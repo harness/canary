@@ -1,8 +1,6 @@
 import { useMemo } from 'react'
-// @ts-ignore
 import {
   createSearchParams,
-  // @ts-ignore
   useLocation,
   useNavigate
 } from 'react-router-dom'

@@ -1,4 +1,5 @@
 import { Parser } from '@harnessio/filters'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 type FilterActionKind = 'filter' | 'sort'
 
@@ -176,7 +177,9 @@ interface ComboBoxFilterOptionConfig extends FilterOptionConfigBase {
     onSearch: (query: string) => void
     noResultsMessage: string
     placeholder: string
+    isLoading?: boolean
   }
+  parser: Parser<ComboBoxOptions>
 }
 
 interface CalendarFilterOptionConfig extends FilterOptionConfigBase {

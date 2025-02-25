@@ -32,7 +32,7 @@
     "stars": "Étoiles",
     "ascending": "Croissant",
     "descending": "Décroissant",
-    "createdBy": "Created By",
+    "author": "Author",
     "createdBefore": "Created Before",
     "createdAfter": "Created After"
   },

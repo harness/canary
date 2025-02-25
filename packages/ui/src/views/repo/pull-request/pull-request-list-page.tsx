@@ -30,23 +30,26 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   setPrincipalsSearchQuery,
   useTranslationStore,
   principalData,
+  defaultSelectedAuthor,
+  isPrincipalsLoading,
   isLoading,
   searchQuery,
   setSearchQuery
 }) => {
   const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestListStore()
   const { t } = useTranslationStore()
+  const computedPrincipalData = principalData ?? (defaultSelectedAuthor ? [defaultSelectedAuthor] : [])
 
   const PR_FILTER_OPTIONS = getPRListFilterOptions({
     t,
     onAuthorSearch: searchText => {
       setPrincipalsSearchQuery?.(searchText)
     },
+    isPrincipalsLoading: isPrincipalsLoading,
     principalData:
-      principalData?.map(userInfo => ({
-        label: userInfo.display_name || '',
-        value: String(userInfo.id),
-        email: userInfo.email
+      computedPrincipalData?.map(userInfo => ({
+        label: userInfo?.display_name || '',
+        value: String(userInfo?.id)
       })) ?? []
   })
   const SORT_OPTIONS = getSortOptions(t)
@@ -150,6 +153,14 @@ const PullRequestList: FC<PullRequestPageProps> = ({
     )
   }
 
+  const handleFilterOpen = (filterValues: PRListFiltersKeys, isOpen: boolean) => {
+    if (filterValues === 'created_by' && isOpen) {
+      // Reset search query so that new principal data set would be fetched
+      // when the filter is opened
+      setPrincipalsSearchQuery?.('')
+    }
+  }
+
   const onFilterValueChange = (filterValues: PRListFilters) => {
     const _filterValues = Object.entries(filterValues).reduce((acc, [key, value]) => {
       // TODO Need to address the type issue here
@@ -163,16 +174,16 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   }
 
   return (
-    <PRListFilterHandler
-      ref={filtersRef}
-      onFilterSelectionChange={onFilterSelectionChange}
-      onChange={onFilterValueChange}
-      view="dropdown"
-    >
-      <SandboxLayout.Main className="max-w-[1040px]">
-        <SandboxLayout.Content>
-          {showTopBar && (
-            <>
+    <SandboxLayout.Main className="max-w-[1040px]">
+      <SandboxLayout.Content>
+        {showTopBar && (
+          <>
+            <PRListFilterHandler
+              ref={filtersRef}
+              onFilterSelectionChange={onFilterSelectionChange}
+              onChange={onFilterValueChange}
+              view="dropdown"
+            >
               <Spacer size={2} />
               <p className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pull Requests</p>
               <Spacer size={6} />
@@ -227,22 +238,33 @@ const PullRequestList: FC<PullRequestPageProps> = ({
               <ListControlBar<PRListFilters>
                 renderSelectedFilters={filterFieldRenderer => (
                   <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
-                    {PR_FILTER_OPTIONS.map(filterOption => (
-                      <PRListFilterHandler.Component
-                        parser={
-                          'parser' in filterOption
-                            ? // TODO Need to address the type issue here
-                              (filterOption.parser as unknown as Parser<PRListFilters[PRListFiltersKeys]>)
-                            : undefined
-                        }
-                        filterKey={filterOption.value as PRListFiltersKeys}
-                        key={filterOption.value}
-                      >
-                        {({ onChange, removeFilter, value }) =>
-                          filterFieldRenderer({ filterOption, onChange, removeFilter, value: value })
-                        }
-                      </PRListFilterHandler.Component>
-                    ))}
+                    {PR_FILTER_OPTIONS.map(filterOption => {
+                      const filterOptionValue = filterOption.value as PRListFiltersKeys
+                      return (
+                        <PRListFilterHandler.Component
+                          parser={
+                            'parser' in filterOption
+                              ? // TODO Need to address the type issue here
+                                (filterOption.parser as unknown as Parser<PRListFilters[PRListFiltersKeys]>)
+                              : undefined
+                          }
+                          filterKey={filterOptionValue}
+                          key={filterOption.value}
+                        >
+                          {({ onChange, removeFilter, value }) =>
+                            filterFieldRenderer({
+                              filterOption,
+                              onChange,
+                              removeFilter,
+                              value: value,
+                              onOpenChange: isOpen => {
+                                handleFilterOpen(filterOptionValue, isOpen)
+                              }
+                            })
+                          }
+                        </PRListFilterHandler.Component>
+                      )
+                    })}
                   </PRListFilterHandler.Content>
                 )}
                 renderFilterOptions={filterOptionsRenderer => (
@@ -264,13 +286,13 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                 t={t}
               />
               <Spacer size={5} />
-            </>
-          )}
-          {renderListContent()}
-          <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
-    </PRListFilterHandler>
+            </PRListFilterHandler>
+          </>
+        )}
+        {renderListContent()}
+        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+      </SandboxLayout.Content>
+    </SandboxLayout.Main>
   )
 }
 export { PullRequestList }

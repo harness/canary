@@ -1,14 +1,21 @@
 import { ReactNode } from 'react'
 
+import { SkeletonList } from '@/components'
 import { Command } from '@components/command'
 import { Icon } from '@components/icon'
 import { debounce } from 'lodash-es'
 
+export interface ComboBoxOptions {
+  label: string
+  value: string
+}
+
 interface ComboBoxProps {
-  options: Array<{ label: string; value: string }>
+  options: Array<ComboBoxOptions>
   onSearch?: (searchQuery: string) => void
-  onUpdateFilter: (selectedValues: string) => void
-  filterValue: string
+  onUpdateFilter: (selectedValues?: ComboBoxOptions) => void
+  filterValue?: ComboBoxOptions
+  isLoading?: boolean
   placeholder?: string
   noResultsMessage: ReactNode
 }
@@ -19,8 +26,10 @@ export default function ComboBox({
   onUpdateFilter,
   filterValue,
   placeholder,
+  isLoading,
   noResultsMessage
 }: ComboBoxProps) {
+  const selectedFilterValue = filterValue?.value
   const debouncedSearch = onSearch ? debounce(onSearch, 400) : undefined
   return (
     <Command.Root shouldFilter={false}>
@@ -31,7 +40,12 @@ export default function ComboBox({
         onInput={e => debouncedSearch?.(e.currentTarget.value)}
       />
       <Command.List>
-        {options.length === 0 && <Command.Empty>{noResultsMessage}</Command.Empty>}
+        {!isLoading && options.length === 0 && <Command.Empty>{noResultsMessage}</Command.Empty>}
+        {isLoading && (
+          <Command.Loading>
+            <span>Loading Authors...</span>
+          </Command.Loading>
+        )}
         {options.map(option => {
           const { label, value } = option
           return (
@@ -40,11 +54,11 @@ export default function ComboBox({
               key={value}
               value={value}
               onSelect={currentValue => {
-                onUpdateFilter(currentValue === filterValue ? '' : currentValue)
+                onUpdateFilter(currentValue === selectedFilterValue ? undefined : option)
               }}
             >
               <div className="mx-2 flex size-4 items-center">
-                {value === filterValue && <Icon name="tick" size={12} className="text-foreground-8" />}
+                {value === selectedFilterValue && <Icon name="tick" size={12} className="text-foreground-8" />}
               </div>
               {label}
             </Command.Item>

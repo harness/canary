@@ -32,7 +32,8 @@
     "stars": "Stars",
     "ascending": "Ascending",
     "descending": "Descending",
-    "createdBy": "Created By",
+    "author": "Author",
+    "delete": "Delete Filter",
     "createdBefore": "Created Before",
     "createdAfter": "Created After"
   },

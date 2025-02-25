@@ -32,9 +32,10 @@
     "stars": "Stars",
     "ascending": "Ascending",
     "descending": "Descending",
-    "createdBy": "Created By",
+    "author": "Author",
     "createdBefore": "Created Before",
-    "createdAfter": "Created After"
+    "createdAfter": "Created After",
+    "delete": "Delete Filter"
   },
   "sort": {
     "defaultLabel": "Sort",

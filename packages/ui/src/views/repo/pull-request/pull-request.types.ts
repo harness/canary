@@ -227,6 +227,8 @@ export interface PullRequestPageProps {
   usePullRequestListStore: () => PullRequestListStore
   repoId?: string
   spaceId?: string
+  isPrincipalsLoading?: boolean
+  defaultSelectedAuthor?: PrincipalType
   principalData?: Partial<PrincipalType>[]
   setPrincipalsSearchQuery?: (query: string) => void
   onFilterChange?: (filterValues: PRListFilters) => void

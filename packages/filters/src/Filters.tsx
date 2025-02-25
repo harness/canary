@@ -67,6 +67,8 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     onChange?.(getValues(filtersMap))
   }
 
+  // Wrapper function to set the filters order
+  // Which automatically triggers the onChange callback
   const setFiltersOrderTrigger = ({
     filterKey,
     updatedFiltersOrder

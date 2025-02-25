@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
-import { Icon, Input } from '@/components'
-import { DropdownMenu } from '@components/dropdown-menu'
+import { Button, DropdownMenu, Icon, Input } from '@/components'
 
 import { FilterOptionConfig } from './types'
 
@@ -33,8 +32,12 @@ const FilterSelect = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="flex items-center gap-x-1.5">{displayLabel}</DropdownMenu.Trigger>
-      <DropdownMenu.Content className="min-w-[224px] p-0" align={dropdownAlign}>
-        <div className="relative flex items-center justify-between border-b border-borders-4 px-3 py-2.5">
+      <DropdownMenu.Content
+        className="min-w-[224px] p-0"
+        align={dropdownAlign}
+        onCloseAutoFocus={e => e.preventDefault()}
+      >
+        <div className="border-borders-4 relative flex items-center border-b px-3 py-2.5">
           <Input
             type="text"
             placeholder={inputPlaceholder}
@@ -47,7 +50,7 @@ const FilterSelect = ({
           {searchQuery && (
             <div className="absolute right-3">
               <button
-                className="flex p-1.5 text-foreground-4 transition-colors duration-200 hover:text-foreground-1"
+                className="p-1.5 hover:text-foreground-1"
                 onClick={e => {
                   e.preventDefault()
                   setSearchQuery('')
@@ -100,14 +103,14 @@ const FilterSelectLabel = ({
 }) => {
   return (
     <>
-      <span className="flex items-center gap-x-1 text-14 text-foreground-2 hover:text-foreground-1">
+      <Button size="xs" variant="ghost" className="hover:text-foreground-1 hover:bg-transparent">
         {displayLabel}
         {selectedFilters > 0 && (
           <span className="flex h-[18px] min-w-[17px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 text-tag-foreground-blue-1">
             {selectedFilters}
           </span>
         )}
-      </span>
+      </Button>
       <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
     </>
   )
@@ -115,10 +118,10 @@ const FilterSelectLabel = ({
 
 const FilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactNode }) => {
   return (
-    <div className="flex items-center gap-x-1.5 text-foreground-4 transition-colors duration-200 hover:text-foreground-1">
+    <Button size="xs" variant="ghost" className="hover:text-foreground-1 gap-x-1.5 hover:bg-transparent">
       <Icon name="plus" size={10} />
       <span>{displayLabel}</span>
-    </div>
+    </Button>
   )
 }
 

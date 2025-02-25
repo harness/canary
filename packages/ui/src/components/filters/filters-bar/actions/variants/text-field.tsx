@@ -18,22 +18,12 @@ const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {
 
   return (
     <div className="flex items-center px-2 pb-2.5">
-      <Input
-        className="w-full"
-        value={filter.value || ''}
-        placeholder="Type a value..."
-        onChange={handleInputChange}
-        onClick={e => {
-          e.stopPropagation()
-          e.preventDefault()
-        }}
-      />
+      <Input className="w-full" value={filter.value || ''} placeholder="Type a value..." onChange={handleInputChange} />
 
       {filter.value && (
         <button
           className="absolute right-3 text-icons-1 transition-colors duration-200 hover:text-foreground-1"
-          onClick={e => {
-            e.stopPropagation()
+          onClick={() => {
             handleClear()
           }}
           aria-label="Clear filter"

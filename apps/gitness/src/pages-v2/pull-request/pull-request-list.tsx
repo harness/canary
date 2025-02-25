@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import {
+  getPrincipal,
   ListPullReqQueryQueryParams,
+  TypesPrincipalInfo,
   useListPrincipalsQuery,
-  useListPullReqQuery,
-  type TypesPrincipalInfo
+  useListPullReqQuery
 } from '@harnessio/code-service-client'
 import { PullRequestList as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
 
@@ -25,8 +26,9 @@ export default function PullRequestListPage() {
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
-  const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
-  const [principalData, setPrincipalData] = useState<TypesPrincipalInfo[]>()
+  const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
+  const [defaultSelectedAuthor, setDefaultSelectedAuthor] = useState<TypesPrincipalInfo>()
+  const [searchParams] = useSearchParams()
   const mfeContext = useMFEContext()
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
@@ -37,16 +39,21 @@ export default function PullRequestListPage() {
     { retry: false }
   )
 
-  const { data: { body: principalDataList } = {} } = useListPrincipalsQuery({
-    queryParams: {
-      page: 1,
-      limit: 100,
-      // @ts-expect-error : BE issue - not implemnted
-      type: 'user',
-      query: principalsSearchQuery,
-      accountIdentifier: mfeContext?.scope?.accountId
+  const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(
+    {
+      queryParams: {
+        page: 1,
+        limit: 100,
+        // @ts-expect-error : BE issue - not implemnted
+        type: 'user',
+        query: principalsSearchQuery,
+        accountIdentifier: mfeContext?.scope?.accountId
+      }
+    },
+    {
+      enabled: principalsSearchQuery !== undefined
     }
-  })
+  )
 
   useEffect(() => {
     if (pullRequestData) {
@@ -56,34 +63,43 @@ export default function PullRequestListPage() {
   }, [pullRequestData, headers, setPullRequests])
 
   useEffect(() => {
-    if (principalDataList) {
-      setPrincipalData(principalDataList)
-    }
-  }, [principalDataList])
-
-  useEffect(() => {
     setQueryPage(page)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, queryPage, setPage])
+
+  useEffect(() => {
+    if (searchParams.get('created_by')) {
+      const authorId = searchParams.get('created_by')
+      getPrincipal({
+        id: Number(authorId),
+        queryParams: {
+          accountIdentifier: mfeContext?.scope?.accountId
+        }
+      }).then(res => {
+        setDefaultSelectedAuthor(res.body)
+      })
+    }
+  }, [])
 
   return (
     <SandboxPullRequestListPage
       repoId={repoId}
       spaceId={spaceId || ''}
       isLoading={fetchingPullReqData}
-      principalData={principalData}
+      isPrincipalsLoading={fetchingPrincipalData}
+      principalData={principalDataList}
+      defaultSelectedAuthor={defaultSelectedAuthor}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       usePullRequestListStore={usePullRequestListStore}
       useTranslationStore={useTranslationStore}
       onFilterChange={(filterData: PRListFilters) => {
         setFilterValues(
-          // TODO Need to address the type issue here
-          Object.entries(filterData).reduce((acc: any, [key, value]) => {
-            if (value !== '' && value !== undefined) {
-              acc[key] = value
-            }
+          Object.entries(filterData).reduce((acc: Record<string, string>, [key, value]) => {
             if (value instanceof Date) {
-              acc[key] = value.getTime()
+              acc[key] = value.getTime().toString()
+            }
+            if (value !== '' && value !== undefined && !(value instanceof Date)) {
+              acc[key] = value
             }
             return acc
           }, {})

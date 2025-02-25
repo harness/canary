@@ -180,39 +180,38 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="px-3">
-        <Input
-          type="text"
-          className={cn({
+      <Input
+        type="text"
+        className={cn(
+          {
             'border-borders-danger focus:border-borders-danger': singleState.input.isError
-          })}
-          value={singleState.input.value}
-          onChange={e => handleDateInput(e.target.value)}
-          onBlur={e => handleDateConfirm(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Select or type a date..."
-        />
-      </div>
-      <div className="mt-2.5 px-2 pb-3 pt-1">
-        <UICalendar
-          className="p-0"
-          mode="single"
-          selected={singleState.date}
-          month={singleState.month}
-          onMonthChange={month => setSingleState(prev => ({ ...prev, month }))}
-          onSelect={(value: Date | undefined) => {
-            if (value) {
-              setSingleState(prev => ({
-                ...prev,
-                date: value,
-                month: value
-              }))
-              onUpdateFilter(value)
-            }
-          }}
-          initialFocus
-        />
-      </div>
+          },
+          'w-auto mx-3'
+        )}
+        value={singleState.input.value}
+        onChange={e => handleDateInput(e.target.value)}
+        onBlur={e => handleDateConfirm(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder="Select or type a date..."
+      />
+      <UICalendar
+        className="mt-2.5 px-2 pb-3 pt-1"
+        mode="single"
+        selected={singleState.date}
+        month={singleState.month}
+        onMonthChange={month => setSingleState(prev => ({ ...prev, month }))}
+        onSelect={(value: Date | undefined) => {
+          if (value) {
+            setSingleState(prev => ({
+              ...prev,
+              date: value,
+              month: value
+            }))
+            onUpdateFilter(value)
+          }
+        }}
+        initialFocus
+      />
     </div>
   )
 }

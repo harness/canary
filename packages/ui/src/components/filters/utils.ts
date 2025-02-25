@@ -12,6 +12,7 @@ import {
   type FilterOption,
   type FilterValue
 } from './types'
+import { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 
 /**
  * Gets the label and icon for the sort trigger button
@@ -121,9 +122,7 @@ export const getFilterLabelValue = <T extends FilterValueTypes>(
       return filter.value as string
 
     case FilterFieldTypes.ComboBox: {
-      const options = filterOption.filterFieldConfig?.options || []
-      const selectedOption = options.find(option => option.value === filter.value)
-      return selectedOption?.label || ''
+      return (filter.value as ComboBoxOptions)?.label
     }
     default:
       return ''

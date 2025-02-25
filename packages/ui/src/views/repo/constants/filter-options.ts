@@ -9,6 +9,7 @@ import { FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
 import { TFunction } from 'i18next'
 
 import { Parser } from '@harnessio/filters'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 export const getBasicConditions = (t: TFunction): FilterCondition[] => [
   { label: t('component:filter.is', 'is'), value: 'is' },
@@ -106,23 +107,30 @@ const dateParser: Parser<Date> = {
 interface PRListFilterOptions {
   t: TFunction
   onAuthorSearch: (name: string) => void
+  isPrincipalsLoading?: boolean
   principalData: { label: string; value: string }[]
 }
 
 export const getPRListFilterOptions = ({
   t,
   onAuthorSearch,
+  isPrincipalsLoading,
   principalData
 }: PRListFilterOptions): FilterOptionConfig[] => [
   {
-    label: t('component:filter.createdBy', 'Created By'),
+    label: t('component:filter.author', 'Author'),
     value: 'created_by',
     type: FilterFieldTypes.ComboBox,
     filterFieldConfig: {
       options: principalData,
       onSearch: onAuthorSearch,
       noResultsMessage: 'No results found',
-      placeholder: 'Search by author'
+      placeholder: 'Search by author',
+      isLoading: isPrincipalsLoading
+    },
+    parser: {
+      parse: (value: string) => principalData.find(user => user.value === value) || {label: '', value},
+      serialize: (value: ComboBoxOptions) => value?.value
     }
   },
   {

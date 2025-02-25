@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useFindRepositoryQuery, useListBranchesQuery, useListTagsQuery } from '@harnessio/code-service-client'
-import { BranchSelectorV2 } from '@harnessio/ui/views'
+import { BranchSelectorListItem, BranchSelectorTab, BranchSelectorV2 } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
@@ -20,8 +20,16 @@ export const BranchSelectorContainer = () => {
   // const [tagList, setTagList] = useState<BranchSelectorListItem[]>([])
 
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
-  const { branchList, setBranchList, tagList, setTagList, selectedBranchOrTag, setSelectedBranchOrTag } =
-    useBranchSelectorStore()
+  const {
+    branchList,
+    setBranchList,
+    tagList,
+    setTagList,
+    selectedBranchOrTag,
+    setSelectedBranchOrTag,
+    setRefType,
+    selectedRefType
+  } = useBranchSelectorStore()
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
@@ -55,13 +63,14 @@ export const BranchSelectorContainer = () => {
         default: true
       })
     }
-  }, [branches, repository])
+    setRefType(BranchSelectorTab.BRANCHES)
+  }, [branches, repository, setSelectedBranchOrTag])
 
   useEffect(() => {
     if (branches) {
       setBranchList(transformBranchList(branches, repository?.default_branch))
     }
-  }, [branches, repository?.default_branch])
+  }, [branches, repository?.default_branch, setBranchList])
 
   useEffect(() => {
     if (tags) {
@@ -73,7 +82,27 @@ export const BranchSelectorContainer = () => {
         }))
       )
     }
-  }, [tags])
+  }, [setTagList, tags])
+
+  const selectBranchOrTag = useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      if (type === BranchSelectorTab.BRANCHES) {
+        const branch = branchList.find(branch => branch.name === branchTagName.name)
+        if (branch) {
+          // setPage(1)
+          setSelectedBranchOrTag(branch)
+          setRefType(type)
+        }
+      } else if (type === BranchSelectorTab.TAGS) {
+        const tag = tagList.find(tag => tag.name === branchTagName.name)
+        if (tag) {
+          setSelectedBranchOrTag(tag)
+          setRefType(type)
+        }
+      }
+    },
+    [repoId, spaceId, branchList, tagList]
+  )
 
   return (
     <BranchSelectorV2
@@ -85,10 +114,7 @@ export const BranchSelectorContainer = () => {
       spaceId={spaceId ?? ''}
       searchQuery={branchTagQuery ?? ''}
       setSearchQuery={setBranchTagQuery}
-      onSelectBranch={(branchTag, _type) => {
-        setSelectedBranchOrTag(branchTag)
-        setBranchTagQuery('')
-      }}
+      onSelectBranch={selectBranchOrTag}
     />
   )
 }

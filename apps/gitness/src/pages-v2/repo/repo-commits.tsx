@@ -31,7 +31,7 @@ export default function RepoCommitsPage() {
   const {
     //   branchList,
     //   tagList,
-    selectedRefType,
+    // selectedRefType,
     //   setBranchList,
     //   setTagList,
     //   selectedBranchTag,
@@ -40,7 +40,7 @@ export default function RepoCommitsPage() {
     setSpaceIdAndRepoId
   } = useRepoBranchesStore()
 
-  const { selectedBranchOrTag } = useBranchSelectorStore()
+  const { selectedBranchOrTag, selectedRefType } = useBranchSelectorStore()
 
   // const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
   // const { data: { body: branches } = {} } = useListBranchesQuery({
@@ -66,6 +66,8 @@ export default function RepoCommitsPage() {
     setSearchParams({ page: String(queryPage), query: branchTagQuery })
   }, [queryPage, branchTagQuery, setSearchParams])
 
+  console.log('selectedBranchOrTag', selectedBranchOrTag, selectedRefType)
+
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
     queryParams: {
@@ -78,6 +80,8 @@ export default function RepoCommitsPage() {
       include_stats: true
     }
   })
+
+  console.log('commitData', commitData)
   const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
   const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
 

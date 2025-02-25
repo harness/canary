@@ -2,17 +2,26 @@ import { FC } from 'react'
 
 import { NoData, Pagination, SkeletonList, Spacer, Text } from '@/components'
 import {
-  BranchSelector,
+  BranchData,
   BranchSelectorListItem,
   BranchSelectorTab,
+  // BranchSelector,
+  BranchSelectorV2,
   CommitsList,
-  IBranchSelectorStore,
+  // IBranchSelectorStore,
   SandboxLayout,
   TranslationStore,
   TypesCommit
 } from '@/views'
 
 export interface RepoCommitsViewProps {
+  // new props
+  branchList: BranchData[]
+  tagList: BranchSelectorListItem[]
+  selectedBranchorTag: BranchSelectorListItem
+  repoId: string
+  spaceId: string
+  // old props
   isFetchingCommits: boolean
   commitsList?: TypesCommit[] | null
   xNextPage: number
@@ -21,7 +30,7 @@ export interface RepoCommitsViewProps {
   setPage: (page: number) => void
   selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   useTranslationStore: () => TranslationStore
-  useRepoBranchesStore: () => IBranchSelectorStore
+  // useRepoBranchesStore: () => IBranchSelectorStore
   searchQuery: string
   setSearchQuery: (query: string) => void
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -37,11 +46,16 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   setPage,
   selectBranchOrTag,
   useTranslationStore,
-  useRepoBranchesStore,
+  // useRepoBranchesStore,
   searchQuery,
   setSearchQuery,
   toCommitDetails,
-  toCode
+  toCode,
+  branchList,
+  tagList,
+  selectedBranchorTag,
+  repoId,
+  spaceId
 }) => {
   const { t } = useTranslationStore()
 
@@ -59,12 +73,25 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
         </Text>
         <Spacer size={6} />
         <div className="flex justify-between gap-5">
-          <BranchSelector
+          {/* <BranchSelector
             onSelectBranch={selectBranchOrTag}
             useRepoBranchesStore={useRepoBranchesStore}
             useTranslationStore={useTranslationStore}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+          /> */}
+          <BranchSelectorV2
+            useTranslationStore={useTranslationStore}
+            branchList={branchList}
+            tagList={tagList}
+            repoId={repoId}
+            spaceId={spaceId}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            onSelectBranch={(branchTag, _type) => {
+              selectBranchOrTag(branchTag, _type)
+            }}
+            selectedBranchorTag={selectedBranchorTag}
           />
         </div>
 

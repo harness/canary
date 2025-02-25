@@ -179,6 +179,11 @@
           "$type": "color",
           "$value": "{colors.accent.600}",
           "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.btn.primary.background}",
+          "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
         }
       },
       "secondary": {
@@ -190,6 +195,11 @@
         "background": {
           "$type": "color",
           "$value": "{colors.chrome.850}",
+          "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.btn.secondary.background}",
           "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
         }
       },
@@ -716,31 +726,6 @@
           "$type": "color",
           "$value": "{colors.lime.950}"
         }
-      },
-      "text": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Default text color for input content.\nCommon uses: input text, entered content."
-      },
-      "placeholder": {
-        "$type": "color",
-        "$value": "{text.3}",
-        "$description": "Default text color for input content.\nCommon uses: input text, entered content."
-      },
-      "icon": {
-        "$type": "color",
-        "$value": "{text.3}",
-        "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
-      },
-      "background": {
-        "$type": "color",
-        "$value": "{background.2}",
-        "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.2}",
-        "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
       }
     },
     "switch": {
@@ -773,6 +758,186 @@
       "text": {
         "$type": "color",
         "$value": "{text.1}"
+      }
+    },
+    "badge": {
+      "success": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.green.200}",
+          "$description": "Text color for success subtle surface.\nCommon uses: supporting text, success icons."
+        },
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.green.300}",
+          "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.green.500}",
+          "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
+        }
+      },
+      "danger": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.red.200}",
+          "$description": "Secondary text color for error content.\nCommon uses: supporting error text, error icons."
+        },
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.red.300}",
+          "$description": "Subtle border for error states.\nCommon uses: soft error boundaries, form field errors."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.red.500}",
+          "$description": "Softer error background for lower emphasis.\nCommon uses: inline error indicators, form validation."
+        }
+      },
+      "warning": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.amber.200}",
+          "$description": "Secondary text color for warning content.\nCommon uses: supporting warning text, alert icons."
+        },
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.amber.300}",
+          "$description": "Subtle border for warning states.\nCommon uses: soft warning boundaries, notice indicators."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.amber.500}",
+          "$description": "Softer warning background for lower emphasis.\nCommon uses: inline warning indicators, notifications."
+        }
+      },
+      "merged": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.purple.200}",
+          "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
+        },
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.purple.300}",
+          "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.purple.500}",
+          "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
+        }
+      },
+      "default": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.pure.white}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.accent.600}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.badge.default.background}"
+        }
+      },
+      "secondary": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.2}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.900}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.badge.secondary.background}"
+        }
+      },
+      "outline": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.2}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{border.2}"
+        }
       }
     },
     "accordion": {
@@ -819,356 +984,56 @@
       "danger": {
         "title": {
           "$type": "color",
-          "$value": "{text.1}"
+          "$value": "{colors.pure.white}"
         },
         "description": {
           "$type": "color",
-          "$value": "{text.2}"
+          "$value": "{colors.pure.white}"
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.900}"
+          "$value": "{colors.red.400}"
         },
         "border": {
           "$type": "color",
-          "$value": "{border.3}"
-        }
-      }
-    }
-  },
-  "feedback": {
-    "success": {
-      "solid": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pure.black}",
-          "$description": "Text color for success intence surface.\nCommon uses: success message text, completion text."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.green.300}",
-          "$description": "Default success background color.\nCommon uses: success alerts, confirmation messages."
-        }
-      },
-      "soft": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.green.200}",
-          "$description": "Text color for success subtle surface.\nCommon uses: supporting text, success icons."
-        },
-        "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.2",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.green.300}",
-          "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
-        },
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.green.500}",
-          "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
+          "$value": "{colors.red.400}"
         }
       }
     },
-    "danger": {
-      "solid": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pure.black}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.300}",
-          "$description": "Default error background color.\nCommon uses: error alerts, validation messages."
-        }
+    "avatar": {
+      "background": {
+        "$type": "color",
+        "$value": "{colors.chrome.900}"
       },
-      "soft": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.red.200}",
-          "$description": "Secondary text color for error content.\nCommon uses: supporting error text, error icons."
-        },
-        "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.2",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.red.300}",
-          "$description": "Subtle border for error states.\nCommon uses: soft error boundaries, form field errors."
-        },
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.red.500}",
-          "$description": "Softer error background for lower emphasis.\nCommon uses: inline error indicators, form validation."
-        },
-        "state": {
-          "hover": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.15",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.red.500}",
-            "$description": "Hover state for interactive error elements.\nCommon uses: clickable error messages, interactive errors."
-          },
-          "active": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.25",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.red.500}",
-            "$description": "Active state for interactive error elements.\nCommon uses: pressed state, active error indicators."
-          }
-        }
+      "text": {
+        "$type": "color",
+        "$value": "{text.2}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{border.3}"
       }
     },
-    "warning": {
-      "solid": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pure.black}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.amber.300}",
-          "$description": "Default warning background color.\nCommon uses: warning alerts, caution messages."
-        }
+    "status-indicaror": {
+      "success": {
+        "$type": "color",
+        "$value": "{colors.green.300}"
       },
-      "soft": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.amber.200}",
-          "$description": "Secondary text color for warning content.\nCommon uses: supporting warning text, alert icons."
-        },
-        "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.2",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.amber.300}",
-          "$description": "Subtle border for warning states.\nCommon uses: soft warning boundaries, notice indicators."
-        },
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.amber.500}",
-          "$description": "Softer warning background for lower emphasis.\nCommon uses: inline warning indicators, notifications."
-        },
-        "state": {
-          "hover": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.15",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.amber.500}",
-            "$description": "Hover state for interactive warning elements.\nCommon uses: clickable warnings, interactive alerts."
-          },
-          "active": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.25",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.amber.500}",
-            "$description": "Active state for interactive warning elements.\nCommon uses: pressed state, active warning indicators."
-          }
-        }
-      }
-    },
-    "info": {
-      "solid": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pure.black}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.chrome.300}",
-          "$description": "Default info background color. \nCommon uses: info alerts, help messages."
-        }
+      "danger": {
+        "$type": "color",
+        "$value": "{colors.red.300}"
       },
-      "soft": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.chrome.200}",
-          "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
-        },
-        "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.2",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.chrome.300}",
-          "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.chrome.900}",
-          "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
-        },
-        "state": {
-          "hover": {
-            "$type": "color",
-            "$value": "{colors.chrome.850}",
-            "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
-          },
-          "active": {
-            "$type": "color",
-            "$value": "{colors.chrome.800}",
-            "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
-          }
-        }
-      }
-    },
-    "merge": {
-      "solid": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pure.black}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.purple.300}",
-          "$description": "Default info background color. \nCommon uses: info alerts, help messages."
-        }
+      "warning": {
+        "$type": "color",
+        "$value": "{colors.amber.300}"
       },
-      "soft": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.purple.200}",
-          "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
-        },
-        "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.2",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.purple.300}",
-          "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
-        },
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.purple.500}",
-          "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
-        },
-        "state": {
-          "hover": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.15",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.purple.500}",
-            "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
-          },
-          "active": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.25",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.purple.500}",
-            "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
-          }
-        }
+      "merged": {
+        "$type": "color",
+        "$value": "{colors.purple.300}"
+      },
+      "pending": {
+        "$type": "color",
+        "$value": "{colors.chrome.400}"
       }
     }
   },

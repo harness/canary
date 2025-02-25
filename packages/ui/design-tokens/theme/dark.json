@@ -1122,6 +1122,89 @@
           "$description": "Subtle background variation for lime tags. Provides a softer alternative for less emphasis."
         }
       }
+    },
+    "breadcrumb": {
+      "item-inactive": {
+        "$type": "color",
+        "$value": "{text.3}"
+      },
+      "item-current": {
+        "$type": "color",
+        "$value": "{text.1}"
+      },
+      "separator": {
+        "$type": "color",
+        "$value": "{state.disabled.text}"
+      }
+    },
+    "dropdown": {
+      "background": {
+        "$type": "color",
+        "$value": "{colors.chrome.900}"
+      },
+      "item": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.2}"
+        },
+        "separator": {
+          "$type": "color",
+          "$value": "{colors.chrome.800}"
+        }
+      }
+    },
+    "table": {
+      "header": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.2}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{background.3}"
+        }
+      },
+      "row": {
+        "alternate-background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.chrome.200}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{border.3}"
+        }
+      },
+      "cell": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.1}"
+        }
+      }
+    },
+    "tooltip": {
+      "text": {
+        "$type": "color",
+        "$value": "{text.2}"
+      },
+      "background": {
+        "$type": "color",
+        "$value": "{colors.chrome.900}"
+      }
+    },
+    "scrollbar": {
+      "thumb": {
+        "$type": "color",
+        "$value": "{colors.chrome.850}"
+      }
     }
   },
   "shadow": {

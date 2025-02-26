@@ -34,6 +34,10 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   sidebarViewportClassName
 }) => {
   const { NavLink } = useRouterContext()
+
+    // TODO: calculate insetShift when useTheme context be available
+    // const insetShift = 24
+
   return (
     <div className="relative mx-auto flex w-full max-w-[1088px] items-start gap-x-20 pr-4">
       <div

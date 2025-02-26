@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 
 import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Spacer, StackedList } from '@/components'
@@ -28,7 +28,9 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   spaceId,
   repoId,
   onFilterChange,
+  defaultSelectedAuthorError,
   setPrincipalsSearchQuery,
+  principalsSearchQuery,
   useTranslationStore,
   principalData,
   defaultSelectedAuthor,
@@ -40,7 +42,11 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestListStore()
   const { t } = useTranslationStore()
   const [searchParams] = useSearchParams()
-  const computedPrincipalData = principalData ?? (defaultSelectedAuthor ? [defaultSelectedAuthor] : [])
+
+  const computedPrincipalData = useMemo(() => {
+    return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
+  }, [principalData, defaultSelectedAuthor, principalsSearchQuery])
+
   const [isAllFilterDataPresent, setisAllFilterDataPresent] = useState<boolean>(true)
 
   const PR_FILTER_OPTIONS = getPRListFilterOptions({
@@ -92,8 +98,10 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   }
 
   useEffect(() => {
-    setisAllFilterDataPresent(searchParams.get('created_by') ? !!defaultSelectedAuthor : true)
-  }, [defaultSelectedAuthor])
+    setisAllFilterDataPresent(
+      searchParams.get('created_by') && !defaultSelectedAuthorError ? !!defaultSelectedAuthor : true
+    )
+  }, [defaultSelectedAuthor, defaultSelectedAuthorError])
 
   const showTopBar = !noData || selectedFiltersCnt > 0 || filterHandlers.activeSorts.length > 0 || !!searchQuery?.length
 

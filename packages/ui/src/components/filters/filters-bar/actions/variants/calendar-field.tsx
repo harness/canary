@@ -144,7 +144,8 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
             setSingleState(prev => ({
               ...prev,
               date: value,
-              month: value
+              month: value,
+              input: { value: formatDateForInput(value), isError: false }
             }))
             onUpdateFilter(value)
           }

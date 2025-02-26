@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import {
-  getPrincipal,
   ListPullReqQueryQueryParams,
-  TypesPrincipalInfo,
+  useGetPrincipalQuery,
   useListPrincipalsQuery,
   useListPullReqQuery
 } from '@harnessio/code-service-client'
@@ -27,8 +26,8 @@ export default function PullRequestListPage() {
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
-  const [defaultSelectedAuthor, setDefaultSelectedAuthor] = useState<TypesPrincipalInfo>()
   const [searchParams] = useSearchParams()
+  const defaultAuthorId = searchParams.get('created_by')
   const mfeContext = useMFEContext()
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
@@ -37,6 +36,14 @@ export default function PullRequestListPage() {
       repo_ref: repoRef
     },
     { retry: false }
+  )
+
+  const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
+    {
+      queryParams: { page, query: query ?? '', ...filterValues },
+      id: Number(searchParams.get('created_by'))
+    },
+    { enabled: !!defaultAuthorId, staleTime: Infinity }
   )
 
   const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(
@@ -67,26 +74,14 @@ export default function PullRequestListPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, queryPage, setPage])
 
-  useEffect(() => {
-    if (searchParams.get('created_by')) {
-      const authorId = searchParams.get('created_by')
-      getPrincipal({
-        id: Number(authorId),
-        queryParams: {
-          accountIdentifier: mfeContext?.scope?.accountId
-        }
-      }).then(res => {
-        setDefaultSelectedAuthor(res.body)
-      })
-    }
-  }, [])
-
   return (
     <SandboxPullRequestListPage
       repoId={repoId}
       spaceId={spaceId || ''}
       isLoading={fetchingPullReqData}
       isPrincipalsLoading={fetchingPrincipalData}
+      principalsSearchQuery={principalsSearchQuery}
+      defaultSelectedAuthorError={defaultSelectedAuthorError}
       principalData={principalDataList}
       defaultSelectedAuthor={defaultSelectedAuthor}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}

@@ -21,3 +21,11 @@ export function splitPathWithParents(fullResourcePath: string, repoPath: string)
   }
   return result
 }
+
+export const decodeURIComponentIfValid = (path: string) => {
+  try {
+    return decodeURIComponent(path)
+  } catch {
+    return path
+  }
+}

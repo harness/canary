@@ -313,6 +313,30 @@ export default {
             mint: 'var(--canary-label-background-mint-01)',
             lime: 'var(--canary-label-background-lime-01)'
           }
+        },
+        sidebar: {
+          background: {
+            1: 'hsl(var(--canary-sidebar-background-01))',
+            2: 'hsl(var(--canary-sidebar-background-02))'
+          },
+          border: {
+            1: 'hsl(var(--canary-sidebar-border-01))',
+            2: 'hsla(var(--canary-sidebar-border-02))',
+            3: 'hsl(var(--canary-sidebar-border-03))'
+          },
+          foreground: {
+            1: 'hsl(var(--canary-sidebar-foreground-01))',
+            2: 'hsl(var(--canary-sidebar-foreground-02))',
+            3: 'hsl(var(--canary-sidebar-foreground-03))',
+            4: 'hsl(var(--canary-sidebar-foreground-04))',
+            5: 'hsl(var(--canary-sidebar-foreground-05))',
+            accent: 'hsl(var(--canary-sidebar-foreground-accent))'
+          },
+          icon: {
+            1: 'hsl(var(--canary-sidebar-icon-01))',
+            2: 'hsl(var(--canary-sidebar-icon-02))',
+            3: 'hsl(var(--canary-sidebar-icon-03))'
+          }
         }
       },
       letterSpacing: {

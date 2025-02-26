@@ -25,8 +25,8 @@ export function Item({ icon, text, description, active, submenuItem, className }
       >
         <div
           className={cn(
-            'group-hover:bg-background-4 absolute z-0 h-full w-full rounded-[10px] bg-transparent transition-colors',
-            { 'bg-background-4': active }
+            'group-hover:bg-sidebar-background-2 absolute z-0 h-full w-full rounded-[10px] bg-transparent transition-colors',
+            { 'bg-sidebar-background-2': active }
           )}
         />
         <div className="z-10 col-start-1 row-span-full mt-px flex items-center">
@@ -68,7 +68,7 @@ export function Item({ icon, text, description, active, submenuItem, className }
     <div
       className={cn(
         'group flex cursor-pointer select-none gap-2 py-1.5 px-3 rounded-md',
-        { 'bg-background-4': active },
+        { 'bg-sidebar-background-2': active },
         { 'gap-0': !icon },
         className
       )}
@@ -76,8 +76,8 @@ export function Item({ icon, text, description, active, submenuItem, className }
       {icon && (
         <div
           className={cn(
-            'text-icons-4 group-hover:text-icons-2 relative z-10 mt-1 flex h-3 w-3 min-w-3 items-center duration-100 ease-in-out',
-            { 'text-icons-2': active }
+            'text-icons-4 group-hover:text-sidebar-icon-1 relative z-10 mt-1 flex h-3 w-3 min-w-3 items-center duration-100 ease-in-out',
+            { 'text-sidebar-icon-1': active }
           )}
         >
           {active && (
@@ -89,8 +89,8 @@ export function Item({ icon, text, description, active, submenuItem, className }
       <Text
         size={2}
         weight="medium"
-        className={cn('text-foreground-3 group-hover:text-foreground-1 z-10 text-left duration-100 ease-in-out', {
-          'text-foreground-1': active
+        className={cn('text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1 z-10 text-left duration-100 ease-in-out', {
+          'text-sidebar-foreground-1': active
         })}
       >
         {text}

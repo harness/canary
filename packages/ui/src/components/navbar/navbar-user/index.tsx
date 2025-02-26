@@ -37,7 +37,7 @@ const UserBlock = ({ username, email, url, isButton = false, className }: UserBl
       )}
     >
       {isButton && (
-        <div className="absolute -inset-2 rounded duration-100 ease-in-out group-hover:bg-background-4 group-data-[state=open]:bg-background-4" />
+        <div className="absolute -inset-2 rounded duration-100 ease-in-out group-hover:bg-sidebar-background-2 group-data-[state=open]:bg-sidebar-background-2" />
       )}
       <div className="col-start-1 row-span-2">
         <Avatar.Root className="rounded-md" size="8">
@@ -45,9 +45,9 @@ const UserBlock = ({ username, email, url, isButton = false, className }: UserBl
           <Avatar.Fallback>{getInitials(username)}</Avatar.Fallback>
         </Avatar.Root>
       </div>
-      <p className="col-start-2 row-start-1 truncate text-13 font-medium leading-tight text-foreground-1">{username}</p>
+      <p className="col-start-2 row-start-1 truncate text-13 font-medium leading-tight text-sidebar-foreground-1">{username}</p>
       {!!email && (
-        <p className="col-start-2 row-start-2 truncate text-13 font-normal leading-tight text-foreground-4">{email}</p>
+        <p className="col-start-2 row-start-2 truncate text-13 font-normal leading-tight text-sidebar-foreground-4">{email}</p>
       )}
     </Tag>
   )

@@ -2,7 +2,13 @@ import { FC, useCallback, useMemo } from 'react'
 
 import { useTranslationStore } from '@utils/viewUtils'
 
-import { BranchSelectorTab, IBranchSelectorStore, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/ui/views'
+import {
+  BranchSelectorTab,
+  BranchSelectorV2,
+  IBranchSelectorStore,
+  RepoSummaryView,
+  RepoSummaryViewProps
+} from '@harnessio/ui/views'
 
 import repoSummaryProps from './repo-summary-props.json'
 
@@ -38,6 +44,7 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
     <RepoSummaryView
       {...repoSummaryProps}
       repoEntryPathToFileTypeMap={repoEntryPathToFileTypeMap}
+      selectedBranchOrTag={{ name: 'main', sha: '' }}
       saveDescription={noop}
       handleCreateToken={noop}
       navigateToFile={noop}
@@ -50,6 +57,21 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
       selectBranchOrTag={noop}
       searchQuery=""
       setSearchQuery={noop}
+      renderProp={() => (
+        <BranchSelectorV2
+          repoId="canary"
+          spaceId="org"
+          branchList={[]}
+          tagList={[]}
+          selectedBranchorTag={{ name: 'main', sha: 'sha' }}
+          selectedBranch={{ name: 'main', sha: 'sha' }}
+          onSelectBranch={noop}
+          isBranchOnly={false}
+          dynamicWidth={false}
+          useTranslationStore={useTranslationStore}
+          setSearchQuery={noop}
+        />
+      )}
       {...props}
     />
   )

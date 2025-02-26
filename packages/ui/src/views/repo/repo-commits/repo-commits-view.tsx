@@ -24,7 +24,6 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   page,
   setPage,
   useTranslationStore,
-
   toCommitDetails,
   toCode,
   renderProp: BranchSelectorContainer

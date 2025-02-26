@@ -842,6 +842,9 @@ importers:
         version: link:../filters
       '@harnessio/forms':
         specifier: workspace:*
+        version: link:../filters
+      '@harnessio/forms':
+        specifier: workspace:*
         version: link:../forms
       '@harnessio/pipeline-graph':
         specifier: workspace:*

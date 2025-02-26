@@ -5,11 +5,11 @@ import {
   type SortOption,
   type ViewLayoutOption
 } from '@components/filters'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
 import { TFunction } from 'i18next'
 
 import { Parser } from '@harnessio/filters'
-import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 export const getBasicConditions = (t: TFunction): FilterCondition[] => [
   { label: t('component:filter.is', 'is'), value: 'is' },
@@ -129,7 +129,7 @@ export const getPRListFilterOptions = ({
       isLoading: isPrincipalsLoading
     },
     parser: {
-      parse: (value: string) => principalData.find(user => user.value === value) || {label: '', value},
+      parse: (value: string) => principalData.find(user => user.value === value) || { label: '', value },
       serialize: (value: ComboBoxOptions) => value?.value
     }
   },

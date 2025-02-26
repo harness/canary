@@ -1,8 +1,8 @@
 import { PrincipalType } from '@/types'
 import { ColorsEnum, LabelType } from '@/views'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { TranslationStore } from '../repo-list/types'
-import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 export interface CommitSelectorListItem {
   title: string

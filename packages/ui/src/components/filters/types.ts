@@ -1,5 +1,6 @@
-import { Parser } from '@harnessio/filters'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
+
+import { Parser } from '@harnessio/filters'
 
 type FilterActionKind = 'filter' | 'sort'
 

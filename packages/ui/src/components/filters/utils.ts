@@ -1,5 +1,6 @@
 import { format } from 'date-fns'
 
+import { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import {
   CheckboxFilterOption,
   FilterField,
@@ -12,7 +13,6 @@ import {
   type FilterOption,
   type FilterValue
 } from './types'
-import { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 
 /**
  * Gets the label and icon for the sort trigger button

@@ -1,33 +1,28 @@
 {
-  "default": {
-    "$type": "sizing",
-    "$value": "{size.9}",
-    "$description": "36px\n"
-  },
-  "compact": {
-    "$type": "sizing",
-    "$value": "{size.8}",
-    "$description": "32px"
-  },
-  "input text": {
-    "$type": "fontSizes",
-    "$value": "{fontSize.2}",
-    "$description": "14px"
-  },
   "input": {
-    "Radius": {
+    "size": {
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.9}",
+        "$description": "36px\n"
+      },
+      "compact": {
+        "$type": "sizing",
+        "$value": "{size.8}",
+        "$description": "32px"
+      }
+    },
+    "radius": {
       "default": {
         "$type": "borderRadius",
         "$value": "{rounded.3}",
         "$description": "6px"
       }
-    }
-  },
-  "gap": {
-    "$type": "spacing",
-    "$value": "{spacing.1-half}"
-  },
-  "inputField": {
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.1-half}"
+    },
     "px": {
       "$type": "spacing",
       "$value": "{spacing.3}",

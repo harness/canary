@@ -54,7 +54,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   toCommitDetails,
   isLoadingRepoDetails
 }) => {
-  const { selectedBranchTag } = useRepoBranchesStore()
+  const { selectedBranchTag, repoId, spaceId } = useRepoBranchesStore()
   const { t } = useTranslationStore()
 
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
@@ -92,8 +92,11 @@ export const RepoFiles: FC<RepoFilesProps> = ({
           {selectedBranchTag.name !== defaultBranchName && (
             <>
               <BranchInfoBar
+                repoId={repoId}
+                spaceId={spaceId}
                 defaultBranchName={defaultBranchName}
                 useRepoBranchesStore={useRepoBranchesStore}
+                selectedBranchTag={selectedBranchTag}
                 currentBranchDivergence={{
                   ahead: currentBranchDivergence.ahead || 0,
                   behind: currentBranchDivergence.behind || 0

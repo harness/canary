@@ -12,7 +12,14 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout, TranslationStore } from '@/views'
+import {
+  BranchSelectorListItem,
+  CommitDivergenceType,
+  IBranchSelectorStore,
+  RepoFile,
+  SandboxLayout,
+  TranslationStore
+} from '@/views'
 import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
@@ -32,6 +39,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   selectedBranchOrTag: BranchSelectorListItem | null
   loading: boolean
   filesList: string[]
+  useRepoBranchesStore: () => IBranchSelectorStore
   navigateToFile: (path: string) => void
   repository:
     | {
@@ -102,7 +110,8 @@ export function RepoSummaryView({
   navigateToProfileKeys,
   renderSidebarComponent,
   isRepoEmpty,
-  renderProp: BranchSelector
+  renderProp: BranchSelector,
+  useRepoBranchesStore
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
 
@@ -205,6 +214,7 @@ export function RepoSummaryView({
               <>
                 <Spacer size={4} />
                 <BranchInfoBar
+                  useRepoBranchesStore={useRepoBranchesStore}
                   defaultBranchName={repository?.default_branch}
                   repoId={repoId}
                   spaceId={spaceId}

@@ -2,13 +2,14 @@ import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Badge, Button, DropdownMenu, Icon, StyledLink } from '@/components'
-import { BranchSelectorListItem } from '@/views'
+import { BranchSelectorListItem, IBranchSelectorStore } from '@/views'
 
 interface BranchInfoBarProps {
   defaultBranchName?: string
   repoId: string
   spaceId: string
-  selectedBranchTag: BranchSelectorListItem
+  selectedBranchTag?: BranchSelectorListItem
+  useRepoBranchesStore: () => IBranchSelectorStore
   currentBranchDivergence: {
     ahead: number
     behind: number
@@ -19,12 +20,14 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   defaultBranchName = 'main',
   repoId,
   spaceId,
+  useRepoBranchesStore,
   selectedBranchTag,
   currentBranchDivergence
 }) => {
   const { behind, ahead } = currentBranchDivergence
   const hasBehind = !!behind
   const hasAhead = !!ahead
+  const { selectedBranchTag: selectedBranchTagFromStore } = useRepoBranchesStore()
 
   return (
     <div className="flex h-11 items-center justify-between rounded-md border border-borders-1 bg-background-2 pl-4 pr-1.5">
@@ -85,7 +88,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           <div className="mt-4 flex flex-col gap-y-2.5">
             <Button className="w-full" variant="outline" asChild>
               <Link
-                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name ?? selectedBranchTagFromStore.name}`}
               >
                 Compare
               </Link>
@@ -93,7 +96,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
             <Button className="w-full" asChild>
               <Link
-                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name ?? selectedBranchTagFromStore.name}`}
               >
                 Open pull request
               </Link>

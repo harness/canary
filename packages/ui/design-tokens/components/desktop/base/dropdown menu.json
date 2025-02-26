@@ -2,12 +2,12 @@
   "dropdown-item": {
     "px": {
       "$type": "spacing",
-      "$value": "{spacing.1-half}",
-      "$description": "6px\n"
+      "$value": "{spacing.1}",
+      "$description": "4px\n"
     },
     "gap": {
       "$type": "spacing",
-      "$value": "{spacing.2}",
+      "$value": "{spacing.2-half}",
       "$description": "8px"
     },
     "radius": {
@@ -22,8 +22,8 @@
   "dropdown-sub-item": {
     "px": {
       "$type": "spacing",
-      "$value": "{spacing.2-half}",
-      "$description": "10px"
+      "$value": "{spacing.3}",
+      "$description": "12px"
     },
     "py": {
       "$type": "spacing",
@@ -32,7 +32,7 @@
     },
     "gap": {
       "$type": "spacing",
-      "$value": "{spacing.2}"
+      "$value": "{spacing.2-half}"
     },
     "radius": {
       "$type": "borderRadius",
@@ -41,6 +41,11 @@
     "size": {
       "$type": "sizing",
       "$value": "{size.8}"
+    },
+    "gap-y": {
+      "$type": "spacing",
+      "$value": "{spacing.1}",
+      "$description": "4px gap between text"
     }
   },
   "container": {
@@ -48,6 +53,39 @@
       "$type": "spacing",
       "$value": "{spacing.1}",
       "$description": "4px\n"
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.3}",
+      "$description": "6px"
+    }
+  },
+  "menu-item-branch-selector": {
+    "tag": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.2}",
+        "$description": "8px horizontal padding"
+      },
+      "size": {
+        "$type": "sizing",
+        "$value": "{size.5}",
+        "$description": "20px height\n"
+      }
+    }
+  },
+  "menu-items": {
+    "header/footer": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}",
+        "$description": "16px horizontal padding"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}",
+        "$description": "10px vertical padding"
+      }
     }
   }
 }

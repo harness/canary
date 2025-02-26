@@ -26,5 +26,17 @@
   "gap": {
     "$type": "spacing",
     "$value": "{spacing.1-half}"
+  },
+  "inputField": {
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.3}",
+      "$description": "12px horizontal padding"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.2}",
+      "$description": "8px vertical padding"
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { FormControl, FormField, FormItem } from '@components/form'
+import { Textarea } from '@components/index'
 
 import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/forms'
-import { Textarea } from '@harnessio/ui/components'
 
 import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'

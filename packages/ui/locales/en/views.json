@@ -213,6 +213,8 @@
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
+    "noUsers": "No Users Found",
+    "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
     "commit": "Commit",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
@@ -476,5 +478,78 @@
     "create": "Create webhook",
     "edit": "Edit webhook",
     "delete": "Delete webhook"
+  },
+  "userManagement": {
+    "addNewUser": "Add a new user",
+    "userId": "User ID",
+    "userIdHint": "User ID cannot be changed once created",
+    "enterUsername": "Enter user name",
+    "enterEmail": "Enter email address",
+    "email": "Email",
+    "enterDisplayName": "Enter display name",
+    "displayName": "Display name",
+    "cancel": "Cancel",
+    "inviting": "Inviting...",
+    "inviteNewUser": "Invite new user",
+    "deleteConfirmation": "Are you sure you want to delete {{name}}?",
+    "deleteWarning": "This will permanently delete the user \"{{name}}\" from the system.",
+    "deletingUser": "Deleting user...",
+    "confirmDelete": "Yes, delete user",
+    "updateUser": "Update user",
+    "updateUserMessage": "Update information for {{name}} and confirm changes.",
+    "saving": "Saving...",
+    "save": "Save",
+    "updateAdminRights": "Are you sure you want to remove {{name}} as an admin?",
+    "removeAdminMessage": "This will remove the admin tag for \"{{name}}\"",
+    "grantAdminMessage": "This will grant admin privileges to \"{{name}}\"",
+    "removingAdmin": "Removing admin...",
+    "grantingAdmin": "Granting admin...",
+    "removeAdmin": "Yes, remove admin",
+    "grantAdmin": "Yes, grant admin",
+    "resetPassword": "Are you sure you want to reset password for {{name}}?",
+    "passwordGeneratedMessage": "Your password has been generated. Please make sure to copy and store your password somewhere safe, you won't be able to see it again.",
+    "resetPasswordMessage": "A new password will be generated to assist {{name}} in resetting their current password.",
+    "close": "Close",
+    "resettingPassword": "Resetting Password...",
+    "resetPasswordConfirm": "Confirm",
+    "newUserButton": "New user",
+    "searchPlaceholder": "Search",
+    "usersHeader": "Users",
+    "deleteUser": "Delete user",
+    "deleteUserMessage": "Are you sure you want to delete \"{{name}}\"?",
+    "tabs": {
+      "active": "Active users",
+      "inactive": "Pending users"
+    },
+    "usersList": {
+      "user": "User",
+      "email": "Email",
+      "roleBinding": "Role binding"
+    },
+    "roles": {
+      "admin": "Admin",
+      "user": "User"
+    },
+    "actions": {
+      "removeAdmin": "Remove admin",
+      "setAsAdmin": "Set as admin",
+      "resetPassword": "Reset password",
+      "editUser": "Edit user",
+      "deleteUser": "Delete user"
+    },
+    "forms": {
+      "userIdRequired": "Please provide a user ID",
+      "emailRequired": "Please enter a valid email address",
+      "displayNameRequired": "Please provide a display name",
+      "passwordGenerateSuccess": "Your password has been generated. Please make sure to copy and store your password somewhere safe.",
+      "saving": "Saving...",
+      "generating": "Generating...",
+      "close": "Close"
+    },
+    "validation": {
+      "emailInvalid": "Please enter a valid email",
+      "displayNameRequired": "Display name is required",
+      "userIdRequired": "User ID is required"
+    }
   }
 }

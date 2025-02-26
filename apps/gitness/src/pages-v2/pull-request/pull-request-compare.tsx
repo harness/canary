@@ -36,6 +36,7 @@ import {
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
@@ -60,6 +61,9 @@ export const CreatePullRequest = () => {
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
   const { currentUser } = useAppContext()
   const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]
+  const {
+    scope: { accountId }
+  } = useMFEContext()
 
   const navigate = useNavigate()
   const [apiError, setApiError] = useState<string | null>(null)
@@ -169,7 +173,7 @@ export const CreatePullRequest = () => {
   )
   const { data: { body: principals } = {} } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
+    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers, accountIdentifier: accountId }
   })
 
   const { labels: labelsList, values: labelsValues } = useGetRepoLabelAndValuesData({

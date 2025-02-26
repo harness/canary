@@ -126,7 +126,7 @@ const CommitsAccordion: FC<{
                       highlight={highlight}
                       mode={diffMode}
                       wrap={wrap}
-                      addWidget
+                      addWidget={false}
                       fileName={header.title}
                       lang={header.lang}
                       useTranslationStore={useTranslationStore}

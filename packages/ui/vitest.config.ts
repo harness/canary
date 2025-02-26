@@ -26,6 +26,18 @@ export default mergeConfig(viteConfig, {
       //   functions: 80,
       //   statements: 80
       // }
+    },
+    server: {
+      deps: {
+        inline: [/react/]
+      }
+    }
+  },
+  resolve: {
+    alias: {
+      // monaco editor doesn't have a proper ESM export marked up in their
+      // package file, so we need to resolve it manually
+      'monaco-editor': './config/resolve-monaco'
     }
   }
 })

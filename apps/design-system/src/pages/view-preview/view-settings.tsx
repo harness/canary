@@ -5,6 +5,7 @@ import { clsx } from 'clsx'
 
 import { Button, Icon, Select, Spacer } from '@harnessio/ui/components'
 
+import { viewPreviews } from './view-preview'
 import css from './view-settings.module.css'
 
 export interface ViewSettingsProps {
@@ -67,10 +68,15 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
         <>
           <Select.Root placeholder="Select view" label="View" value={currentView} onValueChange={navigate}>
             <Select.Content>
-              {routes.map(route => (
-                <Select.Item key={route} value={route}>
-                  {route}
-                </Select.Item>
+              {Object.entries(viewPreviews).map(([groupKey, group]) => (
+                <Select.Group key={groupKey} title={group.label} className="pt-2 first:pt-0">
+                  <div className="text-foreground-3 px-2 py-1.5 text-sm font-medium">{group.label}</div>
+                  {Object.entries(group.items).map(([path, { label }]) => (
+                    <Select.Item key={path} value={path}>
+                      {label}
+                    </Select.Item>
+                  ))}
+                </Select.Group>
               ))}
             </Select.Content>
           </Select.Root>

@@ -1,7 +1,7 @@
 import { ChangeEvent, ClipboardEvent, DragEvent, Fragment, useMemo, useRef, useState } from 'react'
 
 import { Avatar, Button, Icon, IconProps, MarkdownViewer, Tabs, Textarea } from '@/components'
-import { handleFileDrop, handlePaste, ToolbarAction } from '@/views'
+import { handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 
@@ -26,7 +26,7 @@ export interface PullRequestCommentBoxProps {
   inReplyMode?: boolean
   isEditMode?: boolean
   onCancelClick?: () => void
-  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  handleUpload?: HandleUploadType
 }
 
 const TABS_KEYS = {

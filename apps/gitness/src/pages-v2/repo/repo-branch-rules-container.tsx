@@ -22,6 +22,7 @@ import {
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { transformFormOutput } from '../../utils/repo-branch-rules-utils'
@@ -41,6 +42,9 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const { dispatch } = useBranchRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
+  const {
+    scope: { accountId }
+  } = useMFEContext()
 
   const branchRules = useMemo(() => {
     return getBranchRules(t)
@@ -84,7 +88,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
 
   const { data: { body: principals } = {}, error: principalsError } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery }
+    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery, accountIdentifier: accountId }
   })
 
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentQuery({

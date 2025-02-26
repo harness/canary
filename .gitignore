@@ -37,3 +37,6 @@ tsconfig.tsbuildinfo
 storybook-static/
 
 yaml-editor-test/
+
+#cursor
+.cursor

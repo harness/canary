@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 
 import {
   commentCreatePullReq,
@@ -33,60 +33,71 @@ export function usePRCommonInteractions({
   setActivities,
   dryMerge
 }: usePRCommonInteractionsProps) {
-  let count = generateAlphaNumericHash(5)
+  const count = useRef(generateAlphaNumericHash(5))
   const apiPath = useAPIPath()
-  const uploadsURL = `/api/v1/repos/${repoRef}/uploads`
+  const uploadsURL = useMemo(() => `/api/v1/repos/${repoRef}/uploads`, [repoRef])
 
-  const handleUpload = (blob: File, setMarkdownContent: (data: string) => void) => {
-    const reader = new FileReader()
-    // Set up a function to be called when the load event is triggered
-    reader.onload = async function () {
-      if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
-        const markdown = await uploadImage(reader.result)
-        if (blob.type.startsWith('image/')) {
-          setMarkdownContent(`![image](${markdown})`) // Set the markdown content
-        } else {
-          setMarkdownContent(markdown) // Set the markdown content
+  const uploadImage = useCallback(
+    async (
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      fileBlob: any
+    ) => {
+      try {
+        const response = await fetch(apiPath(uploadsURL), {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'content-type': 'application/octet-stream'
+          },
+          body: fileBlob,
+          redirect: 'follow'
+        })
+        // const response = await repoArtifactUpload({
+        //   method: 'POST',
+        //   headers: { 'content-type': 'application/octet-stream' },
+        //   body: fileBlob,
+        //   redirect: 'follow',
+        //   repo_ref: repoRef
+        // })
+
+        const result = await response.json()
+        if (!response.ok && result) {
+          // TODO: fix error state
+          console.warn(getErrorMessage(result))
+          return ''
         }
-      }
-    }
-    reader.readAsArrayBuffer(blob) // This will trigger the onload function when the reading is complete
-  }
-  const uploadImage = async (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    fileBlob: any
-  ) => {
-    try {
-      const response = await fetch(apiPath(uploadsURL), {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'content-type': 'application/octet-stream'
-        },
-        body: fileBlob,
-        redirect: 'follow'
-      })
-      // const response = await repoArtifactUpload({
-      //   method: 'POST',
-      //   headers: { 'content-type': 'application/octet-stream' },
-      //   body: fileBlob,
-      //   redirect: 'follow',
-      //   repo_ref: repoRef
-      // })
-
-      const result = await response.json()
-      if (!response.ok && result) {
-        // TODO: fix error state
-        console.warn(getErrorMessage(result))
+        const filePath = result.file_path
+        return apiPath(`${uploadsURL}/${filePath}`)
+      } catch (exception) {
+        console.warn(getErrorMessage(exception))
         return ''
       }
-      const filePath = result.file_path
-      return apiPath(`${uploadsURL}/${filePath}`)
-    } catch (exception) {
-      console.warn(getErrorMessage(exception))
-      return ''
-    }
-  }
+    },
+    [uploadsURL, apiPath]
+  )
+
+  const handleUpload = useCallback(
+    (blob: File, setMarkdownContent: (data: string) => void) => {
+      const reader = new FileReader()
+
+      // Set up a function to be called when the load event is triggered
+      reader.onload = async function () {
+        if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
+          const markdown = await uploadImage(reader.result)
+
+          if (blob.type.startsWith('image/')) {
+            setMarkdownContent(`![image](${markdown})`) // Set the markdown content
+          } else {
+            setMarkdownContent(markdown) // Set the markdown content
+          }
+        }
+      }
+
+      reader.readAsArrayBuffer(blob) // This will trigger the onload function when the reading is complete
+    },
+    [uploadImage]
+  )
+
   const handleSaveComment = useCallback(
     async (text: string, parentId?: number) => {
       // Optionally replicate ephemeral logic from conversation page:
@@ -103,7 +114,7 @@ export function usePRCommonInteractions({
           message: text,
           parent_id: parentId,
           author: { display_name: currentUserName ?? '' },
-          id: count, // ephemeral ID
+          id: count.current, // ephemeral ID
           created: Date.now(),
           edited: Date.now(),
           updated: Date.now(),
@@ -113,7 +124,7 @@ export function usePRCommonInteractions({
         }
       }
 
-      count += 1 // increment ephemeral ID
+      count.current += 1 // increment ephemeral ID
 
       if (setActivities) {
         setActivities(prev => {
@@ -211,12 +222,12 @@ export function usePRCommonInteractions({
 
   const toggleConversationStatus = useCallback(
     (status: string, parentId?: number) => {
-      if (parentId && updateCommentStatus) {
-        updateCommentStatus(repoRef, prId, parentId, status, refetchActivities)
-        dryMerge?.()
-      }
+      if (!parentId) return
+
+      updateCommentStatus(repoRef, prId, parentId, status, refetchActivities)
+      dryMerge?.()
     },
-    [updateCommentStatus, prId, repoRef, refetchActivities]
+    [updateCommentStatus, prId, repoRef, refetchActivities, dryMerge]
   )
 
   return {

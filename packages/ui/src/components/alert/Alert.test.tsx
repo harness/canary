@@ -16,7 +16,7 @@ describe('Alert', () => {
       </Alert.Container>
     )
 
-    expect(screen.getByText(title)).toBeInTheDocument()
-    expect(screen.getByText(description)).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: title })).toBeInTheDocument()
+    expect(await screen.findByText(description)).toBeInTheDocument()
   })
 })

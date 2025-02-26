@@ -229,7 +229,7 @@ export interface PullRequestPageProps {
   repoId?: string
   spaceId?: string
   isPrincipalsLoading?: boolean
-  defaultSelectedAuthor?: PrincipalType
+  defaultSelectedAuthor?: Partial<PrincipalType>
   principalData?: Partial<PrincipalType>[]
   setPrincipalsSearchQuery?: (query: string) => void
   onFilterChange?: (filterValues: PRListFilters) => void

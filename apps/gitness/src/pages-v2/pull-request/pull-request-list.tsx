@@ -31,18 +31,9 @@ export default function PullRequestListPage() {
   const [searchParams] = useSearchParams()
   const mfeContext = useMFEContext()
 
-  const pullReqFilterValues = Object.entries(filterValues).reduce((acc: Record<string, string>, [key, value]) => {
-    if (key === 'created_by') {
-      acc[key] = value?.value
-    } else {
-      acc[key] = value
-    }
-    return acc
-  }, {})
-
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
-      queryParams: { page, query: query ?? '', ...pullReqFilterValues },
+      queryParams: { page, query: query ?? '', ...filterValues },
       repo_ref: repoRef
     },
     { retry: false }
@@ -103,15 +94,18 @@ export default function PullRequestListPage() {
       useTranslationStore={useTranslationStore}
       onFilterChange={(filterData: PRListFilters) => {
         setFilterValues(
-          Object.entries(filterData).reduce((acc: Record<string, string>, [key, value]) => {
-            if (value instanceof Date) {
-              acc[key] = value.getTime().toString()
-            }
-            if (value !== '' && value !== undefined && !(value instanceof Date)) {
-              acc[key] = value
-            }
-            return acc
-          }, {})
+          Object.entries(filterData).reduce(
+            (acc: Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>, [key, value]) => {
+              if (value instanceof Date) {
+                acc[key] = value.getTime().toString()
+              }
+              if (value !== undefined && !(value instanceof Date)) {
+                acc[key] = value.value
+              }
+              return acc
+            },
+            {}
+          )
         )
       }}
       searchQuery={query}

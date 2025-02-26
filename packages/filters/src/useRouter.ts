@@ -1,9 +1,5 @@
 import { useMemo } from 'react'
-import {
-  createSearchParams,
-  useLocation,
-  useNavigate
-} from 'react-router-dom'
+import { createSearchParams, useLocation, useNavigate } from 'react-router-dom'
 
 interface UseRouterReturnType {
   searchParams: URLSearchParams

@@ -196,12 +196,12 @@
         "text": {
           "$type": "color",
           "$value": "{colors.red.100}",
-          "$description": "Text color for danger buttons. Communicates destructive or warning actions through high-contrast red text."
+          "$description": "Text color for danger alerts. Communicates critical information through high-contrast red text."
         },
         "description": {
           "$type": "color",
           "$value": "{colors.red.200}",
-          "$description": "Text color for danger buttons. Communicates destructive or warning actions through high-contrast red text."
+          "$description": "Description text color for danger alerts. Ensures readability while maintaining the error state styling."
         },
         "background": {
           "$extensions": {
@@ -215,7 +215,7 @@
           },
           "$type": "color",
           "$value": "{colors.red.500}",
-          "$description": "Background color for danger buttons. Creates subtle but recognizable destructive action styling."
+          "$description": "Background color for danger alerts. Creates subtle but recognizable error state styling."
         },
         "border": {
           "$extensions": {
@@ -229,7 +229,7 @@
           },
           "$type": "color",
           "$value": "{colors.red.300}",
-          "$description": "Border color for danger buttons. Provides definition for destructive action buttons."
+          "$description": "Border color for danger alerts. Provides definition for error state alerts."
         }
       }
     },
@@ -426,7 +426,7 @@
           },
           "$type": "color",
           "$value": "{colors.chrome.500}",
-          "$description": "Text color for outline badges. Ensures readability for badges with transparent backgrounds."
+          "$description": "Background color for neutral badges. Creates subtle visual styling for general-purpose indicators."
         },
         "border": {
           "$extensions": {
@@ -454,19 +454,54 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.1",
+                "value": "0.05",
                 "space": "p3"
               }
             }
           },
           "$type": "color",
           "$value": "{colors.pure.white}",
-          "$description": "Text color for AI-related badges. Ensures high contrast against AI badge gradient border."
+          "$description": "Background color for AI-related badges. Creates a subtle backdrop that highlights the gradient border."
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)",
+          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 65%, {gradient.ai.gradient-stop-4} 100%)",
           "$description": "Gradient border color for AI-related badges. Creates distinctive multi-color styling to highlight AI functionality."
+        }
+      },
+      "running": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.yellow.200}",
+          "$description": "Text color for running state badges. Indicates active or in-progress operations."
+        },
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.yellow.300}",
+          "$description": "Border color for running state badges. Defines the boundary of active status indicators."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.yellow.500}",
+          "$description": "Background color for running state badges. Creates subtle visual indication of in-progress states."
         }
       }
     },
@@ -722,9 +757,21 @@
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)",
+          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 65%, {gradient.ai.gradient-stop-4} 100%)",
           "$description": "Gradient border color for AI-powered buttons. Creates distinctive multi-color styling to highlight AI functionality."
         }
+      }
+    },
+    "card": {
+      "background": {
+        "$type": "color",
+        "$value": "{background.2}",
+        "$description": "Background color for card components. Creates a distinct surface that appears elevated from the page background."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{border.2}",
+        "$description": "Border color for card components. Defines the card boundaries and enhances visual separation from surrounding content."
       }
     },
     "dialog": {
@@ -827,12 +874,12 @@
       "border": {
         "$type": "color",
         "$value": "{border.2}",
-        "$description": "Navigation side border."
+        "$description": "Border color for navigation components. Creates visual boundaries and separation from adjacent content."
       },
       "separator": {
         "$type": "color",
         "$value": "{border.2}",
-        "$description": "Separator between nav sections."
+        "$description": "Color for separators between navigation sections. Creates visual organization within the navigation structure."
       },
       "item": {
         "unselected": {
@@ -857,6 +904,41 @@
             "$type": "color",
             "$value": "{text.1}",
             "$description": "Icon color for selected navigation items. Creates stronger visual indication of the current selection."
+          }
+        }
+      }
+    },
+    "pipeline": {
+      "card": {
+        "background": {
+          "$type": "color",
+          "$value": "radial-gradient(90% 100% at 15% 0%,{gradient.pipeline.card.background.gradient-from} 10%, {gradient.pipeline.card.background.gradient-to} 75%)",
+          "$description": "Gradient background for pipeline cards. Creates a visually distinctive surface for pipeline visualization elements."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "radial-gradient(90% 100% at 15% 0%,{gradient.pipeline.card.border.gradient-from} 10%, {gradient.pipeline.card.border.gradient-to} 75%)",
+          "$description": "Gradient border for pipeline cards. Enhances the visual depth and distinction of pipeline components."
+        },
+        "running": {
+          "border": {
+            "$type": "color",
+            "$value": "radial-gradient(604% 142% at 0% 0%, {gradient.pipeline.running.gradient-stop-1} 0%, {gradient.pipeline.running.gradient-stop-2} 30%, {gradient.pipeline.running.gradient-stop-3} 100%)",
+            "$description": "Animated gradient border for running pipeline states. Provides visual indication of active processing."
+          }
+        },
+        "error": {
+          "border": {
+            "$type": "color",
+            "$value": "{colors.red.300}",
+            "$description": "Border color for error pipeline states. Clearly indicates failed or problematic pipeline execution."
+          }
+        },
+        "completed": {
+          "border": {
+            "$type": "color",
+            "$value": "{colors.green.300}",
+            "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
           }
         }
       }
@@ -904,11 +986,18 @@
         }
       }
     },
+    "separator": {
+      "background": {
+        "$type": "color",
+        "$value": "{border.3}",
+        "$description": "Background color for separator elements. Creates visual division between content sections with a subtle line or space."
+      }
+    },
     "skeleton": {
       "background": {
         "$type": "color",
         "$value": "linear-gradient(90deg, {gradient.skeleton.gradient-stop-1} 0%, {gradient.skeleton.gradient-stop-2} 50%, {gradient.skeleton.gradient-stop-3} 100%)",
-        "$description": "Animation color that sweeps across skeleton. Creates \"shimmer\" effect indicating loading."
+        "$description": "Animation color that sweeps across skeleton elements. Creates a \"shimmer\" effect indicating content loading states."
       }
     },
     "slider": {
@@ -964,6 +1053,11 @@
         "$type": "color",
         "$value": "{colors.amber.300}",
         "$description": "Color for warning status indicators. Communicates caution or potential issue states."
+      },
+      "running": {
+        "$type": "color",
+        "$value": "{colors.yellow.300}",
+        "$description": "Color for running status indicators. Communicates active or in-progress operations."
       },
       "merged": {
         "$type": "color",
@@ -1371,52 +1465,6 @@
         "$type": "color",
         "$value": "{colors.chrome.900}",
         "$description": "Background color for tooltips. Creates a distinct surface for contextual information that appears above UI elements."
-      }
-    },
-    "separator": {
-      "background": {
-        "$type": "color",
-        "$value": "{border.3}"
-      }
-    },
-    "card": {
-      "background": {
-        "$type": "color",
-        "$value": "{background.2}"
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.2}"
-      }
-    },
-    "pipline": {
-      "card": {
-        "background": {
-          "$type": "color",
-          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 33.42%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)"
-        },
-        "border": {
-          "$type": "color",
-          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 33.42%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)"
-        },
-        "running": {
-          "border": {
-            "$type": "color",
-            "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 33.42%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)"
-          }
-        },
-        "error": {
-          "border": {
-            "$type": "color",
-            "$value": "{colors.red.300}"
-          }
-        },
-        "completed": {
-          "border": {
-            "$type": "color",
-            "$value": "{colors.green.300}"
-          }
-        }
       }
     }
   },

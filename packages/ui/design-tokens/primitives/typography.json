@@ -40,7 +40,7 @@
         },
         "200": {
           "$type": "fontWeights",
-          "$value": "Extra Light"
+          "$value": "ExtraLight"
         },
         "300": {
           "$type": "fontWeights",
@@ -56,7 +56,7 @@
         },
         "600": {
           "$type": "fontWeights",
-          "$value": "Semi Bold"
+          "$value": "SemiBold"
         },
         "700": {
           "$type": "fontWeights",
@@ -64,7 +64,7 @@
         },
         "800": {
           "$type": "fontWeights",
-          "$value": "Extra Bold"
+          "$value": "ExtraBold"
         },
         "900": {
           "$type": "fontWeights",
@@ -78,7 +78,7 @@
         },
         "200": {
           "$type": "fontWeights",
-          "$value": "Extra Light Italic"
+          "$value": "ExtraLight Italic"
         },
         "300": {
           "$type": "fontWeights",
@@ -94,7 +94,7 @@
         },
         "600": {
           "$type": "fontWeights",
-          "$value": "Semi Bold Italic"
+          "$value": "SemiBold Italic"
         },
         "700": {
           "$type": "fontWeights",
@@ -102,7 +102,7 @@
         },
         "800": {
           "$type": "fontWeights",
-          "$value": "Extra Bold Italic"
+          "$value": "ExtraBold Italic"
         },
         "900": {
           "$type": "fontWeights",

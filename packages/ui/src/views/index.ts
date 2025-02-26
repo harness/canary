@@ -37,8 +37,8 @@ export * from './profile-settings'
 // pipelines
 export * from './pipelines'
 
-// pipeline-edit
-export * from './pipeline-edit'
+// unified-pipeline-studio
+export * from './unified-pipeline-studio'
 
 // user-management
 export * from './user-management'

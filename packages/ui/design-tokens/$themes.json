@@ -6,7 +6,8 @@
       "primitives/colors": "enabled",
       "primitives/typography": "enabled",
       "primitives/dimensions": "enabled",
-      "primitives/icon": "enabled"
+      "primitives/icon": "enabled",
+      "theme-dark/standard": "disabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:b8bdca9fbe3f6357180e05d25146f83172409a7e,",
@@ -667,8 +668,8 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "theme-dark/dark": "enabled",
-      "theme-dark/icon-width": "enabled"
+      "theme-dark/icon-width": "enabled",
+      "theme-dark/standard": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1233,7 +1234,8 @@
       "components/desktop/feature/pipline": "enabled",
       "components/desktop/base/button": "enabled",
       "components/desktop/base/input": "enabled",
-      "components/desktop/base/dropdown menu": "enabled"
+      "components/desktop/base/dropdown menu": "enabled",
+      "theme-dark/standard": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",

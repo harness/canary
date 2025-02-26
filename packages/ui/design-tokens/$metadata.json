@@ -4,7 +4,7 @@
     "primitives/typography",
     "primitives/dimensions",
     "primitives/icon",
-    "theme-dark/dark",
+    "theme-dark/standard",
     "theme-dark/icon-width",
     "breakpoint/desktop",
     "components/desktop/base/button",

@@ -99,7 +99,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
 
   const renderListContent = () => {
     if (isLoading) {
-      return <SkeletonList />
+      return <SkeletonList count={8} />
     }
 
     if (noData) {

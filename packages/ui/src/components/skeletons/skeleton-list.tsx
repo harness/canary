@@ -13,13 +13,14 @@ const listItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 interface SkeletonListProps {
   className?: string
+  count?: number
 }
 
-export const SkeletonList = ({ className }: SkeletonListProps) => {
+export const SkeletonList = ({ className, count = 10 }: SkeletonListProps) => {
   return (
     <div className={cn('relative h-full w-full transition-opacity delay-500 duration-500 ease-in-out', className)}>
       <StackedList.Root>
-        {listItems.map(itm => (
+        {listItems.slice(0, count).map(itm => (
           <StackedList.Item key={itm} className="py-4" isLast={listItems.length === itm}>
             <StackedList.Field
               // Randomized percentage width for title skeleton

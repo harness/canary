@@ -20,23 +20,5 @@
       "$value": "{size.8}",
       "$description": "32px\n"
     }
-  },
-  "iconStrokeWidth": {
-    "xs": {
-      "$type": "borderWidth",
-      "$value": "1"
-    },
-    "sm": {
-      "$type": "borderWidth",
-      "$value": "1"
-    },
-    "md": {
-      "$type": "borderWidth",
-      "$value": "1.4"
-    },
-    "lg": {
-      "$type": "borderWidth",
-      "$value": "2"
-    }
   }
 }

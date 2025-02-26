@@ -282,7 +282,11 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       },
       'unified-pipeline-studio': {
         label: 'Unified Pipeline Studio',
-        element: <UnifiedPipelineStudioWrapper />
+        element: (
+          <RepoViewWrapper>
+            <UnifiedPipelineStudioWrapper />
+          </RepoViewWrapper>
+        )
       },
       'pipeline-graph': {
         label: 'Pipeline Graph',

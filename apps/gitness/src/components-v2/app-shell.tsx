@@ -3,13 +3,15 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { cn } from '@harnessio/canary'
 import {
+  AppSidebar,
   ManageNavigation,
   MenuGroupType,
   MenuGroupTypes,
   MoreSubmenu,
   Navbar,
   NavbarItemType,
-  SettingsMenu
+  SettingsMenu,
+  Sidebar
 } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
 
@@ -177,7 +179,7 @@ export const AppShell = () => {
   return (
     <SandboxLayout.Root>
       <SandboxLayout.LeftPanel>
-        <Navbar
+        {/* <Navbar
           showMoreMenu={showMoreMenu}
           showSettingMenu={showSettingMenu}
           handleMoreMenu={handleMoreMenu}
@@ -191,7 +193,22 @@ export const AppShell = () => {
           handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
           useThemeStore={useThemeStore}
           useTranslationStore={useTranslationStore}
-        />
+        /> */}
+        <Sidebar.Provider>
+          <AppSidebar
+            useThemeStore={useThemeStore}
+            useTranslationStore={useTranslationStore}
+            pinnedMenuItems={pinnedMenu}
+            handleChangePinnedMenuItem={handleChangePinnedMenuItem}
+            recentMenuItems={recentMenu}
+            handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
+            currentUser={currentUser}
+            showMoreMenu={showMoreMenu}
+            handleMoreMenu={handleMoreMenu}
+            showSettingMenu={showSettingMenu}
+            handleSettingsMenu={handleSettingsMenu}
+          />
+        </Sidebar.Provider>
       </SandboxLayout.LeftPanel>
 
       <BreadcrumbsAndOutlet />

@@ -3,7 +3,18 @@ import { FC, useEffect, useState } from 'react'
 import { Dialog, Icon } from '@/components'
 import { cn } from '@utils/cn'
 
-import { LanguageCode, LanguageDialogProps } from './types'
+import { Language, LanguageCode, LanguageDialogProps, LanguageInterface } from './types'
+
+export const languages: LanguageInterface[] = [
+  { code: LanguageCode.EN, name: Language.English },
+  { code: LanguageCode.БГ, name: Language.Bulgarian },
+  { code: LanguageCode.HR, name: Language.Croatian },
+  { code: LanguageCode.CZ, name: Language.Czech },
+  { code: LanguageCode.FR, name: Language.French },
+  { code: LanguageCode.DE, name: Language.German },
+  { code: LanguageCode.IE, name: Language.Irish },
+  { code: LanguageCode.LA, name: Language.LatinAmerican }
+]
 
 const LanguageDialog: FC<LanguageDialogProps> = ({
   defaultLanguage = LanguageCode.EN,

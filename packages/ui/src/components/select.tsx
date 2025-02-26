@@ -16,8 +16,9 @@ import * as SelectPrimitive from '@radix-ui/react-select'
 import { cn } from '@utils/cn'
 
 interface SelectRootProps
-  extends Omit<Omit<PropsWithChildren<HTMLAttributes<HTMLElement>>, 'defaultValue'>, 'dir'>,
-    SelectPrimitive.SelectProps {
+  extends Omit<Omit<HTMLAttributes<HTMLElement>, 'defaultValue'>, 'dir'>,
+    Omit<SelectPrimitive.SelectProps, 'children'> {
+  children?: ReactNode
   label?: string
   error?: string
   caption?: ReactNode

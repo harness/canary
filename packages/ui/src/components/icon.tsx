@@ -35,6 +35,7 @@ import Checks from '../icons/checks.svg'
 import ChevronDown from '../icons/chevron-down.svg'
 import ChevronFillDown from '../icons/chevron-fill-down.svg'
 import ChevronRight from '../icons/chevron-right.svg'
+import ChevronUpDown from '../icons/chevron-up-down.svg'
 import ChevronUp from '../icons/chevron-up.svg'
 import CircleArrowTopRight from '../icons/circle-arrow-top-right.svg'
 import CircleArrowTop from '../icons/circle-arrow-top.svg'
@@ -210,6 +211,7 @@ const IconNameMap = {
   'chevron-down': ChevronDown,
   'chevron-right': ChevronRight,
   'chevron-up': ChevronUp,
+  'chevron-up-down': ChevronUpDown,
   'filter-list': FilterList,
   'info-circle': InfoCircle,
   'double-tick': DoubleTick,

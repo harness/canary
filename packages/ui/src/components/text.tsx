@@ -110,21 +110,6 @@ interface TextProps extends React.ComponentProps<'span'> {
   wrap?: 'wrap' | 'nowrap' | 'pretty' | 'balance'
 }
 
-/**
- * @deprecated
- * The Text component is now considered unnecessary and should no longer be used.
- * Instead, use standard HTML tags (e.g., <span>, <p>, <h1>) directly with the appropriate Tailwind classes.
- *
- * For example:
- * - Replace <Text as="h1" size={5} weight={'medium'}>Hello</Text> with <h1 className="text-2xl font-medium">Hello</h1>
- * - Replace <Text variant="body">Content</Text> with <p className="text-base text-gray-700">Content</p>
- *
- * Reason: Using native HTML tags with Tailwind improves flexibility, reduces abstraction overhead,
- * and provides clearer semantics in the codebase.
- *
- * Action Required: Refactor existing code to replace the Text component with the appropriate HTML tags
- * and Tailwind classes. Once all references have been updated, remove the Text component entirely.
- */
 const Text = ({
   className,
   children,

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { set } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import * as Diff2Html from 'diff2html'
@@ -19,6 +20,7 @@ import {
   useListTagsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
+import { Icon } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchSelectorListItem,
@@ -33,6 +35,7 @@ import {
   PullRequestComparePage
 } from '@harnessio/ui/views'
 
+import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -68,11 +71,11 @@ export const CreatePullRequest = () => {
   const navigate = useNavigate()
   const [apiError, setApiError] = useState<string | null>(null)
   const repoRef = useGetRepoRef()
-  const [selectedTargetBranch, setSelectedTargetBranch] = useState<BranchSelectorListItem>(
-    diffTargetBranch ? { name: diffTargetBranch, sha: '' } : { name: 'main', sha: '' }
+  const [selectedTargetBranch, setSelectedTargetBranch] = useState<BranchSelectorListItem | null>(
+    diffTargetBranch ? { name: diffTargetBranch, sha: '' } : null
   )
-  const [selectedSourceBranch, setSelectedSourceBranch] = useState<BranchSelectorListItem>(
-    diffSourceBranch ? { name: diffSourceBranch, sha: '' } : { name: 'main', sha: '' }
+  const [selectedSourceBranch, setSelectedSourceBranch] = useState<BranchSelectorListItem | null>(
+    diffSourceBranch ? { name: diffSourceBranch, sha: '' } : null
   )
   const [prBranchCombinationExists, setPrBranchCombinationExists] = useState<{
     number: number
@@ -89,8 +92,8 @@ export const CreatePullRequest = () => {
     commitRange
     //  setCommitRange  TODO: add commit view filter dropdown to manage different commits
   ] = useState(defaultCommitRange)
-  const targetRef = useMemo(() => selectedTargetBranch.name, [selectedTargetBranch])
-  const sourceRef = useMemo(() => selectedSourceBranch.name, [selectedSourceBranch])
+  const targetRef = useMemo(() => selectedTargetBranch?.name, [selectedTargetBranch])
+  const sourceRef = useMemo(() => selectedSourceBranch?.name, [selectedSourceBranch])
   const [cachedDiff, setCachedDiff] = useAtom(changesInfoAtom)
   const [mergeability, setMergeabilty] = useState<boolean>()
   const [jumpToDiff, setJumpToDiff] = useState('')
@@ -257,8 +260,8 @@ export const CreatePullRequest = () => {
     const pullRequestBody: OpenapiCreatePullReqRequest = {
       description: data.description,
       is_draft: isDraft,
-      target_branch: selectedTargetBranch.name || repoMetadata?.default_branch,
-      source_branch: selectedSourceBranch.name,
+      target_branch: selectedTargetBranch?.name || repoMetadata?.default_branch,
+      source_branch: selectedSourceBranch?.name,
       title: data.title,
       reviewer_ids: reviewers.map(reviewer => reviewer.reviewer.id),
       labels: labels.map(label => {
@@ -345,8 +348,8 @@ export const CreatePullRequest = () => {
 
   const { data: { body: pullReqData } = {} } = useGetPullReqByBranchesQuery({
     repo_ref: repoRef,
-    source_branch: selectedSourceBranch.name || repoMetadata?.default_branch || '',
-    target_branch: selectedTargetBranch.name,
+    source_branch: selectedSourceBranch?.name || repoMetadata?.default_branch || '',
+    target_branch: selectedTargetBranch?.name || repoMetadata?.default_branch || '',
     queryParams: {
       include_checks: true,
       include_rules: true
@@ -375,8 +378,8 @@ export const CreatePullRequest = () => {
       // query: query??'',
       page: 0,
       limit: 20,
-      after: normalizeGitRef(selectedTargetBranch.name),
-      git_ref: normalizeGitRef(selectedSourceBranch.name),
+      after: normalizeGitRef(selectedTargetBranch?.name),
+      git_ref: normalizeGitRef(selectedSourceBranch?.name),
       include_stats: true
     }
   })
@@ -433,23 +436,23 @@ export const CreatePullRequest = () => {
   const selectBranchorTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => {
       if (type === BranchSelectorTab.BRANCHES) {
-        const branch = branchList.find(branch => branch.name === branchTagName.name)
-        if (branch) {
-          if (sourceBranch) {
-            setSelectedSourceBranch(branch)
-          } else {
-            setSelectedTargetBranch(branch)
-          }
+        // const branch = branchList.find(branch => branch.name === branchTagName.name)
+        // if (branch) {
+        if (sourceBranch) {
+          setSelectedSourceBranch(branchTagName)
+        } else {
+          setSelectedTargetBranch(branchTagName)
         }
+        // }
       } else if (type === BranchSelectorTab.TAGS) {
-        const tag = tagsList.find(tag => tag.name === branchTagName.name)
-        if (tag) {
-          if (sourceBranch) {
-            setSelectedSourceBranch(tag)
-          } else {
-            setSelectedTargetBranch(tag)
-          }
+        // const tag = tagsList.find(tag => tag.name === branchTagName.name)
+        // if (tag) {
+        if (sourceBranch) {
+          setSelectedSourceBranch(branchTagName)
+        } else {
+          setSelectedTargetBranch(branchTagName)
         }
+        // }
       }
       if (sourceBranch) {
         setSourceQuery('')
@@ -607,6 +610,19 @@ export const CreatePullRequest = () => {
         removeLabel={handleDeleteLabel}
         searchLabelQuery={searchLabel}
         setSearchLabelQuery={setSearchLabel}
+        renderProps={() => (
+          <>
+            <BranchSelectorContainer
+              onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
+              selectedBranch={selectedTargetBranch}
+            />
+            <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
+            <BranchSelectorContainer
+              onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
+              selectedBranch={selectedSourceBranch}
+            />
+          </>
+        )}
       />
     )
   }

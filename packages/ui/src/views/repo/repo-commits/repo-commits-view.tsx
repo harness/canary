@@ -26,7 +26,7 @@ export interface RepoCommitsViewProps {
   setSearchQuery: (query: string) => void
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
-  renderProp: FC
+  renderProp: () => React.ReactNode
 }
 
 export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
@@ -68,7 +68,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
           /> */}
-          <BranchSelectorContainer />
+          {BranchSelectorContainer()}
         </div>
 
         <Spacer size={5} />

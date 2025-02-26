@@ -64,8 +64,8 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   mergeability?: boolean
   onSelectCommit: (commit: CommitSelectorListItem) => void
   selectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => void
-  targetBranch: BranchSelectorListItem
-  sourceBranch: BranchSelectorListItem
+  targetBranch: BranchSelectorListItem | null
+  sourceBranch: BranchSelectorListItem | null
   diffData: HeaderProps[]
   diffStats: TypesDiffStats
   isBranchSelected: boolean
@@ -102,6 +102,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   setSearchLabelQuery?: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
+  renderProps: () => React.ReactElement
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -147,7 +148,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   searchLabelQuery,
   setSearchLabelQuery,
   addLabel,
-  removeLabel
+  removeLabel,
+  renderProps: branchSelector
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -214,7 +216,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </p>
           <Layout.Horizontal className="items-center" gap="gap-x-2.5">
             <Icon name="compare" size={14} className="text-icons-1" />
-            <BranchSelector
+            {/* <BranchSelector
               isBranchOnly={true}
               useTranslationStore={useTranslationStore}
               useRepoBranchesStore={useRepoBranchesStore}
@@ -226,10 +228,10 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               }}
               searchQuery={searchTargetQuery}
               setSearchQuery={setSearchTargetQuery}
-            />
+            /> */}
 
-            <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
-            <BranchSelector
+            {/* <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" /> */}
+            {/* <BranchSelector
               isBranchOnly={true}
               useTranslationStore={useTranslationStore}
               useRepoBranchesStore={useRepoBranchesStore}
@@ -241,7 +243,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               }}
               searchQuery={searchSourceQuery}
               setSearchQuery={setSearchSourceQuery}
-            />
+            /> */}
+            {branchSelector()}
 
             {isBranchSelected &&
               !isLoading && ( // Only render this block if isBranchSelected is true

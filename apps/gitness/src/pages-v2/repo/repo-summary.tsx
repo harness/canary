@@ -58,6 +58,9 @@ export default function RepoSummaryPage() {
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
+  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
+  // const [refType, setRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
+
   const {
     //   branchList,
     //   tagList,
@@ -69,9 +72,9 @@ export default function RepoSummaryPage() {
     //   setSelectedBranchTag,
     //   setSelectedRefType
   } = useRepoBranchesStore()
-  const { selectedBranchOrTag } = useBranchSelectorStore()
+  // const { selectedBranchOrTag } = useBranchSelectorStore()
 
-  console.log('selectedBranchOrTag in repo summary', selectedBranchOrTag)
+  // console.log('selectedBranchOrTag in repo summary', selectedBranchOrTag)
 
   const { currentUser } = useAppContext()
   const isMFE = useIsMFE()
@@ -145,7 +148,7 @@ export default function RepoSummaryPage() {
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
 
   useEffect(() => {
-    setGitRef(selectedBranchOrTag?.name)
+    setGitRef(selectedBranchOrTag?.name ?? '')
   }, [selectedBranchOrTag?.name])
 
   // useEffect(() => {
@@ -210,12 +213,12 @@ export default function RepoSummaryPage() {
         }
       })
     }
-  }, [calculateDivergence, repository?.default_branch, selectedBranchOrTag.name])
+  }, [calculateDivergence, repository?.default_branch, selectedBranchOrTag?.name])
 
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
     repo_ref: repoRef,
-    queryParams: { include_commit: false, git_ref: normalizeGitRef(gitRef || selectedBranchOrTag.name) }
+    queryParams: { include_commit: false, git_ref: normalizeGitRef(gitRef || selectedBranchOrTag?.name) }
   })
 
   const decodedReadmeContent = useMemo(() => {
@@ -225,7 +228,7 @@ export default function RepoSummaryPage() {
   const { data: { body: repoDetails } = {}, isLoading: isLoadingRepoDetails } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
-    queryParams: { include_commit: true, git_ref: normalizeGitRef(gitRef || selectedBranchOrTag.name) }
+    queryParams: { include_commit: true, git_ref: normalizeGitRef(gitRef || selectedBranchOrTag?.name) }
   })
 
   const { mutate: createToken } = useCreateTokenMutation(
@@ -336,14 +339,14 @@ export default function RepoSummaryPage() {
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranchOrTag.name) }
+    queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranchOrTag?.name) }
   })
 
   const filesList = filesData?.body?.files || []
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${gitRef || selectedBranchOrTag.name}/~/${filePath}`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${gitRef || selectedBranchOrTag?.name}/~/${filePath}`)
     },
     [gitRef, selectedBranchOrTag, navigate, repoId, spaceId]
   )
@@ -369,6 +372,20 @@ export default function RepoSummaryPage() {
   )
 
   const isLoading = loading || isLoadingRepoDetails
+
+  const selectBranchOrTag = useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      if (type === BranchSelectorTab.BRANCHES) {
+        console.log('selectBranchOrTag', branchTagName, type)
+        setSelectedBranchOrTag(branchTagName)
+        // setRefType(type)
+      } else if (type === BranchSelectorTab.TAGS) {
+        setSelectedBranchOrTag(branchTagName)
+        // setRefType(type)
+      }
+    },
+    [repoId, spaceId]
+  )
 
   return (
     <>
@@ -398,7 +415,9 @@ export default function RepoSummaryPage() {
         toRepoFiles={() => routes.toRepoFiles({ spaceId, repoId })}
         navigateToProfileKeys={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
         isRepoEmpty={repository?.is_empty}
-        renderProp={BranchSelectorContainer}
+        renderProp={() => (
+          <BranchSelectorContainer onSelectBranchorTag={selectBranchOrTag} selectedBranch={selectedBranchOrTag} />
+        )}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

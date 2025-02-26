@@ -6,6 +6,7 @@ export type PathParams = {
   pullRequestId?: string
   gitRef?: string
   commitSHA?: string
+  branchTagName?: string
   resourcePath?: string
   diffRefs?: string
   webhookId?: string

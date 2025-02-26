@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import {
   useFindRepositoryQuery,
@@ -10,7 +10,7 @@ import {
 import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
-import { useBranchSelectorStore } from '../../components-v2/stores/branch-selector-store'
+// import { useBranchSelectorStore } from '../../components-v2/stores/branch-selector-store'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -18,14 +18,18 @@ import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
-import { transformBranchList } from './transform-utils/branch-transform'
+
+// import { transformBranchList } from './transform-utils/branch-transform'
 
 export default function RepoCommitsPage() {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const [branchTagQuery, setBranchTagQuery] = useState('')
+  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
+  const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const [searchParams, setSearchParams] = useSearchParams()
+
   const queryPage = parseInt(searchParams.get('page') || '1', 10)
 
   const {
@@ -40,7 +44,7 @@ export default function RepoCommitsPage() {
     setSpaceIdAndRepoId
   } = useRepoBranchesStore()
 
-  const { selectedBranchOrTag, selectedRefType } = useBranchSelectorStore()
+  // const { selectedBranchOrTag, selectedRefType } = useBranchSelectorStore()
 
   // const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
   // const { data: { body: branches } = {} } = useListBranchesQuery({
@@ -66,8 +70,6 @@ export default function RepoCommitsPage() {
     setSearchParams({ page: String(queryPage), query: branchTagQuery })
   }, [queryPage, branchTagQuery, setSearchParams])
 
-  console.log('selectedBranchOrTag', selectedBranchOrTag, selectedRefType)
-
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
     queryParams: {
@@ -81,32 +83,26 @@ export default function RepoCommitsPage() {
     }
   })
 
-  console.log('commitData', commitData)
   const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
   const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
 
   const [_page, setPage] = useState(queryPage)
 
-  // const selectBranchOrTag = useCallback(
-  //   (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-  //     if (type === BranchSelectorTab.BRANCHES) {
-  //       const branch = branchList.find(branch => branch.name === branchTagName.name)
-  //       if (branch) {
-  //         setPage(1)
-  //         setSelectedBranchTag(branch)
-  //         setSelectedRefType(type)
-  //       }
-  //     } else if (type === BranchSelectorTab.TAGS) {
-  //       const tag = tagList.find(tag => tag.name === branchTagName.name)
-  //       if (tag) {
-  //         setPage(1)
-  //         setSelectedBranchTag(tag)
-  //         setSelectedRefType(type)
-  //       }
-  //     }
-  //   },
-  //   [repoId, spaceId, branchList, tagList]
-  // )
+  const selectBranchOrTag = useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      if (type === BranchSelectorTab.BRANCHES) {
+        setPage(1)
+        console.log('selectBranchOrTag', branchTagName, type)
+        setSelectedBranchOrTag(branchTagName)
+        setSelectedRefType(type)
+      } else if (type === BranchSelectorTab.TAGS) {
+        setPage(1)
+        setSelectedBranchOrTag(branchTagName)
+        setSelectedRefType(type)
+      }
+    },
+    [repoId, spaceId]
+  )
 
   return (
     <RepoCommitsView
@@ -123,7 +119,9 @@ export default function RepoCommitsPage() {
       useTranslationStore={useTranslationStore}
       searchQuery={branchTagQuery}
       setSearchQuery={setBranchTagQuery}
-      renderProp={BranchSelectorContainer}
+      renderProp={() => (
+        <BranchSelectorContainer onSelectBranchorTag={selectBranchOrTag} selectedBranch={selectedBranchOrTag} />
+      )}
     />
   )
 }

@@ -79,7 +79,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   setSearchQuery: (query: string) => void
   renderSidebarComponent?: React.ReactNode
   isRepoEmpty?: boolean
-  renderProp: React.FC
+  renderProp: () => React.ReactNode
 }
 
 export function RepoSummaryView({
@@ -186,7 +186,8 @@ export function RepoSummaryView({
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
                   /> */}
-                  <BranchSelector />
+                  {BranchSelector()}
+
                   <SearchFiles
                     navigateToFile={navigateToFile}
                     filesList={filesList}

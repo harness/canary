@@ -18,9 +18,7 @@ import { Icon, Text } from '@harnessio/ui/components'
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
-import { useState } from 'react'
-
-import { VisualYamlToggle, type VisualYamlValue } from '@harnessio/ui/views'
+// import { VisualYamlToggle, type VisualYamlValue } from '@harnessio/ui/views'
 
 // *****************************************************
 // 2. Define content nodes types
@@ -223,11 +221,11 @@ const data: AnyContainerNodeType[] = [
 ]
 
 const PipelineGraphMinimalWrapper = () => {
-  const [view, setView] = useState<VisualYamlValue>('visual')
+  // const [view, setView] = useState<VisualYamlValue>('visual')
   return (
     <CanvasProvider>
       <div className="flex px-6 pt-3">
-        <VisualYamlToggle view={view} setView={setView} isYamlValid={true} />
+        {/* <VisualYamlToggle view={view} setView={setView} isYamlValid={true} /> */}
       </div>
       <PipelineGraph data={data} nodes={nodes} />
     </CanvasProvider>

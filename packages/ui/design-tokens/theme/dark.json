@@ -465,7 +465,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 33.42%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)",
+          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)",
           "$description": "Gradient border color for AI-related badges. Creates distinctive multi-color styling to highlight AI functionality."
         }
       }
@@ -722,7 +722,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 33.42%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)",
+          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)",
           "$description": "Gradient border color for AI-powered buttons. Creates distinctive multi-color styling to highlight AI functionality."
         }
       }

@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
@@ -12,8 +12,7 @@ import {
   FormWrapper,
   Icon,
   Input,
-  Legend,
-  Spacer
+  Legend
 } from '@/components'
 import { SkeletonForm } from '@/components/skeletons'
 import { IProfileSettingsStore, ProfileSettingsErrorType, SandboxLayout, TranslationStore } from '@/views'
@@ -21,24 +20,57 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { getInitials } from '@utils/stringUtils'
 import { z } from 'zod'
 
-const profileSchema = z.object({
-  name: z.string().min(1, { message: 'Please provide your name' }),
-  username: z.string().min(1, { message: 'Please provide a username' }),
-  email: z.string().email({ message: 'Please provide a valid email address' })
-})
-
-const passwordSchema = z
-  .object({
-    newPassword: z.string().min(6, { message: 'New password must be at least 6 characters' }),
-    confirmPassword: z.string().min(6, { message: 'Please confirm your new password' })
+const makeProfileSchema = (t: TranslationStore['t']) =>
+  z.object({
+    name: z
+      .string()
+      .trim()
+      .min(1, { message: t('views:profileSettings.validation.nameMin', 'Please provide your name') })
+      .max(256, {
+        message: t('views:profileSettings.validation.nameMax', 'Name must be no longer than 256 characters')
+      }),
+    username: z
+      .string()
+      .trim()
+      .min(1, {
+        message: t('views:profileSettings.validation.usernameMin', 'Please provide a username')
+      }),
+    email: z
+      .string()
+      .trim()
+      .email({
+        message: t('views:profileSettings.validation.emailInvalid', 'Please provide a valid email address')
+      })
+      .max(250, {
+        message: t('views:profileSettings.validation.emailMax', 'Email must be no longer than 250 characters')
+      })
   })
-  .refine(data => data.newPassword === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword']
-  })
 
-export type ProfileFields = z.infer<typeof profileSchema>
-export type PasswordFields = z.infer<typeof passwordSchema>
+const makePasswordSchema = (t: TranslationStore['t']) =>
+  z
+    .object({
+      newPassword: z
+        .string()
+        .min(6, {
+          message: t('views:profileSettings.validation.passwordMin', 'New password must be at least 6 characters')
+        })
+        .max(128, {
+          message: t(
+            'views:profileSettings.validation.passwordMax',
+            'New password must be no longer than 128 characters'
+          )
+        }),
+      confirmPassword: z.string().min(6, {
+        message: t('views:profileSettings.validation.confirmPasswordMin', 'Please confirm your new password')
+      })
+    })
+    .refine(data => data.newPassword === data.confirmPassword, {
+      message: t('views:profileSettings.validation.passwordsDoNotMatch', 'Passwords do not match'),
+      path: ['confirmPassword']
+    })
+
+export type ProfileFields = z.infer<ReturnType<typeof makeProfileSchema>>
+export type PasswordFields = z.infer<ReturnType<typeof makePasswordSchema>>
 
 interface SettingsAccountGeneralPageProps {
   isLoadingUser: boolean
@@ -55,7 +87,7 @@ interface SettingsAccountGeneralPageProps {
 
 const SUCCESS_MESSAGE_DURATION = 2000
 
-const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
+export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
   useProfileSettingsStore,
   isLoadingUser,
   isUpdatingUser,
@@ -72,22 +104,13 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
   const [profileSubmitted, setProfileSubmitted] = useState(false)
   const [passwordSubmitted, setPasswordSubmitted] = useState(false)
 
-  const profileDefaultValues = useMemo(
-    () => ({
-      name: userData?.name || '',
-      username: userData?.username || '',
-      email: userData?.email || ''
-    }),
-    [userData]
-  )
-
   const {
     register: registerProfile,
     handleSubmit: handleProfileSubmit,
     reset: resetProfileForm,
     formState: { errors: profileErrors, isValid: isProfileValid, dirtyFields: profileDirtyFields }
   } = useForm<ProfileFields>({
-    resolver: zodResolver(profileSchema),
+    resolver: zodResolver(makeProfileSchema(t)),
     mode: 'onChange',
     defaultValues: {
       name: userData?.name || '',
@@ -102,7 +125,7 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
     handleSubmit: handlePasswordSubmit,
     formState: { errors: passwordErrors, isValid: isPasswordValid }
   } = useForm<PasswordFields>({
-    resolver: zodResolver(passwordSchema),
+    resolver: zodResolver(makePasswordSchema(t)),
     mode: 'onChange',
     defaultValues: {
       newPassword: '',
@@ -111,21 +134,21 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
   })
 
   useEffect(() => {
-    if (userData) {
-      resetProfileForm(profileDefaultValues)
-    }
-  }, [resetProfileForm, profileDefaultValues, userData])
+    if (!userData) return
+
+    resetProfileForm(userData)
+  }, [resetProfileForm, userData])
 
   useEffect(() => {
-    if (profileUpdateSuccess) {
-      resetProfileForm(profileDefaultValues)
+    if (profileUpdateSuccess && userData) {
+      resetProfileForm(userData)
 
       setProfileSubmitted(true)
       const timer = setTimeout(() => setProfileSubmitted(false), SUCCESS_MESSAGE_DURATION)
 
       return () => clearTimeout(timer)
     }
-  }, [profileUpdateSuccess, resetProfileForm, profileDefaultValues])
+  }, [profileUpdateSuccess, resetProfileForm, userData])
 
   useEffect(() => {
     if (passwordUpdateSuccess) {
@@ -156,23 +179,23 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
 
   return (
     <SandboxLayout.Content className="max-w-[476px] px-0">
-      <h1 className="text-24 font-medium text-foreground-1">
+      <h1 className="text-24 text-foreground-1 mb-10 font-medium">
         {t('views:profileSettings.accountSettings', 'Account settings')}
       </h1>
-      <Spacer size={10} />
-      {isLoadingUser ? (
-        <SkeletonForm />
-      ) : (
+
+      {isLoadingUser && <SkeletonForm />}
+
+      {!isLoadingUser && (
         <>
           <FormWrapper onSubmit={handleProfileSubmit(onProfileSubmit)}>
             <Legend title={t('views:profileSettings.personalInfo', 'Personal information')} />
             {/*
-                 FIXME: Avatar size does not work correctly
-                 issue – https://github.com/harness/canary/issues/817
-              */}
+              FIXME: Avatar size does not work correctly
+              issue – https://github.com/harness/canary/issues/817
+            */}
             <Avatar.Root size="20" className="shadow-md">
               <Avatar.Image src="/images/anon.jpg" />
-              <Avatar.Fallback className="text-24 font-medium text-foreground-3">
+              <Avatar.Fallback className="text-24 text-foreground-3 font-medium">
                 {getInitials(userData?.name || '')}
               </Avatar.Fallback>
             </Avatar.Root>
@@ -195,7 +218,10 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
                 placeholder={t('views:profileSettings.enterUsernamePlaceholder', 'Enter your username')}
                 disabled
                 label={t('views:profileSettings.username', 'Username')}
-                caption={'This username will be shown across the platform.'}
+                caption={t(
+                  'views:profileSettings.enterUsernameCaption',
+                  'This username will be shown across the platform.'
+                )}
                 error={profileErrors?.username?.message?.toString()}
               />
             </Fieldset>
@@ -234,7 +260,7 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
             </ControlGroup>
           </FormWrapper>
 
-          <FormSeparator className="my-7 border-borders-4" />
+          <FormSeparator className="border-borders-4 my-7" />
 
           <FormWrapper onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
             <Legend
@@ -293,5 +319,3 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
     </SandboxLayout.Content>
   )
 }
-
-export { SettingsAccountGeneralPage }

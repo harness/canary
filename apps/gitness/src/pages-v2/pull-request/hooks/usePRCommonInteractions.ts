@@ -9,10 +9,9 @@ import {
   TypesPullReqActivity
 } from '@harnessio/code-service-client'
 import { CommitSuggestion } from '@harnessio/ui/views'
-import { generateAlphaNumericHash } from '@harnessio/views'
 
 import { useAPIPath } from '../../../hooks/useAPIPath'
-import { getErrorMessage } from '../pull-request-utils'
+import { generateAlphaNumericHash, getErrorMessage } from '../pull-request-utils'
 
 interface usePRCommonInteractionsProps {
   repoRef: string
@@ -33,8 +32,8 @@ export function usePRCommonInteractions({
   setActivities,
   dryMerge
 }: usePRCommonInteractionsProps) {
-  const count = useRef(generateAlphaNumericHash(5))
   const apiPath = useAPIPath()
+  const count = useRef(generateAlphaNumericHash(5))
   const uploadsURL = useMemo(() => `/api/v1/repos/${repoRef}/uploads`, [repoRef])
 
   const uploadImage = useCallback(

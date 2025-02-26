@@ -63,12 +63,14 @@ const SelectRoot: FC<SelectRootProps> = ({
       </SelectValue>
     </SelectTrigger>
     {children}
+
     {error && (
-      <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-0.5')} theme={MessageTheme.ERROR}>
+      <Message className="mt-0.5" theme={MessageTheme.ERROR}>
         {error}
       </Message>
     )}
-    {caption && <Caption>{caption}</Caption>}
+
+    {caption && <Caption className={cn({ 'text-foreground-9': disabled })}>{caption}</Caption>}
   </SelectPrimitive.Root>
 )
 SelectRoot.displayName = SelectPrimitive.Root.displayName

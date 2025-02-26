@@ -1,6 +1,16 @@
 import { ReactNode } from 'react'
 
-import { Button, DropdownMenu, Fieldset, Icon, Label, Message, MessageTheme, ScrollArea, SearchBox } from '@/components'
+import {
+  Button,
+  ControlGroup,
+  DropdownMenu,
+  Icon,
+  Label,
+  Message,
+  MessageTheme,
+  ScrollArea,
+  SearchBox
+} from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
@@ -11,6 +21,7 @@ export type MultiSelectOptionType<T = unknown> = T & {
 }
 
 export interface MultiSelectProps<T = unknown> {
+  className?: string
   selectedItems: MultiSelectOptionType<Partial<T>>[]
   t: TFunction
   placeholder: string
@@ -24,6 +35,7 @@ export interface MultiSelectProps<T = unknown> {
 }
 
 export const MultiSelect = <T = unknown,>({
+  className,
   selectedItems,
   t,
   placeholder,
@@ -41,9 +53,9 @@ export const MultiSelect = <T = unknown,>({
   })
 
   return (
-    <Fieldset className="gap-y-2">
+    <ControlGroup className={className}>
       {!!label && (
-        <Label className="mb-0.5" color="secondary" htmlFor={''}>
+        <Label className="mb-2.5" color="secondary" htmlFor={''}>
           {label}
         </Label>
       )}
@@ -107,7 +119,7 @@ export const MultiSelect = <T = unknown,>({
         </DropdownMenu.Content>
       </DropdownMenu.Root>
       {!!selectedItems.length && (
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5 mt-2">
           {selectedItems.map(it => (
             <Button
               key={it.id}
@@ -117,18 +129,21 @@ export const MultiSelect = <T = unknown,>({
               onClick={() => handleChange(it)}
             >
               {it.label}
-              <span className="text-icons-1 transition-colors group-hover:text-foreground-1">
-                <Icon className="rotate-45" name="plus" size={10} />
-              </span>
+              <Icon
+                className="rotate-45 text-icons-1 transition-colors group-hover:text-foreground-1"
+                name="plus"
+                size={10}
+              />
             </Button>
           ))}
         </div>
       )}
+
       {!!error && (
-        <Message className="absolute top-full translate-y-0.5" theme={MessageTheme.ERROR}>
+        <Message className="mt-0.5" theme={MessageTheme.ERROR}>
           {error}
         </Message>
       )}
-    </Fieldset>
+    </ControlGroup>
   )
 }

@@ -352,23 +352,14 @@ export const BranchSettingsRuleListField: FC<{
               )}
 
               {!!rule?.hasSelect && isChecked && (
-                <div className="pl-[26px]">
-                  <MultiSelect
-                    selectedItems={rules[index].selectOptions.map(option => ({
-                      id: option,
-                      label: option
-                    }))}
-                    t={t}
-                    placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
-                    handleChange={val => handleSelectChangeForRule(rule.id, val.label)}
-                    options={
-                      recentStatusChecks?.map(check => ({
-                        id: check,
-                        label: check
-                      })) ?? []
-                    }
-                  />
-                </div>
+                <MultiSelect
+                  className="pl-[26px]"
+                  selectedItems={rules[index].selectOptions.map(option => ({ id: option, label: option }))}
+                  t={t}
+                  placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
+                  handleChange={val => handleSelectChangeForRule(rule.id, val.label)}
+                  options={recentStatusChecks?.map(check => ({ id: check, label: check })) ?? []}
+                />
               )}
 
               {!!rule?.hasInput && isChecked && (

@@ -20,6 +20,7 @@ import { extractRedirectRouteObjects } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
 import { mfeRoutes, repoRoutes } from './routes'
+import { decodeURIComponentIfValid } from './utils/path-utils'
 
 export interface MFERouteRendererProps {
   renderUrl: string
@@ -45,21 +46,24 @@ function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFER
    * isNotRedirectPath ==> check if the current path is not a redirect path
    */
   const canNavigate = useMemo(
-    () => renderUrl && parentPath !== location.pathname && isNotRedirectPath,
+    () =>
+      renderUrl &&
+      decodeURIComponentIfValid(parentPath) !== decodeURIComponentIfValid(location.pathname) &&
+      isNotRedirectPath,
     [isNotRedirectPath, location.pathname, parentPath, renderUrl]
   )
 
   // Handle location change detected from parent route
   useEffect(() => {
     if (canNavigate) {
-      navigate(parentPath, { replace: true })
+      navigate(decodeURIComponentIfValid(parentPath), { replace: true })
     }
   }, [parentPath])
 
   // Notify parent about route change
   useEffect(() => {
     if (canNavigate) {
-      onRouteChange?.(`${renderUrl}${location.pathname}`)
+      onRouteChange?.(decodeURIComponentIfValid(`${renderUrl}${location.pathname}`))
     }
   }, [location.pathname])
 

@@ -251,6 +251,58 @@
       }
     },
     "badge": {
+      "default": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.2}",
+          "$description": "Text color for secondary badges. Provides readable contrast on secondary badge styling."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.900}",
+          "$description": "Background color for secondary badges. Creates less prominent badge styling for secondary information."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.badge.default.background}",
+          "$description": "Border color for secondary badges. Matches background for clean, cohesive appearance."
+        }
+      },
+      "neutral": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.2}",
+          "$description": "Text color for outline badges. Ensures readability for badges with transparent backgrounds."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.chrome.500}",
+          "$description": "Background color for neutral badges. Creates subtle visual styling for general-purpose indicators."
+        },
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.chrome.300}",
+          "$description": "Border color for outline badges. Creates definition for badges without background fill."
+        }
+      },
       "success": {
         "text": {
           "$type": "color",
@@ -356,6 +408,41 @@
           "$description": "Background color for warning badges. Creates subtle but recognizable caution indicators."
         }
       },
+      "running": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.yellow.200}",
+          "$description": "Text color for running state badges. Indicates active or in-progress operations."
+        },
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.yellow.300}",
+          "$description": "Border color for running state badges. Defines the boundary of active status indicators."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.yellow.500}",
+          "$description": "Background color for running state badges. Creates subtle visual indication of in-progress states."
+        }
+      },
       "merged": {
         "text": {
           "$type": "color",
@@ -391,58 +478,6 @@
           "$description": "Background color for merged state badges. Creates subtle but recognizable merge indicators."
         }
       },
-      "default": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.2}",
-          "$description": "Text color for secondary badges. Provides readable contrast on secondary badge styling."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.chrome.900}",
-          "$description": "Background color for secondary badges. Creates less prominent badge styling for secondary information."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.badge.default.background}",
-          "$description": "Border color for secondary badges. Matches background for clean, cohesive appearance."
-        }
-      },
-      "neutral": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.2}",
-          "$description": "Text color for outline badges. Ensures readability for badges with transparent backgrounds."
-        },
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.chrome.500}",
-          "$description": "Background color for neutral badges. Creates subtle visual styling for general-purpose indicators."
-        },
-        "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.2",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.chrome.300}",
-          "$description": "Border color for outline badges. Creates definition for badges without background fill."
-        }
-      },
       "ai": {
         "text": {
           "$type": "color",
@@ -467,41 +502,6 @@
           "$type": "color",
           "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 65%, {gradient.ai.gradient-stop-4} 100%)",
           "$description": "Gradient border color for AI-related badges. Creates distinctive multi-color styling to highlight AI functionality."
-        }
-      },
-      "running": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.yellow.200}",
-          "$description": "Text color for running state badges. Indicates active or in-progress operations."
-        },
-        "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.2",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.yellow.300}",
-          "$description": "Border color for running state badges. Defines the boundary of active status indicators."
-        },
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.yellow.500}",
-          "$description": "Background color for running state badges. Creates subtle visual indication of in-progress states."
         }
       }
     },
@@ -919,6 +919,20 @@
       }
     },
     "pipeline": {
+      "arrow": {
+        "border": {
+          "$type": "color",
+          "$value": "{border.1}",
+          "$description": "Border color for pipeline connection arrows. Defines the visual path between pipeline components."
+        },
+        "running": {
+          "border": {
+            "$type": "color",
+            "$value": "linear-gradient(90deg, {gradient.pipeline.arrows.gradient-stop-1} 0%, {gradient.pipeline.arrows.gradient-stop-2} 50%, {gradient.pipeline.arrows.gradient-stop-3} 100%)",
+            "$description": "Gradient border color for active pipeline arrows. Visually indicates data flow between active pipeline components."
+          }
+        }
+      },
       "card": {
         "background": {
           "$type": "color",
@@ -949,18 +963,6 @@
             "$type": "color",
             "$value": "{colors.green.300}",
             "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
-          }
-        }
-      },
-      "arrow": {
-        "border": {
-          "$type": "color",
-          "$value": "{border.1}"
-        },
-        "running": {
-          "border": {
-            "$type": "color",
-            "$value": "linear-gradient(90deg, {gradient.pipeline.arrows.gradient-stop-1} 0%, {gradient.pipeline.arrows.gradient-stop-2} 50%, {gradient.pipeline.arrows.gradient-stop-3} 100%)"
           }
         }
       }
@@ -1209,21 +1211,55 @@
       }
     },
     "tag": {
-      "red": {
+      "blue": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.300}",
-          "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
+          "$value": "{colors.accent.300}",
+          "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.red.900}",
-          "$description": "Background color for red tags. Creates a distinct surface with red theme styling."
+          "$value": "{colors.accent.900}",
+          "$description": "Background color for blue tags. Creates a distinct surface with blue theme styling."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.red.950}",
-          "$description": "Subtle background variation for red tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.accent.950}",
+          "$description": "Subtle background variation for blue tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "brown": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.brown.300}",
+          "$description": "Text color for brown tags. Ensures readability while maintaining the brown color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.brown.900}",
+          "$description": "Background color for brown tags. Creates a distinct surface with brown theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.brown.950}",
+          "$description": "Subtle background variation for brown tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "cyan": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.cyan.300}",
+          "$description": "Text color for cyan tags. Ensures readability while maintaining the cyan color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.cyan.900}",
+          "$description": "Background color for cyan tags. Creates a distinct surface with cyan theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.cyan.950}",
+          "$description": "Subtle background variation for cyan tags. Provides a softer alternative for less emphasis."
         }
       },
       "green": {
@@ -1243,38 +1279,72 @@
           "$description": "Subtle background variation for green tags. Provides a softer alternative for less emphasis."
         }
       },
-      "yellow": {
+      "indigo": {
         "text": {
           "$type": "color",
-          "$value": "{colors.yellow.300}",
-          "$description": "Text color for yellow tags. Ensures readability while maintaining the yellow color theme."
+          "$value": "{colors.indigo.300}",
+          "$description": "Text color for indigo tags. Ensures readability while maintaining the indigo color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.yellow.900}",
-          "$description": "Background color for yellow tags. Creates a distinct surface with yellow theme styling."
+          "$value": "{colors.indigo.900}",
+          "$description": "Background color for indigo tags. Creates a distinct surface with indigo theme styling."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.yellow.950}",
-          "$description": "Subtle background variation for yellow tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.indigo.950}",
+          "$description": "Subtle background variation for indigo tags. Provides a softer alternative for less emphasis."
         }
       },
-      "blue": {
+      "lime": {
         "text": {
           "$type": "color",
-          "$value": "{colors.accent.300}",
-          "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
+          "$value": "{colors.lime.300}",
+          "$description": "Text color for lime tags. Ensures readability while maintaining the lime color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.accent.900}",
-          "$description": "Background color for blue tags. Creates a distinct surface with blue theme styling."
+          "$value": "{colors.lime.900}",
+          "$description": "Background color for lime tags. Creates a distinct surface with lime theme styling."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.accent.950}",
-          "$description": "Subtle background variation for blue tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.lime.950}",
+          "$description": "Subtle background variation for lime tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "mint": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.mint.300}",
+          "$description": "Text color for mint tags. Ensures readability while maintaining the mint color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.mint.900}",
+          "$description": "Background color for mint tags. Creates a distinct surface with mint theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.mint.950}",
+          "$description": "Subtle background variation for mint tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "orange": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.orange.300}",
+          "$description": "Text color for orange tags. Ensures readability while maintaining the orange color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.orange.900}",
+          "$description": "Background color for orange tags. Creates a distinct surface with orange theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.orange.950}",
+          "$description": "Subtle background variation for orange tags. Provides a softer alternative for less emphasis."
         }
       },
       "pink": {
@@ -1311,6 +1381,23 @@
           "$description": "Subtle background variation for purple tags. Provides a softer alternative for less emphasis."
         }
       },
+      "red": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.red.300}",
+          "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}",
+          "$description": "Background color for red tags. Creates a distinct surface with red theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}",
+          "$description": "Subtle background variation for red tags. Provides a softer alternative for less emphasis."
+        }
+      },
       "violet": {
         "text": {
           "$type": "color",
@@ -1328,106 +1415,21 @@
           "$description": "Subtle background variation for violet tags. Provides a softer alternative for less emphasis."
         }
       },
-      "indigo": {
+      "yellow": {
         "text": {
           "$type": "color",
-          "$value": "{colors.indigo.300}",
-          "$description": "Text color for indigo tags. Ensures readability while maintaining the indigo color theme."
+          "$value": "{colors.yellow.300}",
+          "$description": "Text color for yellow tags. Ensures readability while maintaining the yellow color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.indigo.900}",
-          "$description": "Background color for indigo tags. Creates a distinct surface with indigo theme styling."
+          "$value": "{colors.yellow.900}",
+          "$description": "Background color for yellow tags. Creates a distinct surface with yellow theme styling."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.indigo.950}",
-          "$description": "Subtle background variation for indigo tags. Provides a softer alternative for less emphasis."
-        }
-      },
-      "cyan": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.cyan.300}",
-          "$description": "Text color for cyan tags. Ensures readability while maintaining the cyan color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.cyan.900}",
-          "$description": "Background color for cyan tags. Creates a distinct surface with cyan theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.cyan.950}",
-          "$description": "Subtle background variation for cyan tags. Provides a softer alternative for less emphasis."
-        }
-      },
-      "orange": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.orange.300}",
-          "$description": "Text color for orange tags. Ensures readability while maintaining the orange color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.orange.900}",
-          "$description": "Background color for orange tags. Creates a distinct surface with orange theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.orange.950}",
-          "$description": "Subtle background variation for orange tags. Provides a softer alternative for less emphasis."
-        }
-      },
-      "brown": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.brown.300}",
-          "$description": "Text color for brown tags. Ensures readability while maintaining the brown color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.brown.900}",
-          "$description": "Background color for brown tags. Creates a distinct surface with brown theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.brown.950}",
-          "$description": "Subtle background variation for brown tags. Provides a softer alternative for less emphasis."
-        }
-      },
-      "mint": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.mint.300}",
-          "$description": "Text color for mint tags. Ensures readability while maintaining the mint color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.mint.900}",
-          "$description": "Background color for mint tags. Creates a distinct surface with mint theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.mint.950}",
-          "$description": "Subtle background variation for mint tags. Provides a softer alternative for less emphasis."
-        }
-      },
-      "lime": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.lime.300}",
-          "$description": "Text color for lime tags. Ensures readability while maintaining the lime color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.lime.900}",
-          "$description": "Background color for lime tags. Creates a distinct surface with lime theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.lime.950}",
-          "$description": "Subtle background variation for lime tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.yellow.950}",
+          "$description": "Subtle background variation for yellow tags. Provides a softer alternative for less emphasis."
         }
       }
     },
@@ -1640,7 +1642,8 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}"
+      "$value": "{colors.pure.black}",
+      "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
     "1": {
       "$extensions": {
@@ -1653,7 +1656,8 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}"
+      "$value": "{colors.pure.black}",
+      "$description": "Light shadow color with 60% opacity. Creates subtle depth for small UI elements."
     },
     "2": {
       "$extensions": {
@@ -1666,7 +1670,8 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}"
+      "$value": "{colors.pure.black}",
+      "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
     },
     "3": {
       "$extensions": {
@@ -1679,7 +1684,8 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}"
+      "$value": "{colors.pure.black}",
+      "$description": "Medium shadow color with 50% opacity. Creates moderate depth for elevated components."
     },
     "4": {
       "$extensions": {
@@ -1692,7 +1698,8 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}"
+      "$value": "{colors.pure.black}",
+      "$description": "Deep shadow color with 50% opacity. Provides significant depth for floating elements."
     },
     "5": {
       "$extensions": {
@@ -1705,7 +1712,8 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}"
+      "$value": "{colors.pure.black}",
+      "$description": "Very deep shadow color with 50% opacity. Creates dramatic elevation for modal content."
     },
     "6": {
       "$extensions": {
@@ -1718,7 +1726,8 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}"
+      "$value": "{colors.pure.black}",
+      "$description": "Extremely deep shadow color with 60% opacity. Provides maximum depth for highly elevated elements."
     },
     "inner": {
       "$extensions": {
@@ -1731,7 +1740,8 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.white}"
+      "$value": "{colors.pure.white}",
+      "$description": "Subtle inner shadow color with 10% opacity. Creates inset effect for pressed or focused states."
     }
   },
   "ring": {

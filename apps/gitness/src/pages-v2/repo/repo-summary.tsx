@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { use } from 'i18next'
-
 import {
   GitPathDetails,
   OpenapiContentInfo,
@@ -14,9 +12,7 @@ import {
   useCreateTokenMutation,
   useFindRepositoryQuery,
   useGetContentQuery,
-  useListBranchesQuery,
   useListPathsQuery,
-  useListTagsQuery,
   useSummaryQuery,
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
@@ -32,7 +28,6 @@ import {
 import { SummaryItemType } from '@harnessio/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
-import { useBranchSelectorStore } from '../../components-v2/stores/branch-selector-store'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -42,11 +37,9 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { generateAlphaNumericHash } from '../../pages-v2/pull-request/pull-request-utils'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
-import { orderSortDate } from '../../types'
 import { sortFilesByType } from '../../utils/common-utils'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '././stores/repo-branches-store'
-import { transformBranchList } from './transform-utils/branch-transform'
 
 export default function RepoSummaryPage() {
   const routes = useRoutes()
@@ -59,7 +52,6 @@ export default function RepoSummaryPage() {
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
-  // const [refType, setRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
 
   const {
     //   branchList,
@@ -72,9 +64,6 @@ export default function RepoSummaryPage() {
     //   setSelectedBranchTag,
     //   setSelectedRefType
   } = useRepoBranchesStore()
-  // const { selectedBranchOrTag } = useBranchSelectorStore()
-
-  // console.log('selectedBranchOrTag in repo summary', selectedBranchOrTag)
 
   const { currentUser } = useAppContext()
   const isMFE = useIsMFE()
@@ -88,11 +77,6 @@ export default function RepoSummaryPage() {
   })
 
   const { branch_count, default_branch_commit_count, pull_req_summary, tag_count } = repoSummary || {}
-
-  // const { data: { body: branches } = {} } = useListBranchesQuery({
-  //   repo_ref: repoRef,
-  //   queryParams: { include_commit: false, sort: 'date', order: orderSortDate.DESC, limit: 50, query: branchTagQuery }
-  // })
 
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
     useCalculateCommitDivergenceMutation({
@@ -147,63 +131,18 @@ export default function RepoSummaryPage() {
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
 
-  useEffect(() => {
-    setGitRef(selectedBranchOrTag?.name ?? '')
-  }, [selectedBranchOrTag?.name])
-
-  // useEffect(() => {
-  //   if (branches) {
-  //     setBranchList(transformBranchList(branches, repository?.default_branch))
-  //   }
-  //   if (repository?.default_branch) {
-  //     setDefaultBranch(repository?.default_branch)
-  //   }
-  // }, [branches, repository?.default_branch])
-
-  // const { data: { body: tags } = {} } = useListTagsQuery({
-  //   repo_ref: repoRef,
-  //   queryParams: {
-  //     include_commit: false,
-  //     sort: 'date',
-  //     order: orderSortDate.DESC,
-  //     limit: 50,
-  //     page: 1,
-  //     query: branchTagQuery
-  //   }
-  // })
-
-  // useEffect(() => {
-  //   if (tags) {
-  //     setTagList(
-  //       tags.map(item => ({
-  //         name: item?.name || '',
-  //         sha: item?.sha || '',
-  //         default: false
-  //       }))
-  //     )
-  //   }
-  // }, [tags])
-
-  // const selectBranchOrTag = useCallback(
-  //   (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-  //     if (type === BranchSelectorTab.BRANCHES) {
-  //       const branch = branchList.find(branch => branch.name === branchTagName.name)
-  //       if (branch) {
-  //         setSelectedBranchTag(branch)
-  //         setSelectedRefType(type)
-  //         setGitRef(branch.name)
-  //       }
-  //     } else if (type === BranchSelectorTab.TAGS) {
-  //       const tag = tagList.find(tag => tag.name === branchTagName.name)
-  //       if (tag) {
-  //         setSelectedBranchTag(tag)
-  //         setSelectedRefType(type)
-  //         setGitRef(`${REFS_TAGS_PREFIX + tag.name}`)
-  //       }
-  //     }
-  //   },
-  //   [navigate, repoId, spaceId, branchList, tagList]
-  // )
+  const selectBranchOrTag = useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      if (type === BranchSelectorTab.BRANCHES) {
+        setGitRef(branchTagName.name)
+        setSelectedBranchOrTag(branchTagName)
+      } else if (type === BranchSelectorTab.TAGS) {
+        setGitRef(`${REFS_TAGS_PREFIX + branchTagName.name}`)
+        setSelectedBranchOrTag(branchTagName)
+      }
+    },
+    [navigate, repoId, spaceId]
+  )
 
   useEffect(() => {
     if (selectedBranchOrTag?.name) {
@@ -328,15 +267,6 @@ export default function RepoSummaryPage() {
       })
   }, [repoEntryPathToFileTypeMap, selectedBranchOrTag?.name, repoRef, gitRef])
 
-  // useEffect(() => {
-  //   const defaultBranch = branchList.find(branch => branch.default)
-  //   setSelectedBranchTag({
-  //     name: defaultBranch?.name || repository?.default_branch || '',
-  //     sha: defaultBranch?.sha || '',
-  //     default: true
-  //   })
-  // }, [branchList, repository?.default_branch])
-
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
     queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranchOrTag?.name) }
@@ -372,20 +302,6 @@ export default function RepoSummaryPage() {
   )
 
   const isLoading = loading || isLoadingRepoDetails
-
-  const selectBranchOrTag = useCallback(
-    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      if (type === BranchSelectorTab.BRANCHES) {
-        console.log('selectBranchOrTag', branchTagName, type)
-        setSelectedBranchOrTag(branchTagName)
-        // setRefType(type)
-      } else if (type === BranchSelectorTab.TAGS) {
-        setSelectedBranchOrTag(branchTagName)
-        // setRefType(type)
-      }
-    },
-    [repoId, spaceId]
-  )
 
   return (
     <>

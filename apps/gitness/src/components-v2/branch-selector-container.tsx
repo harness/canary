@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useFindRepositoryQuery, useListBranchesQuery, useListTagsQuery } from '@harnessio/code-service-client'
@@ -10,7 +10,6 @@ import { transformBranchList } from '../pages-v2/repo/transform-utils/branch-tra
 import { PathParams } from '../RouteDefinitions'
 import { orderSortDate } from '../types'
 
-// import { useBranchSelectorStore } from './stores/branch-selector-store'
 interface BranchSelectorContainerProps {
   selectedBranch?: BranchSelectorListItem | null
   onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
@@ -26,24 +25,9 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const [branchTagQuery, setBranchTagQuery] = useState<string | null>(null)
-  // const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem>({
-  //   name: selectedBranch ?? '',
-  //   sha: '',
-  //   default: true
-  // })
   const [branchList, setBranchList] = useState<BranchData[]>([])
   const [tagList, setTagList] = useState<BranchSelectorListItem[]>([])
-  const [refType, setRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
-  // const {
-  //   branchList,
-  //   setBranchList,
-  //   tagList,
-  //   setTagList,
-  //   selectedBranchOrTag,
-  //   setSelectedBranchOrTag,
-  //   setRefType
-  //   // selectedRefType
-  // } = useBranchSelectorStore()
+  // const [_refType, setRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
 
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -71,22 +55,16 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
   })
 
   useEffect(() => {
-    // console.log(selectedBranchOrTag)
     if (repository && !selectedBranch) {
-      console.log('yeah this right here')
       const defaultBranch = branches?.find(branch => branch.name === repository.default_branch)
-      // setSelectedBranchOrTag({
-      //   name: defaultBranch?.name ?? repository.default_branch ?? '',
-      //   sha: defaultBranch?.sha ?? '',
-      //   default: true
-      // })
+
       onSelectBranchorTag(
         { name: defaultBranch?.name ?? repository.default_branch ?? '', sha: defaultBranch?.sha ?? '', default: true },
         BranchSelectorTab.BRANCHES
       )
     }
-    setRefType(BranchSelectorTab.BRANCHES)
-  }, [branches, repository, setRefType])
+    // setRefType(BranchSelectorTab.BRANCHES)
+  }, [branches, repository])
 
   useEffect(() => {
     if (branches) {
@@ -105,28 +83,6 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
       )
     }
   }, [setTagList, tags])
-
-  // const selectBranchOrTag = useCallback(
-  //   (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-  //     if (type === BranchSelectorTab.BRANCHES) {
-  //       // const branch = branchList.find(branch => branch.name === branchTagName.name)
-  //       // if (branch) {
-  //       // setPage(1)
-  //       // console.log('selectBranchOrTag', branchTagName, type)
-
-  //       setSelectedBranchOrTag(branchTagName)
-  //       setRefType(type)
-  //       // }
-  //     } else if (type === BranchSelectorTab.TAGS) {
-  //       // const tag = tagList.find(tag => tag.name === branchTagName.name)
-  //       // if (tag) {
-  //       setSelectedBranchOrTag(branchTagName)
-  //       setRefType(type)
-  //       // }
-  //     }
-  //   },
-  //   [repoId, spaceId, setRefType, setSelectedBranchOrTag, branchList, tagList]
-  // )
 
   return (
     <BranchSelectorV2

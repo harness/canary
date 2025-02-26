@@ -611,17 +611,20 @@ export const CreatePullRequest = () => {
         searchLabelQuery={searchLabel}
         setSearchLabelQuery={setSearchLabel}
         renderProps={() => (
-          <>
-            <BranchSelectorContainer
-              onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
-              selectedBranch={selectedTargetBranch}
-            />
-            <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
-            <BranchSelectorContainer
-              onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
-              selectedBranch={selectedSourceBranch}
-            />
-          </>
+          setIsBranchSelected(true),
+          (
+            <>
+              <BranchSelectorContainer
+                onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
+                selectedBranch={selectedTargetBranch}
+              />
+              <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
+              <BranchSelectorContainer
+                onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
+                selectedBranch={selectedSourceBranch}
+              />
+            </>
+          )
         )}
       />
     )

@@ -14,10 +14,14 @@ import { orderSortDate } from '../types'
 interface BranchSelectorContainerProps {
   selectedBranch?: BranchSelectorListItem | null
   onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
+  isBranchOnly?: boolean
+  dynamicWidth?: boolean
 }
 export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = ({
   selectedBranch,
-  onSelectBranchorTag
+  onSelectBranchorTag,
+  isBranchOnly = false,
+  dynamicWidth = false
 }) => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -135,6 +139,8 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
       searchQuery={branchTagQuery ?? ''}
       setSearchQuery={setBranchTagQuery}
       onSelectBranch={onSelectBranchorTag}
+      isBranchOnly={isBranchOnly}
+      dynamicWidth={dynamicWidth}
     />
   )
 }

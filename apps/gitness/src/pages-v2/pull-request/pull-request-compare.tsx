@@ -13,10 +13,8 @@ import {
   useDiffStatsQuery,
   useFindRepositoryQuery,
   useGetPullReqByBranchesQuery,
-  useListBranchesQuery,
   useListCommitsQuery,
   useListPrincipalsQuery,
-  useListTagsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
 import { Icon } from '@harnessio/ui/components'
@@ -47,9 +45,7 @@ import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pag
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data'
-import { useRepoBranchesStore } from '../repo/stores/repo-branches-store'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
-import { transformBranchList } from '../repo/transform-utils/branch-transform'
 import { getErrorMessage } from './pull-request-utils'
 
 /**
@@ -311,17 +307,17 @@ export const CreatePullRequest = () => {
   const onCancel = () => {
     navigate(routes.toRepositories({ spaceId }))
   }
-  const { data: { body: branches } = {} } = useListBranchesQuery({
-    repo_ref: repoRef,
-    queryParams: {
-      page: 0,
-      sort: 'date',
-      order: 'desc',
-      limit: 10,
-      query: sourceQuery || targetQuery || '',
-      include_pullreqs: true
-    }
-  })
+  // const { data: { body: branches } = {} } = useListBranchesQuery({
+  //   repo_ref: repoRef,
+  //   queryParams: {
+  //     page: 0,
+  //     sort: 'date',
+  //     order: 'desc',
+  //     limit: 10,
+  //     query: sourceQuery || targetQuery || '',
+  //     include_pullreqs: true
+  //   }
+  // })
 
   useEffect(() => {
     // useMergeCheckMutation
@@ -390,38 +386,6 @@ export const CreatePullRequest = () => {
     }
   }, [commitData, headers, setCommits])
 
-  const branchList: BranchSelectorListItem[] = useMemo(() => {
-    if (!branches) return []
-
-    return branches.map(item => ({
-      name: item?.name || '',
-      sha: item?.sha || '',
-      default: item?.name === repoMetadata?.default_branch
-    }))
-  }, [branches, repoMetadata?.default_branch])
-
-  const { data: tags } = useListTagsQuery({
-    repo_ref: repoRef,
-    queryParams: {
-      include_commit: false,
-      sort: 'date',
-      order: 'asc',
-      limit: 20,
-      page: 1,
-      query: sourceQuery || targetQuery || ''
-    }
-  })
-
-  const tagsList: BranchSelectorListItem[] = useMemo(() => {
-    if (!tags?.body) return []
-
-    return tags.body.map(item => ({
-      name: item?.name || '',
-      sha: item?.sha || '',
-      default: false
-    }))
-  }, [tags])
-
   const selectCommit = useCallback(
     (commitName: CommitSelectorListItem) => {
       const commit = commitData?.commits?.find(item => item.title === commitName.title)
@@ -435,23 +399,17 @@ export const CreatePullRequest = () => {
   const selectBranchorTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => {
       if (type === BranchSelectorTab.BRANCHES) {
-        // const branch = branchList.find(branch => branch.name === branchTagName.name)
-        // if (branch) {
         if (sourceBranch) {
           setSelectedSourceBranch(branchTagName)
         } else {
           setSelectedTargetBranch(branchTagName)
         }
-        // }
       } else if (type === BranchSelectorTab.TAGS) {
-        // const tag = tagsList.find(tag => tag.name === branchTagName.name)
-        // if (tag) {
         if (sourceBranch) {
           setSelectedSourceBranch(branchTagName)
         } else {
           setSelectedTargetBranch(branchTagName)
         }
-        // }
       }
       if (sourceBranch) {
         setSourceQuery('')
@@ -459,26 +417,8 @@ export const CreatePullRequest = () => {
         setTargetQuery('')
       }
     },
-    [branchList, tagsList, setSelectedSourceBranch, setSelectedTargetBranch]
+    [setSelectedSourceBranch, setSelectedTargetBranch]
   )
-
-  const { setTagList, setBranchList, setSpaceIdAndRepoId } = useRepoBranchesStore()
-
-  useEffect(() => {
-    if (tagsList.length) {
-      setTagList(tagsList)
-    }
-  }, [tagsList])
-
-  useEffect(() => {
-    if (branchList.length) {
-      setBranchList(transformBranchList(branchList, repoMetadata?.default_branch))
-    }
-  }, [tagsList, branchList, repoMetadata?.default_branch])
-
-  useEffect(() => {
-    setSpaceIdAndRepoId(spaceId || '', repoId || '')
-  }, [spaceId, repoId])
 
   const handleAddReviewer = (id?: number) => {
     if (!id) return
@@ -558,7 +498,6 @@ export const CreatePullRequest = () => {
         mergeability={mergeability}
         selectBranch={selectBranchorTag}
         useTranslationStore={useTranslationStore}
-        useRepoBranchesStore={useRepoBranchesStore}
         targetBranch={selectedTargetBranch}
         sourceBranch={selectedSourceBranch}
         prBranchCombinationExists={prBranchCombinationExists}
@@ -617,7 +556,7 @@ export const CreatePullRequest = () => {
                 onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
                 selectedBranch={selectedTargetBranch}
               />
-              <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
+              <Icon name="arrow-long" size={12} className="text-icons-1 rotate-180" />
               <BranchSelectorContainer
                 onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
                 selectedBranch={selectedSourceBranch}

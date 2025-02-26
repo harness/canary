@@ -27,7 +27,6 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
   const [branchTagQuery, setBranchTagQuery] = useState<string | null>(null)
   const [branchList, setBranchList] = useState<BranchData[]>([])
   const [tagList, setTagList] = useState<BranchSelectorListItem[]>([])
-  // const [_refType, setRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
 
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -63,7 +62,6 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
         BranchSelectorTab.BRANCHES
       )
     }
-    // setRefType(BranchSelectorTab.BRANCHES)
   }, [branches, repository])
 
   useEffect(() => {

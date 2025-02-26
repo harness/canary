@@ -1,12 +1,10 @@
-import { FC } from 'react'
-
 import { useTranslationStore } from '@utils/viewUtils'
 
 import { UnifiedPipelineStudio } from '@harnessio/ui/views'
 
 import { usePipelineStudioStore } from './unified-pipeline-studio.store'
 
-const PipelineStudioViewWrapper: FC<Partial<any>> = () => {
+const PipelineStudioViewWrapper = () => {
   return (
     <UnifiedPipelineStudio
       useUnifiedPipelineStudioStore={usePipelineStudioStore}

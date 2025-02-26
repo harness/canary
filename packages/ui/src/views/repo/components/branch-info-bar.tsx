@@ -2,11 +2,13 @@ import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Badge, Button, DropdownMenu, Icon, StyledLink } from '@/components'
-import { IBranchSelectorStore } from '@/views'
+import { BranchSelectorListItem } from '@/views'
 
 interface BranchInfoBarProps {
   defaultBranchName?: string
-  useRepoBranchesStore: () => IBranchSelectorStore
+  repoId: string
+  spaceId: string
+  selectedBranchTag: BranchSelectorListItem
   currentBranchDivergence: {
     ahead: number
     behind: number
@@ -15,11 +17,12 @@ interface BranchInfoBarProps {
 
 export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   defaultBranchName = 'main',
-  useRepoBranchesStore,
+  repoId,
+  spaceId,
+  selectedBranchTag,
   currentBranchDivergence
 }) => {
   const { behind, ahead } = currentBranchDivergence
-  const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
   const hasBehind = !!behind
   const hasAhead = !!ahead
 

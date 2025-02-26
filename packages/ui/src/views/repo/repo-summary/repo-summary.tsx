@@ -12,14 +12,7 @@ import {
   StackedList,
   Text
 } from '@/components'
-import {
-  BranchSelectorListItem,
-  CommitDivergenceType,
-  IBranchSelectorStore,
-  RepoFile,
-  SandboxLayout,
-  TranslationStore
-} from '@/views'
+import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout, TranslationStore } from '@/views'
 import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
@@ -34,6 +27,9 @@ interface RoutingProps {
 }
 
 export interface RepoSummaryViewProps extends Partial<RoutingProps> {
+  repoId: string
+  spaceId: string
+  selectedBranchOrTag: BranchSelectorListItem | null
   loading: boolean
   filesList: string[]
   navigateToFile: (path: string) => void
@@ -69,7 +65,6 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   }
   saveDescription: (description: string) => void
   selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
-  useRepoBranchesStore: () => IBranchSelectorStore
   updateRepoError?: string
   useTranslationStore: () => TranslationStore
   isEditDialogOpen: boolean
@@ -83,6 +78,9 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
 }
 
 export function RepoSummaryView({
+  repoId,
+  spaceId,
+  selectedBranchOrTag,
   loading,
   filesList,
   navigateToFile,
@@ -93,15 +91,11 @@ export function RepoSummaryView({
   gitRef,
   latestCommitInfo,
   saveDescription,
-  selectBranchOrTag,
-  useRepoBranchesStore,
   updateRepoError,
   isEditDialogOpen,
   setEditDialogOpen,
   useTranslationStore,
   currentBranchDivergence,
-  searchQuery,
-  setSearchQuery,
   handleCreateToken,
   toRepoFiles,
   toCommitDetails,
@@ -111,7 +105,6 @@ export function RepoSummaryView({
   renderProp: BranchSelector
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
-  const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
 
   if (loading) {
     return (
@@ -130,7 +123,7 @@ export function RepoSummaryView({
         httpUrl={repository?.git_url ?? 'could not fetch url'}
         repoName={repoId}
         projName={spaceId}
-        gitRef={gitRef || selectedBranchTag?.name || ''}
+        gitRef={gitRef || selectedBranchOrTag?.name || ''}
         handleCreateToken={handleCreateToken}
         navigateToProfileKeys={navigateToProfileKeys}
       />
@@ -179,13 +172,6 @@ export function RepoSummaryView({
             <ListActions.Root>
               <ListActions.Left>
                 <ButtonGroup className="gap-2.5">
-                  {/* <BranchSelector
-                    onSelectBranch={selectBranchOrTag}
-                    useRepoBranchesStore={useRepoBranchesStore}
-                    useTranslationStore={useTranslationStore}
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                  /> */}
                   {BranchSelector()}
 
                   <SearchFiles
@@ -200,7 +186,7 @@ export function RepoSummaryView({
                   <Button variant="outline">
                     <Link
                       className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
-                      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}
+                      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                     >
                       <Icon name="plus" size={12} />
                       <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create new file')}</span>
@@ -215,12 +201,14 @@ export function RepoSummaryView({
                 </ButtonGroup>
               </ListActions.Right>
             </ListActions.Root>
-            {selectedBranchTag.name !== repository?.default_branch && (
+            {selectedBranchOrTag?.name !== repository?.default_branch && (
               <>
                 <Spacer size={4} />
                 <BranchInfoBar
                   defaultBranchName={repository?.default_branch}
-                  useRepoBranchesStore={useRepoBranchesStore}
+                  repoId={repoId}
+                  spaceId={spaceId}
+                  selectedBranchTag={selectedBranchOrTag ?? { name: '', sha: '' }}
                   currentBranchDivergence={{
                     ahead: currentBranchDivergence?.ahead || 0,
                     behind: currentBranchDivergence?.behind || 0
@@ -251,12 +239,12 @@ export function RepoSummaryView({
                   right
                   title={
                     <Button
-                      className="flex border border-borders-1 hover:bg-background-3"
+                      className="border-borders-1 hover:bg-background-3 flex border"
                       variant="ghost"
                       size="icon"
                       asChild
                     >
-                      <Link to={`${toRepoFiles?.()}/edit/${gitRef || selectedBranchTag?.name}/~/README.md`}>
+                      <Link to={`${toRepoFiles?.()}/edit/${gitRef || selectedBranchOrTag?.name}/~/README.md`}>
                         <Icon name="edit-pen" size={16} className="text-icons-3" />
                         <span className="sr-only">{t('views:repos.editReadme', 'Edit README.md')}</span>
                       </Link>

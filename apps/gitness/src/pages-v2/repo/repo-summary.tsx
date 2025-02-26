@@ -39,7 +39,6 @@ import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { sortFilesByType } from '../../utils/common-utils'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
-import { useRepoBranchesStore } from '././stores/repo-branches-store'
 
 export default function RepoSummaryPage() {
   const routes = useRoutes()
@@ -52,18 +51,6 @@ export default function RepoSummaryPage() {
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
-
-  const {
-    //   branchList,
-    //   tagList,
-    //   setBranchList,
-    //   setTagList,
-    setSpaceIdAndRepoId
-    //   setDefaultBranch,
-    //   selectedBranchTag,
-    //   setSelectedBranchTag,
-    //   setSelectedRefType
-  } = useRepoBranchesStore()
 
   const { currentUser } = useAppContext()
   const isMFE = useIsMFE()
@@ -82,10 +69,6 @@ export default function RepoSummaryPage() {
     useCalculateCommitDivergenceMutation({
       repo_ref: repoRef
     })
-
-  useEffect(() => {
-    setSpaceIdAndRepoId(spaceId || '', repoId || '')
-  }, [spaceId, repoId])
 
   useEffect(() => {
     if (branchDivergence.length) {
@@ -306,6 +289,9 @@ export default function RepoSummaryPage() {
   return (
     <>
       <RepoSummaryView
+        repoId={repoId ?? ''}
+        spaceId={spaceId ?? ''}
+        selectedBranchOrTag={selectedBranchOrTag}
         toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
         loading={isLoading}
         filesList={filesList}
@@ -320,7 +306,6 @@ export default function RepoSummaryPage() {
         latestCommitInfo={latestCommitInfo}
         saveDescription={saveDescription}
         selectBranchOrTag={() => {}}
-        useRepoBranchesStore={useRepoBranchesStore}
         updateRepoError={updateError}
         isEditDialogOpen={isEditDialogOpen}
         setEditDialogOpen={setEditDialogOpen}

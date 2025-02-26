@@ -951,6 +951,18 @@
             "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
           }
         }
+      },
+      "arrow": {
+        "border": {
+          "$type": "color",
+          "$value": "{border.1}"
+        },
+        "running": {
+          "border": {
+            "$type": "color",
+            "$value": "linear-gradient(90deg, {gradient.pipeline.arrows.gradient-stop-1} 0%, {gradient.pipeline.arrows.gradient-stop-2} 50%, {gradient.pipeline.arrows.gradient-stop-3} 100%)"
+          }
+        }
       }
     },
     "scrollbar": {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { Accordion } from '@components/accordion'
 import { Icon } from '@components/icon'
+import { Accordion } from '@components/index'
 import { get } from 'lodash-es'
 
 import { InputComponent, InputProps, RenderInputs, useFormContext, type AnyFormikValue } from '@harnessio/forms'

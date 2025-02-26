@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactNode } from 'react'
 
 import { Button, Icon } from '@/components'
 import FilterSelect, { FilterSelectAddIconLabel } from '@components/filters/filter-select'
@@ -15,11 +15,11 @@ interface FiltersBarProps<T, V> {
   sortOptions: SortOption[]
   selectedFiltersCnt: number
   renderSelectedFilters: (
-    filterFieldRenderer: (filterFieldConfig: Omit<FiltersFieldProps<V>, 'shouldOpenFilter' | 't'>) => ReactElement
-  ) => ReactElement
+    filterFieldRenderer: (filterFieldConfig: Omit<FiltersFieldProps<V>, 'shouldOpenFilter' | 't'>) => ReactNode
+  ) => ReactNode
   renderFilterOptions: (
-    filterOptionsRenderer: (filterFieldConfig: FilterOptionsRendererProps<keyof T>) => ReactElement
-  ) => ReactElement
+    filterOptionsRenderer: (filterFieldConfig: FilterOptionsRendererProps<keyof T>) => ReactNode
+  ) => ReactNode
   sortDirections: SortDirection[]
   t: TFunction
   filterHandlers: Pick<

@@ -1,5 +1,5 @@
-import { FC, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { FC, useEffect, useRef, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Spacer, StackedList } from '@/components'
 import { useDebounceSearch } from '@/hooks'
@@ -39,7 +39,9 @@ const PullRequestList: FC<PullRequestPageProps> = ({
 }) => {
   const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestListStore()
   const { t } = useTranslationStore()
+  const [searchParams] = useSearchParams()
   const computedPrincipalData = principalData ?? (defaultSelectedAuthor ? [defaultSelectedAuthor] : [])
+  const [isAllFilterDataPresent, setisAllFilterDataPresent] = useState<boolean>(true)
 
   const PR_FILTER_OPTIONS = getPRListFilterOptions({
     t,
@@ -88,6 +90,10 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
   }
+
+  useEffect(() => {
+    setisAllFilterDataPresent(searchParams.get('created_by') ? !!defaultSelectedAuthor : true)
+  }, [defaultSelectedAuthor])
 
   const showTopBar = !noData || selectedFiltersCnt > 0 || filterHandlers.activeSorts.length > 0 || !!searchQuery?.length
 
@@ -237,37 +243,41 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                 </ListActions.Right>
               </ListActions.Root>
               <ListControlBar<PRListFilters>
-                renderSelectedFilters={filterFieldRenderer => (
-                  <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
-                    {PR_FILTER_OPTIONS.map(filterOption => {
-                      const filterOptionValue = filterOption.value as PRListFiltersKeys
-                      return (
-                        <PRListFilterHandler.Component
-                          parser={
-                            'parser' in filterOption
-                              ? // TODO Need to address the type issue here
-                                (filterOption.parser as unknown as Parser<PRListFilters[PRListFiltersKeys]>)
-                              : undefined
-                          }
-                          filterKey={filterOptionValue}
-                          key={filterOption.value}
-                        >
-                          {({ onChange, removeFilter, value }) =>
-                            filterFieldRenderer({
-                              filterOption,
-                              onChange,
-                              removeFilter,
-                              value: value,
-                              onOpenChange: isOpen => {
-                                handleFilterOpen(filterOptionValue, isOpen)
+                renderSelectedFilters={filterFieldRenderer => {
+                  if (isAllFilterDataPresent) {
+                    return (
+                      <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
+                        {PR_FILTER_OPTIONS.map(filterOption => {
+                          const filterOptionValue = filterOption.value as PRListFiltersKeys
+                          return (
+                            <PRListFilterHandler.Component
+                              parser={
+                                'parser' in filterOption
+                                  ? // TODO Need to address the type issue here
+                                    (filterOption.parser as unknown as Parser<PRListFilters[PRListFiltersKeys]>)
+                                  : undefined
                               }
-                            })
-                          }
-                        </PRListFilterHandler.Component>
-                      )
-                    })}
-                  </PRListFilterHandler.Content>
-                )}
+                              filterKey={filterOptionValue}
+                              key={filterOption.value}
+                            >
+                              {({ onChange, removeFilter, value }) =>
+                                filterFieldRenderer({
+                                  filterOption,
+                                  onChange,
+                                  removeFilter,
+                                  value: value,
+                                  onOpenChange: isOpen => {
+                                    handleFilterOpen(filterOptionValue, isOpen)
+                                  }
+                                })
+                              }
+                            </PRListFilterHandler.Component>
+                          )
+                        })}
+                      </PRListFilterHandler.Content>
+                    )
+                  }
+                }}
                 renderFilterOptions={filterOptionsRenderer => (
                   <PRListFilterHandler.Dropdown>
                     {(addFilter, availableFilters, resetFilters) => (

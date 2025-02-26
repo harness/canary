@@ -1,5 +1,5 @@
-import { Badge } from '@components/badge'
 import { Icon } from '@components/icon'
+import { Badge } from '@components/index'
 
 import { ExecutionStatusType } from '../types/types'
 

@@ -394,23 +394,6 @@
       "default": {
         "text": {
           "$type": "color",
-          "$value": "{colors.pure.white}",
-          "$description": "Text color for default badges. Ensures high contrast against the default badge background."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.accent.600}",
-          "$description": "Background color for default badges. Creates standard, recognizable badge styling."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.badge.default.background}",
-          "$description": "Border color for default badges. Matches background for clean, cohesive appearance."
-        }
-      },
-      "secondary": {
-        "text": {
-          "$type": "color",
           "$value": "{text.2}",
           "$description": "Text color for secondary badges. Provides readable contrast on secondary badge styling."
         },
@@ -421,19 +404,42 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{component.badge.secondary.background}",
+          "$value": "{component.badge.default.background}",
           "$description": "Border color for secondary badges. Matches background for clean, cohesive appearance."
         }
       },
-      "outline": {
+      "neutral": {
         "text": {
           "$type": "color",
           "$value": "{text.2}",
           "$description": "Text color for outline badges. Ensures readability for badges with transparent backgrounds."
         },
-        "border": {
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
           "$type": "color",
-          "$value": "{border.2}",
+          "$value": "{colors.chrome.500}",
+          "$description": "Text color for outline badges. Ensures readability for badges with transparent backgrounds."
+        },
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.chrome.300}",
           "$description": "Border color for outline badges. Creates definition for badges without background fill."
         }
       },
@@ -441,6 +447,20 @@
         "text": {
           "$type": "color",
           "$value": "{text.1}",
+          "$description": "Text color for AI-related badges. Ensures high contrast against AI badge gradient border."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.pure.white}",
           "$description": "Text color for AI-related badges. Ensures high contrast against AI badge gradient border."
         },
         "border": {
@@ -806,8 +826,13 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Navigation sections separator."
+        "$value": "{border.2}",
+        "$description": "Navigation side border."
+      },
+      "separator": {
+        "$type": "color",
+        "$value": "{border.2}",
+        "$description": "Separator between nav sections."
       },
       "item": {
         "unselected": {
@@ -882,12 +907,7 @@
     "skeleton": {
       "background": {
         "$type": "color",
-        "$value": "{background.3}",
-        "$description": "Base color for loading placeholders. Represents where content will appear."
-      },
-      "highlight": {
-        "$type": "color",
-        "$value": "{background.3}",
+        "$value": "linear-gradient(90deg, {gradient.skeleton.gradient-stop-1} 0%, {gradient.skeleton.gradient-stop-2} 50%, {gradient.skeleton.gradient-stop-3} 100%)",
         "$description": "Animation color that sweeps across skeleton. Creates \"shimmer\" effect indicating loading."
       }
     },
@@ -1352,6 +1372,52 @@
         "$value": "{colors.chrome.900}",
         "$description": "Background color for tooltips. Creates a distinct surface for contextual information that appears above UI elements."
       }
+    },
+    "separator": {
+      "background": {
+        "$type": "color",
+        "$value": "{border.3}"
+      }
+    },
+    "card": {
+      "background": {
+        "$type": "color",
+        "$value": "{background.2}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{border.2}"
+      }
+    },
+    "pipline": {
+      "card": {
+        "background": {
+          "$type": "color",
+          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 33.42%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 33.42%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)"
+        },
+        "running": {
+          "border": {
+            "$type": "color",
+            "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 33.42%, {gradient.ai.gradient-stop-3} 69.03%, {gradient.ai.gradient-stop-4} 100%)"
+          }
+        },
+        "error": {
+          "border": {
+            "$type": "color",
+            "$value": "{colors.red.300}"
+          }
+        },
+        "completed": {
+          "border": {
+            "$type": "color",
+            "$value": "{colors.green.300}"
+          }
+        }
+      }
     }
   },
   "shadow": {
@@ -1639,6 +1705,115 @@
       "gradient-stop-4": {
         "$type": "color",
         "$value": "{colors.cyan.200}"
+      }
+    },
+    "skeleton": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{colors.chrome.850}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{colors.chrome.800}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{colors.chrome.850}"
+      }
+    },
+    "pipeline": {
+      "running": {
+        "gradient-stop-1": {
+          "$type": "color",
+          "$value": "{colors.yellow.200}"
+        },
+        "gradient-stop-2": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.4",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.chrome.800}"
+        },
+        "gradient-stop-3": {
+          "$type": "color",
+          "$value": "{colors.yellow.200}"
+        }
+      },
+      "arrows": {
+        "gradient-stop-1": {
+          "$type": "color",
+          "$value": "{colors.pure.white}"
+        },
+        "gradient-stop-2": {
+          "$type": "color",
+          "$value": "{colors.accent.300}"
+        },
+        "gradient-stop-3": {
+          "$type": "color",
+          "$value": "{border.1}"
+        }
+      },
+      "card": {
+        "background": {
+          "gradient-from": {
+            "$type": "color",
+            "$value": "{colors.chrome.850}"
+          },
+          "gradient-to": {
+            "$type": "color",
+            "$value": "{colors.chrome.900}"
+          }
+        },
+        "border": {
+          "gradient-from": {
+            "$type": "color",
+            "$value": "{colors.chrome.800}"
+          },
+          "gradient-to": {
+            "$type": "color",
+            "$value": "{colors.chrome.850}"
+          }
+        }
+      },
+      "widget": {
+        "number": {
+          "gradient-from": {
+            "$type": "color",
+            "$value": "{colors.chrome.200}"
+          },
+          "gradient-to": {
+            "$type": "color",
+            "$value": "{colors.chrome.600}"
+          }
+        },
+        "blob": {
+          "big": {
+            "gradient-from": {
+              "$type": "color",
+              "$value": "{colors.chrome.850}"
+            },
+            "gradient-to": {
+              "$type": "color",
+              "$value": "{colors.chrome.950}"
+            }
+          },
+          "small": {
+            "gradient-from": {
+              "$type": "color",
+              "$value": "{colors.chrome.800}"
+            },
+            "gradient-to": {
+              "$type": "color",
+              "$value": "{colors.chrome.850}"
+            }
+          }
+        }
       }
     }
   }

@@ -607,7 +607,6 @@
       "spacing.1-half": "4d8de65aa1bd0dec962779df8c1987f2baf065dd",
       "spacing.2-half": "2566047f0a38c6f3a16261d0098ac78cae48373e",
       "spacing.3-half": "026d411dda3ddb321bcd4cbbd06cb17a6dd579d0",
-      "rounded.0": "a08cf2ae851bdf8a3870917fc427b7cd79a91e4e",
       "rounded.1": "fcda501dc1177728dcf6daf4699f7626feeae44c",
       "rounded.2": "df03fbe380f6c077c79c39c4d2ad09905bfbfc0b",
       "rounded.3": "2dc08ca451a934fced4d7a5eaecafa629dabc110",
@@ -661,7 +660,8 @@
       "iconStrokeWidth.xs": "c3e35191b6ad7e16c2f318922c1469ee8d63fedb",
       "iconStrokeWidth.sm": "9457adc3b3269a57bc7f69dc31ee72200cf0d94e",
       "iconStrokeWidth.md": "86525072c549fed7beecc0a9d4073fe93e52d2d3",
-      "iconStrokeWidth.lg": "a03d19c29249049db6f295fc91ebe3a0a94d1d2e"
+      "iconStrokeWidth.lg": "a03d19c29249049db6f295fc91ebe3a0a94d1d2e",
+      "rounded.none": "a08cf2ae851bdf8a3870917fc427b7cd79a91e4e"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491161",
     "$figmaModeId": "426:0",

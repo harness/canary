@@ -3,66 +3,66 @@
     "1": {
       "$type": "color",
       "$value": "{colors.chrome.1000}",
-      "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background."
+      "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background.\nCommon uses: Application background, page base layer, lowest-level containers."
     },
     "2": {
       "$type": "color",
       "$value": "{colors.chrome.950}",
-      "$description": "Level 2. Represents elements that sit on top of the bottom layer. Things like cards and containers that appear to be raised slightly above the background."
+      "$description": "Level 2. Represents elements that sit on top of the bottom layer. Creates visual hierarchy through subtle elevation.\nCommon uses: Cards, containers, form fields, dropdown menus."
     },
     "3": {
       "$type": "color",
       "$value": "{colors.chrome.900}",
-      "$description": "Level 3. Represents elements that sit on top of the middle layer. These are the most prominent elements like emphasized content."
+      "$description": "Level 3. Represents elements that sit on top of the middle layer. Creates strong visual emphasis through maximum elevation.\nCommon uses: Popovers, tooltips, highlighted containers."
     }
   },
   "text": {
     "1": {
       "$type": "color",
       "$value": "{colors.pure.white}",
-      "$description": "Highest contrast text color for important content.\nCommon uses: headings, labels, emphasized text."
+      "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\nCommon uses: Headings, labels, emphasized text, primary buttons."
     },
     "2": {
       "$type": "color",
       "$value": "{colors.chrome.200}",
-      "$description": "Primary text color for general content.\nCommon uses: body text, primary content, default icons."
+      "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
       "$type": "color",
       "$value": "{colors.chrome.400}",
-      "$description": "Reduced emphasis text color.\nCommon uses: supporting text, metadata, secondary information."
+      "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "accent": {
       "$type": "color",
       "$value": "{colors.accent.200}",
-      "$description": "Contrasting color for interactive elements or design focus.\nCommon uses: links, buttons, interactive icons."
+      "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\nCommon uses: Links, buttons, interactive icons, highlighted elements."
     },
     "success": {
       "$type": "color",
       "$value": "{colors.green.200}",
-      "$description": "Primary text color for success content.\nCommon uses: success message text, completion text."
+      "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
       "$value": "{colors.red.200}",
-      "$description": "Primary text color for error content.\nCommon uses: error message text, validation text."
+      "$description": "Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.\nCommon uses: Error message text, validation text, destructive action labels."
     },
     "warning": {
       "$type": "color",
       "$value": "{colors.amber.200}",
-      "$description": "Primary text color for warning content.\nCommon uses: warning message text, alert text."
+      "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\nCommon uses: Warning message text, alert text, important notifications."
     }
   },
   "border": {
     "1": {
       "$type": "color",
       "$value": "{colors.chrome.300}",
-      "$description": "Enhanced border color for interactive states.\nCommon uses: hover states, focus indicators."
+      "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\nCommon uses: Focus states, hover states, active elements, primary containers."
     },
     "2": {
       "$type": "color",
       "$value": "{colors.chrome.850}",
-      "$description": "Standard border color for general use.\nCommon uses: containers, dividers, separators."
+      "$description": "Standard border color for general use. Provides balanced visual definition for common UI elements.\nCommon uses: Containers, cards, dividers, separators, default form inputs."
     },
     "3": {
       "$extensions": {
@@ -76,27 +76,27 @@
       },
       "$type": "color",
       "$value": "{colors.chrome.850}",
-      "$description": "Softer border color for minimal separation.\nCommon uses: subtle dividers, grouped content."
+      "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
     },
     "focus": {
       "$type": "color",
       "$value": "{colors.accent.200}",
-      "$description": "Focus state indicator color.\nCommon uses: focus rings, keyboard navigation, selection indicators."
+      "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
       "$type": "color",
       "$value": "{colors.green.400}",
-      "$description": "Border color for success containers.\nCommon uses: success alert borders, confirmation boundaries."
+      "$description": "Border color for success containers. Reinforces positive status through visual framing.\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
       "$value": "{colors.red.400}",
-      "$description": "Border color for error containers.\nCommon uses: error alert borders, validation boundaries."
+      "$description": "Border color for error containers. Emphasizes critical information through visual framing.\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
       "$type": "color",
       "$value": "{colors.amber.500}",
-      "$description": "Border color for warning containers.\nCommon uses: warning alert borders, notice boundaries."
+      "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
   "state": {
@@ -112,7 +112,7 @@
       },
       "$type": "color",
       "$value": "{colors.chrome.200}",
-      "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
+      "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
       "$extensions": {
@@ -126,23 +126,23 @@
       },
       "$type": "color",
       "$value": "{colors.chrome.200}",
-      "$description": "Strong overlay for emphasis.\nCommon uses: selected states, hard interactions."
+      "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     },
     "disabled": {
       "text": {
         "$type": "color",
         "$value": "{colors.chrome.700}",
-        "$description": "Lowest emphasis text color.\nCommon uses: disabled text, placeholders, helper text."
+        "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
       },
       "background": {
         "$type": "color",
         "$value": "{colors.chrome.950}",
-        "$description": "Muted bg color.\nCommon uses: disabled states."
+        "$description": "Muted background color for disabled elements. Reduces visual prominence of non-interactive elements in the UI.\nCommon uses: Disabled buttons, inactive form controls, unavailable options, non-interactive cards."
       },
       "border": {
         "$type": "color",
         "$value": "{border.3}",
-        "$description": "Muted border color.\nCommon uses: disabled border states."
+        "$description": "Muted border color for disabled element boundaries. Creates subtle containment while indicating non-interactive state.\nCommon uses: Disabled form inputs, inactive controls, unavailable action boundaries."
       }
     }
   },
@@ -236,7 +236,7 @@
     "avatar": {
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.900}",
+        "$value": "{background.3}",
         "$description": "Background color for avatar components. Provides contrast for text or image content."
       },
       "text": {
@@ -775,9 +775,19 @@
       }
     },
     "dialog": {
+      "title": {
+        "$type": "color",
+        "$value": "{text.1}",
+        "$description": "Text color for dialog titles. Ensures high visibility and emphasis for the modal heading."
+      },
+      "description": {
+        "$type": "color",
+        "$value": "{text.2}",
+        "$description": "Text color for dialog content. Provides readable contrast for the modal's primary text content."
+      },
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.950}",
+        "$value": "{background.3}",
         "$description": "Background color for dialog components. Creates a distinct surface for modal content that appears above the main UI."
       },
       "backdrop": {
@@ -798,7 +808,7 @@
     "dropdown": {
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.900}",
+        "$value": "{background.2}",
         "$description": "Background color for dropdown menus. Creates a distinct surface for selectable options."
       },
       "item": {
@@ -1423,7 +1433,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.900}",
+          "$value": "{background.3}",
           "$description": "Background color for informational toast notifications. Creates visual distinction from UI content beneath."
         },
         "border": {
@@ -1463,7 +1473,7 @@
       },
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.900}",
+        "$value": "{background.3}",
         "$description": "Background color for tooltips. Creates a distinct surface for contextual information that appears above UI elements."
       }
     }

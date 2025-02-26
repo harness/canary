@@ -8,7 +8,7 @@ export enum Themes {
   DARK_PROT_STD = 'dark-prot-std',
   DARK_STANDARD_HIGH = 'dark-std-high',
   LIGHT = 'light-std-std',
-  LIGHT_PROTO_STD = 'light-prot-std'
+  LIGHT_PROT_STD = 'light-prot-std'
 }
 
 export const getThemeFromStorage = () => {

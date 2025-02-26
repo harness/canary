@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import { getThemeFromStorage } from '@utils/theme-utils.ts'
+import { getThemeFromStorage, Themes } from '@utils/theme-utils'
 import { clsx } from 'clsx'
 
 import { Button, Icon, Select, Spacer } from '@harnessio/ui/components'
@@ -13,18 +13,9 @@ export interface ViewSettingsProps {
   routes: string[]
 }
 
-enum Themes {
-  DARK_STANDARD_LOW = 'dark-std-low',
-  DARK = 'dark-std-std',
-  DARK_PROT_STD = 'dark-prot-std',
-  DARK_STANDARD_HIGH = 'dark-std-high',
-  LIGHT = 'light-std-std',
-  LIGHT_PROT_STD = 'light-prot-std'
-}
-
 const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
   const [showSettings, setShowSettings] = useState(false)
-  const [currentTheme, setCurrentTheme] = useState<Themes>(() => getThemeFromStorage())
+  const [currentTheme, setCurrentTheme] = useState<Themes>(getThemeFromStorage())
 
   useEffect(() => {
     const bodyClass = document.body.classList

@@ -1,5 +1,6 @@
-import { MenuGroupType, MenuGroupTypes } from '@components/navbar'
 import { TFunction } from 'i18next'
+
+import { MenuGroupType, MenuGroupTypes } from '../types'
 
 const PREFIX_ROUTE = '/canary/repos/canary'
 

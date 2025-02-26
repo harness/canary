@@ -148,12 +148,12 @@
   },
   "component": {
     "accordion": {
-      "trigger": {
+      "title": {
         "$type": "color",
         "$value": "{text.1}",
         "$description": "Text color for accordion triggers/headers. Used for the clickable area that expands/collapses content."
       },
-      "content": {
+      "description": {
         "$type": "color",
         "$value": "{text.2}",
         "$description": "Text color for accordion content. Applied to the expandable text within accordion panels."

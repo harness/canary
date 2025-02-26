@@ -931,8 +931,6 @@
       "state.disabled.text": "493f759e564193c9337264b64d9ba95384dbd6bf",
       "state.disabled.background": "35ae70f660a3c798b630b76510bbc3ea0f1e1ad9",
       "state.disabled.border": "c504805e13597fb0ae723ad791a777701722cd6b",
-      "component.accordion.trigger": "12b5aa0e3b4e22ab4f76c34571e44da41971df81",
-      "component.accordion.content": "ef55993865d407c7ef60dfec06958ede7fc9aaea",
       "component.accordion.chevron": "3f8b07af7af4574f889fff3066cb5ee559880623",
       "component.accordion.border": "abbeb9b81a85dc41f5224ffa3977e3591670ee8b",
       "component.alert.default.title": "8720dcaa6d31fe1e78071aeaa66f950fef7a001d",
@@ -1095,7 +1093,9 @@
       "gradient.ai.gradient-stop-1": "ddabb3d6e0461355f5bbf5348233c2881f29131a",
       "gradient.ai.gradient-stop-2": "fb981da93a0829404aa7c9256d64199c612f7506",
       "gradient.ai.gradient-stop-3": "d61d71dbb9d1f524542a6539b3cbe825dd0d1b1d",
-      "gradient.ai.gradient-stop-4": "40171bba4f148d40155d3f2e762e9883fb8937ec"
+      "gradient.ai.gradient-stop-4": "40171bba4f148d40155d3f2e762e9883fb8937ec",
+      "component.accordion.description": "ef55993865d407c7ef60dfec06958ede7fc9aaea",
+      "component.accordion.title": "12b5aa0e3b4e22ab4f76c34571e44da41971df81"
     },
     "$figmaCollectionId": "VariableCollectionId:1239:1141471",
     "$figmaModeId": "1239:0",

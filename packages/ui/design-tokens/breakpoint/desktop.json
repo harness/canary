@@ -58,8 +58,8 @@
       "$value": {
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
-        "fontSize": "{fontSize.4}",
-        "lineHeight": "{lineHeight.4.tight}",
+        "fontSize": "{fontSize.3}",
+        "lineHeight": "{lineHeight.3.tight}",
         "letterSpacing": "{tracking.normal}"
       },
       "$description": "Section headers."
@@ -235,8 +235,8 @@
           "$value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.600}",
-            "fontSize": "{fontSize.4}",
-            "lineHeight": "{lineHeight.4.normal}",
+            "fontSize": "{fontSize.3}",
+            "lineHeight": "{lineHeight.3.normal}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Article subsection heading."
@@ -259,8 +259,8 @@
           "$value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.400}",
-            "fontSize": "{fontSize.4}",
-            "lineHeight": "{lineHeight.4.relaxed}",
+            "fontSize": "{fontSize.3}",
+            "lineHeight": "{lineHeight.3.relaxed}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Article paragraph text."
@@ -270,8 +270,8 @@
           "$value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
-            "fontSize": "{fontSize.4}",
-            "lineHeight": "{lineHeight.4.relaxed}",
+            "fontSize": "{fontSize.3}",
+            "lineHeight": "{lineHeight.3.relaxed}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Emphasized paragraph text."

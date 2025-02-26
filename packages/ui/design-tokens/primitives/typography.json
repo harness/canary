@@ -228,13 +228,13 @@
     },
     "3": {
       "$type": "fontSizes",
-      "$value": "1.125rem",
-      "$description": "18px"
+      "$value": "1rem",
+      "$description": "16px"
     },
     "4": {
       "$type": "fontSizes",
-      "$value": "1rem",
-      "$description": "16px"
+      "$value": "1.125rem",
+      "$description": "18px"
     },
     "5": {
       "$type": "fontSizes",

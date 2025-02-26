@@ -58,6 +58,10 @@
       "$type": "borderRadius",
       "$value": "{rounded.3}",
       "$description": "6px"
+    },
+    "min-w": {
+      "$type": "sizing",
+      "$value": "320px"
     }
   },
   "menu-item-branch-selector": {

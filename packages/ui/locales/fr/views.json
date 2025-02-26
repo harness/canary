@@ -470,5 +470,8 @@
     "create": "Create webhook",
     "edit": "Edit webhook",
     "delete": "Delete webhook"
+  },
+  "secrets": {
+    "secretsTitle": "Secrets"
   }
 }

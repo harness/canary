@@ -54,3 +54,6 @@ export * from './labels'
 
 // execution
 export * from './execution'
+
+// secrets
+export * from './secrets'

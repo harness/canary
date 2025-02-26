@@ -228,7 +228,7 @@ export interface PullRequestPageProps {
   usePullRequestListStore: () => PullRequestListStore
   repoId?: string
   spaceId?: string
-  defaultSelectedAuthorError?: UsererrorError
+  defaultSelectedAuthorError?: UsererrorError | null
   isPrincipalsLoading?: boolean
   principalsSearchQuery?: string
   defaultSelectedAuthor?: Partial<PrincipalType>

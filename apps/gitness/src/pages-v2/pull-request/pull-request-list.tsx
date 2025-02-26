@@ -43,6 +43,7 @@ export default function PullRequestListPage() {
       queryParams: { page, query: query ?? '', ...filterValues },
       id: Number(searchParams.get('created_by'))
     },
+    // Adding staleTime to avoid refetching the data if authorId gets modified in searchParams
     { enabled: !!defaultAuthorId, staleTime: Infinity }
   )
 

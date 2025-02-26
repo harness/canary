@@ -804,6 +804,11 @@
         "$value": "{background.1}",
         "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
       },
+      "border": {
+        "$type": "color",
+        "$value": "{border.3}",
+        "$description": "Navigation sections separator."
+      },
       "item": {
         "unselected": {
           "text": {

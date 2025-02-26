@@ -1,5 +1,5 @@
 import { Avatar, Badge, MoreActionsTooltip, Table, Text } from '@/components'
-import { getInitials } from '@/utils/utils'
+import { getInitials } from '@utils/stringUtils'
 
 import { DialogLabels, UsersProps } from '../types'
 

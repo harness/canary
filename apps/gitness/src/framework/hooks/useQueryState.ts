@@ -18,7 +18,7 @@ const useQueryState = <T = string>(
   // Setter for query params
   const setValue = useCallback(
     (newValue: T | null) => {
-      const newParams = new URLSearchParams(searchParams)
+      const newParams = new URLSearchParams(window.location.search)
       // If the new value is empty or null, remove the query param
       if (newValue === null || newValue === undefined || newValue === '') {
         newParams.delete(key)
@@ -27,7 +27,7 @@ const useQueryState = <T = string>(
       }
       setSearchParams(newParams)
     },
-    [key, searchParams, setSearchParams]
+    [key, setSearchParams]
   )
 
   return [value, setValue]

@@ -137,7 +137,7 @@
       "background": {
         "$type": "color",
         "$value": "{colors.chrome.950}",
-        "$description": "Muted background color for disabled elements. Reduces visual prominence of non-interactive elements in the UI.\nCommon uses: Disabled buttons, inactive form controls, unavailable options, non-interactive cards."
+        "$description": "Muted background color for disabled elements. Reduces visual prominence of non-interactive elements in the UI.\nCommon uses: Disabled buttons, inactive form controls, unavailable options."
       },
       "border": {
         "$type": "color",

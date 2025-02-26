@@ -54,7 +54,7 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
       <ExecutionStatus nodeData={nodeData} />
 
       <div
-        className={cn('absolute inset-0 -z-10 rounded-md border bg-background-1', {
+        className={cn('absolute inset-0 -z-10 rounded-md border bg-graph-background-1', {
           'border-borders-4': !selected,
           'border-borders-3': selected,
           'bg-background-2 border-borders-2': collapsed

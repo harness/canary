@@ -149,7 +149,9 @@ export default {
           foreground: {
             'disabled-1': 'hsl(var(--canary-button-foreground-disabled-01))',
             'danger-1': 'hsl(var(--canary-button-foreground-danger-01))',
-            'success-1': 'hsl(var(--canary-button-foreground-success-01))'
+            'success-1': 'hsl(var(--canary-button-foreground-success-01))',
+            'accent-1': 'hsl(var(--canary-button-foreground-accent-1))',
+            'accent-2': 'hsl(var(--canary-button-foreground-accent-2))'
           },
           background: {
             'disabled-1': 'hsla(var(--canary-button-background-disabled-01))',
@@ -157,12 +159,16 @@ export default {
             'danger-2': 'hsla(var(--canary-button-background-danger-02))',
             'danger-3': 'hsla(var(--canary-button-background-danger-03))',
             'success-1': 'hsla(var(--canary-button-background-success-01))',
-            'success-2': 'hsla(var(--canary-button-background-success-02))'
+            'success-2': 'hsla(var(--canary-button-background-success-02))',
+            'accent-1': 'hsl(var(--canary-button-background-accent-1))',
+            'accent-2': 'hsl(var(--canary-button-background-accent-2))',
+            'accent-3': 'hsl(var(--canary-button-background-accent-3))'
           },
           border: {
             'disabled-1': 'hsla(var(--canary-button-border-disabled-01))',
             'danger-1': 'hsla(var(--canary-button-border-danger-01))',
-            'success-1': 'hsla(var(--canary-button-border-success-01))'
+            'success-1': 'hsla(var(--canary-button-border-success-01))',
+            'accent-1': 'hsl(var(--canary-button-border-accent-1))',
           }
         },
         tag: {
@@ -313,18 +319,51 @@ export default {
             mint: 'var(--canary-label-background-mint-01)',
             lime: 'var(--canary-label-background-lime-01)'
           }
+        },
+        sidebar: {
+          background: {
+            1: 'hsl(var(--canary-sidebar-background-01))',
+            2: 'var(--canary-sidebar-background-02)'
+          },
+          border: {
+            1: 'hsl(var(--canary-sidebar-border-01))',
+            2: 'hsla(var(--canary-sidebar-border-02))',
+            3: 'hsl(var(--canary-sidebar-border-03))'
+          },
+          foreground: {
+            1: 'hsl(var(--canary-sidebar-foreground-01))',
+            2: 'hsl(var(--canary-sidebar-foreground-02))',
+            3: 'hsl(var(--canary-sidebar-foreground-03))',
+            4: 'hsl(var(--canary-sidebar-foreground-04))',
+            5: 'hsl(var(--canary-sidebar-foreground-05))',
+            accent: 'hsl(var(--canary-sidebar-foreground-accent))'
+          },
+          icon: {
+            1: 'hsl(var(--canary-sidebar-icon-01))',
+            2: 'hsl(var(--canary-sidebar-icon-02))',
+            3: 'hsl(var(--canary-sidebar-icon-03))'
+          }
+        },
+        graph: {
+          background: {
+            1: 'hsl(var(--canary-graph-background-1))',
+            2: 'hsl(var(--canary-graph-background-2))',
+            3: 'var(--canary-graph-background-3)',
+            4: 'hsl(var(--canary-graph-background-4))'
+          }
         }
       },
       letterSpacing: {
         tight: '-0.02em'
       },
       boxShadow: {
-        1: '0px 8px 16px hsl(var(--canary-box-shadow-1))',
-        2: '0px 8px 8px hsl(var(--canary-box-shadow-2))',
-        'pagination-1': '0px 2px 4px hsl(var(--canary-box-shadow-pagination))',
+        1: '0px 8px 16px var(--canary-box-shadow-1)',
+        2: '0px 8px 8px var(--canary-box-shadow-2)',
+        'pagination-1': '0px 2px 4px var(--canary-box-shadow-pagination)',
         'as-border': 'inset 0 0 0 1px',
         'commit-list-bullet':
-          '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)'
+          '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)',
+        'auth': '0px 0px 20px var(--canary-box-shadow-2)'
       },
       borderColor: {
         'borders-1': 'hsl(var(--canary-border-01))',
@@ -424,8 +463,51 @@ export default {
         },
         '.tabnav-inactive': {
           boxShadow: 'inset 0 -1px 0 0 hsl(var(--canary-border-background))'
-        }
+        },
       })
+    },
+    function ({ addComponents, theme, e }: PluginAPI) {
+      const hoverClasses: Record<string, Record<string, string>> = {};
+
+      const generateHoverClasses = (colors: Record<string, any> | undefined, prefix = '') => {
+        if (!colors) return
+
+        Object.keys(colors).forEach(key => {
+          const value = colors[key];
+          const classKey = prefix ? `${prefix}-${key}` : key;
+
+          if (typeof value === 'object' && !Array.isArray(value)) {
+            generateHoverClasses(value, classKey);
+            return
+          }
+
+          if (classKey.includes('foreground')) {
+            hoverClasses[`.${e(`hover:text-${classKey}`)}:hover`] = {
+              color: value,
+            };
+          } else if (classKey.includes('background')) {
+            hoverClasses[`.${e(`hover:bg-${classKey}`)}:hover`] = {
+              backgroundColor: value,
+            };
+          } else if (classKey.includes('border')) {
+            hoverClasses[`.${e(`hover:border-${classKey}`)}:hover`] = {
+              borderColor: value,
+            };
+          } else if (classKey.includes('icon') || classKey.includes('icons')) {
+            hoverClasses[`.${e(`hover:text-${classKey}`)}:hover`] = {
+              color: value,
+            };
+            hoverClasses[`.${e(`hover:bg-${classKey}`)}:hover`] = {
+              backgroundColor: value,
+            };
+          }
+        });
+      };
+
+      const colors = theme('colors');
+      generateHoverClasses(colors);
+
+      addComponents(hoverClasses);
     }
   ],
   safelist: [
@@ -436,10 +518,53 @@ export default {
     'prose-a',
     'prose-img',
     'prose-code',
-    { pattern: /^border-borders-/ },
     { pattern: /^bg-graph-/ },
-    { pattern: /^text-foreground-/ },
     { pattern: /^bg-background-/ },
+    { pattern: /^text-foreground-/ },
+    { pattern: /^border-borders-/ },
+    { pattern: /^text-icons-/ },
+    { pattern: /^bg-icons-/ },
+    // button classes
+    { pattern: /^bg-button-background-/ },
+    { pattern: /^text-button-foreground-/ },
+    { pattern: /^border-button-border-/ },
+    // tags classes
+    { pattern: /^bg-tag-background-/ },
+    { pattern: /^text-tag-foreground-/ },
+    { pattern: /^border-tag-border-/ },
+    // label classes
+    { pattern: /^bg-label-background-/ },
+    { pattern: /^text-label-foreground-/ },
+    // sidebar classes
+    { pattern: /^bg-sidebar-background-/ },
+    { pattern: /^text-sidebar-foreground-/ },
+    { pattern: /^border-sidebar-border-/ },
+    { pattern: /^text-sidebar-icon-/ },
+
+    // Hover classes
+    { pattern: /^hover:bg-graph-/ },
+    { pattern: /^hover:bg-background-/ },
+    { pattern: /^hover:text-foreground-/ },
+    { pattern: /^hover:border-borders-/ },
+    { pattern: /^hover:text-icons-/ },
+    { pattern: /^hover:bg-icons-/ },
+    // button classes
+    { pattern: /^hover:bg-button-background-/ },
+    { pattern: /^hover:text-button-foreground-/ },
+    { pattern: /^hover:border-button-border-/ },
+    // tags classes
+    { pattern: /^hover:bg-tag-background-/ },
+    { pattern: /^hover:text-tag-foreground-/ },
+    { pattern: /^hover:border-tag-border-/ },
+    // label classes
+    { pattern: /^hover:bg-label-background-/ },
+    { pattern: /^hover:text-label-foreground-/ },
+    // sidebar classes
+    { pattern: /^hover:bg-sidebar-background-/ },
+    { pattern: /^hover:text-sidebar-foreground-/ },
+    { pattern: /^hover:border-sidebar-border-/ },
+    { pattern: /^hover:text-sidebar-icon-/ },
+
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
     'stroke-borders-2',
     // NOTE: temporary - used in design-system

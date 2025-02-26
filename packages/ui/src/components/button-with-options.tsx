@@ -25,7 +25,7 @@ const buttonPaddings: Record<ButtonWithOptionsSizes, string> = {
 
 const separatorThemes: Record<ButtonWithOptionsTheme, string> = {
   default: 'before:bg-inherit',
-  primary: 'before:bg-borders-7',
+  primary: 'before:bg-button-border-accent-1',
   error: 'before:bg-button-border-danger-1',
   success: 'before:bg-button-border-success-1',
   disabled: 'before:bg-button-border-disabled-1',

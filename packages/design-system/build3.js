@@ -8,7 +8,7 @@ register(StyleDictionary)
 const sd = new StyleDictionary({
   // make sure to have source match your token files!
   // be careful about accidentally matching your package.json or similar files that are not tokens
-  source: ['primitives/**/*.json', 'theme/**/*.json'],
+  source: ['primitives/**/*.json', 'theme/**/*.json', 'breakpoint/**/*.json'],
   preprocessors: ['tokens-studio'], // <-- since 0.16.0 this must be explicit
   platforms: {
     css: {
@@ -23,17 +23,44 @@ const sd = new StyleDictionary({
       files: [
         {
           filter: token => {
-            return token.$type !== 'boxShadow'
+            return token.filePath.includes('primitives/colors.json')
           },
-
-          destination: 'variables.css',
+          destination: 'colors-variables.css',
           format: 'css/variables'
         },
         {
           filter: token => {
-            return token.$type === 'boxShadow'
+            return token.filePath.includes('theme/')
           },
-          destination: 'shadow.css',
+          destination: 'themes.css',
+          format: 'css/variables'
+        },
+        {
+          filter: token => {
+            return token.filePath.includes('primitives/typography.json')
+          },
+          destination: 'typography.css',
+          format: 'css/variables'
+        },
+        {
+          filter: token => {
+            return token.filePath.includes('primitives/dimensions.json')
+          },
+          destination: 'dimensions.css',
+          format: 'css/variables'
+        },
+        {
+          filter: token => {
+            return token.filePath.includes('breakpoint/')
+          },
+          destination: 'breakpoints.css',
+          format: 'css/variables'
+        },
+        {
+          filter: token => {
+            return token.filePath.includes('primitives/icon.json')
+          },
+          destination: 'icons.css',
           format: 'css/variables'
         }
       ]

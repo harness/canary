@@ -6,8 +6,7 @@
       "primitives/colors": "enabled",
       "primitives/typography": "enabled",
       "primitives/dimensions": "enabled",
-      "primitives/icon": "enabled",
-      "theme-dark/standard": "disabled"
+      "primitives/icon": "enabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:b8bdca9fbe3f6357180e05d25146f83172409a7e,",
@@ -1234,8 +1233,7 @@
       "components/desktop/feature/pipline": "enabled",
       "components/desktop/base/button": "enabled",
       "components/desktop/base/input": "enabled",
-      "components/desktop/base/dropdown menu": "enabled",
-      "theme-dark/standard": "disabled"
+      "components/desktop/base/dropdown menu": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",

@@ -1,28 +1,30 @@
+import { ColorType, ContrastType, FullTheme, IThemeStore, ModeType } from '@components/theme-selector/types'
+
 export interface ThemeInterface {
-  mode: Mode
-  contrast: Contrast
-  colorAdjustment: ColorAdjustment
+  mode: ModeType
+  contrast: ContrastType
+  colorAdjustment: ColorType
   accentColor: AccentColor
   grayColor: GrayColor
 }
 
-export enum Mode {
-  Dark = 'Dark',
-  Light = 'Light'
-}
+// export enum Mode {
+//   Dark = 'Dark',
+//   Light = 'Light'
+// }
 
-export enum Contrast {
-  Default = 'Default',
-  HighContrast = 'High Contrast',
-  Dimmer = 'Dimmer'
-}
+// export enum Contrast {
+//   Default = 'Default',
+//   HighContrast = 'High Contrast',
+//   Dimmer = 'Dimmer'
+// }
 
-export enum ColorAdjustment {
-  Default = 'Default',
-  Protanopia = 'Protanopia',
-  Deuteranopia = 'Deuteranopia',
-  Tritanopia = 'Tritanopia'
-}
+// export enum ColorAdjustment {
+//   Default = 'Default',
+//   Protanopia = 'Protanopia',
+//   Deuteranopia = 'Deuteranopia',
+//   Tritanopia = 'Tritanopia'
+// }
 
 export enum AccentColor {
   Red = '#FF4D4D',
@@ -53,9 +55,10 @@ export enum GrayColor {
 
 export interface ThemeDialogProps {
   defaultTheme?: ThemeInterface
-  theme?: ThemeInterface
+  theme?: FullTheme
+  setTheme: (theme: FullTheme) => void
   open: boolean
   onOpenChange: (open: boolean) => void
-  onChange: (language: ThemeInterface) => void
+  // onChange: (theme: ThemeInterface) => void
   children?: React.ReactNode
 }

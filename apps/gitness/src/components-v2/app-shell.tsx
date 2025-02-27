@@ -205,6 +205,7 @@ export const AppShell = () => {
             handleMoreMenu={handleMoreMenu}
             showSettingMenu={showSettingMenu}
             handleSettingsMenu={handleSettingsMenu}
+            handleCustomNav={handleCustomNav}
           />
         </Sidebar.Provider>
       </SandboxLayout.LeftPanel>

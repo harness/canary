@@ -7,13 +7,7 @@ import { Language, LanguageCode, LanguageDialogProps, LanguageInterface } from '
 
 export const languages: LanguageInterface[] = [
   { code: LanguageCode.EN, name: Language.English },
-  { code: LanguageCode.БГ, name: Language.Bulgarian },
-  { code: LanguageCode.HR, name: Language.Croatian },
-  { code: LanguageCode.CZ, name: Language.Czech },
-  { code: LanguageCode.FR, name: Language.French },
-  { code: LanguageCode.DE, name: Language.German },
-  { code: LanguageCode.IE, name: Language.Irish },
-  { code: LanguageCode.LA, name: Language.LatinAmerican }
+  { code: LanguageCode.FR, name: Language.French }
 ]
 
 const LanguageDialog: FC<LanguageDialogProps> = ({
@@ -51,7 +45,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
               }}
             >
               <div className="flex items-center gap-2">
-                <div className="flex size-6 items-center justify-center rounded bg-background-12 text-12 text-foreground-3">
+                <div className="flex size-6 items-center justify-center rounded bg-background-12 text-12 text-foreground-3 uppercase">
                   {lang.code}
                 </div>
                 <span

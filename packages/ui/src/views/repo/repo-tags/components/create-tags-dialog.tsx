@@ -112,6 +112,7 @@ export function CreateTagDialog({
               <Label htmlFor="target" className="mb-2.5">
                 Based on
               </Label>
+              {/* TODO: Currently the search within BranchSelector is not working, we need to review the current passed states for it to work */}
               <BranchSelector
                 useRepoBranchesStore={useRepoBranchesStore}
                 useTranslationStore={useTranslationStore}
@@ -121,6 +122,7 @@ export function CreateTagDialog({
                 }}
                 searchQuery={branchQuery}
                 setSearchQuery={setBranchQuery}
+                buttonSize="md"
                 dynamicWidth
               />
             </ControlGroup>

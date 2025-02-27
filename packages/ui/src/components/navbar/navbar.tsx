@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { Button, Icon, IThemeStore, NavbarProjectChooser, NavbarSkeleton, ScrollArea, Spacer } from '@/components'
+import { useRouterContext } from '@/context'
 import { TypesUser } from '@/types'
 import { TranslationStore } from '@/views'
 import { isEmpty } from 'lodash-es'
@@ -44,6 +45,7 @@ export const Navbar = ({
   useThemeStore,
   useTranslationStore
 }: NavbarProps) => {
+  const { Link } = useRouterContext()
   const location = useLocation()
   const navigate = useNavigate()
   const { t } = useTranslationStore()

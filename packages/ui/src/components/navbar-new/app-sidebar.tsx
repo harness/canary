@@ -46,7 +46,6 @@ export const AppSidebar = ({
   handleLogOut
 }: SidebarProps) => {
   const { t, i18n, changeLanguage } = useTranslationStore()
-  console.log('i18n.language', i18n.language)
   const { theme, setTheme } = useThemeStore()
   const navigate = useNavigate()
 

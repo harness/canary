@@ -6,8 +6,7 @@
       "primitives/colors": "enabled",
       "primitives/typography": "enabled",
       "primitives/dimensions": "enabled",
-      "primitives/icon": "enabled",
-      "components/desktop/base/btn": "disabled"
+      "primitives/icon": "enabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:b8bdca9fbe3f6357180e05d25146f83172409a7e,",
@@ -669,8 +668,7 @@
     "name": "dark",
     "selectedTokenSets": {
       "theme/dark/standard": "enabled",
-      "theme/dark/icon-width": "enabled",
-      "components/desktop/base/btn": "disabled"
+      "theme/dark/icon-width": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",

@@ -1,14 +1,16 @@
 {
   "badge": {
-    "default-24": {
-      "$type": "sizing",
-      "$value": "{size.6}"
+    "size": {
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.6}"
+      },
+      "sm": {
+        "$type": "sizing",
+        "$value": "{size.5}"
+      }
     },
-    "small-20": {
-      "$type": "sizing",
-      "$value": "{size.5}"
-    },
-    "basic": {
+    "default": {
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.1}"
@@ -27,18 +29,20 @@
       }
     },
     "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.2}"
-    },
-    "full": {
-      "$type": "borderRadius",
-      "$value": "{rounded.full}"
-    },
-    "rounded": {
-      "px": {
-        "$type": "spacing",
-        "$value": "{spacing.2-half}"
+      "default": {
+        "$type": "borderRadius",
+        "$value": "{rounded.2}"
+      },
+      "rounded": {
+        "$type": "borderRadius",
+        "$value": "{rounded.full}"
       }
+    }
+  },
+  "badge-rounded": {
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.2-half}"
     }
   }
 }

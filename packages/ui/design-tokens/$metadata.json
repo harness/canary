@@ -4,12 +4,13 @@
     "primitives/typography",
     "primitives/dimensions",
     "primitives/icon",
-    "theme-dark/standard",
-    "theme-dark/icon-width",
+    "theme/dark/standard",
+    "theme/dark/icon-width",
     "breakpoint/desktop",
     "components/desktop/base/button",
     "components/desktop/base/input",
     "components/desktop/base/badge",
+    "components/desktop/base/tag",
     "components/desktop/base/dropdown menu",
     "components/desktop/feature/pipline"
   ]

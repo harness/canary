@@ -6,8 +6,7 @@
       "primitives/colors": "enabled",
       "primitives/typography": "enabled",
       "primitives/dimensions": "enabled",
-      "primitives/icon": "enabled",
-      "components/desktop/base/tag": "disabled"
+      "primitives/icon": "enabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:b8bdca9fbe3f6357180e05d25146f83172409a7e,",
@@ -669,8 +668,7 @@
     "name": "dark",
     "selectedTokenSets": {
       "theme/dark/standard": "enabled",
-      "theme/dark/icon-width": "enabled",
-      "components/desktop/base/tag": "disabled"
+      "theme/dark/icon-width": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1238,8 +1236,7 @@
       "components/desktop/feature/pipline": "enabled",
       "components/desktop/base/button": "enabled",
       "components/desktop/base/input": "enabled",
-      "components/desktop/base/dropdown menu": "enabled",
-      "components/desktop/base/tag": "disabled"
+      "components/desktop/base/dropdown menu": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",
@@ -1274,23 +1271,23 @@
       "input.gap": "d1c4fb60bade86c4a73111042fdb6f6cd82866a8",
       "input.px": "2276d5824d4c1306ec045888740194851fe50c2a",
       "input.py": "c7ae71898285e79260ecb1d681cdc72978ab818a",
-      "dropdown-item.px": "8a447a832a15108a63270884d819bd8c73119f39",
-      "dropdown-item.gap": "5811c5344cc681a87424c899866d939993632f82",
-      "dropdown-item.radius": "fe54e79b3bdb596ef734f8de2bfad219cad77108",
-      "dropdown-item.size": "cf2d134b36dfdc2f360d1ada40f041739ac105a2",
-      "dropdown-sub-item.px": "510f1b5d88220a176e5fb6df785d531dfcb32070",
-      "dropdown-sub-item.py": "c91e77aba6ccd0f23fa158c177915d62f2fe0b06",
-      "dropdown-sub-item.gap": "91c68994497fe0c724599224c904954efeb337d2",
-      "dropdown-sub-item.radius": "67906229cc422c614910959894741c178ad8a76f",
-      "dropdown-sub-item.size": "ded5e6c8cd591a554a8be9f968121994b905d19a",
-      "dropdown-sub-item.gap-y": "7594be6c17f84a7348ff85b2a8adc8dbe43259ea",
-      "container.py": "d63e01af7a6bf8a73360e69645ad96648c739e78",
-      "container.radius": "623504b7b1438de7d3330abd369c6bbcdb6ce642",
-      "container.min-w": "d609efbc8a53fe82d0a899c10f804b0b5cffca98",
-      "menu-item-branch-selector.tag.px": "35594a38718a20c7f3e3fd133e8c44ff831c5a05",
-      "menu-item-branch-selector.tag.size": "4b9f6544cf9aec4068151e8e37a986d832f5606c",
-      "menu-items.header/footer.px": "ac04ab19d02649e4354bb5f650c0a9435f7a7f19",
-      "menu-items.header/footer.py": "7f108d35da597212c12b81e397b921cf5365874b"
+      "dropdown.item.size": "cf2d134b36dfdc2f360d1ada40f041739ac105a2",
+      "dropdown.sub-item.size": "ded5e6c8cd591a554a8be9f968121994b905d19a",
+      "dropdown.container.min-w": "d609efbc8a53fe82d0a899c10f804b0b5cffca98",
+      "dropdown.menu-item-branch-selector.tag.size": "4b9f6544cf9aec4068151e8e37a986d832f5606c",
+      "dropdown.item.px": "8a447a832a15108a63270884d819bd8c73119f39",
+      "dropdown.item.gap": "5811c5344cc681a87424c899866d939993632f82",
+      "dropdown.sub-item.px": "510f1b5d88220a176e5fb6df785d531dfcb32070",
+      "dropdown.sub-item.py": "c91e77aba6ccd0f23fa158c177915d62f2fe0b06",
+      "dropdown.sub-item.gap": "91c68994497fe0c724599224c904954efeb337d2",
+      "dropdown.sub-item.gap-y": "7594be6c17f84a7348ff85b2a8adc8dbe43259ea",
+      "dropdown.container.py": "d63e01af7a6bf8a73360e69645ad96648c739e78",
+      "dropdown.menu-item-branch-selector.tag.px": "35594a38718a20c7f3e3fd133e8c44ff831c5a05",
+      "dropdown.item.radius": "fe54e79b3bdb596ef734f8de2bfad219cad77108",
+      "dropdown.sub-item.radius": "67906229cc422c614910959894741c178ad8a76f",
+      "dropdown.container.radius": "623504b7b1438de7d3330abd369c6bbcdb6ce642",
+      "dropdown.menu-items.header-footer.px": "ac04ab19d02649e4354bb5f650c0a9435f7a7f19",
+      "dropdown.menu-items.header-footer.py": "7f108d35da597212c12b81e397b921cf5365874b"
     },
     "group": "breakpoint"
   }

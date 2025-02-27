@@ -8,7 +8,6 @@ import {
   MenuGroupType,
   MenuGroupTypes,
   MoreSubmenu,
-  // Navbar,
   NavbarItemType,
   SettingsMenu,
   Sidebar
@@ -179,36 +178,21 @@ export const AppShell = () => {
   return (
     <SandboxLayout.Root>
       <SandboxLayout.LeftPanel>
-        {/* <Navbar
-          showMoreMenu={showMoreMenu}
-          showSettingMenu={showSettingMenu}
-          handleMoreMenu={handleMoreMenu}
-          handleSettingsMenu={handleSettingsMenu}
-          currentUser={currentUser}
-          handleCustomNav={handleCustomNav}
-          handleLogOut={handleLogOut}
-          recentMenuItems={recentMenu}
-          pinnedMenuItems={pinnedMenu}
-          handleChangePinnedMenuItem={handleChangePinnedMenuItem}
-          handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-          useThemeStore={useThemeStore}
-          useTranslationStore={useTranslationStore}
-        /> */}
         <Sidebar.Provider>
           <AppSidebar
-            useThemeStore={useThemeStore}
-            useTranslationStore={useTranslationStore}
-            pinnedMenuItems={pinnedMenu}
-            handleChangePinnedMenuItem={handleChangePinnedMenuItem}
-            recentMenuItems={recentMenu}
-            handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-            currentUser={currentUser}
             showMoreMenu={showMoreMenu}
-            handleMoreMenu={handleMoreMenu}
             showSettingMenu={showSettingMenu}
+            handleMoreMenu={handleMoreMenu}
             handleSettingsMenu={handleSettingsMenu}
+            currentUser={currentUser}
             handleCustomNav={handleCustomNav}
             handleLogOut={handleLogOut}
+            recentMenuItems={recentMenu}
+            pinnedMenuItems={pinnedMenu}
+            handleChangePinnedMenuItem={handleChangePinnedMenuItem}
+            handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
+            useThemeStore={useThemeStore}
+            useTranslationStore={useTranslationStore}
           />
         </Sidebar.Provider>
       </SandboxLayout.LeftPanel>

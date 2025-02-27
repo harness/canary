@@ -109,6 +109,7 @@ import InfrastructureGradient from '../icons/infrastructure-gradient.svg'
 import Infrastructure from '../icons/infrastructure-icon.svg'
 import Italicize from '../icons/italicize.svg'
 import Key from '../icons/key-icon.svg'
+import Language from '../icons/language.svg'
 import Lightning from '../icons/lightning.svg'
 import List from '../icons/list.svg'
 import NoDataBranches from '../icons/lists-data-icons/no-data-branches.svg'
@@ -215,6 +216,7 @@ const IconNameMap = {
   'filter-list': FilterList,
   'info-circle': InfoCircle,
   'double-tick': DoubleTick,
+  language: Language,
   play: Play,
   download: Download,
   clock: Clock,

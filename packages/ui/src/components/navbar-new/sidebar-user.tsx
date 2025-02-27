@@ -1,3 +1,4 @@
+import { TypesUser } from '@/types'
 import { Avatar } from '@components/avatar'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
@@ -6,13 +7,7 @@ import { getInitials } from '@utils/stringUtils'
 import { TFunction } from 'i18next'
 
 interface UserProps {
-  user: {
-    display_name?: string
-    uid?: string
-    url: string
-    email: string
-    // avatar: string
-  }
+  user?: TypesUser
   openThemeDialog: () => void
   openLanguageDialog: () => void
   t: TFunction
@@ -30,12 +25,12 @@ export function User({ user, openThemeDialog, openLanguageDialog, t }: UserProps
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar.Root className="h-8 w-8 rounded-lg">
-                <Avatar.Image src={user.url} alt="user" />
+                <Avatar.Image src={user?.url} alt="user" />
                 <Avatar.Fallback className="rounded-lg">{getInitials(userName)}</Avatar.Fallback>
               </Avatar.Root>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{userName}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate text-xs">{user?.email}</span>
               </div>
               <Icon name="chevron-up-down" size={24} className="ml-auto" />
             </Sidebar.MenuButton>
@@ -49,12 +44,12 @@ export function User({ user, openThemeDialog, openLanguageDialog, t }: UserProps
             <DropdownMenu.Label className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar.Root className="h-8 w-8 rounded-lg">
-                  <Avatar.Image src={user.url} alt={userName} />
+                  <Avatar.Image src={user?.url} alt={userName} />
                   <Avatar.Fallback className="rounded-lg">SM</Avatar.Fallback>
                 </Avatar.Root>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{userName}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate text-xs">{user?.email}</span>
                 </div>
               </div>
             </DropdownMenu.Label>

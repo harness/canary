@@ -1,31 +1,35 @@
-// @ts-nocheck
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-
+import { IThemeStore } from '@/components'
+import { TypesUser } from '@/types'
+import { TranslationStore } from '@/views'
 import { Icon } from '@components/icon'
-import { LanguageDialog, languages } from '@components/language-selector'
-import { ManageNavigation } from '@components/manage-navigation'
-import { MoreSubmenu } from '@components/more-submenu'
-import { SettingsMenu } from '@components/settings-menu'
+import { LanguageCode, LanguageDialog, LanguageInterface, languages } from '@components/language-selector'
 import { Sidebar } from '@components/sidebar/sidebar'
 import { Spacer } from '@components/spacer'
-import { ThemeDialog } from '@components/theme-selector-v2'
+import { ThemeDialog, ThemeInterface } from '@components/theme-selector-v2'
 
-import { getNavbarMenuData } from './data/navbar-menu-data'
 import { SidebarItem } from './sidebar-item'
-import { SidebarSearch } from './sidebar-search'
+import { SidebarSearchNew } from './sidebar-search-new'
 import { User } from './sidebar-user'
-import { MenuGroupTypes } from './types'
+import { NavbarItemType } from './types'
 
-const getData = t => ({
-  user: {
-    name: 'Jane Citizen',
-    email: 'jane@harness.io',
-    avatar:
-      'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop'
-  }
-})
+interface SidebarProps {
+  recentMenuItems: NavbarItemType[]
+  pinnedMenuItems: NavbarItemType[]
+  showMoreMenu: boolean
+  showSettingMenu: boolean
+  handleMoreMenu: () => void
+  handleSettingsMenu: () => void
+  currentUser: TypesUser | undefined
+  handleCustomNav: () => void
+  handleLogOut: () => void
+  handleChangePinnedMenuItem: (item: NavbarItemType, pin: boolean) => void
+  handleRemoveRecentMenuItem: (item: NavbarItemType) => void
+  useThemeStore: () => IThemeStore
+  useTranslationStore: () => TranslationStore
+}
 
 export const AppSidebar = ({
   useThemeStore,
@@ -35,90 +39,27 @@ export const AppSidebar = ({
   pinnedMenuItems,
   recentMenuItems,
   currentUser,
-  showMoreMenu,
-  showSettingMenu,
   handleMoreMenu,
-  handleSettingsMenu
-}) => {
-  const location = useLocation()
-  const { setTheme } = useThemeStore()
+  handleSettingsMenu,
+  handleCustomNav
+}: SidebarProps) => {
+  const { t, i18n, changeLanguage } = useTranslationStore()
+  console.log('i18n.language', i18n.language)
+  const { theme, setTheme } = useThemeStore()
+  const navigate = useNavigate()
 
-  // const [showMoreMenu, setShowMoreMenu] = useState(false)
-  // const [showSettingMenu, setShowSettingMenu] = useState(false)
-  const [showCustomNav, setShowCustomNav] = useState(false)
   const [openThemeDialog, setOpenThemeDialog] = useState(false)
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)
 
-  const { t, changeLanguage } = useTranslationStore()
-  const data = getData(t)
+  // const handleThemeChange = (theme: ThemeInterface) => {
+  //   setTheme(`${theme.mode}-${theme.colorAdjustment}-${theme.contrast}`)
+  // }
 
-  const { moreMenu, settingsMenu } = useMemo(() => {
-    const navbarMenuData = getNavbarMenuData(t)
-
-    return navbarMenuData.reduce(
-      (acc, item) => {
-        if (item.type === MenuGroupTypes.SETTINGS) {
-          acc.settingsMenu.push(item)
-        } else {
-          acc.moreMenu.push(item)
-        }
-        return acc
-      },
-      { moreMenu: [], settingsMenu: [] }
-    )
-  }, [t, changeLanguage])
-
-  /**
-   * Toggle show more menu
-   */
-  // const handleMoreMenu = useCallback(() => {
-  //   setShowSettingMenu(false)
-  //   setShowMoreMenu(prevState => !prevState)
-  // }, [])
-
-  /**
-   * Toggle system settings menu
-   */
-  // const handleSettingsMenu = useCallback(() => {
-  //   setShowMoreMenu(false)
-  //   setShowSettingMenu(prevState => !prevState)
-  // }, [])
-
-  /**
-   * Toggle custom navigation modal
-   */
-  const handleCustomNav = useCallback(() => {
-    setShowCustomNav(prevState => !prevState)
-  }, [])
-
-  /**
-   * Close all menu when location changed
-   */
-  // useEffect(() => {
-  //   setShowMoreMenu(false)
-  //   setShowSettingMenu(false)
-  //   setShowCustomNav(false)
-  // }, [location])
-
-  /**
-   * Handle save recent and pinned items
-   */
-  const handleSave = (nextRecentItems, nextPinnedItems) => {
-    // setNavLinks({
-    //   pinnedMenu: nextPinnedItems,
-    //   recentMenu: nextRecentItems
-    // })
-  }
-
-  const handleThemeChange = theme => {
-    setTheme(theme)
-  }
-
-  const handleLanguageChange = language => {
+  const handleLanguageChange = (language: LanguageInterface) => {
     changeLanguage(language.code.toLowerCase())
   }
 
-  const handleLanguageSave = language => {
+  const handleLanguageSave = (language: LanguageInterface) => {
     changeLanguage(language.code.toLowerCase())
     setOpenLanguageDialog(false)
   }
@@ -127,19 +68,28 @@ export const AppSidebar = ({
     setOpenLanguageDialog(false)
   }
 
-  const navigate = useNavigate()
-
   return (
     <>
       <Sidebar.Root>
         <Sidebar.Header>
-          <div className="h-[58px] flex gap-2 items-center pl-3 justify-start">
-            <NavLink to="/views">
-              <Icon name="harness" size={20} className="text-foreground-accent" />
-            </NavLink>
-            <Icon name="harness-logo-text" size={68} className="text-foreground-1" />
-          </div>
-          <SidebarSearch t={t} />
+          {/* <SidebarSearch
+            logo={
+              <Link className="flex items-center gap-1.5" to="/">
+                <Icon name="harness" size={18} className="text-foreground-accent" />
+                <Icon name="harness-logo-text" width={65} height={15} className="mb-0.5 text-foreground-1" />
+              </Link>
+            }
+          /> */}
+
+          <SidebarSearchNew
+            logo={
+              <Link to="/" className="h-[58px] flex gap-2 items-center pl-3 justify-start">
+                <Icon name="harness" size={20} className="text-foreground-accent" />
+                <Icon name="harness-logo-text" size={68} className="text-foreground-1" />
+              </Link>
+            }
+            t={t}
+          />
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group className="px-4 pt-5">
@@ -245,27 +195,15 @@ export const AppSidebar = ({
         </Sidebar.Footer>
         <Sidebar.Rail />
       </Sidebar.Root>
-      <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
-      <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
-      <ManageNavigation
-        pinnedItems={pinnedMenuItems}
-        recentItems={recentMenuItems}
-        navbarMenuData={[]}
-        showManageNavigation={showCustomNav}
-        isSubmitting={false}
-        submitted={false}
-        onSave={handleSave}
-        onClose={handleCustomNav}
-      />
       <ThemeDialog
+        theme={theme}
+        setTheme={setTheme}
         open={openThemeDialog}
         onOpenChange={() => setOpenThemeDialog(false)}
-        onChange={handleThemeChange}
-        // onCancel={handleThemeCancel}
-        // onSave={handleThemeSave}
       />
       <LanguageDialog
         supportedLanguages={languages}
+        defaultLanguage={i18n.language as LanguageCode}
         open={openLanguageDialog}
         onOpenChange={() => setOpenLanguageDialog(false)}
         onChange={handleLanguageChange}

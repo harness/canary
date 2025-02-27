@@ -1,25 +1,11 @@
 export enum Language {
   English = 'English',
-  Bulgarian = 'Bulgarian',
-  Croatian = 'Croatian',
-  Czech = 'Czech',
-  French = 'French',
-  German = 'German – Standard',
-  Irish = 'Irish – Extended',
-  Russian = 'Russian – QWERTY',
-  LatinAmerican = 'Latin American'
+  French = 'French'
 }
 
 export enum LanguageCode {
-  EN = 'EN',
-  БГ = 'БГ',
-  HR = 'HR',
-  CZ = 'CZ',
-  FR = 'FR',
-  DE = 'DE',
-  IE = 'IE',
-  RU = 'РУ',
-  LA = 'LA'
+  EN = 'en',
+  FR = 'fr'
 }
 
 export interface LanguageInterface {

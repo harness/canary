@@ -2,16 +2,19 @@
   "name": "@harnessio/design-system",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "style-dictionary build --config style-dictionary.config.js",
+    "build": "pnpm clean && node build3.js",
     "clean": "rm -rf dist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "style-dictionary": "^4.3.3"
+    "@tokens-studio/sd-transforms": "^1.2.9",
+    "style-dictionary": "^4.3.3",
+    "style-dictionary-utils": "^4.0.5"
   }
 }

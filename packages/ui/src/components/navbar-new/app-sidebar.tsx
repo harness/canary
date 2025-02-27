@@ -8,10 +8,11 @@ import { Icon } from '@components/icon'
 import { LanguageCode, LanguageDialog, LanguageInterface, languages } from '@components/language-selector'
 import { Sidebar } from '@components/sidebar/sidebar'
 import { Spacer } from '@components/spacer'
-import { ThemeDialog, ThemeInterface } from '@components/theme-selector-v2'
+import { ThemeDialog } from '@components/theme-selector-v2'
 
 import { SidebarItem } from './sidebar-item'
-import { SidebarSearchNew } from './sidebar-search-new'
+import { SidebarSearch } from './sidebar-search'
+// import { SidebarSearchNew } from './sidebar-search-new'
 import { User } from './sidebar-user'
 import { NavbarItemType } from './types'
 
@@ -41,7 +42,8 @@ export const AppSidebar = ({
   currentUser,
   handleMoreMenu,
   handleSettingsMenu,
-  handleCustomNav
+  handleCustomNav,
+  handleLogOut
 }: SidebarProps) => {
   const { t, i18n, changeLanguage } = useTranslationStore()
   console.log('i18n.language', i18n.language)
@@ -72,16 +74,15 @@ export const AppSidebar = ({
     <>
       <Sidebar.Root>
         <Sidebar.Header>
-          {/* <SidebarSearch
+          <SidebarSearch
             logo={
               <Link className="flex items-center gap-1.5" to="/">
                 <Icon name="harness" size={18} className="text-foreground-accent" />
                 <Icon name="harness-logo-text" width={65} height={15} className="mb-0.5 text-foreground-1" />
               </Link>
             }
-          /> */}
-
-          <SidebarSearchNew
+          />
+          {/* <SidebarSearchNew
             logo={
               <Link to="/" className="h-[58px] flex gap-2 items-center pl-3 justify-start">
                 <Icon name="harness" size={20} className="text-foreground-accent" />
@@ -89,7 +90,7 @@ export const AppSidebar = ({
               </Link>
             }
             t={t}
-          />
+          /> */}
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group className="px-4 pt-5">
@@ -190,6 +191,7 @@ export const AppSidebar = ({
             user={currentUser}
             openThemeDialog={() => setOpenThemeDialog(true)}
             openLanguageDialog={() => setOpenLanguageDialog(true)}
+            handleLogOut={handleLogOut}
             t={t}
           />
         </Sidebar.Footer>

@@ -10,10 +10,11 @@ interface UserProps {
   user?: TypesUser
   openThemeDialog: () => void
   openLanguageDialog: () => void
+  handleLogOut: () => void
   t: TFunction
 }
 
-export function User({ user, openThemeDialog, openLanguageDialog, t }: UserProps) {
+export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, t }: UserProps) {
   const userName = user?.display_name || user?.uid || ''
   return (
     <Sidebar.Menu>
@@ -68,7 +69,7 @@ export function User({ user, openThemeDialog, openLanguageDialog, t }: UserProps
                 &nbsp;&nbsp;{t('component:navbar.language', 'Language')}
               </DropdownMenu.Item>
               <DropdownMenu.Separator />
-              <DropdownMenu.Item>
+              <DropdownMenu.Item onClick={handleLogOut}>
                 <Icon name="logOut" size={14} />
                 &nbsp;&nbsp;{t('component:navbar.logout', 'Logout')}
               </DropdownMenu.Item>

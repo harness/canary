@@ -19,6 +19,11 @@ export default mergeConfig(viteConfig, {
       //   functions: 80,
       //   statements: 80
       // }
+    },
+    server: {
+      deps: {
+        inline: [/harnessio/]
+      }
     }
   }
 })

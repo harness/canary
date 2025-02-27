@@ -74,6 +74,7 @@ export const LabelsListStore: RepoLabelsListStore = {
         }
       ]
     },
+    isLoading: false,
 
     getParentScopeLabels: false,
 
@@ -82,6 +83,7 @@ export const LabelsListStore: RepoLabelsListStore = {
     addLabel: (_: ILabelType) => {},
 
     deleteLabel: (_: string) => {},
+    setIsLoading: (_: boolean) => {},
 
     setValues: (_: Record<string, LabelValueType[]>) => {},
     setRepoSpaceRef: (_: SetRepoSpaceRefProps) => {},

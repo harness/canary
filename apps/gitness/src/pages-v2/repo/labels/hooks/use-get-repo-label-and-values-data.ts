@@ -42,14 +42,10 @@ export const useGetRepoLabelAndValuesData = ({
       repo_ref: repo_ref ?? '',
       queryParams: { page: queryPage || 1, limit, query: query ?? '', inherited }
     },
-    {
-      enabled
-    }
+    { enabled }
   )
 
-  const labelsData = useMemo(() => {
-    return (labels || []) as ILabelType[]
-  }, [labels])
+  const labelsData = useMemo(() => (labels || []) as ILabelType[], [labels])
 
   /**
    * Get values for each label
@@ -123,6 +119,6 @@ export const useGetRepoLabelAndValuesData = ({
     repo_ref,
     labels: labelsData,
     values,
-    refetchLabels: refetchLabels
+    refetchLabels
   }
 }

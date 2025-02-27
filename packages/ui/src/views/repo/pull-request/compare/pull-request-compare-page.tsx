@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { LinkProps, useNavigate } from 'react-router-dom'
 
 import { Avatar, Button, Icon, NoData, SkeletonList, Spacer, StyledLink, Tabs } from '@/components'
 import { PrincipalType, TypesDiffStats } from '@/types'
@@ -102,6 +102,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   setSearchLabelQuery?: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
+  editLabelsProps: LinkProps
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -147,6 +148,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   searchLabelQuery,
   setSearchLabelQuery,
   addLabel,
+  editLabelsProps,
   removeLabel
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
@@ -154,11 +156,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const navigate = useNavigate()
   const { t } = useTranslationStore()
+
   const {
     register,
     handleSubmit,
     reset,
-
     formState: { errors, isValid }
   } = useForm<CompareFormFields>({
     resolver: zodResolver(pullRequestFormSchema),
@@ -278,7 +280,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                             <span className="text-foreground-4">
                               {t(
-                                'views:pullRequests.compareChangesCantMergeDesciption',
+                                'views:pullRequests.compareChangesCantMergeDescription',
                                 'You can still create the pull request.'
                               )}
                             </span>
@@ -412,6 +414,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       PRLabels={PRLabels}
                       addLabel={addLabel}
                       removeLabel={removeLabel}
+                      editLabelsProps={editLabelsProps}
                       searchLabelQuery={searchLabelQuery}
                       setSearchLabelQuery={setSearchLabelQuery}
                     />

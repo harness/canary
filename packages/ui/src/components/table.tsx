@@ -43,7 +43,7 @@ TableHeader.displayName = 'TableHeader'
 
 const TableBody = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
   ({ className, ...props }, ref) => (
-    <tbody ref={ref} className={cn('[&_tr:last-child]:border-0', className)} {...props} />
+    <tbody ref={ref} className={cn('[&_tr:last-child]:border-0 [&>tr:hover]:bg-background-4', className)} {...props} />
   )
 )
 TableBody.displayName = 'TableBody'
@@ -57,11 +57,7 @@ TableFooter.displayName = 'TableFooter'
 
 const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElement>>(
   ({ className, ...props }, ref) => (
-    <tr
-      ref={ref}
-      className={cn('hover:bg-background-4 data-[state=selected]:bg-muted border-b transition-colors', className)}
-      {...props}
-    />
+    <tr ref={ref} className={cn('data-[state=selected]:bg-muted border-b transition-colors', className)} {...props} />
   )
 )
 TableRow.displayName = 'TableRow'

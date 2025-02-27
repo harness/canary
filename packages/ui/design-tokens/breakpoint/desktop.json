@@ -86,18 +86,18 @@
         "lineHeight": "{lineHeight.2.snug}",
         "letterSpacing": "{tracking.tight}"
       },
-      "$description": "Primary text style for UI and content."
+      "$description": "Primary caption style, small but important text."
     },
-    "strong": {
+    "soft": {
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.500}",
-        "fontSize": "{fontSize.2}",
-        "lineHeight": "{lineHeight.2.snug}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "{fontSize.1}",
+        "lineHeight": "{lineHeight.1.snug}",
         "letterSpacing": "{tracking.normal}"
       },
-      "$description": "Primary text style for UI and content."
+      "$description": "Helper text, meta information."
     },
     "code": {
       "$type": "typography",

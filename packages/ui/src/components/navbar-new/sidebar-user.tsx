@@ -69,7 +69,7 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, 
                 &nbsp;&nbsp;{t('component:navbar.appearence', 'Appearance')}
               </DropdownMenu.Item>
               <DropdownMenu.Item onClick={openLanguageDialog}>
-                <LanguageIcon />
+                <Icon name="language" size={14} />
                 &nbsp;&nbsp;{t('component:navbar.language', 'Language')}
               </DropdownMenu.Item>
               <DropdownMenu.Separator />
@@ -84,65 +84,3 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, 
     </Sidebar.Menu>
   )
 }
-
-const LanguageIcon = () => (
-  <svg x="0px" y="0px" width="18px" height="18px" viewBox="0 0 18 18" style={{ width: '18px', height: '18px' }}>
-    <line
-      x1="2.25"
-      y1="4.25"
-      x2="10.25"
-      y2="4.25"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="1.5"
-    ></line>
-    <line
-      x1="6.25"
-      y1="2.25"
-      x2="6.25"
-      y2="4.25"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="1.5"
-    ></line>
-    <path
-      d="M4.25,4.25c.091,2.676,1.916,4.981,4.5,5.684"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="1.5"
-    ></path>
-    <path
-      d="M8.25,4.25c-.4,5.625-6,6-6,6"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="1.5"
-    ></path>
-    <polyline
-      points="9.25 15.75 12.25 7.75 12.75 7.75 15.75 15.75"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="1.5"
-    ></polyline>
-    <line
-      x1="10.188"
-      y1="13.25"
-      x2="14.813"
-      y2="13.25"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="1.5"
-    ></line>
-  </svg>
-)

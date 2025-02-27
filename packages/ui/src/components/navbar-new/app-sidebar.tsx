@@ -12,7 +12,6 @@ import { ThemeDialog } from '@components/theme-selector-v2'
 
 import { SidebarItem } from './sidebar-item'
 import { SidebarSearch } from './sidebar-search'
-// import { SidebarSearchNew } from './sidebar-search-new'
 import { User } from './sidebar-user'
 import { NavbarItemType } from './types'
 
@@ -77,15 +76,6 @@ export const AppSidebar = ({
               </Link>
             }
           />
-          {/* <SidebarSearchNew
-            logo={
-              <Link to="/" className="h-[58px] flex gap-2 items-center pl-3 justify-start">
-                <Icon name="harness" size={20} className="text-foreground-accent" />
-                <Icon name="harness-logo-text" size={68} className="text-foreground-1" />
-              </Link>
-            }
-            t={t}
-          /> */}
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group className="px-4 pt-5">

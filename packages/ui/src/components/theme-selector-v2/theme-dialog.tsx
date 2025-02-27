@@ -56,8 +56,6 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ theme, setTheme, open, onOpenChange
                     key={key}
                     onClick={() => {
                       setTheme(`${value}-${colorAdjustment}-${contrast}`)
-                      // setMode(value)
-                      // onChange({ mode: value, contrast, colorAdjustment, accentColor, grayColor })
                     }}
                   >
                     <div className="relative">
@@ -115,8 +113,6 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ theme, setTheme, open, onOpenChange
               value={contrast}
               onValueChange={(value: ContrastType) => {
                 setTheme(`${mode}-${colorAdjustment}-${value}`)
-                // setContrast(value)
-                // onChange({ contrast: value, mode, colorAdjustment, accentColor, grayColor })
               }}
               placeholder="Select"
             >
@@ -145,8 +141,6 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ theme, setTheme, open, onOpenChange
               value={colorAdjustment}
               onValueChange={(value: ColorType) => {
                 setTheme(`${mode}-${value}-${contrast}`)
-                // setColorAdjustment(value)
-                // onChange({ colorAdjustment: value, mode, contrast, accentColor, grayColor })
               }}
               placeholder="Select"
             >
@@ -178,7 +172,6 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ theme, setTheme, open, onOpenChange
                   )}
                   onClick={() => {
                     setAccentColor(item)
-                    // onChange({ accentColor: item, mode, contrast, colorAdjustment, grayColor })
                   }}
                 >
                   <span
@@ -211,7 +204,6 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ theme, setTheme, open, onOpenChange
                   )}
                   onClick={() => {
                     setGrayColor(item)
-                    // onChange({ grayColor: item, mode, contrast, colorAdjustment, accentColor })
                   }}
                 >
                   <span style={{ backgroundColor: item }} className="m-auto block size-[18px] rounded-full" />

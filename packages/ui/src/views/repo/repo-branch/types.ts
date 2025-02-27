@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
 
-import { IThemeStore } from '@/components'
 import { TranslationStore } from '@/views'
 import { z } from 'zod'
 
@@ -69,7 +68,6 @@ export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   onDeleteBranch: (branchName: string) => void
   searchBranches: Branch[]
   setCreateBranchSearchQuery: Dispatch<SetStateAction<string>>
-  useThemeStore: () => IThemeStore
 }
 
 interface Branch {

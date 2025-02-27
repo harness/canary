@@ -5,7 +5,6 @@ import { CreateProjectFormFields, CreateProjectPage } from '@harnessio/ui/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 export default function CreateProject() {
@@ -41,7 +40,6 @@ export default function CreateProject() {
       useTranslationStore={useTranslationStore}
       isLoading={isLoading}
       apiError={error?.message}
-      useThemeStore={useThemeStore}
     />
   )
 }

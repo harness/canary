@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 import { useListPullReqQuery } from '@harnessio/code-service-client'
 import { PullRequestListPage as SandboxPullRequestListPage } from '@harnessio/ui/views'
 
-import { useThemeStore } from '../../framework/context/ThemeContext.tsx'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -49,7 +48,6 @@ export default function PullRequestListPage() {
       useTranslationStore={useTranslationStore}
       searchQuery={query}
       setSearchQuery={setQuery}
-      useThemeStore={useThemeStore}
     />
   )
 }

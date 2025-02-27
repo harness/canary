@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react'
 
-import { useThemeStore } from '@utils/theme-utils'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { IBranchSelectorStore, RepoBranchListView } from '@harnessio/ui/views'
@@ -29,7 +28,6 @@ export function RepoBranchesView() {
       onDeleteBranch={noop}
       searchBranches={[]}
       setCreateBranchSearchQuery={noop}
-      useThemeStore={useThemeStore}
     />
   )
 }

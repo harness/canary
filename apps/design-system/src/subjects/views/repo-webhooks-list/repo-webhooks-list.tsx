@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react'
 
-import { useThemeStore } from '@utils/theme-utils'
 import { noop, useTranslationStore } from '@utils/viewUtils.ts'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
@@ -32,7 +31,6 @@ export const RepoWebhooksList = () => {
         searchQuery={null}
         webhookLoading={false}
         handleEnableWebhook={noop}
-        useThemeStore={useThemeStore}
       />
       <DeleteAlertDialog
         open={deleteWebhookId !== null}

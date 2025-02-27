@@ -1,4 +1,3 @@
-import { IThemeStore } from '@/components'
 import { PrincipalType } from '@/types'
 import { IPrincipalListStore } from '@views/account'
 import { TranslationStore } from '@views/repo'
@@ -34,7 +33,6 @@ export interface ProjectMemberListViewProps {
   setPrincipalsSearchQuery: (val: string) => void
   principalsSearchQuery: string
   onDeleteHandler: (id: string) => void
-  useThemeStore: () => IThemeStore
 }
 
 export interface InviteMemberDialogProps {

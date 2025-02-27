@@ -22,3 +22,5 @@ export interface IThemeStore {
   theme?: FullTheme
   setTheme: (theme: FullTheme) => void
 }
+
+export const defaultTheme = `${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Standard}` as FullTheme

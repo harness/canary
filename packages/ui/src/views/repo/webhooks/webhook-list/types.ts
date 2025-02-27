@@ -1,4 +1,3 @@
-import { IThemeStore } from '@/components'
 import { TranslationStore } from '@views/repo'
 import { CreateWebhookFormFields } from '@views/repo/webhooks/webhook-create/types'
 
@@ -103,5 +102,4 @@ export interface RepoWebhookListPageProps {
   setSearchQuery: (query: string | null) => void
   webhookLoading: boolean
   handleEnableWebhook: (id: number, enabled: boolean) => void
-  useThemeStore: () => IThemeStore
 }

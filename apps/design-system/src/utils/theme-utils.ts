@@ -1,6 +1,4 @@
-import { noop } from '@utils/viewUtils.ts'
-
-import { FullTheme } from '@harnessio/ui/components'
+import { FullTheme } from '@harnessio/ui/context'
 
 export enum Themes {
   DARK_STANDARD_LOW = 'dark-std-low',
@@ -11,14 +9,17 @@ export enum Themes {
   LIGHT_PROT_STD = 'light-prot-std'
 }
 
-export const getThemeFromStorage = () => {
-  const storedTheme = sessionStorage.getItem('view-preview-theme') as Themes
+export const getTheme = () => {
+  const storedTheme = sessionStorage.getItem('view-preview-theme') as FullTheme
 
   if (storedTheme && Object.values(Themes).includes(storedTheme)) {
     return storedTheme
   }
 
-  return Themes.DARK
+  return Themes.DARK as FullTheme
 }
 
-export const useThemeStore = () => ({ theme: getThemeFromStorage() as FullTheme, setTheme: noop })
+export const useThemeStore = () => ({
+  theme: getTheme(),
+  setTheme: (_: FullTheme) => {}
+})

@@ -1,9 +1,8 @@
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Icon, Input, IThemeStore, Label, Spacer, Text } from '@/components'
+import { Button, Card, Icon, Input, Label, Spacer, Text } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { isLightTheme } from '@utils/is-light-theme'
 import { z } from 'zod'
 
 interface PageProps {
@@ -11,7 +10,6 @@ interface PageProps {
   onFormSubmit: (data: CreateProjectFormFields) => void
   apiError?: string | null
   useTranslationStore: () => TranslationStore
-  useThemeStore: () => IThemeStore
 }
 // interface InputProps {
 //   identifier: string
@@ -28,13 +26,7 @@ const createProjectSchema = z.object({
 
 export type CreateProjectFormFields = z.infer<typeof createProjectSchema>
 
-export function CreateProjectPage({
-  isLoading,
-  onFormSubmit,
-  apiError,
-  useTranslationStore,
-  useThemeStore
-}: PageProps) {
+export function CreateProjectPage({ isLoading, onFormSubmit, apiError, useTranslationStore }: PageProps) {
   const {
     register,
     handleSubmit,
@@ -42,8 +34,6 @@ export function CreateProjectPage({
   } = useForm<CreateProjectFormFields>({
     resolver: zodResolver(createProjectSchema)
   })
-
-  const { theme } = useThemeStore()
 
   const onSubmit = (data: CreateProjectFormFields) => {
     onFormSubmit(data)
@@ -57,7 +47,7 @@ export function CreateProjectPage({
         <Card.Root variant="plain" width="full">
           <Card.Header>
             <Card.Title className="flex flex-col place-items-center">
-              <Icon name={'create-workspace'} size={112} isLight={isLightTheme(theme)} />
+              <Icon name="create-workspace" size={112} themeDependent />
               <Spacer size={4} />
               <Text size={6} weight="medium" color="primary">
                 {t('views:createProject.newProject', 'Create your new project')}

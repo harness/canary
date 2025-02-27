@@ -10,7 +10,6 @@ import {
 import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -135,7 +134,6 @@ export default function RepoCommitsPage() {
       useTranslationStore={useTranslationStore}
       searchQuery={branchTagQuery}
       setSearchQuery={setBranchTagQuery}
-      useThemeStore={useThemeStore}
     />
   )
 }

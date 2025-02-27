@@ -2,7 +2,6 @@ import { FC, useMemo } from 'react'
 
 import { Button, ListActions, NoData, SearchBox, Spacer } from '@/components'
 import { useDebounceSearch } from '@/hooks'
-import { ThemeProvider } from '@/providers/theme'
 import { SandboxLayout } from '@/views'
 
 import { InviteMemberDialog } from './components/invite-member-dialog'
@@ -24,10 +23,8 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
   onEditMember,
   setPrincipalsSearchQuery,
   principalsSearchQuery,
-  onDeleteHandler,
-  useThemeStore
+  onDeleteHandler
 }) => {
-  const storeTheme = useThemeStore()
   const { t } = useTranslationStore()
   const { memberList, totalPages, page, setPage } = useMemberListStore()
   const { principalList } = usePrincipalListStore()
@@ -47,7 +44,7 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
   }
 
   return (
-    <ThemeProvider {...storeTheme}>
+    <>
       {!memberList.length && !isDirtyList && !isLoading ? (
         <NoData
           textWrapperClassName="max-w-[350px]"
@@ -129,6 +126,6 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
         setPrincipalsSearchQuery={setPrincipalsSearchQuery}
         principalsSearchQuery={principalsSearchQuery}
       />
-    </ThemeProvider>
+    </>
   )
 }

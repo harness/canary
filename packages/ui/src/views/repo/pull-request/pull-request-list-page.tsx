@@ -1,19 +1,8 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Button,
-  IThemeStore,
-  ListActions,
-  NoData,
-  Pagination,
-  SearchBox,
-  SkeletonList,
-  Spacer,
-  StackedList
-} from '@/components'
+import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Spacer, StackedList } from '@/components'
 import { useDebounceSearch } from '@/hooks'
-import { ThemeProvider } from '@/providers/theme'
 import { PullRequestListStore, SandboxLayout, TranslationStore } from '@/views'
 import { Filters, FiltersBar } from '@components/filters'
 import { noop } from 'lodash-es'
@@ -32,7 +21,6 @@ export interface PullRequestPageProps {
   isLoading?: boolean
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
-  useThemeStore: () => IThemeStore
 }
 
 const PullRequestListPage: FC<PullRequestPageProps> = ({
@@ -42,10 +30,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   useTranslationStore,
   isLoading,
   searchQuery,
-  setSearchQuery,
-  useThemeStore
+  setSearchQuery
 }) => {
-  const storeTheme = useThemeStore()
   const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestListStore()
   const { t } = useTranslationStore()
 
@@ -143,51 +129,49 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   }
 
   return (
-    <ThemeProvider {...storeTheme}>
-      <SandboxLayout.Main className="max-w-[1040px]">
-        <SandboxLayout.Content>
-          {showTopBar && (
-            <>
-              <Spacer size={2} />
-              <p className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pull Requests</p>
-              <Spacer size={6} />
-              <ListActions.Root>
-                <ListActions.Left>
-                  <SearchBox.Root
-                    width="full"
-                    className="max-w-96"
-                    value={searchInput || ''}
-                    handleChange={handleInputChange}
-                    placeholder={t('views:repos.search', 'Search')}
-                  />
-                </ListActions.Left>
-                <ListActions.Right>
-                  <Filters
-                    filterOptions={FILTER_OPTIONS}
-                    sortOptions={SORT_OPTIONS}
-                    filterHandlers={filterHandlers}
-                    t={t}
-                  />
-                  <Button variant="default" asChild>
-                    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
-                  </Button>
-                </ListActions.Right>
-              </ListActions.Root>
-              <FiltersBar
-                filterOptions={FILTER_OPTIONS}
-                sortOptions={SORT_OPTIONS}
-                sortDirections={SORT_DIRECTIONS}
-                filterHandlers={filterHandlers}
-                t={t}
-              />
-              <Spacer size={5} />
-            </>
-          )}
-          {renderListContent()}
-          <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
-    </ThemeProvider>
+    <SandboxLayout.Main className="max-w-[1040px]">
+      <SandboxLayout.Content>
+        {showTopBar && (
+          <>
+            <Spacer size={2} />
+            <p className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pull Requests</p>
+            <Spacer size={6} />
+            <ListActions.Root>
+              <ListActions.Left>
+                <SearchBox.Root
+                  width="full"
+                  className="max-w-96"
+                  value={searchInput || ''}
+                  handleChange={handleInputChange}
+                  placeholder={t('views:repos.search', 'Search')}
+                />
+              </ListActions.Left>
+              <ListActions.Right>
+                <Filters
+                  filterOptions={FILTER_OPTIONS}
+                  sortOptions={SORT_OPTIONS}
+                  filterHandlers={filterHandlers}
+                  t={t}
+                />
+                <Button variant="default" asChild>
+                  <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
+                </Button>
+              </ListActions.Right>
+            </ListActions.Root>
+            <FiltersBar
+              filterOptions={FILTER_OPTIONS}
+              sortOptions={SORT_OPTIONS}
+              sortDirections={SORT_DIRECTIONS}
+              filterHandlers={filterHandlers}
+              t={t}
+            />
+            <Spacer size={5} />
+          </>
+        )}
+        {renderListContent()}
+        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+      </SandboxLayout.Content>
+    </SandboxLayout.Main>
   )
 }
 export { PullRequestListPage }

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 
 import { ButtonWithOptions, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/components'
 import { useDebounceSearch } from '@/hooks'
-import { ThemeProvider } from '@/providers/theme'
 import { SandboxLayout } from '@/views'
 
 import { useFilters, useViewManagement } from '../hooks'
@@ -23,11 +22,9 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   setSearchQuery,
   toCreateRepo,
   toImportRepo,
-  useThemeStore,
   ...routingProps
 }) => {
   const { t } = useTranslationStore()
-  const storeTheme = useThemeStore()
   const navigate = useNavigate()
 
   const {
@@ -63,28 +60,26 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
 
   if (isError) {
     return (
-      <ThemeProvider {...storeTheme}>
-        <NoData
-          textWrapperClassName="max-w-[350px]"
-          iconName="no-data-error"
-          title={t('views:noData.errorApiTitle', 'Failed to load repositories', {
-            type: 'repositories'
-          })}
-          description={[
-            errorMessage ||
-              t(
-                'views:noData.errorApiDescription',
-                'An error occurred while loading the data. Please try again and reload the page.'
-              )
-          ]}
-          primaryButton={{
-            label: t('views:notFound.button', 'Reload page'),
-            onClick: () => {
-              navigate(0) // Reload the page
-            }
-          }}
-        />
-      </ThemeProvider>
+      <NoData
+        textWrapperClassName="max-w-[350px]"
+        iconName="no-data-error"
+        title={t('views:noData.errorApiTitle', 'Failed to load repositories', {
+          type: 'repositories'
+        })}
+        description={[
+          errorMessage ||
+            t(
+              'views:noData.errorApiDescription',
+              'An error occurred while loading the data. Please try again and reload the page.'
+            )
+        ]}
+        primaryButton={{
+          label: t('views:notFound.button', 'Reload page'),
+          onClick: () => {
+            navigate(0) // Reload the page
+          }
+        }}
+      />
     )
   }
 
@@ -98,80 +93,78 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   }
 
   return (
-    <ThemeProvider {...storeTheme}>
-      <SandboxLayout.Main className="max-w-[1040px]">
-        <SandboxLayout.Content>
-          {showTopBar && (
-            <>
-              <Spacer size={8} />
-              <div className="flex items-end">
-                <h1 className="text-2xl font-medium text-foreground-1">
-                  {t('views:repos.repositories', 'Repositories')}
-                </h1>
-                {viewManagement.currentView && (
-                  <>
-                    <span className="mx-2.5 inline-flex h-[18px] w-px bg-borders-1" />
-                    <span className="text-14 text-foreground-3">{viewManagement.currentView.name}</span>
-                  </>
-                )}
-              </div>
-              <Spacer size={6} />
-              <ListActions.Root>
-                <ListActions.Left>
-                  <SearchBox.Root
-                    width="full"
-                    className="max-w-96"
-                    value={searchInput || ''}
-                    handleChange={handleInputChange}
-                    placeholder={t('views:repos.search', 'Search')}
-                  />
-                </ListActions.Left>
-                <ListActions.Right>
-                  <ButtonWithOptions<string>
-                    id="repository"
-                    dropdownContentClassName="mt-0 min-w-[170px]"
-                    handleButtonClick={() => navigate(toCreateRepo?.() || '')}
-                    handleOptionChange={option => {
-                      if (option === 'import') {
-                        navigate(toImportRepo?.() || '')
-                      } else if (option === 'import-multiple') {
-                        navigate('import-multiple')
-                      }
-                    }}
-                    options={[
-                      {
-                        value: 'import',
-                        label: t('views:repos.import-repository', 'Import repository')
-                      },
-                      {
-                        value: 'import-multiple',
-                        label: t('views:repos.import-repositories', 'Import repositories')
-                      }
-                    ]}
-                  >
-                    {t('views:repos.create-repository', 'Create repository')}
-                  </ButtonWithOptions>
-                </ListActions.Right>
-              </ListActions.Root>
-            </>
-          )}
-          <Spacer size={5} />
-          <RepoList
-            repos={reposWithFormattedDates}
-            handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
-            isDirtyList={isDirtyList}
-            useTranslationStore={useTranslationStore}
-            isLoading={isLoading}
-            toCreateRepo={toCreateRepo}
-            toImportRepo={toImportRepo}
-            {...routingProps}
-          />
-          {!!reposWithFormattedDates.length && (
-            <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
-          )}
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
-    </ThemeProvider>
+    <SandboxLayout.Main className="max-w-[1040px]">
+      <SandboxLayout.Content>
+        {showTopBar && (
+          <>
+            <Spacer size={8} />
+            <div className="flex items-end">
+              <h1 className="text-2xl font-medium text-foreground-1">
+                {t('views:repos.repositories', 'Repositories')}
+              </h1>
+              {viewManagement.currentView && (
+                <>
+                  <span className="mx-2.5 inline-flex h-[18px] w-px bg-borders-1" />
+                  <span className="text-14 text-foreground-3">{viewManagement.currentView.name}</span>
+                </>
+              )}
+            </div>
+            <Spacer size={6} />
+            <ListActions.Root>
+              <ListActions.Left>
+                <SearchBox.Root
+                  width="full"
+                  className="max-w-96"
+                  value={searchInput || ''}
+                  handleChange={handleInputChange}
+                  placeholder={t('views:repos.search', 'Search')}
+                />
+              </ListActions.Left>
+              <ListActions.Right>
+                <ButtonWithOptions<string>
+                  id="repository"
+                  dropdownContentClassName="mt-0 min-w-[170px]"
+                  handleButtonClick={() => navigate(toCreateRepo?.() || '')}
+                  handleOptionChange={option => {
+                    if (option === 'import') {
+                      navigate(toImportRepo?.() || '')
+                    } else if (option === 'import-multiple') {
+                      navigate('import-multiple')
+                    }
+                  }}
+                  options={[
+                    {
+                      value: 'import',
+                      label: t('views:repos.import-repository', 'Import repository')
+                    },
+                    {
+                      value: 'import-multiple',
+                      label: t('views:repos.import-repositories', 'Import repositories')
+                    }
+                  ]}
+                >
+                  {t('views:repos.create-repository', 'Create repository')}
+                </ButtonWithOptions>
+              </ListActions.Right>
+            </ListActions.Root>
+          </>
+        )}
+        <Spacer size={5} />
+        <RepoList
+          repos={reposWithFormattedDates}
+          handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
+          isDirtyList={isDirtyList}
+          useTranslationStore={useTranslationStore}
+          isLoading={isLoading}
+          toCreateRepo={toCreateRepo}
+          toImportRepo={toImportRepo}
+          {...routingProps}
+        />
+        {!!reposWithFormattedDates.length && (
+          <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+        )}
+      </SandboxLayout.Content>
+    </SandboxLayout.Main>
   )
 }
 

@@ -5,8 +5,7 @@ import { useDeleteRepoLabelMutation, useDeleteSpaceLabelMutation } from '@harnes
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { ILabelType, LabelsListPage } from '@harnessio/ui/views'
 
-import { useRoutes } from '../../../framework/context/NavigationContext.tsx'
-import { useThemeStore } from '../../../framework/context/ThemeContext'
+import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../../i18n/stores/i18n-store'
@@ -82,7 +81,6 @@ export const RepoLabelsList = () => {
         setSearchQuery={setQuery}
         isLoading={isLoading}
         isRepository
-        useThemeStore={useThemeStore}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}

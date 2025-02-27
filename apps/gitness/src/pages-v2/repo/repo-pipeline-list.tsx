@@ -6,7 +6,6 @@ import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
 
 import { LinkComponent } from '../../components/LinkComponent'
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -74,7 +73,6 @@ export default function RepoPipelineListPage() {
         }}
         LinkComponent={LinkComponent}
         toPipelineDetails={(pipeline: IPipeline) => routes.toExecutions({ spaceId, repoId, pipelineId: pipeline.id })}
-        useThemeStore={useThemeStore}
       />
       <CreatePipelineDialog open={isCreatePipelineDialogOpen} onClose={closeSearchDialog} />
     </>

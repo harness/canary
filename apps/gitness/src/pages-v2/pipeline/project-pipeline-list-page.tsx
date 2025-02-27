@@ -8,7 +8,6 @@ import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
 
 import { LinkComponent } from '../../components/LinkComponent'
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -59,7 +58,6 @@ export default function ProjectPipelineListPage() {
       useTranslationStore={useTranslationStore}
       LinkComponent={LinkComponent}
       toPipelineDetails={(pipeline: IPipeline) => routes.toExecutions({ spaceId, pipelineId: pipeline.id })}
-      useThemeStore={useThemeStore}
     />
   )
 }

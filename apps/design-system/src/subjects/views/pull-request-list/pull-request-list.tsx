@@ -1,6 +1,5 @@
 import { FC, useCallback } from 'react'
 
-import { useThemeStore } from '@utils/theme-utils'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { PullRequestListPage, PullRequestPageProps } from '@harnessio/ui/views'
@@ -21,7 +20,6 @@ const PullRequestListWrapper: FC<Partial<PullRequestPageProps>> = props => {
       usePullRequestListStore={usePullRequestListStore}
       useTranslationStore={useTranslationStore}
       isLoading={false}
-      useThemeStore={useThemeStore}
       {...props}
     />
   )

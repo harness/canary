@@ -1,19 +1,8 @@
 import { FC, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Button,
-  Checkbox,
-  IThemeStore,
-  ListActions,
-  Option,
-  Pagination,
-  SearchBox,
-  SkeletonList,
-  Spacer
-} from '@/components'
+import { Button, Checkbox, ListActions, Option, Pagination, SearchBox, SkeletonList, Spacer } from '@/components'
 import { useDebounceSearch } from '@/hooks'
-import { ThemeProvider } from '@/providers/theme'
 import { ILabelsStore, ILabelType, SandboxLayout, TranslationStore } from '@/views'
 
 import { LabelsListView } from './components/labels-list-view'
@@ -29,7 +18,6 @@ export interface LabelsListPageProps {
   setSearchQuery: (query: string | null) => void
   isLoading: boolean
   isRepository?: boolean
-  useThemeStore: () => IThemeStore
 }
 
 export const LabelsListPage: FC<LabelsListPageProps> = ({
@@ -40,10 +28,8 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   searchQuery,
   setSearchQuery,
   isLoading,
-  isRepository = false,
-  useThemeStore
+  isRepository = false
 }) => {
-  const storeTheme = useThemeStore()
   const { t } = useTranslationStore()
   const {
     labels: spaceLabels,
@@ -74,67 +60,65 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   }
 
   return (
-    <ThemeProvider {...storeTheme}>
-      <SandboxLayout.Main>
-        <SandboxLayout.Content className="px-0">
-          <h1 className="text-2xl font-medium text-foreground-1">{t('views:labelData.title', 'Labels')}</h1>
-          <Spacer size={6} />
-          {isRepository && (
-            <Option
-              className="mb-[18px]"
-              control={
-                <Checkbox
-                  checked={getParentScopeLabels}
-                  onCheckedChange={setGetParentScopeLabels}
-                  id="show-parent-labels"
+    <SandboxLayout.Main>
+      <SandboxLayout.Content className="px-0">
+        <h1 className="text-2xl font-medium text-foreground-1">{t('views:labelData.title', 'Labels')}</h1>
+        <Spacer size={6} />
+        {isRepository && (
+          <Option
+            className="mb-[18px]"
+            control={
+              <Checkbox
+                checked={getParentScopeLabels}
+                onCheckedChange={setGetParentScopeLabels}
+                id="show-parent-labels"
+              />
+            }
+            id="show-parent-labels"
+            label={t('views:labelData.showParentLabels', 'Show labels from parent scopes')}
+          />
+        )}
+
+        {(!!spaceLabels.length || (!spaceLabels.length && isDirtyList)) && (
+          <>
+            <ListActions.Root>
+              <ListActions.Left>
+                <SearchBox.Root
+                  width="full"
+                  className="max-w-96"
+                  value={searchInput}
+                  handleChange={handleInputChange}
+                  placeholder={t('views:repos.search', 'Search')}
                 />
-              }
-              id="show-parent-labels"
-              label={t('views:labelData.showParentLabels', 'Show labels from parent scopes')}
-            />
-          )}
+              </ListActions.Left>
+              <ListActions.Right>
+                <Button asChild>
+                  <Link to="create">{t('views:labelData.newLabel', 'New label')}</Link>
+                </Button>
+              </ListActions.Right>
+            </ListActions.Root>
+          </>
+        )}
+        <Spacer size={5} />
+        {isLoading ? (
+          <SkeletonList />
+        ) : (
+          <LabelsListView
+            labels={spaceLabels}
+            useLabelsStore={useLabelsStore}
+            handleDeleteLabel={handleDeleteLabel}
+            handleEditLabel={handleEditLabel}
+            useTranslationStore={useTranslationStore}
+            isDirtyList={isDirtyList}
+            handleResetQueryAndPages={handleResetQueryAndPages}
+            searchQuery={searchQuery}
+            values={spaceValues}
+          />
+        )}
 
-          {(!!spaceLabels.length || (!spaceLabels.length && isDirtyList)) && (
-            <>
-              <ListActions.Root>
-                <ListActions.Left>
-                  <SearchBox.Root
-                    width="full"
-                    className="max-w-96"
-                    value={searchInput}
-                    handleChange={handleInputChange}
-                    placeholder={t('views:repos.search', 'Search')}
-                  />
-                </ListActions.Left>
-                <ListActions.Right>
-                  <Button asChild>
-                    <Link to="create">{t('views:labelData.newLabel', 'New label')}</Link>
-                  </Button>
-                </ListActions.Right>
-              </ListActions.Root>
-            </>
-          )}
-          <Spacer size={5} />
-          {isLoading ? (
-            <SkeletonList />
-          ) : (
-            <LabelsListView
-              labels={spaceLabels}
-              useLabelsStore={useLabelsStore}
-              handleDeleteLabel={handleDeleteLabel}
-              handleEditLabel={handleEditLabel}
-              useTranslationStore={useTranslationStore}
-              isDirtyList={isDirtyList}
-              handleResetQueryAndPages={handleResetQueryAndPages}
-              searchQuery={searchQuery}
-              values={spaceValues}
-            />
-          )}
-
-          <Spacer size={8} />
-          <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
-    </ThemeProvider>
+        <Spacer size={8} />
+        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+      </SandboxLayout.Content>
+    </SandboxLayout.Main>
   )
 }

@@ -31,7 +31,6 @@ import { SummaryItemType } from '@harnessio/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
@@ -388,7 +387,6 @@ export default function RepoSummaryPage() {
         toRepoFiles={() => routes.toRepoFiles({ spaceId, repoId })}
         navigateToProfileKeys={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
         isRepoEmpty={repository?.is_empty}
-        useThemeStore={useThemeStore}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

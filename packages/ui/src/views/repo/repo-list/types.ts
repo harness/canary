@@ -1,4 +1,3 @@
-import { IThemeStore } from '@/components'
 import { RepositoryType } from '@views/repo/repo.types'
 import { i18n, TFunction } from 'i18next'
 
@@ -40,5 +39,4 @@ export interface RepoListProps extends Partial<RoutingProps> {
   errorMessage?: string
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
-  useThemeStore: () => IThemeStore
 }

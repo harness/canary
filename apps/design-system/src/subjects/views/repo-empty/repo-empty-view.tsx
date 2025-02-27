@@ -1,7 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
 import repoSummaryProps from '@subjects/views/repo-summary/repo-summary-props.json'
-import { useThemeStore } from '@utils/theme-utils.ts'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { BranchSelectorTab, IBranchSelectorStore, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/ui/views'
@@ -32,9 +31,6 @@ export const RepoEmpty: FC<Partial<RepoSummaryViewProps>> = props => {
     []
   )
 
-  const t = useThemeStore
-  console.log(t)
-
   return (
     <RepoSummaryView
       {...repoSummaryProps}
@@ -51,7 +47,6 @@ export const RepoEmpty: FC<Partial<RepoSummaryViewProps>> = props => {
       selectBranchOrTag={noop}
       searchQuery=""
       setSearchQuery={noop}
-      useThemeStore={useThemeStore}
       {...props}
     />
   )

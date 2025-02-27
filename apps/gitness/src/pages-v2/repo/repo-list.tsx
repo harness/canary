@@ -6,7 +6,6 @@ import { ToastAction, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
@@ -117,7 +116,6 @@ export default function ReposListPage() {
         toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
         toCreateRepo={() => routes.toCreateRepo({ spaceId })}
         toImportRepo={() => routes.toImportRepo({ spaceId })}
-        useThemeStore={useThemeStore}
       />
     </>
   )

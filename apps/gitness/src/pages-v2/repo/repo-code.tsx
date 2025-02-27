@@ -14,7 +14,6 @@ import { CodeModes, CommitDivergenceType, RepoFile, RepoFiles, SummaryItemType }
 import FileContentViewer from '../../components-v2/file-content-viewer'
 import { FileEditor } from '../../components-v2/file-editor'
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -209,7 +208,6 @@ export const RepoCode = () => {
       defaultBranchName={repository?.default_branch}
       currentBranchDivergence={currBranchDivergence}
       isLoadingRepoDetails={isLoadingRepoDetails}
-      useThemeStore={useThemeStore}
     >
       {renderCodeView}
     </RepoFiles>

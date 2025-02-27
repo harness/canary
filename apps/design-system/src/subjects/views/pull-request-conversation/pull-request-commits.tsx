@@ -1,6 +1,5 @@
 import { FC, PropsWithChildren, useCallback } from 'react'
 
-import { useThemeStore } from '@utils/theme-utils'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { PullRequestCommitsView } from '@harnessio/ui/views'
@@ -26,7 +25,6 @@ const PullRequestCommits: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>
     <PullRequestCommitsView
       usePullRequestCommitsStore={useRepoCommitsListStore}
       useTranslationStore={useTranslationStore}
-      useThemeStore={useThemeStore}
     />
   )
 }

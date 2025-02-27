@@ -14,7 +14,6 @@ import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { CreateBranchFormFields, RepoBranchListView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
@@ -190,7 +189,6 @@ export function RepoBranchesListPage() {
         onDeleteBranch={handleSetDeleteBranch}
         searchBranches={searchBranches || []}
         setCreateBranchSearchQuery={setCreateBranchSearchQuery}
-        useThemeStore={useThemeStore}
       />
 
       <DeleteAlertDialog

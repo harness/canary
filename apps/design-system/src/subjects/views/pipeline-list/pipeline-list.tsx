@@ -1,7 +1,6 @@
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { useThemeStore } from '@utils/theme-utils'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { CreatePipelineDialog, PipelineListPage, RepoSummaryViewProps, TLinkComponent } from '@harnessio/ui/views'
@@ -22,7 +21,6 @@ const PipelineListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
         isError={false}
         handleCreatePipeline={() => setCreatePipelineOpen(true)}
         LinkComponent={LinkComponent}
-        useThemeStore={useThemeStore}
       />
       <CreatePipelineDialog
         isOpen={createPipelineOpen}

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 import { Button, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
 import { useDebounceSearch } from '@/hooks'
-import { ThemeProvider } from '@/providers/theme'
 import { SandboxLayout } from '@/views'
 
 import { ExecutionList } from './execution-list'
@@ -18,11 +17,9 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
   searchQuery,
   setSearchQuery,
   handleExecutePipeline,
-  LinkComponent,
-  useThemeStore
+  LinkComponent
 }) => {
   const { t } = useTranslationStore()
-  const storeTheme = useThemeStore()
   const { executions, totalPages, page, setPage } = useExecutionListStore()
 
   const {
@@ -50,48 +47,46 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
     )
 
   return (
-    <ThemeProvider {...storeTheme}>
-      <SandboxLayout.Main className="max-w-[1040px]">
-        <SandboxLayout.Content>
-          <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Executions</h1>
-          <Spacer size={6} />
-          <ListActions.Root>
-            <ListActions.Left>
-              <SearchBox.Root
-                width="full"
-                className="max-w-96"
-                value={searchInput}
-                handleChange={handleInputChange}
-                placeholder={'Search'}
-              />
-            </ListActions.Left>
-            <ListActions.Right>
-              {/* TODO: two buttons - xd review required */}
-              <div className="flex gap-3">
-                <Button variant="outline" asChild>
-                  <Link to={`edit`}>Edit</Link>
-                </Button>
-                <Button variant="default" asChild>
-                  <Link to={`create`}>Run</Link>
-                </Button>
-              </div>
-            </ListActions.Right>
-          </ListActions.Root>
-          <Spacer size={4} />
-          <ExecutionList
-            executions={executions}
-            LinkComponent={LinkComponent}
-            query={searchQuery ?? ''}
-            handleResetQuery={handleResetSearch}
-            useTranslationStore={useTranslationStore}
-            isLoading={isLoading}
-            handleExecutePipeline={handleExecutePipeline}
-          />
-          <Spacer size={8} />
-          <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
-    </ThemeProvider>
+    <SandboxLayout.Main className="max-w-[1040px]">
+      <SandboxLayout.Content>
+        <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Executions</h1>
+        <Spacer size={6} />
+        <ListActions.Root>
+          <ListActions.Left>
+            <SearchBox.Root
+              width="full"
+              className="max-w-96"
+              value={searchInput}
+              handleChange={handleInputChange}
+              placeholder={'Search'}
+            />
+          </ListActions.Left>
+          <ListActions.Right>
+            {/* TODO: two buttons - xd review required */}
+            <div className="flex gap-3">
+              <Button variant="outline" asChild>
+                <Link to={`edit`}>Edit</Link>
+              </Button>
+              <Button variant="default" asChild>
+                <Link to={`create`}>Run</Link>
+              </Button>
+            </div>
+          </ListActions.Right>
+        </ListActions.Root>
+        <Spacer size={4} />
+        <ExecutionList
+          executions={executions}
+          LinkComponent={LinkComponent}
+          query={searchQuery ?? ''}
+          handleResetQuery={handleResetSearch}
+          useTranslationStore={useTranslationStore}
+          isLoading={isLoading}
+          handleExecutePipeline={handleExecutePipeline}
+        />
+        <Spacer size={8} />
+        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+      </SandboxLayout.Content>
+    </SandboxLayout.Main>
   )
 }
 

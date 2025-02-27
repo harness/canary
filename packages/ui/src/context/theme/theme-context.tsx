@@ -1,10 +1,8 @@
 import { createContext, PropsWithChildren, useContext } from 'react'
 
-import { ColorType, ContrastType, FullTheme, IThemeStore, ModeType } from '@/components'
+import { defaultTheme, IThemeStore } from '@/context'
 
 const ThemeContext = createContext<Required<IThemeStore> | undefined>(undefined)
-
-export const defaultTheme = `${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Standard}` as FullTheme
 
 export const ThemeProvider = ({ children, ...rest }: PropsWithChildren<IThemeStore>) => {
   return (

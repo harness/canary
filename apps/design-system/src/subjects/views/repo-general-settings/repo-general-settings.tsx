@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react'
 
 import { repoBranchListStore } from '@subjects/stores/repo-branch-store'
 import { useRepoRulesStore } from '@subjects/views/repo-general-settings/use-repo-rules-store'
-import { useThemeStore } from '@utils/theme-utils'
 import { useTranslationStore } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
@@ -54,7 +53,6 @@ export const RepoGeneralSettings = () => {
         setSearchQuery={setBranchQuery}
         rulesSearchQuery={rulesSearchQuery}
         setRulesSearchQuery={setRulesSearchQuery}
-        useThemeStore={useThemeStore}
       />
 
       <DeleteAlertDialog

@@ -1,8 +1,16 @@
-// import { useEffect } from 'react'
-
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
-import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper, Input, Spacer, Text, Textarea } from '@/components'
+import {
+  Accordion,
+  Button,
+  ButtonGroup,
+  ControlGroup,
+  Fieldset,
+  FormWrapper,
+  Input,
+  Spacer,
+  Textarea
+} from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -57,16 +65,16 @@ export function NewSecretPage({
   }
 
   return (
-    <SandboxLayout.Content paddingClassName="w-[480px] mx-auto">
+    <SandboxLayout.Content className="px-0 pt-0">
       <Spacer size={5} />
       <FormWrapper className="gap-y-7" onSubmit={handleSubmit(onSubmit)}>
         {/* NAME */}
         <Fieldset>
           <Input
             id="name"
-            label="Name"
+            label="Secret Name"
             {...register('name')}
-            placeholder="Enter github-token"
+            placeholder="Enter secret name"
             size="md"
             error={errors.name?.message?.toString()}
             autoFocus
@@ -76,44 +84,49 @@ export function NewSecretPage({
             id="password"
             {...register('password')}
             type="password"
-            label="Enter the secret text"
-            placeholder="Enter password"
+            label="Secret Value"
+            placeholder="Add your secret value"
             size="md"
             error={errors.password?.message?.toString()}
           />
         </Fieldset>
-
-        <Fieldset>
-          {/* DESCRIPTION */}
-          <Textarea
-            id="description"
-            {...register('description')}
-            placeholder="Enter a description of this secret"
-            label="Description"
-            error={errors.description?.message?.toString()}
-            optional
-          />
-          {/* TAGS */}
-          <Input
-            id="tags"
-            {...register('tags')}
-            label="Tags"
-            placeholder="Enter tags"
-            size="md"
-            error={errors.tags?.message?.toString()}
-            optional
-          />
-        </Fieldset>
-
+        <Accordion.Root type="single" collapsible>
+          <Accordion.Item value="secret-details">
+            <Accordion.Trigger>Metadata</Accordion.Trigger>
+            <Accordion.Content>
+              <Fieldset className="rounded-md border-2 p-4">
+                {/* DESCRIPTION */}
+                <Textarea
+                  id="description"
+                  {...register('description')}
+                  placeholder="Enter a description of this secret"
+                  label="Description"
+                  error={errors.description?.message?.toString()}
+                  optional
+                />
+                {/* TAGS */}
+                <Input
+                  id="tags"
+                  {...register('tags')}
+                  label="Tags"
+                  placeholder="Enter tags"
+                  size="md"
+                  error={errors.tags?.message?.toString()}
+                  optional
+                />
+              </Fieldset>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion.Root>
         {/* SUBMIT BUTTONS */}
-        <Fieldset className="mt-6">
+        <Fieldset className="mt-auto">
           <ControlGroup>
-            <ButtonGroup>
-              <Button type="submit" disabled={!isValid || isLoading}>
-                {!isLoading ? 'Save' : 'Saving...'}
-              </Button>
+            <ButtonGroup className="mt-auto flex flex-row justify-between">
               <Button type="button" variant="outline" onClick={handleCancel}>
                 Cancel
+              </Button>
+              <Button type="submit" disabled={!isValid || isLoading}>
+                {!isLoading ? 'Save' : 'Saving...'}
               </Button>
             </ButtonGroup>
           </ControlGroup>

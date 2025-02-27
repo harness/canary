@@ -52,10 +52,6 @@ export const AppSidebar = ({
   const [openThemeDialog, setOpenThemeDialog] = useState(false)
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)
 
-  // const handleThemeChange = (theme: ThemeInterface) => {
-  //   setTheme(`${theme.mode}-${theme.colorAdjustment}-${theme.contrast}`)
-  // }
-
   const handleLanguageChange = (language: LanguageInterface) => {
     changeLanguage(language.code.toLowerCase())
   }

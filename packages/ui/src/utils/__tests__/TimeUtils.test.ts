@@ -50,7 +50,7 @@ describe('formatDuration', () => {
   })
 })
 
-describe.only('formatTimestamp', () => {
+describe('formatTimestamp', () => {
   const fixedDate = new Date('2023-01-01T12:34:56.789Z')
 
   beforeAll(() => {

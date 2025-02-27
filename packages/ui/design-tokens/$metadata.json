@@ -7,7 +7,7 @@
     "theme/dark/standard",
     "theme/dark/icon-width",
     "breakpoint/desktop",
-    "components/desktop/base/button",
+    "components/desktop/base/btn",
     "components/desktop/base/input",
     "components/desktop/base/badge",
     "components/desktop/base/tag",

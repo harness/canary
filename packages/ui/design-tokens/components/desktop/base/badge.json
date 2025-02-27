@@ -1,13 +1,13 @@
 {
   "badge": {
     "size": {
-      "default": {
-        "$type": "sizing",
-        "$value": "{size.6}"
-      },
       "sm": {
         "$type": "sizing",
         "$value": "{size.5}"
+      },
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.6}"
       }
     },
     "default": {
@@ -26,23 +26,21 @@
       "pr": {
         "$type": "spacing",
         "$value": "{spacing.2}"
-      }
-    },
-    "radius": {
-      "default": {
+      },
+      "radius": {
         "$type": "borderRadius",
         "$value": "{rounded.2}"
-      },
-      "rounded": {
+      }
+    },
+    "rounded": {
+      "radius": {
         "$type": "borderRadius",
         "$value": "{rounded.full}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
       }
-    }
-  },
-  "badge-rounded": {
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.2-half}"
     }
   }
 }

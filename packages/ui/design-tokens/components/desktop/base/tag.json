@@ -1,10 +1,8 @@
 {
   "tag": {
     "size": {
-      "default": {
-        "$type": "sizing",
-        "$value": "{size.5}"
-      }
+      "$type": "sizing",
+      "$value": "{size.5}"
     },
     "gap": {
       "$type": "spacing",
@@ -19,10 +17,8 @@
       "$value": "{spacing.2}"
     },
     "radius": {
-      "default": {
-        "$type": "borderRadius",
-        "$value": "{rounded.2}"
-      }
+      "$type": "borderRadius",
+      "$value": "{rounded.2}"
     }
   }
 }

@@ -41,6 +41,5 @@ export interface ThemeDialogProps {
   setTheme: (theme: FullTheme) => void
   open: boolean
   onOpenChange: (open: boolean) => void
-  // onChange: (theme: ThemeInterface) => void
   children?: React.ReactNode
 }

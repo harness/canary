@@ -20,9 +20,9 @@ export default mergeConfig(viteConfig, {
       //   statements: 80
       // }
     },
-    server: {
-      deps: {
-        inline: [/harnessio/]
+    resolve: {
+      alias: {
+        '@harnessio/ui/views': './config/resolve-harnessio-ui-views'
       }
     }
   }

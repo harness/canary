@@ -1572,7 +1572,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{colors.red.400}",
+          "$value": "{component.toast.danger.background}",
           "$description": "Border color for danger toast notifications. Reinforces the critical nature of the notification message."
         }
       }

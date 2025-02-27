@@ -17,39 +17,39 @@ import { z } from 'zod'
 
 const newSecretformSchema = z.object({
   name: z.string().min(1, { message: 'Please provide a name' }),
-  password: z.string().min(1, { message: 'Please provide a password' }),
+  value: z.string().min(1, { message: 'Please provide a value' }),
   description: z.string().optional(),
   tags: z.string().optional()
 })
 
 export type NewSecretFormFields = z.infer<typeof newSecretformSchema> // Automatically generate a type from the schema
 
-interface NewSecretPageProps {
+interface CreateSecretPageProps {
   onFormSubmit: (data: NewSecretFormFields) => void
   onFormCancel: () => void
   useTranslationStore: () => TranslationStore
   isLoading: boolean
 }
 
-export function NewSecretPage({
+export function CreateSecretPage({
   onFormSubmit,
   onFormCancel,
   useTranslationStore,
   isLoading = false
-}: NewSecretPageProps) {
+}: CreateSecretPageProps) {
   const { t: _t } = useTranslationStore()
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<NewSecretFormFields>({
     resolver: zodResolver(newSecretformSchema),
     mode: 'onChange',
     defaultValues: {
       name: '',
-      password: '',
+      value: '',
       description: '',
       tags: ''
     }
@@ -81,13 +81,13 @@ export function NewSecretPage({
           />
 
           <Input
-            id="password"
-            {...register('password')}
+            id="value"
+            {...register('value')}
             type="password"
             label="Secret Value"
             placeholder="Add your secret value"
             size="md"
-            error={errors.password?.message?.toString()}
+            error={errors.value?.message?.toString()}
           />
         </Fieldset>
         <Accordion.Root type="single" collapsible>
@@ -119,13 +119,13 @@ export function NewSecretPage({
           </Accordion.Item>
         </Accordion.Root>
         {/* SUBMIT BUTTONS */}
-        <Fieldset className="mt-auto">
+        <Fieldset className="mt-[100px]">
           <ControlGroup>
             <ButtonGroup className="mt-auto flex flex-row justify-between">
               <Button type="button" variant="outline" onClick={handleCancel}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={!isValid || isLoading}>
+              <Button type="submit" disabled={isLoading}>
                 {!isLoading ? 'Save' : 'Saving...'}
               </Button>
             </ButtonGroup>

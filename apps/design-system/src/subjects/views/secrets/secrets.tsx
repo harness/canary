@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { Button, Drawer, Spacer } from '@harnessio/ui/components'
-import { NewSecretFormFields, NewSecretPage, SecretsHeader, SecretType } from '@harnessio/ui/views'
+import { CreateSecretPage, NewSecretFormFields, SecretsHeader, SecretType } from '@harnessio/ui/views'
 
 export const SecretsPage = () => {
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.New)
@@ -16,7 +16,7 @@ export const SecretsPage = () => {
     switch (selectedType) {
       case SecretType.New:
         return (
-          <NewSecretPage
+          <CreateSecretPage
             onFormSubmit={onSubmit}
             onFormCancel={noop}
             useTranslationStore={useTranslationStore}
@@ -31,7 +31,7 @@ export const SecretsPage = () => {
   }
 
   return (
-    <Drawer.Root>
+    <Drawer.Root direction="right">
       <Drawer.Trigger>
         <Button>Add Secret</Button>
       </Drawer.Trigger>
@@ -41,7 +41,7 @@ export const SecretsPage = () => {
         </Drawer.Header>
         <Spacer size={5} />
 
-        <SecretsHeader selectedType={selectedType} setSelectedType={setSelectedType} />
+        <SecretsHeader onChange={setSelectedType} />
         <Spacer size={5} />
         {renderContent()}
       </Drawer.Content>

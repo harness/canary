@@ -51,17 +51,19 @@ function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFER
 
   // Handle location change detected from parent route
   useEffect(() => {
-    if (canNavigate) {
+    if (canNavigate && parentPath !== location.pathname) {
       navigate(parentPath, { replace: true })
     }
-  }, [parentPath])
+  }, [parentPath, canNavigate, location.pathname])
 
-  // Notify parent about route change
+  // Notify parent about route change, but only if we didn't just receive a navigation from parent
+  const lastParentPathRef = useRef(parentPath)
   useEffect(() => {
-    if (canNavigate) {
+    if (canNavigate && parentPath === lastParentPathRef.current) {
       onRouteChange?.(`${renderUrl}${location.pathname}`)
     }
-  }, [location.pathname])
+    lastParentPathRef.current = parentPath
+  }, [location.pathname, canNavigate, parentPath, renderUrl])
 
   return null
 }

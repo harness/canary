@@ -21,6 +21,7 @@ export const SecretsPage = () => {
             onFormCancel={noop}
             useTranslationStore={useTranslationStore}
             isLoading={false}
+            apiError={null}
           />
         )
       case SecretType.Existing:

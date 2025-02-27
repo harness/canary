@@ -2,6 +2,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
   Accordion,
+  Alert,
   Button,
   ButtonGroup,
   ControlGroup,
@@ -29,13 +30,15 @@ interface CreateSecretPageProps {
   onFormCancel: () => void
   useTranslationStore: () => TranslationStore
   isLoading: boolean
+  apiError: string | null
 }
 
 export function CreateSecretPage({
   onFormSubmit,
   onFormCancel,
   useTranslationStore,
-  isLoading = false
+  isLoading = false,
+  apiError = null
 }: CreateSecretPageProps) {
   const { t: _t } = useTranslationStore()
 
@@ -65,9 +68,9 @@ export function CreateSecretPage({
   }
 
   return (
-    <SandboxLayout.Content className="px-0 pt-0">
+    <SandboxLayout.Content className="px-0 pt-0 h-full">
       <Spacer size={5} />
-      <FormWrapper className="gap-y-7" onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
         {/* NAME */}
         <Fieldset>
           <Input
@@ -118,10 +121,16 @@ export function CreateSecretPage({
             </Accordion.Content>
           </Accordion.Item>
         </Accordion.Root>
-        {/* SUBMIT BUTTONS */}
-        <Fieldset className="mt-[100px]">
+
+        {apiError && (
+          <Alert.Container variant="destructive" className="mb-8">
+            <Alert.Description>{apiError?.toString()}</Alert.Description>
+          </Alert.Container>
+        )}
+
+        <div className="fixed bottom-0 left-0 right-0 bg-background-2 p-4 shadow-md">
           <ControlGroup>
-            <ButtonGroup className="mt-auto flex flex-row justify-between">
+            <ButtonGroup className="flex flex-row justify-between">
               <Button type="button" variant="outline" onClick={handleCancel}>
                 Cancel
               </Button>
@@ -130,7 +139,9 @@ export function CreateSecretPage({
               </Button>
             </ButtonGroup>
           </ControlGroup>
-        </Fieldset>
+        </div>
+
+        <div className="pb-16"></div>
       </FormWrapper>
     </SandboxLayout.Content>
   )

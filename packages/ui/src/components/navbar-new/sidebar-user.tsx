@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { TypesUser } from '@/types'
 import { Avatar } from '@components/avatar'
 import { DropdownMenu } from '@components/dropdown-menu'
@@ -56,9 +58,11 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, 
             </DropdownMenu.Label>
             <DropdownMenu.Separator />
             <DropdownMenu.Group>
-              <DropdownMenu.Item onClick={openThemeDialog}>
-                <Icon name="settings-1" size={14} />
-                &nbsp;&nbsp;{t('component:navbar.settings', 'Settings')}
+              <DropdownMenu.Item asChild>
+                <Link to="/profile-settings">
+                  <Icon name="settings-1" size={14} />
+                  &nbsp;&nbsp;{t('component:navbar.settings', 'Settings')}
+                </Link>
               </DropdownMenu.Item>
               <DropdownMenu.Item onClick={openThemeDialog}>
                 <Icon name="paint" size={14} />

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Alert, Button, Fieldset, FormSeparator, FormWrapper, Legend, Spacer } from '@/components'
+import { Alert, Button, Fieldset, FormSeparator, FormWrapper, Legend } from '@/components'
 import { ApiErrorType, SandboxLayout, TranslationStore } from '@/views'
 
 import { ProfileKeysList } from './components/profile-settings-keys-list'
@@ -44,10 +44,10 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
 
   return (
     <SandboxLayout.Content className="px-0">
-      <h1 className="text-24 font-medium text-foreground-1">
+      <h1 className="mb-10 text-24 font-medium text-foreground-1">
         {t('views:profileSettings.keysAndTokens', 'Keys and Tokens')}
       </h1>
-      <Spacer size={10} />
+
       <FormWrapper>
         <Fieldset className="gap-y-5">
           <div className="flex items-end justify-between">

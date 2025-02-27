@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
-import { tokenCreateFormSchema } from './components/profile-settings-token-create-dialog'
+import { makeTokenCreateFormSchema } from './components/profile-settings-token-create-dialog'
 import { ProfileFields } from './profile-settings-general-page'
 
-export type TokenFormType = z.infer<typeof tokenCreateFormSchema>
+export type TokenFormType = z.infer<ReturnType<typeof makeTokenCreateFormSchema>>
 
 export interface AlertDeleteParams {
   identifier: string

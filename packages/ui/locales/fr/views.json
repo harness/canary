@@ -397,6 +397,13 @@
     "binaryNotShown": "Fichier binaire non affiché."
   },
   "profileSettings": {
+    "sshKeyValidation": {
+      "nameMin": "Veuillez fournir un nom de clé",
+      "nameMax": "Le nom ne doit pas dépasser 100 caractères",
+      "nameRegex": "Le nom doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
+      "noSpaces": "Le nom ne peut pas contenir d'espaces",
+      "expiration": "Veuillez ajouter la clé publique"
+    },
     "newSshKey": "Nouvelle clé SSH",
     "enterNamePlaceholder": "Entrez le nom",
     "publicKey": "Clé publique",
@@ -407,6 +414,20 @@
     "lastUsedDate": "Dernière date d'utilisation",
     "deleteSshKey": "Delete SSH key",
     "noDataKeysDescription": "Il n'y a aucune clé SSH associée à ce compte.",
+    "tokenValidation": {
+      "nameMin": "Veuillez indiquer le nom du jeton",
+      "nameMax": "Le nom ne doit pas dépasser 100 caractères",
+      "nameRegex": "Name must contain only letters, numbers, and the following characters: '-', '_', '.'",
+      "noSpaces": "Le nom ne peut pas contenir d'espaces",
+      "expiration": "Veuillez sélectionner la date d'expiration"
+    },
+    "expirationOptions": {
+      "7_days": "7 jours",
+      "30_days": "30 jours",
+      "60_days": "60 jours",
+      "90_days": "90 jours",
+      "never": "Jamais"
+    },
     "createToken": "Créer un jeton",
     "enterTokenPlaceholder": "Entrez le nom du jeton",
     "expiration": "Expiration",

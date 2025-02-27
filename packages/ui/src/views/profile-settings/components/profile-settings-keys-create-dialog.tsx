@@ -7,8 +7,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
-type SshKeyFormType = z.infer<typeof formSchema>
-
 interface ProfileSettingsKeysCreateDialogProps {
   open: boolean
   onClose: () => void
@@ -17,10 +15,30 @@ interface ProfileSettingsKeysCreateDialogProps {
   useTranslationStore: () => TranslationStore
 }
 
-const formSchema = z.object({
-  identifier: z.string().min(1, { message: 'Please provide a name' }),
-  content: z.string().min(1, { message: 'Please add the public key' })
-})
+export const makeKeyCreateFormSchema = (t: TranslationStore['t']) =>
+  z.object({
+    identifier: z
+      .string()
+      .trim()
+      .min(1, { message: t('views:profileSettings.sshKeyValidation.nameMin', 'Please provide key name') })
+      .max(100, {
+        message: t('views:profileSettings.sshKeyValidation.nameMax', 'Name must be no longer than 100 characters')
+      })
+      .regex(/^[a-zA-Z0-9._-\s]+$/, {
+        message: t(
+          'views:profileSettings.sshKeyValidation.nameRegex',
+          'Name must contain only letters, numbers, and the characters: - _ .'
+        )
+      })
+      .refine(data => !data.includes(' '), {
+        message: t('views:profileSettings.sshKeyValidation.noSpaces', 'Name cannot contain spaces')
+      }),
+    content: z
+      .string()
+      .min(1, { message: t('views:profileSettings.sshKeyValidation.expiration', 'Please add the public key') })
+  })
+
+type SshKeyFormType = z.infer<ReturnType<typeof makeKeyCreateFormSchema>>
 
 export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialogProps> = ({
   open,
@@ -37,7 +55,7 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
     reset,
     formState: { errors, isValid }
   } = useForm<SshKeyFormType>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(makeKeyCreateFormSchema(t)),
     mode: 'onChange',
     defaultValues: {
       identifier: '',
@@ -46,7 +64,6 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
   })
 
   const content = watch('content')
-  const identifier = watch('identifier')
 
   useEffect(() => {
     !open && reset()
@@ -66,7 +83,6 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
           <Fieldset>
             <Input
               id="identifier"
-              value={identifier}
               size="md"
               {...register('identifier')}
               placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter the name')}

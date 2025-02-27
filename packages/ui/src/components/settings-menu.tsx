@@ -1,6 +1,5 @@
-import { NavLink } from 'react-router-dom'
-
 import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
+import { useRouterContext } from '@/context'
 import { MenuGroupType } from '@components/navbar/types'
 
 interface SystemAdminMenuProps {
@@ -10,6 +9,7 @@ interface SystemAdminMenuProps {
 }
 
 export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: SystemAdminMenuProps) => {
+  const { NavLink } = useRouterContext()
   return (
     <Sheet.Root modal={false} open={showSettingMenu}>
       <Sheet.Content

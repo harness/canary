@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction } from 'react'
-import { NavLink } from 'react-router-dom'
 
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
 import { Button } from './button'
@@ -53,6 +53,7 @@ export const NoData: FC<NoDataProps> = ({
   textWrapperClassName,
   className
 }) => {
+  const { NavLink } = useRouterContext()
   return (
     <div
       className={cn(

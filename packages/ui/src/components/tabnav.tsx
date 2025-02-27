@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren } from 'react'
-import { NavLink, NavLinkProps } from 'react-router-dom'
+import type { NavLinkProps } from 'react-router-dom'
 
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
 const TabNavRoot: FC<PropsWithChildren<unknown>> = ({ children }) => {
@@ -15,6 +16,7 @@ const commonClasses =
   'flex h-full items-center text-center cursor-pointer border-solid border-b-2 border-b-transparent px-0 font-normal text-foreground-2 duration-150 ease-in-out hover:text-foreground-1'
 
 const TabNavItem: FC<NavLinkProps> = ({ children, ...props }) => {
+  const { NavLink } = useRouterContext()
   return (
     <NavLink
       role="tab"

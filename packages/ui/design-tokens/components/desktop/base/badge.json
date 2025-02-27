@@ -1,0 +1,44 @@
+{
+  "badge": {
+    "default-24": {
+      "$type": "sizing",
+      "$value": "{size.6}"
+    },
+    "small-20": {
+      "$type": "sizing",
+      "$value": "{size.5}"
+    },
+    "basic": {
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.half}"
+      },
+      "pl": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
+      },
+      "pr": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      }
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.2}"
+    },
+    "full": {
+      "$type": "borderRadius",
+      "$value": "{rounded.full}"
+    },
+    "rounded": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      }
+    }
+  }
+}

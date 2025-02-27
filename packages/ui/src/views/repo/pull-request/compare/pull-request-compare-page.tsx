@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import { Avatar, Button, Icon, NoData, SkeletonList, Spacer, StyledLink, Tabs } from '@/components'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
-  BranchSelectorListItem,
-  BranchSelectorTab,
   CommitSelectorListItem,
   CommitsList,
   HandleUploadType,
@@ -61,26 +59,20 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   isSuccess: boolean
   mergeability?: boolean
   onSelectCommit: (commit: CommitSelectorListItem) => void
-  selectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => void
-  targetBranch: BranchSelectorListItem | null
-  sourceBranch: BranchSelectorListItem | null
+
   diffData: HeaderProps[]
   diffStats: TypesDiffStats
   isBranchSelected: boolean
   setIsBranchSelected: (val: boolean) => void
   prBranchCombinationExists: { number: number; title: string; description: string } | null
   useTranslationStore: () => TranslationStore
-  // useRepoBranchesStore: () => IBranchSelectorStore
   repoId?: string
   spaceId?: string
   useRepoCommitsStore: () => ICommitSelectorStore
   searchCommitQuery: string | null
   setSearchCommitQuery: (query: string | null) => void
   currentUser?: string
-  searchSourceQuery?: string
-  setSearchSourceQuery: (query: string) => void
-  searchTargetQuery?: string
-  setSearchTargetQuery: (query: string) => void
+
   searchReviewersQuery: string
   setSearchReviewersQuery: (query: string) => void
   usersList?: PrincipalType[]
@@ -100,7 +92,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   setSearchLabelQuery?: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
-  renderProps: () => React.ReactElement
+  branchSelectorRenderer: React.ReactElement
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -110,22 +102,15 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   isSuccess,
   onFormDraftSubmit,
   mergeability = false,
-  // selectBranch,
-  // targetBranch,
-  // sourceBranch,
+
   diffData,
   diffStats,
-  // setIsBranchSelected,
   isBranchSelected,
   prBranchCombinationExists,
   useTranslationStore,
-  // useRepoBranchesStore,
   useRepoCommitsStore,
   currentUser,
-  // searchSourceQuery,
-  // setSearchSourceQuery,
-  // searchTargetQuery,
-  // setSearchTargetQuery,
+
   searchReviewersQuery,
   setSearchReviewersQuery,
   usersList,
@@ -147,7 +132,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   setSearchLabelQuery,
   addLabel,
   removeLabel,
-  renderProps: branchSelector
+  branchSelectorRenderer
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -211,7 +196,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal className="items-center" gap="gap-x-2.5">
             <Icon name="compare" size={14} className="text-icons-1" />
 
-            {branchSelector()}
+            {branchSelectorRenderer}
 
             {isBranchSelected &&
               !isLoading && ( // Only render this block if isBranchSelected is true

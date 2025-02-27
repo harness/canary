@@ -154,8 +154,6 @@ export const CreatePullRequest = () => {
   }
   const path = useMemo(() => `/api/v1/repos/${repoRef}/+/${diffApiPath}`, [repoRef, diffApiPath])
 
-  const [sourceQuery, setSourceQuery] = useState('')
-  const [targetQuery, setTargetQuery] = useState('')
   const [searchReviewers, setSearchReviewers] = useState('')
 
   const { data: { body: rawDiff } = {}, isFetching: loadingRawDiff } = useRawDiffQuery(
@@ -191,6 +189,15 @@ export const CreatePullRequest = () => {
     },
     [rawDiff, path, setCachedDiff]
   )
+
+  useEffect(() => {
+    // Set isBranchSelected to false if source and target branches are the same, otherwise true
+    if (selectedSourceBranch && selectedTargetBranch && selectedSourceBranch.name === selectedTargetBranch.name) {
+      setIsBranchSelected(false)
+    } else {
+      setIsBranchSelected(true)
+    }
+  }, [selectedSourceBranch, selectedTargetBranch, setIsBranchSelected])
 
   // Parsing diff and construct data structure to pass into DiffViewer component
   useEffect(() => {
@@ -307,17 +314,6 @@ export const CreatePullRequest = () => {
   const onCancel = () => {
     navigate(routes.toRepositories({ spaceId }))
   }
-  // const { data: { body: branches } = {} } = useListBranchesQuery({
-  //   repo_ref: repoRef,
-  //   queryParams: {
-  //     page: 0,
-  //     sort: 'date',
-  //     order: 'desc',
-  //     limit: 10,
-  //     query: sourceQuery || targetQuery || '',
-  //     include_pullreqs: true
-  //   }
-  // })
 
   useEffect(() => {
     // useMergeCheckMutation
@@ -411,11 +407,6 @@ export const CreatePullRequest = () => {
           setSelectedTargetBranch(branchTagName)
         }
       }
-      if (sourceBranch) {
-        setSourceQuery('')
-      } else {
-        setTargetQuery('')
-      }
     },
     [setSelectedSourceBranch, setSelectedTargetBranch]
   )
@@ -496,10 +487,7 @@ export const CreatePullRequest = () => {
         isSuccess={createPullRequestMutation.isSuccess}
         onFormDraftSubmit={onDraftSubmit}
         mergeability={mergeability}
-        selectBranch={selectBranchorTag}
         useTranslationStore={useTranslationStore}
-        targetBranch={selectedTargetBranch}
-        sourceBranch={selectedSourceBranch}
         prBranchCombinationExists={prBranchCombinationExists}
         diffData={
           diffStats?.files_changed || 0
@@ -528,10 +516,6 @@ export const CreatePullRequest = () => {
               }
             : {}
         }
-        searchSourceQuery={sourceQuery}
-        setSearchSourceQuery={setSourceQuery}
-        searchTargetQuery={targetQuery}
-        setSearchTargetQuery={setTargetQuery}
         usersList={principals as PrincipalType[]}
         searchReviewersQuery={searchReviewers}
         setSearchReviewersQuery={setSearchReviewers}
@@ -548,22 +532,19 @@ export const CreatePullRequest = () => {
         removeLabel={handleDeleteLabel}
         searchLabelQuery={searchLabel}
         setSearchLabelQuery={setSearchLabel}
-        renderProps={() => (
-          setIsBranchSelected(true),
-          (
-            <>
-              <BranchSelectorContainer
-                onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
-                selectedBranch={selectedTargetBranch}
-              />
-              <Icon name="arrow-long" size={12} className="text-icons-1 rotate-180" />
-              <BranchSelectorContainer
-                onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
-                selectedBranch={selectedSourceBranch}
-              />
-            </>
-          )
-        )}
+        branchSelectorRenderer={
+          <>
+            <BranchSelectorContainer
+              onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
+              selectedBranch={selectedTargetBranch}
+            />
+            <Icon name="arrow-long" size={12} className="text-icons-1 rotate-180" />
+            <BranchSelectorContainer
+              onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
+              selectedBranch={selectedSourceBranch}
+            />
+          </>
+        }
       />
     )
   }

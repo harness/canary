@@ -39,7 +39,8 @@ import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { sortFilesByType } from '../../utils/common-utils'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
-import { useRepoBranchesStore } from './stores/repo-branches-store'
+
+// import { useRepoBranchesStore } from './stores/repo-branches-store'
 
 export default function RepoSummaryPage() {
   const routes = useRoutes()
@@ -306,7 +307,6 @@ export default function RepoSummaryPage() {
         gitRef={gitRef}
         latestCommitInfo={latestCommitInfo}
         saveDescription={saveDescription}
-        selectBranchOrTag={() => {}}
         updateRepoError={updateError}
         isEditDialogOpen={isEditDialogOpen}
         setEditDialogOpen={setEditDialogOpen}
@@ -317,10 +317,9 @@ export default function RepoSummaryPage() {
         toRepoFiles={() => routes.toRepoFiles({ spaceId, repoId })}
         navigateToProfileKeys={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
         isRepoEmpty={repository?.is_empty}
-        useRepoBranchesStore={useRepoBranchesStore}
-        renderProp={() => (
+        branchSelectorRenderer={
           <BranchSelectorContainer onSelectBranchorTag={selectBranchOrTag} selectedBranch={selectedBranchOrTag} />
-        )}
+        }
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

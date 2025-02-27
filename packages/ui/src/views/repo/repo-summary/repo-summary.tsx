@@ -12,15 +12,8 @@ import {
   StackedList,
   Text
 } from '@/components'
-import {
-  BranchSelectorListItem,
-  CommitDivergenceType,
-  IBranchSelectorStore,
-  RepoFile,
-  SandboxLayout,
-  TranslationStore
-} from '@/views'
-import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
+import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout, TranslationStore } from '@/views'
+import { BranchInfoBar, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
 import { CloneRepoDialog } from './components/clone-repo-dialog'
@@ -39,7 +32,6 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   selectedBranchOrTag: BranchSelectorListItem | null
   loading: boolean
   filesList: string[]
-  useRepoBranchesStore: () => IBranchSelectorStore
   navigateToFile: (path: string) => void
   repository:
     | {
@@ -72,7 +64,6 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
     sha: string | null
   }
   saveDescription: (description: string) => void
-  selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   updateRepoError?: string
   useTranslationStore: () => TranslationStore
   isEditDialogOpen: boolean
@@ -82,7 +73,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   setSearchQuery: (query: string) => void
   renderSidebarComponent?: React.ReactNode
   isRepoEmpty?: boolean
-  renderProp: () => React.ReactNode
+  branchSelectorRenderer: React.ReactElement
 }
 
 export function RepoSummaryView({
@@ -110,8 +101,7 @@ export function RepoSummaryView({
   navigateToProfileKeys,
   renderSidebarComponent,
   isRepoEmpty,
-  renderProp: BranchSelector,
-  useRepoBranchesStore
+  branchSelectorRenderer
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
 
@@ -181,8 +171,7 @@ export function RepoSummaryView({
             <ListActions.Root>
               <ListActions.Left>
                 <ButtonGroup className="gap-2.5">
-                  {BranchSelector()}
-
+                  {branchSelectorRenderer}
                   <SearchFiles
                     navigateToFile={navigateToFile}
                     filesList={filesList}
@@ -214,7 +203,7 @@ export function RepoSummaryView({
               <>
                 <Spacer size={4} />
                 <BranchInfoBar
-                  useRepoBranchesStore={useRepoBranchesStore}
+                  // useRepoBranchesStore={useRepoBranchesStore}
                   defaultBranchName={repository?.default_branch}
                   repoId={repoId}
                   spaceId={spaceId}

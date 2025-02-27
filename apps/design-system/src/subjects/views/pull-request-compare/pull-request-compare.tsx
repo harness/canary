@@ -27,9 +27,6 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       apiError={null}
       isSuccess={false}
       onSelectCommit={noop}
-      selectBranch={noop}
-      targetBranch={{ name: 'main', sha: 'sha' }}
-      sourceBranch={{ name: 'main', sha: 'sha' }}
       diffData={[
         {
           text: 'bot.txt',
@@ -54,15 +51,11 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       setSearchCommitQuery={noop}
       useTranslationStore={useTranslationStore}
       isLoading={false}
-      searchSourceQuery=""
-      setSearchSourceQuery={noop}
-      searchTargetQuery=""
-      setSearchTargetQuery={noop}
       searchReviewersQuery=""
       setSearchReviewersQuery={noop}
       jumpToDiff=""
       setJumpToDiff={noop}
-      renderProps={() => (
+      branchSelectorRenderer={
         <BranchSelectorV2
           repoId="canary"
           spaceId="org"
@@ -76,7 +69,7 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
           useTranslationStore={useTranslationStore}
           setSearchQuery={noop}
         />
-      )}
+      }
       {...props}
     />
   )

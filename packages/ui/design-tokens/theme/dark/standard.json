@@ -869,6 +869,7 @@
           "$value": "{text.2}",
           "$description": "Text color for dropdown menu items. Ensures readability of selectable options."
         },
+<<<<<<< HEAD
 <<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
 ========
         "separator": {
@@ -877,6 +878,8 @@
           "$description": "Color for separators between dropdown items or sections. Creates visual organization within the menu."
         },
 >>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+=======
+>>>>>>> 8d0d149f (upd)
         "delete": {
           "text": {
             "$type": "color",

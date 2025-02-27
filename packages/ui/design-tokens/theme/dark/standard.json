@@ -1116,6 +1116,11 @@
         "$value": "{colors.purple.300}",
         "$description": "Color for merged status indicators. Communicates successful integration or completion in version control contexts."
       },
+      "action-required": {
+        "$type": "color",
+        "$value": "{colors.accent.300}",
+        "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed. "
+      },
       "pending": {
         "$type": "color",
         "$value": "{colors.chrome.400}",

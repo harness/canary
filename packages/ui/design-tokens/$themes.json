@@ -1289,6 +1289,7 @@
       "component.status-indicator.warning": "4f88e8c7d995461e15c7664baaf9039a8f9f9c15",
       "component.status-indicator.running": "d60d8f065022139597e33a5f2ca24676c8a08809",
       "component.status-indicator.merged": "8162b8ef2b9917994ec76a200a221538ce838dac",
+      "component.status-indicator.action-required": "a41e5ec4d0fccc70be7ee08f3ad448d069ba7633",
       "component.status-indicator.pending": "2f23bc4908fb315516d0157c1388e5b8f72678e1",
       "component.switch.unselected.thumb": "b32b89292a6abd65c21a231fbc29d660626f4ee1",
       "component.switch.unselected.background": "a0e3eb4ee58c823b25d93f1c26a12135489e2a14",

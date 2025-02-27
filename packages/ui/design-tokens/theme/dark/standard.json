@@ -822,11 +822,6 @@
           "$value": "{text.2}",
           "$description": "Text color for dropdown menu items. Ensures readability of selectable options."
         },
-        "separator": {
-          "$type": "color",
-          "$value": "{colors.chrome.800}",
-          "$description": "Color for separators between dropdown items or sections. Creates visual organization within the menu."
-        },
         "delete": {
           "text": {
             "$type": "color",

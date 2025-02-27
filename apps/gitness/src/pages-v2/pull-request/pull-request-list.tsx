@@ -40,7 +40,7 @@ export default function PullRequestListPage() {
 
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
     {
-      queryParams: { page, query: query ?? '', ...filterValues },
+      queryParams: { page, query: query ?? '', accountIdentifier: mfeContext?.scope?.accountId, ...filterValues },
       id: Number(searchParams.get('created_by'))
     },
     // Adding staleTime to avoid refetching the data if authorId gets modified in searchParams

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { RepoFile, SummaryItemType } from '@harnessio/ui/views'
+import { SummaryItemType, type RepoFile } from '@harnessio/ui/views'
 
 import { getLogsText, sortFilesByType } from '../common-utils'
 

@@ -1259,6 +1259,11 @@
           "$type": "color",
           "$value": "{colors.accent.950}",
           "$description": "Subtle background variation for blue tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.blue.background}",
+          "$description": "Border color for blue tags. "
         }
       },
       "brown": {
@@ -1276,6 +1281,11 @@
           "$type": "color",
           "$value": "{colors.brown.950}",
           "$description": "Subtle background variation for brown tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.brown.background}",
+          "$description": "Border color for brown tags. "
         }
       },
       "cyan": {
@@ -1293,6 +1303,11 @@
           "$type": "color",
           "$value": "{colors.cyan.950}",
           "$description": "Subtle background variation for cyan tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.cyan.background}",
+          "$description": "Border color for cyan tags."
         }
       },
       "green": {
@@ -1310,6 +1325,11 @@
           "$type": "color",
           "$value": "{colors.green.950}",
           "$description": "Subtle background variation for green tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.green.background}",
+          "$description": "Border color for green tags."
         }
       },
       "indigo": {
@@ -1327,6 +1347,11 @@
           "$type": "color",
           "$value": "{colors.indigo.950}",
           "$description": "Subtle background variation for indigo tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.indigo.background}",
+          "$description": "Border color for indigo tags."
         }
       },
       "lime": {
@@ -1344,6 +1369,11 @@
           "$type": "color",
           "$value": "{colors.lime.950}",
           "$description": "Subtle background variation for lime tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.lime.background}",
+          "$description": "Border color for lime tags."
         }
       },
       "mint": {
@@ -1361,6 +1391,11 @@
           "$type": "color",
           "$value": "{colors.mint.950}",
           "$description": "Subtle background variation for mint tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.mint.background}",
+          "$description": "Border color for mint tags."
         }
       },
       "orange": {
@@ -1378,6 +1413,11 @@
           "$type": "color",
           "$value": "{colors.orange.950}",
           "$description": "Subtle background variation for orange tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.orange.background}",
+          "$description": "Border color for orange tags."
         }
       },
       "pink": {
@@ -1395,6 +1435,11 @@
           "$type": "color",
           "$value": "{colors.pink.950}",
           "$description": "Subtle background variation for pink tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.pink.background}",
+          "$description": "Border color for pink tags."
         }
       },
       "purple": {
@@ -1412,6 +1457,11 @@
           "$type": "color",
           "$value": "{colors.purple.950}",
           "$description": "Subtle background variation for purple tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.purple.background}",
+          "$description": "Border color for purple tags."
         }
       },
       "red": {
@@ -1425,15 +1475,15 @@
           "$value": "{colors.red.900}",
           "$description": "Background color for red tags. Creates a distinct surface with red theme styling."
         },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.red.background}",
-          "$description": "Border color for red tags."
-        },
         "background-subtle": {
           "$type": "color",
           "$value": "{colors.red.950}",
           "$description": "Subtle background variation for red tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.red.background}",
+          "$description": "Border color for red tags."
         }
       },
       "violet": {
@@ -1451,6 +1501,11 @@
           "$type": "color",
           "$value": "{colors.violet.950}",
           "$description": "Subtle background variation for violet tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.violet.background}",
+          "$description": "Border color for violet tags."
         }
       },
       "yellow": {
@@ -1468,6 +1523,11 @@
           "$type": "color",
           "$value": "{colors.yellow.950}",
           "$description": "Subtle background variation for yellow tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.yellow.background}",
+          "$description": "Border color for yellow tags."
         }
       }
     },

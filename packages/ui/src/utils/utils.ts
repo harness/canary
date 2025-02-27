@@ -98,19 +98,6 @@ export const timeAgo = (timestamp?: number | null, cutoffDays: number = 3): Reac
   }
 }
 
-//generate random password
-export function generateAlphaNumericHash(length: number) {
-  let result = ''
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  const charactersLength = characters.length
-
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-  }
-
-  return result
-}
-
 /**
  * Format a number with current locale.
  * @param num number
@@ -119,6 +106,7 @@ export function generateAlphaNumericHash(length: number) {
 export function formatNumber(num: number | bigint): string {
   return num ? new Intl.NumberFormat(LOCALE).format(num) : ''
 }
+
 export interface Violation {
   violation: string
 }

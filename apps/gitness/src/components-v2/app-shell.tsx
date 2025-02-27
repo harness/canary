@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Outlet, useLocation, useMatches, useNavigate, useParams } from 'react-router-dom'
 
 import { cn } from '@harnessio/canary'
 import {
@@ -9,7 +9,8 @@ import {
   MoreSubmenu,
   Navbar,
   NavbarItemType,
-  SettingsMenu
+  SettingsMenu,
+  Text
 } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
 

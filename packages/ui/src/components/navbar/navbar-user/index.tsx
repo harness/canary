@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { Link } from 'react-router-dom'
 
 import {
   Avatar,
@@ -13,6 +12,7 @@ import {
   ModeType,
   Text
 } from '@/components'
+import { useRouterContext } from '@/context'
 import { TypesUser } from '@/types'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
@@ -68,6 +68,7 @@ export const NavbarUser = ({
   useThemeStore,
   useTranslationStore
 }: NavbarUserProps) => {
+  const { Link } = useRouterContext()
   const username = currentUser?.display_name || currentUser?.uid || ''
   const { theme, setTheme } = useThemeStore()
   const { t, i18n, changeLanguage } = useTranslationStore()

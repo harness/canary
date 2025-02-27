@@ -8,7 +8,7 @@ import {
   MenuGroupType,
   MenuGroupTypes,
   MoreSubmenu,
-  Navbar,
+  // Navbar,
   NavbarItemType,
   SettingsMenu,
   Sidebar
@@ -206,6 +206,7 @@ export const AppShell = () => {
             showSettingMenu={showSettingMenu}
             handleSettingsMenu={handleSettingsMenu}
             handleCustomNav={handleCustomNav}
+            handleLogOut={handleLogOut}
           />
         </Sidebar.Provider>
       </SandboxLayout.LeftPanel>

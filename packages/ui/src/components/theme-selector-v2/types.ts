@@ -1,4 +1,4 @@
-import { ColorType, ContrastType, FullTheme, IThemeStore, ModeType } from '@components/theme-selector/types'
+import { ColorType, ContrastType, FullTheme, ModeType } from '@components/theme-selector/types'
 
 export interface ThemeInterface {
   mode: ModeType
@@ -7,24 +7,6 @@ export interface ThemeInterface {
   accentColor: AccentColor
   grayColor: GrayColor
 }
-
-// export enum Mode {
-//   Dark = 'Dark',
-//   Light = 'Light'
-// }
-
-// export enum Contrast {
-//   Default = 'Default',
-//   HighContrast = 'High Contrast',
-//   Dimmer = 'Dimmer'
-// }
-
-// export enum ColorAdjustment {
-//   Default = 'Default',
-//   Protanopia = 'Protanopia',
-//   Deuteranopia = 'Deuteranopia',
-//   Tritanopia = 'Tritanopia'
-// }
 
 export enum AccentColor {
   Red = '#FF4D4D',

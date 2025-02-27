@@ -96,6 +96,7 @@ export function CreateBranchDialog({
 
           <Fieldset>
             <ControlGroup>
+              {/* TODO: Currently the search within BranchSelector is not working, we need to review the current passed states for it to work */}
               <BranchSelector
                 useRepoBranchesStore={useRepoBranchesStore}
                 useTranslationStore={useTranslationStore}

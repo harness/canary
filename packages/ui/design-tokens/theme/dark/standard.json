@@ -1824,11 +1824,6 @@
           "$value": "{colors.red.900}",
           "$description": "Background color for red tags. Creates a distinct surface with red theme styling."
         },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.red.background}",
-          "$description": "Border color for red tags."
-        },
         "background-subtle": {
           "$type": "color",
           "$value": "{colors.red.950}",

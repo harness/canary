@@ -1,0 +1,28 @@
+{
+  "tag": {
+    "size": {
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.5}"
+      }
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.1}"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
+    },
+    "radius": {
+      "default": {
+        "$type": "borderRadius",
+        "$value": "{rounded.2}"
+      }
+    }
+  }
+}

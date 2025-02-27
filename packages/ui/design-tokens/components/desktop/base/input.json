@@ -6,7 +6,7 @@
         "$value": "{size.9}",
         "$description": "36px\n"
       },
-      "compact": {
+      "sm": {
         "$type": "sizing",
         "$value": "{size.8}",
         "$description": "32px"

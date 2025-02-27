@@ -9,13 +9,13 @@ interface BranchSelectorProps {
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
   branchPrefix?: string
-  buttonSize?: 'default' | 'sm'
   selectedBranch?: BranchSelectorListItem
   onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   isBranchOnly?: boolean
   searchQuery?: string
   setSearchQuery: (query: string) => void
   dynamicWidth?: boolean
+  buttonSize?: 'default' | 'sm' | 'md'
 }
 export const BranchSelector: FC<BranchSelectorProps> = ({
   useRepoBranchesStore,

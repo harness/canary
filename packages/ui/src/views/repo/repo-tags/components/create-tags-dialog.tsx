@@ -122,6 +122,7 @@ export function CreateTagDialog({
                 searchQuery={branchQuery}
                 setSearchQuery={setBranchQuery}
                 dynamicWidth
+                buttonSize="md"
               />
             </ControlGroup>
           </Fieldset>

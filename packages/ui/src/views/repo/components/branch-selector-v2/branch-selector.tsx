@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, Icon, Text } from '@/components'
+import { Button, DropdownMenu, Icon } from '@/components'
 import { BranchData, BranchSelectorListItem, BranchSelectorTab, TranslationStore } from '@/views'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
@@ -13,7 +13,7 @@ interface BranchSelectorProps {
   spaceId: string
   useTranslationStore: () => TranslationStore
   branchPrefix?: string
-  buttonSize?: 'default' | 'sm'
+  buttonSize?: 'default' | 'sm' | 'md'
   selectedBranch?: BranchSelectorListItem
   onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   isBranchOnly?: boolean
@@ -52,12 +52,12 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
           {!branchPrefix && (
             <Icon className="shrink-0 fill-transparent text-icons-9" name={isTag ? 'tag' : 'branch'} size={14} />
           )}
-          <Text className="w-full text-foreground-8" truncate align="left">
+          <span className="w-full truncate text-left text-foreground-8">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}
-          </Text>
-          <Icon name="chevron-down" className="chevron-down text-icons-2" size={20} />
+          </span>
+          <Icon name="chevron-down" className="chevron-down shrink-0 text-icons-2" size={12} />
         </Button>
       </DropdownMenu.Trigger>
       <BranchSelectorDropdown

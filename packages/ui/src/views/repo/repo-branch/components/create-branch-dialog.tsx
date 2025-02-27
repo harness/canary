@@ -95,40 +95,6 @@ export function CreateBranchDialog({
 
           <Fieldset>
             <ControlGroup>
-              {/* <Select.Root
-                name="target"
-                value={targetValue || defaultBranch}
-                onValueChange={value => handleSelectChange('target', value)}
-                placeholder={t('views:forms.select', 'Select')}
-                label={t('views:forms.baseBranch', 'Base branch')}
-                error={
-                  errors.target?.message
-                    ? t('views:forms.selectBranchError', errors.target?.message?.toString())
-                    : undefined
-                }
-                disabled={isLoadingBranches || !branches?.length}
-              >
-                <Select.Content
-                  withSearch
-                  searchProps={{
-                    placeholder: t('views:repos.search', 'Search'),
-                    searchValue: '',
-                    handleChangeSearchValue
-                  }}
-                >
-                  {processedBranches?.map(
-                    branch =>
-                      branch?.name && (
-                        <Select.Item key={branch.name} value={branch.name as string}>
-                          <span className="flex items-center gap-1.5">
-                            <Icon name="branch" size={14} />
-                            {branch.name}
-                          </span>
-                        </Select.Item>
-                      )
-                  )}
-                </Select.Content>
-              </Select.Root> */}
               <BranchSelector
                 useRepoBranchesStore={useRepoBranchesStore}
                 useTranslationStore={useTranslationStore}
@@ -138,6 +104,8 @@ export function CreateBranchDialog({
                 }}
                 setSearchQuery={handleChangeSearchValue}
                 dynamicWidth
+                buttonSize="md"
+                isBranchOnly
               />
             </ControlGroup>
           </Fieldset>
@@ -155,21 +123,12 @@ export function CreateBranchDialog({
               variant="outline"
               type="button"
               onClick={() => {
-                clearErrors()
-                // handleClose()
-                // reset({
-                //   name: '',
-                //   target: defaultBranch || ''
-                // })
-                onClose()
-                setValue('target', defaultBranch || '')
-                setValue('name', '')
-                setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
+                handleClose()
               }}
               loading={isCreatingBranch}
               disabled={isCreatingBranch}
             >
-              {t('views:repos.cancel', 'Cancel')}
+              {t('views`:repos.cancel', 'Cancel')}
             </Button>
             <Button type="submit" disabled={isCreatingBranch || !isValid}>
               {t('views:repos.createBranchButton', 'Create branch')}

@@ -53,6 +53,7 @@ export function CreateBranchDialog({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful, open, onClose])
+
   const handleClose = () => {
     clearErrors()
     setValue('name', '', { shouldValidate: false })
@@ -95,6 +96,7 @@ export function CreateBranchDialog({
 
           <Fieldset>
             <ControlGroup>
+              {/* TODO: Currently the search within BranchSelector is not working, we need to review the current passed states for it to work */}
               <BranchSelector
                 useRepoBranchesStore={useRepoBranchesStore}
                 useTranslationStore={useTranslationStore}
@@ -103,9 +105,9 @@ export function CreateBranchDialog({
                   setSelectedBranchTag(value)
                 }}
                 setSearchQuery={handleChangeSearchValue}
-                dynamicWidth
                 buttonSize="md"
                 isBranchOnly
+                dynamicWidth
               />
             </ControlGroup>
           </Fieldset>
@@ -122,9 +124,7 @@ export function CreateBranchDialog({
             <Button
               variant="outline"
               type="button"
-              onClick={() => {
-                handleClose()
-              }}
+              onClick={handleClose}
               loading={isCreatingBranch}
               disabled={isCreatingBranch}
             >

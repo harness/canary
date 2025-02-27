@@ -128,7 +128,7 @@ export function CreateBranchDialog({
               loading={isCreatingBranch}
               disabled={isCreatingBranch}
             >
-              {t('views`:repos.cancel', 'Cancel')}
+              {t('views:repos.cancel', 'Cancel')}
             </Button>
             <Button type="submit" disabled={isCreatingBranch || !isValid}>
               {t('views:repos.createBranchButton', 'Create branch')}

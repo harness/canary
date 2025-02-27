@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { Avatar, Layout } from '@/components'
 import {
+  activitiesToDiffCommentItems,
   CommentItem,
   CommitSuggestion,
   CreateCommentPullReqRequest,
@@ -215,7 +216,11 @@ const PullRequestDiffViewer = ({
         updated: parentComment.updated,
         deleted: parentComment.deleted,
         outdated: parentComment.outdated,
-        payload: parentComment.payload
+        payload: parentComment.payload,
+        codeBlockContent: activitiesToDiffCommentItems(parentComment).codeBlockContent,
+        appliedCheckSum: parentComment.payload?.metadata?.suggestions?.applied_check_sum,
+        appliedCommitSha: parentComment.payload?.metadata?.suggestions?.applied_commit_sha,
+        checkSums: parentComment.payload?.metadata?.suggestions?.check_sums
       }
 
       const replies = threadArr.slice(1).map(reply => ({
@@ -227,7 +232,11 @@ const PullRequestDiffViewer = ({
         edited: reply.edited,
         updated: reply.updated,
         deleted: reply.deleted,
-        outdated: reply.outdated
+        outdated: reply.outdated,
+        codeBlockContent: activitiesToDiffCommentItems(reply).codeBlockContent,
+        appliedCheckSum: reply.payload?.metadata?.suggestions?.applied_check_sum,
+        appliedCommitSha: reply.payload?.metadata?.suggestions?.applied_commit_sha,
+        checkSums: reply.payload?.metadata?.suggestions?.check_sums
       }))
 
       if (!newExtend[side][lineNumber]) {

@@ -667,8 +667,7 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "theme/dark/standard": "enabled",
-      "theme/dark/icon-width": "enabled"
+      "theme/dark/standard": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1402,11 +1401,7 @@
       "gradient.pipeline.widget.blob.big.gradient-from": "9c6ae32011922672fef78acdf411bc48bca529d2",
       "gradient.pipeline.widget.blob.big.gradient-to": "2432c16a5db98fbddbef5160535dd7bb63b95561",
       "gradient.pipeline.widget.blob.small.gradient-from": "da7fc247275c53c7efc1f6bf72e97dfc6d826c66",
-      "gradient.pipeline.widget.blob.small.gradient-to": "bb9f344d8786423623a390519743ab786c037063",
-      "iconStrokeWidth.xs": "7a4fe644d43385e3ab3baa5235cc7fdef49e5731",
-      "iconStrokeWidth.sm": "09670a42dc241d032bf3cb9c6bc8c552fe69c7e2",
-      "iconStrokeWidth.md": "d3307e2000c70f5b2fab2ee734a8d3f08a1b1f5f",
-      "iconStrokeWidth.lg": "a3fb99a6e91caf4011b6cb6a45972855895ce969"
+      "gradient.pipeline.widget.blob.small.gradient-to": "bb9f344d8786423623a390519743ab786c037063"
     },
     "$figmaCollectionId": "VariableCollectionId:1276:309650",
     "$figmaModeId": "1276:2",

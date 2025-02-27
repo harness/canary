@@ -1,7 +1,7 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useMemo } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, CopyButton, Dialog, Fieldset, FormWrapper, Input, Select } from '@/components'
+import { Button, Caption, CopyButton, Dialog, Fieldset, FormWrapper, Input, Select, toast } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
@@ -18,19 +18,54 @@ interface ProfileSettingsTokenCreateDialogProps {
   useProfileSettingsStore: () => IProfileSettingsStore
 }
 
-export const tokenCreateFormSchema = z.object({
-  identifier: z.string().min(1, { message: 'Please provide a name' }),
-  lifetime: z.string().min(1, { message: 'Please select an expiration' }),
-  token: z.string()
-})
+export const makeTokenCreateFormSchema = (t: TranslationStore['t']) =>
+  z.object({
+    identifier: z
+      .string()
+      .trim()
+      .min(1, { message: t('views:profileSettings.tokenValidation.nameMin', 'Please provide token name') })
+      .max(100, {
+        message: t('views:profileSettings.tokenValidation.nameMax', 'Name must be no longer than 100 characters')
+      })
+      .regex(/^[a-zA-Z0-9._-\s]+$/, {
+        message: t(
+          'views:profileSettings.tokenValidation.nameRegex',
+          'Name must contain only letters, numbers, and the characters: - _ .'
+        )
+      })
+      .refine(data => !data.includes(' '), {
+        message: t('views:profileSettings.tokenValidation.noSpaces', 'Name cannot contain spaces')
+      }),
+    lifetime: z
+      .string()
+      .min(1, { message: t('views:profileSettings.tokenValidation.expiration', 'Please select the expiration') }),
+    token: z.string()
+  })
 
-const expirationOptions = [
-  { value: '7', label: '7 days' },
-  { value: '30', label: '30 days' },
-  { value: '60', label: '60 days' },
-  { value: '90', label: '90 days' },
-  { value: 'never', label: 'Never' }
+const getExpirationOptions = (t: TranslationStore['t']) => [
+  { value: '7', label: t('views:profileSettings.expirationOptions.7_days', '7 days') },
+  { value: '30', label: t('views:profileSettings.expirationOptions.30_days', '30 days') },
+  { value: '60', label: t('views:profileSettings.expirationOptions.60_days', '60 days') },
+  { value: '90', label: t('views:profileSettings.expirationOptions.90_days', '90 days') },
+  { value: 'never', label: t('views:profileSettings.expirationOptions.never', 'Never') }
 ]
+
+const defaultValues = { identifier: '', lifetime: '', token: '' }
+
+const calculateExpirationDate = (lifetime: string): string => {
+  if (lifetime === 'never') return ''
+
+  const days = parseInt(lifetime, 10)
+  const expirationDate = new Date()
+  expirationDate.setDate(expirationDate.getDate() + days)
+
+  return expirationDate.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
 
 export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDialogProps> = ({
   open,
@@ -43,6 +78,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
 }) => {
   const { createdTokenData } = useProfileSettingsStore()
   const { t } = useTranslationStore()
+
   const {
     register,
     handleSubmit,
@@ -51,57 +87,45 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
     reset,
     formState: { errors, isValid }
   } = useForm<TokenFormType>({
-    resolver: zodResolver(tokenCreateFormSchema),
+    resolver: zodResolver(makeTokenCreateFormSchema(t)),
     mode: 'onChange',
-    defaultValues: {
-      identifier: '',
-      lifetime: '',
-      token: ''
-    }
+    defaultValues
   })
 
+  const expirationOptions = useMemo(() => getExpirationOptions(t), [t])
   const expirationValue = watch('lifetime')
-  const identifier = watch('identifier')
 
   useEffect(() => {
-    if (!open) {
-      reset()
-    }
-  }, [open, reset, setValue])
+    if (!createdTokenData) return
 
-  useEffect(() => {
-    if (createdTokenData) {
-      setValue('identifier', createdTokenData.identifier)
-      setValue('lifetime', createdTokenData.lifetime)
-      setValue('token', createdTokenData.token)
-    }
-  }, [createdTokenData, setValue])
+    reset(createdTokenData)
+  }, [createdTokenData, reset])
 
-  const handleSelectChange = (fieldName: keyof TokenFormType, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
-  }
+  const handleSelectLifetime = (value: string) => setValue('lifetime', value, { shouldValidate: true })
 
   const handleFormSubmit: SubmitHandler<TokenFormType> = data => {
     handleCreateToken(data)
   }
 
-  const calculateExpirationDate = (lifetime: string): string => {
-    if (lifetime === 'never') return ''
-
-    const days = parseInt(lifetime, 10)
-    const expirationDate = new Date()
-    expirationDate.setDate(expirationDate.getDate() + days)
-
-    return expirationDate.toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
+  const handleClose = () => {
+    onClose()
+    setTimeout(() => reset(defaultValues), 300)
   }
 
+  const handleOpenChange = (isOpen: boolean) => !isOpen && handleClose()
+
+  /**
+   * Show an unexpected server error message
+   * Ensure that validation errors are handled by the react-hook-form
+   */
+  useEffect(() => {
+    if (!error || error?.type !== ApiErrorType.TokenCreate) return
+
+    toast({ title: error.message, variant: 'destructive' })
+  }, [error])
+
   return (
-    <Dialog.Root open={open} onOpenChange={onClose}>
+    <Dialog.Root open={open} onOpenChange={handleOpenChange}>
       <Dialog.Content aria-describedby={undefined}>
         <Dialog.Header>
           <Dialog.Title>{t('views:profileSettings.createToken', 'Create a token')}</Dialog.Title>
@@ -110,7 +134,6 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
           <Fieldset>
             <Input
               id="identifier"
-              value={identifier}
               size="md"
               {...register('identifier')}
               placeholder={t('views:profileSettings.enterTokenPlaceholder', 'Enter token name')}
@@ -152,52 +175,39 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
               <span className="text-14 text-foreground-1">
                 {t(
                   'views:profileSettings.tokenSuccessDescription',
-                  'Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t beable to see it again.'
+                  'Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t be able to see it again.'
                 )}
               </span>
             </>
           ) : (
-            <>
-              <Fieldset className="gap-y-0">
-                <Select.Root
-                  value={expirationValue}
-                  onValueChange={value => handleSelectChange('lifetime', value)}
-                  label={t('views:profileSettings.expiration', 'Expiration')}
-                  placeholder={t('views:profileSettings.select', 'Select')}
-                  error={errors.lifetime?.message?.toString()}
-                >
-                  <Select.Content>
-                    {expirationOptions.map(expirationOption => {
-                      return (
-                        <Select.Item key={expirationOption.value} value={expirationOption.value}>
-                          <span className="text-foreground-1">{expirationOption.label}</span>
-                        </Select.Item>
-                      )
-                    })}
-                  </Select.Content>
-                </Select.Root>
-                {isValid && (
-                  <span className="mt-1.5 text-14 text-foreground-3">
-                    {watch('lifetime') === 'never' ? (
-                      <span>{t('views:profileSettings.tokenExpiryNone', 'Token will never expire')}</span>
-                    ) : (
-                      <span>
-                        {t('views:profileSettings.tokenExpiryDate', 'Token will expire on')}{' '}
-                        {calculateExpirationDate(watch('lifetime'))}
-                      </span>
-                    )}
-                  </span>
-                )}
-              </Fieldset>
-            </>
+            <Fieldset className="gap-y-0">
+              <Select.Root
+                value={expirationValue}
+                onValueChange={handleSelectLifetime}
+                label={t('views:profileSettings.expiration', 'Expiration')}
+                placeholder={t('views:profileSettings.select', 'Select')}
+                error={errors.lifetime?.message?.toString()}
+              >
+                <Select.Content>
+                  {expirationOptions.map(expirationOption => (
+                    <Select.Item key={expirationOption.value} value={expirationOption.value}>
+                      <span className="text-foreground-1">{expirationOption.label}</span>
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Root>
+              {isValid && (
+                <Caption>
+                  {expirationValue === 'never'
+                    ? t('views:profileSettings.tokenExpiryNone', 'Token will never expire')
+                    : `${t('views:profileSettings.tokenExpiryDate', 'Token will expire on')} ${calculateExpirationDate(expirationValue)}`}
+                </Caption>
+              )}
+            </Fieldset>
           )}
-          {error?.type === ApiErrorType.TokenCreate && (
-            <Alert.Container variant="destructive">
-              <Alert.Title>{error.message}</Alert.Title>
-            </Alert.Container>
-          )}
+
           <Dialog.Footer className="-mx-5 -mb-5">
-            <Button type="button" variant="outline" onClick={onClose}>
+            <Button type="button" variant="outline" onClick={handleClose}>
               {createdTokenData
                 ? t('views:profileSettings.gotItButton', 'Got it')
                 : t('views:profileSettings.cancel', 'Cancel')}

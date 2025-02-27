@@ -4,7 +4,6 @@ import { FC } from 'react'
 
 import { Button, MarkdownViewer } from '@/components'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
-import { get } from 'lodash-es'
 
 import { CommentItem, TypesPullReqActivity } from '../../pull-request-details-types'
 

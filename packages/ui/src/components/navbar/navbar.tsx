@@ -47,7 +47,7 @@ export const Navbar = ({
 }: NavbarProps) => {
   const { Link } = useRouterContext()
   const location = useLocation()
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
   const adminMenuItem = getAdminMenuItem(t)
 

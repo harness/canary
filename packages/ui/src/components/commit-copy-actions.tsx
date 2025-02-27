@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { Icon, ShaBadge } from '@/components'
+import { useRouterContext } from '@/context'
 import copy from 'clipboard-copy'
 
 export const CommitCopyActions = ({
@@ -12,7 +12,7 @@ export const CommitCopyActions = ({
   toCommitDetails?: ({ sha }: { sha: string }) => string
 }) => {
   const [copied, setCopied] = useState(false)
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
 
   useEffect(() => {
     let timeoutId: number

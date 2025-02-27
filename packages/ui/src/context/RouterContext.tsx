@@ -1,7 +1,5 @@
 import { Component, ComponentType, createContext, ReactNode, useContext } from 'react'
-import type { LinkProps, NavLinkProps } from 'react-router-dom'
-
-// verify if final bundle doesn't have reference to react-router-dom
+import type { LinkProps, NavLinkProps } from 'react-router-dom' // verify if final bundle doesn't have reference to react-router-dom
 
 const DefaultOutlet = () => null
 
@@ -11,12 +9,14 @@ interface RouterContextType {
   Link: ComponentType<LinkProps>
   NavLink: ComponentType<NavLinkProps>
   Outlet: OutletComponentType
+  navigate: (to: string, options?: { replace?: boolean }) => void
 }
 
 const RouterContext = createContext<RouterContextType>({
   Link: Component,
   NavLink: Component,
-  Outlet: DefaultOutlet // Use a placeholder in v5
+  Outlet: DefaultOutlet, // Remove usages of Outlet from the package
+  navigate: () => {}
 })
 
 export const useRouterContext = () => useContext(RouterContext)
@@ -61,5 +61,18 @@ export const RouterProvider = ({
   NavLink?: ComponentType<NavLinkProps>
   Outlet?: OutletComponentType
 }) => {
-  return <RouterContext.Provider value={{ Link, NavLink, Outlet }}>{children}</RouterContext.Provider>
+  return (
+    <RouterContext.Provider
+      value={{
+        Link,
+        NavLink,
+        Outlet,
+        navigate: to => {
+          window.location.href = to
+        }
+      }}
+    >
+      {children}
+    </RouterContext.Provider>
+  )
 }

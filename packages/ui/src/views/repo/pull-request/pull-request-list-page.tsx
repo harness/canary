@@ -197,7 +197,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           <>
             <PRListFilterHandler
               ref={filtersRef}
-              onFilterSelectionChange={onFilterSelectionChange}
+              // TODO: fix type issue
+              {...{ onFilterSelectionChange: onFilterSelectionChange }}
               onChange={onFilterValueChange}
               view="dropdown"
             >

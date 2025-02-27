@@ -15,19 +15,21 @@ export const repoTabsKeysArr = Object.values(RepoTabsKeys)
 
 export const RepoSubheader = ({
   useTranslationStore,
-  showPipelinesTab = true
+  showPipelinesTab = true,
+  className
 }: {
   useTranslationStore: () => TranslationStore
   showPipelinesTab?: boolean
+  className?: string
 }) => {
   const { t } = useTranslationStore()
 
   return (
-    <SandboxLayout.SubHeader className="h-[45px] overflow-hidden">
+    <SandboxLayout.SubHeader className={className}>
       <TabNav.Root>
         <TabNav.Item to="summary">{t('views:repos.summary', 'Summary')}</TabNav.Item>
         <TabNav.Item to="code">{t('views:repos.files', 'Files')}</TabNav.Item>
-        {showPipelinesTab ? <TabNav.Item to="pipelines">{t('views:repos.pipelines', 'Pipelines')}</TabNav.Item> : null}
+        {showPipelinesTab && <TabNav.Item to="pipelines">{t('views:repos.pipelines', 'Pipelines')}</TabNav.Item>}
         <TabNav.Item to="commits">{t('views:repos.commits', 'Commits')}</TabNav.Item>
         <TabNav.Item to="tags">{t('views:repos.tags', 'Tags')}</TabNav.Item>
         <TabNav.Item to="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</TabNav.Item>

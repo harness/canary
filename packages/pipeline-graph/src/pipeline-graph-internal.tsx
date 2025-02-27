@@ -74,7 +74,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
 
       // draw lines
       if (svgGroupRef.current) {
-        let allPaths: { level1: string[]; level2: string[] } = { level1: [], level2: [] }
+        const allPaths: { level1: string[]; level2: string[] } = { level1: [], level2: [] }
         connections.map(portPair => {
           const levelPaths = getPortsConnectionPath({
             pipelineGraphRoot: rootContainerEl,

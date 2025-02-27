@@ -133,7 +133,7 @@ export function CreateSecretPage({
   }
 
   return (
-    <SandboxLayout.Content className="px-0 pt-0 h-full">
+    <SandboxLayout.Content className="h-full px-0 pt-0">
       <Spacer size={5} />
       <FormWrapper className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
         {/* NAME */}
@@ -163,24 +163,24 @@ export function CreateSecretPage({
           />
 
           <div>
-            <label htmlFor="secret-file-input" className="text-foreground-2 mb-2.5 block text-sm font-medium">
+            <label htmlFor="secret-file-input" className="mb-2.5 block text-sm font-medium text-foreground-2">
               Secret File
             </label>
             <div
-              className="border-2 border-dashed border-borders-2 p-4 rounded-md"
+              className="rounded-md border-2 border-dashed border-borders-2 p-4"
               onDragOver={handleDragOver}
               onDrop={handleDrop}
             >
               <div className="flex flex-col items-center justify-center">
                 {!selectedFile ? (
                   <>
-                    <p className="mb-2 text-foreground-2 text-sm">Drag and drop your file here or click to browse</p>
+                    <p className="mb-2 text-sm text-foreground-2">Drag and drop your file here or click to browse</p>
                     <Button type="button" variant="outline" onClick={openFileInput}>
                       Browse Files
                     </Button>
                   </>
                 ) : (
-                  <div className="w-full flex flex-col">
+                  <div className="flex w-full flex-col">
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-foreground-2">
                         Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
@@ -198,7 +198,7 @@ export function CreateSecretPage({
                 )}
               </div>
             </div>
-            {errors.file && <div className="text-destructive text-sm mt-1">{errors.file.message?.toString()}</div>}
+            {errors.file && <div className="mt-1 text-sm text-destructive">{errors.file.message?.toString()}</div>}
           </div>
           <Accordion.Root type="single" collapsible>
             <Accordion.Item value="secret-details">
@@ -236,7 +236,7 @@ export function CreateSecretPage({
           </Alert.Container>
         )}
 
-        <div className="fixed bottom-0 left-0 right-0 bg-background-2 p-4 shadow-md">
+        <div className="fixed inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
           <ControlGroup>
             <ButtonGroup className="flex flex-row justify-between">
               <Button type="button" variant="outline" onClick={handleCancel}>

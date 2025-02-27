@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useAnimateTree } from '@/hooks/useAnimateTree'
 import { useLogs } from '@/hooks/useLogs'
+import { useTranslationStore } from '@utils/viewUtils'
 
 import { TreeViewElement } from '@harnessio/ui/components'
 import {
@@ -106,7 +107,7 @@ export const ExecutionLogsView = () => {
 
   return (
     <div className="flex h-full flex-col">
-      <ExecutionTabs />
+      <ExecutionTabs useTranslationStore={useTranslationStore} />
       <ExecutionHeader
         commitName="8fbru3ix"
         branchName="master"

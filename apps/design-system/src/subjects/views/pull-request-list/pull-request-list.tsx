@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react'
 
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
-import { PullRequestList, PullRequestPageProps } from '@harnessio/ui/views'
+import { PullRequestListPage, PullRequestPageProps } from '@harnessio/ui/views'
 
 import { pullRequestListStore } from './pull-request-list-store'
 
@@ -15,7 +15,7 @@ const PullRequestListWrapper: FC<Partial<PullRequestPageProps>> = props => {
   )
 
   return (
-    <PullRequestList
+    <PullRequestListPage
       setSearchQuery={noop}
       usePullRequestListStore={usePullRequestListStore}
       useTranslationStore={useTranslationStore}

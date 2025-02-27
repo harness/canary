@@ -10,7 +10,7 @@ import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../../i18n/stores/i18n-store'
 import { useLabelsStore } from '../stores/labels-store'
-import { useGetProjectLabelAndValuesData } from './hooks/use-get-project-label-and-values-data.ts'
+import { useGetProjectLabelAndValuesData } from './hooks/use-get-project-label-and-values-data'
 
 export const ProjectLabelsList = () => {
   const navigate = useNavigate()

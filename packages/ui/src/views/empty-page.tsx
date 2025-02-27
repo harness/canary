@@ -1,9 +1,15 @@
+import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { NoData } from '../components/no-data'
+import { NoData } from '@/components'
 
-export const EmptyPage = ({ pathName }: { pathName: string }) => {
+export interface EmptyPageProps {
+  pathName: string
+}
+
+export const EmptyPage: FC<EmptyPageProps> = ({ pathName }) => {
   const navigate = useNavigate()
+
   return (
     <div className="flex min-h-screen items-center">
       <NoData

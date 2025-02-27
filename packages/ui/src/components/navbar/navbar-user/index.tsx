@@ -1,18 +1,8 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Avatar,
-  ColorType,
-  ContrastType,
-  DropdownMenu,
-  FullTheme,
-  getModeColorContrastFromFullTheme,
-  Icon,
-  IThemeStore,
-  ModeType,
-  Text
-} from '@/components'
+import { Avatar, DropdownMenu, getModeColorContrastFromFullTheme, Icon, Text } from '@/components'
+import { ColorType, ContrastType, FullTheme, ModeType, useTheme } from '@/context'
 import { TypesUser } from '@/types'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
@@ -57,19 +47,12 @@ interface NavbarUserProps {
   currentUser: TypesUser | undefined
   handleCustomNav: () => void
   handleLogOut: () => void
-  useThemeStore: () => IThemeStore
   useTranslationStore: () => TranslationStore
 }
 
-export const NavbarUser = ({
-  currentUser,
-  handleCustomNav,
-  handleLogOut,
-  useThemeStore,
-  useTranslationStore
-}: NavbarUserProps) => {
+export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, useTranslationStore }: NavbarUserProps) => {
   const username = currentUser?.display_name || currentUser?.uid || ''
-  const { theme, setTheme } = useThemeStore()
+  const { theme, setTheme } = useTheme()
   const { t, i18n, changeLanguage } = useTranslationStore()
   const { mode, color, contrast } = useMemo(() => getModeColorContrastFromFullTheme(theme), [theme])
 

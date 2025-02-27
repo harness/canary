@@ -47,7 +47,7 @@ export function CreateProjectPage({ isLoading, onFormSubmit, apiError, useTransl
         <Card.Root variant="plain" width="full">
           <Card.Header>
             <Card.Title className="flex flex-col place-items-center">
-              <Icon name="create-workspace" size={112} />
+              <Icon name="create-workspace" size={112} themeDependent />
               <Spacer size={4} />
               <Text size={6} weight="medium" color="primary">
                 {t('views:createProject.newProject', 'Create your new project')}

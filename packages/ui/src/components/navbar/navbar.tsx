@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-import { Button, Icon, IThemeStore, NavbarProjectChooser, NavbarSkeleton, ScrollArea, Spacer } from '@/components'
+import { Button, Icon, NavbarProjectChooser, NavbarSkeleton, ScrollArea, Spacer } from '@/components'
 import { TypesUser } from '@/types'
 import { TranslationStore } from '@/views'
 import { isEmpty } from 'lodash-es'
@@ -25,7 +25,6 @@ interface NavbarProps {
   handleLogOut: () => void
   handleChangePinnedMenuItem: (item: NavbarItemType, pin: boolean) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
-  useThemeStore: () => IThemeStore
   useTranslationStore: () => TranslationStore
 }
 
@@ -41,7 +40,6 @@ export const Navbar = ({
   handleLogOut,
   handleChangePinnedMenuItem,
   handleRemoveRecentMenuItem,
-  useThemeStore,
   useTranslationStore
 }: NavbarProps) => {
   const location = useLocation()
@@ -130,7 +128,6 @@ export const Navbar = ({
             handleCustomNav={handleCustomNav}
             handleLogOut={handleLogOut}
             useTranslationStore={useTranslationStore}
-            useThemeStore={useThemeStore}
           />
         ) : (
           <Button onClick={() => navigate('/signin')}>Sign In</Button>

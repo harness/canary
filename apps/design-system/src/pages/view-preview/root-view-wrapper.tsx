@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, useCallback, useState } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 
-import { noop, useThemeStore, useTranslationStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { Breadcrumb, MoreSubmenu, Navbar, NavbarItemType, SettingsMenu, Topbar } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
@@ -49,7 +49,6 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre
                 pinnedMenuItems={pinnedMenu}
                 handleChangePinnedMenuItem={setPinned}
                 handleRemoveRecentMenuItem={noop}
-                useThemeStore={useThemeStore}
                 useTranslationStore={useTranslationStore}
               />
               <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />

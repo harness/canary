@@ -8,7 +8,6 @@ import {
 import { RepoWebhookExecutionDetailsPage, WebhookExecutionType } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -67,7 +66,6 @@ export const WebhookExecutionDetailsContainer = () => {
       useTranslationStore={useTranslationStore}
       isLoading={isTriggeringExecution}
       handleRetriggerExecution={handleRetriggerExecution}
-      useThemeStore={useThemeStore}
     />
   )
 }

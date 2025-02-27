@@ -5,7 +5,7 @@ import { useDeleteRepoLabelMutation, useDeleteSpaceLabelMutation } from '@harnes
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { ILabelType, LabelsListPage } from '@harnessio/ui/views'
 
-import { useRoutes } from '../../../framework/context/NavigationContext.tsx'
+import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../../i18n/stores/i18n-store'

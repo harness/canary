@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useListPullReqQuery } from '@harnessio/code-service-client'
-import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'
+import { PullRequestListPage as SandboxPullRequestListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'

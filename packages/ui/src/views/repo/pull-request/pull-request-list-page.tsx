@@ -23,7 +23,7 @@ export interface PullRequestPageProps {
   setSearchQuery: (query: string | null) => void
 }
 
-const PullRequestList: FC<PullRequestPageProps> = ({
+const PullRequestListPage: FC<PullRequestPageProps> = ({
   usePullRequestListStore,
   spaceId,
   repoId,
@@ -174,4 +174,4 @@ const PullRequestList: FC<PullRequestPageProps> = ({
     </SandboxLayout.Main>
   )
 }
-export { PullRequestList }
+export { PullRequestListPage }

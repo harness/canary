@@ -1,1 +1,2 @@
-export * from './PortalContext'
+export * from './portal-context'
+export * from './theme'

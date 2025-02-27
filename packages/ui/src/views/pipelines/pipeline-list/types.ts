@@ -1,8 +1,5 @@
+import { PipelineExecutionStatus, TLinkComponent, TranslationStore } from '@/views'
 import { MeterState } from '@components/meter'
-import { TranslationStore } from '@views/repo'
-import { TLinkComponent } from '@views/types/link-types'
-
-import { PipelineExecutionStatus } from '../common/execution-types'
 
 export interface IPipeline {
   id: string

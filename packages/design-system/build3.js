@@ -1,38 +1,88 @@
+import fs from 'fs'
+import path from 'path'
+
 import { register } from '@tokens-studio/sd-transforms'
 import StyleDictionary from 'style-dictionary'
 
 // will register them on StyleDictionary object
 // that is installed as a dependency of this package.
-register(StyleDictionary)
+await register(StyleDictionary)
 
-const sd = new StyleDictionary({
-  // make sure to have source match your token files!
-  // be careful about accidentally matching your package.json or similar files that are not tokens
-  source: ['primitives/**/*.json', 'theme/**/*.json', 'breakpoint/**/*.json'],
-  preprocessors: ['tokens-studio'], // <-- since 0.16.0 this must be explicit
+// Function to get all theme files
+const getThemeFiles = () => {
+  console.log('\n🔍 ========== THEME DIRECTORY SCAN ==========\n')
+  const themeDirPath = path.resolve('./theme')
+  console.log('🗂️ Theme directory path:', themeDirPath)
+
+  const files = fs.readdirSync(themeDirPath)
+  console.log('📄 All files in theme directory:', files)
+  console.log('\n📋 ========== THEME FILES VALIDATION ==========\n')
+
+  const themeFiles = files
+    .filter(file => file.endsWith('.json'))
+    .map(file => {
+      const filePath = path.join('theme', file)
+      const fullPath = path.resolve(themeDirPath, file)
+
+      // Check if file exists and is readable
+      try {
+        const stats = fs.statSync(fullPath)
+
+        console.log(`✅ File ${file} exists: ${stats.isFile()}`)
+
+        // Try to read the file content to verify it's readable
+        const content = fs.readFileSync(fullPath, 'utf8')
+        console.log(`📖 File ${file} is readable, number of lines: ${content.split('\n').length}`)
+        console.log('\n')
+      } catch (error) {
+        console.error(`❌ Error checking file ${file}:`, error.message)
+      }
+
+      return {
+        name: file.split('.')[0],
+        path: filePath,
+        fullPath: fullPath
+      }
+    })
+
+  console.log('\n🎨 ========== THEME FILES SUMMARY ==========\n')
+  console.log('🎨 Theme files found:', themeFiles)
+  console.log('\n================================================\n')
+  return themeFiles
+}
+
+// Get all theme files
+const themeFiles = getThemeFiles()
+
+// Create a base StyleDictionary configuration
+const baseConfig = {
+  source: ['primitives/**/*.json', 'breakpoint/**/*.json', 'components/**/*.json'],
+  preprocessors: ['tokens-studio'],
   platforms: {
     css: {
-      transformGroup: 'tokens-studio', // <-- apply the tokens-studio transformGroup to apply all transforms
-      transforms: ['name/kebab'], // <-- add a token name transform for generating token names, default is camel
+      transformGroup: 'tokens-studio',
+      transforms: ['name/kebab'],
       buildPath: 'dist/css/',
       prefix: 'canary-',
+
       options: {
         outputReferences: true,
-        showFileHeader: true
+        showFileHeader: true,
+        fileHeader: () => {
+          return [
+            'Harness Design System',
+            'Generated style tokens - DO NOT EDIT DIRECTLY',
+            `Generated on ${new Date().toUTCString()}`,
+            'Copyright (c) Harness.'
+          ]
+        }
       },
       files: [
         {
           filter: token => {
             return token.filePath.includes('primitives/colors.json')
           },
-          destination: 'colors-variables.css',
-          format: 'css/variables'
-        },
-        {
-          filter: token => {
-            return token.filePath.includes('theme/')
-          },
-          destination: 'themes.css',
+          destination: 'colors.css',
           format: 'css/variables'
         },
         {
@@ -60,13 +110,65 @@ const sd = new StyleDictionary({
           filter: token => {
             return token.filePath.includes('primitives/icon.json')
           },
-          destination: 'icons.css',
+          destination: 'icon.css',
+          format: 'css/variables'
+        },
+        {
+          filter: token => {
+            return token.filePath.includes('components/')
+          },
+          destination: 'components.css',
           format: 'css/variables'
         }
       ]
     }
   }
-})
+}
 
-await sd.cleanAllPlatforms()
-await sd.buildAllPlatforms()
+// const styleDictionaryConfigWithThemes = themeFiles.reduce((acc, theme) => {
+//   acc.source = [...acc.source, theme.path]
+//   acc.platforms.css.files.push({
+//     filter: token => {
+//       return token.filePath.includes(theme.path)
+//     },
+//     destination: `themes/${theme.name}.css`,
+//     format: 'css/variables'
+//   })
+//   return acc
+// }, baseConfig)
+
+// console.log(JSON.stringify(styleDictionaryConfigWithThemes, null, 4))
+
+// Process each theme file separately
+themeFiles.forEach(async theme => {
+  console.log(`\n ✨ ========== PROCESSING THEME: ${theme.name.toUpperCase()} ==========\n`)
+  // console.log(`🔄 Processing theme: ${theme.name}`)
+
+  // Create a configuration for this theme
+  const themeConfig = {
+    ...baseConfig,
+    source: [...baseConfig.source, theme.path],
+    platforms: {
+      css: {
+        ...baseConfig.platforms.css,
+        files: [
+          ...baseConfig.platforms.css.files,
+          {
+            filter: token => {
+              return token.filePath.includes(theme.path)
+            },
+            destination: `themes/${theme.name}.css`,
+            format: 'css/variables',
+            options: {
+              selector: `.${theme.name}`
+            }
+          }
+        ]
+      }
+    }
+  }
+
+  // Build this theme
+  const sd = new StyleDictionary(themeConfig)
+  await sd.buildAllPlatforms()
+})

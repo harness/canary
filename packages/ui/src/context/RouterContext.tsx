@@ -6,7 +6,6 @@ interface RouterContextType {
   Link: ComponentType<LinkProps>
   NavLink: ComponentType<NavLinkProps>
   Outlet: ComponentType | null
-  Switch: ComponentType | null
   navigate: (to: string, options?: { replace?: boolean }) => void
 }
 
@@ -47,13 +46,10 @@ const NavLinkDefault = ({ to, children, className, style, ...props }: NavLinkPro
 
 const OutletDefault = ({ children }: { children?: ReactNode }) => <>{children}</>
 
-const SwitchDefault = ({ children }: { children?: ReactNode }) => <>{children}</>
-
 const RouterContext = createContext<RouterContextType>({
   Link: LinkDefault,
   NavLink: NavLinkDefault,
   Outlet: OutletDefault,
-  Switch: SwitchDefault,
   navigate: to => {
     window.location.href = to
   }
@@ -66,12 +62,11 @@ export const RouterProvider = ({
   Link = LinkDefault,
   NavLink = NavLinkDefault,
   Outlet = OutletDefault,
-  Switch = SwitchDefault,
   navigate = to => {
     window.location.href = to
   }
 }: {
   children: ReactNode
 } & Partial<RouterContextType>) => {
-  return <RouterContext.Provider value={{ Link, NavLink, Outlet, Switch, navigate }}>{children}</RouterContext.Provider>
+  return <RouterContext.Provider value={{ Link, NavLink, Outlet, navigate }}>{children}</RouterContext.Provider>
 }

@@ -48,7 +48,7 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, 
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar.Root className="h-8 w-8 rounded-lg">
                   <Avatar.Image src={user?.url} alt={userName} />
-                  <Avatar.Fallback className="rounded-lg">SM</Avatar.Fallback>
+                  <Avatar.Fallback className="rounded-lg">{getInitials(userName)}</Avatar.Fallback>
                 </Avatar.Root>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{userName}</span>

@@ -12,6 +12,8 @@ import { ThemeDialog } from '@components/theme-selector-v2'
 
 import { SidebarItem } from './sidebar-item'
 import { SidebarSearch } from './sidebar-search'
+import { SearchProvider } from './sidebar-search-new/search-context'
+import { SidebarSearchNew } from './sidebar-search-new/sidebar-search-new'
 import { User } from './sidebar-user'
 import { NavbarItemType } from './types'
 
@@ -29,6 +31,7 @@ interface SidebarProps {
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
   useThemeStore: () => IThemeStore
   useTranslationStore: () => TranslationStore
+  showNewSearch?: boolean
 }
 
 export const AppSidebar = ({
@@ -42,7 +45,8 @@ export const AppSidebar = ({
   handleMoreMenu,
   handleSettingsMenu,
   handleCustomNav,
-  handleLogOut
+  handleLogOut,
+  showNewSearch
 }: SidebarProps) => {
   const { t, i18n, changeLanguage } = useTranslationStore()
   const { theme, setTheme } = useThemeStore()
@@ -68,14 +72,27 @@ export const AppSidebar = ({
     <>
       <Sidebar.Root>
         <Sidebar.Header>
-          <SidebarSearch
-            logo={
-              <Link className="flex items-center gap-1.5" to="/">
-                <Icon name="harness" size={18} className="text-foreground-accent" />
-                <Icon name="harness-logo-text" width={65} height={15} className="mb-0.5 text-foreground-1" />
-              </Link>
-            }
-          />
+          {showNewSearch ? (
+            <SearchProvider>
+              <SidebarSearchNew
+                logo={
+                  <Link to="/" className="h-[58px] flex gap-2 items-center pl-3 justify-start">
+                    <Icon name="harness" size={20} className="text-foreground-accent" />
+                    <Icon name="harness-logo-text" size={68} className="text-foreground-1" />
+                  </Link>
+                }
+              />
+            </SearchProvider>
+          ) : (
+            <SidebarSearch
+              logo={
+                <Link className="flex items-center gap-1.5" to="/">
+                  <Icon name="harness" size={18} className="text-foreground-accent" />
+                  <Icon name="harness-logo-text" width={65} height={15} className="mb-0.5 text-foreground-1" />
+                </Link>
+              }
+            />
+          )}
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group className="px-4 pt-5">

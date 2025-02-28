@@ -1594,6 +1594,7 @@
     "$figmaCollectionId": "VariableCollectionId:1328:8740",
     "$figmaModeId": "1328:1",
     "$figmaVariableReferences": {
+      "radius.component.xxs": "a959d8e3a28bf39ae991487ac0ab0463fe6008fe",
       "radius.component.xs": "94c875518d8d8518fbc50bfd85b95da15205958f",
       "radius.component.sm": "8ac08814d28c537a11dcfe0d665da9fd0bbf9f7f",
       "radius.component.md": "09f96ffb5370495ce1eb900ddce0b6c782311ec9",
@@ -1629,6 +1630,7 @@
     "$figmaCollectionId": "VariableCollectionId:1328:8740",
     "$figmaModeId": "1328:2",
     "$figmaVariableReferences": {
+      "radius.component.xxs": "a959d8e3a28bf39ae991487ac0ab0463fe6008fe",
       "radius.component.xs": "94c875518d8d8518fbc50bfd85b95da15205958f",
       "radius.component.sm": "8ac08814d28c537a11dcfe0d665da9fd0bbf9f7f",
       "radius.component.md": "09f96ffb5370495ce1eb900ddce0b6c782311ec9",

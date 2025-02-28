@@ -1,9 +1,8 @@
 import { FormHTMLAttributes, ReactNode } from 'react'
 
+import { Button, Input, Label } from '@/components'
 import { Icon } from '@components/icon'
 import { Sidebar } from '@components/sidebar/sidebar'
-
-import { Button, Input, Label } from '@harnessio/ui/components'
 
 import { useSearch } from './search-context'
 

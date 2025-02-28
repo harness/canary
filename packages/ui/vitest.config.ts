@@ -37,7 +37,9 @@ export default mergeConfig(viteConfig, {
     alias: {
       // monaco editor doesn't have a proper ESM export marked up in their
       // package file, so we need to resolve it manually
-      'monaco-editor': './config/resolve-monaco'
+      'monaco-editor': './config/resolve-monaco',
+      '@harnessio/ui/views': './src/views',
+      '@harnessio/ui/components': './src/components'
     }
   }
 })

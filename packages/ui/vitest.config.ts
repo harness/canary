@@ -1,3 +1,5 @@
+import path from 'path'
+
 import { mergeConfig } from 'vitest/config'
 
 import viteConfig from './vite.config'
@@ -38,8 +40,7 @@ export default mergeConfig(viteConfig, {
       // monaco editor doesn't have a proper ESM export marked up in their
       // package file, so we need to resolve it manually
       'monaco-editor': './config/resolve-monaco',
-      '@harnessio/ui/views': './src/views',
-      '@harnessio/ui/components': './src/components'
+      '@': path.resolve(__dirname, './src')
     }
   }
 })

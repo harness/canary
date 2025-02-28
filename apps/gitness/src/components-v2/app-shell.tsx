@@ -10,7 +10,6 @@ import {
   Navbar,
   NavbarItemType,
   SettingsMenu,
-  Text
 } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
 

@@ -15,7 +15,8 @@ export default defineConfig({
     proxy: {
       '/api/v1': {
         /* https://stackoverflow.com/questions/70694187/vite-server-is-running-but-not-working-on-localhost */
-        target: 'http://127.0.0.1:3000',
+        // target: 'http://127.0.0.1:3000',
+        target: 'https://qa.harness.io/gateway/code',
         changeOrigin: true
       }
     }

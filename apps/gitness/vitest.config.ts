@@ -19,9 +19,6 @@ export default mergeConfig(viteConfig, {
       //   functions: 80,
       //   statements: 80
       // }
-    },
-    deps: {
-      include: ['@harnessio/ui']
     }
   }
 })

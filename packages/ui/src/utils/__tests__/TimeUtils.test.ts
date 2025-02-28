@@ -53,13 +53,6 @@ describe('formatTimestamp', () => {
 
   beforeAll(() => {
     vi.setSystemTime(fixedDate)
-
-    vi.spyOn(Intl, 'DateTimeFormat').mockImplementation(
-      () =>
-        ({
-          format: () => '12:34:56.789'
-        }) as any
-    )
   })
 
   it('should format epoch timestamp into "HH:mm:ss.SSS" format', () => {
@@ -70,7 +63,7 @@ describe('formatTimestamp', () => {
   it('should handle different times of the day', () => {
     const morningTimestamp = new Date('2023-01-01T08:00:00.000Z').getTime()
     const eveningTimestamp = new Date('2023-01-01T20:00:00.000Z').getTime()
-    expect(formatTimestamp(morningTimestamp)).toBe('12:34:56.789')
-    expect(formatTimestamp(eveningTimestamp)).toBe('12:34:56.789')
+    expect(formatTimestamp(morningTimestamp)).toBe('08:00:00.000')
+    expect(formatTimestamp(eveningTimestamp)).toBe('20:00:00.000')
   })
 })

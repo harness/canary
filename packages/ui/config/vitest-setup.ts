@@ -5,3 +5,5 @@ import '@testing-library/jest-dom'
 afterEach(() => {
   cleanup()
 })
+
+process.env.TZ = 'UTC'

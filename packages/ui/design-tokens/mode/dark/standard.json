@@ -34,7 +34,7 @@
     },
     "accent": {
       "$type": "color",
-      "$value": "{colors.accent.200}",
+      "$value": "{colors.blue.200}",
       "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\n\nCommon uses: Links, buttons, interactive icons, highlighted elements."
     },
     "success": {
@@ -80,7 +80,7 @@
     },
     "focus": {
       "$type": "color",
-      "$value": "{colors.accent.200}",
+      "$value": "{colors.blue.200}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
@@ -531,7 +531,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.accent.600}",
+          "$value": "{brand.color.600}",
           "$description": "Background color for primary action buttons. Creates emphasis for the most important action in a given context."
         },
         "border": {
@@ -889,7 +889,7 @@
       },
       "hover": {
         "$type": "color",
-        "$value": "{colors.accent.100}",
+        "$value": "{colors.blue.100}",
         "$description": "Hover state color for text links. Provides visual feedback for user interaction."
       },
       "visited": {
@@ -1056,7 +1056,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{colors.accent.300}",
+          "$value": "{colors.blue.300}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         }
       },
@@ -1068,7 +1068,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{colors.accent.800}",
+          "$value": "{colors.blue.800}",
           "$description": "Color for segment markers on the filled track portion. Maintains visibility of markers within the selected range."
         }
       },
@@ -1113,7 +1113,7 @@
       },
       "action-required": {
         "$type": "color",
-        "$value": "{colors.accent.300}",
+        "$value": "{colors.blue.300}",
         "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed. "
       },
       "pending": {
@@ -1242,17 +1242,17 @@
       "blue": {
         "text": {
           "$type": "color",
-          "$value": "{colors.accent.300}",
+          "$value": "{colors.blue.300}",
           "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.accent.900}",
+          "$value": "{colors.blue.900}",
           "$description": "Background color for blue tags. Creates a distinct surface with blue theme styling."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.accent.950}",
+          "$value": "{colors.blue.950}",
           "$description": "Subtle background variation for blue tags. Provides a softer alternative for less emphasis."
         },
         "border": {
@@ -1925,7 +1925,7 @@
         },
         "gradient-stop-2": {
           "$type": "color",
-          "$value": "{colors.accent.300}"
+          "$value": "{colors.blue.300}"
         },
         "gradient-stop-3": {
           "$type": "color",

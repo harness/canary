@@ -43,11 +43,6 @@ const mockFiles: RepoFile[] = [
 ]
 
 describe('getLogsText', () => {
-  Object.defineProperty(document, 'queryCommandSupported', {
-    value: vi.fn().mockReturnValue(true),
-    writable: true // Ensure it can be reassigned
-  })
-
   it('should concatenate log lines into a single string', () => {
     const result = getLogsText(mockLogs)
     expect(result).toBe('Log line 1\nLog line 2\nLog line 3\n')

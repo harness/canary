@@ -1,76 +1,77 @@
-import { Component, ComponentType, createContext, ReactNode, useContext } from 'react'
-import type { LinkProps, NavLinkProps } from 'react-router-dom' // verify if final bundle doesn't have reference to react-router-dom
+import { ComponentType, createContext, ReactNode, useContext } from 'react'
 
-const DefaultOutlet = () => null
-
-type OutletComponentType = ComponentType | null
+import { cn } from '@utils/cn'
 
 interface RouterContextType {
   Link: ComponentType<LinkProps>
   NavLink: ComponentType<NavLinkProps>
-  Outlet: OutletComponentType
+  Outlet: ComponentType | null
+  Switch: ComponentType | null
   navigate: (to: string, options?: { replace?: boolean }) => void
 }
 
-const RouterContext = createContext<RouterContextType>({
-  Link: Component,
-  NavLink: Component,
-  Outlet: DefaultOutlet, // Remove usages of Outlet from the package
-  navigate: () => {}
-})
+// Minimal LinkProps and NavLinkProps to avoid dependencies
+interface LinkProps {
+  to: string
+  children: ReactNode
+  className?: string
+  style?: React.CSSProperties
+}
 
-export const useRouterContext = () => useContext(RouterContext)
+interface NavLinkProps extends LinkProps {
+  isActive?: boolean
+}
 
-const LinkDefault = ({ to, children, ...props }: LinkProps) => {
+const LinkDefault = ({ to, children, className, ...props }: LinkProps) => {
   return (
-    <a href={to.toString()} {...props}>
+    <a href={to} className={cn('text-blue-500 hover:underline', className)} {...props}>
       {children}
     </a>
   )
 }
 
 const NavLinkDefault = ({ to, children, className, style, ...props }: NavLinkProps) => {
-  // Determine active state based on window location
-  const isActive = window.location.pathname === to.toString()
-
-  const finalClassName =
-    typeof className === 'function'
-      ? className({ isActive, isPending: false, isTransitioning: false }) // Mimic React Router v6 behavior
-      : isActive
-        ? `${className || ''} active`.trim()
-        : className
-
-  const finalStyle = typeof style === 'function' ? style({ isActive, isPending: false, isTransitioning: false }) : style
+  const isActive = window.location.pathname === to
 
   return (
-    <a href={to.toString()} className={finalClassName} style={finalStyle} {...props}>
+    <a
+      href={to}
+      className={cn(className, isActive ? 'font-bold text-blue-600' : 'text-blue-500')}
+      style={style}
+      {...props}
+    >
       {children}
     </a>
   )
 }
 
-// Context provider
+const OutletDefault = ({ children }: { children?: ReactNode }) => <>{children}</>
+
+const SwitchDefault = ({ children }: { children?: ReactNode }) => <>{children}</>
+
+const RouterContext = createContext<RouterContextType>({
+  Link: LinkDefault,
+  NavLink: NavLinkDefault,
+  Outlet: OutletDefault,
+  Switch: SwitchDefault,
+  navigate: to => {
+    window.location.href = to
+  }
+})
+
+export const useRouterContext = () => useContext(RouterContext)
+
 export const RouterProvider = ({
   children,
   Link = LinkDefault,
   NavLink = NavLinkDefault,
-  Outlet = DefaultOutlet, // Default to null for React Router v5,
+  Outlet = OutletDefault,
+  Switch = SwitchDefault,
   navigate = to => {
     window.location.href = to
   }
 }: {
   children: ReactNode
-} & RouterContextType) => {
-  return (
-    <RouterContext.Provider
-      value={{
-        Link,
-        NavLink,
-        Outlet,
-        navigate
-      }}
-    >
-      {children}
-    </RouterContext.Provider>
-  )
+} & Partial<RouterContextType>) => {
+  return <RouterContext.Provider value={{ Link, NavLink, Outlet, Switch, navigate }}>{children}</RouterContext.Provider>
 }

@@ -37,7 +37,7 @@
       },
       "radius": {
         "$type": "borderRadius",
-        "$value": "{rounded.1}"
+        "$value": "{radius.component.xxs}"
       },
       "size": {
         "$type": "sizing",
@@ -57,7 +57,7 @@
       },
       "radius": {
         "$type": "borderRadius",
-        "$value": "{rounded.3}",
+        "$value": "{radius.component.sm}",
         "$description": "6px"
       },
       "min-w": {

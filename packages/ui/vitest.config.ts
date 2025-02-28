@@ -1,5 +1,3 @@
-import path from 'path'
-
 import { mergeConfig } from 'vitest/config'
 
 import viteConfig from './vite.config'

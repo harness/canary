@@ -343,9 +343,9 @@ export default {
         tight: '-0.02em'
       },
       boxShadow: {
-        1: '0px 8px 16px hsl(var(--canary-box-shadow-1))',
-        2: '0px 8px 8px hsl(var(--canary-box-shadow-2))',
-        'pagination-1': '0px 2px 4px hsl(var(--canary-box-shadow-pagination))',
+        1: '0px 8px 16px var(--canary-box-shadow-1)',
+        2: '0px 8px 8px var(--canary-box-shadow-2)',
+        'pagination-1': '0px 2px 4px var(--canary-box-shadow-pagination)',
         'as-border': 'inset 0 0 0 1px',
         'commit-list-bullet':
           '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)'

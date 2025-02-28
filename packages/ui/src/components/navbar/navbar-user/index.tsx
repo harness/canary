@@ -45,9 +45,13 @@ const UserBlock = ({ username, email, url, isButton = false, className }: UserBl
           <Avatar.Fallback>{getInitials(username)}</Avatar.Fallback>
         </Avatar.Root>
       </div>
-      <p className="col-start-2 row-start-1 truncate text-13 font-medium leading-tight text-sidebar-foreground-1">{username}</p>
+      <p className="col-start-2 row-start-1 truncate text-13 font-medium leading-tight text-sidebar-foreground-1">
+        {username}
+      </p>
       {!!email && (
-        <p className="col-start-2 row-start-2 truncate text-13 font-normal leading-tight text-sidebar-foreground-4">{email}</p>
+        <p className="col-start-2 row-start-2 truncate text-13 font-normal leading-tight text-sidebar-foreground-4">
+          {email}
+        </p>
       )}
     </Tag>
   )

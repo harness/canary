@@ -89,9 +89,12 @@ export function Item({ icon, text, description, active, submenuItem, className }
       <Text
         size={2}
         weight="medium"
-        className={cn('text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1 z-10 text-left duration-100 ease-in-out', {
-          'text-sidebar-foreground-1': active
-        })}
+        className={cn(
+          'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1 z-10 text-left duration-100 ease-in-out',
+          {
+            'text-sidebar-foreground-1': active
+          }
+        )}
       >
         {text}
       </Text>

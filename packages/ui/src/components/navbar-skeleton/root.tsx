@@ -1,4 +1,4 @@
-import {HTMLAttributes, PropsWithChildren} from 'react'
+import { HTMLAttributes, PropsWithChildren } from 'react'
 
 import { cn } from '@utils/cn'
 

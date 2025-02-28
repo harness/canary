@@ -5,7 +5,8 @@
     "selectedTokenSets": {
       "core/colors": "enabled",
       "core/typography": "enabled",
-      "core/dimensions": "enabled"
+      "core/dimensions": "enabled",
+      "mode/light/standard": "disabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -662,7 +663,8 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "mode/dark/standard": "enabled"
+      "mode/dark/standard": "enabled",
+      "mode/light/standard": "disabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1492,7 +1494,8 @@
       "components/desktop/base/dropdown menu": "enabled",
       "components/desktop/base/btn": "enabled",
       "components/desktop/base/badge": "enabled",
-      "components/desktop/base/tag": "enabled"
+      "components/desktop/base/tag": "enabled",
+      "mode/light/standard": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",
@@ -1598,7 +1601,8 @@
       "component.markdown-editor.content.emphasized": "S:061aad96d53bf2820b1e5e6041f8e6084698c7ee,"
     },
     "selectedTokenSets": {
-      "brand/Harness": "enabled"
+      "brand/Harness": "enabled",
+      "mode/light/standard": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1328:8740",
     "$figmaModeId": "1328:1",
@@ -1634,7 +1638,8 @@
     "name": "Gitness",
     "$figmaStyleReferences": {},
     "selectedTokenSets": {
-      "brand/Gitness": "enabled"
+      "brand/Gitness": "enabled",
+      "mode/light/standard": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1328:8740",
     "$figmaModeId": "1328:2",
@@ -1664,5 +1669,14 @@
       "iconSize.lg": "bef2a8174888418fcfad82cbbe6304821e3e96b0"
     },
     "group": "brand"
+  },
+  {
+    "id": "ba4306138204b6e1a969b0fffe3f9cd3fb821cec",
+    "name": "light",
+    "$figmaStyleReferences": {},
+    "selectedTokenSets": {
+      "mode/light/standard": "enabled"
+    },
+    "group": "mode"
   }
 ]

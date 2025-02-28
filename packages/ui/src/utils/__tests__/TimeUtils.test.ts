@@ -52,7 +52,6 @@ describe('formatTimestamp', () => {
   const fixedDate = new Date('2023-01-01T12:34:56.789Z')
 
   beforeAll(() => {
-    vi.useFakeTimers()
     vi.setSystemTime(fixedDate)
 
     vi.spyOn(Intl, 'DateTimeFormat').mockImplementation(
@@ -61,11 +60,6 @@ describe('formatTimestamp', () => {
           format: () => '12:34:56.789'
         }) as any
     )
-  })
-
-  afterAll(() => {
-    vi.useRealTimers()
-    vi.restoreAllMocks()
   })
 
   it('should format epoch timestamp into "HH:mm:ss.SSS" format', () => {

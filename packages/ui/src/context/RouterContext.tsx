@@ -54,22 +54,20 @@ export const RouterProvider = ({
   children,
   Link = LinkDefault,
   NavLink = NavLinkDefault,
-  Outlet = DefaultOutlet // Default to null for React Router v5
+  Outlet = DefaultOutlet, // Default to null for React Router v5,
+  navigate = to => {
+    window.location.href = to
+  }
 }: {
   children: ReactNode
-  Link?: ComponentType<LinkProps>
-  NavLink?: ComponentType<NavLinkProps>
-  Outlet?: OutletComponentType
-}) => {
+} & RouterContextType) => {
   return (
     <RouterContext.Provider
       value={{
         Link,
         NavLink,
         Outlet,
-        navigate: to => {
-          window.location.href = to
-        }
+        navigate
       }}
     >
       {children}

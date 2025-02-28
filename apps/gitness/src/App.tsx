@@ -1,5 +1,5 @@
 import { I18nextProvider } from 'react-i18next'
-import { createBrowserRouter, Link, Outlet, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Link, NavLink, Outlet, RouterProvider } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
@@ -40,7 +40,7 @@ export default function AppV1() {
             <TooltipProvider>
               <ExitConfirmProvider>
                 <NavigationProvider routes={routes}>
-                  <RouterProviderV1 OutletComponent={Outlet} LinkComponent={Link}>
+                  <RouterProviderV1 Link={Link} NavLink={NavLink} Outlet={Outlet} navigate={router.navigate}>
                     <RouterProvider router={router} />
                   </RouterProviderV1>
                 </NavigationProvider>

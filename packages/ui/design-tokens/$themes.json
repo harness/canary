@@ -5,8 +5,7 @@
     "selectedTokenSets": {
       "core/colors": "enabled",
       "core/typography": "enabled",
-      "core/dimensions": "enabled",
-      "mode/dark/high-contrast": "disabled"
+      "core/dimensions": "enabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -663,8 +662,7 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "mode/dark/standard": "enabled",
-      "mode/dark/high-contrast": "disabled"
+      "mode/dark/standard": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1489,8 +1487,7 @@
       "components/desktop/base/dropdown menu": "enabled",
       "components/desktop/base/btn": "enabled",
       "components/desktop/base/badge": "enabled",
-      "components/desktop/base/tag": "enabled",
-      "mode/dark/high-contrast": "disabled"
+      "components/desktop/base/tag": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",
@@ -1596,8 +1593,7 @@
       "component.markdown-editor.content.emphasized": "S:061aad96d53bf2820b1e5e6041f8e6084698c7ee,"
     },
     "selectedTokenSets": {
-      "brand/Harness": "enabled",
-      "mode/dark/high-contrast": "disabled"
+      "brand/Harness": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1328:8740",
     "$figmaModeId": "1328:1",
@@ -1633,8 +1629,7 @@
     "name": "Gitness",
     "$figmaStyleReferences": {},
     "selectedTokenSets": {
-      "brand/Gitness": "enabled",
-      "mode/dark/high-contrast": "disabled"
+      "brand/Gitness": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1328:8740",
     "$figmaModeId": "1328:2",

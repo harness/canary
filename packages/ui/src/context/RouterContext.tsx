@@ -1,4 +1,5 @@
-import { ComponentType, createContext, ReactNode, useContext } from 'react'
+import { ComponentType, createContext, CSSProperties, ReactNode, useContext } from 'react'
+import type { LinkProps, NavLinkProps } from 'react-router-dom'
 
 import { cn } from '@utils/cn'
 
@@ -9,42 +10,36 @@ interface RouterContextType {
   navigate: (to: string, options?: { replace?: boolean }) => void
 }
 
-// Minimal LinkProps and NavLinkProps to avoid dependencies
-interface LinkProps {
-  to: string
-  children: ReactNode
-  className?: string
-  style?: React.CSSProperties
-}
-
-interface NavLinkProps extends LinkProps {
-  isActive?: boolean
-}
+const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
 
 const LinkDefault = ({ to, children, className, ...props }: LinkProps) => {
+  const href = resolveTo(to)
   return (
-    <a href={to} className={cn('text-blue-500 hover:underline', className)} {...props}>
+    <a href={href} className={cn('text-blue-500 hover:underline', className)} {...props}>
       {children}
     </a>
   )
 }
 
 const NavLinkDefault = ({ to, children, className, style, ...props }: NavLinkProps) => {
-  const isActive = window.location.pathname === to
+  const href = resolveTo(to)
+  const isActive = new URL(href, window.location.origin).pathname === window.location.pathname
+
+  const finalClassName =
+    typeof className === 'function'
+      ? className({ isActive, isPending: false, isTransitioning: false })
+      : cn(className, isActive ? 'font-bold text-blue-600' : 'text-blue-500')
+
+  const finalStyle = typeof style === 'function' ? style({ isActive, isPending: false, isTransitioning: false }) : style
 
   return (
-    <a
-      href={to}
-      className={cn(className, isActive ? 'font-bold text-blue-600' : 'text-blue-500')}
-      style={style}
-      {...props}
-    >
+    <a href={href} className={finalClassName} style={finalStyle} {...props}>
       {children}
     </a>
   )
 }
 
-const OutletDefault = ({ children }: { children?: ReactNode }) => <>{children}</>
+const OutletDefault: ComponentType<{ children?: ReactNode }> = ({ children }) => <>{children}</>
 
 const RouterContext = createContext<RouterContextType>({
   Link: LinkDefault,

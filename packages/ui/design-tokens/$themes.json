@@ -9041,8 +9041,7 @@
       "components/desktop/base/dropdown menu": "enabled",
       "components/desktop/base/btn": "enabled",
       "components/desktop/base/badge": "enabled",
-      "components/desktop/base/tag": "enabled",
-      "mode/light/standard": "disabled"
+      "components/desktop/base/tag": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",

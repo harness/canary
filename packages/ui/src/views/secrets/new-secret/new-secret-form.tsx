@@ -12,9 +12,16 @@ import {
   Spacer,
   Textarea
 } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { i18n, TFunction } from 'i18next'
 import { z } from 'zod'
+
+interface TranslationStore {
+  t: TFunction
+  i18n: i18n
+  changeLanguage: (lng: string) => void
+}
 
 const newSecretformSchema = z.object({
   name: z.string().min(1, { message: 'Please provide a name' }),

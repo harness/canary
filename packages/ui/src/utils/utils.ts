@@ -1,6 +1,6 @@
 import { createElement, ReactNode } from 'react'
 
-import { TimeAgoHoverCard } from '@views/repo/components/time-ago-hover-card'
+import { TimeAgoHoverCard } from '@views/secrets/time-ago-hover-card'
 import { formatDistance, formatDistanceToNow } from 'date-fns'
 
 export const getInitials = (name: string, length = 2) => {

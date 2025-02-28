@@ -15,7 +15,7 @@ import {
   Option,
   RadioButton,
   RadioGroup,
-  StyledLink,
+  // StyledLink,
   Textarea
 } from '@/components'
 import { UsererrorError, ViolationState } from '@/types'
@@ -200,7 +200,8 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                 ariaSelected={commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH}
                 description={
                   // TODO: Add correct path
-                  <StyledLink to="/">Learn more about pull requests</StyledLink>
+                  // <StyledLink to="/">Learn more about pull requests</StyledLink>
+                  <></>
                 }
               />
             </RadioGroup>

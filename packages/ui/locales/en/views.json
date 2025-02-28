@@ -1,7 +1,5 @@
 {
   "repos": {
-    "create-new-file-no-plus": "Create new file",
-    "upload-files": "Upload files",
     "search": "Search",
     "summary": "Summary",
     "files": "Files",
@@ -30,6 +28,7 @@
     "findTag": "Find a tag",
     "allCommits": "All commits",
     "noFile": "No files available",
+    "create-new-file-no-plus": "Create new file",
     "name": "Name",
     "lastCommit": "Last commit message",
     "date": "Date",
@@ -170,6 +169,7 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "upload-files": "Upload files",
     "tagger": "Tagger",
     "renameBranch": "Rename Branch",
     "add": "Add",

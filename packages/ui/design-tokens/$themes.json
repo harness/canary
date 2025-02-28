@@ -9041,7 +9041,8 @@
       "components/desktop/base/dropdown menu": "enabled",
       "components/desktop/base/btn": "enabled",
       "components/desktop/base/badge": "enabled",
-      "components/desktop/base/tag": "enabled"
+      "components/desktop/base/tag": "enabled",
+      "mode/light/standard": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",
@@ -9212,5 +9213,14 @@
       "brand.onColor.950": "07ebad268237bb60b304f81670a89b7662a75dbf"
     },
     "group": "brand"
+  },
+  {
+    "id": "ba4306138204b6e1a969b0fffe3f9cd3fb821cec",
+    "name": "light",
+    "$figmaStyleReferences": {},
+    "selectedTokenSets": {
+      "mode/light/standard": "enabled"
+    },
+    "group": "mode"
   }
 ]

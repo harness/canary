@@ -988,6 +988,48 @@
             "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
           }
         }
+      },
+      "card-canvas": {
+        "1": {
+          "background": {
+            "$type": "color",
+            "$value": "{background.1}",
+            "$description": "The background color for the primary/top-level canvas where pipeline components are arranged. Creates the base visual layer for the main workflow area."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{border.3}",
+            "$description": "Solid border for the outermost pipeline canvas elements. Defines the boundaries of the top-level workflow container."
+          }
+        },
+        "2": {
+          "background": {
+            "$type": "color",
+            "$value": "{background.2}",
+            "$description": "Background color for nested/secondary canvas elements that appear within the main workflow. Provides visual distinction for grouped pipeline components."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{border.2}",
+            "$description": "Border styling applied to nested canvas containers. Creates clear visual boundaries between different sections within the pipeline visualization."
+          }
+        }
+      },
+      "background": {
+        "dotes": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.6",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.chrome.850}",
+          "$description": "Refers to the dotted pattern visible in the background of the workspace."
+        }
       }
     },
     "scrollbar": {
@@ -999,10 +1041,10 @@
     },
     "selection": {
       "unselected": {
-        "text": {
+        "item": {
           "$type": "color",
           "$value": "{text.3}",
-          "$description": "Text color for unselected items in selection controls. Provides readable but less emphasized styling for available options."
+          "$description": "Color for unselected items in selection controls. Provides readable but less emphasized styling for available options."
         },
         "background": {
           "$type": "color",
@@ -1016,10 +1058,10 @@
         }
       },
       "selected": {
-        "text": {
+        "item": {
           "$type": "color",
           "$value": "{colors.chrome.950}",
-          "$description": "Text color for selected items in selection controls. Creates high contrast against selected background state."
+          "$description": "Color for selected items in selection controls. Creates high contrast against selected background state."
         },
         "background": {
           "$type": "color",

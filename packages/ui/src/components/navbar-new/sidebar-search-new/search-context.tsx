@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
-import { CommandPaletteWrapper } from './CommandPaletteWrapper'
+import { CommandPaletteWrapper } from './command-palette-wrapper'
 
 interface SearchContextType {
   isOpen: boolean

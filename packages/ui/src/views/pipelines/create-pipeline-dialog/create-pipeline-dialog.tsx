@@ -2,19 +2,51 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Select } from '@/components'
+import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { CreatePipelineDialogProps, CreatePipelineFormType } from './types'
+import { ICreatePipelineStore } from './types'
 
-const createPipelineSchema = z.object({
-  name: z.string().min(1, { message: 'Pipeline name is required' }),
-  branch: z.string().min(1, { message: 'Branch name is required' }),
-  yamlPath: z.string().min(1, { message: 'YAML path is required' })
-})
+export const makeCreatePipelineSchema = (t: TranslationStore['t']) =>
+  z.object({
+    name: z
+      .string()
+      .trim()
+      .min(1, { message: t('views:pipelines.createPipelineValidation.nameMin', 'Pipeline name is required') })
+      .max(100, {
+        message: t(
+          'views:pipelines.createPipelineValidation.nameMax',
+          'Pipeline name must be no longer than 100 characters'
+        )
+      })
+      .regex(/^[a-zA-Z0-9._-\s]+$/, {
+        message: t(
+          'views:pipelines.createPipelineValidation.nameRegex',
+          'Pipeline name must contain only letters, numbers, and the characters: - _ .'
+        )
+      })
+      .refine(data => !data.includes(' '), {
+        message: t('views:pipelines.createPipelineValidation.noSpaces', 'Pipeline name cannot contain spaces')
+      }),
+    branch: z.string().min(1, { message: 'Branch name is required' }),
+    yamlPath: z.string().min(1, { message: 'YAML path is required' })
+  })
+
+export type CreatePipelineFormType = z.infer<ReturnType<typeof makeCreatePipelineSchema>>
+
+interface CreatePipelineDialogProps {
+  useCreatePipelineStore: () => ICreatePipelineStore
+  isOpen: boolean
+  onClose: () => void
+  onCancel: () => void
+  onSubmit: (formValues: CreatePipelineFormType) => Promise<void>
+  useTranslationStore: () => TranslationStore
+}
 
 export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
-  const { onCancel, onSubmit, isOpen, onClose, useCreatePipelineStore } = props
+  const { onCancel, onSubmit, isOpen, onClose, useCreatePipelineStore, useTranslationStore } = props
+  const { t } = useTranslationStore()
 
   const { isLoadingBranchNames, branchNames, defaultBranch, error } = useCreatePipelineStore()
 
@@ -35,7 +67,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     trigger,
     formState: { errors, isValid }
   } = useForm<CreatePipelineFormType>({
-    resolver: zodResolver(createPipelineSchema),
+    resolver: zodResolver(makeCreatePipelineSchema(t)),
     mode: 'onChange',
     defaultValues: {
       name: '',
@@ -70,14 +102,14 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     setValue(fieldName, value, { shouldValidate: true })
   }
 
+  const handleClose = () => {
+    onCancel()
+    onClose()
+    reset()
+  }
+
   return (
-    <Dialog.Root
-      open={isOpen}
-      onOpenChange={() => {
-        onClose()
-        reset()
-      }}
-    >
+    <Dialog.Root open={isOpen} onOpenChange={handleClose}>
       <Dialog.Content className="max-w-xl" aria-describedby={undefined}>
         <Dialog.Header>
           <Dialog.Title>Create Pipeline</Dialog.Title>
@@ -131,15 +163,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
           )}
 
           <Dialog.Footer className="-mx-5 -mb-5">
-            <Button
-              type="button"
-              onClick={() => {
-                onCancel()
-                reset()
-              }}
-              className="text-primary"
-              variant="outline"
-            >
+            <Button type="button" onClick={handleClose} className="text-primary" variant="outline">
               Cancel
             </Button>
             <Button type="submit" disabled={!isValid || isLoadingBranchNames}>

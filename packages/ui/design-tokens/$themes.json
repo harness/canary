@@ -1395,7 +1395,11 @@
       "gradient.pipeline.widget.blob.big.gradient-from": "5879219ac18f54ea3c371ef47b674181b2e8efb8",
       "gradient.pipeline.widget.blob.big.gradient-to": "c88ab17b2108ed180d4918cef65447488ffee493",
       "gradient.pipeline.widget.blob.small.gradient-from": "e45a6d35f368d1bd160c73e94c62a9097e47b41d",
-      "gradient.pipeline.widget.blob.small.gradient-to": "cfdc09351890a43b20da0fae46b9ffc88c687c59"
+      "gradient.pipeline.widget.blob.small.gradient-to": "cfdc09351890a43b20da0fae46b9ffc88c687c59",
+      "iconStrokeWidth.xs": "8b74182ad2bbb6572ee4b866cdfedf9b74d186ab",
+      "iconStrokeWidth.sm": "d40592fd3b98a99d7041592751bee8f70cae8ebb",
+      "iconStrokeWidth.md": "1ded422d568e0439c4748e03aeddcdae2a456f5c",
+      "iconStrokeWidth.lg": "1587cf35216b1dfbfd28af33f41db162e1a70731"
     },
     "$figmaCollectionId": "VariableCollectionId:1328:8485",
     "$figmaModeId": "1328:0",

@@ -1,0 +1,104 @@
+{
+  "radius": {
+    "component": {
+      "xs": {
+        "$type": "borderRadius",
+        "$value": "{rounded.2}"
+      },
+      "sm": {
+        "$type": "borderRadius",
+        "$value": "{rounded.3}"
+      },
+      "md": {
+        "$type": "borderRadius",
+        "$value": "{rounded.4}"
+      },
+      "lg": {
+        "$type": "borderRadius",
+        "$value": "{rounded.6}"
+      },
+      "full": {
+        "$type": "borderRadius",
+        "$value": "{rounded.full}"
+      }
+    }
+  },
+  "brand": {
+    "color": {
+      "50": {
+        "$type": "color",
+        "$value": "{colors.blue.50}"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "{colors.blue.100}"
+      },
+      "150": {
+        "$type": "color",
+        "$value": "{colors.blue.150}"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "{colors.blue.200}"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "{colors.blue.300}"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "{colors.blue.400}"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "{colors.blue.500}"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "{colors.blue.600}"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "{colors.blue.700}"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "{colors.blue.800}"
+      },
+      "850": {
+        "$type": "color",
+        "$value": "{colors.blue.850}"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "{colors.blue.900}"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "{colors.blue.950}"
+      }
+    }
+  },
+  "iconSize": {
+    "xs": {
+      "$type": "sizing",
+      "$value": "{size.3-half}",
+      "$description": "14px"
+    },
+    "sm": {
+      "$type": "sizing",
+      "$value": "{size.4}",
+      "$description": "16px"
+    },
+    "md": {
+      "$type": "sizing",
+      "$value": "{size.5}",
+      "$description": "20px\n"
+    },
+    "lg": {
+      "$type": "sizing",
+      "$value": "{size.8}",
+      "$description": "32px\n"
+    }
+  }
+}

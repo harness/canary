@@ -38,7 +38,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
           {supportedLanguages.map(lang => (
             <button
               key={lang.code}
-              className="group relative flex cursor-pointer items-center justify-between rounded-md px-0 focus-visible:outline-none"
+              className="group relative flex cursor-pointer items-center justify-between rounded-md px-0 focus-visible:outline-none focus:ring-0"
               onClick={() => {
                 setSelectedLanguage(lang.code)
                 onChange(lang)
@@ -60,7 +60,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
               {selectedLanguage === lang.code && <Icon className="text-icons-2" name="tick" size={12} />}
               <span
                 className={cn(
-                  'absolute -inset-x-2 -inset-y-1 rounded group-hover:bg-background-4 group-focus-visible:outline group-focus-visible:outline-offset-2 group-focus-visible:outline-borders-accent group-focus-visible:outline-2',
+                  'absolute -inset-x-2 -inset-y-1 rounded group-hover:bg-background-4',
                   selectedLanguage === lang.code && 'bg-background-4'
                 )}
                 aria-hidden

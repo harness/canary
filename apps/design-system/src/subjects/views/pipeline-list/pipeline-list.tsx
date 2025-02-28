@@ -24,6 +24,7 @@ const PipelineListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
       />
       <CreatePipelineDialog
         isOpen={createPipelineOpen}
+        useTranslationStore={useTranslationStore}
         onClose={() => setCreatePipelineOpen(false)}
         onSubmit={() => {
           setCreatePipelineOpen(false)

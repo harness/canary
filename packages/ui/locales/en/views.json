@@ -412,6 +412,14 @@
     "description": "The requested page is not found.",
     "button": "Reload page"
   },
+  "pipelines": {
+    "createPipelineValidation": {
+      "nameMin": "Pipeline name is required",
+      "nameMax": "Pipeline name must be no longer than 100 characters",
+      "nameRegex": "Pipeline name must contain only letters, numbers, and the characters: - _ .",
+      "noSpaces": "Pipeline name cannot contain spaces"
+    }
+  },
   "profileSettings": {
     "sshKeyValidation": {
       "nameMin": "Please provide key name",

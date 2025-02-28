@@ -385,6 +385,14 @@
     "description": "La page demandée est introuvable.",
     "button": "Recharger la page"
   },
+  "pipelines": {
+    "createPipelineValidation": {
+      "nameMin": "Le nom du pipeline est requis",
+      "nameMax": "Le nom du pipeline ne doit pas dépasser 100 caractères",
+      "nameRegex": "Le nom du pipeline doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
+      "noSpaces": "Le nom du pipeline ne peut pas contenir d'espaces"
+    }
+  },
   "profileSettings": {
     "sshKeyValidation": {
       "nameMin": "Veuillez fournir un nom de clé",

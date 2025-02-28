@@ -1,7 +1,7 @@
 import { FC, useRef } from 'react'
-import { Link } from 'react-router-dom'
 
 import { Button, DropdownMenu, Icon } from '@/components'
+import { useRouterContext } from '@/context'
 import { TranslationStore } from '@/views'
 
 export interface FileAdditionsTriggerProps {
@@ -15,6 +15,7 @@ export const FileAdditionsTrigger: FC<FileAdditionsTriggerProps> = ({
   pathNewFile,
   pathUploadFiles
 }) => {
+  const { Link } = useRouterContext()
   const triggerRef = useRef<HTMLButtonElement>(null)
   const { t } = useTranslationStore()
 

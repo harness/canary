@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
 
+import { useRouterContext } from '@/context'
 import { Button } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon, IconProps } from '@components/icon'
@@ -33,6 +33,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
   alignOffset = 10,
   className
 }) => {
+  const { Link } = useRouterContext()
   if (!actions.length) return <></>
 
   return (

@@ -1,10 +1,11 @@
 import { I18nextProvider } from 'react-i18next'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Link, Outlet, RouterProvider } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { ToastProvider, TooltipProvider } from '@harnessio/ui/components'
+import { RouterProvider as RouterProviderV1 } from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
@@ -39,7 +40,9 @@ export default function AppV1() {
             <TooltipProvider>
               <ExitConfirmProvider>
                 <NavigationProvider routes={routes}>
-                  <RouterProvider router={router} />
+                  <RouterProviderV1 OutletComponent={Outlet} LinkComponent={Link}>
+                    <RouterProvider router={router} />
+                  </RouterProviderV1>
                 </NavigationProvider>
               </ExitConfirmProvider>
             </TooltipProvider>

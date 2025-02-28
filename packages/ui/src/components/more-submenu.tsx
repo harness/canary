@@ -1,6 +1,5 @@
-import { NavLink } from 'react-router-dom'
-
 import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
+import { useRouterContext } from '@/context'
 import { MenuGroupType } from '@components/navbar/types'
 
 interface MoreSubmenuProps {
@@ -10,6 +9,7 @@ interface MoreSubmenuProps {
 }
 
 export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenuProps) {
+  const { NavLink } = useRouterContext()
   return (
     <Sheet.Root modal={false} open={showMoreMenu}>
       <Sheet.Content

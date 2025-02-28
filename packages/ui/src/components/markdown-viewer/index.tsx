@@ -1,5 +1,4 @@
 import { CSSProperties, FC, Fragment, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { CopyButton, ImageCarousel } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
@@ -10,6 +9,7 @@ import rehypeVideo from 'rehype-video'
 
 import './style.css'
 
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
 import { CodeSuggestionBlock, SuggestionBlock } from './CodeSuggestionBlock'
@@ -50,7 +50,7 @@ export function MarkdownViewer({
   isSuggestion,
   markdownClassName
 }: MarkdownViewerProps) {
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
   const [isOpen, setIsOpen] = useState(false)
   const [imgEvent, setImageEvent] = useState<string[]>([])
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])

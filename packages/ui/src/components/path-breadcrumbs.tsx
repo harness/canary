@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
-import { Link } from 'react-router-dom'
 
 import { Breadcrumb, Icon, Input } from '@/components'
+import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 
 interface InputPathBreadcrumbItemProps {
@@ -65,6 +65,7 @@ export interface PathBreadcrumbsInputProps {
 export type PathBreadcrumbsProps = PathBreadcrumbsBaseProps & Partial<PathBreadcrumbsInputProps>
 
 export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcrumbsProps) => {
+  const { Link } = useRouterContext()
   const length = items.length
 
   const renderInput = () => {

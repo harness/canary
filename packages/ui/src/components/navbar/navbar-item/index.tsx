@@ -1,6 +1,5 @@
-import { NavLink } from 'react-router-dom'
-
 import { Button, DropdownMenu, Icon, IconProps, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { NavbarSkeleton } from '@components/navbar-skeleton'
 import { TFunction } from 'i18next'
 
@@ -23,6 +22,7 @@ export const NavbarItem = ({
   handleCustomNav,
   t
 }: NavbarItemProps) => {
+  const { NavLink } = useRouterContext()
   const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])
 
   const handlePin = () => {

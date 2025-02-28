@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
-import { Link } from 'react-router-dom'
 
 import { Accordion, Icon, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
 interface FolderItemProps {
@@ -14,6 +14,7 @@ interface FolderItemProps {
 }
 
 function FolderItem({ children, value = '', isActive, content, chevronClassName, link }: FolderItemProps) {
+  const { Link } = useRouterContext()
   return (
     <Accordion.Item value={value} className="border-none">
       <Accordion.Trigger
@@ -71,6 +72,7 @@ interface FileItemProps {
 }
 
 function FileItem({ children, isActive, link }: FileItemProps) {
+  const { Link } = useRouterContext()
   const comp = (
     <div
       className={cn(

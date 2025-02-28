@@ -989,7 +989,7 @@
           }
         }
       },
-      "card-canvas": {
+      "canvas": {
         "1": {
           "background": {
             "$type": "color",

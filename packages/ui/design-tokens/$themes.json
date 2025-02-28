@@ -5,8 +5,7 @@
     "selectedTokenSets": {
       "core/colors": "enabled",
       "core/typography": "enabled",
-      "core/dimensions": "enabled",
-      "mode/light/standard": "disabled"
+      "core/dimensions": "enabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -663,8 +662,7 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "mode/dark/standard": "enabled",
-      "mode/light/standard": "disabled"
+      "mode/dark/standard": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1402,11 +1400,11 @@
       "iconStrokeWidth.sm": "d40592fd3b98a99d7041592751bee8f70cae8ebb",
       "iconStrokeWidth.md": "1ded422d568e0439c4748e03aeddcdae2a456f5c",
       "iconStrokeWidth.lg": "1587cf35216b1dfbfd28af33f41db162e1a70731",
-      "component.pipeline.card-canvas.1.background": "f37e1c344ca153cdd5f3686baf63438854443d5c",
-      "component.pipeline.card-canvas.1.border": "9c3f26e76813de383219e7f305a353189f7c0e2f",
-      "component.pipeline.card-canvas.2.background": "ef35857db76d852ba36a2e4cf8775b9713445c70",
-      "component.pipeline.card-canvas.2.border": "faaeff711d5b72a2594229632194642592ab2265",
-      "component.pipeline.background.dotes": "0cadd6c314c06624571a34d408375e5323df2996"
+      "component.pipeline.background.dotes": "0cadd6c314c06624571a34d408375e5323df2996",
+      "component.pipeline.canvas.1.background": "f37e1c344ca153cdd5f3686baf63438854443d5c",
+      "component.pipeline.canvas.1.border": "9c3f26e76813de383219e7f305a353189f7c0e2f",
+      "component.pipeline.canvas.2.background": "ef35857db76d852ba36a2e4cf8775b9713445c70",
+      "component.pipeline.canvas.2.border": "faaeff711d5b72a2594229632194642592ab2265"
     },
     "$figmaCollectionId": "VariableCollectionId:1328:8485",
     "$figmaModeId": "1328:0",
@@ -1494,8 +1492,7 @@
       "components/desktop/base/dropdown menu": "enabled",
       "components/desktop/base/btn": "enabled",
       "components/desktop/base/badge": "enabled",
-      "components/desktop/base/tag": "enabled",
-      "mode/light/standard": "disabled"
+      "components/desktop/base/tag": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",
@@ -1601,8 +1598,7 @@
       "component.markdown-editor.content.emphasized": "S:061aad96d53bf2820b1e5e6041f8e6084698c7ee,"
     },
     "selectedTokenSets": {
-      "brand/Harness": "enabled",
-      "mode/light/standard": "disabled"
+      "brand/Harness": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1328:8740",
     "$figmaModeId": "1328:1",
@@ -1638,8 +1634,7 @@
     "name": "Gitness",
     "$figmaStyleReferences": {},
     "selectedTokenSets": {
-      "brand/Gitness": "enabled",
-      "mode/light/standard": "disabled"
+      "brand/Gitness": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1328:8740",
     "$figmaModeId": "1328:2",

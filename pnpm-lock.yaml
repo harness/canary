@@ -834,6 +834,9 @@ importers:
       '@git-diff-view/shiki':
         specifier: ^0.0.21
         version: 0.0.21
+      '@harnessio/filters':
+        specifier: workspace:*
+        version: link:../filters
       '@harnessio/pipeline-graph':
         specifier: workspace:*
         version: link:../pipeline-graph

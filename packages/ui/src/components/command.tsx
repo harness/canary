@@ -115,6 +115,19 @@ const CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanE
 }
 CommandShortcut.displayName = 'CommandShortcut'
 
+const CommandLoading = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Loading>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Loading>
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive.Loading
+    ref={ref}
+    className={cn('relative flex select-none items-center rounded px-2 py-1.5 text-sm outline-none', className)}
+    {...props}
+  />
+))
+
+CommandLoading.displayName = CommandPrimitive.Loading.displayName
+
 const Command = {
   Root: CommandRoot,
   Dialog: CommandDialog,
@@ -124,7 +137,8 @@ const Command = {
   Group: CommandGroup,
   Item: CommandItem,
   Shortcut: CommandShortcut,
-  Separator: CommandSeparator
+  Separator: CommandSeparator,
+  Loading: CommandLoading
 }
 
 export { Command }

@@ -7,6 +7,7 @@
     "cancel": "Cancel"
   },
   "filter": {
+    "delete": "Delete Filter",
     "add-filter": "Add filter",
     "reset": "Reset",
     "defaultLabel": "Filter",
@@ -31,7 +32,10 @@
     "name": "Name",
     "stars": "Stars",
     "ascending": "Ascending",
-    "descending": "Descending"
+    "descending": "Descending",
+    "author": "Author",
+    "createdBefore": "Created Before",
+    "createdAfter": "Created After"
   },
   "sort": {
     "defaultLabel": "Sort",

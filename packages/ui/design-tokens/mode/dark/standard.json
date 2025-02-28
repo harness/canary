@@ -34,7 +34,7 @@
     },
     "accent": {
       "$type": "color",
-      "$value": "{colors.blue.200}",
+      "$value": "{brand.color.200}",
       "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\n\nCommon uses: Links, buttons, interactive icons, highlighted elements."
     },
     "success": {
@@ -80,7 +80,7 @@
     },
     "focus": {
       "$type": "color",
-      "$value": "{colors.blue.200}",
+      "$value": "{brand.color.200}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
@@ -889,7 +889,7 @@
       },
       "hover": {
         "$type": "color",
-        "$value": "{colors.blue.100}",
+        "$value": "{brand.color.100}",
         "$description": "Hover state color for text links. Provides visual feedback for user interaction."
       },
       "visited": {
@@ -1056,7 +1056,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{colors.blue.300}",
+          "$value": "{brand.color.300}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         }
       },
@@ -1068,7 +1068,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{colors.blue.800}",
+          "$value": "{brand.color.800}",
           "$description": "Color for segment markers on the filled track portion. Maintains visibility of markers within the selected range."
         }
       },

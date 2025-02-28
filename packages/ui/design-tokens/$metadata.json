@@ -6,7 +6,6 @@
     "brand/Gitness",
     "brand/Harness",
     "mode/dark/standard",
-    "mode/dark/icon-width",
     "breakpoint/desktop",
     "components/desktop/base/btn",
     "components/desktop/base/input",

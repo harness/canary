@@ -1,7 +1,7 @@
 [
   {
     "id": "89bf9a3ab61c40d6291a24c452efc1591c4d41c0",
-    "name": "value",
+    "name": "group",
     "selectedTokenSets": {
       "primitives/colors": "enabled",
       "primitives/typography": "enabled",

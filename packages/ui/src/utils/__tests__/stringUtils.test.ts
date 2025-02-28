@@ -1,5 +1,3 @@
-import { describe, expect, it } from 'vitest'
-
 import { getInitials } from '../stringUtils'
 
 describe('getInitials', () => {

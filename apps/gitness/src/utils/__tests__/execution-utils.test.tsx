@@ -1,5 +1,3 @@
-import { describe, expect, it } from 'vitest'
-
 import { EnumCiStatus, TypesExecution } from '@harnessio/code-service-client'
 import { MeterState } from '@harnessio/ui/components'
 import { PipelineExecutionStatus } from '@harnessio/ui/views'

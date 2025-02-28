@@ -1,5 +1,3 @@
-import { describe, expect, it } from 'vitest'
-
 import { getErrorMessage } from '../error-utils'
 
 // Define a custom error type for testing

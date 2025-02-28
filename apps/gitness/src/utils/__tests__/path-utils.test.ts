@@ -1,5 +1,3 @@
-import { describe, expect, it } from 'vitest'
-
 import { splitPathWithParents } from '../path-utils'
 
 describe('splitPathWithParents', () => {

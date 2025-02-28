@@ -1,5 +1,3 @@
-import { describe, expect, it } from 'vitest'
-
 import { formatDuration, formatTimestamp, getFormattedDuration } from '../TimeUtils'
 
 describe('getFormattedDuration', () => {

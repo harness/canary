@@ -1,5 +1,3 @@
-import { describe, expect, it } from 'vitest'
-
 import { EnumRuleState, type RepoRuleGetOkResponse } from '@harnessio/code-service-client'
 import { BranchRuleId, MergeStrategy, PatternsButtonType, Rule } from '@harnessio/ui/views'
 

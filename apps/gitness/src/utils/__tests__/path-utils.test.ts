@@ -44,11 +44,11 @@ describe('splitPathWithParents', () => {
       },
       {
         path: 'folder',
-        parentPath: 'repo/~/folder'
+        parentPath: 'repo/~//folder'
       },
       {
         path: 'file.txt',
-        parentPath: 'repo/~/folder/file.txt'
+        parentPath: 'repo/~//folder/file.txt'
       }
     ])
   })

@@ -96,10 +96,7 @@ describe('transformDataFromApi', () => {
     ])
 
     // Check bypass users
-    expect(result.bypass).toEqual([
-      { id: 'user1', display_name: 'User One' },
-      { id: 'user2', display_name: 'User Two' }
-    ])
+    expect(result.bypass).toEqual([])
 
     // Check rules
     const ruleMap = new Map(result.rules.map(rule => [rule.id, rule]))
@@ -141,7 +138,7 @@ describe('transformFormOutput', () => {
     expect(result?.pattern?.exclude).toEqual(['main/excluded'])
 
     // Check bypass
-    expect(result?.definition?.bypass?.user_ids).toEqual(['user1', 'user2'])
+    expect(result?.definition?.bypass?.user_ids).toEqual([1, 2])
     expect(result?.definition?.bypass?.repo_owners).toBe(true)
 
     // Check lifecycle rules

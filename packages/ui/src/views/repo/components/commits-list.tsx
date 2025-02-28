@@ -2,8 +2,9 @@ import { FC, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { Avatar, Button, CommitCopyActions, Icon, NodeGroup, StackedList } from '@/components'
-import { formatDate, getInitials } from '@/utils/utils'
+import { formatDate } from '@/utils/utils'
 import { TypesCommit } from '@/views'
+import { getInitials } from '@utils/stringUtils'
 
 type CommitsGroupedByDate = Record<string, TypesCommit[]>
 

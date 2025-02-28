@@ -3,7 +3,7 @@ import { Children, FC, memo, ReactElement, ReactNode, useEffect, useState } from
 import { Avatar, Button, Card, Icon, Input, MoreActionsTooltip, NodeGroup } from '@/components'
 import { HandleUploadType, PullRequestCommentBox } from '@/views'
 import { cn } from '@utils/cn'
-import { getInitials } from '@utils/utils'
+import { getInitials } from '@utils/stringUtils'
 
 interface ItemHeaderProps {
   avatar?: ReactNode

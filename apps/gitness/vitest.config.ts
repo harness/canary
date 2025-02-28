@@ -4,6 +4,8 @@ import viteConfig from './vite.config'
 
 export default mergeConfig(viteConfig, {
   test: {
+    environment: 'jsdom',
+    setupFiles: ['./config/vitest-setup.ts'],
     include: ['**/*.test.{ts,tsx}'],
     globals: true,
     coverage: {
@@ -17,6 +19,9 @@ export default mergeConfig(viteConfig, {
       //   functions: 80,
       //   statements: 80
       // }
+    },
+    deps: {
+      include: ['@harnessio/ui']
     }
   }
 })

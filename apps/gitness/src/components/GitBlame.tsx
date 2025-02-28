@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 
 import { useGetBlameQuery } from '@harnessio/code-service-client'
+import { getInitials } from '@harnessio/ui/utils'
 import { BlameEditor, BlameEditorProps, ThemeDefinition } from '@harnessio/yaml-editor'
 import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'
-import { getInitials } from '../utils/common-utils'
 import { normalizeGitRef } from '../utils/git-utils'
 
 interface GitBlameProps {

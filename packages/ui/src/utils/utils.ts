@@ -3,18 +3,6 @@ import { createElement, ReactNode } from 'react'
 import { TimeAgoHoverCard } from '@views/repo/components/time-ago-hover-card'
 import { formatDistance, formatDistanceToNow } from 'date-fns'
 
-export const getInitials = (name: string, length = 2) => {
-  // Split the name into an array of words, ignoring empty strings
-  const words = name.split(' ').filter(Boolean)
-
-  // Get the initials from the words
-  const initials = words
-    .map(word => word[0].toUpperCase()) // Get the first letter of each word
-    .join('')
-
-  // If length is provided, truncate the initials to the desired length
-  return length ? initials.slice(0, length) : initials
-}
 export const INITIAL_ZOOM_LEVEL = 1
 export const ZOOM_INC_DEC_LEVEL = 0.1
 
@@ -110,19 +98,6 @@ export const timeAgo = (timestamp?: number | null, cutoffDays: number = 3): Reac
   }
 }
 
-//generate random password
-export function generateAlphaNumericHash(length: number) {
-  let result = ''
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  const charactersLength = characters.length
-
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-  }
-
-  return result
-}
-
 /**
  * Format a number with current locale.
  * @param num number
@@ -131,6 +106,7 @@ export function generateAlphaNumericHash(length: number) {
 export function formatNumber(num: number | bigint): string {
   return num ? new Intl.NumberFormat(LOCALE).format(num) : ''
 }
+
 export interface Violation {
   violation: string
 }

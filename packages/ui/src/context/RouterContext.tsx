@@ -1,12 +1,12 @@
-import { ComponentType, createContext, CSSProperties, ReactNode, useContext } from 'react'
-import type { LinkProps, NavLinkProps } from 'react-router-dom'
+import { ComponentType, createContext, ReactNode, useContext } from 'react'
+import type { LinkProps, NavLinkProps, OutletProps } from 'react-router-dom'
 
 import { cn } from '@utils/cn'
 
 interface RouterContextType {
   Link: ComponentType<LinkProps>
   NavLink: ComponentType<NavLinkProps>
-  Outlet: ComponentType | null
+  Outlet: ComponentType<OutletProps>
   navigate: (to: string, options?: { replace?: boolean }) => void
 }
 
@@ -39,7 +39,7 @@ const NavLinkDefault = ({ to, children, className, style, ...props }: NavLinkPro
   )
 }
 
-const OutletDefault: ComponentType<{ children?: ReactNode }> = ({ children }) => <>{children}</>
+const OutletDefault: ComponentType<OutletProps> = ({ children }) => <>{children}</>
 
 const RouterContext = createContext<RouterContextType>({
   Link: LinkDefault,

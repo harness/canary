@@ -1,16 +1,24 @@
 import { Link, useMatches } from 'react-router-dom'
 
-import { Breadcrumb, Topbar } from '@harnessio/ui/components'
+import { Breadcrumb, Separator, Sidebar, Topbar } from '@harnessio/ui/components'
 
+import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { CustomHandle } from '../../framework/routing/types'
 
 function Breadcrumbs() {
   const matches = useMatches()
   const matchesWithBreadcrumb = matches.filter(match => (match.handle as CustomHandle)?.breadcrumb)
+  const isMFE = useIsMFE()
 
   return (
     <Topbar.Root>
       <Topbar.Left>
+        {!isMFE ? (
+          <>
+            <Sidebar.Trigger className="-ml-1" />
+            <Separator orientation="vertical" className="ml-1 mr-2 h-4" />
+          </>
+        ) : null}
         <Breadcrumb.Root className="select-none">
           <Breadcrumb.List>
             {matchesWithBreadcrumb.map((match, index) => {

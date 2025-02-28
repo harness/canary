@@ -35,6 +35,7 @@ import Checks from '../icons/checks.svg'
 import ChevronDown from '../icons/chevron-down.svg'
 import ChevronFillDown from '../icons/chevron-fill-down.svg'
 import ChevronRight from '../icons/chevron-right.svg'
+import ChevronUpDown from '../icons/chevron-up-down.svg'
 import ChevronUp from '../icons/chevron-up.svg'
 import CircleArrowTopRight from '../icons/circle-arrow-top-right.svg'
 import CircleArrowTop from '../icons/circle-arrow-top.svg'
@@ -108,6 +109,7 @@ import InfrastructureGradient from '../icons/infrastructure-gradient.svg'
 import Infrastructure from '../icons/infrastructure-icon.svg'
 import Italicize from '../icons/italicize.svg'
 import Key from '../icons/key-icon.svg'
+import Language from '../icons/language.svg'
 import Lightning from '../icons/lightning.svg'
 import List from '../icons/list.svg'
 import NoDataBranches from '../icons/lists-data-icons/no-data-branches.svg'
@@ -210,9 +212,11 @@ const IconNameMap = {
   'chevron-down': ChevronDown,
   'chevron-right': ChevronRight,
   'chevron-up': ChevronUp,
+  'chevron-up-down': ChevronUpDown,
   'filter-list': FilterList,
   'info-circle': InfoCircle,
   'double-tick': DoubleTick,
+  language: Language,
   play: Play,
   download: Download,
   clock: Clock,

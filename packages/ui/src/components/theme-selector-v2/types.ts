@@ -42,4 +42,7 @@ export interface ThemeDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   children?: React.ReactNode
+  showSystemMode?: boolean
+  showAccentColor?: boolean
+  showGrayColor?: boolean
 }

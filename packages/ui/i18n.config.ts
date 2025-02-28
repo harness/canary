@@ -11,7 +11,7 @@ export default {
   // Specify the list of namespaces
   namespaces: ['component'],
 
-  locales: ['en', 'es', 'fr'],
+  locales: ['en', 'fr'],
 
   keySeparator: '.',
 

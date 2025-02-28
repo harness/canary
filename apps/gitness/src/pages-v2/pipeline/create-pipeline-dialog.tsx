@@ -6,6 +6,7 @@ import { CreatePipelineDialog as CreatePipelineDialogView, CreatePipelineFormTyp
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { apiBranches2BranchNames, apiBranches2DefaultBranchName } from '../repo/transform-utils/branch-transform'
 import { useCreatePipelineStore } from './stores/create-pipeline-dialog.store'
@@ -69,6 +70,7 @@ export default function CreatePipelineDialog({ open, onClose }: CreatePipelineDi
       onSubmit={onSubmit}
       onCancel={onCloseInternal}
       useCreatePipelineStore={useCreatePipelineStore}
+      useTranslationStore={useTranslationStore}
     />
   )
 }

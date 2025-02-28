@@ -19,38 +19,22 @@
   "text": {
     "1": {
       "$type": "color",
-<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
-      "$value": "{colors.chrome.50}",
-========
       "$value": "{colors.pure.white}",
->>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text, primary buttons."
     },
     "2": {
       "$type": "color",
-<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
-      "$value": "{colors.chrome.300}",
-========
       "$value": "{colors.chrome.200}",
->>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
       "$type": "color",
-<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
-      "$value": "{colors.chrome.500}",
-========
       "$value": "{colors.chrome.400}",
->>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "accent": {
       "$type": "color",
-<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
-      "$value": "{brand.color.200}",
-========
       "$value": "{colors.accent.200}",
->>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
       "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\n\nCommon uses: Links, buttons, interactive icons, highlighted elements."
     },
     "success": {
@@ -65,11 +49,7 @@
     },
     "warning": {
       "$type": "color",
-<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
-      "$value": "{colors.yellow.200}",
-========
       "$value": "{colors.amber.200}",
->>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     }
   },
@@ -90,7 +70,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.7",
-            "space": "lch"
+            "space": "p3"
           }
         }
       },
@@ -100,11 +80,7 @@
     },
     "focus": {
       "$type": "color",
-<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
-      "$value": "{brand.color.400}",
-========
       "$value": "{colors.accent.200}",
->>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
@@ -119,11 +95,7 @@
     },
     "warning": {
       "$type": "color",
-<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
-      "$value": "{colors.yellow.500}",
-========
       "$value": "{colors.amber.500}",
->>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -134,16 +106,12 @@
           "modify": {
             "type": "alpha",
             "value": "0.15",
-            "space": "lch"
+            "space": "p3"
           }
         }
       },
       "$type": "color",
-<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
-      "$value": "{colors.chrome.700}",
-========
       "$value": "{colors.chrome.200}",
->>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -152,16 +120,12 @@
           "modify": {
             "type": "alpha",
             "value": "0.2",
-            "space": "lch"
+            "space": "p3"
           }
         }
       },
       "$type": "color",
-<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
-      "$value": "{colors.chrome.700}",
-========
       "$value": "{colors.chrome.200}",
->>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     },
     "disabled": {
@@ -219,7 +183,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{background.3}",
+          "$value": "{colors.chrome.900}",
           "$description": "Background color for informational alerts. Creates visual distinction from surrounding content."
         },
         "border": {
@@ -245,7 +209,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -259,7 +223,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.2",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -295,7 +259,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.850}",
+          "$value": "{colors.chrome.900}",
           "$description": "Background color for secondary badges. Creates less prominent badge styling for secondary information."
         },
         "border": {
@@ -316,7 +280,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -330,7 +294,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.2",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -351,7 +315,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.2",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -365,7 +329,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -386,7 +350,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.2",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -400,7 +364,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -412,7 +376,7 @@
       "warning": {
         "text": {
           "$type": "color",
-          "$value": "{colors.yellow.200}",
+          "$value": "{colors.amber.200}",
           "$description": "Text color for warning badges. Signals caution states with readable amber text."
         },
         "border": {
@@ -421,12 +385,12 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.2",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.yellow.300}",
+          "$value": "{colors.amber.300}",
           "$description": "Border color for warning badges. Defines the boundary of caution status indicators."
         },
         "background": {
@@ -435,19 +399,19 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.yellow.500}",
+          "$value": "{colors.amber.500}",
           "$description": "Background color for warning badges. Creates subtle but recognizable caution indicators."
         }
       },
       "running": {
         "text": {
           "$type": "color",
-          "$value": "{colors.orange.200}",
+          "$value": "{colors.yellow.200}",
           "$description": "Text color for running state badges. Indicates active or in-progress operations."
         },
         "border": {
@@ -456,12 +420,12 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.2",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.orange.300}",
+          "$value": "{colors.yellow.300}",
           "$description": "Border color for running state badges. Defines the boundary of active status indicators."
         },
         "background": {
@@ -470,12 +434,12 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.orange.500}",
+          "$value": "{colors.yellow.500}",
           "$description": "Background color for running state badges. Creates subtle visual indication of in-progress states."
         }
       },
@@ -491,7 +455,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.2",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -505,7 +469,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -521,8 +485,17 @@
           "$description": "Text color for AI-related badges. Ensures high contrast against AI badge gradient border."
         },
         "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.05",
+                "space": "p3"
+              }
+            }
+          },
           "$type": "color",
-          "$value": "{background.3}",
+          "$value": "{colors.pure.white}",
           "$description": "Background color for AI-related badges. Creates a subtle backdrop that highlights the gradient border."
         },
         "border": {
@@ -535,7 +508,7 @@
     "breadcrumb": {
       "item-inactive": {
         "$type": "color",
-        "$value": "{text.2}",
+        "$value": "{text.3}",
         "$description": "Text color for inactive breadcrumb items. Provides reduced emphasis for previous navigation steps."
       },
       "item-current": {
@@ -553,12 +526,12 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{brand.onColor.600}",
+          "$value": "{colors.pure.white}",
           "$description": "Text and icon color for primary action buttons. Ensures maximum contrast and visibility for primary CTA elements."
         },
         "background": {
           "$type": "color",
-          "$value": "{brand.color.600}",
+          "$value": "{colors.accent.600}",
           "$description": "Background color for primary action buttons. Creates emphasis for the most important action in a given context."
         },
         "border": {
@@ -600,11 +573,6 @@
             "$type": "color",
             "$value": "{border.2}",
             "$description": "Border color for unselected outline buttons. Defines the clickable area with a visible boundary."
-          },
-          "background": {
-            "$type": "color",
-            "$value": "{background.2}",
-            "$description": "Background color for unselected outline buttons."
           }
         },
         "selected": {
@@ -620,13 +588,8 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{border.2}",
+            "$value": "{border.1}",
             "$description": "Border color for selected outline buttons. Creates stronger visual indication of the active state."
-          },
-          "background": {
-            "$type": "color",
-            "$value": "{background.2}",
-            "$description": "Background color for selected outline buttons."
           }
         }
       },
@@ -668,7 +631,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -682,7 +645,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.2",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -697,7 +660,7 @@
                 "modify": {
                   "type": "alpha",
                   "value": "0.15",
-                  "space": "lch"
+                  "space": "p3"
                 }
               }
             },
@@ -711,7 +674,7 @@
                 "modify": {
                   "type": "alpha",
                   "value": "0.25",
-                  "space": "lch"
+                  "space": "p3"
                 }
               }
             },
@@ -733,7 +696,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -747,7 +710,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.2",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -762,7 +725,7 @@
                 "modify": {
                   "type": "alpha",
                   "value": "0.15",
-                  "space": "lch"
+                  "space": "p3"
                 }
               }
             },
@@ -776,7 +739,7 @@
                 "modify": {
                   "type": "alpha",
                   "value": "0.25",
-                  "space": "lch"
+                  "space": "p3"
                 }
               }
             },
@@ -791,11 +754,6 @@
           "$type": "color",
           "$value": "{text.1}",
           "$description": "Text color for AI-powered buttons. Ensures high contrast against AI button gradient border."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{background.2}",
-          "$description": "Background color for AI-powered buttons."
         },
         "border": {
           "$type": "color",
@@ -832,18 +790,13 @@
         "$value": "{background.3}",
         "$description": "Background color for dialog components. Creates a distinct surface for modal content that appears above the main UI."
       },
-      "border": {
-        "$type": "color",
-        "$value": "{border.2}",
-        "$description": "Border color for dialog components."
-      },
       "backdrop": {
         "$extensions": {
           "studio.tokens": {
             "modify": {
               "type": "alpha",
               "value": "0.5",
-              "space": "lch"
+              "space": "p3"
             }
           }
         },
@@ -869,17 +822,6 @@
           "$value": "{text.2}",
           "$description": "Text color for dropdown menu items. Ensures readability of selectable options."
         },
-<<<<<<< HEAD
-<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
-========
-        "separator": {
-          "$type": "color",
-          "$value": "{colors.chrome.800}",
-          "$description": "Color for separators between dropdown items or sections. Creates visual organization within the menu."
-        },
->>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
-=======
->>>>>>> 8d0d149f (upd)
         "delete": {
           "text": {
             "$type": "color",
@@ -893,11 +835,7 @@
                   "modify": {
                     "type": "alpha",
                     "value": "0.1",
-<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
-                    "space": "lch"
-========
                     "space": "p3"
->>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
                   }
                 }
               },
@@ -907,165 +845,6 @@
             }
           }
         }
-      }
-    },
-    "diff": {
-      "grey": {
-        "$type": "color",
-        "$value": "{background.1}",
-        "$description": "Neutral base color for the diff interface that allows code and difference highlights to remain visually prominent."
-      },
-      "add-content": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.12",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{colors.green.500}",
-        "$description": "Green background highlighting newly added code lines while maintaining readability."
-      },
-      "add-lineNumber": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.2",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{colors.green.500}",
-        "$description": "Background for line numbers of added code, providing visual connection to added content."
-      },
-      "add-content-highlight": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.25",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{colors.green.500}",
-        "$description": "Stronger emphasis color for specific character changes within added lines."
-      },
-      "add-widget": {
-        "$type": "color",
-        "$value": "{colors.chrome.900}",
-        "$description": "Background for interactive UI elements related to added content."
-      },
-      "add-widget-color": {
-        "$type": "color",
-        "$value": "{text.1}",
-        "$description": "Text/icon color for add-related interactive elements, ensuring readability."
-      },
-      "del-content": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.12",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{colors.red.500}",
-        "$description": "Red background highlighting removed code lines without causing eye strain."
-      },
-      "del-lineNumber": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.2",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{colors.red.500}",
-        "$description": "Background for line numbers of deleted code, connecting numbers to removed content."
-      },
-      "del-content-highlight": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.25",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{colors.red.500}",
-        "$description": "Stronger emphasis color for specific character changes within deleted lines."
-      },
-      "plain-content": {
-        "$type": "color",
-        "$value": "{background.1}",
-        "$description": "Neutral background for unchanged code that allows modified content to stand out."
-      },
-      "plain-lineNumber": {
-        "$type": "color",
-        "$value": "{background.1}",
-        "$description": "Background for line numbers of unchanged code, maintaining visual rhythm."
-      },
-      "plain-lineNumber-color": {
-        "$type": "color",
-        "$value": "{text.3}",
-        "$description": "Text color for unchanged line numbers, visually subdued compared to changed content."
-      },
-      "empty-content": {
-        "$type": "color",
-        "$value": "{background.1}",
-        "$description": "Background for placeholder spaces and empty lines, maintaining visual continuity."
-      },
-      "hunk-content": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.12",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{colors.blue.500}",
-        "$description": "Background for diff section headers ('hunks') that indicate which part of the file is displayed."
-      },
-      "hunk-lineNumber": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.2",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{colors.blue.500}",
-        "$description": "Background for line numbers in section headers."
-      },
-      "hunk-content-color": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Text color for section header content showing file position information."
-      },
-      "expand-content": {
-        "$type": "color",
-        "$value": "{background.2}",
-        "$description": "Background for controls that expand/collapse code sections to show additional context."
       }
     },
     "input": {
@@ -1108,41 +887,58 @@
         "$value": "{text.accent}",
         "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
       },
+      "hover": {
+        "$type": "color",
+        "$value": "{colors.accent.100}",
+        "$description": "Hover state color for text links. Provides visual feedback for user interaction."
+      },
       "visited": {
         "$type": "color",
         "$value": "{colors.purple.300}",
         "$description": "Visited state color for text links. Differentiates links the user has already activated."
       }
     },
-    "nav-tabs": {
-      "unselected": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.2}",
-          "$description": "Unselected tab item text."
-        }
-      },
-      "selected": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.1}",
-          "$description": "Selected tab item text."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.focus}",
-          "$description": "Selected tab item border."
-        }
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Navigation container border."
-      },
+    "nav": {
       "background": {
         "$type": "color",
         "$value": "{background.1}",
-        "$description": "Navigation tabs container background."
+        "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{border.2}",
+        "$description": "Border color for navigation components. Creates visual boundaries and separation from adjacent content."
+      },
+      "separator": {
+        "$type": "color",
+        "$value": "{border.2}",
+        "$description": "Color for separators between navigation sections. Creates visual organization within the navigation structure."
+      },
+      "item": {
+        "unselected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.2}",
+            "$description": "Text color for unselected navigation items. Provides readable but less emphasized styling for available options."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.3}",
+            "$description": "Icon color for unselected navigation items. Creates subtle visual indicators for navigation options."
+          }
+        },
+        "selected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Text color for selected navigation items. Increases contrast to highlight the current location."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Icon color for selected navigation items. Creates stronger visual indication of the current selection."
+          }
+        }
       }
     },
     "pipeline": {
@@ -1192,159 +988,6 @@
             "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
           }
         }
-      },
-      "card-canvas": {
-        "1": {
-          "background": {
-            "$type": "color",
-            "$value": "{background.1}",
-            "$description": "The background color for the primary/top-level canvas where pipeline components are arranged. Creates the base visual layer for the main workflow area."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{border.3}",
-            "$description": "Solid border for the outermost pipeline canvas elements. Defines the boundaries of the top-level workflow container."
-          }
-        },
-        "2": {
-          "background": {
-            "$type": "color",
-            "$value": "{background.2}",
-            "$description": "Background color for nested/secondary canvas elements that appear within the main workflow. Provides visual distinction for grouped pipeline components."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{border.2}",
-            "$description": "Border styling applied to nested canvas containers. Creates clear visual boundaries between different sections within the pipeline visualization."
-          }
-        }
-      },
-      "background": {
-        "dotes": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.chrome.850}",
-          "$description": "Refers to the dotted pattern visible in the background of the workspace."
-        }
-      }
-    },
-    "sidebar": {
-      "background": {
-        "$type": "color",
-        "$value": "{colors.pure.black}",
-        "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Border color for navigation components. Creates visual boundaries and separation from adjacent content."
-      },
-      "separator": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Color for separators between navigation sections. Creates visual organization within the navigation structure."
-      },
-      "hover": {
-        "$type": "color",
-        "$value": "{state.hover}",
-        "$description": "Hover state for navigation items."
-      },
-      "selected": {
-        "$type": "color",
-        "$value": "{state.selected}",
-        "$description": "Selected state for navigation items."
-      },
-      "item": {
-        "unselected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.2}",
-            "$description": "Text color for unselected navigation items. Provides readable but less emphasized styling for available options."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.3}",
-            "$description": "Icon color for unselected navigation items. Creates subtle visual indicators for navigation options."
-          }
-        },
-        "selected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Text color for selected navigation items. Increases contrast to highlight the current location."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Icon color for selected navigation items. Creates stronger visual indication of the current selection."
-          }
-        }
-      },
-      "logo": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.1}",
-          "$description": "Text color for Logo in sidebar navigation."
-        },
-        "icon": {
-          "$type": "color",
-          "$value": "{brand.color.300}",
-          "$description": "Icon color for Logo in sidebar navigation."
-        }
-      },
-      "search": {
-        "background": {
-          "$type": "color",
-          "$value": "{component.sidebar.background}",
-          "$description": "Search input specific background on sidebar navigation."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.2}",
-          "$description": "Search input specific border on sidebar navigation."
-        },
-        "placeholder": {
-          "$type": "color",
-          "$value": "{text.3}",
-          "$description": "Search input specific placeholder on sidebar navigation."
-        },
-        "btn": {
-          "background": {
-            "$type": "color",
-            "$value": "{background.3}",
-            "$description": "Search input specific button background on sidebar navigation."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{border.2}",
-            "$description": "Search input specific button border on sidebar navigation."
-          },
-          "text": {
-            "$type": "color",
-            "$value": "{text.3}",
-            "$description": "Search input specific button text on sidebar navigation."
-          }
-        }
-      },
-      "footer": {
-        "username": {
-          "$type": "color",
-          "$value": "{text.1}",
-          "$description": "Username in the footer sidebar navigation menu."
-        },
-        "data": {
-          "$type": "color",
-          "$value": "{text.3}",
-          "$description": "User data in the footer sidebar navigation menu."
-        }
       }
     },
     "scrollbar": {
@@ -1356,10 +999,10 @@
     },
     "selection": {
       "unselected": {
-        "item": {
+        "text": {
           "$type": "color",
           "$value": "{text.3}",
-          "$description": "Color for unselected items in selection controls. Provides readable but less emphasized styling for available options."
+          "$description": "Text color for unselected items in selection controls. Provides readable but less emphasized styling for available options."
         },
         "background": {
           "$type": "color",
@@ -1373,10 +1016,10 @@
         }
       },
       "selected": {
-        "item": {
+        "text": {
           "$type": "color",
           "$value": "{colors.chrome.950}",
-          "$description": "Color for selected items in selection controls. Creates high contrast against selected background state."
+          "$description": "Text color for selected items in selection controls. Creates high contrast against selected background state."
         },
         "background": {
           "$type": "color",
@@ -1413,7 +1056,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{brand.color.300}",
+          "$value": "{colors.accent.300}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         }
       },
@@ -1425,7 +1068,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{brand.color.800}",
+          "$value": "{colors.accent.800}",
           "$description": "Color for segment markers on the filled track portion. Maintains visibility of markers within the selected range."
         }
       },
@@ -1443,24 +1086,24 @@
       }
     },
     "status-indicator": {
-      "completed": {
+      "success": {
         "$type": "color",
         "$value": "{colors.green.300}",
         "$description": "Color for success status indicators. Communicates completed or positive states."
       },
-      "cancelled": {
+      "danger": {
         "$type": "color",
         "$value": "{colors.red.300}",
         "$description": "Color for danger status indicators. Communicates error or critical warning states."
       },
       "warning": {
         "$type": "color",
-        "$value": "{colors.yellow.300}",
+        "$value": "{colors.amber.300}",
         "$description": "Color for warning status indicators. Communicates caution or potential issue states."
       },
       "running": {
         "$type": "color",
-        "$value": "{colors.orange.300}",
+        "$value": "{colors.yellow.300}",
         "$description": "Color for running status indicators. Communicates active or in-progress operations."
       },
       "merged": {
@@ -1470,13 +1113,13 @@
       },
       "action-required": {
         "$type": "color",
-        "$value": "{colors.blue.300}",
+        "$value": "{colors.accent.300}",
         "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed. "
       },
-      "waiting": {
+      "pending": {
         "$type": "color",
         "$value": "{colors.chrome.400}",
-        "$description": "Color for pending status indicators. Communicates in waiting states."
+        "$description": "Color for pending status indicators. Communicates in-progress or waiting states."
       }
     },
     "switch": {
@@ -1525,7 +1168,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -1599,17 +1242,17 @@
       "blue": {
         "text": {
           "$type": "color",
-          "$value": "{colors.blue.200}",
+          "$value": "{colors.accent.300}",
           "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.blue.900}",
+          "$value": "{colors.accent.900}",
           "$description": "Background color for blue tags. Creates a distinct surface with blue theme styling."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.blue.950}",
+          "$value": "{colors.accent.950}",
           "$description": "Subtle background variation for blue tags. Provides a softer alternative for less emphasis."
         },
         "border": {
@@ -1621,7 +1264,7 @@
       "brown": {
         "text": {
           "$type": "color",
-          "$value": "{colors.brown.200}",
+          "$value": "{colors.brown.300}",
           "$description": "Text color for brown tags. Ensures readability while maintaining the brown color theme."
         },
         "background": {
@@ -1643,7 +1286,7 @@
       "cyan": {
         "text": {
           "$type": "color",
-          "$value": "{colors.cyan.200}",
+          "$value": "{colors.cyan.300}",
           "$description": "Text color for cyan tags. Ensures readability while maintaining the cyan color theme."
         },
         "background": {
@@ -1665,7 +1308,7 @@
       "green": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.200}",
+          "$value": "{colors.green.300}",
           "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
         },
         "background": {
@@ -1687,7 +1330,7 @@
       "indigo": {
         "text": {
           "$type": "color",
-          "$value": "{colors.indigo.200}",
+          "$value": "{colors.indigo.300}",
           "$description": "Text color for indigo tags. Ensures readability while maintaining the indigo color theme."
         },
         "background": {
@@ -1709,7 +1352,7 @@
       "lime": {
         "text": {
           "$type": "color",
-          "$value": "{colors.lime.200}",
+          "$value": "{colors.lime.300}",
           "$description": "Text color for lime tags. Ensures readability while maintaining the lime color theme."
         },
         "background": {
@@ -1731,7 +1374,7 @@
       "mint": {
         "text": {
           "$type": "color",
-          "$value": "{colors.mint.200}",
+          "$value": "{colors.mint.300}",
           "$description": "Text color for mint tags. Ensures readability while maintaining the mint color theme."
         },
         "background": {
@@ -1753,7 +1396,7 @@
       "orange": {
         "text": {
           "$type": "color",
-          "$value": "{colors.orange.200}",
+          "$value": "{colors.orange.300}",
           "$description": "Text color for orange tags. Ensures readability while maintaining the orange color theme."
         },
         "background": {
@@ -1775,7 +1418,7 @@
       "pink": {
         "text": {
           "$type": "color",
-          "$value": "{colors.pink.200}",
+          "$value": "{colors.pink.300}",
           "$description": "Text color for pink tags. Ensures readability while maintaining the pink color theme."
         },
         "background": {
@@ -1797,7 +1440,7 @@
       "purple": {
         "text": {
           "$type": "color",
-          "$value": "{colors.purple.200}",
+          "$value": "{colors.purple.300}",
           "$description": "Text color for purple tags. Ensures readability while maintaining the purple color theme."
         },
         "background": {
@@ -1819,7 +1462,7 @@
       "red": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.200}",
+          "$value": "{colors.red.300}",
           "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
         },
         "background": {
@@ -1841,7 +1484,7 @@
       "violet": {
         "text": {
           "$type": "color",
-          "$value": "{colors.violet.200}",
+          "$value": "{colors.violet.300}",
           "$description": "Text color for violet tags. Ensures readability while maintaining the violet color theme."
         },
         "background": {
@@ -1863,7 +1506,7 @@
       "yellow": {
         "text": {
           "$type": "color",
-          "$value": "{colors.yellow.200}",
+          "$value": "{colors.yellow.300}",
           "$description": "Text color for yellow tags. Ensures readability while maintaining the yellow color theme."
         },
         "background": {
@@ -1880,28 +1523,6 @@
           "$type": "color",
           "$value": "{component.tag.yellow.background}",
           "$description": "Border color for yellow tags."
-        }
-      },
-      "gray": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.chrome.200}",
-          "$description": "Text color for gray tags. Ensures readability while maintaining the gray color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.chrome.850}",
-          "$description": "Background color for gray tags. Creates a distinct surface with gray theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.chrome.900}",
-          "$description": "Subtle background variation for gray tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.gray.background}",
-          "$description": "Border color for gray tags."
         }
       }
     },
@@ -1941,7 +1562,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.red.700}",
+          "$value": "{colors.red.400}",
           "$description": "Background color for danger toast notifications. Creates high-visibility indication of errors or warnings."
         },
         "border": {
@@ -2006,7 +1627,7 @@
           "blur": "2",
           "spread": "-1",
           "color": "{shadow-color.2}",
-          "type": "dropShadow"
+          "type": "innerShadow"
         }
       ],
       "$description": "Default shadow. \nCommon uses: Cards, dropdowns, popovers in their default state."
@@ -2028,7 +1649,7 @@
           "blur": "4",
           "spread": "-2",
           "color": "{shadow-color.3}",
-          "type": "dropShadow"
+          "type": "innerShadow"
         }
       ],
       "$description": "Medium shadow. \nCommon uses: Elevated cards, active buttons, interactive elements on hover."
@@ -2049,8 +1670,8 @@
           "y": "4",
           "blur": "6",
           "spread": "-4",
-          "color": "{shadow-color.4}",
-          "type": "dropShadow"
+          "color": "#000000",
+          "type": "innerShadow"
         }
       ],
       "$description": "Large shadow. \nCommon uses: Modals, floating panels, navigation dropdowns."
@@ -2109,7 +1730,7 @@
           "modify": {
             "type": "alpha",
             "value": "0",
-            "space": "lch"
+            "space": "p3"
           }
         }
       },
@@ -2123,7 +1744,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.6",
-            "space": "lch"
+            "space": "p3"
           }
         }
       },
@@ -2137,7 +1758,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.6",
-            "space": "lch"
+            "space": "p3"
           }
         }
       },
@@ -2151,7 +1772,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.5",
-            "space": "lch"
+            "space": "p3"
           }
         }
       },
@@ -2165,7 +1786,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.5",
-            "space": "lch"
+            "space": "p3"
           }
         }
       },
@@ -2179,7 +1800,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.5",
-            "space": "lch"
+            "space": "p3"
           }
         }
       },
@@ -2193,7 +1814,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.6",
-            "space": "lch"
+            "space": "p3"
           }
         }
       },
@@ -2207,7 +1828,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.1",
-            "space": "lch"
+            "space": "p3"
           }
         }
       },
@@ -2248,7 +1869,7 @@
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{colors.pink.200}"
+        "$value": "{colors.pink.150}"
       },
       "gradient-stop-3": {
         "$type": "color",
@@ -2277,7 +1898,7 @@
       "running": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{colors.orange.200}"
+          "$value": "{colors.yellow.200}"
         },
         "gradient-stop-2": {
           "$extensions": {
@@ -2285,7 +1906,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.4",
-                "space": "lch"
+                "space": "p3"
               }
             }
           },
@@ -2294,7 +1915,7 @@
         },
         "gradient-stop-3": {
           "$type": "color",
-          "$value": "{colors.orange.200}"
+          "$value": "{colors.yellow.200}"
         }
       },
       "arrows": {
@@ -2304,7 +1925,7 @@
         },
         "gradient-stop-2": {
           "$type": "color",
-          "$value": "{colors.blue.300}"
+          "$value": "{colors.accent.300}"
         },
         "gradient-stop-3": {
           "$type": "color",
@@ -2367,28 +1988,6 @@
           }
         }
       }
-    }
-  },
-  "iconStrokeWidth": {
-    "xxs": {
-      "$type": "borderWidth",
-      "$value": "1"
-    },
-    "xs": {
-      "$type": "borderWidth",
-      "$value": "1"
-    },
-    "sm": {
-      "$type": "borderWidth",
-      "$value": "1"
-    },
-    "md": {
-      "$type": "borderWidth",
-      "$value": "1.4"
-    },
-    "lg": {
-      "$type": "borderWidth",
-      "$value": "2"
     }
   }
 }

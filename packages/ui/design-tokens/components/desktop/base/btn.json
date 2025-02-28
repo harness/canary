@@ -35,7 +35,7 @@
     "default": {
       "radius": {
         "$type": "borderRadius",
-        "$value": "{rounded.2}"
+        "$value": "{radius.component.default}"
       }
     },
     "rounded": {

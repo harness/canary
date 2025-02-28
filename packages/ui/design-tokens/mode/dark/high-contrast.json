@@ -19,22 +19,54 @@
   "text": {
     "1": {
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.chrome.50}",
+=======
+<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
+      "$value": "{colors.chrome.50}",
+========
+      "$value": "{colors.pure.white}",
+>>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text, primary buttons."
     },
     "2": {
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.chrome.200}",
+=======
+<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
+      "$value": "{colors.chrome.300}",
+========
+      "$value": "{colors.chrome.200}",
+>>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.chrome.400}",
+=======
+<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
+      "$value": "{colors.chrome.500}",
+========
+      "$value": "{colors.chrome.400}",
+>>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "accent": {
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{brand.color.200}",
+=======
+<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
+      "$value": "{brand.color.200}",
+========
+      "$value": "{colors.accent.200}",
+>>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\n\nCommon uses: Links, buttons, interactive icons, highlighted elements."
     },
     "success": {
@@ -49,19 +81,35 @@
     },
     "warning": {
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.yellow.200}",
+=======
+<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
+      "$value": "{colors.yellow.200}",
+========
+      "$value": "{colors.amber.200}",
+>>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     }
   },
   "border": {
     "1": {
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.chrome.200}",
+=======
+      "$value": "{colors.chrome.300}",
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\n\nCommon uses: Focus states, hover states, active elements, primary containers."
     },
     "2": {
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.chrome.700}",
+=======
+      "$value": "{colors.chrome.850}",
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Standard border color for general use. Provides balanced visual definition for common UI elements.\n\nCommon uses: Containers, cards, dividers, separators, default form inputs."
     },
     "3": {
@@ -75,27 +123,55 @@
         }
       },
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.chrome.800}",
+=======
+      "$value": "{colors.chrome.850}",
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\n\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
     },
     "focus": {
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{brand.color.300}",
+=======
+<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
+      "$value": "{brand.color.400}",
+========
+      "$value": "{colors.accent.200}",
+>>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.green.300}",
+=======
+      "$value": "{colors.green.400}",
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.red.300}",
+=======
+      "$value": "{colors.red.400}",
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Border color for error containers. Emphasizes critical information through visual framing.\n\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.yellow.300}",
+=======
+<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
+      "$value": "{colors.yellow.500}",
+========
+      "$value": "{colors.amber.500}",
+>>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -111,7 +187,15 @@
         }
       },
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.chrome.700}",
+=======
+<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
+      "$value": "{colors.chrome.700}",
+========
+      "$value": "{colors.chrome.200}",
+>>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -125,7 +209,15 @@
         }
       },
       "$type": "color",
+<<<<<<< HEAD
       "$value": "{colors.chrome.700}",
+=======
+<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
+      "$value": "{colors.chrome.700}",
+========
+      "$value": "{colors.chrome.200}",
+>>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+>>>>>>> 964eef30 (test push with upd folders structure)
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     },
     "disabled": {
@@ -293,7 +385,11 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
+<<<<<<< HEAD
                 "value": "0.6",
+=======
+                "value": "0.2",
+>>>>>>> 964eef30 (test push with upd folders structure)
                 "space": "lch"
               }
             }
@@ -314,7 +410,11 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
+<<<<<<< HEAD
                 "value": "0.6",
+=======
+                "value": "0.2",
+>>>>>>> 964eef30 (test push with upd folders structure)
                 "space": "lch"
               }
             }
@@ -349,7 +449,11 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
+<<<<<<< HEAD
                 "value": "0.6",
+=======
+                "value": "0.2",
+>>>>>>> 964eef30 (test push with upd folders structure)
                 "space": "lch"
               }
             }
@@ -384,7 +488,11 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
+<<<<<<< HEAD
                 "value": "0.6",
+=======
+                "value": "0.2",
+>>>>>>> 964eef30 (test push with upd folders structure)
                 "space": "lch"
               }
             }
@@ -419,7 +527,11 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
+<<<<<<< HEAD
                 "value": "0.6",
+=======
+                "value": "0.2",
+>>>>>>> 964eef30 (test push with upd folders structure)
                 "space": "lch"
               }
             }
@@ -454,7 +566,11 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
+<<<<<<< HEAD
                 "value": "0.6",
+=======
+                "value": "0.2",
+>>>>>>> 964eef30 (test push with upd folders structure)
                 "space": "lch"
               }
             }
@@ -584,7 +700,11 @@
           },
           "border": {
             "$type": "color",
+<<<<<<< HEAD
             "$value": "{border.1}",
+=======
+            "$value": "{border.2}",
+>>>>>>> 964eef30 (test push with upd folders structure)
             "$description": "Border color for selected outline buttons. Creates stronger visual indication of the active state."
           },
           "background": {
@@ -645,7 +765,11 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
+<<<<<<< HEAD
                 "value": "0.6",
+=======
+                "value": "0.2",
+>>>>>>> 964eef30 (test push with upd folders structure)
                 "space": "lch"
               }
             }
@@ -710,7 +834,11 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
+<<<<<<< HEAD
                 "value": "0.6",
+=======
+                "value": "0.2",
+>>>>>>> 964eef30 (test push with upd folders structure)
                 "space": "lch"
               }
             }
@@ -833,6 +961,20 @@
           "$value": "{text.2}",
           "$description": "Text color for dropdown menu items. Ensures readability of selectable options."
         },
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
+========
+        "separator": {
+          "$type": "color",
+          "$value": "{colors.chrome.800}",
+          "$description": "Color for separators between dropdown items or sections. Creates visual organization within the menu."
+        },
+>>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+=======
+>>>>>>> 8d0d149f (upd)
+>>>>>>> 964eef30 (test push with upd folders structure)
         "delete": {
           "text": {
             "$type": "color",
@@ -846,7 +988,15 @@
                   "modify": {
                     "type": "alpha",
                     "value": "0.1",
+<<<<<<< HEAD
                     "space": "lch"
+=======
+<<<<<<<< HEAD:packages/ui/design-tokens/mode/dark/default.json
+                    "space": "lch"
+========
+                    "space": "p3"
+>>>>>>>> 4a6809e7 (upd):packages/ui/design-tokens/theme/dark/standard.json
+>>>>>>> 964eef30 (test push with upd folders structure)
                   }
                 }
               },
@@ -1548,12 +1698,20 @@
       "blue": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.blue.100}",
+=======
+          "$value": "{colors.blue.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.blue.800}",
+=======
+          "$value": "{colors.blue.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for blue tags. Creates a distinct surface with blue theme styling."
         },
         "background-subtle": {
@@ -1570,12 +1728,20 @@
       "brown": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.brown.100}",
+=======
+          "$value": "{colors.brown.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for brown tags. Ensures readability while maintaining the brown color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.brown.800}",
+=======
+          "$value": "{colors.brown.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for brown tags. Creates a distinct surface with brown theme styling."
         },
         "background-subtle": {
@@ -1592,12 +1758,20 @@
       "cyan": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.cyan.100}",
+=======
+          "$value": "{colors.cyan.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for cyan tags. Ensures readability while maintaining the cyan color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.cyan.800}",
+=======
+          "$value": "{colors.cyan.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for cyan tags. Creates a distinct surface with cyan theme styling."
         },
         "background-subtle": {
@@ -1614,12 +1788,20 @@
       "green": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.green.100}",
+=======
+          "$value": "{colors.green.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.green.800}",
+=======
+          "$value": "{colors.green.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for green tags. Creates a distinct surface with green theme styling."
         },
         "background-subtle": {
@@ -1636,12 +1818,20 @@
       "indigo": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.indigo.100}",
+=======
+          "$value": "{colors.indigo.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for indigo tags. Ensures readability while maintaining the indigo color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.indigo.800}",
+=======
+          "$value": "{colors.indigo.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for indigo tags. Creates a distinct surface with indigo theme styling."
         },
         "background-subtle": {
@@ -1658,12 +1848,20 @@
       "lime": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.lime.100}",
+=======
+          "$value": "{colors.lime.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for lime tags. Ensures readability while maintaining the lime color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.lime.800}",
+=======
+          "$value": "{colors.lime.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for lime tags. Creates a distinct surface with lime theme styling."
         },
         "background-subtle": {
@@ -1680,12 +1878,20 @@
       "mint": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.mint.100}",
+=======
+          "$value": "{colors.mint.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for mint tags. Ensures readability while maintaining the mint color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.mint.800}",
+=======
+          "$value": "{colors.mint.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for mint tags. Creates a distinct surface with mint theme styling."
         },
         "background-subtle": {
@@ -1702,12 +1908,20 @@
       "orange": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.orange.100}",
+=======
+          "$value": "{colors.orange.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for orange tags. Ensures readability while maintaining the orange color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.orange.800}",
+=======
+          "$value": "{colors.orange.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for orange tags. Creates a distinct surface with orange theme styling."
         },
         "background-subtle": {
@@ -1724,12 +1938,20 @@
       "pink": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.pink.100}",
+=======
+          "$value": "{colors.pink.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for pink tags. Ensures readability while maintaining the pink color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.pink.800}",
+=======
+          "$value": "{colors.pink.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for pink tags. Creates a distinct surface with pink theme styling."
         },
         "background-subtle": {
@@ -1746,12 +1968,20 @@
       "purple": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.purple.100}",
+=======
+          "$value": "{colors.purple.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for purple tags. Ensures readability while maintaining the purple color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.purple.800}",
+=======
+          "$value": "{colors.purple.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for purple tags. Creates a distinct surface with purple theme styling."
         },
         "background-subtle": {
@@ -1768,12 +1998,20 @@
       "red": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.red.100}",
+=======
+          "$value": "{colors.red.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.red.800}",
+=======
+          "$value": "{colors.red.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for red tags. Creates a distinct surface with red theme styling."
         },
         "background-subtle": {
@@ -1790,12 +2028,20 @@
       "violet": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.violet.100}",
+=======
+          "$value": "{colors.violet.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for violet tags. Ensures readability while maintaining the violet color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.violet.800}",
+=======
+          "$value": "{colors.violet.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for violet tags. Creates a distinct surface with violet theme styling."
         },
         "background-subtle": {
@@ -1812,12 +2058,20 @@
       "yellow": {
         "text": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.yellow.100}",
+=======
+          "$value": "{colors.yellow.200}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Text color for yellow tags. Ensures readability while maintaining the yellow color theme."
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{colors.yellow.800}",
+=======
+          "$value": "{colors.yellow.900}",
+>>>>>>> 964eef30 (test push with upd folders structure)
           "$description": "Background color for yellow tags. Creates a distinct surface with yellow theme styling."
         },
         "background-subtle": {

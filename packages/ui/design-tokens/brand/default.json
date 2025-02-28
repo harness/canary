@@ -1,0 +1,10 @@
+{
+  "radius": {
+    "component": {
+      "default": {
+        "$type": "borderRadius",
+        "$value": "{rounded.2}"
+      }
+    }
+  }
+}

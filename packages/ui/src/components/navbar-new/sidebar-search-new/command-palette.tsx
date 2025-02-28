@@ -24,6 +24,7 @@ const Root = React.forwardRef<
     {...props}
   />
 ))
+Root.displayName = 'Root'
 
 const Dialog = ({ children, className, open, onOpenChange }: PropsWithChildren<DialogProps>) => (
   <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
@@ -40,6 +41,7 @@ const Dialog = ({ children, className, open, onOpenChange }: PropsWithChildren<D
     </RadixDialog.Content>
   </RadixDialog.Root>
 )
+Dialog.displayName = 'Dialog'
 
 const Dropdown = ({ children, className, open, onOpenChange }: PropsWithChildren<DialogProps>) => (
   <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
@@ -56,6 +58,7 @@ const Dropdown = ({ children, className, open, onOpenChange }: PropsWithChildren
     </RadixDialog.Content>
   </RadixDialog.Root>
 )
+Dropdown.displayName = 'Dropdown'
 
 const Input = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
@@ -75,6 +78,7 @@ const Input = React.forwardRef<
     </Shortcut>
   </div>
 ))
+Input.displayName = 'Input'
 
 const List = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.List>,
@@ -86,11 +90,13 @@ const List = React.forwardRef<
     {...props}
   />
 ))
+List.displayName = 'List'
 
 const Empty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
 >((props, ref) => <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />)
+Empty.displayName = 'Empty'
 
 const Group = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Group>,
@@ -105,6 +111,7 @@ const Group = React.forwardRef<
     {...props}
   />
 ))
+Group.displayName = 'Group'
 
 const Item = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Item>,
@@ -119,6 +126,7 @@ const Item = React.forwardRef<
     {...props}
   />
 ))
+Item.displayName = 'Item'
 
 const Separator = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Separator>,
@@ -126,6 +134,7 @@ const Separator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Separator ref={ref} className={cn('-mx-1 h-px bg-border', className)} {...props} />
 ))
+Separator.displayName = 'Separator'
 
 const Shortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
   return (
@@ -138,6 +147,7 @@ const Shortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>
     />
   )
 }
+Shortcut.displayName = 'Shortcut'
 
 export const CommandPalette = {
   Root,

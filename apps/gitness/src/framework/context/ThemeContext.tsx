@@ -11,7 +11,14 @@ export const useThemeStore = create<IThemeStore>()(
   persist(
     set => ({
       theme: undefined,
-      setTheme: (newTheme: FullTheme) => set({ theme: newTheme })
+      isInset: false,
+      setTheme: (newTheme: FullTheme) => {
+        const isInsetVal = newTheme.includes('Inset')
+        const newThemeVal = newTheme.replace('Inset', '') as FullTheme
+
+        set({ isInset: isInsetVal })
+        set({ theme: newThemeVal })
+      }
     }),
     {
       name: 'canary-ui-theme' // LocalStorage key
@@ -24,7 +31,7 @@ interface ThemeProviderProps {
   defaultTheme: FullTheme
 }
 export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
-  const { theme, setTheme } = useThemeStore()
+  const { theme, setTheme, isInset } = useThemeStore()
   const isMFE = useIsMFE()
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -57,6 +64,8 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
 
     if (!isMFE) {
       root.classList.add(effectiveTheme) // Apply the computed theme class
+
+      if (isInset) root.classList.add('overflow-hidden')
     } else {
       root.classList.add(mode)
     }
@@ -69,7 +78,7 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     if (!colorSchemeMeta.parentNode) {
       document.head.appendChild(colorSchemeMeta)
     }
-  }, [theme, setTheme, systemMode])
+  }, [theme, setTheme, systemMode, isInset])
 
   return <>{children}</>
 }

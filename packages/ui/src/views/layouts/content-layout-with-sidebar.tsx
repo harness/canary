@@ -33,6 +33,9 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   sidebarOffsetTop = 0,
   sidebarViewportClassName
 }) => {
+  // TODO: calculate insetShift when useTheme context be available
+  // const insetShift = 24
+
   return (
     <div className="relative mx-auto flex w-[1072px] items-start gap-x-20">
       <div

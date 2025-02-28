@@ -218,15 +218,18 @@ export const AppShellMFE = () => {
 }
 
 function BreadcrumbsAndOutlet({ className }: { className?: string }) {
+  const { isInset } = useThemeStore()
   useRepoImportEvents()
 
   return (
-    <div className={cn('flex flex-col', className)}>
-      <div className="layer-high sticky top-0 bg-background-1">
-        <Breadcrumbs />
+    <div className={cn({ 'overflow-hidden h-screen p-3 bg-sidebar-background-1': isInset })}>
+      <div className={cn('flex flex-col', { 'h-full rounded-xl overflow-auto bg-background-1': isInset }, className)}>
+        <div className="layer-high sticky top-0 bg-background-1">
+          <Breadcrumbs />
+        </div>
+        <Outlet />
+        <Toaster />
       </div>
-      <Outlet />
-      <Toaster />
     </div>
   )
 }

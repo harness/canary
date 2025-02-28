@@ -115,6 +115,7 @@ export const NavbarUser = ({
               >
                 <DropdownMenu.RadioItem value={ModeType.System}>System</DropdownMenu.RadioItem>
                 <DropdownMenu.RadioItem value={ModeType.Light}>Light</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={`${ModeType.Light}Inset`}>Light inset</DropdownMenu.RadioItem>
                 <DropdownMenu.RadioItem value={ModeType.Dark}>Dark</DropdownMenu.RadioItem>
               </DropdownMenu.RadioGroup>
               <DropdownMenu.Item disabled>Color Correction</DropdownMenu.Item>

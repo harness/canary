@@ -20,5 +20,6 @@ export type FullTheme = `${ModeType}-${ColorType}-${ContrastType}`
 
 export interface IThemeStore {
   theme?: FullTheme
+  isInset?: boolean
   setTheme: (theme: FullTheme) => void
 }

@@ -238,7 +238,7 @@ export function RepoSummaryView({
                   right
                   title={
                     <Button
-                      className="border-borders-1 hover:bg-background-3 flex border"
+                      className="flex border border-borders-1 hover:bg-background-3"
                       variant="ghost"
                       size="icon"
                       asChild

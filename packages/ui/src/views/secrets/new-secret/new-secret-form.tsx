@@ -68,7 +68,7 @@ export function CreateSecretPage({
   }
 
   return (
-    <SandboxLayout.Content className="px-0 pt-0 h-full">
+    <SandboxLayout.Content className="h-full px-0 pt-0">
       <Spacer size={5} />
       <FormWrapper className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
         {/* NAME */}
@@ -128,7 +128,7 @@ export function CreateSecretPage({
           </Alert.Container>
         )}
 
-        <div className="fixed bottom-0 left-0 right-0 bg-background-2 p-4 shadow-md">
+        <div className="fixed inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
           <ControlGroup>
             <ButtonGroup className="flex flex-row justify-between">
               <Button type="button" variant="outline" onClick={handleCancel}>

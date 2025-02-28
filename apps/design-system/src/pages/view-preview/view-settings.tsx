@@ -18,11 +18,13 @@ enum Themes {
   DARK_PROT_STD = 'dark-prot-std',
   DARK_STANDARD_HIGH = 'dark-std-high',
   LIGHT = 'light-std-std',
+  LIGHT_WITH_INSET = 'lightInset-std-std',
   LIGHT_PROT_STD = 'light-prot-std'
 }
 
 const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
   const [showSettings, setShowSettings] = useState(false)
+
   const [currentTheme, setCurrentTheme] = useState<Themes>(() => {
     const storedTheme = sessionStorage.getItem('view-preview-theme') as Themes
 
@@ -40,7 +42,9 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
       bodyClass.remove(theme)
     }
 
-    bodyClass.add(currentTheme)
+    const newThemeVal = currentTheme.replace('Inset', '')
+
+    bodyClass.add(newThemeVal)
     sessionStorage.setItem('view-preview-theme', currentTheme)
   }, [currentTheme])
 
@@ -51,6 +55,13 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
     () => pathname.match(/view-preview\/([^/]+)/)?.[1] || routes[0],
     [pathname, routes]
   )
+
+  const onValueChange = (newTheme: Themes) => {
+    const isInsetVal = newTheme.includes('Inset')
+
+    setCurrentTheme(newTheme)
+    sessionStorage.setItem('view-preview-is-inset', String(isInsetVal))
+  }
 
   return (
     <aside className={clsx(css.viewSettings, 'shadow-1')} data-show={showSettings ? 'show' : 'hide'}>
@@ -81,12 +92,7 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
             </Select.Content>
           </Select.Root>
           <Spacer size={5} />
-          <Select.Root
-            placeholder="Select theme"
-            label="Theme"
-            value={currentTheme}
-            onValueChange={(newTheme: Themes) => setCurrentTheme(newTheme)}
-          >
+          <Select.Root placeholder="Select theme" label="Theme" value={currentTheme} onValueChange={onValueChange}>
             <Select.Content>
               {Object.values(Themes).map(theme => (
                 <Select.Item key={theme} value={theme}>

@@ -9,7 +9,6 @@ export function useResizeObserver<T extends Element>(
 ) {
   const throttledCallback = useCallback(
     throttle((element: T) => {
-      di
       if (document.hidden) return // Don't process when tab is hidden
       callback(element)
     }, throttleMs),

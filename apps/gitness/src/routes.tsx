@@ -15,7 +15,7 @@ import { AppProvider } from './framework/context/AppContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { useTranslationStore } from './i18n/stores/i18n-store'
-import CreateProject from './pages-v2/create-project/create-project-container'
+import { CreateProject } from './pages-v2/create-project'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { Logout } from './pages-v2/logout'
 import PipelineEditPage from './pages-v2/pipeline/pipeline-edit/pipeline-edit'
@@ -618,14 +618,6 @@ export const routes: CustomRouteObject[] = [
         }
       },
       {
-        path: 'create',
-        element: <CreateProject />,
-        handle: {
-          breadcrumb: () => <span>Create project</span>
-        },
-        children: []
-      },
-      {
         path: 'import',
         element: <ImportProjectContainer />,
         handle: {
@@ -1053,6 +1045,15 @@ export const routes: CustomRouteObject[] = [
         ]
       }
     ]
+  },
+  {
+    path: 'create',
+    element: (
+      <AppProvider>
+        <CreateProject />
+      </AppProvider>
+    ),
+    handle: { routeName: RouteConstants.toProjectCreate }
   },
   {
     path: 'signin',

@@ -117,6 +117,7 @@ const PullRequestMergeSection = ({
                   <Layout.Vertical>
                     <p className="text-14 font-normal text-foreground-4">
                       Use the
+                      {/* TODO: looks like below should be a Link component (<StyledLink variant="accent" />) */}
                       <span
                         role="button"
                         tabIndex={0}

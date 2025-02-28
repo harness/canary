@@ -1,24 +1,11 @@
-import { Link } from 'react-router-dom'
-
-import { Text } from '@/components'
+import { StyledLink } from '@/components'
 
 export function Agreements() {
   return (
-    <Text className="relative z-10 mt-auto leading-tight" size={0} color="foreground-5" align="center">
-      By joining, you agree to{' '}
-      <Link
-        className="whitespace-nowrap text-foreground-1 underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-foreground-1"
-        to="https://harness.io/privacy"
-      >
-        Terms of Service
-      </Link>{' '}
+    <span className="relative z-10 mt-auto text-center text-12 leading-tight text-foreground-5">
+      By joining, you agree to <StyledLink to="https://harness.io/subscriptionterms">Terms of Service</StyledLink>{' '}
       and&nbsp;
-      <Link
-        className="whitespace-nowrap text-foreground-1 underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-foreground-1"
-        to="https://harness.io/subscriptionterms"
-      >
-        Privacy Policy
-      </Link>
-    </Text>
+      <StyledLink to="https://harness.io/privacy">Privacy Policy</StyledLink>
+    </span>
   )
 }

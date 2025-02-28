@@ -41,7 +41,7 @@
     "rounded": {
       "radius": {
         "$type": "borderRadius",
-        "$value": "{rounded.full}"
+        "$value": "{radius.component.full}"
       }
     },
     "border": {

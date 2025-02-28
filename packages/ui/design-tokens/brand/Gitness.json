@@ -1,6 +1,10 @@
 {
   "radius": {
     "component": {
+      "xxs": {
+        "$type": "borderRadius",
+        "$value": "{rounded.1}"
+      },
       "xs": {
         "$type": "borderRadius",
         "$value": "{rounded.2}"

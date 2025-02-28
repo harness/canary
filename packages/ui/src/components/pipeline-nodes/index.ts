@@ -6,6 +6,8 @@ import { StageNode } from './stage-node'
 import { StartNode } from './start-node'
 import { StepNode } from './step-node'
 
+export * from './components'
+
 export const PipelineNodes = {
   AddNode,
   StageNode,
@@ -15,5 +17,3 @@ export const PipelineNodes = {
   SerialGroupNode,
   ParallelGroupNode
 }
-
-export * from './types'

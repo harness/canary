@@ -46,12 +46,15 @@ interface LabelProps
  * @example
  * <Label htmlFor="label" optional>Label</Label>
  */
-const Label = ({ htmlFor, optional, color, variant, children, className }: LabelProps) => {
-  return (
-    <LabelRoot htmlFor={htmlFor} variant={variant} color={color} className={className}>
-      {children} {optional && <span className="align-top text-foreground-7">(optional)</span>}
-    </LabelRoot>
-  )
-}
+const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
+  ({ htmlFor, optional, color, variant, children, className }: LabelProps, ref) => {
+    return (
+      <LabelRoot htmlFor={htmlFor} variant={variant} color={color} className={className} ref={ref}>
+        {children} {optional && <span className="align-top text-foreground-7">(optional)</span>}
+      </LabelRoot>
+    )
+  }
+)
+Label.displayName = 'Label'
 
 export { Label }

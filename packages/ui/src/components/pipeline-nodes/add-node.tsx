@@ -1,4 +1,5 @@
-import { Button, Icon } from '..'
+import { Button } from '@components/button'
+import { Icon } from '@components/icon'
 
 export interface AddNodeProp {
   onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void

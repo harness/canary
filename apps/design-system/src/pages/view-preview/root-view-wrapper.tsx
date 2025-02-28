@@ -59,7 +59,7 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre
                 items={settingsMenu}
               />
             </SandboxLayout.LeftPanel>
-            <div className="flex flex-col">
+            <div className="flex flex-col overflow-hidden">
               <div className="bg-background-1 sticky top-0 z-40">
                 <Topbar.Root>
                   <Topbar.Left>

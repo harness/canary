@@ -26,9 +26,7 @@ const NavLinkDefault = ({ to, children, className, style, ...props }: NavLinkPro
   const isActive = new URL(href, window.location.origin).pathname === window.location.pathname
 
   const finalClassName =
-    typeof className === 'function'
-      ? className({ isActive, isPending: false, isTransitioning: false })
-      : cn(className, isActive ? 'font-bold text-blue-600' : 'text-blue-500')
+    typeof className === 'function' ? className({ isActive, isPending: false, isTransitioning: false }) : cn(className)
 
   const finalStyle = typeof style === 'function' ? style({ isActive, isPending: false, isTransitioning: false }) : style
 

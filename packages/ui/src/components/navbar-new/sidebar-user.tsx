@@ -25,7 +25,7 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, 
           <DropdownMenu.Trigger asChild>
             <Sidebar.MenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground focus:ring-0"
             >
               <Avatar.Root className="h-8 w-8 rounded-lg">
                 <Avatar.Image src={user?.url} alt="user" />

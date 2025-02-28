@@ -1,16 +1,7 @@
 import { FC } from 'react'
 
 import { NoData, Pagination, SkeletonList, Spacer, Text } from '@/components'
-import {
-  BranchSelector,
-  BranchSelectorListItem,
-  BranchSelectorTab,
-  CommitsList,
-  IBranchSelectorStore,
-  SandboxLayout,
-  TranslationStore,
-  TypesCommit
-} from '@/views'
+import { CommitsList, SandboxLayout, TranslationStore, TypesCommit } from '@/views'
 
 export interface RepoCommitsViewProps {
   isFetchingCommits: boolean
@@ -19,13 +10,10 @@ export interface RepoCommitsViewProps {
   xPrevPage: number
   page: number
   setPage: (page: number) => void
-  selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   useTranslationStore: () => TranslationStore
-  useRepoBranchesStore: () => IBranchSelectorStore
-  searchQuery: string
-  setSearchQuery: (query: string) => void
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
+  renderProp: () => React.ReactNode
 }
 
 export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
@@ -35,13 +23,10 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   xPrevPage,
   page,
   setPage,
-  selectBranchOrTag,
   useTranslationStore,
-  useRepoBranchesStore,
-  searchQuery,
-  setSearchQuery,
   toCommitDetails,
-  toCode
+  toCode,
+  renderProp: BranchSelectorContainer
 }) => {
   const { t } = useTranslationStore()
 
@@ -58,15 +43,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
           Commits
         </Text>
         <Spacer size={6} />
-        <div className="flex justify-between gap-5">
-          <BranchSelector
-            onSelectBranch={selectBranchOrTag}
-            useRepoBranchesStore={useRepoBranchesStore}
-            useTranslationStore={useTranslationStore}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
-        </div>
+        <div className="flex justify-between gap-5">{BranchSelectorContainer()}</div>
 
         <Spacer size={5} />
 

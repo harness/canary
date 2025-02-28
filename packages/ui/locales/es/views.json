@@ -466,6 +466,9 @@
     "edit": "Edit webhook",
     "delete": "Delete webhook"
   },
+  "secrets": {
+    "secretsTitle": "Secrets"
+  },
   "profileSettingsTableHeader": {
     "token": "Token",
     "status": "Status"

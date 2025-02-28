@@ -2,19 +2,11 @@ import { FC, useCallback } from 'react'
 
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
-import { PullRequestComparePage, PullRequestComparePageProps } from '@harnessio/ui/views'
+import { BranchSelectorV2, PullRequestComparePage, PullRequestComparePageProps } from '@harnessio/ui/views'
 
-import { repoBranchListStore } from '../../stores/repo-branch-store.ts'
 import { repoCommitStore } from './repo-commit-store'
 
 const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = props => {
-  const useRepoBranchListStore = useCallback(
-    () => ({
-      ...repoBranchListStore,
-      setPage: noop
-    }),
-    []
-  )
   const useRepoCommitsListStore = useCallback(
     () => ({
       ...repoCommitStore,
@@ -35,9 +27,6 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       apiError={null}
       isSuccess={false}
       onSelectCommit={noop}
-      selectBranch={noop}
-      targetBranch={{ name: 'main', sha: 'sha' }}
-      sourceBranch={{ name: 'main', sha: 'sha' }}
       diffData={[
         {
           text: 'bot.txt',
@@ -57,20 +46,30 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       isBranchSelected={true}
       setIsBranchSelected={noop}
       prBranchCombinationExists={null}
-      useRepoBranchesStore={useRepoBranchListStore}
       useRepoCommitsStore={useRepoCommitsListStore}
       searchCommitQuery={null}
       setSearchCommitQuery={noop}
       useTranslationStore={useTranslationStore}
       isLoading={false}
-      searchSourceQuery=""
-      setSearchSourceQuery={noop}
-      searchTargetQuery=""
-      setSearchTargetQuery={noop}
       searchReviewersQuery=""
       setSearchReviewersQuery={noop}
       jumpToDiff=""
       setJumpToDiff={noop}
+      branchSelectorRenderer={
+        <BranchSelectorV2
+          repoId="canary"
+          spaceId="org"
+          branchList={[]}
+          tagList={[]}
+          selectedBranchorTag={{ name: 'main', sha: 'sha' }}
+          selectedBranch={{ name: 'main', sha: 'sha' }}
+          onSelectBranch={noop}
+          isBranchOnly={false}
+          dynamicWidth={false}
+          useTranslationStore={useTranslationStore}
+          setSearchQuery={noop}
+        />
+      }
       {...props}
     />
   )

@@ -4,10 +4,8 @@ import { FC } from 'react'
 
 import { Button, MarkdownViewer } from '@/components'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
-import { get } from 'lodash-es'
 
 import { CommentItem, TypesPullReqActivity } from '../../pull-request-details-types'
-import { activitiesToDiffCommentItems } from '../../pull-request-utils'
 
 export interface PRCommentViewProps {
   commentItem: CommentItem<TypesPullReqActivity>
@@ -29,12 +27,11 @@ const PRCommentView: FC<PRCommentViewProps> = ({
   const pathSegments = commentItem?.payload?.code_comment?.path?.split('/') || []
   const fileLang = filenameToLanguage?.(pathSegments.pop() || '') || ''
 
-  const appliedCheckSum = get(commentItem, 'payload.metadata.suggestions.applied_check_sum', '')
-  const checkSums = get(commentItem, 'payload.metadata.suggestions.check_sums', []) as string[]
-  const isSuggestion = !!checkSums.length
+  const appliedCheckSum = commentItem.appliedCheckSum ?? ''
+  const checkSums = commentItem.checkSums ?? []
+  const isSuggestion = !!checkSums?.length
   const isApplied = appliedCheckSum === checkSums?.[0]
   const isInBatch = suggestionsBatch?.some(suggestion => suggestion.comment_id === commentItem.id)
-  const diffCommentItem = activitiesToDiffCommentItems(commentItem)
 
   return (
     <>
@@ -42,11 +39,11 @@ const PRCommentView: FC<PRCommentViewProps> = ({
         markdownClassName="comment"
         source={commentItem?.payload?.text || ''}
         suggestionBlock={{
-          source: diffCommentItem.codeBlockContent || '',
+          source: commentItem.codeBlockContent || '',
           lang: fileLang,
           commentId: commentItem.id,
           appliedCheckSum: appliedCheckSum,
-          appliedCommitSha: get(commentItem, 'payload.metadata.suggestions.applied_commit_sha', '')
+          appliedCommitSha: commentItem.appliedCommitSha || ''
         }}
         suggestionCheckSum={checkSums?.[0] || ''}
         isSuggestion={isSuggestion}

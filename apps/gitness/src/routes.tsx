@@ -159,6 +159,7 @@ export const repoRoutes: CustomRouteObject[] = [
                   pageTitle: Page.Commits
                 }
               },
+
               {
                 path: ':commitSHA',
                 element: <RepoCommitDetailsPage showSidebar={false} />,

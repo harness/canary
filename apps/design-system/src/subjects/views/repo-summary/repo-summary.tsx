@@ -1,8 +1,8 @@
-import { FC, useCallback, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 
 import { useTranslationStore } from '@utils/viewUtils'
 
-import { BranchSelectorTab, IBranchSelectorStore, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/ui/views'
+import { BranchSelectorV2, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/ui/views'
 
 import repoSummaryProps from './repo-summary-props.json'
 
@@ -13,43 +13,35 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
     return new Map(repoSummaryProps.repoEntryPathToFileTypeMap as [string, string][])
   }, [])
 
-  const useRepoBranchesStore = useCallback(
-    (): IBranchSelectorStore => ({
-      ...repoSummaryProps,
-      selectedRefType: BranchSelectorTab.BRANCHES,
-      setSelectedBranchTag: noop,
-      setSelectedRefType: noop,
-      xNextPage: 0,
-      xPrevPage: 0,
-      page: 1,
-      setPage: noop,
-      defaultBranch: '',
-      branchList: [],
-      setTagList: noop,
-      setSpaceIdAndRepoId: noop,
-      setBranchList: noop,
-      setDefaultBranch: noop,
-      setPaginationFromHeaders: noop
-    }),
-    []
-  )
-
   return (
     <RepoSummaryView
       {...repoSummaryProps}
       repoEntryPathToFileTypeMap={repoEntryPathToFileTypeMap}
+      selectedBranchOrTag={{ name: 'main', sha: '' }}
       saveDescription={noop}
       handleCreateToken={noop}
       navigateToFile={noop}
       useTranslationStore={useTranslationStore}
-      useRepoBranchesStore={useRepoBranchesStore}
       gitRef=""
       updateRepoError=""
       isEditDialogOpen={false}
       setEditDialogOpen={noop}
-      selectBranchOrTag={noop}
       searchQuery=""
       setSearchQuery={noop}
+      branchSelectorRenderer={
+        <BranchSelectorV2
+          repoId="canary"
+          spaceId="org"
+          branchList={[]}
+          tagList={[]}
+          selectedBranchorTag={{ name: 'main', sha: 'sha' }}
+          onSelectBranch={noop}
+          isBranchOnly={false}
+          dynamicWidth={false}
+          useTranslationStore={useTranslationStore}
+          setSearchQuery={noop}
+        />
+      }
       {...props}
     />
   )

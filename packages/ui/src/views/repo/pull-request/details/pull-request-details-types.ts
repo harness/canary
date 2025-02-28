@@ -339,6 +339,10 @@ export interface CommentItem<T = unknown> {
   outdated: boolean
   content: string
   payload?: T // optional payload for callers to handle on callback calls
+  appliedCheckSum?: string
+  checkSums?: string[]
+  codeBlockContent?: string
+  appliedCommitSha?: string
 }
 
 export interface DiffFileEntry extends DiffFile {

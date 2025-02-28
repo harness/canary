@@ -1,36 +1,10 @@
-import { useCallback, useState } from 'react'
-
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
-import { BranchSelectorTab, IBranchSelectorStore, RepoCommitsView as RepoCommitsUiView } from '@harnessio/ui/views'
+import { BranchSelectorV2, RepoCommitsView as RepoCommitsUiView } from '@harnessio/ui/views'
 
-import { repoFilesStore } from '../repo-files/components/repo-files-store'
 import { repoCommitsStore } from './repo-commits-store'
 
 export const RepoCommitsView = () => {
-  const [branchTagQuery, setBranchTagQuery] = useState('')
-
-  const useRepoBranchesStore = useCallback(
-    (): IBranchSelectorStore => ({
-      ...repoFilesStore.branchSelectorStore,
-      selectedRefType: BranchSelectorTab.BRANCHES,
-      setSelectedBranchTag: noop,
-      setSelectedRefType: noop,
-      xNextPage: 0,
-      xPrevPage: 0,
-      page: 1,
-      setPage: noop,
-      defaultBranch: '',
-      branchList: [],
-      setTagList: noop,
-      setSpaceIdAndRepoId: noop,
-      setBranchList: noop,
-      setDefaultBranch: noop,
-      setPaginationFromHeaders: noop
-    }),
-    []
-  )
-
   return (
     <RepoCommitsUiView
       commitsList={repoCommitsStore.commits}
@@ -39,11 +13,22 @@ export const RepoCommitsView = () => {
       setPage={noop}
       xNextPage={2}
       xPrevPage={NaN}
-      selectBranchOrTag={noop}
-      useRepoBranchesStore={useRepoBranchesStore}
       useTranslationStore={useTranslationStore}
-      searchQuery={branchTagQuery}
-      setSearchQuery={setBranchTagQuery}
+      renderProp={() => (
+        <BranchSelectorV2
+          repoId="canary"
+          spaceId="org"
+          branchList={[]}
+          tagList={[]}
+          selectedBranchorTag={{ name: 'main', sha: 'sha' }}
+          selectedBranch={{ name: 'main', sha: 'sha' }}
+          onSelectBranch={noop}
+          isBranchOnly={false}
+          dynamicWidth={false}
+          useTranslationStore={useTranslationStore}
+          setSearchQuery={noop}
+        />
+      )}
     />
   )
 }

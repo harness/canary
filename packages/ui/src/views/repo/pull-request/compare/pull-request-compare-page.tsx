@@ -5,13 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import { Avatar, Button, Icon, NoData, SkeletonList, Spacer, StyledLink, Tabs } from '@/components'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
-  BranchSelector,
-  BranchSelectorListItem,
-  BranchSelectorTab,
   CommitSelectorListItem,
   CommitsList,
   HandleUploadType,
-  IBranchSelectorStore,
   ILabelType,
   LabelValuesType,
   PullRequestSideBar,
@@ -63,26 +59,20 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   isSuccess: boolean
   mergeability?: boolean
   onSelectCommit: (commit: CommitSelectorListItem) => void
-  selectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => void
-  targetBranch: BranchSelectorListItem
-  sourceBranch: BranchSelectorListItem
+
   diffData: HeaderProps[]
   diffStats: TypesDiffStats
   isBranchSelected: boolean
   setIsBranchSelected: (val: boolean) => void
   prBranchCombinationExists: { number: number; title: string; description: string } | null
   useTranslationStore: () => TranslationStore
-  useRepoBranchesStore: () => IBranchSelectorStore
   repoId?: string
   spaceId?: string
   useRepoCommitsStore: () => ICommitSelectorStore
   searchCommitQuery: string | null
   setSearchCommitQuery: (query: string | null) => void
   currentUser?: string
-  searchSourceQuery?: string
-  setSearchSourceQuery: (query: string) => void
-  searchTargetQuery?: string
-  setSearchTargetQuery: (query: string) => void
+
   searchReviewersQuery: string
   setSearchReviewersQuery: (query: string) => void
   usersList?: PrincipalType[]
@@ -102,6 +92,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   setSearchLabelQuery?: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
+  branchSelectorRenderer: React.ReactElement
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -111,22 +102,15 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   isSuccess,
   onFormDraftSubmit,
   mergeability = false,
-  selectBranch,
-  targetBranch,
-  sourceBranch,
+
   diffData,
   diffStats,
-  setIsBranchSelected,
   isBranchSelected,
   prBranchCombinationExists,
   useTranslationStore,
-  useRepoBranchesStore,
   useRepoCommitsStore,
   currentUser,
-  searchSourceQuery,
-  setSearchSourceQuery,
-  searchTargetQuery,
-  setSearchTargetQuery,
+
   searchReviewersQuery,
   setSearchReviewersQuery,
   usersList,
@@ -147,7 +131,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   searchLabelQuery,
   setSearchLabelQuery,
   addLabel,
-  removeLabel
+  removeLabel,
+  branchSelectorRenderer
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -185,10 +170,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
     }
   }, [isSuccess, reset])
 
-  const handleBranchSelection = () => {
-    setIsBranchSelected(true) // Update state when a branch is selected
-  }
-
   const mockProcessReviewDecision = (
     review_decision: EnumPullReqReviewDecision,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -214,34 +195,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </p>
           <Layout.Horizontal className="items-center" gap="gap-x-2.5">
             <Icon name="compare" size={14} className="text-icons-1" />
-            <BranchSelector
-              isBranchOnly={true}
-              useTranslationStore={useTranslationStore}
-              useRepoBranchesStore={useRepoBranchesStore}
-              branchPrefix="base"
-              selectedBranch={targetBranch}
-              onSelectBranch={(branchTag, type) => {
-                selectBranch(branchTag, type, false)
-                handleBranchSelection()
-              }}
-              searchQuery={searchTargetQuery}
-              setSearchQuery={setSearchTargetQuery}
-            />
 
-            <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
-            <BranchSelector
-              isBranchOnly={true}
-              useTranslationStore={useTranslationStore}
-              useRepoBranchesStore={useRepoBranchesStore}
-              branchPrefix="compare"
-              selectedBranch={sourceBranch}
-              onSelectBranch={(branchTag, type) => {
-                selectBranch(branchTag, type, true)
-                handleBranchSelection()
-              }}
-              searchQuery={searchSourceQuery}
-              setSearchQuery={setSearchSourceQuery}
-            />
+            {branchSelectorRenderer}
 
             {isBranchSelected &&
               !isLoading && ( // Only render this block if isBranchSelected is true

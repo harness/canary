@@ -1,0 +1,21 @@
+/**
+ * Harness Design System
+ * Generated style tokens - DO NOT EDIT DIRECTLY
+ * Generated on Fri, 28 Feb 2025 06:18:51 GMT
+ * Copyright (c) Harness.
+ */
+
+:root {
+  --canary-icon-size-xs: var(--canary-size-3-half); /* 14px */
+  --canary-icon-size-sm: var(--canary-size-4); /* 16px */
+  /**
+   * 20px
+   * 
+   */
+  --canary-icon-size-md: var(--canary-size-5);
+  /**
+   * 32px
+   * 
+   */
+  --canary-icon-size-lg: var(--canary-size-8);
+}

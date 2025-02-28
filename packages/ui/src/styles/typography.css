@@ -1,0 +1,169 @@
+/**
+ * Harness Design System
+ * Generated style tokens - DO NOT EDIT DIRECTLY
+ * Generated on Fri, 28 Feb 2025 06:18:51 GMT
+ * Copyright (c) Harness.
+ */
+
+:root {
+  --canary-tracking-tighter: -0.05em; /* Very tight, display text */
+  --canary-tracking-tight: -0.02em; /* Headings */
+  --canary-tracking-normal: 0em; /* Default body text */
+  --canary-tracking-wide: 0.025em; /* Improved readability */
+  --canary-tracking-wider: 0.05em; /* Spaced text */
+  --canary-tracking-widest: 0.1em; /* All caps text */
+  --canary-font-weight-default-normal-100: 100;
+  --canary-font-weight-default-normal-200: 200;
+  --canary-font-weight-default-normal-300: 300;
+  --canary-font-weight-default-normal-400: 400;
+  --canary-font-weight-default-normal-500: 500;
+  --canary-font-weight-default-normal-600: 600;
+  --canary-font-weight-default-normal-700: 700;
+  --canary-font-weight-default-normal-800: 800;
+  --canary-font-weight-default-normal-900: 900;
+  --canary-font-weight-default-italic-100-weight: 100;
+  --canary-font-weight-default-italic-100-style: italic;
+  --canary-font-weight-default-italic-200-weight: 200;
+  --canary-font-weight-default-italic-200-style: italic;
+  --canary-font-weight-default-italic-300-weight: 300;
+  --canary-font-weight-default-italic-300-style: italic;
+  --canary-font-weight-default-italic-400-weight: 400;
+  --canary-font-weight-default-italic-400-style: italic;
+  --canary-font-weight-default-italic-500-weight: 500;
+  --canary-font-weight-default-italic-500-style: italic;
+  --canary-font-weight-default-italic-600-weight: 600;
+  --canary-font-weight-default-italic-600-style: italic;
+  --canary-font-weight-default-italic-700-weight: 700;
+  --canary-font-weight-default-italic-700-style: italic;
+  --canary-font-weight-default-italic-800-weight: 800;
+  --canary-font-weight-default-italic-800-style: italic;
+  --canary-font-weight-default-italic-900-weight: 900;
+  --canary-font-weight-default-italic-900-style: italic;
+  --canary-font-weight-mono-normal-100: 100;
+  --canary-font-weight-mono-normal-200: 200;
+  --canary-font-weight-mono-normal-300: 300;
+  --canary-font-weight-mono-normal-400: 400;
+  --canary-font-weight-mono-normal-500: 500;
+  --canary-font-weight-mono-normal-700: 700;
+  --canary-font-weight-mono-normal-800: 800;
+  --canary-font-weight-mono-italic-100-weight: 100;
+  --canary-font-weight-mono-italic-100-style: italic;
+  --canary-font-weight-mono-italic-200-weight: 200;
+  --canary-font-weight-mono-italic-200-style: italic;
+  --canary-font-weight-mono-italic-300-weight: 300;
+  --canary-font-weight-mono-italic-300-style: italic;
+  --canary-font-weight-mono-italic-400-weight: 400;
+  --canary-font-weight-mono-italic-400-style: italic;
+  --canary-font-weight-mono-italic-500-weight: 500;
+  --canary-font-weight-mono-italic-500-style: italic;
+  --canary-font-weight-mono-italic-700-weight: 700;
+  --canary-font-weight-mono-italic-700-style: italic;
+  --canary-font-weight-mono-italic-800-weight: 800;
+  --canary-font-weight-mono-italic-800-style: italic;
+  --canary-font-family-default: Inter;
+  --canary-font-family-mono: 'JetBrains Mono';
+  --canary-text-decoration-none: none;
+  --canary-text-decoration-underline: underline;
+  --canary-text-decoration-line-through: line-through;
+  --canary-text-case-none: none;
+  --canary-text-case-uppercase: uppercase;
+  --canary-text-case-lowercase: lowercase;
+  --canary-text-case-capitalize: capitalize;
+  --canary-font-size-1: 0.75rem; /* 12px */
+  --canary-font-size-2: 0.875rem; /* 14px */
+  --canary-font-size-3: 1rem; /* 16px */
+  --canary-font-size-4: 1.125rem; /* 18px */
+  --canary-font-size-5: 1.25rem; /* 20px */
+  --canary-font-size-6: 1.5rem; /* 24px */
+  --canary-font-size-7: 1.875rem; /* 30px */
+  --canary-font-size-8: 2.25rem; /* 36px */
+  --canary-font-size-9: 3rem; /* 48px */
+  --canary-font-size-10: 3.75rem; /* 60px */
+  --canary-font-size-11: 4.5rem; /* 72px */
+  --canary-font-size-12: 6rem; /* 96px */
+  --canary-font-size-13: 8rem; /* 128px */
+  --canary-line-height-none: 1;
+  --canary-line-height-tight: 1.25;
+  --canary-line-height-snug: 1.375;
+  --canary-line-height-normal: 1.5;
+  --canary-line-height-relaxed: 1.625;
+  --canary-line-height-loose: 2;
+  --canary-line-height-1-none: var(--canary-font-size-1)*var(--canary-line-height-none);
+  --canary-line-height-1-tight: var(--canary-font-size-1)*var(--canary-line-height-tight);
+  --canary-line-height-1-snug: var(--canary-font-size-1)*var(--canary-line-height-snug);
+  --canary-line-height-1-normal: var(--canary-font-size-1)*var(--canary-line-height-normal);
+  --canary-line-height-1-relaxed: var(--canary-font-size-1)*var(--canary-line-height-relaxed);
+  --canary-line-height-1-loose: var(--canary-font-size-1)*var(--canary-line-height-loose);
+  --canary-line-height-2-none: var(--canary-font-size-2)*var(--canary-line-height-none);
+  --canary-line-height-2-tight: var(--canary-font-size-2)*var(--canary-line-height-tight);
+  --canary-line-height-2-snug: var(--canary-font-size-2)*var(--canary-line-height-snug);
+  --canary-line-height-2-normal: var(--canary-font-size-2)*var(--canary-line-height-normal);
+  --canary-line-height-2-relaxed: var(--canary-font-size-2)*var(--canary-line-height-relaxed);
+  --canary-line-height-2-loose: var(--canary-font-size-2)*var(--canary-line-height-loose);
+  --canary-line-height-3-none: var(--canary-font-size-3)*var(--canary-line-height-none);
+  --canary-line-height-3-tight: var(--canary-font-size-3)*var(--canary-line-height-tight);
+  --canary-line-height-3-snug: var(--canary-font-size-3)*var(--canary-line-height-snug);
+  --canary-line-height-3-normal: var(--canary-font-size-3)*var(--canary-line-height-normal);
+  --canary-line-height-3-relaxed: var(--canary-font-size-3)*var(--canary-line-height-relaxed);
+  --canary-line-height-3-loose: var(--canary-font-size-3)*var(--canary-line-height-loose);
+  --canary-line-height-4-none: var(--canary-font-size-4)*var(--canary-line-height-none);
+  --canary-line-height-4-tight: var(--canary-font-size-4)*var(--canary-line-height-tight);
+  --canary-line-height-4-snug: var(--canary-font-size-4)*var(--canary-line-height-snug);
+  --canary-line-height-4-normal: var(--canary-font-size-4)*var(--canary-line-height-normal);
+  --canary-line-height-4-relaxed: var(--canary-font-size-4)*var(--canary-line-height-relaxed);
+  --canary-line-height-4-loose: var(--canary-font-size-4)*var(--canary-line-height-loose);
+  --canary-line-height-5-none: var(--canary-font-size-5)*var(--canary-line-height-none);
+  --canary-line-height-5-tight: var(--canary-font-size-5)*var(--canary-line-height-tight);
+  --canary-line-height-5-snug: var(--canary-font-size-5)*var(--canary-line-height-snug);
+  --canary-line-height-5-normal: var(--canary-font-size-5)*var(--canary-line-height-normal);
+  --canary-line-height-5-relaxed: var(--canary-font-size-5)*var(--canary-line-height-relaxed);
+  --canary-line-height-5-loose: var(--canary-font-size-5)*var(--canary-line-height-loose);
+  --canary-line-height-6-none: var(--canary-font-size-6)*var(--canary-line-height-none);
+  --canary-line-height-6-tight: var(--canary-font-size-6)*var(--canary-line-height-tight);
+  --canary-line-height-6-snug: var(--canary-font-size-6)*var(--canary-line-height-snug);
+  --canary-line-height-6-normal: var(--canary-font-size-6)*var(--canary-line-height-normal);
+  --canary-line-height-6-relaxed: var(--canary-font-size-6)*var(--canary-line-height-relaxed);
+  --canary-line-height-6-loose: var(--canary-font-size-6)*var(--canary-line-height-loose);
+  --canary-line-height-7-none: var(--canary-font-size-7)*var(--canary-line-height-none);
+  --canary-line-height-7-tight: var(--canary-font-size-7)*var(--canary-line-height-tight);
+  --canary-line-height-7-snug: var(--canary-font-size-7)*var(--canary-line-height-snug);
+  --canary-line-height-7-normal: var(--canary-font-size-7)*var(--canary-line-height-normal);
+  --canary-line-height-7-relaxed: var(--canary-font-size-7)*var(--canary-line-height-relaxed);
+  --canary-line-height-7-loose: var(--canary-font-size-7)*var(--canary-line-height-loose);
+  --canary-line-height-8-none: var(--canary-font-size-8)*var(--canary-line-height-none);
+  --canary-line-height-8-tight: var(--canary-font-size-8)*var(--canary-line-height-tight);
+  --canary-line-height-8-snug: var(--canary-font-size-8)*var(--canary-line-height-snug);
+  --canary-line-height-8-normal: var(--canary-font-size-8)*var(--canary-line-height-normal);
+  --canary-line-height-8-relaxed: var(--canary-font-size-8)*var(--canary-line-height-relaxed);
+  --canary-line-height-8-loose: var(--canary-font-size-8)*var(--canary-line-height-loose);
+  --canary-line-height-9-none: var(--canary-font-size-9)*var(--canary-line-height-none);
+  --canary-line-height-9-tight: var(--canary-font-size-9)*var(--canary-line-height-tight);
+  --canary-line-height-9-snug: var(--canary-font-size-9)*var(--canary-line-height-snug);
+  --canary-line-height-9-normal: var(--canary-font-size-9)*var(--canary-line-height-normal);
+  --canary-line-height-9-relaxed: var(--canary-font-size-9)*var(--canary-line-height-relaxed);
+  --canary-line-height-9-loose: var(--canary-font-size-9)*var(--canary-line-height-loose);
+  --canary-line-height-10-none: var(--canary-font-size-10)*var(--canary-line-height-none);
+  --canary-line-height-10-tight: var(--canary-font-size-10)*var(--canary-line-height-tight);
+  --canary-line-height-10-snug: var(--canary-font-size-10)*var(--canary-line-height-snug);
+  --canary-line-height-10-normal: var(--canary-font-size-10)*var(--canary-line-height-normal);
+  --canary-line-height-10-relaxed: var(--canary-font-size-10)*var(--canary-line-height-relaxed);
+  --canary-line-height-10-loose: var(--canary-font-size-10)*var(--canary-line-height-loose);
+  --canary-line-height-11-none: var(--canary-font-size-11)*var(--canary-line-height-none);
+  --canary-line-height-11-tight: var(--canary-font-size-11)*var(--canary-line-height-tight);
+  --canary-line-height-11-snug: var(--canary-font-size-11)*var(--canary-line-height-snug);
+  --canary-line-height-11-normal: var(--canary-font-size-11)*var(--canary-line-height-normal);
+  --canary-line-height-11-relaxed: var(--canary-font-size-11)*var(--canary-line-height-relaxed);
+  --canary-line-height-11-loose: var(--canary-font-size-11)*var(--canary-line-height-loose);
+  --canary-line-height-12-none: var(--canary-font-size-12)*var(--canary-line-height-none);
+  --canary-line-height-12-tight: var(--canary-font-size-12)*var(--canary-line-height-tight);
+  --canary-line-height-12-snug: var(--canary-font-size-12)*var(--canary-line-height-snug);
+  --canary-line-height-12-normal: var(--canary-font-size-12)*var(--canary-line-height-normal);
+  --canary-line-height-12-relaxed: var(--canary-font-size-12)*var(--canary-line-height-relaxed);
+  --canary-line-height-12-loose: var(--canary-font-size-12)*var(--canary-line-height-loose);
+  --canary-line-height-13-none: var(--canary-font-size-13)*var(--canary-line-height-none);
+  --canary-line-height-13-tight: var(--canary-font-size-13)*var(--canary-line-height-tight);
+  --canary-line-height-13-snug: var(--canary-font-size-13)*var(--canary-line-height-snug);
+  --canary-line-height-13-normal: var(--canary-font-size-13)*var(--canary-line-height-normal);
+  --canary-line-height-13-relaxed: var(--canary-font-size-13)*var(--canary-line-height-relaxed);
+  --canary-line-height-13-loose: var(--canary-font-size-13)*var(--canary-line-height-loose);
+}

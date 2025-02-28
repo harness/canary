@@ -1,0 +1,82 @@
+/**
+ * Harness Design System
+ * Generated style tokens - DO NOT EDIT DIRECTLY
+ * Generated on Fri, 28 Feb 2025 06:18:51 GMT
+ * Copyright (c) Harness.
+ */
+
+:root {
+  --canary-dropdown-container-min-w: 320px;
+  --canary-badge-size-sm: var(--canary-size-5);
+  --canary-badge-size-default: var(--canary-size-6);
+  --canary-badge-default-gap: var(--canary-spacing-1);
+  --canary-badge-default-py: var(--canary-spacing-half);
+  --canary-badge-default-pl: var(--canary-spacing-1-half);
+  --canary-badge-default-pr: var(--canary-spacing-2);
+  --canary-badge-default-radius: var(--canary-rounded-2);
+  --canary-badge-rounded-radius: var(--canary-rounded-full);
+  --canary-badge-rounded-px: var(--canary-spacing-2-half);
+  --canary-btn-size-sm: var(--canary-size-7);
+  --canary-btn-size-default: var(--canary-size-8);
+  --canary-btn-size-icon: var(--canary-size-8);
+  --canary-btn-size-lg: var(--canary-size-10);
+  --canary-btn-gap-sm: var(--canary-spacing-1-half);
+  --canary-btn-gap-default: var(--canary-spacing-2-half);
+  --canary-btn-gap-lg: var(--canary-spacing-2-half);
+  --canary-btn-default-radius: var(--canary-rounded-2);
+  --canary-btn-rounded-radius: var(--canary-rounded-full);
+  --canary-btn-px-sm: var(--canary-spacing-5);
+  --canary-btn-px-default: var(--canary-spacing-6);
+  --canary-btn-px-lg: var(--canary-spacing-6);
+  --canary-btn-py-sm: var(--canary-spacing-1-half);
+  --canary-btn-py-default: var(--canary-spacing-2);
+  --canary-btn-py-lg: var(--canary-spacing-3);
+  --canary-btn-link-size-sm: var(--canary-size-4);
+  --canary-btn-link-size-default: var(--canary-size-4);
+  --canary-btn-link-gap-sm: var(--canary-spacing-2);
+  --canary-btn-link-gap-default: var(--canary-spacing-2-half);
+  /**
+   * 4px
+   * 
+   */
+  --canary-dropdown-item-px: var(--canary-spacing-1);
+  --canary-dropdown-item-gap: var(--canary-spacing-2-half); /* 8px */
+  --canary-dropdown-item-radius: var(--canary-rounded-1);
+  --canary-dropdown-item-size: var(--canary-size-10);
+  --canary-dropdown-sub-item-px: var(--canary-spacing-3); /* 12px */
+  --canary-dropdown-sub-item-py: var(--canary-spacing-2); /* 8px */
+  --canary-dropdown-sub-item-gap: var(--canary-spacing-2-half);
+  --canary-dropdown-sub-item-radius: var(--canary-rounded-1);
+  --canary-dropdown-sub-item-size: var(--canary-size-8);
+  --canary-dropdown-sub-item-gap-y: var(--canary-spacing-1); /* 4px gap between text */
+  /**
+   * 4px
+   * 
+   */
+  --canary-dropdown-container-py: var(--canary-spacing-1);
+  --canary-dropdown-container-radius: var(--canary-rounded-3); /* 6px */
+  --canary-dropdown-menu-item-branch-selector-tag-px: var(--canary-spacing-2); /* 8px horizontal padding */
+  /**
+   * 20px height
+   * 
+   */
+  --canary-dropdown-menu-item-branch-selector-tag-size: var(--canary-size-5);
+  --canary-dropdown-menu-items-header-footer-px: var(--canary-spacing-4); /* 16px horizontal padding */
+  --canary-dropdown-menu-items-header-footer-py: var(--canary-spacing-2-half); /* 10px vertical padding */
+  --canary-input-size-sm: var(--canary-size-8); /* 32px */
+  /**
+   * 36px
+   * 
+   */
+  --canary-input-size-default: var(--canary-size-9);
+  --canary-input-radius: var(--canary-rounded-3); /* 6px */
+  --canary-input-gap: var(--canary-spacing-1-half);
+  --canary-input-px: var(--canary-spacing-3); /* 12px horizontal padding */
+  --canary-input-py: var(--canary-spacing-2); /* 8px vertical padding */
+  --canary-tag-size: var(--canary-size-5);
+  --canary-tag-gap: var(--canary-spacing-2);
+  --canary-tag-py: var(--canary-spacing-1);
+  --canary-tag-px: var(--canary-spacing-2);
+  --canary-tag-radius: var(--canary-rounded-2);
+  --canary-btn-border: var(--canary-border-2);
+}

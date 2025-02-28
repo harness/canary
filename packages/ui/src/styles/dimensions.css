@@ -1,0 +1,91 @@
+/**
+ * Harness Design System
+ * Generated style tokens - DO NOT EDIT DIRECTLY
+ * Generated on Fri, 28 Feb 2025 06:18:51 GMT
+ * Copyright (c) Harness.
+ */
+
+:root {
+  --canary-spacing-0: 0px;
+  --canary-spacing-1: 4px;
+  --canary-spacing-2: 8px;
+  --canary-spacing-3: 12px;
+  --canary-spacing-4: 16px;
+  --canary-spacing-5: 20px;
+  --canary-spacing-6: 24px;
+  --canary-spacing-7: 28px;
+  --canary-spacing-8: 32px;
+  --canary-spacing-9: 36px;
+  --canary-spacing-10: 40px;
+  --canary-spacing-11: 44px;
+  --canary-spacing-12: 48px;
+  --canary-spacing-14: 56px;
+  --canary-spacing-16: 64px;
+  --canary-spacing-20: 80px;
+  --canary-spacing-24: 96px;
+  --canary-spacing-28: 112px;
+  --canary-spacing-32: 128px;
+  --canary-spacing-36: 144px;
+  --canary-spacing-40: 160px;
+  --canary-spacing-44: 176px;
+  --canary-spacing-48: 192px;
+  --canary-spacing-52: 208px;
+  --canary-spacing-56: 224px;
+  --canary-spacing-60: 240px;
+  --canary-spacing-64: 256px;
+  --canary-spacing-72: 288px;
+  --canary-spacing-80: 320px;
+  --canary-spacing-96: 384px;
+  --canary-spacing-px: 1px;
+  --canary-spacing-half: 2px; /* 0.5 */
+  --canary-spacing-1-half: 6px; /* 1.5 */
+  --canary-spacing-2-half: 10px; /* 2.5 */
+  --canary-spacing-3-half: 14px; /* 3.5 */
+  --canary-rounded-1: 2px;
+  --canary-rounded-2: 4px; /* default */
+  --canary-rounded-3: 6px;
+  --canary-rounded-4: 8px;
+  --canary-rounded-5: 12px;
+  --canary-rounded-6: 16px;
+  --canary-rounded-7: 24px;
+  --canary-rounded-none: 0px; /* No border radius */
+  --canary-rounded-full: 9999px; /* Fully rounded corners (circular) */
+  --canary-size-0: 0px;
+  --canary-size-1: 4px;
+  --canary-size-2: 8px;
+  --canary-size-3: 12px;
+  --canary-size-4: 16px;
+  --canary-size-5: 20px;
+  --canary-size-6: 24px;
+  --canary-size-7: 28px;
+  --canary-size-8: 32px;
+  --canary-size-9: 36px;
+  --canary-size-10: 40px;
+  --canary-size-11: 44px;
+  --canary-size-12: 48px;
+  --canary-size-14: 56px;
+  --canary-size-16: 64px;
+  --canary-size-20: 80px;
+  --canary-size-24: 96px;
+  --canary-size-28: 112px;
+  --canary-size-32: 128px;
+  --canary-size-36: 144px;
+  --canary-size-40: 160px;
+  --canary-size-44: 176px;
+  --canary-size-48: 192px;
+  --canary-size-52: 208px;
+  --canary-size-56: 224px;
+  --canary-size-60: 240px;
+  --canary-size-64: 256px;
+  --canary-size-72: 288px;
+  --canary-size-80: 320px;
+  --canary-size-96: 384px;
+  --canary-size-px: 1px;
+  --canary-size-half: 2px; /* 0.5 */
+  --canary-size-1-half: 6px; /* 1.5 */
+  --canary-size-2-half: 10px; /* 2.5 */
+  --canary-size-3-half: 14px; /* 3.5 */
+  --canary-border-0: 0rem; /* No border (border-0) */
+  --canary-border-4: 4px; /* Thick border width (border-4) */
+  --canary-border-8: 8px; /* Extra thick border width (border-8) */
+}

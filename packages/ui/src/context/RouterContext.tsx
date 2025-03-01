@@ -50,7 +50,7 @@ const RouterContext = createContext<RouterContextType>({
 
 export const useRouterContext = () => useContext(RouterContext)
 
-export const RouterProvider = ({
+export const RouterContextProvider = ({
   children,
   Link = LinkDefault,
   NavLink = NavLinkDefault,

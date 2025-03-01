@@ -5,7 +5,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { ToastProvider, TooltipProvider } from '@harnessio/ui/components'
-import { RouterProvider as RouterProviderV1 } from '@harnessio/ui/context'
+import { RouterContextProvider } from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
@@ -40,9 +40,9 @@ export default function AppV1() {
             <TooltipProvider>
               <ExitConfirmProvider>
                 <NavigationProvider routes={routes}>
-                  <RouterProviderV1 Link={Link} NavLink={NavLink} Outlet={Outlet} navigate={router.navigate}>
+                  <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet} navigate={router.navigate}>
                     <RouterProvider router={router} />
-                  </RouterProviderV1>
+                  </RouterContextProvider>
                 </NavigationProvider>
               </ExitConfirmProvider>
             </TooltipProvider>

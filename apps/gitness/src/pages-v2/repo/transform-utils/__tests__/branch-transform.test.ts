@@ -1,3 +1,5 @@
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+
 import { ListBranchesOkResponse, TypesBranchExtended, TypesCommitDivergence } from '@harnessio/code-service-client'
 
 import { apiBranches2BranchNames, apiBranches2DefaultBranchName, transformBranchList } from '../branch-transform'
@@ -25,9 +27,19 @@ const mockApiBranches: ListBranchesOkResponse = [
   { name: 'feature', is_default: false }
 ]
 
-// Tests
-
 describe('transformBranchList', () => {
+  beforeAll(() => {
+    // Use fake timers to control the current time
+    vi.useFakeTimers()
+    // Set the system time to a specific date
+    vi.setSystemTime(new Date('2025-03-01T00:00:00Z'))
+  })
+
+  afterAll(() => {
+    // Restore real timers after tests
+    vi.useRealTimers()
+  })
+
   it('should transform branch data correctly', () => {
     const result = transformBranchList(mockBranches, 'main', mockDivergence)
     expect(result).toEqual([
@@ -35,7 +47,7 @@ describe('transformBranchList', () => {
         id: 0,
         name: 'main',
         sha: 'abc123',
-        timestamp: 'Feb 28, 1990', // Assuming timeAgoFromISOTime returns 'just now'
+        timestamp: 'Feb 28, 1990', // Adjust this according to your expectations
         default: true,
         user: { name: 'John Doe', avatarUrl: '' },
         behindAhead: { behind: 3, ahead: 5, default: true },
@@ -45,7 +57,7 @@ describe('transformBranchList', () => {
         id: 1,
         name: 'feature',
         sha: 'def456',
-        timestamp: 'Feb 28, 1990', // Assuming timeAgoFromISOTime returns 'just now'
+        timestamp: 'Feb 28, 1990', // Adjust this according to your expectations
         default: false,
         user: { name: 'Jane Smith', avatarUrl: '' },
         behindAhead: { behind: 1, ahead: 2, default: false },

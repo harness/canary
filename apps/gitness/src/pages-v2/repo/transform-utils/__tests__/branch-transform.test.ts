@@ -8,12 +8,12 @@ import { apiBranches2BranchNames, apiBranches2DefaultBranchName, transformBranch
 const mockBranches: TypesBranchExtended[] = [
   {
     name: 'main',
-    commit: { sha: 'abc123', committer: { when: '1990-03-01T00:00:00Z', identity: { name: 'John Doe' } } },
+    commit: { sha: 'abc123', committer: { when: '2025-01-02T00:00:00Z', identity: { name: 'John Doe' } } },
     is_default: true
   },
   {
     name: 'feature',
-    commit: { sha: 'def456', committer: { when: '1990-03-01T01:00:00Z', identity: { name: 'Jane Smith' } } },
+    commit: { sha: 'def456', committer: { when: '2025-01-02T00:00:00Z', identity: { name: 'Jane Smith' } } },
     is_default: false
   }
 ]
@@ -32,7 +32,7 @@ describe('transformBranchList', () => {
     // Use fake timers to control the current time
     vi.useFakeTimers()
     // Set the system time to a specific date
-    vi.setSystemTime(new Date('2025-03-01T00:00:00Z'))
+    vi.setSystemTime(new Date('2025-01-03T00:00:00Z'))
   })
 
   afterAll(() => {
@@ -47,7 +47,7 @@ describe('transformBranchList', () => {
         id: 0,
         name: 'main',
         sha: 'abc123',
-        timestamp: 'Feb 28, 1990', // Adjust this according to your expectations
+        timestamp: 'yesterday', // Adjust this according to your expectations
         default: true,
         user: { name: 'John Doe', avatarUrl: '' },
         behindAhead: { behind: 3, ahead: 5, default: true },
@@ -57,7 +57,7 @@ describe('transformBranchList', () => {
         id: 1,
         name: 'feature',
         sha: 'def456',
-        timestamp: 'Feb 28, 1990', // Adjust this according to your expectations
+        timestamp: 'yesterday', // Adjust this according to your expectations
         default: false,
         user: { name: 'Jane Smith', avatarUrl: '' },
         behindAhead: { behind: 1, ahead: 2, default: false },

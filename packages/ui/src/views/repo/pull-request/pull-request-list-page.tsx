@@ -215,13 +215,11 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                 <ListActions.Right>
                   <PRListFilterHandler.Dropdown>
                     {(addFilter, availableFilters, resetFilters) => (
-                      <FilterSelect
-                        options={PR_FILTER_OPTIONS.filter(option =>
-                          availableFilters.includes(option.value as PRListFiltersKeys)
-                        )}
+                      <FilterSelect<PRListFiltersKeys>
+                        options={PR_FILTER_OPTIONS.filter(option => availableFilters.includes(option.value))}
                         onChange={option => {
-                          addFilter(option.value as PRListFiltersKeys)
-                          setOpenedFilter(option.value as PRListFiltersKeys)
+                          addFilter(option.value)
+                          setOpenedFilter(option.value)
                         }}
                         onReset={resetFilters}
                         inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
@@ -256,7 +254,6 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                     return (
                       <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
                         {PR_FILTER_OPTIONS.map(filterOption => {
-                          const filterOptionValue = filterOption.value as PRListFiltersKeys
                           return (
                             <PRListFilterHandler.Component
                               parser={
@@ -265,7 +262,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                                     (filterOption.parser as unknown as Parser<PRListFilters[PRListFiltersKeys]>)
                                   : undefined
                               }
-                              filterKey={filterOptionValue}
+                              filterKey={filterOption.value}
                               key={filterOption.value}
                             >
                               {({ onChange, removeFilter, value }) =>
@@ -275,7 +272,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                                   removeFilter,
                                   value: value,
                                   onOpenChange: isOpen => {
-                                    handleFilterOpen(filterOptionValue, isOpen)
+                                    handleFilterOpen(filterOption.value, isOpen)
                                   }
                                 })
                               }

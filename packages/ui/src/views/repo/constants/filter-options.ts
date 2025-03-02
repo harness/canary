@@ -10,6 +10,7 @@ import { FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
 import { TFunction } from 'i18next'
 
 import { Parser } from '@harnessio/filters'
+import { PRListFilters } from '../pull-request/pull-request.types'
 
 export const getBasicConditions = (t: TFunction): FilterCondition[] => [
   { label: t('component:filter.is', 'is'), value: 'is' },
@@ -100,8 +101,8 @@ export const getLayoutOptions = (t: TFunction): ViewLayoutOption[] => [
 ]
 
 const dateParser: Parser<Date> = {
-  parse: (value: string) => (value ? new Date(Number(value)) : new Date()),
-  serialize: (value: Date) => value?.getTime().toString() || ''
+  parse: (value: string): Date => (value ? new Date(Number(value)) : new Date()),
+  serialize: (value: Date): string => value?.getTime().toString() || ''
 }
 
 interface PRListFilterOptions {
@@ -116,7 +117,7 @@ export const getPRListFilterOptions = ({
   onAuthorSearch,
   isPrincipalsLoading,
   principalData
-}: PRListFilterOptions): FilterOptionConfig[] => [
+}: PRListFilterOptions): Array<FilterOptionConfig<keyof PRListFilters>> => [
   {
     label: t('component:filter.author', 'Author'),
     value: 'created_by',
@@ -129,8 +130,8 @@ export const getPRListFilterOptions = ({
       isLoading: isPrincipalsLoading
     },
     parser: {
-      parse: (value: string) => principalData.find(user => user.value === value) || { label: '', value },
-      serialize: (value: ComboBoxOptions) => value?.value
+      parse: (value: string): ComboBoxOptions => principalData.find(user => user.value === value) || { label: '', value },
+      serialize: (value: ComboBoxOptions): string => value?.value || ''
     }
   },
   {

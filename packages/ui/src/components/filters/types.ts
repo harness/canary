@@ -166,12 +166,13 @@ interface FilterField<T = string | number> {
   value?: T
 }
 
-interface FilterOptionConfigBase {
+interface FilterOptionConfigBase<Key extends string, V = string> {
   label: string
-  value: string
+  value: Key
+  parser?: Parser<V>
 }
 
-interface ComboBoxFilterOptionConfig extends FilterOptionConfigBase {
+interface ComboBoxFilterOptionConfig<Key extends string> extends FilterOptionConfigBase<Key, ComboBoxOptions> {
   type: FilterFieldTypes.ComboBox
   filterFieldConfig: {
     options: Array<{ label: string; value: string }>
@@ -180,27 +181,25 @@ interface ComboBoxFilterOptionConfig extends FilterOptionConfigBase {
     placeholder: string
     isLoading?: boolean
   }
-  parser: Parser<ComboBoxOptions>
 }
 
-interface CalendarFilterOptionConfig extends FilterOptionConfigBase {
+interface CalendarFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T, Date> {
   type: FilterFieldTypes.Calendar
-  parser: Parser<Date>
 }
 
-interface TextFilterOptionConfig extends FilterOptionConfigBase {
+interface TextFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T> {
   type: FilterFieldTypes.Text
 }
 
-interface NumberFilterOptionConfig extends FilterOptionConfigBase {
+interface NumberFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T> {
   type: FilterFieldTypes.Number
 }
 
-type FilterOptionConfig =
-  | ComboBoxFilterOptionConfig
-  | CalendarFilterOptionConfig
-  | TextFilterOptionConfig
-  | NumberFilterOptionConfig
+type FilterOptionConfig<T extends string = string> =
+  | ComboBoxFilterOptionConfig<T>
+  | CalendarFilterOptionConfig<T>
+  | TextFilterOptionConfig<T>
+  | NumberFilterOptionConfig<T>
 
 type FilterValueTypes = string | number | unknown
 

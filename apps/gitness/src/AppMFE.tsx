@@ -17,7 +17,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { ToastProvider, TooltipProvider } from '@harnessio/ui/components'
-import { PortalProvider, RouterProvider as RouterProviderV1 } from '@harnessio/ui/context'
+import { PortalProvider, RouterContextProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -185,14 +185,14 @@ export default function AppMFE({
                         <TooltipProvider>
                           <ExitConfirmProvider>
                             <NavigationProvider routes={routesToRender}>
-                              <RouterProviderV1
+                              <RouterContextProvider
                                 Link={Link}
                                 NavLink={NavLink}
                                 Outlet={Outlet}
                                 navigate={router.navigate}
                               >
                                 <RouterProvider router={router} />
-                              </RouterProviderV1>
+                              </RouterContextProvider>
                             </NavigationProvider>
                           </ExitConfirmProvider>
                         </TooltipProvider>

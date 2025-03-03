@@ -666,14 +666,7 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "mode/dark/default": "enabled",
-      "mode/light/default": "disabled",
-      "mode/dark/default-protanopia": "disabled",
-      "mode/dark/default-deuteranopia": "disabled",
-      "mode/dark/default-tritanopia": "disabled",
-      "mode/light/default-protanopia": "disabled",
-      "mode/light/default-deuteranopia": "disabled",
-      "mode/light/default-tritanopia": "disabled"
+      "mode/dark/default": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1459,14 +1452,7 @@
       "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
     },
     "selectedTokenSets": {
-      "mode/dark/default": "disabled",
-      "mode/light/default": "enabled",
-      "mode/dark/default-protanopia": "disabled",
-      "mode/dark/default-deuteranopia": "disabled",
-      "mode/dark/default-tritanopia": "disabled",
-      "mode/light/default-protanopia": "disabled",
-      "mode/light/default-deuteranopia": "disabled",
-      "mode/light/default-tritanopia": "disabled"
+      "mode/light/default": "enabled"
     },
     "group": "mode",
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
@@ -1775,15 +1761,7 @@
       "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer": "enabled",
-      "mode/dark/default": "disabled",
-      "mode/light/default": "disabled",
-      "mode/dark/default-protanopia": "disabled",
-      "mode/dark/default-deuteranopia": "disabled",
-      "mode/dark/default-tritanopia": "disabled",
-      "mode/light/default-protanopia": "disabled",
-      "mode/light/default-deuteranopia": "disabled",
-      "mode/light/default-tritanopia": "disabled"
+      "mode/dark/dimmer": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:5",
@@ -2092,15 +2070,7 @@
       "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer": "enabled",
-      "mode/dark/default": "disabled",
-      "mode/light/default": "disabled",
-      "mode/dark/default-protanopia": "disabled",
-      "mode/dark/default-deuteranopia": "disabled",
-      "mode/dark/default-tritanopia": "disabled",
-      "mode/light/default-protanopia": "disabled",
-      "mode/light/default-deuteranopia": "disabled",
-      "mode/light/default-tritanopia": "disabled"
+      "mode/light/dimmer": "enabled"
     },
     "group": "mode",
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
@@ -2409,15 +2379,7 @@
       "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast": "enabled",
-      "mode/dark/default": "disabled",
-      "mode/light/default": "disabled",
-      "mode/dark/default-protanopia": "disabled",
-      "mode/dark/default-deuteranopia": "disabled",
-      "mode/dark/default-tritanopia": "disabled",
-      "mode/light/default-protanopia": "disabled",
-      "mode/light/default-deuteranopia": "disabled",
-      "mode/light/default-tritanopia": "disabled"
+      "mode/dark/high-contrast": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:7",
@@ -2726,15 +2688,7 @@
       "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast": "enabled",
-      "mode/dark/default": "disabled",
-      "mode/light/default": "disabled",
-      "mode/dark/default-protanopia": "disabled",
-      "mode/dark/default-deuteranopia": "disabled",
-      "mode/dark/default-tritanopia": "disabled",
-      "mode/light/default-protanopia": "disabled",
-      "mode/light/default-deuteranopia": "disabled",
-      "mode/light/default-tritanopia": "disabled"
+      "mode/light/high-contrast": "enabled"
     },
     "group": "mode",
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
@@ -3043,14 +2997,7 @@
       "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
     },
     "selectedTokenSets": {
-      "mode/dark/default": "disabled",
-      "mode/light/default": "disabled",
-      "mode/dark/default-protanopia": "enabled",
-      "mode/dark/default-deuteranopia": "disabled",
-      "mode/dark/default-tritanopia": "disabled",
-      "mode/light/default-protanopia": "disabled",
-      "mode/light/default-deuteranopia": "disabled",
-      "mode/light/default-tritanopia": "disabled"
+      "mode/dark/default-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:9",
@@ -3359,14 +3306,7 @@
       "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
     },
     "selectedTokenSets": {
-      "mode/dark/default": "disabled",
-      "mode/light/default": "disabled",
-      "mode/dark/default-protanopia": "disabled",
-      "mode/dark/default-deuteranopia": "disabled",
-      "mode/dark/default-tritanopia": "disabled",
-      "mode/light/default-protanopia": "enabled",
-      "mode/light/default-deuteranopia": "disabled",
-      "mode/light/default-tritanopia": "disabled"
+      "mode/light/default-protanopia": "enabled"
     },
     "group": "mode",
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
@@ -3675,15 +3615,7 @@
       "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-protanopia": "enabled",
-      "mode/dark/default": "disabled",
-      "mode/light/default": "disabled",
-      "mode/dark/default-protanopia": "disabled",
-      "mode/dark/default-deuteranopia": "disabled",
-      "mode/dark/default-tritanopia": "disabled",
-      "mode/light/default-protanopia": "disabled",
-      "mode/light/default-deuteranopia": "disabled",
-      "mode/light/default-tritanopia": "disabled"
+      "mode/dark/dimmer-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:11",
@@ -4301,15 +4233,7 @@
       "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-protanopia": "enabled",
-      "mode/dark/default": "disabled",
-      "mode/light/default": "disabled",
-      "mode/dark/default-protanopia": "disabled",
-      "mode/dark/default-deuteranopia": "disabled",
-      "mode/dark/default-tritanopia": "disabled",
-      "mode/light/default-protanopia": "disabled",
-      "mode/light/default-deuteranopia": "disabled",
-      "mode/light/default-tritanopia": "disabled"
+      "mode/dark/high-contrast-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:13",
@@ -4684,15 +4608,7 @@
       "components/desktop/base/dropdown menu": "enabled",
       "components/desktop/base/btn": "enabled",
       "components/desktop/base/badge": "enabled",
-      "components/desktop/base/tag": "enabled",
-      "mode/dark/default": "disabled",
-      "mode/light/default": "disabled",
-      "mode/dark/default-protanopia": "disabled",
-      "mode/dark/default-deuteranopia": "disabled",
-      "mode/dark/default-tritanopia": "disabled",
-      "mode/light/default-protanopia": "disabled",
-      "mode/light/default-deuteranopia": "disabled",
-      "mode/light/default-tritanopia": "disabled"
+      "components/desktop/base/tag": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",

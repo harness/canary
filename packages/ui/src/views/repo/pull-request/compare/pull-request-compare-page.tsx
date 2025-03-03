@@ -1,8 +1,8 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
 
 import { Avatar, Button, Icon, NoData, SkeletonList, Spacer, StyledLink, Tabs } from '@/components'
+import { useRouterContext } from '@/context'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
   CommitSelectorListItem,
@@ -137,7 +137,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
   const {
     register,

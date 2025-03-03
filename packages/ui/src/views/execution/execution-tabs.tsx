@@ -1,10 +1,10 @@
-import { NavLink } from 'react-router-dom'
-
 import { Tabs } from '@/components'
+import { useRouterContext } from '@/context'
 import { SandboxLayout } from '@/views'
 import useActiveTab from '@hooks/use-get-active-tab'
 
 export const ExecutionTabs = () => {
+  const { NavLink } = useRouterContext()
   const activeTab = useActiveTab('summary')
 
   return (

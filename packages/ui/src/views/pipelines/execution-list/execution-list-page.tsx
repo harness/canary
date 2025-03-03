@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
 
 import { Button, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 
@@ -19,6 +19,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
   handleExecutePipeline,
   LinkComponent
 }) => {
+  const { Link } = useRouterContext()
   const { t } = useTranslationStore()
   const { executions, totalPages, page, setPage } = useExecutionListStore()
 

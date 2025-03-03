@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
-import { NavLink } from 'react-router-dom'
 
 import { NavbarSkeleton, ScrollArea } from '@/components'
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
 export interface SidebarMenuItemSubItem {
@@ -33,6 +33,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   sidebarOffsetTop = 0,
   sidebarViewportClassName
 }) => {
+  const { NavLink } = useRouterContext()
   return (
     <div className="relative mx-auto flex w-[1072px] items-start gap-x-20">
       <div

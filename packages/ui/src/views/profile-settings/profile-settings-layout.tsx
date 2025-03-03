@@ -1,5 +1,4 @@
-import { Outlet } from 'react-router-dom'
-
+import { useRouterContext } from '@/context'
 import { ContentLayoutWithSidebar, TranslationStore } from '@/views'
 import { TFunction } from 'i18next'
 
@@ -15,6 +14,7 @@ const getNavItems = (t: TFunction) => [
 ]
 
 export function ProfileSettingsLayout({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) {
+  const { Outlet } = useRouterContext()
   const { t } = useTranslationStore()
 
   return (

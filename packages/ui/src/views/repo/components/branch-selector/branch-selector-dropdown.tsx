@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import { Badge, DropdownMenu, Icon, SearchBox, Tabs } from '@/components'
+import { useRouterContext } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 import { cn } from '@utils/cn'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
@@ -19,6 +19,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   setSearchQuery,
   dynamicWidth = false
 }) => {
+  const { Link } = useRouterContext()
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const { t } = useTranslationStore()
   const BRANCH_SELECTOR_LABELS = getBranchSelectorLabels(t)

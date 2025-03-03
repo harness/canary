@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 
 import {
   Avatar,
@@ -13,6 +12,7 @@ import {
   SkeletonTable,
   Table
 } from '@/components'
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
@@ -35,7 +35,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   onDeleteBranch
 }) => {
   const { t } = useTranslationStore()
-  const navigate = useNavigate()
+  const { Link, navigate } = useRouterContext()
 
   if (!branches?.length && !isLoading) {
     return (

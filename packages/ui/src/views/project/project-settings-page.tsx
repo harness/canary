@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
 
 import { Tabs } from '@/components'
+import { useRouterContext } from '@/context'
 import { SandboxLayout, TranslationStore } from '@/views'
 
 export interface ProjectSettingsTabNavProps {
@@ -9,8 +9,8 @@ export interface ProjectSettingsTabNavProps {
 }
 
 export const ProjectSettingsPage: FC<ProjectSettingsTabNavProps> = ({ useTranslationStore }) => {
+  const { NavLink, location } = useRouterContext()
   const { t } = useTranslationStore()
-  const location = useLocation()
   const activeTab = location.pathname.split('/').pop() || 'general'
 
   return (

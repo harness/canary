@@ -1,6 +1,5 @@
-import { useNavigate } from 'react-router-dom'
-
 import { Badge, MoreActionsTooltip, NoData, Pagination, Spacer, StackedList, Switch, Table, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { TranslationStore, WebhookType } from '@/views'
 
 const Title = ({
@@ -50,7 +49,7 @@ export function RepoWebhookList({
   handleEnableWebhook
 }: RepoWebhookListProps) {
   const { t } = useTranslationStore()
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
 
   const handleNavigate = () => {
     navigate('create')

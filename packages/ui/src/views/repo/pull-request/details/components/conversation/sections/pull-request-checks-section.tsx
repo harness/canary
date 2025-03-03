@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom'
-
 import { Accordion, Badge, Icon, StackedList, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { cn } from '@utils/cn'
 import { timeDistance } from '@utils/utils'
@@ -18,6 +17,7 @@ interface PullRequestMergeSectionProps extends Partial<PullRequestRoutingProps> 
 }
 
 const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullRequestMergeSectionProps) => {
+  const { Link } = useRouterContext()
   const getStatusIcon = (status: EnumCheckStatus) => {
     switch (status) {
       // TODO: fix icons to use from nucleo

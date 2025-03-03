@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
 
 import { Button, Icon, PathBreadcrumbs, PathParts } from '@/components'
+import { useRouterContext } from '@/context'
 import { CodeModes, TranslationStore } from '@/views'
 
 export interface PathActionBarProps {
@@ -31,6 +31,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   handleOpenCommitDialog,
   handleCancelFileEdit
 }) => {
+  const { Link } = useRouterContext()
   const { t } = useTranslationStore()
   return (
     <div className="mb-4 flex h-8 items-center justify-between gap-8">

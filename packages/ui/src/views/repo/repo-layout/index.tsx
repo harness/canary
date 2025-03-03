@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { Tabs } from '@/components'
+import { useRouterContext } from '@/context'
 import { SandboxLayout, TranslationStore } from '@/views'
 
 export enum RepoTabsKeys {
@@ -17,7 +17,7 @@ export enum RepoTabsKeys {
 export const repoTabsKeysArr = Object.values(RepoTabsKeys)
 
 export const RepoLayout = ({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) => {
-  const location = useLocation()
+  const { NavLink, Outlet, location } = useRouterContext()
   const { t } = useTranslationStore()
 
   const activeTab = useMemo(() => {

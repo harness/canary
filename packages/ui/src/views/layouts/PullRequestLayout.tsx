@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
 
 import { Badge, Icon, Spacer, Tabs } from '@/components'
+import { useRouterContext } from '@/context'
 import { SandboxLayout } from '@/views'
 import { TranslationStore } from '@views/repo'
 import { PullRequestHeader } from '@views/repo/pull-request/components/pull-request-header'
@@ -28,6 +28,7 @@ const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   repoId,
   updateTitle
 }) => {
+  const { NavLink, Outlet } = useRouterContext()
   const { pullRequest } = usePullRequestStore()
   const { t } = useTranslationStore()
 

@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { Avatar, CommitCopyActions, Icon, IconProps, LabelMarker, Layout, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
   CommentItem,
@@ -33,7 +33,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
   toCommitDetails,
   toCode
 }) => {
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
 
   const payloadMain = useMemo(() => {
     return commentItems[0]?.payload

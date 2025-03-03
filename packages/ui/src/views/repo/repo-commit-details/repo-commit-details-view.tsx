@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { Outlet } from 'react-router-dom'
 
 import { Avatar, Badge, Button, CommitCopyActions, Icon } from '@/components'
+import { useRouterContext } from '@/context'
 import { ICommitDetailsStore, SandboxLayout, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
@@ -21,6 +21,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   showSidebar = true,
   toCommitDetails
 }) => {
+  const { Outlet } = useRouterContext()
   const { t } = useTranslationStore()
   const { commitData, isVerified } = useCommitDetailsStore()
 

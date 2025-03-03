@@ -1,11 +1,11 @@
 import { I18nextProvider } from 'react-i18next'
-import { createBrowserRouter, Link, NavLink, Outlet, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Link, NavLink, Outlet, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { ToastProvider, TooltipProvider } from '@harnessio/ui/components'
-import { RouterContextProvider } from '@harnessio/ui/context'
+import { RouterContextProvider, RouterContextType } from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
@@ -16,7 +16,22 @@ import { routes } from './routes'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
-export default function AppV1() {
+const AppRouterProvider = ({
+  children
+}: {
+  children: React.ReactNode
+} & Partial<RouterContextType>) => {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  return (
+    <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet} navigate={navigate} location={location}>
+      {children}
+    </RouterContextProvider>
+  )
+}
+
+export default function App() {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) => `${BASE_URL_PREFIX}${url}`,
     responseInterceptor: (response: Response) => {
@@ -40,9 +55,9 @@ export default function AppV1() {
             <TooltipProvider>
               <ExitConfirmProvider>
                 <NavigationProvider routes={routes}>
-                  <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet} navigate={router.navigate}>
+                  <AppRouterProvider>
                     <RouterProvider router={router} />
-                  </RouterContextProvider>
+                  </AppRouterProvider>
                 </NavigationProvider>
               </ExitConfirmProvider>
             </TooltipProvider>

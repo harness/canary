@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
-import { Link } from 'react-router-dom'
 
 import { Button, Checkbox, ListActions, Option, Pagination, SearchBox, SkeletonList, Spacer } from '@/components'
+import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { ILabelsStore, ILabelType, SandboxLayout, TranslationStore } from '@/views'
 
@@ -30,6 +30,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   isLoading,
   isRepository = false
 }) => {
+  const { Link } = useRouterContext()
   const { t } = useTranslationStore()
   const {
     labels: spaceLabels,

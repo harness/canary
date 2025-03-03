@@ -1,13 +1,14 @@
 import { ComponentType, createContext, ReactNode, useContext } from 'react'
-import type { LinkProps, NavigateFunction, NavLinkProps, OutletProps } from 'react-router-dom'
+import type { LinkProps, NavigateFunction, NavLinkProps, OutletProps, Path } from 'react-router-dom'
 
 import { cn } from '@utils/cn'
 
-interface RouterContextType {
+export interface RouterContextType {
   Link: ComponentType<LinkProps>
   NavLink: ComponentType<NavLinkProps>
   Outlet: ComponentType<OutletProps>
   navigate: NavigateFunction
+  location: Location
 }
 
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
@@ -51,7 +52,8 @@ const RouterContext = createContext<RouterContextType>({
   Link: LinkDefault,
   NavLink: NavLinkDefault,
   Outlet: OutletDefault,
-  navigate: navigateFnDefault
+  navigate: navigateFnDefault,
+  location: window.location
 })
 
 export const useRouterContext = () => useContext(RouterContext)
@@ -61,9 +63,12 @@ export const RouterContextProvider = ({
   Link = LinkDefault,
   NavLink = NavLinkDefault,
   Outlet = OutletDefault,
-  navigate = navigateFnDefault
+  navigate = navigateFnDefault,
+  location = window.location
 }: {
   children: ReactNode
 } & Partial<RouterContextType>) => {
-  return <RouterContext.Provider value={{ Link, NavLink, Outlet, navigate }}>{children}</RouterContext.Provider>
+  return (
+    <RouterContext.Provider value={{ Link, NavLink, Outlet, navigate, location }}>{children}</RouterContext.Provider>
+  )
 }

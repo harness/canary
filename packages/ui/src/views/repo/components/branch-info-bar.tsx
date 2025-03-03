@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
 
 import { Badge, Button, DropdownMenu, Icon, StyledLink } from '@/components'
+import { useRouterContext } from '@/context'
 import { BranchSelectorListItem, IBranchSelectorStore } from '@/views'
 
 interface BranchInfoBarProps {
@@ -24,6 +24,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   selectedBranchTag,
   currentBranchDivergence
 }) => {
+  const { Link } = useRouterContext()
   const { behind, ahead } = currentBranchDivergence
   const hasBehind = !!behind
   const hasAhead = !!ahead

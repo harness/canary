@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
-import { Link } from 'react-router-dom'
 
 import { Button, ListActions, SearchBox, SkeletonList, Spacer } from '@/components'
+import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 
@@ -17,6 +17,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   webhookLoading,
   handleEnableWebhook
 }) => {
+  const { Link } = useRouterContext()
   const { t } = useTranslationStore()
   const { webhooks, totalPages, page, setPage, error } = useWebhookStore()
 

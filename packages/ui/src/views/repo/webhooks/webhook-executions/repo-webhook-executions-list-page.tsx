@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { Badge, FormSeparator, NoData, Pagination, SkeletonList, Table, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { timeAgo } from '@utils/utils'
 
@@ -26,7 +26,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
 }) => {
   const { t } = useTranslationStore()
   const { executions, webhookExecutionPage, setWebhookExecutionPage, totalWebhookExecutionPages } = useWebhookStore()
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
   const events = useMemo(() => {
     return [...getBranchEvents(t), ...getTagEvents(t), ...getPrEvents(t)]
   }, [])

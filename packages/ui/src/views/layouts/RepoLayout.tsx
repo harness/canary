@@ -1,8 +1,9 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { useRouterContext } from '@/context'
 
 import { SandboxLayout } from '..'
 
 const RepoLayout: React.FC = () => {
+  const { NavLink, Outlet } = useRouterContext()
   const baseClasses = 'h-full text-center flex items-center'
 
   const getLinkClasses = (isActive: boolean) =>

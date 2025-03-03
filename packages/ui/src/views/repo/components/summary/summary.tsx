@@ -1,6 +1,5 @@
-import { useNavigate } from 'react-router-dom'
-
 import { Icon, Spacer, Table, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
 
@@ -22,7 +21,7 @@ export const Summary = ({
   hideHeader = false,
   toCommitDetails
 }: SummaryProps) => {
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
 
   return (

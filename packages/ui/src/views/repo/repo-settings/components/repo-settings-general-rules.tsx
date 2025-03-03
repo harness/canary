@@ -1,5 +1,4 @@
 import { FC, useMemo } from 'react'
-import { Link, NavLink } from 'react-router-dom'
 import { Fragment } from 'react/jsx-runtime'
 
 import {
@@ -14,6 +13,7 @@ import {
   StackedList,
   Text
 } from '@/components'
+import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { ErrorTypes, RuleDataType, TranslationStore } from '@/views'
 import { TFunction } from 'i18next'
@@ -70,6 +70,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   rulesSearchQuery,
   setRulesSearchQuery
 }) => {
+  const { Link, NavLink } = useRouterContext()
   const { t } = useTranslationStore()
 
   const {

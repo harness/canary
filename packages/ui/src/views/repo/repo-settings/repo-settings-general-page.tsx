@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
 
 import { Fieldset, FormSeparator } from '@/components'
+import { useRouterContext } from '@/context'
 import { BranchSelectorListItem, IBranchSelectorStore, SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelectorTab } from '@/views/repo/components'
 
@@ -56,8 +56,8 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   rulesSearchQuery,
   setRulesSearchQuery
 }) => {
+  const { location } = useRouterContext()
   const { t } = useTranslationStore()
-  const location = useLocation()
   const rulesRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {

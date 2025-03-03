@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import {
   Accordion,
@@ -14,6 +13,7 @@ import {
   Layout,
   StackedList
 } from '@/components'
+import { useRouterContext } from '@/context'
 import {
   EnumCheckStatus,
   extractInfoFromRuleViolationArr,
@@ -218,6 +218,7 @@ const PullRequestPanel = ({
   repoId,
   ...routingProps
 }: PullRequestPanelProps) => {
+  const { Link } = useRouterContext()
   const mergeable = useMemo(() => pullReqMetadata?.merge_check_status === MergeCheckStatus.MERGEABLE, [pullReqMetadata])
   const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
   const isOpen = pullReqMetadata?.state === PullRequestState.OPEN

@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 
 import { Avatar, Button, CommitCopyActions, Icon, NodeGroup, StackedList } from '@/components'
+import { useRouterContext } from '@/context'
 import { formatDate } from '@/utils/utils'
 import { TypesCommit } from '@/views'
 import { getInitials } from '@utils/stringUtils'
@@ -18,7 +18,7 @@ interface CommitProps extends Partial<RoutingProps> {
 }
 
 export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, className }) => {
-  const navigate = useNavigate()
+  const { Link, navigate } = useRouterContext()
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
       ? {}

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
-import { Link } from 'react-router-dom'
 
+import { useRouterContext } from '@/context'
 import { Badge, Button, Icon } from '@components/index'
 import { timeAgo } from '@utils/utils'
 
@@ -46,6 +46,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   },
   updateTitle
 }) => {
+  const { Link } = useRouterContext()
   const [isEditing, setIsEditing] = useState(false)
 
   // Format the parsed date as relative time from now

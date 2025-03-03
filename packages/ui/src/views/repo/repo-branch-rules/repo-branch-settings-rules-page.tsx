@@ -1,8 +1,8 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { NavLink } from 'react-router-dom'
 
 import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper } from '@/components'
+import { useRouterContext } from '@/context'
 import { IRepoStore, repoBranchSettingsFormSchema, SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -56,6 +56,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   principalsSearchQuery,
   isSubmitSuccess
 }) => {
+  const { NavLink } = useRouterContext()
   const { t } = useTranslationStore()
   const { presetRuleData, principals, recentStatusChecks } = useRepoRulesStore()
   const {

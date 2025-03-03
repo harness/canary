@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom'
-
 import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
@@ -43,6 +42,7 @@ export function RepoList({
   toCreateRepo,
   toImportRepo
 }: PageProps) {
+  const { Link } = useRouterContext()
   const { t } = useTranslationStore()
 
   if (isLoading) {

@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom'
-
 import {
   Button,
   ButtonGroup,
@@ -12,6 +10,7 @@ import {
   StackedList,
   Text
 } from '@/components'
+import { useRouterContext } from '@/context'
 import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout, TranslationStore } from '@/views'
 import { BranchInfoBar, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
@@ -103,6 +102,7 @@ export function RepoSummaryView({
   isRepoEmpty,
   branchSelectorRenderer
 }: RepoSummaryViewProps) {
+  const { Link } = useRouterContext()
   const { t } = useTranslationStore()
 
   if (loading) {

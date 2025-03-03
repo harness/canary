@@ -1,7 +1,7 @@
 import { FC, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import { NoData, StackedList } from '@/components'
+import { useRouterContext } from '@/context'
 import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestType, TranslationStore } from '@/views'
 
 import { PullRequestItemDescription } from './pull-request-item-description'
@@ -33,6 +33,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   repoId,
   useTranslationStore
 }) => {
+  const { Link } = useRouterContext()
   const { t } = useTranslationStore()
 
   const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(

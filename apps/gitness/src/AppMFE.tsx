@@ -17,7 +17,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { ToastProvider, TooltipProvider } from '@harnessio/ui/components'
-import { PortalProvider, RouterContextProvider } from '@harnessio/ui/context'
+import { PortalProvider, RouterContextProvider, RouterContextType } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -105,6 +105,21 @@ function decode<T = unknown>(arg: string): T {
   return JSON.parse(decodeURIComponent(atob(arg)))
 }
 
+const AppRouterProvider = ({
+  children
+}: {
+  children: React.ReactNode
+} & Partial<RouterContextType>) => {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  return (
+    <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet} navigate={navigate} location={location}>
+      {children}
+    </RouterContextProvider>
+  )
+}
+
 export default function AppMFE({
   scope,
   renderUrl,
@@ -185,14 +200,9 @@ export default function AppMFE({
                         <TooltipProvider>
                           <ExitConfirmProvider>
                             <NavigationProvider routes={routesToRender}>
-                              <RouterContextProvider
-                                Link={Link}
-                                NavLink={NavLink}
-                                Outlet={Outlet}
-                                navigate={router.navigate}
-                              >
+                              <AppRouterProvider>
                                 <RouterProvider router={router} />
-                              </RouterContextProvider>
+                              </AppRouterProvider>
                             </NavigationProvider>
                           </ExitConfirmProvider>
                         </TooltipProvider>

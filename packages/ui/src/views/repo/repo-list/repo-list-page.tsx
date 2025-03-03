@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { ButtonWithOptions, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/components'
+import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 
@@ -25,7 +25,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   ...routingProps
 }) => {
   const { t } = useTranslationStore()
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
 
   const {
     search: searchInput,

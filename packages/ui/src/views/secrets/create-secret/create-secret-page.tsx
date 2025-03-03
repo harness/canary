@@ -162,7 +162,7 @@ export function CreateSecretPage({
             error={errors.value?.message?.toString()}
           />
 
-          <div className="mb-4">
+          <div>
             <label htmlFor="secret-file-input" className="text-foreground-2 mb-2.5 block text-sm font-medium">
               Secret File
             </label>
@@ -200,35 +200,35 @@ export function CreateSecretPage({
             </div>
             {errors.file && <div className="text-destructive text-sm mt-1">{errors.file.message?.toString()}</div>}
           </div>
+          <Accordion.Root type="single" collapsible>
+            <Accordion.Item value="secret-details">
+              <Accordion.Trigger>Metadata</Accordion.Trigger>
+              <Accordion.Content>
+                <Fieldset className="rounded-md border-2 p-4">
+                  {/* DESCRIPTION */}
+                  <Textarea
+                    id="description"
+                    {...register('description')}
+                    placeholder="Enter a description of this secret"
+                    label="Description"
+                    error={errors.description?.message?.toString()}
+                    optional
+                  />
+                  {/* TAGS */}
+                  <Input
+                    id="tags"
+                    {...register('tags')}
+                    label="Tags"
+                    placeholder="Enter tags"
+                    size="md"
+                    error={errors.tags?.message?.toString()}
+                    optional
+                  />
+                </Fieldset>
+              </Accordion.Content>
+            </Accordion.Item>
+          </Accordion.Root>
         </Fieldset>
-        <Accordion.Root type="single" collapsible>
-          <Accordion.Item value="secret-details">
-            <Accordion.Trigger>Metadata</Accordion.Trigger>
-            <Accordion.Content>
-              <Fieldset className="rounded-md border-2 p-4">
-                {/* DESCRIPTION */}
-                <Textarea
-                  id="description"
-                  {...register('description')}
-                  placeholder="Enter a description of this secret"
-                  label="Description"
-                  error={errors.description?.message?.toString()}
-                  optional
-                />
-                {/* TAGS */}
-                <Input
-                  id="tags"
-                  {...register('tags')}
-                  label="Tags"
-                  placeholder="Enter tags"
-                  size="md"
-                  error={errors.tags?.message?.toString()}
-                  optional
-                />
-              </Fieldset>
-            </Accordion.Content>
-          </Accordion.Item>
-        </Accordion.Root>
 
         {apiError && (
           <Alert.Container variant="destructive" className="mb-8">

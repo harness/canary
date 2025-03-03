@@ -850,22 +850,49 @@
     "diff": {
       "grey": {
         "$type": "color",
-        "$value": "{colors.chrome.950}",
+        "$value": "{background.1}",
         "$description": "Neutral base color for the diff interface that allows code and difference highlights to remain visually prominent."
       },
       "add-content": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "p3"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{colors.green.950}",
+        "$value": "{colors.green.500}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.2",
+              "space": "p3"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{colors.green.900}",
+        "$value": "{colors.green.500}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.25",
+              "space": "p3"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{colors.green.900}",
+        "$value": "{colors.green.500}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -875,22 +902,49 @@
       },
       "add-widget-color": {
         "$type": "color",
-        "$value": "{colors.chrome.200}",
+        "$value": "{text.1}",
         "$description": "Text/icon color for add-related interactive elements, ensuring readability."
       },
       "del-content": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "p3"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{colors.red.950}",
+        "$value": "{colors.red.500}",
         "$description": "Red background highlighting removed code lines without causing eye strain."
       },
       "del-lineNumber": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.2",
+              "space": "p3"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{colors.red.900}",
+        "$value": "{colors.red.500}",
         "$description": "Background for line numbers of deleted code, connecting numbers to removed content."
       },
       "del-content-highlight": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.25",
+              "space": "p3"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{colors.red.900}",
+        "$value": "{colors.red.500}",
         "$description": "Stronger emphasis color for specific character changes within deleted lines."
       },
       "plain-content": {
@@ -905,7 +959,7 @@
       },
       "plain-lineNumber-color": {
         "$type": "color",
-        "$value": "{colors.chrome.200}",
+        "$value": "{text.3}",
         "$description": "Text color for unchanged line numbers, visually subdued compared to changed content."
       },
       "empty-content": {
@@ -914,8 +968,17 @@
         "$description": "Background for placeholder spaces and empty lines, maintaining visual continuity."
       },
       "hunk-content": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "p3"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{colors.blue.950}",
+        "$value": "{colors.blue.500}",
         "$description": "Background for diff section headers ('hunks') that indicate which part of the file is displayed."
       },
       "hunk-lineNumber": {
@@ -923,23 +986,23 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.5",
+              "value": "0.2",
               "space": "p3"
             }
           }
         },
         "$type": "color",
-        "$value": "{colors.blue.900}",
+        "$value": "{colors.blue.500}",
         "$description": "Background for line numbers in section headers."
       },
       "hunk-content-color": {
         "$type": "color",
-        "$value": "{colors.chrome.200}",
+        "$value": "{text.2}",
         "$description": "Text color for section header content showing file position information."
       },
       "expand-content": {
         "$type": "color",
-        "$value": "{background.1}",
+        "$value": "{background.2}",
         "$description": "Background for controls that expand/collapse code sections to show additional context."
       }
     },

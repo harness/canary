@@ -5,7 +5,6 @@ import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Space
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
-import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import FilterTrigger from '@components/filters/triggers/filter-trigger'
 import { noop } from 'lodash-es'
 
@@ -78,7 +77,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
    */
   const filterHandlers = useFilters()
   const [openedFilter, setOpenedFilter] = useState<PRListFiltersKeys>()
-  const filtersRef = useRef<FilterRefType<PRListFilters>>({} as FilterRefType<PRListFilters>)
+  const filtersRef = useRef<FilterRefType<PRListFilters> | null>(null)
 
   const filteredPullReqs = filterPullRequests(pullRequests, filterHandlers.activeFilters)
   const sortedPullReqs = sortPullRequests(filteredPullReqs, filterHandlers.activeSorts)
@@ -107,7 +106,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
 
   const renderListContent = () => {
     if (isLoading) {
-      return <SkeletonList count={8} />
+      return <SkeletonList />
     }
 
     if (noData) {
@@ -177,13 +176,15 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   }
 
   const onFilterValueChange = (filterValues: PRListFilters) => {
-    const _filterValues = Object.entries(filterValues).reduce((acc, [key, value]) => {
-      // TODO Need to address the type issue here
-      if (value !== undefined) {
-        acc[key as PRListFiltersKeys] = value as ComboBoxOptions & Date
-      }
-      return acc
-    }, {} as PRListFilters)
+    const _filterValues = Object.entries(filterValues).reduce(
+      (acc: Record<string, PRListFilters[keyof PRListFilters]>, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = value
+        }
+        return acc
+      },
+      {}
+    )
 
     onFilterChange?.(_filterValues)
   }

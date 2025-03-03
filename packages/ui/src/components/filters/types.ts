@@ -166,7 +166,7 @@ interface FilterField<T = string | number> {
   value?: T
 }
 
-interface FilterOptionConfigBase<Key extends string, V = string> {
+interface FilterOptionConfigBase<Key extends string, V = undefined> {
   label: string
   value: Key
   parser?: Parser<V>

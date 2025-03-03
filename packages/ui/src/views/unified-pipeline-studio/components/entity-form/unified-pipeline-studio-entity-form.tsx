@@ -20,6 +20,7 @@ import { useUnifiedPipelineStudioContext } from '../../../unified-pipeline-studi
 import { inputComponentFactory } from '../form-inputs/factory/factory'
 import { InputType } from '../form-inputs/types'
 import { getHarnessSteOrGroupIdentifier, getHarnessStepOrGroupDefinition, isHarnessGroup } from '../steps/harness-steps'
+import { TEMPLATE_STEP_IDENTIFIER } from '../steps/types'
 import { EntityFormLayout } from './entity-form-layout'
 import { EntityFormSectionLayout } from './entity-form-section-layout'
 
@@ -69,22 +70,12 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         }
       }
       // process templates step
-      // TODO
-      // else if (step[TEMPLATE_STEP_IDENTIFIER]) {
-      //   setDefaultStepValues(step)
-      //   listTemplates({ space_ref: spaceId || '', queryParams: { query: step.template.uses } }).then(response => {
-      //     const editStep = response.body.find(plugin => plugin.identifier === step.template.uses)
-      //     setFormStep(editStep ? { stepSource: StepSource.Templates, data: editStep } : null)
-      //   })
-      // } else if (step[GROUP_IDENTIFIER] || step[PARALLEL_IDENTIFIER]) {
-      //   setDefaultStepValues(step)
-      //   setFormStep({
-      //     stepSource: StepSource.Harness,
-      //     data: {
-      //       identifier: step[GROUP_IDENTIFIER] ? GROUP_IDENTIFIER : PARALLEL_IDENTIFIER
-      //     }
-      //   })
-      // }
+      else if (step[TEMPLATE_STEP_IDENTIFIER]) {
+        setDefaultStepValues(step)
+        getTemplateFormDefinition(step.template.uses).then(templateFormDefinition => {
+          return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
+        })
+      }
     }
   }, [editStepIntention])
 
@@ -132,10 +123,10 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         if (formEntity?.source === 'external') {
           // NOTE: add 'uses' for template step
           stepValue = {
-            ...omit(stepValue, 'with'),
+            ...omit(stepValue, 'template'),
             template: {
               uses: formEntity.data.identifier,
-              with: stepValue.with
+              with: stepValue.template.with
             }
           }
         }

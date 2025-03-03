@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button } from '@components/button'
 import { Icon } from '@components/icon'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
-import { get } from 'lodash-es'
+import { get, omit } from 'lodash-es'
 import { parse } from 'yaml'
 
 import {
@@ -27,10 +27,19 @@ interface UnifiedPipelineStudioEntityFormProps {
   requestClose: () => void
 }
 
-export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEntityFormProps): JSX.Element => {
+export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEntityFormProps) => {
   const { requestClose } = props
-  const { yamlRevision, addStepIntention, editStepIntention, requestYamlModifications, setFormEntity, formEntity } =
-    useUnifiedPipelineStudioContext()
+  const {
+    yamlRevision,
+    addStepIntention,
+    editStepIntention,
+    requestYamlModifications,
+    setFormEntity,
+    formEntity,
+    useTemplateListStore
+  } = useUnifiedPipelineStudioContext()
+
+  const { getTemplateFormDefinition } = useTemplateListStore()
 
   const [defaultStepValues, setDefaultStepValues] = useState({})
 
@@ -79,34 +88,35 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
     }
   }, [editStepIntention])
 
-  const formDefinition: IFormDefinition = useMemo(() => {
+  const [formDefinition, setFormDefinition] = useState<IFormDefinition | null>(null)
+
+  useEffect(() => {
     if (formEntity?.source === 'embedded') {
       const harnessStepDefinition = getHarnessStepOrGroupDefinition(formEntity.data.identifier)
       if (harnessStepDefinition) {
-        return {
+        setFormDefinition({
           ...harnessStepDefinition.formDefinition,
           inputs: addNameInput(harnessStepDefinition.formDefinition.inputs, 'name')
-        }
+        })
       }
     } else if (formEntity?.source === 'external') {
-      // TODO
-      // const stepData = JSON.parse(formStep?.data?.data ?? '{}') as StepDefinitionType
-      // const inputs = stepData.template.inputs
-      // const formInputs: IFormDefinition['inputs'] = Object.keys(inputs).map(inputName => {
-      //   return apiInput2IInputDefinition(inputName, inputs[inputName], 'template.with')
-      // })
-      // return { inputs: addNameInput(formInputs, 'name') }
+      getTemplateFormDefinition(formEntity.data.identifier).then(templateFormDefinition => {
+        return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
+      })
+    } else {
+      setFormDefinition({ inputs: [] })
     }
-
-    return { inputs: [] }
   }, [formEntity])
 
-  const resolver = useZodValidationResolver(formDefinition, {
+  const resolver = useZodValidationResolver(formDefinition ?? { inputs: [] }, {
     validationConfig: {
       requiredMessage: 'Required input',
       requiredMessagePerInput: { [InputType.select]: 'Selection is required' }
     }
   })
+
+  // TODO: add loading flag and skeleton
+  if (!formDefinition) return null
 
   return (
     <RootForm
@@ -116,19 +126,19 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
       mode="onSubmit"
       onSubmit={values => {
         const transformers = getTransformers(formDefinition)
-        const stepValue = outputTransformValues(values, transformers)
+        let stepValue = outputTransformValues(values, transformers)
 
-        // TODO: "external"
-        // if (formStep?.stepSource === StepSource.Templates) {
-        //   // NOTE: add 'uses' for template step
-        //   stepValue = {
-        //     ...stepValue,
-        //     template: {
-        //       uses: formStep?.data.identifier,
-        //       ...stepValue.template
-        //     }
-        //   }
-        // }
+        // TODO:move transform logic outside for "external"
+        if (formEntity?.source === 'external') {
+          // NOTE: add 'uses' for template step
+          stepValue = {
+            ...omit(stepValue, 'with'),
+            template: {
+              uses: formEntity.data.identifier,
+              with: stepValue.with
+            }
+          }
+        }
 
         if (addStepIntention) {
           // step group

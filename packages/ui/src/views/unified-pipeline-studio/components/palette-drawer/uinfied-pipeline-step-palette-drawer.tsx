@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
 import { Button } from '@components/button'
+import { Pagination } from '@components/index'
 import { Input } from '@components/input'
 import { Spacer } from '@components/spacer'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
@@ -18,12 +19,14 @@ interface PipelineStudioStepFormProps {
 
 export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Element => {
   const { requestClose } = props
-
-  const { setFormEntity, setRightDrawer } = useUnifiedPipelineStudioContext()
+  const { setFormEntity, setRightDrawer, useTemplateListStore, useTranslationStore } = useUnifiedPipelineStudioContext()
+  const { page, xNextPage, xPrevPage, setPage, templates } = useTemplateListStore()
 
   const [query, setQuery] = useState('')
 
-  // const templatesSectionRef = useRef<HTMLDivElement | null>(null)
+  const { t } = useTranslationStore()
+
+  const templatesSectionRef = useRef<HTMLDivElement | null>(null)
 
   const harnessStepGroupsFiltered = useMemo(
     () => harnessStepGroups.filter(harnessStepGroup => harnessStepGroup.identifier.includes(query)),
@@ -77,17 +80,33 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
             setRightDrawer(RightDrawer.Form)
           }}
         />
-        {/* <Spacer size={8} />
+        <StepPaletteSection
+          ref={templatesSectionRef}
+          title="Templates"
+          steps={templates ?? []}
+          onSelect={step => {
+            setFormEntity({
+              source: 'external',
+              type: 'step',
+              data: {
+                identifier: step.identifier,
+                description: step.description
+              }
+            })
+            setRightDrawer(RightDrawer.Form)
+          }}
+        />
+        <Spacer size={8} />
         <Pagination
-          nextPage={1}
-          previousPage={2}
+          nextPage={xNextPage}
+          previousPage={xPrevPage}
           currentPage={page}
           goToPage={(pageNum: number) => {
             templatesSectionRef.current?.scrollIntoView()
-            setPage(pageNum)
+            setPage(pageNum, query)
           }}
           t={t}
-        /> */}
+        />
         <Spacer size={8} />
       </StepsPaletteContentLayout.Root>
       <StepFormLayout.Footer>

@@ -1,20 +1,24 @@
+import { forwardRef } from 'react'
+
 import { Icon } from '@components/icon'
 
-import { AnyStepDefinition } from '../../steps/types'
 import { StepsPaletteContentLayout } from './step-palette-content-layout'
 import { StepsPaletteItemLayout } from './step-palette-item-layout'
 
-export interface StepPaletteSectionProps {
+export interface StepPaletteSectionProps<T> {
   title: string
-  steps: AnyStepDefinition[]
-  onSelect: (step: AnyStepDefinition) => void
+  steps: T[]
+  onSelect: (step: T) => void
 }
 
-export function StepPaletteSection(props: StepPaletteSectionProps) {
+const StepPaletteSection = forwardRef<
+  HTMLDivElement,
+  StepPaletteSectionProps<{ identifier: string; description?: string }>
+>(function StepPaletteSection(props: StepPaletteSectionProps<{ identifier: string; description?: string }>, ref) {
   const { steps, onSelect, title } = props
 
   return (
-    <StepsPaletteContentLayout.Section>
+    <StepsPaletteContentLayout.Section ref={ref}>
       <StepsPaletteContentLayout.SectionHeader>{title}</StepsPaletteContentLayout.SectionHeader>
 
       {steps.length > 0 ? (
@@ -43,4 +47,6 @@ export function StepPaletteSection(props: StepPaletteSectionProps) {
       )}
     </StepsPaletteContentLayout.Section>
   )
-}
+})
+
+export { StepPaletteSection }

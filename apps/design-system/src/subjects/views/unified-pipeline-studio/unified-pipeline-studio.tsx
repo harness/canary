@@ -2,6 +2,7 @@ import { useTranslationStore } from '@utils/viewUtils'
 
 import { UnifiedPipelineStudio } from '@harnessio/ui/views'
 
+import { useTemplateListStore } from './template-list.store'
 import { usePipelineStudioStore } from './unified-pipeline-studio.store'
 
 const PipelineStudioViewWrapper = () => {
@@ -9,6 +10,7 @@ const PipelineStudioViewWrapper = () => {
     <UnifiedPipelineStudio
       useUnifiedPipelineStudioStore={usePipelineStudioStore}
       useTranslationStore={useTranslationStore}
+      useTemplateListStore={useTemplateListStore}
     />
   )
 }

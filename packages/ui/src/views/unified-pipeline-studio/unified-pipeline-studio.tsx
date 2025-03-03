@@ -7,6 +7,22 @@ import { UnifiedPipelineStudioProvider } from './context/unified-pipeline-studio
 import { YamlRevision } from './types/common-types'
 import { PipelineStudioInternal } from './unified-pipeline-studio-internal'
 
+export interface ITemplateListItem {
+  identifier: string
+  description?: string
+}
+
+export interface ITemplateListStore {
+  templates: ITemplateListItem[] | null
+  setTemplatesData: (data: ITemplateListItem[] | null, totalPages: number) => void
+  totalPages: number
+  page: number
+  xNextPage: number
+  xPrevPage: number
+  setPage: (page: number, query: string) => void
+  getTemplateFormDefinition: (identifier: string) => Promise<any> // << TODO
+}
+
 export interface IUnifiedPipelineStudioStore {
   /** yaml state */
   yamlRevision: YamlRevision
@@ -25,12 +41,13 @@ export interface IUnifiedPipelineStudioStore {
 
 export interface UnifiedPipelineStudioProps {
   useUnifiedPipelineStudioStore: () => IUnifiedPipelineStudioStore
+  useTemplateListStore: () => ITemplateListStore
   useTranslationStore: () => TranslationStore
   initialView?: VisualYamlValue
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {
-  const { useUnifiedPipelineStudioStore, initialView = 'visual', useTranslationStore } = props
+  const { useUnifiedPipelineStudioStore, initialView = 'visual', useTranslationStore, useTemplateListStore } = props
   const {
     yamlRevision,
     onYamlRevisionChange,
@@ -53,6 +70,7 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       panelOpen={panelOpen}
       onPanelOpenChange={onPanelOpenChange}
       useTranslationStore={useTranslationStore}
+      useTemplateListStore={useTemplateListStore}
       initialView={initialView}
     >
       <UnifiedPipelineStudioNodeContextProvider>

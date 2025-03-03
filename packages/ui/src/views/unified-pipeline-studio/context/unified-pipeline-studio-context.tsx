@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 
 import { TranslationStore } from '@views/repo'
 
+import { ITemplateListStore } from '..'
 import { YamlErrorDataType } from '../components/unified-pipeline-studio-yaml-view'
 import { VisualYamlValue } from '../components/visual-yaml-toggle'
 import { YamlRevision } from '../types/common-types'
@@ -61,6 +62,7 @@ export interface UnifiedPipelineStudioContextProps {
   clearRightDrawerData: () => void
   formEntity: FormEntityType | null
   setFormEntity: (formEntity: FormEntityType) => void
+  useTemplateListStore: () => ITemplateListStore
 }
 
 export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioContextProps>({
@@ -94,7 +96,8 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
   },
   clearRightDrawerData: () => undefined,
   formEntity: null,
-  setFormEntity: (_formEntity: FormEntityType) => undefined
+  setFormEntity: (_formEntity: FormEntityType) => undefined,
+  useTemplateListStore: () => ({}) as ITemplateListStore
 })
 
 export function useUnifiedPipelineStudioContext(): UnifiedPipelineStudioContextProps {
@@ -112,6 +115,7 @@ export interface UnifiedPipelineStudioProviderProps {
   onPanelOpenChange?: (open: boolean) => void
   useTranslationStore: () => TranslationStore
   initialView?: VisualYamlValue
+  useTemplateListStore: () => ITemplateListStore
 }
 
 export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProviderProps> = props => {

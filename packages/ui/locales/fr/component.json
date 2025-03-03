@@ -7,6 +7,7 @@
     "cancel": "Annuler"
   },
   "filter": {
+    "delete": "Delete filter",
     "add-filter": "Ajouter un filtre",
     "reset": "Réinitialiser",
     "defaultLabel": "Filtrer",
@@ -31,7 +32,10 @@
     "name": "Nom",
     "stars": "Étoiles",
     "ascending": "Croissant",
-    "descending": "Décroissant"
+    "descending": "Décroissant",
+    "author": "Author",
+    "createdBefore": "Created Before",
+    "createdAfter": "Created After"
   },
   "sort": {
     "defaultLabel": "Trier",

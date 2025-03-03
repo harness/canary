@@ -33,11 +33,12 @@ const FiltersContext = createContext<FiltersContextType<Record<string, unknown>>
 interface FiltersProps<T extends Record<string, unknown>> {
   children?: ReactNode
   allFiltersSticky?: boolean
+  onFilterSelectionChange?: (filters: (keyof T)[]) => void
   onChange?: (filters: T) => void
 }
 
 const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
-  { children, allFiltersSticky, onChange }: FiltersProps<T>,
+  { children, allFiltersSticky, onChange, onFilterSelectionChange }: FiltersProps<T>,
   ref: React.Ref<FilterRefType<T>>
 ) {
   type FilterKeys = keyof T
@@ -66,6 +67,26 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     onChange?.(getValues(filtersMap))
   }
 
+  // Wrapper function to set the filters order
+  // Which automatically triggers the onChange callback
+  const setFiltersOrderTrigger = ({
+    filterKey,
+    updatedFiltersOrder
+  }: {
+    filterKey?: FilterKeys
+    updatedFiltersOrder?: FilterKeys[]
+  }) => {
+    if (filterKey) {
+      setFiltersOrder(prev => {
+        onFilterSelectionChange?.([...prev, filterKey])
+        return [...prev, filterKey]
+      })
+    } else if (updatedFiltersOrder) {
+      setFiltersOrder(updatedFiltersOrder)
+      onFilterSelectionChange?.(updatedFiltersOrder)
+    }
+  }
+
   const addFilter = (filterKey: FilterKeys) => {
     debug('Adding filter with key: %s', filterKey)
     setFiltersMap(prev => ({
@@ -79,16 +100,16 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
         [filterKey]: createNewFilter()
       })
     )
-    setFiltersOrder(prev => [...prev, filterKey])
+    setFiltersOrderTrigger({ filterKey })
   }
 
   const removeFilter = (filterKey: FilterKeys) => {
     debug('Removing filter with key: %s', filterKey)
-    const updatedFiltersMap = { ...filtersMap }
-    delete updatedFiltersMap[filterKey]
+    const updatedFiltersMap = { ...filtersMap, [filterKey]: { ...createNewFilter(), state: FilterStatus.HIDDEN } }
+
     const updatedFiltersOrder = filtersOrder.filter(key => key !== filterKey)
     setFiltersMapTrigger(updatedFiltersMap)
-    setFiltersOrder(updatedFiltersOrder)
+    setFiltersOrderTrigger({ updatedFiltersOrder })
 
     const query = createQueryString(updatedFiltersOrder, updatedFiltersMap)
     debug('Updating URL with query: %s', query)
@@ -118,7 +139,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
       // If default values is set, check if it is a valid non-null value and apply filter_applied status
       // If not, set the filter state to visible
-      const serializedDefaultValue = defaultValue ?? parser?.serialize(defaultValue)
+      const serializedDefaultValue = defaultValue === undefined ? defaultValue : parser?.serialize(defaultValue)
       let filterState = isStickyFilter ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
 
       if (!isNullable(serializedDefaultValue)) {
@@ -167,7 +188,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     const newFiltersOrder = Object.keys(map).filter(
       filter => map[filter as FilterKeys].state !== FilterStatus.HIDDEN
     ) as FilterKeys[]
-    setFiltersOrder(newFiltersOrder)
+    setFiltersOrderTrigger({ updatedFiltersOrder: newFiltersOrder })
 
     const query = createQueryString(newFiltersOrder, map)
     debug('Updating URL with query: %s', query)
@@ -176,6 +197,10 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     // remove setVisibleFilters
     initialFiltersRef.current = map
   }
+
+  useEffect(() => {
+    onFilterSelectionChange?.(filtersOrder)
+  }, [filtersOrder, onFilterSelectionChange])
 
   useEffect(() => {
     if (!initialFiltersRef.current) return
@@ -208,7 +233,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
     // check typecasting
     setFiltersMapTrigger(searchParamsFiltersMap as Record<FilterKeys, FilterType>)
-    setFiltersOrder(Object.keys(searchParamsFiltersMap) as FilterKeys[])
+    setFiltersOrderTrigger({ updatedFiltersOrder: Object.keys(searchParamsFiltersMap) as FilterKeys[] })
   }, [searchParams])
 
   const createNewFilter = (): FilterType => ({
@@ -263,7 +288,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     ) as FilterKeys[]
 
     setFiltersMapTrigger(updatedFiltersMap)
-    setFiltersOrder(newFiltersOrder)
+    setFiltersOrderTrigger({ updatedFiltersOrder: newFiltersOrder })
 
     const query = createQueryString(newFiltersOrder, updatedFiltersMap)
     debug('Updating URL with query: %s', query)

@@ -1,5 +1,6 @@
-import { PrincipalType } from '@/types'
+import { PrincipalType, UsererrorError } from '@/types'
 import { ColorsEnum, LabelType } from '@/views'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { TranslationStore } from '../repo-list/types'
 
@@ -221,6 +222,29 @@ export interface PRListLabelType {
   color: ColorsEnum
   key: string
   value?: string
+}
+
+export interface PullRequestPageProps {
+  usePullRequestListStore: () => PullRequestListStore
+  repoId?: string
+  spaceId?: string
+  defaultSelectedAuthorError?: UsererrorError | null
+  isPrincipalsLoading?: boolean
+  principalsSearchQuery?: string
+  defaultSelectedAuthor?: Partial<PrincipalType>
+  principalData?: Partial<PrincipalType>[]
+  setPrincipalsSearchQuery?: (query: string) => void
+  onFilterChange?: (filterValues: PRListFilters) => void
+  useTranslationStore: () => TranslationStore
+  isLoading?: boolean
+  searchQuery?: string | null
+  setSearchQuery: (query: string | null) => void
+}
+
+export type PRListFilters = {
+  created_by?: ComboBoxOptions
+  created_lt?: Date
+  created_gt?: Date
 }
 
 export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void) => void

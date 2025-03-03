@@ -1,33 +1,40 @@
-import { FC } from 'react'
+import { FC, useEffect, useMemo, useRef, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Spacer, StackedList } from '@/components'
 import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
-import { PullRequestListStore, SandboxLayout, TranslationStore } from '@/views'
-import { Filters, FiltersBar } from '@components/filters'
+import { SandboxLayout } from '@/views'
+import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
+import FilterTrigger from '@components/filters/triggers/filter-trigger'
 import { noop } from 'lodash-es'
 
-import { getFilterOptions, getSortDirections, getSortOptions } from '../constants/filter-options'
+import { createFilters, FilterRefType, Parser } from '@harnessio/filters'
+
+import ListControlBar from '../components/list-control-bar'
+import { getPRListFilterOptions, getSortDirections, getSortOptions } from '../constants/filter-options'
 import { useFilters } from '../hooks'
 import { filterPullRequests } from '../utils/filtering/pulls'
 import { sortPullRequests } from '../utils/sorting/pulls'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
+import type { PRListFilters, PullRequestPageProps } from './pull-request.types'
 
-export interface PullRequestPageProps {
-  usePullRequestListStore: () => PullRequestListStore
-  repoId?: string
-  spaceId?: string
-  useTranslationStore: () => TranslationStore
-  isLoading?: boolean
-  searchQuery?: string | null
-  setSearchQuery: (query: string | null) => void
-}
+type PRListFiltersKeys = keyof PRListFilters
+
+const PRListFilterHandler = createFilters<PRListFilters>()
 
 const PullRequestList: FC<PullRequestPageProps> = ({
   usePullRequestListStore,
   spaceId,
   repoId,
+  onFilterChange,
+  defaultSelectedAuthorError,
+  setPrincipalsSearchQuery,
+  principalsSearchQuery,
   useTranslationStore,
+  principalData,
+  defaultSelectedAuthor,
+  isPrincipalsLoading,
   isLoading,
   searchQuery,
   setSearchQuery
@@ -35,8 +42,26 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   const { Link } = useRouterContext()
   const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestListStore()
   const { t } = useTranslationStore()
+  const [searchParams] = useSearchParams()
 
-  const FILTER_OPTIONS = getFilterOptions(t)
+  const computedPrincipalData = useMemo(() => {
+    return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
+  }, [principalData, defaultSelectedAuthor, principalsSearchQuery])
+
+  const [isAllFilterDataPresent, setisAllFilterDataPresent] = useState<boolean>(true)
+
+  const PR_FILTER_OPTIONS = getPRListFilterOptions({
+    t,
+    onAuthorSearch: searchText => {
+      setPrincipalsSearchQuery?.(searchText)
+    },
+    isPrincipalsLoading: isPrincipalsLoading,
+    principalData:
+      computedPrincipalData?.map(userInfo => ({
+        label: userInfo?.display_name || '',
+        value: String(userInfo?.id)
+      })) ?? []
+  })
   const SORT_OPTIONS = getSortOptions(t)
   const SORT_DIRECTIONS = getSortDirections(t)
 
@@ -53,9 +78,12 @@ const PullRequestList: FC<PullRequestPageProps> = ({
    * Initialize filters hook with handlers for managing filter state
    */
   const filterHandlers = useFilters()
+  const [openedFilter, setOpenedFilter] = useState<PRListFiltersKeys>()
+  const filtersRef = useRef<FilterRefType<PRListFilters> | null>(null)
 
   const filteredPullReqs = filterPullRequests(pullRequests, filterHandlers.activeFilters)
   const sortedPullReqs = sortPullRequests(filteredPullReqs, filterHandlers.activeSorts)
+  const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
   const noData = !(sortedPullReqs && sortedPullReqs.length > 0)
   const handleCloseClick = () => {
@@ -66,8 +94,17 @@ const PullRequestList: FC<PullRequestPageProps> = ({
     filterHandlers.handleResetFilters()
   }
 
-  const showTopBar =
-    !noData || filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0 || !!searchQuery?.length
+  const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
+    setSelectedFiltersCnt(filterValues.length)
+  }
+
+  useEffect(() => {
+    setisAllFilterDataPresent(
+      searchParams.get('created_by') && !defaultSelectedAuthorError ? !!defaultSelectedAuthor : true
+    )
+  }, [defaultSelectedAuthor, defaultSelectedAuthorError])
+
+  const showTopBar = !noData || selectedFiltersCnt > 0 || filterHandlers.activeSorts.length > 0 || !!searchQuery?.length
 
   const renderListContent = () => {
     if (isLoading) {
@@ -75,7 +112,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
     }
 
     if (noData) {
-      return filterHandlers.activeFilters.length > 0 || searchQuery ? (
+      return selectedFiltersCnt > 0 || searchQuery ? (
         <StackedList.Root>
           <div className="flex min-h-[50vh] items-center justify-center py-20">
             <NoData
@@ -91,7 +128,10 @@ const PullRequestList: FC<PullRequestPageProps> = ({
               }}
               secondaryButton={{
                 label: t('views:noData.clearFilters', 'Clear filters'),
-                onClick: filterHandlers.handleResetFilters
+                onClick: () => {
+                  filterHandlers.handleResetFilters()
+                  filtersRef.current?.reset()
+                }
               }}
             />
           </div>
@@ -129,44 +169,143 @@ const PullRequestList: FC<PullRequestPageProps> = ({
     )
   }
 
+  const handleFilterOpen = (filterValues: PRListFiltersKeys, isOpen: boolean) => {
+    if (filterValues === 'created_by' && isOpen) {
+      // Reset search query so that new principal data set would be fetched
+      // when the filter is opened
+      setPrincipalsSearchQuery?.('')
+    }
+  }
+
+  const onFilterValueChange = (filterValues: PRListFilters) => {
+    const _filterValues = Object.entries(filterValues).reduce(
+      (acc: Record<string, PRListFilters[keyof PRListFilters]>, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = value
+        }
+        return acc
+      },
+      {}
+    )
+
+    onFilterChange?.(_filterValues)
+  }
+
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
         {showTopBar && (
           <>
-            <Spacer size={2} />
-            <p className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pull Requests</p>
-            <Spacer size={6} />
-            <ListActions.Root>
-              <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-96"
-                  value={searchInput || ''}
-                  handleChange={handleInputChange}
-                  placeholder={t('views:repos.search', 'Search')}
-                />
-              </ListActions.Left>
-              <ListActions.Right>
-                <Filters
-                  filterOptions={FILTER_OPTIONS}
-                  sortOptions={SORT_OPTIONS}
-                  filterHandlers={filterHandlers}
-                  t={t}
-                />
-                <Button variant="default" asChild>
-                  <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
-                </Button>
-              </ListActions.Right>
-            </ListActions.Root>
-            <FiltersBar
-              filterOptions={FILTER_OPTIONS}
-              sortOptions={SORT_OPTIONS}
-              sortDirections={SORT_DIRECTIONS}
-              filterHandlers={filterHandlers}
-              t={t}
-            />
-            <Spacer size={5} />
+            <PRListFilterHandler
+              ref={filtersRef}
+              onFilterSelectionChange={onFilterSelectionChange}
+              onChange={onFilterValueChange}
+              view="dropdown"
+            >
+              <Spacer size={2} />
+              <p className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pull Requests</p>
+              <Spacer size={6} />
+              <ListActions.Root>
+                <ListActions.Left>
+                  <SearchBox.Root
+                    width="full"
+                    className="max-w-96"
+                    value={searchInput || ''}
+                    handleChange={handleInputChange}
+                    placeholder={t('views:repos.search', 'Search')}
+                  />
+                </ListActions.Left>
+                <ListActions.Right>
+                  <PRListFilterHandler.Dropdown>
+                    {(addFilter, availableFilters, resetFilters) => (
+                      <FilterSelect<PRListFiltersKeys>
+                        options={PR_FILTER_OPTIONS.filter(option => availableFilters.includes(option.value))}
+                        onChange={option => {
+                          addFilter(option.value)
+                          setOpenedFilter(option.value)
+                        }}
+                        onReset={resetFilters}
+                        inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+                        buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+                        displayLabel={
+                          <FilterSelectLabel
+                            selectedFilters={PR_FILTER_OPTIONS.length - availableFilters.length}
+                            displayLabel={t('component:filter.defaultLabel', 'Filter')}
+                          />
+                        }
+                      />
+                    )}
+                  </PRListFilterHandler.Dropdown>
+                  <FilterTrigger
+                    type="sort"
+                    activeFilters={filterHandlers.activeSorts}
+                    onChange={filterHandlers.handleSortChange}
+                    onReset={filterHandlers.handleResetSorts}
+                    searchQueries={filterHandlers.searchQueries}
+                    onSearchChange={filterHandlers.handleSearchChange}
+                    options={SORT_OPTIONS}
+                    t={t}
+                  />
+                  <Button variant="default" asChild>
+                    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
+                  </Button>
+                </ListActions.Right>
+              </ListActions.Root>
+              <ListControlBar<PRListFilters>
+                renderSelectedFilters={filterFieldRenderer => {
+                  if (isAllFilterDataPresent) {
+                    return (
+                      <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
+                        {PR_FILTER_OPTIONS.map(filterOption => {
+                          return (
+                            <PRListFilterHandler.Component
+                              parser={
+                                'parser' in filterOption
+                                  ? // TODO Need to address the type issue here
+                                    (filterOption.parser as unknown as Parser<PRListFilters[PRListFiltersKeys]>)
+                                  : undefined
+                              }
+                              filterKey={filterOption.value}
+                              key={filterOption.value}
+                            >
+                              {({ onChange, removeFilter, value }) =>
+                                filterFieldRenderer({
+                                  filterOption,
+                                  onChange,
+                                  removeFilter,
+                                  value: value,
+                                  onOpenChange: isOpen => {
+                                    handleFilterOpen(filterOption.value, isOpen)
+                                  }
+                                })
+                              }
+                            </PRListFilterHandler.Component>
+                          )
+                        })}
+                      </PRListFilterHandler.Content>
+                    )
+                  }
+                }}
+                renderFilterOptions={filterOptionsRenderer => (
+                  <PRListFilterHandler.Dropdown>
+                    {(addFilter, availableFilters, resetFilters) => (
+                      <div className="flex items-center gap-x-4">
+                        {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
+                      </div>
+                    )}
+                  </PRListFilterHandler.Dropdown>
+                )}
+                openedFilter={openedFilter}
+                setOpenedFilter={setOpenedFilter}
+                selectedFiltersCnt={selectedFiltersCnt}
+                filterOptions={PR_FILTER_OPTIONS}
+                sortOptions={SORT_OPTIONS}
+                sortDirections={SORT_DIRECTIONS}
+                filterHandlers={filterHandlers}
+                t={t}
+              />
+              <Spacer size={5} />
+            </PRListFilterHandler>
           </>
         )}
         {renderListContent()}

@@ -1,3 +1,7 @@
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
+
+import { Parser } from '@harnessio/filters'
+
 type FilterActionKind = 'filter' | 'sort'
 
 interface FilterAction {
@@ -150,7 +154,59 @@ interface FilterHandlers {
   clearFilterToOpen: () => void
 }
 
+export enum FilterFieldTypes {
+  Calendar = 'calendar',
+  Text = 'text',
+  Number = 'number',
+  ComboBox = 'combobox'
+}
+
+interface FilterField<T = string | number> {
+  type: string
+  value?: T
+}
+
+interface FilterOptionConfigBase<Key extends string, V = undefined> {
+  label: string
+  value: Key
+  parser?: Parser<V>
+}
+
+interface ComboBoxFilterOptionConfig<Key extends string> extends FilterOptionConfigBase<Key, ComboBoxOptions> {
+  type: FilterFieldTypes.ComboBox
+  filterFieldConfig: {
+    options: Array<{ label: string; value: string }>
+    onSearch: (query: string) => void
+    noResultsMessage: string
+    placeholder: string
+    isLoading?: boolean
+  }
+}
+
+interface CalendarFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T, Date> {
+  type: FilterFieldTypes.Calendar
+}
+
+interface TextFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T> {
+  type: FilterFieldTypes.Text
+}
+
+interface NumberFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T> {
+  type: FilterFieldTypes.Number
+}
+
+type FilterOptionConfig<T extends string = string> =
+  | ComboBoxFilterOptionConfig<T>
+  | CalendarFilterOptionConfig<T>
+  | TextFilterOptionConfig<T>
+  | NumberFilterOptionConfig<T>
+
+type FilterValueTypes = string | number | unknown
+
 export type {
+  FilterField,
+  FilterValueTypes,
+  FilterOptionConfig,
   FilterAction,
   FilterOption,
   CalendarFilterOption,

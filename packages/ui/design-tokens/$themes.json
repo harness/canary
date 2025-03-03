@@ -9227,9 +9227,7 @@
       "shadow.inner": "S:2805cdc40176a4707d5cfc549b4c12e7ec4e74ff,",
       "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
     },
-    "selectedTokenSets": {
-      "mode/light/standard": "enabled"
-    },
+    "selectedTokenSets": {},
     "group": "mode",
     "$figmaCollectionId": "VariableCollectionId:1328:8485",
     "$figmaModeId": "1330:8",

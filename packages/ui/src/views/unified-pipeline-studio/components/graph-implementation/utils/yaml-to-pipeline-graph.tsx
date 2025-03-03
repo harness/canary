@@ -90,7 +90,7 @@ const processStages = (
       return {
         type: ContentNodeType.SerialStageGroup,
         config: {
-          maxWidth: 200,
+          minWidth: 200,
           minHeight: 50,
           hideDeleteButton: true,
           hideBeforeAdd: true,
@@ -112,7 +112,7 @@ const processStages = (
       return {
         type: ContentNodeType.ParallelStageGroup,
         config: {
-          maxWidth: 200,
+          minWidth: 200,
           minHeight: 50,
           hideDeleteButton: true,
           hideBeforeAdd: true,
@@ -173,7 +173,7 @@ const processSteps = (
       return {
         type: ContentNodeType.SerialStepGroup,
         config: {
-          maxWidth: 200,
+          minWidth: 200,
           minHeight: 50,
           hideDeleteButton: true,
           hideCollapseButton: false
@@ -194,7 +194,7 @@ const processSteps = (
       return {
         type: ContentNodeType.ParallelStepGroup,
         config: {
-          maxWidth: 200,
+          minWidth: 200,
           minHeight: 50,
           hideDeleteButton: true
         },

@@ -5,16 +5,17 @@ import { StepsPaletteContentLayout } from './step-palette-content-layout'
 import { StepsPaletteItemLayout } from './step-palette-item-layout'
 
 export interface StepPaletteSectionProps {
+  title: string
   steps: AnyStepDefinition[]
   onSelect: (step: AnyStepDefinition) => void
 }
 
 export function StepPaletteSection(props: StepPaletteSectionProps) {
-  const { steps, onSelect } = props
+  const { steps, onSelect, title } = props
 
   return (
     <StepsPaletteContentLayout.Section>
-      <StepsPaletteContentLayout.SectionHeader>Groups</StepsPaletteContentLayout.SectionHeader>
+      <StepsPaletteContentLayout.SectionHeader>{title}</StepsPaletteContentLayout.SectionHeader>
 
       {steps.length > 0 ? (
         steps.map(step => (

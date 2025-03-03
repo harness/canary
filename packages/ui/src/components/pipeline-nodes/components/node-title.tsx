@@ -13,7 +13,7 @@ export const NodeTitle: FC<NodeTitleProps> = ({ name, onHeaderClick, counter }) 
         role="button"
         tabIndex={0}
         title={name}
-        className="cursor-pointer truncate px-8 pt-0.5 text-14 font-medium leading-snug text-foreground-3"
+        className="mx-8 cursor-pointer truncate pt-0.5 text-14 font-medium leading-snug text-foreground-3"
         onClick={onHeaderClick}
       >
         {name} <span className="text-foreground-5">({counter})</span>

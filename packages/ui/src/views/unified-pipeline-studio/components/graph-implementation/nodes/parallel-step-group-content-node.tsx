@@ -56,7 +56,11 @@ export function ParallelStepGroupContentNode(props: {
       }}
       onEllipsisClick={e => {
         e.stopPropagation()
-        showContextMenu(StepGroupNodeContextMenu, data, e.currentTarget)
+        showContextMenu({
+          contextMenu: StepGroupNodeContextMenu,
+          nodeData: data,
+          initiator: e.currentTarget
+        })
       }}
       onHeaderClick={e => {
         e.stopPropagation()

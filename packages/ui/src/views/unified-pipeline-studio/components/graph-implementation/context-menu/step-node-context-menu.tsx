@@ -1,6 +1,5 @@
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon } from '@components/icon'
-import { Text } from '@components/text'
+import { Icon, Text } from '@components/index'
 
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 
@@ -39,11 +38,11 @@ export const StepNodeContextMenu = (): (() => React.ReactNode)[] | null | any =>
           key="add"
           className="flex items-center gap-1.5"
           onSelect={() => {
-            onAddIntention(contextMenuData.nodeData, 'before') // TODO what to add
+            onAddIntention(contextMenuData.nodeData, 'before')
           }}
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
-          <Text wrap="nowrap">Add step/group before</Text>
+          <Text wrap="nowrap">Add before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
           key="add"
@@ -53,7 +52,7 @@ export const StepNodeContextMenu = (): (() => React.ReactNode)[] | null | any =>
           }}
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
-          <Text wrap="nowrap">Add step/group after</Text>
+          <Text wrap="nowrap">Add after</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         {/* <RevealDropdownMenuItem /> */}

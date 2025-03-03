@@ -1,5 +1,6 @@
 import { ContainerNode } from '@harnessio/pipeline-graph'
 
+import { AddContentNode } from '../nodes/add-content-node'
 import { EndContentNode } from '../nodes/end-content-node'
 import { ParallelStageGroupContentNode } from '../nodes/parallel-stage-group-content-node'
 import { ParallelStepGroupContentNode } from '../nodes/parallel-step-group-content-node'
@@ -12,6 +13,15 @@ import { ContentNodeType } from '../types/content-node-type'
 import { ContentNodeFactory } from './content-node-factory'
 
 export const contentNodeBank = new ContentNodeFactory()
+
+// NOTE: Add node is used only whe pipeline is empty
+contentNodeBank.registerEntity(ContentNodeType.Add, {
+  type: ContentNodeType.Add,
+  component: AddContentNode,
+  containerType: ContainerNode.leaf
+})
+
+// --
 
 contentNodeBank.registerEntity(ContentNodeType.Start, {
   type: ContentNodeType.Start,

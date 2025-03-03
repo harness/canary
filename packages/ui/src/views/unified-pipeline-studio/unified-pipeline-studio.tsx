@@ -1,7 +1,5 @@
 import { TranslationStore } from '..'
 import { UnifiedPipelineStudioNodeContextProvider } from './components/graph-implementation/context/UnifiedPipelineStudioNodeContext'
-import { CommonNodeDataType } from './components/graph-implementation/types/common-node-data-type'
-import { YamlEntityType } from './components/graph-implementation/types/yaml-entity-type'
 import { PipelineStudioNodeContextMenu } from './components/unified-pipeline-studio-node-context-menu'
 import { YamlErrorDataType } from './components/unified-pipeline-studio-yaml-view'
 import { VisualYamlValue } from './components/visual-yaml-toggle'
@@ -44,30 +42,6 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     onPanelOpenChange
   } = useUnifiedPipelineStudioStore()
 
-  const onSelectIntention = (nodeData: CommonNodeDataType) => {
-    onSelectedPathChange(nodeData.yamlPath)
-  }
-
-  const onEditIntention = (_nodeData: CommonNodeDataType) => {
-    // throw new Error('Function not implemented.')
-  }
-
-  const onRevealInYaml = (_path: string | undefined) => {
-    // throw new Error('Function not implemented.')
-  }
-
-  const onAddIntention = (
-    _nodeData: CommonNodeDataType,
-    _position: 'after' | 'before' | 'in',
-    _yamlEntityTypeToAdd?: YamlEntityType | undefined
-  ) => {
-    // throw new Error('Function not implemented.')
-  }
-
-  const onDeleteIntention = (_nodeData: CommonNodeDataType) => {
-    // throw new Error('Function not implemented.')
-  }
-
   return (
     <UnifiedPipelineStudioProvider
       yamlRevision={yamlRevision}
@@ -81,14 +55,7 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       useTranslationStore={useTranslationStore}
       initialView={initialView}
     >
-      <UnifiedPipelineStudioNodeContextProvider
-        selectedPath={selectedPath}
-        onAddIntention={onAddIntention}
-        onDeleteIntention={onDeleteIntention}
-        onEditIntention={onEditIntention}
-        onRevealInYaml={onRevealInYaml}
-        onSelectIntention={onSelectIntention}
-      >
+      <UnifiedPipelineStudioNodeContextProvider>
         <PipelineStudioInternal />
         <PipelineStudioNodeContextMenu />
       </UnifiedPipelineStudioNodeContextProvider>

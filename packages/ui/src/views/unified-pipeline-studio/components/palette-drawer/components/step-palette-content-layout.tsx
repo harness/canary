@@ -7,7 +7,7 @@ const StepsPaletteContentLayout = {
 
   Section: forwardRef<HTMLDivElement, { children: React.ReactNode }>(function Section({ children }, ref) {
     return (
-      <div ref={ref} className="mx-4 flex flex-col pt-4">
+      <div ref={ref} className="flex flex-col pt-4">
         {children}
       </div>
     )
@@ -18,11 +18,7 @@ const StepsPaletteContentLayout = {
   },
 
   SectionItem: function SectionHeader({ children }: { children: React.ReactNode }) {
-    return (
-      <div className="hover:bg-shade-10 mb-3 flex flex-col rounded-md border bg-gradient-to-br from-[#FFFFFF15] to-[#FFFFFF00] p-2">
-        {children}
-      </div>
-    )
+    return <div className="hover:bg-shade-10 mb-3 flex flex-col rounded-md border p-2">{children}</div>
   }
 }
 

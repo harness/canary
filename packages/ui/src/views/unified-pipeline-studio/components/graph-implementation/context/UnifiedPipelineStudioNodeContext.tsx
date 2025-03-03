@@ -1,25 +1,32 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
+import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
+import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
+
 import { ParallelContainerConfig, SerialContainerConfig } from '@harnessio/pipeline-graph/src/types/container-node'
 
 import { CommonNodeDataType } from '../types/common-node-data-type'
 import { YamlEntityType } from '../types/yaml-entity-type'
 
 export interface ContextMenuData {
-  contextMenu: () => JSX.Element
+  contextMenu: ({ outsidePosition }: { outsidePosition?: 'before' | 'after' }) => JSX.Element
   nodeData: CommonNodeDataType
   position: { x: number; y: number }
   isIn?: boolean
+  isOutside?: boolean
+  outsidePosition?: 'before' | 'after'
 }
 
 export interface PipelineStudioNodeContextProps<T> {
   // context menu
-  showContextMenu: (
-    contextMenu: () => React.ReactNode,
-    nodeData: CommonNodeDataType,
-    initiator: HTMLElement,
+  showContextMenu: (props: {
+    contextMenu: (() => React.ReactNode)[] | any
+    nodeData: CommonNodeDataType
+    initiator: HTMLElement
     isIn?: boolean
-  ) => void
+    isOutside?: boolean
+    outsidePosition?: 'before' | 'after'
+  }) => void
   hideContextMenu: () => void
   contextMenuData: ContextMenuData | undefined
 
@@ -42,12 +49,14 @@ export interface PipelineStudioNodeContextProps<T> {
 }
 
 export const PipelineStudioNodeContext = createContext<PipelineStudioNodeContextProps<any>>({
-  showContextMenu: (
-    _contextMenu: () => React.ReactNode,
-    _nodeData: CommonNodeDataType,
-    _initiator: HTMLElement,
-    _isIn?: boolean
-  ) => undefined,
+  showContextMenu: (_props: {
+    contextMenu: () => React.ReactNode
+    nodeData: CommonNodeDataType
+    initiator: HTMLElement
+    isIn?: boolean
+    isOutside?: boolean
+    outsidePosition?: 'before' | 'after'
+  }) => undefined,
   hideContextMenu: () => undefined,
   contextMenuData: undefined,
   //
@@ -71,16 +80,6 @@ export function usePipelineStudioNodeContext<T>(): PipelineStudioNodeContextProp
 
 export interface UnifiedPipelineStudioNodeContextProviderProps<T = unknown> {
   children: React.ReactNode
-  selectedPath?: string
-  onSelectIntention: (nodeData: CommonNodeDataType) => void
-  onAddIntention: (
-    nodeData: CommonNodeDataType,
-    position: 'after' | 'before' | 'in',
-    yamlEntityTypeToAdd?: YamlEntityType
-  ) => void
-  onEditIntention: (nodeData: CommonNodeDataType) => void
-  onDeleteIntention: (nodeData: CommonNodeDataType) => void
-  onRevealInYaml: (_path: string | undefined) => void
   globalData?: T
   serialContainerConfig?: Partial<SerialContainerConfig>
   parallelContainerConfig?: Partial<ParallelContainerConfig>
@@ -89,35 +88,108 @@ export interface UnifiedPipelineStudioNodeContextProviderProps<T = unknown> {
 export const UnifiedPipelineStudioNodeContextProvider: React.FC<
   UnifiedPipelineStudioNodeContextProviderProps
 > = props => {
-  const {
-    onSelectIntention,
-    onAddIntention,
-    onEditIntention,
-    onDeleteIntention,
-    onRevealInYaml,
-    children,
-    selectedPath,
-    globalData,
-    serialContainerConfig,
-    parallelContainerConfig
-  } = props
+  const { children, globalData, serialContainerConfig, parallelContainerConfig } = props
+
+  const { requestYamlModifications, setRightDrawer, setEditStepIntention, setAddStepIntention, selectedPath } =
+    useUnifiedPipelineStudioContext()
+
+  const onDeleteIntention = (nodeData: CommonNodeDataType) => {
+    requestYamlModifications.deleteInArray({ path: nodeData.yamlPath })
+  }
+
+  const onEditIntention = (nodeData: CommonNodeDataType) => {
+    setRightDrawer(RightDrawer.Form)
+    setEditStepIntention({ path: nodeData.yamlPath })
+  }
+
+  const onSelectIntention = () => {}
+
+  const onAddIntention = (
+    nodeData: CommonNodeDataType,
+    position: 'after' | 'before' | 'in',
+    yamlEntityTypeToAdd?: YamlEntityType
+  ) => {
+    if (yamlEntityTypeToAdd === YamlEntityType.ParallelStageGroup) {
+      // NOTE: if we are adding in the array we have to provide path to children array
+      if (position === 'in' && nodeData.yamlChildrenPath) {
+        requestYamlModifications.injectInArray({
+          path: nodeData.yamlChildrenPath,
+          position,
+          item: { parallel: { stages: [] } }
+        })
+      } else {
+        requestYamlModifications.injectInArray({
+          path: nodeData.yamlPath,
+          position,
+          item: { parallel: { stages: [] } }
+        })
+      }
+      return
+    }
+
+    if (yamlEntityTypeToAdd === YamlEntityType.SerialStageGroup) {
+      // NOTE: if we are adding in the array we have to provide path to children array
+      if (position === 'in' && nodeData.yamlChildrenPath) {
+        requestYamlModifications.injectInArray({
+          path: nodeData.yamlChildrenPath,
+          position,
+          item: { group: { stages: [] } }
+        })
+      } else {
+        requestYamlModifications.injectInArray({ path: nodeData.yamlPath, position, item: { group: { stages: [] } } })
+      }
+      return
+    }
+
+    if (yamlEntityTypeToAdd === YamlEntityType.Stage) {
+      // NOTE: if we are adding in the array we have to provide path to children array
+      if (position === 'in' && nodeData.yamlChildrenPath) {
+        requestYamlModifications.injectInArray({ path: nodeData.yamlChildrenPath, position, item: { steps: [] } })
+      } else {
+        requestYamlModifications.injectInArray({ path: nodeData.yamlPath, position, item: { steps: [] } })
+      }
+      return
+    }
+
+    setRightDrawer(RightDrawer.Collection)
+
+    // NOTE: if we are adding in the array we have to provide path to children array
+    if (position === 'in' && nodeData.yamlChildrenPath) {
+      setAddStepIntention({ path: nodeData.yamlChildrenPath, position })
+    } else {
+      setAddStepIntention({ path: nodeData.yamlPath, position })
+    }
+  }
+
+  const onRevealInYaml = () => {}
 
   const [contextMenuData, setContextMenuData] = useState<ContextMenuData | undefined>(undefined)
   const [selectionPath, setSelectionPath] = useState<string | undefined>(undefined)
 
-  const showContextMenu = (
-    contextMenu: (() => React.ReactNode)[] | any,
-    nodeData: CommonNodeDataType,
-    initiator: HTMLElement,
+  const showContextMenu = ({
+    contextMenu,
+    nodeData,
+    initiator,
+    isIn,
+    isOutside,
+    outsidePosition
+  }: {
+    contextMenu: (() => React.ReactNode)[] | any
+    nodeData: CommonNodeDataType
+    initiator: HTMLElement
     isIn?: boolean
-  ) => {
+    isOutside?: boolean
+    outsidePosition?: 'before' | 'after'
+  }) => {
     const rect = initiator.getBoundingClientRect()
 
     setContextMenuData({
       contextMenu,
       nodeData,
       position: { x: rect.left + rect.width, y: rect.top },
-      isIn
+      isIn,
+      isOutside,
+      outsidePosition
     })
   }
 

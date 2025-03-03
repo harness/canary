@@ -2,13 +2,22 @@ import './styles/AppMFE.css'
 
 import { useEffect, useMemo, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import { createBrowserRouter, matchPath, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  Link,
+  matchPath,
+  NavLink,
+  Outlet,
+  RouterProvider,
+  useLocation,
+  useNavigate
+} from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { ToastProvider, TooltipProvider } from '@harnessio/ui/components'
-import { PortalProvider } from '@harnessio/ui/context'
+import { PortalProvider, RouterProvider as RouterProviderV1 } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -20,6 +29,7 @@ import { extractRedirectRouteObjects } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
 import { mfeRoutes, repoRoutes } from './routes'
+import { decodeURIComponentIfValid } from './utils/path-utils'
 
 export interface MFERouteRendererProps {
   renderUrl: string
@@ -45,21 +55,24 @@ function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFER
    * isNotRedirectPath ==> check if the current path is not a redirect path
    */
   const canNavigate = useMemo(
-    () => renderUrl && parentPath !== location.pathname && isNotRedirectPath,
+    () =>
+      renderUrl &&
+      decodeURIComponentIfValid(parentPath) !== decodeURIComponentIfValid(location.pathname) &&
+      isNotRedirectPath,
     [isNotRedirectPath, location.pathname, parentPath, renderUrl]
   )
 
   // Handle location change detected from parent route
   useEffect(() => {
     if (canNavigate) {
-      navigate(parentPath, { replace: true })
+      navigate(decodeURIComponentIfValid(parentPath), { replace: true })
     }
   }, [parentPath])
 
   // Notify parent about route change
   useEffect(() => {
     if (canNavigate) {
-      onRouteChange?.(`${renderUrl}${location.pathname}`)
+      onRouteChange?.(decodeURIComponentIfValid(`${renderUrl}${location.pathname}`))
     }
   }, [location.pathname])
 
@@ -172,7 +185,14 @@ export default function AppMFE({
                         <TooltipProvider>
                           <ExitConfirmProvider>
                             <NavigationProvider routes={routesToRender}>
-                              <RouterProvider router={router} />
+                              <RouterProviderV1
+                                Link={Link}
+                                NavLink={NavLink}
+                                Outlet={Outlet}
+                                navigate={router.navigate}
+                              >
+                                <RouterProvider router={router} />
+                              </RouterProviderV1>
                             </NavigationProvider>
                           </ExitConfirmProvider>
                         </TooltipProvider>

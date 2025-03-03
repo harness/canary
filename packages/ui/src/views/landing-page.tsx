@@ -1,4 +1,7 @@
-import { Button, ButtonGroup, DropdownMenu, Icon, Text } from '@/components'
+import { FC } from 'react'
+import { LinkProps } from 'react-router-dom'
+
+import { Button, ButtonGroup, DropdownMenu, Icon } from '@/components'
 import { useRouterContext } from '@/context'
 import { SandboxLayout, TranslationStore } from '@/views'
 
@@ -14,66 +17,68 @@ interface TypesSpace {
   updated?: number
 }
 
-interface LandingPageProps {
+export interface LandingPageProps {
   spaces: TypesSpace[]
   useTranslationStore: () => TranslationStore
+  getProjectPath: (spaceId?: string) => string
+  createProjectLinkProps: LinkProps
 }
 
-export const LandingPageView: React.FC<LandingPageProps> = ({ spaces, useTranslationStore }) => {
-  const { navigate } = useRouterContext()
+export const LandingPageView: FC<LandingPageProps> = ({
+  spaces,
+  useTranslationStore,
+  getProjectPath,
+  createProjectLinkProps
+}) => {
+  const { Link } = useRouterContext()
   const { t } = useTranslationStore()
 
   return (
     <SandboxLayout.Main>
-      <div className="flex size-full flex-col place-content-center place-items-center gap-4">
-        <div className="flex flex-col place-content-center place-items-center gap-2.5">
-          <Text size={5} weight="medium">
-            {t('views:landingPage.selectProject', 'Select a project to get started')}
-          </Text>
-          <div className="flex flex-col">
-            <Text size={2} weight="normal" align="center" color="tertiaryBackground">
-              {t(
-                'views:landingPage.description',
-                'Projects contain your repositories and pipelines. To start using Gitness, select a project or create a new one.'
-              )}
-            </Text>
-          </div>
-          <ButtonGroup>
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger asChild>
-                <Button variant="default" size={'lg'}>
-                  <Text color="tertiary" className="mr-5 text-foreground-6">
-                    {t('views:landingPage.projectSelector', 'Select Project')}
-                  </Text>
-                  <Icon name="chevron-down" size={15} className="chevron-down" />
-                </Button>
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Content style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
-                {spaces?.length ? (
-                  spaces.map(space => (
-                    <DropdownMenu.Item key={space.id} onClick={() => navigate(`${space.path}/repos`)}>
-                      {space.identifier}
-                    </DropdownMenu.Item>
-                  ))
-                ) : (
-                  <DropdownMenu.Item disabled>
-                    {t('views:landingPage.noProjects', 'No projects available')}
+      <section className="grid h-full place-content-center place-items-center gap-2.5">
+        <h2 className="text-2xl font-medium text-foreground-1">
+          {t('views:landingPage.selectProject', 'Select a project to get started')}
+        </h2>
+
+        <p className="text-center text-sm font-normal text-foreground-3">
+          {t(
+            'views:landingPage.description',
+            'Projects contain your repositories and pipelines. To start using Gitness, select a project or create a new one.'
+          )}
+        </p>
+
+        <ButtonGroup>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild>
+              <Button variant="default" size="lg">
+                <span className="mr-5 text-sm font-normal text-foreground-6">
+                  {t('views:landingPage.projectSelector', 'Select Project')}
+                </span>
+                <Icon name="chevron-down" size={15} className="chevron-down" />
+              </Button>
+            </DropdownMenu.Trigger>
+
+            <DropdownMenu.Content style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
+              {!!spaces?.length &&
+                spaces.map(space => (
+                  <DropdownMenu.Item key={space.id}>
+                    <Link to={getProjectPath(space?.path)}>{space.identifier}</Link>
                   </DropdownMenu.Item>
-                )}
-              </DropdownMenu.Content>
-            </DropdownMenu.Root>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => {
-                navigate('/create')
-              }}
-            >
-              {t('views:landingPage.createProject', 'Create Project')}
-            </Button>
-          </ButtonGroup>
-        </div>
-      </div>
+                ))}
+
+              {!spaces?.length && (
+                <DropdownMenu.Item disabled>
+                  {t('views:landingPage.noProjects', 'No projects available')}
+                </DropdownMenu.Item>
+              )}
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+
+          <Button size="lg" variant="outline" asChild>
+            <Link {...createProjectLinkProps}>{t('views:landingPage.createProject', 'Create Project')}</Link>
+          </Button>
+        </ButtonGroup>
+      </section>
     </SandboxLayout.Main>
   )
 }

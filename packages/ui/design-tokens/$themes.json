@@ -1487,7 +1487,6 @@
     },
     "selectedTokenSets": {
       "breakpoint/desktop": "enabled",
-      "components/desktop/feature/pipline": "enabled",
       "components/desktop/base/input": "enabled",
       "components/desktop/base/dropdown menu": "enabled",
       "components/desktop/base/btn": "enabled",

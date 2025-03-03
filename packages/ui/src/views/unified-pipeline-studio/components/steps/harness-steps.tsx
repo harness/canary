@@ -94,7 +94,7 @@ export function isHarnessStep(step: Record<string, unknown>): boolean {
   return harnessStepsIds.some(stepId => stepId in step)
 }
 
-export function isHarnessGroup(step: { identifier: string }): boolean {
+export function isHarnessGroup(step: Record<string, unknown>): boolean {
   const harnessStepsIds = harnessStepGroups.map(step => step.identifier)
   return harnessStepsIds.some(stepId => stepId in step)
 }

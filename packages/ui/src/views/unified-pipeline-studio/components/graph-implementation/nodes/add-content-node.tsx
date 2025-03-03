@@ -8,7 +8,7 @@ import { CommonNodeDataType } from '../types/common-node-data-type'
 
 export interface AddNodeDataType extends CommonNodeDataType {}
 
-export function AddNode(props: { node: LeafNodeInternalType<AddNodeDataType> }) {
+export function AddContentNode(props: { node: LeafNodeInternalType<AddNodeDataType> }) {
   const { node } = props
   const { data } = node
 
@@ -18,7 +18,7 @@ export function AddNode(props: { node: LeafNodeInternalType<AddNodeDataType> }) 
     <PipelineNodes.AddNode
       onClick={e => {
         e.stopPropagation()
-        showContextMenu(StageGroupAddInNodeContextMenu, data, e.currentTarget)
+        showContextMenu({ contextMenu: StageGroupAddInNodeContextMenu, nodeData: data, initiator: e.currentTarget })
       }}
     />
   )

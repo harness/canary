@@ -6,6 +6,7 @@ import { CollapsedGroupNode } from '@components/pipeline-nodes/components/collap
 import { SerialNodeInternalType } from '@harnessio/pipeline-graph'
 
 import { StageGroupAddInNodeContextMenu } from '../context-menu/stage-group-add-in-node-context-menu'
+import { StageGroupFloatingAddNodeContextMenu } from '../context-menu/stage-group-floating-add-node-context-menu'
 import { StageGroupNodeContextMenu } from '../context-menu/stage-group-node-context-menu'
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 import { CommonNodeDataType } from '../types/common-node-data-type'
@@ -26,14 +27,8 @@ export function SerialStageGroupContentNode(props: {
   const { node, children, collapsed, isFirst, parentNodeType } = props
   const data = node.data as SerialStageGroupContentNodeDataType
 
-  const {
-    selectionPath,
-    showContextMenu,
-    onSelectIntention,
-    onAddIntention,
-    serialContainerConfig,
-    parallelContainerConfig
-  } = usePipelineStudioNodeContext()
+  const { selectionPath, showContextMenu, onSelectIntention, serialContainerConfig, parallelContainerConfig } =
+    usePipelineStudioNodeContext()
 
   const selected = useMemo(() => selectionPath === data.yamlPath, [selectionPath])
 
@@ -53,18 +48,34 @@ export function SerialStageGroupContentNode(props: {
       serialContainerConfig={serialContainerConfig}
       onAddInClick={e => {
         e.stopPropagation()
-        showContextMenu(StageGroupAddInNodeContextMenu, data, e.currentTarget, true)
+        showContextMenu({
+          contextMenu: StageGroupAddInNodeContextMenu,
+          nodeData: data,
+          initiator: e.currentTarget,
+          isIn: true
+        })
       }}
       onEllipsisClick={e => {
         e.stopPropagation()
-        showContextMenu(StageGroupNodeContextMenu, data, e.currentTarget)
+        showContextMenu({
+          contextMenu: StageGroupNodeContextMenu,
+          nodeData: data,
+          initiator: e.currentTarget
+        })
       }}
       onHeaderClick={e => {
         e.stopPropagation()
         onSelectIntention(data)
       }}
-      onAddClick={position => {
-        onAddIntention(data, position)
+      onAddClick={(position, e) => {
+        showContextMenu({
+          contextMenu: StageGroupFloatingAddNodeContextMenu,
+          nodeData: data,
+          initiator: e.currentTarget,
+          isIn: true,
+          isOutside: true,
+          outsidePosition: position
+        })
       }}
     >
       {collapsed ? (

@@ -1,6 +1,5 @@
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon } from '@components/icon'
-import { Text } from '@components/text'
+import { Icon, Text } from '@components/index'
 
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 import { YamlEntityType } from '../types/yaml-entity-type'
@@ -37,20 +36,20 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
-          key="add"
+          key="add-before"
           className="flex items-center gap-1.5"
           onSelect={() => {
-            onAddIntention(contextMenuData.nodeData, 'before', YamlEntityType.Stage) // TODO what to add
+            onAddIntention(contextMenuData.nodeData, 'before', YamlEntityType.Stage)
           }}
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add stage before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
-          key="add"
+          key="add-after"
           className="flex items-center gap-1.5"
           onSelect={() => {
-            onAddIntention(contextMenuData.nodeData, 'after', YamlEntityType.Stage) // TODO what to add
+            onAddIntention(contextMenuData.nodeData, 'after', YamlEntityType.Stage)
           }}
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />

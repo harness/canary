@@ -19,7 +19,7 @@ import {
 import { useUnifiedPipelineStudioContext } from '../../../unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { inputComponentFactory } from '../form-inputs/factory/factory'
 import { InputType } from '../form-inputs/types'
-import { getHarnessSteOrGroupIdentifier, getHarnessStepOrGroupDefinition } from '../steps/harness-steps'
+import { getHarnessSteOrGroupIdentifier, getHarnessStepOrGroupDefinition, isHarnessGroup } from '../steps/harness-steps'
 import { EntityFormLayout } from './entity-form-layout'
 import { EntityFormSectionLayout } from './entity-form-section-layout'
 
@@ -35,19 +35,15 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
   const [defaultStepValues, setDefaultStepValues] = useState({})
 
   useEffect(() => {
-    console.log(editStepIntention)
     if (editStepIntention) {
       const yamlJson = parse(yamlRevision.yaml)
       const step = get(yamlJson, editStepIntention.path)
-      console.log(step)
 
       const harnessStepIdentifier = getHarnessSteOrGroupIdentifier(step)
-      console.log(harnessStepIdentifier)
 
       // process harness step
       if (harnessStepIdentifier) {
         const stepDefinition = getHarnessStepOrGroupDefinition(harnessStepIdentifier)
-        console.log(stepDefinition, 'stepDefinition')
 
         if (stepDefinition) {
           const transformers = getTransformers(stepDefinition?.formDefinition ?? { inputs: [] })
@@ -135,11 +131,22 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         // }
 
         if (addStepIntention) {
-          requestYamlModifications.injectInArray({
-            path: addStepIntention.path,
-            position: addStepIntention.position,
-            item: stepValue
-          })
+          // step group
+          if (formEntity?.data?.identifier && isHarnessGroup({ [formEntity.data.identifier]: true })) {
+            requestYamlModifications.injectInArray({
+              path: addStepIntention.path,
+              position: addStepIntention.position,
+              item: { [formEntity.data.identifier]: { ...stepValue, steps: [] } }
+            })
+          }
+          // step
+          else {
+            requestYamlModifications.injectInArray({
+              path: addStepIntention.path,
+              position: addStepIntention.position,
+              item: stepValue
+            })
+          }
         } else if (editStepIntention) {
           requestYamlModifications.updateInArray({
             path: editStepIntention.path,

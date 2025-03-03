@@ -11,11 +11,8 @@ import {
   type UseFormReturn
 } from 'react-hook-form'
 
-import type * as LabelPrimitive from '@radix-ui/react-label'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
-
-import { Label } from '.'
 
 interface ZodFormProps<T extends FieldValues> {
   form: UseFormReturn<T>
@@ -86,15 +83,15 @@ const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 )
 FormItem.displayName = 'FormItem'
 
-const FormLabel = React.forwardRef<
-  React.ElementRef<typeof LabelPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof Label>
->(({ className, ...props }, ref) => {
-  const { error, formItemId } = useFormField()
+// const FormLabel = React.forwardRef<
+//   React.ElementRef<typeof LabelPrimitive.Root>,
+//   React.ComponentPropsWithoutRef<typeof Label>
+// >(({ className, ...props }, ref) => {
+//   const { error, formItemId } = useFormField()
 
-  return <Label ref={ref} className={cn(error && 'text-destructive', className)} htmlFor={formItemId} {...props} />
-})
-FormLabel.displayName = 'FormLabel'
+//   return <Label ref={ref} className={cn(error && 'text-destructive', className)} htmlFor={formItemId} {...props} />
+// })
+// FormLabel.displayName = Label.displayName
 
 const FormControl = React.forwardRef<React.ElementRef<typeof Slot>, React.ComponentPropsWithoutRef<typeof Slot>>(
   ({ ...props }, ref) => {
@@ -163,4 +160,4 @@ function Form<T extends FieldValues>(props: ZodFormProps<T> & Omit<React.Compone
 }
 Form.displayName = 'Form'
 
-export { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField, useForm }
+export { useFormField, Form, FormItem, FormControl, FormDescription, FormMessage, FormField, useForm }

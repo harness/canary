@@ -4,7 +4,7 @@ import { Icon, Text } from '@components/index'
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 import { YamlEntityType } from '../types/yaml-entity-type'
 
-export const StageGroupAddInNodeContextMenu = () => {
+export const StageGroupFloatingAddNodeContextMenu = ({ outsidePosition }: { outsidePosition: 'before' | 'after' }) => {
   const { contextMenuData, onAddIntention, hideContextMenu } = usePipelineStudioNodeContext()
 
   if (!contextMenuData) return null
@@ -24,35 +24,26 @@ export const StageGroupAddInNodeContextMenu = () => {
         style={{ left: `${contextMenuData?.position.x}px`, top: `${contextMenuData?.position.y}px` }}
       >
         <DropdownMenu.Item
-          key={`add-${YamlEntityType.Stage}`}
+          key={`add-${YamlEntityType.SerialStageGroup}-before`}
           className="flex items-center gap-1.5"
           onSelect={() => {
-            onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.Stage)
+            onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.SerialStageGroup)
           }}
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
-          <Text wrap="nowrap">Add Stage</Text>
+          <Text wrap="nowrap">Add Serial Stages Group</Text>
         </DropdownMenu.Item>
+
         <DropdownMenu.Separator />
         <DropdownMenu.Item
-          key={`add-${YamlEntityType.SerialStageGroup}`}
+          key={`add-${YamlEntityType.ParallelStageGroup}-before`}
           className="flex items-center gap-1.5"
           onSelect={() => {
-            onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.SerialStageGroup)
+            onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.ParallelStageGroup)
           }}
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
-          <Text wrap="nowrap">Add Serial group</Text>
-        </DropdownMenu.Item>
-        <DropdownMenu.Item
-          key={`add-${YamlEntityType.ParallelStageGroup}`}
-          className="flex items-center gap-1.5"
-          onSelect={() => {
-            onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.ParallelStageGroup)
-          }}
-        >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
-          <Text wrap="nowrap">Add Parallel group</Text>
+          <Text wrap="nowrap">Add Parallel Stages Group</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

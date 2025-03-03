@@ -52,7 +52,7 @@ export function StepContentNode(props: {
       hideFloatingButtons={hideFloatingButtons}
       onEllipsisClick={e => {
         e.stopPropagation()
-        showContextMenu(StepNodeContextMenu, data, e.currentTarget)
+        showContextMenu({ contextMenu: StepNodeContextMenu, nodeData: data, initiator: e.currentTarget })
       }}
       onClick={e => {
         e.stopPropagation()

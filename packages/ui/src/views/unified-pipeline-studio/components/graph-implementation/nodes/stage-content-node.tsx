@@ -5,6 +5,7 @@ import { CollapsedGroupNode } from '@components/pipeline-nodes/components/collap
 
 import { SerialNodeInternalType } from '@harnessio/pipeline-graph'
 
+import { StageFloatingAddNodeContextMenu } from '../context-menu/stage-floating-add-node-context-menu'
 import { StageNodeContextMenu } from '../context-menu/stage-node-context-menu'
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 import { CommonNodeDataType } from '../types/common-node-data-type'
@@ -54,14 +55,20 @@ export function StageContentNode(props: {
       }}
       onEllipsisClick={e => {
         e.stopPropagation()
-        showContextMenu(StageNodeContextMenu, data, e.currentTarget)
+        showContextMenu({ contextMenu: StageNodeContextMenu, nodeData: data, initiator: e.currentTarget })
       }}
       onHeaderClick={e => {
         e.stopPropagation()
         onSelectIntention(data)
       }}
-      onAddClick={position => {
-        onAddIntention(data, position)
+      onAddClick={(position, e) => {
+        showContextMenu({
+          contextMenu: StageFloatingAddNodeContextMenu,
+          nodeData: data,
+          initiator: e.currentTarget,
+          isOutside: true,
+          outsidePosition: position
+        })
       }}
     >
       {collapsed ? (

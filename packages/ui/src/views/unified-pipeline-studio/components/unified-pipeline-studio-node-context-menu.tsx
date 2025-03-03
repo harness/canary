@@ -3,5 +3,5 @@ import { usePipelineStudioNodeContext } from './graph-implementation/context/Uni
 export const PipelineStudioNodeContextMenu = () => {
   const { contextMenuData } = usePipelineStudioNodeContext()
 
-  return contextMenuData ? contextMenuData.contextMenu() : null
+  return contextMenuData ? <contextMenuData.contextMenu outsidePosition={contextMenuData.outsidePosition} /> : null
 }

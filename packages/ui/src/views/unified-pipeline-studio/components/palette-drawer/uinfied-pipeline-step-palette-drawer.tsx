@@ -48,6 +48,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
       </StepsPaletteLayout.Header>
       <StepsPaletteContentLayout.Root>
         <StepPaletteSection
+          title="Group"
           steps={harnessStepGroupsFiltered}
           onSelect={step => {
             setFormEntity({
@@ -62,6 +63,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
           }}
         />
         <StepPaletteSection
+          title="Steps"
           steps={harnessStepsFiltered}
           onSelect={step => {
             setFormEntity({

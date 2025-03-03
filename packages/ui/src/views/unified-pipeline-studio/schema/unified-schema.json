@@ -126,8 +126,7 @@
           "type": "string"
         }
       },
-      "type": "object",
-      "x-go-file": "cache.go"
+      "type": "object"
     },
     "Clone": {
       "anyOf": [
@@ -395,15 +394,50 @@
       "type": "object",
       "x-go-file": "credentials_aws.go"
     },
-    "Environment": {
+    "Delegate": {
       "anyOf": [
+        {
+          "const": "inherit-from-infrastrcuture",
+          "type": "string"
+        },
         {
           "type": "string"
         },
         {
-          "$ref": "#/definitions/EnvironmentLong"
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       ]
+    },
+    "Environment": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "org": {
+          "deprecated": true,
+          "type": "string"
+        },
+        "project": {
+          "deprecated": true,
+          "type": "string"
+        },
+        "tags": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "type": {
+          "$ref": "#/definitions/EnvironmentType"
+        }
+      },
+      "type": "object"
     },
     "EnvironmentItem": {
       "properties": {
@@ -432,7 +466,17 @@
       },
       "type": "object"
     },
-    "EnvironmentLong": {
+    "EnvironmentRef": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/EnvironmentRefLong"
+        }
+      ]
+    },
+    "EnvironmentRefLong": {
       "properties": {
         "items": {
           "items": {
@@ -446,35 +490,9 @@
       },
       "type": "object"
     },
-    "EnvironmentSchema": {
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "org": {
-          "deprecated": true,
-          "type": "string"
-        },
-        "project": {
-          "deprecated": true,
-          "type": "string"
-        },
-        "tags": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
-        },
-        "type": {
-          "enum": ["production", "non-production"],
-          "type": "string"
-        }
-      },
-      "type": "object",
-      "x-go-file": "schema_environment.go"
+    "EnvironmentType": {
+      "enum": ["production", "non-production"],
+      "type": "string"
     },
     "Event": {
       "anyOf": [
@@ -733,6 +751,10 @@
           "items": {},
           "type": "array"
         },
+        "pattern": {
+          "description": "Pattern defines a regular expression input constraint.",
+          "type": "string"
+        },
         "required": {
           "description": "Required indicates the input is required.",
           "type": "boolean"
@@ -748,10 +770,12 @@
       "x-go-file": "input.go"
     },
     "MachineImage": {
+      "description": "MachineImage defines possible machine image values.",
       "enum": ["ubuntu-latest", "macos-latest", "wndows-latest"],
       "type": "string"
     },
     "MachineSize": {
+      "description": "MachineImage defines machine size values.",
       "enum": ["flex", "small", "medium", "large", "xlarge", "xxlarge"],
       "type": "string"
     },
@@ -811,34 +835,6 @@
           "$ref": "#/definitions/Event"
         }
       ]
-    },
-    "Output": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "$ref": "#/definitions/OutputLong"
-        }
-      ]
-    },
-    "OutputLong": {
-      "properties": {
-        "alias": {
-          "type": "string"
-        },
-        "mask": {
-          "type": "boolean"
-        },
-        "name": {
-          "type": "string"
-        },
-        "scope": {
-          "enum": ["pipeline", "stage"],
-          "type": "string"
-        }
-      },
-      "type": "object"
     },
     "Permissions": {
       "anyOf": [
@@ -939,7 +935,7 @@
           "type": "object"
         },
         "environment": {
-          "$ref": "#/definitions/Environment",
+          "$ref": "#/definitions/EnvironmentRef",
           "description": "Environment defines the target deployment environment (e.g. development, prod)."
         },
         "id": {
@@ -982,7 +978,7 @@
           "description": "Repo overrides the default repository."
         },
         "service": {
-          "$ref": "#/definitions/Service",
+          "$ref": "#/definitions/ServiceRef",
           "description": "Service defines the service being deployed."
         },
         "stages": {
@@ -995,6 +991,11 @@
         "status": {
           "$ref": "#/definitions/Status",
           "description": "Status overrides the default status behavior."
+        },
+        "timeout": {
+          "description": "Timeout defines the step timeout duration.",
+          "format": "duration",
+          "type": "string"
         }
       },
       "type": "object",
@@ -1225,8 +1226,20 @@
           "type": "string"
         }
       },
-      "type": "object",
-      "x-go-file": "report.go"
+      "type": "object"
+    },
+    "ReportList": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Report"
+        },
+        {
+          "items": {
+            "$ref": "#/definitions/Report"
+          },
+          "type": "array"
+        }
+      ]
     },
     "Repository": {
       "description": "Repository defines a remote git repository.",
@@ -1257,14 +1270,7 @@
       "description": "RuntimeClone configures the cloud runtime environment.",
       "properties": {
         "image": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/MachineImage"
-            },
-            {
-              "type": "string"
-            }
-          ]
+          "$ref": "#/definitions/MachineImage"
         },
         "size": {
           "$ref": "#/definitions/MachineSize"
@@ -1294,6 +1300,9 @@
     "RuntimeKubernetes": {
       "description": "RuntimeKubernetes configures the kubernetes runtime environment.",
       "properties": {
+        "connector": {
+          "type": "string"
+        },
         "namespace": {
           "type": "string"
         }
@@ -1346,7 +1355,7 @@
           "type": "object"
         },
         "environment": {
-          "$ref": "#/definitions/EnvironmentSchema",
+          "$ref": "#/definitions/Environment",
           "description": "Environment defines a deployment environment."
         },
         "infrastructure": {
@@ -1354,7 +1363,8 @@
           "description": "Infrastructure defines the service infrastructure."
         },
         "inputset": {
-          "description": "Inputset defines re-usable inputs."
+          "description": "Inputset defines re-usable inputs.",
+          "type": "object"
         },
         "jobs": {
           "additionalProperties": {
@@ -1380,7 +1390,7 @@
           "description": "Pipeline defines the pipeline configuration."
         },
         "service": {
-          "$ref": "#/definitions/ServiceSchema",
+          "$ref": "#/definitions/Service",
           "description": "Service defines a service."
         },
         "template": {
@@ -1396,31 +1406,6 @@
       "x-go-file": "schema.go"
     },
     "Service": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "$ref": "#/definitions/ServiceLong"
-        }
-      ]
-    },
-    "ServiceLong": {
-      "properties": {
-        "items": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "parallel": {
-          "type": "boolean"
-        }
-      },
-      "required": ["items"],
-      "type": "object"
-    },
-    "ServiceSchema": {
       "properties": {
         "id": {
           "type": "string"
@@ -1443,8 +1428,38 @@
           "type": "object"
         }
       },
-      "type": "object",
-      "x-go-file": "schema_service.go"
+      "type": "object"
+    },
+    "ServiceRef": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "$ref": "#/definitions/ServiceRefLong"
+        }
+      ]
+    },
+    "ServiceRefLong": {
+      "properties": {
+        "items": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "parallel": {
+          "type": "boolean"
+        }
+      },
+      "required": ["items"],
+      "type": "object"
     },
     "Stage": {
       "properties": {
@@ -1476,7 +1491,7 @@
           "type": "object"
         },
         "environment": {
-          "$ref": "#/definitions/Environment",
+          "$ref": "#/definitions/EnvironmentRef",
           "description": "Environment defines the deployment environment (production, staging)."
         },
         "group": {
@@ -1541,7 +1556,7 @@
           "description": "Runtime defines the execution runtime."
         },
         "service": {
-          "$ref": "#/definitions/Service",
+          "$ref": "#/definitions/ServiceRef",
           "description": "Service defines the deployment target."
         },
         "services": {
@@ -1669,33 +1684,8 @@
           "description": "Env defines the environment of the step.",
           "type": "object"
         },
-        "output": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Output"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/Output"
-              },
-              "type": "array"
-            }
-          ],
-          "deprecated": true,
-          "description": "Output defines the output variables."
-        },
         "report": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Report"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/Report"
-              },
-              "type": "array"
-            }
-          ],
+          "$ref": "#/definitions/ReportList",
           "description": "Report uploads reports at the the provided path(s)"
         },
         "uses": {
@@ -1738,6 +1728,80 @@
       "type": "object",
       "x-go-file": "step_barrier.go"
     },
+    "StepClone": {
+      "properties": {
+        "clean": {
+          "description": "Clean enables running git clean and git reset before fetching.",
+          "type": "boolean"
+        },
+        "connector": {
+          "description": "Connector provides the repository connector.",
+          "type": "string"
+        },
+        "depth": {
+          "description": "Depth defines the clone depth.",
+          "type": "number"
+        },
+        "disabled": {
+          "description": "Disabled disables the default clone step.",
+          "type": "boolean"
+        },
+        "filter": {
+          "description": "Filter configures partial cloning against the given filter. This overrides sparse checkout if set.",
+          "type": "string"
+        },
+        "insecure": {
+          "description": "Insecure enables cloning without ssl verification.",
+          "type": "boolean"
+        },
+        "lfs": {
+          "description": "Lfs enables cloning lfs files.",
+          "type": "boolean"
+        },
+        "path": {
+          "description": "Path provides the relative path in the workspace where the repository is cloned.",
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/CloneRef",
+          "description": "Reference defines the clone ref."
+        },
+        "repo": {
+          "description": "Repo provides the repository name.",
+          "type": "string"
+        },
+        "set-safe-directory": {
+          "description": "SetSafeDirectory adds the repository path as safe.directory for the global git configuration.",
+          "type": "boolean"
+        },
+        "sparse-checkout": {
+          "description": "SparseCheckout enables sparse checkout on given patterns. Each pattern should be separated with new lines.",
+          "type": "string"
+        },
+        "sparse-checkout-cone-mode": {
+          "description": "SparseCheckoutCodeMode enables cone-mode when doing a sparse checkout.",
+          "type": "string"
+        },
+        "strategy": {
+          "description": "Strategy configures the clone strategy.",
+          "enum": ["source-branch", "merge"],
+          "type": "string"
+        },
+        "submodules": {
+          "description": "Submodules enables cloning all submodules;",
+          "type": "boolean"
+        },
+        "tags": {
+          "description": "Tags enables cloning all tags;",
+          "type": "boolean"
+        },
+        "trace": {
+          "description": "Trace enables trace logging.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "StepGroup": {
       "properties": {
         "parallel": {
@@ -1773,6 +1837,14 @@
         "barrier": {
           "$ref": "#/definitions/StepBarrier",
           "description": "Barrier defines a step barrier."
+        },
+        "clone": {
+          "$ref": "#/definitions/StepClone",
+          "description": "Clone clones a git repository."
+        },
+        "delegate": {
+          "$ref": "#/definitions/Delegate",
+          "description": "This property is available solely for the purpose of backward compatibility with Harness Currrent Gen."
         },
         "env": {
           "additionalProperties": {
@@ -1852,7 +1924,8 @@
         },
         "timeout": {
           "description": "Timeout defines the step timeout duration.",
-          "type": ["string", "number"]
+          "format": "duration",
+          "type": "string"
         },
         "uses": {
           "description": "Uses defines the github action.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
@@ -1885,24 +1958,6 @@
           "$ref": "#/definitions/Container",
           "description": "Container runs the step inside a container. If you do not set a container, the step will run directly on the host unless the target runtime in kubernetes, in which case the container is required."
         },
-        "delegate": {
-          "anyOf": [
-            {
-              "const": "inherit-from-infrastrcuture",
-              "type": "string"
-            },
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            }
-          ],
-          "description": "This property is available solely for the purpose of backward compatibility with Harness Currrent Gen."
-        },
         "env": {
           "additionalProperties": {
             "type": "string"
@@ -1910,33 +1965,8 @@
           "description": "Env defines the environment of the step.",
           "type": "object"
         },
-        "output": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Output"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/Output"
-              },
-              "type": "array"
-            }
-          ],
-          "deprecated": true,
-          "description": "Output defines the step output variables."
-        },
         "report": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Report"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/Report"
-              },
-              "type": "array"
-            }
-          ],
+          "$ref": "#/definitions/ReportList",
           "description": "Report uploads reports at the the provided path(s)"
         },
         "script": {
@@ -2014,33 +2044,8 @@
           ],
           "description": "Match provides unit test matching logic in glob format."
         },
-        "output": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Output"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/Output"
-              },
-              "type": "array"
-            }
-          ],
-          "deprecated": true,
-          "description": "Output defines the output variables."
-        },
         "report": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Report"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/Report"
-              },
-              "type": "array"
-            }
-          ],
+          "$ref": "#/definitions/ReportList",
           "description": "Report uploads reports at the the provided path(s)"
         },
         "script": {
@@ -2121,8 +2126,7 @@
           "type": "boolean"
         }
       },
-      "type": "object",
-      "x-go-file": "test_intelligence.go"
+      "type": "object"
     },
     "TestSplitting": {
       "properties": {
@@ -2133,8 +2137,7 @@
           "type": "boolean"
         }
       },
-      "type": "object",
-      "x-go-file": "test_splitting.go"
+      "type": "object"
     },
     "Volume": {
       "properties": {

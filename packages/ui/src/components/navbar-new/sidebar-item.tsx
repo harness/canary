@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom'
 
-import { Button } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon, IconProps } from '@components/icon'
 import { Sidebar } from '@components/sidebar/sidebar'

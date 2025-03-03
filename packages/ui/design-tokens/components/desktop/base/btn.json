@@ -35,13 +35,13 @@
     "default": {
       "radius": {
         "$type": "borderRadius",
-        "$value": "{radius.component.xs}"
+        "$value": "{rounded.2}"
       }
     },
     "rounded": {
       "radius": {
         "$type": "borderRadius",
-        "$value": "{radius.component.full}"
+        "$value": "{rounded.full}"
       }
     },
     "border": {

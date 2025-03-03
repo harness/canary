@@ -181,7 +181,7 @@ export const RepoSettingsGeneralForm: FC<{
                   control={<RadioButton value="1" id="access-public" />}
                   id="access-public"
                   label={t('views:repos.public', 'Public')}
-                  ariaSelected={accessValue === '1'}
+                  aria-selected={accessValue === '1'}
                   description={t(
                     'views:repos.publicDescription',
                     'Anyone with access to the gitness environment can clone this repo.'
@@ -191,7 +191,7 @@ export const RepoSettingsGeneralForm: FC<{
                   control={<RadioButton value="2" id="access-private" />}
                   id="access-private"
                   label={t('views:repos.private', 'Private')}
-                  ariaSelected={accessValue === '2'}
+                  aria-selected={accessValue === '2'}
                   description={t(
                     'views:repos.privateDescription',
                     'You can choose who can see and commit to this repository.'

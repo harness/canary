@@ -85,7 +85,7 @@ NavbarItemProps) => {
       <NavLink className="block" to={item.to || ''} end>
         {({ isActive }) => (
           <Sidebar.MenuItem
-            className={cn('hover:bg-background-4 rounded text-foreground-3  transition-colors hover:text-primary', {
+            className={cn('hover:bg-background-4 rounded text-foreground-3 transition-colors hover:text-primary', {
               'bg-background-4': isActive
             })}
           >
@@ -93,8 +93,8 @@ NavbarItemProps) => {
               <div className="gap-2.5">
                 <Icon
                   name={iconName!}
-                  size={10}
-                  className={cn('!w-[12px] !h-[auto]', {
+                  size={12}
+                  className={cn({
                     'text-primary': isActive
                   })}
                 />

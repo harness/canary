@@ -95,7 +95,7 @@ export const AppSidebar = ({
           )}
         </Sidebar.Header>
         <Sidebar.Content>
-          <Sidebar.Group className="px-4 pt-5">
+          <Sidebar.Group className="px-2 pt-5">
             <Sidebar.GroupContent>
               <Sidebar.Menu>
                 {pinnedMenuItems.map((item, index) => (
@@ -112,11 +112,7 @@ export const AppSidebar = ({
                 <Sidebar.MenuItem className="cursor-pointer">
                   <Sidebar.MenuButton asChild onClick={handleMoreMenu}>
                     <div>
-                      <Icon
-                        name="ellipsis"
-                        size={12}
-                        className="text-icons-4 transition-colors hover:text-primary !w-[12px] !h-[auto]"
-                      />
+                      <Icon name="ellipsis" size={12} className="text-icons-4 transition-colors hover:text-primary" />
                       <span className="text-foreground-3 font-medium transition-colors hover:text-primary">More</span>
                     </div>
                   </Sidebar.MenuButton>
@@ -126,7 +122,7 @@ export const AppSidebar = ({
           </Sidebar.Group>
 
           {!!recentMenuItems.length && (
-            <Sidebar.Group title="Recent" className="border-t px-4 pt-3">
+            <Sidebar.Group title="Recent" className="border-t px-2 pt-3">
               <Sidebar.GroupLabel>Recent</Sidebar.GroupLabel>
               <Spacer size={2} />
               <Sidebar.GroupContent>
@@ -147,22 +143,14 @@ export const AppSidebar = ({
             </Sidebar.Group>
           )}
 
-          <Sidebar.Group className="border-t px-4 pt-5">
+          <Sidebar.Group className="border-t px-2 pt-5">
             <Sidebar.GroupContent>
               <Sidebar.Menu>
                 {!!currentUser?.admin && (
                   <Sidebar.MenuItem>
-                    <Sidebar.MenuButton
-                      asChild
-                      className="cursor-pointer"
-                      onClick={() => navigate('/admin/default-settings')}
-                    >
+                    <Sidebar.MenuButton asChild onClick={() => navigate('/admin/default-settings')}>
                       <div>
-                        <Icon
-                          name="account"
-                          size={12}
-                          className="text-icons-4 transition-colors hover:text-primary !w-[12px] !h-[auto]"
-                        />
+                        <Icon name="account" size={12} className="text-icons-4 transition-colors hover:text-primary" />
                         <span className="text-foreground-3 font-medium transition-colors hover:text-primary">
                           User Management
                         </span>
@@ -171,13 +159,9 @@ export const AppSidebar = ({
                   </Sidebar.MenuItem>
                 )}
                 <Sidebar.MenuItem>
-                  <Sidebar.MenuButton asChild className="cursor-pointer" onClick={handleSettingsMenu}>
+                  <Sidebar.MenuButton asChild onClick={handleSettingsMenu}>
                     <div>
-                      <Icon
-                        name="settings-1"
-                        size={12}
-                        className="text-icons-4 transition-colors hover:text-primary !w-[12px] !h-[auto]"
-                      />
+                      <Icon name="settings-1" size={12} className="text-icons-4 transition-colors hover:text-primary" />
                       <span className="text-foreground-3 font-medium transition-colors hover:text-primary">
                         {t('component:navbar.settings')}
                       </span>

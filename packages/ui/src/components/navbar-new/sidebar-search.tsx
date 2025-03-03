@@ -21,7 +21,7 @@ function SidebarSearch({ logo }: ProjectProps) {
   }
 
   return (
-    <div className="flex w-full flex-col place-items-start px-3 pb-3">
+    <div className="flex w-full flex-col place-items-start px-2 pb-3">
       <div className="flex h-[58px] items-center px-1">{logo}</div>
       <SearchBox.Root
         width="full"

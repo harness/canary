@@ -1,17 +1,16 @@
-import { FC, ReactElement, ReactNode } from 'react'
+import { FC, HTMLAttributes, ReactElement, ReactNode } from 'react'
 
-import { Checkbox, Label, RadioButton, Text } from '@/components'
+import { Checkbox, Label, RadioButton } from '@/components'
 import { cn } from '@utils/cn'
 
 type ControlType = ReactElement<typeof RadioButton> | ReactElement<typeof Checkbox>
 
-interface OptionProps {
+interface OptionProps extends HTMLAttributes<HTMLDivElement> {
   control: ControlType
   id: string
   label?: string | ReactNode
   description?: string | ReactNode
-  className?: string
-  ariaSelected?: boolean
+  disabled?: boolean
 }
 
 /**
@@ -24,30 +23,32 @@ interface OptionProps {
  *   description="Description for Option 1"
  * />
  */
-export const Option: FC<OptionProps> = ({ control, id, label, description, ariaSelected, className }) => {
+export const Option: FC<OptionProps> = ({ control, id, label, description, className, disabled, ...props }) => {
   return (
     <div
       className={cn('flex items-start', className)}
       role="option"
       aria-labelledby={`${id}-label`}
-      aria-selected={ariaSelected}
+      aria-selected={false}
+      {...props}
     >
       {control}
       <div className="flex flex-col gap-0">
-        <Label htmlFor={id} className="cursor-pointer pl-2.5 leading-tight">
+        <Label
+          htmlFor={id}
+          className={cn('cursor-pointer pl-2.5 leading-tight', { 'cursor-default': disabled })}
+          color={disabled ? 'disabled' : 'primary'}
+        >
           {label}
         </Label>
         {description && (
-          <Text
-            className="ml-2.5 mt-1.5 leading-snug tracking-tight"
-            as="p"
-            size={2}
-            color="foreground-4"
+          <p
+            className="ml-2.5 mt-1.5 text-sm leading-snug tracking-tight text-foreground-4"
             id={`${id}-description`}
             role="note"
           >
             {description}
-          </Text>
+          </p>
         )}
       </div>
     </div>

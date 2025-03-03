@@ -358,5 +358,27 @@
       "$value": "8px",
       "$description": "Extra thick border width (border-8)"
     }
+  },
+  "iconSize": {
+    "xs": {
+      "$type": "sizing",
+      "$value": "{size.3-half}",
+      "$description": "14px"
+    },
+    "sm": {
+      "$type": "sizing",
+      "$value": "{size.4}",
+      "$description": "16px"
+    },
+    "md": {
+      "$type": "sizing",
+      "$value": "{size.5}",
+      "$description": "20px\n"
+    },
+    "lg": {
+      "$type": "sizing",
+      "$value": "{size.8}",
+      "$description": "32px\n"
+    }
   }
 }

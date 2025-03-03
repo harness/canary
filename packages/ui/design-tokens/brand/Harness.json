@@ -1,32 +1,4 @@
 {
-  "radius": {
-    "component": {
-      "xxs": {
-        "$type": "borderRadius",
-        "$value": "{rounded.1}"
-      },
-      "xs": {
-        "$type": "borderRadius",
-        "$value": "{rounded.2}"
-      },
-      "sm": {
-        "$type": "borderRadius",
-        "$value": "{rounded.3}"
-      },
-      "md": {
-        "$type": "borderRadius",
-        "$value": "{rounded.4}"
-      },
-      "lg": {
-        "$type": "borderRadius",
-        "$value": "{rounded.6}"
-      },
-      "full": {
-        "$type": "borderRadius",
-        "$value": "{rounded.full}"
-      }
-    }
-  },
   "brand": {
     "color": {
       "50": {
@@ -81,28 +53,6 @@
         "$type": "color",
         "$value": "{colors.blue.950}"
       }
-    }
-  },
-  "iconSize": {
-    "xs": {
-      "$type": "sizing",
-      "$value": "{size.3-half}",
-      "$description": "14px"
-    },
-    "sm": {
-      "$type": "sizing",
-      "$value": "{size.4}",
-      "$description": "16px"
-    },
-    "md": {
-      "$type": "sizing",
-      "$value": "{size.5}",
-      "$description": "20px\n"
-    },
-    "lg": {
-      "$type": "sizing",
-      "$value": "{size.8}",
-      "$description": "32px\n"
     }
   }
 }

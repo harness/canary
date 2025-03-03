@@ -23,7 +23,7 @@ export function SidebarSearchNew(props: SidebarSearchProps) {
   return (
     <form {...props}>
       {props.logo}
-      <Sidebar.Group className="py-0 -mt-2 px-2">
+      <Sidebar.Group className="py-0">
         <Sidebar.GroupContent className="relative">
           <Label htmlFor="search" className="sr-only">
             Search

@@ -12,10 +12,16 @@ interface SecretTypeForm {
   type: SecretType
 }
 
-export const SecretsHeader = ({ onChange }: { onChange: (type: SecretType) => void }) => {
+export const SecretsHeader = ({
+  onChange,
+  selectedType: selectedTypeVal
+}: {
+  onChange: (type: SecretType) => void
+  selectedType: SecretType
+}) => {
   const { watch, setValue } = useForm<SecretTypeForm>({
     defaultValues: {
-      type: SecretType.New
+      type: selectedTypeVal
     }
   })
 
@@ -27,7 +33,7 @@ export const SecretsHeader = ({ onChange }: { onChange: (type: SecretType) => vo
   }
 
   return (
-    <RadioGroup value={selectedType} onValueChange={handleTypeChange} id="secret-type">
+    <RadioGroup value={selectedTypeVal} onValueChange={handleTypeChange} id="secret-type">
       <div className="flex flex-col gap-2">
         <Option
           id="new-secret"

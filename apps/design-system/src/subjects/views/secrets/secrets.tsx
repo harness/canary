@@ -57,7 +57,7 @@ export const SecretsPage = () => {
         </Drawer.Header>
         <Spacer size={5} />
 
-        <SecretsHeader onChange={setSelectedType} />
+        <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
         <Spacer size={5} />
         {renderContent()}
       </Drawer.Content>

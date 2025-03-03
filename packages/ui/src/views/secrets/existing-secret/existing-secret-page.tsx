@@ -71,7 +71,6 @@ export function ExistingSecretPage({
   }
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files)
     if (e.target.files && e.target.files.length > 0) {
       setValue('file', e.target.files[0], { shouldValidate: true })
       setIsDialogOpen(false)

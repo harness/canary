@@ -80,47 +80,50 @@ NavbarItemProps) => {
   )
 
   return (
-    <div className="group/menu-item relative">
-      <NavLink className="block" to={item.to || ''} end>
-        {({ isActive }) => (
-          <Sidebar.MenuItem
-            className={cn('hover:bg-background-4 rounded text-foreground-3 transition-colors hover:text-primary', {
-              'bg-background-4': isActive
-            })}
-          >
-            <Sidebar.MenuButton asChild isActive={isActive}>
-              <div className="gap-2.5">
-                <Icon
-                  name={iconName!}
-                  size={12}
-                  className={cn({
-                    'text-primary': isActive
-                  })}
-                />
-                <span
-                  className={cn('font-medium', {
-                    'text-primary': isActive
-                  })}
-                >
-                  {item.title}
-                </span>
-              </div>
-            </Sidebar.MenuButton>
-          </Sidebar.MenuItem>
-        )}
-      </NavLink>
-      <DropdownMenu.Root>
-        <Sidebar.MenuAction>
-          <DropdownMenu.Trigger asChild>
-            <span className="absolute right-[-0.2rem] text-icons-4 opacity-0 hover:text-icons-2 focus:opacity-100 focus-visible:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 focus:outline-none focus:ring-0">
-              <Icon name="menu-dots" size={12} />
-            </span>
-          </DropdownMenu.Trigger>
-        </Sidebar.MenuAction>
-        <DropdownMenu.Content className="w-[128px]" align="end" sideOffset={-1} alignOffset={8}>
-          {dropdownItems}
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
-    </div>
+    <Sidebar.MenuItem>
+      <div className="group/menu-item relative">
+        <NavLink className="block" to={item.to || ''} end>
+          {({ isActive }) => (
+            <div
+              className={cn('hover:bg-background-4 rounded text-foreground-3 transition-colors hover:text-primary', {
+                'bg-background-4': isActive
+              })}
+            >
+              <Sidebar.MenuButton asChild isActive={isActive}>
+                <div className="gap-2.5">
+                  <Icon
+                    name={iconName!}
+                    size={12}
+                    className={cn({
+                      'text-primary': isActive
+                    })}
+                  />
+                  <span
+                    className={cn('font-medium', {
+                      'text-primary': isActive
+                    })}
+                  >
+                    {item.title}
+                  </span>
+                </div>
+              </Sidebar.MenuButton>
+            </div>
+          )}
+        </NavLink>
+
+        <DropdownMenu.Root>
+          <Sidebar.MenuAction>
+            <DropdownMenu.Trigger asChild>
+              <span className="absolute right-[-0.2rem] text-icons-4 opacity-0 hover:text-icons-2 focus:opacity-100 focus-visible:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 focus:outline-none focus:ring-0">
+                <Icon name="menu-dots" size={12} />
+              </span>
+            </DropdownMenu.Trigger>
+          </Sidebar.MenuAction>
+          <DropdownMenu.Content className="w-[128px]" align="end" sideOffset={-1} alignOffset={8}>
+            {dropdownItems}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+      </div>
+    </Sidebar.MenuItem>
   )
 }

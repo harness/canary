@@ -506,6 +506,38 @@
       "link": "Se déconnecter"
     }
   },
+  "importProject": {
+    "validation": {
+      "nameMax": "Le nom ne doit pas dépasser 100 caractères",
+      "nameRegex": "Le nom de l'organisation doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
+      "nameNoSpaces": "Le nom ne peut pas contenir d'espaces",
+      "descriptionMax": "La description ne doit pas dépasser 1024 caractères",
+      "organizationNameMax": "Le nom de l'organisation ne doit pas dépasser 100 caractères",
+      "noSpaces": "Le nom de l'organisation ne peut pas contenir d'espaces",
+      "hostUrlRequired": "L'URL du référentiel est requis",
+      "hostUrlInvalid": "URL invalide"
+    },
+    "title": "Importer un projet",
+    "gitProviderPlaceholder": "Sélectionner un fournisseur",
+    "gitProviderLabel": "Fournisseur Git",
+    "hostUrlLabel": "URL d'hôte",
+    "hostUrlPlaceholder": "Entrer l'URL d'hôte",
+    "tokenLabel": "Jeton",
+    "tokenPlaceholder": "Entrer votre jeton d'accès",
+    "organizationLabel": "Organisation",
+    "organizationPlaceholder": "Entrer le nom de l'organisation",
+    "repositoriesLabel": "Référentiels",
+    "pipelinesLabel": "Importer des pipelines",
+    "projectNameLabel": "Nom",
+    "projectNamePlaceholder": "Entrer le nom du référentiel",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Entrer une description",
+    "importButton": {
+      "default": "Importer le projet",
+      "importing": "Importation du projet..."
+    },
+    "cancelButton": "Annuler"
+  },
   "forms": {
     "selectMember": "",
     "selectRole": "",

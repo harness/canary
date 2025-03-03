@@ -209,14 +209,14 @@ export function RepoCreatePage({
                   control={<RadioButton className="mt-px" value="1" id="access-public" />}
                   id="access-public"
                   label="Public"
-                  ariaSelected={accessValue === '1'}
+                  aria-selected={accessValue === '1'}
                   description="Anyone with access to the Gitness environment can clone this repo."
                 />
                 <Option
                   control={<RadioButton className="mt-px" value="2" id="access-private" />}
                   id="access-private"
                   label="Private"
-                  ariaSelected={accessValue === '2'}
+                  aria-selected={accessValue === '2'}
                   description="You choose who can see and commit to this repository."
                 />
               </RadioGroup>
@@ -239,7 +239,7 @@ export function RepoCreatePage({
                 control={<Checkbox id="readme" checked={readmeValue} onCheckedChange={handleReadmeChange} />}
                 id="readme"
                 label="Add a README file"
-                ariaSelected={accessValue === '1'}
+                aria-selected={accessValue === '1'}
                 description={
                   <>
                     This is where you can write a long description for your project.{' '}

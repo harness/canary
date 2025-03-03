@@ -533,6 +533,38 @@
       "link": "Log out"
     }
   },
+  "importProject": {
+    "validation": {
+      "nameMax": "Name must be no longer than 100 characters",
+      "nameRegex": "Organization name must contain only letters, numbers, and the characters: - _ .",
+      "nameNoSpaces": "Name cannot contain spaces",
+      "descriptionMax": "Description must be no longer than 1024 characters",
+      "organizationNameMax": "Organization name must be no longer than 100 characters",
+      "noSpaces": "Organization name cannot contain spaces",
+      "hostUrlRequired": "Repository URL is required",
+      "hostUrlInvalid": "Invalid URL"
+    },
+    "title": "Import a project",
+    "gitProviderPlaceholder": "Select provider",
+    "gitProviderLabel": "Git provider",
+    "hostUrlLabel": "Host URL",
+    "hostUrlPlaceholder": "Enter the host URL",
+    "tokenLabel": "Token",
+    "tokenPlaceholder": "Enter your access token",
+    "organizationLabel": "Organization",
+    "organizationPlaceholder": "Enter the organization name",
+    "repositoriesLabel": "Repositories",
+    "pipelinesLabel": "Import Pipelines",
+    "projectNameLabel": "Name",
+    "projectNamePlaceholder": "Enter repository name",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Enter a description",
+    "importButton": {
+      "default": "Import project",
+      "importing": "Importing project..."
+    },
+    "cancelButton": "Cancel"
+  },
   "forms": {
     "selectMember": "Select member",
     "selectRole": "Select role",

@@ -2,8 +2,9 @@ import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button, Card, Fieldset, FormWrapper, Icon, Input, StyledLink, StyledLinkProps } from '@/components'
-import { cn, Floating1ColumnLayout, TranslationStore } from '@/views'
+import { Floating1ColumnLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { cn } from '@utils/cn'
 import { z } from 'zod'
 
 import { CreateProjectAnimatedLogo } from './create-project-animated-logo'

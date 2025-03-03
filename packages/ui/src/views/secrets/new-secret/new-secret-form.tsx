@@ -104,7 +104,7 @@ export function CreateSecretPage({
           <Accordion.Item value="secret-details">
             <Accordion.Trigger>Metadata</Accordion.Trigger>
             <Accordion.Content>
-              <Fieldset className="rounded-md border-2 p-4">
+              <Fieldset className="border-1 rounded-md border p-4">
                 {/* DESCRIPTION */}
                 <Textarea
                   id="description"
@@ -135,20 +135,20 @@ export function CreateSecretPage({
           </Alert.Container>
         )}
 
-        <div className="fixed bottom-0 left-0 right-0 bg-background-2 p-4 shadow-md">
-          <ControlGroup>
-            <ButtonGroup className="flex flex-row justify-between">
-              <Button type="button" variant="outline" onClick={handleCancel}>
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isLoading}>
-                {!isLoading ? 'Save' : 'Saving...'}
-              </Button>
-            </ButtonGroup>
-          </ControlGroup>
-        </div>
+        {/* <div className="bottom-0 left-0 right-0 bg-background-2 p-4 shadow-md"> */}
+        <ControlGroup>
+          <ButtonGroup className="flex flex-row justify-between">
+            <Button type="button" variant="outline" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button type="submit" disabled={isLoading}>
+              {!isLoading ? 'Save' : 'Saving...'}
+            </Button>
+          </ButtonGroup>
+        </ControlGroup>
+        {/* </div> */}
 
-        <div className="pb-16"></div>
+        {/* <div className="pb-16"></div> */}
       </FormWrapper>
     </SandboxLayout.Content>
   )

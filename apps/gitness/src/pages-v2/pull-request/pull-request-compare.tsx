@@ -43,10 +43,10 @@ import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { changesInfoAtom, DiffFileEntry } from '../../pages/pull-request/types/types'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
+import { getErrorMessage } from '../../utils/error-utils'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
-import { getErrorMessage } from './pull-request-utils'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.

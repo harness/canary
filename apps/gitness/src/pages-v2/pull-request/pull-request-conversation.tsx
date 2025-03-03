@@ -39,20 +39,21 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import {
-  capitalizeFirstLetter,
-  checkIfOutdatedSha,
-  extractInfoForCodeOwnerContent,
-  findChangeReqDecisions,
-  findWaitingDecisions
-} from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { CodeOwnerReqDecision } from '../../types'
 import { filenameToLanguage } from '../../utils/git-utils'
 import { usePrConversationLabels } from './hooks/use-pr-conversation-labels'
 import { usePrFilters } from './hooks/use-pr-filters'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
-import { extractInfoFromRuleViolationArr, processReviewDecision } from './pull-request-utils'
+import {
+  capitalizeFirstLetter,
+  checkIfOutdatedSha,
+  extractInfoForCodeOwnerContent,
+  extractInfoFromRuleViolationArr,
+  findChangeReqDecisions,
+  findWaitingDecisions,
+  processReviewDecision
+} from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
 const onCopyClick = (commentId?: number, isNotCodeComment = false) => {

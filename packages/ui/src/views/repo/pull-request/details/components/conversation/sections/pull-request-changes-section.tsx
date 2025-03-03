@@ -204,10 +204,11 @@ const PullRequestChangesSection = ({
   }
 
   const viewBtn =
-    (minApproval && minApproval > 0 && !isEmpty(approvedEvaluations)) ||
-    (minReqLatestApproval && minReqLatestApproval > 0 && !isEmpty(latestApprovalArr)) ||
+    (minApproval && minApproval > 0) ||
+    (minReqLatestApproval && minReqLatestApproval > 0) ||
     !isEmpty(changeReqEvaluations) ||
     (!isEmpty(codeOwners) && !isEmpty(codeOwners?.evaluation_entries))
+
   return (
     <Accordion.Item value="item-1">
       <Accordion.Trigger

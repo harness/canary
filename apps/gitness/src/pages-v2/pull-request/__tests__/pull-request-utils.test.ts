@@ -1,12 +1,4 @@
-import { describe, expect, it } from 'vitest'
-
-import {
-  EnumCheckStatus,
-  EnumPullReqReviewDecision,
-  TypesCodeOwnerEvaluationEntry,
-  TypesOwnerEvaluation,
-  TypesPrincipalInfo
-} from '@harnessio/code-service-client'
+import { TypesCodeOwnerEvaluationEntry, TypesOwnerEvaluation, TypesPrincipalInfo } from '@harnessio/code-service-client'
 
 import { PullReqReviewDecision, TypeCheckData } from '../../../pages/pull-request/types/types'
 import {
@@ -21,15 +13,29 @@ import {
   findWaitingDecisions,
   generateAlphaNumericHash,
   generateStatusSummary,
-  getErrorMessage,
   normalizeGitFilePath,
   processReviewDecision
 } from '../pull-request-utils'
 
+export enum EnumCheckStatus {
+  Error = 'error',
+  Failure = 'failure',
+  Pending = 'pending',
+  Running = 'running',
+  Success = 'success'
+}
+export enum EnumPullReqReviewDecision {
+  Approved = 'approved',
+  ChangeReq = 'changereq',
+  Pending = 'pending',
+  Reviewed = 'reviewed',
+  Waiting = 'waiting'
+}
+
 // Mock data
 const mockChecks = [
-  { check: { status: 'success' as EnumCheckStatus }, required: true, bypassable: false },
-  { check: { status: 'failure' as EnumCheckStatus }, required: false, bypassable: false }
+  { check: { status: EnumCheckStatus.Success }, required: true, bypassable: false },
+  { check: { status: EnumCheckStatus.Failure }, required: false, bypassable: false }
 ]
 
 const mockViolationsData = {
@@ -41,26 +47,31 @@ const mockViolationsData = {
   }
 }
 
-const mockReviewDecision = 'approved' as EnumPullReqReviewDecision
+const mockReviewDecision = EnumPullReqReviewDecision.Approved
 const mockReviewedSHA = 'sha1'
 const mockSourceSHA = 'sha2'
 
 // Mock data for findWaitingDecisions
 const mockEntriesForWaitingDecisions: TypesCodeOwnerEvaluationEntry[] = [
   {
+    pattern: '**',
     owner_evaluations: [
-      { review_decision: undefined }, // Empty decision
-      { review_decision: 'request_changes' as EnumPullReqReviewDecision }
-    ]
-  },
-  {
-    owner_evaluations: [{ review_decision: 'approved' }]
-  },
-  {
-    owner_evaluations: [
-      { review_decision: undefined }, // Empty decision
-      { review_decision: 'reviewed' as EnumPullReqReviewDecision }
-    ]
+      {
+        owner: {
+          id: 3,
+          uid: 'admin',
+          display_name: 'Administrator',
+          email: 'admin@gitness.io',
+          type: 'user',
+          created: 1699863416002,
+          updated: 1699863416002
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        review_decision: '' as any, // Set to empty
+        review_sha: ''
+      }
+    ],
+    user_group_owner_evaluations: []
   }
 ]
 
@@ -68,15 +79,15 @@ const mockEntriesForWaitingDecisions: TypesCodeOwnerEvaluationEntry[] = [
 const mockEntriesForChangeReq: TypesCodeOwnerEvaluationEntry[] = [
   {
     owner_evaluations: [
-      { review_decision: 'approve' as EnumPullReqReviewDecision },
-      { review_decision: 'request_changes' as EnumPullReqReviewDecision }
+      { review_decision: EnumPullReqReviewDecision.Approved },
+      { review_decision: EnumPullReqReviewDecision.ChangeReq }
     ]
   },
   {
-    owner_evaluations: [{ review_decision: 'approve' as EnumPullReqReviewDecision }]
+    owner_evaluations: [{ review_decision: EnumPullReqReviewDecision.Approved }]
   },
   {
-    owner_evaluations: [{ review_decision: 'reviewed' as EnumPullReqReviewDecision }]
+    owner_evaluations: [{ review_decision: EnumPullReqReviewDecision.Reviewed }]
   }
 ]
 // Mock data for extractInfoFromRuleViolationArr
@@ -94,6 +105,16 @@ describe('processReviewDecision', () => {
   it('should mark review as outdated if SHAs differ', () => {
     const result = processReviewDecision(mockReviewDecision, mockReviewedSHA, mockSourceSHA)
     expect(result).toBe(PullReqReviewDecision.outdated)
+  })
+
+  it('should not mark review as outdated if SHAs do not differ', () => {
+    const sameSHA = 'sameSHA'
+    const result = processReviewDecision(mockReviewDecision, sameSHA, sameSHA)
+    expect(result).not.toBe(PullReqReviewDecision.outdated) // Assuming it returns a different decision
+  })
+  it('should return the original decision if not approved or SHAs are the same', () => {
+    const result = processReviewDecision(PullReqReviewDecision.pending, 'sameSHA', 'sameSHA')
+    expect(result).toBe(PullReqReviewDecision.pending)
   })
 })
 
@@ -147,13 +168,10 @@ describe('capitalizeFirstLetter', () => {
 
 describe('findChangeReqDecisions', () => {
   it('should find change request decisions from entries', () => {
-    const result = findChangeReqDecisions(mockEntriesForChangeReq, 'approve')
+    const result = findChangeReqDecisions(mockEntriesForChangeReq, 'changereq')
     expect(result).toEqual([
       {
-        owner_evaluations: [{ review_decision: 'approve' }]
-      },
-      {
-        owner_evaluations: [{ review_decision: 'approve' }]
+        owner_evaluations: [{ review_decision: 'changereq' }]
       }
     ])
   })
@@ -162,14 +180,35 @@ describe('findChangeReqDecisions', () => {
 describe('findWaitingDecisions', () => {
   it('should find waiting decisions from entries', () => {
     const result = findWaitingDecisions(mockEntriesForWaitingDecisions)
-    expect(result).toEqual([])
+    expect(result).toEqual([
+      {
+        pattern: '**',
+        owner_evaluations: [
+          {
+            owner: {
+              id: 3,
+              uid: 'admin',
+              display_name: 'Administrator',
+              email: 'admin@gitness.io',
+              type: 'user',
+              created: 1699863416002,
+              updated: 1699863416002
+            },
+            review_decision: '',
+            review_sha: ''
+          }
+        ],
+        user_group_owner_evaluations: []
+      }
+    ])
   })
 })
 
 describe('normalizeGitFilePath', () => {
-  it('should normalize file paths with spaces', () => {
-    const result = normalizeGitFilePath('path/with space/file.txt')
-    expect(result).toBe('path/with space/file.txt')
+  it('should remove trailing tab if path contains spaces', () => {
+    const pathWithSpacesAndTab = 'path/with a space/file.txt\t'
+    const normalizedPath = normalizeGitFilePath(pathWithSpacesAndTab)
+    expect(normalizedPath).toBe('path/with a space/file.txt')
   })
 })
 
@@ -177,14 +216,6 @@ describe('generateAlphaNumericHash', () => {
   it('should generate an alphanumeric hash of specified length', () => {
     const result = generateAlphaNumericHash(5)
     expect(result).toHaveLength(5)
-  })
-})
-
-describe('getErrorMessage', () => {
-  it('should return an error message from an error object', () => {
-    const error = new Error('Test error')
-    const result = getErrorMessage(error)
-    expect(result).toBe('Test error')
   })
 })
 
@@ -228,6 +259,16 @@ describe('changedFileId', () => {
   it('should return the changed file ID', () => {
     const result = changedFileId(['file.txt'])
     expect(result).toBe('file.txt')
+  })
+
+  it('should handle multiple changed files', () => {
+    const result = changedFileId(['file1.txt', 'file2.txt'])
+    expect(result).toBe('file1.txt::::file2.txt')
+  })
+
+  it('should handle no changed files', () => {
+    const result = changedFileId([])
+    expect(result).toBe('')
   })
 })
 

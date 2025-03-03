@@ -1,5 +1,3 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
-
 import { ListBranchesOkResponse, TypesBranchExtended, TypesCommitDivergence } from '@harnessio/code-service-client'
 
 import { apiBranches2BranchNames, apiBranches2DefaultBranchName, transformBranchList } from '../branch-transform'
@@ -29,15 +27,8 @@ const mockApiBranches: ListBranchesOkResponse = [
 
 describe('transformBranchList', () => {
   beforeAll(() => {
-    // Use fake timers to control the current time
-    vi.useFakeTimers()
     // Set the system time to a specific date
     vi.setSystemTime(new Date('2025-01-03T00:00:00Z'))
-  })
-
-  afterAll(() => {
-    // Restore real timers after tests
-    vi.useRealTimers()
   })
 
   it('should transform branch data correctly', () => {

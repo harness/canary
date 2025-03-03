@@ -1,5 +1,5 @@
 import { ComponentType, createContext, ReactNode, useContext } from 'react'
-import type { LinkProps, NavigateFunction, NavLinkProps, OutletProps, Path } from 'react-router-dom'
+import type { LinkProps, NavigateFunction, NavLinkProps, OutletProps } from 'react-router-dom'
 
 import { cn } from '@utils/cn'
 

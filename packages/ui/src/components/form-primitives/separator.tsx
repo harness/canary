@@ -9,13 +9,13 @@ interface FormSeparatorProps {
 /**
  * A horizontal separator component for forms
  * @example
- * // Basic usage
+ * Basic usage
  * <FormSeparator />
  *
- * // With dashed style
+ * With dashed style
  * <FormSeparator dashed />
  *
- * // With custom className
+ * With custom className
  * <FormSeparator className="my-4" />
  */
 export function FormSeparator({ dashed, dotted, className }: FormSeparatorProps) {

@@ -4,6 +4,7 @@ import { ImporterProviderType, ImportSpaceRequestBody, useImportSpaceMutation } 
 import { ImportProjectFormFields, ImportProjectPage, ProviderOptionsEnum } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 export const ImportProjectContainer = () => {
   const routes = useRoutes()
@@ -53,6 +54,7 @@ export const ImportProjectContainer = () => {
       onFormCancel={onCancel}
       isLoading={isLoading}
       apiErrorsValue={error?.message?.toString()}
+      useTranslationStore={useTranslationStore}
     />
   )
 }

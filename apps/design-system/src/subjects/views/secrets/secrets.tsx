@@ -3,12 +3,19 @@ import { useState } from 'react'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { Button, Drawer, Spacer } from '@harnessio/ui/components'
-import { CreateSecretPage, NewSecretFormFields, SecretsHeader, SecretType } from '@harnessio/ui/views'
+import {
+  CreateSecretPage,
+  ExistingSecretFormFields,
+  ExistingSecretPage,
+  NewSecretFormFields,
+  SecretsHeader,
+  SecretType
+} from '@harnessio/ui/views'
 
 export const SecretsPage = () => {
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.New)
 
-  const onSubmit = (data: NewSecretFormFields) => {
+  const onSubmit = (data: NewSecretFormFields | ExistingSecretFormFields) => {
     console.log(data)
   }
 
@@ -25,7 +32,15 @@ export const SecretsPage = () => {
           />
         )
       case SecretType.Existing:
-        return <div>Existing Secret Content</div>
+        return (
+          <ExistingSecretPage
+            onFormSubmit={onSubmit}
+            onFormCancel={noop}
+            useTranslationStore={useTranslationStore}
+            isLoading={false}
+            apiError={null}
+          />
+        )
       default:
         return null
     }

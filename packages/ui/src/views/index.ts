@@ -54,3 +54,6 @@ export * from './execution'
 
 // secrets
 export * from './secrets'
+
+// connectors
+export * from './connectors'

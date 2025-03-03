@@ -62,6 +62,7 @@ import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-conta
 import { WebhookExecutionDetailsContainer } from './pages-v2/webhooks/webhook-execution-details-container'
 import { WebhookExecutionsContainer } from './pages-v2/webhooks/webhook-executions'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
+import ConnectorsListPage from './pages-v2/connectors/connectors-list-page.tsx'
 
 enum Page {
   Repositories = 'Repositories',
@@ -82,7 +83,8 @@ enum Page {
   General = 'General',
   Keys = 'Keys',
   Home = 'Home',
-  Theme = 'Theme'
+  Theme = 'Theme',
+  Connectors = 'Connectors'
 }
 
 export const repoRoutes: CustomRouteObject[] = [
@@ -710,7 +712,8 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'connectors',
-        element: <EmptyPage pathName="Connectors" />,
+        // temp change to test connectors in standalone
+        element: <ConnectorsListPage />,
         handle: {
           routeName: RouteConstants.toConnectors,
           pageTitle: 'Connectors'

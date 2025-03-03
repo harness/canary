@@ -10,6 +10,7 @@ import { FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
 import { TFunction } from 'i18next'
 
 import { Parser } from '@harnessio/filters'
+
 import { PRListFilters } from '../pull-request/pull-request.types'
 
 export const getBasicConditions = (t: TFunction): FilterCondition[] => [
@@ -130,7 +131,8 @@ export const getPRListFilterOptions = ({
       isLoading: isPrincipalsLoading
     },
     parser: {
-      parse: (value: string): ComboBoxOptions => principalData.find(user => user.value === value) || { label: '', value },
+      parse: (value: string): ComboBoxOptions =>
+        principalData.find(user => user.value === value) || { label: '', value },
       serialize: (value: ComboBoxOptions): string => value?.value || ''
     }
   },

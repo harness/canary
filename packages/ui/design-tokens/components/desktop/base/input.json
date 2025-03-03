@@ -14,7 +14,7 @@
     },
     "radius": {
       "$type": "borderRadius",
-      "$value": "{radius.component.sm}",
+      "$value": "{rounded.3}",
       "$description": "6px"
     },
     "gap": {

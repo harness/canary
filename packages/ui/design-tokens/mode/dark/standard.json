@@ -847,6 +847,102 @@
         }
       }
     },
+    "diff": {
+      "grey": {
+        "$type": "color",
+        "$value": "{colors.chrome.950}",
+        "$description": "Neutral base color for the diff interface that allows code and difference highlights to remain visually prominent."
+      },
+      "add-content": {
+        "$type": "color",
+        "$value": "{colors.green.950}",
+        "$description": "Green background highlighting newly added code lines while maintaining readability."
+      },
+      "add-lineNumber": {
+        "$type": "color",
+        "$value": "{colors.green.900}",
+        "$description": "Background for line numbers of added code, providing visual connection to added content."
+      },
+      "add-content-highlight": {
+        "$type": "color",
+        "$value": "{colors.green.900}",
+        "$description": "Stronger emphasis color for specific character changes within added lines."
+      },
+      "add-widget": {
+        "$type": "color",
+        "$value": "{colors.chrome.900}",
+        "$description": "Background for interactive UI elements related to added content."
+      },
+      "add-widget-color": {
+        "$type": "color",
+        "$value": "{colors.chrome.200}",
+        "$description": "Text/icon color for add-related interactive elements, ensuring readability."
+      },
+      "del-content": {
+        "$type": "color",
+        "$value": "{colors.red.950}",
+        "$description": "Red background highlighting removed code lines without causing eye strain."
+      },
+      "del-lineNumber": {
+        "$type": "color",
+        "$value": "{colors.red.900}",
+        "$description": "Background for line numbers of deleted code, connecting numbers to removed content."
+      },
+      "del-content-highlight": {
+        "$type": "color",
+        "$value": "{colors.red.900}",
+        "$description": "Stronger emphasis color for specific character changes within deleted lines."
+      },
+      "plain-content": {
+        "$type": "color",
+        "$value": "{background.1}",
+        "$description": "Neutral background for unchanged code that allows modified content to stand out."
+      },
+      "plain-lineNumber": {
+        "$type": "color",
+        "$value": "{background.1}",
+        "$description": "Background for line numbers of unchanged code, maintaining visual rhythm."
+      },
+      "plain-lineNumber-color": {
+        "$type": "color",
+        "$value": "{colors.chrome.200}",
+        "$description": "Text color for unchanged line numbers, visually subdued compared to changed content."
+      },
+      "empty-content": {
+        "$type": "color",
+        "$value": "{background.1}",
+        "$description": "Background for placeholder spaces and empty lines, maintaining visual continuity."
+      },
+      "hunk-content": {
+        "$type": "color",
+        "$value": "{colors.blue.950}",
+        "$description": "Background for diff section headers ('hunks') that indicate which part of the file is displayed."
+      },
+      "hunk-lineNumber": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.5",
+              "space": "p3"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{colors.blue.900}",
+        "$description": "Background for line numbers in section headers."
+      },
+      "hunk-content-color": {
+        "$type": "color",
+        "$value": "{colors.chrome.200}",
+        "$description": "Text color for section header content showing file position information."
+      },
+      "expand-content": {
+        "$type": "color",
+        "$value": "{background.1}",
+        "$description": "Background for controls that expand/collapse code sections to show additional context."
+      }
+    },
     "input": {
       "text": {
         "$type": "color",

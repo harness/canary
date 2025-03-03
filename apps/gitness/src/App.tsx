@@ -40,7 +40,7 @@ export default function AppV1() {
             <TooltipProvider>
               <ExitConfirmProvider>
                 <NavigationProvider routes={routes}>
-                  <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet} navigate={router.navigate}>
+                  <RouterContextProvider NavLink={NavLink} Outlet={Outlet} navigate={router.navigate}>
                     <RouterProvider router={router} />
                   </RouterContextProvider>
                 </NavigationProvider>

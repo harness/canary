@@ -1,6 +1,5 @@
-import { useNavigate } from 'react-router-dom'
-
 import { Button, ButtonGroup, DropdownMenu, Icon, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { SandboxLayout, TranslationStore } from '@/views'
 
 interface TypesSpace {
@@ -21,7 +20,7 @@ interface LandingPageProps {
 }
 
 export const LandingPageView: React.FC<LandingPageProps> = ({ spaces, useTranslationStore }) => {
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
 
   return (

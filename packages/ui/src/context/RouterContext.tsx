@@ -1,5 +1,5 @@
 import { ComponentType, createContext, ReactNode, useContext } from 'react'
-import type { LinkProps, NavLinkProps, OutletProps } from 'react-router-dom'
+import type { LinkProps, NavigateFunction, NavLinkProps, OutletProps } from 'react-router-dom'
 
 import { cn } from '@utils/cn'
 
@@ -7,7 +7,7 @@ interface RouterContextType {
   Link: ComponentType<LinkProps>
   NavLink: ComponentType<NavLinkProps>
   Outlet: ComponentType<OutletProps>
-  navigate: (to: string, options?: { replace?: boolean }) => void
+  navigate: NavigateFunction
 }
 
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
@@ -39,13 +39,19 @@ const NavLinkDefault = ({ to, children, className, style, ...props }: NavLinkPro
 
 const OutletDefault: ComponentType<OutletProps> = ({ children }) => <>{children}</>
 
+const navigateFnDefault: NavigateFunction = to => {
+  if (typeof to === 'number') {
+    window.history.go(to) // Supports navigate(-1), navigate(1), etc.
+  } else {
+    window.location.href = to.toString()
+  }
+}
+
 const RouterContext = createContext<RouterContextType>({
   Link: LinkDefault,
   NavLink: NavLinkDefault,
   Outlet: OutletDefault,
-  navigate: to => {
-    window.location.href = to
-  }
+  navigate: navigateFnDefault
 })
 
 export const useRouterContext = () => useContext(RouterContext)
@@ -55,9 +61,7 @@ export const RouterContextProvider = ({
   Link = LinkDefault,
   NavLink = NavLinkDefault,
   Outlet = OutletDefault,
-  navigate = to => {
-    window.location.href = to
-  }
+  navigate = navigateFnDefault
 }: {
   children: ReactNode
 } & Partial<RouterContextType>) => {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 
 import { Button, Card, Input, Spacer, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -27,6 +27,7 @@ const signInSchema = z.object({
 })
 
 export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) {
+  const { Link } = useRouterContext()
   const [serverError, setServerError] = useState<string | null>(null)
   const {
     register,

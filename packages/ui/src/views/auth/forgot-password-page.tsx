@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 
 import { Button, Card, Input, Spacer, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -25,6 +25,7 @@ const forgotPasswordSchema = z.object({
 })
 
 export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswordPageProps) {
+  const { Link } = useRouterContext()
   const [serverError, setServerError] = useState<string | null>(null)
   const {
     register,

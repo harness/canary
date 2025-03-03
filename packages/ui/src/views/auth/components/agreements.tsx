@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
-
 import { Text } from '@/components'
+import { useRouterContext } from '@/context'
 
 export function Agreements() {
+  const { Link } = useRouterContext()
   return (
     <Text className="relative z-10 mt-auto leading-tight" size={0} color="foreground-5" align="center">
       By joining, you agree to{' '}

@@ -1,5 +1,4 @@
-// import * as styles from './shared-style-variables.css'
-
+import './shared-style-variables.css'
 // import * as styles from './styles.css'
 
 import './styles.css'

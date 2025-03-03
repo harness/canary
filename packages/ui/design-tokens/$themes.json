@@ -3,9 +3,9 @@
     "id": "89bf9a3ab61c40d6291a24c452efc1591c4d41c0",
     "name": "source",
     "selectedTokenSets": {
-      "core/colors": "enabled",
-      "core/typography": "enabled",
-      "core/dimensions": "enabled"
+      "core/colors": "source",
+      "core/typography": "source",
+      "core/dimensions": "source"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -1598,7 +1598,7 @@
       "component.markdown-editor.content.emphasized": "S:061aad96d53bf2820b1e5e6041f8e6084698c7ee,"
     },
     "selectedTokenSets": {
-      "brand/Harness": "enabled"
+      "brand/Harness": "source"
     },
     "$figmaCollectionId": "VariableCollectionId:1328:8740",
     "$figmaModeId": "1328:1",
@@ -1634,7 +1634,7 @@
     "name": "Gitness",
     "$figmaStyleReferences": {},
     "selectedTokenSets": {
-      "brand/Gitness": "enabled"
+      "brand/Gitness": "source"
     },
     "$figmaCollectionId": "VariableCollectionId:1328:8740",
     "$figmaModeId": "1328:2",

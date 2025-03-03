@@ -659,8 +659,40 @@
     "group": "core"
   },
   {
-    "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
+    "id": "mode-dark",
     "name": "dark",
+    "selectedTokenSets": {
+      "mode/dark/standard": "enabled"
+    },
+    "group": "mode"
+  },
+  {
+    "id": "mode-light",
+    "name": "light",
+    "selectedTokenSets": {
+      "mode/light/standard": "enabled"
+    },
+    "group": "mode"
+  },
+  {
+    "id": "brand-gitness",
+    "name": "Gitness",
+    "selectedTokenSets": {
+      "brand/Gitness": "enabled"
+    },
+    "group": "brand"
+  },
+  {
+    "id": "brand-harness",
+    "name": "Harness",
+    "selectedTokenSets": {
+      "brand/Harness": "enabled"
+    },
+    "group": "brand"
+  },
+  {
+    "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
+    "name": "dark-legacy",
     "selectedTokenSets": {
       "mode/dark/standard": "enabled"
     },

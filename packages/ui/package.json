@@ -29,6 +29,7 @@
     "build:ci": "vite build --config ./vite-base.config.ts",
     "build:analyse": "vite build --config ./vite-analyse.config.ts",
     "build:watch": "vite build --watch --emptyOutDir=false",
+    "build:tokens": "node build-theme-tokens.js",
     "lint": "eslint ./src",
     "pretty": "prettier --check ./src",
     "shadcn:update": "npx shadcn-ui@latest add -a -o -y",

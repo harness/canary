@@ -1,0 +1,18 @@
+/* Generated theme CSS */
+/* Import core colors first */
+@import './colors.css';
+
+/* Import theme files */
+@import './Gitness-dark-standard.css';
+@import './Gitness-light-standard.css';
+@import './Harness-dark-standard.css';
+@import './Harness-light-standard.css';
+
+:root {
+  color-scheme: light dark;
+}
+
+/* Default to first theme if no theme is set */
+:root:not([data-theme]) {
+  --theme-name: 'Gitness-dark-standard';
+}

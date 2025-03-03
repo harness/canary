@@ -1,0 +1,997 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root[data-theme="Harness-dark-standard"] {
+  --canaryBorder0: 0rem; /* No border (border-0) */
+  --canaryBorder1: 1px; /* Default border width (border) */
+  --canaryBorder2: 2px; /* Medium border width (border-2) */
+  --canaryBorder4: 4px; /* Thick border width (border-4) */
+  --canaryBorder8: 8px; /* Extra thick border width (border-8) */
+  --canaryIconStrokeWidthXs: 1px;
+  --canaryIconStrokeWidthSm: 1px;
+  --canaryIconStrokeWidthMd: 1.4px;
+  --canaryIconStrokeWidthLg: 2px;
+  --canaryColorsPureWhite: #ffffff;
+  --canaryColorsPureBlack: #09090b;
+  --canaryColorsChrome50: #fcfcfd;
+  --canaryColorsChrome100: #efeff6;
+  --canaryColorsChrome150: #d7d7e9;
+  --canaryColorsChrome200: #cbcbd7;
+  --canaryColorsChrome300: #c6c6d3;
+  --canaryColorsChrome400: #a3a3b2;
+  --canaryColorsChrome500: #9090a0;
+  --canaryColorsChrome600: #686775;
+  --canaryColorsChrome700: #595969;
+  --canaryColorsChrome800: #42424d;
+  --canaryColorsChrome850: #2a2a32;
+  --canaryColorsChrome900: #1d1d21;
+  --canaryColorsChrome950: #111114;
+  --canaryColorsChrome1000: #0d0d10;
+  --canaryColorsBlue50: #edf6ff;
+  --canaryColorsBlue100: #d6eaff;
+  --canaryColorsBlue150: #cadffd;
+  --canaryColorsBlue200: #8dc1ff;
+  --canaryColorsBlue300: #57a2ff;
+  --canaryColorsBlue400: #027cfe;
+  --canaryColorsBlue500: #006ef2;
+  --canaryColorsBlue600: #0061d8;
+  --canaryColorsBlue700: #1150a5;
+  --canaryColorsBlue800: #063677;
+  --canaryColorsBlue850: #122e5a;
+  --canaryColorsBlue900: #0e1d38;
+  --canaryColorsBlue950: #0a101d;
+  --canaryColorsRed50: #fff6f4;
+  --canaryColorsRed100: #ffe4df;
+  --canaryColorsRed150: #ffd3cb;
+  --canaryColorsRed200: #ff8d7c;
+  --canaryColorsRed300: #ff7160;
+  --canaryColorsRed400: #d24e40;
+  --canaryColorsRed500: #c03e32;
+  --canaryColorsRed600: #ae2e24;
+  --canaryColorsRed700: #96281f;
+  --canaryColorsRed800: #822920;
+  --canaryColorsRed850: #521c16;
+  --canaryColorsRed900: #2e1511;
+  --canaryColorsRed950: #1e110f;
+  --canaryColorsPink50: #fff5ff;
+  --canaryColorsPink100: #ffdfff;
+  --canaryColorsPink150: #ffd1f2;
+  --canaryColorsPink200: #fb8bd5;
+  --canaryColorsPink300: #ff79c7;
+  --canaryColorsPink400: #cf408f;
+  --canaryColorsPink500: #bf2e7b;
+  --canaryColorsPink600: #a72a6a;
+  --canaryColorsPink700: #8b2d5a;
+  --canaryColorsPink800: #742a4e;
+  --canaryColorsPink850: #482234;
+  --canaryColorsPink900: #2d1722;
+  --canaryColorsPink950: #1f0d16;
+  --canaryColorsYellow50: #fffae8;
+  --canaryColorsYellow100: #ffeabe;
+  --canaryColorsYellow150: #ffdaa9;
+  --canaryColorsYellow200: #fec25f;
+  --canaryColorsYellow300: #ebae42;
+  --canaryColorsYellow400: #d79e2e;
+  --canaryColorsYellow500: #c48f26;
+  --canaryColorsYellow600: #ae822c;
+  --canaryColorsYellow700: #88651f;
+  --canaryColorsYellow800: #6f5319;
+  --canaryColorsYellow850: #4e3d1e;
+  --canaryColorsYellow900: #271e0d;
+  --canaryColorsYellow950: #1a1408;
+  --canaryColorsAmber50: #fffbde;
+  --canaryColorsAmber100: #fdeeab;
+  --canaryColorsAmber150: #f7e4a6;
+  --canaryColorsAmber200: #e8cb7a;
+  --canaryColorsAmber300: #dbb65f;
+  --canaryColorsAmber400: #cda24b;
+  --canaryColorsAmber500: #c09041;
+  --canaryColorsAmber600: #b1803f;
+  --canaryColorsAmber700: #906232;
+  --canaryColorsAmber800: #7a5234;
+  --canaryColorsAmber850: #55382a;
+  --canaryColorsAmber900: #261b18;
+  --canaryColorsAmber950: #1c120f;
+  --canaryColorsOrange50: #fff7e8;
+  --canaryColorsOrange100: #ffe8d4;
+  --canaryColorsOrange150: #ffcdb7;
+  --canaryColorsOrange200: #ffb68f;
+  --canaryColorsOrange300: #ff9f71;
+  --canaryColorsOrange400: #ee8c5c;
+  --canaryColorsOrange500: #dc7d4f;
+  --canaryColorsOrange600: #c87044;
+  --canaryColorsOrange700: #a65133;
+  --canaryColorsOrange800: #914428;
+  --canaryColorsOrange850: #603120;
+  --canaryColorsOrange900: #34180a;
+  --canaryColorsOrange950: #1b130f;
+  --canaryColorsBrown50: #fdf9e8;
+  --canaryColorsBrown100: #f5e4c9;
+  --canaryColorsBrown150: #f3ccb4;
+  --canaryColorsBrown200: #f5c1a0;
+  --canaryColorsBrown300: #e7ac84;
+  --canaryColorsBrown400: #d9996c;
+  --canaryColorsBrown500: #cb8859;
+  --canaryColorsBrown600: #bc7848;
+  --canaryColorsBrown700: #94582a;
+  --canaryColorsBrown800: #75431a;
+  --canaryColorsBrown850: #5a3618;
+  --canaryColorsBrown900: #2e1805;
+  --canaryColorsBrown950: #1c1109;
+  --canaryColorsMint50: #eefff8;
+  --canaryColorsMint100: #c9fbed;
+  --canaryColorsMint150: #95f1dc;
+  --canaryColorsMint200: #49dcc0;
+  --canaryColorsMint300: #00ccad;
+  --canaryColorsMint400: #00ac8b;
+  --canaryColorsMint500: #009d79;
+  --canaryColorsMint600: #008c68;
+  --canaryColorsMint700: #007452;
+  --canaryColorsMint800: #00573b;
+  --canaryColorsMint850: #06432d;
+  --canaryColorsMint900: #11221a;
+  --canaryColorsMint950: #08160f;
+  --canaryColorsLime50: #f5fdef;
+  --canaryColorsLime100: #d9f4c3;
+  --canaryColorsLime150: #c8e6ab;
+  --canaryColorsLime200: #a3d277;
+  --canaryColorsLime300: #92c560;
+  --canaryColorsLime400: #71a23a;
+  --canaryColorsLime500: #65932f;
+  --canaryColorsLime600: #598327;
+  --canaryColorsLime700: #496d1f;
+  --canaryColorsLime800: #334f12;
+  --canaryColorsLime850: #2b3f15;
+  --canaryColorsLime900: #1a2213;
+  --canaryColorsLime950: #10180a;
+  --canaryColorsGreen50: #f2fef4;
+  --canaryColorsGreen100: #cff7d7;
+  --canaryColorsGreen150: #aff0bd;
+  --canaryColorsGreen200: #6add8c;
+  --canaryColorsGreen300: #4bcd76;
+  --canaryColorsGreen400: #18ac57;
+  --canaryColorsGreen500: #109d4d;
+  --canaryColorsGreen600: #098741;
+  --canaryColorsGreen700: #19733b;
+  --canaryColorsGreen800: #19582f;
+  --canaryColorsGreen850: #1c4126;
+  --canaryColorsGreen900: #112416;
+  --canaryColorsGreen950: #0d150f;
+  --canaryColorsPurple50: #fbf9ff;
+  --canaryColorsPurple100: #ede2ff;
+  --canaryColorsPurple150: #dfc8ff;
+  --canaryColorsPurple200: #cb9eff;
+  --canaryColorsPurple300: #bf82ff;
+  --canaryColorsPurple400: #a469e8;
+  --canaryColorsPurple500: #864fc2;
+  --canaryColorsPurple600: #693a9b;
+  --canaryColorsPurple700: #583381;
+  --canaryColorsPurple800: #4e2478;
+  --canaryColorsPurple850: #35244a;
+  --canaryColorsPurple900: #231a30;
+  --canaryColorsPurple950: #17131c;
+  --canaryColorsViolet50: #f9f7ff;
+  --canaryColorsViolet100: #e8deff;
+  --canaryColorsViolet150: #dacbff;
+  --canaryColorsViolet200: #c2afff;
+  --canaryColorsViolet300: #a794f2;
+  --canaryColorsViolet400: #8c79e1;
+  --canaryColorsViolet500: #6f5ac8;
+  --canaryColorsViolet600: #583eab;
+  --canaryColorsViolet700: #4c3194;
+  --canaryColorsViolet800: #48228a;
+  --canaryColorsViolet850: #342153;
+  --canaryColorsViolet900: #231830;
+  --canaryColorsViolet950: #16111d;
+  --canaryColorsIndigo50: #eff0ff;
+  --canaryColorsIndigo100: #dddffb;
+  --canaryColorsIndigo150: #c6cdfe;
+  --canaryColorsIndigo200: #acb7ff;
+  --canaryColorsIndigo300: #859bff;
+  --canaryColorsIndigo400: #5470eb;
+  --canaryColorsIndigo500: #4760d4;
+  --canaryColorsIndigo600: #3d53ba;
+  --canaryColorsIndigo700: #374aa1;
+  --canaryColorsIndigo800: #28387f;
+  --canaryColorsIndigo850: #1e2a5c;
+  --canaryColorsIndigo900: #151e3d;
+  --canaryColorsIndigo950: #101423;
+  --canaryColorsCyan50: #f1faff;
+  --canaryColorsCyan100: #ccecfe;
+  --canaryColorsCyan150: #99d0ec;
+  --canaryColorsCyan200: #76caf0;
+  --canaryColorsCyan300: #47aedb;
+  --canaryColorsCyan400: #2e84c0;
+  --canaryColorsCyan500: #2672ad;
+  --canaryColorsCyan600: #1e6399;
+  --canaryColorsCyan700: #165886;
+  --canaryColorsCyan800: #0e4066;
+  --canaryColorsCyan850: #06334c;
+  --canaryColorsCyan900: #03202e;
+  --canaryColorsCyan950: #0b171c;
+  --canaryColorsPeach50: #fff5f5;
+  --canaryColorsPeach100: #ffe1e0;
+  --canaryColorsPeach150: #ffbcbb;
+  --canaryColorsPeach200: #ff9092;
+  --canaryColorsPeach300: #e86c71;
+  --canaryColorsPeach400: #cd5159;
+  --canaryColorsPeach500: #ba434c;
+  --canaryColorsPeach600: #a53941;
+  --canaryColorsPeach700: #8e3138;
+  --canaryColorsPeach800: #7b2f34;
+  --canaryColorsPeach850: #521b1f;
+  --canaryColorsPeach900: #2f1517;
+  --canaryColorsPeach950: #210f10;
+  --canaryTrackingTighter: -0.05em; /* Very tight, display text */
+  --canaryTrackingTight: -0.02em; /* Headings */
+  --canaryTrackingNormal: 0em; /* Default body text */
+  --canaryTrackingWide: 0.025em; /* Improved readability */
+  --canaryTrackingWider: 0.05em; /* Spaced text */
+  --canaryTrackingWidest: 0.1em; /* All caps text */
+  --canaryFontWeightDefaultNormal100: 100;
+  --canaryFontWeightDefaultNormal200: 200;
+  --canaryFontWeightDefaultNormal300: 300;
+  --canaryFontWeightDefaultNormal400: 400;
+  --canaryFontWeightDefaultNormal500: 500;
+  --canaryFontWeightDefaultNormal600: 600;
+  --canaryFontWeightDefaultNormal700: 700;
+  --canaryFontWeightDefaultNormal800: 800;
+  --canaryFontWeightDefaultNormal900: 900;
+  --canaryFontWeightDefaultItalic100Weight: 100;
+  --canaryFontWeightDefaultItalic100Style: italic;
+  --canaryFontWeightDefaultItalic200Weight: 200;
+  --canaryFontWeightDefaultItalic200Style: italic;
+  --canaryFontWeightDefaultItalic300Weight: 300;
+  --canaryFontWeightDefaultItalic300Style: italic;
+  --canaryFontWeightDefaultItalic400Weight: 400;
+  --canaryFontWeightDefaultItalic400Style: italic;
+  --canaryFontWeightDefaultItalic500Weight: 500;
+  --canaryFontWeightDefaultItalic500Style: italic;
+  --canaryFontWeightDefaultItalic600Weight: 600;
+  --canaryFontWeightDefaultItalic600Style: italic;
+  --canaryFontWeightDefaultItalic700Weight: 700;
+  --canaryFontWeightDefaultItalic700Style: italic;
+  --canaryFontWeightDefaultItalic800Weight: 800;
+  --canaryFontWeightDefaultItalic800Style: italic;
+  --canaryFontWeightDefaultItalic900Weight: 900;
+  --canaryFontWeightDefaultItalic900Style: italic;
+  --canaryFontWeightMonoNormal100: 100;
+  --canaryFontWeightMonoNormal200: 200;
+  --canaryFontWeightMonoNormal300: 300;
+  --canaryFontWeightMonoNormal400: 400;
+  --canaryFontWeightMonoNormal500: 500;
+  --canaryFontWeightMonoNormal700: 700;
+  --canaryFontWeightMonoNormal800: 800;
+  --canaryFontWeightMonoItalic100Weight: 100;
+  --canaryFontWeightMonoItalic100Style: italic;
+  --canaryFontWeightMonoItalic200Weight: 200;
+  --canaryFontWeightMonoItalic200Style: italic;
+  --canaryFontWeightMonoItalic300Weight: 300;
+  --canaryFontWeightMonoItalic300Style: italic;
+  --canaryFontWeightMonoItalic400Weight: 400;
+  --canaryFontWeightMonoItalic400Style: italic;
+  --canaryFontWeightMonoItalic500Weight: 500;
+  --canaryFontWeightMonoItalic500Style: italic;
+  --canaryFontWeightMonoItalic700Weight: 700;
+  --canaryFontWeightMonoItalic700Style: italic;
+  --canaryFontWeightMonoItalic800Weight: 800;
+  --canaryFontWeightMonoItalic800Style: italic;
+  --canaryFontFamilyDefault: Inter;
+  --canaryFontFamilyMono: 'JetBrains Mono';
+  --canaryTextDecorationNone: none;
+  --canaryTextDecorationUnderline: underline;
+  --canaryTextDecorationLineThrough: line-through;
+  --canaryTextCaseNone: none;
+  --canaryTextCaseUppercase: uppercase;
+  --canaryTextCaseLowercase: lowercase;
+  --canaryTextCaseCapitalize: capitalize;
+  --canaryFontSize1: 0.75rem; /* 12px */
+  --canaryFontSize2: 0.875rem; /* 14px */
+  --canaryFontSize3: 1rem; /* 16px */
+  --canaryFontSize4: 1.125rem; /* 18px */
+  --canaryFontSize5: 1.25rem; /* 20px */
+  --canaryFontSize6: 1.5rem; /* 24px */
+  --canaryFontSize7: 1.875rem; /* 30px */
+  --canaryFontSize8: 2.25rem; /* 36px */
+  --canaryFontSize9: 3rem; /* 48px */
+  --canaryFontSize10: 3.75rem; /* 60px */
+  --canaryFontSize11: 4.5rem; /* 72px */
+  --canaryFontSize12: 6rem; /* 96px */
+  --canaryFontSize13: 8rem; /* 128px */
+  --canaryLineHeightNone: 1;
+  --canaryLineHeightTight: 1.25;
+  --canaryLineHeightSnug: 1.375;
+  --canaryLineHeightNormal: 1.5;
+  --canaryLineHeightRelaxed: 1.625;
+  --canaryLineHeightLoose: 2;
+  --canarySpacing0: 0px;
+  --canarySpacing1: 4px;
+  --canarySpacing2: 8px;
+  --canarySpacing3: 12px;
+  --canarySpacing4: 16px;
+  --canarySpacing5: 20px;
+  --canarySpacing6: 24px;
+  --canarySpacing7: 28px;
+  --canarySpacing8: 32px;
+  --canarySpacing9: 36px;
+  --canarySpacing10: 40px;
+  --canarySpacing11: 44px;
+  --canarySpacing12: 48px;
+  --canarySpacing14: 56px;
+  --canarySpacing16: 64px;
+  --canarySpacing20: 80px;
+  --canarySpacing24: 96px;
+  --canarySpacing28: 112px;
+  --canarySpacing32: 128px;
+  --canarySpacing36: 144px;
+  --canarySpacing40: 160px;
+  --canarySpacing44: 176px;
+  --canarySpacing48: 192px;
+  --canarySpacing52: 208px;
+  --canarySpacing56: 224px;
+  --canarySpacing60: 240px;
+  --canarySpacing64: 256px;
+  --canarySpacing72: 288px;
+  --canarySpacing80: 320px;
+  --canarySpacing96: 384px;
+  --canarySpacingPx: 1px;
+  --canarySpacingHalf: 2px; /* 0.5 */
+  --canarySpacing1Half: 6px; /* 1.5 */
+  --canarySpacing2Half: 10px; /* 2.5 */
+  --canarySpacing3Half: 14px; /* 3.5 */
+  --canaryRounded1: 2px;
+  --canaryRounded2: 4px; /* default */
+  --canaryRounded3: 6px;
+  --canaryRounded4: 8px;
+  --canaryRounded5: 12px;
+  --canaryRounded6: 16px;
+  --canaryRounded7: 24px;
+  --canaryRoundedNone: 0px; /* No border radius */
+  --canaryRoundedFull: 9999px; /* Fully rounded corners (circular) */
+  --canarySize0: 0px;
+  --canarySize1: 4px;
+  --canarySize2: 8px;
+  --canarySize3: 12px;
+  --canarySize4: 16px;
+  --canarySize5: 20px;
+  --canarySize6: 24px;
+  --canarySize7: 28px;
+  --canarySize8: 32px;
+  --canarySize9: 36px;
+  --canarySize10: 40px;
+  --canarySize11: 44px;
+  --canarySize12: 48px;
+  --canarySize14: 56px;
+  --canarySize16: 64px;
+  --canarySize20: 80px;
+  --canarySize24: 96px;
+  --canarySize28: 112px;
+  --canarySize32: 128px;
+  --canarySize36: 144px;
+  --canarySize40: 160px;
+  --canarySize44: 176px;
+  --canarySize48: 192px;
+  --canarySize52: 208px;
+  --canarySize56: 224px;
+  --canarySize60: 240px;
+  --canarySize64: 256px;
+  --canarySize72: 288px;
+  --canarySize80: 320px;
+  --canarySize96: 384px;
+  --canarySizePx: 1px;
+  --canarySizeHalf: 2px; /* 0.5 */
+  --canarySize1Half: 6px; /* 1.5 */
+  --canarySize2Half: 10px; /* 2.5 */
+  --canarySize3Half: 14px; /* 3.5 */
+  --canaryBreakpointViewport: 1440;
+  --canaryBreakpointViewportMin: 1080;
+  --canaryBreakpointViewportMax: 1919;
+  --canaryDropdownContainerMinW: 320px;
+  --canaryRadiusComponentXxs: var(--canaryRounded1);
+  --canaryRadiusComponentXs: var(--canaryRounded2);
+  --canaryRadiusComponentSm: var(--canaryRounded3);
+  --canaryRadiusComponentMd: var(--canaryRounded4);
+  --canaryRadiusComponentLg: var(--canaryRounded6);
+  --canaryRadiusComponentFull: var(--canaryRoundedFull);
+  --canaryBrandColor50: var(--canaryColorsBlue50);
+  --canaryBrandColor100: var(--canaryColorsBlue100);
+  --canaryBrandColor150: var(--canaryColorsBlue150);
+  --canaryBrandColor200: var(--canaryColorsBlue200);
+  --canaryBrandColor300: var(--canaryColorsBlue300);
+  --canaryBrandColor400: var(--canaryColorsBlue400);
+  --canaryBrandColor500: var(--canaryColorsBlue500);
+  --canaryBrandColor600: var(--canaryColorsBlue600);
+  --canaryBrandColor700: var(--canaryColorsBlue700);
+  --canaryBrandColor800: var(--canaryColorsBlue800);
+  --canaryBrandColor850: var(--canaryColorsBlue850);
+  --canaryBrandColor900: var(--canaryColorsBlue900);
+  --canaryBrandColor950: var(--canaryColorsBlue950);
+  --canaryIconSizeXs: var(--canarySize3Half); /* 14px */
+  --canaryIconSizeSm: var(--canarySize4); /* 16px */
+  /**
+   * 20px
+   * 
+   */
+  --canaryIconSizeMd: var(--canarySize5);
+  /**
+   * 32px
+   * 
+   */
+  --canaryIconSizeLg: var(--canarySize8);
+  /**
+   * Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background.
+   * 
+   * Common uses: Application background, page base layer, lowest-level containers.
+   */
+  --canaryBackground1: var(--canaryColorsChrome1000);
+  /**
+   * Level 2. Represents elements that sit on top of the bottom layer. Creates visual hierarchy through subtle elevation.
+   * 
+   * Common uses: Cards, containers, form fields, dropdown menus.
+   */
+  --canaryBackground2: var(--canaryColorsChrome950);
+  /**
+   * Level 3. Represents elements that sit on top of the middle layer. Creates strong visual emphasis through maximum elevation.
+   * 
+   * Common uses: Popovers, tooltips, highlighted containers.
+   */
+  --canaryBackground3: var(--canaryColorsChrome900);
+  /**
+   * Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.
+   * 
+   * Common uses: Headings, labels, emphasized text, primary buttons.
+   */
+  --canaryText1: var(--canaryColorsPureWhite);
+  /**
+   * Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.
+   * 
+   * Common uses: Body text, primary content, default icons, form inputs.
+   */
+  --canaryText2: var(--canaryColorsChrome200);
+  /**
+   * Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.
+   * 
+   * Common uses: Supporting text, metadata, secondary information, placeholders.
+   */
+  --canaryText3: var(--canaryColorsChrome400);
+  /**
+   * Primary color for text and icons in success content. Communicates positive outcomes and completion states.
+   * 
+   * Common uses: Success message text, completion text, positive indicators.
+   */
+  --canaryTextSuccess: var(--canaryColorsGreen200);
+  /**
+   * Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.
+   * 
+   * Common uses: Error message text, validation text, destructive action labels.
+   */
+  --canaryTextDanger: var(--canaryColorsRed200);
+  /**
+   * Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.
+   * 
+   * Common uses: Warning message text, alert text, important notifications.
+   */
+  --canaryTextWarning: var(--canaryColorsAmber200);
+  /**
+   * Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.
+   * 
+   * Common uses: Subtle dividers, grouped content, secondary containers, table rows.
+   */
+  --canaryBorder3: var(--canaryColorsChrome850);
+  /**
+   * Border color for success containers. Reinforces positive status through visual framing.
+   * 
+   * Common uses: Success alert borders, confirmation boundaries, completed state indicators.
+   */
+  --canaryBorderSuccess: var(--canaryColorsGreen400);
+  /**
+   * Border color for error containers. Emphasizes critical information through visual framing.
+   * 
+   * Common uses: Error alert borders, validation boundaries, destructive action containers.
+   */
+  --canaryBorderDanger: var(--canaryColorsRed400);
+  /**
+   * Border color for warning containers. Frames cautionary information with distinct boundary.
+   * 
+   * Common uses: Warning alert borders, notice boundaries, attention-requiring elements.
+   */
+  --canaryBorderWarning: var(--canaryColorsAmber500);
+  /**
+   * Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.
+   * 
+   * Common uses: Button hover states, link hover states, soft interactions, menu items.
+   */
+  --canaryStateHover: var(--canaryColorsChrome200);
+  /**
+   * Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.
+   * 
+   * Common uses: Selected list items, active tabs, chosen options, current navigation item.
+   */
+  --canaryStateSelected: var(--canaryColorsChrome200);
+  /**
+   * Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.
+   * 
+   * Common uses: Disabled buttons, inactive form elements, unavailable options, placeholders.
+   */
+  --canaryStateDisabledText: var(--canaryColorsChrome700);
+  /**
+   * Muted background color for disabled elements. Reduces visual prominence of non-interactive elements in the UI.
+   * 
+   * Common uses: Disabled buttons, inactive form controls, unavailable options.
+   */
+  --canaryStateDisabledBackground: var(--canaryColorsChrome950);
+  --canaryComponentAccordionBorder: var(--canaryBorder2); /* Border color for accordion items. Provides visual separation between accordion panels. */
+  --canaryComponentAlertDefaultBackground: var(--canaryColorsChrome900); /* Background color for informational alerts. Creates visual distinction from surrounding content. */
+  --canaryComponentAlertDangerTitle: var(--canaryColorsRed100); /* Text color for danger alerts. Communicates critical information through high-contrast red text. */
+  --canaryComponentAlertDangerDescription: var(--canaryColorsRed200); /* Description text color for danger alerts. Ensures readability while maintaining the error state styling. */
+  --canaryComponentAlertDangerBackground: var(--canaryColorsRed500); /* Background color for danger alerts. Creates subtle but recognizable error state styling. */
+  --canaryComponentAlertDangerBorder: var(--canaryColorsRed300); /* Border color for danger alerts. Provides definition for error state alerts. */
+  --canaryComponentBadgeDefaultBackground: var(--canaryColorsChrome900); /* Background color for secondary badges. Creates less prominent badge styling for secondary information. */
+  --canaryComponentBadgeNeutralBackground: var(--canaryColorsChrome500); /* Background color for neutral badges. Creates subtle visual styling for general-purpose indicators. */
+  --canaryComponentBadgeNeutralBorder: var(--canaryColorsChrome300); /* Border color for outline badges. Creates definition for badges without background fill. */
+  --canaryComponentBadgeSuccessText: var(--canaryColorsGreen200); /* Text color for success badges. Communicates positive status through readable green text. */
+  --canaryComponentBadgeSuccessBorder: var(--canaryColorsGreen300); /* Border color for success badges. Provides subtle definition for success state indicators. */
+  --canaryComponentBadgeSuccessBackground: var(--canaryColorsGreen500); /* Background color for success badges. Creates a subtle but recognizable success indicator. */
+  --canaryComponentBadgeDangerText: var(--canaryColorsRed200); /* Text color for danger badges. Communicates error or warning status with high visibility. */
+  --canaryComponentBadgeDangerBorder: var(--canaryColorsRed300); /* Border color for danger badges. Creates definition for error or warning indicators. */
+  --canaryComponentBadgeDangerBackground: var(--canaryColorsRed500); /* Background color for danger badges. Provides subtle visual indication of error states. */
+  --canaryComponentBadgeWarningText: var(--canaryColorsAmber200); /* Text color for warning badges. Signals caution states with readable amber text. */
+  --canaryComponentBadgeWarningBorder: var(--canaryColorsAmber300); /* Border color for warning badges. Defines the boundary of caution status indicators. */
+  --canaryComponentBadgeWarningBackground: var(--canaryColorsAmber500); /* Background color for warning badges. Creates subtle but recognizable caution indicators. */
+  --canaryComponentBadgeRunningText: var(--canaryColorsYellow200); /* Text color for running state badges. Indicates active or in-progress operations. */
+  --canaryComponentBadgeRunningBorder: var(--canaryColorsYellow300); /* Border color for running state badges. Defines the boundary of active status indicators. */
+  --canaryComponentBadgeRunningBackground: var(--canaryColorsYellow500); /* Background color for running state badges. Creates subtle visual indication of in-progress states. */
+  --canaryComponentBadgeMergedText: var(--canaryColorsPurple200); /* Text color for merged state badges. Indicates completed merge actions in version control contexts. */
+  --canaryComponentBadgeMergedBorder: var(--canaryColorsPurple300); /* Border color for merged state badges. Defines the boundary of merge status indicators. */
+  --canaryComponentBadgeMergedBackground: var(--canaryColorsPurple500); /* Background color for merged state badges. Creates subtle but recognizable merge indicators. */
+  --canaryComponentBadgeAiBackground: var(--canaryColorsPureWhite); /* Background color for AI-related badges. Creates a subtle backdrop that highlights the gradient border. */
+  --canaryComponentBtnPrimaryText: var(--canaryColorsPureWhite); /* Text and icon color for primary action buttons. Ensures maximum contrast and visibility for primary CTA elements. */
+  --canaryComponentBtnSecondaryBackground: var(--canaryColorsChrome850); /* Background color for secondary action buttons. Creates visual hierarchy between primary and secondary actions. */
+  --canaryComponentBtnOutlineUnselectedBorder: var(--canaryBorder2); /* Border color for unselected outline buttons. Defines the clickable area with a visible boundary. */
+  --canaryComponentBtnOutlineSelectedBorder: var(--canaryBorder1); /* Border color for selected outline buttons. Creates stronger visual indication of the active state. */
+  --canaryComponentBtnSuccessText: var(--canaryColorsGreen200); /* Text color for success buttons. Communicates positive actions through readable green text. */
+  --canaryComponentBtnSuccessBackground: var(--canaryColorsGreen500); /* Background color for success buttons. Creates subtle but recognizable positive action styling. */
+  --canaryComponentBtnSuccessBorder: var(--canaryColorsGreen300); /* Border color for success buttons. Provides definition for positive action buttons. */
+  --canaryComponentBtnSuccessStateHover: var(--canaryColorsGreen500); /* Hover state background color for success buttons. Creates subtle feedback for user interaction. */
+  --canaryComponentBtnSuccessStateActive: var(--canaryColorsGreen500); /* Active state background color for success buttons. Provides stronger visual feedback for clicks/presses. */
+  --canaryComponentBtnDangerText: var(--canaryColorsRed200); /* Text color for danger buttons. Communicates destructive or warning actions through high-contrast red text. */
+  --canaryComponentBtnDangerBackground: var(--canaryColorsRed500); /* Background color for danger buttons. Creates subtle but recognizable destructive action styling. */
+  --canaryComponentBtnDangerBorder: var(--canaryColorsRed300); /* Border color for danger buttons. Provides definition for destructive action buttons. */
+  --canaryComponentBtnDangerStateHover: var(--canaryColorsRed500); /* Hover state background color for danger buttons. Creates subtle feedback for user interaction. */
+  --canaryComponentBtnDangerStateActive: var(--canaryColorsRed500); /* Active state background color for danger buttons. Provides stronger visual feedback for clicks/presses. */
+  --canaryComponentCardBorder: var(--canaryBorder2); /* Border color for card components. Defines the card boundaries and enhances visual separation from surrounding content. */
+  --canaryComponentDialogBackdrop: var(--canaryColorsChrome950); /* Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath. */
+  --canaryComponentDropdownBorder: var(--canaryBorder2); /* Border color for dropdown menus container. */
+  --canaryComponentDropdownItemDeleteStateHover: var(--canaryColorsRed500); /* Specific hover state color for dropdown delete-item. */
+  --canaryComponentInputBorder: var(--canaryBorder2); /* Border color for input fields. Defines the input area with a visible boundary for improved usability. */
+  --canaryComponentLinkVisited: var(--canaryColorsPurple300); /* Visited state color for text links. Differentiates links the user has already activated. */
+  --canaryComponentNavBorder: var(--canaryBorder2); /* Border color for navigation components. Creates visual boundaries and separation from adjacent content. */
+  --canaryComponentNavSeparator: var(--canaryBorder2); /* Color for separators between navigation sections. Creates visual organization within the navigation structure. */
+  --canaryComponentPipelineArrowBorder: var(--canaryBorder1); /* Border color for pipeline connection arrows. Defines the visual path between pipeline components. */
+  --canaryComponentPipelineCardErrorBorder: var(--canaryColorsRed300); /* Border color for error pipeline states. Clearly indicates failed or problematic pipeline execution. */
+  --canaryComponentPipelineCardCompletedBorder: var(--canaryColorsGreen300); /* Border color for completed pipeline states. Indicates successful pipeline execution. */
+  --canaryComponentPipelineCardCanvas2Border: var(--canaryBorder2); /* Border styling applied to nested canvas containers. Creates clear visual boundaries between different sections within the pipeline visualization. */
+  --canaryComponentPipelineBackgroundDotes: var(--canaryColorsChrome850); /* Refers to the dotted pattern visible in the background of the workspace. */
+  --canaryComponentScrollbarThumb: var(--canaryColorsChrome850); /* Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability. */
+  --canaryComponentSelectionUnselectedBorder: var(--canaryBorder1); /* Border color for unselected elements in selection controls. Defines the clickable area with a visible boundary. */
+  --canaryComponentSelectionSelectedItem: var(--canaryColorsChrome950); /* Color for selected items in selection controls. Creates high contrast against selected background state. */
+  --canaryComponentSelectionSelectedBackground: var(--canaryColorsPureWhite); /* Background color for selected state in selection controls. Creates strong visual indication of active selection. */
+  --canaryComponentSelectionSelectedBorder: var(--canaryColorsPureWhite); /* Border color for selected elements in selection controls. Reinforces the selected state with consistent styling. */
+  --canaryComponentSliderTrackBase: var(--canaryColorsChrome850); /* Background color for slider tracks. Represents the full range of available values in an unselected state. */
+  --canaryComponentSliderTrackSegmentsBase: var(--canaryColorsChrome600); /* Color for segment markers on the unfilled track portion. Creates visual indicators for specific values or intervals. */
+  --canaryComponentSliderHandleBackground: var(--canaryColorsChrome100); /* Background color for slider handles. Creates a distinct, interactive element for adjusting values. */
+  --canaryComponentSliderHandleBorder: var(--canaryColorsChrome850); /* Border color for slider handles. Provides definition and contrast for the interactive control. */
+  --canaryComponentStatusIndicatorSuccess: var(--canaryColorsGreen300); /* Color for success status indicators. Communicates completed or positive states. */
+  --canaryComponentStatusIndicatorDanger: var(--canaryColorsRed300); /* Color for danger status indicators. Communicates error or critical warning states. */
+  --canaryComponentStatusIndicatorWarning: var(--canaryColorsAmber300); /* Color for warning status indicators. Communicates caution or potential issue states. */
+  --canaryComponentStatusIndicatorRunning: var(--canaryColorsYellow300); /* Color for running status indicators. Communicates active or in-progress operations. */
+  --canaryComponentStatusIndicatorMerged: var(--canaryColorsPurple300); /* Color for merged status indicators. Communicates successful integration or completion in version control contexts. */
+  --canaryComponentStatusIndicatorActionRequired: var(--canaryColorsBlue300); /* Color for action-required status indicators. Communicates that user attention or intervention is needed.  */
+  --canaryComponentStatusIndicatorPending: var(--canaryColorsChrome400); /* Color for pending status indicators. Communicates in-progress or waiting states. */
+  --canaryComponentSwitchSelectedThumb: var(--canaryColorsChrome950); /* Color for the movable thumb element in selected switch controls. Provides clear contrast against the active track. */
+  --canaryComponentSwitchSelectedBackground: var(--canaryColorsPureWhite); /* Background color for the selected state of switch controls. Creates strong visual indication of active state. */
+  --canaryComponentTableRowAlternateBackground: var(--canaryColorsChrome200); /* Background color for alternate table rows. Improves readability by differentiating adjacent rows. */
+  --canaryComponentTabsItemSelectedBorder: var(--canaryBorder2); /* Border color for the selected tab item. Reinforces the active state with defined boundaries. */
+  --canaryComponentTagBlueText: var(--canaryColorsBlue300); /* Text color for blue tags. Ensures readability while maintaining the blue color theme. */
+  --canaryComponentTagBlueBackground: var(--canaryColorsBlue900); /* Background color for blue tags. Creates a distinct surface with blue theme styling. */
+  --canaryComponentTagBlueBackgroundSubtle: var(--canaryColorsBlue950); /* Subtle background variation for blue tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagBrownText: var(--canaryColorsBrown300); /* Text color for brown tags. Ensures readability while maintaining the brown color theme. */
+  --canaryComponentTagBrownBackground: var(--canaryColorsBrown900); /* Background color for brown tags. Creates a distinct surface with brown theme styling. */
+  --canaryComponentTagBrownBackgroundSubtle: var(--canaryColorsBrown950); /* Subtle background variation for brown tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagCyanText: var(--canaryColorsCyan300); /* Text color for cyan tags. Ensures readability while maintaining the cyan color theme. */
+  --canaryComponentTagCyanBackground: var(--canaryColorsCyan900); /* Background color for cyan tags. Creates a distinct surface with cyan theme styling. */
+  --canaryComponentTagCyanBackgroundSubtle: var(--canaryColorsCyan950); /* Subtle background variation for cyan tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagGreenText: var(--canaryColorsGreen300); /* Text color for green tags. Ensures readability while maintaining the green color theme. */
+  --canaryComponentTagGreenBackground: var(--canaryColorsGreen900); /* Background color for green tags. Creates a distinct surface with green theme styling. */
+  --canaryComponentTagGreenBackgroundSubtle: var(--canaryColorsGreen950); /* Subtle background variation for green tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagIndigoText: var(--canaryColorsIndigo300); /* Text color for indigo tags. Ensures readability while maintaining the indigo color theme. */
+  --canaryComponentTagIndigoBackground: var(--canaryColorsIndigo900); /* Background color for indigo tags. Creates a distinct surface with indigo theme styling. */
+  --canaryComponentTagIndigoBackgroundSubtle: var(--canaryColorsIndigo950); /* Subtle background variation for indigo tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagLimeText: var(--canaryColorsLime300); /* Text color for lime tags. Ensures readability while maintaining the lime color theme. */
+  --canaryComponentTagLimeBackground: var(--canaryColorsLime900); /* Background color for lime tags. Creates a distinct surface with lime theme styling. */
+  --canaryComponentTagLimeBackgroundSubtle: var(--canaryColorsLime950); /* Subtle background variation for lime tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagMintText: var(--canaryColorsMint300); /* Text color for mint tags. Ensures readability while maintaining the mint color theme. */
+  --canaryComponentTagMintBackground: var(--canaryColorsMint900); /* Background color for mint tags. Creates a distinct surface with mint theme styling. */
+  --canaryComponentTagMintBackgroundSubtle: var(--canaryColorsMint950); /* Subtle background variation for mint tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagOrangeText: var(--canaryColorsOrange300); /* Text color for orange tags. Ensures readability while maintaining the orange color theme. */
+  --canaryComponentTagOrangeBackground: var(--canaryColorsOrange900); /* Background color for orange tags. Creates a distinct surface with orange theme styling. */
+  --canaryComponentTagOrangeBackgroundSubtle: var(--canaryColorsOrange950); /* Subtle background variation for orange tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagPinkText: var(--canaryColorsPink300); /* Text color for pink tags. Ensures readability while maintaining the pink color theme. */
+  --canaryComponentTagPinkBackground: var(--canaryColorsPink900); /* Background color for pink tags. Creates a distinct surface with pink theme styling. */
+  --canaryComponentTagPinkBackgroundSubtle: var(--canaryColorsPink950); /* Subtle background variation for pink tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagPurpleText: var(--canaryColorsPurple300); /* Text color for purple tags. Ensures readability while maintaining the purple color theme. */
+  --canaryComponentTagPurpleBackground: var(--canaryColorsPurple900); /* Background color for purple tags. Creates a distinct surface with purple theme styling. */
+  --canaryComponentTagPurpleBackgroundSubtle: var(--canaryColorsPurple950); /* Subtle background variation for purple tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagRedText: var(--canaryColorsRed300); /* Text color for red tags. Ensures readability while maintaining the red color theme. */
+  --canaryComponentTagRedBackground: var(--canaryColorsRed900); /* Background color for red tags. Creates a distinct surface with red theme styling. */
+  --canaryComponentTagRedBackgroundSubtle: var(--canaryColorsRed950); /* Subtle background variation for red tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagVioletText: var(--canaryColorsViolet300); /* Text color for violet tags. Ensures readability while maintaining the violet color theme. */
+  --canaryComponentTagVioletBackground: var(--canaryColorsViolet900); /* Background color for violet tags. Creates a distinct surface with violet theme styling. */
+  --canaryComponentTagVioletBackgroundSubtle: var(--canaryColorsViolet950); /* Subtle background variation for violet tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentTagYellowText: var(--canaryColorsYellow300); /* Text color for yellow tags. Ensures readability while maintaining the yellow color theme. */
+  --canaryComponentTagYellowBackground: var(--canaryColorsYellow900); /* Background color for yellow tags. Creates a distinct surface with yellow theme styling. */
+  --canaryComponentTagYellowBackgroundSubtle: var(--canaryColorsYellow950); /* Subtle background variation for yellow tags. Provides a softer alternative for less emphasis. */
+  --canaryComponentToastDangerTitle: var(--canaryColorsPureWhite); /* Title text color for danger toast notifications. Provides maximum contrast against the error background. */
+  --canaryComponentToastDangerDescription: var(--canaryColorsPureWhite); /* Description text color for danger toast notifications. Ensures readability of critical information. */
+  --canaryComponentToastDangerBackground: var(--canaryColorsRed400); /* Background color for danger toast notifications. Creates high-visibility indication of errors or warnings. */
+  --canaryComponentMarkdownEditorTitleH1: var(--canaryFontWeightDefaultNormal600) var(--canaryFontSize7)/var(--canaryLineHeight7Normal) var(--canaryFontFamilyDefault); /* Article main heading. */
+  --canaryComponentMarkdownEditorTitleH2: var(--canaryFontWeightDefaultNormal600) var(--canaryFontSize6)/var(--canaryLineHeight6Normal) var(--canaryFontFamilyDefault); /* Article section heading. */
+  --canaryComponentMarkdownEditorTitleH3: var(--canaryFontWeightDefaultNormal600) var(--canaryFontSize3)/var(--canaryLineHeight3Normal) var(--canaryFontFamilyDefault); /* Article subsection heading. */
+  --canaryComponentMarkdownEditorContentLead: var(--canaryFontWeightDefaultNormal400) var(--canaryFontSize5)/var(--canaryLineHeight5Normal) var(--canaryFontFamilyDefault); /* Article introduction paragraph. */
+  --canaryComponentMarkdownEditorContentParagraph: var(--canaryFontWeightDefaultNormal400) var(--canaryFontSize3)/var(--canaryLineHeight3Relaxed) var(--canaryFontFamilyDefault); /* Article paragraph text. */
+  --canaryComponentMarkdownEditorContentEmphasized: var(--canaryFontWeightDefaultNormal500) var(--canaryFontSize3)/var(--canaryLineHeight3Relaxed) var(--canaryFontFamilyDefault); /* Emphasized paragraph text. */
+  --canaryShadowColor0: var(--canaryColorsPureBlack); /* Transparent shadow color. Used when no shadow effect is desired. */
+  --canaryShadowColor1: var(--canaryColorsPureBlack); /* Light shadow color with 60% opacity. Creates subtle depth for small UI elements. */
+  --canaryShadowColor2: var(--canaryColorsPureBlack); /* Medium shadow color with 60% opacity. Provides balanced depth for common UI components. */
+  --canaryShadowColor3: var(--canaryColorsPureBlack); /* Medium shadow color with 50% opacity. Creates moderate depth for elevated components. */
+  --canaryShadowColor4: var(--canaryColorsPureBlack); /* Deep shadow color with 50% opacity. Provides significant depth for floating elements. */
+  --canaryShadowColor5: var(--canaryColorsPureBlack); /* Very deep shadow color with 50% opacity. Creates dramatic elevation for modal content. */
+  --canaryShadowColor6: var(--canaryColorsPureBlack); /* Extremely deep shadow color with 60% opacity. Provides maximum depth for highly elevated elements. */
+  --canaryShadowColorInner: var(--canaryColorsPureWhite); /* Subtle inner shadow color with 10% opacity. Creates inset effect for pressed or focused states. */
+  --canaryGradientAiGradientStop1: var(--canaryColorsYellow100);
+  --canaryGradientAiGradientStop2: var(--canaryColorsPink150);
+  --canaryGradientAiGradientStop3: var(--canaryColorsPurple300);
+  --canaryGradientAiGradientStop4: var(--canaryColorsCyan200);
+  --canaryGradientSkeletonGradientStop1: var(--canaryColorsChrome850);
+  --canaryGradientSkeletonGradientStop2: var(--canaryColorsChrome800);
+  --canaryGradientSkeletonGradientStop3: var(--canaryColorsChrome850);
+  --canaryGradientPipelineRunningGradientStop1: var(--canaryColorsYellow200);
+  --canaryGradientPipelineRunningGradientStop2: var(--canaryColorsChrome800);
+  --canaryGradientPipelineRunningGradientStop3: var(--canaryColorsYellow200);
+  --canaryGradientPipelineArrowsGradientStop1: var(--canaryColorsPureWhite);
+  --canaryGradientPipelineArrowsGradientStop2: var(--canaryColorsBlue300);
+  --canaryGradientPipelineArrowsGradientStop3: var(--canaryBorder1);
+  --canaryGradientPipelineCardBackgroundGradientFrom: var(--canaryColorsChrome850);
+  --canaryGradientPipelineCardBackgroundGradientTo: var(--canaryColorsChrome900);
+  --canaryGradientPipelineCardBorderGradientFrom: var(--canaryColorsChrome800);
+  --canaryGradientPipelineCardBorderGradientTo: var(--canaryColorsChrome850);
+  --canaryGradientPipelineWidgetNumberGradientFrom: var(--canaryColorsChrome200);
+  --canaryGradientPipelineWidgetNumberGradientTo: var(--canaryColorsChrome600);
+  --canaryGradientPipelineWidgetBlobBigGradientFrom: var(--canaryColorsChrome850);
+  --canaryGradientPipelineWidgetBlobBigGradientTo: var(--canaryColorsChrome950);
+  --canaryGradientPipelineWidgetBlobSmallGradientFrom: var(--canaryColorsChrome800);
+  --canaryGradientPipelineWidgetBlobSmallGradientTo: var(--canaryColorsChrome850);
+  --canaryLineHeight1None: var(--canaryFontSize1)*var(--canaryLineHeightNone);
+  --canaryLineHeight1Tight: var(--canaryFontSize1)*var(--canaryLineHeightTight);
+  --canaryLineHeight1Snug: var(--canaryFontSize1)*var(--canaryLineHeightSnug);
+  --canaryLineHeight1Normal: var(--canaryFontSize1)*var(--canaryLineHeightNormal);
+  --canaryLineHeight1Relaxed: var(--canaryFontSize1)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight1Loose: var(--canaryFontSize1)*var(--canaryLineHeightLoose);
+  --canaryLineHeight2None: var(--canaryFontSize2)*var(--canaryLineHeightNone);
+  --canaryLineHeight2Tight: var(--canaryFontSize2)*var(--canaryLineHeightTight);
+  --canaryLineHeight2Snug: var(--canaryFontSize2)*var(--canaryLineHeightSnug);
+  --canaryLineHeight2Normal: var(--canaryFontSize2)*var(--canaryLineHeightNormal);
+  --canaryLineHeight2Relaxed: var(--canaryFontSize2)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight2Loose: var(--canaryFontSize2)*var(--canaryLineHeightLoose);
+  --canaryLineHeight3None: var(--canaryFontSize3)*var(--canaryLineHeightNone);
+  --canaryLineHeight3Tight: var(--canaryFontSize3)*var(--canaryLineHeightTight);
+  --canaryLineHeight3Snug: var(--canaryFontSize3)*var(--canaryLineHeightSnug);
+  --canaryLineHeight3Normal: var(--canaryFontSize3)*var(--canaryLineHeightNormal);
+  --canaryLineHeight3Relaxed: var(--canaryFontSize3)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight3Loose: var(--canaryFontSize3)*var(--canaryLineHeightLoose);
+  --canaryLineHeight4None: var(--canaryFontSize4)*var(--canaryLineHeightNone);
+  --canaryLineHeight4Tight: var(--canaryFontSize4)*var(--canaryLineHeightTight);
+  --canaryLineHeight4Snug: var(--canaryFontSize4)*var(--canaryLineHeightSnug);
+  --canaryLineHeight4Normal: var(--canaryFontSize4)*var(--canaryLineHeightNormal);
+  --canaryLineHeight4Relaxed: var(--canaryFontSize4)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight4Loose: var(--canaryFontSize4)*var(--canaryLineHeightLoose);
+  --canaryLineHeight5None: var(--canaryFontSize5)*var(--canaryLineHeightNone);
+  --canaryLineHeight5Tight: var(--canaryFontSize5)*var(--canaryLineHeightTight);
+  --canaryLineHeight5Snug: var(--canaryFontSize5)*var(--canaryLineHeightSnug);
+  --canaryLineHeight5Normal: var(--canaryFontSize5)*var(--canaryLineHeightNormal);
+  --canaryLineHeight5Relaxed: var(--canaryFontSize5)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight5Loose: var(--canaryFontSize5)*var(--canaryLineHeightLoose);
+  --canaryLineHeight6None: var(--canaryFontSize6)*var(--canaryLineHeightNone);
+  --canaryLineHeight6Tight: var(--canaryFontSize6)*var(--canaryLineHeightTight);
+  --canaryLineHeight6Snug: var(--canaryFontSize6)*var(--canaryLineHeightSnug);
+  --canaryLineHeight6Normal: var(--canaryFontSize6)*var(--canaryLineHeightNormal);
+  --canaryLineHeight6Relaxed: var(--canaryFontSize6)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight6Loose: var(--canaryFontSize6)*var(--canaryLineHeightLoose);
+  --canaryLineHeight7None: var(--canaryFontSize7)*var(--canaryLineHeightNone);
+  --canaryLineHeight7Tight: var(--canaryFontSize7)*var(--canaryLineHeightTight);
+  --canaryLineHeight7Snug: var(--canaryFontSize7)*var(--canaryLineHeightSnug);
+  --canaryLineHeight7Normal: var(--canaryFontSize7)*var(--canaryLineHeightNormal);
+  --canaryLineHeight7Relaxed: var(--canaryFontSize7)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight7Loose: var(--canaryFontSize7)*var(--canaryLineHeightLoose);
+  --canaryLineHeight8None: var(--canaryFontSize8)*var(--canaryLineHeightNone);
+  --canaryLineHeight8Tight: var(--canaryFontSize8)*var(--canaryLineHeightTight);
+  --canaryLineHeight8Snug: var(--canaryFontSize8)*var(--canaryLineHeightSnug);
+  --canaryLineHeight8Normal: var(--canaryFontSize8)*var(--canaryLineHeightNormal);
+  --canaryLineHeight8Relaxed: var(--canaryFontSize8)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight8Loose: var(--canaryFontSize8)*var(--canaryLineHeightLoose);
+  --canaryLineHeight9None: var(--canaryFontSize9)*var(--canaryLineHeightNone);
+  --canaryLineHeight9Tight: var(--canaryFontSize9)*var(--canaryLineHeightTight);
+  --canaryLineHeight9Snug: var(--canaryFontSize9)*var(--canaryLineHeightSnug);
+  --canaryLineHeight9Normal: var(--canaryFontSize9)*var(--canaryLineHeightNormal);
+  --canaryLineHeight9Relaxed: var(--canaryFontSize9)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight9Loose: var(--canaryFontSize9)*var(--canaryLineHeightLoose);
+  --canaryLineHeight10None: var(--canaryFontSize10)*var(--canaryLineHeightNone);
+  --canaryLineHeight10Tight: var(--canaryFontSize10)*var(--canaryLineHeightTight);
+  --canaryLineHeight10Snug: var(--canaryFontSize10)*var(--canaryLineHeightSnug);
+  --canaryLineHeight10Normal: var(--canaryFontSize10)*var(--canaryLineHeightNormal);
+  --canaryLineHeight10Relaxed: var(--canaryFontSize10)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight10Loose: var(--canaryFontSize10)*var(--canaryLineHeightLoose);
+  --canaryLineHeight11None: var(--canaryFontSize11)*var(--canaryLineHeightNone);
+  --canaryLineHeight11Tight: var(--canaryFontSize11)*var(--canaryLineHeightTight);
+  --canaryLineHeight11Snug: var(--canaryFontSize11)*var(--canaryLineHeightSnug);
+  --canaryLineHeight11Normal: var(--canaryFontSize11)*var(--canaryLineHeightNormal);
+  --canaryLineHeight11Relaxed: var(--canaryFontSize11)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight11Loose: var(--canaryFontSize11)*var(--canaryLineHeightLoose);
+  --canaryLineHeight12None: var(--canaryFontSize12)*var(--canaryLineHeightNone);
+  --canaryLineHeight12Tight: var(--canaryFontSize12)*var(--canaryLineHeightTight);
+  --canaryLineHeight12Snug: var(--canaryFontSize12)*var(--canaryLineHeightSnug);
+  --canaryLineHeight12Normal: var(--canaryFontSize12)*var(--canaryLineHeightNormal);
+  --canaryLineHeight12Relaxed: var(--canaryFontSize12)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight12Loose: var(--canaryFontSize12)*var(--canaryLineHeightLoose);
+  --canaryLineHeight13None: var(--canaryFontSize13)*var(--canaryLineHeightNone);
+  --canaryLineHeight13Tight: var(--canaryFontSize13)*var(--canaryLineHeightTight);
+  --canaryLineHeight13Snug: var(--canaryFontSize13)*var(--canaryLineHeightSnug);
+  --canaryLineHeight13Normal: var(--canaryFontSize13)*var(--canaryLineHeightNormal);
+  --canaryLineHeight13Relaxed: var(--canaryFontSize13)*var(--canaryLineHeightRelaxed);
+  --canaryLineHeight13Loose: var(--canaryFontSize13)*var(--canaryLineHeightLoose);
+  --canaryBreakpointContainer: var(--canarySpacing8);
+  --canaryHeadingHero: var(--canaryFontWeightDefaultNormal500) var(--canaryFontSize9)/var(--canaryLineHeight9Tight) var(--canaryFontFamilyDefault); /* Large headlines with extra emphasis. */
+  --canaryHeadingSection: var(--canaryFontWeightDefaultNormal500) var(--canaryFontSize7)/var(--canaryLineHeight7Tight) var(--canaryFontFamilyDefault); /* Large headlines, hero sections. */
+  --canaryHeadingSubsection: var(--canaryFontWeightDefaultNormal500) var(--canaryFontSize6)/var(--canaryLineHeight6Tight) var(--canaryFontFamilyDefault); /* Emphasized section headers. */
+  --canaryHeadingBase: var(--canaryFontWeightDefaultNormal500) var(--canaryFontSize3)/var(--canaryLineHeight3Tight) var(--canaryFontFamilyDefault); /* Section headers. */
+  --canaryHeadingSmall: var(--canaryFontWeightDefaultNormal600) var(--canaryFontSize2)/var(--canaryLineHeight2Snug) var(--canaryFontFamilyDefault); /* Section headers. */
+  --canaryBodyNormal: var(--canaryFontWeightDefaultNormal400) var(--canaryFontSize2)/var(--canaryLineHeight2Snug) var(--canaryFontFamilyDefault); /* Primary text style for UI and content. */
+  --canaryBodyStrong: var(--canaryFontWeightDefaultNormal500) var(--canaryFontSize2)/var(--canaryLineHeight2Snug) var(--canaryFontFamilyDefault); /* Primary text style for UI and content. */
+  --canaryBodyCode: var(--canaryFontWeightDefaultNormal400) var(--canaryFontSize2)/var(--canaryLineHeight2Normal) var(--canaryFontFamilyMono); /* Code blocks and larger code snippets. */
+  --canaryBodyNoneNormal: var(--canaryFontWeightDefaultNormal400) var(--canaryFontSize2)/var(--canaryLineHeight2None) var(--canaryFontFamilyDefault); /* Primary text style for UI and content. */
+  --canaryBodyNoneStrong: var(--canaryFontWeightDefaultNormal500) var(--canaryFontSize2)/var(--canaryLineHeight2None) var(--canaryFontFamilyDefault);
+  --canaryBodyTightNormal: var(--canaryFontWeightDefaultNormal400) var(--canaryFontSize2)/var(--canaryLineHeight2Tight) var(--canaryFontFamilyDefault); /* Primary text style for UI and content. */
+  --canaryBodyTightStrong: var(--canaryFontWeightDefaultNormal500) var(--canaryFontSize2)/var(--canaryLineHeight2Tight) var(--canaryFontFamilyDefault);
+  --canaryCaptionNormal: var(--canaryFontWeightDefaultNormal500) var(--canaryFontSize1)/var(--canaryLineHeight1Snug) var(--canaryFontFamilyDefault); /* Primary caption style, small but important text. */
+  --canaryCaptionSoft: var(--canaryFontWeightDefaultNormal400) var(--canaryFontSize1)/var(--canaryLineHeight1Snug) var(--canaryFontFamilyDefault); /* Helper text, meta information. */
+  --canaryCaptionNoneNormal: var(--canaryFontWeightDefaultNormal500) var(--canaryFontSize1)/var(--canaryLineHeight1None) var(--canaryFontFamilyDefault); /* Primary caption style, small but important text. */
+  --canaryCaptionNoneSoft: var(--canaryFontWeightDefaultNormal400) var(--canaryFontSize1)/var(--canaryLineHeight1None) var(--canaryFontFamilyDefault); /* Helper text, meta information. */
+  --canaryBadgeSizeSm: var(--canarySize5);
+  --canaryBadgeSizeDefault: var(--canarySize6);
+  --canaryBadgeDefaultGap: var(--canarySpacing1);
+  --canaryBadgeDefaultPy: var(--canarySpacingHalf);
+  --canaryBadgeDefaultPl: var(--canarySpacing1Half);
+  --canaryBadgeDefaultPr: var(--canarySpacing2);
+  --canaryBadgeDefaultRadius: var(--canaryRounded2);
+  --canaryBadgeRoundedRadius: var(--canaryRoundedFull);
+  --canaryBadgeRoundedPx: var(--canarySpacing2Half);
+  --canaryBtnSizeSm: var(--canarySize7);
+  --canaryBtnSizeDefault: var(--canarySize8);
+  --canaryBtnSizeIcon: var(--canarySize8);
+  --canaryBtnSizeLg: var(--canarySize10);
+  --canaryBtnGapSm: var(--canarySpacing1Half);
+  --canaryBtnGapDefault: var(--canarySpacing2Half);
+  --canaryBtnGapLg: var(--canarySpacing2Half);
+  --canaryBtnBorder: var(--canaryBorder2);
+  --canaryBtnPxSm: var(--canarySpacing5);
+  --canaryBtnPxDefault: var(--canarySpacing6);
+  --canaryBtnPxLg: var(--canarySpacing6);
+  --canaryBtnPySm: var(--canarySpacing1Half);
+  --canaryBtnPyDefault: var(--canarySpacing2);
+  --canaryBtnPyLg: var(--canarySpacing3);
+  --canaryBtnLinkSizeSm: var(--canarySize4);
+  --canaryBtnLinkSizeDefault: var(--canarySize4);
+  --canaryBtnLinkGapSm: var(--canarySpacing2);
+  --canaryBtnLinkGapDefault: var(--canarySpacing2Half);
+  /**
+   * 4px
+   * 
+   */
+  --canaryDropdownItemPx: var(--canarySpacing1);
+  --canaryDropdownItemGap: var(--canarySpacing2Half); /* 8px */
+  --canaryDropdownItemSize: var(--canarySize10);
+  --canaryDropdownSubItemPx: var(--canarySpacing3); /* 12px */
+  --canaryDropdownSubItemPy: var(--canarySpacing2); /* 8px */
+  --canaryDropdownSubItemGap: var(--canarySpacing2Half);
+  --canaryDropdownSubItemSize: var(--canarySize8);
+  --canaryDropdownSubItemGapY: var(--canarySpacing1); /* 4px gap between text */
+  /**
+   * 4px
+   * 
+   */
+  --canaryDropdownContainerPy: var(--canarySpacing1);
+  --canaryDropdownMenuItemBranchSelectorTagPx: var(--canarySpacing2); /* 8px horizontal padding */
+  /**
+   * 20px height
+   * 
+   */
+  --canaryDropdownMenuItemBranchSelectorTagSize: var(--canarySize5);
+  --canaryDropdownMenuItemsHeaderFooterPx: var(--canarySpacing4); /* 16px horizontal padding */
+  --canaryDropdownMenuItemsHeaderFooterPy: var(--canarySpacing2Half); /* 10px vertical padding */
+  --canaryInputSizeSm: var(--canarySize8); /* 32px */
+  /**
+   * 36px
+   * 
+   */
+  --canaryInputSizeDefault: var(--canarySize9);
+  --canaryInputGap: var(--canarySpacing1Half);
+  --canaryInputPx: var(--canarySpacing3); /* 12px horizontal padding */
+  --canaryInputPy: var(--canarySpacing2); /* 8px vertical padding */
+  --canaryTagSize: var(--canarySize5);
+  --canaryTagGap: var(--canarySpacing2);
+  --canaryTagPy: var(--canarySpacing1);
+  --canaryTagPx: var(--canarySpacing2);
+  /**
+   * Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.
+   * 
+   * Common uses: Links, buttons, interactive icons, highlighted elements.
+   */
+  --canaryTextAccent: var(--canaryBrandColor200);
+  /**
+   * Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.
+   * 
+   * Common uses: Focus rings, keyboard navigation highlights, selection indicators.
+   */
+  --canaryBorderFocus: var(--canaryBrandColor200);
+  /**
+   * Muted border color for disabled element boundaries. Creates subtle containment while indicating non-interactive state.
+   * 
+   * Common uses: Disabled form inputs, inactive controls, unavailable action boundaries.
+   */
+  --canaryStateDisabledBorder: var(--canaryBorder3);
+  --canaryComponentAccordionTitle: var(--canaryText1); /* Text color for accordion triggers/headers. Used for the clickable area that expands/collapses content. */
+  --canaryComponentAccordionDescription: var(--canaryText2); /* Text color for accordion content. Applied to the expandable text within accordion panels. */
+  --canaryComponentAccordionChevron: var(--canaryText3); /* Color for the accordion expansion indicator icon. Visually signals the collapsed/expanded state. */
+  --canaryComponentAlertDefaultTitle: var(--canaryText1); /* Title text color for informational alerts. Ensures high visibility for the alert heading. */
+  --canaryComponentAlertDefaultDescription: var(--canaryText2); /* Description text color for informational alerts. Provides readable contrast for alert content. */
+  --canaryComponentAlertDefaultBorder: var(--canaryBorder3); /* Border color for informational alerts. Subtly defines the alert's boundaries. */
+  --canaryComponentAvatarText: var(--canaryText2); /* Text color for avatar initials or text. Ensures visibility against the avatar background. */
+  --canaryComponentAvatarBackground: var(--canaryBackground3); /* Background color for avatar components. Provides contrast for text or image content. */
+  --canaryComponentAvatarBorder: var(--canaryBorder3); /* Border color for avatars. Creates subtle definition around the avatar element. */
+  --canaryComponentBadgeDefaultText: var(--canaryText2); /* Text color for secondary badges. Provides readable contrast on secondary badge styling. */
+  --canaryComponentBadgeDefaultBorder: var(--canaryComponentBadgeDefaultBackground); /* Border color for secondary badges. Matches background for clean, cohesive appearance. */
+  --canaryComponentBadgeNeutralText: var(--canaryText2); /* Text color for outline badges. Ensures readability for badges with transparent backgrounds. */
+  --canaryComponentBadgeAiText: var(--canaryText1); /* Text color for AI-related badges. Ensures high contrast against AI badge gradient border. */
+  --canaryComponentBadgeAiBorder: linear-gradient(94deg, var(--canaryGradientAiGradientStop1) 0%, var(--canaryGradientAiGradientStop2) 35%, var(--canaryGradientAiGradientStop3) 65%, var(--canaryGradientAiGradientStop4) 100%); /* Gradient border color for AI-related badges. Creates distinctive multi-color styling to highlight AI functionality. */
+  --canaryComponentBreadcrumbItemInactive: var(--canaryText3); /* Text color for inactive breadcrumb items. Provides reduced emphasis for previous navigation steps. */
+  --canaryComponentBreadcrumbItemCurrent: var(--canaryText1); /* Text color for current breadcrumb item. Emphasizes the user's current location in the navigation hierarchy. */
+  --canaryComponentBreadcrumbSeparator: var(--canaryStateDisabledText); /* Color for breadcrumb separator characters. Creates visual distinction between breadcrumb items. */
+  --canaryComponentBtnPrimaryBackground: var(--canaryBrandColor600); /* Background color for primary action buttons. Creates emphasis for the most important action in a given context. */
+  --canaryComponentBtnSecondaryText: var(--canaryText2); /* Text and icon color for secondary action buttons. Provides readable contrast for supporting actions. */
+  --canaryComponentBtnSecondaryBorder: var(--canaryComponentBtnSecondaryBackground); /* Border color for secondary action buttons. Matches background for clean, cohesive appearance. */
+  --canaryComponentBtnOutlineUnselectedText: var(--canaryText2); /* Text color for unselected outline buttons. Provides readable contrast against transparent backgrounds. */
+  --canaryComponentBtnOutlineUnselectedIcon: var(--canaryText3); /* Icon color for unselected outline buttons. Creates subtle emphasis for button icons. */
+  --canaryComponentBtnOutlineSelectedText: var(--canaryText1); /* Text color for selected outline buttons. Increases contrast for active button states. */
+  --canaryComponentBtnOutlineSelectedIcon: var(--canaryText1); /* Icon color for selected outline buttons. Increases visibility for active button states. */
+  --canaryComponentBtnGhostUnselectedText: var(--canaryText2); /* Text color for unselected ghost buttons. Provides readable contrast for minimal styling. */
+  --canaryComponentBtnGhostUnselectedIcon: var(--canaryText3); /* Icon color for unselected ghost buttons. Creates subtle emphasis for button icons. */
+  --canaryComponentBtnGhostSelectedText: var(--canaryText1); /* Text color for selected ghost buttons. Increases contrast for active button states. */
+  --canaryComponentBtnGhostSelectedIcon: var(--canaryText1); /* Icon color for selected ghost buttons. Increases visibility for active button states. */
+  --canaryComponentBtnAiText: var(--canaryText1); /* Text color for AI-powered buttons. Ensures high contrast against AI button gradient border. */
+  --canaryComponentBtnAiBorder: linear-gradient(94deg, var(--canaryGradientAiGradientStop1) 0%, var(--canaryGradientAiGradientStop2) 35%, var(--canaryGradientAiGradientStop3) 65%, var(--canaryGradientAiGradientStop4) 100%); /* Gradient border color for AI-powered buttons. Creates distinctive multi-color styling to highlight AI functionality. */
+  --canaryComponentCardBackground: var(--canaryBackground2); /* Background color for card components. Creates a distinct surface that appears elevated from the page background. */
+  --canaryComponentDialogTitle: var(--canaryText1); /* Text color for dialog titles. Ensures high visibility and emphasis for the modal heading. */
+  --canaryComponentDialogDescription: var(--canaryText2); /* Text color for dialog content. Provides readable contrast for the modal's primary text content. */
+  --canaryComponentDialogBackground: var(--canaryBackground3); /* Background color for dialog components. Creates a distinct surface for modal content that appears above the main UI. */
+  --canaryComponentDropdownBackground: var(--canaryBackground2); /* Background color for dropdown menus. Creates a distinct surface for selectable options. */
+  --canaryComponentDropdownItemText: var(--canaryText2); /* Text color for dropdown menu items. Ensures readability of selectable options. */
+  --canaryComponentDropdownItemDeleteText: var(--canaryTextDanger); /* Text color for dropdown menu delete-item. */
+  --canaryComponentInputText: var(--canaryText2); /* Text color for input field content. Ensures readability of user-entered information. */
+  --canaryComponentInputPlaceholder: var(--canaryText3); /* Text color for input field placeholders. Provides lower-contrast guidance text that doesn't compete with entered content. */
+  --canaryComponentInputIcon: var(--canaryText3); /* Color for icons within input components. Creates visual harmony with placeholder text and decorative elements. */
+  --canaryComponentInputBackground: var(--canaryBackground2); /* Background color for input fields. Creates a distinct surface for user interaction and data entry. */
+  --canaryComponentLabelText: var(--canaryText1); /* Text color for form labels and field identifiers. Ensures high contrast for important contextual information. */
+  --canaryComponentLinkHover: var(--canaryBrandColor100); /* Hover state color for text links. Provides visual feedback for user interaction. */
+  --canaryComponentNavBackground: var(--canaryBackground1); /* Background color for navigation components. Creates a consistent foundation for navigation elements. */
+  --canaryComponentNavItemUnselectedText: var(--canaryText2); /* Text color for unselected navigation items. Provides readable but less emphasized styling for available options. */
+  --canaryComponentNavItemUnselectedIcon: var(--canaryText3); /* Icon color for unselected navigation items. Creates subtle visual indicators for navigation options. */
+  --canaryComponentNavItemSelectedText: var(--canaryText1); /* Text color for selected navigation items. Increases contrast to highlight the current location. */
+  --canaryComponentNavItemSelectedIcon: var(--canaryText1); /* Icon color for selected navigation items. Creates stronger visual indication of the current selection. */
+  --canaryComponentPipelineArrowRunningBorder: linear-gradient(90deg, var(--canaryGradientPipelineArrowsGradientStop1) 0%, var(--canaryGradientPipelineArrowsGradientStop2) 50%, var(--canaryGradientPipelineArrowsGradientStop3) 100%); /* Gradient border color for active pipeline arrows. Visually indicates data flow between active pipeline components. */
+  --canaryComponentPipelineCardBackground: radial-gradient(90% 100% at 15% 0%,var(--canaryGradientPipelineCardBackgroundGradientFrom) 10%, var(--canaryGradientPipelineCardBackgroundGradientTo) 75%); /* Gradient background for pipeline cards. Creates a visually distinctive surface for pipeline visualization elements. */
+  --canaryComponentPipelineCardBorder: radial-gradient(90% 100% at 15% 0%,var(--canaryGradientPipelineCardBorderGradientFrom) 10%, var(--canaryGradientPipelineCardBorderGradientTo) 75%); /* Gradient border for pipeline cards. Enhances the visual depth and distinction of pipeline components. */
+  --canaryComponentPipelineCardRunningBorder: radial-gradient(604% 142% at 0% 0%, var(--canaryGradientPipelineRunningGradientStop1) 0%, var(--canaryGradientPipelineRunningGradientStop2) 30%, var(--canaryGradientPipelineRunningGradientStop3) 100%); /* Animated gradient border for running pipeline states. Provides visual indication of active processing. */
+  --canaryComponentPipelineCardCanvas1Background: var(--canaryBackground1); /* The background color for the primary/top-level canvas where pipeline components are arranged. Creates the base visual layer for the main workflow area. */
+  --canaryComponentPipelineCardCanvas1Border: var(--canaryBorder3); /* Solid border for the outermost pipeline canvas elements. Defines the boundaries of the top-level workflow container. */
+  --canaryComponentPipelineCardCanvas2Background: var(--canaryBackground2); /* Background color for nested/secondary canvas elements that appear within the main workflow. Provides visual distinction for grouped pipeline components. */
+  --canaryComponentSelectionUnselectedItem: var(--canaryText3); /* Color for unselected items in selection controls. Provides readable but less emphasized styling for available options. */
+  --canaryComponentSelectionUnselectedBackground: var(--canaryBackground1); /* Background color for unselected state in selection controls. Creates visual distinction from selected items. */
+  --canaryComponentSeparatorBackground: var(--canaryBorder3); /* Background color for separator elements. Creates visual division between content sections with a subtle line or space. */
+  --canaryComponentSkeletonBackground: linear-gradient(90deg, var(--canaryGradientSkeletonGradientStop1) 0%, var(--canaryGradientSkeletonGradientStop2) 50%, var(--canaryGradientSkeletonGradientStop3) 100%); /* Animation color that sweeps across skeleton elements. Creates a "shimmer" effect indicating content loading states. */
+  --canaryComponentSliderTrackProgress: var(--canaryBrandColor300); /* Filled portion color for slider tracks. Visually represents the selected value or range within the track. */
+  --canaryComponentSliderTrackSegmentsProgress: var(--canaryBrandColor800); /* Color for segment markers on the filled track portion. Maintains visibility of markers within the selected range. */
+  --canaryComponentSwitchUnselectedThumb: var(--canaryText3); /* Color for the movable thumb element in unselected switch controls. Creates visual contrast against the track. */
+  --canaryComponentSwitchUnselectedBackground: var(--canaryBackground2); /* Background color for the unselected state of switch controls. Creates visual distinction from the selected state. */
+  --canaryComponentTableHeaderText: var(--canaryText2); /* Text color for table header cells. Ensures readability of column labels and titles. */
+  --canaryComponentTableHeaderBackground: var(--canaryBackground3); /* Background color for table header rows. Creates visual distinction between headers and data rows. */
+  --canaryComponentTableRowBorder: var(--canaryBorder3); /* Border color for table rows. Provides subtle separation between data rows. */
+  --canaryComponentTableCellText: var(--canaryText1); /* Text color for table cell content. Ensures high readability of tabular data. */
+  --canaryComponentTabsBackground: var(--canaryBackground1); /* Background color for the tabs container. Creates a consistent foundation for tab elements. */
+  --canaryComponentTabsBorder: var(--canaryBorder3); /* Border color for tab containers and separators. Provides subtle definition for tab boundaries. */
+  --canaryComponentTabsItemUnselectedText: var(--canaryText3); /* Text color for unselected tab items. Provides reduced emphasis for available but inactive tabs. */
+  --canaryComponentTabsItemUnselectedBackground: var(--canaryBackground1); /* Background color for unselected tab items. Creates visual distinction from the active tab. */
+  --canaryComponentTabsItemSelectedText: var(--canaryText1); /* Text color for the selected tab item. Increases contrast to highlight the active tab. */
+  --canaryComponentTabsItemSelectedBackground: var(--canaryBackground3); /* Background color for the selected tab item. Creates strong visual indication of the active tab. */
+  --canaryComponentTagBlueBorder: var(--canaryComponentTagBlueBackground); /* Border color for blue tags.  */
+  --canaryComponentTagBrownBorder: var(--canaryComponentTagBrownBackground); /* Border color for brown tags.  */
+  --canaryComponentTagCyanBorder: var(--canaryComponentTagCyanBackground); /* Border color for cyan tags. */
+  --canaryComponentTagGreenBorder: var(--canaryComponentTagGreenBackground); /* Border color for green tags. */
+  --canaryComponentTagIndigoBorder: var(--canaryComponentTagIndigoBackground); /* Border color for indigo tags. */
+  --canaryComponentTagLimeBorder: var(--canaryComponentTagLimeBackground); /* Border color for lime tags. */
+  --canaryComponentTagMintBorder: var(--canaryComponentTagMintBackground); /* Border color for mint tags. */
+  --canaryComponentTagOrangeBorder: var(--canaryComponentTagOrangeBackground); /* Border color for orange tags. */
+  --canaryComponentTagPinkBorder: var(--canaryComponentTagPinkBackground); /* Border color for pink tags. */
+  --canaryComponentTagPurpleBorder: var(--canaryComponentTagPurpleBackground); /* Border color for purple tags. */
+  --canaryComponentTagRedBorder: var(--canaryComponentTagRedBackground); /* Border color for red tags. */
+  --canaryComponentTagVioletBorder: var(--canaryComponentTagVioletBackground); /* Border color for violet tags. */
+  --canaryComponentTagYellowBorder: var(--canaryComponentTagYellowBackground); /* Border color for yellow tags. */
+  --canaryComponentToastDefaultTitle: var(--canaryText1); /* Title text color for informational toast notifications. Ensures high visibility for the notification headline. */
+  --canaryComponentToastDefaultDescription: var(--canaryText2); /* Description text color for informational toast notifications. Provides readable contrast for notification content. */
+  --canaryComponentToastDefaultBackground: var(--canaryBackground3); /* Background color for informational toast notifications. Creates visual distinction from UI content beneath. */
+  --canaryComponentToastDefaultBorder: var(--canaryBorder3); /* Border color for informational toast notifications. Subtly defines the notification's boundaries. */
+  --canaryComponentToastDangerBorder: var(--canaryComponentToastDangerBackground); /* Border color for danger toast notifications. Reinforces the critical nature of the notification message. */
+  --canaryComponentTooltipText: var(--canaryText2); /* Text color for tooltip content. Ensures readability of helpful contextual information. */
+  --canaryComponentTooltipBackground: var(--canaryBackground3); /* Background color for tooltips. Creates a distinct surface for contextual information that appears above UI elements. */
+  /**
+   * No shadow. 
+   * Common uses: Flat designs, disabled states, removing shadows on mobile.
+   */
+  --canaryShadow0: 0 0 0 0 var(--canaryShadowColor0);
+  /**
+   * Small shadow. 
+   * Common uses: Buttons in their rest state, form inputs, subtle UI elements.
+   */
+  --canaryShadow1: 0 1px 2px 0 var(--canaryShadowColor1);
+  /**
+   * Default shadow. 
+   * Common uses: Cards, dropdowns, popovers in their default state.
+   */
+  --canaryShadow2: 0 1px 3px 0 var(--canaryShadowColor2), inset 0 1px 2px -1px var(--canaryShadowColor2);
+  /**
+   * Medium shadow. 
+   * Common uses: Elevated cards, active buttons, interactive elements on hover.
+   */
+  --canaryShadow3: 0 4px 6px -1px var(--canaryShadowColor3), inset 0 2px 4px -2px var(--canaryShadowColor3);
+  /**
+   * Large shadow. 
+   * Common uses: Modals, floating panels, navigation dropdowns.
+   */
+  --canaryShadow4: 0 10px 15px -3px var(--canaryShadowColor4), inset 0 4px 6px -4px #000000;
+  /**
+   * Extra large shadow. 
+   * Common uses: Large modals, sidebars, elevated content sections.
+   */
+  --canaryShadow5: 0 20px 25px -5px var(--canaryShadowColor5), 0 8px 10px -6px var(--canaryShadowColor5);
+  /**
+   * Extra extra large shadow.
+   * Common uses: This aggressive shadow is typically used sparingly in UI design, primarily for elements that need maximum visual emphasis and elevation.
+   */
+  --canaryShadow6: 0 25px 50px -12px var(--canaryShadowColor6);
+  /**
+   * Inner shadow. 
+   * Common uses: Pressed buttons, selected states, inset form fields.
+   */
+  --canaryShadowInner: inset 0 2px 4px 0 var(--canaryShadowColorInner);
+  --canaryRingFocus: 0 0 0 2px var(--canaryBackground1), 0 0 0 4px var(--canaryBorderFocus); /* Focus ring effect with background offset and accent border. */
+  --canaryBtnDefaultRadius: var(--canaryRadiusComponentXs);
+  --canaryBtnRoundedRadius: var(--canaryRadiusComponentFull);
+  --canaryDropdownItemRadius: var(--canaryRadiusComponentXxs);
+  --canaryDropdownSubItemRadius: var(--canaryRadiusComponentXxs);
+  --canaryDropdownContainerRadius: var(--canaryRadiusComponentSm); /* 6px */
+  --canaryInputRadius: var(--canaryRadiusComponentSm); /* 6px */
+  --canaryTagRadius: var(--canaryRadiusComponentXs);
+  --canaryComponentBtnPrimaryBorder: var(--canaryComponentBtnPrimaryBackground); /* Border color for primary action buttons. Matches background for clean, cohesive appearance. */
+  --canaryComponentLinkDefault: var(--canaryTextAccent); /* Default color for text links. Creates distinct visual identification of interactive text elements. */
+  --canaryComponentTabsItemUnselectedBorder: var(--canaryComponentTabsItemUnselectedBackground); /* Border color for unselected tab items. Maintains consistent styling with the tab background. */
+}

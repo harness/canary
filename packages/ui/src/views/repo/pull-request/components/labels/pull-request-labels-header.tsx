@@ -163,9 +163,6 @@ const LabelsHeader = ({
                           />
                           {!!label.isCustom && <Icon className="flex-none text-icons-4" name="circle-plus" size={11} />}
                         </div>
-                        {!!label?.description && (
-                          <span className="w-full truncate text-foreground-4">{label.description}</span>
-                        )}
                         {label.isSelected && (
                           <Icon className="absolute right-0 top-1 text-icons-2" name="tick" size={12} />
                         )}

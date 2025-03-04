@@ -110,7 +110,9 @@ export const RouterContextProvider = ({
   NavLink = NavLinkDefault,
   Outlet = OutletDefault,
   navigate = navigateFnDefault,
-  location = window.location
+  location = window.location,
+  useSearchParams = useSearchParamsDefault,
+  useMatches = useMatchesDefault
 }: {
   children: ReactNode
 } & Partial<RouterContextType>) => {
@@ -122,8 +124,8 @@ export const RouterContextProvider = ({
         Outlet,
         navigate,
         location,
-        useSearchParams: useSearchParamsDefault,
-        useMatches: useMatchesDefault
+        useSearchParams,
+        useMatches
       }}
     >
       {children}

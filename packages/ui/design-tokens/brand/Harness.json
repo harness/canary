@@ -3,55 +3,47 @@
     "color": {
       "50": {
         "$type": "color",
-        "$value": "{colors.blue.50}"
+        "$value": "{colors.cyan.50}"
       },
       "100": {
         "$type": "color",
-        "$value": "{colors.blue.100}"
-      },
-      "150": {
-        "$type": "color",
-        "$value": "{colors.blue.150}"
+        "$value": "{colors.cyan.100}"
       },
       "200": {
         "$type": "color",
-        "$value": "{colors.blue.200}"
+        "$value": "{colors.cyan.200}"
       },
       "300": {
         "$type": "color",
-        "$value": "{colors.blue.300}"
+        "$value": "{colors.cyan.300}"
       },
       "400": {
         "$type": "color",
-        "$value": "{colors.blue.400}"
+        "$value": "{colors.cyan.400}"
       },
       "500": {
         "$type": "color",
-        "$value": "{colors.blue.500}"
+        "$value": "{colors.cyan.500}"
       },
       "600": {
         "$type": "color",
-        "$value": "{colors.blue.600}"
+        "$value": "{colors.cyan.600}"
       },
       "700": {
         "$type": "color",
-        "$value": "{colors.blue.700}"
+        "$value": "{colors.cyan.700}"
       },
       "800": {
         "$type": "color",
-        "$value": "{colors.blue.800}"
-      },
-      "850": {
-        "$type": "color",
-        "$value": "{colors.blue.850}"
+        "$value": "{colors.cyan.800}"
       },
       "900": {
         "$type": "color",
-        "$value": "{colors.blue.900}"
+        "$value": "{colors.cyan.900}"
       },
       "950": {
         "$type": "color",
-        "$value": "{colors.blue.950}"
+        "$value": "{colors.cyan.950}"
       }
     },
     "onColor": {
@@ -63,10 +55,6 @@
         "$type": "color",
         "$value": "{colors.pure.black}"
       },
-      "150": {
-        "$type": "color",
-        "$value": "{colors.pure.black}"
-      },
       "200": {
         "$type": "color",
         "$value": "{colors.pure.black}"
@@ -92,10 +80,6 @@
         "$value": "{colors.pure.white}"
       },
       "800": {
-        "$type": "color",
-        "$value": "{colors.pure.white}"
-      },
-      "850": {
         "$type": "color",
         "$value": "{colors.pure.white}"
       },

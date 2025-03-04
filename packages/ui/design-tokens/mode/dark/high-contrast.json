@@ -2,7 +2,7 @@
   "background": {
     "1": {
       "$type": "color",
-      "$value": "{colors.pure.black}",
+      "$value": "{colors.chrome.1000}",
       "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background.\n\nCommon uses: Application background, page base layer, lowest-level containers."
     },
     "2": {
@@ -12,7 +12,7 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{colors.chrome.900}",
+      "$value": "{colors.chrome.850}",
       "$description": "Level 3. Represents elements that sit on top of the middle layer. Creates strong visual emphasis through maximum elevation.\n\nCommon uses: Popovers, tooltips, highlighted containers."
     }
   },
@@ -24,7 +24,7 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{colors.chrome.150}",
+      "$value": "{colors.chrome.200}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
@@ -61,7 +61,7 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{colors.chrome.800}",
+      "$value": "{colors.chrome.700}",
       "$description": "Standard border color for general use. Provides balanced visual definition for common UI elements.\n\nCommon uses: Containers, cards, dividers, separators, default form inputs."
     },
     "3": {
@@ -1177,12 +1177,12 @@
     "sidebar": {
       "background": {
         "$type": "color",
-        "$value": "{background.1}",
+        "$value": "{colors.pure.black}",
         "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
       },
       "border": {
         "$type": "color",
-        "$value": "{border.2}",
+        "$value": "{border.3}",
         "$description": "Border color for navigation components. Creates visual boundaries and separation from adjacent content."
       },
       "separator": {

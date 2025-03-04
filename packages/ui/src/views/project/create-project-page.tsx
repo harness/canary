@@ -1,9 +1,11 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button, Card, Fieldset, FormWrapper, Icon, Input, StyledLink, StyledLinkProps } from '@/components'
+import { useTheme } from '@/context'
 import { cn, Floating1ColumnLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { isLightTheme } from '@utils/is-light-theme'
 import { z } from 'zod'
 
 import { CreateProjectAnimatedLogo } from './create-project-animated-logo'
@@ -58,9 +60,13 @@ export type CreateProjectFields = z.infer<ReturnType<typeof createProjectSchema>
 
 export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
   const { error, isLoading, backLinkProps, onFormSubmit, useTranslationStore } = props
+  const { theme } = useTheme()
+
   const isAdditional = getIsAdditionalProjectPage(props)
   const isFirst = getIsFirstProjectPage(props)
   const isWithBackButton = !!backLinkProps?.to && isAdditional
+
+  const isThemeLight = useMemo(() => isLightTheme(theme), [theme])
 
   const { t } = useTranslationStore()
 
@@ -116,7 +122,11 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
       <div className="relative z-10 w-80 max-w-full">
         <div className="mb-10 grid justify-items-center">
-          <CreateProjectAnimatedLogo hasError={hasError} />
+          {isThemeLight ? (
+            <Icon size={112} name="create-workspace-light" />
+          ) : (
+            <CreateProjectAnimatedLogo hasError={hasError} />
+          )}
 
           <Card.Title className="mt-3 text-center text-foreground-1" as="h1">
             {t('views:createProject.title', 'Create your new project')}

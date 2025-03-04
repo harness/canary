@@ -1002,9 +1002,6 @@ importers:
       react-resizable-panels:
         specifier: ^2.0.19
         version: 2.1.7(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
-      react-router-dom:
-        specifier: ^6.26.0
-        version: 6.28.2(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       rehype-external-links:
         specifier: ^3.0.0
         version: 3.0.0
@@ -1059,13 +1056,13 @@ importers:
         version: 3.8.0(vite@6.1.1(@types/node@22.10.10)(jiti@1.21.7)(sass@1.83.4)(terser@5.37.0)(yaml@2.7.0))
       '@vitest/coverage-istanbul':
         specifier: ^3.0.6
-        version: 3.0.6(vitest@3.0.6(@types/debug@4.1.12)(@types/node@22.10.10)(@vitest/ui@3.0.6)(jiti@1.21.7)(jsdom@25.0.1)(sass@1.83.4)(terser@5.37.0)(yaml@2.7.0))
+        version: 3.0.6(vitest@3.0.6)
       '@vitest/ui':
         specifier: ^3.0.6
         version: 3.0.6(vitest@3.0.6)
       autoprefixer:
         specifier: ^10.4.20
-        version: 10.4.20(postcss@8.5.3)
+        version: 10.4.20(postcss@8.5.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -14686,7 +14683,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/coverage-istanbul@3.0.6(vitest@3.0.6(@types/debug@4.1.12)(@types/node@22.10.10)(@vitest/ui@3.0.6)(jiti@1.21.7)(jsdom@25.0.1)(sass@1.83.4)(terser@5.37.0)(yaml@2.7.0))':
+  '@vitest/coverage-istanbul@3.0.6(vitest@3.0.6)':
     dependencies:
       '@istanbuljs/schema': 0.1.3
       debug: 4.4.0

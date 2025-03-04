@@ -18,6 +18,13 @@ interface OutletProps {
   children?: ReactNode
 }
 
+interface Match {
+  id: string
+  pathname: string
+  params: Record<string, string>
+  pathnameBase: string
+}
+
 type NavigateFunction = (to: string | number) => void
 
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
@@ -57,12 +64,23 @@ const navigateFnDefault: NavigateFunction = to => {
   }
 }
 
+const useSearchParamsDefault = () => {
+  const setSearchParams = (params: URLSearchParams | ((currentParams: URLSearchParams) => URLSearchParams)): void => {}
+  return [new URLSearchParams(), setSearchParams] as const
+}
+
+const useMatchesDefault = (): Match[] => {
+  return []
+}
+
 interface RouterContextType {
   Link: ComponentType<LinkProps>
   NavLink: ComponentType<NavLinkProps>
   Outlet: ComponentType<OutletProps>
   navigate: NavigateFunction
   location: Location
+  useSearchParams: typeof useSearchParamsDefault
+  useMatches: typeof useMatchesDefault
 }
 
 const RouterContext = createContext<RouterContextType>({
@@ -70,7 +88,9 @@ const RouterContext = createContext<RouterContextType>({
   NavLink: NavLinkDefault,
   Outlet: OutletDefault,
   navigate: navigateFnDefault,
-  location: window.location
+  location: window.location,
+  useSearchParams: useSearchParamsDefault,
+  useMatches: useMatchesDefault
 })
 
 export const useRouterContext = () => useContext(RouterContext)
@@ -86,6 +106,18 @@ export const RouterContextProvider = ({
   children: ReactNode
 } & Partial<RouterContextType>) => {
   return (
-    <RouterContext.Provider value={{ Link, NavLink, Outlet, navigate, location }}>{children}</RouterContext.Provider>
+    <RouterContext.Provider
+      value={{
+        Link,
+        NavLink,
+        Outlet,
+        navigate,
+        location,
+        useSearchParams: useSearchParamsDefault,
+        useMatches: useMatchesDefault
+      }}
+    >
+      {children}
+    </RouterContext.Provider>
   )
 }

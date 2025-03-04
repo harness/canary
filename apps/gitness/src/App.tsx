@@ -1,5 +1,13 @@
 import { I18nextProvider } from 'react-i18next'
-import { createBrowserRouter, Link, NavLink, Outlet, RouterProvider } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  Link,
+  NavLink,
+  Outlet,
+  RouterProvider,
+  useMatches,
+  useSearchParams
+} from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
@@ -46,6 +54,8 @@ export default function App() {
                     Outlet={Outlet}
                     navigate={router.navigate}
                     location={window.location}
+                    useSearchParams={useSearchParams}
+                    useMatches={useMatches}
                   >
                     <RouterProvider router={router} />
                   </RouterContextProvider>

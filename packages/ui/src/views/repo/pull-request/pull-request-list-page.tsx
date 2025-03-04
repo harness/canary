@@ -1,5 +1,4 @@
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 
 import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Spacer, StackedList } from '@/components'
 import { useRouterContext } from '@/context'
@@ -39,7 +38,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   searchQuery,
   setSearchQuery
 }) => {
-  const { Link } = useRouterContext()
+  const { Link, useSearchParams } = useRouterContext()
   const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestListStore()
   const { t } = useTranslationStore()
   const [searchParams] = useSearchParams()

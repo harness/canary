@@ -4,14 +4,23 @@ export interface LinkProps {
   to: string | { pathname: string }
   className?: string
   children?: ReactNode
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
   [key: string]: any
 }
 
-export interface NavLinkProps extends Omit<LinkProps, 'className'> {
-  style?:
-    | CSSProperties
-    | ((props: { isActive: boolean; isPending: boolean; isTransitioning: boolean }) => CSSProperties)
-  className?: string | ((props: { isActive: boolean; isPending: boolean; isTransitioning: boolean }) => string)
+interface NavLinkStateProps {
+  isActive: boolean
+  isPending: boolean
+  isTransitioning: boolean
+}
+
+export interface NavLinkProps {
+  to: string | { pathname: string }
+  style?: CSSProperties | ((props: NavLinkStateProps) => CSSProperties)
+  className?: string | ((props: NavLinkStateProps) => string)
+  children?: ReactNode | ((props: NavLinkStateProps) => ReactNode)
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+  [key: string]: any
 }
 
 interface OutletProps {

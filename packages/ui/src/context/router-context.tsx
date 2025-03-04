@@ -5,7 +5,7 @@ export interface LinkProps {
   className?: string
   children?: ReactNode
   onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
-  [key: string]: any
+  [key: string]: unknown
 }
 
 interface NavLinkStateProps {
@@ -20,7 +20,7 @@ export interface NavLinkProps {
   className?: string | ((props: NavLinkStateProps) => string)
   children?: ReactNode | ((props: NavLinkStateProps) => ReactNode)
   onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
-  [key: string]: any
+  [key: string]: unknown
 }
 
 interface OutletProps {

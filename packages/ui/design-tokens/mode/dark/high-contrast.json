@@ -1481,12 +1481,12 @@
       "blue": {
         "text": {
           "$type": "color",
-          "$value": "{colors.blue.200}",
+          "$value": "{colors.blue.100}",
           "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.blue.900}",
+          "$value": "{colors.blue.800}",
           "$description": "Background color for blue tags. Creates a distinct surface with blue theme styling."
         },
         "background-subtle": {
@@ -1503,12 +1503,12 @@
       "brown": {
         "text": {
           "$type": "color",
-          "$value": "{colors.brown.200}",
+          "$value": "{colors.brown.100}",
           "$description": "Text color for brown tags. Ensures readability while maintaining the brown color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.brown.900}",
+          "$value": "{colors.brown.800}",
           "$description": "Background color for brown tags. Creates a distinct surface with brown theme styling."
         },
         "background-subtle": {
@@ -1525,12 +1525,12 @@
       "cyan": {
         "text": {
           "$type": "color",
-          "$value": "{colors.cyan.200}",
+          "$value": "{colors.cyan.100}",
           "$description": "Text color for cyan tags. Ensures readability while maintaining the cyan color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.cyan.900}",
+          "$value": "{colors.cyan.800}",
           "$description": "Background color for cyan tags. Creates a distinct surface with cyan theme styling."
         },
         "background-subtle": {
@@ -1547,12 +1547,12 @@
       "green": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.200}",
+          "$value": "{colors.green.100}",
           "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.green.900}",
+          "$value": "{colors.green.800}",
           "$description": "Background color for green tags. Creates a distinct surface with green theme styling."
         },
         "background-subtle": {
@@ -1569,12 +1569,12 @@
       "indigo": {
         "text": {
           "$type": "color",
-          "$value": "{colors.indigo.200}",
+          "$value": "{colors.indigo.100}",
           "$description": "Text color for indigo tags. Ensures readability while maintaining the indigo color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.indigo.900}",
+          "$value": "{colors.indigo.800}",
           "$description": "Background color for indigo tags. Creates a distinct surface with indigo theme styling."
         },
         "background-subtle": {
@@ -1591,12 +1591,12 @@
       "lime": {
         "text": {
           "$type": "color",
-          "$value": "{colors.lime.200}",
+          "$value": "{colors.lime.100}",
           "$description": "Text color for lime tags. Ensures readability while maintaining the lime color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.lime.900}",
+          "$value": "{colors.lime.800}",
           "$description": "Background color for lime tags. Creates a distinct surface with lime theme styling."
         },
         "background-subtle": {
@@ -1613,12 +1613,12 @@
       "mint": {
         "text": {
           "$type": "color",
-          "$value": "{colors.mint.200}",
+          "$value": "{colors.mint.100}",
           "$description": "Text color for mint tags. Ensures readability while maintaining the mint color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.mint.900}",
+          "$value": "{colors.mint.800}",
           "$description": "Background color for mint tags. Creates a distinct surface with mint theme styling."
         },
         "background-subtle": {
@@ -1635,12 +1635,12 @@
       "orange": {
         "text": {
           "$type": "color",
-          "$value": "{colors.orange.200}",
+          "$value": "{colors.orange.100}",
           "$description": "Text color for orange tags. Ensures readability while maintaining the orange color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.orange.900}",
+          "$value": "{colors.orange.800}",
           "$description": "Background color for orange tags. Creates a distinct surface with orange theme styling."
         },
         "background-subtle": {
@@ -1657,12 +1657,12 @@
       "pink": {
         "text": {
           "$type": "color",
-          "$value": "{colors.pink.200}",
+          "$value": "{colors.pink.100}",
           "$description": "Text color for pink tags. Ensures readability while maintaining the pink color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.pink.900}",
+          "$value": "{colors.pink.800}",
           "$description": "Background color for pink tags. Creates a distinct surface with pink theme styling."
         },
         "background-subtle": {
@@ -1679,12 +1679,12 @@
       "purple": {
         "text": {
           "$type": "color",
-          "$value": "{colors.purple.200}",
+          "$value": "{colors.purple.100}",
           "$description": "Text color for purple tags. Ensures readability while maintaining the purple color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.purple.900}",
+          "$value": "{colors.purple.800}",
           "$description": "Background color for purple tags. Creates a distinct surface with purple theme styling."
         },
         "background-subtle": {
@@ -1701,12 +1701,12 @@
       "red": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.200}",
+          "$value": "{colors.red.100}",
           "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.red.900}",
+          "$value": "{colors.red.800}",
           "$description": "Background color for red tags. Creates a distinct surface with red theme styling."
         },
         "background-subtle": {
@@ -1723,12 +1723,12 @@
       "violet": {
         "text": {
           "$type": "color",
-          "$value": "{colors.violet.200}",
+          "$value": "{colors.violet.100}",
           "$description": "Text color for violet tags. Ensures readability while maintaining the violet color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.violet.900}",
+          "$value": "{colors.violet.800}",
           "$description": "Background color for violet tags. Creates a distinct surface with violet theme styling."
         },
         "background-subtle": {
@@ -1745,12 +1745,12 @@
       "yellow": {
         "text": {
           "$type": "color",
-          "$value": "{colors.yellow.200}",
+          "$value": "{colors.yellow.100}",
           "$description": "Text color for yellow tags. Ensures readability while maintaining the yellow color theme."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.yellow.900}",
+          "$value": "{colors.yellow.800}",
           "$description": "Background color for yellow tags. Creates a distinct surface with yellow theme styling."
         },
         "background-subtle": {

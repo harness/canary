@@ -1,11 +1,11 @@
 import { I18nextProvider } from 'react-i18next'
-import { createBrowserRouter, Link, NavLink, Outlet, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
+import { createBrowserRouter, Link, NavLink, Outlet, RouterProvider } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { ToastProvider, TooltipProvider } from '@harnessio/ui/components'
-import { RouterContextProvider, RouterContextType } from '@harnessio/ui/context'
+import { RouterContextProvider } from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
@@ -15,21 +15,6 @@ import i18n from './i18n/i18n'
 import { routes } from './routes'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
-
-const AppRouterProvider = ({
-  children
-}: {
-  children: React.ReactNode
-} & Partial<RouterContextType>) => {
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  return (
-    <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet} navigate={navigate} location={location}>
-      {children}
-    </RouterContextProvider>
-  )
-}
 
 export default function App() {
   new CodeServiceAPIClient({
@@ -55,9 +40,15 @@ export default function App() {
             <TooltipProvider>
               <ExitConfirmProvider>
                 <NavigationProvider routes={routes}>
-                  <AppRouterProvider>
+                  <RouterContextProvider
+                    Link={Link}
+                    NavLink={NavLink}
+                    Outlet={Outlet}
+                    navigate={router.navigate}
+                    location={window.location}
+                  >
                     <RouterProvider router={router} />
-                  </AppRouterProvider>
+                  </RouterContextProvider>
                 </NavigationProvider>
               </ExitConfirmProvider>
             </TooltipProvider>

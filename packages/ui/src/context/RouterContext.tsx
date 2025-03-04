@@ -3,7 +3,7 @@ import type { LinkProps, NavigateFunction, NavLinkProps, OutletProps } from 'rea
 
 import { cn } from '@utils/cn'
 
-export interface RouterContextType {
+interface RouterContextType {
   Link: ComponentType<LinkProps>
   NavLink: ComponentType<NavLinkProps>
   Outlet: ComponentType<OutletProps>

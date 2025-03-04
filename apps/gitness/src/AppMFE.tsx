@@ -105,21 +105,6 @@ function decode<T = unknown>(arg: string): T {
   return JSON.parse(decodeURIComponent(atob(arg)))
 }
 
-const AppRouterProvider = ({
-  children
-}: {
-  children: React.ReactNode
-} & Partial<RouterContextType>) => {
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  return (
-    <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet} navigate={navigate} location={location}>
-      {children}
-    </RouterContextProvider>
-  )
-}
-
 export default function AppMFE({
   scope,
   renderUrl,
@@ -200,9 +185,15 @@ export default function AppMFE({
                         <TooltipProvider>
                           <ExitConfirmProvider>
                             <NavigationProvider routes={routesToRender}>
-                              <AppRouterProvider>
+                              <RouterContextProvider
+                                Link={Link}
+                                NavLink={NavLink}
+                                Outlet={Outlet}
+                                navigate={router.navigate}
+                                location={window.location}
+                              >
                                 <RouterProvider router={router} />
-                              </AppRouterProvider>
+                              </RouterContextProvider>
                             </NavigationProvider>
                           </ExitConfirmProvider>
                         </TooltipProvider>

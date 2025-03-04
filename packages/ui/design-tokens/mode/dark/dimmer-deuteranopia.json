@@ -80,7 +80,7 @@
     },
     "focus": {
       "$type": "color",
-      "$value": "{brand.color.400}",
+      "$value": "{brand.color.500}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
@@ -1177,12 +1177,12 @@
     "sidebar": {
       "background": {
         "$type": "color",
-        "$value": "{background.1}",
+        "$value": "{colors.pure.black}",
         "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
       },
       "border": {
         "$type": "color",
-        "$value": "{border.2}",
+        "$value": "{border.3}",
         "$description": "Border color for navigation components. Creates visual boundaries and separation from adjacent content."
       },
       "separator": {

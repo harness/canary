@@ -91,6 +91,60 @@
         "$type": "color",
         "$value": "{colors.pure.white}"
       }
+    },
+    "onColor": {
+      "50": {
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "150": {
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "850": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      }
     }
   }
 }

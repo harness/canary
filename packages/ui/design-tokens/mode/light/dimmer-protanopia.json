@@ -1389,7 +1389,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{brand.color.400}",
+          "$value": "{brand.color.300}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         }
       },
@@ -1426,7 +1426,7 @@
       },
       "cancelled": {
         "$type": "color",
-        "$value": "{colors.red.400}",
+        "$value": "{colors.red.300}",
         "$description": "Color for danger status indicators. Communicates error or critical warning states."
       },
       "warning": {

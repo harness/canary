@@ -2,7 +2,7 @@
   "background": {
     "1": {
       "$type": "color",
-      "$value": "{colors.chrome.1000}",
+      "$value": "{colors.pure.black}",
       "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background.\n\nCommon uses: Application background, page base layer, lowest-level containers."
     },
     "2": {

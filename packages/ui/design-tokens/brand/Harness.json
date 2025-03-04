@@ -101,10 +101,6 @@
         "$type": "color",
         "$value": "{colors.pure.black}"
       },
-      "150": {
-        "$type": "color",
-        "$value": "{colors.pure.black}"
-      },
       "200": {
         "$type": "color",
         "$value": "{colors.pure.black}"
@@ -130,10 +126,6 @@
         "$value": "{colors.pure.white}"
       },
       "800": {
-        "$type": "color",
-        "$value": "{colors.pure.white}"
-      },
-      "850": {
         "$type": "color",
         "$value": "{colors.pure.white}"
       },

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 
-import { Icon, Button } from '@/components'
+import { Button, Icon } from '@/components'
+import { Root as StackedList, Field as StackedListField, Item as StackedListItem } from '@/components/stacked-list'
 
-import { BaseEntityProps, EntityReference, EntityRendererProps, ScopeType } from './entity-reference'
+import { BaseEntityProps, EntityReference, EntityRendererProps, ScopeSelectorProps } from './entity-reference'
 
 // Define our specific entity types based on the provided data structure
 interface SecretSpec {
@@ -12,7 +13,7 @@ interface SecretSpec {
   additionalMetadata: any | null
 }
 
-interface SecretData extends BaseEntityProps {
+interface SecretData {
   type: string
   name: string
   identifier: string
@@ -23,13 +24,16 @@ interface SecretData extends BaseEntityProps {
   spec: SecretSpec
 }
 
+// Define our custom scope type
+type SecretScope = 'account' | 'organization' | string
+
 interface SecretItem extends BaseEntityProps {
   secret: SecretData
   createdAt: number
   updatedAt: number
   draft: boolean
   governanceMetadata: any | null
-  scope?: ScopeType
+  scope?: SecretScope
 }
 
 // Example data for Account scope
@@ -199,14 +203,17 @@ const formatDate = (timestamp: number): string => {
 // Example component showing how to use EntityReference
 export const EntityReferenceExample: React.FC = () => {
   const [selectedEntity, setSelectedEntity] = useState<SecretItem | null>(null)
-  const [activeScope, setActiveScope] = useState<ScopeType>('account')
+  const [activeScope, setActiveScope] = useState<SecretScope>('account')
+
+  // Define available scopes
+  const availableScopes: SecretScope[] = ['account', 'organization']
 
   const handleSelectEntity = (entity: SecretItem) => {
     setSelectedEntity(entity)
     console.log('Selected entity:', entity)
   }
 
-  const handleScopeChange = (scope: ScopeType) => {
+  const handleScopeChange = (scope: SecretScope) => {
     setActiveScope(scope)
     console.log('Scope changed to:', scope)
   }
@@ -226,38 +233,55 @@ export const EntityReferenceExample: React.FC = () => {
   // Custom entity renderer for secrets
   const renderEntity = (props: EntityRendererProps<SecretItem>) => {
     const { entity, isSelected, onSelect } = props
-    
+
     return (
-      <div
-        className={`flex items-center py-2 px-3 rounded cursor-pointer hover:bg-background-3 transition-colors ${
-          isSelected ? 'bg-background-4' : ''
-        }`}
+      <StackedListItem
         onClick={() => onSelect(entity)}
-      >
-        <div className="flex-1 flex items-center">
-          <Icon name="secrets" className="mr-3 text-foreground-5" size={16} />
-          <div className="flex flex-col">
-            <span className="font-medium">{entity.secret.name}</span>
-            {entity.secret.description && (
-              <span className="text-xs text-foreground-5">{entity.secret.description}</span>
-            )}
+        className={isSelected ? 'bg-background-4' : ''}
+        thumbnail={<Icon name="secrets" size={16} className="text-foreground-5" />}
+        actions={
+          <div className="flex items-center">
+            <span className="text-xs text-foreground-4 mr-4">Updated {formatDate(entity.updatedAt)}</span>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={e => {
+                e.stopPropagation()
+                onSelect(entity)
+              }}
+            >
+              Select
+            </Button>
           </div>
-        </div>
-        
-        <div className="flex items-center">
-          <span className="text-xs text-foreground-4 mr-4">Updated {formatDate(entity.updatedAt)}</span>
-          <Button 
-            variant="default" 
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation()
-              onSelect(entity)
-            }}
-          >
-            Select
-          </Button>
-        </div>
-      </div>
+        }
+      >
+        <StackedListField 
+          title={entity.secret.name}
+          description={entity.secret.description || undefined}
+        />
+      </StackedListItem>
+    )
+  }
+
+  // Custom scope selector renderer
+  const renderScopeSelector = (props: ScopeSelectorProps<SecretScope>) => {
+    const { scope, isActive, onSelect } = props
+
+    // Icon based on scope
+    const getIcon = () => {
+      if (scope === 'account') return 'account'
+      if (scope === 'organization') return 'folder'
+      return 'folder'
+    }
+
+    return (
+      <StackedListItem
+        onClick={() => onSelect(scope)}
+        className={isActive ? 'bg-background-4 font-medium' : ''}
+        thumbnail={<Icon name={getIcon()} size={16} className="text-foreground-5" />}
+      >
+        <StackedListField title={<span className="capitalize">{scope}</span>} />
+      </StackedListItem>
     )
   }
 
@@ -265,13 +289,15 @@ export const EntityReferenceExample: React.FC = () => {
     <div className="p-4">
       <h2 className="text-lg font-medium mb-4">Select an existing Secret:</h2>
 
-      <EntityReference<SecretItem>
+      <EntityReference<SecretItem, SecretScope>
         entities={getEntitiesByScope()}
         selectedEntityId={selectedEntity?.id}
         onSelectEntity={handleSelectEntity}
         onScopeChange={handleScopeChange}
         activeScope={activeScope}
+        scopes={availableScopes}
         renderEntity={renderEntity}
+        renderScopeSelector={renderScopeSelector}
         onCancel={() => console.log('Cancelled')}
       />
     </div>

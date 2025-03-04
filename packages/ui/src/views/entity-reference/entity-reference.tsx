@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react'
 
 import { Button, Icon } from '@/components'
+import { Root as StackedList, Field as StackedListField, Item as StackedListItem } from '@/components/stacked-list'
 import { cn } from '@utils/cn'
 
 // Base properties that all entities must have
@@ -9,49 +10,46 @@ export interface BaseEntityProps {
   name: string
 }
 
-// Define the scope types
-export type ScopeType = 'account' | 'organization' | 'project'
-
 // Props for rendering a single entity item
 export interface EntityRendererProps<T extends BaseEntityProps> {
   entity: T
   isSelected: boolean
-  isExpanded?: boolean
   onSelect: (entity: T) => void
-  onToggleExpand?: (entityId: string) => void
+}
+
+// Props for the scope selector item
+export interface ScopeSelectorProps<S = string> {
+  scope: S
+  isActive: boolean
+  onSelect: (scope: S) => void
 }
 
 // Props for the EntityReference component
-export interface EntityReferenceProps<T extends BaseEntityProps> {
+export interface EntityReferenceProps<T extends BaseEntityProps, S = string> {
   // Data
   entities: T[]
   selectedEntityId?: string
 
   // Callbacks
   onSelectEntity?: (entity: T) => void
-  onScopeChange?: (scope: ScopeType) => void
+  onScopeChange?: (scope: S) => void
   onCancel?: () => void
 
   // UI Configuration
   className?: string
   showFilter?: boolean
-  activeScope?: ScopeType
+  activeScope?: S
+  scopes?: S[]
 
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
-  renderScopeSelector?: (activeScope: ScopeType, onScopeChange: (scope: ScopeType) => void) => React.ReactNode
-
-  // Entity structure helpers
-  getEntityChildren?: (entity: T) => T[] | undefined
-  isExpandable?: (entity: T) => boolean
-  filterEntity?: (entity: T, filterText: string) => boolean
-  getEntityIcon?: (entity: T, isExpanded?: boolean) => string
+  renderScopeSelector?: (props: ScopeSelectorProps<S>) => React.ReactNode
 }
 
 /**
- * A generic component for displaying and selecting entities with hierarchical structure
+ * A generic component for displaying and selecting entities
  */
-export function EntityReference<T extends BaseEntityProps>({
+export function EntityReference<T extends BaseEntityProps, S = string>({
   // Data
   entities,
   selectedEntityId,
@@ -61,35 +59,18 @@ export function EntityReference<T extends BaseEntityProps>({
   onScopeChange,
   onCancel,
 
-  // UI Configuration
   className,
   showFilter = true,
-  activeScope = 'account',
+  activeScope,
+  scopes = [],
 
   // Custom renderers
   renderEntity,
-  renderScopeSelector,
-
-  // Entity structure helpers
-  getEntityChildren = () => undefined,
-  isExpandable = () => false,
-  filterEntity = (entity, filterText) => entity.name.toLowerCase().includes(filterText.toLowerCase()),
-  getEntityIcon = () => 'file'
-}: EntityReferenceProps<T>): JSX.Element {
-  // State for tracking expanded entities and filter text
-  const [expandedEntities, setExpandedEntities] = useState<Record<string, boolean>>({})
-  const [filterText, setFilterText] = useState('')
+  renderScopeSelector
+}: EntityReferenceProps<T, S>): JSX.Element {
   const [selectedEntity, setSelectedEntity] = useState<T | undefined>(
     entities.find(entity => entity.id === selectedEntityId)
   )
-
-  // Handle toggling entity expansion
-  const handleToggleExpand = useCallback((entityId: string) => {
-    setExpandedEntities(prev => ({
-      ...prev,
-      [entityId]: !prev[entityId]
-    }))
-  }, [])
 
   // Handle entity selection
   const handleSelectEntity = useCallback(
@@ -102,7 +83,7 @@ export function EntityReference<T extends BaseEntityProps>({
 
   // Handle scope change
   const handleScopeChange = useCallback(
-    (scope: ScopeType) => {
+    (scope: S) => {
       onScopeChange?.(scope)
     },
     [onScopeChange]
@@ -115,177 +96,124 @@ export function EntityReference<T extends BaseEntityProps>({
     }
   }, [selectedEntity, onSelectEntity])
 
-  // Filter entities based on filter text
-  const filteredEntities = entities.filter(entity => {
-    if (!filterText) return true
-    return filterEntity(entity, filterText)
-  })
-
   // Default entity renderer
-  const defaultEntityRenderer = ({
-    entity,
-    isSelected,
-    isExpanded,
-    onSelect,
-    onToggleExpand
-  }: EntityRendererProps<T>) => {
-    const canExpand = isExpandable(entity)
-    const iconName = getEntityIcon(entity, isExpanded)
-    const children = getEntityChildren(entity)
-
-    console.log('Rendering entity - but i should not be here', entity)
+  const defaultEntityRenderer = ({ entity, isSelected, onSelect }: EntityRendererProps<T>) => {
+    const hasSelectButton = 'type' in entity && entity.type === 'secret'
 
     return (
-      <div
-        className={cn(
-          'flex items-center py-1 px-2 rounded cursor-pointer hover:bg-background-3 transition-colors',
-          isSelected && 'bg-background-4'
-        )}
+      <StackedListItem
         onClick={() => onSelect(entity)}
+        className={cn(isSelected && 'bg-background-4')}
+        thumbnail={<Icon name="file" size={16} className="text-foreground-5" />}
+        actions={
+          hasSelectButton ? (
+            <Button
+              variant="default"
+              size="sm"
+              onClick={e => {
+                e.stopPropagation()
+                onSelect(entity)
+              }}
+            >
+              Select
+            </Button>
+          ) : undefined
+        }
       >
-        {canExpand && onToggleExpand && (
-          <div
-            className="flex items-center mr-1 cursor-pointer"
-            onClick={e => {
-              e.stopPropagation()
-              onToggleExpand(entity.id)
-            }}
-          >
-            <Icon name={isExpanded ? 'chevron-down' : 'chevron-right'} className="text-foreground-5" size={12} />
-          </div>
-        )}
-
-        <Icon name={iconName} className="mr-2 text-foreground-5" size={16} />
-        <span className="truncate">{entity.name}</span>
-
-        {canExpand && children && <span className="ml-2 text-xs text-foreground-4">({children.length || 0})</span>}
-
-        {'type' in entity && entity.type === 'secret' && (
-          <button
-            className="ml-auto px-3 py-1 text-sm rounded bg-primary text-white hover:bg-primary-dark transition-colors"
-            onClick={e => {
-              e.stopPropagation()
-              onSelect(entity)
-            }}
-          >
-            Select
-          </button>
-        )}
-      </div>
+        <StackedListField title={entity.name} />
+      </StackedListItem>
     )
   }
 
   // Default scope selector renderer
-  const defaultScopeSelectorRenderer = (activeScope: ScopeType, onScopeChange: (scope: ScopeType) => void) => (
-    <div className="flex mb-4">
-      <div
-        className={cn('flex items-center py-2 px-4 cursor-pointer', activeScope === 'account' && 'font-medium')}
-        onClick={() => onScopeChange('account')}
+  const defaultScopeSelectorRenderer = ({ scope, isActive, onSelect }: ScopeSelectorProps<S>) => {
+    const iconName = typeof scope === 'string' && (scope.toLowerCase().includes('account') ? 'account' : 'folder')
+
+    return (
+      <StackedListItem
+        onClick={() => onSelect(scope)}
+        className={cn(isActive && 'bg-background-4 font-medium')}
+        thumbnail={<Icon name={iconName} size={16} className="text-foreground-5" />}
       >
-        <Icon name="account" className="mr-2" size={16} />
-        <span>Account</span>
-      </div>
-      <div
-        className={cn('flex items-center py-2 px-4 cursor-pointer', activeScope === 'organization' && 'font-medium')}
-        onClick={() => onScopeChange('organization')}
-      >
-        <Icon name="folder" className="mr-2" size={16} />
-        <span>Organization</span>
-      </div>
-    </div>
-  )
+        <StackedListField title={<span className="capitalize">{String(scope)}</span>} />
+      </StackedListItem>
+    )
+  }
 
-  // Function to render the entity list
-  const renderEntityList = () => {
-    return filteredEntities.map(entity => {
-      const isSelected = entity.id === selectedEntityId || entity === selectedEntity
-      const isExpanded = expandedEntities[entity.id]
-      const canExpand = isExpandable(entity)
-      const children = getEntityChildren(entity)
+  // Render the combined list (scopes + entities)
+  const renderCombinedList = () => {
+    return (
+      <StackedList>
+        {/* Render scopes at the top of the list */}
+        {onScopeChange && scopes.length > 0 && (
+          <>
+            {scopes.map(scope => (
+              <React.Fragment key={String(scope)}>
+                {renderScopeSelector
+                  ? renderScopeSelector({
+                      scope,
+                      isActive: scope === activeScope,
+                      onSelect: handleScopeChange
+                    })
+                  : defaultScopeSelectorRenderer({
+                      scope,
+                      isActive: scope === activeScope,
+                      onSelect: handleScopeChange
+                    })}
+              </React.Fragment>
+            ))}
+          </>
+        )}
 
-      return (
-        <React.Fragment key={entity.id}>
-          {renderEntity
-            ? renderEntity({
-                entity,
-                isSelected,
-                isExpanded,
-                onSelect: handleSelectEntity,
-                onToggleExpand: canExpand ? handleToggleExpand : undefined
-              })
-            : defaultEntityRenderer({
-                entity,
-                isSelected,
-                isExpanded,
-                onSelect: handleSelectEntity,
-                onToggleExpand: canExpand ? handleToggleExpand : undefined
-              })}
+        {/* Render entities */}
+        {entities.length > 0 ? (
+          <>
+            {entities.map(entity => {
+              const isSelected = entity.id === selectedEntityId || entity === selectedEntity
 
-          {canExpand && isExpanded && children && (
-            <div className="ml-5">
-              {children.map(child => {
-                const childIsSelected = child.id === selectedEntityId || child === selectedEntity
-                const childIsExpanded = expandedEntities[child.id]
-                const childCanExpand = isExpandable(child)
-
-                return (
-                  <React.Fragment key={child.id}>
-                    {renderEntity
-                      ? renderEntity({
-                          entity: child,
-                          isSelected: childIsSelected,
-                          isExpanded: childIsExpanded,
-                          onSelect: handleSelectEntity,
-                          onToggleExpand: childCanExpand ? handleToggleExpand : undefined
-                        })
-                      : defaultEntityRenderer({
-                          entity: child,
-                          isSelected: childIsSelected,
-                          isExpanded: childIsExpanded,
-                          onSelect: handleSelectEntity,
-                          onToggleExpand: childCanExpand ? handleToggleExpand : undefined
-                        })}
-                  </React.Fragment>
-                )
-              })}
-            </div>
-          )}
-        </React.Fragment>
-      )
-    })
+              return (
+                <React.Fragment key={entity.id}>
+                  {renderEntity
+                    ? renderEntity({
+                        entity,
+                        isSelected,
+                        onSelect: handleSelectEntity
+                      })
+                    : defaultEntityRenderer({
+                        entity,
+                        isSelected,
+                        onSelect: handleSelectEntity
+                      })}
+                </React.Fragment>
+              )
+            })}
+          </>
+        ) : (
+          <StackedListItem disableHover>
+            <StackedListField
+              title={<div className="flex items-center justify-center h-32 text-foreground-4">No items available</div>}
+            />
+          </StackedListItem>
+        )}
+      </StackedList>
+    )
   }
 
   return (
     <div className={cn('flex flex-col h-full', className)}>
-      {/* Scope selector */}
-      {onScopeChange &&
-        (renderScopeSelector
-          ? renderScopeSelector(activeScope, handleScopeChange)
-          : defaultScopeSelectorRenderer(activeScope, handleScopeChange))}
-
       {/* Filter input */}
       {showFilter && (
         <div className="mb-4">
           <input
             type="text"
-            placeholder="Filter by name..."
+            placeholder="Search"
             className="w-full px-3 py-2 text-sm border rounded border-borders-2 bg-background-2 focus:outline-none focus:ring-1 focus:ring-primary"
-            value={filterText}
-            onChange={e => setFilterText(e.target.value)}
           />
         </div>
       )}
 
-      {/* Entity list */}
-      <div className="flex-1 overflow-auto border rounded border-borders-2 p-2">
-        {filteredEntities.length > 0 ? (
-          <div>{renderEntityList()}</div>
-        ) : (
-          <div className="flex items-center justify-center h-full text-foreground-4">
-            {filterText ? 'No matching items found' : 'No items available'}
-          </div>
-        )}
-      </div>
+      {/* Combined list (scopes + entities) */}
+      <div className="flex-1 overflow-auto">{renderCombinedList()}</div>
 
       {/* Action buttons */}
       {(onSelectEntity || onCancel) && (

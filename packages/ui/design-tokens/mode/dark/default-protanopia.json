@@ -1481,7 +1481,7 @@
       "blue": {
         "text": {
           "$type": "color",
-          "$value": "{colors.blue.300}",
+          "$value": "{colors.blue.200}",
           "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
         },
         "background": {

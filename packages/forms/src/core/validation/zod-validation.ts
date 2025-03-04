@@ -305,7 +305,7 @@ function populateSchemaTreeRec<T = any>(
 
       // handle array
       if (!input.validation?.schema && (input.inputType as string) === 'array') {
-        let arraySchemaObj = {}
+        const arraySchemaObj = {}
         populateSchemaTreeRec(
           arraySchemaObj,
           [{ ...(input.inputConfig as { input: IInputDefinition }).input, path: '___array' }],

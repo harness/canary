@@ -55,6 +55,7 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       setSearchReviewersQuery={noop}
       jumpToDiff=""
       setJumpToDiff={noop}
+      editLabelsProps={{ to: '' }}
       branchSelectorRenderer={
         <BranchSelectorV2
           repoId="canary"

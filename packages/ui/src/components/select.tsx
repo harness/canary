@@ -15,7 +15,7 @@ import { useDebounceSearch } from '@hooks/use-debounce-search'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { cn } from '@utils/cn'
 
-interface SelectRootProps
+export interface SelectRootProps
   extends Omit<Omit<PropsWithChildren<HTMLAttributes<HTMLElement>>, 'defaultValue'>, 'dir'>,
     SelectPrimitive.SelectProps {
   label?: string

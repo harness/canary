@@ -25,11 +25,7 @@ export const usePrConversationLabels = ({ repoRef, prId, refetchData }: UsePrCon
     labels,
     values: labelsValues,
     refetchLabels
-  } = useGetRepoLabelAndValuesData({
-    query: searchLabel,
-    inherited: true,
-    limit: 100
-  })
+  } = useGetRepoLabelAndValuesData({ query: searchLabel, inherited: true, limit: 100 })
 
   const { data: { body: prLabels } = {}, refetch: refetchPRLabels } = useListLabelsQuery({
     repo_ref: repoRef,
@@ -44,23 +40,13 @@ export const usePrConversationLabels = ({ repoRef, prId, refetchData }: UsePrCon
   }
 
   const { mutate: addLabel } = useAssignLabelMutation(
-    {
-      repo_ref: repoRef,
-      pullreq_number: prId
-    },
-    {
-      onSuccess: handleOnSuccess
-    }
+    { repo_ref: repoRef, pullreq_number: prId },
+    { onSuccess: handleOnSuccess }
   )
 
   const { mutate: removeLabel } = useUnassignLabelMutation(
-    {
-      repo_ref: repoRef,
-      pullreq_number: prId
-    },
-    {
-      onSuccess: handleOnSuccess
-    }
+    { repo_ref: repoRef, pullreq_number: prId },
+    { onSuccess: handleOnSuccess }
   )
 
   const handleAddLabel = useCallback((body: HandleAddLabelType) => addLabel({ body }), [addLabel])

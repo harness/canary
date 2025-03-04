@@ -6,7 +6,7 @@ export const useLabelsStore = create<ILabelsStore>(set => ({
   labels: [],
   totalPages: 1,
   page: 1,
-
+  isLoading: true,
   values: {},
   space_ref: null,
   repo_ref: null,
@@ -17,6 +17,8 @@ export const useLabelsStore = create<ILabelsStore>(set => ({
 
   deleteLabel: (key: string) => set(state => ({ labels: state.labels.filter(label => label.key !== key) })),
   setPage: (page: number) => set({ page }),
+
+  setIsLoading: (isLoading: boolean) => set({ isLoading }),
 
   setValues: (values: LabelValuesType) => set({ values }),
   setRepoSpaceRef: ({ repo_ref, space_ref }: SetRepoSpaceRefProps) => set({ repo_ref, space_ref }),

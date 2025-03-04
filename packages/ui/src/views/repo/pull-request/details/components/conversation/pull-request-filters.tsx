@@ -1,4 +1,5 @@
 import { DropdownMenu, Icon } from '@/components'
+import { cn } from '@utils/cn'
 
 interface DropdownMenuComponentProps<T> {
   items: T[]
@@ -42,6 +43,7 @@ export interface PullRequestFilterProps<T extends FilterOption> {
   dateOrderSort: T
   setActivityFilter: (filter: T) => void
   setDateOrderSort: (sort: T) => void
+  className?: string
 }
 
 const PullRequestFilters = <T extends FilterOption>({
@@ -50,11 +52,13 @@ const PullRequestFilters = <T extends FilterOption>({
   activityFilter,
   dateOrderSort,
   setActivityFilter,
-  setDateOrderSort
+  setDateOrderSort,
+  className
 }: PullRequestFilterProps<T>) => {
   return (
-    <div className="grid grid-cols-[1fr_auto] items-center border-b border-borders-1 pb-2">
+    <div className={cn('grid grid-cols-[1fr_auto] items-center border-b border-borders-1 pb-2', className)}>
       <h3 className="text-18 font-medium leading-snug text-foreground-1">Overview</h3>
+
       <div className="flex items-center gap-x-5">
         <DropdownMenuComponent items={activityFilters} selectedItem={activityFilter} onItemSelect={setActivityFilter} />
         <DropdownMenuComponent items={dateFilters} selectedItem={dateOrderSort} onItemSelect={setDateOrderSort} />

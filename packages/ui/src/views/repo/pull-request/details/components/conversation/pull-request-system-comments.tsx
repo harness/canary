@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, CommitCopyActions, Icon, IconProps, LabelMarker, Layout, Text } from '@/components'
+import { Avatar, CommitCopyActions, Icon, IconProps, Layout } from '@/components'
 import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
@@ -8,6 +8,7 @@ import {
   CommentType,
   GeneralPayload,
   LabelActivity,
+  LabelMarker,
   MergeStrategy,
   ReviewerAddActivity,
   TypesPullReqActivity
@@ -17,6 +18,12 @@ import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
 import PullRequestBranchBadge from './pull-request-branch-badge'
 import PullRequestTimelineItem, { TimelineItemProps } from './pull-request-timeline-item'
+
+const labelActivityToTitleDict: Record<LabelActivity, string> = {
+  assign: 'added',
+  reassign: 'reassigned',
+  unassign: 'removed'
+}
 
 interface SystemCommentProps extends TypesPullReq {
   commentItems: CommentItem<TypesPullReqActivity>[]
@@ -35,9 +42,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
 }) => {
   const { navigate } = useRouterContext()
 
-  const payloadMain = useMemo(() => {
-    return commentItems[0]?.payload
-  }, [commentItems])
+  const payloadMain = useMemo(() => commentItems[0]?.payload, [commentItems])
 
   const {
     header,
@@ -45,10 +50,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
   }: Partial<Omit<TimelineItemProps, 'header'>> & {
     header: TimelineItemProps['header'][number]
   } = useMemo(() => {
-    if (!payloadMain)
-      return {
-        header: {}
-      }
+    if (!payloadMain) return { header: {} }
 
     const handleNavigation = (url?: string) => {
       navigate(url || '')
@@ -69,7 +71,8 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
       reviewer_type,
       label,
       label_color,
-      value
+      value,
+      value_color
     } = payload as GeneralPayload
 
     const openFromDraft = old_draft === true && new_draft === false
@@ -80,7 +83,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className=" flex items-center gap-x-1 text-14 text-foreground-4">
+              <span className="flex items-center gap-x-1 text-14 text-foreground-4">
                 {merge_method === MergeStrategy.REBASE ? 'rebased changes from branch' : 'merged changes from'}
                 <PullRequestBranchBadge
                   branchName={pullReqMetadata?.source_branch as string}
@@ -171,15 +174,11 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <>
-                {openFromDraft || changedToDraft ? (
-                  <Text color="tertiaryBackground">
-                    {changedToDraft ? 'marked pull request as draft' : 'opened pull request for review'}
-                  </Text>
-                ) : (
-                  <Text color="tertiaryBackground">{`changed pull request state from ${old} to ${newData}`}</Text>
-                )}
-              </>
+              <span className="text-sm text-foreground-3">
+                {!!changedToDraft && 'This pull request is now a draft'}
+                {!!openFromDraft && 'This pull request is no longer a draft'}
+                {!changedToDraft && !openFromDraft && `changed pull request state from ${old} to ${newData}`}
+              </span>
             )
           },
           icon: <Icon name={iconName} size={12} />
@@ -190,9 +189,9 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <Text color="tertiaryBackground">
+              <span className="text-sm text-foreground-3">
                 changed title from <span className="line-through">{String(old)}</span> to {String(newData)}
-              </Text>
+              </span>
             )
           },
           icon: <Icon name="edit-pen" size={14} className="p-0.5" />
@@ -205,11 +204,11 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <Text color="tertiaryBackground">
+              <span className="text-sm text-foreground-3">
                 {author?.id === mentionId
                   ? 'removed their request for review'
                   : `removed the request for review from ${mentionDisplayName}`}
-              </Text>
+              </span>
             )
           },
           icon: <Icon name="edit-pen" size={14} className="p-0.5" />
@@ -223,13 +222,11 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <Text color="tertiaryBackground">
-                {reviewer_type === ReviewerAddActivity.SELF_ASSIGNED
-                  ? 'self-requested a review'
-                  : reviewer_type === ReviewerAddActivity.ASSIGNED
-                    ? `assigned ${mentionDisplayName} as a reviewer`
-                    : `requested a review from ${mentionDisplayName}`}
-              </Text>
+              <span className="text-sm text-foreground-3">
+                {reviewer_type === ReviewerAddActivity.SELF_ASSIGNED && 'self-requested a review'}
+                {reviewer_type === ReviewerAddActivity.ASSIGNED && `assigned ${mentionDisplayName} as a reviewer`}
+                {reviewer_type === ReviewerAddActivity.REQUESTED && `requested a review from ${mentionDisplayName}`}
+              </span>
             )
           },
           icon: <Icon name="pr-review" size={14} className="p-0.5" />
@@ -237,25 +234,22 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
       }
 
       case CommentType.LABEL_MODIFY: {
-        const labelType = type as LabelActivity
+        const labelType = payload?.type as LabelActivity
 
         return {
           header: {
             description: (
-              <Text color="tertiaryBackground">
-                {labelType === LabelActivity.ASSIGN
-                  ? 'applied'
-                  : labelType === LabelActivity.RE_ASSIGN
-                    ? 'reassigned'
-                    : 'removed'}{' '}
-                label{'  '}
+              <span className="inline-flex items-center text-sm text-foreground-3">
+                {labelType ? labelActivityToTitleDict[labelType] : 'modified'}
                 <LabelMarker
+                  className="mx-1.5"
                   key={label as string}
-                  color={label_color as ColorsEnum}
+                  color={(value_color ?? label_color) as ColorsEnum}
                   label={label as string}
                   value={value as string}
                 />
-              </Text>
+                label
+              </span>
             )
           },
           icon: <Icon name="edit-pen" size={14} className="p-0.5" />
@@ -267,7 +261,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
 
         return {
           header: {
-            description: <Text color="tertiaryBackground">{String(type)}</Text>
+            description: <span className="text-sm text-foreground-3">{String(type)}</span>
           }
         }
     }

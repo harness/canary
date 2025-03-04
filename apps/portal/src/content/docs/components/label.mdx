@@ -1,0 +1,100 @@
+---
+title: Label
+description: Label component
+---
+
+The `Label` component is a customizable label for form elements. It supports various styling options through colors and includes an optional indicator.
+
+import { DocsPage } from "../../../components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
+        <h5>Standard usage</h5>
+        <Label htmlFor="name">Name</Label>
+        <input id="name" type="text" />
+    </div>
+
+    <hr />
+
+    <div className="flex flex-col gap-4">
+        <h5>With optional indicator</h5>
+        <Label htmlFor="email" optional>Email</Label>
+        <input id="email" type="email" />
+    </div>
+
+    <hr />
+
+    <div className="flex flex-col gap-4">
+        <h5>With color</h5>
+        <Label htmlFor="password" color="disabled">Password</Label>
+        <input id="password" type="password" />
+    </div>
+
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Label } from '@harnessio/ui/components'
+
+// ...
+
+return (
+  <>
+    <Label htmlFor="username">Username</Label>
+    <input id="username" type="text" />
+  </>
+)
+```
+
+## API Reference
+
+The `Label` component provides a styled label for form elements with customizable options.
+
+```typescript jsx
+<Label
+  htmlFor="inputId" // [OPTIONAL] ID of the form control this label is associated with
+  optional          // [OPTIONAL] Indicate if the associated form field is optional
+  color="primary"   // [OPTIONAL] Color variant of the label
+>
+  Label Text
+</Label>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "htmlFor",
+      description: "The id of the form control this label is associated with",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "optional",
+      description: "Indicates if the associated form field is optional",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "color",
+      description: "The color variant of the label",
+      required: false,
+      value: "'primary' | 'secondary' | 'disabled' | 'disabled-dark'",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the label",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "The content of the label",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

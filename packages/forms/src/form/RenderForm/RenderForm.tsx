@@ -1,4 +1,4 @@
-import React from 'react'
+import { forwardRef } from 'react'
 
 import type { InputFactory } from '../../core/factory/InputFactory'
 import type { IFormDefinition } from '../../types/types'
@@ -10,7 +10,7 @@ export interface RenderFormProps {
   className?: string
 }
 
-export const RenderForm = React.forwardRef<HTMLDivElement, RenderFormProps>((props, ref): React.ReactElement => {
+export const RenderForm = forwardRef<HTMLDivElement, RenderFormProps>((props, ref): React.ReactElement => {
   const { inputs, className, factory } = props
 
   return (
@@ -20,3 +20,4 @@ export const RenderForm = React.forwardRef<HTMLDivElement, RenderFormProps>((pro
     </div>
   )
 })
+RenderForm.displayName = 'RenderForm'

@@ -1,5 +1,4 @@
-import { NavLink } from 'react-router-dom'
-
+import { useRouterContext } from '@/context'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon, IconProps } from '@components/icon'
 import { Sidebar } from '@components/sidebar/sidebar'
@@ -34,6 +33,8 @@ export const SidebarItem = ({
   t
 }: //   t,
 NavbarItemProps) => {
+  const { NavLink } = useRouterContext()
+
   const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])
 
   const handlePin = () => {

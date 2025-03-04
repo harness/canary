@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 
-import { IThemeStore } from '@/context'
+import { IThemeStore, useRouterContext } from '@/context'
 import { TypesUser } from '@/types'
 import { TranslationStore } from '@/views'
 import { Icon } from '@components/icon'
@@ -50,7 +49,7 @@ export const AppSidebar = ({
 }: SidebarProps) => {
   const { t, i18n, changeLanguage } = useTranslationStore()
   const { theme, setTheme } = useThemeStore()
-  const navigate = useNavigate()
+  const { Link, navigate } = useRouterContext()
 
   const [openThemeDialog, setOpenThemeDialog] = useState(false)
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)

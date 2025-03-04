@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom'
-
+import { useRouterContext } from '@/context'
 import { TypesUser } from '@/types'
 import { Avatar } from '@components/avatar'
 import { DropdownMenu } from '@components/dropdown-menu'
@@ -17,6 +16,8 @@ interface UserProps {
 }
 
 export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, t }: UserProps) {
+  const { Link } = useRouterContext()
+
   const userName = user?.display_name || user?.uid || ''
   return (
     <Sidebar.Menu>

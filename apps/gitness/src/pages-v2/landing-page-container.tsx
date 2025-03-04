@@ -15,7 +15,7 @@ export const LandingPage = () => {
       spaces={spaces}
       useTranslationStore={useTranslationStore}
       getProjectPath={getProjectPath}
-      createProjectLinkProps={{ to: routes.toProjectCreate() }}
+      toCreateProject={() => routes.toProjectCreate()}
     />
   )
 }

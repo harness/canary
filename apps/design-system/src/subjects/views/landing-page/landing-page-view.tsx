@@ -8,7 +8,7 @@ export const LandingPagePreview = () => {
       spaces={[]}
       useTranslationStore={useTranslationStore}
       getProjectPath={() => ''}
-      createProjectLinkProps={{ to: '' }}
+      toCreateProject={() => ''}
     />
   )
 }

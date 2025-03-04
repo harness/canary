@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import type { LinkProps } from 'react-router-dom'
 
 import { Button, ButtonGroup, DropdownMenu, Icon } from '@/components'
 import { useRouterContext } from '@/context'
@@ -17,18 +16,21 @@ interface TypesSpace {
   updated?: number
 }
 
-export interface LandingPageProps {
+interface RoutingProps {
+  toCreateProject: () => string
+}
+
+export interface LandingPageProps extends Partial<RoutingProps> {
   spaces: TypesSpace[]
   useTranslationStore: () => TranslationStore
   getProjectPath: (spaceId?: string) => string
-  createProjectLinkProps: LinkProps
 }
 
 export const LandingPageView: FC<LandingPageProps> = ({
   spaces,
   useTranslationStore,
   getProjectPath,
-  createProjectLinkProps
+  toCreateProject
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
@@ -75,7 +77,7 @@ export const LandingPageView: FC<LandingPageProps> = ({
           </DropdownMenu.Root>
 
           <Button size="lg" variant="outline" asChild>
-            <Link {...createProjectLinkProps}>{t('views:landingPage.createProject', 'Create Project')}</Link>
+            <Link to={toCreateProject?.() || ''}>{t('views:landingPage.createProject', 'Create Project')}</Link>
           </Button>
         </ButtonGroup>
       </section>

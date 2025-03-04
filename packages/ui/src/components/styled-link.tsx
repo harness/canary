@@ -1,7 +1,6 @@
 import { RefAttributes } from 'react'
-import { type LinkProps } from 'react-router-dom'
 
-import { useRouterContext } from '@/context'
+import { useRouterContext, type LinkProps } from '@/context'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 

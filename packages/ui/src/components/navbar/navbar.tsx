@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { useLocation } from 'react-router-dom'
 
 import { Button, Icon, NavbarProjectChooser, NavbarSkeleton, ScrollArea, Spacer } from '@/components'
 import { useRouterContext } from '@/context'
@@ -43,8 +42,7 @@ export const Navbar = ({
   handleRemoveRecentMenuItem,
   useTranslationStore
 }: NavbarProps) => {
-  const { Link } = useRouterContext()
-  const location = useLocation()
+  const { Link, location } = useRouterContext()
   const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
   const adminMenuItem = getAdminMenuItem(t)

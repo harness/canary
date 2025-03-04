@@ -82,16 +82,6 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
   const renderEntity = (props: EntityRendererProps<SecretItem>) => {
     const { entity, isSelected, onSelect } = props
 
-    // Format date for display
-    const formatDate = (timestamp: number): string => {
-      const date = new Date(timestamp)
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      })
-    }
-
     return (
       <StackedList.Item
         onClick={() => onSelect(entity)}

@@ -3,7 +3,7 @@
     "color": {
       "50": {
         "$type": "color",
-        "$value": "{colors.chrome.50}"
+        "$value": "{colors.chrome.100}"
       },
       "100": {
         "$type": "color",
@@ -11,35 +11,35 @@
       },
       "200": {
         "$type": "color",
-        "$value": "{colors.chrome.200}"
+        "$value": "{colors.chrome.100}"
       },
       "300": {
         "$type": "color",
-        "$value": "{colors.chrome.300}"
+        "$value": "{colors.chrome.100}"
       },
       "400": {
         "$type": "color",
-        "$value": "{colors.chrome.400}"
+        "$value": "{colors.chrome.100}"
       },
       "500": {
         "$type": "color",
-        "$value": "{colors.chrome.500}"
+        "$value": "{colors.chrome.100}"
       },
       "600": {
         "$type": "color",
-        "$value": "{colors.chrome.600}"
+        "$value": "{colors.chrome.950}"
       },
       "700": {
         "$type": "color",
-        "$value": "{colors.chrome.700}"
+        "$value": "{colors.chrome.950}"
       },
       "800": {
         "$type": "color",
-        "$value": "{colors.chrome.800}"
+        "$value": "{colors.chrome.950}"
       },
       "900": {
         "$type": "color",
-        "$value": "{colors.chrome.900}"
+        "$value": "{colors.chrome.950}"
       },
       "950": {
         "$type": "color",
@@ -73,23 +73,23 @@
       },
       "600": {
         "$type": "color",
-        "$value": "{colors.pure.white}"
+        "$value": "{colors.pure.black}"
       },
       "700": {
         "$type": "color",
-        "$value": "{colors.pure.white}"
+        "$value": "{colors.pure.black}"
       },
       "800": {
         "$type": "color",
-        "$value": "{colors.pure.white}"
+        "$value": "{colors.pure.black}"
       },
       "900": {
         "$type": "color",
-        "$value": "{colors.pure.white}"
+        "$value": "{colors.pure.black}"
       },
       "950": {
         "$type": "color",
-        "$value": "{colors.pure.white}"
+        "$value": "{colors.pure.black}"
       }
     }
   }

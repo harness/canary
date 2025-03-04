@@ -38,10 +38,10 @@ type NavigateFunction = (to: string | number) => void
 
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
 
-const LinkDefault = ({ to, children, className, ...props }: LinkProps) => {
+const LinkDefault = ({ to, children, ...props }: LinkProps) => {
   const href = resolveTo(to)
   return (
-    <a href={href} className={className} {...props}>
+    <a href={href} {...props}>
       {children}
     </a>
   )

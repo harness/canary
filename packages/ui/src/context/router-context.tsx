@@ -74,7 +74,7 @@ const navigateFnDefault: NavigateFunction = to => {
 }
 
 const useSearchParamsDefault = () => {
-  const setSearchParams = (params: URLSearchParams | ((currentParams: URLSearchParams) => URLSearchParams)): void => {}
+  const setSearchParams = (_params: URLSearchParams | ((currentParams: URLSearchParams) => URLSearchParams)): void => {}
   return [new URLSearchParams(), setSearchParams] as const
 }
 

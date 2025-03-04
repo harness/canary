@@ -1801,7 +1801,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.red.400}",
+          "$value": "{colors.red.700}",
           "$description": "Background color for danger toast notifications. Creates high-visibility indication of errors or warnings."
         },
         "border": {

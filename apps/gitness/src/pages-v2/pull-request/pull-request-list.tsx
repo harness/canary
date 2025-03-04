@@ -7,7 +7,7 @@ import {
   useListPrincipalsQuery,
   useListPullReqQuery
 } from '@harnessio/code-service-client'
-import { PullRequestList as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
+import { PullRequestListPage as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'

@@ -1,4 +1,4 @@
-import { ColorType, ContrastType, FullTheme, ModeType } from '@components/theme-selector/types'
+import { ColorType, ContrastType, FullTheme, ModeType } from '@/context'
 
 export interface ThemeInterface {
   mode: ModeType

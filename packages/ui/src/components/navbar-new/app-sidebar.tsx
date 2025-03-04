@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { IThemeStore } from '@/components'
+import { IThemeStore } from '@/context'
 import { TypesUser } from '@/types'
 import { TranslationStore } from '@/views'
 import { Icon } from '@components/icon'

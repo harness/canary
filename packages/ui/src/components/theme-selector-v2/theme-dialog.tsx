@@ -1,15 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 
-import {
-  ColorType,
-  ContrastType,
-  Dialog,
-  getModeColorContrastFromFullTheme,
-  Icon,
-  ModeType,
-  Select,
-  Separator
-} from '@/components'
+import { Dialog, getModeColorContrastFromFullTheme, Icon, Select, Separator } from '@/components'
+import { ColorType, ContrastType, ModeType } from '@/context/theme'
 import darkModeImage from '@/svgs/theme-dark.png'
 import lightModeImage from '@/svgs/theme-light.png'
 import { cn } from '@/utils/cn'

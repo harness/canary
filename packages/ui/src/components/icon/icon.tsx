@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import { useTheme } from '@/context'
 import { cn } from '@utils/cn'
-import { isLightTheme } from '@utils/is-light-theme'
 
 import { IconNameMap } from './icon-name-map'
 
@@ -17,16 +16,16 @@ export interface IconProps {
 }
 
 const Icon: FC<IconProps> = ({ name, size = 16, height, width, className, themeDependent = false }) => {
-  const { theme } = useTheme()
+  const { isLightTheme } = useTheme()
 
   const isLightIconAvailable = !!IconNameMap[`${name}-light` as keyof typeof IconNameMap]
 
   const Component =
-    themeDependent && isLightTheme(theme) && isLightIconAvailable
+    themeDependent && isLightTheme && isLightIconAvailable
       ? IconNameMap[`${name}-light` as keyof typeof IconNameMap]
       : IconNameMap[name]
 
-  const shouldInvert = themeDependent && isLightTheme(theme) && !isLightIconAvailable
+  const shouldInvert = themeDependent && isLightTheme && !isLightIconAvailable
 
   return <Component className={cn({ invert: shouldInvert }, className)} width={width || size} height={height || size} />
 }

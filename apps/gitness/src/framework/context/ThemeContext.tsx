@@ -12,7 +12,8 @@ export const useThemeStore = create<IThemeStore>()(
   persist(
     set => ({
       theme: undefined,
-      setTheme: (newTheme: FullTheme) => set({ theme: newTheme })
+      setTheme: (newTheme: FullTheme) => set({ theme: newTheme }),
+      isLightTheme: false
     }),
     {
       name: 'canary-ui-theme' // LocalStorage key
@@ -25,7 +26,7 @@ interface ThemeProviderProps {
   defaultTheme: FullTheme
 }
 export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
-  const { theme, setTheme } = useThemeStore()
+  const { theme, setTheme, isLightTheme } = useThemeStore()
   const isMFE = useIsMFE()
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -73,7 +74,7 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
   }, [theme, setTheme, systemMode])
 
   return (
-    <UIThemeProvider theme={theme} setTheme={setTheme}>
+    <UIThemeProvider theme={theme} setTheme={setTheme} isLightTheme={isLightTheme}>
       {children}
     </UIThemeProvider>
   )

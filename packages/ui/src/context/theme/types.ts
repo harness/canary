@@ -21,6 +21,7 @@ export type FullTheme = `${ModeType}-${ColorType}-${ContrastType}`
 export interface IThemeStore {
   theme?: FullTheme
   setTheme: (theme: FullTheme) => void
+  isLightTheme: boolean
 }
 
 export const defaultTheme = `${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Standard}` as FullTheme

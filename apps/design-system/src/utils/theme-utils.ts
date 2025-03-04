@@ -1,4 +1,4 @@
-import { FullTheme } from '@harnessio/ui/context'
+import { FullTheme, IThemeStore } from '@harnessio/ui/context'
 
 export enum Themes {
   DARK_STANDARD_LOW = 'dark-std-low',
@@ -19,7 +19,8 @@ export const getTheme = () => {
   return Themes.DARK
 }
 
-export const useThemeStore = () => ({
+export const useThemeStore = (): IThemeStore => ({
   theme: getTheme() as FullTheme,
-  setTheme: (_: FullTheme) => {}
+  setTheme: (_: FullTheme) => {},
+  isLightTheme: false
 })

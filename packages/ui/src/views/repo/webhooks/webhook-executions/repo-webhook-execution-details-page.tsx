@@ -3,7 +3,6 @@ import { FC, useEffect, useMemo, useState } from 'react'
 import { Badge, Button, ListActions, Spacer, Text } from '@/components'
 import { ModeType, useTheme } from '@/context'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
-import { isLightTheme } from '@utils/is-light-theme'
 import { formatDuration } from '@utils/TimeUtils'
 import { timeAgo } from '@utils/utils'
 
@@ -29,9 +28,9 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
   const { executionId, executions } = useWebhookStore()
   const [codeEditorContent, setCodeEditorContent] = useState({ code: '' })
   const [view, setView] = useState('payload')
-  const { theme } = useTheme()
+  const { isLightTheme } = useTheme()
 
-  const monacoTheme = useMemo(() => (isLightTheme(theme) ? ModeType.Light : ModeType.Dark), [theme])
+  const monacoTheme = useMemo(() => (isLightTheme ? ModeType.Light : ModeType.Dark), [isLightTheme])
 
   const themeConfig = useMemo(
     () => ({

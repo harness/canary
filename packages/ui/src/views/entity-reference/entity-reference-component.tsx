@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 
-import { Button, Icon } from '@/components'
+import { Button, Icon, IconProps } from '@/components'
 import { Root as StackedList, Field as StackedListField, Item as StackedListItem } from '@/components/stacked-list'
 import { cn } from '@utils/cn'
 
@@ -72,7 +72,6 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
     entities.find(entity => entity.id === selectedEntityId)
   )
 
-  // Handle entity selection
   const handleSelectEntity = useCallback(
     (entity: T) => {
       setSelectedEntity(entity)
@@ -81,7 +80,6 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
     [onSelectEntity]
   )
 
-  // Handle scope change
   const handleScopeChange = useCallback(
     (scope: S) => {
       onScopeChange?.(scope)
@@ -89,7 +87,6 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
     [onScopeChange]
   )
 
-  // Handle apply button click
   const handleApply = useCallback(() => {
     if (selectedEntity) {
       onSelectEntity?.(selectedEntity)
@@ -133,7 +130,7 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
       <StackedListItem
         onClick={() => onSelect(scope)}
         className={cn(isActive && 'bg-background-4 font-medium')}
-        thumbnail={<Icon name={iconName} size={16} className="text-foreground-5" />}
+        thumbnail={<Icon name={iconName as IconProps['name']} size={16} className="text-foreground-5" />}
       >
         <StackedListField title={<span className="capitalize">{String(scope)}</span>} />
       </StackedListItem>
@@ -201,7 +198,6 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
 
   return (
     <div className={cn('flex flex-col h-full', className)}>
-      {/* Filter input */}
       {showFilter && (
         <div className="mb-4">
           <input
@@ -212,10 +208,8 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
         </div>
       )}
 
-      {/* Combined list (scopes + entities) */}
       <div className="flex-1 overflow-auto">{renderCombinedList()}</div>
 
-      {/* Action buttons */}
       {(onSelectEntity || onCancel) && (
         <div className="flex mt-4 space-x-2">
           {onSelectEntity && (

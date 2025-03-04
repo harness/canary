@@ -17,7 +17,7 @@ import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-const newSecretFormSchema = z
+const createSecretFormSchema = z
   .object({
     name: z.string().min(1, { message: 'Please provide a name' }),
     value: z.string().optional(),
@@ -45,10 +45,10 @@ const newSecretFormSchema = z
     }
   })
 
-export type NewSecretFormFields = z.infer<typeof newSecretFormSchema>
+export type CreateSecretFormFields = z.infer<typeof createSecretFormSchema>
 
-interface CreateSecretPageProps {
-  onFormSubmit: (data: NewSecretFormFields) => void
+interface CreateSecretProps {
+  onFormSubmit: (data: CreateSecretFormFields) => void
   onFormCancel: () => void
   useTranslationStore: () => TranslationStore
   isLoading: boolean
@@ -61,7 +61,7 @@ export function CreateSecretPage({
   useTranslationStore,
   isLoading = false,
   apiError = null
-}: CreateSecretPageProps) {
+}: CreateSecretProps) {
   const { t: _t } = useTranslationStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -73,8 +73,8 @@ export function CreateSecretPage({
     watch,
     trigger,
     formState: { errors }
-  } = useForm<NewSecretFormFields>({
-    resolver: zodResolver(newSecretFormSchema),
+  } = useForm<CreateSecretFormFields>({
+    resolver: zodResolver(createSecretFormSchema),
     mode: 'onChange',
     defaultValues: {
       name: '',
@@ -87,7 +87,7 @@ export function CreateSecretPage({
   const selectedFile = watch('file')
   // const secretValue = watch('value')
 
-  const onSubmit: SubmitHandler<NewSecretFormFields> = data => {
+  const onSubmit: SubmitHandler<CreateSecretFormFields> = data => {
     onFormSubmit(data)
     reset()
   }
@@ -259,7 +259,6 @@ export function CreateSecretPage({
         ref={fileInputRef}
         onChange={handleFileChange}
         style={{ display: 'none' }}
-        accept=".txt,.json,.yaml,.yml,.env,.key,.pem,.crt,.cer,.pub"
       />
     </SandboxLayout.Content>
   )

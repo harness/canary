@@ -10,7 +10,7 @@ const external = ['react', 'react-router-dom', 'react-router', 'react/jsx-runtim
 export default defineConfig({
   plugins: [react(), svgr({ include: '**/*.svg' }), tsConfigPaths()],
   build: {
-    // cssCodeSplit: true,
+    cssCodeSplit: true,
     lib: {
       cssFileName: 'styles',
       entry: {
@@ -23,7 +23,8 @@ export default defineConfig({
         // styles: resolve(__dirname, 'src/styles.css'),
         // context: resolve(__dirname, 'src/context/index.ts'),
         // types: resolve(__dirname, 'src/types/index.ts'),
-        'tailwind.config': resolve(__dirname, 'tailwind.config.js')
+        'tailwind.config': resolve(__dirname, 'tailwind.config.js'),
+        'shared-style-variables': resolve(__dirname, 'src/shared-style-variables.css')
       },
       formats: ['es']
     },

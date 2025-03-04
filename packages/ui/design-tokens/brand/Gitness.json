@@ -39,7 +39,7 @@
       },
       "900": {
         "$type": "color",
-        "$value": "{colors.chrome.900}"
+        "$value": "{colors.chrome.950}"
       },
       "950": {
         "$type": "color",
@@ -119,23 +119,23 @@
       },
       "600": {
         "$type": "color",
-        "$value": "{colors.pure.white}"
+        "$value": "{colors.pure.black}"
       },
       "700": {
         "$type": "color",
-        "$value": "{colors.pure.white}"
+        "$value": "{colors.pure.black}"
       },
       "800": {
         "$type": "color",
-        "$value": "{colors.pure.white}"
+        "$value": "{colors.pure.black}"
       },
       "900": {
         "$type": "color",
-        "$value": "{colors.pure.white}"
+        "$value": "{colors.pure.black}"
       },
       "950": {
         "$type": "color",
-        "$value": "{colors.pure.white}"
+        "$value": "{colors.pure.black}"
       }
     }
   }

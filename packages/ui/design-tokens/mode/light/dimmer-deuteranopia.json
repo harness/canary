@@ -2,29 +2,29 @@
   "background": {
     "1": {
       "$type": "color",
-      "$value": "{colors.pure.black}",
+      "$value": "{colors.chrome.1000}",
       "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background.\n\nCommon uses: Application background, page base layer, lowest-level containers."
     },
     "2": {
       "$type": "color",
-      "$value": "{colors.chrome.1000}",
+      "$value": "{colors.chrome.950}",
       "$description": "Level 2. Represents elements that sit on top of the bottom layer. Creates visual hierarchy through subtle elevation.\n\nCommon uses: Cards, containers, form fields, dropdown menus."
     },
     "3": {
       "$type": "color",
-      "$value": "{colors.chrome.950}",
+      "$value": "{colors.chrome.900}",
       "$description": "Level 3. Represents elements that sit on top of the middle layer. Creates strong visual emphasis through maximum elevation.\n\nCommon uses: Popovers, tooltips, highlighted containers."
     }
   },
   "text": {
     "1": {
       "$type": "color",
-      "$value": "{colors.chrome.150}",
+      "$value": "{colors.pure.white}",
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text, primary buttons."
     },
     "2": {
       "$type": "color",
-      "$value": "{colors.chrome.400}",
+      "$value": "{colors.chrome.200}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
@@ -34,29 +34,29 @@
     },
     "accent": {
       "$type": "color",
-      "$value": "{brand.color.300}",
+      "$value": "{brand.color.200}",
       "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\n\nCommon uses: Links, buttons, interactive icons, highlighted elements."
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.300}",
+      "$value": "{colors.green.200}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{colors.red.300}",
+      "$value": "{colors.red.200}",
       "$description": "Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.\n\nCommon uses: Error message text, validation text, destructive action labels."
     },
     "warning": {
       "$type": "color",
-      "$value": "{colors.amber.300}",
+      "$value": "{colors.yellow.200}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     }
   },
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{colors.chrome.500}",
+      "$value": "{colors.chrome.300}",
       "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\n\nCommon uses: Focus states, hover states, active elements, primary containers."
     },
     "2": {
@@ -80,22 +80,22 @@
     },
     "focus": {
       "$type": "color",
-      "$value": "{brand.color.400}",
+      "$value": "{brand.color.300}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.500}",
+      "$value": "{colors.green.400}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{colors.red.500}",
+      "$value": "{colors.red.400}",
       "$description": "Border color for error containers. Emphasizes critical information through visual framing.\n\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
       "$type": "color",
-      "$value": "{colors.amber.600}",
+      "$value": "{colors.yellow.500}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -105,13 +105,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.06",
+            "value": "0.15",
             "space": "p3"
           }
         }
       },
       "$type": "color",
-      "$value": "{colors.chrome.200}",
+      "$value": "{colors.chrome.700}",
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -119,13 +119,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.1",
+            "value": "0.2",
             "space": "p3"
           }
         }
       },
       "$type": "color",
-      "$value": "{colors.chrome.200}",
+      "$value": "{colors.chrome.700}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     },
     "disabled": {
@@ -306,7 +306,7 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.300}",
+          "$value": "{colors.green.200}",
           "$description": "Text color for success badges. Communicates positive status through readable green text."
         },
         "border": {
@@ -341,7 +341,7 @@
       "danger": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.300}",
+          "$value": "{colors.red.200}",
           "$description": "Text color for danger badges. Communicates error or warning status with high visibility."
         },
         "border": {
@@ -376,7 +376,7 @@
       "warning": {
         "text": {
           "$type": "color",
-          "$value": "{colors.amber.300}",
+          "$value": "{colors.yellow.200}",
           "$description": "Text color for warning badges. Signals caution states with readable amber text."
         },
         "border": {
@@ -390,7 +390,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.amber.300}",
+          "$value": "{colors.yellow.300}",
           "$description": "Border color for warning badges. Defines the boundary of caution status indicators."
         },
         "background": {
@@ -404,14 +404,14 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.amber.500}",
+          "$value": "{colors.yellow.500}",
           "$description": "Background color for warning badges. Creates subtle but recognizable caution indicators."
         }
       },
       "running": {
         "text": {
           "$type": "color",
-          "$value": "{colors.yellow.300}",
+          "$value": "{colors.orange.200}",
           "$description": "Text color for running state badges. Indicates active or in-progress operations."
         },
         "border": {
@@ -425,7 +425,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.yellow.300}",
+          "$value": "{colors.orange.300}",
           "$description": "Border color for running state badges. Defines the boundary of active status indicators."
         },
         "background": {
@@ -439,14 +439,14 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.yellow.500}",
+          "$value": "{colors.orange.500}",
           "$description": "Background color for running state badges. Creates subtle visual indication of in-progress states."
         }
       },
       "merged": {
         "text": {
           "$type": "color",
-          "$value": "{colors.purple.300}",
+          "$value": "{colors.purple.200}",
           "$description": "Text color for merged state badges. Indicates completed merge actions in version control contexts."
         },
         "border": {
@@ -526,12 +526,12 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{brand.onColor.700}",
+          "$value": "{brand.onColor.600}",
           "$description": "Text and icon color for primary action buttons. Ensures maximum contrast and visibility for primary CTA elements."
         },
         "background": {
           "$type": "color",
-          "$value": "{brand.color.700}",
+          "$value": "{brand.color.600}",
           "$description": "Background color for primary action buttons. Creates emphasis for the most important action in a given context."
         },
         "border": {
@@ -622,7 +622,7 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.300}",
+          "$value": "{colors.green.200}",
           "$description": "Text color for success buttons. Communicates positive actions through readable green text."
         },
         "background": {
@@ -687,7 +687,7 @@
       "danger": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.300}",
+          "$value": "{colors.red.200}",
           "$description": "Text color for danger buttons. Communicates destructive or warning actions through high-contrast red text."
         },
         "background": {
@@ -1048,12 +1048,12 @@
       },
       "hover": {
         "$type": "color",
-        "$value": "{brand.color.200}",
+        "$value": "{brand.color.100}",
         "$description": "Hover state color for text links. Provides visual feedback for user interaction."
       },
       "visited": {
         "$type": "color",
-        "$value": "{colors.purple.400}",
+        "$value": "{colors.purple.300}",
         "$description": "Visited state color for text links. Differentiates links the user has already activated."
       }
     },
@@ -1224,7 +1224,7 @@
         },
         "icon": {
           "$type": "color",
-          "$value": "{brand.color.400}",
+          "$value": "{brand.color.300}",
           "$description": "Icon color for Logo in sidebar navigation."
         }
       }
@@ -1262,12 +1262,12 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.100}",
+          "$value": "{colors.pure.white}",
           "$description": "Background color for selected state in selection controls. Creates strong visual indication of active selection."
         },
         "border": {
           "$type": "color",
-          "$value": "{colors.chrome.100}",
+          "$value": "{colors.pure.white}",
           "$description": "Border color for selected elements in selection controls. Reinforces the selected state with consistent styling."
         }
       }
@@ -1295,7 +1295,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{brand.color.400}",
+          "$value": "{brand.color.300}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         }
       },
@@ -1327,32 +1327,32 @@
     "status-indicator": {
       "completed": {
         "$type": "color",
-        "$value": "{colors.green.400}",
+        "$value": "{colors.green.300}",
         "$description": "Color for success status indicators. Communicates completed or positive states."
       },
       "cancelled": {
         "$type": "color",
-        "$value": "{colors.red.400}",
+        "$value": "{colors.red.300}",
         "$description": "Color for danger status indicators. Communicates error or critical warning states."
       },
       "warning": {
         "$type": "color",
-        "$value": "{colors.amber.400}",
+        "$value": "{colors.yellow.300}",
         "$description": "Color for warning status indicators. Communicates caution or potential issue states."
       },
       "running": {
         "$type": "color",
-        "$value": "{colors.yellow.400}",
+        "$value": "{colors.orange.300}",
         "$description": "Color for running status indicators. Communicates active or in-progress operations."
       },
       "merged": {
         "$type": "color",
-        "$value": "{colors.purple.400}",
+        "$value": "{colors.purple.300}",
         "$description": "Color for merged status indicators. Communicates successful integration or completion in version control contexts."
       },
       "action-required": {
         "$type": "color",
-        "$value": "{colors.blue.400}",
+        "$value": "{colors.blue.300}",
         "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed. "
       },
       "waiting": {
@@ -1801,7 +1801,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.red.500}",
+          "$value": "{colors.red.400}",
           "$description": "Background color for danger toast notifications. Creates high-visibility indication of errors or warnings."
         },
         "border": {
@@ -2108,7 +2108,7 @@
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{colors.pink.150}"
+        "$value": "{colors.pink.200}"
       },
       "gradient-stop-3": {
         "$type": "color",
@@ -2137,7 +2137,7 @@
       "running": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{colors.yellow.200}"
+          "$value": "{colors.orange.200}"
         },
         "gradient-stop-2": {
           "$extensions": {
@@ -2154,7 +2154,7 @@
         },
         "gradient-stop-3": {
           "$type": "color",
-          "$value": "{colors.yellow.200}"
+          "$value": "{colors.orange.200}"
         }
       },
       "arrows": {

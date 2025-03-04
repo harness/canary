@@ -2,7 +2,7 @@
   "background": {
     "1": {
       "$type": "color",
-      "$value": "{colors.chrome.1000}",
+      "$value": "{colors.pure.black}",
       "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background.\n\nCommon uses: Application background, page base layer, lowest-level containers."
     },
     "2": {
@@ -29,7 +29,7 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{colors.chrome.300}",
+      "$value": "{colors.chrome.400}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "accent": {
@@ -49,7 +49,7 @@
     },
     "warning": {
       "$type": "color",
-      "$value": "{colors.amber.200}",
+      "$value": "{colors.yellow.200}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     }
   },
@@ -95,7 +95,7 @@
     },
     "warning": {
       "$type": "color",
-      "$value": "{colors.amber.300}",
+      "$value": "{colors.yellow.300}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -105,13 +105,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.08",
+            "value": "0.15",
             "space": "p3"
           }
         }
       },
       "$type": "color",
-      "$value": "{colors.chrome.200}",
+      "$value": "{colors.chrome.700}",
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -119,13 +119,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.12",
+            "value": "0.2",
             "space": "p3"
           }
         }
       },
       "$type": "color",
-      "$value": "{colors.chrome.200}",
+      "$value": "{colors.chrome.700}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     },
     "disabled": {
@@ -293,7 +293,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.6",
                 "space": "p3"
               }
             }
@@ -314,7 +314,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.6",
                 "space": "p3"
               }
             }
@@ -349,7 +349,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.6",
                 "space": "p3"
               }
             }
@@ -376,7 +376,7 @@
       "warning": {
         "text": {
           "$type": "color",
-          "$value": "{colors.amber.200}",
+          "$value": "{colors.yellow.200}",
           "$description": "Text color for warning badges. Signals caution states with readable amber text."
         },
         "border": {
@@ -384,13 +384,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.6",
                 "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.amber.300}",
+          "$value": "{colors.yellow.300}",
           "$description": "Border color for warning badges. Defines the boundary of caution status indicators."
         },
         "background": {
@@ -404,14 +404,14 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.amber.500}",
+          "$value": "{colors.yellow.500}",
           "$description": "Background color for warning badges. Creates subtle but recognizable caution indicators."
         }
       },
       "running": {
         "text": {
           "$type": "color",
-          "$value": "{colors.yellow.200}",
+          "$value": "{colors.orange.200}",
           "$description": "Text color for running state badges. Indicates active or in-progress operations."
         },
         "border": {
@@ -419,13 +419,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.6",
                 "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.yellow.300}",
+          "$value": "{colors.orange.300}",
           "$description": "Border color for running state badges. Defines the boundary of active status indicators."
         },
         "background": {
@@ -439,7 +439,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.yellow.500}",
+          "$value": "{colors.orange.500}",
           "$description": "Background color for running state badges. Creates subtle visual indication of in-progress states."
         }
       },
@@ -454,7 +454,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.6",
                 "space": "p3"
               }
             }
@@ -644,7 +644,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.6",
                 "space": "p3"
               }
             }
@@ -709,7 +709,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.6",
                 "space": "p3"
               }
             }
@@ -1337,12 +1337,12 @@
       },
       "warning": {
         "$type": "color",
-        "$value": "{colors.amber.300}",
+        "$value": "{colors.yellow.300}",
         "$description": "Color for warning status indicators. Communicates caution or potential issue states."
       },
       "running": {
         "$type": "color",
-        "$value": "{colors.yellow.300}",
+        "$value": "{colors.orange.300}",
         "$description": "Color for running status indicators. Communicates active or in-progress operations."
       },
       "merged": {
@@ -2108,7 +2108,7 @@
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{colors.pink.150}"
+        "$value": "{colors.pink.200}"
       },
       "gradient-stop-3": {
         "$type": "color",
@@ -2137,7 +2137,7 @@
       "running": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{colors.yellow.200}"
+          "$value": "{colors.orange.200}"
         },
         "gradient-stop-2": {
           "$extensions": {
@@ -2154,7 +2154,7 @@
         },
         "gradient-stop-3": {
           "$type": "color",
-          "$value": "{colors.yellow.200}"
+          "$value": "{colors.orange.200}"
         }
       },
       "arrows": {

@@ -119,7 +119,7 @@
       },
       "600": {
         "$type": "color",
-        "$value": "{colors.pure.white}"
+        "$value": "{colors.pure.black}"
       },
       "700": {
         "$type": "color",

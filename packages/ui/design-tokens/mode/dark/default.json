@@ -1481,7 +1481,7 @@
       "blue": {
         "text": {
           "$type": "color",
-          "$value": "{colors.blue.300}",
+          "$value": "{colors.blue.200}",
           "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
         },
         "background": {
@@ -1503,7 +1503,7 @@
       "brown": {
         "text": {
           "$type": "color",
-          "$value": "{colors.brown.300}",
+          "$value": "{colors.brown.200}",
           "$description": "Text color for brown tags. Ensures readability while maintaining the brown color theme."
         },
         "background": {
@@ -1525,7 +1525,7 @@
       "cyan": {
         "text": {
           "$type": "color",
-          "$value": "{colors.cyan.300}",
+          "$value": "{colors.cyan.200}",
           "$description": "Text color for cyan tags. Ensures readability while maintaining the cyan color theme."
         },
         "background": {
@@ -1547,7 +1547,7 @@
       "green": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.300}",
+          "$value": "{colors.green.200}",
           "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
         },
         "background": {
@@ -1569,7 +1569,7 @@
       "indigo": {
         "text": {
           "$type": "color",
-          "$value": "{colors.indigo.300}",
+          "$value": "{colors.indigo.200}",
           "$description": "Text color for indigo tags. Ensures readability while maintaining the indigo color theme."
         },
         "background": {
@@ -1591,7 +1591,7 @@
       "lime": {
         "text": {
           "$type": "color",
-          "$value": "{colors.lime.300}",
+          "$value": "{colors.lime.200}",
           "$description": "Text color for lime tags. Ensures readability while maintaining the lime color theme."
         },
         "background": {
@@ -1613,7 +1613,7 @@
       "mint": {
         "text": {
           "$type": "color",
-          "$value": "{colors.mint.300}",
+          "$value": "{colors.mint.200}",
           "$description": "Text color for mint tags. Ensures readability while maintaining the mint color theme."
         },
         "background": {
@@ -1635,7 +1635,7 @@
       "orange": {
         "text": {
           "$type": "color",
-          "$value": "{colors.orange.300}",
+          "$value": "{colors.orange.200}",
           "$description": "Text color for orange tags. Ensures readability while maintaining the orange color theme."
         },
         "background": {
@@ -1657,7 +1657,7 @@
       "pink": {
         "text": {
           "$type": "color",
-          "$value": "{colors.pink.300}",
+          "$value": "{colors.pink.200}",
           "$description": "Text color for pink tags. Ensures readability while maintaining the pink color theme."
         },
         "background": {
@@ -1679,7 +1679,7 @@
       "purple": {
         "text": {
           "$type": "color",
-          "$value": "{colors.purple.300}",
+          "$value": "{colors.purple.200}",
           "$description": "Text color for purple tags. Ensures readability while maintaining the purple color theme."
         },
         "background": {
@@ -1701,7 +1701,7 @@
       "red": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.300}",
+          "$value": "{colors.red.200}",
           "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
         },
         "background": {
@@ -1723,7 +1723,7 @@
       "violet": {
         "text": {
           "$type": "color",
-          "$value": "{colors.violet.300}",
+          "$value": "{colors.violet.200}",
           "$description": "Text color for violet tags. Ensures readability while maintaining the violet color theme."
         },
         "background": {
@@ -1745,7 +1745,7 @@
       "yellow": {
         "text": {
           "$type": "color",
-          "$value": "{colors.yellow.300}",
+          "$value": "{colors.yellow.200}",
           "$description": "Text color for yellow tags. Ensures readability while maintaining the yellow color theme."
         },
         "background": {

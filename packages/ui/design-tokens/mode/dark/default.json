@@ -526,7 +526,7 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{colors.pure.white}",
+          "$value": "{brand.onColor.600}",
           "$description": "Text and icon color for primary action buttons. Ensures maximum contrast and visibility for primary CTA elements."
         },
         "background": {

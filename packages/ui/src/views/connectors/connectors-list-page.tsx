@@ -7,7 +7,7 @@ import { ConnectorsRightDrawer } from './connectors-right-drawer'
 import { ConnectorRightDrawer } from './types'
 
 // temp component for testing in standalone
-const ConnectorsListPageView: FC<any> = ({}) => {
+const ConnectorsListPageView: FC<any> = () => {
   const [rightDrawer, setRightDrawer] = useState<ConnectorRightDrawer>(ConnectorRightDrawer.None)
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
@@ -30,7 +30,7 @@ const ConnectorsListPageView: FC<any> = ({}) => {
           <Spacer size={5} />
         </>
       </SandboxLayout.Content>
-      <ConnectorsRightDrawer rightDrawer={rightDrawer} setRightDrawer={setRightDrawer}/>
+      <ConnectorsRightDrawer rightDrawer={rightDrawer} setRightDrawer={setRightDrawer} />
     </SandboxLayout.Main>
   )
 }

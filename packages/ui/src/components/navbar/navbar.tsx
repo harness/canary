@@ -42,8 +42,8 @@ export const Navbar = ({
   handleRemoveRecentMenuItem,
   useTranslationStore
 }: NavbarProps) => {
-  const { Link, location } = useRouterContext()
-  const { navigate } = useRouterContext()
+  const { Link, location, useNavigate } = useRouterContext()
+  const navigate = useNavigate()
   const { t } = useTranslationStore()
   const adminMenuItem = getAdminMenuItem(t)
 

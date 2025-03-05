@@ -49,7 +49,8 @@ export function RepoWebhookList({
   handleEnableWebhook
 }: RepoWebhookListProps) {
   const { t } = useTranslationStore()
-  const { navigate } = useRouterContext()
+  const { useNavigate } = useRouterContext()
+  const navigate = useNavigate()
 
   const handleNavigate = () => {
     navigate('create')

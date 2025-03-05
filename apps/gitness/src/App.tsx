@@ -6,6 +6,7 @@ import {
   Outlet,
   RouterProvider,
   useMatches,
+  useNavigate,
   useSearchParams
 } from 'react-router-dom'
 
@@ -52,8 +53,8 @@ export default function App() {
                     Link={Link}
                     NavLink={NavLink}
                     Outlet={Outlet}
-                    navigate={router.navigate}
                     location={window.location}
+                    useNavigate={useNavigate}
                     useSearchParams={useSearchParams}
                     useMatches={useMatches}
                   >

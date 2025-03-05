@@ -49,7 +49,8 @@ export const AppSidebar = ({
 }: SidebarProps) => {
   const { t, i18n, changeLanguage } = useTranslationStore()
   const { theme, setTheme } = useThemeStore()
-  const { Link, navigate } = useRouterContext()
+  const { Link, useNavigate } = useRouterContext()
+  const navigate = useNavigate()
 
   const [openThemeDialog, setOpenThemeDialog] = useState(false)
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)

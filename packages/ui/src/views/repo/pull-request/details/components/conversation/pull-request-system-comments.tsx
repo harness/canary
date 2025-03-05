@@ -33,7 +33,8 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
   toCommitDetails,
   toCode
 }) => {
-  const { navigate } = useRouterContext()
+  const { useNavigate } = useRouterContext()
+  const navigate = useNavigate()
 
   const payloadMain = useMemo(() => {
     return commentItems[0]?.payload

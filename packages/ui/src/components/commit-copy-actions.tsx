@@ -12,7 +12,8 @@ export const CommitCopyActions = ({
   toCommitDetails?: ({ sha }: { sha: string }) => string
 }) => {
   const [copied, setCopied] = useState(false)
-  const { navigate } = useRouterContext()
+  const { useNavigate } = useRouterContext()
+  const navigate = useNavigate()
 
   useEffect(() => {
     let timeoutId: number

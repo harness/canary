@@ -18,7 +18,8 @@ interface CommitProps extends Partial<RoutingProps> {
 }
 
 export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, className }) => {
-  const { Link, navigate } = useRouterContext()
+  const { Link, useNavigate } = useRouterContext()
+  const navigate = useNavigate()
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
       ? {}

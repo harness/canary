@@ -50,7 +50,8 @@ export function MarkdownViewer({
   isSuggestion,
   markdownClassName
 }: MarkdownViewerProps) {
-  const { navigate } = useRouterContext()
+  const { useNavigate } = useRouterContext()
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
   const [imgEvent, setImageEvent] = useState<string[]>([])
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])

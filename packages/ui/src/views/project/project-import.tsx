@@ -23,6 +23,8 @@ const makeImportProjectFormSchema = (t: TranslationStore['t']) =>
     .object({
       identifier: z
         .string()
+        .trim()
+        .nonempty({ message: 'Please enter a project name' })
         .max(100, {
           message: t('views:importProject.validation.nameMax', 'Name must be no longer than 100 characters')
         })
@@ -35,20 +37,24 @@ const makeImportProjectFormSchema = (t: TranslationStore['t']) =>
         .refine(data => !data.includes(' '), {
           message: t('views:importProject.validation.nameNoSpaces', 'Name cannot contain spaces')
         }),
-      description: z.string().max(1024, {
-        message: t(
-          'views:importProject.validation.descriptionMax',
-          'Description must be no longer than 1024 characters'
-        )
-      }),
+      description: z
+        .string()
+        .trim()
+        .max(1024, {
+          message: t(
+            'views:importProject.validation.descriptionMax',
+            'Description must be no longer than 1024 characters'
+          )
+        }),
       hostUrl: z.string().optional(),
       pipelines: z.boolean().optional(),
       repositories: z.boolean().optional(),
-      provider: z.string().min(1, { message: 'Please select a provider' }),
+      provider: z.string().trim().nonempty({ message: 'Please select a provider' }),
       password: z.string().optional(),
       organization: z
         .string()
-        .min(1, { message: 'Please enter an organization' })
+        .trim()
+        .nonempty({ message: 'Please enter an organization' })
         .max(100, {
           message: t(
             'views:importProject.validation.organizationNameMax',
@@ -140,12 +146,12 @@ export function ImportProjectPage({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
-        <h1 className="mb-10 mt-5 text-2xl font-medium tracking-tight text-foreground-1">
+        <h1 className="text-foreground-1 mb-10 mt-5 text-2xl font-medium tracking-tight">
           {t('views:importProject.title', 'Import a project')}
         </h1>
 
         <FormWrapper onSubmit={handleSubmit(onFormSubmit)}>
-          <Fieldset legend="Git provider data">
+          <Fieldset legend="Git provider details">
             <ControlGroup>
               <Select.Root
                 name="provider"
@@ -193,7 +199,7 @@ export function ImportProjectPage({
 
           <FormSeparator />
 
-          <Fieldset legend="Organization import data">
+          <Fieldset legend="Organization import details">
             <Input
               id="organization"
               label={t('views:importProject.organizationLabel', 'Organization')}
@@ -227,7 +233,7 @@ export function ImportProjectPage({
 
           <FormSeparator />
 
-          <Fieldset legend="Project data">
+          <Fieldset legend="Project details">
             <Input
               id="identifier"
               label={t('views:importProject.projectNameLabel', 'Name')}
@@ -247,7 +253,7 @@ export function ImportProjectPage({
             />
           </Fieldset>
 
-          {!!apiErrorsValue && <span className="text-xs text-destructive">{apiErrorsValue}</span>}
+          {!!apiErrorsValue && <span className="text-destructive text-xs">{apiErrorsValue}</span>}
 
           <Fieldset legend="Form actions">
             <ButtonGroup>

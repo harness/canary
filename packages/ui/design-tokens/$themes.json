@@ -9266,7 +9266,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -9574,7 +9581,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     },
     "group": "mode"
   },
@@ -9884,7 +9898,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -10192,7 +10213,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     },
     "group": "mode"
   },
@@ -10502,7 +10530,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -10810,7 +10845,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     },
     "group": "mode"
   },
@@ -11120,7 +11162,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -11428,7 +11477,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     },
     "group": "mode"
   },
@@ -11738,7 +11794,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -12046,7 +12109,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     },
     "group": "mode"
   },
@@ -12609,7 +12679,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -12918,7 +12995,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -13227,7 +13311,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -13536,7 +13627,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -13845,7 +13943,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -14154,7 +14259,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -14463,7 +14575,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -14772,7 +14891,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -15081,7 +15207,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -15390,7 +15523,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -15699,7 +15839,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -16008,7 +16155,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   },
   {
@@ -16317,7 +16471,14 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "component.sidebar.search.border": "f2044f7e8cf503f8809a48a14a88c5ef6466176f",
+      "component.sidebar.search.placeholder": "665cc00a32edd27b62371ee820d3c3250e629e78",
+      "component.sidebar.search.btn.background": "70c80e61b9ec397214c809c51de4fdf8177185da",
+      "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
+      "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
+      "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
     }
   }
 ]

@@ -1312,6 +1312,47 @@
           "$value": "{colors.chrome.500}",
           "$description": "User data in the footer sidebar navigation menu."
         }
+      },
+      "search": {
+        "border": {
+          "$type": "color",
+          "$value": "{border.2}",
+          "$description": "Search input specific border on sidebar navigation."
+        },
+        "placeholder": {
+          "$type": "color",
+          "$value": "{text.3}",
+          "$description": "Search input specific placeholder on sidebar navigation."
+        },
+        "btn": {
+          "background": {
+            "$type": "color",
+            "$value": "{colors.chrome.900}",
+            "$description": "Search input specific button background on sidebar navigation."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{colors.chrome.850}",
+            "$description": "Search input specific button border on sidebar navigation."
+          },
+          "text": {
+            "$type": "color",
+            "$value": "{text.3}",
+            "$description": "Search input specific button text on sidebar navigation."
+          }
+        }
+      },
+      "footer": {
+        "username": {
+          "$type": "color",
+          "$value": "{text.1}",
+          "$description": "Username in the footer sidebar navigation menu."
+        },
+        "data": {
+          "$type": "color",
+          "$value": "{text.3}",
+          "$description": "User data in the footer sidebar navigation menu."
+        }
       }
     },
     "scrollbar": {

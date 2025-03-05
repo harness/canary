@@ -29,16 +29,15 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string> {
   // Data
   entities: T[]
   selectedEntity: T | null
+  activeScope?: S
+  scopes?: S[]
 
   // Callbacks
   onSelectEntity?: (entity: T) => void
   onScopeChange?: (scope: S) => void
 
   // UI Configuration
-  className?: string
   showFilter?: boolean
-  activeScope?: S
-  scopes?: S[]
 
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
@@ -49,15 +48,14 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
   // Data
   entities,
   selectedEntity,
+  activeScope,
+  scopes = [],
 
   // Callbacks
   onSelectEntity,
   onScopeChange,
 
-  className,
   showFilter = true,
-  activeScope,
-  scopes = [],
 
   // Custom renderers
   renderEntity,
@@ -175,7 +173,7 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
   }
 
   return (
-    <div className={cn('flex flex-col h-full', className)}>
+    <div className={cn('flex flex-col h-full')}>
       {showFilter && <Input type="text" placeholder="Search" className="mb-4" />}
 
       <div className="flex-1 overflow-auto">{renderCombinedList()}</div>

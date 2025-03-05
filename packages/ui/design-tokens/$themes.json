@@ -9053,9 +9053,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -9126,6 +9128,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -9274,7 +9278,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -9369,9 +9374,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -9442,6 +9449,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -9590,7 +9599,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     },
     "group": "mode"
   },
@@ -9687,9 +9697,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -9760,6 +9772,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -9908,7 +9922,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -10003,9 +10018,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -10076,6 +10093,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -10224,7 +10243,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     },
     "group": "mode"
   },
@@ -10321,9 +10341,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -10394,6 +10416,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -10542,7 +10566,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -10637,9 +10662,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -10710,6 +10737,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -10858,7 +10887,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     },
     "group": "mode"
   },
@@ -10955,9 +10985,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -11028,6 +11060,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -11176,7 +11210,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -11271,9 +11306,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -11344,6 +11381,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -11492,7 +11531,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     },
     "group": "mode"
   },
@@ -11589,9 +11629,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -11662,6 +11704,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -11810,7 +11854,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -11905,9 +11950,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -11978,6 +12025,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -12126,7 +12175,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     },
     "group": "mode"
   },
@@ -12476,9 +12526,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -12549,6 +12601,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -12697,7 +12751,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -12793,9 +12848,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -12866,6 +12923,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -13014,7 +13073,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -13110,9 +13170,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -13183,6 +13245,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -13331,7 +13395,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -13427,9 +13492,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -13500,6 +13567,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -13648,7 +13717,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -13744,9 +13814,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -13817,6 +13889,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -13965,7 +14039,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -14061,9 +14136,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -14134,6 +14211,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -14282,7 +14361,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -14378,9 +14458,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -14451,6 +14533,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -14599,7 +14683,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -14695,9 +14780,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -14768,6 +14855,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -14916,7 +15005,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -15012,9 +15102,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -15085,6 +15177,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -15233,7 +15327,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -15329,9 +15424,10 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -15402,6 +15498,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -15550,7 +15648,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -15646,9 +15745,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -15719,6 +15820,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -15867,7 +15970,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -15963,9 +16067,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -16036,6 +16142,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -16184,7 +16292,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   },
   {
@@ -16280,9 +16389,11 @@
       "component.btn.outline.unselected.text": "9cf2c495178d6fdfd8f1360376242acbd4dc5e75",
       "component.btn.outline.unselected.icon": "af1510c6050f671219d2089e0e59d5febb4422d6",
       "component.btn.outline.unselected.border": "2b3013d632e566301e9f5f1a5cbb6aab4e7ec53f",
+      "component.btn.outline.unselected.background": "cbcba8dd2394ccc5246827ebcf5aab2bee3b07b5",
       "component.btn.outline.selected.text": "13b50089245dec1899db2012412efcf649e2c0b4",
       "component.btn.outline.selected.icon": "2bdf2c92b22e814109f4e05ec4d41d92f934a15d",
-      "component.btn.outline.selected.border": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
+      "component.btn.outline.selected.border": "4cd821b6ba3eba5b332d9cb3b104a4706fba0f3f",
+      "component.btn.outline.selected.background": "8bb1583c9161d84f59b8a3d5d557dcf2dd7ca485",
       "component.btn.ghost.unselected.text": "43fa10dd413cddb9a2e2142ead9ca3b4a91b49a6",
       "component.btn.ghost.unselected.icon": "5ce332f51238b374104ec53067d685c26882f38e",
       "component.btn.ghost.selected.text": "74cbf3b86016e05517f8c7bc64652281c940363e",
@@ -16353,6 +16464,8 @@
       "component.sidebar.background": "8b6619fafae38e8ad94fffd488f2cf53d3c31d76",
       "component.sidebar.border": "2263230eae16609a3d95ba5863aa3cc343010131",
       "component.sidebar.separator": "a0c913dd38e81e3b2c20ee17642433da6da5f147",
+      "component.sidebar.hover": "4925b4511178bd2853a6b7b329683d036508aec1",
+      "component.sidebar.selected": "31f335ecde0aedb12407221718069f5b13574d41",
       "component.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "component.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "component.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
@@ -16501,7 +16614,8 @@
       "component.sidebar.search.btn.border": "1c434c7d16cd4ba880e2d57520c90bc37f6b3879",
       "component.sidebar.search.btn.text": "589c7d0162d67165a8752ea54a2c63bb63ee3ad7",
       "component.sidebar.footer.username": "68298a8f471bb04f2f0305d9433a2b59613abd8d",
-      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a"
+      "component.sidebar.footer.data": "6a681d2abb90c2b62a39e20a1d29419c5086f01a",
+      "component.nav-tabs.background": "b92549e37390005f2bd1cfce06f9dfb8f67e39e0"
     }
   }
 ]

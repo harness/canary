@@ -1286,7 +1286,7 @@
         "btn": {
           "background": {
             "$type": "color",
-            "$value": "{background.3}",
+            "$value": "{colors.chrome.900}",
             "$description": "Search input specific button background on sidebar navigation."
           },
           "border": {

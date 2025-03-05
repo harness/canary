@@ -399,7 +399,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.yellow.300}",
+          "$value": "{colors.yellow.400}",
           "$description": "Border color for warning badges. Defines the boundary of caution status indicators."
         },
         "background": {
@@ -434,7 +434,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.orange.300}",
+          "$value": "{colors.orange.400}",
           "$description": "Border color for running state badges. Defines the boundary of active status indicators."
         },
         "background": {
@@ -1295,7 +1295,7 @@
         "btn": {
           "background": {
             "$type": "color",
-            "$value": "{background.3}",
+            "$value": "{colors.chrome.900}",
             "$description": "Search input specific button background on sidebar navigation."
           },
           "border": {
@@ -1389,7 +1389,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{brand.color.300}",
+          "$value": "{brand.color.500}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         }
       },

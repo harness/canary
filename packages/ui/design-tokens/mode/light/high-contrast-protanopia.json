@@ -1316,33 +1316,33 @@
       "search": {
         "background": {
           "$type": "color",
-          "$value": "{component.sidebar.background}",
+          "$value": "{colors.chrome.950}",
           "$description": "Search input specific background on sidebar navigation."
         },
         "border": {
           "$type": "color",
-          "$value": "{border.2}",
+          "$value": "{colors.chrome.800}",
           "$description": "Search input specific border on sidebar navigation."
         },
         "placeholder": {
           "$type": "color",
-          "$value": "{text.3}",
+          "$value": "{colors.chrome.500}",
           "$description": "Search input specific placeholder on sidebar navigation."
         },
         "btn": {
           "background": {
             "$type": "color",
-            "$value": "{background.3}",
+            "$value": "{colors.chrome.900}",
             "$description": "Search input specific button background on sidebar navigation."
           },
           "border": {
             "$type": "color",
-            "$value": "{border.2}",
+            "$value": "{colors.chrome.800}",
             "$description": "Search input specific button border on sidebar navigation."
           },
           "text": {
             "$type": "color",
-            "$value": "{text.3}",
+            "$value": "{colors.chrome.500}",
             "$description": "Search input specific button text on sidebar navigation."
           }
         }
@@ -1350,12 +1350,12 @@
       "footer": {
         "username": {
           "$type": "color",
-          "$value": "{text.1}",
+          "$value": "{colors.pure.white}",
           "$description": "Username in the footer sidebar navigation menu."
         },
         "data": {
           "$type": "color",
-          "$value": "{text.3}",
+          "$value": "{colors.chrome.500}",
           "$description": "User data in the footer sidebar navigation menu."
         }
       }
@@ -1406,7 +1406,7 @@
     "separator": {
       "background": {
         "$type": "color",
-        "$value": "{border.3}",
+        "$value": "{border.2}",
         "$description": "Background color for separator elements. Creates visual division between content sections with a subtle line or space."
       }
     },

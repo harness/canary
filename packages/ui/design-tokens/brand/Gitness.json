@@ -39,7 +39,7 @@
       },
       "900": {
         "$type": "color",
-        "$value": "{colors.chrome.950}"
+        "$value": "{colors.chrome.900}"
       },
       "950": {
         "$type": "color",
@@ -115,7 +115,7 @@
       },
       "500": {
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.pure.white}"
       },
       "600": {
         "$type": "color",

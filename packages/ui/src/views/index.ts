@@ -54,3 +54,6 @@ export * from './execution'
 
 // secrets
 export * from './secrets'
+
+// entity-reference
+export * from './entity-reference'

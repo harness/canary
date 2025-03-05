@@ -1,5 +1,4 @@
-import { FC, PropsWithChildren, useCallback } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { FC, PropsWithChildren } from 'react'
 
 import { Badge, BadgeProps, Icon, IconProps, Tabs, TabsTriggerProps } from '@/components'
 import { useRouterContext } from '@/context'
@@ -43,41 +42,25 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   repoId,
   updateTitle
 }) => {
-  const { Outlet } = useRouterContext()
+  const { Outlet, navigate } = useRouterContext()
   const { pullRequest } = usePullRequestStore()
   const { t } = useTranslationStore()
-  const navigate = useNavigate()
-  const location = useLocation()
 
-  const getIsActiveTab = useCallback(
-    (tab: string) => (location.pathname.endsWith(tab) ? 'active' : 'inactive'),
-    [location.pathname]
-  )
-  const makeHandleTabChange = useCallback((tab: string) => () => navigate(tab), [navigate])
-
-  const getTabProps = useCallback(
-    (tab: PullRequestTabsKeys): TabsTriggerProps => ({
-      value: tab,
-      ...{ 'data-state': getIsActiveTab(tab) },
-      onClick: makeHandleTabChange(tab),
-      className: 'group gap-x-1.5',
-      role: 'link'
-    }),
-    [getIsActiveTab, makeHandleTabChange]
-  )
+  const getTabProps = (tab: PullRequestTabsKeys): TabsTriggerProps => ({
+    value: tab,
+    onClick: () => navigate(tab),
+    className: 'group gap-x-1.5',
+    role: 'link'
+  })
 
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="mx-auto max-w-[1500px] px-6">
         {pullRequest && (
-          <PullRequestHeader
-            className="mb-10"
-            updateTitle={updateTitle}
-            data={{ ...pullRequest, stats: { commits: pullRequest?.stats?.commits }, spaceId, repoId }}
-          />
+          <PullRequestHeader className="mb-10" updateTitle={updateTitle} data={{ ...pullRequest, spaceId, repoId }} />
         )}
 
-        <Tabs.Root variant="tabnav" className="mb-7">
+        <Tabs.Root variant="tabnav" className="mb-7" defaultValue={PullRequestTabsKeys.CONVERSATION}>
           <Tabs.List className="before:left-1/2 before:w-[calc(100vw-220px)] before:-translate-x-1/2">
             <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CONVERSATION)}>
               <TabTitleWithIcon icon="comments">

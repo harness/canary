@@ -24,8 +24,8 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
   }
 
   return (
-    <div className="flex w-full flex-col place-items-start px-2 pb-3">
-      <div className="flex h-[58px] items-center px-1">{logo}</div>
+    <div className="flex w-full flex-col place-items-start pb-3 pt-1.5">
+      <div className="flex h-[58px] items-center pl-1">{logo}</div>
       <SearchBox.Root
         width="full"
         placeholder={`${t('component:navbar.search', 'Search')}...`}
@@ -35,6 +35,7 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
         value=""
         onSearch={openSearchDialog}
         handleChange={openSearchDialog}
+        theme="sidebar"
       />
       <Dialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
         <Dialog.Content className="h-[600px] max-w-[800px]">

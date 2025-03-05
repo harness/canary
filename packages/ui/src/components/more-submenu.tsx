@@ -14,6 +14,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
     <Sheet.Root modal={false} open={showMoreMenu}>
       <Sheet.Content
         className="inset-y-0 left-[220px] z-40 h-screen w-[328px] bg-transparent p-0"
+        closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
         side="left"
         onClick={handleMoreMenu}
         modal={false}
@@ -21,19 +22,26 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
         <Sheet.Title className="sr-only">More Menu</Sheet.Title>
         <NavbarSkeleton.Root className="w-[328px]" isSubMenu>
           <NavbarSkeleton.Content className="overflow-hidden">
-            <ScrollArea>
+            <ScrollArea scrollThumbClassName="bg-sidebar-background-8">
               <Spacer size={9} />
               {items.map((group, group_idx) => (
-                <NavbarSkeleton.Group key={group.groupId} topBorder={group_idx > 0} title={group.title} isSubMenu>
+                <NavbarSkeleton.Group
+                  key={group.groupId}
+                  topBorder={group_idx > 0}
+                  title={group.title}
+                  isSubMenu
+                  isMainNav
+                >
                   {group.items.map(item => (
                     <NavLink key={item.id} to={item.to || ''}>
                       {({ isActive }) => (
                         <NavbarSkeleton.Item
                           text={item.title || ''}
                           description={item.description || ''}
-                          submenuItem
                           icon={item.iconName && <Icon name={item.iconName} size={18} />}
                           active={isActive}
+                          submenuItem
+                          isMainNav
                         />
                       )}
                     </NavLink>

@@ -38,7 +38,7 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
           {Object.values(ColorsEnum).map(color => (
             <Select.Item key={color} value={color}>
               <div className="flex max-w-full items-center gap-x-1.5">
-                <div className={`size-2 min-h-2 min-w-2 rounded-full bg-label-foreground-${color}`} />
+                <div className={`bg-label-foreground- size-2 min-h-2 min-w-2 rounded-full${color}`} />
                 <span className="truncate text-foreground-3">{color}</span>
               </div>
             </Select.Item>

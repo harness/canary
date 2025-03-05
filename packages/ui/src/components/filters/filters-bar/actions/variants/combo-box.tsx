@@ -35,7 +35,7 @@ export default function ComboBox({
 
   const renderContent = () => {
     if (isLoading) {
-      return <Command.Loading className="text-foreground-5 px-2 py-4 text-sm">{loadingMessage}</Command.Loading>
+      return <Command.Loading className="px-2 py-4 text-sm text-foreground-5">{loadingMessage}</Command.Loading>
     }
 
     if (options.length === 0) {

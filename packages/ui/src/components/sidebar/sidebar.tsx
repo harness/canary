@@ -5,6 +5,7 @@ import {
   CSSProperties,
   ElementRef,
   forwardRef,
+  ReactElement,
   useCallback,
   useContext,
   useEffect,
@@ -12,7 +13,7 @@ import {
   useState
 } from 'react'
 
-import { Button, Icon, Input, Sheet, Tooltip } from '@/components'
+import { Button, Icon, Input, ScrollArea, Sheet, Tooltip } from '@/components'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -150,7 +151,7 @@ const SidebarRoot = forwardRef<
   if (collapsible === 'none') {
     return (
       <div
-        className={cn('flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground', className)}
+        className={cn('flex h-full w-[--sidebar-width] flex-col bg-sidebar-background-1', className)}
         ref={ref}
         {...props}
       >
@@ -165,7 +166,7 @@ const SidebarRoot = forwardRef<
         <Sheet.Content
           data-sidebar="sidebar"
           data-mobile="true"
-          className="bg-sidebar text-sidebar-foreground w-[--sidebar-width] p-0 [&>button]:hidden"
+          className="w-[--sidebar-width] bg-sidebar-background-1 p-0 [&>button]:hidden"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE
@@ -182,7 +183,7 @@ const SidebarRoot = forwardRef<
   return (
     <div
       ref={ref}
-      className="text-sidebar-foreground group peer hidden md:block"
+      className={cn('group peer hidden md:block', className)}
       data-state={state}
       data-collapsible={state === 'collapsed' ? collapsible : ''}
       data-variant={variant}
@@ -201,7 +202,7 @@ const SidebarRoot = forwardRef<
       />
       <div
         className={cn(
-          'duration-200 fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex',
+          'bg-sidebar-background-1 border-sidebar-border-1 duration-200 fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex',
           side === 'left'
             ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
             : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
@@ -215,7 +216,7 @@ const SidebarRoot = forwardRef<
       >
         <div
           data-sidebar="sidebar"
-          className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex size-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow"
+          className="group-data-[variant=floating]:border-sidebar-border flex size-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow"
         >
           {children}
         </div>
@@ -262,10 +263,10 @@ const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'>>(({ c
       onClick={toggleSidebar}
       title="Toggle Sidebar"
       className={cn(
-        'absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex',
+        'absolute bg-transparent inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex',
         '[[data-side=left]_&]:cursor-w-resize [[data-side=right]_&]:cursor-e-resize',
         '[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize',
-        'group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full group-data-[collapsible=offcanvas]:hover:bg-sidebar',
+        'group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full',
         '[[data-side=left][data-collapsible=offcanvas]_&]:-right-2',
         '[[data-side=right][data-collapsible=offcanvas]_&]:-left-2',
         className
@@ -309,12 +310,12 @@ const SidebarInput = forwardRef<ElementRef<typeof Input>, ComponentProps<typeof 
 SidebarInput.displayName = 'SidebarInput'
 
 const SidebarHeader = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
-  return <div ref={ref} data-sidebar="header" className={cn('flex flex-col gap-2 px-2', className)} {...props} />
+  return <div ref={ref} data-sidebar="header" className={cn('flex flex-col gap-2 px-2.5', className)} {...props} />
 })
 SidebarHeader.displayName = 'SidebarHeader'
 
 const SidebarFooter = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
-  return <div ref={ref} data-sidebar="footer" className={cn('flex flex-col gap-2 p-2', className)} {...props} />
+  return <div ref={ref} data-sidebar="footer" className={cn('flex flex-col gap-2 px-2 py-3', className)} {...props} />
 })
 SidebarFooter.displayName = 'SidebarFooter'
 
@@ -332,17 +333,19 @@ const SidebarSeparator = forwardRef<ElementRef<typeof Separator>, ComponentProps
 )
 SidebarSeparator.displayName = 'SidebarSeparator'
 
-const SidebarContent = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
+const SidebarContent = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, children, ...props }, ref) => {
   return (
     <div
       ref={ref}
       data-sidebar="content"
       className={cn(
-        'flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden',
+        'flex min-h-0 flex-1 flex-col gap-2 overflow-hidden group-data-[collapsible=icon]:overflow-hidden',
         className
       )}
       {...props}
-    />
+    >
+      <ScrollArea scrollThumbClassName="bg-sidebar-background-8">{children}</ScrollArea>
+    </div>
   )
 })
 SidebarContent.displayName = 'SidebarContent'
@@ -352,7 +355,7 @@ const SidebarGroup = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ classN
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn('relative flex w-full min-w-0 flex-col p-2', className)}
+      className={cn('relative flex w-full min-w-0 flex-col px-2.5 py-2 border-sidebar-border-1', className)}
       {...props}
     />
   )
@@ -368,7 +371,7 @@ const SidebarGroupLabel = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'d
         ref={ref}
         data-sidebar="group-label"
         className={cn(
-          'duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opa] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
+          'duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-xs text-sidebar-foreground-5 outline-none ring-sidebar-ring transition-[margin,opa] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
           'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0',
           className
         )}
@@ -407,7 +410,7 @@ const SidebarGroupContent = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({
 SidebarGroupContent.displayName = 'SidebarGroupContent'
 
 const SidebarMenu = forwardRef<HTMLUListElement, ComponentProps<'ul'>>(({ className, ...props }, ref) => (
-  <ul ref={ref} data-sidebar="menu" className={cn('flex w-full min-w-0 flex-col gap-1', className)} {...props} />
+  <ul ref={ref} data-sidebar="menu" className={cn('flex w-full min-w-0 flex-col gap-0.5', className)} {...props} />
 ))
 SidebarMenu.displayName = 'SidebarMenu'
 
@@ -417,13 +420,13 @@ const SidebarMenuItem = forwardRef<HTMLLIElement, ComponentProps<'li'>>(({ class
 SidebarMenuItem.displayName = 'SidebarMenuItem'
 
 const sidebarMenuButtonVariants = cva(
-  'peer/menu-button hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground flex w-full cursor-pointer items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none transition-[width,height,padding] focus:outline-none focus:ring-0 focus-visible:ring-0 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-medium group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0',
+  'peer/menu-button flex w-full cursor-pointer items-center gap-2.5 overflow-hidden rounded p-2 text-left text-sm outline-none transition-[width,height,padding] disabled:pointer-events-none disabled:opacity-50 group-hover/menu-item:bg-sidebar-background-3 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-background-3 data-[active=true]:font-medium data-[state=open]:hover:bg-sidebar-background-3 group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0',
   {
     variants: {
       variant: {
-        default: 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+        default: '',
         outline:
-          'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]'
+          'bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]'
       },
       size: {
         default: 'h-8 text-sm',
@@ -479,6 +482,47 @@ const SidebarMenuButton = forwardRef<
 })
 SidebarMenuButton.displayName = 'SidebarMenuButton'
 
+const SidebarMenuItemText = forwardRef<
+  HTMLDivElement,
+  {
+    icon?: ReactElement<SVGSVGElement>
+    text: string
+    className?: string
+    active?: boolean
+  }
+>(({ icon, text, className, active = false, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      className={cn(className, 'flex items-center select-none gap-x-2 pl-2.5', { 'gap-x-0': !icon })}
+      {...props}
+    >
+      {icon && (
+        <div
+          className={cn(
+            'text-sidebar-icon-3 group-hover/menu-item:text-sidebar-icon-1 relative z-10 flex h-3 w-3 min-w-3 items-center duration-100 ease-in-out',
+            { 'text-sidebar-icon-1': !!active }
+          )}
+        >
+          {!!active && (
+            <span className="absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2 bg-navbar-item-gradient" />
+          )}
+          {icon}
+        </div>
+      )}
+      <span
+        className={cn(
+          'font-medium text-sidebar-foreground-2 group-hover/menu-item:text-sidebar-foreground-1 z-10 text-left duration-100 ease-in-out',
+          { 'text-sidebar-foreground-1': active }
+        )}
+      >
+        {text}
+      </span>
+    </div>
+  )
+})
+SidebarMenuItemText.displayName = 'SidebarMenuItemText'
+
 const SidebarMenuAction = forwardRef<
   HTMLButtonElement,
   ComponentPropsWithoutRef<'button'> & {
@@ -500,9 +544,10 @@ const SidebarMenuAction = forwardRef<
         'peer-data-[size=default]/menu-button:top-1.5',
         'peer-data-[size=lg]/menu-button:top-2.5',
         'group-data-[collapsible=icon]:hidden',
-        showOnHover &&
-          'group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0',
-        'focus:outline-none focus:ring-0 focus:ring-transparent',
+        {
+          'opacity-0 group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0':
+            showOnHover
+        },
         className
       )}
       {...props}
@@ -626,6 +671,7 @@ const Sidebar = {
   MenuAction: SidebarMenuAction,
   MenuBadge: SidebarMenuBadge,
   MenuButton: SidebarMenuButton,
+  MenuItemText: SidebarMenuItemText,
   MenuItem: SidebarMenuItem,
   MenuSkeleton: SidebarMenuSkeleton,
   MenuSub: SidebarMenuSubItem,

@@ -66,6 +66,7 @@ interface SheetContentProps
   handleClose?: () => void
   modal?: boolean
   overlayClassName?: string
+  closeClassName?: string
 }
 
 const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Content>, SheetContentProps>(
@@ -78,6 +79,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
       className,
       children,
       overlayClassName,
+      closeClassName,
       ...props
     },
     ref
@@ -90,14 +92,16 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
           {children}
           {!hideCloseButton && (
             <SheetPrimitive.Close
-              asChild
               className="absolute right-[0.1875rem] top-2 flex items-center justify-center transition-colors disabled:pointer-events-none"
+              asChild
             >
               <Button
-                className="text-icons-4 hover:text-icons-2 focus:ring-0 focus-visible:outline-none"
+                className={cn(
+                  'text-icons-4 hover:text-icons-2 focus:ring-0 focus-visible:outline-none',
+                  closeClassName
+                )}
                 variant="custom"
                 size="icon"
-                onClick={handleClose}
               >
                 <Icon name="close" size={16} />
                 <span className="sr-only">Close</span>

@@ -38,14 +38,14 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
           {supportedLanguages.map(lang => (
             <button
               key={lang.code}
-              className="group relative flex cursor-pointer items-center justify-between rounded-md px-0 focus-visible:outline-none focus:ring-0"
+              className="group relative flex cursor-pointer items-center justify-between rounded-md px-0 focus:ring-0 focus-visible:outline-none"
               onClick={() => {
                 setSelectedLanguage(lang.code)
                 onChange(lang)
               }}
             >
               <div className="flex items-center gap-2">
-                <div className="flex size-6 items-center justify-center rounded bg-background-12 text-12 text-foreground-3 uppercase">
+                <div className="flex size-6 items-center justify-center rounded bg-background-12 text-12 uppercase text-foreground-3">
                   {lang.code}
                 </div>
                 <span

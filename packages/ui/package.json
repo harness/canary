@@ -21,6 +21,7 @@
     "lint": "eslint ./src",
     "pretty": "prettier --check ./src",
     "shadcn:update": "npx shadcn-ui@latest add -a -o -y",
+    "prepublishOnly": "pnpm build",
     "publish:custom": "pnpm build:custom && yalc publish --no-scripts",
     "pre-commit": "lint-staged",
     "test": "vitest --run",

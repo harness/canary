@@ -10,9 +10,9 @@ import { Spacer } from '@components/spacer'
 import { ThemeDialog } from '@components/theme-selector-v2'
 
 import { SidebarItem } from './sidebar-item'
-import { SidebarSearch } from './sidebar-search'
-import { SearchProvider } from './sidebar-search-new/search-context'
-import { SidebarSearchNew } from './sidebar-search-new/sidebar-search-new'
+import { SidebarSearchLegacy } from './sidebar-search-legacy'
+import { SearchProvider } from './sidebar-search/search-context'
+import { SidebarSearch } from './sidebar-search/sidebar-search'
 import { User } from './sidebar-user'
 import { NavbarItemType } from './types'
 
@@ -73,7 +73,7 @@ export const AppSidebar = ({
         <Sidebar.Header>
           {showNewSearch ? (
             <SearchProvider>
-              <SidebarSearchNew
+              <SidebarSearch
                 logo={
                   <Link to="/" className="h-[58px] flex gap-2 items-center pl-3 justify-start">
                     <Icon name="harness" size={20} className="text-foreground-accent" />
@@ -83,7 +83,7 @@ export const AppSidebar = ({
               />
             </SearchProvider>
           ) : (
-            <SidebarSearch
+            <SidebarSearchLegacy
               logo={
                 <Link className="flex items-center gap-1.5" to="/">
                   <Icon name="harness" size={18} className="text-foreground-accent" />

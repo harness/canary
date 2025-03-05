@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { AlertDialog, Button, ButtonGroup, Icon, ScrollArea, Text } from '@/components'
 import useDragAndDrop from '@/hooks/use-drag-and-drop'
-import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
+import { MenuGroupType, NavbarItemType } from '@components/app-sidebar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
 import { SortableContext } from '@dnd-kit/sortable'
 

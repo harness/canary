@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Button, Popover, ScrollArea, SearchBox, Text } from '@/components'
 import { useDebounceSearch } from '@/hooks'
-import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
+import { MenuGroupType, NavbarItemType } from '@components/app-sidebar/types'
 import { cn } from '@utils/cn'
 
 const filterItems = (categories: MenuGroupType[], query: string): MenuGroupType[] => {

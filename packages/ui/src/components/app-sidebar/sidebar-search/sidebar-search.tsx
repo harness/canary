@@ -10,7 +10,7 @@ interface SidebarSearchProps extends FormHTMLAttributes<HTMLFormElement> {
   logo: ReactNode
 }
 
-export function SidebarSearchNew(props: SidebarSearchProps) {
+export function SidebarSearch(props: SidebarSearchProps) {
   const searchContext = useSearch()
 
   if (!searchContext) {

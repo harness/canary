@@ -6,7 +6,7 @@ interface ProjectProps {
   logo: ReactNode
 }
 
-function SidebarSearch({ logo }: ProjectProps) {
+function SidebarSearchLegacy({ logo }: ProjectProps) {
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
 
   const openSearchDialog = (e?: FormEvent<HTMLInputElement>) => {
@@ -48,4 +48,4 @@ function SidebarSearch({ logo }: ProjectProps) {
   )
 }
 
-export { SidebarSearch }
+export { SidebarSearchLegacy }

@@ -1,6 +1,6 @@
 import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
 import { useRouterContext } from '@/context'
-import { MenuGroupType } from '@components/navbar/types'
+import { MenuGroupType } from '@components/app-sidebar/types'
 
 interface MoreSubmenuProps {
   showMoreMenu: boolean

@@ -1,9 +1,10 @@
 import { FC, PropsWithChildren, ReactNode, useCallback, useState } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 
+import { useThemeStore } from '@utils/theme-utils'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
-import { MoreSubmenu, Navbar, NavbarItemType, SettingsMenu } from '@harnessio/ui/components'
+import { AppSidebar, MoreSubmenu, NavbarItemType, SettingsMenu } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
 
 import { useRootViewWrapperStore } from './root-view-wrapper-store'
@@ -46,7 +47,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
         element={
           <SandboxLayout.Root>
             <SandboxLayout.LeftPanel>
-              <Navbar
+              <AppSidebar
                 showMoreMenu={showMoreMenu}
                 showSettingMenu={showSettingsMenu}
                 handleMoreMenu={onToggleMoreMenu}
@@ -59,6 +60,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
                 handleChangePinnedMenuItem={setPinned}
                 handleRemoveRecentMenuItem={noop}
                 useTranslationStore={useTranslationStore}
+                useThemeStore={useThemeStore}
               />
               <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />
               <SettingsMenu

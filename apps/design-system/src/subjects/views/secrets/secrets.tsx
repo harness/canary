@@ -22,6 +22,11 @@ export const SecretsPage = () => {
             useTranslationStore={useTranslationStore}
             isLoading={false}
             apiError={null}
+            prefilledFormData={{
+              name: 'mock-secret',
+              description: 'mock-description',
+              tags: 'mock-tags'
+            }}
           />
         )
       case SecretType.Existing:

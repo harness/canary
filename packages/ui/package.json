@@ -126,7 +126,8 @@
     "zod": "^3.23.8"
   },
   "peerDependencies": {
-    "react": ">=17"
+    "react": ">=17",
+    "react-router-dom": ">=5 <7"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",

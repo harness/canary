@@ -489,7 +489,11 @@
   "createProject": {
     "validation": {
       "nameNoEmpty": "Le champ ne peut pas être vide",
-      "nameMinLength": "Le nom du projet doit contenir au moins 4 caractères"
+      "nameMinLength": "Le nom du projet doit contenir au moins 4 caractères",
+      "nameMax": "Le nom ne doit pas dépasser 100 caractères",
+      "nameRegex": "Le nom du pipeline doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
+      "noSpaces": "Le nom du pipeline ne peut pas contenir d'espaces",
+      "descriptionMax": "La description ne doit pas dépasser 1024 caractères"
     },
     "backButton": "Retour",
     "title": "Créez votre nouveau projet",

@@ -13,7 +13,7 @@ export const makeCreatePipelineSchema = (t: TranslationStore['t']) =>
     name: z
       .string()
       .trim()
-      .min(1, { message: t('views:pipelines.createPipelineValidation.nameMin', 'Pipeline name is required') })
+      .nonempty({ message: t('views:pipelines.createPipelineValidation.nameMin', 'Pipeline name is required') })
       .max(100, {
         message: t(
           'views:pipelines.createPipelineValidation.nameMax',
@@ -29,8 +29,8 @@ export const makeCreatePipelineSchema = (t: TranslationStore['t']) =>
       .refine(data => !data.includes(' '), {
         message: t('views:pipelines.createPipelineValidation.noSpaces', 'Pipeline name cannot contain spaces')
       }),
-    branch: z.string().min(1, { message: 'Branch name is required' }),
-    yamlPath: z.string().min(1, { message: 'YAML path is required' })
+    branch: z.string().trim().nonempty({ message: 'Branch name is required' }),
+    yamlPath: z.string().trim().nonempty({ message: 'YAML path is required' })
   })
 
 export type CreatePipelineFormType = z.infer<ReturnType<typeof makeCreatePipelineSchema>>

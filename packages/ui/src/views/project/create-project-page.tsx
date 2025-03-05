@@ -49,11 +49,32 @@ const createProjectSchema = (t: TranslationStore['t']) =>
   z.object({
     name: z
       .string()
-      .nonempty(t('views:createProject.validation.nameNoEmpty', 'The field can’t be blank'))
+      .trim()
+      .nonempty(t('views:createProject.validation.nameNoEmpty', 'Name can’t be blank'))
       .min(4, {
-        message: t('views:createProject.validation.nameMinLength', 'The project name should be at least 4 characters')
+        message: t('views:createProject.validation.nameMinLength', 'Name should be at least 4 characters')
+      })
+      .max(100, {
+        message: t('views:createProject.validation.nameMax', 'Name must be no longer than 100 characters')
+      })
+      .regex(/^[a-zA-Z0-9._-\s]+$/, {
+        message: t(
+          'views:createProject.validation.nameRegex',
+          'Name must contain only letters, numbers, and the characters: - _ .'
+        )
+      })
+      .refine(data => !data.includes(' '), {
+        message: t('views:createProject.validation.noSpaces', 'Name cannot contain spaces')
       }),
-    description: z.string()
+    description: z
+      .string()
+      .trim()
+      .max(1024, {
+        message: t(
+          'views:createProject.validation.descriptionMax',
+          'Description must be no longer than 1024 characters'
+        )
+      })
   })
 
 export type CreateProjectFields = z.infer<ReturnType<typeof createProjectSchema>>
@@ -136,7 +157,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
         </div>
 
         <FormWrapper onSubmit={handleSubmit(onFormSubmit)}>
-          <Fieldset>
+          <Fieldset legend="Project details">
             <Input
               id="name"
               label={t('views:createProject.form.name', 'Project name')}

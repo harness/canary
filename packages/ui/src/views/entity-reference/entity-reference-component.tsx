@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 
-import { Button, Icon, IconProps } from '@/components'
+import { Button, Icon, IconProps, Input } from '@/components'
 import { Root as StackedList, Field as StackedListField, Item as StackedListItem } from '@/components/stacked-list'
 import { cn } from '@utils/cn'
 
@@ -13,22 +13,22 @@ export interface BaseEntityProps {
 // Props for rendering a single entity item
 export interface EntityRendererProps<T extends BaseEntityProps> {
   entity: T
-  isSelected: boolean
-  onSelect: (entity: T) => void
+  isSelected?: boolean
+  onSelect?: (entity: T) => void
 }
 
 // Props for the scope selector item
 export interface ScopeSelectorProps<S = string> {
   scope: S
-  isActive: boolean
-  onSelect: (scope: S) => void
+  isActive?: boolean
+  onSelect?: (scope: S) => void
 }
 
 // Props for the EntityReference component
 export interface EntityReferenceProps<T extends BaseEntityProps, S = string> {
   // Data
   entities: T[]
-  selectedEntityId?: string
+  selectedEntity: T | null
 
   // Callbacks
   onSelectEntity?: (entity: T) => void
@@ -46,13 +46,10 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string> {
   renderScopeSelector?: (props: ScopeSelectorProps<S>) => React.ReactNode
 }
 
-/**
- * A generic component for displaying and selecting entities
- */
 export function EntityReference<T extends BaseEntityProps, S = string>({
   // Data
   entities,
-  selectedEntityId,
+  selectedEntity,
 
   // Callbacks
   onSelectEntity,
@@ -68,13 +65,8 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
   renderEntity,
   renderScopeSelector
 }: EntityReferenceProps<T, S>): JSX.Element {
-  const [selectedEntity, setSelectedEntity] = useState<T | undefined>(
-    entities.find(entity => entity.id === selectedEntityId)
-  )
-
   const handleSelectEntity = useCallback(
     (entity: T) => {
-      setSelectedEntity(entity)
       onSelectEntity?.(entity)
     },
     [onSelectEntity]
@@ -87,19 +79,13 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
     [onScopeChange]
   )
 
-  const handleApply = useCallback(() => {
-    if (selectedEntity) {
-      onSelectEntity?.(selectedEntity)
-    }
-  }, [selectedEntity, onSelectEntity])
-
   // Default entity renderer
   const defaultEntityRenderer = ({ entity, isSelected, onSelect }: EntityRendererProps<T>) => {
     const hasSelectButton = 'type' in entity && entity.type === 'secret'
 
     return (
       <StackedListItem
-        onClick={() => onSelect(entity)}
+        onClick={() => onSelect?.(entity)}
         className={cn(isSelected && 'bg-background-4')}
         thumbnail={<Icon name="file" size={16} className="text-foreground-5" />}
         actions={
@@ -109,7 +95,7 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
               size="sm"
               onClick={e => {
                 e.stopPropagation()
-                onSelect(entity)
+                onSelect?.(entity)
               }}
             >
               Select
@@ -128,7 +114,7 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
 
     return (
       <StackedListItem
-        onClick={() => onSelect(scope)}
+        onClick={() => onSelect?.(scope)}
         className={cn(isActive && 'bg-background-4 font-medium')}
         thumbnail={<Icon name={iconName as IconProps['name']} size={16} className="text-foreground-5" />}
       >
@@ -137,20 +123,16 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
     )
   }
 
-  // Render the combined list (scopes + entities)
   const renderCombinedList = () => {
     return (
       <StackedList>
-        {/* Render scopes at the top of the list */}
-        {onScopeChange && scopes.length > 0 && (
+        {scopes.length > 0 && (
           <>
             {scopes.map(scope => (
               <React.Fragment key={String(scope)}>
                 {renderScopeSelector
                   ? renderScopeSelector({
-                      scope,
-                      isActive: scope === activeScope,
-                      onSelect: handleScopeChange
+                      scope
                     })
                   : defaultScopeSelectorRenderer({
                       scope,
@@ -166,15 +148,13 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
         {entities.length > 0 ? (
           <>
             {entities.map(entity => {
-              const isSelected = entity.id === selectedEntityId || entity === selectedEntity
+              const isSelected = entity === selectedEntity
 
               return (
                 <React.Fragment key={entity.id}>
                   {renderEntity
                     ? renderEntity({
-                        entity,
-                        isSelected,
-                        onSelect: handleSelectEntity
+                        entity
                       })
                     : defaultEntityRenderer({
                         entity,
@@ -198,32 +178,9 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
 
   return (
     <div className={cn('flex flex-col h-full', className)}>
-      {showFilter && (
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-full px-3 py-2 text-sm border rounded border-borders-2 bg-background-2 focus:outline-none focus:ring-1 focus:ring-primary"
-          />
-        </div>
-      )}
+      {showFilter && <Input type="text" placeholder="Search" className="mb-4" />}
 
       <div className="flex-1 overflow-auto">{renderCombinedList()}</div>
-
-      {(onSelectEntity || onCancel) && (
-        <div className="flex mt-4 space-x-2">
-          {onSelectEntity && (
-            <Button variant={'default'} onClick={handleApply} disabled={!selectedEntity}>
-              Apply
-            </Button>
-          )}
-          {onCancel && (
-            <Button variant={'secondary'} onClick={onCancel}>
-              Cancel
-            </Button>
-          )}
-        </div>
-      )}
     </div>
   )
 }

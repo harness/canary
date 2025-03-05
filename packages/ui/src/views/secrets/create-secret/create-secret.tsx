@@ -17,6 +17,8 @@ import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import { SecretDataType } from '../types'
+
 const createSecretFormSchema = z
   .object({
     name: z.string().min(1, { message: 'Please provide a name' }),
@@ -48,7 +50,7 @@ const createSecretFormSchema = z
 export type CreateSecretFormFields = z.infer<typeof createSecretFormSchema>
 
 interface CreateSecretProps {
-  prefilledFormData?: CreateSecretFormFields
+  prefilledFormData?: SecretDataType
   onFormSubmit: (data: CreateSecretFormFields) => void
   onFormCancel: () => void
   useTranslationStore: () => TranslationStore
@@ -66,6 +68,9 @@ export function CreateSecretPage({
 }: CreateSecretProps) {
   const { t: _t } = useTranslationStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Determine the secret type from prefilledFormData
+  const secretType = prefilledFormData?.type || null
 
   const {
     register,

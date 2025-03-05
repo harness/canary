@@ -1247,12 +1247,12 @@
         "btn": {
           "background": {
             "$type": "color",
-            "$value": "{colors.chrome.900}",
+            "$value": "{background.3}",
             "$description": "Search input specific button background on sidebar navigation."
           },
           "border": {
             "$type": "color",
-            "$value": "{colors.chrome.850}",
+            "$value": "{border.2}",
             "$description": "Search input specific button border on sidebar navigation."
           },
           "text": {

@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren } from 'react'
+import type { NavLinkProps } from 'react-router-dom'
 
-import { useRouterContext, type NavLinkProps } from '@/context'
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
 const TabNavRoot: FC<PropsWithChildren<unknown>> = ({ children }) => {

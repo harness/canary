@@ -1,40 +1,5 @@
-import { ComponentType, createContext, CSSProperties, ReactNode, useContext } from 'react'
-
-export interface LinkProps {
-  to: string | { pathname: string }
-  className?: string
-  children?: ReactNode
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
-  [key: string]: unknown
-}
-
-interface NavLinkStateProps {
-  isActive: boolean
-  isPending: boolean
-  isTransitioning: boolean
-}
-
-export interface NavLinkProps {
-  to: string | { pathname: string }
-  style?: CSSProperties | ((props: NavLinkStateProps) => CSSProperties)
-  className?: string | ((props: NavLinkStateProps) => string)
-  children?: ReactNode | ((props: NavLinkStateProps) => ReactNode)
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
-  [key: string]: unknown
-}
-
-interface OutletProps {
-  children?: ReactNode
-}
-
-interface Match {
-  id: string
-  pathname: string
-  params: Record<string, string>
-  pathnameBase: string
-}
-
-type NavigateFunction = (to: string | number) => void
+import { ComponentType, createContext, ReactNode, useContext } from 'react'
+import type { LinkProps, NavigateFunction, NavLinkProps, OutletProps, UIMatch } from 'react-router-dom'
 
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
 
@@ -78,7 +43,7 @@ const useSearchParamsDefault = () => {
   return [new URLSearchParams(), setSearchParams] as const
 }
 
-const useMatchesDefault = (): Match[] => {
+const useMatchesDefault = (): UIMatch[] => {
   return []
 }
 

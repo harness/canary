@@ -1177,12 +1177,12 @@
     "sidebar": {
       "background": {
         "$type": "color",
-        "$value": "{background.1}",
+        "$value": "{colors.pure.black}",
         "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
       },
       "border": {
         "$type": "color",
-        "$value": "{border.2}",
+        "$value": "{border.3}",
         "$description": "Border color for navigation components. Creates visual boundaries and separation from adjacent content."
       },
       "separator": {
@@ -1226,6 +1226,47 @@
           "$type": "color",
           "$value": "{brand.color.300}",
           "$description": "Icon color for Logo in sidebar navigation."
+        }
+      },
+      "search": {
+        "border": {
+          "$type": "color",
+          "$value": "{border.2}",
+          "$description": "Search input specific border on sidebar navigation."
+        },
+        "placeholder": {
+          "$type": "color",
+          "$value": "{text.3}",
+          "$description": "Search input specific placeholder on sidebar navigation."
+        },
+        "btn": {
+          "background": {
+            "$type": "color",
+            "$value": "{colors.chrome.900}",
+            "$description": "Search input specific button background on sidebar navigation."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{colors.chrome.850}",
+            "$description": "Search input specific button border on sidebar navigation."
+          },
+          "text": {
+            "$type": "color",
+            "$value": "{text.3}",
+            "$description": "Search input specific button text on sidebar navigation."
+          }
+        }
+      },
+      "footer": {
+        "username": {
+          "$type": "color",
+          "$value": "{text.1}",
+          "$description": "Username in the footer sidebar navigation menu."
+        },
+        "data": {
+          "$type": "color",
+          "$value": "{text.3}",
+          "$description": "User data in the footer sidebar navigation menu."
         }
       }
     },

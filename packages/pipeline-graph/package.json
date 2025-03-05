@@ -14,7 +14,8 @@
   "scripts": {
     "playground": "vite dev --config vite.config.playground.ts",
     "dev": "vite build --watch",
-    "build": "vite build"
+    "build": "vite build",
+    "build:ci": "vite build"
   },
   "peerDependencies": {
     "@types/react": "^17.0.3",

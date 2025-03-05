@@ -1,7 +1,6 @@
-import { FormControl, FormField, FormItem } from '@components/form'
 import { Input } from '@components/input'
 
-import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/forms'
+import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'
@@ -16,20 +15,15 @@ function TextInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
   const { readonly, path, input } = props
   const { label = '', required, placeholder, description } = input
 
+  const { field } = useController({
+    name: path
+  })
+
   return (
     <InputWrapper>
-      <FormField
-        name={path}
-        render={({ field }) => (
-          <FormItem>
-            <InputLabel label={label} description={description} required={required} />
-            <FormControl>
-              <Input placeholder={placeholder} {...field} disabled={readonly} tabIndex={0} />
-            </FormControl>
-            <InputError />
-          </FormItem>
-        )}
-      />
+      <InputLabel label={label} description={description} required={required} />
+      <Input placeholder={placeholder} {...field} disabled={readonly} tabIndex={0} />
+      <InputError />
     </InputWrapper>
   )
 }

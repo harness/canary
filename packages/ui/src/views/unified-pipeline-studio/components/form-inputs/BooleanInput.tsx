@@ -1,7 +1,6 @@
-import { FormControl, FormField, FormItem } from '@components/form'
 import { Switch } from '@components/switch'
 
-import { InputComponent, InputProps, type AnyFormikValue, type UseFormReturn } from '@harnessio/forms'
+import { InputComponent, InputProps, useController, type AnyFormikValue, type UseFormReturn } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'
@@ -19,26 +18,23 @@ function BooleanInputInternal(props: InputProps<AnyFormikValue, BooleanInputConf
   const { readonly, path, input } = props
   const { label = '', required, description } = input
 
+  const { field } = useController({
+    name: path
+  })
+
   return (
     <InputWrapper>
-      <FormField
-        name={path}
-        render={({ field }) => (
-          <FormItem className="flex space-x-2 space-y-0">
-            <FormControl>
-              <Switch
-                disabled={readonly}
-                checked={field.value}
-                onCheckedChange={value => {
-                  field.onChange(value)
-                }}
-              />
-            </FormControl>
-            <InputLabel label={label} required={required} description={description} />
-            <InputError />
-          </FormItem>
-        )}
+      {/* TODO: check styling we have on FormItem/}
+      {/* <FormItem className="flex space-x-2 space-y-0">  */}
+      <Switch
+        disabled={readonly}
+        checked={field.value}
+        onCheckedChange={value => {
+          field.onChange(value)
+        }}
       />
+      <InputLabel label={label} required={required} description={description} />
+      <InputError />
     </InputWrapper>
   )
 }

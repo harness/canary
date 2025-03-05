@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 
 import { Button } from '@components/button'
+import { FormField, FormItem } from '@components/form'
 import { Icon } from '@components/icon'
 
 import {
@@ -30,7 +31,7 @@ export interface ListInputConfig {
   }
 }
 
-function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element {
+function ListInputInternal_OLD(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element {
   const { readonly, path, input, factory } = props
   const { label, required, inputConfig, description } = input
 
@@ -68,59 +69,65 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
 
   return (
     <InputWrapper>
-      <InputLabel label={label} required={required} description={description} />
-      {/* TODO: do we need Controller ? */}
-      <Controller
+      <FormField
         name={path}
         render={() => (
-          <div>
-            <div>
-              {isGrid && fields.length > 0 && (
-                <div className={rowClass} style={rowStyle}>
-                  {inputConfig?.inputs.map(rowInput => (
-                    <InputLabel
-                      key={rowInput.label}
-                      label={rowInput.label}
-                      required={rowInput.required}
-                      description={rowInput.description}
-                    />
-                  ))}
+          <FormItem>
+            <InputLabel label={label} required={required} description={description} />
+            <Controller
+              name={path}
+              render={() => (
+                <div>
+                  <div>
+                    {isGrid && fields.length > 0 && (
+                      <div className={rowClass} style={rowStyle}>
+                        {inputConfig?.inputs.map(rowInput => (
+                          <InputLabel
+                            key={rowInput.label}
+                            label={rowInput.label}
+                            required={rowInput.required}
+                            description={rowInput.description}
+                          />
+                        ))}
+                      </div>
+                    )}
+                    {fields.map((_item, idx) => (
+                      <div key={_item.id} className={rowClass} style={rowStyle}>
+                        {inputConfig?.inputs && (
+                          <RenderInputs items={getChildInputs(inputConfig?.inputs, path, idx)} factory={factory} />
+                        )}
+                        <div className="flex items-center">
+                          <button
+                            className="mt-2"
+                            onClick={() => {
+                              remove(idx)
+                            }}
+                            disabled={readonly}
+                          >
+                            <Icon name="trash" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <Button size="sm" onClick={() => append({})} className="mt-2">
+                    Add
+                  </Button>
                 </div>
               )}
-              {fields.map((_item, idx) => (
-                <div key={_item.id} className={rowClass} style={rowStyle}>
-                  {inputConfig?.inputs && (
-                    <RenderInputs items={getChildInputs(inputConfig?.inputs, path, idx)} factory={factory} />
-                  )}
-                  <div className="flex items-center">
-                    <button
-                      className="mt-2"
-                      onClick={() => {
-                        remove(idx)
-                      }}
-                      disabled={readonly}
-                    >
-                      <Icon name="trash" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Button size="sm" onClick={() => append({})} className="mt-2">
-              Add
-            </Button>
-          </div>
+            />
+            <InputError />
+          </FormItem>
         )}
       />
-      <InputError />
     </InputWrapper>
   )
 }
 
-export class ListInput extends InputComponent<AnyFormikValue> {
+export class ListInput_OLD extends InputComponent<AnyFormikValue> {
   public internalType = InputType.list
 
   renderComponent(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element {
-    return <ListInputInternal {...props} />
+    return <ListInputInternal_OLD {...props} />
   }
 }

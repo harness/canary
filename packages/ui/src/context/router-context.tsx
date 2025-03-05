@@ -32,7 +32,7 @@ const OutletDefault: ComponentType<OutletProps> = ({ children }) => <>{children}
 
 const navigateFnDefault: NavigateFunction = to => {
   if (typeof to === 'number') {
-    window.history.go(to)
+    window.history.go(to) // Supports navigate(-1), navigate(1), etc.
   } else {
     window.location.href = to.toString()
   }

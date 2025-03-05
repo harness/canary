@@ -1229,6 +1229,11 @@
         }
       },
       "search": {
+        "background": {
+          "$type": "color",
+          "$value": "{component.sidebar.background}",
+          "$description": "Search input specific background on sidebar navigation."
+        },
         "border": {
           "$type": "color",
           "$value": "{border.2}",

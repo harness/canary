@@ -31,8 +31,7 @@ export const SidebarItem = ({
   handleRemoveRecentMenuItem,
   handleCustomNav,
   t
-}: //   t,
-NavbarItemProps) => {
+}: NavbarItemProps) => {
   const { NavLink } = useRouterContext()
 
   const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])

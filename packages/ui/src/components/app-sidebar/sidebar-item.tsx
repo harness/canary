@@ -82,7 +82,7 @@ export const SidebarItem = ({
   return (
     <Sidebar.MenuItem>
       <NavLink className="block" to={item.to || ''} end>
-        {({ isActive }) => (
+        {({ isActive }: { isActive: boolean }) => (
           <div
             className={cn('hover:bg-background-4 rounded text-foreground-3 transition-colors hover:text-primary', {
               'bg-background-4': isActive

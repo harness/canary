@@ -54,7 +54,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                     >
                       <Link
                         className="grow"
-                        onClick={e => {
+                        onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
                           e.stopPropagation()
                         }}
                         key={commit?.sha}

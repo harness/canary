@@ -33,7 +33,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
                   <div className="grid grid-cols-2 gap-x-6 gap-y-[0.6875rem]">
                     {group.items.map(item => (
                       <NavLink key={item.id} to={item.to || ''}>
-                        {({ isActive }) => (
+                        {({ isActive }: { isActive: boolean }) => (
                           <NavbarSkeleton.Item
                             text={item.title || ''}
                             icon={item.iconName && <Icon name={item.iconName} size={12} />}

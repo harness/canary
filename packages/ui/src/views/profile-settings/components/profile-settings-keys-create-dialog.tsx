@@ -79,8 +79,9 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
         <Dialog.Header>
           <Dialog.Title>{t('views:profileSettings.newSshKey', 'New SSH key')}</Dialog.Title>
         </Dialog.Header>
+
         <FormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
-          <Fieldset>
+          <Fieldset legend="New SSH key details">
             <Input
               id="identifier"
               size="md"
@@ -90,8 +91,6 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
               error={errors.identifier?.message?.toString()}
               autoFocus
             />
-          </Fieldset>
-          <Fieldset className="gap-y-0">
             <Textarea
               className="text-foreground-1"
               id="content"
@@ -101,11 +100,13 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
               error={errors.content?.message?.toString()}
             />
           </Fieldset>
+
           {error?.type === ApiErrorType.KeyCreate && (
             <Alert.Container variant="destructive">
               <Alert.Title>{error.message}</Alert.Title>
             </Alert.Container>
           )}
+
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button type="button" variant="outline" onClick={onClose}>
               {t('views:profileSettings.cancel', 'Cancel')}

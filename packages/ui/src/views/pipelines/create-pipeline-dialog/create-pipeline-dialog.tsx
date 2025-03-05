@@ -98,9 +98,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     return () => subscription.unsubscribe()
   }, [watch, setValue, clearErrors, error, trigger])
 
-  const handleSelectChange = (fieldName: keyof CreatePipelineFormType, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
-  }
+  const handleSelectBranch = (value: string) => setValue('branch', value, { shouldValidate: true })
 
   const handleClose = () => {
     onCancel()
@@ -115,7 +113,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
           <Dialog.Title>Create Pipeline</Dialog.Title>
         </Dialog.Header>
         <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-          <Fieldset>
+          <Fieldset legend="Pipeline details">
             <Input
               id="name"
               label="Pipeline name"
@@ -123,9 +121,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
               size="md"
               error={errors.name?.message?.toString()}
             />
-          </Fieldset>
 
-          <Fieldset>
             <Input
               id="yamlPath"
               label="Yaml path"
@@ -133,15 +129,13 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
               size="md"
               error={errors.name?.message?.toString()}
             />
-          </Fieldset>
 
-          <Fieldset>
             <ControlGroup>
               <Select.Root
                 disabled={isLoadingBranchNames}
                 name="branch"
                 value={branch}
-                onValueChange={value => handleSelectChange('branch', value)}
+                onValueChange={handleSelectBranch}
                 placeholder="Select"
                 label="Branch"
               >

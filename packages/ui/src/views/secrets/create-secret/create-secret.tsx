@@ -70,7 +70,6 @@ export function CreateSecretPage({
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Determine the secret type from prefilledFormData
-  const secretType = prefilledFormData?.type || null
 
   const {
     register,

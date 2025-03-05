@@ -109,11 +109,7 @@ export const ButtonWithOptions = <T extends string>({
         >
           <Icon name="chevron-down" size={12} className="chevron-down" />
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content
-          className={cn('mt-1 max-w-80', dropdownContentClassName)}
-          align="end"
-          onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
-        >
+        <DropdownMenu.Content className={cn('mt-1 max-w-80', dropdownContentClassName)} align="end">
           {selectedValue ? (
             <RadioGroup value={String(selectedValue)} id={id}>
               <DropdownMenu.Group>

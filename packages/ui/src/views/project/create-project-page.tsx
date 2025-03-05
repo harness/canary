@@ -104,7 +104,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
   return (
     <Floating1ColumnLayout
-      className="bg-background-7 flex-col justify-start pt-20 sm:pt-[8.75rem]"
+      className="flex-col justify-start bg-background-7 pt-20 sm:pt-[8.75rem]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
@@ -126,11 +126,11 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}
 
-          <Card.Title className="text-foreground-1 mt-3 text-center" as="h1">
+          <Card.Title className="mt-3 text-center text-foreground-1" as="h1">
             {t('views:createProject.title', 'Create your new project')}
           </Card.Title>
 
-          <p className="text-foreground-4 mt-0.5 text-center text-sm leading-snug">
+          <p className="mt-0.5 text-center text-sm leading-snug text-foreground-4">
             {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}
           </p>
         </div>
@@ -172,7 +172,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
         </FormWrapper>
 
         {isFirst && (
-          <p className="foreground-5 text-foreground-5 mt-4 text-center text-sm">
+          <p className="foreground-5 mt-4 text-center text-sm text-foreground-5">
             {t('views:createProject.logout.question', 'Want to use a different account?')}{' '}
             <StyledLink {...props.logoutLinkProps} variant="accent">
               {t('views:createProject.logout.link', 'Log out')}

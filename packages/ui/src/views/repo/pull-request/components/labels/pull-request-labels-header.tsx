@@ -119,13 +119,7 @@ const LabelsHeader = ({
             <Icon name="vertical-ellipsis" size={12} />
           </Button>
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content
-          className="w-80"
-          align="end"
-          sideOffset={-6}
-          alignOffset={10}
-          onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
-        >
+        <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
           {labelWithValuesToShow ? (
             <LabelValueSelector
               useTranslationStore={useTranslationStore}

@@ -31,7 +31,7 @@ export function SidebarSearch(props: SidebarSearchProps) {
           <Input
             id="search"
             placeholder="Search"
-            className="pl-8 cursor-pointer border-borders-1 focus:ring-0 focus-visible:outline-none"
+            className="cursor-pointer border-borders-1 pl-8 focus:ring-0 focus-visible:outline-none"
             onClick={() => setIsOpen(true)}
             autoComplete="off"
             spellCheck={false}
@@ -44,9 +44,9 @@ export function SidebarSearch(props: SidebarSearchProps) {
           <Button
             variant="secondary"
             size="icon"
-            className="pointer-events-none absolute right-2 top-1/2 h-5 -translate-y-1/2 select-none opacity-100 px-1.5 border border-borders-2 rounded-sm p-0"
+            className="pointer-events-none absolute right-2 top-1/2 h-5 -translate-y-1/2 select-none rounded-sm border border-borders-2 p-0 px-1.5 opacity-100"
           >
-            <span className="text-foreground-2 bg-background-3 size-full text-12">⌘K</span>
+            <span className="size-full bg-background-3 text-12 text-foreground-2">⌘K</span>
           </Button>
         </Sidebar.GroupContent>
       </Sidebar.Group>

@@ -12,7 +12,7 @@ export function Root({ className, children, isSubMenu = false }: RootProps) {
     <div
       className={cn(
         'relative border-sidebar-border-1 bg-sidebar-background-1 grid h-screen w-[220px] select-none grid-rows-[auto_1fr_auto] overflow-y-auto border-r',
-        { 'bg-sidebar-background-1/70 backdrop-blur-[20px]': isSubMenu },
+        { 'bg-sidebar-background-6 backdrop-blur-[20px]': isSubMenu },
         className
       )}
     >

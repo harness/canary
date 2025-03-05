@@ -1090,7 +1090,6 @@
   scrollbar-width: none;
 }
 
-/* TODO: Need style customization for light theme */
 .sub-menu-icon-bg {
   stop {
     stop-color: #f0f0f0;

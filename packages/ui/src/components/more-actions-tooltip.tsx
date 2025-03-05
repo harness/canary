@@ -54,7 +54,6 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
         align="end"
         sideOffset={sideOffset}
         alignOffset={alignOffset}
-        onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
       >
         <DropdownMenu.Group>
           {actions.map((action, idx) =>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Icon, Spacer, StackedList } from '@/components'
+import { Button, ButtonGroup, Icon, Spacer, StackedList } from '@/components'
 import { BaseEntityProps, EntityReference, EntityRendererProps, ScopeSelectorProps } from '@/views'
 
 export interface SecretSpec {
@@ -80,12 +80,12 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
 
   // Custom entity renderer for secrets
   const renderEntity = (props: EntityRendererProps<SecretItem>) => {
-    const { entity, isSelected, onSelect } = props
+    const { entity } = props
 
     return (
       <StackedList.Item
-        onClick={() => onSelect(entity)}
-        className={isSelected ? 'bg-background-4' : ''}
+        onClick={() => onSelectEntity(entity)}
+        className={selectedEntity?.id === entity.id ? 'bg-background-4' : ''}
         thumbnail={<Icon name="secrets" size={16} className="text-foreground-5" />}
         actions={
           <Button
@@ -93,7 +93,7 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
             size="sm"
             onClick={e => {
               e.stopPropagation()
-              onSelect(entity)
+              onSelectEntity(entity)
             }}
           >
             Select
@@ -107,7 +107,7 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
 
   // Custom scope selector renderer
   const renderScopeSelector = (props: ScopeSelectorProps<SecretScope>) => {
-    const { scope, isActive, onSelect } = props
+    const { scope } = props
 
     // Icon based on scope
     const getIcon = () => {
@@ -118,8 +118,8 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
 
     return (
       <StackedList.Item
-        onClick={() => onSelect(scope)}
-        className={isActive ? 'bg-background-4 font-medium' : ''}
+        onClick={() => onScopeChange(scope)}
+        className={scope === activeScope ? 'bg-background-4 font-medium' : ''}
         thumbnail={<Icon name={getIcon()} size={16} className="text-foreground-5" />}
       >
         <StackedList.Field title={<span className="capitalize">{scope}</span>} />
@@ -130,19 +130,26 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
   return (
     <div>
       <span className="font-medium">Select an existing Secret:</span>
-      <Spacer size={6} />
-
+      <Spacer size={4} />
       <EntityReference<SecretItem, SecretScope>
         entities={getEntitiesByScope()}
-        selectedEntityId={selectedEntity?.id}
-        onSelectEntity={onSelectEntity}
-        onScopeChange={onScopeChange}
+        selectedEntity={selectedEntity}
+        // onSelectEntity={onSelectEntity}
+        // onScopeChange={onScopeChange}
         activeScope={activeScope}
         scopes={availableScopes}
         renderEntity={renderEntity}
         renderScopeSelector={renderScopeSelector}
         onCancel={onCancel}
       />
+      <div className="fixed bottom-0 left-0 right-0 bg-background-2 p-4 shadow-md">
+        <ButtonGroup className="flex flex-row justify-between">
+          <Button type="button" variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button type="submit">Save</Button>
+        </ButtonGroup>
+      </div>
     </div>
   )
 }

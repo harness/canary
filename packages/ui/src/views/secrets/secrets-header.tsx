@@ -3,10 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Option, RadioButton, RadioGroup, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 
-export enum SecretType {
-  New = 'new',
-  Existing = 'existing'
-}
+import { SecretType } from './types'
 
 interface SecretTypeForm {
   type: SecretType

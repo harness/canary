@@ -38,8 +38,6 @@ const navigateFnDefault: NavigateFunction = to => {
   }
 }
 
-const useNavigateDefault = () => navigateFnDefault
-
 const useSearchParamsDefault = () => {
   const setSearchParams = (_params: URLSearchParams | ((currentParams: URLSearchParams) => URLSearchParams)): void => {}
   return [new URLSearchParams(), setSearchParams] as const
@@ -54,7 +52,7 @@ interface RouterContextType {
   NavLink: ComponentType<NavLinkProps>
   Outlet: ComponentType<OutletProps>
   location: Location
-  useNavigate: typeof useNavigateDefault
+  navigate: NavigateFunction
   useSearchParams: typeof useSearchParamsDefault
   useMatches: typeof useMatchesDefault
 }
@@ -64,7 +62,7 @@ const RouterContext = createContext<RouterContextType>({
   NavLink: NavLinkDefault,
   Outlet: OutletDefault,
   location: window.location,
-  useNavigate: useNavigateDefault,
+  navigate: navigateFnDefault,
   useSearchParams: useSearchParamsDefault,
   useMatches: useMatchesDefault
 })
@@ -77,7 +75,7 @@ export const RouterContextProvider = ({
   NavLink = NavLinkDefault,
   Outlet = OutletDefault,
   location = window.location,
-  useNavigate = useNavigateDefault,
+  navigate = navigateFnDefault,
   useSearchParams = useSearchParamsDefault,
   useMatches = useMatchesDefault
 }: {
@@ -90,7 +88,7 @@ export const RouterContextProvider = ({
         NavLink,
         Outlet,
         location,
-        useNavigate,
+        navigate,
         useSearchParams,
         useMatches
       }}

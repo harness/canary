@@ -2,8 +2,7 @@ import { NoData } from '@/components'
 import { useRouterContext } from '@/context'
 
 export const EmptyPage = ({ pathName }: { pathName: string }) => {
-  const { useNavigate } = useRouterContext()
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
   return (
     <div className="flex min-h-screen items-center">
       <NoData

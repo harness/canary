@@ -26,8 +26,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
 }) => {
   const { t } = useTranslationStore()
   const { executions, webhookExecutionPage, setWebhookExecutionPage, totalWebhookExecutionPages } = useWebhookStore()
-  const { useNavigate } = useRouterContext()
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
   const events = useMemo(() => {
     return [...getBranchEvents(t), ...getTagEvents(t), ...getPrEvents(t)]
   }, [t])

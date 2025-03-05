@@ -35,8 +35,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   onDeleteBranch
 }) => {
   const { t } = useTranslationStore()
-  const { Link, useNavigate } = useRouterContext()
-  const navigate = useNavigate()
+  const { Link, navigate } = useRouterContext()
 
   if (!branches?.length && !isLoading) {
     return (

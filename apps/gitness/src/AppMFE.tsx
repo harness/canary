@@ -192,7 +192,7 @@ export default function AppMFE({
                                 NavLink={NavLink}
                                 Outlet={Outlet}
                                 location={window.location}
-                                useNavigate={useNavigate}
+                                navigate={router.navigate}
                                 useSearchParams={useSearchParams}
                                 useMatches={useMatches}
                               >

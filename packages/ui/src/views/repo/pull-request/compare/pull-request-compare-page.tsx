@@ -138,8 +138,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
 
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
-  const { useNavigate } = useRouterContext()
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
   const {
     register,

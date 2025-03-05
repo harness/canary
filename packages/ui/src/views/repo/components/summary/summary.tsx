@@ -21,8 +21,7 @@ export const Summary = ({
   hideHeader = false,
   toCommitDetails
 }: SummaryProps) => {
-  const { useNavigate } = useRouterContext()
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
 
   return (

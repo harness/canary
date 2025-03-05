@@ -25,8 +25,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   ...routingProps
 }) => {
   const { t } = useTranslationStore()
-  const { useNavigate } = useRouterContext()
-  const navigate = useNavigate()
+  const { navigate } = useRouterContext()
 
   const {
     search: searchInput,

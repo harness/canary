@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 
 import { Button, Icon, IconProps, Input } from '@/components'
 import { Root as StackedList, Field as StackedListField, Item as StackedListItem } from '@/components/stacked-list'
@@ -33,7 +33,6 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string> {
   // Callbacks
   onSelectEntity?: (entity: T) => void
   onScopeChange?: (scope: S) => void
-  onCancel?: () => void
 
   // UI Configuration
   className?: string
@@ -54,7 +53,6 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
   // Callbacks
   onSelectEntity,
   onScopeChange,
-  onCancel,
 
   className,
   showFilter = true,

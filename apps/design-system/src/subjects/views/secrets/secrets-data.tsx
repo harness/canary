@@ -1,4 +1,4 @@
-import { SecretItem } from './existing-secrets'
+import { SecretItem } from '@harnessio/ui/views'
 
 export const accountSecrets: SecretItem[] = [
   {

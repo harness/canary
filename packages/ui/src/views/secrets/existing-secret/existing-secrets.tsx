@@ -140,7 +140,6 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
         scopes={availableScopes}
         renderEntity={renderEntity}
         renderScopeSelector={renderScopeSelector}
-        onCancel={onCancel}
       />
       <div className="fixed bottom-0 left-0 right-0 bg-background-2 p-4 shadow-md">
         <ButtonGroup className="flex flex-row justify-between">

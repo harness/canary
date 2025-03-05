@@ -13,14 +13,14 @@ const makeProfileSchema = (t: TranslationStore['t']) =>
     name: z
       .string()
       .trim()
-      .min(1, { message: t('views:profileSettings.validation.nameMin', 'Please provide your name') })
+      .nonempty({ message: t('views:profileSettings.validation.nameMin', 'Please provide your name') })
       .max(256, {
         message: t('views:profileSettings.validation.nameMax', 'Name must be no longer than 256 characters')
       }),
     username: z
       .string()
       .trim()
-      .min(1, {
+      .nonempty({
         message: t('views:profileSettings.validation.usernameMin', 'Please provide a username')
       }),
     email: z

@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { Alert, Button, Dialog, Fieldset, FormWrapper, Input, Textarea } from '@/components'
 import { ApiErrorType } from '@/views'
@@ -20,7 +20,7 @@ export const makeKeyCreateFormSchema = (t: TranslationStore['t']) =>
     identifier: z
       .string()
       .trim()
-      .min(1, { message: t('views:profileSettings.sshKeyValidation.nameMin', 'Please provide key name') })
+      .nonempty({ message: t('views:profileSettings.sshKeyValidation.nameMin', 'Please provide key name') })
       .max(100, {
         message: t('views:profileSettings.sshKeyValidation.nameMax', 'Name must be no longer than 100 characters')
       })
@@ -35,6 +35,7 @@ export const makeKeyCreateFormSchema = (t: TranslationStore['t']) =>
       }),
     content: z
       .string()
+      .trim()
       .min(1, { message: t('views:profileSettings.sshKeyValidation.expiration', 'Please add the public key') })
   })
 
@@ -69,10 +70,6 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
     !open && reset()
   }, [open, reset])
 
-  const handleFormSubmit: SubmitHandler<SshKeyFormType> = data => {
-    handleCreateSshKey(data)
-  }
-
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
       <Dialog.Content aria-describedby={undefined}>
@@ -80,8 +77,8 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
           <Dialog.Title>{t('views:profileSettings.newSshKey', 'New SSH key')}</Dialog.Title>
         </Dialog.Header>
 
-        <FormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
-          <Fieldset legend="New SSH key details">
+        <FormWrapper onSubmit={handleSubmit(handleCreateSshKey)}>
+          <Fieldset legend="SSH key details">
             <Input
               id="identifier"
               size="md"

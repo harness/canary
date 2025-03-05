@@ -23,7 +23,7 @@ export const makeTokenCreateFormSchema = (t: TranslationStore['t']) =>
     identifier: z
       .string()
       .trim()
-      .min(1, { message: t('views:profileSettings.tokenValidation.nameMin', 'Please provide token name') })
+      .nonempty({ message: t('views:profileSettings.tokenValidation.nameMin', 'Please provide token name') })
       .max(100, {
         message: t('views:profileSettings.tokenValidation.nameMax', 'Name must be no longer than 100 characters')
       })
@@ -139,7 +139,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
           <Dialog.Title>{t('views:profileSettings.createToken', 'Create a token')}</Dialog.Title>
         </Dialog.Header>
         <FormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
-          <Fieldset legend="New token details">
+          <Fieldset legend="Token details">
             <Input
               id="identifier"
               size="md"

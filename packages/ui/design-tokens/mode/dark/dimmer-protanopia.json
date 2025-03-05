@@ -80,7 +80,7 @@
     },
     "focus": {
       "$type": "color",
-      "$value": "{brand.color.500}",
+      "$value": "{brand.color.600}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
@@ -183,7 +183,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.900}",
+          "$value": "{background.3}",
           "$description": "Background color for informational alerts. Creates visual distinction from surrounding content."
         },
         "border": {
@@ -259,7 +259,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.900}",
+          "$value": "{colors.chrome.850}",
           "$description": "Background color for secondary badges. Creates less prominent badge styling for secondary information."
         },
         "border": {
@@ -573,6 +573,11 @@
             "$type": "color",
             "$value": "{border.2}",
             "$description": "Border color for unselected outline buttons. Defines the clickable area with a visible boundary."
+          },
+          "background": {
+            "$type": "color",
+            "$value": "{background.2}",
+            "$description": "Background color for unselected outline buttons."
           }
         },
         "selected": {
@@ -590,6 +595,11 @@
             "$type": "color",
             "$value": "{border.1}",
             "$description": "Border color for selected outline buttons. Creates stronger visual indication of the active state."
+          },
+          "background": {
+            "$type": "color",
+            "$value": "{background.2}",
+            "$description": "Background color for selected outline buttons."
           }
         }
       },
@@ -1081,6 +1091,11 @@
         "$type": "color",
         "$value": "{border.3}",
         "$description": "Navigation container border."
+      },
+      "background": {
+        "$type": "color",
+        "$value": "{background.1}",
+        "$description": "Navigation tabs container background."
       }
     },
     "pipeline": {
@@ -1189,6 +1204,16 @@
         "$type": "color",
         "$value": "{border.3}",
         "$description": "Color for separators between navigation sections. Creates visual organization within the navigation structure."
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{state.hover}",
+        "$description": "Hover state for navigation items."
+      },
+      "selected": {
+        "$type": "color",
+        "$value": "{state.selected}",
+        "$description": "Selected state for navigation items."
       },
       "item": {
         "unselected": {

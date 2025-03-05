@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from 'react'
+import { ChangeEvent, useEffect, useRef } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
@@ -48,6 +48,7 @@ const createSecretFormSchema = z
 export type CreateSecretFormFields = z.infer<typeof createSecretFormSchema>
 
 interface CreateSecretProps {
+  prefilledFormData?: CreateSecretFormFields
   onFormSubmit: (data: CreateSecretFormFields) => void
   onFormCancel: () => void
   useTranslationStore: () => TranslationStore
@@ -60,7 +61,8 @@ export function CreateSecretPage({
   onFormCancel,
   useTranslationStore,
   isLoading = false,
-  apiError = null
+  apiError = null,
+  prefilledFormData
 }: CreateSecretProps) {
   const { t: _t } = useTranslationStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -77,12 +79,23 @@ export function CreateSecretPage({
     resolver: zodResolver(createSecretFormSchema),
     mode: 'onChange',
     defaultValues: {
-      name: '',
-      value: '',
-      description: '',
-      tags: ''
+      name: prefilledFormData?.name ?? '',
+      // value: prefilledFormData?.value ?? '',
+      // file: prefilledFormData?.file,
+      description: prefilledFormData?.description ?? '',
+      tags: prefilledFormData?.tags ?? ''
     }
   })
+
+  useEffect(() => {
+    if (prefilledFormData) {
+      reset({
+        name: prefilledFormData.name,
+        description: prefilledFormData.description,
+        tags: prefilledFormData.tags
+      })
+    }
+  }, [prefilledFormData])
 
   const selectedFile = watch('file')
   // const secretValue = watch('value')
@@ -157,7 +170,7 @@ export function CreateSecretPage({
             })}
             type="password"
             label="Secret Value"
-            placeholder="Add your secret value"
+            placeholder={prefilledFormData ? 'Encryped' : 'Add your secret value'}
             size="md"
             error={errors.value?.message?.toString()}
           />

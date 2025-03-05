@@ -1,5 +1,7 @@
+import { RadialOption } from '@views/unified-pipeline-studio/components/form-inputs/RadialInput'
 import { InputConfigType, InputType } from '@views/unified-pipeline-studio/components/form-inputs/types'
-import * as zod from 'zod'
+
+// import * as zod from 'zod'
 
 import { IFormDefinition } from '@harnessio/forms'
 
@@ -21,7 +23,10 @@ const inputs: IInputConfigWithConfig[] = [
 
     inputConfig: {
       inputType: InputType.radio,
-      options: ['Cloud', 'Enterprise']
+      options: [
+        { label: 'Cloud', value: 'Cloud', description: 'Connect to Github Cloud' },
+        { label: 'Enterprise', value: 'Enterprise', description: 'Connect to Github Enterprise' }
+      ] as RadialOption[]
     },
     default: 'Cloud'
     // required: true,

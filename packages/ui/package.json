@@ -127,7 +127,7 @@
   },
   "peerDependencies": {
     "react": ">=17",
-    "react-router-dom": ">=5 <7"
+    "react-router-dom": ">=5"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",

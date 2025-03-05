@@ -7,16 +7,11 @@ import { inputComponentFactory } from '@views/unified-pipeline-studio/components
 import { InputType } from '@views/unified-pipeline-studio/components/form-inputs/types'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 
-import {
-  IFormDefinition,
-  RenderForm,
-  RootForm,
-  useZodValidationResolver
-} from '@harnessio/forms'
+import { IFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
 
 import { getHarnessConnectorDefinition } from './connector-utils'
-import { ConnectorFormEntityType, GITHUB_CONNECTOR_IDENTIFIER } from './types'
 import { GITHUB_CONNECTOR_DESCRIPTION } from './harness-connectors/github-connector'
+import { ConnectorFormEntityType, GITHUB_CONNECTOR_IDENTIFIER } from './types'
 
 interface ConnectorEntityFormProps {
   formEntity: ConnectorFormEntityType
@@ -54,7 +49,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       mode="onSubmit"
       onSubmit={values => {
         // TODO: handle form submit for create/edit
-
+        console.log('values', values)
       }}
       validateAfterFirstSubmit={true}
     >

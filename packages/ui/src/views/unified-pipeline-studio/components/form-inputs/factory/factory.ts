@@ -9,6 +9,7 @@ import { SelectInput } from '../SelectInput'
 import { SeparatorInput } from '../Separator'
 import { TextAreaInput } from '../TextAreaInput'
 import { TextInput } from '../TextInput'
+import { RadialInput } from '../RadialInput'
 
 const inputComponentFactory = new InputFactory()
 inputComponentFactory.registerComponent(new TextInput())
@@ -20,5 +21,6 @@ inputComponentFactory.registerComponent(new TextAreaInput())
 inputComponentFactory.registerComponent(new GroupInput())
 inputComponentFactory.registerComponent(new SelectInput())
 inputComponentFactory.registerComponent(new SeparatorInput())
+inputComponentFactory.registerComponent(new RadialInput())
 
 export { inputComponentFactory }

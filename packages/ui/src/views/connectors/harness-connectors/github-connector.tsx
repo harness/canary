@@ -1,13 +1,34 @@
 import { InputConfigType, InputType } from '@views/unified-pipeline-studio/components/form-inputs/types'
+import * as zod from 'zod'
 
 import { IFormDefinition } from '@harnessio/forms'
 
 import { IInputConfigWithConfig } from '../types'
-import { getCloningContainer, getConnectionContainer, getMetadataContainer, getResourcesContainer } from './common-connector-utils'
+import {
+  getCloningContainer,
+  getConnectionContainer,
+  getMetadataContainer,
+  getResourcesContainer
+} from './common-connector-utils'
 
 export const GITHUB_CONNECTOR_DESCRIPTION = 'Github Connector'
 
 const inputs: IInputConfigWithConfig[] = [
+  {
+    inputType: InputType.radio,
+    path: 'githubType',
+    label: 'GitHub Type',
+
+    inputConfig: {
+      inputType: InputType.radio,
+      options: ['Cloud', 'Enterprise']
+    },
+    default: 'Cloud'
+    // required: true,
+    // validation: {
+    //   schema: zod.string().min(1, 'Required input')
+    // }
+  },
   {
     inputType: InputType.select,
     path: `auth`,

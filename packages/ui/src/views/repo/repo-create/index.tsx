@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
+  Alert,
   Button,
   ButtonGroup,
   Checkbox,
@@ -24,13 +25,9 @@ import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-const NAMESCHEMA = /^[a-zA-Z_][0-9a-zA-Z-_.$]*$/
-
 // Define the form schema with optional fields for gitignore and license
 const formSchema = z.object({
-  name: z.string().min(1, { message: 'Please provide a name' }).regex(NAMESCHEMA, {
-    message: 'Name must start with a letter or _ and only contain [a-zA-Z0-9-_.]'
-  }),
+  name: z.string().min(1, { message: 'Please provide a name' }),
   description: z.string(),
   gitignore: z.string().optional(),
   license: z.string().optional(),
@@ -48,6 +45,7 @@ interface RepoCreatePageProps {
   gitIgnoreOptions?: string[]
   licenseOptions?: { value?: string; label?: string }[]
   useTranslationStore: () => TranslationStore
+  apiError?: string
 }
 
 export function RepoCreatePage({
@@ -57,7 +55,8 @@ export function RepoCreatePage({
   isSuccess,
   gitIgnoreOptions,
   licenseOptions,
-  useTranslationStore
+  useTranslationStore,
+  apiError
 }: RepoCreatePageProps) {
   const { t } = useTranslationStore()
 
@@ -67,7 +66,7 @@ export function RepoCreatePage({
     setValue,
     watch,
     reset,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -256,12 +255,18 @@ export function RepoCreatePage({
             </ControlGroup>
           </Fieldset>
 
+          {apiError && (
+            <Alert.Container variant="destructive">
+              <Alert.Description>{apiError}</Alert.Description>
+            </Alert.Container>
+          )}
+
           {/* SUBMIT BUTTONS */}
-          <Fieldset className="mt-6">
+          <Fieldset>
             <ControlGroup>
               <ButtonGroup>
                 {/* TODO: Improve loading state to avoid flickering */}
-                <Button type="submit" disabled={!isValid || isLoading}>
+                <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Create repository' : 'Creating repository...'}
                 </Button>
                 <Button type="button" variant="outline" onClick={handleCancel}>

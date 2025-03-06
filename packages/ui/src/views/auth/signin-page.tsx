@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Fieldset, FormWrapper, Input, StyledLink } from '@/components'
+import { Button, Card, Fieldset, FormWrapper, Input, Message, MessageTheme, StyledLink } from '@/components'
 import { Floating1ColumnLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -16,57 +16,27 @@ interface SignInPageProps {
   error?: string
 }
 
-export interface SignInData {
-  email?: string
-  password?: string
-}
-
 const makeSignInSchema = (t: TranslationStore['t']) =>
   z.object({
     email: z.string().trim().nonempty(t('views:signIn.validation.emailNoEmpty', 'Field can’t be blank')),
     password: z.string().nonempty(t('views:signIn.validation.passwordNoEmpty', 'Password can’t be blank'))
   })
 
+export type SignInData = z.infer<ReturnType<typeof makeSignInSchema>>
+
 export function SignInPage({ handleSignIn, useTranslationStore, isLoading, error }: SignInPageProps) {
   const { t } = useTranslationStore()
-  const [serverError, setServerError] = useState<string | null>(null)
   const {
     register,
     handleSubmit,
-    setError,
-    clearErrors,
-    formState: { errors },
-    trigger
-  } = useForm({
+    formState: { errors }
+  } = useForm<SignInData>({
     resolver: zodResolver(makeSignInSchema(t))
   })
 
-  const onSubmit = (data: SignInData) => {
-    handleSignIn(data)
-  }
+  const errorMessage = useMemo(() => (error?.includes('Not Found') ? 'Please check your details' : error), [error])
 
-  const handleInputChange = async () => {
-    if (!serverError) return
-
-    setServerError(null)
-    clearErrors()
-    await trigger()
-  }
-
-  useEffect(() => {
-    if (error) {
-      const isNotFoundError = error.includes('Not Found')
-
-      setServerError(error)
-      setError('email', { type: 'manual', message: ' ' })
-      setError('password', { type: 'manual', message: isNotFoundError ? 'Please check your details' : error })
-    } else {
-      setServerError(null)
-      clearErrors()
-    }
-  }, [error, setError, clearErrors])
-
-  const hasError = Object.keys(errors).length > 0 || !!serverError
+  const hasError = Object.keys(errors).length > 0 || !!error
 
   return (
     <Floating1ColumnLayout
@@ -88,27 +58,33 @@ export function SignInPage({ handleSignIn, useTranslationStore, isLoading, error
         </Card.Header>
 
         <Card.Content className="mt-10">
-          <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+          <FormWrapper onSubmit={handleSubmit(handleSignIn)}>
             <Fieldset legend="User details">
               <Input
                 id="email"
                 label={t('views:signIn.emailTitle', 'Username/Email')}
                 placeholder={t('views:signIn.emailDescription', 'Your email')}
                 size="md"
-                {...register('email', { onChange: handleInputChange })}
+                {...register('email')}
                 error={errors.email?.message?.toString()}
                 autoFocus
               />
               <Input
                 id="password"
                 type="password"
-                {...register('password', { onChange: handleInputChange })}
+                {...register('password')}
                 label={t('views:signIn.passwordTitle', 'Password')}
                 placeholder={t('views:signIn.passwordDescription', 'Password')}
                 size="md"
                 error={errors.password?.message?.toString()}
               />
             </Fieldset>
+
+            {error && (
+              <Message className="mt-1" theme={MessageTheme.ERROR}>
+                {errorMessage}
+              </Message>
+            )}
 
             <Button
               className="mt-3 w-full"

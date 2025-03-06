@@ -289,6 +289,37 @@
       "linkText": "Sign up"
     }
   },
+  "signUp": {
+    "validation": {
+      "userIDNoEmpty": "User ID can’t be blank",
+      "userIDMax": "User ID must be no longer than 100 characters",
+      "userIDRegex": "User ID must contain only letters, numbers, and the characters: - _ .",
+      "userIDNoSpaces": "User ID cannot contain spaces",
+      "emailNoEmpty": "Invalid email address",
+      "emailMax": "Email must be no longer than 250 characters",
+      "passwordNoEmpty": "Password must be at least 6 characters",
+      "passwordMax": "Password must be no longer than 128 characters",
+      "passwordsCheck": "Passwords don't match"
+    },
+    "pageTitle": "Sign up to Harness",
+    "pageDescription": "Let’s start your journey with us today.",
+    "userIDPlaceholder": "User ID",
+    "userIDLabel": "User ID",
+    "emailPlaceholder": "Your email",
+    "emailLabel": "Email",
+    "passwordPlaceholder": "Password (6+ characters)",
+    "passwordLabel": "Password",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "confirmPasswordLabel": "Confirm password",
+    "buttonText": {
+      "signingUp": "Signing up...",
+      "signUp": "Sign up"
+    },
+    "signInLink": {
+      "question": "Already have an account?",
+      "linkText": "Sign in"
+    }
+  },
   "labelData": {
     "form": {
       "colorValuePlaceholder": "Enter value name",

@@ -1880,17 +1880,17 @@
       "danger": {
         "title": {
           "$type": "color",
-          "$value": "{colors.pure.white}",
+          "$value": "{text.1}",
           "$description": "Title text color for danger toast notifications. Provides maximum contrast against the error background."
         },
         "description": {
           "$type": "color",
-          "$value": "{colors.pure.white}",
+          "$value": "{text.1}",
           "$description": "Description text color for danger toast notifications. Ensures readability of critical information."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.red.400}",
+          "$value": "{colors.red.200}",
           "$description": "Background color for danger toast notifications. Creates high-visibility indication of errors or warnings."
         },
         "border": {
@@ -1955,7 +1955,7 @@
           "blur": "2",
           "spread": "-1",
           "color": "{shadow-color.2}",
-          "type": "innerShadow"
+          "type": "dropShadow"
         }
       ],
       "$description": "Default shadow. \nCommon uses: Cards, dropdowns, popovers in their default state."
@@ -1977,7 +1977,7 @@
           "blur": "4",
           "spread": "-2",
           "color": "{shadow-color.3}",
-          "type": "innerShadow"
+          "type": "dropShadow"
         }
       ],
       "$description": "Medium shadow. \nCommon uses: Elevated cards, active buttons, interactive elements on hover."
@@ -1998,8 +1998,8 @@
           "y": "4",
           "blur": "6",
           "spread": "-4",
-          "color": "#000000",
-          "type": "innerShadow"
+          "color": "{shadow-color.4}",
+          "type": "dropShadow"
         }
       ],
       "$description": "Large shadow. \nCommon uses: Modals, floating panels, navigation dropdowns."
@@ -2063,7 +2063,7 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}",
+      "$value": "{colors.chrome.300}",
       "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
     "1": {
@@ -2077,7 +2077,7 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}",
+      "$value": "{colors.chrome.300}",
       "$description": "Light shadow color with 60% opacity. Creates subtle depth for small UI elements."
     },
     "2": {
@@ -2091,7 +2091,7 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}",
+      "$value": "{colors.chrome.300}",
       "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
     },
     "3": {
@@ -2105,7 +2105,7 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}",
+      "$value": "{colors.chrome.300}",
       "$description": "Medium shadow color with 50% opacity. Creates moderate depth for elevated components."
     },
     "4": {
@@ -2119,7 +2119,7 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}",
+      "$value": "{colors.chrome.300}",
       "$description": "Deep shadow color with 50% opacity. Provides significant depth for floating elements."
     },
     "5": {
@@ -2133,7 +2133,7 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}",
+      "$value": "{colors.chrome.300}",
       "$description": "Very deep shadow color with 50% opacity. Creates dramatic elevation for modal content."
     },
     "6": {
@@ -2147,7 +2147,7 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.black}",
+      "$value": "{colors.chrome.300}",
       "$description": "Extremely deep shadow color with 60% opacity. Provides maximum depth for highly elevated elements."
     },
     "inner": {
@@ -2161,7 +2161,7 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.pure.white}",
+      "$value": "{colors.chrome.400}",
       "$description": "Subtle inner shadow color with 10% opacity. Creates inset effect for pressed or focused states."
     }
   },

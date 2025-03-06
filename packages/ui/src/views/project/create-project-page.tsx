@@ -45,7 +45,7 @@ const getIsFirstProjectPage = (props: CreateProjectPageProps): props is CreateFi
   return 'logoutLinkProps' in props
 }
 
-const createProjectSchema = (t: TranslationStore['t']) =>
+const makeCreateProjectSchema = (t: TranslationStore['t']) =>
   z.object({
     name: z
       .string()
@@ -77,7 +77,7 @@ const createProjectSchema = (t: TranslationStore['t']) =>
       })
   })
 
-export type CreateProjectFields = z.infer<ReturnType<typeof createProjectSchema>>
+export type CreateProjectFields = z.infer<ReturnType<typeof makeCreateProjectSchema>>
 
 export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
   const { error, isLoading, backLinkProps, onFormSubmit, useTranslationStore } = props
@@ -98,13 +98,12 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
     clearErrors,
     handleSubmit
   } = useForm<CreateProjectFields>({
-    resolver: zodResolver(createProjectSchema(t))
+    resolver: zodResolver(makeCreateProjectSchema(t))
   })
 
   const handleInputChange = async () => {
-    clearErrors()
-
     if (serverError) {
+      clearErrors()
       setServerError(null)
       await trigger()
     }

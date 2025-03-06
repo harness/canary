@@ -263,6 +263,26 @@
     "sto": "Tests de sécurité",
     "secrets": "Secrets"
   },
+  "signIn": {
+    "validation": {
+      "emailNoEmpty": "Le champ ne peut pas être vide",
+      "passwordNoEmpty": "Le mot de passe ne peut pas être vide"
+    },
+    "pageTitle": "Se connecter à Harness",
+    "pageDescription": "Bienvenue ! Veuillez entrer vos informations.",
+    "emailTitle": "Nom d'utilisateur/Adresse e-mail",
+    "emailDescription": "Votre adresse e-mail",
+    "passwordTitle": "Mot de passe",
+    "passwordDescription": "Mot de passe",
+    "buttonText": {
+      "signingIn": "Connexion en cours...",
+      "signIn": "Se connecter"
+    },
+    "signUpLink": {
+      "question": "Vous n'avez pas de compte ?",
+      "linkText": "S'inscrire"
+    }
+  },
   "labelData": {
     "form": {
       "colorValuePlaceholder": "Enter value name",

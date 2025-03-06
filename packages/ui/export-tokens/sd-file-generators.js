@@ -1,13 +1,14 @@
 import { outputReferencesTransformed } from 'style-dictionary/utils'
 
-import { breakpointFilter, componentFilter, componentsFilter, coreFilter, semanticFilter } from './sd-filters.js'
+import { STYLE_FILE_PATH } from './constants.js'
+import { breakpointFilter, componentsFilter, coreFilter, semanticFilter } from './sd-filters.js'
 
 const format = 'css/variables'
 
 // ✨ Building core tokens
 export const generateCoreFiles = () => [
   {
-    destination: 'src/styles2/core.css',
+    destination: STYLE_FILE_PATH.CORE,
     format,
     filter: coreFilter,
     options: {
@@ -15,7 +16,7 @@ export const generateCoreFiles = () => [
     }
   },
   {
-    destination: 'src/styles2/breakpoint.css',
+    destination: STYLE_FILE_PATH.BREAKPOINT,
     format,
     filter: breakpointFilter,
     options: {
@@ -23,7 +24,7 @@ export const generateCoreFiles = () => [
     }
   },
   {
-    destination: 'src/styles2/components.css',
+    destination: STYLE_FILE_PATH.COMPONENTS,
     format,
     filter: componentsFilter,
     options: {
@@ -39,7 +40,7 @@ export const generateThemeFiles = theme => {
   filesArr.push({
     format,
     filter: semanticFilter(true),
-    destination: `src/styles2/${theme.toLowerCase()}.css`,
+    destination: `${STYLE_FILE_PATH.DESIGN_SYSTEM}/${theme.toLowerCase()}.css`,
     options: {
       outputReferences: true,
       selector: `.${theme.toLowerCase()}`
@@ -61,20 +62,20 @@ export const generateThemeFiles = theme => {
 
 // for each component (currently only button), filter those specific component tokens and output them
 // to the component folder where the component source code will live
-export const generateComponentFiles = components => {
-  const filesArr = []
+// export const generateComponentFiles = components => {
+//   const filesArr = []
 
-  for (const comp of components) {
-    filesArr.push({
-      format,
-      filter: componentFilter(comp, true),
-      options: {
-        // since these will be used in ShadowDOM
-        selector: ':host',
-        outputReferences: outputReferencesTransformed
-      },
-      destination: `components/${comp}/${comp}.css`
-    })
-  }
-  return filesArr
-}
+//   for (const comp of components) {
+//     filesArr.push({
+//       format,
+//       filter: componentFilter(comp, true),
+//       options: {
+//         // since these will be used in ShadowDOM
+//         selector: ':host',
+//         outputReferences: outputReferencesTransformed
+//       },
+//       destination: `components/${comp}/${comp}.css`
+//     })
+//   }
+//   return filesArr
+// }

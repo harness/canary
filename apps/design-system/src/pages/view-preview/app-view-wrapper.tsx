@@ -4,8 +4,7 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 import { useThemeStore } from '@utils/theme-utils'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
-import { AppSidebar, MoreSubmenu, NavbarItemType, SettingsMenu } from '@harnessio/ui/components'
-import { SandboxLayout } from '@harnessio/ui/views'
+import { AppSidebar, MoreSubmenu, NavbarItemType, SettingsMenu, Sidebar } from '@harnessio/ui/components'
 
 import { useRootViewWrapperStore } from './root-view-wrapper-store'
 
@@ -45,36 +44,35 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
       <Route
         path="*"
         element={
-          <SandboxLayout.Root>
-            <SandboxLayout.LeftPanel>
-              <AppSidebar
-                showMoreMenu={showMoreMenu}
-                showSettingMenu={showSettingsMenu}
-                handleMoreMenu={onToggleMoreMenu}
-                handleSettingsMenu={onToggleSettingsMenu}
-                currentUser={undefined}
-                handleCustomNav={noop}
-                handleLogOut={noop}
-                recentMenuItems={recentMenu}
-                pinnedMenuItems={pinnedMenu}
-                handleChangePinnedMenuItem={setPinned}
-                handleRemoveRecentMenuItem={noop}
-                useTranslationStore={useTranslationStore}
-                useThemeStore={useThemeStore}
-              />
+          <Sidebar.Provider>
+            <AppSidebar
+              showMoreMenu={showMoreMenu}
+              showSettingMenu={showSettingsMenu}
+              handleMoreMenu={onToggleMoreMenu}
+              handleSettingsMenu={onToggleSettingsMenu}
+              currentUser={undefined}
+              handleCustomNav={noop}
+              handleLogOut={noop}
+              recentMenuItems={recentMenu}
+              pinnedMenuItems={pinnedMenu}
+              handleChangePinnedMenuItem={setPinned}
+              handleRemoveRecentMenuItem={noop}
+              useTranslationStore={useTranslationStore}
+              useThemeStore={useThemeStore}
+            />
+            <Sidebar.Inset>
+              <div className="h-full flex flex-col">
+                {breadcrumbs}
+                <Outlet />
+              </div>
               <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />
               <SettingsMenu
                 showSettingMenu={showSettingsMenu}
                 handleSettingsMenu={onToggleSettingsMenu}
                 items={settingsMenu}
               />
-            </SandboxLayout.LeftPanel>
-
-            <div className="flex flex-col">
-              {breadcrumbs}
-              <Outlet />
-            </div>
-          </SandboxLayout.Root>
+            </Sidebar.Inset>
+          </Sidebar.Provider>
         }
       >
         {asChild ? children : <Route path="*" element={children} />}

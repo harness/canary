@@ -1,8 +1,18 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Fieldset, FormWrapper, Icon, Input, StyledLink, StyledLinkProps } from '@/components'
-import { useTheme } from '@/context'
+import {
+  Button,
+  Card,
+  Fieldset,
+  FormWrapper,
+  Icon,
+  Input,
+  Message,
+  MessageTheme,
+  StyledLink,
+  StyledLinkProps
+} from '@/components'
 import { Floating1ColumnLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
@@ -51,30 +61,23 @@ const makeCreateProjectSchema = (t: TranslationStore['t']) =>
       .string()
       .trim()
       .nonempty(t('views:createProject.validation.nameNoEmpty', 'Name can’t be blank'))
-      .min(4, {
-        message: t('views:createProject.validation.nameMinLength', 'Name should be at least 4 characters')
-      })
-      .max(100, {
-        message: t('views:createProject.validation.nameMax', 'Name must be no longer than 100 characters')
-      })
-      .regex(/^[a-zA-Z0-9._-\s]+$/, {
-        message: t(
+      .min(4, t('views:createProject.validation.nameMinLength', 'Name should be at least 4 characters'))
+      .max(100, t('views:createProject.validation.nameMax', 'Name must be no longer than 100 characters'))
+      .regex(
+        /^[a-zA-Z0-9._-\s]+$/,
+        t(
           'views:createProject.validation.nameRegex',
           'Name must contain only letters, numbers, and the characters: - _ .'
         )
-      })
-      .refine(data => !data.includes(' '), {
-        message: t('views:createProject.validation.noSpaces', 'Name cannot contain spaces')
-      }),
+      )
+      .refine(data => !data.includes(' '), t('views:createProject.validation.noSpaces', 'Name cannot contain spaces')),
     description: z
       .string()
       .trim()
-      .max(1024, {
-        message: t(
-          'views:createProject.validation.descriptionMax',
-          'Description must be no longer than 1024 characters'
-        )
-      })
+      .max(
+        1024,
+        t('views:createProject.validation.descriptionMax', 'Description must be no longer than 1024 characters')
+      )
   })
 
 export type CreateProjectFields = z.infer<ReturnType<typeof makeCreateProjectSchema>>
@@ -89,38 +92,15 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
   const { t } = useTranslationStore()
 
-  const [serverError, setServerError] = useState<string | null>(null)
   const {
-    trigger,
     register,
-    setError,
     formState: { errors },
-    clearErrors,
     handleSubmit
   } = useForm<CreateProjectFields>({
     resolver: zodResolver(makeCreateProjectSchema(t))
   })
 
-  const handleInputChange = async () => {
-    if (serverError) {
-      clearErrors()
-      setServerError(null)
-      await trigger()
-    }
-  }
-
-  useEffect(() => {
-    if (error) {
-      setServerError(error)
-      setError('name', { type: 'manual', message: error })
-    } else {
-      setServerError(null)
-      clearErrors()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error])
-
-  const hasError = Object.keys(errors).length > 0 || !!serverError
+  const hasError = Object.keys(errors).length > 0 || !!error
 
   return (
     <Floating1ColumnLayout
@@ -162,20 +142,26 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
               label={t('views:createProject.form.name', 'Project name')}
               placeholder={t('views:createProject.form.namePlaceholder', 'Enter your project name')}
               size="md"
-              {...register('name', { onChange: handleInputChange })}
+              {...register('name')}
               error={errors.name?.message?.toString()}
               autoFocus
             />
 
             <Input
               id="description"
-              {...register('description', { onChange: handleInputChange })}
+              {...register('description')}
               label={t('views:createProject.form.description', 'Description')}
               placeholder={t('views:createProject.form.descriptionPlaceholder', 'Enter a description (optional)')}
               size="md"
               error={errors.description?.message?.toString()}
             />
           </Fieldset>
+
+          {error && (
+            <Message className="mt-1" theme={MessageTheme.ERROR}>
+              {error}
+            </Message>
+          )}
 
           <Button
             className="mt-3 w-full"

@@ -41,6 +41,10 @@
         "$type": "spacing",
         "$value": "{spacing.2-half}"
       }
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     }
   }
 }

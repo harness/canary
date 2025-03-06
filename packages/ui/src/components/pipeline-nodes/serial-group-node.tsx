@@ -104,7 +104,6 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
         />
       )}
       {children}
-      {/* {collapsed ? <CollapsedGroupNode node={node} containerNodeType={'serial'} /> : children} */}
     </>
   )
 }

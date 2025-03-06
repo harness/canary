@@ -104,7 +104,6 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
         />
       )}
       {children}
-      {/* {collapsed ? <CollapsedGroupNode node={node} containerNodeType={'parallel'} /> : children} */}
     </>
   )
 }

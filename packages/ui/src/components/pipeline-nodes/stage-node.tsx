@@ -103,7 +103,6 @@ export function StageNode(props: StageNodeProps) {
         />
       )}
       {children}
-      {/* {collapsed ? <CollapsedGroupNode node={node} containerNodeType={'serial'} /> : children} */}
     </>
   )
 }

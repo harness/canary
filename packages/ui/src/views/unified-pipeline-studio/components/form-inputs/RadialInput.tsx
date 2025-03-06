@@ -67,7 +67,7 @@ function RadialInputInternal(props: InputProps<AnyFormikValue, RadialInputConfig
                 <div className="flex flex-col gap-2">
                   {options.map(option => (
                     <Option
-                      key={label}
+                      key={option.label}
                       label={option.label}
                       description={option.description}
                       value={option.value}

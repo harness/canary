@@ -1,18 +1,15 @@
-import { FC, useCallback, useState } from 'react'
+import { useCallback } from 'react'
 
 import { Sheet } from '@components/sheet'
 
 import { ConnectorEntityForm } from './connector-entity-form'
 import { ConnectorsPalette } from './connectors-pallete-drawer'
-import { ConnectorFormEntityType, ConnectorRightDrawer } from './types'
+import { ConnectorRightDrawer } from './types'
+import { useConnectorsContext } from './context/connectors-context'
 
-export interface ConnectorsRightDrawerProps {
-  rightDrawer: ConnectorRightDrawer
-  setRightDrawer: (value: ConnectorRightDrawer) => void
-}
-
-export const ConnectorsRightDrawer: FC<ConnectorsRightDrawerProps> = ({ rightDrawer, setRightDrawer }) => {
-  const [formEntity, setFormEntity] = useState<ConnectorFormEntityType | null>(null)
+export const ConnectorsRightDrawer = (): JSX.Element => {
+  const { rightDrawer, setRightDrawer, formEntity, setFormEntity, clearRightDrawerData } = useConnectorsContext()
+  
   const renderSheetContent = useCallback(() => {
     switch (rightDrawer) {
       case ConnectorRightDrawer.Collection:
@@ -21,23 +18,23 @@ export const ConnectorsRightDrawer: FC<ConnectorsRightDrawerProps> = ({ rightDra
             setRightDrawer={setRightDrawer}
             setFormEntity={setFormEntity}
             requestClose={() => {
-              setRightDrawer(ConnectorRightDrawer.None)
+              clearRightDrawerData()
             }}
           />
         )
       case ConnectorRightDrawer.Form:
-        return (
+        return formEntity ? (
           <ConnectorEntityForm
             formEntity={formEntity}
             requestClose={() => {
-              setRightDrawer(ConnectorRightDrawer.None)
+              clearRightDrawerData()
             }}
           />
-        )
+        ) : null
       default:
         return null
     }
-  }, [rightDrawer])
+  }, [rightDrawer, setRightDrawer, setFormEntity, formEntity])
 
   return (
     <Sheet.Root

@@ -1,14 +1,13 @@
-import { FC, useState } from 'react'
-
 import { Button, ListActions, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
 
 import { ConnectorsRightDrawer } from './connectors-right-drawer'
+import { ConnectorsProvider } from './context/connectors-context'
+import { useConnectorsContext } from './context/connectors-context'
 import { ConnectorRightDrawer } from './types'
 
-// temp component for testing in standalone
-const ConnectorsListPageView: FC<any> = () => {
-  const [rightDrawer, setRightDrawer] = useState<ConnectorRightDrawer>(ConnectorRightDrawer.None)
+const ConnectorsListPageContent = (): JSX.Element => {
+  const { setRightDrawer } = useConnectorsContext()
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
@@ -30,8 +29,17 @@ const ConnectorsListPageView: FC<any> = () => {
           <Spacer size={5} />
         </>
       </SandboxLayout.Content>
-      <ConnectorsRightDrawer rightDrawer={rightDrawer} setRightDrawer={setRightDrawer} />
+      <ConnectorsRightDrawer />
     </SandboxLayout.Main>
+  )
+}
+
+// temp component for testing in standalone
+const ConnectorsListPageView = (): JSX.Element => {
+  return (
+    <ConnectorsProvider>
+      <ConnectorsListPageContent />
+    </ConnectorsProvider>
   )
 }
 

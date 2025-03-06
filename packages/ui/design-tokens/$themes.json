@@ -616,7 +616,12 @@
       "iconSize.xs": "60a419ef3a3707069d4332226fd5de5026262723",
       "iconSize.sm": "f857bc614dc0f9dafc613bf5f04eb305d194fe36",
       "iconSize.md": "30dfaa7e6c403c1b81191920634c612f67662aea",
-      "iconSize.lg": "1da69111eca3d6355427d1523736d7ef13fb460c"
+      "iconSize.lg": "1da69111eca3d6355427d1523736d7ef13fb460c",
+      "borderWidth.1": "554d33ab7c952fbe9558f3c9562483abda105891",
+      "borderWidth.2": "c259dae921de08038e1efb5f295d8ab4be540990",
+      "borderWidth.0": "950d5f6e9b3fed7b192e5a150f74927b462bca29",
+      "borderWidth.4": "4f4280b0a24f816e2dfb5ba5a39199c24d7c4b61",
+      "borderWidth.8": "c1632660a255d86cde0647e810c28fb8bb6e8f65"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491161",
     "$figmaModeId": "426:0",
@@ -8980,8 +8985,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:4",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -9278,7 +9281,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -9302,8 +9307,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:1",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -9600,7 +9603,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -9624,8 +9629,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:2",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -9922,7 +9925,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -9946,8 +9951,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:3",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -10244,7 +10247,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -10268,8 +10273,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:4",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -10566,7 +10569,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -10590,8 +10595,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:5",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -10888,7 +10891,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -10912,8 +10917,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:6",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -11210,7 +11213,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -11234,8 +11239,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:7",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -11532,7 +11535,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -11556,8 +11561,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:8",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -11854,7 +11857,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -11878,8 +11883,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:9",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -12176,7 +12179,9 @@
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
       "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
-      "component.pipeline.card.completed": "3fa7c4475eec00149944ad1ea1439e11a8a53f1e"
+      "component.pipeline.card.completed": "3fa7c4475eec00149944ad1ea1439e11a8a53f1e",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -12200,8 +12205,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:10",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -12498,7 +12501,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -12522,8 +12527,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:11",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -12820,7 +12823,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -12844,8 +12849,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:12",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -13142,7 +13145,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -13166,8 +13171,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:13",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -13464,7 +13467,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -13488,8 +13493,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:14",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -13786,7 +13789,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -13810,8 +13815,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:15",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -14108,7 +14111,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -14132,8 +14137,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:16",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -14430,7 +14433,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -14454,8 +14459,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:17",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -14752,7 +14755,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -14776,8 +14781,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:18",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -15074,7 +15077,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -15098,8 +15103,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:19",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -15396,7 +15399,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -15420,8 +15425,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:20",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -15718,7 +15721,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },
@@ -15742,8 +15747,6 @@
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:21",
     "$figmaVariableReferences": {
-      "border.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
-      "border.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16",
       "background.1": "633e5f77aa1bd1bd133852d8372b9c9f1231a9e4",
       "background.2": "14e8d4b56cc273b508af8a2c58cb00e99e08d1d3",
       "background.3": "33554ff11e1eab35e50aa3570f51d53f16f46d6a",
@@ -16040,7 +16043,9 @@
       "iconStrokeWidth.xs": "d6b6c9228d47e8006cd220e454305f5e557422fa",
       "iconStrokeWidth.sm": "874b9ccabceda2152f65fb72bb736e6c19ca6325",
       "iconStrokeWidth.md": "de5bdfa3208d15e584d09904d1fbb01f86b87892",
-      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92"
+      "iconStrokeWidth.lg": "889a5600c5e4bb0d4c110af7ed56a0e0f59f9b92",
+      "borderWidth.1": "d7bc80b157ce62063fcb946fd16da166d0a91b25",
+      "borderWidth.2": "c27dae194395d0fa7dfa3f6c0085f2660bc46b16"
     },
     "group": "mode"
   },

@@ -1618,7 +1618,7 @@
       "green": {
         "text": {
           "$type": "color",
-          "$value": "{colors.purple.300}",
+          "$value": "{colors.purple.200}",
           "$description": "Text color for green tags, replaced with purple for tritanopia visibility."
         },
         "background": {

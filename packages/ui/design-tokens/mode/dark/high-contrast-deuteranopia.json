@@ -12,7 +12,7 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{colors.chrome.900}",
+      "$value": "{colors.chrome.850}",
       "$description": "Level 3. Represents elements that sit on top of the middle layer. Creates strong visual emphasis through maximum elevation.\n\nCommon uses: Popovers, tooltips, highlighted containers."
     }
   },
@@ -39,12 +39,12 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.200}",
+      "$value": "{colors.cyan.200}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{colors.red.200}",
+      "$value": "{colors.orange.200}",
       "$description": "Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.\n\nCommon uses: Error message text, validation text, destructive action labels."
     },
     "warning": {
@@ -61,7 +61,7 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{colors.chrome.800}",
+      "$value": "{colors.chrome.700}",
       "$description": "Standard border color for general use. Provides balanced visual definition for common UI elements.\n\nCommon uses: Containers, cards, dividers, separators, default form inputs."
     },
     "3": {
@@ -85,12 +85,12 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.300}",
+      "$value": "{colors.cyan.300}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{colors.red.300}",
+      "$value": "{colors.orange.300}",
       "$description": "Border color for error containers. Emphasizes critical information through visual framing.\n\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
@@ -195,12 +195,12 @@
       "danger": {
         "title": {
           "$type": "color",
-          "$value": "{colors.red.100}",
-          "$description": "Text color for danger alerts. Communicates critical information through high-contrast red text."
+          "$value": "{colors.orange.100}",
+          "$description": "Text color for danger alerts. Communicates critical information through high-contrast orange text."
         },
         "description": {
           "$type": "color",
-          "$value": "{colors.red.200}",
+          "$value": "{colors.orange.200}",
           "$description": "Description text color for danger alerts. Ensures readability while maintaining the error state styling."
         },
         "background": {
@@ -214,7 +214,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.red.500}",
+          "$value": "{colors.orange.500}",
           "$description": "Background color for danger alerts. Creates subtle but recognizable error state styling."
         },
         "border": {
@@ -228,7 +228,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.red.300}",
+          "$value": "{colors.orange.300}",
           "$description": "Border color for danger alerts. Provides definition for error state alerts."
         }
       }
@@ -306,8 +306,8 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.200}",
-          "$description": "Text color for success badges. Communicates positive status through readable green text."
+          "$value": "{colors.cyan.200}",
+          "$description": "Text color for success badges. Communicates positive status through readable cyan text."
         },
         "border": {
           "$extensions": {
@@ -320,7 +320,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.300}",
+          "$value": "{colors.cyan.300}",
           "$description": "Border color for success badges. Provides subtle definition for success state indicators."
         },
         "background": {
@@ -334,14 +334,14 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.500}",
+          "$value": "{colors.cyan.500}",
           "$description": "Background color for success badges. Creates a subtle but recognizable success indicator."
         }
       },
       "danger": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.200}",
+          "$value": "{colors.orange.200}",
           "$description": "Text color for danger badges. Communicates error or warning status with high visibility."
         },
         "border": {
@@ -355,7 +355,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.red.300}",
+          "$value": "{colors.orange.300}",
           "$description": "Border color for danger badges. Creates definition for error or warning indicators."
         },
         "background": {
@@ -369,7 +369,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.red.500}",
+          "$value": "{colors.orange.500}",
           "$description": "Background color for danger badges. Provides subtle visual indication of error states."
         }
       },
@@ -446,7 +446,7 @@
       "merged": {
         "text": {
           "$type": "color",
-          "$value": "{colors.purple.200}",
+          "$value": "{colors.cyan.200}",
           "$description": "Text color for merged state badges. Indicates completed merge actions in version control contexts."
         },
         "border": {
@@ -460,7 +460,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.purple.300}",
+          "$value": "{colors.cyan.300}",
           "$description": "Border color for merged state badges. Defines the boundary of merge status indicators."
         },
         "background": {
@@ -474,7 +474,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.purple.500}",
+          "$value": "{colors.cyan.500}",
           "$description": "Background color for merged state badges. Creates subtle but recognizable merge indicators."
         }
       },
@@ -632,8 +632,8 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.200}",
-          "$description": "Text color for success buttons. Communicates positive actions through readable green text."
+          "$value": "{colors.cyan.200}",
+          "$description": "Text color for success buttons. Communicates positive actions through readable cyan text."
         },
         "background": {
           "$extensions": {
@@ -646,7 +646,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.500}",
+          "$value": "{colors.cyan.500}",
           "$description": "Background color for success buttons. Creates subtle but recognizable positive action styling."
         },
         "border": {
@@ -660,7 +660,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.300}",
+          "$value": "{colors.cyan.300}",
           "$description": "Border color for success buttons. Provides definition for positive action buttons."
         },
         "state": {
@@ -675,7 +675,7 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.green.500}",
+            "$value": "{colors.cyan.500}",
             "$description": "Hover state background color for success buttons. Creates subtle feedback for user interaction."
           },
           "active": {
@@ -689,7 +689,7 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.green.500}",
+            "$value": "{colors.cyan.500}",
             "$description": "Active state background color for success buttons. Provides stronger visual feedback for clicks/presses."
           }
         }
@@ -697,8 +697,8 @@
       "danger": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.200}",
-          "$description": "Text color for danger buttons. Communicates destructive or warning actions through high-contrast red text."
+          "$value": "{colors.orange.200}",
+          "$description": "Text color for danger buttons. Communicates destructive or warning actions through high-contrast orange text."
         },
         "background": {
           "$extensions": {
@@ -711,7 +711,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.red.500}",
+          "$value": "{colors.orange.500}",
           "$description": "Background color for danger buttons. Creates subtle but recognizable destructive action styling."
         },
         "border": {
@@ -725,7 +725,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.red.300}",
+          "$value": "{colors.orange.300}",
           "$description": "Border color for danger buttons. Provides definition for destructive action buttons."
         },
         "state": {
@@ -740,7 +740,7 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.red.500}",
+            "$value": "{colors.orange.500}",
             "$description": "Hover state background color for danger buttons. Creates subtle feedback for user interaction."
           },
           "active": {
@@ -754,7 +754,7 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.red.500}",
+            "$value": "{colors.orange.500}",
             "$description": "Active state background color for danger buttons. Provides stronger visual feedback for clicks/presses."
           }
         }
@@ -850,7 +850,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{colors.red.500}",
+              "$value": "{colors.orange.500}",
               "$description": "Specific hover state color for dropdown delete-item."
             }
           }
@@ -874,8 +874,8 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
-        "$description": "Green background highlighting newly added code lines while maintaining readability."
+        "$value": "{colors.cyan.500}",
+        "$description": "Cyan background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
         "$extensions": {
@@ -888,7 +888,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
+        "$value": "{colors.cyan.500}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -902,7 +902,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
+        "$value": "{colors.cyan.500}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -926,8 +926,8 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.red.500}",
-        "$description": "Red background highlighting removed code lines without causing eye strain."
+        "$value": "{colors.orange.500}",
+        "$description": "Orange background highlighting removed code lines without causing eye strain."
       },
       "del-lineNumber": {
         "$extensions": {
@@ -940,7 +940,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.red.500}",
+        "$value": "{colors.orange.500}",
         "$description": "Background for line numbers of deleted code, connecting numbers to removed content."
       },
       "del-content-highlight": {
@@ -954,7 +954,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.red.500}",
+        "$value": "{colors.orange.500}",
         "$description": "Stronger emphasis color for specific character changes within deleted lines."
       },
       "plain-content": {
@@ -1063,7 +1063,7 @@
       },
       "visited": {
         "$type": "color",
-        "$value": "{colors.purple.300}",
+        "$value": "{colors.blue.300}",
         "$description": "Visited state color for text links. Differentiates links the user has already activated."
       }
     },
@@ -1134,14 +1134,14 @@
         "error": {
           "border": {
             "$type": "color",
-            "$value": "{colors.red.300}",
+            "$value": "{colors.orange.300}",
             "$description": "Border color for error pipeline states. Clearly indicates failed or problematic pipeline execution."
           }
         },
         "completed": {
           "border": {
             "$type": "color",
-            "$value": "{colors.green.300}",
+            "$value": "{colors.cyan.300}",
             "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
           }
         }
@@ -1398,12 +1398,12 @@
     "status-indicator": {
       "completed": {
         "$type": "color",
-        "$value": "{colors.green.300}",
+        "$value": "{colors.cyan.300}",
         "$description": "Color for success status indicators. Communicates completed or positive states."
       },
       "cancelled": {
         "$type": "color",
-        "$value": "{colors.red.300}",
+        "$value": "{colors.orange.300}",
         "$description": "Color for danger status indicators. Communicates error or critical warning states."
       },
       "warning": {
@@ -1418,13 +1418,13 @@
       },
       "merged": {
         "$type": "color",
-        "$value": "{colors.purple.300}",
+        "$value": "{colors.cyan.300}",
         "$description": "Color for merged status indicators. Communicates successful integration or completion in version control contexts."
       },
       "action-required": {
         "$type": "color",
         "$value": "{colors.blue.300}",
-        "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed. "
+        "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed."
       },
       "waiting": {
         "$type": "color",
@@ -1568,7 +1568,7 @@
         "border": {
           "$type": "color",
           "$value": "{component.tag.blue.background}",
-          "$description": "Border color for blue tags. "
+          "$description": "Border color for blue tags."
         }
       },
       "brown": {
@@ -1590,7 +1590,7 @@
         "border": {
           "$type": "color",
           "$value": "{component.tag.brown.background}",
-          "$description": "Border color for brown tags. "
+          "$description": "Border color for brown tags."
         }
       },
       "cyan": {
@@ -1618,23 +1618,23 @@
       "green": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.100}",
-          "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
+          "$value": "{colors.cyan.100}",
+          "$description": "Text color for green tags, replaced with cyan for deuteranopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.green.800}",
-          "$description": "Background color for green tags. Creates a distinct surface with green theme styling."
+          "$value": "{colors.cyan.800}",
+          "$description": "Background color for green tags, replaced with cyan for deuteranopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.green.950}",
-          "$description": "Subtle background variation for green tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.cyan.950}",
+          "$description": "Subtle background variation for green tags, replaced with cyan for deuteranopia visibility."
         },
         "border": {
           "$type": "color",
           "$value": "{component.tag.green.background}",
-          "$description": "Border color for green tags."
+          "$description": "Border color for green tags, replaced with cyan."
         }
       },
       "indigo": {
@@ -1750,67 +1750,67 @@
       "purple": {
         "text": {
           "$type": "color",
-          "$value": "{colors.purple.100}",
-          "$description": "Text color for purple tags. Ensures readability while maintaining the purple color theme."
+          "$value": "{colors.cyan.100}",
+          "$description": "Text color for purple tags, replaced with cyan for deuteranopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.purple.800}",
-          "$description": "Background color for purple tags. Creates a distinct surface with purple theme styling."
+          "$value": "{colors.cyan.800}",
+          "$description": "Background color for purple tags, replaced with cyan for deuteranopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.purple.950}",
-          "$description": "Subtle background variation for purple tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.cyan.950}",
+          "$description": "Subtle background variation for purple tags, replaced with cyan for deuteranopia visibility."
         },
         "border": {
           "$type": "color",
           "$value": "{component.tag.purple.background}",
-          "$description": "Border color for purple tags."
+          "$description": "Border color for purple tags, replaced with cyan."
         }
       },
       "red": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.100}",
-          "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
+          "$value": "{colors.orange.100}",
+          "$description": "Text color for red tags, replaced with orange for deuteranopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.red.800}",
-          "$description": "Background color for red tags. Creates a distinct surface with red theme styling."
+          "$value": "{colors.orange.800}",
+          "$description": "Background color for red tags, replaced with orange for deuteranopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.red.950}",
-          "$description": "Subtle background variation for red tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.orange.950}",
+          "$description": "Subtle background variation for red tags, replaced with orange for deuteranopia visibility."
         },
         "border": {
           "$type": "color",
           "$value": "{component.tag.red.background}",
-          "$description": "Border color for red tags."
+          "$description": "Border color for red tags, replaced with orange."
         }
       },
       "violet": {
         "text": {
           "$type": "color",
-          "$value": "{colors.violet.100}",
-          "$description": "Text color for violet tags. Ensures readability while maintaining the violet color theme."
+          "$value": "{colors.blue.100}",
+          "$description": "Text color for violet tags, replaced with blue for deuteranopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.violet.800}",
-          "$description": "Background color for violet tags. Creates a distinct surface with violet theme styling."
+          "$value": "{colors.blue.800}",
+          "$description": "Background color for violet tags, replaced with blue for deuteranopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.violet.950}",
-          "$description": "Subtle background variation for violet tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.blue.950}",
+          "$description": "Subtle background variation for violet tags, replaced with blue for deuteranopia visibility."
         },
         "border": {
           "$type": "color",
           "$value": "{component.tag.violet.background}",
-          "$description": "Border color for violet tags."
+          "$description": "Border color for violet tags, replaced with blue."
         }
       },
       "yellow": {
@@ -1872,7 +1872,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.red.700}",
+          "$value": "{colors.orange.700}",
           "$description": "Background color for danger toast notifications. Creates high-visibility indication of errors or warnings."
         },
         "border": {
@@ -2179,11 +2179,11 @@
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{colors.pink.200}"
+        "$value": "{colors.orange.200}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{colors.purple.300}"
+        "$value": "{colors.cyan.300}"
       },
       "gradient-stop-4": {
         "$type": "color",

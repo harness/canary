@@ -39,7 +39,7 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.200}",
+      "$value": "{colors.blue.200}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
@@ -85,7 +85,7 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.300}",
+      "$value": "{colors.blue.300}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
@@ -306,8 +306,8 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.200}",
-          "$description": "Text color for success badges. Communicates positive status through readable green text."
+          "$value": "{colors.blue.200}",
+          "$description": "Text color for success badges. Communicates positive status through readable blue text."
         },
         "border": {
           "$extensions": {
@@ -320,7 +320,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.300}",
+          "$value": "{colors.blue.300}",
           "$description": "Border color for success badges. Provides subtle definition for success state indicators."
         },
         "background": {
@@ -334,7 +334,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.500}",
+          "$value": "{colors.blue.500}",
           "$description": "Background color for success badges. Creates a subtle but recognizable success indicator."
         }
       },
@@ -632,8 +632,8 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.200}",
-          "$description": "Text color for success buttons. Communicates positive actions through readable green text."
+          "$value": "{colors.blue.200}",
+          "$description": "Text color for success buttons. Communicates positive actions through readable blue text."
         },
         "background": {
           "$extensions": {
@@ -646,7 +646,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.500}",
+          "$value": "{colors.blue.500}",
           "$description": "Background color for success buttons. Creates subtle but recognizable positive action styling."
         },
         "border": {
@@ -660,7 +660,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.300}",
+          "$value": "{colors.blue.300}",
           "$description": "Border color for success buttons. Provides definition for positive action buttons."
         },
         "state": {
@@ -675,7 +675,7 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.green.500}",
+            "$value": "{colors.blue.500}",
             "$description": "Hover state background color for success buttons. Creates subtle feedback for user interaction."
           },
           "active": {
@@ -689,7 +689,7 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.green.500}",
+            "$value": "{colors.blue.500}",
             "$description": "Active state background color for success buttons. Provides stronger visual feedback for clicks/presses."
           }
         }
@@ -874,8 +874,8 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
-        "$description": "Green background highlighting newly added code lines while maintaining readability."
+        "$value": "{colors.blue.500}",
+        "$description": "Blue background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
         "$extensions": {
@@ -888,7 +888,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
+        "$value": "{colors.blue.500}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -902,7 +902,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
+        "$value": "{colors.blue.500}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1141,7 +1141,7 @@
         "completed": {
           "border": {
             "$type": "color",
-            "$value": "{colors.green.300}",
+            "$value": "{colors.blue.300}",
             "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
           }
         }
@@ -1398,7 +1398,7 @@
     "status-indicator": {
       "completed": {
         "$type": "color",
-        "$value": "{colors.green.300}",
+        "$value": "{colors.blue.300}",
         "$description": "Color for success status indicators. Communicates completed or positive states."
       },
       "cancelled": {
@@ -1424,7 +1424,7 @@
       "action-required": {
         "$type": "color",
         "$value": "{colors.blue.300}",
-        "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed. "
+        "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed."
       },
       "waiting": {
         "$type": "color",
@@ -1568,7 +1568,7 @@
         "border": {
           "$type": "color",
           "$value": "{component.tag.blue.background}",
-          "$description": "Border color for blue tags. "
+          "$description": "Border color for blue tags."
         }
       },
       "brown": {
@@ -1590,7 +1590,7 @@
         "border": {
           "$type": "color",
           "$value": "{component.tag.brown.background}",
-          "$description": "Border color for brown tags. "
+          "$description": "Border color for brown tags."
         }
       },
       "cyan": {
@@ -1618,18 +1618,18 @@
       "green": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.100}",
-          "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
+          "$value": "{colors.blue.100}",
+          "$description": "Text color for green tags. Adjusted for protanopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.green.800}",
-          "$description": "Background color for green tags. Creates a distinct surface with green theme styling."
+          "$value": "{colors.blue.800}",
+          "$description": "Background color for green tags. Adjusted for protanopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.green.950}",
-          "$description": "Subtle background variation for green tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.blue.950}",
+          "$description": "Subtle background variation for green tags. Adjusted for protanopia visibility."
         },
         "border": {
           "$type": "color",

@@ -12,7 +12,7 @@ import {
   useState
 } from 'react'
 
-import { Button, Icon, Input, Sheet, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components'
+import { Button, Icon, Input, Sheet, Tooltip } from '@/components'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -116,7 +116,7 @@ const SidebarProvider = forwardRef<
 
   return (
     <SidebarContext.Provider value={contextValue}>
-      <TooltipProvider delayDuration={0}>
+      <Tooltip.Provider delayDuration={0}>
         <div
           style={
             {
@@ -131,7 +131,7 @@ const SidebarProvider = forwardRef<
         >
           {children}
         </div>
-      </TooltipProvider>
+      </Tooltip.Provider>
     </SidebarContext.Provider>
   )
 })
@@ -417,7 +417,7 @@ const SidebarMenuItem = forwardRef<HTMLLIElement, ComponentProps<'li'>>(({ class
 SidebarMenuItem.displayName = 'SidebarMenuItem'
 
 const sidebarMenuButtonVariants = cva(
-  'peer/menu-button hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none transition-[width,height,padding] disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-medium group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0 focus:outline-none focus:ring-0 focus-visible:ring-0 cursor-pointer',
+  'peer/menu-button hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground flex w-full cursor-pointer items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none transition-[width,height,padding] focus:outline-none focus:ring-0 focus-visible:ring-0 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-medium group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0',
   {
     variants: {
       variant: {
@@ -443,7 +443,7 @@ const SidebarMenuButton = forwardRef<
   ComponentPropsWithoutRef<'button'> & {
     asChild?: boolean
     isActive?: boolean
-    tooltip?: string | ComponentProps<typeof TooltipContent>
+    tooltip?: string | ComponentProps<typeof Tooltip.Content>
   } & VariantProps<typeof sidebarMenuButtonVariants>
 >(({ asChild = false, isActive = false, variant = 'default', size = 'default', tooltip, className, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button'
@@ -471,10 +471,10 @@ const SidebarMenuButton = forwardRef<
   }
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{button}</TooltipTrigger>
-      <TooltipContent side="right" align="center" hidden={state !== 'collapsed' || isMobile} {...tooltip} />
-    </Tooltip>
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>{button}</Tooltip.Trigger>
+      <Tooltip.Content side="right" align="center" hidden={state !== 'collapsed' || isMobile} {...tooltip} />
+    </Tooltip.Root>
   )
 })
 SidebarMenuButton.displayName = 'SidebarMenuButton'

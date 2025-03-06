@@ -1,0 +1,258 @@
+---
+title: Tooltip
+description: Tooltip component
+---
+
+The Tooltip component provides additional information for an element in a small overlay.
+
+import { DocsPage } from "../../../components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Tooltip.Provider>
+    <Tooltip.Root>
+        <Tooltip.Trigger>Hover me</Tooltip.Trigger>
+        <Tooltip.Content>
+            <p>This is a tooltip</p>
+        </Tooltip.Content>
+    </Tooltip.Root>
+</Tooltip.Provider>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Tooltip } from '@harnessio/ui/components'
+
+// ...
+
+return (
+  <Tooltip.Provider> {/* typically wrapped around the entire app */}
+    {/* ... */}
+    <Tooltip.Root>
+      <Tooltip.Trigger>Hover me</Tooltip.Trigger>
+      <Tooltip.Content>
+        <p>This is a tooltip</p>
+      </Tooltip.Content>
+    </Tooltip.Root>
+  </Tooltip.Provider>
+)
+```
+
+## Anatomy
+
+```typescript jsx
+<Tooltip.Provider>
+  <Tooltip.Root>
+    <Tooltip.Trigger />
+    <Tooltip.Content>
+      <Tooltip.Arrow />
+    </Tooltip.Content>
+  </Tooltip.Root>
+</Tooltip.Provider>
+```
+
+## API Reference
+
+### `Provider`
+
+The provider component that manages tooltips. Typically wrapped around the entire app.
+
+```typescript jsx
+<Tooltip.Provider
+  delayDuration={700}     // [OPTIONAL] delay from when the mouse enters until the tooltip opens
+  skipDelayDuration={300} // [OPTIONAL] how much time a user has to enter another trigger without incurring a delay again
+  disableHoverableContent // [OPTIONAL] immediately close the tooltip when the mouse leaves the trigger
+>
+  {/* ... */}
+</Tooltip.Provider>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "delayDuration",
+      value: "number",
+      defaultValue: "700",
+      description:
+        "The duration from when the mouse enters the trigger until the tooltip opens.",
+    },
+    {
+      name: "skipDelayDuration",
+      value: "number",
+      defaultValue: "300",
+      description:
+        "How much time a user has to enter another trigger without incurring a delay again.",
+    },
+    {
+      name: "disableHoverableContent",
+      value: "boolean",
+      defaultValue: "false",
+      description:
+        "Immediately close the tooltip when the mouse leaves the trigger.",
+    },
+  ]}
+/>
+
+### `Root`
+
+The `Root` component of a tooltip can be used in both controlled and uncontrolled modes. In uncontrolled mode, you can
+use the `defaultOpen` prop to specify the initial open state of the tooltip. In controlled mode, you can manage the open
+state externally by using the `open` and `onOpenChange` props. The `open` prop allows you to control the open state
+directly, while the `onOpenChange` prop is an event handler called whenever the open state changes.
+
+```typescript jsx
+<Tooltip.Root
+  defaultOpen             // [OPTIONAL] initial open state
+  open                    // [OPTIONAL] controlled open state
+  onOpenChange={onChange} // [OPTIONAL] event handler called when the open state changes
+  delayDuration={700}     // [OPTIONAL] override default delay duration
+  disableHoverableContent // [OPTIONAL] override default setting for disabling hoverable content
+>
+  {/* ... */}
+</Tooltip.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "defaultOpen",
+      value: "boolean",
+      defaultValue: "false",
+      description:
+        "The open state of the tooltip when it is initially rendered.",
+    },
+    {
+      name: "open",
+      value: "boolean",
+      description: "The controlled open state of the tooltip.",
+    },
+    {
+      name: "onOpenChange",
+      value: "(open: boolean) => void",
+      description:
+        "Event handler called when the open state of the tooltip changes.",
+    },
+    {
+      name: "delayDuration",
+      value: "number",
+      description: "Override the default delay duration for this tooltip.",
+    },
+    {
+      name: "disableHoverableContent",
+      value: "boolean",
+      description:
+        "Override the default setting for disabling hoverable content for this tooltip.",
+    },
+  ]}
+/>
+
+### `Trigger`
+
+The button that toggles the tooltip. This component is based on the native `button` element and supports all of its props.
+
+```typescript jsx
+<Tooltip.Trigger
+  asChild           // [OPTIONAL] render the trigger as the child
+  className="class" // [OPTIONAL] additional CSS classes
+>
+  <button>Hover over me</button>
+</Tooltip.Trigger>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "asChild",
+      description: "Render the trigger as the child",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the trigger",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Content`
+
+The component that pops out when the tooltip is open.
+
+```typescript jsx
+<Tooltip.Content
+  side="top"               // [OPTIONAL] preferred side
+  sideOffset={5}           // [OPTIONAL] distance from the trigger
+  align="center"           // [OPTIONAL] preferred alignment
+  alignOffset={-4}         // [OPTIONAL] offset from the alignment
+  avoidCollisions          // [OPTIONAL] avoid collisions
+  collisionBoundary={[el]} // [OPTIONAL] boundary to use for collision detection
+  collisionPadding={4}     // [OPTIONAL] padding to apply to the collision detection
+  sticky="partial"         // [OPTIONAL] sticky behavior
+  className="class"        // [OPTIONAL] additional CSS classes
+>
+  {/* Tooltip content */}
+</Tooltip.Content>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "side",
+      value: "'top' | 'right' | 'bottom' | 'left'",
+      defaultValue: "'top'",
+      description: "The preferred side of the trigger to render against.",
+    },
+    {
+      name: "sideOffset",
+      value: "number",
+      defaultValue: "5",
+      description: "The distance in pixels from the trigger.",
+    },
+    {
+      name: "align",
+      value: "'start' | 'center' | 'end'",
+      defaultValue: "'center'",
+      description: "The preferred alignment against the trigger.",
+    },
+    {
+      name: "alignOffset",
+      value: "number",
+      defaultValue: "-4",
+      description:
+        'An offset in pixels from the "start" or "end" alignment options.',
+    },
+    {
+      name: "avoidCollisions",
+      value: "boolean",
+      defaultValue: "true",
+      description:
+        "When true, overrides the side and align preferences to prevent collisions with boundary edges.",
+    },
+    {
+      name: "collisionBoundary",
+      value: "Element | null | Array<Element | null>",
+      description: "The element used as the collision boundary.",
+    },
+    {
+      name: "collisionPadding",
+      value: "number",
+      defaultValue: "4",
+      description: "The padding in pixels to apply to the collision boundary.",
+    },
+    {
+      name: "sticky",
+      value: "'partial' | 'always'",
+      defaultValue: "'partial'",
+      description:
+        "When 'partial', keeps the content in the boundary as long as the trigger is partially in the boundary. When 'always', keeps the content in the boundary regardless.",
+    },
+    {
+      name: "className",
+      value: "string",
+      description: "Additional CSS classes to apply to the content.",
+    },
+  ]}
+/>

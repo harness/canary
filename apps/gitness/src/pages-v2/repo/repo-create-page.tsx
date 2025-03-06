@@ -18,7 +18,7 @@ import { PathParams } from '../../RouteDefinitions'
 
 export const CreateRepo = () => {
   const routes = useRoutes()
-  const createRepositoryMutation = useCreateRepositoryMutation({})
+  const { mutate: createRepository, error, isLoading, isSuccess } = useCreateRepositoryMutation({})
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
@@ -35,7 +35,7 @@ export const CreateRepo = () => {
       identifier: data.name
     }
 
-    createRepositoryMutation.mutate(
+    createRepository(
       {
         queryParams: {
           space_path: spaceURL
@@ -45,13 +45,6 @@ export const CreateRepo = () => {
       {
         onSuccess: ({ body: data }) => {
           navigate(routes.toRepoSummary({ spaceId, repoId: data?.identifier }))
-        },
-        onError: (error: CreateRepositoryErrorResponse) => {
-          const message = error.message || 'An unknown error occurred.'
-          toast({
-            title: message,
-            variant: 'destructive'
-          })
         }
       }
     )
@@ -70,11 +63,12 @@ export const CreateRepo = () => {
       <RepoCreatePageView
         onFormSubmit={onSubmit}
         onFormCancel={onCancel}
-        isLoading={createRepositoryMutation.isLoading}
-        isSuccess={createRepositoryMutation.isSuccess}
+        isLoading={isLoading}
+        isSuccess={isSuccess}
         gitIgnoreOptions={gitIgnoreOptions}
         licenseOptions={licenseOptions}
         useTranslationStore={useTranslationStore}
+        apiError={error?.message?.toString()}
       />
     </>
   )

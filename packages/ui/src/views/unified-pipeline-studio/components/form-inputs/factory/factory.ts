@@ -5,6 +5,7 @@ import { BooleanInput } from '../BooleanInput'
 import { GroupInput } from '../GroupInput'
 import { ListInput } from '../ListInput'
 import { NumberInput } from '../NumberInput'
+import { RadialInput } from '../RadialInput'
 import { SelectInput } from '../SelectInput'
 import { SeparatorInput } from '../Separator'
 import { TextAreaInput } from '../TextAreaInput'
@@ -20,5 +21,6 @@ inputComponentFactory.registerComponent(new TextAreaInput())
 inputComponentFactory.registerComponent(new GroupInput())
 inputComponentFactory.registerComponent(new SelectInput())
 inputComponentFactory.registerComponent(new SeparatorInput())
+inputComponentFactory.registerComponent(new RadialInput())
 
 export { inputComponentFactory }

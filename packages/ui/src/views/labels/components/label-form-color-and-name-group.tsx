@@ -1,82 +1,64 @@
 import { FC } from 'react'
-import { UseFormRegister } from 'react-hook-form'
 
-import { Button, Icon, Input, Select } from '@/components'
-import { ColorsEnum, CreateLabelFormFields, TranslationStore } from '@/views'
-
-const SelectColorMarker = {
-  [ColorsEnum.RED]: 'bg-label-foreground-red',
-  [ColorsEnum.BLUE]: 'bg-label-foreground-blue',
-  [ColorsEnum.GREEN]: 'bg-label-foreground-green',
-  [ColorsEnum.YELLOW]: 'bg-label-foreground-yellow',
-  [ColorsEnum.PURPLE]: 'bg-label-foreground-purple',
-  [ColorsEnum.PINK]: 'bg-label-foreground-pink',
-  [ColorsEnum.VIOLET]: 'bg-label-foreground-violet',
-  [ColorsEnum.INDIGO]: 'bg-label-foreground-indigo',
-  [ColorsEnum.CYAN]: 'bg-label-foreground-cyan',
-  [ColorsEnum.ORANGE]: 'bg-label-foreground-orange',
-  [ColorsEnum.BROWN]: 'bg-label-foreground-brown',
-  [ColorsEnum.MINT]: 'bg-label-foreground-mint',
-  [ColorsEnum.LIME]: 'bg-label-foreground-lime'
-}
+import { Button, Icon, Input, InputProps, Select, SelectRootProps } from '@/components'
+import { cn } from '@/utils'
+import { ColorsEnum, TranslationStore } from '@/views'
 
 interface LabelFormColorAndNameGroupProps {
-  name: string
-  colorValue: ColorsEnum
-  handleColorChange: (color: ColorsEnum) => void
-  colorError?: string
-  nameError?: string
+  className?: string
   isValue?: boolean
   useTranslationStore: () => TranslationStore
-  register: UseFormRegister<CreateLabelFormFields>
-  registerName: keyof CreateLabelFormFields
   handleDeleteValue?: () => void
+  selectProps?: SelectRootProps
+  inputProps?: InputProps
 }
 
 export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = ({
-  name,
-  colorValue,
-  handleColorChange,
-  colorError,
-  nameError,
+  className,
   isValue = false,
   useTranslationStore,
-  register,
-  registerName,
-  handleDeleteValue
+  handleDeleteValue,
+  selectProps,
+  inputProps
 }) => {
   const { t } = useTranslationStore()
 
+  const isWithDeleteButton = isValue && !!handleDeleteValue
+
   return (
-    <div className="flex gap-x-2.5">
-      <div className="w-32 flex-none">
-        <Select.Root name={`color-${name}`} value={colorValue} onValueChange={handleColorChange} error={colorError}>
-          <Select.Content>
-            {Object.values(ColorsEnum).map(color => (
-              <Select.Item key={color} value={color}>
-                <div className="flex max-w-full items-center gap-x-1.5">
-                  <div className={`size-2 rounded-full ${SelectColorMarker[color]}`} />
-                  <span className="truncate">{color}</span>
-                </div>
-              </Select.Item>
-            ))}
-          </Select.Content>
-        </Select.Root>
-      </div>
+    <div
+      className={cn(
+        'grid grid-cols-[8rem_1fr] gap-x-2.5',
+        isWithDeleteButton && 'grid-cols-[8rem_1fr_auto]',
+        className
+      )}
+    >
+      <Select.Root {...selectProps}>
+        <Select.Content>
+          {Object.values(ColorsEnum).map(color => (
+            <Select.Item key={color} value={color}>
+              <div className="flex max-w-full items-center gap-x-1.5">
+                <div className={`size-2 min-h-2 min-w-2 rounded-full bg-label-foreground-${color}`} />
+                <span className="truncate text-foreground-3">{color}</span>
+              </div>
+            </Select.Item>
+          ))}
+        </Select.Content>
+      </Select.Root>
+
       <Input
-        wrapperClassName="flex-1"
-        {...register(registerName)}
         placeholder={
           isValue
             ? t('views:labelData.form.colorValuePlaceholder', 'Enter value name')
             : t('views:labelData.form.colorLabelPlaceholder', 'Enter label name')
         }
-        error={nameError}
         size="md"
+        {...inputProps}
       />
-      {isValue && !!handleDeleteValue && (
+
+      {isWithDeleteButton && (
         <Button
-          className="mx-[-9px] h-9 flex-none text-icons-1 hover:text-icons-2"
+          className="size-4 flex-none self-center text-icons-1 hover:text-icons-2"
           variant="custom"
           size="icon"
           onClick={handleDeleteValue}

@@ -440,6 +440,8 @@ export default {
     { pattern: /^bg-graph-/ },
     { pattern: /^text-foreground-/ },
     { pattern: /^bg-background-/ },
+    { pattern: /^bg-label-/ },
+    { pattern: /^text-label-/ },
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
     'stroke-borders-2',
     // NOTE: temporary - used in design-system

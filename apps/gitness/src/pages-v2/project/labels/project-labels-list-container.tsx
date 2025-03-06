@@ -10,7 +10,7 @@ import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../../i18n/stores/i18n-store'
 import { useLabelsStore } from '../stores/labels-store'
-import { useGetProjectLabelAndValuesData } from './hooks/use-get-project-label-and-values-data'
+import { useFillLabelStoreWithProjectLabelValuesData } from './hooks/use-fill-label-store-with-project-label-values-data.ts'
 
 export const ProjectLabelsList = () => {
   const navigate = useNavigate()
@@ -24,7 +24,8 @@ export const ProjectLabelsList = () => {
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [query, setQuery] = useQueryState('query')
 
-  const { isLoading } = useGetProjectLabelAndValuesData({ queryPage, query })
+  // To fetch labels/values and set isLoading state at useLabelsStore
+  useFillLabelStoreWithProjectLabelValuesData({ queryPage, query })
 
   const handleOpenDeleteDialog = (identifier: string) => {
     setOpenAlertDeleteDialog(true)
@@ -32,9 +33,7 @@ export const ProjectLabelsList = () => {
   }
 
   const { mutate: deleteSpaceLabel, isLoading: isDeletingSpaceLabel } = useDeleteSpaceLabelMutation(
-    {
-      space_ref: space_ref ?? ''
-    },
+    { space_ref: space_ref ?? '' },
     {
       onSuccess: (_data, variables) => {
         setOpenAlertDeleteDialog(false)
@@ -48,22 +47,19 @@ export const ProjectLabelsList = () => {
   }
 
   const handleDeleteLabel = (identifier: string) => {
-    deleteSpaceLabel({
-      key: identifier
-    })
+    deleteSpaceLabel({ key: identifier })
   }
 
   return (
     <>
       <LabelsListPage
+        className="mx-auto max-w-[1040px]"
         useTranslationStore={useTranslationStore}
         useLabelsStore={useLabelsStore}
         createdIn={space_ref}
-        handleEditLabel={handleEditLabel}
-        handleDeleteLabel={handleOpenDeleteDialog}
         searchQuery={query}
         setSearchQuery={setQuery}
-        isLoading={isLoading}
+        labelsListViewProps={{ handleDeleteLabel: handleOpenDeleteDialog, handleEditLabel }}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}

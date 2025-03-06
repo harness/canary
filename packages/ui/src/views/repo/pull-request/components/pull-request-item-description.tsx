@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Icon, Text } from '@/components'
+import { Button, Icon } from '@/components'
 import { useRouterContext } from '@/context'
 
 interface PullRequestItemDescriptionProps {
@@ -29,7 +29,8 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   return (
     <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-14 leading-none text-foreground-4">
       <p>
-        {`#${number}`} opened {timestamp} by {author}
+        {`#${number}`} opened {timestamp} by{' '}
+        <span className="inline-block max-w-[200px] truncate align-bottom">{author}</span>
       </p>
 
       <span className="pointer-events-none h-3.5 w-px bg-borders-2" aria-hidden />
@@ -49,21 +50,17 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
 
       {sourceBranch && (
         <>
-          <Button variant="secondary" size="xs" asChild>
+          <Button variant="secondary" size="xs" className="w-full min-w-[60px] max-w-fit justify-start" asChild>
             <Link to={`${relativePath}/code/${targetBranch}`}>
               <Icon name="branch" size={11} className="mr-1 text-tertiary-background" />
-              <Text size={1} className="p-0.5 hover:underline">
-                {targetBranch}
-              </Text>
+              <span className="max-w-[calc(100%-15px)] truncate p-0.5 text-xs hover:underline">{targetBranch}</span>
             </Link>
           </Button>
 
           <span>&larr;</span>
-          <Button variant="secondary" size="xs" asChild>
+          <Button variant="secondary" size="xs" className="w-full min-w-[60px] max-w-fit justify-start" asChild>
             <Link to={`${relativePath}/code/${sourceBranch}`}>
-              <Text size={1} className="p-0.5 hover:underline">
-                {sourceBranch}
-              </Text>
+              <span className="max-w-full truncate p-0.5 text-xs hover:underline">{sourceBranch}</span>
             </Link>
           </Button>
         </>

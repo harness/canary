@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useEffect } from 'react'
+import { FC, HTMLAttributes, PropsWithChildren, useCallback, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { isEqual } from 'lodash-es'
@@ -10,6 +10,7 @@ import {
   useListCommitsQuery,
   useListPullReqActivitiesQuery
 } from '@harnessio/code-service-client'
+import { RepoRepositoryOutput } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
@@ -22,7 +23,7 @@ import { usePRChecksDecision } from '../hooks/usePRChecksDecision'
 import { usePullRequestDataStore } from '../stores/pull-request-store'
 import { extractSpecificViolations } from '../utils'
 
-const PullRequestDataProviderV1: React.FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => {
+const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   const spaceURL = useGetSpaceURLParam() ?? ''
   const repoRef = useGetRepoRef()
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
@@ -94,7 +95,7 @@ const PullRequestDataProviderV1: React.FC<PropsWithChildren<React.HTMLAttributes
   })
   useEffect(() => {
     if (repoMetadata) {
-      setRepoMetadata(repoMetadata)
+      setRepoMetadata(repoMetadata as RepoRepositoryOutput)
     }
   }, [repoMetadata, setRepoMetadata])
   useEffect(() => {
@@ -135,7 +136,7 @@ const PullRequestDataProviderV1: React.FC<PropsWithChildren<React.HTMLAttributes
     if (hasChanges) {
       setResolvedCommentArr(undefined)
       store.updateState({
-        repoMetadata,
+        repoMetadata: repoMetadata as RepoRepositoryOutput,
         setPullReqMetadata,
         pullReqMetadata: pullReqData ? pullReqData : undefined,
         pullReqStats: pullReqData?.stats,

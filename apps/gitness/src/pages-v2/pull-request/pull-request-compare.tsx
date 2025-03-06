@@ -530,6 +530,7 @@ export const CreatePullRequest = () => {
         PRLabels={labels}
         addLabel={handleAddLabel}
         removeLabel={handleDeleteLabel}
+        editLabelsProps={{ to: routes.toRepoLabels({ spaceId, repoId }) }}
         searchLabelQuery={searchLabel}
         setSearchLabelQuery={setSearchLabel}
         branchSelectorRenderer={

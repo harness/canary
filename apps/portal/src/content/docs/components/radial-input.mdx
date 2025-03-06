@@ -1,0 +1,135 @@
+---
+title: RadialInput
+description: RadialInput component documentation
+---
+
+The `RadialInput` component provides a customizable radio group input with a stacked list layout. Each option includes a title, description, and a radio button control, making it ideal for selection interfaces where users need detailed information about each choice.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<RadialInput
+    options={[
+      {
+        id: "option1",
+        title: "Option 1",
+        description: "Description for option 1",
+        value: "value1"
+      },
+      {
+        id: "option2",
+        title: "Option 2",
+        description: "Description for option 2",
+        value: "value2"
+      }
+    ]}
+    value="value1"
+    onValueChange={(value) => console.log(value)}
+  />`}
+/>
+
+## Usage
+
+```typescript jsx
+import { RadialInput } from '@harnessio/ui/views'
+
+const options = [
+  {
+    id: 'option1',
+    title: 'Option 1',
+    description: 'Description for option 1',
+    value: 'value1'
+  },
+  {
+    id: 'option2',
+    title: 'Option 2',
+    description: 'Description for option 2',
+    value: 'value2'
+  }
+]
+
+return (
+  <RadialInput
+    options={options}
+    value="value1"
+    onValueChange={value => {
+      console.log('Selected value:', value)
+    }}
+  />
+)
+```
+
+## API Reference
+
+### RadialInput
+
+The main component that renders a radio group with stacked list items.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "options",
+      description: "Array of options to display in the radio group",
+      required: true,
+      value: "RadialOption[]",
+    },
+    {
+      name: "value",
+      description: "Currently selected value",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Callback function called when selection changes",
+      required: true,
+      value: "(value: string) => void",
+    },
+    {
+      name: "id",
+      description: "Optional ID for the radio group",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Optional CSS class name for styling",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### RadialOption
+
+The shape of each option in the options array.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "id",
+      description: "Unique identifier for the option",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "title",
+      description: "Title text to display for the option",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "description",
+      description: "Description text to display under the title",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Value associated with this option",
+      required: true,
+      value: "string",
+    },
+  ]}
+/>

@@ -5,6 +5,7 @@ import { useOnLoginMutation } from '@harnessio/code-service-client'
 import { SignInData, SignInPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../framework/context/NavigationContext'
+import { useTranslationStore } from '../i18n/stores/i18n-store'
 
 export const SignIn: FC = () => {
   const routes = useRoutes()
@@ -32,6 +33,7 @@ export const SignIn: FC = () => {
         })
       }}
       error={error?.message}
+      useTranslationStore={useTranslationStore}
     />
   )
 }

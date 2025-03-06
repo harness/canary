@@ -20,13 +20,30 @@ export default {
         code: ['JetBrains Mono', 'monospace']
       },
       colors: {
-        border: 'oklch(var(--canary-border))',
+        // border: 'oklch(var(--canary-border))',
+        borders: {
+          1: 'hsl(var(--canary-border-01))',
+          2: 'hsl(var(--canary-border-02))',
+          3: 'hsl(var(--canary-border-03))',
+          4: 'hsl(var(--canary-border-04))',
+          5: 'hsl(var(--canary-border-05))',
+          6: 'hsl(var(--canary-border-06))',
+          7: 'hsl(var(--canary-border-07))',
+          8: 'hsl(var(--canary-border-08))',
+          9: 'hsl(var(--canary-border-09))',
+          10: 'hsl(var(--canary-border-10))',
+          danger: 'hsl(var(--canary-border-danger))',
+          success: 'hsl(var(--canary-border-success))',
+          accent: 'hsl(var(--canary-border-accent))',
+          risk: 'hsl(var(--canary-icon-risk))',
+          alert: 'hsl(var(--canary-border-alert))'
+        },
         'border-background': 'oklch(var(--canary-border-background))',
         input: 'oklch(var(--canary-input))',
         'input-background': 'oklch(var(--canary-input-background))',
         ring: 'oklch(var(--canary-ring))',
         primary: {
-          DEFAULT: 'oklch(var(--canary-primary))',
+          DEFAULT: '#f00',
           background: 'oklch(var(--canary-background-1))',
           foreground: 'oklch(var(--canary-text-1))',
           muted: 'oklch(var(--canary-state-disabled-background))',
@@ -91,59 +108,37 @@ export default {
         },
         /* New colors design variables */
         foreground: {
-          // TODO: remove DEFAULT, cause use old color var
-          DEFAULT: 'oklch(var(--canary-foreground))',
-          1: 'oklch(var(--canary-foreground-01))',
-          2: 'oklch(var(--canary-foreground-02))',
-          3: 'oklch(var(--canary-foreground-03))',
-          4: 'oklch(var(--canary-foreground-04))',
-          5: 'oklch(var(--canary-foreground-05))',
-          6: 'oklch(var(--canary-foreground-06))',
-          7: 'oklch(var(--canary-foreground-07))',
-          8: 'oklch(var(--canary-foreground-08))',
-          9: 'oklch(var(--canary-foreground-09))',
-          10: 'oklch(var(--canary-foreground-10))',
-          danger: 'oklch(var(--canary-foreground-danger))',
-          alert: 'oklch(var(--canary-foreground-alert))',
-          success: 'oklch(var(--canary-foreground-success))',
-          accent: 'oklch(var(--canary-foreground-accent))'
+          1: 'oklch(var(--canary-text-1))',
+          2: 'oklch(var(--canary-text-2))',
+          3: 'oklch(var(--canary-text-3))',
+          accent: 'oklch(var(--canary-text-accent))',
+          success: 'oklch(var(--canary-text-success))',
+          danger: 'oklch(var(--canary-text-danger))',
+          warning: 'oklch(var(--canary-text-warning))',
+          disabled: 'oklch(var(--canary-state-disabled-text))',
+
+          // SHOULD BE REMOVED
+          4: 'oklch(var(--canary-text-3))',
+          5: 'oklch(var(--canary-text-3))',
+          8: 'oklch(var(--canary-text-3))'
         },
         background: {
-          // TODO: remove DEFAULT, cause use old color var
-          DEFAULT: 'oklch(var(--canary-background))',
-          1: 'oklch(var(--canary-background-01))',
-          2: 'oklch(var(--canary-background-02))',
-          3: 'oklch(var(--canary-background-03))',
-          4: 'oklch(var(--canary-background-04))',
-          5: 'oklch(var(--canary-background-05))',
-          6: 'oklch(var(--canary-background-06))',
-          7: 'oklch(var(--canary-background-07))',
-          8: 'oklch(var(--canary-background-08))',
-          9: 'oklch(var(--canary-background-09))',
-          10: 'oklch(var(--canary-background-10))',
-          11: 'oklch(var(--canary-background-11))',
-          12: 'oklch(var(--canary-background-12))',
-          13: 'oklch(var(--canary-background-13))',
-          surface: 'oklch(var(--canary-background-surface))',
-          danger: 'oklch(var(--canary-background-danger))',
-          success: 'oklch(var(--canary-background-success))'
+          1: 'oklch(var(--canary-background-1))',
+          2: 'oklch(var(--canary-background-2))',
+          3: 'oklch(var(--canary-background-3))',
+
+          // SHOULD BE REMOVED
+          surface: 'oklch(var(--canary-background-1))',
+          9: 'oklch(var(--canary-background-1))'
         },
-        borders: {
-          1: 'oklch(var(--canary-border-01))',
-          2: 'oklch(var(--canary-border-02))',
-          3: 'oklch(var(--canary-border-03))',
-          4: 'oklch(var(--canary-border-04))',
-          5: 'oklch(var(--canary-border-05))',
-          6: 'oklch(var(--canary-border-06))',
-          7: 'oklch(var(--canary-border-07))',
-          8: 'oklch(var(--canary-border-08))',
-          9: 'oklch(var(--canary-border-09))',
-          10: 'oklch(var(--canary-border-10))',
-          danger: 'oklch(var(--canary-border-danger))',
+        border: {
+          1: 'oklch(var(--canary-border-1))',
+          2: 'oklch(var(--canary-border-2))',
+          3: 'oklch(var(--canary-border-3))',
+          focus: 'oklch(var(--canary-border-focus))',
           success: 'oklch(var(--canary-border-success))',
-          accent: 'oklch(var(--canary-border-accent))',
-          risk: 'oklch(var(--canary-icon-risk))',
-          alert: 'oklch(var(--canary-border-alert))'
+          danger: 'oklch(var(--canary-border-danger))',
+          warning: 'oklch(var(--canary-border-warning))'
         },
         button: {
           foreground: {
@@ -318,31 +313,31 @@ export default {
       letterSpacing: {
         tight: '-0.02em'
       },
-      boxShadow: {
-        1: '0px 8px 16px hsl(var(--canary-box-shadow-1))',
-        2: '0px 8px 8px hsl(var(--canary-box-shadow-2))',
-        'pagination-1': '0px 2px 4px hsl(var(--canary-box-shadow-pagination))',
-        'as-border': 'inset 0 0 0 1px',
-        'commit-list-bullet':
-          '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)'
-      },
-      borderColor: {
-        'borders-1': 'hsl(var(--canary-border-01))',
-        'borders-2': 'hsl(var(--canary-border-02))',
-        'borders-3': 'hsl(var(--canary-border-03))',
-        'borders-4': 'hsl(var(--canary-border-04))',
-        'borders-5': 'hsl(var(--canary-border-05))',
-        'borders-6': 'hsl(var(--canary-border-06))',
-        'borders-7': 'hsl(var(--canary-border-07))',
-        'borders-8': 'hsl(var(--canary-border-08))',
-        'borders-9': 'hsl(var(--canary-border-09))',
-        'borders-10': 'hsl(var(--canary-border-10))',
-        'borders-danger': 'hsl(var(--canary-border-danger))',
-        'borders-success': 'hsl(var(--canary-border-success))',
-        'borders-accent': 'hsl(var(--canary-border-accent))',
-        'borders-risk': 'hsl(var(--canary-icon-risk))',
-        'borders-alert': 'hsl(var(--canary-border-alert))'
-      },
+      //   boxShadow: {
+      //     1: '0px 8px 16px hsl(var(--canary-box-shadow-1))',
+      //     2: '0px 8px 8px hsl(var(--canary-box-shadow-2))',
+      //     'pagination-1': '0px 2px 4px hsl(var(--canary-box-shadow-pagination))',
+      //     'as-border': 'inset 0 0 0 1px',
+      //     'commit-list-bullet':
+      //       '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)'
+      //   },
+      //   borderColor: {
+      //     'borders-1': 'hsl(var(--canary-border-01))',
+      //     'borders-2': 'hsl(var(--canary-border-02))',
+      //     'borders-3': 'hsl(var(--canary-border-03))',
+      //     'borders-4': 'hsl(var(--canary-border-04))',
+      //     'borders-5': 'hsl(var(--canary-border-05))',
+      //     'borders-6': 'hsl(var(--canary-border-06))',
+      //     'borders-7': 'hsl(var(--canary-border-07))',
+      //     'borders-8': 'hsl(var(--canary-border-08))',
+      //     'borders-9': 'hsl(var(--canary-border-09))',
+      //     'borders-10': 'hsl(var(--canary-border-10))',
+      //     'borders-danger': 'hsl(var(--canary-border-danger))',
+      //     'borders-success': 'hsl(var(--canary-border-success))',
+      //     'borders-accent': 'hsl(var(--canary-border-accent))',
+      //     'borders-risk': 'hsl(var(--canary-icon-risk))',
+      //     'borders-alert': 'hsl(var(--canary-border-alert))'
+      //   },
       borderRadius: {
         10: '0.625rem'
       },
@@ -365,30 +360,30 @@ export default {
         20: '1.25rem',
         24: '1.5rem'
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--canary-tw-gradient-stops))',
-        'ai-button':
-          'linear-gradient(to right, hsl(var(--canary-ai-button-stop-1)), hsl(var(--canary-ai-button-stop-2)), hsl(var(--canary-ai-button-stop-3)), hsl(var(--canary-ai-button-stop-4)))',
-        'navbar-gradient-1':
-          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-1-1)) 0%, hsla(var(--canary-nav-gradient-1-2)) 100%)',
-        'navbar-gradient-2':
-          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-2-1)) 0%, hsla(var(--canary-nav-gradient-2-2)) 44.95%, hsla(var(--canary-nav-gradient-2-3)) 100%)',
-        'navbar-gradient-3':
-          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-3-1)) 0%, hsla(var(--canary-nav-gradient-3-2)) 100%)',
-        'navbar-gradient-4':
-          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-4-1)) 0%, hsla(var(--canary-nav-gradient-4-2)) 100%)',
-        'navbar-item-gradient':
-          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-item-gradient-1)) 0%, hsla(var(--canary-nav-item-gradient-2)) 17.63%, hsla(var(--canary-nav-item-gradient-3)) 40.23%, hsla(var(--canary-nav-item-gradient-4)) 61.54%, hsla(var(--canary-nav-item-gradient-5)) 80%, hsla(var(--canary-nav-item-gradient-6)) 100%)',
-        'widget-bg-gradient':
-          'radial-gradient(80.82% 77.84% at 80.15% 11.99%, hsla(var(--canary-widget-bg-gradient-from)) 8.43%, hsla(var(--canary-widget-bg-gradient-to)) 100%)',
-        'widget-number-gradient':
-          'linear-gradient(180deg, hsla(var(--canary-widget-number-gradient-from)) 35.9%, hsla(var(--canary-widget-number-gradient-to)) 100%)',
-        'widget-number-bg-gradient':
-          'linear-gradient(135deg, hsla(var(--canary-widget-number-bg-gradient-from)) 0%, hsla(var(--canary-widget-number-bg-gradient-to)) 67.67%)',
-        'graph-gradient-1':
-          'radial-gradient(88.57% 100% at 14.29% 0%, var(--canary-graph-gradient-bg-1) 10.62%, var(--canary-graph-gradient-bg-2) 75.86%)',
-        'graph-bg-gradient': 'radial-gradient(circle, var(--canary-graph-viewport-bg) 1px, transparent 1px)'
-      },
+      //   backgroundImage: {
+      //     'gradient-radial': 'radial-gradient(var(--canary-tw-gradient-stops))',
+      //     'ai-button':
+      //       'linear-gradient(to right, hsl(var(--canary-ai-button-stop-1)), hsl(var(--canary-ai-button-stop-2)), hsl(var(--canary-ai-button-stop-3)), hsl(var(--canary-ai-button-stop-4)))',
+      //     'navbar-gradient-1':
+      //       'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-1-1)) 0%, hsla(var(--canary-nav-gradient-1-2)) 100%)',
+      //     'navbar-gradient-2':
+      //       'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-2-1)) 0%, hsla(var(--canary-nav-gradient-2-2)) 44.95%, hsla(var(--canary-nav-gradient-2-3)) 100%)',
+      //     'navbar-gradient-3':
+      //       'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-3-1)) 0%, hsla(var(--canary-nav-gradient-3-2)) 100%)',
+      //     'navbar-gradient-4':
+      //       'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-4-1)) 0%, hsla(var(--canary-nav-gradient-4-2)) 100%)',
+      //     'navbar-item-gradient':
+      //       'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-item-gradient-1)) 0%, hsla(var(--canary-nav-item-gradient-2)) 17.63%, hsla(var(--canary-nav-item-gradient-3)) 40.23%, hsla(var(--canary-nav-item-gradient-4)) 61.54%, hsla(var(--canary-nav-item-gradient-5)) 80%, hsla(var(--canary-nav-item-gradient-6)) 100%)',
+      //     'widget-bg-gradient':
+      //       'radial-gradient(80.82% 77.84% at 80.15% 11.99%, hsla(var(--canary-widget-bg-gradient-from)) 8.43%, hsla(var(--canary-widget-bg-gradient-to)) 100%)',
+      //     'widget-number-gradient':
+      //       'linear-gradient(180deg, hsla(var(--canary-widget-number-gradient-from)) 35.9%, hsla(var(--canary-widget-number-gradient-to)) 100%)',
+      //     'widget-number-bg-gradient':
+      //       'linear-gradient(135deg, hsla(var(--canary-widget-number-bg-gradient-from)) 0%, hsla(var(--canary-widget-number-bg-gradient-to)) 67.67%)',
+      //     'graph-gradient-1':
+      //       'radial-gradient(88.57% 100% at 14.29% 0%, var(--canary-graph-gradient-bg-1) 10.62%, var(--canary-graph-gradient-bg-2) 75.86%)',
+      //     'graph-bg-gradient': 'radial-gradient(circle, var(--canary-graph-viewport-bg) 1px, transparent 1px)'
+      //   },
       backgroundSize: {
         'graph-bg-size': '22px 22px'
       },

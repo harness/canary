@@ -57,3 +57,6 @@ export * from './secrets'
 
 // components
 export * from './components/RadioSelect'
+
+// connectors
+export * from './connectors'

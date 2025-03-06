@@ -10,8 +10,7 @@ import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-u
 import { IFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
 
 import { getHarnessConnectorDefinition } from './connector-utils'
-import { GITHUB_CONNECTOR_DESCRIPTION } from './harness-connectors/github-connector'
-import { ConnectorFormEntityType, GITHUB_CONNECTOR_IDENTIFIER } from './types'
+import { ConnectorFormEntityType } from './types'
 
 interface ConnectorEntityFormProps {
   formEntity: ConnectorFormEntityType

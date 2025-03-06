@@ -1898,12 +1898,12 @@
       "danger": {
         "title": {
           "$type": "color",
-          "$value": "{colors.pure.white}",
+          "$value": "{text.1}",
           "$description": "Title text color for danger toast notifications. Provides maximum contrast against the error background."
         },
         "description": {
           "$type": "color",
-          "$value": "{colors.pure.white}",
+          "$value": "{text.1}",
           "$description": "Description text color for danger toast notifications. Ensures readability of critical information."
         },
         "background": {

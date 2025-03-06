@@ -29,7 +29,7 @@
     "build:ci": "vite build --config ./vite-base.config.ts",
     "build:analyse": "vite build --config ./vite-analyse.config.ts",
     "build:watch": "vite build --watch --emptyOutDir=false",
-    "build:style": "rm -rf src/styles/design-system && node export-tokens/build.js",
+    "build:styles": "rm -rf src/styles/design-system && node export-tokens/build.js",
     "lint": "eslint ./src",
     "pretty": "prettier --check ./src",
     "shadcn:update": "npx shadcn-ui@latest add -a -o -y",

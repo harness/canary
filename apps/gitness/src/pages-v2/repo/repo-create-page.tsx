@@ -1,13 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
-  CreateRepositoryErrorResponse,
   OpenapiCreateRepositoryRequest,
   useCreateRepositoryMutation,
   useListGitignoreQuery,
   useListLicensesQuery
 } from '@harnessio/code-service-client'
-import { toast } from '@harnessio/ui/components'
 import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/views'
 
 // import { Toaster } from '../../components-v2/toaster'

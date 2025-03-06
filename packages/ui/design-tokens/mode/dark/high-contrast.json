@@ -1937,7 +1937,7 @@
           "blur": "2",
           "spread": "-1",
           "color": "{shadow-color.2}",
-          "type": "innerShadow"
+          "type": "dropShadow"
         }
       ],
       "$description": "Default shadow. \nCommon uses: Cards, dropdowns, popovers in their default state."
@@ -1959,7 +1959,7 @@
           "blur": "4",
           "spread": "-2",
           "color": "{shadow-color.3}",
-          "type": "innerShadow"
+          "type": "dropShadow"
         }
       ],
       "$description": "Medium shadow. \nCommon uses: Elevated cards, active buttons, interactive elements on hover."
@@ -1980,8 +1980,8 @@
           "y": "4",
           "blur": "6",
           "spread": "-4",
-          "color": "#000000",
-          "type": "innerShadow"
+          "color": "{shadow-color.4}",
+          "type": "dropShadow"
         }
       ],
       "$description": "Large shadow. \nCommon uses: Modals, floating panels, navigation dropdowns."

@@ -1821,8 +1821,8 @@
     /* Selected tab bg element*/
     --canary-tab-item-gradient-from: var(--canary-grey-20) / 0.3;
     --canary-tab-item-gradient-to: var(--canary-grey-20) / 0;
-    --canary-tab-item-gradient-stops: hsla(var(--canary-tab-item-gradient-from)),
-      hsla(var(--canary-tab-item-gradient-to));
+    --canary-tab-item-gradient-stops:
+      hsla(var(--canary-tab-item-gradient-from)), hsla(var(--canary-tab-item-gradient-to));
 
     /* Gradient colors */
     --canary-tab-background-gradient: radial-gradient(

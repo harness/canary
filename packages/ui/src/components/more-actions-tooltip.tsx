@@ -62,7 +62,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
               <Link
                 key={`${action.title}-${idx}`}
                 to={action.to}
-                onClick={e => {
+                onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
                   e.stopPropagation()
                 }}
               >

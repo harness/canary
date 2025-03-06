@@ -61,7 +61,7 @@ const PullRequestLayout: FC<PullRequestLayoutProps> = ({
         <Tabs.Root variant="tabnav">
           <Tabs.List className="before:left-1/2 before:w-[calc(100vw-220px)] before:-translate-x-1/2">
             <NavLink to={PullRequestTabsKeys.CONVERSATION}>
-              {({ isActive }) => (
+              {({ isActive }: { isActive: boolean }) => (
                 <Tabs.Trigger
                   className="group gap-x-1.5"
                   value={PullRequestTabsKeys.CONVERSATION}
@@ -80,7 +80,7 @@ const PullRequestLayout: FC<PullRequestLayoutProps> = ({
               )}
             </NavLink>
             <NavLink to={PullRequestTabsKeys.COMMITS}>
-              {({ isActive }) => (
+              {({ isActive }: { isActive: boolean }) => (
                 <Tabs.Trigger
                   className="group gap-x-1.5"
                   value={PullRequestTabsKeys.COMMITS}
@@ -97,7 +97,7 @@ const PullRequestLayout: FC<PullRequestLayoutProps> = ({
               )}
             </NavLink>
             <NavLink to={PullRequestTabsKeys.CHANGES}>
-              {({ isActive }) => (
+              {({ isActive }: { isActive: boolean }) => (
                 <Tabs.Trigger
                   className="group gap-x-1.5"
                   value={PullRequestTabsKeys.CHANGES}

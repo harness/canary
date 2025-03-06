@@ -1062,7 +1062,7 @@ importers:
         version: 3.0.6(vitest@3.0.6)
       autoprefixer:
         specifier: ^10.4.20
-        version: 10.4.20(postcss@8.5.3)
+        version: 10.4.20(postcss@8.5.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1084,9 +1084,6 @@ importers:
       react:
         specifier: 17.0.2
         version: 17.0.2
-      react-router-dom:
-        specifier: ^6.26.0
-        version: 6.28.2(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       tailwindcss:
         specifier: ^3.4.14
         version: 3.4.17

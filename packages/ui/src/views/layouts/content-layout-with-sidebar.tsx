@@ -55,7 +55,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
             >
               {group.items.map(item => (
                 <NavLink key={item.id} to={item.to}>
-                  {({ isActive }) => (
+                  {({ isActive }: { isActive: boolean }) => (
                     <NavbarSkeleton.Item
                       className="py-2"
                       text={item.title}

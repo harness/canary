@@ -1,5 +1,10 @@
 import { ComponentType, createContext, ReactNode, useContext } from 'react'
-import type { LinkProps, NavigateFunction, NavLinkProps, OutletProps, UIMatch } from 'react-router-dom'
+
+type LinkProps = any
+type NavigateFunction = any
+type NavLinkProps = any
+type OutletProps = any
+type UIMatch = any
 
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
 
@@ -30,7 +35,7 @@ const NavLinkDefault = ({ to, children, className, style, ...props }: NavLinkPro
 
 const OutletDefault: ComponentType<OutletProps> = ({ children }) => <>{children}</>
 
-const navigateFnDefault: NavigateFunction = to => {
+const navigateFnDefault: NavigateFunction = (to: string | number) => {
   if (typeof to === 'number') {
     window.history.go(to) // Supports navigate(-1), navigate(1), etc.
   } else {

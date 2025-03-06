@@ -1,8 +1,9 @@
 import { FC, PropsWithChildren } from 'react'
-import type { NavLinkProps } from 'react-router-dom'
 
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
+
+type NavLinkProps = any
 
 const TabNavRoot: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
@@ -20,7 +21,7 @@ const TabNavItem: FC<NavLinkProps> = ({ children, ...props }) => {
   return (
     <NavLink
       role="tab"
-      className={({ isActive }) =>
+      className={({ isActive }: { isActive: boolean }) =>
         cn(commonClasses, {
           'text-primary border-borders-9': isActive
         })

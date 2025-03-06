@@ -27,7 +27,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
                 <NavbarSkeleton.Group key={group.groupId} topBorder={group_idx > 0} title={group.title} isSubMenu>
                   {group.items.map(item => (
                     <NavLink key={item.id} to={item.to || ''}>
-                      {({ isActive }) => (
+                      {({ isActive }: { isActive: boolean }) => (
                         <NavbarSkeleton.Item
                           text={item.title || ''}
                           description={item.description || ''}

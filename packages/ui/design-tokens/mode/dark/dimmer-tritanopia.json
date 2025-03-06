@@ -573,6 +573,11 @@
             "$value": "{text.1}",
             "$description": "Icon color for selected outline buttons. Increases visibility for active button states."
           },
+          "border": {
+            "$type": "color",
+            "$value": "{border.1}",
+            "$description": "Border color for selected outline buttons. Creates stronger visual indication of the active state."
+          },
           "background": {
             "$type": "color",
             "$value": "{border.1}",

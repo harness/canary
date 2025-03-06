@@ -283,6 +283,37 @@
       "linkText": "S'inscrire"
     }
   },
+  "signUp": {
+    "validation": {
+      "userIDNoEmpty": "L'ID utilisateur ne peut pas être vide",
+      "userIDMax": "L'ID utilisateur ne doit pas dépasser 100 caractères",
+      "userIDRegex": "L'ID utilisateur doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
+      "userIDNoSpaces": "L'ID utilisateur ne peut pas contenir d'espaces",
+      "emailNoEmpty": "Adresse e-mail invalide",
+      "emailMax": "L'adresse e-mail ne doit pas dépasser 250 caractères",
+      "passwordNoEmpty": "Le mot de passe doit avoir au moins 6 caractères",
+      "passwordMax": "Le mot de passe ne doit pas dépasser 128 caractères",
+      "passwordsCheck": "Les mots de passe ne correspondent pas"
+    },
+    "pageTitle": "S'inscrire à Harness",
+    "pageDescription": "Commencez votre aventure avec nous dès aujourd'hui.",
+    "userIDPlaceholder": "ID utilisateur",
+    "userIDLabel": "ID utilisateur",
+    "emailPlaceholder": "Votre adresse e-mail",
+    "emailLabel": "Adresse e-mail",
+    "passwordPlaceholder": "Mot de passe (6 caractères minimum)",
+    "passwordLabel": "Mot de passe",
+    "confirmPasswordPlaceholder": "Confirmer le mot de passe",
+    "confirmPasswordLabel": "Confirmer le mot de passe",
+    "buttonText": {
+      "signingUp": "Inscription en cours...",
+      "signUp": "S'inscrire"
+    },
+    "signInLink": {
+      "question": "Vous avez déjà un compte ?",
+      "linkText": "Se connecter"
+    }
+  },
   "labelData": {
     "form": {
       "colorValuePlaceholder": "Enter value name",

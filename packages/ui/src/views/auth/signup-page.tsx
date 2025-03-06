@@ -1,136 +1,137 @@
-import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Input, Spacer, StyledLink, Text } from '@/components'
+import { Button, Card, Fieldset, FormWrapper, Input, Message, MessageTheme, StyledLink } from '@/components'
+import { Floating1ColumnLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { Floating1ColumnLayout } from '..'
 import { Agreements } from './components/agreements'
 import { AnimatedHarnessLogo } from './components/animated-harness-logo'
 
 interface SignUpPageProps {
   isLoading?: boolean
   handleSignUp: (data: SignUpData) => void
+  useTranslationStore: () => TranslationStore
   error?: string
 }
 
-export interface SignUpData {
-  userId?: string
-  email?: string
-  password?: string
-  confirmPassword?: string
-}
+const makeSignUpSchema = (t: TranslationStore['t']) =>
+  z
+    .object({
+      userId: z
+        .string()
+        .trim()
+        .nonempty(t('views:signUp.validation.userIDNoEmpty', 'User ID can’t be blank'))
+        .max(100, t('views:signUp.validation.userIDMax', 'User ID must be no longer than 100 characters'))
+        .regex(
+          /^[a-zA-Z0-9._-\s]+$/,
+          t(
+            'views:signUp.validation.userIDRegex',
+            'User ID must contain only letters, numbers, and the characters: - _ .'
+          )
+        )
+        .refine(
+          data => !data.includes(' '),
+          t('views:signUp.validation.userIDNoSpaces', 'User ID cannot contain spaces')
+        ),
+      email: z
+        .string()
+        .email(t('views:signUp.validation.emailNoEmpty', 'Invalid email address'))
+        .max(250, t('views:signUp.validation.emailMax', 'Email must be no longer than 250 characters')),
+      password: z
+        .string()
+        .min(6, t('views:signUp.validation.passwordNoEmpty', 'Password must be at least 6 characters'))
+        .max(128, t('views:signUp.validation.passwordMax', 'Password must be no longer than 128 characters')),
+      confirmPassword: z.string()
+    })
+    .refine(data => data.password === data.confirmPassword, {
+      message: t('views:signUp.validation.passwordsCheck', "Passwords don't match"),
+      path: ['confirmPassword']
+    })
 
-const signUpSchema = z
-  .object({
-    userId: z.string().min(1, { message: 'User ID cannot be blank' }),
-    email: z.string().email({ message: 'Invalid email address' }),
-    password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
-    confirmPassword: z.string()
-  })
-  .refine(data => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword']
-  })
+export type SignUpData = z.infer<ReturnType<typeof makeSignUpSchema>>
 
-export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) {
-  const [serverError, setServerError] = useState<string | null>(null)
+export function SignUpPage({ isLoading, handleSignUp, useTranslationStore, error }: SignUpPageProps) {
+  const { t } = useTranslationStore()
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    trigger
-  } = useForm({
-    resolver: zodResolver(signUpSchema)
+    formState: { errors }
+  } = useForm<SignUpData>({
+    resolver: zodResolver(makeSignUpSchema(t))
   })
 
-  const onSubmit = (data: SignUpData) => {
-    handleSignUp(data)
-  }
-
-  const handleInputChange = async () => {
-    if (serverError) {
-      setServerError(null)
-      await trigger()
-    }
-  }
-
-  useEffect(() => {
-    if (error) {
-      setServerError(error)
-    }
-  }, [error])
-
-  const hasError = Object.keys(errors).length > 0 || !!serverError
+  const hasError = Object.keys(errors).length > 0 || !!error
 
   return (
     <Floating1ColumnLayout
-      className="flex-col bg-background-7 pt-20 sm:pt-[186px]"
+      className="bg-background-7 flex-col pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
       <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
         <Card.Header className="items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'green'} />
+
           <Card.Title className="mt-3 text-center" as="h1">
-            Sign up to Harness
+            {t('views:signUp.pageTitle', 'Sign up to Harness')}
           </Card.Title>
-          <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
-            Let’s start your journey with us today.
-          </Text>
+
+          <p className="text-foreground-4 mt-0.5 text-center text-sm leading-snug">
+            {t('views:signUp.pageDescription', 'Let’s start your journey with us today.')}
+          </p>
         </Card.Header>
+
         <Card.Content className="mt-10">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              id="userId"
-              type="text"
-              {...register('userId', { onChange: handleInputChange })}
-              placeholder="User ID"
-              label="User ID"
-              size="md"
-              autoFocus
-              error={errors.userId?.message?.toString()}
-            />
-            <Input
-              wrapperClassName="mt-7"
-              id="email"
-              type="email"
-              {...register('email', { onChange: handleInputChange })}
-              placeholder="Your email"
-              label="Email"
-              size="md"
-              error={errors.email?.message?.toString()}
-            />
-            <Input
-              wrapperClassName="mt-7"
-              id="password"
-              type="password"
-              placeholder="Password (6+ characters)"
-              label="Password"
-              size="md"
-              {...register('password', { onChange: handleInputChange })}
-              error={errors.password?.message?.toString()}
-            />
-            <Input
-              wrapperClassName="mt-7"
-              id="confirmPassword"
-              type="password"
-              placeholder="Confirm password"
-              label="Confirm password"
-              size="md"
-              {...register('confirmPassword', { onChange: handleInputChange })}
-              error={errors.confirmPassword?.message?.toString()}
-            />
-            {serverError && (
-              <>
-                <Text className="mt-1 leading-none tracking-tight text-foreground-danger" size={0}>
-                  {serverError}
-                </Text>
-              </>
+          <FormWrapper onSubmit={handleSubmit(handleSignUp)}>
+            <Fieldset legend="User details">
+              <Input
+                id="userId"
+                type="text"
+                {...register('userId')}
+                placeholder={t('views:signUp.userIDPlaceholder', 'User ID')}
+                label={t('views:signUp.userIDLabel', 'User ID')}
+                size="md"
+                autoFocus
+                error={errors.userId?.message?.toString()}
+              />
+              <Input
+                id="email"
+                type="email"
+                {...register('email')}
+                placeholder={t('views:signUp.emailPlaceholder', 'Your email')}
+                label={t('views:signUp.emailLabel', 'Email')}
+                size="md"
+                error={errors.email?.message?.toString()}
+              />
+              <Input
+                id="password"
+                type="password"
+                placeholder={t('views:signUp.passwordPlaceholder', 'Password (6+ characters)')}
+                label={t('views:signUp.passwordLabel', 'Password')}
+                size="md"
+                {...register('password')}
+                error={errors.password?.message?.toString()}
+              />
+              <Input
+                id="confirmPassword"
+                type="password"
+                placeholder={t('views:signUp.confirmPasswordPlaceholder', 'Confirm password')}
+                label={t('views:signUp.confirmPasswordLabel', 'Confirm password')}
+                size="md"
+                {...register('confirmPassword')}
+                error={errors.confirmPassword?.message?.toString()}
+              />
+            </Fieldset>
+
+            {error && (
+              <Message className="mt-1" theme={MessageTheme.ERROR}>
+                {error}
+              </Message>
             )}
+
             <Button
-              className="mt-10 w-full"
+              className="mt-3 w-full"
               variant="default"
               borderRadius="full"
               type="submit"
@@ -138,16 +139,18 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               loading={isLoading}
               disabled={hasError}
             >
-              {isLoading ? 'Signing up...' : 'Sign up'}
+              {isLoading
+                ? t('views:signUp.buttonText.signingUp', 'Signing up...')
+                : t('views:signUp.buttonText.signUp', 'Sign up')}
             </Button>
-          </form>
-          <Spacer size={4} />
-          <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
-            Already have an account?{' '}
-            <StyledLink variant="accent" to="/signin">
-              Sign in
+          </FormWrapper>
+
+          <p className="foreground-5 text-foreground-5 mt-4 text-center text-sm">
+            {t('views:signUp.signInLink.question', 'Already have an account?')}{' '}
+            <StyledLink to="/signin" variant="accent">
+              {t('views:signUp.signInLink.linkText', 'Sign in')}
             </StyledLink>
-          </Text>
+          </p>
         </Card.Content>
       </Card.Root>
       <Agreements />

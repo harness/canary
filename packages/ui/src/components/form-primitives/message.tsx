@@ -1,6 +1,5 @@
 import { HTMLAttributes } from 'react'
 
-import { Text } from '@/components'
 import { cn } from '@utils/cn'
 
 import { MessageTheme } from './form-primitives.types'
@@ -30,15 +29,12 @@ const themeClassMap: Record<MessageTheme, string> = {
  * </Message>
  */
 export function Message({ children, theme, className }: MessageProps) {
-  const textClass = themeClassMap[theme]
   const role = theme === MessageTheme.ERROR ? 'alert' : 'status'
   const ariaLive = theme === MessageTheme.ERROR ? 'assertive' : 'polite'
 
   return (
-    <div className={cn(textClass, className)} role={role} aria-live={ariaLive}>
-      <Text as="p" size={2} className="text-inherit">
-        {children}
-      </Text>
-    </div>
+    <p className={cn('text-sm font-normal', themeClassMap[theme], className)} role={role} aria-live={ariaLive}>
+      {children}
+    </p>
   )
 }

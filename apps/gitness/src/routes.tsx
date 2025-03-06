@@ -15,6 +15,7 @@ import { AppProvider } from './framework/context/AppContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { useTranslationStore } from './i18n/stores/i18n-store'
+import ConnectorsListPage from './pages-v2/connectors/connectors-list-page.tsx'
 import { CreateProject } from './pages-v2/create-project'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { Logout } from './pages-v2/logout'
@@ -62,7 +63,6 @@ import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-conta
 import { WebhookExecutionDetailsContainer } from './pages-v2/webhooks/webhook-execution-details-container'
 import { WebhookExecutionsContainer } from './pages-v2/webhooks/webhook-executions'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
-import ConnectorsListPage from './pages-v2/connectors/connectors-list-page.tsx'
 
 enum Page {
   Repositories = 'Repositories',

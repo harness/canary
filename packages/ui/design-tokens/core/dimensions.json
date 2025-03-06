@@ -332,7 +332,7 @@
       "$description": "3.5"
     }
   },
-  "border": {
+  "borderWidth": {
     "0": {
       "$type": "borderWidth",
       "$value": "0rem",

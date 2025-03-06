@@ -165,7 +165,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{border.2}",
+        "$value": "{borderWidth.2}",
         "$description": "Border color for accordion items. Provides visual separation between accordion panels."
       }
     },
@@ -571,7 +571,7 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{border.2}",
+            "$value": "{borderWidth.2}",
             "$description": "Border color for unselected outline buttons. Defines the clickable area with a visible boundary."
           },
           "background": {
@@ -593,7 +593,7 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{border.1}",
+            "$value": "{borderWidth.1}",
             "$description": "Border color for selected outline buttons. Creates stronger visual indication of the active state."
           },
           "background": {
@@ -780,7 +780,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{border.2}",
+        "$value": "{borderWidth.2}",
         "$description": "Border color for card components. Defines the card boundaries and enhances visual separation from surrounding content."
       }
     },
@@ -823,7 +823,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{border.2}",
+        "$value": "{borderWidth.2}",
         "$description": "Border color for dropdown menus container."
       },
       "item": {
@@ -1039,7 +1039,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{border.2}",
+        "$value": "{borderWidth.2}",
         "$description": "Border color for input fields. Defines the input area with a visible boundary for improved usability."
       }
     },
@@ -1102,7 +1102,7 @@
       "arrow": {
         "border": {
           "$type": "color",
-          "$value": "{border.1}",
+          "$value": "{borderWidth.1}",
           "$description": "Border color for pipeline connection arrows. Defines the visual path between pipeline components."
         },
         "running": {
@@ -1167,7 +1167,7 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{border.2}",
+            "$value": "{borderWidth.2}",
             "$description": "Border styling applied to nested canvas containers. Creates clear visual boundaries between different sections within the pipeline visualization."
           }
         }
@@ -1339,7 +1339,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.1}",
+          "$value": "{borderWidth.1}",
           "$description": "Border color for unselected elements in selection controls. Defines the clickable area with a visible boundary."
         }
       },
@@ -1364,7 +1364,7 @@
     "separator": {
       "background": {
         "$type": "color",
-        "$value": "{border.2}",
+        "$value": "{borderWidth.2}",
         "$description": "Background color for separator elements. Creates visual division between content sections with a subtle line or space."
       }
     },
@@ -1560,7 +1560,7 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{border.2}",
+            "$value": "{borderWidth.2}",
             "$description": "Border color for the selected tab item. Reinforces the active state with defined boundaries."
           }
         }
@@ -1880,17 +1880,17 @@
       "danger": {
         "title": {
           "$type": "color",
-          "$value": "{colors.pure.white}",
+          "$value": "{text.1}",
           "$description": "Title text color for danger toast notifications. Provides maximum contrast against the error background."
         },
         "description": {
           "$type": "color",
-          "$value": "{colors.pure.white}",
+          "$value": "{text.1}",
           "$description": "Description text color for danger toast notifications. Ensures readability of critical information."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.red.400}",
+          "$value": "{colors.red.200}",
           "$description": "Background color for danger toast notifications. Creates high-visibility indication of errors or warnings."
         },
         "border": {
@@ -2257,7 +2257,7 @@
         },
         "gradient-stop-3": {
           "$type": "color",
-          "$value": "{border.1}"
+          "$value": "{borderWidth.1}"
         }
       },
       "card": {

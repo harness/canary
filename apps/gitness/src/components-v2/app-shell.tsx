@@ -175,58 +175,68 @@ export const AppShell = () => {
   useRepoImportEvents()
 
   return (
-    <Sidebar.Provider>
-      <AppSidebar
-        showMoreMenu={showMoreMenu}
-        showSettingMenu={showSettingMenu}
-        handleMoreMenu={handleMoreMenu}
-        handleSettingsMenu={handleSettingsMenu}
-        currentUser={currentUser}
-        handleCustomNav={handleCustomNav}
-        handleLogOut={handleLogOut}
-        recentMenuItems={recentMenu}
-        pinnedMenuItems={pinnedMenu}
-        handleChangePinnedMenuItem={handleChangePinnedMenuItem}
-        handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-        useThemeStore={useThemeStore}
-        useTranslationStore={useTranslationStore}
-      />
-
-      <Sidebar.Inset>
-        <BreadcrumbsAndOutlet />
-
-        <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
-        <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
-        <ManageNavigation
-          pinnedItems={pinnedMenu}
-          recentItems={recentMenu}
-          navbarMenuData={getNavbarMenuData({ t, routes, spaceId: spaceIdPathParam, repoId })}
-          showManageNavigation={showCustomNav}
-          isSubmitting={false}
-          submitted={false}
-          onSave={handleSave}
-          onClose={handleCustomNav}
+    <>
+      <Sidebar.Provider>
+        <AppSidebar
+          showMoreMenu={showMoreMenu}
+          showSettingMenu={showSettingMenu}
+          handleMoreMenu={handleMoreMenu}
+          handleSettingsMenu={handleSettingsMenu}
+          currentUser={currentUser}
+          handleCustomNav={handleCustomNav}
+          handleLogOut={handleLogOut}
+          recentMenuItems={recentMenu}
+          pinnedMenuItems={pinnedMenu}
+          handleChangePinnedMenuItem={handleChangePinnedMenuItem}
+          handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
+          useThemeStore={useThemeStore}
+          useTranslationStore={useTranslationStore}
         />
-        <Toaster />
-      </Sidebar.Inset>
-    </Sidebar.Provider>
+
+        <Sidebar.Inset>
+          <BreadcrumbsAndOutlet />
+
+          <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
+          <SettingsMenu
+            showSettingMenu={showSettingMenu}
+            handleSettingsMenu={handleSettingsMenu}
+            items={settingsMenu}
+          />
+          <ManageNavigation
+            pinnedItems={pinnedMenu}
+            recentItems={recentMenu}
+            navbarMenuData={getNavbarMenuData({ t, routes, spaceId: spaceIdPathParam, repoId })}
+            showManageNavigation={showCustomNav}
+            isSubmitting={false}
+            submitted={false}
+            onSave={handleSave}
+            onClose={handleCustomNav}
+          />
+        </Sidebar.Inset>
+      </Sidebar.Provider>
+      <Toaster />
+    </>
   )
 }
 
 export const AppShellMFE = () => {
-  return <BreadcrumbsAndOutlet className="min-h-screen text-foreground-2" />
+  useRepoImportEvents()
+
+  return (
+    <>
+      <BreadcrumbsAndOutlet className="min-h-screen text-foreground-2" />
+      <Toaster />
+    </>
+  )
 }
 
 function BreadcrumbsAndOutlet({ className }: { className?: string }) {
-  useRepoImportEvents()
-
   return (
     <div className={cn('h-full flex flex-col', className)}>
       <div className="layer-high sticky top-0 bg-background-1">
         <Breadcrumbs />
       </div>
       <Outlet />
-      <Toaster />
     </div>
   )
 }

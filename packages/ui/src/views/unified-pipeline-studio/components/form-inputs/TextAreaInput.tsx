@@ -23,7 +23,7 @@ function TextAreaInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
     <InputWrapper>
       <InputLabel label={label} description={description} required={required} />
       <Textarea placeholder={placeholder} {...field} disabled={readonly} />
-      <InputError />
+      <InputError path={path} />
     </InputWrapper>
   )
 }

@@ -46,7 +46,7 @@ function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig
           })}
         </Select.Content>
       </Select.Root>
-      <InputError />
+      <InputError path={path} />
     </InputWrapper>
   )
 }

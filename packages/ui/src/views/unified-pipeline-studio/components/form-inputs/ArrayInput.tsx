@@ -84,7 +84,7 @@ function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>)
           </div>
         )}
       />
-      <InputError />
+      <InputError path={path} />
     </InputWrapper>
   )
 }

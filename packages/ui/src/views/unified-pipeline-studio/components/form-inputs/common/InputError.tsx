@@ -1,21 +1,25 @@
 import { forwardRef } from 'react'
+import { useFormContext } from 'react-hook-form'
 
-import { useFormField } from '@components/form'
 import { cn } from '@utils/cn'
 
-export const InputError = forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => {
-    const { error, formMessageId } = useFormField()
+export const InputError = forwardRef<
+  HTMLParagraphElement,
+  { path: string } & React.HTMLAttributes<HTMLParagraphElement>
+>(({ path, className, ...props }, ref) => {
+  const { getFieldState, formState } = useFormContext()
 
-    if (!error?.message) {
-      return null
-    }
+  const fieldState = getFieldState(path, formState)
+  const { error } = fieldState
 
-    return (
-      <p ref={ref} id={formMessageId} className={cn('text-destructive text-sm font-medium', className)} {...props}>
-        {error.message}
-      </p>
-    )
+  if (!error?.message) {
+    return null
   }
-)
+
+  return (
+    <p ref={ref} className={cn('text-destructive text-sm font-medium', className)} {...props}>
+      {error.message}
+    </p>
+  )
+})
 InputError.displayName = 'InputError'

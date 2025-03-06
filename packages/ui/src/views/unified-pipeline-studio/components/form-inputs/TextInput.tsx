@@ -23,7 +23,7 @@ function TextInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
     <InputWrapper>
       <InputLabel label={label} description={description} required={required} />
       <Input placeholder={placeholder} {...field} disabled={readonly} tabIndex={0} />
-      <InputError />
+      <InputError path={path} />
     </InputWrapper>
   )
 }

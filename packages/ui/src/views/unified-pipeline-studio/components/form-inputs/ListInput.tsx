@@ -112,7 +112,7 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
           </div>
         )}
       />
-      <InputError />
+      <InputError path={path} />
     </InputWrapper>
   )
 }

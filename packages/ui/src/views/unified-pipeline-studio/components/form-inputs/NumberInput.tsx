@@ -23,7 +23,7 @@ function NumberInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
     <InputWrapper>
       <InputLabel label={label} description={description} required={required} />
       <Input placeholder={placeholder} {...field} disabled={readonly} type="number" />
-      <InputError />
+      <InputError path={path} />
     </InputWrapper>
   )
 }

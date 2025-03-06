@@ -34,7 +34,7 @@ function BooleanInputInternal(props: InputProps<AnyFormikValue, BooleanInputConf
         }}
       />
       <InputLabel label={label} required={required} description={description} />
-      <InputError />
+      <InputError path={path} />
     </InputWrapper>
   )
 }

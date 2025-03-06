@@ -1,5 +1,5 @@
 import { ComponentType, createContext, ReactNode, useContext } from 'react'
-import type { LinkProps, NavigateFunction, NavLinkProps, OutletProps, UIMatch } from 'react-router-dom'
+import type { LinkProps, Location, NavigateFunction, NavLinkProps, OutletProps, UIMatch } from 'react-router-dom'
 
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
 
@@ -47,6 +47,8 @@ const useMatchesDefault = (): UIMatch[] => {
   return []
 }
 
+const defaultLocation: Location = { ...window.location, state: {}, key: '' }
+
 interface RouterContextType {
   Link: ComponentType<LinkProps>
   NavLink: ComponentType<NavLinkProps>
@@ -61,7 +63,7 @@ const RouterContext = createContext<RouterContextType>({
   Link: LinkDefault,
   NavLink: NavLinkDefault,
   Outlet: OutletDefault,
-  location: window.location,
+  location: defaultLocation,
   navigate: navigateFnDefault,
   useSearchParams: useSearchParamsDefault,
   useMatches: useMatchesDefault
@@ -74,7 +76,7 @@ export const RouterContextProvider = ({
   Link = LinkDefault,
   NavLink = NavLinkDefault,
   Outlet = OutletDefault,
-  location = window.location,
+  location = defaultLocation,
   navigate = navigateFnDefault,
   useSearchParams = useSearchParamsDefault,
   useMatches = useMatchesDefault

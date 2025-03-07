@@ -1,8 +1,5 @@
 import { FormControl, FormField, FormItem } from '@components/form'
-import { StackedList } from '@components/index'
-import { RadioButton, RadioGroup } from '@components/radio'
-import { cn } from '@utils/cn'
-import { RadialSelect } from '@views/components/RadialSelect'
+import { RadioSelect } from '@views/components/RadioSelect'
 
 import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/forms'
 
@@ -10,33 +7,6 @@ import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'
 import InputWrapper from './common/InputWrapper'
 import { InputType } from './types'
-
-interface OptionProps {
-  label: string
-  description: string
-  value: string
-  selected: boolean
-  onSelect: (value: string) => void
-  disabled?: boolean
-}
-
-const Option = ({ description, value, selected, onSelect, disabled, label }: OptionProps) => (
-  <div id={label}>
-    <StackedList.Root className="overflow-hidden" borderBackground>
-      <StackedList.Item
-        className={cn('cursor-pointer !rounded px-5 py-3', {
-          '!bg-background-4': selected
-        })}
-        isHeader
-        isLast
-        actions={<RadioButton value={value} disabled={disabled} />}
-        onClick={() => onSelect(value)}
-      >
-        <StackedList.Field title={label} description={description} />
-      </StackedList.Item>
-    </StackedList.Root>
-  </div>
-)
 
 export interface RadialOption {
   label: string
@@ -66,7 +36,7 @@ function RadialInputInternal(props: Readonly<InputProps<AnyFormikValue, RadialIn
           <FormItem>
             <InputLabel label={label} description={description} required={required} />
             <FormControl>
-              <RadialSelect options={options} value={field.value} onValueChange={field.onChange} id={field.value} />
+              <RadioSelect options={options} value={field.value} onValueChange={field.onChange} id={field.value} />
             </FormControl>
             <InputError path={path} />
           </FormItem>

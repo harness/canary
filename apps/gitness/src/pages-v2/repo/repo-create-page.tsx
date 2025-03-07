@@ -1,16 +1,14 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
-  CreateRepositoryErrorResponse,
   OpenapiCreateRepositoryRequest,
   useCreateRepositoryMutation,
   useListGitignoreQuery,
   useListLicensesQuery
 } from '@harnessio/code-service-client'
-import { toast } from '@harnessio/ui/components'
 import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/views'
 
-import { Toaster } from '../../components-v2/toaster'
+// import { Toaster } from '../../components-v2/toaster'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -18,7 +16,7 @@ import { PathParams } from '../../RouteDefinitions'
 
 export const CreateRepo = () => {
   const routes = useRoutes()
-  const createRepositoryMutation = useCreateRepositoryMutation({})
+  const { mutate: createRepository, error, isLoading, isSuccess } = useCreateRepositoryMutation({})
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
@@ -35,7 +33,7 @@ export const CreateRepo = () => {
       identifier: data.name
     }
 
-    createRepositoryMutation.mutate(
+    createRepository(
       {
         queryParams: {
           space_path: spaceURL
@@ -45,13 +43,6 @@ export const CreateRepo = () => {
       {
         onSuccess: ({ body: data }) => {
           navigate(routes.toRepoSummary({ spaceId, repoId: data?.identifier }))
-        },
-        onError: (error: CreateRepositoryErrorResponse) => {
-          const message = error.message || 'An unknown error occurred.'
-          toast({
-            title: message,
-            variant: 'destructive'
-          })
         }
       }
     )
@@ -70,13 +61,13 @@ export const CreateRepo = () => {
       <RepoCreatePageView
         onFormSubmit={onSubmit}
         onFormCancel={onCancel}
-        isLoading={createRepositoryMutation.isLoading}
-        isSuccess={createRepositoryMutation.isSuccess}
+        isLoading={isLoading}
+        isSuccess={isSuccess}
         gitIgnoreOptions={gitIgnoreOptions}
         licenseOptions={licenseOptions}
         useTranslationStore={useTranslationStore}
+        apiError={error?.message?.toString()}
       />
-      <Toaster />
     </>
   )
 }

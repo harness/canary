@@ -76,8 +76,25 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
   const submittedRef = useRef(false)
 
   useEffect(() => {
-    methods.reset(defaultValues)
+    methods.reset(defaultValues, {})
   }, [methods.reset, defaultValues])
+
+  // reset defaultValues to prevent default on recreated (deleted then created) array/list items
+  useEffect(() => {
+    setTimeout(() => {
+      methods.reset({} as TFieldValues, {
+        keepErrors: true,
+        keepDirty: true,
+        keepDirtyValues: true,
+        keepValues: true,
+        keepDefaultValues: false, // RESET default values
+        keepIsSubmitted: true,
+        keepTouched: true,
+        keepIsValid: true,
+        keepSubmitCount: true
+      })
+    }, 1)
+  }, [])
 
   const { getValues, handleSubmit } = methods
   const values = getValues()

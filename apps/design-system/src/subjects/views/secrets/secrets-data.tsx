@@ -1,61 +1,26 @@
-import { SecretItem } from '@harnessio/ui/views'
-
-export const accountSecrets: SecretItem[] = [
+export const secretsData = [
   {
-    id: 'aws-access-key',
-    name: 'aws-access-key',
     secret: {
-      type: 'SecretText',
-      name: 'aws-access-key',
-      identifier: 'aws-access-key',
+      type: 'SecretFile',
+      name: 'hellohjfe',
+      identifier: 'hellohjfe',
       orgIdentifier: 'default',
+      projectIdentifier: 'abhinavtest3',
       tags: {},
-      description: 'AWS access key for deployments',
+      description: '',
       spec: {
         secretManagerIdentifier: 'harnessSecretManager',
-        valueType: 'Inline',
-        value: null,
         additionalMetadata: null
       }
     },
-    createdAt: 1710968557986,
-    updatedAt: 1710968557986,
+    createdAt: 1741279791821,
+    updatedAt: 1741279791821,
     draft: false,
-    governanceMetadata: null,
-    scope: 'account'
+    governanceMetadata: null
   },
   {
-    id: 'github-token',
-    name: 'github-token',
     secret: {
-      type: 'SecretText',
-      name: 'github-token',
-      identifier: 'github-token',
-      orgIdentifier: 'default',
-      tags: {},
-      description: 'GitHub token for CI/CD',
-      spec: {
-        secretManagerIdentifier: 'harnessSecretManager',
-        valueType: 'Inline',
-        value: null,
-        additionalMetadata: null
-      }
-    },
-    createdAt: 1719353653579,
-    updatedAt: 1719353653579,
-    draft: false,
-    governanceMetadata: null,
-    scope: 'account'
-  }
-]
-
-// Example data for Organization scope
-export const organizationSecrets: SecretItem[] = [
-  {
-    id: 'hello',
-    name: 'hello',
-    secret: {
-      type: 'SecretText',
+      type: 'SecretFile',
       name: 'hello',
       identifier: 'hello',
       orgIdentifier: 'default',
@@ -64,20 +29,15 @@ export const organizationSecrets: SecretItem[] = [
       description: '',
       spec: {
         secretManagerIdentifier: 'harnessSecretManager',
-        valueType: 'Inline',
-        value: null,
         additionalMetadata: null
       }
     },
-    createdAt: 1741108966918,
-    updatedAt: 1741108966918,
+    createdAt: 1741213431403,
+    updatedAt: 1741213431403,
     draft: false,
-    governanceMetadata: null,
-    scope: 'organization'
+    governanceMetadata: null
   },
   {
-    id: 'sanskar-test',
-    name: 'sanskar-test',
     secret: {
       type: 'SecretText',
       name: 'sanskar-test',
@@ -100,12 +60,9 @@ export const organizationSecrets: SecretItem[] = [
     createdAt: 1740785306341,
     updatedAt: 1740785306341,
     draft: false,
-    governanceMetadata: null,
-    scope: 'organization'
+    governanceMetadata: null
   },
   {
-    id: 'abhinavrastogi-harness',
-    name: 'abhinavrastogi-harness',
     secret: {
       type: 'SecretText',
       name: 'abhinavrastogi-harness',
@@ -124,12 +81,30 @@ export const organizationSecrets: SecretItem[] = [
     createdAt: 1719353653579,
     updatedAt: 1719353653579,
     draft: false,
-    governanceMetadata: null,
-    scope: 'organization'
+    governanceMetadata: null
   },
   {
-    id: 'abhinav-test',
-    name: 'abhinav-test',
+    secret: {
+      type: 'SecretText',
+      name: 'aws-access-key',
+      identifier: 'aws-access-key',
+      orgIdentifier: 'default',
+      projectIdentifier: 'abhinavtest3',
+      tags: {},
+      description: '',
+      spec: {
+        secretManagerIdentifier: 'harnessSecretManager',
+        valueType: 'Inline',
+        value: null,
+        additionalMetadata: null
+      }
+    },
+    createdAt: 1710968557986,
+    updatedAt: 1710968557986,
+    draft: false,
+    governanceMetadata: null
+  },
+  {
     secret: {
       type: 'SecretText',
       name: 'abhinav-test',
@@ -148,7 +123,6 @@ export const organizationSecrets: SecretItem[] = [
     createdAt: 1700005592914,
     updatedAt: 1700005592914,
     draft: false,
-    governanceMetadata: null,
-    scope: 'organization'
+    governanceMetadata: null
   }
 ]

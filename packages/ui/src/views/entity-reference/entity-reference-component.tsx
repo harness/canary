@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 
-import { Button, Icon, IconProps, Input } from '@/components'
+import { Button, Icon, Input, ScrollArea } from '@/components'
 import { Root as StackedList, Field as StackedListField, Item as StackedListItem } from '@/components/stacked-list'
 import { cn } from '@utils/cn'
 
@@ -13,28 +13,34 @@ export interface BaseEntityProps {
 // Props for rendering a single entity item
 export interface EntityRendererProps<T extends BaseEntityProps> {
   entity: T
-  isSelected?: boolean
-  onSelect?: (entity: T) => void
+  isSelected: boolean
+  onSelect: (entity: T) => void
 }
 
 // Props for the scope selector item
 export interface ScopeSelectorProps<S = string> {
   scope: S
-  isActive?: boolean
-  onSelect?: (scope: S) => void
+  isActive: boolean
+  onSelect: (scope: S) => void
 }
 
-// Props for the EntityReference component
-export interface EntityReferenceProps<T extends BaseEntityProps, S = string> {
+export interface FolderRendererProps<F = string> {
+  folder: F
+  onSelect: (folder: F) => void
+}
+
+export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F = string> {
   // Data
   entities: T[]
   selectedEntity: T | null
-  activeScope?: S
+  activeScope?: S | null
   scopes?: S[]
+  folders?: F[]
 
   // Callbacks
-  onSelectEntity?: (entity: T) => void
-  onScopeChange?: (scope: S) => void
+  onSelectEntity: (entity: T) => void
+  onScopeChange: (scope: S) => void
+  onFolderChange?: (folder: F) => void
 
   // UI Configuration
   showFilter?: boolean
@@ -42,25 +48,29 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string> {
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
   renderScopeSelector?: (props: ScopeSelectorProps<S>) => React.ReactNode
+  renderFolder?: (props: FolderRendererProps<F>) => React.ReactNode
 }
 
-export function EntityReference<T extends BaseEntityProps, S = string>({
+export function EntityReference<T extends BaseEntityProps, S = string, F = string>({
   // Data
   entities,
   selectedEntity,
   activeScope,
   scopes = [],
+  folders = [],
 
   // Callbacks
   onSelectEntity,
   onScopeChange,
+  onFolderChange,
 
   showFilter = true,
 
   // Custom renderers
   renderEntity,
-  renderScopeSelector
-}: EntityReferenceProps<T, S>): JSX.Element {
+  renderScopeSelector,
+  renderFolder
+}: EntityReferenceProps<T, S, F>): JSX.Element {
   const handleSelectEntity = useCallback(
     (entity: T) => {
       onSelectEntity?.(entity)
@@ -75,28 +85,45 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
     [onScopeChange]
   )
 
-  // Default entity renderer
-  const defaultEntityRenderer = ({ entity, isSelected, onSelect }: EntityRendererProps<T>) => {
-    const hasSelectButton = 'type' in entity && entity.type === 'secret'
+  const handleFolderChange = useCallback(
+    (folder: F) => {
+      onFolderChange?.(folder)
+    },
+    [onFolderChange]
+  )
 
+  // Filter scopes based on hierarchy
+  const getVisibleScopes = () => {
+    if (!activeScope) {
+      return scopes
+    }
+
+    const activeScopeIndex = scopes.findIndex(scope => scope === activeScope)
+
+    if (activeScopeIndex === -1) {
+      return scopes
+    }
+
+    return scopes.slice(0, activeScopeIndex)
+  }
+
+  const defaultEntityRenderer = ({ entity, isSelected, onSelect }: EntityRendererProps<T>) => {
     return (
       <StackedListItem
         onClick={() => onSelect?.(entity)}
         className={cn(isSelected && 'bg-background-4')}
         thumbnail={<Icon name="file" size={16} className="text-foreground-5" />}
         actions={
-          hasSelectButton ? (
-            <Button
-              variant="default"
-              size="sm"
-              onClick={e => {
-                e.stopPropagation()
-                onSelect?.(entity)
-              }}
-            >
-              Select
-            </Button>
-          ) : undefined
+          <Button
+            variant="default"
+            size="sm"
+            onClick={e => {
+              e.stopPropagation()
+              onSelect?.(entity)
+            }}
+          >
+            Select
+          </Button>
         }
       >
         <StackedListField title={entity.name} />
@@ -106,29 +133,44 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
 
   // Default scope selector renderer
   const defaultScopeSelectorRenderer = ({ scope, isActive, onSelect }: ScopeSelectorProps<S>) => {
-    const iconName = typeof scope === 'string' && (scope.toLowerCase().includes('account') ? 'account' : 'folder')
-
     return (
       <StackedListItem
         onClick={() => onSelect?.(scope)}
         className={cn(isActive && 'bg-background-4 font-medium')}
-        thumbnail={<Icon name={iconName as IconProps['name']} size={16} className="text-foreground-5" />}
+        thumbnail={<Icon name="circle-arrow-top" size={16} className="text-foreground-5" />}
       >
         <StackedListField title={<span className="capitalize">{String(scope)}</span>} />
       </StackedListItem>
     )
   }
 
+  // Default folder renderer
+  const defaultFolderRenderer = ({ folder, onSelect }: FolderRendererProps<F>) => {
+    return (
+      <StackedListItem
+        onClick={() => onSelect?.(folder)}
+        thumbnail={<Icon name="folder" size={16} className="text-foreground-5" />}
+      >
+        <StackedListField title={<span className="capitalize">{String(folder)}</span>} />
+      </StackedListItem>
+    )
+  }
+
   const renderCombinedList = () => {
+    const visibleScopes = getVisibleScopes()
+
     return (
       <StackedList>
-        {scopes.length > 0 && (
+        {/* scopes */}
+        {visibleScopes.length > 0 && (
           <>
-            {scopes.map(scope => (
+            {visibleScopes.map(scope => (
               <React.Fragment key={String(scope)}>
                 {renderScopeSelector
                   ? renderScopeSelector({
-                      scope
+                      scope,
+                      isActive: scope === activeScope,
+                      onSelect: handleScopeChange
                     })
                   : defaultScopeSelectorRenderer({
                       scope,
@@ -140,17 +182,38 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
           </>
         )}
 
-        {/* Render entities */}
+        {/* folders */}
+        {folders.length > 0 && (
+          <>
+            {folders.map(folder => (
+              <React.Fragment key={String(folder)}>
+                {renderFolder
+                  ? renderFolder({
+                      folder,
+                      onSelect: handleFolderChange
+                    })
+                  : defaultFolderRenderer({
+                      folder,
+                      onSelect: handleFolderChange
+                    })}
+              </React.Fragment>
+            ))}
+          </>
+        )}
+
+        {/* entities */}
         {entities.length > 0 ? (
           <>
             {entities.map(entity => {
-              const isSelected = entity === selectedEntity
+              const isSelected = entity.id === selectedEntity?.id
 
               return (
                 <React.Fragment key={entity.id}>
                   {renderEntity
                     ? renderEntity({
-                        entity
+                        entity,
+                        isSelected,
+                        onSelect: handleSelectEntity
                       })
                     : defaultEntityRenderer({
                         entity,
@@ -173,11 +236,12 @@ export function EntityReference<T extends BaseEntityProps, S = string>({
   }
 
   return (
-    <div className={cn('flex flex-col h-full')}>
+    <>
       {showFilter && <Input type="text" placeholder="Search" className="mb-4" />}
-
-      <div className="flex-1 overflow-auto">{renderCombinedList()}</div>
-    </div>
+      <ScrollArea className="h-[62%]">
+        <div className="flex-1">{renderCombinedList()}</div>
+      </ScrollArea>
+    </>
   )
 }
 

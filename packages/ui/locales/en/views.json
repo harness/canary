@@ -110,6 +110,15 @@
     "viewRules": "View Rules",
     "browse": "Browse",
     "deleteBranch": "Delete Branch",
+    "createBranchDialog": {
+      "validation": {
+        "nameNoEmpty": "Branch name can’t be blank",
+        "nameMax": "Branch name must be no longer than 256 characters",
+        "nameRegex": "Branch name must contain only letters, numbers, and the characters: - _ .",
+        "nameNoSpaces": "Branch name cannot contain spaces",
+        "targetNoEmpty": "Target branch can’t be blank"
+      }
+    },
     "createBranchTitle": "Create a branch",
     "createBranchButton": "Create branch",
     "newBranch": "New branch",
@@ -407,6 +416,12 @@
     "compareChangesFormTitleLabel": "Title",
     "compareChangesFormDescriptionPlaceholder": "Add Pull Request description here.",
     "compareChangesFormDescriptionLabel": "Description",
+    "compare": {
+      "validation": {
+        "titleNoEmpty": "Pull request title can’t be blank",
+        "titleMax": "Pull request title must be no longer than 256 characters"
+      }
+    },
     "compareChanges": "Comparing changes",
     "compareChangesDescription": "Choose two branches to see what’s changed or to start a new pull request.",
     "compareChangesAbleToMerge": "Able to merge.",
@@ -441,6 +456,7 @@
     "split": "Split",
     "unified": "Unified",
     "viewed": "Viewed",
+    "compareChangesCantMergeDesciption": "You can still create the pull request.",
     "compareChangesForkLink": "compare across forks",
     "compareChangesOr": "or",
     "compareChangesDiffLink": "learn more about diff comparisons",

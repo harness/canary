@@ -13,12 +13,8 @@ import {
   StyledLink,
   StyledLinkProps
 } from '@/components'
-import {
-  Floating1ColumnLayout,
-  makeProjectDescriptionSchema,
-  makeProjectNameSchema,
-  TranslationStore
-} from '@/views'
+import { useTheme } from '@/context'
+import { Floating1ColumnLayout, makeProjectDescriptionSchema, makeProjectNameSchema, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
 import { z } from 'zod'

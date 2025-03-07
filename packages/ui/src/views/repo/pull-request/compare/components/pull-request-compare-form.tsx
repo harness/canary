@@ -2,31 +2,23 @@ import { forwardRef, MouseEvent, useRef, useState } from 'react'
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
 import { Button, Fieldset, Icon, Input, MarkdownViewer, Tabs, Textarea } from '@/components'
-import { handleFileDrop, handlePaste, HandleUploadType, TranslationStore } from '@/views'
+import { CompareFormFields, handleFileDrop, handlePaste, HandleUploadType, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
-import { z } from 'zod'
 
 const TABS_KEYS = {
   WRITE: 'write',
   PREVIEW: 'preview'
 }
-// Define the form schema
-const formSchemaCompare = z.object({
-  title: z.string().min(1, { message: 'Please provide a pull request title' }),
-  description: z.string().optional()
-})
-
-export type FormFields = z.infer<typeof formSchemaCompare> // Automatically generate a type from the schema
 
 interface PullRequestFormProps {
   apiError: string | null
   isLoading: boolean
-  onFormDraftSubmit: (data: FormFields) => void
-  onFormSubmit: (data: FormFields) => void
+  onFormDraftSubmit: (data: CompareFormFields) => void
+  onFormSubmit: (data: CompareFormFields) => void
   isValid: boolean
-  errors: FieldErrors<FormFields>
-  handleSubmit: UseFormHandleSubmit<FormFields>
-  register: UseFormRegister<FormFields>
+  errors: FieldErrors<CompareFormFields>
+  handleSubmit: UseFormHandleSubmit<CompareFormFields>
+  register: UseFormRegister<CompareFormFields>
   useTranslationStore: () => TranslationStore
   handleUpload?: HandleUploadType
   desc?: string
@@ -39,7 +31,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
     ref
   ) => {
     const { t } = useTranslationStore()
-    const onSubmit: SubmitHandler<FormFields> = data => {
+    const onSubmit: SubmitHandler<CompareFormFields> = data => {
       onFormSubmit(data)
     }
     const [__file, setFile] = useState<File>()
@@ -167,7 +159,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                     error={errors.description?.message?.toString()}
                   />
                   {isDragging && (
-                    <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-borders-2" />
+                    <div className="border-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed" />
                   )}
                 </div>
               </Tabs.Content>
@@ -187,7 +179,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                 <div>
                   <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
                   <Button
-                    className="gap-x-2 px-2.5 font-normal text-foreground-3 hover:bg-background-8"
+                    className="text-foreground-3 hover:bg-background-8 gap-x-2 px-2.5 font-normal"
                     variant="custom"
                     onClick={e => handleFileSelect(e)}
                   >

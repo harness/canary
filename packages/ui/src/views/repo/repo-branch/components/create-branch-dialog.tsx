@@ -1,17 +1,37 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input } from '@/components'
+import { Alert, Button, Dialog, Fieldset, FormWrapper, Input } from '@/components'
+import { BranchSelector, BranchSelectorListItem, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { BranchSelector } from '@views/repo/components'
 import { z } from 'zod'
 
 import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'
 
-export const createBranchFormSchema = z.object({
-  name: z.string().min(1, { message: 'Branch name is required' }),
-  target: z.string().min(1, { message: 'Base branch is required' })
-})
+export const makeCreateBranchFormSchema = (t: TranslationStore['t']) =>
+  z.object({
+    name: z
+      .string()
+      .nonempty(t('views:repos.createBranchDialog.validation.nameNoEmpty', 'Branch name can’t be blank'))
+      .max(
+        256,
+        t('views:repos.createBranchDialog.validation.nameMax', 'Branch name must be no longer than 256 characters')
+      )
+      .regex(
+        /^[a-zA-Z0-9._-\s]+$/,
+        t(
+          'views:repos.createBranchDialog.validation.nameRegex',
+          'Branch name must contain only letters, numbers, and the characters: - _ .'
+        )
+      )
+      .refine(
+        data => !data.includes(' '),
+        t('views:repos.createBranchDialog.validation.nameNoSpaces', 'Branch name cannot contain spaces')
+      ),
+    target: z
+      .string()
+      .nonempty(t('views:repos.createBranchDialog.validation.targetNoEmpty', 'Target branch can’t be blank'))
+  })
 
 export function CreateBranchDialog({
   open,
@@ -34,11 +54,11 @@ export function CreateBranchDialog({
     clearErrors,
     formState: { errors, isValid, isSubmitSuccessful }
   } = useForm<CreateBranchFormFields>({
-    resolver: zodResolver(createBranchFormSchema),
+    resolver: zodResolver(makeCreateBranchFormSchema(t)),
     mode: 'onChange',
     defaultValues: {
       name: '',
-      target: ''
+      target: defaultBranch ?? ''
     }
   })
 
@@ -46,25 +66,23 @@ export function CreateBranchDialog({
     if (isSubmitSuccessful) {
       clearErrors()
       reset()
-      setValue('name', '', { shouldValidate: false })
-      setValue('target', defaultBranch || '', { shouldValidate: false })
       setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
       onClose()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSubmitSuccessful, open, onClose])
+  }, [isSubmitSuccessful, onClose])
 
   const handleClose = () => {
     clearErrors()
-    setValue('name', '', { shouldValidate: false })
-    setValue('target', defaultBranch || '', { shouldValidate: false })
+    reset()
     setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
     handleChangeSearchValue('')
     onClose()
   }
 
-  const handleSelectChange = (fieldName: keyof CreateBranchFormFields, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
+  const handleSelectTargetBranch = (value: BranchSelectorListItem) => {
+    setValue('target', value.name, { shouldValidate: true })
+    setSelectedBranchTag(value)
   }
 
   useEffect(() => {
@@ -76,7 +94,7 @@ export function CreateBranchDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content className="max-w-[460px] border-border bg-background-1" aria-describedby={undefined}>
+      <Dialog.Content className="border-border bg-background-1 max-w-[460px]" aria-describedby={undefined}>
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
         </Dialog.Header>
@@ -93,33 +111,26 @@ export function CreateBranchDialog({
                 errors.name?.message ? t('views:forms.createBranchError', errors.name?.message?.toString()) : undefined
               }
             />
+
+            {/* TODO: Currently the search within BranchSelector is not working, we need to review the current passed states for it to work */}
+            <BranchSelector
+              useRepoBranchesStore={useRepoBranchesStore}
+              useTranslationStore={useTranslationStore}
+              onSelectBranch={handleSelectTargetBranch}
+              setSearchQuery={handleChangeSearchValue}
+              buttonSize="md"
+              isBranchOnly
+              dynamicWidth
+            />
           </Fieldset>
 
-          <Fieldset>
-            <ControlGroup>
-              {/* TODO: Currently the search within BranchSelector is not working, we need to review the current passed states for it to work */}
-              <BranchSelector
-                useRepoBranchesStore={useRepoBranchesStore}
-                useTranslationStore={useTranslationStore}
-                onSelectBranch={value => {
-                  handleSelectChange('target', value.name)
-                  setSelectedBranchTag(value)
-                }}
-                setSearchQuery={handleChangeSearchValue}
-                buttonSize="md"
-                isBranchOnly
-                dynamicWidth
-              />
-            </ControlGroup>
-          </Fieldset>
-
-          {error ? (
+          {error && (
             <Alert.Container variant="destructive">
               <Alert.Title>
                 {t('views:repos.error', 'Error:')} {error}
               </Alert.Title>
             </Alert.Container>
-          ) : null}
+          )}
 
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button

@@ -71,7 +71,7 @@ export default function AppMFE({ scope, renderUrl, on401, customComponents: { Sw
 
   const getV5Routes = (routes: CustomRouteObject[], renderUrl: string = ''): React.ReactNode => {
     return routes.map((route, index) => {
-      const fullPath = route.index
+      const pathWithPrefix = route.index
         ? renderUrl // Keep parent URL for index routes
         : renderUrl
           ? `${renderUrl}/${route.path}`.replace(/\/+/g, '/') // Remove extra slashes, for routes ending with "/"
@@ -80,12 +80,12 @@ export default function AppMFE({ scope, renderUrl, on401, customComponents: { Sw
       return (
         <Route
           key={route.path || `index-${index}`}
-          path={route.index ? renderUrl : fullPath}
+          path={route.index ? renderUrl : pathWithPrefix}
           exact={route.index || !route.children}
           render={() => (
             <>
               {route.element}
-              {route.children && <Switch>{getV5Routes(route.children, fullPath)}</Switch>}
+              {route.children && <Switch>{getV5Routes(route.children, pathWithPrefix)}</Switch>}
             </>
           )}
         />

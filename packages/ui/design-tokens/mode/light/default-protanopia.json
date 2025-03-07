@@ -2324,7 +2324,7 @@
     },
     "sm": {
       "$type": "borderWidth",
-      "$value": "1.2"
+      "$value": "1"
     },
     "md": {
       "$type": "borderWidth",

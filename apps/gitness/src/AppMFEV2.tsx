@@ -1,6 +1,7 @@
 import './styles/AppMFE.css'
 
 import { ComponentType } from 'react'
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
 
 import { Unknown } from './framework/context/MFEContext'
 
@@ -44,7 +45,6 @@ interface AppMFEProps {
 
 export default function AppMFE({
   renderUrl,
-
   customComponents: { Link, Switch, Route },
   customHooks: { useParams }
 }: AppMFEProps) {
@@ -160,20 +160,46 @@ export default function AppMFE({
   const Layout: React.FC<LayoutProps> = ({ OutletComponent, children }) => {
     return (
       <div>
-        <OutletComponent>{children}</OutletComponent> {/* Works for both versions */}
+        {/* Works for both versions */}
+        <OutletComponent>{children}</OutletComponent>
       </div>
     )
   }
 
-  /* v5 */
+  // v5
+  // return (
+  //   <>
+  //     <Layout OutletComponent={Switch}>
+  //       <Route exact path={`${renderUrl}/repos`} component={Repos} />
+  //       <Route path={`${renderUrl}/repos/:repoName`} component={RepoDetails} />
+  //     </Layout>
+  //   </>
+  // )
+
+  // v6
   return (
-    <>
-      <Layout OutletComponent={Switch} />
-      <Switch>
-        <Route exact path={`${renderUrl}/repos`} component={Repos} />
-        <Route path={`${renderUrl}/repos/:repoName`} component={RepoDetails} />
-      </Switch>
-    </>
+    <RouterProvider
+      router={createBrowserRouter(
+        [
+          {
+            path: '/',
+            element: <Layout OutletComponent={Outlet} />,
+            children: [
+              {
+                index: true,
+                element: <Repos />,
+                path: 'repos'
+              },
+              {
+                path: 'repos/:repoName',
+                element: <RepoDetails />
+              }
+            ]
+          }
+        ],
+        { basename: `/ng${renderUrl}` }
+      )}
+    />
   )
 
   /**

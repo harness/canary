@@ -28,16 +28,16 @@ export const routes: CustomRouteObject[] = [
             path: 'web',
             children: [
               { index: true, element: <WebDevelopment /> },
-              { path: 'react', element: <span>ReactJS</span> },
-              { path: 'vite', element: <span>ViteJS</span> }
+              { path: 'react', element: <h2>ReactJS</h2> },
+              { path: 'vite', element: <h3>ViteJS</h3> }
             ]
           },
           {
             path: 'mobile',
             children: [
               { index: true, element: <MobileDevelopment /> },
-              { path: 'ios', element: <span>iOS</span> },
-              { path: 'android', element: <span>Android</span> }
+              { path: 'ios', element: <h2>iOS</h2> },
+              { path: 'android', element: <h3>Android</h3> }
             ]
           }
         ]

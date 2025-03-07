@@ -32,19 +32,21 @@
         "$value": "{spacing.2-half}"
       }
     },
-    "radius": {
-      "default": {
+    "default": {
+      "radius": {
         "$type": "borderRadius",
         "$value": "{rounded.2}"
-      },
-      "rounded": {
+      }
+    },
+    "rounded": {
+      "radius": {
         "$type": "borderRadius",
         "$value": "{rounded.full}"
       }
     },
     "border": {
       "$type": "borderWidth",
-      "$value": "{border.2}"
+      "$value": "{borderWidth.2}"
     },
     "px": {
       "sm": {

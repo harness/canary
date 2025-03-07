@@ -24,9 +24,9 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.9}",
+        "lineHeight": "{lineHeight.9.tight}",
         "letterSpacing": "{tracking.tight}",
-        "textCase": "{textCase.none}",
-        "lineHeight": "{lineHeight.9.tight}"
+        "textCase": "{textCase.none}"
       },
       "$description": "Large headlines with extra emphasis."
     },
@@ -36,9 +36,9 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.7}",
+        "lineHeight": "{lineHeight.7.tight}",
         "letterSpacing": "{tracking.tight}",
-        "textCase": "{textCase.none}",
-        "lineHeight": "{lineHeight.7.tight}"
+        "textCase": "{textCase.none}"
       },
       "$description": "Large headlines, hero sections."
     },
@@ -77,6 +77,39 @@
     }
   },
   "body": {
+    "normal": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "{fontSize.2}",
+        "lineHeight": "{lineHeight.2.snug}",
+        "letterSpacing": "{tracking.normal}"
+      },
+      "$description": "Primary text style for UI and content."
+    },
+    "strong": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.500}",
+        "fontSize": "{fontSize.2}",
+        "lineHeight": "{lineHeight.2.snug}",
+        "letterSpacing": "{tracking.normal}"
+      },
+      "$description": "Primary text style for UI and content."
+    },
+    "code": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.mono}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "{fontSize.2}",
+        "lineHeight": "{lineHeight.2.normal}",
+        "letterSpacing": "{tracking.tight}"
+      },
+      "$description": "Code blocks and larger code snippets."
+    },
     "none": {
       "normal": {
         "$type": "typography",
@@ -122,42 +155,31 @@
           "letterSpacing": "{tracking.normal}"
         }
       }
-    },
+    }
+  },
+  "caption": {
     "normal": {
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.400}",
-        "fontSize": "{fontSize.2}",
-        "lineHeight": "{lineHeight.2.snug}",
+        "fontWeight": "{fontWeight.default.normal.500}",
+        "fontSize": "{fontSize.1}",
+        "lineHeight": "{lineHeight.1.snug}",
         "letterSpacing": "{tracking.normal}"
       },
-      "$description": "Primary text style for UI and content."
+      "$description": "Primary caption style, small but important text."
     },
-    "strong": {
+    "soft": {
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.500}",
-        "fontSize": "{fontSize.2}",
-        "lineHeight": "{lineHeight.2.snug}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "{fontSize.1}",
+        "lineHeight": "{lineHeight.1.snug}",
         "letterSpacing": "{tracking.normal}"
       },
-      "$description": "Primary text style for UI and content."
+      "$description": "Helper text, meta information."
     },
-    "code": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{fontFamily.mono}",
-        "fontWeight": "{fontWeight.default.normal.400}",
-        "fontSize": "{fontSize.2}",
-        "lineHeight": "{lineHeight.2.normal}",
-        "letterSpacing": "{tracking.tight}"
-      },
-      "$description": "Code blocks and larger code snippets."
-    }
-  },
-  "caption": {
     "none": {
       "normal": {
         "$type": "typography",
@@ -181,28 +203,6 @@
         },
         "$description": "Helper text, meta information."
       }
-    },
-    "normal": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.500}",
-        "fontSize": "{fontSize.1}",
-        "lineHeight": "{lineHeight.1.snug}",
-        "letterSpacing": "{tracking.normal}"
-      },
-      "$description": "Primary caption style, small but important text."
-    },
-    "soft": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.400}",
-        "fontSize": "{fontSize.1}",
-        "lineHeight": "{lineHeight.1.snug}",
-        "letterSpacing": "{tracking.normal}"
-      },
-      "$description": "Helper text, meta information."
     }
   },
   "component": {

@@ -1,94 +1,96 @@
 {
-  "dropdown-item": {
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.1}",
-      "$description": "4px\n"
-    },
-    "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.2-half}",
-      "$description": "8px"
-    },
-    "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.1}"
-    },
-    "size": {
-      "$type": "sizing",
-      "$value": "{size.10}"
-    }
-  },
-  "dropdown-sub-item": {
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.3}",
-      "$description": "12px"
-    },
-    "py": {
-      "$type": "spacing",
-      "$value": "{spacing.2}",
-      "$description": "8px"
-    },
-    "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.2-half}"
-    },
-    "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.1}"
-    },
-    "size": {
-      "$type": "sizing",
-      "$value": "{size.8}"
-    },
-    "gap-y": {
-      "$type": "spacing",
-      "$value": "{spacing.1}",
-      "$description": "4px gap between text"
-    }
-  },
-  "container": {
-    "py": {
-      "$type": "spacing",
-      "$value": "{spacing.1}",
-      "$description": "4px\n"
-    },
-    "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.3}",
-      "$description": "6px"
-    },
-    "min-w": {
-      "$type": "sizing",
-      "$value": "320px"
-    }
-  },
-  "menu-item-branch-selector": {
-    "tag": {
+  "dropdown": {
+    "item": {
       "px": {
         "$type": "spacing",
-        "$value": "{spacing.2}",
-        "$description": "8px horizontal padding"
+        "$value": "{spacing.1}",
+        "$description": "4px\n"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}",
+        "$description": "8px"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{dropdown.sub-item.radius}"
       },
       "size": {
         "$type": "sizing",
-        "$value": "{size.5}",
-        "$description": "20px height\n"
+        "$value": "{size.10}"
       }
-    }
-  },
-  "menu-items": {
-    "header/footer": {
+    },
+    "sub-item": {
       "px": {
         "$type": "spacing",
-        "$value": "{spacing.4}",
-        "$description": "16px horizontal padding"
+        "$value": "{spacing.3}",
+        "$description": "12px"
       },
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.2-half}",
-        "$description": "10px vertical padding"
+        "$value": "{spacing.2}",
+        "$description": "8px"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.1}"
+      },
+      "size": {
+        "$type": "sizing",
+        "$value": "{size.8}"
+      },
+      "gap-y": {
+        "$type": "spacing",
+        "$value": "{spacing.1}",
+        "$description": "4px gap between text"
+      }
+    },
+    "container": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.1}",
+        "$description": "4px\n"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.3}",
+        "$description": "6px"
+      },
+      "min-w": {
+        "$type": "sizing",
+        "$value": "320px"
+      }
+    },
+    "menu-item-branch-selector": {
+      "tag": {
+        "px": {
+          "$type": "spacing",
+          "$value": "{spacing.2}",
+          "$description": "8px horizontal padding"
+        },
+        "size": {
+          "$type": "sizing",
+          "$value": "{size.5}",
+          "$description": "20px height\n"
+        }
+      }
+    },
+    "menu-items": {
+      "header-footer": {
+        "px": {
+          "$type": "spacing",
+          "$value": "{spacing.4}",
+          "$description": "16px horizontal padding"
+        },
+        "py": {
+          "$type": "spacing",
+          "$value": "{spacing.2-half}",
+          "$description": "10px vertical padding"
+        }
       }
     }
   }

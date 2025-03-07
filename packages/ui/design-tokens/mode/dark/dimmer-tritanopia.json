@@ -2285,9 +2285,13 @@
     }
   },
   "iconStrokeWidth": {
+    "xxs": {
+      "$type": "borderWidth",
+      "$value": "1.4"
+    },
     "xs": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.2"
     },
     "sm": {
       "$type": "borderWidth",

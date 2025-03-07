@@ -132,3 +132,20 @@ export const wrapConditionalArrayElements = <T>(elements: T[], isPassing: boolea
 
   return elements
 }
+
+/**
+ * Generate a random alphanumeric hash of a given length
+ * @param length - The length of the hash to generate
+ * @returns A random alphanumeric hash of the given length
+ */
+export function generateAlphaNumericHash(length: number) {
+  let result = ''
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const charactersLength = characters.length
+
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
+  }
+
+  return result
+}

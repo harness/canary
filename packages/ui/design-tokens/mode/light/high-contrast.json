@@ -29,7 +29,7 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{colors.chrome.700}",
+      "$value": "{colors.chrome.800}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "accent": {

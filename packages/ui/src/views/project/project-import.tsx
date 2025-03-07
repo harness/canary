@@ -24,52 +24,56 @@ const makeImportProjectFormSchema = (t: TranslationStore['t']) =>
       identifier: z
         .string()
         .trim()
-        .nonempty({ message: 'Please enter a project name' })
-        .max(100, {
-          message: t('views:importProject.validation.nameMax', 'Name must be no longer than 100 characters')
-        })
-        .regex(/^[a-zA-Z0-9._-\s]+$/, {
-          message: t(
+        .nonempty(t('views:importProject.validation.nameNoEmpty', 'Please enter a project name'))
+        .max(100, t('views:importProject.validation.nameMax', 'Name must be no longer than 100 characters'))
+        .regex(
+          /^[a-zA-Z0-9._-\s]+$/,
+          t(
             'views:importProject.validation.nameRegex',
             'Name must contain only letters, numbers, and the characters: - _ .'
           )
-        })
-        .refine(data => !data.includes(' '), {
-          message: t('views:importProject.validation.nameNoSpaces', 'Name cannot contain spaces')
-        }),
+        )
+        .refine(
+          data => !data.includes(' '),
+          t('views:importProject.validation.nameNoSpaces', 'Name cannot contain spaces')
+        ),
       description: z
         .string()
         .trim()
-        .max(1024, {
-          message: t(
-            'views:importProject.validation.descriptionMax',
-            'Description must be no longer than 1024 characters'
-          )
-        }),
+        .max(
+          1024,
+          t('views:importProject.validation.descriptionMax', 'Description must be no longer than 1024 characters')
+        ),
       hostUrl: z.string().optional(),
       pipelines: z.boolean().optional(),
       repositories: z.boolean().optional(),
-      provider: z.string().trim().nonempty({ message: 'Please select a provider' }),
+      provider: z
+        .string()
+        .trim()
+        .nonempty(t('views:importProject.validation.providerNoEmpty', 'Please select a provider')),
       password: z.string().optional(),
       organization: z
         .string()
         .trim()
-        .nonempty({ message: 'Please enter an organization' })
-        .max(100, {
-          message: t(
+        .nonempty(t('views:importProject.validation.organizationNoEmpty', 'Please enter an organization'))
+        .max(
+          100,
+          t(
             'views:importProject.validation.organizationNameMax',
             'Organization name must be no longer than 100 characters'
           )
-        })
-        .regex(/^[a-zA-Z0-9._-\s]+$/, {
-          message: t(
+        )
+        .regex(
+          /^[a-zA-Z0-9._-\s]+$/,
+          t(
             'views:importProject.validation.nameRegex',
             'Organization name must contain only letters, numbers, and the characters: - _ .'
           )
-        })
-        .refine(data => !data.includes(' '), {
-          message: t('views:importProject.validation.noSpaces', 'Organization name cannot contain spaces')
-        })
+        )
+        .refine(
+          data => !data.includes(' '),
+          t('views:importProject.validation.noSpaces', 'Organization name cannot contain spaces')
+        )
     })
     .superRefine((data, ctx) => {
       if (data.provider !== ProviderOptionsEnum.GITHUB_ENTERPRISE) return

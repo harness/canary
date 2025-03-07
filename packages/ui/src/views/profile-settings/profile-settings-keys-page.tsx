@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Alert, Button, Fieldset, FormSeparator, FormWrapper, Legend } from '@/components'
+import { Alert, Button, Separator } from '@/components'
 import { ApiErrorType, SandboxLayout, TranslationStore } from '@/views'
 
 import { ProfileKeysList } from './components/profile-settings-keys-list'
@@ -25,7 +25,7 @@ const ErrorMessage: FC<{ message: string }> = ({ message }) => (
   </Alert.Container>
 )
 
-const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
+export const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
   useProfileSettingsStore,
   openTokenDialog,
   openSshKeyDialog,
@@ -43,71 +43,73 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
   const { t } = useTranslationStore()
 
   return (
-    <SandboxLayout.Content className="px-0">
-      <h1 className="mb-10 text-24 font-medium text-foreground-1">
+    <SandboxLayout.Content className="grid gap-y-7 px-0">
+      <h1 className="text-24 text-foreground-1 mb-3 font-medium">
         {t('views:profileSettings.keysAndTokens', 'Keys and Tokens')}
       </h1>
 
-      <FormWrapper>
-        <Fieldset className="gap-y-5">
-          <div className="flex items-end justify-between">
-            <Legend
-              title={
-                <span className="flex justify-between gap-x-4">
-                  {t('views:profileSettings.personalAccessToken', 'Personal access token')}
-                </span>
-              }
-              description={t(
+      <section className="grid gap-y-[18px]">
+        <header className="flex items-end justify-between">
+          <div className="max-w-[400px]">
+            <h4 className="text-18 text-foreground-1 mb-2.5 font-medium leading-snug">
+              {t('views:profileSettings.personalAccessToken', 'Personal access token')}
+            </h4>
+            <p className="text-14 text-foreground-2 leading-snug">
+              {t(
                 'views:profileSettings.addTokenDescription',
                 'Personal access tokens allow you to authenticate with the API.'
               )}
-            />
-            <Button type="button" variant="outline" onClick={openTokenDialog}>
-              {t('views:profileSettings.addToken', 'Add new token')}
-            </Button>
+            </p>
           </div>
-          {error?.type === ApiErrorType.TokenFetch ? (
-            <ErrorMessage message={error.message} />
-          ) : (
-            <ProfileTokensList
-              tokens={tokens}
-              isLoading={isLoadingTokenList}
-              openAlertDeleteDialog={openAlertDeleteDialog}
-              useTranslationStore={useTranslationStore}
-            />
-          )}
-        </Fieldset>
 
-        <FormSeparator className="border-borders-4" />
+          <Button type="button" variant="outline" onClick={openTokenDialog}>
+            {t('views:profileSettings.addToken', 'Add new token')}
+          </Button>
+        </header>
 
-        <Fieldset className="gap-y-5">
-          <div className="flex items-end justify-between">
-            <Legend
-              className="max-w-[400px]"
-              title={t('views:profileSettings.sshKeys', 'My SSH keys')}
-              description={t(
+        {error?.type === ApiErrorType.TokenFetch ? (
+          <ErrorMessage message={error.message} />
+        ) : (
+          <ProfileTokensList
+            tokens={tokens}
+            isLoading={isLoadingTokenList}
+            openAlertDeleteDialog={openAlertDeleteDialog}
+            useTranslationStore={useTranslationStore}
+          />
+        )}
+      </section>
+
+      <Separator className="bg-borders-4 h-px" />
+
+      <section className="grid gap-y-[18px]">
+        <header className="flex items-end justify-between">
+          <div className="max-w-[400px]">
+            <h4 className="text-18 text-foreground-1 mb-2.5 font-medium leading-snug">
+              {t('views:profileSettings.sshKeys', 'My SSH keys')}
+            </h4>
+            <p className="text-14 text-foreground-2 leading-snug">
+              {t(
                 'views:profileSettings.addSshKeyDescription',
                 'SSH keys allow you to establish a secure connection to your code repository.'
               )}
-            />
-            <Button variant="outline" type="button" onClick={openSshKeyDialog}>
-              {t('views:profileSettings.addSshKey', 'Add new SSH key')}
-            </Button>
+            </p>
           </div>
-          {error?.type === ApiErrorType.KeyFetch ? (
-            <ErrorMessage message={error.message} />
-          ) : (
-            <ProfileKeysList
-              publicKeys={publicKeys}
-              isLoading={isLoadingKeysList}
-              openAlertDeleteDialog={openAlertDeleteDialog}
-              useTranslationStore={useTranslationStore}
-            />
-          )}
-        </Fieldset>
-      </FormWrapper>
+          <Button variant="outline" type="button" onClick={openSshKeyDialog}>
+            {t('views:profileSettings.addSshKey', 'Add new SSH key')}
+          </Button>
+        </header>
+
+        {error?.type === ApiErrorType.KeyFetch ? (
+          <ErrorMessage message={error.message} />
+        ) : (
+          <ProfileKeysList
+            publicKeys={publicKeys}
+            isLoading={isLoadingKeysList}
+            openAlertDeleteDialog={openAlertDeleteDialog}
+            useTranslationStore={useTranslationStore}
+          />
+        )}
+      </section>
     </SandboxLayout.Content>
   )
 }
-
-export { SettingsAccountKeysPage }

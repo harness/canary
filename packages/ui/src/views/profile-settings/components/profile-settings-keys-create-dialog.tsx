@@ -20,23 +20,23 @@ export const makeKeyCreateFormSchema = (t: TranslationStore['t']) =>
     identifier: z
       .string()
       .trim()
-      .nonempty({ message: t('views:profileSettings.sshKeyValidation.nameMin', 'Please provide key name') })
-      .max(100, {
-        message: t('views:profileSettings.sshKeyValidation.nameMax', 'Name must be no longer than 100 characters')
-      })
-      .regex(/^[a-zA-Z0-9._-\s]+$/, {
-        message: t(
-          'views:profileSettings.sshKeyValidation.nameRegex',
+      .nonempty(t('views:profileSettings.sshKey.validation.nameMin', 'Please provide key name'))
+      .max(100, t('views:profileSettings.sshKey.validation.nameMax', 'Name must be no longer than 100 characters'))
+      .regex(
+        /^[a-zA-Z0-9._-\s]+$/,
+        t(
+          'views:profileSettings.sshKey.validation.nameRegex',
           'Name must contain only letters, numbers, and the characters: - _ .'
         )
-      })
-      .refine(data => !data.includes(' '), {
-        message: t('views:profileSettings.sshKeyValidation.noSpaces', 'Name cannot contain spaces')
-      }),
+      )
+      .refine(
+        data => !data.includes(' '),
+        t('views:profileSettings.sshKey.validation.noSpaces', 'Name cannot contain spaces')
+      ),
     content: z
       .string()
       .trim()
-      .min(1, { message: t('views:profileSettings.sshKeyValidation.expiration', 'Please add the public key') })
+      .nonempty(t('views:profileSettings.sshKey.validation.expiration', 'Please add the public key'))
   })
 
 type SshKeyFormType = z.infer<ReturnType<typeof makeKeyCreateFormSchema>>
@@ -74,7 +74,7 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
     <Dialog.Root open={open} onOpenChange={onClose}>
       <Dialog.Content aria-describedby={undefined}>
         <Dialog.Header>
-          <Dialog.Title>{t('views:profileSettings.newSshKey', 'New SSH key')}</Dialog.Title>
+          <Dialog.Title>{t('views:profileSettings.sshKey.newSshKey', 'New SSH key')}</Dialog.Title>
         </Dialog.Header>
 
         <FormWrapper onSubmit={handleSubmit(handleCreateSshKey)}>
@@ -83,8 +83,8 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
               id="identifier"
               size="md"
               {...register('identifier')}
-              placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter the name')}
-              label={t('views:profileSettings.newSshKey', 'New SSH key')}
+              placeholder={t('views:profileSettings.sshKey.enterNamePlaceholder', 'Enter the name')}
+              label={t('views:profileSettings.sshKey.newSshKey', 'New SSH key')}
               error={errors.identifier?.message?.toString()}
               autoFocus
             />
@@ -93,7 +93,7 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
               id="content"
               value={content}
               {...register('content')}
-              label={t('views:profileSettings.publicKey', 'Public key')}
+              label={t('views:profileSettings.sshKey.publicKey', 'Public key')}
               error={errors.content?.message?.toString()}
             />
           </Fieldset>
@@ -106,10 +106,10 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
 
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button type="button" variant="outline" onClick={onClose}>
-              {t('views:profileSettings.cancel', 'Cancel')}
+              {t('views:profileSettings.sshKey.cancel', 'Cancel')}
             </Button>
             <Button type="submit" disabled={!isValid}>
-              {t('views:profileSettings.save', 'Save')}
+              {t('views:profileSettings.sshKey.save', 'Save')}
             </Button>
           </Dialog.Footer>
         </FormWrapper>

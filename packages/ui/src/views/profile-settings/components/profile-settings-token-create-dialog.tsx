@@ -23,31 +23,34 @@ export const makeTokenCreateFormSchema = (t: TranslationStore['t']) =>
     identifier: z
       .string()
       .trim()
-      .nonempty({ message: t('views:profileSettings.tokenValidation.nameMin', 'Please provide token name') })
-      .max(100, {
-        message: t('views:profileSettings.tokenValidation.nameMax', 'Name must be no longer than 100 characters')
-      })
-      .regex(/^[a-zA-Z0-9._-\s]+$/, {
-        message: t(
-          'views:profileSettings.tokenValidation.nameRegex',
+      .nonempty(t('views:profileSettings.createTokenDialog.validation.nameMin', 'Please provide token name'))
+      .max(
+        100,
+        t('views:profileSettings.createTokenDialog.validation.nameMax', 'Name must be no longer than 100 characters')
+      )
+      .regex(
+        /^[a-zA-Z0-9._-\s]+$/,
+        t(
+          'views:profileSettings.createTokenDialog.validation.nameRegex',
           'Name must contain only letters, numbers, and the characters: - _ .'
         )
-      })
-      .refine(data => !data.includes(' '), {
-        message: t('views:profileSettings.tokenValidation.noSpaces', 'Name cannot contain spaces')
-      }),
+      )
+      .refine(
+        data => !data.includes(' '),
+        t('views:profileSettings.createTokenDialog.validation.noSpaces', 'Name cannot contain spaces')
+      ),
     lifetime: z
       .string()
-      .min(1, { message: t('views:profileSettings.tokenValidation.expiration', 'Please select the expiration') }),
+      .nonempty(t('views:profileSettings.createTokenDialog.validation.expiration', 'Please select the expiration')),
     token: z.string()
   })
 
 const getExpirationOptions = (t: TranslationStore['t']) => [
-  { value: '7', label: t('views:profileSettings.expirationOptions.7_days', '7 days') },
-  { value: '30', label: t('views:profileSettings.expirationOptions.30_days', '30 days') },
-  { value: '60', label: t('views:profileSettings.expirationOptions.60_days', '60 days') },
-  { value: '90', label: t('views:profileSettings.expirationOptions.90_days', '90 days') },
-  { value: 'never', label: t('views:profileSettings.expirationOptions.never', 'Never') }
+  { value: '7', label: t('views:profileSettings.createTokenDialog.expirationOptions.7_days', '7 days') },
+  { value: '30', label: t('views:profileSettings.createTokenDialog.expirationOptions.30_days', '30 days') },
+  { value: '60', label: t('views:profileSettings.createTokenDialog.expirationOptions.60_days', '60 days') },
+  { value: '90', label: t('views:profileSettings.createTokenDialog.expirationOptions.90_days', '90 days') },
+  { value: 'never', label: t('views:profileSettings.createTokenDialog.expirationOptions.never', 'Never') }
 ]
 
 const defaultValues = { identifier: '', lifetime: '', token: '' }
@@ -118,8 +121,8 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
     if (!isValid) return
 
     return expirationValue === 'never'
-      ? t('views:profileSettings.tokenExpiryNone', 'Token will never expire')
-      : `${t('views:profileSettings.tokenExpiryDate', 'Token will expire on')} ${calculateExpirationDate(expirationValue)}`
+      ? t('views:profileSettings.createTokenDialog.tokenExpiryNone', 'Token will never expire')
+      : `${t('views:profileSettings.createTokenDialog.tokenExpiryDate', 'Token will expire on')} ${calculateExpirationDate(expirationValue)}`
   }
 
   /**
@@ -136,7 +139,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
       <Dialog.Content aria-describedby={undefined}>
         <Dialog.Header>
-          <Dialog.Title>{t('views:profileSettings.createToken', 'Create a token')}</Dialog.Title>
+          <Dialog.Title>{t('views:profileSettings.createTokenDialog.title', 'Create a token')}</Dialog.Title>
         </Dialog.Header>
         <FormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
           <Fieldset legend="Token details">
@@ -144,8 +147,8 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
               id="identifier"
               size="md"
               {...register('identifier')}
-              placeholder={t('views:profileSettings.enterTokenPlaceholder', 'Enter token name')}
-              label={t('views:profileSettings.name', 'Name')}
+              placeholder={t('views:profileSettings.createTokenDialog.namePlaceholder', 'Enter token name')}
+              label={t('views:profileSettings.createTokenDialog.nameLabel', 'Name')}
               error={errors.identifier?.message?.toString()}
               rightElement={
                 createdTokenData && (
@@ -161,7 +164,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                   id="lifetime"
                   value={createdTokenData?.lifetime}
                   size="md"
-                  label={t('views:profileSettings.expiration', 'Expiration')}
+                  label={t('views:profileSettings.createTokenDialog.expiration', 'Expiration')}
                   readOnly
                 />
                 <Input
@@ -170,14 +173,14 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                   value={createdTokenData?.token}
                   size="md"
                   readOnly
-                  label={t('views:profileSettings.token', 'Token')}
+                  label={t('views:profileSettings.createTokenDialog.tokenFieldLabel', 'Token')}
                   rightElement={
                     <CopyButton className="bg-background-1 absolute right-2.5" name={createdTokenData?.token || ''} />
                   }
                 />
                 <span className="text-14 text-foreground-1">
                   {t(
-                    'views:profileSettings.tokenSuccessDescription',
+                    'views:profileSettings.createTokenDialog.successDescription',
                     'Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t be able to see it again.'
                   )}
                 </span>
@@ -186,8 +189,8 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
               <Select.Root
                 value={expirationValue}
                 onValueChange={handleSelectLifetime}
-                label={t('views:profileSettings.expiration', 'Expiration')}
-                placeholder={t('views:profileSettings.select', 'Select')}
+                label={t('views:profileSettings.createTokenDialog.expirationLabel', 'Expiration')}
+                placeholder={t('views:profileSettings.createTokenDialog.expirationPlaceholder', 'Select')}
                 error={errors.lifetime?.message?.toString()}
                 caption={getSelectCaption()}
               >
@@ -209,14 +212,14 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button type="button" variant="outline" onClick={handleClose}>
               {createdTokenData
-                ? t('views:profileSettings.gotItButton', 'Got it')
-                : t('views:profileSettings.cancel', 'Cancel')}
+                ? t('views:profileSettings.createTokenDialog.gotItButton', 'Got it')
+                : t('views:profileSettings.createTokenDialog.cancelButton', 'Cancel')}
             </Button>
             {!createdTokenData && (
               <Button type="submit" disabled={!isValid || isLoading}>
                 {!isLoading
-                  ? t('views:profileSettings.generateTokenButton', 'Generate token')
-                  : t('views:profileSettings.generatingTokenButton', 'Generating token...')}
+                  ? t('views:profileSettings.createTokenDialog.generateButton', 'Generate token')
+                  : t('views:profileSettings.createTokenDialog.generatingButton', 'Generating token...')}
               </Button>
             )}
           </Dialog.Footer>

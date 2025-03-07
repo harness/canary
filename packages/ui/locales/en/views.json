@@ -479,49 +479,75 @@
     "fileNoChanges": "File without changes.",
     "binaryNotShown": "Binary file not shown."
   },
+  "pipelines": {
+    "createPipelineDialog": {
+      "validation": {
+        "nameMin": "Pipeline name is required",
+        "nameMax": "Pipeline name must be no longer than 100 characters",
+        "nameRegex": "Pipeline name must contain only letters, numbers, and the characters: - _ .",
+        "noSpaces": "Pipeline name cannot contain spaces",
+        "branchNameRequired": "Branch name is required",
+        "yamlPathRequired": "YAML path is required"
+      },
+      "dialogTitle": "Create Pipeline",
+      "nameLabel": "Pipeline name",
+      "yamlPathLabel": "Yaml path",
+      "branchPlaceholder": "Select",
+      "branchLabel": "Branch",
+      "cancelButton": "Cancel",
+      "createButton": "Create Pipeline"
+    }
+  },
   "profileSettings": {
-    "sshKeyValidation": {
-      "nameMin": "Please provide key name",
-      "nameMax": "Name must be no longer than 100 characters",
-      "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
-      "noSpaces": "Name cannot contain spaces",
-      "expiration": "Please add the public key"
+    "sshKey": {
+      "validation": {
+        "nameMin": "Please provide key name",
+        "nameMax": "Name must be no longer than 100 characters",
+        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
+        "noSpaces": "Name cannot contain spaces",
+        "expiration": "Please add the public key"
+      },
+      "newSshKey": "New SSH key",
+      "enterNamePlaceholder": "Enter the name",
+      "publicKey": "Public key",
+      "cancel": "Cancel",
+      "save": "Save"
     },
-    "newSshKey": "New SSH key",
-    "enterNamePlaceholder": "Enter the name",
-    "publicKey": "Public key",
-    "cancel": "Cancel",
-    "save": "Save",
     "name": "Name",
     "added": "Added",
     "lastUsedDate": "Last used date",
     "deleteSshKey": "Delete SSH key",
     "noDataKeysDescription": "There are no SSH keys associated with this account.",
-    "tokenValidation": {
-      "nameMin": "Please provide token name",
-      "nameMax": "Name must be no longer than 100 characters",
-      "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
-      "noSpaces": "Name cannot contain spaces",
-      "expiration": "Please select the expiration"
+    "createTokenDialog": {
+      "validation": {
+        "nameMin": "Please provide token name",
+        "nameMax": "Name must be no longer than 100 characters",
+        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
+        "noSpaces": "Name cannot contain spaces",
+        "expiration": "Please select the expiration"
+      },
+      "expirationOptions": {
+        "7_days": "7 days",
+        "30_days": "30 days",
+        "60_days": "60 days",
+        "90_days": "90 days",
+        "never": "Never"
+      },
+      "tokenExpiryNone": "Token will never expire",
+      "tokenExpiryDate": "Token will expire on",
+      "title": "Create a token",
+      "namePlaceholder": "Enter token name",
+      "nameLabel": "Name",
+      "expiration": "Expiration",
+      "tokenFieldLabel": "Token",
+      "successDescription": "Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t be able to see it again.",
+      "expirationLabel": "Expiration",
+      "expirationPlaceholder": "Select",
+      "gotItButton": "Got it",
+      "cancelButton": "Cancel",
+      "generateButton": "Generate token",
+      "generatingButton": "Generating token..."
     },
-    "expirationOptions": {
-      "7_days": "7 days",
-      "30_days": "30 days",
-      "60_days": "60 days",
-      "90_days": "90 days",
-      "never": "Never"
-    },
-    "tokenExpiryNone": "Token will never expire",
-    "tokenExpiryDate": "Token will expire on",
-    "createToken": "Create a token",
-    "enterTokenPlaceholder": "Enter token name",
-    "expiration": "Expiration",
-    "token": "Token",
-    "tokenSuccessDescription": "Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t be able to see it again.",
-    "select": "Select",
-    "gotItButton": "Got it",
-    "generateTokenButton": "Generate token",
-    "generatingTokenButton": "Generating token...",
     "tokenTableHeader": "Token",
     "statusTableHeader": "Status",
     "expirationDateTableHeader": "Expiration date",
@@ -543,6 +569,7 @@
     },
     "accountSettings": "Account settings",
     "personalInfo": "Personal information",
+    "enterNamePlaceholder": "Enter your name",
     "enterUsernamePlaceholder": "Enter your username",
     "username": "Username",
     "enterUsernameCaption": "This username will be shown across the platform.",
@@ -564,10 +591,7 @@
     "addToken": "Add new token",
     "sshKeys": "My SSH keys",
     "addSshKeyDescription": "SSH keys allow you to establish a secure connection to your code repository.",
-    "addSshKey": "Add new SSH key",
-    "saving": "Saving...",
-    "generalTab": "General",
-    "keysTab": "Keys and Tokens"
+    "addSshKey": "Add new SSH key"
   },
   "createProject": {
     "validation": {
@@ -598,10 +622,13 @@
   },
   "importProject": {
     "validation": {
+      "nameNoEmpty": "Please enter a project name",
       "nameMax": "Name must be no longer than 100 characters",
       "nameRegex": "Organization name must contain only letters, numbers, and the characters: - _ .",
       "nameNoSpaces": "Name cannot contain spaces",
       "descriptionMax": "Description must be no longer than 1024 characters",
+      "providerNoEmpty": "Please select a provider",
+      "organizationNoEmpty": "Please enter an organization",
       "organizationNameMax": "Organization name must be no longer than 100 characters",
       "noSpaces": "Organization name cannot contain spaces",
       "hostUrlRequired": "Repository URL is required",

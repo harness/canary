@@ -13,24 +13,33 @@ export const makeCreatePipelineSchema = (t: TranslationStore['t']) =>
     name: z
       .string()
       .trim()
-      .nonempty({ message: t('views:pipelines.createPipelineValidation.nameMin', 'Pipeline name is required') })
-      .max(100, {
-        message: t(
-          'views:pipelines.createPipelineValidation.nameMax',
+      .nonempty(t('views:pipelines.createPipelineDialog.validation.nameMin', 'Pipeline name is required'))
+      .max(
+        100,
+        t(
+          'views:pipelines.createPipelineDialog.validation.nameMax',
           'Pipeline name must be no longer than 100 characters'
         )
-      })
-      .regex(/^[a-zA-Z0-9._-\s]+$/, {
-        message: t(
-          'views:pipelines.createPipelineValidation.nameRegex',
+      )
+      .regex(
+        /^[a-zA-Z0-9._-\s]+$/,
+        t(
+          'views:pipelines.createPipelineDialog.validation.nameRegex',
           'Pipeline name must contain only letters, numbers, and the characters: - _ .'
         )
-      })
-      .refine(data => !data.includes(' '), {
-        message: t('views:pipelines.createPipelineValidation.noSpaces', 'Pipeline name cannot contain spaces')
-      }),
-    branch: z.string().trim().nonempty({ message: 'Branch name is required' }),
-    yamlPath: z.string().trim().nonempty({ message: 'YAML path is required' })
+      )
+      .refine(
+        data => !data.includes(' '),
+        t('views:pipelines.createPipelineDialog.validation.noSpaces', 'Pipeline name cannot contain spaces')
+      ),
+    branch: z
+      .string()
+      .trim()
+      .nonempty(t('views:pipelines.createPipelineDialog.validation.branchNameRequired', 'Branch name is required')),
+    yamlPath: z
+      .string()
+      .trim()
+      .nonempty(t('views:pipelines.createPipelineDialog.validation.yamlPathRequired', 'YAML path is required'))
   })
 
 export type CreatePipelineFormType = z.infer<ReturnType<typeof makeCreatePipelineSchema>>
@@ -110,13 +119,13 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     <Dialog.Root open={isOpen} onOpenChange={handleClose}>
       <Dialog.Content className="max-w-xl" aria-describedby={undefined}>
         <Dialog.Header>
-          <Dialog.Title>Create Pipeline</Dialog.Title>
+          <Dialog.Title>{t('views:pipelines.createPipelineDialog.dialogTitle', 'Create Pipeline')}</Dialog.Title>
         </Dialog.Header>
         <FormWrapper onSubmit={handleSubmit(onSubmit)}>
           <Fieldset legend="Pipeline details">
             <Input
               id="name"
-              label="Pipeline name"
+              label={t('views:pipelines.createPipelineDialog.nameLabel', 'Pipeline name')}
               {...register('name')}
               size="md"
               error={errors.name?.message?.toString()}
@@ -124,7 +133,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
 
             <Input
               id="yamlPath"
-              label="Yaml path"
+              label={t('views:pipelines.createPipelineDialog.yamlPathLabel', 'Yaml path')}
               {...register('yamlPath')}
               size="md"
               error={errors.name?.message?.toString()}
@@ -136,8 +145,8 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 name="branch"
                 value={branch}
                 onValueChange={handleSelectBranch}
-                placeholder="Select"
-                label="Branch"
+                placeholder={t('views:pipelines.createPipelineDialog.branchPlaceholder', 'Select')}
+                label={t('views:pipelines.createPipelineDialog.branchLabel', 'Branch')}
               >
                 <Select.Content>
                   {branchNames?.map(branchName => (
@@ -158,10 +167,10 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
 
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button type="button" onClick={handleClose} className="text-primary" variant="outline">
-              Cancel
+              {t('views:pipelines.createPipelineDialog.cancelButton', 'Cancel')}
             </Button>
             <Button type="submit" disabled={!isValid || isLoadingBranchNames}>
-              Create Pipeline
+              {t('views:pipelines.createPipelineDialog.createButton', 'Create Pipeline')}
             </Button>
           </Dialog.Footer>
         </FormWrapper>

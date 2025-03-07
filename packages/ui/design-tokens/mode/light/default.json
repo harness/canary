@@ -2206,22 +2206,22 @@
     "skeleton": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{colors.chrome.850}"
+        "$value": "{colors.chrome.100}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{colors.chrome.800}"
+        "$value": "{colors.pure.white}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{colors.chrome.850}"
+        "$value": "{colors.chrome.100}"
       }
     },
     "pipeline": {
       "running": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{colors.orange.200}"
+          "$value": "{colors.orange.300}"
         },
         "gradient-stop-2": {
           "$extensions": {
@@ -2234,21 +2234,21 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.chrome.800}"
+          "$value": "{colors.chrome.200}"
         },
         "gradient-stop-3": {
           "$type": "color",
-          "$value": "{colors.orange.200}"
+          "$value": "{colors.orange.300}"
         }
       },
       "arrows": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{colors.pure.white}"
+          "$value": "{colors.chrome.100}"
         },
         "gradient-stop-2": {
           "$type": "color",
-          "$value": "{colors.blue.300}"
+          "$value": "{colors.blue.400}"
         },
         "gradient-stop-3": {
           "$type": "color",
@@ -2259,21 +2259,21 @@
         "background": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{colors.chrome.850}"
+            "$value": "{colors.pure.white}"
           },
           "gradient-to": {
             "$type": "color",
-            "$value": "{colors.chrome.900}"
+            "$value": "{colors.chrome.50}"
           }
         },
         "border": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{colors.chrome.800}"
+            "$value": "{colors.chrome.50}"
           },
           "gradient-to": {
             "$type": "color",
-            "$value": "{colors.chrome.850}"
+            "$value": "{colors.chrome.100}"
           }
         }
       },
@@ -2281,7 +2281,7 @@
         "number": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{colors.chrome.200}"
+            "$value": "{colors.chrome.500}"
           },
           "gradient-to": {
             "$type": "color",
@@ -2292,21 +2292,21 @@
           "big": {
             "gradient-from": {
               "$type": "color",
-              "$value": "{colors.chrome.850}"
+              "$value": "{colors.chrome.100}"
             },
             "gradient-to": {
               "$type": "color",
-              "$value": "{colors.chrome.950}"
+              "$value": "{colors.pure.white}"
             }
           },
           "small": {
             "gradient-from": {
               "$type": "color",
-              "$value": "{colors.chrome.800}"
+              "$value": "{colors.chrome.150}"
             },
             "gradient-to": {
               "$type": "color",
-              "$value": "{colors.chrome.850}"
+              "$value": "{colors.pure.white}"
             }
           }
         }
@@ -2314,13 +2314,17 @@
     }
   },
   "iconStrokeWidth": {
+    "xxs": {
+      "$type": "borderWidth",
+      "$value": "1.4"
+    },
     "xs": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.3"
     },
     "sm": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.2"
     },
     "md": {
       "$type": "borderWidth",

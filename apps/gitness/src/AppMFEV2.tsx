@@ -2,11 +2,7 @@ import './styles/AppMFE.css'
 
 import { ComponentType } from 'react'
 
-import { CodeServiceAPIClient } from '@harnessio/code-service-client'
-
 import { Unknown } from './framework/context/MFEContext'
-import { getV5Routes } from './framework/routing/utils'
-import { routes as routesV6 } from './routesV2'
 
 export interface MFERouteRendererProps {
   renderUrl: string
@@ -46,36 +42,12 @@ interface AppMFEProps {
   }>
 }
 
-function decode<T = unknown>(arg: string): T {
-  return JSON.parse(decodeURIComponent(atob(arg)))
-}
-
 export default function AppMFE({
-  scope,
   renderUrl,
-  on401,
+
   customComponents: { Link, Switch, Route },
   customHooks: { useParams }
 }: AppMFEProps) {
-  new CodeServiceAPIClient({
-    urlInterceptor: (url: string) =>
-      `${window.apiUrl || ''}/code/api/v1${url}${url.includes('?') ? '&' : '?'}routingId=${scope.accountId}`,
-    requestInterceptor: (request: Request) => {
-      const token = decode(localStorage.getItem('token') || '')
-      const newRequest = request.clone()
-      newRequest.headers.set('Authorization', `Bearer ${token}`)
-      return newRequest
-    },
-    responseInterceptor: (response: Response) => {
-      switch (response.status) {
-        case 401:
-          on401?.()
-          break
-      }
-      return response
-    }
-  })
-
   const Repos = () => (
     <div>
       <h2>Repositories</h2>
@@ -180,29 +152,33 @@ export default function AppMFE({
     )
   }
 
-  // Not Found Page
-  const NotFound = () => <h2>404 - Page Not Found</h2>
+  interface LayoutProps {
+    OutletComponent: React.ElementType
+    children?: React.ReactNode // Needed for v5
+  }
 
-  const Layout = () => (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to={`${renderUrl}/repos`}>Repos</Link>
-          </li>
-        </ul>
-      </nav>
-      <hr />
-      {/* Replacement for <Outlet /> */}
+  const Layout: React.FC<LayoutProps> = ({ OutletComponent, children }) => {
+    return (
+      <div>
+        <OutletComponent>{children}</OutletComponent> {/* Works for both versions */}
+      </div>
+    )
+  }
+
+  /* v5 */
+  return (
+    <>
+      <Layout OutletComponent={Switch} />
       <Switch>
         <Route exact path={`${renderUrl}/repos`} component={Repos} />
         <Route path={`${renderUrl}/repos/:repoName`} component={RepoDetails} />
-        <Route component={NotFound} />
       </Switch>
-    </div>
+    </>
   )
 
-  return <Layout />
-  // const routes = getV5Routes({ Route, Switch, routesV6, renderUrl })
-  // return <Switch>{routes}</Switch>
+  /**
+   * convert v6 to v5 routes
+  const routes = getV5Routes({ Route, Switch, routesV6, renderUrl })
+  return <Switch>{routes}</Switch>
+  */
 }

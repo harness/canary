@@ -1,15 +1,15 @@
 ---
-title: RadialInput
-description: RadialInput component documentation
+title: RadialSelect
+description: RadialSelect component documentation
 ---
 
-The `RadialInput` component provides a customizable radio group input with a stacked list layout. Each option includes a title, description, and a radio button control, making it ideal for selection interfaces where users need detailed information about each choice.
+The `RadialSelect` component provides a customizable radio group input with a stacked list layout. Each option includes a title, description, and a radio button control, making it ideal for selection interfaces where users need detailed information about each choice.
 
 import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<RadialInput
+  code={`<RadialSelect
     options={[
       {
         id: "option1",
@@ -32,7 +32,7 @@ import { DocsPage } from "@/components/docs-page";
 ## Usage
 
 ```typescript jsx
-import { RadialInput } from '@harnessio/ui/views'
+import { RadialSelect } from '@harnessio/ui/views'
 
 const options = [
   {
@@ -50,7 +50,7 @@ const options = [
 ]
 
 return (
-  <RadialInput
+  <RadialSelect
     options={options}
     value="value1"
     onValueChange={value => {
@@ -62,7 +62,7 @@ return (
 
 ## API Reference
 
-### RadialInput
+### RadialSelect
 
 The main component that renders a radio group with stacked list items.
 

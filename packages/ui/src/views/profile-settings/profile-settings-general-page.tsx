@@ -13,25 +13,17 @@ const makeProfileSchema = (t: TranslationStore['t']) =>
     name: z
       .string()
       .trim()
-      .nonempty({ message: t('views:profileSettings.validation.nameMin', 'Please provide your name') })
-      .max(256, {
-        message: t('views:profileSettings.validation.nameMax', 'Name must be no longer than 256 characters')
-      }),
+      .nonempty(t('views:profileSettings.validation.nameMin', 'Please provide your name'))
+      .max(256, t('views:profileSettings.validation.nameMax', 'Name must be no longer than 256 characters')),
     username: z
       .string()
       .trim()
-      .nonempty({
-        message: t('views:profileSettings.validation.usernameMin', 'Please provide a username')
-      }),
+      .nonempty(t('views:profileSettings.validation.usernameMin', 'Please provide a username')),
     email: z
       .string()
       .trim()
-      .email({
-        message: t('views:profileSettings.validation.emailInvalid', 'Please provide a valid email address')
-      })
-      .max(250, {
-        message: t('views:profileSettings.validation.emailMax', 'Email must be no longer than 250 characters')
-      })
+      .email(t('views:profileSettings.validation.emailInvalid', 'Please provide a valid email address'))
+      .max(250, t('views:profileSettings.validation.emailMax', 'Email must be no longer than 250 characters'))
   })
 
 const makePasswordSchema = (t: TranslationStore['t']) =>
@@ -39,18 +31,14 @@ const makePasswordSchema = (t: TranslationStore['t']) =>
     .object({
       newPassword: z
         .string()
-        .min(6, {
-          message: t('views:profileSettings.validation.passwordMin', 'New password must be at least 6 characters')
-        })
-        .max(128, {
-          message: t(
-            'views:profileSettings.validation.passwordMax',
-            'New password must be no longer than 128 characters'
-          )
-        }),
-      confirmPassword: z.string().min(6, {
-        message: t('views:profileSettings.validation.confirmPasswordMin', 'Please confirm your new password')
-      })
+        .min(6, t('views:profileSettings.validation.passwordMin', 'New password must be at least 6 characters'))
+        .max(
+          128,
+          t('views:profileSettings.validation.passwordMax', 'New password must be no longer than 128 characters')
+        ),
+      confirmPassword: z
+        .string()
+        .min(6, t('views:profileSettings.validation.confirmPasswordMin', 'Please confirm your new password'))
     })
     .refine(data => data.newPassword === data.confirmPassword, {
       message: t('views:profileSettings.validation.passwordsDoNotMatch', 'Passwords do not match'),

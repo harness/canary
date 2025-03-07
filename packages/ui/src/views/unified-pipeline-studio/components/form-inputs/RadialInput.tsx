@@ -2,6 +2,7 @@ import { FormControl, FormField, FormItem } from '@components/form'
 import { StackedList } from '@components/index'
 import { RadioButton, RadioGroup } from '@components/radio'
 import { cn } from '@utils/cn'
+import { RadialSelect } from '@views/components/RadialSelect'
 
 import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/forms'
 
@@ -41,6 +42,8 @@ export interface RadialOption {
   label: string
   description: string
   value: string
+  id: string
+  title: string
 }
 
 export interface RadialInputConfig {
@@ -50,8 +53,8 @@ export interface RadialInputConfig {
   }
 }
 
-function RadialInputInternal(props: InputProps<AnyFormikValue, RadialInputConfig>): JSX.Element {
-  const { readonly, path, input } = props
+function RadialInputInternal(props: Readonly<InputProps<AnyFormikValue, RadialInputConfig>>): JSX.Element {
+  const { path, input } = props
   const { label = '', required, description } = input
   const options = input.inputConfig?.options ?? []
 
@@ -63,21 +66,7 @@ function RadialInputInternal(props: InputProps<AnyFormikValue, RadialInputConfig
           <FormItem>
             <InputLabel label={label} description={description} required={required} />
             <FormControl>
-              <RadioGroup value={field.value} onValueChange={field.onChange} id={path}>
-                <div className="flex flex-col gap-2">
-                  {options.map(option => (
-                    <Option
-                      key={option.label}
-                      label={option.label}
-                      description={option.description}
-                      value={option.value}
-                      selected={field.value === option.value}
-                      onSelect={field.onChange}
-                      disabled={readonly}
-                    />
-                  ))}
-                </div>
-              </RadioGroup>
+              <RadialSelect options={options} value={field.value} onValueChange={field.onChange} id={field.value} />
             </FormControl>
             <InputError path={path} />
           </FormItem>

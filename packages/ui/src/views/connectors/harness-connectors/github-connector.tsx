@@ -24,8 +24,14 @@ const inputs: IInputConfigWithConfig[] = [
     inputConfig: {
       inputType: InputType.radio,
       options: [
-        { label: 'Cloud', value: 'Cloud', description: 'Connect to Github Cloud' },
-        { label: 'Enterprise', value: 'Enterprise', description: 'Connect to Github Enterprise' }
+        { label: 'Cloud', value: 'Cloud', description: 'Connect to Github Cloud', id: 'cloud', title: 'Cloud' },
+        {
+          label: 'Enterprise',
+          value: 'Enterprise',
+          description: 'Connect to Github Enterprise',
+          id: 'enterprise',
+          title: 'Enterprise'
+        }
       ] as RadialOption[]
     },
     default: 'Cloud'

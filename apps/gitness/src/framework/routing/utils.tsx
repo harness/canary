@@ -2,6 +2,8 @@ import { Navigate, Params } from 'react-router-dom'
 
 import '../context/NavigationContext'
 
+import { ComponentType } from 'react'
+
 import { CustomRouteObject, RouteConstants, RouteEntry, RouteFunctionMap } from './types'
 
 /**
@@ -93,4 +95,40 @@ export const extractRedirectRouteObjects = (routes: CustomRouteObject[]): Custom
   }
   traverseRoutes(routes)
   return navigateObjects
+}
+
+export const getV5Routes = ({
+  Route,
+  Switch,
+  routesV6,
+  renderUrl = ''
+}: {
+  Route: ComponentType<any>
+  Switch: ComponentType<any>
+  routesV6: CustomRouteObject[]
+  renderUrl?: string
+}): React.ReactNode => {
+  return routesV6.map((route, index) => {
+    const pathWithPrefix = route.index
+      ? renderUrl // Keep parent URL for index routes
+      : renderUrl
+        ? `${renderUrl}/${route.path}`.replace(/\/+/g, '/') // Remove extra slashes, for routes ending with "/"
+        : route.path
+
+    return (
+      <Route
+        key={route.path || `index-${index}`}
+        path={route.index ? renderUrl : pathWithPrefix}
+        exact={route.index || !route.children}
+        render={() => (
+          <>
+            {route.element}
+            {route.children ? (
+              <Switch>{getV5Routes({ Route, Switch, routesV6: route.children, renderUrl: pathWithPrefix })}</Switch>
+            ) : null}
+          </>
+        )}
+      />
+    )
+  })
 }

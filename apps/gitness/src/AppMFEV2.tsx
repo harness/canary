@@ -5,8 +5,8 @@ import { ComponentType } from 'react'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 
 import { Unknown } from './framework/context/MFEContext'
-import { CustomRouteObject } from './framework/routing/types'
-import { routes as routesV2 } from './routesV2'
+import { getV5Routes } from './framework/routing/utils'
+import { routes as routesV6 } from './routesV2'
 
 export interface MFERouteRendererProps {
   renderUrl: string
@@ -49,7 +49,7 @@ function decode<T = unknown>(arg: string): T {
   return JSON.parse(decodeURIComponent(atob(arg)))
 }
 
-export default function AppMFE({ scope, renderUrl, on401, customComponents: { Switch, Route } }: AppMFEProps) {
+export default function AppMFE({ scope, renderUrl, on401, customComponents: { Link, Switch, Route } }: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) =>
       `${window.apiUrl || ''}/code/api/v1${url}${url.includes('?') ? '&' : '?'}routingId=${scope.accountId}`,
@@ -69,30 +69,101 @@ export default function AppMFE({ scope, renderUrl, on401, customComponents: { Sw
     }
   })
 
-  const getV5Routes = (routes: CustomRouteObject[], renderUrl: string = ''): React.ReactNode => {
-    return routes.map((route, index) => {
-      const pathWithPrefix = route.index
-        ? renderUrl // Keep parent URL for index routes
-        : renderUrl
-          ? `${renderUrl}/${route.path}`.replace(/\/+/g, '/') // Remove extra slashes, for routes ending with "/"
-          : route.path
+  const Home = () => <h2>Welcome to the Home Page</h2>
+  const About = () => <h2>About Our Company</h2>
 
-      return (
-        <Route
-          key={route.path || `index-${index}`}
-          path={route.index ? renderUrl : pathWithPrefix}
-          exact={route.index || !route.children}
-          render={() => (
-            <>
-              {route.element}
-              {route.children ? <Switch>{getV5Routes(route.children, pathWithPrefix)}</Switch> : null}
-            </>
-          )}
-        />
-      )
-    })
-  }
+  const Services = ({ match }) => (
+    <div>
+      <h2>Our Services</h2>
+      <ul>
+        <li>
+          <Link to={`${match.url}/web`}>Web Development</Link>
+        </li>
+        <li>
+          <Link to={`${match.url}/mobile`}>Mobile Development</Link>
+        </li>
+      </ul>
+      <Switch>
+        <Route exact path={match.path} render={() => <h3>Select a service</h3>} />
+        <Route path={`${match.path}/web`} component={WebDevelopment} />
+        <Route path={`${match.path}/mobile`} component={MobileDevelopment} />
+      </Switch>
+    </div>
+  )
 
-  const routes = getV5Routes(routesV2, renderUrl)
+  const WebDevelopment = ({ match }) => (
+    <div>
+      <h3>Web Development Services</h3>
+      <ul>
+        <li>
+          <Link to={`${match.url}/react`}>ReactJS</Link>
+        </li>
+        <li>
+          <Link to={`${match.url}/vite`}>ViteJS</Link>
+        </li>
+      </ul>
+      {/* Replacement for <Outlet /> */}
+      <Switch>
+        <Route exact path={match.path} render={() => <h3>Select a web dev technology</h3>} />
+        <Route path={`${match.path}/react`} render={() => <h3>ReactJS Development</h3>} />
+        <Route path={`${match.path}/vite`} render={() => <h3>ViteJS Development</h3>} />
+      </Switch>
+    </div>
+  )
+
+  const MobileDevelopment = ({ match }) => (
+    <div>
+      <h3>Mobile Development Services</h3>
+      <ul>
+        <li>
+          <Link to={`${match.url}/ios`}>iOS</Link>
+        </li>
+        <li>
+          <Link to={`${match.url}/android`}>Android</Link>
+        </li>
+      </ul>
+      {/* Replacement for <Outlet /> */}
+      <Switch>
+        <Route exact path={match.path} render={() => <h3>Select a mobile dev technology</h3>} />
+        <Route path={`${match.path}/ios`} render={() => <h3>iOS Development</h3>} />
+        <Route path={`${match.path}/android`} render={() => <h3>Android Development</h3>} />
+      </Switch>
+    </div>
+  )
+
+  const Contact = () => <h2>Contact Us</h2>
+  const NotFound = () => <h2>404 - Page Not Found</h2>
+
+  const Layout = () => (
+    <div>
+      <nav>
+        <ul>
+          <li>
+            <Link to={`${renderUrl}/`}>Home</Link>
+          </li>
+          <li>
+            <Link to={`${renderUrl}/about`}>About</Link>
+          </li>
+          <li>
+            <Link to={`${renderUrl}/services`}>Services</Link>
+          </li>
+          <li>
+            <Link to={`${renderUrl}/contact`}>Contact</Link>
+          </li>
+        </ul>
+      </nav>
+      <hr />
+      <Switch>
+        <Route exact path={`${renderUrl}/`} component={Home} />
+        <Route path={`${renderUrl}/about`} component={About} />
+        <Route path={`${renderUrl}/services`} component={Services} />
+        <Route path={`${renderUrl}/contact`} component={Contact} />
+        <Route component={NotFound} />
+      </Switch>
+    </div>
+  )
+
+  // return <Layout />
+  const routes = getV5Routes({ Route, Switch, routesV6, renderUrl })
   return <Switch>{routes}</Switch>
 }

@@ -1196,17 +1196,17 @@
     "sidebar": {
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.850}",
+        "$value": "{colors.chrome.900}",
         "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.chrome.800}",
+        "$value": "{colors.chrome.850}",
         "$description": "Border color for navigation components. Creates visual boundaries and separation from adjacent content."
       },
       "separator": {
         "$type": "color",
-        "$value": "{colors.chrome.800}",
+        "$value": "{colors.chrome.850}",
         "$description": "Color for separators between navigation sections. Creates visual organization within the navigation structure."
       },
       "hover": {
@@ -1214,7 +1214,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.3",
+              "value": "0.15",
               "space": "p3"
             }
           }
@@ -1228,7 +1228,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.5",
+              "value": "0.2",
               "space": "p3"
             }
           }
@@ -1277,17 +1277,8 @@
       },
       "search": {
         "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.5",
-                "space": "p3"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{colors.chrome.900}",
+          "$value": "{colors.chrome.950}",
           "$description": "Search input specific background on sidebar navigation."
         },
         "border": {
@@ -1302,15 +1293,6 @@
         },
         "btn": {
           "background": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.5",
-                  "space": "p3"
-                }
-              }
-            },
             "$type": "color",
             "$value": "{colors.chrome.900}",
             "$description": "Search input specific button background on sidebar navigation."

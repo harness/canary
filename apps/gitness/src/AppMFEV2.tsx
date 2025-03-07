@@ -85,7 +85,7 @@ export default function AppMFE({ scope, renderUrl, on401, customComponents: { Sw
           render={() => (
             <>
               {route.element}
-              {route.children && <Switch>{getV5Routes(route.children, pathWithPrefix)}</Switch>}
+              {route.children ? <Switch>{getV5Routes(route.children, pathWithPrefix)}</Switch> : null}
             </>
           )}
         />

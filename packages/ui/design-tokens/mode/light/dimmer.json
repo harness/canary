@@ -89,7 +89,7 @@
     },
     "focus": {
       "$type": "color",
-      "$value": "{brand.color.400}",
+      "$value": "{brand.color.500}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
@@ -531,7 +531,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{brand.color.400}",
+          "$value": "{brand.color.500}",
           "$description": "Background color for primary action buttons. Creates emphasis for the most important action in a given context."
         },
         "border": {
@@ -1197,17 +1197,17 @@
     "sidebar": {
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.900}",
+        "$value": "{colors.chrome.850}",
         "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.chrome.850}",
+        "$value": "{colors.chrome.800}",
         "$description": "Border color for navigation components. Creates visual boundaries and separation from adjacent content."
       },
       "separator": {
         "$type": "color",
-        "$value": "{colors.chrome.850}",
+        "$value": "{colors.chrome.800}",
         "$description": "Color for separators between navigation sections. Creates visual organization within the navigation structure."
       },
       "hover": {
@@ -1278,8 +1278,17 @@
       },
       "search": {
         "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.5",
+                "space": "p3"
+              }
+            }
+          },
           "$type": "color",
-          "$value": "{colors.chrome.950}",
+          "$value": "{colors.chrome.900}",
           "$description": "Search input specific background on sidebar navigation."
         },
         "border": {
@@ -1294,6 +1303,15 @@
         },
         "btn": {
           "background": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.5",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
             "$value": "{colors.chrome.900}",
             "$description": "Search input specific button background on sidebar navigation."
@@ -2220,7 +2238,7 @@
     "ai": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{colors.yellow.300}"
+        "$value": "{colors.yellow.200}"
       },
       "gradient-stop-2": {
         "$type": "color",

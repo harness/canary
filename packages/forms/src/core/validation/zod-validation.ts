@@ -29,7 +29,7 @@ type SchemaTreeNode = { [key: string]: SchemaTreeNode } & {
   _input?: IInputDefinition
   _isList?: boolean
   _isArrayItem?: boolean
-  _schema?: zod.ZodObject<zod.ZodRawShape>
+  _schema?: (values: any) => zod.ZodObject<zod.ZodRawShape>
   _schemaObj?: { [key: string]: SchemaTreeNode }
   _requiredOnly?: boolean
 }
@@ -99,7 +99,7 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormikValue, op
       const enhancedSchema = getSchemaForArray(_schema, _input, values, options, arraySchema)
       objectSchemas[key] = enhancedSchema!
     } else if (_schema && _input) {
-      const enhancedSchema: zod.Schema<unknown> = getSchemaForPrimitive(_schema, _input, options)
+      const enhancedSchema: zod.Schema<unknown> = getSchemaForPrimitive(_schema, _input, values, options)
       objectSchemas[key] = enhancedSchema
       // TODO check this
       // objectSchemas[key] = !isEmpty(nestedSchemaObj)
@@ -134,11 +134,12 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormikValue, op
 }
 
 function getSchemaForPrimitive(
-  schema: zod.Schema<unknown> | undefined,
+  schema: ((values: any) => zod.Schema<unknown>) | undefined,
   input: IInputDefinition,
+  values: any,
   options?: IGetValidationSchemaOptions
 ) {
-  return zod.string().superRefine(async (value, ctx) => {
+  return zod.any().superRefine(async (value, ctx) => {
     // 1. Required validation
     if (input.required) {
       const requiredSchemaResponse = await getRequiredSchema(input, options).safeParseAsync(value)
@@ -168,7 +169,7 @@ function getSchemaForPrimitive(
 
     //3. Input validation
     if (schema) {
-      const schemaResponse = await schema.safeParseAsync(value)
+      const schemaResponse = await schema(values).safeParseAsync(value)
 
       if (!schemaResponse.success) {
         ctx.addIssue({
@@ -181,9 +182,9 @@ function getSchemaForPrimitive(
 }
 
 function getSchemaForArray(
-  schema: zod.Schema | undefined,
+  schema: ((values: any) => zod.Schema) | undefined,
   input: IInputDefinition,
-  _values: AnyFormikValue, // TODO remove this
+  values: AnyFormikValue,
   options?: IGetValidationSchemaOptions,
   arraySchema?: zod.ZodTypeAny
 ) {
@@ -229,7 +230,7 @@ function getSchemaForArray(
 
       // 4. Input validation
       if (schema) {
-        const schemaResult = await schema.safeParseAsync(value)
+        const schemaResult = await schema(values).safeParseAsync(value)
 
         if (!schemaResult.success) {
           ctx.addIssue({

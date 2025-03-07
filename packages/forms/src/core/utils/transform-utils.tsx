@@ -1,4 +1,4 @@
-import { cloneDeep, get, pick, set } from 'lodash-es'
+import { cloneDeep, get, pick, set, unset } from 'lodash-es'
 
 import { IFormDefinition, IInputDefinition } from '../../types/types'
 
@@ -83,4 +83,23 @@ export function getTransformers(formDefinition: IFormDefinition): TransformItem[
   })
 
   return ret
+}
+
+/** Remove values for inputs that are hidden  */
+export function unsetHiddenInputsValues(
+  formDefinition: IFormDefinition,
+  values: Record<string, any>,
+  metadata?: any
+): Record<string, any> {
+  const flattenInputs = flattenInputsRec(formDefinition.inputs)
+
+  const retValues = cloneDeep(values)
+
+  flattenInputs.forEach(input => {
+    if (!!input.isVisible && !input.isVisible(values, metadata)) {
+      unset(retValues, input.path)
+    }
+  })
+
+  return retValues
 }

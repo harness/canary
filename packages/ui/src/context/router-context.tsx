@@ -30,6 +30,8 @@ const NavLinkDefault = ({ to, children, className, style, ...props }: NavLinkPro
 
 const OutletDefault: ComponentType<OutletProps> = ({ children }) => <>{children}</>
 
+const SwitchDefault: ComponentType<{ children: ReactNode }> = ({ children }) => <>{children}</>
+
 const navigateFnDefault: NavigateFunction = to => {
   if (typeof to === 'number') {
     window.history.go(to) // Supports navigate(-1), navigate(1), etc.
@@ -51,6 +53,7 @@ interface RouterContextType {
   Link: ComponentType<LinkProps>
   NavLink: ComponentType<NavLinkProps>
   Outlet: ComponentType<OutletProps>
+  Switch: ComponentType<{ children: ReactNode }>
   location: Location
   navigate: NavigateFunction
   useSearchParams: typeof useSearchParamsDefault
@@ -61,6 +64,7 @@ const RouterContext = createContext<RouterContextType>({
   Link: LinkDefault,
   NavLink: NavLinkDefault,
   Outlet: OutletDefault,
+  Switch: SwitchDefault,
   location: window.location,
   navigate: navigateFnDefault,
   useSearchParams: useSearchParamsDefault,
@@ -74,6 +78,7 @@ export const RouterContextProvider = ({
   Link = LinkDefault,
   NavLink = NavLinkDefault,
   Outlet = OutletDefault,
+  Switch = SwitchDefault,
   location = window.location,
   navigate = navigateFnDefault,
   useSearchParams = useSearchParamsDefault,
@@ -87,6 +92,7 @@ export const RouterContextProvider = ({
         Link,
         NavLink,
         Outlet,
+        Switch,
         location,
         navigate,
         useSearchParams,

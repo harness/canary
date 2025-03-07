@@ -119,6 +119,7 @@ export default function AppMFE({
             <Link to={`${renderUrl}/repos/${repoName}/settings`}>Settings</Link>
           </li>
         </ul>
+        {/* Replacement for <Outlet /> */}
         <Switch>
           <Route
             path={`${renderUrl}/repos/:repoName/summary`}

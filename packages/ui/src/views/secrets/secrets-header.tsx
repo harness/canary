@@ -2,10 +2,7 @@ import { useForm } from 'react-hook-form'
 
 import { RadialOption, RadioSelect } from '@views/components/RadioSelect'
 
-export enum SecretType {
-  New = 'new',
-  Existing = 'existing'
-}
+import { SecretType } from './types'
 
 interface SecretTypeForm {
   type: SecretType

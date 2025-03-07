@@ -49,23 +49,23 @@
     "onColor": {
       "50": {
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.chrome.950}"
       },
       "100": {
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.chrome.950}"
       },
       "200": {
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.chrome.950}"
       },
       "300": {
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.chrome.950}"
       },
       "400": {
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.chrome.950}"
       },
       "500": {
         "$type": "color",

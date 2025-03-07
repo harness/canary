@@ -340,44 +340,44 @@
     "create": "Create labels"
   },
   "projectSettings": {
-    "newLabels": "Create label",
+    "newLabels": "Créer une étiquette",
     "general": {
-      "mainTitle": "",
-      "projectNamePlaceholder": "",
-      "projectNameLabel": "",
-      "projectDescriptionPlaceholder": "",
-      "projectDescriptionLabel": "",
+      "mainTitle": "Paramètres généraux",
+      "projectNamePlaceholder": "Entrer le nom du projet",
+      "projectNameLabel": "Nom du projet",
+      "projectDescriptionPlaceholder": "Entrer une description (facultatif)",
+      "projectDescriptionLabel": "Description",
       "formSubmitButton": {
-        "savingState": "",
-        "defaultState": "",
-        "savedState": ""
+        "savingState": "Enregistrement...",
+        "defaultState": "Enregistrer les modifications",
+        "savedState": "Enregistré"
       },
-      "formCancelButton": "Cancel",
-      "deleteProjectTitle": "",
-      "deleteProjectDescription": "",
-      "deleteProjectButton": ""
+      "formCancelButton": "Annuler",
+      "deleteProjectTitle": "Supprimer le projet",
+      "deleteProjectDescription": "Cela supprimera définitivement ce projet et tout ce qu'il contient. Tous les référentiels qu'il contient seront également supprimés.",
+      "deleteProjectButton": "Supprimer le projet"
     },
-    "newMember": "",
-    "member": "",
-    "role": "",
-    "addMember": "",
+    "newMember": "Nouveau membre",
+    "member": "Membre",
+    "role": "Rôle",
+    "addMember": "Ajouter un membre à ce projet",
     "membersTable": {
-      "user": "User",
-      "email": "Email",
-      "role": "Role"
+      "user": "Utilisateur",
+      "email": "Adresse e-mail",
+      "role": "Rôle"
     },
-    "removeMember": "Remove member",
-    "inviteNewMember": "Invite new member",
-    "members": "",
-    "rules": "Rules",
-    "addRule": "Add new rule",
+    "removeMember": "Supprimer le membre",
+    "inviteNewMember": "Inviter un nouveau membre",
+    "members": "Membres",
+    "rules": "Règles",
+    "addRule": "Ajouter une nouvelle règle",
     "tabs": {
-      "general": "General",
-      "members": "Members",
-      "labels": "Labels",
-      "rules": "Rules"
+      "general": "Général",
+      "members": "Membres",
+      "labels": "Étiquettes",
+      "rules": "Règles"
     },
-    "newBranchRule": "New branch rule"
+    "newBranchRule": "Nouvelle règle de branche"
   },
   "landingPage": {
     "selectProject": "Sélectionnez un projet pour commencer",
@@ -565,14 +565,6 @@
     "saving": "Enregistrement..."
   },
   "createProject": {
-    "validation": {
-      "nameNoEmpty": "Le champ ne peut pas être vide",
-      "nameMinLength": "Le nom du projet doit contenir au moins 4 caractères",
-      "nameMax": "Le nom ne doit pas dépasser 100 caractères",
-      "nameRegex": "Le nom du pipeline doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
-      "noSpaces": "Le nom du pipeline ne peut pas contenir d'espaces",
-      "descriptionMax": "La description ne doit pas dépasser 1024 caractères"
-    },
     "backButton": "Retour",
     "title": "Créez votre nouveau projet",
     "description": "Organisez vos dépôts, pipelines et plus encore.",
@@ -589,6 +581,14 @@
     "logout": {
       "question": "Voulez-vous utiliser un autre compte ?",
       "link": "Se déconnecter"
+    },
+    "validation": {
+      "nameNoEmpty": "Le champ ne peut pas être vide",
+      "nameMinLength": "Le nom du projet doit contenir au moins 4 caractères",
+      "nameMax": "Le nom ne doit pas dépasser 100 caractères",
+      "nameRegex": "Le nom du pipeline doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
+      "noSpaces": "Le nom du pipeline ne peut pas contenir d'espaces",
+      "descriptionMax": "La description ne doit pas dépasser 1024 caractères"
     }
   },
   "importProject": {

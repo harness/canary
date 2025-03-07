@@ -13,7 +13,12 @@ import {
   StyledLink,
   StyledLinkProps
 } from '@/components'
-import { Floating1ColumnLayout, TranslationStore } from '@/views'
+import {
+  Floating1ColumnLayout,
+  makeProjectDescriptionSchema,
+  makeProjectNameSchema,
+  TranslationStore
+} from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
 import { z } from 'zod'
@@ -55,30 +60,8 @@ const getIsFirstProjectPage = (props: CreateProjectPageProps): props is CreateFi
   return 'logoutLinkProps' in props
 }
 
-const makeCreateProjectSchema = (t: TranslationStore['t']) =>
-  z.object({
-    name: z
-      .string()
-      .trim()
-      .nonempty(t('views:createProject.validation.nameNoEmpty', 'Name can’t be blank'))
-      .min(4, t('views:createProject.validation.nameMinLength', 'Name should be at least 4 characters'))
-      .max(100, t('views:createProject.validation.nameMax', 'Name must be no longer than 100 characters'))
-      .regex(
-        /^[a-zA-Z0-9._-\s]+$/,
-        t(
-          'views:createProject.validation.nameRegex',
-          'Name must contain only letters, numbers, and the characters: - _ .'
-        )
-      )
-      .refine(data => !data.includes(' '), t('views:createProject.validation.noSpaces', 'Name cannot contain spaces')),
-    description: z
-      .string()
-      .trim()
-      .max(
-        1024,
-        t('views:createProject.validation.descriptionMax', 'Description must be no longer than 1024 characters')
-      )
-  })
+export const makeCreateProjectSchema = (t: TranslationStore['t']) =>
+  z.object({ name: makeProjectNameSchema(t), description: makeProjectDescriptionSchema(t) })
 
 export type CreateProjectFields = z.infer<ReturnType<typeof makeCreateProjectSchema>>
 

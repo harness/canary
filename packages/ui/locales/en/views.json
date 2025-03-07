@@ -594,14 +594,6 @@
     "addSshKey": "Add new SSH key"
   },
   "createProject": {
-    "validation": {
-      "nameNoEmpty": "The field can’t be blank",
-      "nameMinLength": "The project name should be at least 4 characters",
-      "nameMax": "Name must be no longer than 100 characters",
-      "nameRegex": "Pipeline name must contain only letters, numbers, and the characters: - _ .",
-      "noSpaces": "Pipeline name cannot contain spaces",
-      "descriptionMax": "Description must be no longer than 1024 characters"
-    },
     "backButton": "Back",
     "title": "Create your new project",
     "description": "Organize your repositories, pipelines and more.",
@@ -618,6 +610,14 @@
     "logout": {
       "question": "Want to use a different account?",
       "link": "Log out"
+    },
+    "validation": {
+      "nameNoEmpty": "The field can’t be blank",
+      "nameMinLength": "The project name should be at least 4 characters",
+      "nameMax": "Name must be no longer than 100 characters",
+      "nameRegex": "Pipeline name must contain only letters, numbers, and the characters: - _ .",
+      "noSpaces": "Pipeline name cannot contain spaces",
+      "descriptionMax": "Description must be no longer than 1024 characters"
     }
   },
   "importProject": {

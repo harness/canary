@@ -37,7 +37,7 @@ const FilterSelect = <FilterKey extends string>({
         align={dropdownAlign}
         onCloseAutoFocus={e => e.preventDefault()}
       >
-        <div className="border-borders-4 relative flex items-center border-b px-3 py-2.5">
+        <div className="relative flex items-center border-b border-borders-4 px-3 py-2.5">
           <Input
             type="text"
             placeholder={inputPlaceholder}
@@ -103,10 +103,10 @@ const FilterSelectLabel = ({
 }) => {
   return (
     <>
-      <Button size="xs" variant="ghost" className="hover:text-foreground-1 gap-x-1 px-0 hover:bg-transparent">
+      <Button size="xs" variant="ghost" className="gap-x-1 px-0 hover:bg-transparent hover:text-foreground-1">
         {displayLabel}
         {selectedFilters > 0 && (
-          <span className="border-tag-border-blue-1 bg-tag-background-blue-1 text-11 text-tag-foreground-blue-1 flex h-[18px] min-w-[17px] items-center justify-center rounded border px-1">
+          <span className="flex h-[18px] min-w-[17px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 text-tag-foreground-blue-1">
             {selectedFilters}
           </span>
         )}
@@ -118,7 +118,7 @@ const FilterSelectLabel = ({
 
 const FilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactNode }) => {
   return (
-    <Button size="xs" variant="ghost" className="hover:text-foreground-1 gap-x-1.5 hover:bg-transparent">
+    <Button size="xs" variant="ghost" className="gap-x-1.5 hover:bg-transparent hover:text-foreground-1">
       <Icon name="plus" size={10} />
       <span>{displayLabel}</span>
     </Button>

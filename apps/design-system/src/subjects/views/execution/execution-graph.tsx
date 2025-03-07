@@ -1,3 +1,5 @@
+import { useTranslationStore } from '@utils/viewUtils'
+
 import { ExecutionHeader, ExecutionState, ExecutionTabs } from '@harnessio/ui/views'
 
 import PipelineExecutionGraph from './pipeline-execution-graph'
@@ -5,7 +7,7 @@ import PipelineExecutionGraph from './pipeline-execution-graph'
 export const ExecutionGraphView = () => {
   return (
     <div className="flex h-full flex-col">
-      <ExecutionTabs />
+      <ExecutionTabs useTranslationStore={useTranslationStore} />
       <ExecutionHeader
         className="border-borders-4 border-b"
         commitName="8fbru3ix"

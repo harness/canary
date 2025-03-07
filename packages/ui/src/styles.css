@@ -1151,10 +1151,6 @@ mark {
   @apply bg-background-1 fixed top-0 z-30 ml-56 w-full;
 }
 
-.bg-tab-gradient-radial {
-  background-image: var(--canary-tab-background-gradient);
-}
-
 .top-\[100px\] {
   top: 100px;
 }

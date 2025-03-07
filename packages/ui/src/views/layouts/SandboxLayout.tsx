@@ -49,7 +49,7 @@ function Header({ children, className }: { children: ReactNode; className?: stri
 }
 
 function SubHeader({ children, className }: { children: ReactNode; className?: string }) {
-  return <header className={className}>{children}</header>
+  return <header className={cn('h-[45px] overflow-hidden', className)}>{children}</header>
 }
 
 function Main({ children, fullWidth, className }: { children: ReactNode; fullWidth?: boolean; className?: string }) {

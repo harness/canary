@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 
 import { useRouterContext } from '@/context'
 import { Badge, Button, Icon } from '@components/index'
+import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
 
 import { IconType } from '../pull-request.types'
@@ -10,6 +11,7 @@ import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
 
 type ThemeType = 'default' | 'destructive' | 'success' | 'emphasis' | 'muted' | null | undefined
 interface PullRequestTitleProps {
+  className?: string
   data: {
     title?: string
     number?: number
@@ -29,6 +31,7 @@ interface PullRequestTitleProps {
 }
 
 export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
+  className,
   data: {
     title,
     number,
@@ -63,7 +66,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
 
   return (
     <>
-      <div className="flex w-full flex-col gap-y-4">
+      <div className={cn('flex w-full flex-col gap-y-4', className)}>
         <div className="flex w-full max-w-full items-center gap-x-3 text-24">
           <div className="flex items-center gap-x-2.5 leading-snug">
             <h1 className="flex max-w-[95%] items-center truncate font-medium text-foreground-1">{title}</h1>

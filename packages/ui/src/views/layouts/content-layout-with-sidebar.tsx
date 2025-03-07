@@ -35,7 +35,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
 }) => {
   const { NavLink } = useRouterContext()
   return (
-    <div className="relative mx-auto flex w-[1072px] items-start gap-x-20">
+    <div className="relative mx-auto flex w-full max-w-[1088px] items-start gap-x-20 pr-4">
       <div
         className="sticky w-[220px]"
         style={{

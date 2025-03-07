@@ -47,17 +47,17 @@ export function CommandPaletteWrapper() {
         label: 'Search repositories...',
         key: PageKey.REPOSITORIES,
         shortcut: ['⇧', 'R'],
-        icon: () => <Icon name="repositories" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="repositories" className="!h-[14px] !w-[14px] text-icons-1" />
       },
       {
         label: 'Create repository',
         action: () => alert('Create Repository'),
-        icon: () => <Icon name="plus" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="plus" className="!h-[14px] !w-[14px] text-icons-1" />
       },
       {
         label: 'Import repository',
         action: () => alert('Import Repository'),
-        icon: () => <Icon name="download" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="download" className="!h-[14px] !w-[14px] text-icons-1" />
       }
     ],
     [PageKey.PROJECTS]: [
@@ -65,17 +65,17 @@ export function CommandPaletteWrapper() {
         label: 'Search projects...',
         key: PageKey.PROJECTS,
         shortcut: ['⇧', 'P'],
-        icon: () => <Icon name="environment" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="environment" className="!h-[14px] !w-[14px] text-icons-1" />
       },
       {
         label: 'Create project',
         action: () => alert('Create Project'),
-        icon: () => <Icon name="plus" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="plus" className="!h-[14px] !w-[14px] text-icons-1" />
       },
       {
         label: 'Import project',
         action: () => alert('Import Project'),
-        icon: () => <Icon name="download" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="download" className="!h-[14px] !w-[14px] text-icons-1" />
       }
     ],
     [PageKey.PIPELINES]: [
@@ -83,12 +83,12 @@ export function CommandPaletteWrapper() {
         label: 'Search pipelines...',
         key: PageKey.PIPELINES,
         shortcut: ['⇧', 'L'],
-        icon: () => <Icon name="pipelines" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="pipelines" className="!h-[14px] !w-[14px] text-icons-1" />
       },
       {
         label: 'Create pipeline',
         action: () => alert('Create Pipeline'),
-        icon: () => <Icon name="plus" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="plus" className="!h-[14px] !w-[14px] text-icons-1" />
       }
     ]
   }
@@ -98,46 +98,46 @@ export function CommandPaletteWrapper() {
       {
         label: 'petstore-app',
         url: '/canary/repos/petstore-app/summary',
-        icon: () => <Icon name="repositories" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="repositories" className="!h-[14px] !w-[14px] text-icons-1" />
       },
       {
         label: 'RealWorld',
         url: '/canary/repos/real-world/summary',
-        icon: () => <Icon name="repositories" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="repositories" className="!h-[14px] !w-[14px] text-icons-1" />
       },
       {
         label: 'sock shop',
         url: '/canary/repos/sock-shop/summary',
-        icon: () => <Icon name="repositories" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="repositories" className="!h-[14px] !w-[14px] text-icons-1" />
       },
       {
         label: 'anthos',
         url: '/canary/repos/anthos/summary',
-        icon: () => <Icon name="repositories" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="repositories" className="!h-[14px] !w-[14px] text-icons-1" />
       },
       {
         label: 'acme-web',
         url: '/canary/repos/acme-web/summary',
-        icon: () => <Icon name="repositories" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="repositories" className="!h-[14px] !w-[14px] text-icons-1" />
       }
     ],
     [PageKey.PROJECTS]: [
       {
         label: 'Canary',
         url: '/canary/repos/petstore-app/summary',
-        icon: () => <Icon name="file" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="file" className="!h-[14px] !w-[14px] text-icons-1" />
       },
       {
         label: 'Paypal',
         url: '/canary/repos/real-world/summary',
-        icon: () => <Icon name="file" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="file" className="!h-[14px] !w-[14px] text-icons-1" />
       }
     ],
     [PageKey.PIPELINES]: [
       {
         label: 'build-pipeline',
         url: '/canary/pipelines/build-pipeline/studio',
-        icon: () => <Icon name="pipelines" className="!w-[14px] !h-[14px] text-icons-1" />
+        icon: () => <Icon name="pipelines" className="!h-[14px] !w-[14px] text-icons-1" />
       }
     ]
   }

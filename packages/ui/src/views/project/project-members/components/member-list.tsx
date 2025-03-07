@@ -55,11 +55,7 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
                   {getRoleLabel(member.role)}
                   <Icon className="chevron-down text-icons-7" name="chevron-fill-down" size={6} />
                 </DropdownMenu.Trigger>
-                <DropdownMenu.Content
-                  align="start"
-                  className="w-[300px]"
-                  onCloseAutoFocus={event => event.preventDefault()}
-                >
+                <DropdownMenu.Content align="start" className="w-[300px]">
                   {roleOptions.map(role => (
                     <DropdownMenu.Item
                       key={role.uid}

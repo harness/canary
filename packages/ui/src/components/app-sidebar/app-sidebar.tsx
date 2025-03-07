@@ -1,13 +1,18 @@
 import { useState } from 'react'
 
+import {
+  Icon,
+  LanguageCode,
+  LanguageDialog,
+  LanguageInterface,
+  languages,
+  Sidebar,
+  Spacer,
+  ThemeDialog
+} from '@/components'
 import { IThemeStore, useRouterContext } from '@/context'
 import { TypesUser } from '@/types'
 import { TranslationStore } from '@/views'
-import { Icon } from '@components/icon'
-import { LanguageCode, LanguageDialog, LanguageInterface, languages } from '@components/language-selector'
-import { Sidebar } from '@components/sidebar/sidebar'
-import { Spacer } from '@components/spacer'
-import { ThemeDialog } from '@components/theme-selector-v2'
 
 import { SidebarItem } from './sidebar-item'
 import { SidebarSearchLegacy } from './sidebar-search-legacy'
@@ -69,15 +74,15 @@ export const AppSidebar = ({
 
   return (
     <>
-      <Sidebar.Root>
+      <Sidebar.Root className="z-20">
         <Sidebar.Header>
           {showNewSearch ? (
             <SearchProvider>
               <SidebarSearch
                 logo={
-                  <Link to="/" className="h-[58px] flex gap-2 items-center pl-3 justify-start">
-                    <Icon name="harness" size={20} className="text-foreground-accent" />
-                    <Icon name="harness-logo-text" size={68} className="text-foreground-1" />
+                  <Link to="/" className="flex h-[58px] items-center justify-start gap-2 pl-3">
+                    <Icon name="harness" size={20} className="text-sidebar-foreground-accent" />
+                    <Icon name="harness-logo-text" size={68} className="text-sidebar-foreground-1" />
                   </Link>
                 }
               />
@@ -86,15 +91,15 @@ export const AppSidebar = ({
             <SidebarSearchLegacy
               logo={
                 <Link className="flex items-center gap-1.5" to="/">
-                  <Icon name="harness" size={18} className="text-foreground-accent" />
-                  <Icon name="harness-logo-text" width={65} height={15} className="mb-0.5 text-foreground-1" />
+                  <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
+                  <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1" />
                 </Link>
               }
             />
           )}
         </Sidebar.Header>
         <Sidebar.Content>
-          <Sidebar.Group className="px-2 pt-5">
+          <Sidebar.Group>
             <Sidebar.GroupContent>
               <Sidebar.Menu>
                 {pinnedMenuItems.map((item, index) => (
@@ -108,12 +113,9 @@ export const AppSidebar = ({
                   />
                 ))}
 
-                <Sidebar.MenuItem className="cursor-pointer">
+                <Sidebar.MenuItem>
                   <Sidebar.MenuButton asChild onClick={handleMoreMenu}>
-                    <div>
-                      <Icon name="ellipsis" size={12} className="text-icons-4 transition-colors hover:text-primary" />
-                      <span className="text-foreground-3 font-medium transition-colors hover:text-primary">More</span>
-                    </div>
+                    <Sidebar.MenuItemText text="More" icon={<Icon name="ellipsis" size={14} />} />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
               </Sidebar.Menu>
@@ -121,7 +123,7 @@ export const AppSidebar = ({
           </Sidebar.Group>
 
           {!!recentMenuItems.length && (
-            <Sidebar.Group title="Recent" className="border-t px-2 pt-3">
+            <Sidebar.Group title="Recent" className="border-t pt-2.5">
               <Sidebar.GroupLabel>Recent</Sidebar.GroupLabel>
               <Spacer size={2} />
               <Sidebar.GroupContent>
@@ -142,36 +144,29 @@ export const AppSidebar = ({
             </Sidebar.Group>
           )}
 
-          <Sidebar.Group className="border-t px-2 pt-5">
+          <Sidebar.Group className="border-t">
             <Sidebar.GroupContent>
               <Sidebar.Menu>
                 {!!currentUser?.admin && (
                   <Sidebar.MenuItem>
-                    <Sidebar.MenuButton asChild onClick={() => navigate('/admin/default-settings')}>
-                      <div>
-                        <Icon name="account" size={12} className="text-icons-4 transition-colors hover:text-primary" />
-                        <span className="text-foreground-3 font-medium transition-colors hover:text-primary">
-                          User Management
-                        </span>
-                      </div>
+                    <Sidebar.MenuButton onClick={() => navigate('/admin/default-settings')}>
+                      <Sidebar.MenuItemText text="User Management" icon={<Icon name="account" size={14} />} />
                     </Sidebar.MenuButton>
                   </Sidebar.MenuItem>
                 )}
                 <Sidebar.MenuItem>
-                  <Sidebar.MenuButton asChild onClick={handleSettingsMenu}>
-                    <div>
-                      <Icon name="settings-1" size={12} className="text-icons-4 transition-colors hover:text-primary" />
-                      <span className="text-foreground-3 font-medium transition-colors hover:text-primary">
-                        {t('component:navbar.settings')}
-                      </span>
-                    </div>
+                  <Sidebar.MenuButton onClick={handleSettingsMenu}>
+                    <Sidebar.MenuItemText
+                      text={t('component:navbar.settings')}
+                      icon={<Icon name="settings-1" size={14} />}
+                    />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
               </Sidebar.Menu>
             </Sidebar.GroupContent>
           </Sidebar.Group>
         </Sidebar.Content>
-        <Sidebar.Footer className="border-t border-borders-1">
+        <Sidebar.Footer className="border-t border-sidebar-border-1">
           <User
             user={currentUser}
             openThemeDialog={() => setOpenThemeDialog(true)}

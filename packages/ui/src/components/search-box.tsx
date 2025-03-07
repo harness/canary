@@ -8,7 +8,7 @@ import React, {
   type InputHTMLAttributes
 } from 'react'
 
-import { Icon, Input, Text } from '@/components'
+import { BaseInputProps, Icon, Input, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { noop } from 'lodash-es'
 
@@ -28,7 +28,7 @@ enum TextSize {
   'text-9xl' = 12
 }
 
-interface SearchBoxProps {
+interface SearchBoxProps extends BaseInputProps {
   placeholder: string
   width?: 'full' | 'fixed'
   hasShortcut?: boolean
@@ -65,6 +65,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
       showOnFocus = false,
       className,
       inputClassName = 'h-8',
+      theme,
       children
     },
     ref: ForwardedRef<HTMLInputElement>
@@ -115,10 +116,21 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
     return (
       <div className={cn('relative', width === 'full' ? 'w-full' : 'w-96', className)}>
         {hasSearchIcon && (
-          <Icon name="search" size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-icons-1" />
+          <Icon
+            className={cn('absolute left-2.5 top-1/2 -translate-y-1/2 text-icons-1', {
+              'text-sidebar-foreground-4': theme === 'sidebar'
+            })}
+            name="search"
+            size={12}
+          />
         )}
         {hasShortcut && !!shortcutLetter && (
-          <div className="absolute right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-background-3 px-1 text-foreground-2 duration-100 ease-in-out">
+          <div
+            className={cn(
+              'absolute right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-background-3 px-1 text-foreground-2 duration-100 ease-in-out',
+              { 'border-sidebar-border-5 bg-sidebar-background-9 text-sidebar-foreground-2': theme === 'sidebar' }
+            )}
+          >
             <Icon name="apple-shortcut" size={12} />
             <Text size={0} className="text-inherit">
               {shortcutLetter}
@@ -135,6 +147,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
           onInput={handleChange}
           value={value}
           customContent={children}
+          theme={theme}
         />
       </div>
     )

@@ -44,7 +44,6 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         width: dynamicWidth ? 'var(--radix-dropdown-menu-trigger-width)' : '298px'
       }}
       align="start"
-      onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
     >
       <div className="px-3 pt-2">
         {isBranchOnly ? (

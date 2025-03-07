@@ -323,12 +323,21 @@ export default {
         sidebar: {
           background: {
             1: 'hsl(var(--canary-sidebar-background-01))',
-            2: 'var(--canary-sidebar-background-02)'
+            2: 'var(--canary-sidebar-background-02)',
+            3: 'var(--canary-sidebar-background-03)',
+            4: 'hsl(var(--canary-sidebar-background-04))',
+            5: 'hsl(var(--canary-sidebar-background-05))',
+            6: 'var(--canary-sidebar-background-06)',
+            7: 'hsl(var(--canary-sidebar-background-07))',
+            8: 'hsl(var(--canary-sidebar-background-08))',
+            9: 'hsl(var(--canary-sidebar-background-09))'
           },
           border: {
             1: 'hsl(var(--canary-sidebar-border-01))',
             2: 'hsla(var(--canary-sidebar-border-02))',
-            3: 'hsl(var(--canary-sidebar-border-03))'
+            3: 'hsl(var(--canary-sidebar-border-03))',
+            4: 'hsl(var(--canary-sidebar-border-04))',
+            5: 'hsl(var(--canary-sidebar-border-05))'
           },
           foreground: {
             1: 'hsl(var(--canary-sidebar-foreground-01))',
@@ -336,6 +345,7 @@ export default {
             3: 'hsl(var(--canary-sidebar-foreground-03))',
             4: 'hsl(var(--canary-sidebar-foreground-04))',
             5: 'hsl(var(--canary-sidebar-foreground-05))',
+            6: 'hsl(var(--canary-sidebar-foreground-06))',
             accent: 'hsl(var(--canary-sidebar-foreground-accent))'
           },
           icon: {

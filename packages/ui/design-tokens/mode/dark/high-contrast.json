@@ -19,7 +19,7 @@
   "text": {
     "1": {
       "$type": "color",
-      "$value": "{colors.pure.white}",
+      "$value": "{colors.chrome.50}",
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text, primary buttons."
     },
     "2": {

@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 
-import { RadialOption, RadialSelect } from '@views/components/RadialSelect'
+import { RadialOption, RadioSelect } from '@views/components/RadioSelect'
 
 export enum SecretType {
   New = 'new',
@@ -44,5 +44,5 @@ export const SecretsHeader = ({
     }
   ]
 
-  return <RadialSelect options={options} value={selectedTypeVal} onValueChange={handleTypeChange} id="secret-type" />
+  return <RadioSelect options={options} value={selectedTypeVal} onValueChange={handleTypeChange} id="secret-type" />
 }

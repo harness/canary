@@ -9,7 +9,7 @@ export interface RadialOption<T extends string> {
   value: T
 }
 
-interface RadialSelectProps<T extends string> {
+interface RadioSelectProps<T extends string> {
   options: RadialOption<T>[]
   value: T
   onValueChange: (value: T) => void
@@ -17,13 +17,13 @@ interface RadialSelectProps<T extends string> {
   className?: string
 }
 
-export const RadialSelect = <T extends string>({
+export const RadioSelect = <T extends string>({
   options,
   value,
   onValueChange,
   id,
   className
-}: RadialSelectProps<T>) => {
+}: RadioSelectProps<T>) => {
   return (
     <RadioGroup value={value} onValueChange={onValueChange as (value: string) => void} id={id} className={className}>
       <div className="flex flex-col gap-2">

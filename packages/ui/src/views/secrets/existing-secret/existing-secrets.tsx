@@ -1,46 +1,35 @@
 import React from 'react'
 
 import { Button, ButtonGroup, Icon, Spacer, StackedList } from '@/components'
-import { BaseEntityProps, EntityReference, EntityRendererProps, ScopeSelectorProps } from '@/views'
-
-export interface SecretSpec {
-  secretManagerIdentifier: string
-  valueType: string
-  value: string | null
-  additionalMetadata: any | null
-}
+import { BaseEntityProps, EntityReference, EntityRendererProps, ScopeSelectorProps } from '@/views/entity-reference'
 
 export interface SecretData {
   type: string
   name: string
   identifier: string
-  orgIdentifier: string
+  orgIdentifier?: string
   projectIdentifier?: string
-  tags: Record<string, string>
-  description: string
-  spec: SecretSpec
+  tags: Record<string, string | undefined>
+  description?: string
 }
 
 // Define our custom scope type
-export type SecretScope = 'account' | 'organization' | string
+export type SecretScope = 'account' | 'organization' | 'project'
 
 export interface SecretItem extends BaseEntityProps {
   secret: SecretData
   createdAt: number
   updatedAt: number
   draft: boolean
-  governanceMetadata: any | null
-  scope?: SecretScope
 }
 
 export interface ExistingSecretsProps {
   // Data
-  accountSecrets: SecretItem[]
-  organizationSecrets: SecretItem[]
+  secretsData: SecretItem[]
 
   // State
   selectedEntity: SecretItem | null
-  activeScope: SecretScope
+  activeScope: SecretScope | null
 
   // Callbacks
   onSelectEntity: (entity: SecretItem) => void
@@ -51,8 +40,7 @@ export interface ExistingSecretsProps {
 // Component for selecting existing secrets
 export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
   // Data
-  accountSecrets,
-  organizationSecrets,
+  secretsData,
 
   // State
   selectedEntity,
@@ -64,28 +52,16 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
   onCancel
 }) => {
   // Define available scopes
-  const availableScopes: SecretScope[] = ['account', 'organization']
-
-  // Get entities based on active scope
-  const getEntitiesByScope = () => {
-    switch (activeScope) {
-      case 'account':
-        return accountSecrets
-      case 'organization':
-        return organizationSecrets
-      default:
-        return []
-    }
-  }
+  const availableScopes: SecretScope[] = ['account', 'organization', 'project']
 
   // Custom entity renderer for secrets
   const renderEntity = (props: EntityRendererProps<SecretItem>) => {
-    const { entity } = props
+    const { entity, isSelected, onSelect } = props
 
     return (
       <StackedList.Item
-        onClick={() => onSelectEntity(entity)}
-        className={selectedEntity?.id === entity.id ? 'bg-background-4' : ''}
+        onClick={() => onSelect(entity)}
+        className={isSelected ? 'bg-background-4' : ''}
         thumbnail={<Icon name="secrets" size={16} className="text-foreground-5" />}
         actions={
           <Button
@@ -93,7 +69,7 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
             size="sm"
             onClick={e => {
               e.stopPropagation()
-              onSelectEntity(entity)
+              onSelect(entity)
             }}
           >
             Select
@@ -107,20 +83,13 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
 
   // Custom scope selector renderer
   const renderScopeSelector = (props: ScopeSelectorProps<SecretScope>) => {
-    const { scope } = props
-
-    // Icon based on scope
-    const getIcon = () => {
-      if (scope === 'account') return 'account'
-      if (scope === 'organization') return 'folder'
-      return 'folder'
-    }
+    const { scope, isActive, onSelect } = props
 
     return (
       <StackedList.Item
-        onClick={() => onScopeChange(scope)}
-        className={scope === activeScope ? 'bg-background-4 font-medium' : ''}
-        thumbnail={<Icon name={getIcon()} size={16} className="text-foreground-5" />}
+        onClick={() => onSelect(scope)}
+        className={isActive ? 'bg-background-4 font-medium' : ''}
+        thumbnail={<Icon name="circle-arrow-top" size={16} className="text-foreground-5" />}
       >
         <StackedList.Field title={<span className="capitalize">{scope}</span>} />
       </StackedList.Item>
@@ -128,19 +97,21 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
   }
 
   return (
-    <div>
-      <span className="font-medium">Select an existing Secret:</span>
-      <Spacer size={4} />
-      <EntityReference<SecretItem, SecretScope>
-        entities={getEntitiesByScope()}
-        selectedEntity={selectedEntity}
-        // onSelectEntity={onSelectEntity}
-        // onScopeChange={onScopeChange}
-        activeScope={activeScope}
-        scopes={availableScopes}
-        renderEntity={renderEntity}
-        renderScopeSelector={renderScopeSelector}
-      />
+    <div className="flex flex-col h-full">
+      <span className="font-medium mb-4">Select an existing Secret:</span>
+      <div className="flex-1">
+        <EntityReference<SecretItem, SecretScope>
+          entities={secretsData}
+          selectedEntity={selectedEntity}
+          onSelectEntity={onSelectEntity}
+          onScopeChange={onScopeChange}
+          activeScope={activeScope}
+          scopes={availableScopes}
+          renderEntity={renderEntity}
+          renderScopeSelector={renderScopeSelector}
+          folders={['folder1', 'folder2', 'folder3']}
+        />
+      </div>
       <div className="fixed bottom-0 left-0 right-0 bg-background-2 p-4 shadow-md">
         <ButtonGroup className="flex flex-row justify-between">
           <Button type="button" variant="outline" onClick={onCancel}>

@@ -13,14 +13,14 @@ import {
   SecretType
 } from '@harnessio/ui/views'
 
-import { accountSecrets, organizationSecrets } from './secrets-data'
+import { secretsData } from './secrets-data'
 
 export const SecretsPage = () => {
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.New)
 
   // State for existing secrets
   const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
-  const [activeScope, setActiveScope] = useState<SecretScope>('account')
+  const [activeScope, setActiveScope] = useState<SecretScope | null>(null)
 
   const onSubmit = (data: CreateSecretFormFields) => {
     console.log('Submitted data:', data)
@@ -56,8 +56,11 @@ export const SecretsPage = () => {
       case SecretType.Existing:
         return (
           <ExistingSecrets
-            accountSecrets={accountSecrets}
-            organizationSecrets={organizationSecrets}
+            secretsData={secretsData.map(secret => ({
+              ...secret,
+              id: secret.secret.identifier,
+              name: secret.secret.name
+            }))}
             selectedEntity={selectedSecret}
             activeScope={activeScope}
             onSelectEntity={handleSelectSecret}

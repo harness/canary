@@ -26,6 +26,7 @@ export interface SecretItem extends BaseEntityProps {
 export interface ExistingSecretsProps {
   // Data
   secretsData: SecretItem[]
+  folders: string[]
 
   // State
   selectedEntity: SecretItem | null
@@ -34,6 +35,7 @@ export interface ExistingSecretsProps {
   // Callbacks
   onSelectEntity: (entity: SecretItem) => void
   onScopeChange: (scope: SecretScope) => void
+  onFolderChange: (folder: string, scope: SecretScope) => void
   onCancel?: () => void
 }
 
@@ -41,6 +43,7 @@ export interface ExistingSecretsProps {
 export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
   // Data
   secretsData,
+  folders,
 
   // State
   selectedEntity,
@@ -49,6 +52,7 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
   // Callbacks
   onSelectEntity,
   onScopeChange,
+  onFolderChange,
   onCancel
 }) => {
   // Define available scopes
@@ -105,11 +109,12 @@ export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
           selectedEntity={selectedEntity}
           onSelectEntity={onSelectEntity}
           onScopeChange={onScopeChange}
+          onFolderChange={onFolderChange}
           activeScope={activeScope}
           scopes={availableScopes}
           renderEntity={renderEntity}
           renderScopeSelector={renderScopeSelector}
-          folders={['folder1', 'folder2', 'folder3']}
+          folders={folders}
         />
       </div>
       <div className="fixed bottom-0 left-0 right-0 bg-background-2 p-4 shadow-md">

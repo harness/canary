@@ -40,7 +40,7 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   // Callbacks
   onSelectEntity: (entity: T) => void
   onScopeChange: (scope: S) => void
-  onFolderChange?: (folder: F) => void
+  onFolderChange?: (folder: F, Scope: S) => void
 
   // UI Configuration
   showFilter?: boolean
@@ -86,8 +86,8 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   )
 
   const handleFolderChange = useCallback(
-    (folder: F) => {
-      onFolderChange?.(folder)
+    (folder: F, scope: S) => {
+      onFolderChange?.(folder, scope)
     },
     [onFolderChange]
   )
@@ -185,19 +185,22 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
         {/* folders */}
         {folders.length > 0 && (
           <>
-            {folders.map(folder => (
-              <React.Fragment key={String(folder)}>
-                {renderFolder
-                  ? renderFolder({
-                      folder,
-                      onSelect: handleFolderChange
-                    })
-                  : defaultFolderRenderer({
-                      folder,
-                      onSelect: handleFolderChange
-                    })}
-              </React.Fragment>
-            ))}
+            {folders.map(folder => {
+              const activeScopeIndex = scopes.findIndex(scope => scope === activeScope)
+              return (
+                <React.Fragment key={String(folder)}>
+                  {renderFolder
+                    ? renderFolder({
+                        folder,
+                        onSelect: () => handleFolderChange(folder, scopes[activeScopeIndex + 1])
+                      })
+                    : defaultFolderRenderer({
+                        folder,
+                        onSelect: () => handleFolderChange(folder, scopes[activeScopeIndex + 1])
+                      })}
+                </React.Fragment>
+              )
+            })}
           </>
         )}
 

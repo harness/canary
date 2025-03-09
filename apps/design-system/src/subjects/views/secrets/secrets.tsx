@@ -14,14 +14,14 @@ import {
   SecretType
 } from '@harnessio/ui/views'
 
-import { getAccountsData, getOrgData, getProjectData, getSecretsData } from './secrets-data'
+import { getOrgData, getProjectData, getSecretsData } from './secrets-data'
 
 export const SecretsPage = () => {
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.New)
 
   // State for existing secrets
   const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
-  const [activeScope, setActiveScope] = useState<SecretScope | null>(null)
+  const [activeScope, setActiveScope] = useState<SecretScope | null>('project')
   const [folders, setFolders] = useState<string[]>([])
 
   const onSubmit = (data: CreateSecretFormFields) => {
@@ -36,14 +36,22 @@ export const SecretsPage = () => {
 
   const handleScopeChange = (scope: SecretScope) => {
     setActiveScope(scope)
-    console.log('Scope changed to:', scope)
+    switch (scope) {
+      case 'account':
+        setFolders(getOrgData().map(org => org.organizationResponse.organization.identifier) as any)
+        break
+      case 'organization':
+        setFolders(getProjectData().map(project => project.projectResponse.project.identifier) as any)
+        break
+      case 'project':
+        break
+    }
   }
 
   const handleFolderChange = (_folder: string, scope: SecretScope) => {
     setActiveScope(scope)
     switch (scope) {
       case 'account':
-        setFolders(getOrgData().map(org => org.organizationResponse.organization.identifier) as any)
         break
       case 'organization':
         setFolders(getProjectData().map(project => project.projectResponse.project.identifier) as any)

@@ -127,53 +127,53 @@ export const getSecretsData = () => [
   }
 ]
 
-export const getAccountsData = () => [
-  {
-    uuid: 'px7xd_BFRCi-pfWPYXVjvw',
-    accountName: 'harness-dev',
-    companyName: 'harness-dev',
-    clusterName: 'cluster1',
-    localEncryptionEnabled: false,
-    twoFactorAdminEnforced: false,
-    forImport: false,
-    cloudCostEnabled: false,
-    salesContacts: null,
-    licenseInfo: {
-      accountType: 'PAID',
-      accountStatus: 'ACTIVE',
-      expireAfterDays: 0,
-      expiryTime: 1727111595000,
-      licenseUnits: 1003000,
-      reasonForLicenseUpdate: null
-    },
-    ceLicenseInfo: {
-      licenseType: 'FULL_TRIAL',
-      expiryTime: 1656700199999
-    },
-    licenseId: null,
-    techStacks: [
-      {
-        category: 'Deployment Platforms',
-        technology: 'None'
-      }
-    ],
-    subdomainUrl: null,
-    defaultExperience: 'NG',
-    authenticationMechanism: 'USER_PASSWORD',
-    sessionTimeOutInMinutes: 1440,
-    publicAccessEnabled: true,
-    absoluteSessionTimeOutInMinutes: 0,
-    status: 'ACTIVE',
-    loginAllowed: true
-  }
-]
+// export const getAccountsData = () => [
+//   {
+//     uuid: 'px7xd_BFRCi-pfWPYXVjvw',
+//     accountName: 'harness-dev',
+//     companyName: 'harness-dev',
+//     clusterName: 'cluster1',
+//     localEncryptionEnabled: false,
+//     twoFactorAdminEnforced: false,
+//     forImport: false,
+//     cloudCostEnabled: false,
+//     salesContacts: null,
+//     licenseInfo: {
+//       accountType: 'PAID',
+//       accountStatus: 'ACTIVE',
+//       expireAfterDays: 0,
+//       expiryTime: 1727111595000,
+//       licenseUnits: 1003000,
+//       reasonForLicenseUpdate: null
+//     },
+//     ceLicenseInfo: {
+//       licenseType: 'FULL_TRIAL',
+//       expiryTime: 1656700199999
+//     },
+//     licenseId: null,
+//     techStacks: [
+//       {
+//         category: 'Deployment Platforms',
+//         technology: 'None'
+//       }
+//     ],
+//     subdomainUrl: null,
+//     defaultExperience: 'NG',
+//     authenticationMechanism: 'USER_PASSWORD',
+//     sessionTimeOutInMinutes: 1440,
+//     publicAccessEnabled: true,
+//     absoluteSessionTimeOutInMinutes: 0,
+//     status: 'ACTIVE',
+//     loginAllowed: true
+//   }
+// ]
 
 export const getOrgData = () => [
   {
     organizationResponse: {
       organization: {
-        identifier: 'sameed_Test',
-        name: 'sameed_Test',
+        identifier: 'org-1',
+        name: 'org-1',
         description: '',
         tags: {}
       },
@@ -212,8 +212,8 @@ export const getOrgData = () => [
   {
     organizationResponse: {
       organization: {
-        identifier: 'Anjali',
-        name: 'Anjali',
+        identifier: 'org-2',
+        name: 'org-2',
         description: '',
         tags: {}
       },
@@ -255,9 +255,9 @@ export const getProjectData = () => [
   {
     projectResponse: {
       project: {
-        orgIdentifier: 'sameed_Test',
-        identifier: 'Sameed_Test',
-        name: 'Sameed_Test',
+        orgIdentifier: 'org-1',
+        identifier: 'project-1',
+        name: 'project-1',
         color: '#0063f7',
         modules: [
           'CD',
@@ -309,9 +309,9 @@ export const getProjectData = () => [
   {
     projectResponse: {
       project: {
-        orgIdentifier: 'Anjali',
-        identifier: 'PL43094',
-        name: 'PL-43094',
+        orgIdentifier: 'org-2',
+        identifier: 'project-2',
+        name: 'project-2',
         color: '#0063f7',
         modules: [
           'CD',
@@ -373,9 +373,9 @@ export const getProjectData = () => [
   {
     projectResponse: {
       project: {
-        orgIdentifier: 'default',
-        identifier: 'abhinavtest3',
-        name: 'abhinav-test-4',
+        orgIdentifier: 'org-1',
+        identifier: 'project-3',
+        name: 'project-3',
         color: '#0063f7',
         modules: [
           'CD',
@@ -437,9 +437,9 @@ export const getProjectData = () => [
   {
     projectResponse: {
       project: {
-        orgIdentifier: 'code',
-        identifier: 'johannes',
-        name: 'johannes',
+        orgIdentifier: 'org-2',
+        identifier: 'project-4',
+        name: 'project-4',
         color: '#e63535',
         modules: [
           'CD',
@@ -490,9 +490,9 @@ export const getProjectData = () => [
   {
     projectResponse: {
       project: {
-        orgIdentifier: 'NgTriggersOrg',
-        identifier: 'viniciusTest',
-        name: 'viniciusTest',
+        orgIdentifier: 'org-1',
+        identifier: 'project-5',
+        name: 'project-5',
         color: '#0063f7',
         modules: [
           'CD',

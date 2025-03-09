@@ -14,7 +14,7 @@ import {
   SecretType
 } from '@harnessio/ui/views'
 
-import { secretsData } from './secrets-data'
+import { getAccountsData, getOrgData, getProjectData, getSecretsData } from './secrets-data'
 
 export const SecretsPage = () => {
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.New)
@@ -22,6 +22,7 @@ export const SecretsPage = () => {
   // State for existing secrets
   const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
   const [activeScope, setActiveScope] = useState<SecretScope | null>(null)
+  const [folders, setFolders] = useState<string[]>([])
 
   const onSubmit = (data: CreateSecretFormFields) => {
     console.log('Submitted data:', data)
@@ -36,6 +37,21 @@ export const SecretsPage = () => {
   const handleScopeChange = (scope: SecretScope) => {
     setActiveScope(scope)
     console.log('Scope changed to:', scope)
+  }
+
+  const handleFolderChange = (_folder: string, scope: SecretScope) => {
+    setActiveScope(scope)
+    switch (scope) {
+      case 'account':
+        setFolders(getOrgData().map(org => org.organizationResponse.organization.identifier) as any)
+        break
+      case 'organization':
+        setFolders(getProjectData().map(project => project.projectResponse.project.identifier) as any)
+        break
+      case 'project':
+        setFolders([])
+        break
+    }
   }
 
   const handleCancel = () => {
@@ -64,7 +80,7 @@ export const SecretsPage = () => {
       case SecretType.Existing:
         return (
           <ExistingSecrets
-            secretsData={secretsData.map(secret => ({
+            secretsData={getSecretsData().map(secret => ({
               ...secret,
               id: secret.secret.identifier,
               name: secret.secret.name
@@ -74,6 +90,8 @@ export const SecretsPage = () => {
             onSelectEntity={handleSelectSecret}
             onScopeChange={handleScopeChange}
             onCancel={handleCancel}
+            onFolderChange={handleFolderChange}
+            folders={folders}
           />
         )
       default:

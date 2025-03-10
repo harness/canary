@@ -49,6 +49,7 @@ export const SecretsPage = () => {
   }
 
   const handleFolderChange = (_folder: string, scope: SecretScope) => {
+    console.log(_folder, scope)
     setActiveScope(scope)
     switch (scope) {
       case 'account':

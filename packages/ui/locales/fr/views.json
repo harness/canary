@@ -38,6 +38,20 @@
     "token": "Jeton",
     "cloneCredGenerated": "Votre jeton a été généré. Veuillez le copier et le stocker en lieu sûr car vous ne pourrez pas le voir à nouveau.",
     "manageAPIToken": "Gérer le jeton API",
+    "prListFilterOptions": {
+      "authorOption": {
+        "label": "Auteur",
+        "noResults": "Aucun résultat trouvé",
+        "loading": "Chargement des auteurs...",
+        "placeholder": "Rechercher par auteur"
+      },
+      "beforeOption": {
+        "label": "Créé avant"
+      },
+      "afterOption": {
+        "label": "Créé après"
+      }
+    },
     "RequestApprovalRule": "Demander l'approbation des nouvelles modifications",
     "RequireLatestCommitDescription": "Exiger une nouvelle approbation pour toute modification récente dans la requête de tirage",
     "RequireNoChangeRequest": "Exiger la résolution des demandes de modifications",

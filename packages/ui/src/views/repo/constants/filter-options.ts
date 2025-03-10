@@ -120,14 +120,15 @@ export const getPRListFilterOptions = ({
   principalData
 }: PRListFilterOptions): Array<FilterOptionConfig<keyof PRListFilters>> => [
   {
-    label: t('component:filter.author', 'Author'),
+    label: t('views:repos.prListFilterOptions.authorOption.label', 'Author'),
     value: 'created_by',
     type: FilterFieldTypes.ComboBox,
     filterFieldConfig: {
       options: principalData,
       onSearch: onAuthorSearch,
-      noResultsMessage: 'No results found',
-      placeholder: 'Search by author',
+      noResultsMessage: t('views:repos.prListFilterOptions.authorOption.noResults', 'No results found'),
+      loadingMessage: t('views:repos.prListFilterOptions.authorOption.loading', 'Loading Authors...'),
+      placeholder: t('views:repos.prListFilterOptions.authorOption.placeholder', 'Search by author'),
       isLoading: isPrincipalsLoading
     },
     parser: {
@@ -137,13 +138,13 @@ export const getPRListFilterOptions = ({
     }
   },
   {
-    label: t('component:filter.createdBefore', 'Created Before'),
+    label: t('views:repos.prListFilterOptions.beforeOption.label', 'Created Before'),
     value: 'created_lt',
     type: FilterFieldTypes.Calendar,
     parser: dateParser
   },
   {
-    label: t('component:filter.createdAfter', 'Created After'),
+    label: t('views:repos.prListFilterOptions.afterOption.label', 'Created After'),
     value: 'created_gt',
     type: FilterFieldTypes.Calendar,
     parser: dateParser

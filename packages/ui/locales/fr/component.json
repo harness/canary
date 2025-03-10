@@ -95,10 +95,7 @@
     "name": "Nom",
     "stars": "Étoiles",
     "ascending": "Croissant",
-    "descending": "Décroissant",
-    "author": "Author",
-    "createdBefore": "Created Before",
-    "createdAfter": "Created After"
+    "descending": "Décroissant"
   },
   "sort": {
     "defaultLabel": "Trier",

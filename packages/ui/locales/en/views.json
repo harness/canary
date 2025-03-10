@@ -38,6 +38,20 @@
     "token": "Token",
     "cloneCredGenerated": "Your token has been generated. Please make sure to copy and store your token somewhere safe, you won't be able to see it again.",
     "manageAPIToken": "Manage API token",
+    "prListFilterOptions": {
+      "authorOption": {
+        "label": "Author",
+        "noResults": "No results found",
+        "loading": "Loading Authors...",
+        "placeholder": "Search by author"
+      },
+      "beforeOption": {
+        "label": "Created Before"
+      },
+      "afterOption": {
+        "label": "Created After"
+      }
+    },
     "RequestApprovalRule": "Request approval of new changes",
     "RequireLatestCommitDescription": "Require re-approval when there are new changes in the pull request",
     "RequireNoChangeRequest": "Require resolution of change requests",

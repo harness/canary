@@ -95,10 +95,7 @@
     "name": "Name",
     "stars": "Stars",
     "ascending": "Ascending",
-    "descending": "Descending",
-    "author": "Author",
-    "createdBefore": "Created Before",
-    "createdAfter": "Created After"
+    "descending": "Descending"
   },
   "sort": {
     "defaultLabel": "Sort",

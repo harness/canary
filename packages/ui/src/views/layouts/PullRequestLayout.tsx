@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, useCallback } from 'react'
 
 import { Badge, BadgeProps, Icon, IconProps, Tabs, TabsTriggerProps } from '@/components'
 import { useRouterContext } from '@/context'
@@ -46,12 +46,15 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   const { pullRequest } = usePullRequestStore()
   const { t } = useTranslationStore()
 
-  const getTabProps = (tab: PullRequestTabsKeys): TabsTriggerProps => ({
-    value: tab,
-    onClick: () => navigate(tab),
-    className: 'group gap-x-1.5',
-    role: 'link'
-  })
+  const getTabProps = useCallback(
+    (tab: PullRequestTabsKeys): TabsTriggerProps => ({
+      value: tab,
+      onClick: () => navigate(`../${tab}`),
+      className: 'group gap-x-1.5',
+      role: 'link'
+    }),
+    [navigate]
+  )
 
   return (
     <SandboxLayout.Main fullWidth>

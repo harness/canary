@@ -17,7 +17,7 @@ import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { SecretDataType } from '../types'
+import { SecretCreationType, SecretDataType } from '../types'
 
 const createSecretFormSchema = z
   .object({
@@ -95,7 +95,7 @@ export function CreateSecretPage({
   useEffect(() => {
     if (prefilledFormData) {
       reset({
-        name: prefilledFormData.name,
+        name: prefilledFormData.identifier,
         description: prefilledFormData.description,
         tags: prefilledFormData.tags
       })
@@ -165,59 +165,61 @@ export function CreateSecretPage({
             error={errors.name?.message?.toString()}
             autoFocus
           />
-
-          <Input
-            id="value"
-            {...register('value', {
-              onChange: () => {
-                trigger()
-              }
-            })}
-            type="password"
-            label="Secret Value"
-            placeholder={prefilledFormData ? 'Encryped' : 'Add your secret value'}
-            size="md"
-            error={errors.value?.message?.toString()}
-          />
-
-          <div>
-            <label htmlFor="secret-file-input" className="mb-2.5 block text-sm font-medium text-foreground-2">
-              Secret File
-            </label>
-            <div
-              className="rounded-md border-2 border-dashed border-borders-2 p-4"
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-            >
-              <div className="flex flex-col items-center justify-center">
-                {!selectedFile ? (
-                  <>
-                    <p className="mb-2 text-sm text-foreground-2">Drag and drop your file here or click to browse</p>
-                    <Button type="button" variant="outline" onClick={openFileInput}>
-                      Browse Files
-                    </Button>
-                  </>
-                ) : (
-                  <div className="flex w-full flex-col">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-foreground-2">
-                        Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
-                      </span>
-                      <div className="flex gap-2">
-                        <Button type="button" variant="outline" size="sm" onClick={openFileInput}>
-                          Change
-                        </Button>
-                        <Button type="button" variant="destructive" size="sm" onClick={removeFile}>
-                          Remove
-                        </Button>
+          {(!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_TEXT) && (
+            <Input
+              id="value"
+              {...register('value', {
+                onChange: () => {
+                  trigger()
+                }
+              })}
+              type="password"
+              label="Secret Value"
+              placeholder={prefilledFormData ? 'Encryped' : 'Add your secret value'}
+              size="md"
+              error={errors.value?.message?.toString()}
+            />
+          )}
+          {(!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_FILE) && (
+            <div>
+              <label htmlFor="secret-file-input" className="text-foreground-2 mb-2.5 block text-sm font-medium">
+                Secret File
+              </label>
+              <div
+                className="border-2 border-dashed border-borders-2 p-4 rounded-md"
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+              >
+                <div className="flex flex-col items-center justify-center">
+                  {!selectedFile ? (
+                    <>
+                      <p className="mb-2 text-foreground-2 text-sm">Drag and drop your file here or click to browse</p>
+                      <Button type="button" variant="outline" onClick={openFileInput}>
+                        Browse Files
+                      </Button>
+                    </>
+                  ) : (
+                    <div className="w-full flex flex-col">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-foreground-2">
+                          Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
+                        </span>
+                        <div className="flex gap-2">
+                          <Button type="button" variant="outline" size="sm" onClick={openFileInput}>
+                            Change
+                          </Button>
+                          <Button type="button" variant="destructive" size="sm" onClick={removeFile}>
+                            Remove
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
+              {errors.file && <div className="text-destructive text-sm mt-1">{errors.file.message?.toString()}</div>}
             </div>
-            {errors.file && <div className="mt-1 text-sm text-destructive">{errors.file.message?.toString()}</div>}
-          </div>
+          )}
           <Accordion.Root type="single" collapsible>
             <Accordion.Item value="secret-details">
               <Accordion.Trigger>Metadata</Accordion.Trigger>

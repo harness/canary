@@ -1,27 +1,42 @@
-import { FormData } from '@platform/connectors/interfaces/ConnectorInterface'
-import { createConnectorPayloadBuilder } from './ConnectorPayloadBuilder'
-import { Connectors } from '@platform/connectors/constants'
-import { GitAuthTypes, GitAPIAuthTypes, GitConnectionType } from '@platform/connectors/pages/connectors/utils/ConnectorHelper'
-import { getExecuteOnDelegateValue } from '@platform/connectors/pages/connectors/utils/ConnectorUtils'
+import { get } from '@harnessio/forms'
 
-const getGitAuthSpec = (formData: FormData): Record<string, any> => {
+import { createConnectorPayloadBuilder } from './ConnectorPayloadBuilder'
+import { ConnectorPayloadTypes, FormData, GitAPIAuthTypes, GitAuthTypes, GitConnectionType, ValueType } from './types'
+
+const getGitAuthSpec = (formData: FormData): Record<string, any> | undefined => {
   const isAnonymous = formData.authType === GitAuthTypes.ANONYMOUS
+  const oAuthAccessTokenRef = formData.oAuthAccessTokenRef || get(formData, 'spec.authentication.spec.spec.tokenRef')
+  const oAuthRefreshTokenRef =
+    formData.oAuthRefreshTokenRef || get(formData, 'spec.authentication.spec.spec.refreshTokenRef')
   if (isAnonymous) return undefined
 
   switch (formData.authType) {
-    case GitAuthTypes.HTTP_USERNAME_TOKEN:
+    case GitAuthTypes.USER_TOKEN:
       return {
         username: formData.username?.value,
         tokenRef: formData.token?.referenceString
       }
-    case GitAuthTypes.HTTP_USERNAME_PASSWORD:
+    case GitAuthTypes.USER_PASSWORD:
       return {
         username: formData.username?.value,
         passwordRef: formData.password?.referenceString
       }
-    case GitAuthTypes.SSH_KEY:
+    case GitAuthTypes.OAUTH:
       return {
-        sshKeyRef: formData.sshKey?.referenceString
+        tokenRef: oAuthAccessTokenRef,
+        ...(oAuthRefreshTokenRef && {
+          refreshTokenRef: oAuthRefreshTokenRef
+        })
+      }
+    case GitAuthTypes.GITHUB_APP:
+      return {
+        installationId: formData.installationId?.type === ValueType.TEXT ? formData.installationId?.value : undefined,
+        installationIdRef:
+          formData.installationId?.type === ValueType.ENCRYPTED ? formData.installationId?.value : undefined,
+        applicationId: formData.applicationId?.type === ValueType.TEXT ? formData.applicationId?.value : undefined,
+        applicationIdRef:
+          formData.applicationId?.type === ValueType.ENCRYPTED ? formData.applicationId?.value : undefined,
+        privateKeyRef: formData.privateKey
       }
     default:
       return undefined
@@ -53,6 +68,9 @@ const getGitApiAccessSpec = (formData: FormData): Record<string, any> => {
 
 const buildGithubSpec = (formData: FormData): Record<string, any> => {
   const isAnonymous = formData.authType === GitAuthTypes.ANONYMOUS
+  const getExecuteOnDelegateValue = ({ _formData }: { _formData: FormData }) => {
+    return true
+  }
 
   const spec: Record<string, any> = {
     ...(formData?.delegateSelectors ? { delegateSelectors: formData.delegateSelectors } : {}),
@@ -89,6 +107,6 @@ const buildGithubSpec = (formData: FormData): Record<string, any> => {
 }
 
 export const githubConnectorPayloadBuilder = createConnectorPayloadBuilder(
-  Connectors.GITHUB,
+  ConnectorPayloadTypes.Github,
   buildGithubSpec
 )

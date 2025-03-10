@@ -1,4 +1,4 @@
-import { FormData } from '@platform/connectors/interfaces/ConnectorInterface' // TODO: remove when we get real interface??
+import { FormData } from './types'
 
 export interface ConnectorPayloadConfig {
   name: string

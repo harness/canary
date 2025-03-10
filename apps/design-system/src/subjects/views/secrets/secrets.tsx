@@ -21,8 +21,8 @@ export const SecretsPage = () => {
 
   // State for existing secrets
   const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
-  const [activeScope, setActiveScope] = useState<SecretScope | null>('project')
-  const [folders, setFolders] = useState<string[]>([])
+  const [parentScope, setParentScope] = useState<SecretScope | null>('project')
+  const [childFolder, setChildFolder] = useState<string>()
 
   const onSubmit = (data: CreateSecretFormFields) => {
     console.log('Submitted data:', data)
@@ -35,13 +35,13 @@ export const SecretsPage = () => {
   }
 
   const handleScopeChange = (scope: SecretScope) => {
-    setActiveScope(scope)
+    setParentScope(scope)
     switch (scope) {
       case 'account':
-        setFolders(getOrgData().map(org => org.organizationResponse.organization.identifier) as any)
+        setChildFolder('org-1')
         break
       case 'organization':
-        setFolders(getProjectData().map(project => project.projectResponse.project.identifier) as any)
+        setChildFolder('project-1')
         break
       case 'project':
         break
@@ -50,15 +50,15 @@ export const SecretsPage = () => {
 
   const handleFolderChange = (_folder: string, scope: SecretScope) => {
     console.log(_folder, scope)
-    setActiveScope(scope)
+    setParentScope(scope)
     switch (scope) {
       case 'account':
+        setChildFolder('org-1')
         break
       case 'organization':
-        setFolders(getProjectData().map(project => project.projectResponse.project.identifier) as any)
+        setChildFolder('project-1')
         break
       case 'project':
-        setFolders([])
         break
     }
   }
@@ -94,13 +94,13 @@ export const SecretsPage = () => {
               id: secret.secret.identifier,
               name: secret.secret.name
             }))}
+            parentScope={parentScope}
+            childFolder={childFolder}
             selectedEntity={selectedSecret}
-            activeScope={activeScope}
             onSelectEntity={handleSelectSecret}
             onScopeChange={handleScopeChange}
             onCancel={handleCancel}
             onFolderChange={handleFolderChange}
-            folders={folders}
           />
         )
       default:

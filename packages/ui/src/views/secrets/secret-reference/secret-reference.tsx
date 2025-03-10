@@ -26,16 +26,16 @@ export interface SecretItem extends BaseEntityProps {
 export interface SecretReferenceProps {
   // Data
   secretsData: SecretItem[]
-  folders: string[]
+  childFolder: SecretScope
+  parentScope: SecretScope
 
   // State
   selectedEntity: SecretItem | null
-  activeScope: SecretScope | null
 
   // Callbacks
   onSelectEntity: (entity: SecretItem) => void
   onScopeChange: (scope: SecretScope) => void
-  onFolderChange: (folder: string, scope: SecretScope) => void
+  onFolderChange: (folder: string) => void
   onCancel?: () => void
 }
 
@@ -43,11 +43,11 @@ export interface SecretReferenceProps {
 export const SecretReference: React.FC<SecretReferenceProps> = ({
   // Data
   secretsData,
-  folders,
+  childFolder,
+  parentScope,
 
   // State
   selectedEntity,
-  activeScope,
 
   // Callbacks
   onSelectEntity,
@@ -56,7 +56,6 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   onCancel
 }) => {
   // Define available scopes
-  const availableScopes: SecretScope[] = ['account', 'organization', 'project']
 
   // Custom entity renderer for secrets
   const renderEntity = (props: EntityRendererProps<SecretItem>) => {
@@ -87,15 +86,14 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
 
   // Custom scope selector renderer
   const renderScopeSelector = (props: ScopeSelectorProps<SecretScope>) => {
-    const { scope, isActive, onSelect } = props
+    const { parentScope, onSelect } = props
 
     return (
       <StackedList.Item
-        onClick={() => onSelect(scope)}
-        className={isActive ? 'bg-background-4 font-medium' : ''}
+        onClick={() => onSelect(parentScope)}
         thumbnail={<Icon name="circle-arrow-top" size={16} className="text-foreground-5" />}
       >
-        <StackedList.Field title={<span className="capitalize">{scope}</span>} />
+        <StackedList.Field title={<span className="capitalize">{parentScope}</span>} />
       </StackedList.Item>
     )
   }
@@ -110,11 +108,10 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
           onSelectEntity={onSelectEntity}
           onScopeChange={onScopeChange}
           onFolderChange={onFolderChange}
-          activeScope={activeScope}
-          scopes={availableScopes}
           renderEntity={renderEntity}
           renderScopeSelector={renderScopeSelector}
-          folders={folders}
+          parentScope={parentScope}
+          childFolder={childFolder}
         />
       </div>
       <div className="fixed bottom-0 left-0 right-0 bg-background-2 p-4 shadow-md">

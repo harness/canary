@@ -19,8 +19,7 @@ export interface EntityRendererProps<T extends BaseEntityProps> {
 
 // Props for the scope selector item
 export interface ScopeSelectorProps<S = string> {
-  scope: S
-  isActive: boolean
+  parentScope: S
   onSelect: (scope: S) => void
 }
 
@@ -33,14 +32,13 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   // Data
   entities: T[]
   selectedEntity: T | null
-  activeScope?: S | null
-  scopes?: S[]
-  folders?: F[]
+  parentScope?: S | null
+  childFolder?: F | null
 
   // Callbacks
   onSelectEntity: (entity: T) => void
   onScopeChange: (scope: S) => void
-  onFolderChange?: (folder: F, Scope: S) => void
+  onFolderChange?: (folder: F) => void
 
   // UI Configuration
   showFilter?: boolean
@@ -55,9 +53,8 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   // Data
   entities,
   selectedEntity,
-  activeScope,
-  scopes = [],
-  folders = [],
+  parentScope,
+  childFolder,
 
   // Callbacks
   onSelectEntity,
@@ -86,26 +83,11 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   )
 
   const handleFolderChange = useCallback(
-    (folder: F, scope: S) => {
-      onFolderChange?.(folder, scope)
+    (folder: F) => {
+      onFolderChange?.(folder)
     },
     [onFolderChange]
   )
-
-  // Filter scopes based on hierarchy
-  const getVisibleScopes = () => {
-    if (!activeScope) {
-      return scopes
-    }
-
-    const activeScopeIndex = scopes.findIndex(scope => scope === activeScope)
-
-    if (activeScopeIndex === -1) {
-      return scopes
-    }
-
-    return scopes.slice(0, activeScopeIndex)
-  }
 
   const defaultEntityRenderer = ({ entity, isSelected, onSelect }: EntityRendererProps<T>) => {
     return (
@@ -132,14 +114,13 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   }
 
   // Default scope selector renderer
-  const defaultScopeSelectorRenderer = ({ scope, isActive, onSelect }: ScopeSelectorProps<S>) => {
+  const defaultScopeSelectorRenderer = ({ parentScope, onSelect }: ScopeSelectorProps<S>) => {
     return (
       <StackedListItem
-        onClick={() => onSelect?.(scope)}
-        className={cn(isActive && 'bg-background-4 font-medium')}
+        onClick={() => onSelect?.(parentScope)}
         thumbnail={<Icon name="circle-arrow-top" size={16} className="text-foreground-5" />}
       >
-        <StackedListField title={<span className="capitalize">{String(scope)}</span>} />
+        <StackedListField title={<span className="capitalize">{String(parentScope)}</span>} />
       </StackedListItem>
     )
   }
@@ -157,50 +138,35 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   }
 
   const renderCombinedList = () => {
-    const visibleScopes = getVisibleScopes()
-
     return (
       <StackedList>
         {/* scopes */}
-        {visibleScopes.length > 0 && (
+        {parentScope && (
           <>
-            {visibleScopes.map(scope => (
-              <React.Fragment key={String(scope)}>
-                {renderScopeSelector
-                  ? renderScopeSelector({
-                      scope,
-                      isActive: scope === activeScope,
-                      onSelect: handleScopeChange
-                    })
-                  : defaultScopeSelectorRenderer({
-                      scope,
-                      isActive: scope === activeScope,
-                      onSelect: handleScopeChange
-                    })}
-              </React.Fragment>
-            ))}
+            {renderScopeSelector
+              ? renderScopeSelector({
+                  parentScope,
+                  onSelect: handleScopeChange
+                })
+              : defaultScopeSelectorRenderer({
+                  parentScope,
+                  onSelect: handleScopeChange
+                })}
           </>
         )}
 
         {/* folders */}
-        {folders.length > 0 && (
+        {childFolder && (
           <>
-            {folders.map(folder => {
-              const activeScopeIndex = scopes.findIndex(scope => scope === activeScope)
-              return (
-                <React.Fragment key={String(folder)}>
-                  {renderFolder
-                    ? renderFolder({
-                        folder,
-                        onSelect: () => handleFolderChange(folder, scopes[activeScopeIndex + 1])
-                      })
-                    : defaultFolderRenderer({
-                        folder,
-                        onSelect: () => handleFolderChange(folder, scopes[activeScopeIndex + 1])
-                      })}
-                </React.Fragment>
-              )
-            })}
+            {renderFolder
+              ? renderFolder({
+                  folder: childFolder,
+                  onSelect: () => handleFolderChange(childFolder)
+                })
+              : defaultFolderRenderer({
+                  folder: childFolder,
+                  onSelect: () => handleFolderChange(childFolder)
+                })}
           </>
         )}
 

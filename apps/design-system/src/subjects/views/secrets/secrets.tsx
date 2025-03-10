@@ -14,15 +14,15 @@ import {
   SecretType
 } from '@harnessio/ui/views'
 
-import { getOrgData, getProjectData, getSecretsData } from './secrets-data'
+import { getSecretsData } from './secrets-data'
 
 export const SecretsPage = () => {
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.New)
 
   // State for existing secrets
   const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
-  const [parentScope, setParentScope] = useState<SecretScope | null>('project')
-  const [childFolder, setChildFolder] = useState<string>()
+  const [parentScope, setParentScope] = useState<SecretScope | null>('organization')
+  const [childFolder, setChildFolder] = useState<SecretScope | null>()
 
   const onSubmit = (data: CreateSecretFormFields) => {
     console.log('Submitted data:', data)
@@ -35,30 +35,33 @@ export const SecretsPage = () => {
   }
 
   const handleScopeChange = (scope: SecretScope) => {
-    setParentScope(scope)
     switch (scope) {
       case 'account':
-        setChildFolder('org-1')
+        setParentScope(null)
+        setChildFolder('organization')
         break
       case 'organization':
-        setChildFolder('project-1')
+        setParentScope('account')
+        setChildFolder('project')
         break
       case 'project':
+        setParentScope('organization')
+        setChildFolder(null)
         break
     }
   }
 
-  const handleFolderChange = (_folder: string, scope: SecretScope) => {
-    console.log(_folder, scope)
-    setParentScope(scope)
-    switch (scope) {
+  const handleFolderChange = (folder: string) => {
+    switch (folder) {
       case 'account':
-        setChildFolder('org-1')
         break
       case 'organization':
-        setChildFolder('project-1')
+        setParentScope('account')
+        setChildFolder('project')
         break
       case 'project':
+        setParentScope('organization')
+        setChildFolder(null)
         break
     }
   }

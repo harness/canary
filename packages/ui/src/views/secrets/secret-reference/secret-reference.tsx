@@ -26,8 +26,8 @@ export interface SecretItem extends BaseEntityProps {
 export interface SecretReferenceProps {
   // Data
   secretsData: SecretItem[]
-  childFolder: SecretScope
-  parentScope: SecretScope
+  childFolder?: SecretScope | null
+  parentScope?: SecretScope | null
 
   // State
   selectedEntity: SecretItem | null

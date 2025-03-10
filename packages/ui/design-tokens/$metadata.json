@@ -1,6 +1,7 @@
 {
   "tokenSetOrder": [
-    "core/colors",
+    "core/colors_hex",
+    "core/colors_lch",
     "core/typography",
     "core/dimensions",
     "brand/Gitness",

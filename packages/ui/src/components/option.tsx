@@ -1,6 +1,6 @@
 import { FC, HTMLAttributes, ReactElement, ReactNode } from 'react'
 
-import { Checkbox, Label, RadioButton } from '@/components'
+import { Caption, Checkbox, Label, Message, MessageTheme, RadioButton } from '@/components'
 import { cn } from '@utils/cn'
 
 type ControlType = ReactElement<typeof RadioButton> | ReactElement<typeof Checkbox>
@@ -11,6 +11,7 @@ interface OptionProps extends HTMLAttributes<HTMLDivElement> {
   label?: string | ReactNode
   description?: string | ReactNode
   disabled?: boolean
+  error?: string
 }
 
 /**
@@ -23,7 +24,7 @@ interface OptionProps extends HTMLAttributes<HTMLDivElement> {
  *   description="Description for Option 1"
  * />
  */
-export const Option: FC<OptionProps> = ({ control, id, label, description, className, disabled, ...props }) => {
+export const Option: FC<OptionProps> = ({ control, id, label, description, className, disabled, error, ...props }) => {
   return (
     <div
       className={cn('flex items-start', className)}
@@ -41,14 +42,17 @@ export const Option: FC<OptionProps> = ({ control, id, label, description, class
         >
           {label}
         </Label>
+
+        {!!error && (
+          <Message className="mt-0.5" theme={MessageTheme.ERROR}>
+            {error}
+          </Message>
+        )}
+
         {description && (
-          <p
-            className="ml-2.5 mt-1.5 text-sm leading-snug tracking-tight text-foreground-4"
-            id={`${id}-description`}
-            role="note"
-          >
+          <Caption className="ml-2.5 tracking-tight" id={`${id}-description`} role="note">
             {description}
-          </p>
+          </Caption>
         )}
       </div>
     </div>

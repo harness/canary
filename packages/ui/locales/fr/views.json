@@ -86,8 +86,10 @@
     "targetPatterns": "Modèles cibles",
     "createRuleCaption": "Définir les branches correspondant aux modèles globaux (ex : 'feature-*', 'release/**')",
     "rulePatternPlaceholder": "Enter the target patterns",
-    "include": "Include",
-    "exclude": "Exclude",
+    "ruleTarget": {
+      "include": "Include",
+      "exclude": "Exclude"
+    },
     "applyRuleDefaultBranch": "Appliquer la règle à la branche par défaut",
     "bypassList": "Liste de contournement",
     "selectUsers": "Sélectionner les utilisateurs",
@@ -100,6 +102,7 @@
     "createRuleButton": "Créer la règle",
     "updatingRule": "Mise à jour de la règle...",
     "creatingRuleButton": "Création de la règle...",
+    "rules": "Règles",
     "branch": "Branche",
     "update": "Mettre à jour",
     "checkStatus": "Vérifier le statut",
@@ -147,7 +150,6 @@
     "rulesApplied": "Règles appliquées",
     "bypassAllowed": "Contournement autorisé",
     "bypassNotAllowed": "Contournement non autorisé",
-    "rules": "Règles",
     "rulesDescription": "Define standards and automate workflows to ensure better collaboration and control in your repository.",
     "newRule": "Nouvelle règle de branche",
     "settingsToolTip": "Impossible de modifier les paramètres lors du chargement ou de la mise à jour.",

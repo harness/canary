@@ -9,9 +9,6 @@ import {
   Fieldset,
   Icon,
   Input,
-  Label,
-  Message,
-  MessageTheme,
   MultiSelect,
   MultiSelectOptionType,
   Option,
@@ -34,9 +31,9 @@ export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch,
       isLast
       actions={
         <Switch
-          {...register!('state')}
-          checked={watch!('state')}
-          onCheckedChange={() => setValue!('state', !watch!('state'))}
+          {...register('state')}
+          checked={watch('state')}
+          onCheckedChange={() => setValue('state', watch('state'))}
         />
       }
     >
@@ -57,61 +54,55 @@ export const BranchSettingsRuleNameField: FC<FieldProps & { disabled: boolean }>
   disabled,
   t
 }) => (
-  <ControlGroup>
-    <Input
-      id="name"
-      label={t('views:repos.name', 'Name')}
-      {...register!('identifier')}
-      placeholder={t('views:repos.enterRuleName', 'Enter the rule name here')}
-      autoFocus
-      disabled={disabled}
-      error={errors?.identifier?.message?.toString()}
-      size="md"
-    />
-  </ControlGroup>
+  <Input
+    id="name"
+    label={t('views:repos.name', 'Name')}
+    {...register('identifier')}
+    placeholder={t('views:repos.enterRuleName', 'Enter the rule name here')}
+    autoFocus
+    disabled={disabled}
+    error={errors?.identifier?.message?.toString()}
+    size="md"
+  />
 )
 
 export const BranchSettingsRuleDescriptionField: FC<FieldProps> = ({ register, errors, t }) => (
-  <ControlGroup>
-    <Textarea
-      label={t('views:repos.description', 'Description')}
-      id="description"
-      {...register!('description')}
-      placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter the description here')}
-      error={errors?.description?.message?.toString()}
-    />
-  </ControlGroup>
+  <Textarea
+    label={t('views:repos.description', 'Description')}
+    id="description"
+    {...register('description')}
+    placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter the description here')}
+    error={errors?.description?.message?.toString()}
+  />
 )
 
 export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue, watch, register, errors, t }) => {
   const [selectedOption, setSelectedOption] = useState<PatternsButtonType>(PatternsButtonType.INCLUDE)
 
-  const patterns = watch!('patterns') || []
+  const patterns = watch('patterns') || []
 
   const handleAddPattern = () => {
-    const pattern = watch!('pattern')
+    const pattern = watch('pattern')
     if (pattern && !patterns.some(p => p.pattern === pattern)) {
-      setValue!('patterns', [...patterns, { pattern, option: selectedOption }])
-      setValue!('pattern', '')
+      setValue('patterns', [...patterns, { pattern, option: selectedOption }])
+      setValue('pattern', '')
     }
   }
 
   const handleRemovePattern = (patternVal: string) => {
     const updatedPatterns = patterns.filter(({ pattern }) => pattern !== patternVal)
-    setValue!('patterns', updatedPatterns)
+    setValue('patterns', updatedPatterns)
   }
 
   return (
-    <Fieldset className="gap-y-4">
+    <Fieldset className="gap-y-4" legend="Target patterns">
       <ControlGroup>
-        <Label htmlFor="target-patterns" className="mb-2.5" color="secondary">
-          {t('views:repos.targetPatterns', 'Target patterns')}
-        </Label>
         <div className="grid grid-cols-[1fr_112px] items-start gap-x-3.5">
           <Input
             id="pattern"
             size="md"
-            {...register!('pattern')}
+            label={t('views:repos.targetPatterns', 'Target patterns')}
+            {...register('pattern')}
             caption={t(
               'views:repos.createRuleCaption',
               'Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)'
@@ -123,21 +114,23 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
             buttonClassName="px-0 w-full"
             id="patterns-type"
             size="md"
+            className="mt-6"
             handleButtonClick={handleAddPattern}
             selectedValue={selectedOption}
             handleOptionChange={setSelectedOption}
             options={[
               {
                 value: PatternsButtonType.INCLUDE,
-                label: t(`views:repos.include`, 'Include')
+                label: t(`views:repos.ruleTarget.include`, 'Include')
               },
               {
                 value: PatternsButtonType.EXCLUDE,
-                label: t(`views:repos.exclude`, 'Exclude')
+                label: t(`views:repos.ruleTarget.exclude`, 'Exclude')
               }
             ]}
           >
-            {t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
+            {selectedOption === PatternsButtonType.INCLUDE && t(`views:repos.ruleTarget.include`, 'Include')}
+            {selectedOption === PatternsButtonType.EXCLUDE && t(`views:repos.ruleTarget.exclude`, 'Exclude')}
           </ButtonWithOptions>
         </div>
         {!!patterns.length && (
@@ -145,7 +138,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
             {patterns.map(pattern => (
               <Button
                 key={pattern.pattern}
-                className="group flex h-6 items-center gap-x-1.5 bg-background-8 px-2.5 text-foreground-8"
+                className="bg-background-8 text-foreground-8 group flex h-6 items-center gap-x-1.5 px-2.5"
                 type="button"
                 variant="custom"
                 onClick={() => handleRemovePattern(pattern.pattern)}
@@ -160,32 +153,31 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
                   />
                   {pattern.pattern}
                 </span>
-                <span className="text-icons-1 transition-colors group-hover:text-foreground-1">
-                  <Icon className="rotate-45" name="plus" size={10} />
-                </span>
+
+                <Icon
+                  className="text-icons-1 group-hover:text-foreground-1 rotate-45 transition-colors"
+                  name="plus"
+                  size={10}
+                />
               </Button>
             ))}
           </div>
         )}
       </ControlGroup>
 
-      <ControlGroup>
-        <Option
-          control={
-            <Checkbox
-              {...register!('default')}
-              checked={watch!('default')}
-              onCheckedChange={() => setValue!('default', !watch!('default'))}
-              id="default-branch"
-            />
-          }
-          id="default-branch"
-          label={t('views:repos.applyRuleDefaultBranch', 'Apply this rule to the default branch')}
-          className="mt-0"
-        />
-
-        {!!errors?.default && <Message theme={MessageTheme.ERROR}>{errors?.default?.message?.toString()}</Message>}
-      </ControlGroup>
+      <Option
+        control={
+          <Checkbox
+            {...register('default')}
+            checked={watch('default')}
+            onCheckedChange={() => setValue('default', watch('default'))}
+            id="default-branch"
+          />
+        }
+        id="default-branch"
+        label={t('views:repos.applyRuleDefaultBranch', 'Apply this rule to the default branch')}
+        error={errors?.default && errors?.default?.message?.toString()}
+      />
     </Fieldset>
   )
 }
@@ -209,7 +201,7 @@ export const BranchSettingsRuleBypassListField: FC<
     principalsSearchQuery: string
   }
 > = ({ watch, setValue, bypassOptions, t, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
-  const selectedBypassUsers = watch!('bypass').map(user => ({
+  const selectedBypassUsers = watch('bypass').map(user => ({
     ...user,
     label: user.display_name
   }))
@@ -218,7 +210,7 @@ export const BranchSettingsRuleBypassListField: FC<
     (option: MultiSelectOptionType<Partial<PrincipalType>>) => {
       const selectedIds = selectedBypassUsers.map(it => it.id)
 
-      setValue!(
+      setValue(
         'bypass',
         selectedIds.includes(Number(option.id))
           ? selectedBypassUsers.filter(item => item.id !== option.id)
@@ -246,44 +238,35 @@ export const BranchSettingsRuleBypassListField: FC<
   }, [bypassOptions])
 
   return (
-    <Fieldset className="gap-y-4">
-      <ControlGroup>
-        <Label className="mb-2.5" htmlFor="bypassValue" color="secondary">
-          {t('views:repos.bypassList', 'Bypass list')}
-        </Label>
+    <Fieldset className="gap-y-4" legend="Bypass list">
+      <MultiSelect<PrincipalType>
+        selectedItems={selectedBypassUsers}
+        t={t}
+        label={t('views:repos.bypassList', 'Bypass list')}
+        placeholder={t('views:repos.selectUsers', 'Select users')}
+        handleChange={handleCheckboxChange}
+        options={multiSelectOptions}
+        searchValue={principalsSearchQuery}
+        handleChangeSearchValue={setPrincipalsSearchQuery}
+        customOptionElem={BranchSettingsRuleBypassListOption}
+      />
 
-        <MultiSelect<PrincipalType>
-          selectedItems={selectedBypassUsers}
-          t={t}
-          placeholder={t('views:repos.selectUsers', 'Select users')}
-          handleChange={handleCheckboxChange}
-          options={multiSelectOptions}
-          searchValue={principalsSearchQuery}
-          handleChangeSearchValue={setPrincipalsSearchQuery}
-          customOptionElem={BranchSettingsRuleBypassListOption}
-        />
-      </ControlGroup>
-
-      <ControlGroup>
-        <Option
-          control={
-            <Checkbox
-              {...register!('repo_owners')}
-              checked={watch!('repo_owners')}
-              onCheckedChange={() => setValue!('repo_owners', !watch!('repo_owners'))}
-              id="edit-permissons"
-            />
-          }
-          id="edit-permissons"
-          label={t(
-            'views:repos.editPermissionsCheckboxDescription',
-            'Allow users with edit permission on the repository to bypass'
-          )}
-          className="mt-0"
-        />
-
-        {errors!.repo_owners && <Message theme={MessageTheme.ERROR}>{errors!.repo_owners.message?.toString()}</Message>}
-      </ControlGroup>
+      <Option
+        control={
+          <Checkbox
+            {...register('repo_owners')}
+            checked={watch('repo_owners')}
+            onCheckedChange={() => setValue('repo_owners', watch('repo_owners'))}
+            id="edit-permissions"
+          />
+        }
+        id="edit-permissions"
+        label={t(
+          'views:repos.editPermissionsCheckboxDescription',
+          'Allow users with edit permission on the repository to bypass'
+        )}
+        error={errors?.repo_owners && errors?.repo_owners?.message?.toString()}
+      />
     </Fieldset>
   )
 }
@@ -308,75 +291,73 @@ export const BranchSettingsRuleListField: FC<{
   const branchRules = getBranchRules(t)
 
   return (
-    <ControlGroup className="max-w-[476px]">
-      <Label className="mb-6" color="secondary">
+    <Fieldset className="grid max-w-[476px] gap-5">
+      <legend className="mb-6" color="secondary">
         {t('views:repos.rulesTitle', 'Rules: select all that apply')}
-      </Label>
-      <Fieldset className="gap-y-5">
-        {branchRules.map((rule, index) => {
-          const isChecked = rules[index]?.checked ?? false
+      </legend>
 
-          return (
-            <Fieldset key={rule.id} className="gap-y-4">
-              <Option
-                control={
-                  <Checkbox
-                    id={rule.id}
-                    checked={isChecked}
-                    onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
-                  />
-                }
-                id={rule.id}
-                label={rule.label}
-                description={rule.description}
-              />
+      {branchRules.map((rule, index) => {
+        const isChecked = rules[index]?.checked ?? false
 
-              {/* Conditionally render the submenu if this rule has a submenu and is checked */}
-              {!!rule?.submenuOptions && !!rule?.submenuOptions.length && isChecked && (
-                <Fieldset className="gap-y-4 pl-[26px]">
-                  {rule.submenuOptions.map(subOption => (
-                    <Option
-                      key={subOption.id}
-                      control={
-                        <Checkbox
-                          id={subOption.id}
-                          checked={rules[index].submenu?.includes(subOption.id as MergeStrategy)}
-                          onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
-                        />
-                      }
-                      id={subOption.id}
-                      label={subOption.label}
-                    />
-                  ))}
-                </Fieldset>
-              )}
-
-              {!!rule?.hasSelect && isChecked && (
-                <MultiSelect
-                  className="pl-[26px]"
-                  selectedItems={rules[index].selectOptions.map(option => ({ id: option, label: option }))}
-                  t={t}
-                  placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
-                  handleChange={val => handleSelectChangeForRule(rule.id, val.label)}
-                  options={recentStatusChecks?.map(check => ({ id: check, label: check })) ?? []}
+        return (
+          <div key={rule.id} className="grid gap-y-4">
+            <Option
+              control={
+                <Checkbox
+                  id={rule.id}
+                  checked={isChecked}
+                  onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
                 />
-              )}
+              }
+              id={rule.id}
+              label={rule.label}
+              description={rule.description}
+            />
 
-              {!!rule?.hasInput && isChecked && (
-                <div className="pl-[26px]">
-                  <Input
-                    id="name"
-                    size="md"
-                    placeholder={t('views:repos.enterMinReviewers', 'Enter minimum number of reviewers')}
-                    value={rules[index].input || ''}
-                    onChange={e => handleInputChange(rule.id, e.target.value)}
+            {/* Conditionally render the submenu if this rule has a submenu and is checked */}
+            {!!rule?.submenuOptions && !!rule?.submenuOptions.length && isChecked && (
+              <div className="grid gap-y-4 pl-[26px]">
+                {rule.submenuOptions.map(subOption => (
+                  <Option
+                    key={subOption.id}
+                    control={
+                      <Checkbox
+                        id={subOption.id}
+                        checked={rules[index].submenu?.includes(subOption.id as MergeStrategy)}
+                        onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
+                      />
+                    }
+                    id={subOption.id}
+                    label={subOption.label}
                   />
-                </div>
-              )}
-            </Fieldset>
-          )
-        })}
-      </Fieldset>
-    </ControlGroup>
+                ))}
+              </div>
+            )}
+
+            {!!rule?.hasSelect && isChecked && (
+              <MultiSelect
+                className="pl-[26px]"
+                selectedItems={rules[index].selectOptions.map(option => ({ id: option, label: option }))}
+                t={t}
+                placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
+                handleChange={val => handleSelectChangeForRule(rule.id, val.label)}
+                options={recentStatusChecks?.map(check => ({ id: check, label: check })) ?? []}
+              />
+            )}
+
+            {!!rule?.hasInput && isChecked && (
+              <Input
+                id="name"
+                size="md"
+                className="ml-[26px]"
+                placeholder={t('views:repos.enterMinReviewers', 'Enter minimum number of reviewers')}
+                value={rules[index].input || ''}
+                onChange={e => handleInputChange(rule.id, e.target.value)}
+              />
+            )}
+          </div>
+        )
+      })}
+    </Fieldset>
   )
 }

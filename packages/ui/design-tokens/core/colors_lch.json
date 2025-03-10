@@ -8,11 +8,11 @@
   "colors": {
     "$type": "color",
     "pure": {
-      "black": {
-        "$value": "lch(2.44% 1.49 285.81)"
-      },
       "white": {
         "$value": "lch(100% 0 134.54)"
+      },
+      "black": {
+        "$value": "lch(2.44% 1.49 285.81)"
       }
     },
     "chrome": {

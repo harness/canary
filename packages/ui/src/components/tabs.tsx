@@ -10,9 +10,15 @@ const tabsListVariants = cva('inline-flex items-center text-foreground-4', {
       default: 'h-9 justify-center rounded-lg bg-muted p-1',
       underline: 'h-11 justify-center gap-4',
       /**
+       * TODO: Technical Debt - Navigation Variant Removal
+       * This variant needs to be removed after:
+       * 1. Verifying all dependencies in packages/ui || packages/views
+       * 2. Migrating existing usages to TabNav component
+       * 3. Ensuring no breaking changes in the application
+       * 
        * @deprecated Use TabNav component instead
        */
-      navigation: '',
+      navigation: 'h-[44px] w-full justify-start gap-6 border-b border-borders-5 px-5',
       tabnav:
         'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-borders-1'
     },
@@ -36,9 +42,15 @@ const tabsTriggerVariants = cva(
         underline:
           'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-primary',
         /**
+         * TODO: Technical Debt - Navigation Variant Removal
+         * This variant needs to be removed after:
+         * 1. Verifying all dependencies in packages/views
+         * 2. Migrating existing usages to TabNav component
+         * 3. Ensuring no breaking changes in the application
+         * 
          * @deprecated Use TabNav component instead
          */
-        navigation: '',
+        navigation: 'm-0 -mb-px h-[44px] border-b-2 border-solid border-b-transparent px-0 font-normal text-foreground-2 duration-150 ease-in-out hover:text-foreground-1 data-[state=active]:border-borders-9',
         tabnav:
           'h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-1 data-[state=active]:bg-background-1 data-[state=active]:text-foreground-1'
       }
@@ -57,6 +69,12 @@ const tabsContentVariants = cva(
         default: '',
         underline: '',
         /**
+         * TODO: Technical Debt - Navigation Variant Removal
+         * This variant needs to be removed after:
+         * 1. Verifying all dependencies in packages/views
+         * 2. Migrating existing usages to TabNav component
+         * 3. Ensuring no breaking changes in the application
+         * 
          * @deprecated Use TabNav component instead
          */
         navigation: '',

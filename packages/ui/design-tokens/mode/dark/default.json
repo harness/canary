@@ -1162,7 +1162,7 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{borderWidth.2}",
+            "$value": "{border.2}",
             "$description": "Border styling applied to nested canvas containers. Creates clear visual boundaries between different sections within the pipeline visualization."
           }
         }

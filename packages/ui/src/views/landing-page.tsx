@@ -63,9 +63,9 @@ export const LandingPageView: FC<LandingPageProps> = ({
             <DropdownMenu.Content style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
               {!!spaces?.length &&
                 spaces.map(space => (
-                  <DropdownMenu.Item key={space.id}>
-                    <Link to={getProjectPath(space?.path)}>{space.identifier}</Link>
-                  </DropdownMenu.Item>
+                  <Link to={getProjectPath(space?.path)}>
+                    <DropdownMenu.Item key={space.id}>{space.identifier}</DropdownMenu.Item>
+                  </Link>
                 ))}
 
               {!spaces?.length && (

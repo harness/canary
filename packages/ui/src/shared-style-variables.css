@@ -189,7 +189,7 @@
 
 @layer themes {
   /* TODO: replace hsl with variables for theming */
-  ::-webkit-search-results-decoration {
+  :host {
     --canary-background: 0 0% 100%;
     --canary-foreground: 240 10% 3.9%;
     --canary-card: 0 0% 100%;

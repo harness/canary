@@ -20,5 +20,11 @@
       "$type": "borderRadius",
       "$value": "{rounded.2}"
     }
+  },
+  "sub-tag": {
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.1}"
+    }
   }
 }

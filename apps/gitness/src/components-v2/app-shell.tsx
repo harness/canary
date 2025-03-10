@@ -21,6 +21,7 @@ import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useLocationChange } from '../framework/hooks/useLocationChange'
 import { useRepoImportEvents } from '../framework/hooks/useRepoImportEvent'
+import { useSelectedSpaceId } from '../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
 import Breadcrumbs from './breadcrumbs/breadcrumbs'
@@ -35,13 +36,14 @@ interface NavLinkStorageInterface {
 
 export const AppShell = () => {
   const routes = useRoutes()
-  const { currentUser, spaces } = useAppContext()
+  const { currentUser } = useAppContext()
   const navigate = useNavigate()
   const location = useLocation()
   const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } = useNav()
   const { t } = useTranslationStore()
   const { spaceId, repoId } = useParams<PathParams>()
-  const spaceIdPathParam = spaceId ?? spaces[0]?.path ?? ''
+  const selectedSpaceId = useSelectedSpaceId(spaceId)
+  const spaceIdPathParam = spaceId ?? selectedSpaceId ?? ''
 
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
@@ -74,7 +76,7 @@ export const AppShell = () => {
       )
       setNavLinks({ pinnedMenu: [...pinnedMenuItemsData, ...pinnedItems] })
     }
-  }, [])
+  }, [spaceIdPathParam])
 
   /**
    * Map mock data menu by type to Settings and More

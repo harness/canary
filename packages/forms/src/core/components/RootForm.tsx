@@ -81,7 +81,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
 
   // reset defaultValues to prevent default on recreated (deleted then created) array/list items
   useEffect(() => {
-    setTimeout(() => {
+    requestIdleCallback(() => {
       methods.reset({} as TFieldValues, {
         keepErrors: true,
         keepDirty: true,
@@ -93,7 +93,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
         keepIsValid: true,
         keepSubmitCount: true
       })
-    }, 1)
+    })
   }, [])
 
   const { getValues, handleSubmit } = methods

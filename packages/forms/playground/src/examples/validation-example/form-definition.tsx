@@ -47,15 +47,14 @@ const inputs: IInputConfigWithConfig[] = [
         path: '',
         required: true,
         validation: {
-          schema: _values =>
-            z.string().refine(
-              val => {
-                return !isNaN(parseInt(val))
-              },
-              {
-                message: 'Value is not a integer'
-              }
-            )
+          schema: z.string().refine(
+            val => {
+              return !isNaN(parseInt(val))
+            },
+            {
+              message: 'Value is not a integer'
+            }
+          )
         }
       }
     }

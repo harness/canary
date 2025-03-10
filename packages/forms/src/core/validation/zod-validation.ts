@@ -29,7 +29,7 @@ type SchemaTreeNode = { [key: string]: SchemaTreeNode } & {
   _input?: IInputDefinition
   _isList?: boolean
   _isArrayItem?: boolean
-  _schema?: (values: any) => zod.ZodObject<zod.ZodRawShape>
+  _schema?: zod.ZodType<unknown> | ((values: any) => zod.ZodType<unknown>)
   _schemaObj?: { [key: string]: SchemaTreeNode }
   _requiredOnly?: boolean
 }
@@ -134,7 +134,7 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormikValue, op
 }
 
 function getSchemaForPrimitive(
-  schema: ((values: any) => zod.Schema<unknown>) | undefined,
+  schema: zod.ZodType<unknown> | ((values: any) => zod.ZodType<unknown>) | undefined,
   input: IInputDefinition,
   values: any,
   options?: IGetValidationSchemaOptions
@@ -168,8 +168,9 @@ function getSchemaForPrimitive(
     }
 
     //3. Input validation
-    if (schema) {
-      const schemaResponse = await schema(values).safeParseAsync(value)
+    const schemaInternal = getSchema(schema, values)
+    if (schemaInternal) {
+      const schemaResponse = await schemaInternal.safeParseAsync(value)
 
       if (!schemaResponse.success) {
         ctx.addIssue({
@@ -182,7 +183,7 @@ function getSchemaForPrimitive(
 }
 
 function getSchemaForArray(
-  schema: ((values: any) => zod.Schema) | undefined,
+  schema: zod.ZodType<unknown> | ((values: any) => zod.ZodType<unknown>) | undefined,
   input: IInputDefinition,
   values: AnyFormikValue,
   options?: IGetValidationSchemaOptions,
@@ -229,8 +230,9 @@ function getSchemaForArray(
       }
 
       // 4. Input validation
-      if (schema) {
-        const schemaResult = await schema(values).safeParseAsync(value)
+      const schemaInternal = getSchema(schema, values)
+      if (schemaInternal) {
+        const schemaResult = await schemaInternal.safeParseAsync(value)
 
         if (!schemaResult.success) {
           ctx.addIssue({
@@ -357,4 +359,13 @@ function getRequiredSchema(input: IInputDefinition, options?: IGetValidationSche
       })
     }
   })
+}
+
+function getSchema<T>(schema: zod.ZodType<unknown> | ((values: any) => zod.ZodType<unknown>) | undefined, values: T) {
+  if (schema instanceof zod.ZodType) {
+    return schema
+  } else if (typeof schema === 'function') {
+    return schema(values)
+  }
+  return undefined
 }

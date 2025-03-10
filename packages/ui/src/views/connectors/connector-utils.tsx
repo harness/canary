@@ -31,3 +31,8 @@ export const harnessConnectors: HarnessConnectorDefinitionType[] = [
 export function getHarnessConnectorDefinition(identifier: string): HarnessConnectorDefinitionType | undefined {
   return harnessConnectors.find(harnessConnector => harnessConnector.identifier === identifier)
 }
+
+export const getExecuteOnDelegateValue = ({ formData }: { formData?: FormData } = {}) => {
+  console.log(formData)
+  return true
+}

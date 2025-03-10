@@ -86,8 +86,10 @@
     "targetPatterns": "Target patterns",
     "createRuleCaption": "Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)",
     "rulePatternPlaceholder": "Enter the target patterns",
-    "include": "Include",
-    "exclude": "Exclude",
+    "ruleTarget": {
+      "include": "Include",
+      "exclude": "Exclude"
+    },
     "applyRuleDefaultBranch": "Apply this rule to the default branch",
     "bypassList": "Bypass list",
     "selectUsers": "Select users",
@@ -100,6 +102,7 @@
     "createRuleButton": "Create rule",
     "updatingRule": "Updating rule...",
     "creatingRuleButton": "Creating rule...",
+    "rules": "Rules",
     "branch": "Branch",
     "update": "Updated",
     "checkStatus": "Check status",
@@ -147,7 +150,6 @@
     "rulesApplied": "rules applied",
     "bypassAllowed": "bypass allowed",
     "bypassNotAllowed": " bypass not allowed",
-    "rules": "Rules",
     "rulesDescription": "Define standards and automate workflows to ensure better collaboration and control in your repository.",
     "newRule": "New branch rule",
     "settingsToolTip": "Cannot change settings while loading or updating.",

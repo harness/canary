@@ -74,7 +74,7 @@ export const AppShell = () => {
       )
       setNavLinks({ pinnedMenu: [...pinnedMenuItemsData, ...pinnedItems] })
     }
-  }, [])
+  }, [spaceIdPathParam])
 
   /**
    * Map mock data menu by type to Settings and More

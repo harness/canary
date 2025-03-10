@@ -1,4 +1,4 @@
-:root {
+:host {
   /* PP Figma shades */
   --canary-black: 240 13% 3%;
   --canary-grey-6: 240 6% 6%;
@@ -42,7 +42,7 @@
   /*--vscode-scrollbarSlider-activeBackground: #0000ff;*/
 }
 
-:root {
+:host {
   /* value */
   /* color */
   --canary-pure-white: 0 0% 100%;
@@ -189,7 +189,7 @@
 
 @layer themes {
   /* TODO: replace hsl with variables for theming */
-  :root {
+  ::-webkit-search-results-decoration {
     --canary-background: 0 0% 100%;
     --canary-foreground: 240 10% 3.9%;
     --canary-card: 0 0% 100%;
@@ -1821,8 +1821,8 @@
     /* Selected tab bg element*/
     --canary-tab-item-gradient-from: var(--canary-grey-20) / 0.3;
     --canary-tab-item-gradient-to: var(--canary-grey-20) / 0;
-    --canary-tab-item-gradient-stops:
-      hsla(var(--canary-tab-item-gradient-from)), hsla(var(--canary-tab-item-gradient-to));
+    --canary-tab-item-gradient-stops: hsla(var(--canary-tab-item-gradient-from)),
+      hsla(var(--canary-tab-item-gradient-to));
 
     /* Gradient colors */
     --canary-tab-background-gradient: radial-gradient(

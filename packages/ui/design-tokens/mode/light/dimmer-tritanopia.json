@@ -2232,7 +2232,7 @@
       },
       "gradient-stop-4": {
         "$type": "color",
-        "$value": "{colors.cyan.300}"
+        "$value": "{colors.cyan.200}"
       }
     },
     "skeleton": {

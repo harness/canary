@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, ButtonGroup, Icon, Spacer, StackedList } from '@/components'
+import { Button, ButtonGroup, Icon, StackedList } from '@/components'
 import { BaseEntityProps, EntityReference, EntityRendererProps, ScopeSelectorProps } from '@/views/entity-reference'
 
 export interface SecretData {

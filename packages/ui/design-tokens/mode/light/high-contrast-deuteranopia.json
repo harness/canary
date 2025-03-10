@@ -1360,7 +1360,7 @@
     "separator": {
       "background": {
         "$type": "color",
-        "$value": "{borderWidth.2}",
+        "$value": "{border.3}",
         "$description": "Background color for separator elements. Creates visual division between content sections with a subtle line or space."
       }
     },
@@ -1898,12 +1898,12 @@
       "danger": {
         "title": {
           "$type": "color",
-          "$value": "{text.1}",
+          "$value": "{colors.pure.white}",
           "$description": "Title text color for danger toast notifications. Provides maximum contrast against the error background."
         },
         "description": {
           "$type": "color",
-          "$value": "{text.1}",
+          "$value": "{colors.pure.white}",
           "$description": "Description text color for danger toast notifications. Ensures readability of critical information."
         },
         "background": {

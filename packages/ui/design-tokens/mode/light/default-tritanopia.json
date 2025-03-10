@@ -39,7 +39,7 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.600}",
+      "$value": "{colors.cyan.600}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
@@ -49,7 +49,7 @@
     },
     "warning": {
       "$type": "color",
-      "$value": "{colors.yellow.500}",
+      "$value": "{colors.orange.500}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     }
   },
@@ -85,7 +85,7 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.400}",
+      "$value": "{colors.cyan.400}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
@@ -95,7 +95,7 @@
     },
     "warning": {
       "$type": "color",
-      "$value": "{colors.yellow.500}",
+      "$value": "{colors.orange.500}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -306,8 +306,8 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.600}",
-          "$description": "Text color for success badges. Communicates positive status through readable green text."
+          "$value": "{colors.cyan.600}",
+          "$description": "Text color for success badges. Communicates positive status through readable cyan text."
         },
         "border": {
           "$extensions": {
@@ -320,7 +320,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.400}",
+          "$value": "{colors.cyan.400}",
           "$description": "Border color for success badges. Provides subtle definition for success state indicators."
         },
         "background": {
@@ -334,7 +334,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.200}",
+          "$value": "{colors.cyan.200}",
           "$description": "Background color for success badges. Creates a subtle but recognizable success indicator."
         }
       },
@@ -376,8 +376,8 @@
       "warning": {
         "text": {
           "$type": "color",
-          "$value": "{colors.yellow.600}",
-          "$description": "Text color for warning badges. Signals caution states with readable amber text."
+          "$value": "{colors.orange.600}",
+          "$description": "Text color for warning badges. Signals caution states with readable orange text."
         },
         "border": {
           "$extensions": {
@@ -390,7 +390,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.yellow.400}",
+          "$value": "{colors.orange.400}",
           "$description": "Border color for warning badges. Defines the boundary of caution status indicators."
         },
         "background": {
@@ -404,7 +404,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.yellow.200}",
+          "$value": "{colors.orange.200}",
           "$description": "Background color for warning badges. Creates subtle but recognizable caution indicators."
         }
       },
@@ -446,7 +446,7 @@
       "merged": {
         "text": {
           "$type": "color",
-          "$value": "{colors.purple.600}",
+          "$value": "{colors.cyan.600}",
           "$description": "Text color for merged state badges. Indicates completed merge actions in version control contexts."
         },
         "border": {
@@ -460,7 +460,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.purple.400}",
+          "$value": "{colors.cyan.400}",
           "$description": "Border color for merged state badges. Defines the boundary of merge status indicators."
         },
         "background": {
@@ -474,7 +474,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.purple.300}",
+          "$value": "{colors.cyan.300}",
           "$description": "Background color for merged state badges. Creates subtle but recognizable merge indicators."
         }
       },
@@ -632,8 +632,8 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.600}",
-          "$description": "Text color for success buttons. Communicates positive actions through readable green text."
+          "$value": "{colors.cyan.600}",
+          "$description": "Text color for success buttons. Communicates positive actions through readable cyan text."
         },
         "background": {
           "$extensions": {
@@ -646,7 +646,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.200}",
+          "$value": "{colors.cyan.200}",
           "$description": "Background color for success buttons. Creates subtle but recognizable positive action styling."
         },
         "border": {
@@ -660,7 +660,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.400}",
+          "$value": "{colors.cyan.400}",
           "$description": "Border color for success buttons. Provides definition for positive action buttons."
         },
         "state": {
@@ -675,7 +675,7 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.green.200}",
+            "$value": "{colors.cyan.200}",
             "$description": "Hover state background color for success buttons. Creates subtle feedback for user interaction."
           },
           "active": {
@@ -689,7 +689,7 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.green.200}",
+            "$value": "{colors.cyan.200}",
             "$description": "Active state background color for success buttons. Provides stronger visual feedback for clicks/presses."
           }
         }
@@ -874,8 +874,8 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
-        "$description": "Green background highlighting newly added code lines while maintaining readability."
+        "$value": "{colors.cyan.500}",
+        "$description": "Cyan background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
         "$extensions": {
@@ -888,7 +888,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
+        "$value": "{colors.cyan.500}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -902,7 +902,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
+        "$value": "{colors.cyan.500}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1058,7 +1058,7 @@
       },
       "visited": {
         "$type": "color",
-        "$value": "{colors.purple.600}",
+        "$value": "{colors.cyan.600}",
         "$description": "Visited state color for text links. Differentiates links the user has already activated."
       }
     },
@@ -1136,7 +1136,7 @@
         "completed": {
           "border": {
             "$type": "color",
-            "$value": "{colors.green.400}",
+            "$value": "{colors.cyan.400}",
             "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
           }
         }
@@ -1411,7 +1411,7 @@
     "status-indicator": {
       "completed": {
         "$type": "color",
-        "$value": "{colors.green.300}",
+        "$value": "{colors.cyan.300}",
         "$description": "Color for success status indicators. Communicates completed or positive states."
       },
       "cancelled": {
@@ -1421,7 +1421,7 @@
       },
       "warning": {
         "$type": "color",
-        "$value": "{colors.yellow.300}",
+        "$value": "{colors.orange.300}",
         "$description": "Color for warning status indicators. Communicates caution or potential issue states."
       },
       "running": {
@@ -1431,13 +1431,13 @@
       },
       "merged": {
         "$type": "color",
-        "$value": "{colors.purple.300}",
+        "$value": "{colors.cyan.300}",
         "$description": "Color for merged status indicators. Communicates successful integration or completion in version control contexts."
       },
       "action-required": {
         "$type": "color",
         "$value": "{colors.blue.400}",
-        "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed. "
+        "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed."
       },
       "waiting": {
         "$type": "color",
@@ -1565,7 +1565,7 @@
       "blue": {
         "text": {
           "$type": "color",
-          "$value": "{colors.blue.500}",
+          "$value": "{colors.blue.600}",
           "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
         },
         "background": {
@@ -1581,7 +1581,7 @@
         "border": {
           "$type": "color",
           "$value": "{component.tag.blue.background}",
-          "$description": "Border color for blue tags. "
+          "$description": "Border color for blue tags."
         }
       },
       "brown": {
@@ -1603,13 +1603,13 @@
         "border": {
           "$type": "color",
           "$value": "{component.tag.brown.background}",
-          "$description": "Border color for brown tags. "
+          "$description": "Border color for brown tags."
         }
       },
       "cyan": {
         "text": {
           "$type": "color",
-          "$value": "{colors.cyan.500}",
+          "$value": "{colors.cyan.600}",
           "$description": "Text color for cyan tags. Ensures readability while maintaining the cyan color theme."
         },
         "background": {
@@ -1631,29 +1631,29 @@
       "green": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.600}",
-          "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
+          "$value": "{colors.cyan.600}",
+          "$description": "Text color for green tags, replaced with cyan for tritanopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.green.100}",
-          "$description": "Background color for green tags. Creates a distinct surface with green theme styling."
+          "$value": "{colors.cyan.100}",
+          "$description": "Background color for green tags, replaced with cyan for tritanopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.green.50}",
-          "$description": "Subtle background variation for green tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.cyan.50}",
+          "$description": "Subtle background variation for green tags, replaced with cyan for tritanopia visibility."
         },
         "border": {
           "$type": "color",
           "$value": "{component.tag.green.background}",
-          "$description": "Border color for green tags."
+          "$description": "Border color for green tags, replaced with cyan."
         }
       },
       "indigo": {
         "text": {
           "$type": "color",
-          "$value": "{colors.indigo.500}",
+          "$value": "{colors.indigo.600}",
           "$description": "Text color for indigo tags. Ensures readability while maintaining the indigo color theme."
         },
         "background": {
@@ -1719,7 +1719,7 @@
       "orange": {
         "text": {
           "$type": "color",
-          "$value": "{colors.orange.500}",
+          "$value": "{colors.orange.600}",
           "$description": "Text color for orange tags. Ensures readability while maintaining the orange color theme."
         },
         "background": {
@@ -1741,7 +1741,7 @@
       "pink": {
         "text": {
           "$type": "color",
-          "$value": "{colors.pink.500}",
+          "$value": "{colors.pink.600}",
           "$description": "Text color for pink tags. Ensures readability while maintaining the pink color theme."
         },
         "background": {
@@ -1763,29 +1763,29 @@
       "purple": {
         "text": {
           "$type": "color",
-          "$value": "{colors.purple.500}",
-          "$description": "Text color for purple tags. Ensures readability while maintaining the purple color theme."
+          "$value": "{colors.cyan.600}",
+          "$description": "Text color for purple tags, replaced with cyan for tritanopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.purple.100}",
-          "$description": "Background color for purple tags. Creates a distinct surface with purple theme styling."
+          "$value": "{colors.cyan.100}",
+          "$description": "Background color for purple tags, replaced with cyan for tritanopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.purple.50}",
-          "$description": "Subtle background variation for purple tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.cyan.50}",
+          "$description": "Subtle background variation for purple tags, replaced with cyan for tritanopia visibility."
         },
         "border": {
           "$type": "color",
           "$value": "{component.tag.purple.background}",
-          "$description": "Border color for purple tags."
+          "$description": "Border color for purple tags, replaced with cyan."
         }
       },
       "red": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.500}",
+          "$value": "{colors.red.600}",
           "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
         },
         "background": {
@@ -1807,45 +1807,45 @@
       "violet": {
         "text": {
           "$type": "color",
-          "$value": "{colors.violet.500}",
-          "$description": "Text color for violet tags. Ensures readability while maintaining the violet color theme."
+          "$value": "{colors.cyan.600}",
+          "$description": "Text color for violet tags, replaced with cyan for tritanopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.violet.100}",
-          "$description": "Background color for violet tags. Creates a distinct surface with violet theme styling."
+          "$value": "{colors.cyan.100}",
+          "$description": "Background color for violet tags, replaced with cyan for tritanopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.violet.50}",
-          "$description": "Subtle background variation for violet tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.cyan.50}",
+          "$description": "Subtle background variation for violet tags, replaced with cyan for tritanopia visibility."
         },
         "border": {
           "$type": "color",
           "$value": "{component.tag.violet.background}",
-          "$description": "Border color for violet tags."
+          "$description": "Border color for violet tags, replaced with cyan."
         }
       },
       "yellow": {
         "text": {
           "$type": "color",
-          "$value": "{colors.yellow.600}",
-          "$description": "Text color for yellow tags. Ensures readability while maintaining the yellow color theme."
+          "$value": "{colors.orange.600}",
+          "$description": "Text color for yellow tags, replaced with orange for tritanopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.yellow.100}",
-          "$description": "Background color for yellow tags. Creates a distinct surface with yellow theme styling."
+          "$value": "{colors.orange.100}",
+          "$description": "Background color for yellow tags, replaced with orange for tritanopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.yellow.50}",
-          "$description": "Subtle background variation for yellow tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.orange.50}",
+          "$description": "Subtle background variation for yellow tags, replaced with orange for tritanopia visibility."
         },
         "border": {
           "$type": "color",
           "$value": "{component.tag.yellow.background}",
-          "$description": "Border color for yellow tags."
+          "$description": "Border color for yellow tags, replaced with orange."
         }
       }
     },
@@ -1905,6 +1905,135 @@
         "$type": "color",
         "$value": "{background.3}",
         "$description": "Background color for tooltips. Creates a distinct surface for contextual information that appears above UI elements."
+      }
+    }
+  },
+  "gradient": {
+    "ai": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{colors.orange.200}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{colors.pink.300}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{colors.cyan.300}"
+      },
+      "gradient-stop-4": {
+        "$type": "color",
+        "$value": "{colors.cyan.200}"
+      }
+    },
+    "skeleton": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{colors.chrome.100}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{colors.chrome.100}"
+      }
+    },
+    "pipeline": {
+      "running": {
+        "gradient-stop-1": {
+          "$type": "color",
+          "$value": "{colors.orange.300}"
+        },
+        "gradient-stop-2": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.4",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.chrome.200}"
+        },
+        "gradient-stop-3": {
+          "$type": "color",
+          "$value": "{colors.orange.300}"
+        }
+      },
+      "arrows": {
+        "gradient-stop-1": {
+          "$type": "color",
+          "$value": "{colors.chrome.100}"
+        },
+        "gradient-stop-2": {
+          "$type": "color",
+          "$value": "{colors.blue.400}"
+        },
+        "gradient-stop-3": {
+          "$type": "color",
+          "$value": "{border.1}"
+        }
+      },
+      "card": {
+        "background": {
+          "gradient-from": {
+            "$type": "color",
+            "$value": "{colors.pure.white}"
+          },
+          "gradient-to": {
+            "$type": "color",
+            "$value": "{colors.chrome.50}"
+          }
+        },
+        "border": {
+          "gradient-from": {
+            "$type": "color",
+            "$value": "{colors.chrome.50}"
+          },
+          "gradient-to": {
+            "$type": "color",
+            "$value": "{colors.chrome.100}"
+          }
+        }
+      },
+      "widget": {
+        "number": {
+          "gradient-from": {
+            "$type": "color",
+            "$value": "{colors.chrome.500}"
+          },
+          "gradient-to": {
+            "$type": "color",
+            "$value": "{colors.chrome.600}"
+          }
+        },
+        "blob": {
+          "big": {
+            "gradient-from": {
+              "$type": "color",
+              "$value": "{colors.chrome.100}"
+            },
+            "gradient-to": {
+              "$type": "color",
+              "$value": "{colors.pure.white}"
+            }
+          },
+          "small": {
+            "gradient-from": {
+              "$type": "color",
+              "$value": "{colors.chrome.150}"
+            },
+            "gradient-to": {
+              "$type": "color",
+              "$value": "{colors.pure.white}"
+            }
+          }
+        }
       }
     }
   },
@@ -2184,143 +2313,14 @@
       "$description": "Focus ring effect with background offset and accent border."
     }
   },
-  "gradient": {
-    "ai": {
-      "gradient-stop-1": {
-        "$type": "color",
-        "$value": "{colors.yellow.200}"
-      },
-      "gradient-stop-2": {
-        "$type": "color",
-        "$value": "{colors.pink.300}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{colors.purple.300}"
-      },
-      "gradient-stop-4": {
-        "$type": "color",
-        "$value": "{colors.cyan.200}"
-      }
-    },
-    "skeleton": {
-      "gradient-stop-1": {
-        "$type": "color",
-        "$value": "{colors.chrome.850}"
-      },
-      "gradient-stop-2": {
-        "$type": "color",
-        "$value": "{colors.chrome.800}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{colors.chrome.850}"
-      }
-    },
-    "pipeline": {
-      "running": {
-        "gradient-stop-1": {
-          "$type": "color",
-          "$value": "{colors.orange.200}"
-        },
-        "gradient-stop-2": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.4",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.chrome.800}"
-        },
-        "gradient-stop-3": {
-          "$type": "color",
-          "$value": "{colors.orange.200}"
-        }
-      },
-      "arrows": {
-        "gradient-stop-1": {
-          "$type": "color",
-          "$value": "{colors.pure.white}"
-        },
-        "gradient-stop-2": {
-          "$type": "color",
-          "$value": "{colors.blue.300}"
-        },
-        "gradient-stop-3": {
-          "$type": "color",
-          "$value": "{border.1}"
-        }
-      },
-      "card": {
-        "background": {
-          "gradient-from": {
-            "$type": "color",
-            "$value": "{colors.chrome.850}"
-          },
-          "gradient-to": {
-            "$type": "color",
-            "$value": "{colors.chrome.900}"
-          }
-        },
-        "border": {
-          "gradient-from": {
-            "$type": "color",
-            "$value": "{colors.chrome.800}"
-          },
-          "gradient-to": {
-            "$type": "color",
-            "$value": "{colors.chrome.850}"
-          }
-        }
-      },
-      "widget": {
-        "number": {
-          "gradient-from": {
-            "$type": "color",
-            "$value": "{colors.chrome.200}"
-          },
-          "gradient-to": {
-            "$type": "color",
-            "$value": "{colors.chrome.600}"
-          }
-        },
-        "blob": {
-          "big": {
-            "gradient-from": {
-              "$type": "color",
-              "$value": "{colors.chrome.850}"
-            },
-            "gradient-to": {
-              "$type": "color",
-              "$value": "{colors.chrome.950}"
-            }
-          },
-          "small": {
-            "gradient-from": {
-              "$type": "color",
-              "$value": "{colors.chrome.800}"
-            },
-            "gradient-to": {
-              "$type": "color",
-              "$value": "{colors.chrome.850}"
-            }
-          }
-        }
-      }
-    }
-  },
   "iconStrokeWidth": {
     "xxs": {
       "$type": "borderWidth",
-      "$value": "1.4"
+      "$value": "1"
     },
     "xs": {
       "$type": "borderWidth",
-      "$value": "1.3"
+      "$value": "1"
     },
     "sm": {
       "$type": "borderWidth",

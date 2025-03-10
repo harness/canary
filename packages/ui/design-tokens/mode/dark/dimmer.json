@@ -111,7 +111,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.2",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },

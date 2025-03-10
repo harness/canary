@@ -39,8 +39,8 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.600}",
-      "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
+      "$value": "{colors.blue.600}",
+      "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states. Using blue instead of green for protanopia visibility.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
@@ -85,8 +85,8 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.400}",
-      "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
+      "$value": "{colors.blue.400}",
+      "$description": "Border color for success containers. Reinforces positive status through visual framing. Using blue instead of green for protanopia visibility.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
@@ -306,8 +306,8 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.600}",
-          "$description": "Text color for success badges. Communicates positive status through readable green text."
+          "$value": "{colors.blue.600}",
+          "$description": "Text color for success badges. Communicates positive status through readable blue text. Adjusted for protanopia visibility."
         },
         "border": {
           "$extensions": {
@@ -320,8 +320,8 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.400}",
-          "$description": "Border color for success badges. Provides subtle definition for success state indicators."
+          "$value": "{colors.blue.400}",
+          "$description": "Border color for success badges. Provides subtle definition for success state indicators. Adjusted for protanopia visibility."
         },
         "background": {
           "$extensions": {
@@ -334,8 +334,8 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.200}",
-          "$description": "Background color for success badges. Creates a subtle but recognizable success indicator."
+          "$value": "{colors.blue.300}",
+          "$description": "Background color for success badges. Creates a subtle but recognizable success indicator. Adjusted for protanopia visibility."
         }
       },
       "danger": {
@@ -632,8 +632,8 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.600}",
-          "$description": "Text color for success buttons. Communicates positive actions through readable green text."
+          "$value": "{colors.blue.600}",
+          "$description": "Text color for success buttons. Communicates positive actions through readable blue text. Adjusted for protanopia visibility."
         },
         "background": {
           "$extensions": {
@@ -646,8 +646,8 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.200}",
-          "$description": "Background color for success buttons. Creates subtle but recognizable positive action styling."
+          "$value": "{colors.blue.300}",
+          "$description": "Background color for success buttons. Creates subtle but recognizable positive action styling. Adjusted for protanopia visibility."
         },
         "border": {
           "$extensions": {
@@ -660,8 +660,8 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.green.400}",
-          "$description": "Border color for success buttons. Provides definition for positive action buttons."
+          "$value": "{colors.blue.400}",
+          "$description": "Border color for success buttons. Provides definition for positive action buttons. Adjusted for protanopia visibility."
         },
         "state": {
           "hover": {
@@ -675,8 +675,8 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.green.200}",
-            "$description": "Hover state background color for success buttons. Creates subtle feedback for user interaction."
+            "$value": "{colors.blue.300}",
+            "$description": "Hover state background color for success buttons. Creates subtle feedback for user interaction. Adjusted for protanopia visibility."
           },
           "active": {
             "$extensions": {
@@ -689,8 +689,8 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.green.200}",
-            "$description": "Active state background color for success buttons. Provides stronger visual feedback for clicks/presses."
+            "$value": "{colors.blue.300}",
+            "$description": "Active state background color for success buttons. Provides stronger visual feedback for clicks/presses. Adjusted for protanopia visibility."
           }
         }
       },
@@ -874,8 +874,8 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
-        "$description": "Green background highlighting newly added code lines while maintaining readability."
+        "$value": "{colors.blue.500}",
+        "$description": "Blue background highlighting newly added code lines while maintaining readability. Using blue instead of green for protanopia visibility."
       },
       "add-lineNumber": {
         "$extensions": {
@@ -888,8 +888,8 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
-        "$description": "Background for line numbers of added code, providing visual connection to added content."
+        "$value": "{colors.blue.500}",
+        "$description": "Background for line numbers of added code, providing visual connection to added content. Using blue instead of green for protanopia visibility."
       },
       "add-content-highlight": {
         "$extensions": {
@@ -902,8 +902,8 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.green.500}",
-        "$description": "Stronger emphasis color for specific character changes within added lines."
+        "$value": "{colors.blue.500}",
+        "$description": "Stronger emphasis color for specific character changes within added lines. Using blue instead of green for protanopia visibility."
       },
       "add-widget": {
         "$type": "color",
@@ -1136,8 +1136,8 @@
         "completed": {
           "border": {
             "$type": "color",
-            "$value": "{colors.green.400}",
-            "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
+            "$value": "{colors.blue.400}",
+            "$description": "Border color for completed pipeline states. Indicates successful pipeline execution. Using blue instead of green for protanopia visibility."
           }
         }
       },
@@ -1411,8 +1411,8 @@
     "status-indicator": {
       "completed": {
         "$type": "color",
-        "$value": "{colors.green.300}",
-        "$description": "Color for success status indicators. Communicates completed or positive states."
+        "$value": "{colors.blue.300}",
+        "$description": "Color for success status indicators. Communicates completed or positive states. Using blue instead of green for protanopia visibility."
       },
       "cancelled": {
         "$type": "color",
@@ -1437,7 +1437,7 @@
       "action-required": {
         "$type": "color",
         "$value": "{colors.blue.400}",
-        "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed. "
+        "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed."
       },
       "waiting": {
         "$type": "color",
@@ -1565,7 +1565,7 @@
       "blue": {
         "text": {
           "$type": "color",
-          "$value": "{colors.blue.500}",
+          "$value": "{colors.blue.600}",
           "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
         },
         "background": {
@@ -1581,7 +1581,7 @@
         "border": {
           "$type": "color",
           "$value": "{component.tag.blue.background}",
-          "$description": "Border color for blue tags. "
+          "$description": "Border color for blue tags."
         }
       },
       "brown": {
@@ -1603,13 +1603,13 @@
         "border": {
           "$type": "color",
           "$value": "{component.tag.brown.background}",
-          "$description": "Border color for brown tags. "
+          "$description": "Border color for brown tags."
         }
       },
       "cyan": {
         "text": {
           "$type": "color",
-          "$value": "{colors.cyan.500}",
+          "$value": "{colors.cyan.600}",
           "$description": "Text color for cyan tags. Ensures readability while maintaining the cyan color theme."
         },
         "background": {
@@ -1631,29 +1631,29 @@
       "green": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.600}",
-          "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
+          "$value": "{colors.blue.600}",
+          "$description": "Text color for green tags. Using blue instead of green for protanopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.green.100}",
-          "$description": "Background color for green tags. Creates a distinct surface with green theme styling."
+          "$value": "{colors.blue.100}",
+          "$description": "Background color for green tags. Using blue instead of green for protanopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.green.50}",
-          "$description": "Subtle background variation for green tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.blue.50}",
+          "$description": "Subtle background variation for green tags. Using blue instead of green for protanopia visibility."
         },
         "border": {
           "$type": "color",
           "$value": "{component.tag.green.background}",
-          "$description": "Border color for green tags."
+          "$description": "Border color for green tags. Using blue instead of green for protanopia visibility."
         }
       },
       "indigo": {
         "text": {
           "$type": "color",
-          "$value": "{colors.indigo.500}",
+          "$value": "{colors.indigo.600}",
           "$description": "Text color for indigo tags. Ensures readability while maintaining the indigo color theme."
         },
         "background": {
@@ -1675,51 +1675,51 @@
       "lime": {
         "text": {
           "$type": "color",
-          "$value": "{colors.lime.600}",
-          "$description": "Text color for lime tags. Ensures readability while maintaining the lime color theme."
+          "$value": "{colors.blue.600}",
+          "$description": "Text color for lime tags. Using blue instead of lime/green for protanopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.lime.100}",
-          "$description": "Background color for lime tags. Creates a distinct surface with lime theme styling."
+          "$value": "{colors.blue.100}",
+          "$description": "Background color for lime tags. Using blue instead of lime/green for protanopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.lime.50}",
-          "$description": "Subtle background variation for lime tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.blue.50}",
+          "$description": "Subtle background variation for lime tags. Using blue instead of lime/green for protanopia visibility."
         },
         "border": {
           "$type": "color",
           "$value": "{component.tag.lime.background}",
-          "$description": "Border color for lime tags."
+          "$description": "Border color for lime tags. Using blue instead of lime/green for protanopia visibility."
         }
       },
       "mint": {
         "text": {
           "$type": "color",
-          "$value": "{colors.mint.600}",
-          "$description": "Text color for mint tags. Ensures readability while maintaining the mint color theme."
+          "$value": "{colors.blue.600}",
+          "$description": "Text color for mint tags. Using blue instead of mint/green for protanopia visibility."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.mint.100}",
-          "$description": "Background color for mint tags. Creates a distinct surface with mint theme styling."
+          "$value": "{colors.blue.100}",
+          "$description": "Background color for mint tags. Using blue instead of mint/green for protanopia visibility."
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.mint.50}",
-          "$description": "Subtle background variation for mint tags. Provides a softer alternative for less emphasis."
+          "$value": "{colors.blue.50}",
+          "$description": "Subtle background variation for mint tags. Using blue instead of mint/green for protanopia visibility."
         },
         "border": {
           "$type": "color",
           "$value": "{component.tag.mint.background}",
-          "$description": "Border color for mint tags."
+          "$description": "Border color for mint tags. Using blue instead of mint/green for protanopia visibility."
         }
       },
       "orange": {
         "text": {
           "$type": "color",
-          "$value": "{colors.orange.500}",
+          "$value": "{colors.orange.600}",
           "$description": "Text color for orange tags. Ensures readability while maintaining the orange color theme."
         },
         "background": {
@@ -1741,7 +1741,7 @@
       "pink": {
         "text": {
           "$type": "color",
-          "$value": "{colors.pink.500}",
+          "$value": "{colors.pink.600}",
           "$description": "Text color for pink tags. Ensures readability while maintaining the pink color theme."
         },
         "background": {
@@ -1763,7 +1763,7 @@
       "purple": {
         "text": {
           "$type": "color",
-          "$value": "{colors.purple.500}",
+          "$value": "{colors.purple.600}",
           "$description": "Text color for purple tags. Ensures readability while maintaining the purple color theme."
         },
         "background": {
@@ -1785,7 +1785,7 @@
       "red": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.500}",
+          "$value": "{colors.red.600}",
           "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
         },
         "background": {
@@ -1807,7 +1807,7 @@
       "violet": {
         "text": {
           "$type": "color",
-          "$value": "{colors.violet.500}",
+          "$value": "{colors.violet.600}",
           "$description": "Text color for violet tags. Ensures readability while maintaining the violet color theme."
         },
         "background": {
@@ -2206,22 +2206,22 @@
     "skeleton": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{colors.chrome.850}"
+        "$value": "{colors.chrome.100}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{colors.chrome.800}"
+        "$value": "{colors.pure.white}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{colors.chrome.850}"
+        "$value": "{colors.chrome.100}"
       }
     },
     "pipeline": {
       "running": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{colors.orange.200}"
+          "$value": "{colors.orange.300}"
         },
         "gradient-stop-2": {
           "$extensions": {
@@ -2234,21 +2234,21 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.chrome.800}"
+          "$value": "{colors.chrome.200}"
         },
         "gradient-stop-3": {
           "$type": "color",
-          "$value": "{colors.orange.200}"
+          "$value": "{colors.orange.300}"
         }
       },
       "arrows": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{colors.pure.white}"
+          "$value": "{colors.chrome.100}"
         },
         "gradient-stop-2": {
           "$type": "color",
-          "$value": "{colors.blue.300}"
+          "$value": "{colors.blue.400}"
         },
         "gradient-stop-3": {
           "$type": "color",
@@ -2259,21 +2259,21 @@
         "background": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{colors.chrome.850}"
+            "$value": "{colors.pure.white}"
           },
           "gradient-to": {
             "$type": "color",
-            "$value": "{colors.chrome.900}"
+            "$value": "{colors.chrome.50}"
           }
         },
         "border": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{colors.chrome.800}"
+            "$value": "{colors.chrome.50}"
           },
           "gradient-to": {
             "$type": "color",
-            "$value": "{colors.chrome.850}"
+            "$value": "{colors.chrome.100}"
           }
         }
       },
@@ -2281,7 +2281,7 @@
         "number": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{colors.chrome.200}"
+            "$value": "{colors.chrome.500}"
           },
           "gradient-to": {
             "$type": "color",
@@ -2292,21 +2292,21 @@
           "big": {
             "gradient-from": {
               "$type": "color",
-              "$value": "{colors.chrome.850}"
+              "$value": "{colors.chrome.100}"
             },
             "gradient-to": {
               "$type": "color",
-              "$value": "{colors.chrome.950}"
+              "$value": "{colors.pure.white}"
             }
           },
           "small": {
             "gradient-from": {
               "$type": "color",
-              "$value": "{colors.chrome.800}"
+              "$value": "{colors.chrome.150}"
             },
             "gradient-to": {
               "$type": "color",
-              "$value": "{colors.chrome.850}"
+              "$value": "{colors.pure.white}"
             }
           }
         }

@@ -2,7 +2,7 @@
   "background": {
     "1": {
       "$type": "color",
-      "$value": "{colors.chrome.50}",
+      "$value": "{colors.pure.white}",
       "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background.\n\nCommon uses: Application background, page base layer, lowest-level containers."
     },
     "2": {
@@ -19,32 +19,32 @@
   "text": {
     "1": {
       "$type": "color",
-      "$value": "{colors.chrome.950}",
+      "$value": "{colors.chrome.800}",
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text, primary buttons."
     },
     "2": {
       "$type": "color",
-      "$value": "{colors.chrome.850}",
+      "$value": "{colors.chrome.700}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
       "$type": "color",
-      "$value": "{colors.chrome.700}",
+      "$value": "{colors.chrome.600}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "accent": {
       "$type": "color",
-      "$value": "{brand.color.500}",
+      "$value": "{brand.color.400}",
       "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\n\nCommon uses: Links, buttons, interactive icons, highlighted elements."
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.600}",
+      "$value": "{colors.green.500}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{colors.red.600}",
+      "$value": "{colors.red.500}",
       "$description": "Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.\n\nCommon uses: Error message text, validation text, destructive action labels."
     },
     "warning": {
@@ -56,10 +56,19 @@
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{colors.chrome.800}",
+      "$value": "{colors.chrome.600}",
       "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\n\nCommon uses: Focus states, hover states, active elements, primary containers."
     },
     "2": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.8",
+            "space": "p3"
+          }
+        }
+      },
       "$type": "color",
       "$value": "{colors.chrome.100}",
       "$description": "Standard border color for general use. Provides balanced visual definition for common UI elements.\n\nCommon uses: Containers, cards, dividers, separators, default form inputs."
@@ -85,17 +94,17 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{colors.green.400}",
+      "$value": "{colors.green.300}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{colors.red.400}",
+      "$value": "{colors.red.300}",
       "$description": "Border color for error containers. Emphasizes critical information through visual framing.\n\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
       "$type": "color",
-      "$value": "{colors.yellow.500}",
+      "$value": "{colors.yellow.400}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -105,7 +114,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.15",
+            "value": "0.1",
             "space": "p3"
           }
         }
@@ -119,7 +128,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.2",
+            "value": "0.15",
             "space": "p3"
           }
         }
@@ -195,12 +204,12 @@
       "danger": {
         "title": {
           "$type": "color",
-          "$value": "{colors.red.800}",
+          "$value": "{colors.red.700}",
           "$description": "Text color for danger alerts. Communicates critical information through high-contrast red text."
         },
         "description": {
           "$type": "color",
-          "$value": "{colors.red.600}",
+          "$value": "{colors.red.500}",
           "$description": "Description text color for danger alerts. Ensures readability while maintaining the error state styling."
         },
         "background": {
@@ -208,7 +217,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.1",
+                "value": "0.08",
                 "space": "p3"
               }
             }
@@ -222,7 +231,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.15",
                 "space": "p3"
               }
             }
@@ -259,7 +268,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.150}",
+          "$value": "{colors.chrome.100}",
           "$description": "Background color for secondary badges. Creates less prominent badge styling for secondary information."
         },
         "border": {
@@ -279,7 +288,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.1",
+                "value": "0.07",
                 "space": "p3"
               }
             }
@@ -293,7 +302,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.3",
                 "space": "p3"
               }
             }
@@ -306,7 +315,7 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.600}",
+          "$value": "{colors.green.500}",
           "$description": "Text color for success badges. Communicates positive status through readable green text."
         },
         "border": {
@@ -314,13 +323,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.3",
                 "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.green.400}",
+          "$value": "{colors.green.300}",
           "$description": "Border color for success badges. Provides subtle definition for success state indicators."
         },
         "background": {
@@ -328,7 +337,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.1",
+                "value": "0.07",
                 "space": "p3"
               }
             }
@@ -341,7 +350,7 @@
       "danger": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.600}",
+          "$value": "{colors.red.500}",
           "$description": "Text color for danger badges. Communicates error or warning status with high visibility."
         },
         "border": {
@@ -349,13 +358,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.3",
                 "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.red.400}",
+          "$value": "{colors.red.300}",
           "$description": "Border color for danger badges. Creates definition for error or warning indicators."
         },
         "background": {
@@ -363,7 +372,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.1",
+                "value": "0.07",
                 "space": "p3"
               }
             }
@@ -376,7 +385,7 @@
       "warning": {
         "text": {
           "$type": "color",
-          "$value": "{colors.yellow.600}",
+          "$value": "{colors.yellow.500}",
           "$description": "Text color for warning badges. Signals caution states with readable amber text."
         },
         "border": {
@@ -384,13 +393,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.3",
                 "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.yellow.400}",
+          "$value": "{colors.yellow.300}",
           "$description": "Border color for warning badges. Defines the boundary of caution status indicators."
         },
         "background": {
@@ -398,7 +407,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.1",
+                "value": "0.07",
                 "space": "p3"
               }
             }
@@ -411,7 +420,7 @@
       "running": {
         "text": {
           "$type": "color",
-          "$value": "{colors.orange.600}",
+          "$value": "{colors.orange.500}",
           "$description": "Text color for running state badges. Indicates active or in-progress operations."
         },
         "border": {
@@ -419,13 +428,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.3",
                 "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.orange.400}",
+          "$value": "{colors.orange.300}",
           "$description": "Border color for running state badges. Defines the boundary of active status indicators."
         },
         "background": {
@@ -433,7 +442,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.1",
+                "value": "0.07",
                 "space": "p3"
               }
             }
@@ -446,7 +455,7 @@
       "merged": {
         "text": {
           "$type": "color",
-          "$value": "{colors.purple.600}",
+          "$value": "{colors.purple.500}",
           "$description": "Text color for merged state badges. Indicates completed merge actions in version control contexts."
         },
         "border": {
@@ -454,13 +463,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.3",
                 "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.purple.400}",
+          "$value": "{colors.purple.300}",
           "$description": "Border color for merged state badges. Defines the boundary of merge status indicators."
         },
         "background": {
@@ -468,7 +477,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.1",
+                "value": "0.07",
                 "space": "p3"
               }
             }
@@ -489,7 +498,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.5",
+                "value": "0.4",
                 "space": "p3"
               }
             }
@@ -548,7 +557,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.200}",
+          "$value": "{colors.chrome.150}",
           "$description": "Background color for secondary action buttons. Creates visual hierarchy between primary and secondary actions."
         },
         "border": {
@@ -632,7 +641,7 @@
       "success": {
         "text": {
           "$type": "color",
-          "$value": "{colors.green.600}",
+          "$value": "{colors.green.500}",
           "$description": "Text color for success buttons. Communicates positive actions through readable green text."
         },
         "background": {
@@ -640,7 +649,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.12",
+                "value": "0.08",
                 "space": "p3"
               }
             }
@@ -654,13 +663,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.25",
+                "value": "0.3",
                 "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.green.400}",
+          "$value": "{colors.green.300}",
           "$description": "Border color for success buttons. Provides definition for positive action buttons."
         },
         "state": {
@@ -669,7 +678,7 @@
               "studio.tokens": {
                 "modify": {
                   "type": "alpha",
-                  "value": "0.15",
+                  "value": "0.1",
                   "space": "p3"
                 }
               }
@@ -683,7 +692,7 @@
               "studio.tokens": {
                 "modify": {
                   "type": "alpha",
-                  "value": "0.25",
+                  "value": "0.15",
                   "space": "p3"
                 }
               }
@@ -697,7 +706,7 @@
       "danger": {
         "text": {
           "$type": "color",
-          "$value": "{colors.red.600}",
+          "$value": "{colors.red.500}",
           "$description": "Text color for danger buttons. Communicates destructive or warning actions through high-contrast red text."
         },
         "background": {
@@ -705,7 +714,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.12",
+                "value": "0.08",
                 "space": "p3"
               }
             }
@@ -719,13 +728,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.3",
                 "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.red.400}",
+          "$value": "{colors.red.300}",
           "$description": "Border color for danger buttons. Provides definition for destructive action buttons."
         },
         "state": {
@@ -734,7 +743,7 @@
               "studio.tokens": {
                 "modify": {
                   "type": "alpha",
-                  "value": "0.15",
+                  "value": "0.1",
                   "space": "p3"
                 }
               }
@@ -748,7 +757,7 @@
               "studio.tokens": {
                 "modify": {
                   "type": "alpha",
-                  "value": "0.25",
+                  "value": "0.15",
                   "space": "p3"
                 }
               }
@@ -805,7 +814,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.5",
+              "value": "0.4",
               "space": "p3"
             }
           }
@@ -844,7 +853,7 @@
                 "studio.tokens": {
                   "modify": {
                     "type": "alpha",
-                    "value": "0.1",
+                    "value": "0.07",
                     "space": "p3"
                   }
                 }
@@ -868,7 +877,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.12",
+              "value": "0.08",
               "space": "p3"
             }
           }
@@ -882,7 +891,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.2",
+              "value": "0.12",
               "space": "p3"
             }
           }
@@ -896,7 +905,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.25",
+              "value": "0.15",
               "space": "p3"
             }
           }
@@ -920,7 +929,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.12",
+              "value": "0.08",
               "space": "p3"
             }
           }
@@ -934,7 +943,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.2",
+              "value": "0.12",
               "space": "p3"
             }
           }
@@ -948,7 +957,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.25",
+              "value": "0.15",
               "space": "p3"
             }
           }
@@ -982,7 +991,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.12",
+              "value": "0.08",
               "space": "p3"
             }
           }
@@ -996,7 +1005,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.2",
+              "value": "0.12",
               "space": "p3"
             }
           }
@@ -1058,7 +1067,7 @@
       },
       "visited": {
         "$type": "color",
-        "$value": "{colors.purple.600}",
+        "$value": "{colors.purple.500}",
         "$description": "Visited state color for text links. Differentiates links the user has already activated."
       }
     },
@@ -1129,14 +1138,14 @@
         "error": {
           "border": {
             "$type": "color",
-            "$value": "{colors.red.400}",
+            "$value": "{colors.red.300}",
             "$description": "Border color for error pipeline states. Clearly indicates failed or problematic pipeline execution."
           }
         },
         "completed": {
           "border": {
             "$type": "color",
-            "$value": "{colors.green.400}",
+            "$value": "{colors.green.300}",
             "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
           }
         }
@@ -1173,7 +1182,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.6",
+                "value": "0.5",
                 "space": "p3"
               }
             }
@@ -1341,17 +1350,17 @@
       "selected": {
         "item": {
           "$type": "color",
-          "$value": "{colors.pure.white}",
+          "$value": "{colors.chrome.100}",
           "$description": "Color for selected items in selection controls. Creates high contrast against selected background state."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.900}",
+          "$value": "{colors.chrome.700}",
           "$description": "Background color for selected state in selection controls. Creates strong visual indication of active selection."
         },
         "border": {
           "$type": "color",
-          "$value": "{colors.chrome.900}",
+          "$value": "{colors.chrome.700}",
           "$description": "Border color for selected elements in selection controls. Reinforces the selected state with consistent styling."
         }
       }
@@ -1359,7 +1368,7 @@
     "separator": {
       "background": {
         "$type": "color",
-        "$value": "{borderWidth.2}",
+        "$value": "{border.2}",
         "$description": "Background color for separator elements. Creates visual division between content sections with a subtle line or space."
       }
     },
@@ -1379,7 +1388,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{brand.color.500}",
+          "$value": "{brand.color.400}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         }
       },
@@ -1391,7 +1400,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{brand.color.700}",
+          "$value": "{brand.color.600}",
           "$description": "Color for segment markers on the filled track portion. Maintains visibility of markers within the selected range."
         }
       },
@@ -1403,7 +1412,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{colors.chrome.900}",
+          "$value": "{colors.chrome.700}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
       }
@@ -1461,12 +1470,12 @@
       "selected": {
         "thumb": {
           "$type": "color",
-          "$value": "{colors.chrome.50}",
+          "$value": "{colors.chrome.100}",
           "$description": "Color for the movable thumb element in selected switch controls. Provides clear contrast against the active track."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.900}",
+          "$value": "{colors.chrome.700}",
           "$description": "Background color for the selected state of switch controls. Creates strong visual indication of active state."
         }
       }
@@ -1490,7 +1499,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.1",
+                "value": "0.07",
                 "space": "p3"
               }
             }
@@ -1885,7 +1894,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.red.200}",
+          "$value": "{colors.red.100}",
           "$description": "Background color for danger toast notifications. Creates high-visibility indication of errors or warnings."
         },
         "border": {
@@ -2066,98 +2075,98 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.6",
+            "value": "0.4",
             "space": "p3"
           }
         }
       },
       "$type": "color",
       "$value": "{colors.chrome.300}",
-      "$description": "Light shadow color with 60% opacity. Creates subtle depth for small UI elements."
+      "$description": "Light shadow color with 40% opacity. Creates subtle depth for small UI elements."
     },
     "2": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.6",
+            "value": "0.4",
             "space": "p3"
           }
         }
       },
       "$type": "color",
       "$value": "{colors.chrome.300}",
-      "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
+      "$description": "Medium shadow color with 40% opacity. Provides balanced depth for common UI components."
     },
     "3": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.5",
+            "value": "0.35",
             "space": "p3"
           }
         }
       },
       "$type": "color",
       "$value": "{colors.chrome.300}",
-      "$description": "Medium shadow color with 50% opacity. Creates moderate depth for elevated components."
+      "$description": "Medium shadow color with 35% opacity. Creates moderate depth for elevated components."
     },
     "4": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.5",
+            "value": "0.35",
             "space": "p3"
           }
         }
       },
       "$type": "color",
       "$value": "{colors.chrome.300}",
-      "$description": "Deep shadow color with 50% opacity. Provides significant depth for floating elements."
+      "$description": "Deep shadow color with 35% opacity. Provides significant depth for floating elements."
     },
     "5": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.5",
+            "value": "0.35",
             "space": "p3"
           }
         }
       },
       "$type": "color",
       "$value": "{colors.chrome.300}",
-      "$description": "Very deep shadow color with 50% opacity. Creates dramatic elevation for modal content."
+      "$description": "Very deep shadow color with 35% opacity. Creates dramatic elevation for modal content."
     },
     "6": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.6",
+            "value": "0.4",
             "space": "p3"
           }
         }
       },
       "$type": "color",
       "$value": "{colors.chrome.300}",
-      "$description": "Extremely deep shadow color with 60% opacity. Provides maximum depth for highly elevated elements."
+      "$description": "Extremely deep shadow color with 40% opacity. Provides maximum depth for highly elevated elements."
     },
     "inner": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.1",
+            "value": "0.07",
             "space": "p3"
           }
         }
       },
       "$type": "color",
       "$value": "{colors.chrome.900}",
-      "$description": "Subtle inner shadow color with 10% opacity. Creates inset effect for pressed or focused states."
+      "$description": "Subtle inner shadow color with 7% opacity. Creates inset effect for pressed or focused states."
     }
   },
   "ring": {
@@ -2200,55 +2209,55 @@
       },
       "gradient-stop-4": {
         "$type": "color",
-        "$value": "{colors.cyan.200}"
+        "$value": "{colors.cyan.300}"
       }
     },
     "skeleton": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{colors.chrome.850}"
+        "$value": "{colors.chrome.100}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{colors.chrome.800}"
+        "$value": "{colors.pure.white}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{colors.chrome.850}"
+        "$value": "{colors.chrome.100}"
       }
     },
     "pipeline": {
       "running": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{colors.orange.200}"
+          "$value": "{colors.orange.300}"
         },
         "gradient-stop-2": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.4",
+                "value": "0.3",
                 "space": "p3"
               }
             }
           },
           "$type": "color",
-          "$value": "{colors.chrome.800}"
+          "$value": "{colors.chrome.200}"
         },
         "gradient-stop-3": {
           "$type": "color",
-          "$value": "{colors.orange.200}"
+          "$value": "{colors.orange.300}"
         }
       },
       "arrows": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{colors.pure.white}"
+          "$value": "{colors.chrome.100}"
         },
         "gradient-stop-2": {
           "$type": "color",
-          "$value": "{colors.blue.300}"
+          "$value": "{colors.blue.400}"
         },
         "gradient-stop-3": {
           "$type": "color",
@@ -2259,21 +2268,21 @@
         "background": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{colors.chrome.850}"
+            "$value": "{colors.pure.white}"
           },
           "gradient-to": {
             "$type": "color",
-            "$value": "{colors.chrome.900}"
+            "$value": "{colors.chrome.50}"
           }
         },
         "border": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{colors.chrome.800}"
+            "$value": "{colors.chrome.50}"
           },
           "gradient-to": {
             "$type": "color",
-            "$value": "{colors.chrome.850}"
+            "$value": "{colors.chrome.100}"
           }
         }
       },
@@ -2281,7 +2290,7 @@
         "number": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{colors.chrome.200}"
+            "$value": "{colors.chrome.500}"
           },
           "gradient-to": {
             "$type": "color",
@@ -2292,21 +2301,21 @@
           "big": {
             "gradient-from": {
               "$type": "color",
-              "$value": "{colors.chrome.850}"
+              "$value": "{colors.chrome.100}"
             },
             "gradient-to": {
               "$type": "color",
-              "$value": "{colors.chrome.950}"
+              "$value": "{colors.pure.white}"
             }
           },
           "small": {
             "gradient-from": {
               "$type": "color",
-              "$value": "{colors.chrome.800}"
+              "$value": "{colors.chrome.150}"
             },
             "gradient-to": {
               "$type": "color",
-              "$value": "{colors.chrome.850}"
+              "$value": "{colors.pure.white}"
             }
           }
         }

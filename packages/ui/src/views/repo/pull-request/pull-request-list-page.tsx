@@ -259,12 +259,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                         {PR_FILTER_OPTIONS.map(filterOption => {
                           return (
                             <PRListFilterHandler.Component
-                              parser={
-                                'parser' in filterOption
-                                  ? // TODO Need to address the type issue here
-                                    (filterOption.parser as unknown as Parser<PRListFilters[PRListFiltersKeys]>)
-                                  : undefined
-                              }
+                              parser={filterOption.parser}
                               filterKey={filterOption.value}
                               key={filterOption.value}
                             >

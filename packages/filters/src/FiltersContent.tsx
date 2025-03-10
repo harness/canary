@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef } from 'react'
+import React, { ReactNode, useEffect, useRef } from 'react'
 
 import { useFiltersContext } from './Filters'
 import { FilterStatus, InitializeFiltersConfigType } from './types'
@@ -10,12 +10,15 @@ export interface FiltersContentProps {
 
 const FiltersContent: React.FC<FiltersContentProps> = ({ children, className }) => {
   const { visibleFilters, addInitialFilters } = useFiltersContext()
-  const initializedFiltersRef = useRef(false)
 
   const reducerInitialState = {
     components: [],
     filtersConfig: {}
   }
+
+  useEffect(() => {
+    addInitialFilters(filtersConfig)
+  }, [])
 
   const { components, filtersConfig } = React.Children.toArray(children).reduce<{
     components: ReactNode[]
@@ -35,11 +38,6 @@ const FiltersContent: React.FC<FiltersContentProps> = ({ children, className }) 
     }
     return acc
   }, reducerInitialState)
-
-  if (initializedFiltersRef.current === false) {
-    addInitialFilters(filtersConfig)
-    initializedFiltersRef.current = true
-  }
 
   return <div className={className}>{components}</div>
 }

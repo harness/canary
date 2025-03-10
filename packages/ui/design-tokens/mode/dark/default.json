@@ -2298,11 +2298,11 @@
   "iconStrokeWidth": {
     "xxs": {
       "$type": "borderWidth",
-      "$value": "1.4"
+      "$value": "1"
     },
     "xs": {
       "$type": "borderWidth",
-      "$value": "1.2"
+      "$value": "1"
     },
     "sm": {
       "$type": "borderWidth",

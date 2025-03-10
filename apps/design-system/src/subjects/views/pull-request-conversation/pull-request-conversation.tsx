@@ -175,7 +175,8 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
           searchLabelQuery: searchLabel,
           setSearchLabelQuery: noop,
           addLabel: noop,
-          removeLabel: noop
+          removeLabel: noop,
+          editLabelsProps: { to: '' }
         }}
       />
     </>

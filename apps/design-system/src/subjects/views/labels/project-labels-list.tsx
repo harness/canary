@@ -12,14 +12,13 @@ export const ProjectLabelsList = () => {
   return (
     <>
       <LabelsListPage
+        className="mx-auto max-w-[1040px]"
         useTranslationStore={useTranslationStore}
         useLabelsStore={LabelsListStore.useLabelsStore}
         createdIn={''}
-        handleEditLabel={() => {}}
-        handleDeleteLabel={() => setOpenAlertDeleteDialog(true)}
         searchQuery={''}
-        setSearchQuery={() => {}}
-        isLoading={false}
+        setSearchQuery={noop}
+        labelsListViewProps={{ handleEditLabel: noop, handleDeleteLabel: () => setOpenAlertDeleteDialog(true) }}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}

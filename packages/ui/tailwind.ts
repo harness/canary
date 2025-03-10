@@ -168,7 +168,7 @@ export default {
             'disabled-1': 'hsla(var(--canary-button-border-disabled-01))',
             'danger-1': 'hsla(var(--canary-button-border-danger-01))',
             'success-1': 'hsla(var(--canary-button-border-success-01))',
-            'accent-1': 'hsl(var(--canary-button-border-accent-1))',
+            'accent-1': 'hsl(var(--canary-button-border-accent-1))'
           }
         },
         tag: {
@@ -363,7 +363,7 @@ export default {
         'as-border': 'inset 0 0 0 1px',
         'commit-list-bullet':
           '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)',
-        'auth': '0px 0px 20px var(--canary-box-shadow-2)'
+        auth: '0px 0px 20px var(--canary-box-shadow-2)'
       },
       borderColor: {
         'borders-1': 'hsl(var(--canary-border-01))',
@@ -463,51 +463,51 @@ export default {
         },
         '.tabnav-inactive': {
           boxShadow: 'inset 0 -1px 0 0 hsl(var(--canary-border-background))'
-        },
+        }
       })
     },
     function ({ addComponents, theme, e }: PluginAPI) {
-      const hoverClasses: Record<string, Record<string, string>> = {};
+      const hoverClasses: Record<string, Record<string, string>> = {}
 
       const generateHoverClasses = (colors: Record<string, any> | undefined, prefix = '') => {
         if (!colors) return
 
         Object.keys(colors).forEach(key => {
-          const value = colors[key];
-          const classKey = prefix ? `${prefix}-${key}` : key;
+          const value = colors[key]
+          const classKey = prefix ? `${prefix}-${key}` : key
 
           if (typeof value === 'object' && !Array.isArray(value)) {
-            generateHoverClasses(value, classKey);
+            generateHoverClasses(value, classKey)
             return
           }
 
           if (classKey.includes('foreground')) {
             hoverClasses[`.${e(`hover:text-${classKey}`)}:hover`] = {
-              color: value,
-            };
+              color: value
+            }
           } else if (classKey.includes('background')) {
             hoverClasses[`.${e(`hover:bg-${classKey}`)}:hover`] = {
-              backgroundColor: value,
-            };
+              backgroundColor: value
+            }
           } else if (classKey.includes('border')) {
             hoverClasses[`.${e(`hover:border-${classKey}`)}:hover`] = {
-              borderColor: value,
-            };
+              borderColor: value
+            }
           } else if (classKey.includes('icon') || classKey.includes('icons')) {
             hoverClasses[`.${e(`hover:text-${classKey}`)}:hover`] = {
-              color: value,
-            };
+              color: value
+            }
             hoverClasses[`.${e(`hover:bg-${classKey}`)}:hover`] = {
-              backgroundColor: value,
-            };
+              backgroundColor: value
+            }
           }
-        });
-      };
+        })
+      }
 
-      const colors = theme('colors');
-      generateHoverClasses(colors);
+      const colors = theme('colors')
+      generateHoverClasses(colors)
 
-      addComponents(hoverClasses);
+      addComponents(hoverClasses)
     }
   ],
   safelist: [
@@ -564,7 +564,6 @@ export default {
     { pattern: /^hover:text-sidebar-foreground-/ },
     { pattern: /^hover:border-sidebar-border-/ },
     { pattern: /^hover:text-sidebar-icon-/ },
-
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
     'stroke-borders-2',
     // NOTE: temporary - used in design-system

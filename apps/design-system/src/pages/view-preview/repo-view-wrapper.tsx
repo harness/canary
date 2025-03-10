@@ -13,9 +13,10 @@ const RepoViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> 
       path="*"
       element={
         <>
-          <div className="layer-high bg-background-1 sticky top-[55px]">
-            <RepoSubheader useTranslationStore={useTranslationStore} />
-          </div>
+          <RepoSubheader
+            className="layer-high bg-background-1 sticky top-[55px]"
+            useTranslationStore={useTranslationStore}
+          />
           {children}
         </>
       }

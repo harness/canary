@@ -1,30 +1,21 @@
-// import { Icon, Tooltip, TooltipContent, TooltipTrigger } from '@harnessio/canary'
+import { Label } from '@components/form-primitives/label'
+import { cn } from '@utils/cn'
 
 export interface InputLabelProps {
   label?: string
   description?: string
   required?: boolean
+  className?: string
 }
 
-function InputLabel(props: InputLabelProps): JSX.Element {
-  const { label, required } = props
+function InputLabel(props: InputLabelProps): JSX.Element | null {
+  const { label, required, className } = props
+
+  if (!label) return null
 
   const labelText = required && label ? `${label} *` : label
 
-  return (
-    <div className="flex">
-      <div className="text-muted-foreground">{labelText}</div>
-      {/* TODO: TooltipProvider not available */}
-      {/* {description && (
-        <Tooltip>
-          <TooltipTrigger>
-            <Icon name="info-circle" className="ml-2 h-5 text-muted-foreground" />
-          </TooltipTrigger>
-          <TooltipContent>{description}</TooltipContent>
-        </Tooltip>
-      )} */}
-    </div>
-  )
+  return <Label className={cn('mb-2.5 block', className)}>{labelText}</Label>
 }
 
 export default InputLabel

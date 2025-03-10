@@ -1,5 +1,5 @@
 import { ComponentType, createContext, ReactNode, useContext } from 'react'
-import type { LinkProps, NavigateFunction, NavLinkProps, OutletProps, UIMatch } from 'react-router-dom'
+import type { LinkProps, Location, NavigateFunction, NavLinkProps, OutletProps, UIMatch } from 'react-router-dom'
 
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
 
@@ -30,8 +30,6 @@ const NavLinkDefault = ({ to, children, className, style, ...props }: NavLinkPro
 
 const OutletDefault: ComponentType<OutletProps> = ({ children }) => <>{children}</>
 
-const SwitchDefault: ComponentType<{ children: ReactNode }> = ({ children }) => <>{children}</>
-
 const navigateFnDefault: NavigateFunction = to => {
   if (typeof to === 'number') {
     window.history.go(to) // Supports navigate(-1), navigate(1), etc.
@@ -49,11 +47,12 @@ const useMatchesDefault = (): UIMatch[] => {
   return []
 }
 
+const defaultLocation: Location = { ...window.location, state: {}, key: '' }
+
 interface RouterContextType {
   Link: ComponentType<LinkProps>
   NavLink: ComponentType<NavLinkProps>
   Outlet: ComponentType<OutletProps>
-  Switch: ComponentType<{ children: ReactNode }>
   location: Location
   navigate: NavigateFunction
   useSearchParams: typeof useSearchParamsDefault
@@ -64,8 +63,7 @@ const RouterContext = createContext<RouterContextType>({
   Link: LinkDefault,
   NavLink: NavLinkDefault,
   Outlet: OutletDefault,
-  Switch: SwitchDefault,
-  location: window.location,
+  location: defaultLocation,
   navigate: navigateFnDefault,
   useSearchParams: useSearchParamsDefault,
   useMatches: useMatchesDefault
@@ -78,8 +76,7 @@ export const RouterContextProvider = ({
   Link = LinkDefault,
   NavLink = NavLinkDefault,
   Outlet = OutletDefault,
-  Switch = SwitchDefault,
-  location = window.location,
+  location = defaultLocation,
   navigate = navigateFnDefault,
   useSearchParams = useSearchParamsDefault,
   useMatches = useMatchesDefault
@@ -92,7 +89,6 @@ export const RouterContextProvider = ({
         Link,
         NavLink,
         Outlet,
-        Switch,
         location,
         navigate,
         useSearchParams,

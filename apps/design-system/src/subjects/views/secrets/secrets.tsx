@@ -3,7 +3,13 @@ import { useState } from 'react'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { Button, Drawer, Spacer } from '@harnessio/ui/components'
-import { CreateSecretFormFields, CreateSecretPage, SecretsHeader, SecretType } from '@harnessio/ui/views'
+import {
+  CreateSecretFormFields,
+  CreateSecretPage,
+  SecretCreationType,
+  SecretsHeader,
+  SecretType
+} from '@harnessio/ui/views'
 
 export const SecretsPage = () => {
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.New)
@@ -22,6 +28,13 @@ export const SecretsPage = () => {
             useTranslationStore={useTranslationStore}
             isLoading={false}
             apiError={null}
+            prefilledFormData={{
+              name: 'mock-secret',
+              identifier: 'mock-identifier',
+              description: 'mock-description',
+              tags: 'mock-tags, mock-tags-2',
+              type: SecretCreationType.SECRET_FILE
+            }}
           />
         )
       case SecretType.Existing:

@@ -36,15 +36,10 @@ const renderFilterValues = <T extends FilterValueTypes>(
     }
     case FilterFieldTypes.ComboBox: {
       const comboBoxFilter = filter as FilterField<ComboBoxOptions>
-      const { options = [], onSearch, placeholder, noResultsMessage, isLoading } = filterOption.filterFieldConfig
       return (
         <Combobox
           filterValue={comboBoxFilter.value}
-          options={options}
-          isLoading={isLoading}
-          onSearch={onSearch}
-          placeholder={placeholder}
-          noResultsMessage={noResultsMessage}
+          {...filterOption.filterFieldConfig}
           onUpdateFilter={values => onUpdateFilter(values as T)}
         />
       )

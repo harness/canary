@@ -178,6 +178,7 @@ interface ComboBoxFilterOptionConfig<Key extends string> extends FilterOptionCon
     options: Array<{ label: string; value: string }>
     onSearch: (query: string) => void
     noResultsMessage: string
+    loadingMessage?: string
     placeholder: string
     isLoading?: boolean
   }

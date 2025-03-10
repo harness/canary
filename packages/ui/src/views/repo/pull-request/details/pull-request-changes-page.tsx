@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 
+import { SkeletonList, Spacer } from '@/components'
 import { TypesUser } from '@/types'
-import { SkeletonList, Spacer } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { activityToCommentItem, HandleUploadType, TypesCommit } from '@views/index'
 import { TranslationStore } from '@views/repo/repo-list/types'

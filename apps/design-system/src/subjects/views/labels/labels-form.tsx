@@ -8,11 +8,10 @@ export const LabelsForm = () => {
     <LabelFormPage
       useLabelsStore={LabelsListStore.useLabelsStore}
       useTranslationStore={useTranslationStore}
-      isLoading={false}
+      isSaving={false}
       onSubmit={() => {}}
       onFormCancel={() => {}}
       error={''}
-      isDataLoading={false}
     />
   )
 }

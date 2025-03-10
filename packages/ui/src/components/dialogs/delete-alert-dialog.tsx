@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react'
 
 import { AlertDialog, Button, Fieldset, Input } from '@/components'
-import { TranslationStore } from '@views/repo'
+import { TranslationStore } from '@/views'
 
 const DELETION_KEYWORD = 'DELETE'
 
@@ -74,7 +74,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
           </Fieldset>
         )}
 
-        {!!error && error.message && <p className="text-xs text-destructive">{error.message}</p>}
+        {!!error && error.message && <p className="text-destructive text-xs">{error.message}</p>}
 
         <AlertDialog.Footer>
           <Button variant="outline" onClick={onClose} disabled={isLoading}>

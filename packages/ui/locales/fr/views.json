@@ -11,7 +11,7 @@
     "pull-requests": "Requêtes de tirage",
     "branches": "Branches",
     "settings": "Paramètres",
-    "descriptionPlaceholder": "Entrez une description",
+    "descriptionPlaceholder": "Enter a description",
     "description": "Description",
     "error": "Erreur :",
     "saving": "Enregistrement...",
@@ -38,6 +38,20 @@
     "token": "Jeton",
     "cloneCredGenerated": "Votre jeton a été généré. Veuillez le copier et le stocker en lieu sûr car vous ne pourrez pas le voir à nouveau.",
     "manageAPIToken": "Gérer le jeton API",
+    "prListFilterOptions": {
+      "authorOption": {
+        "label": "Auteur",
+        "noResults": "Aucun résultat trouvé",
+        "loading": "Chargement des auteurs...",
+        "placeholder": "Rechercher par auteur"
+      },
+      "beforeOption": {
+        "label": "Créé avant"
+      },
+      "afterOption": {
+        "label": "Créé après"
+      }
+    },
     "RequestApprovalRule": "Demander l'approbation des nouvelles modifications",
     "RequireLatestCommitDescription": "Exiger une nouvelle approbation pour toute modification récente dans la requête de tirage",
     "RequireNoChangeRequest": "Exiger la résolution des demandes de modifications",
@@ -217,6 +231,17 @@
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
+  "execution": {
+    "summary": "Résumé",
+    "logs": "Journaux",
+    "graph": "Graphique",
+    "inputs": "Entrées",
+    "opa": "Évaluations de politique",
+    "artifacts": "Artéfacts",
+    "tests": "Tests",
+    "sto": "Tests de sécurité",
+    "secrets": "Secrets"
+  },
   "labelData": {
     "form": {
       "colorValuePlaceholder": "Enter value name",
@@ -287,6 +312,7 @@
   },
   "pullRequests": {
     "conversation": "Conversation",
+    "commits": "Commets",
     "changes": "Changements",
     "noCommitsYet": "",
     "noCommitDataDescription": "",
@@ -305,7 +331,7 @@
     "compareChangesAbleToMergeDescription": "Ces branches peuvent être fusionnées automatiquement.",
     "compareChangesApiError": "La branche principale ne contient pas de nouveaux commits.",
     "compareChangesCantMerge": "Fusion impossible.",
-    "compareChangesCantMergeDesciption": "Vous pouvez quand même créer la pull request.",
+    "compareChangesCantMergeDescription": "Vous pouvez quand même créer la pull request.",
     "compareChangesDiscussChanges": "Discutez et révisez les modifications de cette comparaison avec d'autres.",
     "compareChangesDiscussChangesLink": "En savoir plus sur les pull requests.",
     "compareChangesChooseDifferent": "Choisissez différentes branches ou forks ci-dessus pour discuter et réviser les modifications.",
@@ -314,11 +340,14 @@
     "compareChangesTabCommits": "Commits",
     "compareChangesTabChanges": "Modifications",
     "findOrAddNewValue": "Find or add a new value",
+    "addNewValue": "Add a new value",
     "searchValue": "Search value",
     "addValue": "Add new value",
-    "noLabels": "Aucune étiquette trouvée.",
+    "labelNotFound": "Label not found",
     "labels": "Étiquettes",
     "searchLabels": "Rechercher des étiquettes..",
+    "noLabels": "No labels found",
+    "editLabels": "Edit labels",
     "deleted": "Supprimé",
     "deletedComment": "Ce commentaire a été supprimé.",
     "reviewers": "Réviseurs",
@@ -336,7 +365,6 @@
     "compareChangesFormTitle": "Ajouter un titre",
     "compareChangesFormDescription": "Ajouter une description",
     "replyHere": "Repondre ici",
-    "commits": "Commets",
     "showDiff": "Afficher la différence",
     "deletedFileDiff": "Ce fichier a été supprimé.",
     "largeDiff": "Les différences de grande taille ne sont pas affichées par défaut.",
@@ -402,9 +430,9 @@
     "sshKeys": "Mes clés SSH",
     "addSshKeyDescription": "Les clés SSH vous permettent d'établir une connexion sécurisée avec votre dépôt de code.",
     "addSshKey": "Ajouter une nouvelle clé SSH",
-    "saving": "Enregistrement...",
     "generalTab": "Général",
-    "keysTab": "Clés et Jetons"
+    "keysTab": "Clés et Jetons",
+    "saving": "Enregistrement..."
   },
   "createProject": {
     "validation": {

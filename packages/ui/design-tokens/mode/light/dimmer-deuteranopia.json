@@ -399,7 +399,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.yellow.400}",
+          "$value": "{colors.yellow.300}",
           "$description": "Border color for warning badges. Defines the boundary of caution status indicators."
         },
         "background": {
@@ -434,7 +434,7 @@
             }
           },
           "$type": "color",
-          "$value": "{colors.orange.400}",
+          "$value": "{colors.orange.300}",
           "$description": "Border color for running state badges. Defines the boundary of active status indicators."
         },
         "background": {
@@ -1369,7 +1369,7 @@
     "separator": {
       "background": {
         "$type": "color",
-        "$value": "{borderWidth.2}",
+        "$value": "{border.2}",
         "$description": "Background color for separator elements. Creates visual division between content sections with a subtle line or space."
       }
     },
@@ -1389,7 +1389,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{brand.color.500}",
+          "$value": "{brand.color.400}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         }
       },

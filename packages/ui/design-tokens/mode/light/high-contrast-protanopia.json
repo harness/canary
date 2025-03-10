@@ -1262,7 +1262,7 @@
         },
         "icon": {
           "$type": "color",
-          "$value": "{colors.blue.300}",
+          "$value": "{brand.color.300}",
           "$description": "Icon color for Logo in sidebar navigation. Adjusted for protanopia using blue instead of green."
         }
       },

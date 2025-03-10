@@ -9,7 +9,7 @@ import {
   WebhookSettingsLayout
 } from '@harnessio/ui/views'
 
-import { AppShell } from './components-v2/app-shell'
+import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { AppProvider } from './framework/context/AppContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
@@ -1068,5 +1068,29 @@ export const routes: CustomRouteObject[] = [
     path: 'logout',
     element: <Logout />,
     handle: { routeName: RouteConstants.toLogout }
+  }
+]
+
+export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | null = null): CustomRouteObject[] => [
+  {
+    path: '/',
+    element: (
+      <AppProvider>
+        {mfeRouteRenderer}
+        <AppShellMFE />
+      </AppProvider>
+    ),
+    handle: { routeName: RouteConstants.toHome },
+    children: [
+      {
+        path: '',
+        handle: {
+          ...(mfeProjectId && {
+            breadcrumb: () => <span>{mfeProjectId}</span>
+          })
+        },
+        children: repoRoutes
+      }
+    ]
   }
 ]

@@ -30,7 +30,7 @@ import { queryClient } from './framework/queryClient'
 import { extractRedirectRouteObjects } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
-import { mfeRoutes, repoRoutes } from './routes'
+import { mfeRoutes, repoRoutes } from './routesV2'
 import { decodeURIComponentIfValid } from './utils/path-utils'
 
 export interface MFERouteRendererProps {

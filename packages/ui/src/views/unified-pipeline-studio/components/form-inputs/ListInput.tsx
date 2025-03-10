@@ -87,24 +87,26 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
                   ))}
                 </div>
               )}
-              {fields.map((_item, idx) => (
-                <div key={_item.id} className={rowClass} style={rowStyle}>
-                  {inputConfig?.inputs && (
-                    <RenderInputs items={getChildInputs(inputConfig?.inputs, path, idx)} factory={factory} />
-                  )}
-                  <div className="flex items-center">
-                    <button
-                      className="mt-2"
-                      onClick={() => {
-                        remove(idx)
-                      }}
-                      disabled={readonly}
-                    >
-                      <Icon name="trash" />
-                    </button>
+              <div className="flex flex-col space-y-2">
+                {fields.map((_item, idx) => (
+                  <div key={_item.id} className={rowClass} style={rowStyle}>
+                    {inputConfig?.inputs && (
+                      <RenderInputs items={getChildInputs(inputConfig?.inputs, path, idx)} factory={factory} />
+                    )}
+                    <div className="flex items-center">
+                      <button
+                        className="mt-2"
+                        onClick={() => {
+                          remove(idx)
+                        }}
+                        disabled={readonly}
+                      >
+                        <Icon name="trash" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
             <Button size="sm" onClick={() => append({})} className="mt-2">
               Add

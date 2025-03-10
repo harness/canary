@@ -174,7 +174,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
             {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
             {/* </StepFormSection.Header> */}
             <EntityFormSectionLayout.Form>
-              <RenderForm className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
+              <RenderForm className="space-y-7" factory={inputComponentFactory} inputs={formDefinition} />
             </EntityFormSectionLayout.Form>
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer>

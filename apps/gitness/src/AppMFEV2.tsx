@@ -1,14 +1,84 @@
 import './styles/AppMFE.css'
 
-import { ComponentType } from 'react'
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
+import { useEffect, useMemo, useRef } from 'react'
+import { I18nextProvider } from 'react-i18next'
+import {
+  createBrowserRouter,
+  Link,
+  matchPath,
+  NavLink,
+  Outlet,
+  RouterProvider,
+  useLocation,
+  useMatches,
+  useNavigate,
+  useSearchParams
+} from 'react-router-dom'
 
-import { Unknown } from './framework/context/MFEContext'
+import { QueryClientProvider } from '@tanstack/react-query'
+
+import { CodeServiceAPIClient } from '@harnessio/code-service-client'
+import { ToastProvider, Tooltip } from '@harnessio/ui/components'
+import { PortalProvider, RouterContextProvider } from '@harnessio/ui/context'
+
+import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
+import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
+import { MFEContext, Unknown } from './framework/context/MFEContext'
+import { NavigationProvider } from './framework/context/NavigationContext'
+import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
+import { queryClient } from './framework/queryClient'
+import { extractRedirectRouteObjects } from './framework/routing/utils'
+import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
+import i18n from './i18n/i18n'
+import { mfeRoutes, repoRoutes } from './routes'
+import { decodeURIComponentIfValid } from './utils/path-utils'
 
 export interface MFERouteRendererProps {
   renderUrl: string
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
+}
+
+const filteredRedirectRoutes = extractRedirectRouteObjects(repoRoutes)
+const isRouteNotMatchingRedirectRoutes = (pathToValidate: string) => {
+  return filteredRedirectRoutes.every(route => !matchPath(`/${route.path}` as string, pathToValidate))
+}
+
+function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFERouteRendererProps) {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const parentPath = parentLocationPath.replace(renderUrl, '')
+  const isNotRedirectPath = isRouteNotMatchingRedirectRoutes(location.pathname)
+
+  /**
+   * renderUrl ==> base URL of parent application
+   * parentPath ==> path name of parent application after base URL
+   * location.pathname ==> path name of MFE
+   * isNotRedirectPath ==> check if the current path is not a redirect path
+   */
+  const canNavigate = useMemo(
+    () =>
+      renderUrl &&
+      decodeURIComponentIfValid(parentPath) !== decodeURIComponentIfValid(location.pathname) &&
+      isNotRedirectPath,
+    [isNotRedirectPath, location.pathname, parentPath, renderUrl]
+  )
+
+  // Handle location change detected from parent route
+  useEffect(() => {
+    if (canNavigate) {
+      navigate(decodeURIComponentIfValid(parentPath), { replace: true })
+    }
+  }, [parentPath])
+
+  // Notify parent about route change
+  useEffect(() => {
+    if (canNavigate) {
+      onRouteChange?.(decodeURIComponentIfValid(`${renderUrl}${location.pathname}`))
+    }
+  }, [location.pathname])
+
+  return null
 }
 
 interface AppMFEProps {
@@ -25,186 +95,151 @@ interface AppMFEProps {
   useMFEThemeContext: () => { theme: string }
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
-  customComponents: {
-    Link: ComponentType<any>
-    NavLink: ComponentType<any>
-    Route: ComponentType<any>
-    Switch: ComponentType<any>
-  }
   customHooks: Partial<{
-    useLocation: any
     useGenerateToken: Unknown
-    useRouteMatch: any
-    useParams: any
   }>
   customUtils: Partial<{
-    navigate: (path: string | number) => void
     navigateToUserProfile: Unknown
   }>
 }
 
+function decode<T = unknown>(arg: string): T {
+  return JSON.parse(decodeURIComponent(atob(arg)))
+}
+
 export default function AppMFE({
+  scope,
   renderUrl,
-  customComponents: { Link, Switch, Route },
-  customHooks: { useParams }
+  on401,
+  useMFEThemeContext,
+  parentLocationPath,
+  onRouteChange,
+  customHooks,
+  customUtils
 }: AppMFEProps) {
-  const Repos = () => (
-    <div>
-      <h2>Repositories</h2>
-      <ul>
-        <li>
-          <Link to={`${renderUrl}/repos/repo-1`}>Repo 1</Link>
-        </li>
-        <li>
-          <Link to={`${renderUrl}/repos/repo-2`}>Repo 2</Link>
-        </li>
-        <li>
-          <Link to={`${renderUrl}/repos/repo-3`}>Repo 3</Link>
-        </li>
-      </ul>
+  new CodeServiceAPIClient({
+    urlInterceptor: (url: string) =>
+      `${window.apiUrl || ''}/code/api/v1${url}${url.includes('?') ? '&' : '?'}routingId=${scope.accountId}`,
+    requestInterceptor: (request: Request) => {
+      const token = decode(localStorage.getItem('token') || '')
+      const newRequest = request.clone()
+      newRequest.headers.set('Authorization', `Bearer ${token}`)
+      return newRequest
+    },
+    responseInterceptor: (response: Response) => {
+      switch (response.status) {
+        case 401:
+          on401?.()
+          break
+      }
+      return response
+    }
+  })
+
+  // Apply host theme to MFE
+  const { theme } = useMFEThemeContext()
+  const { setTheme } = useThemeStore()
+
+  useEffect(() => {
+    if (theme === 'Light') {
+      setTheme('light-std-std')
+    } else {
+      setTheme('dark-std-std')
+    }
+  }, [theme])
+
+  const portalRef = useRef<HTMLDivElement>(null)
+  const portalContainer = portalRef.current?.shadowRoot as Element | undefined
+
+  const isStylesLoaded = useLoadMFEStyles(portalContainer)
+
+  // Router Configuration
+  const basename = `/ng${renderUrl}`
+
+  const routesToRender = mfeRoutes(
+    scope.projectIdentifier,
+    <MFERouteRenderer renderUrl={renderUrl} onRouteChange={onRouteChange} parentLocationPath={parentLocationPath} />
+  )
+
+  const router = createBrowserRouter(routesToRender, { basename })
+
+  return (
+    <div ref={portalRef}>
+      <ShadowRootWrapper>
+        <div className={theme.toLowerCase()}>
+          {!isStylesLoaded ? (
+            // Replace it with spinner once it is available
+            <ShadowRootLoader theme={theme} />
+          ) : (
+            <PortalProvider portalContainer={portalContainer}>
+              <MFEContext.Provider
+                value={{
+                  scope,
+                  renderUrl,
+                  customHooks,
+                  customUtils
+                }}
+              >
+                <I18nextProvider i18n={i18n}>
+                  <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+                    <QueryClientProvider client={queryClient}>
+                      <ToastProvider>
+                        <Tooltip.Provider>
+                          <ExitConfirmProvider>
+                            <NavigationProvider routes={routesToRender}>
+                              <RouterContextProvider
+                                Link={Link}
+                                NavLink={NavLink}
+                                Outlet={Outlet}
+                                location={{ ...window.location, state: {}, key: '' }}
+                                navigate={router.navigate}
+                                useSearchParams={useSearchParams}
+                                useMatches={useMatches}
+                              >
+                                <RouterProvider router={router} />
+                              </RouterContextProvider>
+                            </NavigationProvider>
+                          </ExitConfirmProvider>
+                        </Tooltip.Provider>
+                      </ToastProvider>
+                    </QueryClientProvider>
+                  </ThemeProvider>
+                </I18nextProvider>
+              </MFEContext.Provider>
+            </PortalProvider>
+          )}
+        </div>
+      </ShadowRootWrapper>
     </div>
   )
+}
 
-  // Repo Details Page with tabs
-  const RepoDetails = () => {
-    const { repoName } = useParams() // Get the repo name from the URL
-    return (
-      <div>
-        <h2>{repoName} - Repo Details</h2>
-        <ul>
-          <li>
-            <Link to={`${renderUrl}/repos/${repoName}/summary`}>Summary</Link>
-          </li>
-          <li>
-            <Link to={`${renderUrl}/repos/${repoName}/files`}>Files</Link>
-          </li>
-          <li>
-            <Link to={`${renderUrl}/repos/${repoName}/pull-requests`}>Pull Requests</Link>
-          </li>
-          <li>
-            <Link to={`${renderUrl}/repos/${repoName}/commits`}>Commits</Link>
-          </li>
-          <li>
-            <Link to={`${renderUrl}/repos/${repoName}/branches`}>Branches</Link>
-          </li>
-          <li>
-            <Link to={`${renderUrl}/repos/${repoName}/settings`}>Settings</Link>
-          </li>
-        </ul>
-        {/* Replacement for <Outlet /> */}
-        <Switch>
-          <Route
-            path={`${renderUrl}/repos/:repoName/summary`}
-            render={() => (
-              <div>
-                <h2>Summary</h2>
-                <h3>Repository Summary</h3>
-              </div>
-            )}
-          />
-          <Route
-            path={`${renderUrl}/repos/:repoName/files`}
-            render={() => (
-              <div>
-                <h2>Files</h2>
-                <h3>Repository files</h3>
-              </div>
-            )}
-          />
-          <Route
-            path={`${renderUrl}/repos/:repoName/pull-requests`}
-            render={() => (
-              <div>
-                <h2>Pull Requests</h2>
-                <h3>Repository pull requests</h3>
-              </div>
-            )}
-          />
-          <Route
-            path={`${renderUrl}/repos/:repoName/commits`}
-            render={() => (
-              <div>
-                <h2>Commits</h2>
-                <h3>Repository commits</h3>
-              </div>
-            )}
-          />
-          <Route
-            path={`${renderUrl}/repos/:repoName/branches`}
-            render={() => (
-              <div>
-                <h2>Branches</h2>
-                <h3>Repository branches</h3>
-              </div>
-            )}
-          />
-          <Route
-            path={`${renderUrl}/repos/:repoName/settings`}
-            render={() => (
-              <div>
-                <h2>Settings</h2>
-                <h3>Repository settings</h3>
-              </div>
-            )}
-          />
-        </Switch>
-      </div>
-    )
-  }
-
-  interface LayoutProps {
-    OutletComponent: React.ElementType
-    children?: React.ReactNode // Needed for v5
-  }
-
-  const Layout: React.FC<LayoutProps> = ({ OutletComponent, children }) => {
-    return (
-      <div>
-        {/* Works for both versions */}
-        <OutletComponent>{children}</OutletComponent>
-      </div>
-    )
-  }
-
-  // v5
-  // return (
-  //   <>
-  //     <Layout OutletComponent={Switch}>
-  //       <Route exact path={`${renderUrl}/repos`} component={Repos} />
-  //       <Route path={`${renderUrl}/repos/:repoName`} component={RepoDetails} />
-  //     </Layout>
-  //   </>
-  // )
-
-  // v6
+function ShadowRootLoader({ theme }: { theme: string }) {
   return (
-    <RouterProvider
-      router={createBrowserRouter(
-        [
-          {
-            path: '/',
-            element: <Layout OutletComponent={Outlet} />,
-            children: [
-              {
-                index: true,
-                element: <Repos />,
-                path: 'repos'
-              },
-              {
-                path: 'repos/:repoName',
-                element: <RepoDetails />
-              }
-            ]
-          }
-        ],
-        { basename: `/ng${renderUrl}` }
-      )}
-    />
+    <>
+      <div className="loading-container">
+        <p className="loading-text">Loading, please wait...</p>
+      </div>
+      <style>
+        {`
+      @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+      }
+      .loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .loading-text {
+        color: ${theme === 'Light' ? '#000' : '#fff'};
+        font-size: 16px;
+        animation: blink 1s infinite;
+      }
+      `}
+      </style>
+    </>
   )
-
-  /**
-   * convert v6 to v5 routes
-  const routes = getV5Routes({ Route, Switch, routesV6, renderUrl })
-  return <Switch>{routes}</Switch>
-  */
 }

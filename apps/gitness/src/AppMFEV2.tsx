@@ -1,10 +1,10 @@
 import './styles/AppMFE.css'
 
-import { useEffect, useMemo, useRef } from 'react'
+import { ComponentType, useEffect, useMemo, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import {
+  BrowserRouter,
   createBrowserRouter,
-  Link,
   matchPath,
   NavLink,
   Outlet,
@@ -27,7 +27,7 @@ import { MFEContext, Unknown } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
-import { extractRedirectRouteObjects } from './framework/routing/utils'
+import { extractRedirectRouteObjects, getV5Routes } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
 import { mfeRoutes, repoRoutes } from './routesV2'
@@ -95,10 +95,16 @@ interface AppMFEProps {
   useMFEThemeContext: () => { theme: string }
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
+  customComponents: {
+    Route: ComponentType<any>
+    Link: ComponentType<any>
+    Switch: ComponentType<any>
+  }
   customHooks: Partial<{
     useGenerateToken: Unknown
   }>
   customUtils: Partial<{
+    navigate: Unknown
     navigateToUserProfile: Unknown
   }>
 }
@@ -114,6 +120,7 @@ export default function AppMFE({
   useMFEThemeContext,
   parentLocationPath,
   onRouteChange,
+  customComponents: { Route, Link, Switch },
   customHooks,
   customUtils
 }: AppMFEProps) {
@@ -156,12 +163,12 @@ export default function AppMFE({
   // Router Configuration
   const basename = `/ng${renderUrl}`
 
-  const routesToRender = mfeRoutes(
+  const routesV6 = mfeRoutes(
     scope.projectIdentifier,
     <MFERouteRenderer renderUrl={renderUrl} onRouteChange={onRouteChange} parentLocationPath={parentLocationPath} />
   )
 
-  const router = createBrowserRouter(routesToRender, { basename })
+  const routesV5 = getV5Routes({ Route, Switch, routesV6, renderUrl })
 
   return (
     <div ref={portalRef}>
@@ -186,17 +193,22 @@ export default function AppMFE({
                       <ToastProvider>
                         <Tooltip.Provider>
                           <ExitConfirmProvider>
-                            <NavigationProvider routes={routesToRender}>
+                            <NavigationProvider routes={routesV6}>
                               <RouterContextProvider
                                 Link={Link}
                                 NavLink={NavLink}
                                 Outlet={Outlet}
                                 location={{ ...window.location, state: {}, key: '' }}
-                                navigate={router.navigate}
+                                navigate={customUtils.navigate}
                                 useSearchParams={useSearchParams}
                                 useMatches={useMatches}
                               >
-                                <RouterProvider router={router} />
+                                {/* v6 */}
+                                <RouterProvider router={createBrowserRouter(routesV6, { basename })} />
+                                {/* v5 */}
+                                {/* <BrowserRouter basename={basename}>
+                                  <Switch>{routesV5}</Switch>
+                                </BrowserRouter> */}
                               </RouterContextProvider>
                             </NavigationProvider>
                           </ExitConfirmProvider>

@@ -26,6 +26,7 @@ import {
   useUpdateSecuritySettingsMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { wrapConditionalObjectElement } from '@harnessio/ui/utils'
 import {
   AccessLevel,
@@ -38,7 +39,6 @@ import {
 } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useGetPathParams } from '../../framework/hooks/useGetPathParams'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -49,7 +49,8 @@ import { transformBranchList } from './transform-utils/branch-transform'
 export const RepoSettingsGeneralPageContainer = () => {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
-  const { repoId: repoName } = useGetPathParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId: repoName } = useParams<PathParams>()
   const navigate = useNavigate()
   const { spaceId } = useParams<PathParams>()
   const queryClient = useQueryClient()

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
   GitPathDetails,
@@ -16,6 +16,7 @@ import {
   useSummaryQuery,
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import {
   BranchSelectorListItem,
   BranchSelectorTab,
@@ -30,7 +31,6 @@ import { SummaryItemType } from '@harnessio/views'
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useGetPathParams } from '../../framework/hooks/useGetPathParams'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
@@ -49,8 +49,8 @@ export default function RepoSummaryPage() {
   const [files, setFiles] = useState<RepoFile[]>([])
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
-  const { spaceId } = useParams<PathParams>()
-  const { repoId } = useGetPathParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { spaceId, repoId } = useParams<PathParams>()
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')

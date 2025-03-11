@@ -23,6 +23,7 @@ export interface IMFEContext {
   }
   customHooks: Partial<{
     useGenerateToken: Unknown
+    useSearchParams: Unknown
     useParams: Unknown
   }>
   customUtils: Partial<{

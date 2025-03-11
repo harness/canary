@@ -10,10 +10,10 @@ import {
   useListBranchesQuery
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { CreateBranchFormFields, RepoBranchListView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useGetPathParams } from '../../framework/hooks/useGetPathParams'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
@@ -26,7 +26,8 @@ import { transformBranchList } from './transform-utils/branch-transform'
 export function RepoBranchesListPage() {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useGetPathParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { spaceId, repoId } = useParams<PathParams>()
   const queryClient = useQueryClient()
 
   const {

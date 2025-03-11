@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
   useListPrincipalsQuery,
@@ -9,6 +9,7 @@ import {
   useRepoRuleUpdateMutation
 } from '@harnessio/code-service-client'
 import { SkeletonForm } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchRulesActionType,
@@ -20,7 +21,6 @@ import {
 } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useGetPathParams } from '../../framework/hooks/useGetPathParams'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -34,7 +34,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const routes = useRoutes()
   const navigate = useNavigate()
   const repoRef = useGetRepoRef()
-  const { repoId: repoName } = useGetPathParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId: repoName } = useParams<PathParams>()
 
   const { spaceId } = useParams<PathParams>()
   const { identifier } = useParams()

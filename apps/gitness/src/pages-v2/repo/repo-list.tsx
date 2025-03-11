@@ -2,10 +2,10 @@ import { useEffect } from 'react'
 
 import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
 import { ToastAction, useToast } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useGetPathParams } from '../../framework/hooks/useGetPathParams'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
@@ -16,8 +16,9 @@ import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
 export default function ReposListPage() {
+  const { useParams } = useRouterContext()
   const routes = useRoutes()
-  const { spaceId } = useGetPathParams<PathParams>()
+  const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
   const {
     setRepositories,

@@ -2,11 +2,11 @@ import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { useListCommitsQuery } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useGetPathParams } from '../../framework/hooks/useGetPathParams'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -16,7 +16,8 @@ import { normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 export default function RepoCommitsPage() {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useGetPathParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { spaceId, repoId } = useParams<PathParams>()
   const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
   const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const [searchParams, setSearchParams] = useSearchParams()

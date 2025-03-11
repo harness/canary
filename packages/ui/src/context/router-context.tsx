@@ -47,6 +47,10 @@ const useMatchesDefault = (): UIMatch[] => {
   return []
 }
 
+const useParamsDefault = <T extends Record<string, string | undefined>>(): T => {
+  return {} as T
+}
+
 const defaultLocation: Location = { ...window.location, state: {}, key: '' }
 
 interface RouterContextType {
@@ -57,6 +61,7 @@ interface RouterContextType {
   navigate: NavigateFunction
   useSearchParams: typeof useSearchParamsDefault
   useMatches: typeof useMatchesDefault
+  useParams: <T extends Record<string, string | undefined>>() => T
 }
 
 const RouterContext = createContext<RouterContextType>({
@@ -66,7 +71,8 @@ const RouterContext = createContext<RouterContextType>({
   location: defaultLocation,
   navigate: navigateFnDefault,
   useSearchParams: useSearchParamsDefault,
-  useMatches: useMatchesDefault
+  useMatches: useMatchesDefault,
+  useParams: useParamsDefault
 })
 
 export const useRouterContext = () => useContext(RouterContext)
@@ -79,7 +85,8 @@ export const RouterContextProvider = ({
   location = defaultLocation,
   navigate = navigateFnDefault,
   useSearchParams = useSearchParamsDefault,
-  useMatches = useMatchesDefault
+  useMatches = useMatchesDefault,
+  useParams = useParamsDefault
 }: {
   children: ReactNode
 } & Partial<RouterContextType>) => {
@@ -92,7 +99,8 @@ export const RouterContextProvider = ({
         location,
         navigate,
         useSearchParams,
-        useMatches
+        useMatches,
+        useParams
       }}
     >
       {children}

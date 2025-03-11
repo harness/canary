@@ -5,7 +5,7 @@ import { REFS_TAGS_PREFIX } from '../utils/git-utils'
 
 const useCodePathDetails = () => {
   const { useParams } = useRouterContext()
-  const subCodePath = useParams<Record<string, string>>()['*'] || ''
+  const subCodePath = useParams()['*'] || ''
 
   // Determine codeMode and restPath
   const [codeMode, restPath] = (() => {

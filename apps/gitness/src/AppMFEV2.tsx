@@ -18,8 +18,8 @@ import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
-import { mfeRoutes } from './routes'
-import { getAppRoutes } from './v5routes'
+import { getRoutes } from './v5/RouteDestinations'
+import { mfeRoutes } from './v6/RouteDestinations'
 
 export interface MFERouteRendererProps {
   renderUrl: string
@@ -31,7 +31,6 @@ interface AppMFEProps extends IMFEContext {
   /**
    * These types will be later referred from "ChildComponentProps" from @harness/microfrontends
    *  */
-
   renderUrl: string
   on401?: () => void
   useMFEThemeContext: () => { theme: string }
@@ -95,7 +94,7 @@ export default function AppMFE({
 
   const { Link, NavLink, Switch, Route, Redirect } = customComponents
 
-  const v5AppRoutes = getAppRoutes({
+  const routes = getRoutes({
     pathPrefix: renderUrl,
     Switch,
     Route,
@@ -137,10 +136,7 @@ export default function AppMFE({
                                 useParams={customHooks.useParams}
                                 useMatches={useMatches}
                               >
-                                {/* v6 */}
-                                {/* <RouterProvider router={createBrowserRouter(routesV6, { basename })} /> */}
-                                {/* v5 */}
-                                <BrowserRouter basename={basename}>{v5AppRoutes}</BrowserRouter>
+                                <BrowserRouter basename={basename}>{routes}</BrowserRouter>
                               </RouterContextProvider>
                             </NavigationProvider>
                           </ExitConfirmProvider>

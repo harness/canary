@@ -1,24 +1,24 @@
 import { ComponentType } from 'react'
 
-import { AppShellMFE } from './components-v2/app-shell'
-import { AppProvider } from './framework/context/AppContext'
-import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
-import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
-import { RepoCode } from './pages-v2/repo/repo-code'
-import RepoCommitsPage from './pages-v2/repo/repo-commits'
-import { CreateRepo } from './pages-v2/repo/repo-create-page'
-import { ImportMultipleRepos } from './pages-v2/repo/repo-import-multiple-container'
-import { ImportRepo } from './pages-v2/repo/repo-import-page'
-import RepoLayout from './pages-v2/repo/repo-layout'
-import ReposListPage from './pages-v2/repo/repo-list'
-import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
-import RepoSummaryPage from './pages-v2/repo/repo-summary'
+import { AppShellMFE } from '../components-v2/app-shell'
+import { AppProvider } from '../framework/context/AppContext'
+import { ExplorerPathsProvider } from '../framework/context/ExplorerPathsContext'
+import { RepoBranchesListPage } from '../pages-v2/repo/repo-branch-list'
+import { RepoCode } from '../pages-v2/repo/repo-code'
+import RepoCommitsPage from '../pages-v2/repo/repo-commits'
+import { CreateRepo } from '../pages-v2/repo/repo-create-page'
+import { ImportMultipleRepos } from '../pages-v2/repo/repo-import-multiple-container'
+import { ImportRepo } from '../pages-v2/repo/repo-import-page'
+import RepoLayout from '../pages-v2/repo/repo-layout'
+import ReposListPage from '../pages-v2/repo/repo-list'
+import { RepoSidebar } from '../pages-v2/repo/repo-sidebar'
+import RepoSummaryPage from '../pages-v2/repo/repo-summary'
 
 interface MatchParams {
   match: { params: { repoId: string } }
 }
 
-export const getAppRoutes = ({
+export const getRoutes = ({
   pathPrefix,
   Switch,
   Route,

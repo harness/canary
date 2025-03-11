@@ -7,6 +7,7 @@ import { ImportMultipleReposFormFields, RepoImportMultiplePage } from '@harnessi
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useAPIPath } from '../../hooks/useAPIPath'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { getRepoProviderConfig, PROVIDER_TYPE_MAP } from './constants/import-providers-map'
 
 export const ImportMultipleRepos = () => {
@@ -73,13 +74,12 @@ export const ImportMultipleRepos = () => {
 
   return (
     // @TODO: Add loading states and error handling when API is available
-    <>
-      <RepoImportMultiplePage
-        onFormSubmit={onSubmit}
-        onFormCancel={onCancel}
-        isLoading={loading}
-        apiErrorsValue={apiError}
-      />
-    </>
+    <RepoImportMultiplePage
+      onFormSubmit={onSubmit}
+      onFormCancel={onCancel}
+      isLoading={loading}
+      apiErrorsValue={apiError}
+      useTranslationStore={useTranslationStore}
+    />
   )
 }

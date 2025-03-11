@@ -2,7 +2,15 @@ import './styles/AppMFE.css'
 
 import { ComponentType, useEffect, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import { createBrowserRouter, NavLink, Outlet, RouterProvider, useMatches, useSearchParams } from 'react-router-dom'
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  NavLink,
+  Outlet,
+  RouterProvider,
+  useMatches,
+  useSearchParams
+} from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
@@ -145,11 +153,11 @@ export default function AppMFE({
                                 useMatches={useMatches}
                               >
                                 {/* v6 */}
-                                <RouterProvider router={createBrowserRouter(routesV6, { basename })} />
+                                {/* <RouterProvider router={createBrowserRouter(routesV6, { basename })} /> */}
                                 {/* v5 */}
-                                {/* <BrowserRouter basename={basename}>
+                                <BrowserRouter basename={basename}>
                                   <Switch>{routesV5}</Switch>
-                                </BrowserRouter> */}
+                                </BrowserRouter>
                               </RouterContextProvider>
                             </NavigationProvider>
                           </ExitConfirmProvider>

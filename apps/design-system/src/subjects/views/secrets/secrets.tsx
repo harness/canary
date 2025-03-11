@@ -14,7 +14,7 @@ import {
   SecretType
 } from '@harnessio/ui/views'
 
-import { getSecretsData } from './secrets-data'
+import { getAccountsData, getOrgData, getProjectData, getSecretsData } from './secrets-data'
 
 export const SecretsPage = () => {
   const scopeHierarchy: Record<SecretScope, { parent: SecretScope | null; child: SecretScope | null }> = {
@@ -26,9 +26,10 @@ export const SecretsPage = () => {
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.New)
 
   // State for existing secrets
+  const [activeScope, setActiveScope] = useState<SecretScope>('organization')
   const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
-  const [parentScope, setParentScope] = useState<SecretScope | null>('organization')
-  const [childFolder, setChildFolder] = useState<SecretScope | null>()
+  const [parentFolder, setParentFolder] = useState<string | null>(getAccountsData()[0].accountName)
+  const [childFolder, setChildFolder] = useState<string | null>(getProjectData()[0].projectResponse.project.identifier)
 
   const onSubmit = (data: CreateSecretFormFields) => {
     console.log('Submitted data:', data)
@@ -40,13 +41,41 @@ export const SecretsPage = () => {
     console.log('Selected secret:', secret)
   }
 
-  const handleScopeChange = (scope: SecretScope, direction: 'up' | 'down') => {
+  const handleScopeChange = (direction: 'up' | 'down') => {
     if (direction === 'up') {
-      setParentScope(scopeHierarchy[scope].parent)
-      setChildFolder(scopeHierarchy[scope].child)
+      const newScope = scopeHierarchy[activeScope].parent!
+      setActiveScope(newScope)
+      switch (newScope) {
+        case 'account':
+          setParentFolder(null)
+          setChildFolder(getOrgData()[0].organizationResponse.organization.identifier)
+          break
+        case 'organization':
+          setParentFolder(getAccountsData()[0].accountName)
+          setChildFolder(getProjectData()[0].projectResponse.project.identifier)
+          break
+        case 'project':
+          setParentFolder(getOrgData()[0].organizationResponse.organization.identifier)
+          setChildFolder(null)
+          break
+      }
     } else if (direction === 'down') {
-      setParentScope(scopeHierarchy[scope].parent)
-      setChildFolder(scopeHierarchy[scope].child)
+      const newScope = scopeHierarchy[activeScope].child!
+      setActiveScope(newScope)
+      switch (newScope) {
+        case 'account':
+          setParentFolder(null)
+          setChildFolder(getOrgData()[0].organizationResponse.organization.identifier)
+          break
+        case 'organization':
+          setParentFolder(getAccountsData()[0].accountName)
+          setChildFolder(getProjectData()[0].projectResponse.project.identifier)
+          break
+        case 'project':
+          setParentFolder(getOrgData()[0].organizationResponse.organization.identifier)
+          setChildFolder(null)
+          break
+      }
     }
   }
 
@@ -81,7 +110,7 @@ export const SecretsPage = () => {
               id: secret.secret.identifier,
               name: secret.secret.name
             }))}
-            parentScope={parentScope}
+            parentFolder={parentFolder}
             childFolder={childFolder}
             selectedEntity={selectedSecret}
             onSelectEntity={handleSelectSecret}

@@ -19,7 +19,7 @@ export interface EntityRendererProps<T extends BaseEntityProps> {
 
 // Props for the scope selector item
 export interface ScopeSelectorProps<S = string> {
-  parentScope: S
+  parentFolder: S
   onSelect: (scope: S) => void
 }
 
@@ -32,12 +32,12 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   // Data
   entities: T[]
   selectedEntity: T | null
-  parentScope?: S | null
-  childFolder?: F | null
+  parentFolder: S | null
+  childFolder: F | null
 
   // Callbacks
   onSelectEntity: (entity: T) => void
-  onScopeChange: (scope: S | F, direction: 'up' | 'down') => void
+  onScopeChange: (direction: 'up' | 'down') => void
 
   // UI Configuration
   showFilter?: boolean
@@ -52,7 +52,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   // Data
   entities,
   selectedEntity,
-  parentScope,
+  parentFolder,
   childFolder,
 
   // Callbacks
@@ -74,8 +74,8 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   )
 
   const handleScopeChange = useCallback(
-    (scope: S | F, direction: 'up' | 'down') => {
-      onScopeChange?.(scope, direction)
+    (direction: 'up' | 'down') => {
+      onScopeChange?.(direction)
     },
     [onScopeChange]
   )
@@ -105,13 +105,13 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   }
 
   // Default scope selector renderer
-  const defaultScopeSelectorRenderer = ({ parentScope, onSelect }: ScopeSelectorProps<S>) => {
+  const defaultScopeSelectorRenderer = ({ parentFolder, onSelect }: ScopeSelectorProps<S>) => {
     return (
       <StackedListItem
-        onClick={() => onSelect?.(parentScope)}
+        onClick={() => onSelect?.(parentFolder)}
         thumbnail={<Icon name="circle-arrow-top" size={16} className="text-foreground-5" />}
       >
-        <StackedListField title={<span className="capitalize">{String(parentScope)}</span>} />
+        <StackedListField title={<span className="capitalize">{String(parentFolder)}</span>} />
       </StackedListItem>
     )
   }
@@ -132,16 +132,16 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList>
         {/* scopes */}
-        {parentScope && (
+        {parentFolder && (
           <>
             {renderScopeSelector
               ? renderScopeSelector({
-                  parentScope,
-                  onSelect: () => handleScopeChange(parentScope, 'up')
+                  parentFolder,
+                  onSelect: () => handleScopeChange('up')
                 })
               : defaultScopeSelectorRenderer({
-                  parentScope,
-                  onSelect: () => handleScopeChange(parentScope, 'up')
+                  parentFolder,
+                  onSelect: () => handleScopeChange('up')
                 })}
           </>
         )}
@@ -152,11 +152,11 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             {renderFolder
               ? renderFolder({
                   folder: childFolder,
-                  onSelect: () => handleScopeChange(childFolder, 'down')
+                  onSelect: () => handleScopeChange('down')
                 })
               : defaultFolderRenderer({
                   folder: childFolder,
-                  onSelect: () => handleScopeChange(childFolder, 'down')
+                  onSelect: () => handleScopeChange('down')
                 })}
           </>
         )}

@@ -26,15 +26,15 @@ export interface SecretItem extends BaseEntityProps {
 export interface SecretReferenceProps {
   // Data
   secretsData: SecretItem[]
-  childFolder?: SecretScope | null
-  parentScope?: SecretScope | null
+  childFolder: string | null
+  parentFolder: string | null
 
   // State
   selectedEntity: SecretItem | null
 
   // Callbacks
   onSelectEntity: (entity: SecretItem) => void
-  onScopeChange: (scope: SecretScope, direction: 'up' | 'down') => void
+  onScopeChange: (direction: 'up' | 'down') => void
   onCancel?: () => void
 }
 
@@ -43,7 +43,7 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   // Data
   secretsData,
   childFolder,
-  parentScope,
+  parentFolder,
 
   // State
   selectedEntity,
@@ -83,15 +83,15 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   }
 
   // Custom scope selector renderer
-  const renderScopeSelector = (props: ScopeSelectorProps<SecretScope>) => {
-    const { parentScope, onSelect } = props
+  const renderScopeSelector = (props: ScopeSelectorProps<string>) => {
+    const { parentFolder, onSelect } = props
 
     return (
       <StackedList.Item
-        onClick={() => onSelect(parentScope)}
+        onClick={() => onSelect(parentFolder)}
         thumbnail={<Icon name="circle-arrow-top" size={16} className="text-foreground-5" />}
       >
-        <StackedList.Field title={<span className="capitalize">{parentScope}</span>} />
+        <StackedList.Field title={<span className="capitalize">{parentFolder}</span>} />
       </StackedList.Item>
     )
   }
@@ -100,14 +100,14 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
     <div className="flex flex-col h-full">
       <span className="font-medium mb-4">Select an existing Secret:</span>
       <div className="flex-1">
-        <EntityReference<SecretItem, SecretScope, SecretScope>
+        <EntityReference<SecretItem, string, string>
           entities={secretsData}
           selectedEntity={selectedEntity}
           onSelectEntity={onSelectEntity}
           onScopeChange={onScopeChange}
           renderEntity={renderEntity}
           renderScopeSelector={renderScopeSelector}
-          parentScope={parentScope}
+          parentFolder={parentFolder}
           childFolder={childFolder}
         />
       </div>

@@ -34,7 +34,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const routes = useRoutes()
   const navigate = useNavigate()
   const repoRef = useGetRepoRef()
-  const { repoId: repoName } = useGetPathParams()
+  const { repoId: repoName } = useGetPathParams<PathParams>()
 
   const { spaceId } = useParams<PathParams>()
   const { identifier } = useParams()

@@ -50,7 +50,7 @@ export default function RepoSummaryPage() {
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
   const { spaceId } = useParams<PathParams>()
-  const { repoId } = useGetPathParams()
+  const { repoId } = useGetPathParams<PathParams>()
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')

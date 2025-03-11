@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
 import { useGetPathParams } from '../../../../framework/hooks/useGetPathParams'
+import { PathParams } from '../../../../RouteDefinitions'
 import { useLabelsStore } from '../../../project/stores/labels-store'
 import { useGetRepoLabelAndValuesData } from './use-get-repo-label-and-values-data'
 
@@ -11,7 +12,7 @@ export interface UsePopulateLabelStoreProps {
 }
 
 export const usePopulateLabelStore = ({ queryPage, query, enabled = true }: UsePopulateLabelStoreProps) => {
-  const { repoId } = useGetPathParams()
+  const { repoId } = useGetPathParams<PathParams>()
 
   const { setLabels, setValues, setRepoSpaceRef, resetLabelsAndValues, setIsLoading, getParentScopeLabels } =
     useLabelsStore()

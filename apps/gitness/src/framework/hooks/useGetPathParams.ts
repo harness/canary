@@ -1,14 +1,9 @@
 import { useParams } from 'react-router-dom'
 
-import type { PathParams } from '../../RouteDefinitions'
 import { useIsMFE } from './useIsMFE'
 import { useMFEContext } from './useMFEContext'
 
-export function useGetPathParams(): Partial<PathParams> {
-  const params = useParams<PathParams>()
-
+export function useGetPathParams<T>(): Partial<T> {
   const isMFE = useIsMFE()
-  const mfeParams: PathParams = useMFEContext()?.customHooks?.useParams()
-
-  return isMFE ? mfeParams : params
+  return isMFE ? (useMFEContext()?.customHooks?.useParams() as T) : (useParams() as T)
 }

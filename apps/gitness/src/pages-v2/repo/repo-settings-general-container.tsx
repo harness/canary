@@ -49,7 +49,7 @@ import { transformBranchList } from './transform-utils/branch-transform'
 export const RepoSettingsGeneralPageContainer = () => {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
-  const { repoId: repoName } = useGetPathParams()
+  const { repoId: repoName } = useGetPathParams<PathParams>()
   const navigate = useNavigate()
   const { spaceId } = useParams<PathParams>()
   const queryClient = useQueryClient()

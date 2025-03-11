@@ -34,35 +34,35 @@ export const SecretsPage = () => {
     console.log('Selected secret:', secret)
   }
 
-  const handleScopeChange = (scope: SecretScope) => {
-    switch (scope) {
-      case 'account':
-        setParentScope(null)
-        setChildFolder('organization')
-        break
-      case 'organization':
-        setParentScope('account')
-        setChildFolder('project')
-        break
-      case 'project':
-        setParentScope('organization')
-        setChildFolder(null)
-        break
-    }
-  }
-
-  const handleFolderChange = (folder: string) => {
-    switch (folder) {
-      case 'account':
-        break
-      case 'organization':
-        setParentScope('account')
-        setChildFolder('project')
-        break
-      case 'project':
-        setParentScope('organization')
-        setChildFolder(null)
-        break
+  const handleScopeChange = (scope: SecretScope, direction: 'up' | 'down') => {
+    if (direction === 'up') {
+      switch (scope) {
+        case 'account':
+          setParentScope(null)
+          setChildFolder('organization')
+          break
+        case 'organization':
+          setParentScope('account')
+          setChildFolder('project')
+          break
+        case 'project':
+          setParentScope('organization')
+          setChildFolder(null)
+          break
+      }
+    } else {
+      switch (scope) {
+        case 'account':
+          break
+        case 'organization':
+          setParentScope('account')
+          setChildFolder('project')
+          break
+        case 'project':
+          setParentScope('organization')
+          setChildFolder(null)
+          break
+      }
     }
   }
 
@@ -103,7 +103,7 @@ export const SecretsPage = () => {
             onSelectEntity={handleSelectSecret}
             onScopeChange={handleScopeChange}
             onCancel={handleCancel}
-            onFolderChange={handleFolderChange}
+            // onFolderChange={handleFolderChange}
           />
         )
       default:

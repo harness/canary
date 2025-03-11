@@ -34,8 +34,7 @@ export interface SecretReferenceProps {
 
   // Callbacks
   onSelectEntity: (entity: SecretItem) => void
-  onScopeChange: (scope: SecretScope) => void
-  onFolderChange: (folder: string) => void
+  onScopeChange: (scope: SecretScope, direction: 'up' | 'down') => void
   onCancel?: () => void
 }
 
@@ -52,7 +51,6 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   // Callbacks
   onSelectEntity,
   onScopeChange,
-  onFolderChange,
   onCancel
 }) => {
   // Define available scopes
@@ -102,12 +100,11 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
     <div className="flex flex-col h-full">
       <span className="font-medium mb-4">Select an existing Secret:</span>
       <div className="flex-1">
-        <EntityReference<SecretItem, SecretScope>
+        <EntityReference<SecretItem, SecretScope, SecretScope>
           entities={secretsData}
           selectedEntity={selectedEntity}
           onSelectEntity={onSelectEntity}
           onScopeChange={onScopeChange}
-          onFolderChange={onFolderChange}
           renderEntity={renderEntity}
           renderScopeSelector={renderScopeSelector}
           parentScope={parentScope}

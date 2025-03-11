@@ -37,8 +37,7 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
 
   // Callbacks
   onSelectEntity: (entity: T) => void
-  onScopeChange: (scope: S) => void
-  onFolderChange?: (folder: F) => void
+  onScopeChange: (scope: S | F, direction: 'up' | 'down') => void
 
   // UI Configuration
   showFilter?: boolean
@@ -59,7 +58,6 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   // Callbacks
   onSelectEntity,
   onScopeChange,
-  onFolderChange,
 
   showFilter = true,
 
@@ -76,17 +74,10 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   )
 
   const handleScopeChange = useCallback(
-    (scope: S) => {
-      onScopeChange?.(scope)
+    (scope: S | F, direction: 'up' | 'down') => {
+      onScopeChange?.(scope, direction)
     },
     [onScopeChange]
-  )
-
-  const handleFolderChange = useCallback(
-    (folder: F) => {
-      onFolderChange?.(folder)
-    },
-    [onFolderChange]
   )
 
   const defaultEntityRenderer = ({ entity, isSelected, onSelect }: EntityRendererProps<T>) => {
@@ -146,11 +137,11 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             {renderScopeSelector
               ? renderScopeSelector({
                   parentScope,
-                  onSelect: handleScopeChange
+                  onSelect: () => handleScopeChange(parentScope, 'up')
                 })
               : defaultScopeSelectorRenderer({
                   parentScope,
-                  onSelect: handleScopeChange
+                  onSelect: () => handleScopeChange(parentScope, 'up')
                 })}
           </>
         )}
@@ -161,11 +152,11 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             {renderFolder
               ? renderFolder({
                   folder: childFolder,
-                  onSelect: () => handleFolderChange(childFolder)
+                  onSelect: () => handleScopeChange(childFolder, 'down')
                 })
               : defaultFolderRenderer({
                   folder: childFolder,
-                  onSelect: () => handleFolderChange(childFolder)
+                  onSelect: () => handleScopeChange(childFolder, 'down')
                 })}
           </>
         )}

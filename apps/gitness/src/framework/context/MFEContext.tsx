@@ -25,6 +25,7 @@ export interface IMFEContext {
     useGenerateToken: Unknown
     useSearchParams: Unknown
     useParams: Unknown
+    useMatches: Unknown
   }>
   customUtils: Partial<{
     navigate: Unknown

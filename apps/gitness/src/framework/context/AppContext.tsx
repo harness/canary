@@ -48,7 +48,7 @@ const AppContext = createContext<AppContextType>({
 })
 
 export const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  usePageTitle()
+  // usePageTitle()
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [isSpacesLoading, setSpacesIsLoading] = useState(false)
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})

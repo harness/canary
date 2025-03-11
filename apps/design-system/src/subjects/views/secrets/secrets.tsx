@@ -26,7 +26,7 @@ export const SecretsPage = () => {
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.New)
 
   // State for existing secrets
-  const [activeScope, setActiveScope] = useState<SecretScope>('organization')
+  const [, setActiveScope] = useState<SecretScope>('organization')
   const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
   const [parentFolder, setParentFolder] = useState<string | null>(getAccountsData()[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(getProjectData()[0].projectResponse.project.identifier)
@@ -42,9 +42,9 @@ export const SecretsPage = () => {
   }
 
   const handleScopeChange = (direction: 'up' | 'down') => {
-    if (direction === 'up') {
-      const newScope = scopeHierarchy[activeScope].parent!
-      setActiveScope(newScope)
+    setActiveScope(prevScope => {
+      const newScope = direction === 'up' ? scopeHierarchy[prevScope].parent! : scopeHierarchy[prevScope].child!
+
       switch (newScope) {
         case 'account':
           setParentFolder(null)
@@ -59,24 +59,9 @@ export const SecretsPage = () => {
           setChildFolder(null)
           break
       }
-    } else if (direction === 'down') {
-      const newScope = scopeHierarchy[activeScope].child!
-      setActiveScope(newScope)
-      switch (newScope) {
-        case 'account':
-          setParentFolder(null)
-          setChildFolder(getOrgData()[0].organizationResponse.organization.identifier)
-          break
-        case 'organization':
-          setParentFolder(getAccountsData()[0].accountName)
-          setChildFolder(getProjectData()[0].projectResponse.project.identifier)
-          break
-        case 'project':
-          setParentFolder(getOrgData()[0].organizationResponse.organization.identifier)
-          setChildFolder(null)
-          break
-      }
-    }
+
+      return newScope
+    })
   }
 
   const handleCancel = () => {

@@ -12,6 +12,10 @@ import ReposListPage from './pages-v2/repo/repo-list'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 
+interface MatchParams {
+  match: { params: { repoId: string } }
+}
+
 export const getAppRoutes = ({
   pathPrefix,
   Switch,
@@ -39,15 +43,20 @@ export const getAppRoutes = ({
     <Route path={`${pathPrefix}/repos/import-multiple`} render={() => <ImportMultipleRepos />} />
     <Route
       path={`${pathPrefix}/repos/:repoId`}
-      render={() => (
+      render={({ match: _match }: MatchParams) => (
         <RepoLayout>
           <Switch>
             <Route
               path={`${pathPrefix}/repos/:repoId`}
               exact
-              render={() => <Redirect to={`${pathPrefix}/repos/:repoId/summary`} />}
+              render={({ match }: MatchParams) => (
+                <Redirect to={`${pathPrefix}/repos/${match.params.repoId}/summary`} />
+              )}
             />
-            <Route path={`${pathPrefix}/repos/:repoId/summary`} render={() => <RepoSummaryPage />} />
+            <Route
+              path={`${pathPrefix}/repos/:repoId/summary`}
+              render={({ match: _match }: MatchParams) => <RepoSummaryPage />} // Ensure correct usage of params
+            />
             <Route
               path={`${pathPrefix}/repos/:repoId/code`}
               render={() => (

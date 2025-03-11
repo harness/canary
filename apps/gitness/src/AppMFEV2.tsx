@@ -1,16 +1,8 @@
 import './styles/AppMFE.css'
 
-import { ComponentType, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  NavLink,
-  Outlet,
-  RouterProvider,
-  useMatches,
-  useSearchParams
-} from 'react-router-dom'
+import { BrowserRouter, Outlet, useMatches, useSearchParams } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
@@ -20,7 +12,7 @@ import { PortalProvider, RouterContextProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
-import { MFEContext, Unknown } from './framework/context/MFEContext'
+import { IMFEContext, MFEContext } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
@@ -35,34 +27,16 @@ export interface MFERouteRendererProps {
   onRouteChange: (updatedLocationPathname: string) => void
 }
 
-interface AppMFEProps {
+interface AppMFEProps extends IMFEContext {
   /**
    * These types will be later referred from "ChildComponentProps" from @harness/microfrontends
    *  */
-  scope: {
-    accountId?: string
-    orgIdentifier?: string
-    projectIdentifier?: string
-  }
+
   renderUrl: string
   on401?: () => void
   useMFEThemeContext: () => { theme: string }
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
-  customComponents: {
-    Link: ComponentType<any>
-    NavLink: ComponentType<any>
-    Switch: ComponentType<any>
-    Route: ComponentType<any>
-    Redirect: ComponentType<any>
-  }
-  customHooks: Partial<{
-    useGenerateToken: Unknown
-  }>
-  customUtils: Partial<{
-    navigate: Unknown
-    navigateToUserProfile: Unknown
-  }>
 }
 
 function decode<T = unknown>(arg: string): T {
@@ -74,7 +48,7 @@ export default function AppMFE({
   renderUrl,
   on401,
   useMFEThemeContext,
-  customComponents: { Link, Switch, Route, Redirect },
+  customComponents,
   customHooks,
   customUtils
 }: AppMFEProps) {
@@ -119,6 +93,8 @@ export default function AppMFE({
 
   const v6Routes = mfeRoutes(scope.projectIdentifier)
 
+  const { Link, NavLink, Switch, Route, Redirect } = customComponents
+
   const v5AppRoutes = getAppRoutes({
     pathPrefix: renderUrl,
     Switch,
@@ -140,7 +116,8 @@ export default function AppMFE({
                   scope,
                   renderUrl,
                   customHooks,
-                  customUtils
+                  customUtils,
+                  customComponents
                 }}
               >
                 <I18nextProvider i18n={i18n}>

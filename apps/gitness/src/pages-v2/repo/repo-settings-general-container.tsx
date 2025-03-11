@@ -38,8 +38,8 @@ import {
 } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetRepoPathParam } from '../../framework/hooks/useGetRepoPathParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
@@ -49,7 +49,7 @@ import { transformBranchList } from './transform-utils/branch-transform'
 export const RepoSettingsGeneralPageContainer = () => {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
-  const repoName = useGetRepoId()
+  const repoName = useGetRepoPathParam()
   const navigate = useNavigate()
   const { spaceId } = useParams<PathParams>()
   const queryClient = useQueryClient()

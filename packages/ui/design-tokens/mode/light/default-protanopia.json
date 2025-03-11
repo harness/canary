@@ -2338,11 +2338,11 @@
     },
     "xs": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.1"
     },
     "sm": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.1"
     },
     "md": {
       "$type": "borderWidth",

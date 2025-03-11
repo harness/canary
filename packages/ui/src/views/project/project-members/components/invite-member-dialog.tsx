@@ -1,18 +1,22 @@
 import { FC, forwardRef, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Avatar, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Select } from '@/components'
+import { Avatar, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Select, toast } from '@/components'
 import { PrincipalType } from '@/types'
-import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
+import { InviteMemberDialogProps, InviteMemberFormFields, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInitials } from '@utils/stringUtils'
 import { getRolesData } from '@views/project/project-members/constants'
 import { z } from 'zod'
 
-export const inviteMemberFormSchema = z.object({
-  member: z.string().min(1, { message: 'Member name is required' }),
-  role: z.string().min(1, { message: 'Role is required' })
-})
+export const makeInviteMemberFormSchema = (t: TranslationStore['t']) =>
+  z.object({
+    member: z
+      .string()
+      .trim()
+      .nonempty(t('views:repos.inviteMemberDialog.validation.memberNoEmpty', 'Member name is required')),
+    role: z.string().trim().nonempty(t('views:repos.inviteMemberDialog.validation.roleNoEmpty', 'Role is required'))
+  })
 
 interface PrincipalOptionProps {
   principal: PrincipalType
@@ -30,7 +34,7 @@ const PrincipalOption = forwardRef<HTMLDivElement, PrincipalOptionProps>(({ prin
         <span className={`truncate ${isShortView ? 'text-foreground-1' : 'text-foreground-8'}`}>
           {principal.display_name}
         </span>
-        {!isShortView && <span className="truncate text-12 text-foreground-4">{principal.email}</span>}
+        {!isShortView && <span className="text-12 text-foreground-4 truncate">{principal.email}</span>}
       </span>
     </div>
   )
@@ -57,6 +61,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
   const [invitedMemberFullModel, setInvitedMemberFullModel] = useState<PrincipalType | null>(null)
 
   const roleOptions = useMemo(() => getRolesData(t), [t])
+  const readerRole = roleOptions[3]
 
   const {
     handleSubmit,
@@ -65,19 +70,19 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
     reset,
     formState: { errors, isValid }
   } = useForm<InviteMemberFormFields>({
-    resolver: zodResolver(inviteMemberFormSchema),
+    resolver: zodResolver(makeInviteMemberFormSchema(t)),
     mode: 'onChange',
     defaultValues: {
       member: '',
-      role: roleOptions[3].uid
+      role: readerRole.uid
     }
   })
 
   const invitedMember = watch('member')
   const memberRole = watch('role')
 
-  const handleSelectChange = (fieldName: keyof InviteMemberFormFields, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
+  const handleSelectRole = (value: string) => {
+    setValue('role', value, { shouldValidate: true })
   }
 
   const handleMemberChange = (value: string) => {
@@ -102,14 +107,25 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
     }
   }, [open, reset])
 
+  /**
+   * Show an unexpected server error message
+   * Ensure that validation errors are handled by the react-hook-form
+   */
+  useEffect(() => {
+    if (!error) return
+
+    toast({ title: `${t('views:repos.error', 'Error:')} ${error}`, variant: 'destructive' })
+  }, [error, t])
+
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
       <Dialog.Content className="max-w-[420px]">
         <Dialog.Header>
           <Dialog.Title>{t('views:projectSettings.newMember', 'New member')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <Fieldset>
+
+        <FormWrapper className="space-y-6" onSubmit={handleSubmit(onSubmit)} id="invite-member-form">
+          <Fieldset legend="Member details">
             <ControlGroup>
               <Select.Root
                 name="member"
@@ -142,7 +158,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
               <Select.Root
                 name="role"
                 value={memberRole}
-                onValueChange={value => handleSelectChange('role', value)}
+                onValueChange={handleSelectRole}
                 placeholder={t('views:forms.selectRole', 'Select role')}
                 label={t('views:projectSettings.role', 'Role')}
                 error={errors.role?.message?.toString()}
@@ -154,8 +170,8 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
                   {roleOptions.map(option => (
                     <Select.Item key={option.uid} value={option.uid} isItemTextAsChild>
                       <div className="flex cursor-pointer flex-col gap-y-1.5">
-                        <span className="leading-none text-foreground-8">{option.label}</span>
-                        <span className="leading-tight text-foreground-4">{option.description}</span>
+                        <span className="text-foreground-8 leading-none">{option.label}</span>
+                        <span className="text-foreground-4 leading-tight">{option.description}</span>
                       </div>
                     </Select.Item>
                   ))}
@@ -163,21 +179,13 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
               </Select.Root>
             </ControlGroup>
           </Fieldset>
-
-          {!!error && (
-            <Alert.Container className="!mt-0" variant="destructive">
-              <Alert.Title>
-                {t('views:repos.error', 'Error:')} {error}
-              </Alert.Title>
-            </Alert.Container>
-          )}
         </FormWrapper>
 
         <Dialog.Footer>
           <Button type="button" variant="outline" onClick={onClose} loading={isInvitingMember}>
             {t('views:repos.cancel', 'Cancel')}
           </Button>
-          <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isInvitingMember || !isValid}>
+          <Button type="submit" form="invite-member-form" disabled={isInvitingMember || !isValid}>
             {t('views:projectSettings.addMember', 'Add member to this project')}
           </Button>
         </Dialog.Footer>

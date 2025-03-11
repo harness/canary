@@ -22,6 +22,12 @@
     "executions": "Executions",
     "generalTab": "General",
     "keysTab": "Keys and tokens",
+    "inviteMemberDialog": {
+      "validation": {
+        "memberNoEmpty": "Le nom du membre est requis",
+        "roleNoEmpty": "Le rôle est requis"
+      }
+    },
     "default": "Par défaut",
     "viewAll": "Voir tous les {{type}}",
     "branchesLowercase": "branches",
@@ -125,10 +131,47 @@
     "createBranchTitle": "Créer une branche",
     "createBranchButton": "Créer une branche",
     "newBranch": "Nouvelle branche",
-    "createNewRepo": "Create a new repository",
-    "repoContains": "A repository contains all project files, including the revision history. Already have a project repository elsewhere?",
-    "importRepo": "Import a repository",
+    "repoCreate": {
+      "validation": {
+        "nameNoEmpty": "Le nom ne peut pas être vide",
+        "nameMax": "Le nom ne doit pas dépasser 100 caractères",
+        "nameRegex": "Le nom doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
+        "nameNoSpaces": "Le nom ne peut pas contenir d'espaces",
+        "descriptionMax": "La description ne doit pas dépasser 1024 caractères",
+        "access": "Veuillez sélectionner qui a accès"
+      },
+      "title": "Créer un nouveau dépôt",
+      "description": "Un dépôt contient tous les fichiers du projet, y compris l'historique des révisions. Vous avez déjà un dépôt de projet ailleurs ?",
+      "importRepo": "Importer un dépôt",
+      "nameLabel": "Nom",
+      "namePlaceholder": "Entrez le nom du dépôt",
+      "descriptionPlaceholder": "Entrez une description de ce dépôt",
+      "descriptionLabel": "Description",
+      "gitignorePlaceholder": "Sélectionner",
+      "gitignoreLabel": "Ajouter .gitignore",
+      "gitignoreCaption": "Choisissez quels fichiers ne pas suivre à partir d'une liste de modèles.",
+      "licensePlaceholder": "Sélectionner",
+      "licenseLabel": "Choisir une licence",
+      "licenseCaption": "Une licence indique aux autres ce qu'ils peuvent et ne peuvent pas faire avec votre code.",
+      "access": {
+        "legend": "Qui a accès",
+        "publicOptionLabel": "Public",
+        "publicOptionDescription": "Toute personne ayant accès à l'environnement Gitness peut cloner ce dépôt.",
+        "privateOptionLabel": "Privé",
+        "privateOptionDescription": "Vous choisissez qui peut voir et contribuer à ce dépôt."
+      },
+      "initialize": {
+        "label": "Initialiser ce dépôt avec",
+        "readmeLabel": "Ajouter un fichier README",
+        "readmeDescription": "C'est ici que vous pouvez écrire une longue description pour votre projet"
+      },
+      "create": {
+        "create": "Création du dépôt..."
+      },
+      "cancel": "Annuler"
+    },
     "emptyRepo": "Ce référentiel est vide.",
+    "importRepo": "Import a repository",
     "repositories": "Dépôts",
     "import-repository": "Importer un dépôt",
     "import-repositories": "Import repositories",
@@ -194,13 +237,7 @@
     "updatingWebhook": "Updating webhook...",
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
-    "createWebhook": "Create webhook",
-    "tagger": "Tagger",
-    "renameBranch": "Renommer la branche",
-    "add": "Ajouter",
-    "users": "Utilisateurs",
-    "clone": "Cloner",
-    "addFile": "Ajouter un fichier"
+    "createWebhook": "Create webhook"
   },
   "noData": {
     "noResults": "Aucun résultat de recherche",
@@ -245,17 +282,6 @@
     "commit": "Validation",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
-  },
-  "execution": {
-    "summary": "Résumé",
-    "logs": "Journaux",
-    "graph": "Graphique",
-    "inputs": "Entrées",
-    "opa": "Évaluations de politique",
-    "artifacts": "Artéfacts",
-    "tests": "Tests",
-    "sto": "Tests de sécurité",
-    "secrets": "Secrets"
   },
   "signIn": {
     "validation": {
@@ -307,6 +333,17 @@
       "question": "Vous avez déjà un compte ?",
       "linkText": "Se connecter"
     }
+  },
+  "execution": {
+    "summary": "Résumé",
+    "logs": "Journaux",
+    "graph": "Graphique",
+    "inputs": "Entrées",
+    "opa": "Évaluations de politique",
+    "artifacts": "Artefacts",
+    "tests": "Tests",
+    "sto": "Tests de sécurité",
+    "secrets": "Secrets"
   },
   "labelData": {
     "form": {

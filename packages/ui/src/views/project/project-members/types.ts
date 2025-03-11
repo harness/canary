@@ -4,7 +4,7 @@ import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
 import { IMemberListStore } from '../project.types'
-import { inviteMemberFormSchema } from './components/invite-member-dialog'
+import { makeInviteMemberFormSchema } from './components/invite-member-dialog'
 
 export interface MembersProps {
   display_name: string
@@ -15,7 +15,7 @@ export interface MembersProps {
   uid: string
 }
 
-export type InviteMemberFormFields = z.infer<typeof inviteMemberFormSchema>
+export type InviteMemberFormFields = z.infer<ReturnType<typeof makeInviteMemberFormSchema>>
 
 export interface ProjectMemberListViewProps {
   isLoading: boolean

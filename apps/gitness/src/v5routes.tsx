@@ -5,6 +5,7 @@ import { AppProvider } from './framework/context/AppContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoCode } from './pages-v2/repo/repo-code'
+import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import { ImportMultipleRepos } from './pages-v2/repo/repo-import-multiple-container'
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
@@ -66,6 +67,7 @@ export const getAppRoutes = ({
               )}
             />
             <Route path={`${pathPrefix}/repos/:repoId/branches`} render={() => <RepoBranchesListPage />} />
+            <Route path={`${pathPrefix}/repos/:repoId/commits`} render={() => <RepoCommitsPage />} />
           </Switch>
         </RepoLayout>
       )}

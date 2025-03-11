@@ -2,8 +2,14 @@ import { InputConfigType, InputType } from '@views/unified-pipeline-studio/compo
 
 import { IFormDefinition } from '@harnessio/forms'
 
-import { ConnectorPayloadConfig } from '../ConnectorPayloadBuilder'
-import { AWS_KMS_CONNECTOR_IDENTIFIER, CredTypeValues, DelegateTypes, IInputConfigWithConfig, createConnectorPayloadConverter } from '../types'
+import { ConnectorPayloadConfig, ConnectorSpec } from '../ConnectorPayloadBuilder'
+import {
+  AWS_KMS_CONNECTOR_IDENTIFIER,
+  createConnectorPayloadConverter,
+  CredTypeValues,
+  DelegateTypes,
+  IInputConfigWithConfig
+} from '../types'
 
 export const AWS_KMS_CONNECTOR_DESCRIPTION = 'AWS KMS Connector'
 
@@ -75,21 +81,42 @@ const inputs: IInputConfigWithConfig[] = [
 ]
 
 // Convert AWS KMS payload back to form data
-const convertAwsKmsPayloadToFormData = (payload: ConnectorPayloadConfig): Record<string, any> => {
-  const { spec } = payload
-  const { credential, kmsArn, region, default: isDefault, delegateSelectors } = spec
+interface AwsKmsConnectorSpec extends ConnectorSpec {
+  credential: {
+    type: string
+    spec?: {
+      accessKey?: string
+      secretKey?: string
+      delegateSelectors?: string[]
+      roleArn?: string
+      externalName?: string
+      assumeStsRoleDuration?: string
+      iamRoleArn?: string
+    }
+  }
+  kmsArn: string
+  region: string
+  default?: boolean
+  executeOnDelegate?: boolean
+}
+
+const convertAwsKmsPayloadToFormData = (payload: ConnectorPayloadConfig<ConnectorSpec>): Record<string, any> => {
+  // Type assertion since we know this is an AWS KMS connector payload
+  const typedPayload = payload as ConnectorPayloadConfig<AwsKmsConnectorSpec>
+  const { spec } = typedPayload
+  const { credential, kmsArn, region, default: isDefault, delegateSelectors } = spec as AwsKmsConnectorSpec
 
   const formData: Record<string, any> = {
-    name: payload.name,
-    description: payload.description,
-    projectIdentifier: payload.projectIdentifier,
-    orgIdentifier: payload.orgIdentifier,
-    identifier: payload.identifier,
-    tags: payload.tags,
+    name: typedPayload.name,
+    description: typedPayload.description,
+    projectIdentifier: typedPayload.projectIdentifier,
+    orgIdentifier: typedPayload.orgIdentifier,
+    identifier: typedPayload.identifier,
+    tags: typedPayload.tags,
     connectivityMode: { _formData: { executeOnDelegate: spec.executeOnDelegate } },
     delegateSelectors,
-    credType: credential?.type,
-    awsArn: { referenceString: kmsArn },
+    credential: credential?.type,
+    awsArn: kmsArn,
     region,
     default: isDefault
   }
@@ -98,8 +125,8 @@ const convertAwsKmsPayloadToFormData = (payload: ConnectorPayloadConfig): Record
   if (credential?.spec) {
     switch (credential.type) {
       case CredTypeValues.ManualConfig:
-        formData.accessKey = { referenceString: credential.spec.accessKey }
-        formData.secretKey = { referenceString: credential.spec.secretKey }
+        formData.accessKey = credential.spec.accessKey
+        formData.secretKey = credential.spec.secretKey
         break
       case CredTypeValues.AssumeIAMRole:
         formData.delegateSelectors = credential.spec.delegateSelectors
@@ -111,7 +138,7 @@ const convertAwsKmsPayloadToFormData = (payload: ConnectorPayloadConfig): Record
         formData.assumeStsRoleDuration = credential.spec.assumeStsRoleDuration
         break
       case DelegateTypes.DELEGATE_OIDC:
-        formData.iamRoleArn = credential.spec.iamRoleArn
+        formData.iamRole = credential.spec.iamRoleArn
         break
     }
   }

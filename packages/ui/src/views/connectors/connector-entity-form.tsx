@@ -9,7 +9,7 @@ import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-u
 
 import { IFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
 
-import { awsKmsConnectorPayloadBuilder } from './AwsKmsConnectorPayload'
+import { awsKmsBuilder } from './AwsKmsConnector'
 import { getHarnessConnectorDefinition } from './connector-utils'
 import { awsKmsConnectorPayloadConverter } from './harness-connectors/aws-kms-connector'
 import {
@@ -71,9 +71,8 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
         // TODO: handle form submit for create/edit
         console.log('values', values)
         if (formEntity.data.identifier === AWS_KMS_CONNECTOR_IDENTIFIER) {
-          const { connector } = awsKmsConnectorPayloadBuilder.buildPayload(values)
+          const { connector } = awsKmsBuilder.buildPayload(values)
           console.log('AWS KMS payload:', connector)
-
           const converter = connectorPayloadConverters[formEntity.data.identifier as HARNESS_CONNECTOR_IDENTIFIER]
           console.log('converted to form: ', converter ? converter.convertToFormData(connector) : {})
           // TODO: Handle the AWS KMS payload

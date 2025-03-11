@@ -9,7 +9,7 @@ import { ConnectorRightDrawer } from './types'
 
 export const ConnectorsRightDrawer = (): JSX.Element => {
   const { rightDrawer, setRightDrawer, formEntity, setFormEntity, clearRightDrawerData } = useConnectorsContext()
-
+  console.log(rightDrawer, formEntity)
   const renderSheetContent = useCallback(() => {
     switch (rightDrawer) {
       case ConnectorRightDrawer.Collection:

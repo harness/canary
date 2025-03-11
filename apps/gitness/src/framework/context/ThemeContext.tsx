@@ -12,14 +12,14 @@ export const useThemeStore = create<IThemeStore>()(
   persist(
     set => ({
       theme: undefined,
-    isInset: false,
-    setTheme: (newTheme: FullTheme) => {
+      isInset: false,
+      setTheme: (newTheme: FullTheme) => {
         const isInsetVal = newTheme.includes('Inset')
         const newThemeVal = newTheme.replace('Inset', '') as FullTheme
 
         set({ isInset: isInsetVal })
         set({ theme: newThemeVal })
-    },
+      },
       isLightTheme: false
     }),
     {

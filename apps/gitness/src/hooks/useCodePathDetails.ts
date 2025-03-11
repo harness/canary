@@ -1,11 +1,10 @@
-import { useParams } from 'react-router-dom'
-
 import { CodeModes } from '@harnessio/ui/views'
 
+import { useGetPathParams } from '../framework/hooks/useGetPathParams'
 import { REFS_TAGS_PREFIX } from '../utils/git-utils'
 
 const useCodePathDetails = () => {
-  const subCodePath = useParams()['*'] || ''
+  const subCodePath = useGetPathParams<Record<string, string>>()['*'] || ''
 
   // Determine codeMode and restPath
   const [codeMode, restPath] = (() => {

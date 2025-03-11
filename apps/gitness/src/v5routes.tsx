@@ -3,6 +3,7 @@ import { ComponentType } from 'react'
 import { AppShellMFE } from './components-v2/app-shell'
 import { AppProvider } from './framework/context/AppContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoCode } from './pages-v2/repo/repo-code'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import { ImportMultipleRepos } from './pages-v2/repo/repo-import-multiple-container'
@@ -49,14 +50,9 @@ export const getAppRoutes = ({
             <Route
               path={`${pathPrefix}/repos/:repoId`}
               exact
-              render={({ match }: MatchParams) => (
-                <Redirect to={`${pathPrefix}/repos/${match.params.repoId}/summary`} />
-              )}
+              render={() => <Redirect to={`${pathPrefix}/repos/:repoId/summary`} />}
             />
-            <Route
-              path={`${pathPrefix}/repos/:repoId/summary`}
-              render={({ match: _match }: MatchParams) => <RepoSummaryPage />} // Ensure correct usage of params
-            />
+            <Route path={`${pathPrefix}/repos/:repoId/summary`} render={() => <RepoSummaryPage />} />
             <Route
               path={`${pathPrefix}/repos/:repoId/code`}
               render={() => (
@@ -69,6 +65,7 @@ export const getAppRoutes = ({
                 </ExplorerPathsProvider>
               )}
             />
+            <Route path={`${pathPrefix}/repos/:repoId/branches`} render={() => <RepoBranchesListPage />} />
           </Switch>
         </RepoLayout>
       )}

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -14,6 +13,7 @@ import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { CreateBranchFormFields, RepoBranchListView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useGetPathParams } from '../../framework/hooks/useGetPathParams'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
@@ -26,7 +26,7 @@ import { transformBranchList } from './transform-utils/branch-transform'
 export function RepoBranchesListPage() {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { spaceId, repoId } = useGetPathParams<PathParams>()
   const queryClient = useQueryClient()
 
   const {

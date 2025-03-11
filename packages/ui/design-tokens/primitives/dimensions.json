@@ -152,7 +152,8 @@
     },
     "2": {
       "$type": "borderRadius",
-      "$value": "4px"
+      "$value": "4px",
+      "$description": "default"
     },
     "3": {
       "$type": "borderRadius",
@@ -331,7 +332,7 @@
       "$description": "3.5"
     }
   },
-  "borderWidth": {
+  "border": {
     "0": {
       "$type": "borderWidth",
       "$value": "0rem",
@@ -356,29 +357,6 @@
       "$type": "borderWidth",
       "$value": "8px",
       "$description": "Extra thick border width (border-8)"
-    }
-  },
-  "iconSize": {
-    "xxs": {
-      "$type": "sizing",
-      "$value": "{size.3}"
-    },
-    "xs": {
-      "$type": "sizing",
-      "$value": "{size.3-half}"
-    },
-    "sm": {
-      "$type": "sizing",
-      "$value": "{size.4}"
-    },
-    "md": {
-      "$type": "sizing",
-      "$value": "{size.5}"
-    },
-    "lg": {
-      "$type": "sizing",
-      "$value": "{size.8}",
-      "$description": "\n"
     }
   }
 }

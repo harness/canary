@@ -14,7 +14,8 @@ import {
 import { ProfileSettingsErrorType } from '@harnessio/ui/views'
 
 import useLocalStorage from '../hooks/useLocalStorage'
-import usePageTitle from '../hooks/usePageTitle'
+
+// import usePageTitle from '../hooks/usePageTitle'
 
 interface AppContextType {
   spaces: TypesSpace[]

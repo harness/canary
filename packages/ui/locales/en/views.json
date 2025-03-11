@@ -171,7 +171,59 @@
       "cancel": "Cancel"
     },
     "emptyRepo": "This repository is empty.",
-    "importRepo": "Import a repository",
+    "importRepo": {
+      "validation": {
+        "providerNoEmpty": "Please enter a repository name",
+        "organizationNoEmpty": "Please enter an organization name",
+        "workspaceNoEmpty": "Please enter a Workspace",
+        "groupNoEmpty": "Please enter a Group",
+        "hostUrlNoEmpty": "Please enter a Host URL",
+        "hostUrlInvalid": "Invalid URL",
+        "projectNoEmpty": "Please enter a Project",
+        "repoUrlNoEmpty": "Please enter the Repository URL"
+      },
+      "importMultipleTitle": "Import Repositories",
+      "providerPlaceholder": "Select",
+      "providerLabel": "Git provider",
+      "hostLabel": "Host URL",
+      "hostPlaceholder": "Enter the host URL",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "Enter your username",
+      "accessInput": {
+        "passwordLabel": "Password",
+        "tokenLabel": "Token",
+        "passwordPlaceholder": "Enter your password",
+        "tokenPlaceholder": "Enter your access token"
+      },
+      "groupLabel": "Group",
+      "groupPlaceholder": "Enter the group name",
+      "workspaceLabel": "Workspace",
+      "workspacePlaceholder": "Enter the workspace name",
+      "organizationLabel": "Organization",
+      "organizationPlaceholder": "Enter the organization name",
+      "projectLabel": "Project",
+      "projectPlaceholder": "Enter the project name",
+      "repositoriesOption": "Repositories",
+      "pipelinesOption": "Pipelines",
+      "importMultipleButton": {
+        "import": "Import repositories",
+        "importing": "Importing repositories..."
+      },
+      "cancelButton": "Cancel",
+      "importTitle": "Import a repository",
+      "repositoryLabel": "Repository",
+      "repositoryPlaceholder": "Enter the repository name",
+      "authorizationOption": "Authorization",
+      "importPipelinesOption": "Import Pipelines",
+      "repositoryNameLabel": "Repository name",
+      "repositoryNamePlaceholder": "Enter the repository name",
+      "repositoryDescriptionLabel": "Description",
+      "repositoryDescriptionPlaceholder": "Enter the repository description",
+      "importButton": {
+        "import": "Import repository",
+        "importing": "Importing repository..."
+      }
+    },
     "repositories": "Repositories",
     "import-repository": "Import repository",
     "import-repositories": "Import repositories",

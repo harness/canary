@@ -171,7 +171,59 @@
       "cancel": "Annuler"
     },
     "emptyRepo": "Ce référentiel est vide.",
-    "importRepo": "Import a repository",
+    "importRepo": {
+      "validation": {
+        "providerNoEmpty": "Veuillez saisir un nom de dépôt",
+        "organizationNoEmpty": "Veuillez saisir un nom d'organisation",
+        "workspaceNoEmpty": "Veuillez saisir un espace de travail",
+        "groupNoEmpty": "Veuillez saisir un groupe",
+        "hostUrlNoEmpty": "Veuillez saisir une URL d'hôte",
+        "hostUrlInvalid": "URL invalide",
+        "projectNoEmpty": "Veuillez saisir un projet",
+        "repoUrlNoEmpty": "Veuillez saisir l'URL du dépôt"
+      },
+      "importMultipleTitle": "Importer des dépôts",
+      "providerPlaceholder": "Sélectionner",
+      "providerLabel": "Fournisseur Git",
+      "hostLabel": "URL d'hôte",
+      "hostPlaceholder": "Entrez l'URL d'hôte",
+      "usernameLabel": "Nom d'utilisateur",
+      "usernamePlaceholder": "Entrez votre nom d'utilisateur",
+      "accessInput": {
+        "passwordLabel": "Mot de passe",
+        "tokenLabel": "Jeton",
+        "passwordPlaceholder": "Entrez votre mot de passe",
+        "tokenPlaceholder": "Entrez votre jeton d'accès"
+      },
+      "groupLabel": "Groupe",
+      "groupPlaceholder": "Entrez le nom du groupe",
+      "workspaceLabel": "Espace de travail",
+      "workspacePlaceholder": "Entrez le nom de l'espace de travail",
+      "organizationLabel": "Organisation",
+      "organizationPlaceholder": "Entrez le nom de l'organisation",
+      "projectLabel": "Projet",
+      "projectPlaceholder": "Entrez le nom du projet",
+      "repositoriesOption": "Dépôts",
+      "pipelinesOption": "Pipelines",
+      "importMultipleButton": {
+        "import": "Importer des dépôts",
+        "importing": "Importation des dépôts..."
+      },
+      "cancelButton": "Annuler",
+      "importTitle": "Importer un dépôt",
+      "repositoryLabel": "Dépôt",
+      "repositoryPlaceholder": "Entrez le nom du dépôt",
+      "authorizationOption": "Autorisation",
+      "importPipelinesOption": "Importer les pipelines",
+      "repositoryNameLabel": "Nom du dépôt",
+      "repositoryNamePlaceholder": "Entrez le nom du dépôt",
+      "repositoryDescriptionLabel": "Description",
+      "repositoryDescriptionPlaceholder": "Entrez la description du dépôt",
+      "importButton": {
+        "import": "Importer le dépôt",
+        "importing": "Importation du dépôt..."
+      }
+    },
     "repositories": "Dépôts",
     "import-repository": "Importer un dépôt",
     "import-repositories": "Import repositories",

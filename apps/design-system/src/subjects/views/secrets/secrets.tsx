@@ -6,9 +6,9 @@ import { Button, Drawer, Spacer } from '@harnessio/ui/components'
 import {
   CreateSecretFormFields,
   CreateSecretPage,
-  ExistingSecrets,
   SecretCreationType,
   SecretItem,
+  SecretReference,
   SecretScope,
   SecretsHeader,
   SecretType
@@ -87,7 +87,7 @@ export const SecretsPage = () => {
         )
       case SecretType.Existing:
         return (
-          <ExistingSecrets
+          <SecretReference
             secretsData={getSecretsData().map(secret => ({
               ...secret,
               id: secret.secret.identifier,

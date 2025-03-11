@@ -2,14 +2,14 @@ export const getSecretsData = () => [
   {
     secret: {
       type: 'SecretFile',
-      name: 'hellohjfe',
-      identifier: 'hellohjfe',
-      orgIdentifier: 'default',
-      projectIdentifier: 'abhinavtest3',
+      name: 'secret-file-1',
+      identifier: 'secret-id-1',
+      orgIdentifier: 'org-default',
+      projectIdentifier: 'project-xyz',
       tags: {},
       description: '',
       spec: {
-        secretManagerIdentifier: 'harnessSecretManager',
+        secretManagerIdentifier: 'secret-manager',
         additionalMetadata: null
       }
     },
@@ -21,14 +21,14 @@ export const getSecretsData = () => [
   {
     secret: {
       type: 'SecretFile',
-      name: 'hello',
-      identifier: 'hello',
-      orgIdentifier: 'default',
-      projectIdentifier: 'abhinavtest3',
+      name: 'secret-file-2',
+      identifier: 'secret-id-2',
+      orgIdentifier: 'org-default',
+      projectIdentifier: 'project-xyz',
       tags: {},
       description: '',
       spec: {
-        secretManagerIdentifier: 'harnessSecretManager',
+        secretManagerIdentifier: 'secret-manager',
         additionalMetadata: null
       }
     },
@@ -40,10 +40,10 @@ export const getSecretsData = () => [
   {
     secret: {
       type: 'SecretText',
-      name: 'sanskar-test',
-      identifier: 'sanskar-test',
-      orgIdentifier: 'default',
-      projectIdentifier: 'abhinavtest3',
+      name: 'secret-text-1',
+      identifier: 'secret-text-id-1',
+      orgIdentifier: 'org-default',
+      projectIdentifier: 'project-xyz',
       tags: {
         tag1: '',
         tag2: '',
@@ -51,7 +51,7 @@ export const getSecretsData = () => [
       },
       description: 'desc',
       spec: {
-        secretManagerIdentifier: 'harnessSecretManager',
+        secretManagerIdentifier: 'secret-manager',
         valueType: 'Inline',
         value: null,
         additionalMetadata: null
@@ -65,14 +65,14 @@ export const getSecretsData = () => [
   {
     secret: {
       type: 'SecretText',
-      name: 'abhinavrastogi-harness',
-      identifier: 'abhinavrastogi-harness',
-      orgIdentifier: 'default',
-      projectIdentifier: 'abhinavtest3',
+      name: 'secret-text-2',
+      identifier: 'secret-text-id-2',
+      orgIdentifier: 'org-default',
+      projectIdentifier: 'project-xyz',
       tags: {},
-      description: 'github pat',
+      description: 'github token',
       spec: {
-        secretManagerIdentifier: 'harnessSecretManager',
+        secretManagerIdentifier: 'secret-manager',
         valueType: 'Inline',
         value: null,
         additionalMetadata: null
@@ -86,14 +86,14 @@ export const getSecretsData = () => [
   {
     secret: {
       type: 'SecretText',
-      name: 'aws-access-key',
-      identifier: 'aws-access-key',
-      orgIdentifier: 'default',
-      projectIdentifier: 'abhinavtest3',
+      name: 'secret-text-3',
+      identifier: 'secret-text-id-3',
+      orgIdentifier: 'org-default',
+      projectIdentifier: 'project-xyz',
       tags: {},
       description: '',
       spec: {
-        secretManagerIdentifier: 'harnessSecretManager',
+        secretManagerIdentifier: 'secret-manager',
         valueType: 'Inline',
         value: null,
         additionalMetadata: null
@@ -107,14 +107,14 @@ export const getSecretsData = () => [
   {
     secret: {
       type: 'SecretText',
-      name: 'abhinav-test',
-      identifier: 'abhinavtest',
-      orgIdentifier: 'default',
-      projectIdentifier: 'abhinavtest3',
+      name: 'secret-text-4',
+      identifier: 'secret-text-id-4',
+      orgIdentifier: 'org-default',
+      projectIdentifier: 'project-xyz',
       tags: {},
       description: '',
       spec: {
-        secretManagerIdentifier: 'harnessSecretManager',
+        secretManagerIdentifier: 'secret-manager',
         valueType: 'Inline',
         value: null,
         additionalMetadata: null
@@ -172,8 +172,8 @@ export const getOrgData = () => [
   {
     organizationResponse: {
       organization: {
-        identifier: 'org-1',
-        name: 'org-1',
+        identifier: 'org-anon-1',
+        name: 'org-anon-1',
         description: '',
         tags: {}
       },
@@ -188,9 +188,9 @@ export const getOrgData = () => [
     templatesCount: 0,
     admins: [
       {
-        name: 'Sameed Ul Haq',
-        email: 'sameed.haq@harness.io',
-        uuid: 'qSblIr49RqicjV2C8pJmpw',
+        name: 'Admin User 1',
+        email: 'admin1@example.com',
+        uuid: 'uuid-admin-1',
         locked: false,
         disabled: false,
         externallyManaged: false,
@@ -199,9 +199,9 @@ export const getOrgData = () => [
     ],
     collaborators: [
       {
-        name: 'Yash Rathore test',
-        email: 'yash.rathore+1@harness.io',
-        uuid: 'BDkEEa2BQOWX_p00FTStMg',
+        name: 'Collaborator User 1',
+        email: 'collab1@example.com',
+        uuid: 'uuid-collab-1',
         locked: false,
         disabled: false,
         externallyManaged: false,
@@ -212,8 +212,8 @@ export const getOrgData = () => [
   {
     organizationResponse: {
       organization: {
-        identifier: 'org-2',
-        name: 'org-2',
+        identifier: 'org-anon-2',
+        name: 'org-anon-2',
         description: '',
         tags: {}
       },
@@ -228,9 +228,9 @@ export const getOrgData = () => [
     templatesCount: 0,
     admins: [
       {
-        name: 'Anjali Siwach',
-        email: 'anjali.siwach@harness.io',
-        uuid: '6b2lUhrqSVaq2q1pD1Ai0g',
+        name: 'Admin User 2',
+        email: 'admin2@example.com',
+        uuid: 'uuid-admin-2',
         locked: false,
         disabled: false,
         externallyManaged: false,
@@ -239,9 +239,9 @@ export const getOrgData = () => [
     ],
     collaborators: [
       {
-        name: 'nikhil mishra',
-        email: 'nikhil.mishra@harness.io',
-        uuid: '0sZhwbdfSe64qHG4sZeYcQ',
+        name: 'Collaborator User 2',
+        email: 'collab2@example.com',
+        uuid: 'uuid-collab-2',
         locked: false,
         disabled: false,
         externallyManaged: false,
@@ -287,17 +287,17 @@ export const getProjectData = () => [
       isFavorite: false
     },
     organization: {
-      identifier: 'sameed_Test',
-      name: 'sameed_Test',
+      identifier: 'org-test-1',
+      name: 'Org Test 1',
       description: '',
       tags: {}
     },
     harnessManagedOrg: false,
     admins: [
       {
-        name: 'Sameed Ul Haq',
-        email: 'sameed.haq@harness.io',
-        uuid: 'qSblIr49RqicjV2C8pJmpw',
+        name: 'Admin 1',
+        email: 'admin1@example.com',
+        uuid: 'admin1-uuid',
         locked: false,
         disabled: false,
         externallyManaged: false,
@@ -341,17 +341,17 @@ export const getProjectData = () => [
       isFavorite: false
     },
     organization: {
-      identifier: 'Anjali',
-      name: 'Anjali',
+      identifier: 'org-test-2',
+      name: 'Org Test 2',
       description: '',
       tags: {}
     },
     harnessManagedOrg: false,
     admins: [
       {
-        name: 'Jimit Gandhi',
-        email: 'jimit.gandhi@harness.io',
-        uuid: 'KYA2SGyJTTmM-duzJ_i_pg',
+        name: 'Admin 2',
+        email: 'admin2@example.com',
+        uuid: 'admin2-uuid',
         locked: false,
         disabled: false,
         externallyManaged: false,
@@ -360,9 +360,9 @@ export const getProjectData = () => [
     ],
     collaborators: [
       {
-        name: 'jimit_1992',
-        email: 'jimit_1992@mailinator.com',
-        uuid: 'kBpu9YHzTnWxJM8ouTjXxA',
+        name: 'Collaborator 1',
+        email: 'collab1@example.com',
+        uuid: 'collab1-uuid',
         locked: false,
         disabled: false,
         externallyManaged: false,
@@ -405,17 +405,17 @@ export const getProjectData = () => [
       isFavorite: false
     },
     organization: {
-      identifier: 'default',
-      name: 'default',
+      identifier: 'org-default',
+      name: 'Default Org',
       description: '',
       tags: {}
     },
     harnessManagedOrg: false,
     admins: [
       {
-        name: 'Deba Chatterjee',
-        email: 'debaditya.chatterjee@harness.io',
-        uuid: '8sNtcQbiSr696pO_KOpJlw',
+        name: 'Admin 3',
+        email: 'admin3@example.com',
+        uuid: 'admin3-uuid',
         locked: false,
         disabled: false,
         externallyManaged: false,
@@ -424,9 +424,9 @@ export const getProjectData = () => [
     ],
     collaborators: [
       {
-        name: 'Raghav M',
-        email: 'raghavsukt70@gmail.com',
-        uuid: 'qHlpKjq2S36WQYICkr1BPg',
+        name: 'Collaborator 2',
+        email: 'collab2@example.com',
+        uuid: 'collab2-uuid',
         locked: false,
         disabled: false,
         externallyManaged: false,
@@ -469,23 +469,24 @@ export const getProjectData = () => [
       isFavorite: false
     },
     organization: {
-      identifier: 'code',
-      name: 'code',
+      identifier: 'org-code',
+      name: 'Code Org',
       description: '',
       tags: {}
     },
     harnessManagedOrg: false,
     admins: [
       {
-        name: 'Chanikya',
-        email: 'chanikya.tippireddy@harness.io',
-        uuid: 'kIYn-iMFRnGRyYt1PIRoqg',
+        name: 'Admin 4',
+        email: 'admin4@example.com',
+        uuid: 'admin4-uuid',
         locked: false,
         disabled: false,
         externallyManaged: false,
         twoFactorAuthenticationEnabled: false
       }
-    ]
+    ],
+    collaborators: []
   },
   {
     projectResponse: {
@@ -522,17 +523,17 @@ export const getProjectData = () => [
       isFavorite: false
     },
     organization: {
-      identifier: 'NgTriggersOrg',
-      name: 'NgTriggersOrg',
+      identifier: 'org-triggers',
+      name: 'Triggers Org',
       description: '',
       tags: {}
     },
     harnessManagedOrg: false,
     admins: [
       {
-        name: 'shylaja.sundararajan@harness.io',
-        email: 'shylaja.sundararajan@harness.io',
-        uuid: 'lCf5uBXcQAGT1y4Qfc-uiQ',
+        name: 'Admin 5',
+        email: 'admin5@example.com',
+        uuid: 'admin5-uuid',
         locked: false,
         disabled: false,
         externallyManaged: false,
@@ -541,9 +542,9 @@ export const getProjectData = () => [
     ],
     collaborators: [
       {
-        name: 'Abhinav Mittal 2',
-        email: 'abhinav.mittal+1@harness.io',
-        uuid: 'qwUyCw0SQ1qCmQ69AaPhdA',
+        name: 'Collaborator 3',
+        email: 'collab3@example.com',
+        uuid: 'collab3-uuid',
         locked: false,
         disabled: false,
         externallyManaged: false,

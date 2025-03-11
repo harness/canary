@@ -23,7 +23,7 @@ export interface SecretItem extends BaseEntityProps {
   draft: boolean
 }
 
-export interface ExistingSecretsProps {
+export interface SecretReferenceProps {
   // Data
   secretsData: SecretItem[]
   folders: string[]
@@ -40,7 +40,7 @@ export interface ExistingSecretsProps {
 }
 
 // Component for selecting existing secrets
-export const ExistingSecrets: React.FC<ExistingSecretsProps> = ({
+export const SecretReference: React.FC<SecretReferenceProps> = ({
   // Data
   secretsData,
   folders,

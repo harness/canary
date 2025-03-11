@@ -42,7 +42,7 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
             <Dialog.Title>{t('component:navbar.search')}</Dialog.Title>
             <Dialog.Description>
               <Spacer size={6} />
-              <SearchBox.Root width="full" placeholder="Search..." />
+              <SearchBox.Root width="full" placeholder={`${t('component:navbar.search')}...`} />
             </Dialog.Description>
           </Dialog.Header>
         </Dialog.Content>

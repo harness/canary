@@ -6,7 +6,7 @@ import { Button, Drawer, Spacer } from '@harnessio/ui/components'
 import {
   CreateSecretFormFields,
   CreateSecretPage,
-  DirectoryType,
+  DirectionEnum,
   SecretCreationType,
   SecretItem,
   SecretReference,
@@ -16,7 +16,10 @@ import {
   SecretType
 } from '@harnessio/ui/views'
 
-import { getAccountsData, getOrgData, getProjectData, getSecretsData } from './secrets-data'
+import mockAccountsData from './mock-account-data.json'
+import mockOrgData from './mock-org-data.json'
+import mockProjectsData from './mock-project-data.json'
+import mockSecretsData from './mock-secrets-data.json'
 
 export const SecretsPage = () => {
   const scopeHierarchy: Record<SecretScope, { parent: SecretScope | null; child: SecretScope | null }> = {
@@ -30,8 +33,8 @@ export const SecretsPage = () => {
   // State for existing secrets
   const [, setActiveScope] = useState<SecretScope>(SecretScopeEnum.ORGANIZATION)
   const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
-  const [parentFolder, setParentFolder] = useState<string | null>(getAccountsData()[0].accountName)
-  const [childFolder, setChildFolder] = useState<string | null>(getProjectData()[0].projectResponse.project.identifier)
+  const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
+  const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
 
   const onSubmit = (data: CreateSecretFormFields) => {
     console.log('Submitted data:', data)
@@ -43,21 +46,21 @@ export const SecretsPage = () => {
     console.log('Selected secret:', secret)
   }
 
-  const handleScopeChange = (direction: DirectoryType) => {
+  const handleScopeChange = (direction: DirectionEnum) => {
     setActiveScope(prevScope => {
       const newScope =
-        direction === DirectoryType.UP ? scopeHierarchy[prevScope].parent! : scopeHierarchy[prevScope].child!
+        direction === DirectionEnum.PARENT ? scopeHierarchy[prevScope].parent! : scopeHierarchy[prevScope].child!
       switch (newScope) {
         case SecretScopeEnum.ACCOUNT:
           setParentFolder(null)
-          setChildFolder(getOrgData()[0].organizationResponse.organization.identifier)
+          setChildFolder(mockOrgData[0].organizationResponse.organization.identifier)
           break
         case SecretScopeEnum.ORGANIZATION:
-          setParentFolder(getAccountsData()[0].accountName)
-          setChildFolder(getProjectData()[0].projectResponse.project.identifier)
+          setParentFolder(mockAccountsData[0].accountName)
+          setChildFolder(mockProjectsData[0].projectResponse.project.identifier)
           break
         case SecretScopeEnum.PROJECT:
-          setParentFolder(getOrgData()[0].organizationResponse.organization.identifier)
+          setParentFolder(mockOrgData[0].organizationResponse.organization.identifier)
           setChildFolder(null)
           break
       }
@@ -91,7 +94,7 @@ export const SecretsPage = () => {
       case SecretType.EXISTING:
         return (
           <SecretReference
-            secretsData={getSecretsData().map(secret => ({
+            secretsData={mockSecretsData.map(secret => ({
               ...secret,
               id: secret.secret.identifier,
               name: secret.secret.name

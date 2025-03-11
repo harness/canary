@@ -57,5 +57,6 @@ export * from './secrets'
 
 // components
 export * from './components/RadioSelect'
+
 // entity-reference
-export * from './entity-reference'
+export * from './platform'

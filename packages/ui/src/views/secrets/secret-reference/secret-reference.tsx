@@ -1,9 +1,8 @@
-import React from 'react'
-
 import { Button, ButtonGroup, Icon, StackedList } from '@/components'
-import { EntityReference, EntityRendererProps, ScopeSelectorProps } from '@/views/entity-reference'
+import { EntityReference, EntityRendererProps } from '@views/platform'
+import { DirectionEnum } from '@views/platform/types'
 
-import { DirectoryType, SecretItem } from '../types'
+import { SecretItem } from '../types'
 
 export interface SecretReferenceProps {
   // Data
@@ -16,7 +15,7 @@ export interface SecretReferenceProps {
 
   // Callbacks
   onSelectEntity: (entity: SecretItem) => void
-  onScopeChange: (direction: DirectoryType) => void
+  onScopeChange: (direction: DirectionEnum) => void
   onCancel?: () => void
   isLoading?: boolean
 }
@@ -61,21 +60,7 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
           </Button>
         }
       >
-        <StackedList.Field title={entity.secret.name} description={entity.secret.description || undefined} />
-      </StackedList.Item>
-    )
-  }
-
-  // Custom scope selector renderer
-  const renderScopeSelector = (props: ScopeSelectorProps<string>) => {
-    const { parentFolder, onSelect } = props
-
-    return (
-      <StackedList.Item
-        onClick={() => onSelect(parentFolder)}
-        thumbnail={<Icon name="circle-arrow-top" size={16} className="text-foreground-5" />}
-      >
-        <StackedList.Field title={<span className="capitalize">{parentFolder}</span>} />
+        <StackedList.Field title={entity.secret.name} description={entity.secret.description} />
       </StackedList.Item>
     )
   }
@@ -84,13 +69,12 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
     <div className="flex flex-col h-full">
       <span className="font-medium mb-4">Select an existing Secret:</span>
       <div className="flex-1">
-        <EntityReference<SecretItem, string, string>
+        <EntityReference<SecretItem>
           entities={secretsData}
           selectedEntity={selectedEntity}
           onSelectEntity={onSelectEntity}
           onScopeChange={onScopeChange}
           renderEntity={renderEntity}
-          renderScopeSelector={renderScopeSelector}
           parentFolder={parentFolder}
           childFolder={childFolder}
           isLoading={isLoading}

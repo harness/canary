@@ -1,4 +1,4 @@
-import { BaseEntityProps } from '@views/entity-reference'
+import { BaseEntityProps } from '@views/platform'
 
 export interface SecretDataType {
   type: SecretCreationType
@@ -24,10 +24,6 @@ export enum SecretScopeEnum {
   PROJECT = 'project'
 }
 
-export enum DirectoryType {
-  UP = 'up',
-  DOWN = 'down'
-}
 export interface SecretData {
   type: string
   name: string

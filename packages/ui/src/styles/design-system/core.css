@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Thu, 06 Mar 2025 07:17:46 GMT
+ * Generated on Mon, 10 Mar 2025 11:42:46 GMT
  * Copyright (c) Harness.
  */
 
@@ -124,7 +124,7 @@
   --canary-spacing-2-half: 10px; /* 2.5 */
   --canary-spacing-3-half: 14px; /* 3.5 */
   --canary-rounded-1: 2px;
-  --canary-rounded-2: 4px; /* default */
+  --canary-rounded-2: 4px;
   --canary-rounded-3: 6px;
   --canary-rounded-4: 8px;
   --canary-rounded-5: 12px;
@@ -167,9 +167,11 @@
   --canary-size-1-half: 6px; /* 1.5 */
   --canary-size-2-half: 10px; /* 2.5 */
   --canary-size-3-half: 14px; /* 3.5 */
-  --canary-border-0: 0rem; /* No border (border-0) */
-  --canary-border-4: 4px; /* Thick border width (border-4) */
-  --canary-border-8: 8px; /* Extra thick border width (border-8) */
+  --canary-border-width-0: 0rem; /* No border (border-0) */
+  --canary-border-width-1: 1px; /* Default border width (border) */
+  --canary-border-width-2: 2px; /* Medium border width (border-2) */
+  --canary-border-width-4: 4px; /* Thick border width (border-4) */
+  --canary-border-width-8: 8px; /* Extra thick border width (border-8) */
   --canary-line-height-1-none: var(--canary-font-size-1)*var(--canary-line-height-none);
   --canary-line-height-1-tight: var(--canary-font-size-1)*var(--canary-line-height-tight);
   --canary-line-height-1-snug: var(--canary-font-size-1)*var(--canary-line-height-snug);
@@ -248,15 +250,12 @@
   --canary-line-height-13-normal: var(--canary-font-size-13)*var(--canary-line-height-normal);
   --canary-line-height-13-relaxed: var(--canary-font-size-13)*var(--canary-line-height-relaxed);
   --canary-line-height-13-loose: var(--canary-font-size-13)*var(--canary-line-height-loose);
-  --canary-icon-size-xs: var(--canary-size-3-half); /* 14px */
-  --canary-icon-size-sm: var(--canary-size-4); /* 16px */
-  /**
-   * 20px
-   * 
-   */
+  --canary-icon-size-xxs: var(--canary-size-3);
+  --canary-icon-size-xs: var(--canary-size-3-half);
+  --canary-icon-size-sm: var(--canary-size-4);
   --canary-icon-size-md: var(--canary-size-5);
   /**
-   * 32px
+   * 
    * 
    */
   --canary-icon-size-lg: var(--canary-size-8);

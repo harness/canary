@@ -19,7 +19,7 @@
   "text": {
     "1": {
       "$type": "color",
-      "$value": "{colors.chrome.50}",
+      "$value": "{colors.pure.white}",
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text, primary buttons."
     },
     "2": {
@@ -593,7 +593,7 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{border.2}",
+            "$value": "{border.1}",
             "$description": "Border color for selected outline buttons. Creates stronger visual indication of the active state."
           },
           "background": {
@@ -1056,6 +1056,11 @@
         "$value": "{text.accent}",
         "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
       },
+      "hover": {
+        "$type": "color",
+        "$value": "{brand.color.100}",
+        "$description": "Hover state color for text links. Provides visual feedback for user interaction."
+      },
       "visited": {
         "$type": "color",
         "$value": "{colors.purple.300}",
@@ -1162,7 +1167,7 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{borderWidth.2}",
+            "$value": "{border.2}",
             "$description": "Border styling applied to nested canvas containers. Creates clear visual boundaries between different sections within the pipeline visualization."
           }
         }

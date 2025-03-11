@@ -23,4 +23,5 @@ export interface IThemeStore {
   setTheme: (theme: FullTheme) => void
 }
 
-export const defaultTheme = `${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Standard}` as FullTheme
+// export const defaultTheme = `${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Standard}` as FullTheme
+export const defaultTheme = `source-dark-desktop-gitness` as FullTheme

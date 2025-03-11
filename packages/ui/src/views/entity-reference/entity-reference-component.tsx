@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 
-import { Button, Icon, Input, ScrollArea, SkeletonList, SkeletonTable } from '@/components'
+import { Button, Icon, Input, ScrollArea, SkeletonList } from '@/components'
 import { Root as StackedList, Field as StackedListField, Item as StackedListItem } from '@/components/stacked-list'
 import { cn } from '@utils/cn'
 import { DirectoryType } from '@views/secrets'

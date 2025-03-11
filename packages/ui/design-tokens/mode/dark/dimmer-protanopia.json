@@ -747,6 +747,11 @@
           "$value": "{text.1}",
           "$description": "Text color for AI-powered buttons. Ensures high contrast against AI button gradient border."
         },
+        "background": {
+          "$type": "color",
+          "$value": "{background.2}",
+          "$description": "Background color for AI-powered buttons."
+        },
         "border": {
           "$type": "color",
           "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 65%, {gradient.ai.gradient-stop-4} 100%)",

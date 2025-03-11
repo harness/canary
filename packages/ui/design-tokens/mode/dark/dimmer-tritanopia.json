@@ -1814,6 +1814,28 @@
           "$value": "{component.tag.yellow.background}",
           "$description": "Border color for yellow tags, replaced with orange."
         }
+      },
+      "gray": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.2}",
+          "$description": "Text color for gray tags. Ensures readability while maintaining the gray color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.850}",
+          "$description": "Background color for gray tags. Creates a distinct surface with gray theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.chrome.950}",
+          "$description": "Subtle background variation for gray tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.gray.background}",
+          "$description": "Border color for gray tags."
+        }
       }
     },
     "toast": {

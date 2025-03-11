@@ -26,8 +26,8 @@ import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
-import { mfeRoutes } from './routesV2'
-import { getV5RepoRoutes } from './v5routes'
+import { mfeRoutes } from './routes'
+import { getAppRoutes } from './v5routes'
 
 export interface MFERouteRendererProps {
   renderUrl: string
@@ -117,9 +117,9 @@ export default function AppMFE({
   // Router Configuration
   const basename = `/ng${renderUrl}`
 
-  const routesV6 = mfeRoutes(scope.projectIdentifier)
+  const v6Routes = mfeRoutes(scope.projectIdentifier)
 
-  const v5Routes = getV5RepoRoutes({
+  const v5AppRoutes = getAppRoutes({
     pathPrefix: renderUrl,
     Switch,
     Route,
@@ -149,7 +149,7 @@ export default function AppMFE({
                       <ToastProvider>
                         <Tooltip.Provider>
                           <ExitConfirmProvider>
-                            <NavigationProvider routes={routesV6} pathPrefix={renderUrl}>
+                            <NavigationProvider routes={v6Routes} pathPrefix={renderUrl}>
                               <RouterContextProvider
                                 Link={Link}
                                 NavLink={NavLink}
@@ -162,7 +162,7 @@ export default function AppMFE({
                                 {/* v6 */}
                                 {/* <RouterProvider router={createBrowserRouter(routesV6, { basename })} /> */}
                                 {/* v5 */}
-                                <BrowserRouter basename={basename}>{v5Routes}</BrowserRouter>
+                                <BrowserRouter basename={basename}>{v5AppRoutes}</BrowserRouter>
                               </RouterContextProvider>
                             </NavigationProvider>
                           </ExitConfirmProvider>

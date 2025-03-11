@@ -47,7 +47,7 @@ const FilterBoxWrapper = ({
     >
       {/* className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-background-3 pl-2.5 pr-2 transition-colors duration-200 hover:bg-background-8" */}
       <DropdownMenu.Trigger asChild>
-        <Button className="bg-background-3 hover:bg-background-8 gap-x-3 pl-2.5 pr-2">
+        <Button className="gap-x-3 bg-background-3 pl-2.5 pr-2 hover:bg-background-8">
           <div className="flex items-center gap-x-1.5 text-13">
             <span className="text-foreground-1">
               {filterLabel}
@@ -61,7 +61,7 @@ const FilterBoxWrapper = ({
 
       <DropdownMenu.Content className={cn('w-[276px] p-0', contentClassName)} align="start">
         <div className="flex items-center justify-between px-3 py-2.5">
-          <div className="text-foreground-4 flex items-center gap-x-2">{filterLabel}</div>
+          <div className="flex items-center gap-x-2 text-foreground-4">{filterLabel}</div>
 
           <DropdownMenu.Root>
             <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">
@@ -76,7 +76,7 @@ const FilterBoxWrapper = ({
                 <Button
                   size="xs"
                   variant="custom"
-                  className="data-[highlighted]:text-foreground-danger data-[highlighted]:bg-background-transparent gap-x-1.5"
+                  className="data-[highlighted]:bg-background-transparent gap-x-1.5 data-[highlighted]:text-foreground-danger"
                 >
                   <Icon name="trash" size={12} />
                   {t('component:filter.delete', 'Delete filter')}

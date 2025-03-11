@@ -69,7 +69,7 @@ export function StepNodeComponent({
   node: LeafNodeInternalType<StepNodeDataType>
 } & NodeProps) {
   const { name, icon, logs } = node.data
-  const stepNode = <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} mode={mode} />
+  const stepNode = <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} />
 
   if (mode === 'Edit') {
     return stepNode
@@ -162,8 +162,7 @@ export interface SerialGroupNodeDataType {
 
 export function SerialGroupNodeComponent({
   node,
-  children,
-  mode
+  children
 }: {
   node: SerialNodeInternalType<SerialGroupNodeDataType>
   children: React.ReactElement
@@ -177,7 +176,6 @@ export function SerialGroupNodeComponent({
       onAddClick={() => undefined}
       onHeaderClick={() => undefined}
       onAddInClick={() => undefined}
-      mode={mode}
     >
       {children}
     </PipelineNodes.SerialGroupNode>
@@ -192,8 +190,7 @@ export interface ParallelGroupNodeDataType {
 
 export function ParallelGroupNodeComponent({
   node,
-  children,
-  mode
+  children
 }: {
   node: ParallelNodeInternalType<ParallelGroupNodeDataType>
   children: React.ReactElement
@@ -207,7 +204,6 @@ export function ParallelGroupNodeComponent({
       onAddClick={() => undefined}
       onHeaderClick={() => undefined}
       onAddInClick={() => undefined}
-      mode={mode}
     >
       {children}
     </PipelineNodes.ParallelGroupNode>

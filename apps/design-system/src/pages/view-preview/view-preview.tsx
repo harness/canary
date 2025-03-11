@@ -11,7 +11,6 @@ import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
 import { RepoLabelsList } from '@subjects/views/labels/repo-labels-list'
 import { LandingPagePreview } from '@subjects/views/landing-page/landing-page-view'
-import PipelineStudioWrapper from '@subjects/views/pipeline-edit/pipeline-edit'
 import PipelineGraphWrapper from '@subjects/views/pipeline-graph/pipeline-graph'
 import PipelineGraphMinimalWrapper from '@subjects/views/pipeline-graph/pipeline-graph-minimal'
 import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
@@ -44,6 +43,7 @@ import { SecretsPage } from '@subjects/views/secrets/secrets'
 import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
+import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studio/unified-pipeline-studio'
 import { useTranslationStore } from '@utils/viewUtils'
 
 import { ChatEmptyPreviewWrapper, ChatPreviewWrapper } from '@harnessio/ui/components'
@@ -280,9 +280,13 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
           </RepoViewWrapper>
         )
       },
-      'pipeline-studio': {
-        label: 'Pipeline Studio',
-        element: <PipelineStudioWrapper />
+      'unified-pipeline-studio': {
+        label: 'Unified Pipeline Studio',
+        element: (
+          <RepoViewWrapper>
+            <UnifiedPipelineStudioWrapper />
+          </RepoViewWrapper>
+        )
       },
       'pipeline-graph': {
         label: 'Pipeline Graph',

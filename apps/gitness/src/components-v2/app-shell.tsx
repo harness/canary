@@ -3,15 +3,15 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { cn } from '@harnessio/canary'
 import {
+  AppSidebar,
   ManageNavigation,
   MenuGroupType,
   MenuGroupTypes,
   MoreSubmenu,
-  Navbar,
   NavbarItemType,
-  SettingsMenu
+  SettingsMenu,
+  Sidebar
 } from '@harnessio/ui/components'
-import { SandboxLayout } from '@harnessio/ui/views'
 
 import { useNav } from '../components/stores/recent-pinned-nav-links.store'
 import { getNavbarMenuData } from '../data/navbar-menu-data'
@@ -175,9 +175,9 @@ export const AppShell = () => {
   useRepoImportEvents()
 
   return (
-    <SandboxLayout.Root>
-      <SandboxLayout.LeftPanel>
-        <Navbar
+    <>
+      <Sidebar.Provider>
+        <AppSidebar
           showMoreMenu={showMoreMenu}
           showSettingMenu={showSettingMenu}
           handleMoreMenu={handleMoreMenu}
@@ -192,41 +192,51 @@ export const AppShell = () => {
           useThemeStore={useThemeStore}
           useTranslationStore={useTranslationStore}
         />
-      </SandboxLayout.LeftPanel>
 
-      <BreadcrumbsAndOutlet />
+        <Sidebar.Inset>
+          <BreadcrumbsAndOutlet />
 
-      <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
-      <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
-      <ManageNavigation
-        pinnedItems={pinnedMenu}
-        recentItems={recentMenu}
-        navbarMenuData={getNavbarMenuData({ t, routes, spaceId: spaceIdPathParam, repoId })}
-        showManageNavigation={showCustomNav}
-        isSubmitting={false}
-        submitted={false}
-        onSave={handleSave}
-        onClose={handleCustomNav}
-      />
+          <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
+          <SettingsMenu
+            showSettingMenu={showSettingMenu}
+            handleSettingsMenu={handleSettingsMenu}
+            items={settingsMenu}
+          />
+          <ManageNavigation
+            pinnedItems={pinnedMenu}
+            recentItems={recentMenu}
+            navbarMenuData={getNavbarMenuData({ t, routes, spaceId: spaceIdPathParam, repoId })}
+            showManageNavigation={showCustomNav}
+            isSubmitting={false}
+            submitted={false}
+            onSave={handleSave}
+            onClose={handleCustomNav}
+          />
+        </Sidebar.Inset>
+      </Sidebar.Provider>
       <Toaster />
-    </SandboxLayout.Root>
+    </>
   )
 }
 
 export const AppShellMFE = () => {
-  return <BreadcrumbsAndOutlet className="min-h-screen text-foreground-2" />
-}
-
-function BreadcrumbsAndOutlet({ className }: { className?: string }) {
   useRepoImportEvents()
 
   return (
-    <div className={cn('flex flex-col', className)}>
+    <>
+      <BreadcrumbsAndOutlet className="min-h-screen text-foreground-2" />
+      <Toaster />
+    </>
+  )
+}
+
+function BreadcrumbsAndOutlet({ className }: { className?: string }) {
+  return (
+    <div className={cn('h-full flex flex-col', className)}>
       <div className="layer-high sticky top-0 bg-background-1">
         <Breadcrumbs />
       </div>
       <Outlet />
-      <Toaster />
     </div>
   )
 }

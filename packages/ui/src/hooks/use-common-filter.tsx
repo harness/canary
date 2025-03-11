@@ -1,9 +1,10 @@
 import { useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
 
+import { useRouterContext } from '@/context'
 import { isEmpty } from 'lodash-es'
 
 function useCommonFilter() {
+  const { useSearchParams } = useRouterContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const searchQuery = searchParams.get('query')

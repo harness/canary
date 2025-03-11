@@ -161,38 +161,24 @@ export const PullRequestList: FC<PullRequestListProps> = ({
         <Link key={pullRequest.sha} to={pullRequest.number?.toString() || ''}>
           <StackedList.Item className="px-4 py-3" isLast={filteredData.length - 1 === pullRequest_idx}>
             {!!pullRequest.number && (
-              <>
-                <StackedList.Field
-                  className="max-w-full gap-1.5"
-                  title={
-                    pullRequest.name && (
-                      <PullRequestItemTitle
-                        isDraft={pullRequest.is_draft}
-                        state={pullRequest.state}
-                        success={!!pullRequest.merged}
-                        title={pullRequest.name}
-                        labels={pullRequest.labels}
-                        comments={pullRequest?.comments}
-                        merged={pullRequest.merged}
-                      />
-                    )
-                  }
-                  description={
-                    pullRequest.author &&
-                    typeof pullRequest.author === 'string' && (
-                      <PullRequestItemDescription
-                        number={pullRequest.number}
-                        author={pullRequest.author}
-                        reviewRequired={pullRequest.reviewRequired}
-                        tasks={pullRequest.tasks}
-                        sourceBranch={pullRequest.sourceBranch || ''}
-                        timestamp={pullRequest.timestamp}
-                        targetBranch={pullRequest.targetBranch || ''}
-                      />
-                    )
-                  }
-                />
-              </>
+              <StackedList.Field
+                className="max-w-full gap-1.5"
+                title={pullRequest.name && <PullRequestItemTitle pullRequest={pullRequest} />}
+                description={
+                  pullRequest.author &&
+                  typeof pullRequest.author === 'string' && (
+                    <PullRequestItemDescription
+                      number={pullRequest.number}
+                      author={pullRequest.author}
+                      reviewRequired={pullRequest.reviewRequired}
+                      tasks={pullRequest.tasks}
+                      sourceBranch={pullRequest.sourceBranch || ''}
+                      timestamp={pullRequest.timestamp}
+                      targetBranch={pullRequest.targetBranch || ''}
+                    />
+                  )
+                }
+              />
             )}
           </StackedList.Item>
         </Link>

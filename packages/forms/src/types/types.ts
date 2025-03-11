@@ -73,7 +73,7 @@ export interface IInputDefinition<T = unknown> {
    * Note: Validation of complex inputs has to respect its formik structure
    */
   validation?: {
-    schema?: Schema<unknown>
+    schema?: Schema<unknown> | ((values: any) => Schema<unknown>)
   }
   before?: JSX.Element | string
   after?: JSX.Element | string

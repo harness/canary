@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { LinkProps } from 'react-router-dom'
 
 import { PrincipalType } from '@/types'
 import {
@@ -38,11 +39,12 @@ export interface PullRequestSideBarProps {
   searchLabelQuery?: string
   setSearchLabelQuery?: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
+  editLabelsProps: LinkProps
   removeLabel?: (id: number) => void
   useTranslationStore: () => TranslationStore
 }
 
-const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
+export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
   usersList,
   reviewers = [],
   pullRequestMetadata,
@@ -60,11 +62,12 @@ const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
   searchLabelQuery,
   setSearchLabelQuery,
   addLabel,
+  editLabelsProps,
   removeLabel,
   useTranslationStore
 }) => {
   return (
-    <div>
+    <>
       <div className="flex flex-col gap-3">
         <ReviewersHeader
           currentUserId={currentUserId}
@@ -91,6 +94,7 @@ const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
           labelsValues={labelsValues}
           selectedLabels={PRLabels}
           addLabel={addLabel}
+          editLabelsProps={editLabelsProps}
           removeLabel={removeLabel}
           searchQuery={searchLabelQuery}
           setSearchQuery={setSearchLabelQuery}
@@ -98,14 +102,13 @@ const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
         />
         <LabelsList
           labels={PRLabels.map(label => ({
+            onDelete: () => removeLabel?.(label.id),
             color: label?.assigned_value?.color || label.color,
             key: label.key,
             value: label?.assigned_value?.value || undefined
           }))}
         />
       </div>
-    </div>
+    </>
   )
 }
-
-export { PullRequestSideBar }

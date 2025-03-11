@@ -48,7 +48,7 @@ export const ProjectGeneralSettingsPageContainer = () => {
   }
 
   // delete API call here
-  const deleteSpaceMutation = useDeleteSpaceMutation(
+  const { mutate: deleteSpaceMutation, isLoading } = useDeleteSpaceMutation(
     { space_ref: space?.path },
     {
       onSuccess: ({ body: data }) => {
@@ -65,7 +65,7 @@ export const ProjectGeneralSettingsPageContainer = () => {
     }
   )
 
-  const handleDeleteProject = () => deleteSpaceMutation.mutate({}, {})
+  const handleDeleteProject = () => deleteSpaceMutation({})
 
   return (
     <>
@@ -85,7 +85,7 @@ export const ProjectGeneralSettingsPageContainer = () => {
         deleteFn={handleDeleteProject}
         type="Project"
         error={deleteError}
-        isLoading={deleteSpaceMutation.isLoading}
+        isLoading={isLoading}
         withForm
         useTranslationStore={useTranslationStore}
       />

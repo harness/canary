@@ -1,27 +1,11 @@
+import { ColorType, ContrastType, FullTheme, ModeType } from '@/context'
+
 export interface ThemeInterface {
-  mode: Mode
-  contrast: Contrast
-  colorAdjustment: ColorAdjustment
+  mode: ModeType
+  contrast: ContrastType
+  colorAdjustment: ColorType
   accentColor: AccentColor
   grayColor: GrayColor
-}
-
-export enum Mode {
-  Dark = 'Dark',
-  Light = 'Light'
-}
-
-export enum Contrast {
-  Default = 'Default',
-  HighContrast = 'High Contrast',
-  Dimmer = 'Dimmer'
-}
-
-export enum ColorAdjustment {
-  Default = 'Default',
-  Protanopia = 'Protanopia',
-  Deuteranopia = 'Deuteranopia',
-  Tritanopia = 'Tritanopia'
 }
 
 export enum AccentColor {
@@ -53,9 +37,12 @@ export enum GrayColor {
 
 export interface ThemeDialogProps {
   defaultTheme?: ThemeInterface
-  theme?: ThemeInterface
+  theme?: FullTheme
+  setTheme: (theme: FullTheme) => void
   open: boolean
   onOpenChange: (open: boolean) => void
-  onChange: (language: ThemeInterface) => void
   children?: React.ReactNode
+  showSystemMode?: boolean
+  showAccentColor?: boolean
+  showGrayColor?: boolean
 }

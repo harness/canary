@@ -3152,7 +3152,7 @@ export const repoCommitsStore: RepoCommitsStore = {
         },
         files: [
           {
-            path: 'packages/ui/src/components/navbar/types.ts',
+            path: 'packages/ui/src/components/app-sidebar/types.ts',
             status: 'MODIFIED',
             insertions: 6,
             deletions: 4,
@@ -3180,14 +3180,14 @@ export const repoCommitsStore: RepoCommitsStore = {
             changes: 2
           },
           {
-            path: 'packages/ui/src/components/navbar/index.tsx',
+            path: 'packages/ui/src/components/app-sidebar/index.tsx',
             status: 'MODIFIED',
             insertions: 5,
             deletions: 3,
             changes: 8
           },
           {
-            path: 'packages/ui/src/components/navbar/navbar-item/index.tsx',
+            path: 'packages/ui/src/components/app-sidebar/navbar-item/index.tsx',
             status: 'MODIFIED',
             insertions: 4,
             deletions: 3,
@@ -3422,14 +3422,14 @@ export const repoCommitsStore: RepoCommitsStore = {
             changes: 47
           },
           {
-            path: 'packages/ui/src/components/navbar/data.ts',
+            path: 'packages/ui/src/components/app-sidebar/data.ts',
             status: 'MODIFIED',
             insertions: 13,
             deletions: 9,
             changes: 22
           },
           {
-            path: 'packages/ui/src/components/navbar/navbar-user/index.tsx',
+            path: 'packages/ui/src/components/app-sidebar/navbar-user/index.tsx',
             status: 'MODIFIED',
             insertions: 5,
             deletions: 2,
@@ -3499,7 +3499,7 @@ export const repoCommitsStore: RepoCommitsStore = {
             changes: 8
           },
           {
-            path: 'packages/ui/src/components/navbar/index.tsx',
+            path: 'packages/ui/src/components/app-sidebar/index.tsx',
             status: 'MODIFIED',
             insertions: 7,
             deletions: 4,

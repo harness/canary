@@ -19,7 +19,7 @@ export function InputComponentRenderer<T = unknown>({
   initialValues,
   input
 }: InputComponentRendererProps<T>): JSX.Element | null {
-  const { getValues, formState } = useFormContext()
+  const { formState, watch } = useFormContext()
   const { metadata = {}, fixedValues = {} /*getValuesWithDependencies*/ } = {} as any // useRootFormikContext()
 
   const inputComponent = factory?.getComponent<T>(input.inputType as string)
@@ -37,7 +37,8 @@ export function InputComponentRenderer<T = unknown>({
     [factory, initialValues, input, onChange, onUpdate, path, readonly, formState.errors]
   )
 
-  const valuesWithDependenciesAndStepPaths = cloneDeep(getValues()) //getValuesWithDependencies(values, input as IInputDefinition)
+  const values = watch()
+  const valuesWithDependenciesAndStepPaths = cloneDeep(values) //getValuesWithDependencies(values, input as IInputDefinition)
 
   if (fixedValues) {
     Object.keys(fixedValues).forEach(path => {

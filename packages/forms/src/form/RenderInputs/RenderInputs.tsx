@@ -1,5 +1,3 @@
-import React from 'react'
-
 import type { InputFactory } from '../../core/factory/InputFactory'
 import type { IInputDefinition } from '../../types/types'
 import { Row } from '../Row/Row'

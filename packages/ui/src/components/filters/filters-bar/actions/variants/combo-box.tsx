@@ -17,23 +17,25 @@ interface ComboBoxProps {
   isLoading?: boolean
   placeholder?: string
   noResultsMessage: ReactNode
+  loadingMessage?: ReactNode
 }
 
 export default function ComboBox({
-  options,
+  options = [],
   onSearch,
   onUpdateFilter,
   filterValue,
   placeholder,
   isLoading,
+  loadingMessage,
   noResultsMessage
 }: ComboBoxProps) {
   const selectedFilterValue = filterValue?.value
   const debouncedSearch = onSearch ? debounce(onSearch, 400) : undefined
 
-  const renderConent = () => {
+  const renderContent = () => {
     if (isLoading) {
-      return <Command.Loading className="text-foreground-5 px-2 py-4 text-sm">Loading Authors...</Command.Loading>
+      return <Command.Loading className="text-foreground-5 px-2 py-4 text-sm">{loadingMessage}</Command.Loading>
     }
 
     if (options.length === 0) {
@@ -68,7 +70,7 @@ export default function ComboBox({
         autoFocus
         onInput={e => debouncedSearch?.(e.currentTarget.value)}
       />
-      <Command.List>{renderConent()}</Command.List>
+      <Command.List>{renderContent()}</Command.List>
     </Command.Root>
   )
 }

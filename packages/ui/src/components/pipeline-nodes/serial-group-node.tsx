@@ -1,25 +1,40 @@
+import { Button } from '@components/button'
+import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 
-import { Button, Icon, NodeProps } from '..'
-import { FloatingAddButton } from './components/floating-add-button'
+import { ParallelContainerConfig } from '@harnessio/pipeline-graph/src/types/container-node'
 
-export interface SerialGroupNodeProps extends NodeProps {
+import { ExecutionStatus } from './components/execution-status'
+import { FloatingAddButton } from './components/floating-add-button'
+import { NodeMenuTrigger } from './components/node-menu-trigger'
+import { NodeTitle } from './components/node-title'
+import { ExecutionStatusType } from './types/types'
+
+export interface SerialGroupNodeProps {
   name?: string
+  executionStatus?: ExecutionStatusType
+  allChildrenCount?: number
   children?: React.ReactElement
   collapsed?: boolean
   isEmpty?: boolean
   selected?: boolean
   isFirst?: boolean
   parentNodeType?: 'leaf' | 'serial' | 'parallel'
+  hideContextMenu?: boolean
+  hideFloatingButtons?: boolean
   onEllipsisClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onAddInClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onHeaderClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onAddClick?: (position: 'before' | 'after', e: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  parallelContainerConfig?: Partial<ParallelContainerConfig>
+  serialContainerConfig?: Partial<ParallelContainerConfig>
 }
 
 export function SerialGroupNode(props: SerialGroupNodeProps) {
   const {
     name,
+    allChildrenCount,
+    executionStatus,
     children,
     collapsed,
     isEmpty,
@@ -30,41 +45,27 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
     onHeaderClick,
     onAddClick,
     parentNodeType,
-    mode
+    hideContextMenu,
+    hideFloatingButtons,
+    serialContainerConfig,
+    parallelContainerConfig
   } = props
 
   return (
     <>
+      <ExecutionStatus executionStatus={executionStatus} />
+
       <div
-        className={cn('absolute inset-0 -z-10 rounded-xl border', {
-          'border-borders-2': !selected,
-          'border-borders-3': selected
+        className={cn('absolute inset-0 -z-10 rounded-md border bg-graph-background-1', {
+          'border-borders-4': !selected,
+          'border-borders-3': selected,
+          'bg-background-2 border-borders-2': collapsed
         })}
       />
 
-      <div className="absolute inset-x-0 top-0 h-0">
-        <div
-          role="button"
-          tabIndex={0}
-          title={name}
-          className="h-10 cursor-pointer truncate px-9 pt-2.5 text-primary-muted"
-          onClick={onHeaderClick}
-        >
-          {name}
-        </div>
-      </div>
+      <NodeTitle name={name} onHeaderClick={onHeaderClick} counter={allChildrenCount} />
 
-      {mode !== 'Execution' && (
-        <Button
-          className="absolute right-2 top-2 z-10"
-          variant="ghost"
-          size="sm_icon"
-          onMouseDown={e => e.stopPropagation()}
-          onClick={onEllipsisClick}
-        >
-          <Icon name="ellipsis" size={15} />
-        </Button>
-      )}
+      {!hideContextMenu && <NodeMenuTrigger onEllipsisClick={onEllipsisClick} />}
 
       {!collapsed && isEmpty && (
         <Button
@@ -78,25 +79,30 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
         </Button>
       )}
 
-      {mode !== 'Execution' && isFirst && (
+      {!hideFloatingButtons && isFirst && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="before"
           onClick={e => {
             onAddClick?.('before', e)
           }}
+          collapsed={collapsed}
+          parallelContainerConfig={parallelContainerConfig}
+          serialContainerConfig={serialContainerConfig}
         />
       )}
-      {mode !== 'Execution' && (
+      {!hideFloatingButtons && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="after"
           onClick={e => {
             onAddClick?.('after', e)
           }}
+          collapsed={collapsed}
+          parallelContainerConfig={parallelContainerConfig}
+          serialContainerConfig={serialContainerConfig}
         />
       )}
-
       {children}
     </>
   )

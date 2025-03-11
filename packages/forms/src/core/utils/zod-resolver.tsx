@@ -16,7 +16,7 @@ export function useZodValidationResolver(
       try {
         const validationSchema = getValidationSchema(formDefinition, data, options)
 
-        const values = await validationSchema.parseAsync(data)
+        await validationSchema.parseAsync(data)
 
         return {
           values: data, // TODO: check this - values does not contains all data

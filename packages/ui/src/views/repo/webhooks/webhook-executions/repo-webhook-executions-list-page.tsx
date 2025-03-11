@@ -29,7 +29,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   const { navigate } = useRouterContext()
   const events = useMemo(() => {
     return [...getBranchEvents(t), ...getTagEvents(t), ...getPrEvents(t)]
-  }, [])
+  }, [t])
 
   return (
     <SandboxLayout.Main className="mx-0">

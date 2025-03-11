@@ -13,7 +13,13 @@
     "publish:all": "pnpm publish -r --access public",
     "preinstall": "npx only-allow pnpm",
     "pre-commit": "pnpm run -r --workspace-concurrency=1 pre-commit",
-    "test": "pnpm -r test"
+    "test": "pnpm -r test",
+    "gitness:build": "pnpm -r -F './packages/*' build:ci && pnpm -r -F ./apps/gitness build",
+    "gitness:dev": "pnpm -r -F './packages/*' build && pnpm -r -F ./apps/gitness dev",
+    "portal:build": "pnpm -r -F './packages/*' build:ci && pnpm -r -F ./apps/portal build",
+    "portal:dev": "pnpm -r -F './packages/*' build && pnpm -r -F ./apps/portal dev",
+    "view-preview:build": "pnpm -r -F './packages/*' build:ci && pnpm -r -F ./apps/design-system build",
+    "view-preview:dev": "pnpm -r -F './packages/*' build && pnpm -r -F ./apps/design-system dev"
   },
   "engines": {
     "node": ">=18.17.1"

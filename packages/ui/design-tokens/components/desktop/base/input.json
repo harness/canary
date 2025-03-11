@@ -1,23 +1,21 @@
 {
   "input": {
     "size": {
+      "sm": {
+        "$type": "sizing",
+        "$value": "{size.8}",
+        "$description": "32px"
+      },
       "default": {
         "$type": "sizing",
         "$value": "{size.9}",
         "$description": "36px\n"
-      },
-      "compact": {
-        "$type": "sizing",
-        "$value": "{size.8}",
-        "$description": "32px"
       }
     },
     "radius": {
-      "default": {
-        "$type": "borderRadius",
-        "$value": "{rounded.3}",
-        "$description": "6px"
-      }
+      "$type": "borderRadius",
+      "$value": "{rounded.3}",
+      "$description": "6px"
     },
     "gap": {
       "$type": "spacing",

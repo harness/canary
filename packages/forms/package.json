@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "description": "Harness Forms Library",
   "scripts": {
+    "playground": "vite dev --config vite.config.playground.ts",
     "dev": "run-p build:watch",
     "build": "vite build",
+    "build:ci": "vite build",
     "build:watch": "vite build --watch",
     "prepublishOnly": "pnpm build",
     "pretty": "prettier --check ./src",

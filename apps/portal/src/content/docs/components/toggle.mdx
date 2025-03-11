@@ -1,0 +1,129 @@
+---
+title: Toggle
+description: Toggle component for switching between two states
+---
+
+The `Toggle` component provides a customizable button that can be toggled between two states. It supports various styling options through variants and sizes.
+
+import { DocsPage } from "../../../components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-8">
+    <div>
+        <h5>Standard toggle</h5>
+        <Toggle>Default</Toggle>
+    </div>
+
+    <hr />
+
+    <div className="flex flex-col gap-4">
+        <h5>Variants</h5>
+        <div className="flex items-center flex-wrap gap-4">
+            <Toggle variant="default">Default</Toggle>
+            <Toggle variant="outline">Outline</Toggle>
+            <Toggle variant="compact">Compact</Toggle>
+        </div>
+    </div>
+
+    <hr />
+
+    <div className="flex flex-col gap-4">
+        <h5>Sizes <span className="italic text-12">(pressed)</span></h5>
+        <div className="flex items-center flex-wrap gap-4">
+            <Toggle size="default" defaultPressed>Default</Toggle>
+            <Toggle size="xs" defaultPressed>Extra small</Toggle>
+            <Toggle size="sm" defaultPressed>Small</Toggle>
+            <Toggle size="lg" defaultPressed>Large</Toggle>
+        </div>
+    </div>
+
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Toggle } from '@harnessio/ui/components'
+
+// ...
+
+const [pressed, setPressed] = useState(false)
+
+return <Toggle pressed={pressed} onPressedChange={setPressed}>Dark Mode</Toggle>
+```
+
+## API Reference
+
+The `Toggle` component is a button that can be toggled on and off.
+
+```typescript jsx
+<Toggle
+  variant="default"           // [OPTIONAL] visual style variant, can be 'default', 'outline', 'compact'
+  size="default"              // [OPTIONAL] size, can 'default', 'sm', 'lg', 'xs', 'icon'
+  className="custom"          // [OPTIONAL] additional CSS classes to apply
+  defaultPressed              // [OPTIONAL] initial pressed state
+  pressed                     // [OPTIONAL] current pressed state
+  onPressedChange={onPressed} // [OPTIONAL] event handler called when the pressed state changes
+  disabled                    // [OPTIONAL] disable the toggle
+>
+  Toggle Text
+</Toggle>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "The visual style variant of the toggle",
+      required: false,
+      defaultValue: "default",
+      value: "'default' | 'outline' | 'compact'",
+    },
+    {
+      name: "size",
+      description: "The size of the toggle",
+      required: false,
+      defaultValue: "default",
+      value: "'default' | 'sm' | 'lg' | 'xs' | 'icon'",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the toggle",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "The content of the toggle",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "defaultPressed",
+      description: "The initial pressed state of the toggle",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "pressed",
+      description: "The controlled pressed state of the toggle",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onPressedChange",
+      description: "Event handler called when the pressed state changes",
+      required: false,
+      value: "(pressed: boolean) => void",
+    },
+    {
+      name: "disabled",
+      description: "Whether the toggle is disabled",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+  ]}
+/>

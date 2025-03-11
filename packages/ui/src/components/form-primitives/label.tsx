@@ -1,6 +1,6 @@
 // ToDo: Need to be reviewed by the XD team
 
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, PropsWithChildren } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, PropsWithChildren } from 'react'
 
 import * as LabelPrimitive from '@radix-ui/react-label'
 import { cn } from '@utils/cn'
@@ -34,7 +34,7 @@ LabelRoot.displayName = LabelPrimitive.Root.displayName
 
 interface LabelProps
   extends VariantProps<typeof labelVariants>,
-    PropsWithChildren<Omit<React.HTMLAttributes<HTMLLabelElement>, 'color'>> {
+    PropsWithChildren<Omit<HTMLAttributes<HTMLLabelElement>, 'color'>> {
   htmlFor?: string
   optional?: boolean
   className?: string
@@ -46,12 +46,15 @@ interface LabelProps
  * @example
  * <Label htmlFor="label" optional>Label</Label>
  */
-const Label = ({ htmlFor, optional, color, variant, children, className }: LabelProps) => {
-  return (
-    <LabelRoot htmlFor={htmlFor} variant={variant} color={color} className={className}>
-      {children} {optional && <span className="align-top text-foreground-7">(optional)</span>}
-    </LabelRoot>
-  )
-}
+const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
+  ({ htmlFor, optional, color, variant, children, className }: LabelProps, ref) => {
+    return (
+      <LabelRoot htmlFor={htmlFor} variant={variant} color={color} className={className} ref={ref}>
+        {children} {optional && <span className="align-top text-foreground-7">(optional)</span>}
+      </LabelRoot>
+    )
+  }
+)
+Label.displayName = 'Label'
 
 export { Label }

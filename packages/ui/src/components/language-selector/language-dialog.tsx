@@ -3,7 +3,12 @@ import { FC, useEffect, useState } from 'react'
 import { Dialog, Icon } from '@/components'
 import { cn } from '@utils/cn'
 
-import { LanguageCode, LanguageDialogProps } from './types'
+import { Language, LanguageCode, LanguageDialogProps, LanguageInterface } from './types'
+
+export const languages: LanguageInterface[] = [
+  { code: LanguageCode.EN, name: Language.English },
+  { code: LanguageCode.FR, name: Language.French }
+]
 
 const LanguageDialog: FC<LanguageDialogProps> = ({
   defaultLanguage = LanguageCode.EN,
@@ -33,14 +38,14 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
           {supportedLanguages.map(lang => (
             <button
               key={lang.code}
-              className="group relative flex cursor-pointer items-center justify-between rounded-md px-0 focus-visible:outline-none"
+              className="group relative flex cursor-pointer items-center justify-between rounded-md px-0 focus-visible:outline-none focus:ring-0"
               onClick={() => {
                 setSelectedLanguage(lang.code)
                 onChange(lang)
               }}
             >
               <div className="flex items-center gap-2">
-                <div className="flex size-6 items-center justify-center rounded bg-background-12 text-12 text-foreground-3">
+                <div className="flex size-6 items-center justify-center rounded bg-background-12 text-12 text-foreground-3 uppercase">
                   {lang.code}
                 </div>
                 <span
@@ -55,7 +60,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
               {selectedLanguage === lang.code && <Icon className="text-icons-2" name="tick" size={12} />}
               <span
                 className={cn(
-                  'absolute -inset-x-2 -inset-y-1 rounded group-hover:bg-background-4 group-focus-visible:outline group-focus-visible:outline-offset-2 group-focus-visible:outline-borders-accent group-focus-visible:outline-2',
+                  'absolute -inset-x-2 -inset-y-1 rounded group-hover:bg-background-4',
                   selectedLanguage === lang.code && 'bg-background-4'
                 )}
                 aria-hidden

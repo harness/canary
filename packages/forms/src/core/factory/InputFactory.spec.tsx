@@ -1,5 +1,3 @@
-import React from 'react'
-
 import type { AnyFormikValue } from '../../types/types'
 import { InputComponent, InputProps } from '../components/InputComponent'
 import { InputFactory, InputOverrideError } from './InputFactory'

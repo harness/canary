@@ -36,7 +36,7 @@ import PullRequestConversationPage from './pages-v2/pull-request/pull-request-co
 import PullRequestDataProvider from './pages-v2/pull-request/pull-request-data-provider'
 import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
 import PullRequestListPage from './pages-v2/pull-request/pull-request-list'
-import { RepoLabelFormContainer } from './pages-v2/repo/labels/label-form-container.tsx'
+import { RepoLabelFormContainer } from './pages-v2/repo/labels/label-form-container'
 import { RepoLabelsList } from './pages-v2/repo/labels/labels-list-container'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/repo-branch-rules-container'

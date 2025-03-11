@@ -1,2 +1,3 @@
-export * from './PortalContext'
-export * from './RouterContext'
+export * from './portal-context'
+export * from './router-context'
+export * from './theme'

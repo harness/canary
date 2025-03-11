@@ -11,7 +11,7 @@
     "pull-requests": "Pull Requests",
     "branches": "Branches",
     "settings": "Settings",
-    "descriptionPlaceholder": "Enter a description",
+    "descriptionPlaceholder": "Enter a short description for the label",
     "description": "Description",
     "error": "Error:",
     "saving": "Saving…",
@@ -38,6 +38,20 @@
     "token": "Token",
     "cloneCredGenerated": "Your token has been generated. Please make sure to copy and store your token somewhere safe, you won't be able to see it again.",
     "manageAPIToken": "Manage API token",
+    "prListFilterOptions": {
+      "authorOption": {
+        "label": "Author",
+        "noResults": "No results found",
+        "loading": "Loading Authors...",
+        "placeholder": "Search by author"
+      },
+      "beforeOption": {
+        "label": "Created Before"
+      },
+      "afterOption": {
+        "label": "Created After"
+      }
+    },
     "RequestApprovalRule": "Request approval of new changes",
     "RequireLatestCommitDescription": "Require re-approval when there are new changes in the pull request",
     "RequireNoChangeRequest": "Require resolution of change requests",
@@ -143,7 +157,7 @@
     "editReadme": "Edit README.md",
     "openPullReq": "Open pull requests",
     "createTagTitle": "Create a tag",
-    "repoTagDescriptionPlaceholder": "Enter a description of this tag...",
+    "repoTagDescriptionPlaceholder": "Enter tag description here",
     "creatingTagButton": "Creating tag...",
     "createTagButton": "Create tag",
     "tag": "Tag",
@@ -171,6 +185,28 @@
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
     "tagger": "Tagger",
+    "creationDate": "Creation date",
+    "createBranchDialog": {
+      "validation": {
+        "name": "Branch name is required",
+        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
+        "noSpaces": "Name cannot contain spaces",
+        "target": "Base branch is required"
+      }
+    },
+    "createTagDialog": {
+      "validation": {
+        "name": "Tag name is required",
+        "nameMax": "Name must be no longer than 40 characters",
+        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
+        "noSpaces": "Name cannot contain spaces",
+        "target": "Base branch is required",
+        "message": "Description is required"
+      },
+      "name": "Name",
+      "target": "Target",
+      "message": "Message"
+    },
     "renameBranch": "Rename Branch",
     "add": "Add",
     "users": "Users",
@@ -207,15 +243,27 @@
     "noRepos": "No repositories yet",
     "noReposProject": "There are no repositories in this project yet.",
     "createOrImportRepos": "Create new or import an existing repository.",
-    "noTags": "There are no tags in this project yet.",
-    "createNewTag": "Create a new Tag.",
+    "noTags": "No tags yet",
+    "createNewTag": "Create new tag",
     "noWebhookExecution": "No webhook executions yet",
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
+    "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
     "commit": "Commit",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
+  },
+  "execution": {
+    "summary": "Summary",
+    "logs": "Logs",
+    "graph": "Graph",
+    "inputs": "Inputs",
+    "opa": "Policy evaluations",
+    "artifacts": "Artifacts",
+    "tests": "Tests",
+    "sto": "Security tests",
+    "secrets": "Secrets"
   },
   "labelData": {
     "form": {
@@ -287,6 +335,7 @@
   },
   "pullRequests": {
     "conversation": "Conversation",
+    "commits": "Commits",
     "changes": "Changes",
     "noCommitsYet": "No commits yet",
     "noCommitDataDescription": "There are no commits yet.",
@@ -305,7 +354,7 @@
     "compareChangesAbleToMergeDescription": "These branches can be automatically merged.",
     "compareChangesApiError": "Head branch doesn’t contain any new commits.",
     "compareChangesCantMerge": "Can’t be merged.",
-    "compareChangesCantMergeDesciption": "You can still create the pull request.",
+    "compareChangesCantMergeDescription": "You can still create the pull request.",
     "compareChangesDiscussChanges": "Discuss and review the changes in this comparison with others.",
     "compareChangesDiscussChangesLink": "Learn about pull requests.",
     "compareChangesChooseDifferent": "Choose different branches above to discuss and review changes.",
@@ -313,12 +362,15 @@
     "compareChangesTabOverview": "Overview",
     "compareChangesTabCommits": "Commits",
     "compareChangesTabChanges": "Changes",
-    "findOrAddNewValue": "Search or add a new value",
+    "findOrAddNewValue": "Find or add a new value",
+    "addNewValue": "Add a new value",
     "searchValue": "Search value",
     "addValue": "Add new value",
-    "noLabels": "No labels found",
+    "labelNotFound": "Label not found",
     "labels": "Labels",
     "searchLabels": "Search labels",
+    "noLabels": "No labels found",
+    "editLabels": "Edit labels",
     "deleted": "Deleted",
     "deletedComment": "This comment was deleted.",
     "reviewers": "Reviewers",
@@ -340,7 +392,6 @@
     "compareChangesDraftButton": "Draft pull request",
     "compareChangesDraftButtonLoading": "Drafting pull request...",
     "replyHere": "Reply here",
-    "commits": "Commits",
     "showDiff": "Show Diff",
     "deletedFileDiff": "This file was deleted.",
     "largeDiff": "Large diffs are not rendered by default.",
@@ -438,7 +489,9 @@
     "selectRole": "Select role",
     "enterBranchName": "Enter branch name",
     "createBranchError": "Branch name is required",
-    "enterTagName": "Enter tag name",
+    "enterTagName": "Enter a tag name here",
+    "tagName": "Name",
+    "basedOn": "Based on",
     "select": "Select",
     "baseBranch": "Base branch",
     "selectBranchError": "Base branch is required",

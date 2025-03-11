@@ -38,7 +38,7 @@ export const SecretsPage = () => {
           />
         )
       case SecretType.Existing:
-        return <></>
+        return <EntityReferenceExample />
       default:
         return null
     }

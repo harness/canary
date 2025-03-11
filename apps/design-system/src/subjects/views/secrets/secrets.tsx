@@ -17,6 +17,12 @@ import {
 import { getSecretsData } from './secrets-data'
 
 export const SecretsPage = () => {
+  const scopeHierarchy: Record<SecretScope, { parent: SecretScope | null; child: SecretScope | null }> = {
+    account: { parent: null, child: 'organization' },
+    organization: { parent: 'account', child: 'project' },
+    project: { parent: 'organization', child: null }
+  }
+
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.New)
 
   // State for existing secrets
@@ -36,33 +42,11 @@ export const SecretsPage = () => {
 
   const handleScopeChange = (scope: SecretScope, direction: 'up' | 'down') => {
     if (direction === 'up') {
-      switch (scope) {
-        case 'account':
-          setParentScope(null)
-          setChildFolder('organization')
-          break
-        case 'organization':
-          setParentScope('account')
-          setChildFolder('project')
-          break
-        case 'project':
-          setParentScope('organization')
-          setChildFolder(null)
-          break
-      }
-    } else {
-      switch (scope) {
-        case 'account':
-          break
-        case 'organization':
-          setParentScope('account')
-          setChildFolder('project')
-          break
-        case 'project':
-          setParentScope('organization')
-          setChildFolder(null)
-          break
-      }
+      setParentScope(scopeHierarchy[scope].parent)
+      setChildFolder(scopeHierarchy[scope].child)
+    } else if (direction === 'down') {
+      setParentScope(scopeHierarchy[scope].parent)
+      setChildFolder(scopeHierarchy[scope].child)
     }
   }
 
@@ -103,7 +87,6 @@ export const SecretsPage = () => {
             onSelectEntity={handleSelectSecret}
             onScopeChange={handleScopeChange}
             onCancel={handleCancel}
-            // onFolderChange={handleFolderChange}
           />
         )
       default:

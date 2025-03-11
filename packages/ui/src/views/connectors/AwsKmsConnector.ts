@@ -1,6 +1,7 @@
 // Import schema registration first
-import { AwsKmsSpec, schemas } from './schemas'
+
 import { getConnectorBuilder } from './ConnectorPayloadBuilder'
+import { AwsKmsSpec, schemas } from './schemas'
 import { AWS_KMS_CONNECTOR_IDENTIFIER } from './types'
 
 // Register schema before getting the builder

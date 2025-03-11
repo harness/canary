@@ -142,7 +142,7 @@ export default function AppMFE({
                       <ToastProvider>
                         <Tooltip.Provider>
                           <ExitConfirmProvider>
-                            <NavigationProvider routes={routesV6}>
+                            <NavigationProvider routes={routesV6} basename={renderUrl}>
                               <RouterContextProvider
                                 Link={Link}
                                 NavLink={NavLink}

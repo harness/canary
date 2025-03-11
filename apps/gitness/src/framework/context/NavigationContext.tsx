@@ -8,10 +8,15 @@ const RouteMappingContext = createContext<RouteFunctionMap | undefined>(undefine
 interface NavigationProviderProps {
   routes: CustomRouteObject[]
   children: React.ReactNode
+  pathPrefix?: string
 }
 
-export const NavigationProvider: React.FC<NavigationProviderProps> = ({ routes, children }) => {
-  return <RouteMappingContext.Provider value={getRouteMapping({ routes })}>{children}</RouteMappingContext.Provider>
+export const NavigationProvider: React.FC<NavigationProviderProps> = ({ routes, children, pathPrefix }) => {
+  return (
+    <RouteMappingContext.Provider value={getRouteMapping({ routes, parentPath: pathPrefix })}>
+      {children}
+    </RouteMappingContext.Provider>
+  )
 }
 
 export const useRoutes = (): RouteFunctionMap => {

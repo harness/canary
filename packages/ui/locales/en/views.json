@@ -249,9 +249,9 @@
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
-    "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
     "noUsers": "No Users Found",
     "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
+    "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
     "commit": "Commit",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."

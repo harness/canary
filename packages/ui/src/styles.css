@@ -1,5 +1,3 @@
-/* @import url('./shared-style-variables.css'); */
-
 @import url('./styles/core-styles.css');
 
 @tailwind base;
@@ -27,47 +25,60 @@
   src: url('./fonts/JetBrainsMono-Regular.woff2') format('woff2');
 }
 
+/**
+ * Component styles - TEMPORARY
+ */
+
 @layer components {
   /*  ====== BADGE ======  */
-  .badge-default {
-    /* border: ; */
-    color: oklch(var(--canary-component-badge-default-text));
-    background-color: oklch(var(--canary-component-badge-default-background));
+
+  .badge {
+    --badge-color: var(--canary-component-badge-default-text);
+    --badge-bg-color: var(--canary-component-badge-default-background);
+    --badge-border-color: var(--canary-component-badge-default-border);
+
+    border: var(--canary-border-width-1) solid var(--badge-border-color);
+    color: var(--badge-color);
+    background-color: var(--badge-bg-color);
   }
   .badge-neutral {
-    /* border: ; */
-    color: oklch(var(--canary-component-badge-neutral-text));
-    background-color: oklch(var(--canary-component-badge-neutral-background));
+    --badge-color: var(--canary-component-badge-neutral-text);
+    --badge-bg-color: var(--canary-component-badge-neutral-background);
+    --badge-border-color: var(--canary-component-badge-neutral-border);
   }
   .badge-success {
-    /* border: ; */
-    color: oklch(var(--canary-component-badge-success-text));
-    background-color: oklch(var(--canary-component-badge-success-background));
+    --badge-color: var(--canary-component-badge-success-text);
+    --badge-bg-color: var(--canary-component-badge-success-background);
+    --badge-border-color: var(--canary-component-badge-success-border);
   }
   .badge-warning {
-    /* border: ; */
-    color: oklch(var(--canary-component-badge-warning-text));
-    background-color: oklch(var(--canary-component-badge-warning-background));
+    --badge-color: var(--canary-component-badge-warning-text);
+    --badge-bg-color: var(--canary-component-badge-warning-background);
+    --badge-border-color: var(--canary-component-badge-warning-border);
   }
   .badge-danger {
-    /* border: ; */
-    color: oklch(var(--canary-component-badge-danger-text));
-    background-color: oklch(var(--canary-component-badge-danger-background));
+    --badge-color: var(--canary-component-badge-danger-text);
+    --badge-bg-color: var(--canary-component-badge-danger-background);
+    --badge-border-color: var(--canary-component-badge-danger-border);
   }
   .badge-running {
-    /* border: ; */
-    color: oklch(var(--canary-component-badge-running-text));
-    background-color: oklch(var(--canary-component-badge-running-background));
+    --badge-color: var(--canary-component-badge-running-text);
+    --badge-bg-color: var(--canary-component-badge-running-background);
+    --badge-border-color: var(--canary-component-badge-running-border);
   }
   .badge-merged {
-    /* border: ; */
-    color: oklch(var(--canary-component-badge-merged-text));
-    background-color: oklch(var(--canary-component-badge-merged-background));
+    --badge-color: var(--canary-component-badge-merged-text);
+    --badge-bg-color: var(--canary-component-badge-merged-background);
+    --badge-border-color: var(--canary-component-badge-merged-border);
   }
   .badge-ai {
-    /* border: ; */
-    color: oklch(var(--canary-component-badge-ai-text));
-    background-color: oklch(var(--canary-component-badge-ai-background));
+    --badge-color: var(--canary-component-badge-ai-text);
+    --badge-bg-color: var(--canary-component-badge-ai-background);
+    --badge-border-color: var(--canary-component-badge-ai-border);
+  }
+  /* .badge-default {
+    color: oklch(var(--canary-component-badge-default-text));
+    background-color: oklch(var(--canary-component-badge-default-background));
   }
   /*  ====== BADGE ======  */
 }
@@ -126,7 +137,7 @@
 /* Text utilities */
 .text-radial-gradient {
   /* remove hardcode colors */
-  @apply text-primary/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
+  @apply bg-gradient-radial text-primary/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
 }
 
 /* Card utilities */

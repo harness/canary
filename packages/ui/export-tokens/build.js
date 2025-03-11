@@ -151,6 +151,7 @@ async function run() {
     return {
       source: sets.map(tokenset => `design-tokens/${tokenset}.json`),
       preprocessors: ['tokens-studio'],
+
       platforms: {
         css: {
           transformGroup: 'tokens-studio',
@@ -165,7 +166,7 @@ async function run() {
               ]
             }
           },
-          transforms: ['name/kebab', 'attribute/themeable'],
+          transforms: ['name/kebab', 'attribute/themeable', 'ts/transform/alpha'],
           files: [
             // core tokens (colors, typography, dimensions, components)
             ...generateCoreFiles(),
@@ -228,23 +229,26 @@ async function run() {
       }
     })
 
-    // sd.registerTransform({
-    //   name: 'ts/transform/alpha',
-    //   type: 'value',
-    //   // filter: prop => {
-    //   //   return prop.type === 'color'
-    //   //   // return prop.$extensions?.['studio.tokens']?.modify?.type === 'alpha'
-    //   // },
-    //   transitive: true,
-    //   transform: prop => {
-    //     return '#010'
-    //     console.log('prop', JSON.stringify(prop, null, 2))
-    //     const alphaValue = prop.$extensions?.['studio.tokens']?.modify?.value
-    //     const colorValue = prop.$value
+    sd.registerTransform({
+      name: 'ts/transform/alpha',
+      type: 'value',
+      filter: prop => {
+        // return prop.type === 'color'
+        return (
+          prop.$extensions?.['studio.tokens']?.modify?.type === 'alpha' &&
+          prop.$extensions?.['studio.tokens']?.modify?.space === 'lch'
+        )
+      },
+      transitive: true,
+      transform: prop => {
+        console.log('prop', JSON.stringify(prop, null, 2))
 
-    //     return `var(--${colorValue.replace(/[{}]/g, '').toLowerCase()}) / ${alphaValue}`
-    //   }
-    // })
+        const baseColor = prop.original.$value.replace(/[{}]/g, '').replace(/\./g, '-')
+        const alphaValue = prop.$extensions['studio.tokens'].modify.value
+        return `lch(from var(--canary-${baseColor}) l c h / ${alphaValue})`
+        // return `lch(var(--canary-${baseColor}) / ${alphaValue})`
+      }
+    })
 
     await sd.cleanAllPlatforms()
     await sd.buildAllPlatforms()

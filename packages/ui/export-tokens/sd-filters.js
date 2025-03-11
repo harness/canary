@@ -3,8 +3,12 @@
  * All the colors will be updated manually.
  * 🚨 TODO: UPDATE THE COLORS FILE NAME HERE 🚨
  *  */
+// && !token.filePath.startsWith('design-tokens/core/colors.json')
 export const coreFilter = token =>
-  token.filePath.startsWith('design-tokens/core/') && !token.filePath.startsWith('design-tokens/core/colors.json')
+  token.filePath.startsWith('design-tokens/core/') && !token.filePath.startsWith('design-tokens/core/colors_')
+
+export const lchColorsFilter = token =>
+  token.filePath.startsWith('design-tokens/core/') && token.filePath.startsWith('design-tokens/core/colors_lch')
 
 // filters only tokens originating from breakpoint folder
 export const breakpointFilter = token => token.filePath.startsWith('design-tokens/breakpoint/')

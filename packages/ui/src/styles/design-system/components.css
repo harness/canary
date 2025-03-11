@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Thu, 06 Mar 2025 07:17:46 GMT
+ * Generated on Mon, 10 Mar 2025 11:42:46 GMT
  * Copyright (c) Harness.
  */
 
@@ -53,6 +53,7 @@
   --canary-btn-gap-lg: var(--canary-spacing-2-half);
   --canary-btn-default-radius: var(--canary-rounded-2);
   --canary-btn-rounded-radius: var(--canary-rounded-full);
+  --canary-btn-border: var(--canary-border-width-2);
   --canary-btn-px-sm: var(--canary-spacing-5);
   --canary-btn-px-default: var(--canary-spacing-6);
   --canary-btn-px-lg: var(--canary-spacing-6);
@@ -72,11 +73,12 @@
   --canary-badge-default-radius: var(--canary-rounded-2);
   --canary-badge-rounded-radius: var(--canary-rounded-full);
   --canary-badge-rounded-px: var(--canary-spacing-2-half);
+  --canary-badge-border: var(--canary-border-width-1);
   --canary-tag-size: var(--canary-size-5);
   --canary-tag-gap: var(--canary-spacing-2);
   --canary-tag-py: var(--canary-spacing-1);
   --canary-tag-px: var(--canary-spacing-2);
   --canary-tag-radius: var(--canary-rounded-2);
+  --canary-sub-tag-gap: var(--canary-spacing-1);
   --canary-dropdown-item-radius: var(--canary-dropdown-sub-item-radius);
-  --canary-btn-border: var(--canary-border-2);
 }

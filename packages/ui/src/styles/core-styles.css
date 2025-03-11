@@ -5,35 +5,4 @@
 /* Design System */
 @import './design-system/index.css';
 
-/**
- * Core Colors
- * This import should occur after Design System import
- * Do not change the order
- */
-@import './core-colors/colors.css';
-
 /* ======= 🚨 PROTECTED ZONE - END ======= */
-
-/**
- * Core Fonts
- */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 300 500;
-  src: url('../fonts/InterVariable.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  src: url('../fonts/InterVariable.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../fonts/JetBrainsMono-Regular.woff2') format('woff2');
-}

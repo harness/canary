@@ -19,12 +19,24 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
+        // default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
         secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
         tertiary: 'border-transparent bg-background-8 text-foreground-8',
         quaternary: 'border-borders-1 bg-background-2 text-foreground-5',
         destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
-        outline: 'text-foreground'
+        outline: 'text-foreground',
+
+        /**
+         * New variants
+         */
+        default: 'badge',
+        neutral: 'badge badge-neutral',
+        success: 'badge badge-success',
+        warning: 'badge badge-warning',
+        danger: 'badge badge-danger',
+        running: 'badge badge-running',
+        merged: 'badge badge-merged',
+        ai: 'badge badge-ai'
       },
       size: {
         default: 'px-2.5 py-0.5 text-xs font-semibold',

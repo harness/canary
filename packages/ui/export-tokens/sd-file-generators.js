@@ -1,7 +1,5 @@
-import { outputReferencesTransformed } from 'style-dictionary/utils'
-
 import { STYLE_FILE_PATH } from './constants.js'
-import { breakpointFilter, componentsFilter, coreFilter, semanticFilter } from './sd-filters.js'
+import { breakpointFilter, componentsFilter, coreFilter, lchColorsFilter, semanticFilter } from './sd-filters.js'
 
 const format = 'css/variables'
 
@@ -11,6 +9,14 @@ export const generateCoreFiles = () => [
     destination: STYLE_FILE_PATH.CORE,
     format,
     filter: coreFilter,
+    options: {
+      outputReferences: true
+    }
+  },
+  {
+    destination: STYLE_FILE_PATH.COLORS,
+    format,
+    filter: lchColorsFilter,
     options: {
       outputReferences: true
     }
@@ -42,21 +48,13 @@ export const generateThemeFiles = theme => {
     filter: semanticFilter(true),
     destination: `${STYLE_FILE_PATH.DESIGN_SYSTEM}/${theme.toLowerCase()}.css`,
     options: {
-      outputReferences: true,
+      outputReferences: token => {
+        // ADD REFERENCE ONLY TO NON-ALPHA TOKENS, ALPHA TOKENS ARE TRANSFORMED AND REFERENCED MANUALLY
+        return token?.$extensions?.['studio.tokens']?.modify?.type !== 'alpha'
+      },
       selector: `.${theme.toLowerCase()}`
     }
   })
-
-  // // not theme-specific outputs
-  // filesArr.push({
-  //   format,
-  //   filter: semanticFilter(false),
-  //   options: {
-  //     selector: `.${theme.toLowerCase()}`
-  //   },
-  //   destination: `styles2/semantic.css`
-  // })
-
   return filesArr
 }
 

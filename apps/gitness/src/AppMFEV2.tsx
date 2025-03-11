@@ -1,19 +1,8 @@
 import './styles/AppMFE.css'
 
-import { ComponentType, useEffect, useMemo, useRef } from 'react'
+import { ComponentType, useEffect, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  matchPath,
-  NavLink,
-  Outlet,
-  RouterProvider,
-  useLocation,
-  useMatches,
-  useNavigate,
-  useSearchParams
-} from 'react-router-dom'
+import { createBrowserRouter, NavLink, Outlet, RouterProvider, useMatches, useSearchParams } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
@@ -27,58 +16,15 @@ import { MFEContext, Unknown } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
-import { extractRedirectRouteObjects, getV5Routes } from './framework/routing/utils'
+import { getV5Routes } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
-import { mfeRoutes, repoRoutes } from './routesV2'
-import { decodeURIComponentIfValid } from './utils/path-utils'
+import { mfeRoutes } from './routesV2'
 
 export interface MFERouteRendererProps {
   renderUrl: string
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
-}
-
-const filteredRedirectRoutes = extractRedirectRouteObjects(repoRoutes)
-const isRouteNotMatchingRedirectRoutes = (pathToValidate: string) => {
-  return filteredRedirectRoutes.every(route => !matchPath(`/${route.path}` as string, pathToValidate))
-}
-
-function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFERouteRendererProps) {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const parentPath = parentLocationPath.replace(renderUrl, '')
-  const isNotRedirectPath = isRouteNotMatchingRedirectRoutes(location.pathname)
-
-  /**
-   * renderUrl ==> base URL of parent application
-   * parentPath ==> path name of parent application after base URL
-   * location.pathname ==> path name of MFE
-   * isNotRedirectPath ==> check if the current path is not a redirect path
-   */
-  const canNavigate = useMemo(
-    () =>
-      renderUrl &&
-      decodeURIComponentIfValid(parentPath) !== decodeURIComponentIfValid(location.pathname) &&
-      isNotRedirectPath,
-    [isNotRedirectPath, location.pathname, parentPath, renderUrl]
-  )
-
-  // Handle location change detected from parent route
-  useEffect(() => {
-    if (canNavigate) {
-      navigate(decodeURIComponentIfValid(parentPath), { replace: true })
-    }
-  }, [parentPath])
-
-  // Notify parent about route change
-  useEffect(() => {
-    if (canNavigate) {
-      onRouteChange?.(decodeURIComponentIfValid(`${renderUrl}${location.pathname}`))
-    }
-  }, [location.pathname])
-
-  return null
 }
 
 interface AppMFEProps {
@@ -118,8 +64,6 @@ export default function AppMFE({
   renderUrl,
   on401,
   useMFEThemeContext,
-  parentLocationPath,
-  onRouteChange,
   customComponents: { Route, Link, Switch },
   customHooks,
   customUtils
@@ -163,10 +107,7 @@ export default function AppMFE({
   // Router Configuration
   const basename = `/ng${renderUrl}`
 
-  const routesV6 = mfeRoutes(
-    scope.projectIdentifier,
-    <MFERouteRenderer renderUrl={renderUrl} onRouteChange={onRouteChange} parentLocationPath={parentLocationPath} />
-  )
+  const routesV6 = mfeRoutes(scope.projectIdentifier)
 
   const routesV5 = getV5Routes({ Route, Switch, routesV6, renderUrl })
 

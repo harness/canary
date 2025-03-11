@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
-import { ToastAction, useToast } from '@harnessio/ui/components'
+import { Toast, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -85,7 +85,7 @@ export default function ReposListPage() {
         description: importRepoIdentifier,
         duration: Infinity,
         action: (
-          <ToastAction
+          <Toast.Action
             onClick={() => {
               deleteRepository({
                 queryParams: {},
@@ -95,7 +95,7 @@ export default function ReposListPage() {
             altText="Cancel import"
           >
             {isCancellingImport ? 'Canceling...' : 'Cancel'}
-          </ToastAction>
+          </Toast.Action>
         )
       })
 

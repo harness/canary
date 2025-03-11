@@ -12,7 +12,7 @@ import {
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
-import { ToastProvider, Tooltip } from '@harnessio/ui/components'
+import { Toast, Tooltip } from '@harnessio/ui/components'
 import { RouterContextProvider } from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -44,7 +44,7 @@ export default function App() {
     <I18nextProvider i18n={i18n}>
       <ThemeProvider defaultTheme="dark-std-std">
         <QueryClientProvider client={queryClient}>
-          <ToastProvider>
+          <Toast.Provider>
             <Tooltip.Provider>
               <ExitConfirmProvider>
                 <NavigationProvider routes={routes}>
@@ -62,7 +62,7 @@ export default function App() {
                 </NavigationProvider>
               </ExitConfirmProvider>
             </Tooltip.Provider>
-          </ToastProvider>
+          </Toast.Provider>
         </QueryClientProvider>
       </ThemeProvider>
     </I18nextProvider>

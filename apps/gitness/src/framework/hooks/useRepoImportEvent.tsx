@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { RepoRepositoryOutput } from '@harnessio/code-service-client'
-import { ToastAction, useToast } from '@harnessio/ui/components'
+import { Toast, useToast } from '@harnessio/ui/components'
 
 import { useRepoStore } from '../../pages-v2/repo/stores/repo-list-store'
 import { transformRepoList } from '../../pages-v2/repo/transform-utils/repo-list-transform'
@@ -29,7 +29,7 @@ export const useRepoImportEvents = () => {
         duration: 5000,
         action: (
           <Link to={routes.toRepoSummary({ spaceId, repoId: importRepoIdentifier ?? '' })}>
-            <ToastAction altText="View repository">View</ToastAction>
+            <Toast.Action altText="View repository">View</Toast.Action>
           </Link>
         ),
         variant: 'success'

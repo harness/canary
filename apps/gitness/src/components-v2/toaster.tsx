@@ -1,23 +1,21 @@
-import { Toast, ToastClose, ToastDescription, ToastTitle, ToastViewport, useToast } from '@harnessio/ui/components'
+import { Toast, useToast } from '@harnessio/ui/components'
 
 export function Toaster() {
   const { toasts } = useToast()
 
   return (
     <>
-      {toasts.map(function ({ id, title, description, action, ...props }) {
-        return (
-          <Toast key={id} {...props}>
-            <div className="grid gap-1">
-              {title && <ToastTitle>{title}</ToastTitle>}
-              {description && <ToastDescription>{description}</ToastDescription>}
-            </div>
-            {action}
-            <ToastClose />
-          </Toast>
-        )
-      })}
-      <ToastViewport />
+      {toasts.map(({ id, title, description, action, ...props }) => (
+        <Toast.Root key={id} {...props}>
+          <div className="grid gap-1">
+            {!!title && <Toast.Title>{title}</Toast.Title>}
+            {!!description && <Toast.Description>{description}</Toast.Description>}
+          </div>
+          {action}
+          <Toast.Close />
+        </Toast.Root>
+      ))}
+      <Toast.Viewport />
     </>
   )
 }

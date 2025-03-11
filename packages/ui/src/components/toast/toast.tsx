@@ -39,13 +39,13 @@ const toastVariants = cva(
   }
 )
 
-const Toast = forwardRef<
+const ToastRoot = forwardRef<
   ElementRef<typeof ToastPrimitives.Root>,
   ComponentPropsWithoutRef<typeof ToastPrimitives.Root> & VariantProps<typeof toastVariants>
 >(({ className, variant, ...props }, ref) => {
   return <ToastPrimitives.Root ref={ref} className={cn(toastVariants({ variant }), className)} {...props} />
 })
-Toast.displayName = ToastPrimitives.Root.displayName
+ToastRoot.displayName = ToastPrimitives.Root.displayName
 
 const ToastAction = forwardRef<
   ElementRef<typeof ToastPrimitives.Action>,
@@ -100,18 +100,18 @@ const ToastDescription = forwardRef<
 ))
 ToastDescription.displayName = ToastPrimitives.Description.displayName
 
-type ToastProps = ComponentPropsWithoutRef<typeof Toast>
+type ToastProps = ComponentPropsWithoutRef<typeof ToastRoot>
 
 type ToastActionElement = ReactElement<typeof ToastAction>
 
-export {
-  type ToastProps,
-  type ToastActionElement,
-  ToastProvider,
-  ToastViewport,
-  Toast,
-  ToastTitle,
-  ToastDescription,
-  ToastClose,
-  ToastAction
+const Toast = {
+  Root: ToastRoot,
+  Action: ToastAction,
+  Close: ToastClose,
+  Title: ToastTitle,
+  Description: ToastDescription,
+  Viewport: ToastViewport,
+  Provider: ToastProvider
 }
+
+export { Toast, type ToastProps, type ToastActionElement }

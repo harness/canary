@@ -48,42 +48,48 @@ export const getAppRoutes = ({
 }) => (
   <Switch>
     <Route
-      path={pathPrefix}
+      path={`${pathPrefix}/`}
       exact
-      render={
+      render={() => (
         <AppProvider>
-          <AppShellMFE />
+          {/* <AppShellMFE /> */}
+          <></>
         </AppProvider>
-      }
-    ></Route>
+      )}
+    />
     <Switch>
       <Route path={`${pathPrefix}/repos`} exact render={() => <ReposListPage />} />
       <Route path={`${pathPrefix}/repos/create`} render={() => <CreateRepo />} />
       <Route path={`${pathPrefix}/repos/import`} render={() => <ImportRepo />} />
       <Route path={`${pathPrefix}/repos/import-multiple`} render={() => <ImportMultipleRepos />} />
-      <Route path={`${pathPrefix}/repos/:repoId`} render={() => <RepoLayout />}>
-        <Switch>
-          <Route
-            path={`${pathPrefix}/repos/:repoId`}
-            exact
-            render={() => <Redirect to={`${pathPrefix}/repos/:repoId/summary`} />}
-          />
-          <Route path={`${pathPrefix}/repos/:repoId/summary`} render={() => <RepoSummaryPage />} />
-          <Route
-            path={`${pathPrefix}/repos/:repoId/code`}
-            render={() => (
-              <ExplorerPathsProvider>
-                <RepoSidebar />
-              </ExplorerPathsProvider>
-            )}
-          >
+      <Route
+        path={`${pathPrefix}/repos/:repoId`}
+        render={() => (
+          <RepoLayout>
             <Switch>
-              <Route path={`${pathPrefix}/repos/:repoId/code`} exact render={() => <RepoCode />} />
-              <Route path={`${pathPrefix}/repos/:repoId/code/*`} render={() => <RepoCode />} />
+              <Route
+                path={`${pathPrefix}/repos/:repoId`}
+                exact
+                render={() => <Redirect to={`${pathPrefix}/repos/:repoId/summary`} />}
+              />
+              <Route path={`${pathPrefix}/repos/:repoId/summary`} render={() => <RepoSummaryPage />} />
+              <Route
+                path={`${pathPrefix}/repos/:repoId/code`}
+                render={() => (
+                  <ExplorerPathsProvider>
+                    <RepoSidebar />
+                  </ExplorerPathsProvider>
+                )}
+              >
+                <Switch>
+                  <Route path={`${pathPrefix}/repos/:repoId/code`} exact render={() => <RepoCode />} />
+                  <Route path={`${pathPrefix}/repos/:repoId/code/*`} render={() => <RepoCode />} />
+                </Switch>
+              </Route>
             </Switch>
-          </Route>
-        </Switch>
-      </Route>
+          </RepoLayout>
+        )}
+      ></Route>
     </Switch>
   </Switch>
 )

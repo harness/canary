@@ -5,7 +5,7 @@ import { RepoSubheader } from '@harnessio/ui/components'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
-const RepoLayout = () => {
+const RepoLayout = ({ children }: { children?: React.ReactNode }) => {
   const isMFE = useIsMFE()
 
   return (
@@ -13,7 +13,8 @@ const RepoLayout = () => {
       <div className="layer-high sticky top-[55px] bg-background-1">
         <RepoSubheader showPipelinesTab={!isMFE} useTranslationStore={useTranslationStore} />
       </div>
-      <Outlet />
+      {/* Render Outlet for v6, or children for v5 */}
+      {children ? children : <Outlet />}
     </>
   )
 }

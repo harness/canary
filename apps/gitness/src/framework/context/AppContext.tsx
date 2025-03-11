@@ -14,8 +14,7 @@ import {
 import { ProfileSettingsErrorType } from '@harnessio/ui/views'
 
 import useLocalStorage from '../hooks/useLocalStorage'
-
-// import usePageTitle from '../hooks/usePageTitle'
+import usePageTitle from '../hooks/usePageTitle'
 
 interface AppContextType {
   spaces: TypesSpace[]
@@ -49,7 +48,7 @@ const AppContext = createContext<AppContextType>({
 })
 
 export const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  // usePageTitle()
+  usePageTitle()
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [isSpacesLoading, setSpacesIsLoading] = useState(false)
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})

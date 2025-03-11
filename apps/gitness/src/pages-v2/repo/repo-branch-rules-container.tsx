@@ -21,7 +21,7 @@ import {
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetRepoPathParam } from '../../framework/hooks/useGetRepoPathParam'
+import { useGetPathParams } from '../../framework/hooks/useGetRepoPathParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -34,7 +34,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const routes = useRoutes()
   const navigate = useNavigate()
   const repoRef = useGetRepoRef()
-  const repoName = useGetRepoPathParam()
+  const { repoId: repoName } = useGetPathParams()
 
   const { spaceId } = useParams<PathParams>()
   const { identifier } = useParams()

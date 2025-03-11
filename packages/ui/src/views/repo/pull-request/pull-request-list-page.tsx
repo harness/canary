@@ -8,7 +8,7 @@ import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-sele
 import FilterTrigger from '@components/filters/triggers/filter-trigger'
 import { noop } from 'lodash-es'
 
-import { createFilters, FilterRefType, Parser } from '@harnessio/filters'
+import { createFilters, FilterRefType } from '@harnessio/filters'
 
 import ListControlBar from '../components/list-control-bar'
 import { getPRListFilterOptions, getSortDirections, getSortOptions } from '../constants/filter-options'

@@ -18,6 +18,7 @@ export interface SecretReferenceProps {
   onSelectEntity: (entity: SecretItem) => void
   onScopeChange: (direction: DirectoryType) => void
   onCancel?: () => void
+  isLoading?: boolean
 }
 
 // Component for selecting existing secrets
@@ -33,7 +34,8 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   // Callbacks
   onSelectEntity,
   onScopeChange,
-  onCancel
+  onCancel,
+  isLoading
 }) => {
   // Define available scopes
 
@@ -91,9 +93,10 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
           renderScopeSelector={renderScopeSelector}
           parentFolder={parentFolder}
           childFolder={childFolder}
+          isLoading={isLoading}
         />
       </div>
-      <div className="fixed bottom-0 left-0 right-0 bg-background-2 p-4 shadow-md">
+      <div className="bg-background-2 fixed bottom-0 left-0 right-0 p-4 shadow-md">
         <ButtonGroup className="flex flex-row justify-between">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel

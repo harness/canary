@@ -102,6 +102,7 @@ export const SecretsPage = () => {
             onSelectEntity={handleSelectSecret}
             onScopeChange={handleScopeChange}
             onCancel={handleCancel}
+            isLoading={false}
           />
         )
       default:

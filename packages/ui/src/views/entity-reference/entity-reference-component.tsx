@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 
-import { Button, Icon, Input, ScrollArea } from '@/components'
+import { Button, Icon, Input, ScrollArea, SkeletonList, SkeletonTable } from '@/components'
 import { Root as StackedList, Field as StackedListField, Item as StackedListItem } from '@/components/stacked-list'
 import { cn } from '@utils/cn'
 import { DirectoryType } from '@views/secrets'
@@ -47,6 +47,7 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
   renderScopeSelector?: (props: ScopeSelectorProps<S>) => React.ReactNode
   renderFolder?: (props: FolderRendererProps<F>) => React.ReactNode
+  isLoading?: boolean
 }
 
 export function EntityReference<T extends BaseEntityProps, S = string, F = string>({
@@ -65,7 +66,8 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   // Custom renderers
   renderEntity,
   renderScopeSelector,
-  renderFolder
+  renderFolder,
+  isLoading = false
 }: EntityReferenceProps<T, S, F>): JSX.Element {
   const handleSelectEntity = useCallback(
     (entity: T) => {
@@ -198,10 +200,16 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
 
   return (
     <>
-      {showFilter && <Input type="text" placeholder="Search" className="mb-4" />}
-      <ScrollArea className="h-[62%]">
-        <div className="flex-1">{renderCombinedList()}</div>
-      </ScrollArea>
+      {isLoading ? (
+        <SkeletonList />
+      ) : (
+        <>
+          {showFilter && <Input type="text" placeholder="Search" className="mb-4" />}
+          <ScrollArea className="h-[62%]">
+            <div className="flex-1">{renderCombinedList()}</div>
+          </ScrollArea>
+        </>
+      )}
     </>
   )
 }

@@ -1,13 +1,12 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
 import { ToastAction, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useGetPathParams } from '../../framework/hooks/useGetPathParams'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -18,10 +17,7 @@ import { transformRepoList } from './transform-utils/repo-list-transform'
 
 export default function ReposListPage() {
   const routes = useRoutes()
-  const { customHooks } = useMFEContext()
-  const params = customHooks.useParams()
-  console.log('params', params)
-  const { spaceId } = useParams<PathParams>()
+  const { spaceId } = useGetPathParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
   const {
     setRepositories,
@@ -117,10 +113,7 @@ export default function ReposListPage() {
         errorMessage={error?.message}
         searchQuery={query}
         setSearchQuery={setQuery}
-        toRepository={(repo: RepositoryType) => {
-          const route = routes.toRepoSummary({ spaceId, repoId: repo.name })
-          return route
-        }}
+        toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
         toCreateRepo={() => routes.toCreateRepo({ spaceId })}
         toImportRepo={() => routes.toImportRepo({ spaceId })}
       />

@@ -6,7 +6,7 @@ import { ConnectorsProvider, useConnectorsContext } from './context/connectors-c
 import { ConnectorRightDrawer } from './types'
 
 const ConnectorsListPageContent = (): JSX.Element => {
-  const { setRightDrawer } = useConnectorsContext()
+  const { setRightDrawer, setFormEntity } = useConnectorsContext()
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
@@ -22,6 +22,21 @@ const ConnectorsListPageContent = (): JSX.Element => {
                 }}
               >
                 Create Connector
+              </Button>
+              <Button
+                variant="default"
+                onClick={() => {
+                  setRightDrawer(ConnectorRightDrawer.Form)
+                  setFormEntity({
+                    type: 'connector',
+                    data: {
+                      identifier: 'AWS KMS Connector',
+                      description: 'AWS KMS Connector'
+                    }
+                  })
+                }}
+              >
+                Edit Connector
               </Button>
             </ListActions.Right>
           </ListActions.Root>

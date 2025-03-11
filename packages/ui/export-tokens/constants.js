@@ -8,3 +8,5 @@ export const STYLE_FILE_PATH = {
   BREAKPOINT: `${DESIGN_SYSTEM_ROOT}/breakpoint.css`,
   COMPONENTS: `${DESIGN_SYSTEM_ROOT}/components.css`
 }
+
+export const DESIGN_SYSTEM_PREFIX = 'canary'

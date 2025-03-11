@@ -1818,7 +1818,7 @@
       "gray": {
         "text": {
           "$type": "color",
-          "$value": "{text.2}",
+          "$value": "{colors.chrome.200}",
           "$description": "Text color for gray tags. Ensures readability while maintaining the gray color theme."
         },
         "background": {
@@ -1828,7 +1828,7 @@
         },
         "background-subtle": {
           "$type": "color",
-          "$value": "{colors.chrome.950}",
+          "$value": "{colors.chrome.900}",
           "$description": "Subtle background variation for gray tags. Provides a softer alternative for less emphasis."
         },
         "border": {

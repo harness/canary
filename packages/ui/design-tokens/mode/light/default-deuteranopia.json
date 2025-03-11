@@ -1847,7 +1847,7 @@
       "gray": {
         "text": {
           "$type": "color",
-          "$value": "{text.2}",
+          "$value": "{colors.chrome.850}",
           "$description": "Text color for gray tags. Ensures readability while maintaining the gray color theme."
         },
         "background": {

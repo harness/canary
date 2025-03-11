@@ -1,10 +1,16 @@
 {
   "navbar": {
+    "more": "More",
+    "recent": "Recent",
+    "user-management": "User Management",
     "settings": "Settings",
     "pin": "Pin",
     "remove": "Remove",
     "reorder": "Reorder",
     "unpin": "Unpin",
+    "search": "Search",
+    "command-palette": "Command Palette",
+    "nothing-found": "Nothing found",
     "appearence": "Appearance",
     "language": "Language",
     "logout": "Log out",

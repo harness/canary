@@ -72,8 +72,9 @@ export const AppSidebar = ({
       <Sidebar.Root>
         <Sidebar.Header>
           {showNewSearch ? (
-            <SearchProvider>
+            <SearchProvider t={t}>
               <SidebarSearch
+                t={t}
                 logo={
                   <Link to="/" className="h-[58px] flex gap-2 items-center pl-3 justify-start">
                     <Icon name="harness" size={20} className="text-foreground-accent" />
@@ -84,6 +85,7 @@ export const AppSidebar = ({
             </SearchProvider>
           ) : (
             <SidebarSearchLegacy
+              t={t}
               logo={
                 <Link className="flex items-center gap-1.5" to="/">
                   <Icon name="harness" size={18} className="text-foreground-accent" />
@@ -112,7 +114,9 @@ export const AppSidebar = ({
                   <Sidebar.MenuButton asChild onClick={handleMoreMenu}>
                     <div>
                       <Icon name="ellipsis" size={12} className="text-icons-4 transition-colors hover:text-primary" />
-                      <span className="text-foreground-3 font-medium transition-colors hover:text-primary">More</span>
+                      <span className="text-foreground-3 font-medium transition-colors hover:text-primary">
+                        {t('component:navbar.more')}
+                      </span>
                     </div>
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -122,7 +126,7 @@ export const AppSidebar = ({
 
           {!!recentMenuItems.length && (
             <Sidebar.Group title="Recent" className="border-t px-2 pt-3">
-              <Sidebar.GroupLabel>Recent</Sidebar.GroupLabel>
+              <Sidebar.GroupLabel>{t('component:navbar.recent')}</Sidebar.GroupLabel>
               <Spacer size={2} />
               <Sidebar.GroupContent>
                 <Sidebar.Menu>
@@ -151,7 +155,7 @@ export const AppSidebar = ({
                       <div>
                         <Icon name="account" size={12} className="text-icons-4 transition-colors hover:text-primary" />
                         <span className="text-foreground-3 font-medium transition-colors hover:text-primary">
-                          User Management
+                          {t('component:navbar.user-management')}
                         </span>
                       </div>
                     </Sidebar.MenuButton>

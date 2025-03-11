@@ -1,12 +1,15 @@
 import { FormEvent, ReactNode, useState } from 'react'
 
+import { TFunction } from 'i18next'
+
 import { Dialog, SearchBox, Spacer } from '..'
 
 interface ProjectProps {
   logo: ReactNode
+  t: TFunction
 }
 
-function SidebarSearchLegacy({ logo }: ProjectProps) {
+function SidebarSearchLegacy({ logo, t }: ProjectProps) {
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
 
   const openSearchDialog = (e?: FormEvent<HTMLInputElement>) => {
@@ -36,7 +39,7 @@ function SidebarSearchLegacy({ logo }: ProjectProps) {
       <Dialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
         <Dialog.Content className="h-[600px] max-w-[800px]">
           <Dialog.Header>
-            <Dialog.Title>Search</Dialog.Title>
+            <Dialog.Title>{t('component:navbar.search')}</Dialog.Title>
             <Dialog.Description>
               <Spacer size={6} />
               <SearchBox.Root width="full" placeholder="Search..." />

@@ -1,5 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
+import { TFunction } from 'i18next'
+
 import { CommandPaletteWrapper } from './command-palette-wrapper'
 
 interface SearchContextType {
@@ -15,9 +17,10 @@ const SearchContext = createContext<SearchContextType | null>(null)
 
 interface SearchProviderProps {
   children: ReactNode
+  t: TFunction
 }
 
-export function SearchProvider({ children }: SearchProviderProps) {
+export function SearchProvider({ children, t }: SearchProviderProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [selectedIndex, setSelectedIndex] = useState<number>(0)
@@ -50,7 +53,7 @@ export function SearchProvider({ children }: SearchProviderProps) {
       }}
     >
       {children}
-      <CommandPaletteWrapper />
+      <CommandPaletteWrapper t={t} />
     </SearchContext.Provider>
   )
 }

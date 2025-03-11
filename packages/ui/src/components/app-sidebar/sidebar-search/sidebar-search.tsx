@@ -3,14 +3,17 @@ import { FormHTMLAttributes, ReactNode } from 'react'
 import { Button, Input, Label } from '@/components'
 import { Icon } from '@components/icon'
 import { Sidebar } from '@components/sidebar/sidebar'
+import { TFunction } from 'i18next'
 
 import { useSearch } from './search-context'
 
 interface SidebarSearchProps extends FormHTMLAttributes<HTMLFormElement> {
   logo: ReactNode
+  t: TFunction
 }
 
 export function SidebarSearch(props: SidebarSearchProps) {
+  const { t } = props
   const searchContext = useSearch()
 
   if (!searchContext) {
@@ -26,7 +29,7 @@ export function SidebarSearch(props: SidebarSearchProps) {
       <Sidebar.Group className="py-0">
         <Sidebar.GroupContent className="relative">
           <Label htmlFor="search" className="sr-only">
-            Search
+            {t('component:navbar.search')}
           </Label>
           <Input
             id="search"

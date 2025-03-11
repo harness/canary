@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Icon } from '@components/icon'
+import { TFunction } from 'i18next'
 
 import { CommandPalette } from './command-palette'
 import { useSearch } from './search-context'
@@ -20,7 +21,11 @@ interface CommandOption {
   icon?: () => JSX.Element
 }
 
-export function CommandPaletteWrapper() {
+interface CommandPaletteProps {
+  t: TFunction
+}
+
+export function CommandPaletteWrapper({ t }: CommandPaletteProps) {
   const { isOpen, setIsOpen } = useSearch()
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<PageKey[]>([])
@@ -145,7 +150,7 @@ export function CommandPaletteWrapper() {
   return (
     <CommandPalette.Dialog open={isOpen} onOpenChange={setIsOpen}>
       <CommandPalette.Root
-        label="Command Palette"
+        label={t('component:navbar.command-palette')}
         onKeyDown={(e: any) => {
           if (e.key === 'Escape' || (e.key === 'Backspace' && !search)) {
             e.preventDefault()
@@ -155,7 +160,7 @@ export function CommandPaletteWrapper() {
       >
         <CommandPalette.Input placeholder={placeholder} value={search} onValueChange={setSearch} />
         <CommandPalette.List className="pb-3">
-          <CommandPalette.Empty>Nothing found</CommandPalette.Empty>
+          <CommandPalette.Empty>{t('component:navbar.nothing-found')}</CommandPalette.Empty>
 
           {!page ? (
             Object.entries(MENU_OPTIONS).map(([key, items]) => (

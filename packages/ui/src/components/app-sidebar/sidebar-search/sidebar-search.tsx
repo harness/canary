@@ -29,7 +29,7 @@ export function SidebarSearch(props: SidebarSearchProps) {
       <Sidebar.Group className="py-0">
         <Sidebar.GroupContent className="relative">
           <Label htmlFor="search" className="sr-only">
-            {t('component:navbar.search')}
+            {t('component:navbar.search', 'Search')}
           </Label>
           <Input
             id="search"

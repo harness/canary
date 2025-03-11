@@ -115,7 +115,7 @@ export const AppSidebar = ({
                     <div>
                       <Icon name="ellipsis" size={12} className="text-icons-4 transition-colors hover:text-primary" />
                       <span className="text-foreground-3 font-medium transition-colors hover:text-primary">
-                        {t('component:navbar.more')}
+                        {t('component:navbar.more', 'More')}
                       </span>
                     </div>
                   </Sidebar.MenuButton>
@@ -126,7 +126,7 @@ export const AppSidebar = ({
 
           {!!recentMenuItems.length && (
             <Sidebar.Group title="Recent" className="border-t px-2 pt-3">
-              <Sidebar.GroupLabel>{t('component:navbar.recent')}</Sidebar.GroupLabel>
+              <Sidebar.GroupLabel>{t('component:navbar.recent', 'Recent')}</Sidebar.GroupLabel>
               <Spacer size={2} />
               <Sidebar.GroupContent>
                 <Sidebar.Menu>
@@ -155,7 +155,7 @@ export const AppSidebar = ({
                       <div>
                         <Icon name="account" size={12} className="text-icons-4 transition-colors hover:text-primary" />
                         <span className="text-foreground-3 font-medium transition-colors hover:text-primary">
-                          {t('component:navbar.user-management')}
+                          {t('component:navbar.user-management', 'User Management')}
                         </span>
                       </div>
                     </Sidebar.MenuButton>
@@ -166,7 +166,7 @@ export const AppSidebar = ({
                     <div>
                       <Icon name="settings-1" size={12} className="text-icons-4 transition-colors hover:text-primary" />
                       <span className="text-foreground-3 font-medium transition-colors hover:text-primary">
-                        {t('component:navbar.settings')}
+                        {t('component:navbar.settings', 'Settings')}
                       </span>
                     </div>
                   </Sidebar.MenuButton>

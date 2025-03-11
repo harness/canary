@@ -150,7 +150,7 @@ export function CommandPaletteWrapper({ t }: CommandPaletteProps) {
   return (
     <CommandPalette.Dialog open={isOpen} onOpenChange={setIsOpen}>
       <CommandPalette.Root
-        label={t('component:navbar.command-palette')}
+        label={t('component:navbar.command-palette', 'Command Palette')}
         onKeyDown={(e: any) => {
           if (e.key === 'Escape' || (e.key === 'Backspace' && !search)) {
             e.preventDefault()
@@ -160,7 +160,7 @@ export function CommandPaletteWrapper({ t }: CommandPaletteProps) {
       >
         <CommandPalette.Input placeholder={placeholder} value={search} onValueChange={setSearch} />
         <CommandPalette.List className="pb-3">
-          <CommandPalette.Empty>{t('component:navbar.nothing-found')}</CommandPalette.Empty>
+          <CommandPalette.Empty>{t('component:navbar.nothing-found', 'Nothing Found')}</CommandPalette.Empty>
 
           {!page ? (
             Object.entries(MENU_OPTIONS).map(([key, items]) => (

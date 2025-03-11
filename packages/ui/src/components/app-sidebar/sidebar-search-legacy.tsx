@@ -28,7 +28,7 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
       <div className="flex h-[58px] items-center px-1">{logo}</div>
       <SearchBox.Root
         width="full"
-        placeholder="Search..."
+        placeholder={`${t('component:navbar.search', 'Search')}...`}
         hasShortcut
         shortcutLetter="K"
         shortcutModifier="cmd"
@@ -39,10 +39,10 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
       <Dialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
         <Dialog.Content className="h-[600px] max-w-[800px]">
           <Dialog.Header>
-            <Dialog.Title>{t('component:navbar.search')}</Dialog.Title>
+            <Dialog.Title>{t('component:navbar.search', 'Search')}</Dialog.Title>
             <Dialog.Description>
               <Spacer size={6} />
-              <SearchBox.Root width="full" placeholder={`${t('component:navbar.search')}...`} />
+              <SearchBox.Root width="full" placeholder={`${t('component:navbar.search', 'Search')}...`} />
             </Dialog.Description>
           </Dialog.Header>
         </Dialog.Content>

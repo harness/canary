@@ -6,7 +6,7 @@ import {
   useListGitignoreQuery,
   useListLicensesQuery
 } from '@harnessio/code-service-client'
-import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/views'
+import { RepoCreateFormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/views'
 
 // import { Toaster } from '../../components-v2/toaster'
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -21,7 +21,7 @@ export const CreateRepo = () => {
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
 
-  const onSubmit = (data: FormFields) => {
+  const onSubmit = (data: RepoCreateFormFields) => {
     const repositoryRequest: OpenapiCreateRepositoryRequest = {
       default_branch: 'main',
       parent_ref: spaceURL,

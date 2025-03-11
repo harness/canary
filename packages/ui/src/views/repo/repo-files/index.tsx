@@ -65,7 +65,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     if (!isView) return children
 
     if (isRepoEmpty) {
-      return <p>{t('views:repos.emptyRepo')}</p>
+      return <p>{t('views:repos.emptyRepo', 'This repository is empty.')}</p>
     }
 
     if (!isDir) {

@@ -22,6 +22,12 @@
     "executions": "Executions",
     "generalTab": "General",
     "keysTab": "Keys and tokens",
+    "inviteMemberDialog": {
+      "validation": {
+        "memberNoEmpty": "Member name is required",
+        "roleNoEmpty": "Role is required"
+      }
+    },
     "default": "Default",
     "viewAll": "View all {{type}}",
     "branchesLowercase": "branches",
@@ -125,10 +131,47 @@
     "createBranchTitle": "Create a branch",
     "createBranchButton": "Create branch",
     "newBranch": "New branch",
-    "createNewRepo": "Create a new repository",
-    "repoContains": "A repository contains all project files, including the revision history. Already have a project repository elsewhere?",
-    "importRepo": "Import a repository",
+    "repoCreate": {
+      "validation": {
+        "nameNoEmpty": "Name can’t be blank",
+        "nameMax": "Name must be no longer than 100 characters",
+        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
+        "nameNoSpaces": "Name cannot contain spaces",
+        "descriptionMax": "Description must be no longer than 1024 characters",
+        "access": "Please select who has access"
+      },
+      "title": "Create a new repository",
+      "description": "A repository contains all project files, including the revision history. Already have a project repository elsewhere?",
+      "importRepo": "Import a repository",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter repository name",
+      "descriptionPlaceholder": "Enter a description of this repository",
+      "descriptionLabel": "Description",
+      "gitignorePlaceholder": "Select",
+      "gitignoreLabel": "Add .gitignore",
+      "gitignoreCaption": "Choose which files not to track from a list of templates.",
+      "licensePlaceholder": "Select",
+      "licenseLabel": "Choose a license",
+      "licenseCaption": "A license tells others what they can and can't do with your code.",
+      "access": {
+        "legend": "Who has access",
+        "publicOptionLabel": "Public",
+        "publicOptionDescription": "Anyone with access to the Gitness environment can clone this repo.",
+        "privateOptionLabel": "Private",
+        "privateOptionDescription": "You choose who can see and commit to this repository."
+      },
+      "initialize": {
+        "label": "Initialize this repository with",
+        "readmeLabel": "Add a README file",
+        "readmeDescription": "This is where you can write a long description for your project"
+      },
+      "create": {
+        "create": "Creating repository..."
+      },
+      "cancel": "Cancel"
+    },
     "emptyRepo": "This repository is empty.",
+    "importRepo": "Import a repository",
     "repositories": "Repositories",
     "import-repository": "Import repository",
     "import-repositories": "Import repositories",
@@ -194,38 +237,7 @@
     "updatingWebhook": "Updating webhook...",
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
-    "createWebhook": "Create webhook",
-    "deleteConnector": "Delete Connector",
-    "deleteSecret": "Delete Secret",
-    "status": "Status",
-    "tagger": "Tagger",
-    "creationDate": "Creation date",
-    "createBranchDialog": {
-      "validation": {
-        "name": "Branch name is required",
-        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
-        "noSpaces": "Name cannot contain spaces",
-        "target": "Base branch is required"
-      }
-    },
-    "createTagDialog": {
-      "validation": {
-        "name": "Tag name is required",
-        "nameMax": "Name must be no longer than 40 characters",
-        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
-        "noSpaces": "Name cannot contain spaces",
-        "target": "Base branch is required",
-        "message": "Description is required"
-      },
-      "name": "Name",
-      "target": "Target",
-      "message": "Message"
-    },
-    "renameBranch": "Rename Branch",
-    "add": "Add",
-    "users": "Users",
-    "clone": "Clone",
-    "addFile": "Add file"
+    "createWebhook": "Create webhook"
   },
   "noData": {
     "noResults": "No search results",
@@ -284,24 +296,6 @@
     "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
     "description": "The requested page is not found."
   },
-  "search": "Search",
-  "connectors": {
-    "createNew": "Create new connector",
-    "delete": "Delete Connector",
-    "updated": "Last updated",
-    "lastConnected": "Last connected"
-  },
-  "execution": {
-    "summary": "Summary",
-    "logs": "Logs",
-    "graph": "Graph",
-    "inputs": "Inputs",
-    "opa": "Policy evaluations",
-    "artifacts": "Artifacts",
-    "tests": "Tests",
-    "sto": "Security tests",
-    "secrets": "Secrets"
-  },
   "signIn": {
     "validation": {
       "emailNoEmpty": "Field can’t be blank",
@@ -352,6 +346,17 @@
       "question": "Already have an account?",
       "linkText": "Sign in"
     }
+  },
+  "execution": {
+    "summary": "Summary",
+    "logs": "Logs",
+    "graph": "Graph",
+    "inputs": "Inputs",
+    "opa": "Policy evaluations",
+    "artifacts": "Artifacts",
+    "tests": "Tests",
+    "sto": "Security tests",
+    "secrets": "Secrets"
   },
   "labelData": {
     "form": {

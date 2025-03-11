@@ -38,8 +38,8 @@ import {
 } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useGetPathParams } from '../../framework/hooks/useGetPathParams'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetPathParams } from '../../framework/hooks/useGetRepoPathParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useRepoBranchesStore } from './stores/repo-branches-store'

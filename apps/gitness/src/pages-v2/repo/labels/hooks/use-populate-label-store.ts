@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { useGetPathParams } from '../../../../framework/hooks/useGetRepoPathParam'
+import { useGetPathParams } from '../../../../framework/hooks/useGetPathParams'
 import { useLabelsStore } from '../../../project/stores/labels-store'
 import { useGetRepoLabelAndValuesData } from './use-get-repo-label-and-values-data'
 

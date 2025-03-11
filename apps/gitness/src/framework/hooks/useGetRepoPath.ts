@@ -1,4 +1,4 @@
-import { useGetPathParams } from './useGetRepoPathParam'
+import { useGetPathParams } from './useGetPathParams'
 import { useGetSpaceURLParam } from './useGetSpaceParam'
 
 export function useGetRepoRef(): string {

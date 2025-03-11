@@ -82,65 +82,59 @@ const inputs: IInputConfigWithConfig[] = [
 
 // Convert AWS KMS payload back to form data
 interface AwsKmsConnectorSpec extends ConnectorSpec {
-  credential: {
-    type: string
-    spec?: {
-      accessKey?: string
-      secretKey?: string
-      delegateSelectors?: string[]
-      roleArn?: string
-      externalName?: string
-      assumeStsRoleDuration?: string
-      iamRoleArn?: string
-    }
-  }
-  kmsArn: string
+  name: string
+  credential: string
+  awsArn: string
   region: string
   default?: boolean
   executeOnDelegate?: boolean
+  iamRole?: string
+  accessKey?: string
+  secretKey?: string
+  delegateSelectors?: string[]
+  roleArn?: string
+  externalName?: string
+  assumeStsRoleDuration?: string
 }
 
 const convertAwsKmsPayloadToFormData = (payload: ConnectorPayloadConfig<ConnectorSpec>): Record<string, any> => {
-  // Type assertion since we know this is an AWS KMS connector payload
-  const typedPayload = payload as ConnectorPayloadConfig<AwsKmsConnectorSpec>
-  const { spec } = typedPayload
-  const { credential, kmsArn, region, default: isDefault, delegateSelectors } = spec as AwsKmsConnectorSpec
+  // Extract fields from spec
+  const spec = payload.spec as AwsKmsConnectorSpec
 
+  // Basic form data
   const formData: Record<string, any> = {
-    name: typedPayload.name,
-    description: typedPayload.description,
-    projectIdentifier: typedPayload.projectIdentifier,
-    orgIdentifier: typedPayload.orgIdentifier,
-    identifier: typedPayload.identifier,
-    tags: typedPayload.tags,
-    connectivityMode: { _formData: { executeOnDelegate: spec.executeOnDelegate } },
-    delegateSelectors,
-    credential: credential?.type,
-    awsArn: kmsArn,
-    region,
-    default: isDefault
+    name: payload.name,
+    description: payload.description,
+    projectIdentifier: payload.projectIdentifier,
+    orgIdentifier: payload.orgIdentifier,
+    identifier: payload.identifier,
+    tags: payload.tags,
+    credential: spec.credential,
+    awsArn: spec.awsArn,
+    region: spec.region,
+    default: spec.default
   }
 
-  // Handle credential specific fields
-  if (credential?.spec) {
-    switch (credential.type) {
-      case CredTypeValues.ManualConfig:
-        formData.accessKey = credential.spec.accessKey
-        formData.secretKey = credential.spec.secretKey
-        break
-      case CredTypeValues.AssumeIAMRole:
-        formData.delegateSelectors = credential.spec.delegateSelectors
-        break
-      case CredTypeValues.AssumeRoleSTS:
-        formData.delegateSelectors = credential.spec.delegateSelectors
-        formData.roleArn = credential.spec.roleArn
-        formData.externalName = credential.spec.externalName
-        formData.assumeStsRoleDuration = credential.spec.assumeStsRoleDuration
-        break
-      case DelegateTypes.DELEGATE_OIDC:
-        formData.iamRole = credential.spec.iamRoleArn
-        break
-    }
+  // Add OIDC-specific fields
+  if (spec.credential === DelegateTypes.DELEGATE_OIDC && spec.iamRole) {
+    formData.iamRole = spec.iamRole
+  }
+
+  // Add credential-specific fields
+  switch (spec.credential) {
+    case CredTypeValues.ManualConfig:
+      formData.accessKey = spec.accessKey
+      formData.secretKey = spec.secretKey
+      break
+    case CredTypeValues.AssumeIAMRole:
+      formData.delegateSelectors = spec.delegateSelectors
+      break
+    case CredTypeValues.AssumeRoleSTS:
+      formData.delegateSelectors = spec.delegateSelectors
+      formData.roleArn = spec.roleArn
+      formData.externalName = spec.externalName
+      formData.assumeStsRoleDuration = spec.assumeStsRoleDuration
+      break
   }
 
   return formData

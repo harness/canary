@@ -16,13 +16,18 @@ export interface EntityRendererProps<T extends BaseEntityProps> {
   onSelect: (entity: T) => void
 }
 
-// Props for the scope selector item
-export interface ScopeSelectorProps<S = string> {
+export interface ParentFolderRendererProps<S = string> {
   parentFolder: S
   onSelect: (scope: S) => void
 }
 
-export interface FolderRendererProps<F = string> {
+export interface ChildFolderRendererProps<F = string> {
   folder: F
   onSelect: (folder: F) => void
+}
+
+export enum ScopeEnum {
+  ACCOUNT = 'account',
+  ORGANIZATION = 'organization',
+  PROJECT = 'project'
 }

@@ -2,7 +2,13 @@ import { Fragment } from 'react'
 
 import { StackedList } from '@/components'
 
-import { BaseEntityProps, DirectionEnum, EntityRendererProps, FolderRendererProps, ScopeSelectorProps } from './types'
+import {
+  BaseEntityProps,
+  ChildFolderRendererProps,
+  DirectionEnum,
+  EntityRendererProps,
+  ParentFolderRendererProps
+} from './types'
 
 export interface EntityReferenceListProps<T extends BaseEntityProps, S = string, F = string> {
   entities: T[]
@@ -13,8 +19,8 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   handleScopeChange: (direction: DirectionEnum) => void
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
   defaultEntityRenderer: (props: EntityRendererProps<T>) => React.ReactNode
-  parentFolderRenderer: (props: ScopeSelectorProps<S>) => React.ReactNode
-  childFolderRenderer: (props: FolderRendererProps<F>) => React.ReactNode
+  parentFolderRenderer: (props: ParentFolderRendererProps<S>) => React.ReactNode
+  childFolderRenderer: (props: ChildFolderRendererProps<F>) => React.ReactNode
 }
 
 export function EntityReferenceList<T extends BaseEntityProps, S = string, F = string>({

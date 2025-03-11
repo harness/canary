@@ -4,7 +4,13 @@ import { Button, Icon, Input, ScrollArea, SkeletonList, StackedList } from '@/co
 import { cn } from '@utils/cn'
 
 import { EntityReferenceList } from './entity-reference-list'
-import { BaseEntityProps, DirectionEnum, EntityRendererProps, FolderRendererProps, ScopeSelectorProps } from './types'
+import {
+  BaseEntityProps,
+  ChildFolderRendererProps,
+  DirectionEnum,
+  EntityRendererProps,
+  ParentFolderRendererProps
+} from './types'
 
 export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F = string> {
   // Data
@@ -80,7 +86,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     )
   }
 
-  const parentFolderRenderer = ({ parentFolder, onSelect }: ScopeSelectorProps<S>) => {
+  const parentFolderRenderer = ({ parentFolder, onSelect }: ParentFolderRendererProps<S>) => {
     return (
       <StackedList.Item
         onClick={() => onSelect?.(parentFolder)}
@@ -91,7 +97,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     )
   }
 
-  const childFolderRenderer = ({ folder, onSelect }: FolderRendererProps<F>) => {
+  const childFolderRenderer = ({ folder, onSelect }: ChildFolderRendererProps<F>) => {
     return (
       <StackedList.Item
         onClick={() => onSelect?.(folder)}

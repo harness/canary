@@ -18,12 +18,6 @@ export enum SecretType {
   EXISTING = 'existing'
 }
 
-export enum SecretScopeEnum {
-  ACCOUNT = 'account',
-  ORGANIZATION = 'organization',
-  PROJECT = 'project'
-}
-
 export interface SecretData {
   type: string
   name: string

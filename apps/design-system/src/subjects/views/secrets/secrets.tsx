@@ -7,11 +7,11 @@ import {
   CreateSecretFormFields,
   CreateSecretPage,
   DirectionEnum,
+  ScopeEnum,
   SecretCreationType,
   SecretItem,
   SecretReference,
   SecretScope,
-  SecretScopeEnum,
   SecretsHeader,
   SecretType
 } from '@harnessio/ui/views'
@@ -23,15 +23,15 @@ import mockSecretsData from './mock-secrets-data.json'
 
 export const SecretsPage = () => {
   const scopeHierarchy: Record<SecretScope, { parent: SecretScope | null; child: SecretScope | null }> = {
-    account: { parent: null, child: SecretScopeEnum.ORGANIZATION },
-    organization: { parent: SecretScopeEnum.ACCOUNT, child: SecretScopeEnum.PROJECT },
-    project: { parent: SecretScopeEnum.ORGANIZATION, child: null }
+    account: { parent: null, child: ScopeEnum.ORGANIZATION },
+    organization: { parent: ScopeEnum.ACCOUNT, child: ScopeEnum.PROJECT },
+    project: { parent: ScopeEnum.ORGANIZATION, child: null }
   }
 
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.NEW)
 
   // State for existing secrets
-  const [, setActiveScope] = useState<SecretScope>(SecretScopeEnum.ORGANIZATION)
+  const [, setActiveScope] = useState<SecretScope>(ScopeEnum.ORGANIZATION)
   const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
@@ -51,15 +51,15 @@ export const SecretsPage = () => {
       const newScope =
         direction === DirectionEnum.PARENT ? scopeHierarchy[prevScope].parent! : scopeHierarchy[prevScope].child!
       switch (newScope) {
-        case SecretScopeEnum.ACCOUNT:
+        case ScopeEnum.ACCOUNT:
           setParentFolder(null)
           setChildFolder(mockOrgData[0].organizationResponse.organization.identifier)
           break
-        case SecretScopeEnum.ORGANIZATION:
+        case ScopeEnum.ORGANIZATION:
           setParentFolder(mockAccountsData[0].accountName)
           setChildFolder(mockProjectsData[0].projectResponse.project.identifier)
           break
-        case SecretScopeEnum.PROJECT:
+        case ScopeEnum.PROJECT:
           setParentFolder(mockOrgData[0].organizationResponse.organization.identifier)
           setChildFolder(null)
           break

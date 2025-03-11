@@ -1,27 +1,9 @@
 import React from 'react'
 
 import { Button, ButtonGroup, Icon, StackedList } from '@/components'
-import { BaseEntityProps, EntityReference, EntityRendererProps, ScopeSelectorProps } from '@/views/entity-reference'
+import { EntityReference, EntityRendererProps, ScopeSelectorProps } from '@/views/entity-reference'
 
-export interface SecretData {
-  type: string
-  name: string
-  identifier: string
-  orgIdentifier?: string
-  projectIdentifier?: string
-  tags: Record<string, string | undefined>
-  description?: string
-}
-
-// Define our custom scope type
-export type SecretScope = 'account' | 'organization' | 'project'
-
-export interface SecretItem extends BaseEntityProps {
-  secret: SecretData
-  createdAt: number
-  updatedAt: number
-  draft: boolean
-}
+import { DirectoryType, SecretItem } from '../types'
 
 export interface SecretReferenceProps {
   // Data
@@ -34,7 +16,7 @@ export interface SecretReferenceProps {
 
   // Callbacks
   onSelectEntity: (entity: SecretItem) => void
-  onScopeChange: (direction: 'up' | 'down') => void
+  onScopeChange: (direction: DirectoryType) => void
   onCancel?: () => void
 }
 

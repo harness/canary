@@ -3,6 +3,7 @@ import React, { useCallback } from 'react'
 import { Button, Icon, Input, ScrollArea } from '@/components'
 import { Root as StackedList, Field as StackedListField, Item as StackedListItem } from '@/components/stacked-list'
 import { cn } from '@utils/cn'
+import { DirectoryType } from '@views/secrets'
 
 // Base properties that all entities must have
 export interface BaseEntityProps {
@@ -37,7 +38,7 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
 
   // Callbacks
   onSelectEntity: (entity: T) => void
-  onScopeChange: (direction: 'up' | 'down') => void
+  onScopeChange: (direction: DirectoryType) => void
 
   // UI Configuration
   showFilter?: boolean
@@ -74,7 +75,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   )
 
   const handleScopeChange = useCallback(
-    (direction: 'up' | 'down') => {
+    (direction: DirectoryType) => {
       onScopeChange?.(direction)
     },
     [onScopeChange]
@@ -137,11 +138,11 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             {renderScopeSelector
               ? renderScopeSelector({
                   parentFolder,
-                  onSelect: () => handleScopeChange('up')
+                  onSelect: () => handleScopeChange(DirectoryType.UP)
                 })
               : defaultScopeSelectorRenderer({
                   parentFolder,
-                  onSelect: () => handleScopeChange('up')
+                  onSelect: () => handleScopeChange(DirectoryType.UP)
                 })}
           </>
         )}
@@ -152,11 +153,11 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             {renderFolder
               ? renderFolder({
                   folder: childFolder,
-                  onSelect: () => handleScopeChange('down')
+                  onSelect: () => handleScopeChange(DirectoryType.DOWN)
                 })
               : defaultFolderRenderer({
                   folder: childFolder,
-                  onSelect: () => handleScopeChange('down')
+                  onSelect: () => handleScopeChange(DirectoryType.DOWN)
                 })}
           </>
         )}
@@ -187,7 +188,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
         ) : (
           <StackedListItem disableHover>
             <StackedListField
-              title={<div className="flex items-center justify-center h-32 text-foreground-4">No items available</div>}
+              title={<div className="text-foreground-4 flex h-32 items-center justify-center">No items available</div>}
             />
           </StackedListItem>
         )}

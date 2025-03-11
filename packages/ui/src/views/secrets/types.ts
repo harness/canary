@@ -1,3 +1,5 @@
+import { BaseEntityProps } from '@views/entity-reference'
+
 export interface SecretDataType {
   type: SecretCreationType
   name: string
@@ -12,6 +14,36 @@ export enum SecretCreationType {
 }
 
 export enum SecretType {
-  New = 'new',
-  Existing = 'existing'
+  NEW = 'new',
+  EXISTING = 'existing'
+}
+
+export enum SecretScopeEnum {
+  ACCOUNT = 'account',
+  ORGANIZATION = 'organization',
+  PROJECT = 'project'
+}
+
+export enum DirectoryType {
+  UP = 'up',
+  DOWN = 'down'
+}
+export interface SecretData {
+  type: string
+  name: string
+  identifier: string
+  orgIdentifier?: string
+  projectIdentifier?: string
+  tags: Record<string, string | undefined>
+  description?: string
+}
+
+// Define our custom scope type
+export type SecretScope = 'account' | 'organization' | 'project'
+
+export interface SecretItem extends BaseEntityProps {
+  secret: SecretData
+  createdAt: number
+  updatedAt: number
+  draft: boolean
 }

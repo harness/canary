@@ -6,10 +6,12 @@ import { Button, Drawer, Spacer } from '@harnessio/ui/components'
 import {
   CreateSecretFormFields,
   CreateSecretPage,
+  DirectoryType,
   SecretCreationType,
   SecretItem,
   SecretReference,
   SecretScope,
+  SecretScopeEnum,
   SecretsHeader,
   SecretType
 } from '@harnessio/ui/views'
@@ -18,15 +20,15 @@ import { getAccountsData, getOrgData, getProjectData, getSecretsData } from './s
 
 export const SecretsPage = () => {
   const scopeHierarchy: Record<SecretScope, { parent: SecretScope | null; child: SecretScope | null }> = {
-    account: { parent: null, child: 'organization' },
-    organization: { parent: 'account', child: 'project' },
-    project: { parent: 'organization', child: null }
+    account: { parent: null, child: SecretScopeEnum.ORGANIZATION },
+    organization: { parent: SecretScopeEnum.ACCOUNT, child: SecretScopeEnum.PROJECT },
+    project: { parent: SecretScopeEnum.ORGANIZATION, child: null }
   }
 
-  const [selectedType, setSelectedType] = useState<SecretType>(SecretType.New)
+  const [selectedType, setSelectedType] = useState<SecretType>(SecretType.NEW)
 
   // State for existing secrets
-  const [, setActiveScope] = useState<SecretScope>('organization')
+  const [, setActiveScope] = useState<SecretScope>(SecretScopeEnum.ORGANIZATION)
   const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
   const [parentFolder, setParentFolder] = useState<string | null>(getAccountsData()[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(getProjectData()[0].projectResponse.project.identifier)
@@ -41,25 +43,24 @@ export const SecretsPage = () => {
     console.log('Selected secret:', secret)
   }
 
-  const handleScopeChange = (direction: 'up' | 'down') => {
+  const handleScopeChange = (direction: DirectoryType) => {
     setActiveScope(prevScope => {
-      const newScope = direction === 'up' ? scopeHierarchy[prevScope].parent! : scopeHierarchy[prevScope].child!
-
+      const newScope =
+        direction === DirectoryType.UP ? scopeHierarchy[prevScope].parent! : scopeHierarchy[prevScope].child!
       switch (newScope) {
-        case 'account':
+        case SecretScopeEnum.ACCOUNT:
           setParentFolder(null)
           setChildFolder(getOrgData()[0].organizationResponse.organization.identifier)
           break
-        case 'organization':
+        case SecretScopeEnum.ORGANIZATION:
           setParentFolder(getAccountsData()[0].accountName)
           setChildFolder(getProjectData()[0].projectResponse.project.identifier)
           break
-        case 'project':
+        case SecretScopeEnum.PROJECT:
           setParentFolder(getOrgData()[0].organizationResponse.organization.identifier)
           setChildFolder(null)
           break
       }
-
       return newScope
     })
   }
@@ -70,7 +71,7 @@ export const SecretsPage = () => {
 
   const renderSecretContent = () => {
     switch (selectedType) {
-      case SecretType.New:
+      case SecretType.NEW:
         return (
           <CreateSecretPage
             onFormSubmit={onSubmit}
@@ -87,7 +88,7 @@ export const SecretsPage = () => {
             }}
           />
         )
-      case SecretType.Existing:
+      case SecretType.EXISTING:
         return (
           <SecretReference
             secretsData={getSecretsData().map(secret => ({

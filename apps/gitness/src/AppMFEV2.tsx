@@ -24,10 +24,10 @@ import { MFEContext, Unknown } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
-import { getV5Routes } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
 import { mfeRoutes } from './routesV2'
+import { getV5RepoRoutes } from './v5routes'
 
 export interface MFERouteRendererProps {
   renderUrl: string
@@ -50,9 +50,11 @@ interface AppMFEProps {
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
   customComponents: {
-    Route: ComponentType<any>
     Link: ComponentType<any>
+    NavLink: ComponentType<any>
     Switch: ComponentType<any>
+    Route: ComponentType<any>
+    Redirect: ComponentType<any>
   }
   customHooks: Partial<{
     useGenerateToken: Unknown
@@ -72,7 +74,7 @@ export default function AppMFE({
   renderUrl,
   on401,
   useMFEThemeContext,
-  customComponents: { Route, Link, Switch },
+  customComponents: { Link, Switch, Route, Redirect },
   customHooks,
   customUtils
 }: AppMFEProps) {
@@ -117,7 +119,12 @@ export default function AppMFE({
 
   const routesV6 = mfeRoutes(scope.projectIdentifier)
 
-  const routesV5 = getV5Routes({ Route, Switch, routesV6, renderUrl })
+  const v5Routes = getV5RepoRoutes({
+    pathPrefix: renderUrl,
+    Switch,
+    Route,
+    Redirect
+  })
 
   return (
     <div ref={portalRef}>
@@ -155,9 +162,7 @@ export default function AppMFE({
                                 {/* v6 */}
                                 {/* <RouterProvider router={createBrowserRouter(routesV6, { basename })} /> */}
                                 {/* v5 */}
-                                <BrowserRouter basename={basename}>
-                                  <Switch>{routesV5}</Switch>
-                                </BrowserRouter>
+                                <BrowserRouter basename={basename}>{v5Routes}</BrowserRouter>
                               </RouterContextProvider>
                             </NavigationProvider>
                           </ExitConfirmProvider>

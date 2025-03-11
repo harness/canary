@@ -235,16 +235,16 @@ export const AppShellMFE = memo(() => {
 AppShellMFE.displayName = 'AppShellMFE'
 
 function BreadcrumbsAndOutlet({ className }: { className?: string }) {
-    const { isInset } = useThemeStore()
+  const { isInset } = useThemeStore()
 
   return (
-      <div className={cn({ 'overflow-hidden h-screen p-3 bg-sidebar-background-1': isInset })}>
-          <div className={cn('h-full flex flex-col', { 'rounded-xl overflow-auto bg-background-1': isInset }, className)}>
-              <div className="layer-high sticky top-0 bg-background-1">
-                  <Breadcrumbs />
-              </div>
-              <Outlet />
-          </div>
+    <div className={cn({ 'overflow-hidden h-screen p-3 bg-sidebar-background-1': isInset })}>
+      <div className={cn('h-full flex flex-col', { 'rounded-xl overflow-auto bg-background-1': isInset }, className)}>
+        <div className="layer-high sticky top-0 bg-background-1">
+          <Breadcrumbs />
+        </div>
+        <Outlet />
       </div>
+    </div>
   )
 }

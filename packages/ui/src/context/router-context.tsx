@@ -1,5 +1,13 @@
 import { ComponentType, createContext, ReactNode, useContext } from 'react'
-import type { LinkProps, Location, NavigateFunction, NavLinkProps, OutletProps, UIMatch } from 'react-router-dom'
+import type {
+  LinkProps,
+  Location,
+  NavigateFunction,
+  NavLinkProps,
+  OutletProps,
+  Params,
+  UIMatch
+} from 'react-router-dom'
 
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
 
@@ -47,8 +55,10 @@ const useMatchesDefault = (): UIMatch[] => {
   return []
 }
 
-const useParamsDefault = <T extends Record<string, string | undefined>>(): T => {
-  return {} as T
+const useParamsDefault = <ParamsOrKey extends string | Record<string, string | undefined> = string>(): Readonly<
+  [ParamsOrKey] extends [string] ? Params<ParamsOrKey> : Partial<ParamsOrKey>
+> => {
+  return {} as any
 }
 
 const defaultLocation: Location = { ...window.location, state: {}, key: '' }
@@ -61,7 +71,7 @@ interface RouterContextType {
   navigate: NavigateFunction
   useSearchParams: typeof useSearchParamsDefault
   useMatches: typeof useMatchesDefault
-  useParams: <T extends Record<string, string | undefined>>() => T
+  useParams: typeof useParamsDefault
 }
 
 const RouterContext = createContext<RouterContextType>({

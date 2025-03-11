@@ -6,6 +6,7 @@ import {
   Outlet,
   RouterProvider,
   useMatches,
+  useParams,
   useSearchParams
 } from 'react-router-dom'
 
@@ -56,6 +57,7 @@ export default function App() {
                     navigate={router.navigate}
                     useSearchParams={useSearchParams}
                     useMatches={useMatches}
+                    useParams={useParams}
                   >
                     <RouterProvider router={router} />
                   </RouterContextProvider>

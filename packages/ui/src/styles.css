@@ -74,7 +74,11 @@
   .badge-ai {
     --badge-color: var(--canary-component-badge-ai-text);
     --badge-bg-color: var(--canary-component-badge-ai-background);
-    --badge-border-color: var(--canary-component-badge-ai-border);
+    border: 1px solid transparent;
+    background-image:
+      linear-gradient(to right, var(--badge-bg-color), var(--badge-bg-color)), var(--canary-component-badge-ai-border);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
   }
   /* .badge-default {
     color: oklch(var(--canary-component-badge-default-text));

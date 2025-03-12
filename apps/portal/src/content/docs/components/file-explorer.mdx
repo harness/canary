@@ -1,0 +1,208 @@
+---
+title: File Explorer
+description: File Explorer component documentation
+---
+
+The File Explorer component provides a UI element for browsing and selecting files or directories. It displays a hierarchical view of the file system.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<FileExplorer.Root
+  value={['src']}
+  onValueChange={(value) => console.log('Value changed:', value)}
+>
+  <FileExplorer.FolderItem content={
+    <div className="flex flex-col">
+      <FileExplorer.FileItem link="/src/index.tsx">index.tsx</FileExplorer.FileItem>
+      <FileExplorer.FileItem link="/src/file-explorer.tsx">FileExplorer.tsx</FileExplorer.FileItem>
+      <FileExplorer.FileItem link="/src/type.ts">type.ts</FileExplorer.FileItem>
+    </div>
+  } value="src" link="/src">
+    src
+  </FileExplorer.FolderItem>
+
+  <FileExplorer.FolderItem content={
+    <div className="flex flex-col">
+      <FileExplorer.FileItem link="/src/index.tsx">index.tsx</FileExplorer.FileItem>
+      <FileExplorer.FileItem link="/src/file-explorer.tsx">FileExplorer.tsx</FileExplorer.FileItem>
+      <FileExplorer.FileItem link="/src/type.ts">type.ts</FileExplorer.FileItem>
+    </div>
+  } value="assets" link="/assets">
+    assets
+  </FileExplorer.FolderItem>
+  <FileExplorer.FileItem link="/package.json">package.json</FileExplorer.FileItem>
+</FileExplorer.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { FileExplorer } from '@harnessio/ui/components'
+
+return (
+  <FileExplorer.Root
+    value={['src']}                         // [REQUIRED] Currently selected items
+    onValueChange={(value) => console.log('Value changed:', value)} // [REQUIRED] Handler for selection changes
+  >
+    <FileExplorer.FolderItem
+      value="src"                          // [OPTIONAL] Folder identifier
+      link="/src"                          // [REQUIRED] Navigation link
+      isActive={false}                     // [OPTIONAL] Active state
+      chevronClassName="custom-chevron"    // [OPTIONAL] Custom chevron styling
+    >
+      src
+      <FileExplorer.FileItem
+        link="/src/index.tsx"              // [OPTIONAL] Navigation link
+        isActive={false}                   // [OPTIONAL] Active state
+      >
+        index.tsx
+      </FileExplorer.FileItem>
+    </FileExplorer.FolderItem>
+    <FileExplorer.FileItem link="/package.json">package.json</FileExplorer.FileItem>
+  </FileExplorer.Root>
+)
+```
+
+## Anatomy
+
+The File Explorer component can be used to display a hierarchical view of the file system and handle file or directory selection.
+
+```typescript jsx
+<FileExplorer.Root
+  value={['src']}                         // [REQUIRED] Currently selected items
+  onValueChange={(value) => console.log('Value changed:', value)} // [REQUIRED] Handler for selection changes
+>
+  <FileExplorer.FolderItem
+    value="src"                          // [OPTIONAL] Folder identifier
+    link="/src"                          // [REQUIRED] Navigation link
+    isActive={false}                     // [OPTIONAL] Active state
+    chevronClassName="custom-chevron"    // [OPTIONAL] Custom chevron styling
+  >
+    src
+    <FileItem
+      link="/src/index.tsx"              // [OPTIONAL] Navigation link
+      isActive={false}                   // [OPTIONAL] Active state
+    >
+      index.tsx
+    </FileExplorer.FileItem>
+  </FileExplorer.FolderItem>
+  <FileExplorer.FileItem link="/package.json">package.json</FileExplorer.FileItem>
+</FileExplorer.Root>
+```
+
+## API Reference
+
+### Root
+
+The `Root` component serves as the main container for displaying the file system hierarchy and handling file or directory selection.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "The child components (FileItem and FolderItem) to render inside the root component",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "onValueChange",
+      description:
+        "Callback function that is called when the selection changes. Receives the new selected values as an argument.",
+      required: true,
+      value: "(value: string | string[]) => void",
+    },
+    {
+      name: "value",
+      description:
+        "Array of currently selected item values. These values correspond to the 'value' props of the selected FolderItems.",
+      required: true,
+      value: "string[]",
+    },
+  ]}
+/>
+
+### FolderItem
+
+The `FolderItem` component is used to display a folder in the file explorer.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "The label and child components (FileItems or nested FolderItems) to render inside the folder",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "value",
+      description:
+        "Unique identifier for the folder. Used for selection tracking and must match values in Root's value prop.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "isActive",
+      description:
+        "Controls the visual active state of the folder item. When true, applies active styling.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "content",
+      description:
+        "Additional content to render inside the folder. Can be used to add custom elements or information.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "chevronClassName",
+      description:
+        "Custom CSS classes to style the expand/collapse chevron icon of the folder",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "link",
+      description:
+        "URL or path to navigate to when the folder item is clicked. Used for routing or navigation.",
+      required: true,
+      value: "string",
+    },
+  ]}
+/>
+
+### FileItem
+
+The `FileItem` component is used to display a file in the file explorer.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "The label or content to display for the file item. Typically the filename.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "isActive",
+      description:
+        "Controls the visual active state of the file item. When true, applies active styling to indicate current selection.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "link",
+      description:
+        "URL or path to navigate to when the file item is clicked. If not provided, the file item will not be clickable.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

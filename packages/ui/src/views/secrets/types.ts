@@ -28,9 +28,6 @@ export interface SecretData {
   description?: string
 }
 
-// Define our custom scope type
-export type SecretScope = 'account' | 'organization' | 'project'
-
 export interface SecretItem extends BaseEntityProps {
   secret: SecretData
   createdAt: number

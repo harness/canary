@@ -25,9 +25,3 @@ export interface ChildFolderRendererProps<F = string> {
   folder: F
   onSelect: (folder: F) => void
 }
-
-export enum ScopeEnum {
-  ACCOUNT = 'account',
-  ORGANIZATION = 'organization',
-  PROJECT = 'project'
-}

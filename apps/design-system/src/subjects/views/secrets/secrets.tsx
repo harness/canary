@@ -7,11 +7,9 @@ import {
   CreateSecretFormFields,
   CreateSecretPage,
   DirectionEnum,
-  ScopeEnum,
   SecretCreationType,
   SecretItem,
   SecretReference,
-  SecretScope,
   SecretsHeader,
   SecretType
 } from '@harnessio/ui/views'
@@ -20,6 +18,7 @@ import mockAccountsData from './mock-account-data.json'
 import mockOrgData from './mock-org-data.json'
 import mockProjectsData from './mock-project-data.json'
 import mockSecretsData from './mock-secrets-data.json'
+import { ScopeEnum, SecretScope } from './types'
 
 export const SecretsPage = () => {
   const scopeHierarchy: Record<SecretScope, { parent: SecretScope | null; child: SecretScope | null }> = {
@@ -106,6 +105,7 @@ export const SecretsPage = () => {
             onScopeChange={handleScopeChange}
             onCancel={handleCancel}
             isLoading={false}
+            apiError="Could not fetch secrets, unauthorized"
           />
         )
       default:

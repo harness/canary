@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, CopyButton, Dialog, Fieldset, FormWrapper, Input, Select, toast } from '@/components'
+import { Alert, Button, CopyButton, Dialog, Fieldset, FormWrapper, Input, Select } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
@@ -125,16 +125,6 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
       : `${t('views:profileSettings.createTokenDialog.tokenExpiryDate', 'Token will expire on')} ${calculateExpirationDate(expirationValue)}`
   }
 
-  /**
-   * Show an unexpected server error message
-   * Ensure that validation errors are handled by the react-hook-form
-   */
-  useEffect(() => {
-    if (!error || error?.type !== ApiErrorType.TokenCreate) return
-
-    toast({ title: error.message, variant: 'destructive' })
-  }, [error])
-
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
       <Dialog.Content aria-describedby={undefined}>
@@ -208,6 +198,12 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
               </Select.Root>
             )}
           </Fieldset>
+
+          {error?.type === ApiErrorType.TokenCreate && (
+            <Alert.Container variant="destructive">
+              <Alert.Title>{error.message}</Alert.Title>
+            </Alert.Container>
+          )}
 
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button type="button" variant="outline" onClick={handleClose}>

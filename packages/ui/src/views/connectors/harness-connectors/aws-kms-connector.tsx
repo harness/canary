@@ -8,12 +8,12 @@ import {
   createConnectorPayloadConverter,
   CredTypeValues,
   DelegateTypes,
-  IInputConfigWithConfig
+  IInputConfigWithConfigInterface
 } from '../types'
 
 export const AWS_KMS_CONNECTOR_DESCRIPTION = 'AWS KMS Connector'
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: IInputConfigWithConfigInterface[] = [
   {
     inputType: InputType.select,
     path: `credential`,

@@ -32,6 +32,7 @@ import { BranchSelectorContainer } from '../../components-v2/branch-selector-con
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -50,7 +51,8 @@ export default function RepoSummaryPage() {
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
   const { useParams } = useRouterContext()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')

@@ -22,6 +22,7 @@ import {
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -37,7 +38,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const { useParams } = useRouterContext()
   const { repoId: repoName } = useParams<PathParams>()
 
-  const { spaceId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const { identifier } = useParams()
   const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useRepoRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')

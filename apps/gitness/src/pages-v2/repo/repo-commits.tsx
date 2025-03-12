@@ -8,6 +8,7 @@ import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@har
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
@@ -17,7 +18,8 @@ export default function RepoCommitsPage() {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
   const { useParams } = useRouterContext()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
   const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const [searchParams, setSearchParams] = useSearchParams()

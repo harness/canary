@@ -5,6 +5,7 @@ import { useRouterContext } from '@harnessio/ui/context'
 import { CreateLabelFormFields, LabelFormPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
+import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../../i18n/stores/i18n-store'
 import { PathParams } from '../../../RouteDefinitions'
 import { useLabelsStore } from '../stores/labels-store'
@@ -13,7 +14,8 @@ import { useFillLabelStoreWithProjectLabelValuesData } from './hooks/use-fill-la
 export const ProjectLabelFormContainer = () => {
   const routes = useRoutes()
   const { useParams } = useRouterContext()
-  const { spaceId, labelId } = useParams<PathParams>()
+  const { labelId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const navigate = useNavigate()
 
   const { space_ref } = useFillLabelStoreWithProjectLabelValuesData({ query: labelId, enabled: !!labelId })

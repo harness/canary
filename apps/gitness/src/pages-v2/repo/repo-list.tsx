@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 
 import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
 import { ToastAction, useToast } from '@harnessio/ui/components'
-import { useRouterContext } from '@harnessio/ui/context'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -10,16 +9,13 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
 export default function ReposListPage() {
-  const { useParams } = useRouterContext()
   const routes = useRoutes()
-  const { spaceId } = useParams<PathParams>()
-  const spaceURL = useGetSpaceURLParam() ?? ''
+  const spaceId = useGetSpaceURLParam()
   const {
     setRepositories,
     page,
@@ -46,7 +42,7 @@ export default function ReposListPage() {
         page: queryPage,
         query: query ?? ''
       },
-      space_ref: `${spaceURL}/+`
+      space_ref: `${spaceId}/+`
     },
     {
       retry: 5
@@ -90,7 +86,7 @@ export default function ReposListPage() {
             onClick={() => {
               deleteRepository({
                 queryParams: {},
-                repo_ref: `${spaceURL}/${importRepoIdentifier}/+`
+                repo_ref: `${spaceId}/${importRepoIdentifier}/+`
               })
             }}
             altText="Cancel import"

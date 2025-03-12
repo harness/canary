@@ -9,7 +9,7 @@ import { CustomHandle } from '../../framework/routing/types'
 // import { routes } from '../../v6/RouteDestinations'
 
 function Breadcrumbs() {
-  const matches: UIMatch[] = useMFEContext()?.customHooks?.useMatches?.([])
+  const matches: UIMatch[] = useMFEContext()?.customHooks?.useMatches?.([]) || []
   const matchesWithBreadcrumb = matches.filter(match => (match.handle as CustomHandle)?.breadcrumb)
   const isMFE = useIsMFE()
 

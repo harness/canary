@@ -19,11 +19,7 @@
         "$type": "spacing",
         "$value": "{spacing.half}"
       },
-      "pl": {
-        "$type": "spacing",
-        "$value": "{spacing.1-half}"
-      },
-      "pr": {
+      "px": {
         "$type": "spacing",
         "$value": "{spacing.2}"
       },

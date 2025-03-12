@@ -9056,8 +9056,6 @@
       "badge.size.default": "cad204331a3d056d1cd49b8d85f982e03cc768a4",
       "badge.default.gap": "d78cd5b01cce6b22996f167916bb926b5dfb913c",
       "badge.default.py": "122f6bc32c7efab7a5e27a2dc32def7b9a6e0826",
-      "badge.default.pl": "ccfde41e72e43dd5c363bcef62cdf4533a3ce989",
-      "badge.default.pr": "f0bc7c9701c0a55677d9813597af807a8644fe23",
       "badge.default.radius": "347be28d0a728945866ff529cd499b1e58bee6f0",
       "badge.rounded.radius": "7a19a52ddc4cde699ca52b3100e9532770b9b551",
       "badge.rounded.px": "6014b3b6218847f226fd965b8138f261aef9610e",
@@ -9084,7 +9082,8 @@
       "dropdown.menu-item-branch-selector.tag.px": "35594a38718a20c7f3e3fd133e8c44ff831c5a05",
       "dropdown.menu-item-branch-selector.tag.size": "4b9f6544cf9aec4068151e8e37a986d832f5606c",
       "dropdown.menu-items.header-footer.px": "ac04ab19d02649e4354bb5f650c0a9435f7a7f19",
-      "dropdown.menu-items.header-footer.py": "7f108d35da597212c12b81e397b921cf5365874b"
+      "dropdown.menu-items.header-footer.py": "7f108d35da597212c12b81e397b921cf5365874b",
+      "badge.default.px": "f0bc7c9701c0a55677d9813597af807a8644fe23"
     },
     "group": "breakpoint"
   },

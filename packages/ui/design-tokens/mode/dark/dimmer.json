@@ -787,6 +787,11 @@
         "$value": "{background.3}",
         "$description": "Background color for dialog components. Creates a distinct surface for modal content that appears above the main UI."
       },
+      "border": {
+        "$type": "color",
+        "$value": "{border.2}",
+        "$description": "Border color for dialog components."
+      },
       "backdrop": {
         "$extensions": {
           "studio.tokens": {

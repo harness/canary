@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { Button, Drawer, Spacer } from '@harnessio/ui/components'
-import { ConnectorHeader, ConnectorReference, ConnectorType, DirectionEnum } from '@harnessio/ui/views'
+import { ConnectorHeader, ConnectorItem, ConnectorReference, ConnectorType, DirectionEnum } from '@harnessio/ui/views'
 
 import mockAccountsData from '../secrets/mock-account-data.json'
 import mockOrgData from '../secrets/mock-org-data.json'
@@ -14,12 +14,12 @@ export const ConnectorsPage = () => {
   const [, setActiveScope] = useState<SecretScope>(ScopeEnum.ORGANIZATION)
 
   // State for existing connectors
-  const [selectedConnector, setSelectedConnector] = useState<any | null>(null)
+  const [selectedConnector, setSelectedConnector] = useState<ConnectorItem | null>(null)
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
 
   // Handlers for existing connectors
-  const handleSelectConnector = (connector: any) => {
+  const handleSelectConnector = (connector: ConnectorItem) => {
     setSelectedConnector(connector)
     console.log('Selected connector:', connector)
   }
@@ -57,13 +57,19 @@ export const ConnectorsPage = () => {
           <div className="p-4">
             <h2 className="text-xl font-semibold mb-4">Create New Connector</h2>
             <p>Add form for new connector here</p>
-            {/* In a real implementation, you would include a form component here */}
+            {/* Render Calvin/Shaurya's create connector flow from here */}
           </div>
         )
       case ConnectorType.EXISTING:
         return (
           <ConnectorReference
-            connectorsData={mockConnectorsData}
+            connectorsData={mockConnectorsData.map(connector => {
+              return {
+                ...connector,
+                name: connector.connector.name,
+                id: connector.connector.identifier
+              }
+            })}
             parentFolder={parentFolder}
             childFolder={childFolder}
             selectedEntity={selectedConnector}

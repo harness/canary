@@ -2,20 +2,20 @@ import { Alert, Button, ButtonGroup, Icon, StackedList } from '@/components'
 import { EntityReference, EntityRendererProps } from '@views/platform'
 import { DirectionEnum } from '@views/platform/types'
 
-// import { ConnectorItem } from '../types'
+import { ConnectorItem } from '../types'
 
 export interface ConnectorReferenceProps {
   // Data
-  connectorsData: any[]
+  connectorsData: ConnectorItem[]
   childFolder: string | null
   parentFolder: string | null
   apiError?: string | null
 
   // State
-  selectedEntity: any | null
+  selectedEntity: ConnectorItem | null
 
   // Callbacks
-  onSelectEntity: (entity: any) => void
+  onSelectEntity: (entity: ConnectorItem) => void
   onScopeChange: (direction: DirectionEnum) => void
   onCancel?: () => void
   isLoading?: boolean
@@ -70,7 +70,7 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
     <div className="flex flex-col">
       <span className="font-medium mb-4">Select an existing Connector:</span>
       <div className="flex-1">
-        <EntityReference<any>
+        <EntityReference<ConnectorItem>
           entities={connectorsData}
           selectedEntity={selectedEntity}
           onSelectEntity={onSelectEntity}

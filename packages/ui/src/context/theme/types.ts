@@ -10,6 +10,11 @@ export enum ColorType {
   ProtanopiaAndDeuteranopia = 'pnd'
 }
 
+export enum ContentStyleType {
+  Inset = 'inset',
+  NoInset = 'noInset'
+}
+
 export enum ContrastType {
   Standard = 'std',
   Low = 'low',
@@ -22,7 +27,10 @@ export interface IThemeStore {
   theme?: FullTheme
   isInset?: boolean
   setTheme: (theme: FullTheme) => void
+  setInset: (isInset: boolean) => void
   isLightTheme: boolean
 }
 
 export const defaultTheme = `${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Standard}` as FullTheme
+
+export const INSET_THEME_PADDING = 8

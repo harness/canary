@@ -13,13 +13,8 @@ export const useThemeStore = create<IThemeStore>()(
     set => ({
       theme: undefined,
       isInset: false,
-      setTheme: (newTheme: FullTheme) => {
-        const isInsetVal = newTheme.includes('Inset')
-        const newThemeVal = newTheme.replace('Inset', '') as FullTheme
-
-        set({ isInset: isInsetVal })
-        set({ theme: newThemeVal })
-      },
+      setTheme: (newTheme: FullTheme) => set({ theme: newTheme }),
+      setInset: (isInset: boolean) => set({ isInset }),
       isLightTheme: false
     }),
     {
@@ -33,7 +28,7 @@ interface ThemeProviderProps {
   defaultTheme: FullTheme
 }
 export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
-  const { theme, setTheme, isLightTheme, isInset } = useThemeStore()
+  const { theme, setTheme, setInset, isLightTheme, isInset } = useThemeStore()
   const isMFE = useIsMFE()
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -83,7 +78,7 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
   }, [theme, setTheme, systemMode, isInset])
 
   return (
-    <UIThemeProvider theme={theme} setTheme={setTheme} isLightTheme={isLightTheme}>
+    <UIThemeProvider theme={theme} setTheme={setTheme} setInset={setInset} isLightTheme={isLightTheme}>
       {children}
     </UIThemeProvider>
   )

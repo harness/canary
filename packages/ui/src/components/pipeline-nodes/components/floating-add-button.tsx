@@ -3,7 +3,7 @@ import { CSSProperties } from 'react'
 import { Button } from '@components/button'
 import { Icon } from '@components/icon'
 
-import { ParallelContainerConfig } from '@harnessio/pipeline-graph'
+import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 
 const CONTAINER_WIDTH = '40'
 const CONTAINER_HEIGHT = '40'
@@ -13,8 +13,8 @@ export interface FloatingAddButtonProp {
   position: 'before' | 'after'
   onClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
   collapsed?: boolean
-  parallelContainerConfig?: Partial<ParallelContainerConfig>
-  serialContainerConfig?: Partial<ParallelContainerConfig>
+  parallelContainerConfig?: Partial<ParallelContainerConfigType>
+  serialContainerConfig?: Partial<SerialContainerConfigType>
 }
 
 export function FloatingAddButton(props: FloatingAddButtonProp) {

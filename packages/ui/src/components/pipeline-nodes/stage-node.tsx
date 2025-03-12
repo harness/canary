@@ -2,7 +2,7 @@ import { Button } from '@components/button'
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 
-import { ParallelContainerConfig } from '@harnessio/pipeline-graph'
+import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
@@ -26,8 +26,8 @@ export interface StageNodeProps {
   onAddInClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onHeaderClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onAddClick?: (position: 'before' | 'after', e: React.MouseEvent<HTMLElement, MouseEvent>) => void
-  parallelContainerConfig?: Partial<ParallelContainerConfig>
-  serialContainerConfig?: Partial<ParallelContainerConfig>
+  parallelContainerConfig?: Partial<ParallelContainerConfigType>
+  serialContainerConfig?: Partial<SerialContainerConfigType>
 }
 
 export function StageNode(props: StageNodeProps) {

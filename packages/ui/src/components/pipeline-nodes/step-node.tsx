@@ -2,7 +2,7 @@ import { cn } from '@utils/cn'
 
 import './step-node.css'
 
-import { ParallelContainerConfig } from '@harnessio/pipeline-graph'
+import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
@@ -25,8 +25,8 @@ export interface StepNodeProps {
   onAddClick?: (position: 'before' | 'after', e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   counter?: number
   isCollapsedNode?: boolean
-  parallelContainerConfig?: Partial<ParallelContainerConfig>
-  serialContainerConfig?: Partial<ParallelContainerConfig>
+  parallelContainerConfig?: Partial<ParallelContainerConfigType>
+  serialContainerConfig?: Partial<SerialContainerConfigType>
 }
 
 export function StepNode(props: StepNodeProps) {

@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
 
-import { ParallelContainerConfig, SerialContainerConfig } from '@harnessio/pipeline-graph'
+import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 
 import { CommonNodeDataType } from '../types/common-node-data-type'
 import { YamlEntityType } from '../types/yaml-entity-type'
@@ -44,8 +44,8 @@ export interface PipelineStudioNodeContextProps<T> {
   onDeleteIntention: (nodeData: CommonNodeDataType) => void
   onRevealInYaml: (path: string | undefined) => void
   globalData?: T
-  serialContainerConfig?: Partial<SerialContainerConfig>
-  parallelContainerConfig?: Partial<ParallelContainerConfig>
+  serialContainerConfig?: Partial<SerialContainerConfigType>
+  parallelContainerConfig?: Partial<ParallelContainerConfigType>
 }
 
 export const PipelineStudioNodeContext = createContext<PipelineStudioNodeContextProps<any>>({
@@ -81,8 +81,8 @@ export function usePipelineStudioNodeContext<T>(): PipelineStudioNodeContextProp
 export interface UnifiedPipelineStudioNodeContextProviderProps<T = unknown> {
   children: React.ReactNode
   globalData?: T
-  serialContainerConfig?: Partial<SerialContainerConfig>
-  parallelContainerConfig?: Partial<ParallelContainerConfig>
+  serialContainerConfig?: Partial<SerialContainerConfigType>
+  parallelContainerConfig?: Partial<ParallelContainerConfigType>
 }
 
 export const UnifiedPipelineStudioNodeContextProvider: React.FC<

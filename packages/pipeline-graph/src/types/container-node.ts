@@ -19,18 +19,18 @@ export interface ContainerNodeProps<CONTAINER_NODE = AnyNodeInternal> extends No
   isLast: boolean
 }
 
-interface CommonContainerConfig {
+interface CommonContainerConfigType {
   paddingLeft: number
   paddingRight: number
   paddingTop: number
   paddingBottom: number
 }
-export interface ParallelContainerConfig extends CommonContainerConfig {
+export interface ParallelContainerConfigType extends CommonContainerConfigType {
   nodeGap: number
   parallelGroupAdjustment?: number
 }
 
-export interface SerialContainerConfig extends CommonContainerConfig {
+export interface SerialContainerConfigType extends CommonContainerConfigType {
   nodeGap: number
   serialGroupAdjustment?: number
 }

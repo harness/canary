@@ -19,7 +19,7 @@
   "text": {
     "1": {
       "$type": "color",
-      "$value": "{colors.pure.white}",
+      "$value": "{colors.chrome.50}",
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text, primary buttons."
     },
     "2": {
@@ -486,7 +486,11 @@
         },
         "background": {
           "$type": "color",
+<<<<<<< HEAD
           "$value": "{background.3}",
+=======
+          "$value": "{background.2}",
+>>>>>>> 0114f991 (Add js tokens build)
           "$description": "Background color for AI-related badges. Creates a subtle backdrop that highlights the gradient border."
         },
         "border": {
@@ -584,7 +588,7 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{border.1}",
+            "$value": "{border.2}",
             "$description": "Border color for selected outline buttons. Creates stronger visual indication of the active state."
           },
           "background": {
@@ -1056,11 +1060,6 @@
         "$type": "color",
         "$value": "{text.accent}",
         "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
-      },
-      "hover": {
-        "$type": "color",
-        "$value": "{brand.color.100}",
-        "$description": "Hover state color for text links. Provides visual feedback for user interaction."
       },
       "visited": {
         "$type": "color",

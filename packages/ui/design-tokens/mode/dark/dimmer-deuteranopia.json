@@ -476,6 +476,18 @@
           "$description": "Text color for AI-related badges. Ensures high contrast against AI badge gradient border."
         },
         "background": {
+<<<<<<< HEAD
+=======
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.05",
+                "space": "lch"
+              }
+            }
+          },
+>>>>>>> 0114f991 (Add js tokens build)
           "$type": "color",
           "$value": "{background.3}",
           "$description": "Background color for AI-related badges. Creates a subtle backdrop that highlights the gradient border."

@@ -1,13 +1,13 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Mon, 10 Mar 2025 11:42:45 GMT
+ * Generated on Wed, 12 Mar 2025 05:35:17 GMT
  * Copyright (c) Harness.
  */
 
 .source-light-high-contrast-deuteranopia-desktop-gitness {
-  --canary-icon-stroke-width-xxs: 1.4px;
-  --canary-icon-stroke-width-xs: 1.3px;
+  --canary-icon-stroke-width-xxs: 1px;
+  --canary-icon-stroke-width-xs: 1px;
   --canary-icon-stroke-width-sm: 1px;
   --canary-icon-stroke-width-md: 1.4px;
   --canary-icon-stroke-width-lg: 2px;
@@ -16,19 +16,19 @@
    * 
    * Common uses: Application background, page base layer, lowest-level containers.
    */
-  --canary-background-1: var(--canary-colors-chrome-50);
+  --canary-background-1: var(--canary-colors-pure-white);
   /**
    * Level 2. Represents elements that sit on top of the bottom layer. Creates visual hierarchy through subtle elevation.
    * 
    * Common uses: Cards, containers, form fields, dropdown menus.
    */
-  --canary-background-2: var(--canary-colors-pure-white);
+  --canary-background-2: var(--canary-colors-chrome-50);
   /**
    * Level 3. Represents elements that sit on top of the middle layer. Creates strong visual emphasis through maximum elevation.
    * 
    * Common uses: Popovers, tooltips, highlighted containers.
    */
-  --canary-background-3: var(--canary-colors-chrome-50);
+  --canary-background-3: var(--canary-colors-chrome-100);
   /**
    * Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.
    * 
@@ -40,61 +40,61 @@
    * 
    * Common uses: Body text, primary content, default icons, form inputs.
    */
-  --canary-text-2: var(--canary-colors-chrome-850);
+  --canary-text-2: var(--canary-colors-chrome-900);
   /**
    * Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.
    * 
    * Common uses: Supporting text, metadata, secondary information, placeholders.
    */
-  --canary-text-3: var(--canary-colors-chrome-700);
+  --canary-text-3: var(--canary-colors-chrome-800);
   /**
    * Primary color for text and icons in success content. Communicates positive outcomes and completion states.
    * 
    * Common uses: Success message text, completion text, positive indicators.
    */
-  --canary-text-success: var(--canary-colors-green-600);
+  --canary-text-success: var(--canary-colors-cyan-600);
   /**
    * Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.
    * 
    * Common uses: Error message text, validation text, destructive action labels.
    */
-  --canary-text-danger: var(--canary-colors-red-600);
+  --canary-text-danger: var(--canary-colors-orange-600);
   /**
    * Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.
    * 
    * Common uses: Warning message text, alert text, important notifications.
    */
-  --canary-text-warning: var(--canary-colors-yellow-500);
+  --canary-text-warning: var(--canary-colors-yellow-600);
   /**
    * Enhanced border color for interactive states. Creates strong visual definition for important boundaries.
    * 
    * Common uses: Focus states, hover states, active elements, primary containers.
    */
-  --canary-border-1: var(--canary-colors-chrome-800);
+  --canary-border-1: var(--canary-colors-chrome-700);
   /**
    * Standard border color for general use. Provides balanced visual definition for common UI elements.
    * 
    * Common uses: Containers, cards, dividers, separators, default form inputs.
    */
-  --canary-border-2: var(--canary-colors-chrome-100);
+  --canary-border-2: var(--canary-colors-chrome-300);
   /**
    * Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.
    * 
    * Common uses: Subtle dividers, grouped content, secondary containers, table rows.
    */
-  --canary-border-3: var(--canary-colors-chrome-100);
+  --canary-border-3: lch(from var(--canary-colors-chrome-200) l c h / 0.7);
   /**
    * Border color for success containers. Reinforces positive status through visual framing.
    * 
    * Common uses: Success alert borders, confirmation boundaries, completed state indicators.
    */
-  --canary-border-success: var(--canary-colors-green-400);
+  --canary-border-success: var(--canary-colors-cyan-500);
   /**
    * Border color for error containers. Emphasizes critical information through visual framing.
    * 
    * Common uses: Error alert borders, validation boundaries, destructive action containers.
    */
-  --canary-border-danger: var(--canary-colors-red-400);
+  --canary-border-danger: var(--canary-colors-orange-500);
   /**
    * Border color for warning containers. Frames cautionary information with distinct boundary.
    * 
@@ -106,13 +106,13 @@
    * 
    * Common uses: Button hover states, link hover states, soft interactions, menu items.
    */
-  --canary-state-hover: var(--canary-colors-chrome-400);
+  --canary-state-hover: lch(from var(--canary-colors-chrome-300) l c h / 0.15);
   /**
    * Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.
    * 
    * Common uses: Selected list items, active tabs, chosen options, current navigation item.
    */
-  --canary-state-selected: var(--canary-colors-chrome-400);
+  --canary-state-selected: lch(from var(--canary-colors-chrome-400) l c h / 0.2);
   /**
    * Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.
    * 
@@ -124,63 +124,63 @@
    * 
    * Common uses: Disabled buttons, inactive form controls, unavailable options.
    */
-  --canary-state-disabled-background: var(--canary-colors-chrome-300);
-  --canary-component-alert-danger-title: var(--canary-colors-red-800); /* Text color for danger alerts. Communicates critical information through high-contrast red text. */
-  --canary-component-alert-danger-description: var(--canary-colors-red-600); /* Description text color for danger alerts. Ensures readability while maintaining the error state styling. */
-  --canary-component-alert-danger-background: var(--canary-colors-red-500); /* Background color for danger alerts. Creates subtle but recognizable error state styling. */
-  --canary-component-alert-danger-border: var(--canary-colors-red-400); /* Border color for danger alerts. Provides definition for error state alerts. */
+  --canary-state-disabled-background: var(--canary-colors-chrome-100);
+  --canary-component-alert-danger-title: var(--canary-colors-orange-700); /* Text color for danger alerts. Communicates critical information through high-contrast orange text. */
+  --canary-component-alert-danger-description: var(--canary-colors-orange-600); /* Description text color for danger alerts. Ensures readability while maintaining the error state styling. */
+  --canary-component-alert-danger-background: lch(from var(--canary-colors-orange-400) l c h / 0.1); /* Background color for danger alerts. Creates subtle but recognizable error state styling. */
+  --canary-component-alert-danger-border: lch(from var(--canary-colors-orange-500) l c h / 0.2); /* Border color for danger alerts. Provides definition for error state alerts. */
   --canary-component-badge-default-background: var(--canary-colors-chrome-150); /* Background color for secondary badges. Creates less prominent badge styling for secondary information. */
-  --canary-component-badge-neutral-background: var(--canary-colors-chrome-500); /* Background color for neutral badges. Creates subtle visual styling for general-purpose indicators. */
-  --canary-component-badge-neutral-border: var(--canary-colors-chrome-600); /* Border color for outline badges. Creates definition for badges without background fill. */
-  --canary-component-badge-success-text: var(--canary-colors-green-600); /* Text color for success badges. Communicates positive status through readable green text. */
-  --canary-component-badge-success-border: var(--canary-colors-green-400); /* Border color for success badges. Provides subtle definition for success state indicators. */
-  --canary-component-badge-success-background: var(--canary-colors-green-200); /* Background color for success badges. Creates a subtle but recognizable success indicator. */
-  --canary-component-badge-danger-text: var(--canary-colors-red-600); /* Text color for danger badges. Communicates error or warning status with high visibility. */
-  --canary-component-badge-danger-border: var(--canary-colors-red-400); /* Border color for danger badges. Creates definition for error or warning indicators. */
-  --canary-component-badge-danger-background: var(--canary-colors-red-300); /* Background color for danger badges. Provides subtle visual indication of error states. */
-  --canary-component-badge-warning-text: var(--canary-colors-yellow-600); /* Text color for warning badges. Signals caution states with readable amber text. */
-  --canary-component-badge-warning-border: var(--canary-colors-yellow-400); /* Border color for warning badges. Defines the boundary of caution status indicators. */
-  --canary-component-badge-warning-background: var(--canary-colors-yellow-200); /* Background color for warning badges. Creates subtle but recognizable caution indicators. */
-  --canary-component-badge-running-text: var(--canary-colors-orange-600); /* Text color for running state badges. Indicates active or in-progress operations. */
-  --canary-component-badge-running-border: var(--canary-colors-orange-400); /* Border color for running state badges. Defines the boundary of active status indicators. */
-  --canary-component-badge-running-background: var(--canary-colors-orange-300); /* Background color for running state badges. Creates subtle visual indication of in-progress states. */
-  --canary-component-badge-merged-text: var(--canary-colors-purple-600); /* Text color for merged state badges. Indicates completed merge actions in version control contexts. */
-  --canary-component-badge-merged-border: var(--canary-colors-purple-400); /* Border color for merged state badges. Defines the boundary of merge status indicators. */
-  --canary-component-badge-merged-background: var(--canary-colors-purple-300); /* Background color for merged state badges. Creates subtle but recognizable merge indicators. */
-  --canary-component-badge-ai-background: var(--canary-colors-pure-white); /* Background color for AI-related badges. Creates a subtle backdrop that highlights the gradient border. */
-  --canary-component-btn-secondary-background: var(--canary-colors-chrome-200); /* Background color for secondary action buttons. Creates visual hierarchy between primary and secondary actions. */
-  --canary-component-btn-success-text: var(--canary-colors-green-600); /* Text color for success buttons. Communicates positive actions through readable green text. */
-  --canary-component-btn-success-background: var(--canary-colors-green-200); /* Background color for success buttons. Creates subtle but recognizable positive action styling. */
-  --canary-component-btn-success-border: var(--canary-colors-green-400); /* Border color for success buttons. Provides definition for positive action buttons. */
-  --canary-component-btn-success-state-hover: var(--canary-colors-green-200); /* Hover state background color for success buttons. Creates subtle feedback for user interaction. */
-  --canary-component-btn-success-state-active: var(--canary-colors-green-200); /* Active state background color for success buttons. Provides stronger visual feedback for clicks/presses. */
-  --canary-component-btn-danger-text: var(--canary-colors-red-600); /* Text color for danger buttons. Communicates destructive or warning actions through high-contrast red text. */
-  --canary-component-btn-danger-background: var(--canary-colors-red-300); /* Background color for danger buttons. Creates subtle but recognizable destructive action styling. */
-  --canary-component-btn-danger-border: var(--canary-colors-red-400); /* Border color for danger buttons. Provides definition for destructive action buttons. */
-  --canary-component-btn-danger-state-hover: var(--canary-colors-red-300); /* Hover state background color for danger buttons. Creates subtle feedback for user interaction. */
-  --canary-component-btn-danger-state-active: var(--canary-colors-red-300); /* Active state background color for danger buttons. Provides stronger visual feedback for clicks/presses. */
-  --canary-component-dialog-backdrop: var(--canary-colors-chrome-300); /* Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath. */
-  --canary-component-dropdown-item-delete-state-hover: var(--canary-colors-red-300); /* Specific hover state color for dropdown delete-item. */
-  --canary-component-diff-add-content: var(--canary-colors-green-500); /* Green background highlighting newly added code lines while maintaining readability. */
-  --canary-component-diff-add-line-number: var(--canary-colors-green-500); /* Background for line numbers of added code, providing visual connection to added content. */
-  --canary-component-diff-add-content-highlight: var(--canary-colors-green-500); /* Stronger emphasis color for specific character changes within added lines. */
+  --canary-component-badge-neutral-background: lch(from var(--canary-colors-chrome-500) l c h / 0.1); /* Background color for neutral badges. Creates subtle visual styling for general-purpose indicators. */
+  --canary-component-badge-neutral-border: lch(from var(--canary-colors-chrome-600) l c h / 0.6); /* Border color for outline badges. Creates definition for badges without background fill. */
+  --canary-component-badge-success-text: var(--canary-colors-cyan-700); /* Text color for success badges. Communicates positive status through readable cyan text. */
+  --canary-component-badge-success-border: lch(from var(--canary-colors-cyan-400) l c h / 0.6); /* Border color for success badges. Provides subtle definition for success state indicators. */
+  --canary-component-badge-success-background: lch(from var(--canary-colors-cyan-300) l c h / 0.1); /* Background color for success badges. Creates a subtle but recognizable success indicator. */
+  --canary-component-badge-danger-text: var(--canary-colors-orange-700); /* Text color for danger badges. Communicates error or warning status with high visibility. */
+  --canary-component-badge-danger-border: lch(from var(--canary-colors-orange-400) l c h / 0.6); /* Border color for danger badges. Creates definition for error or warning indicators. */
+  --canary-component-badge-danger-background: lch(from var(--canary-colors-orange-300) l c h / 0.1); /* Background color for danger badges. Provides subtle visual indication of error states. */
+  --canary-component-badge-warning-text: var(--canary-colors-yellow-700); /* Text color for warning badges. Signals caution states with readable amber text. */
+  --canary-component-badge-warning-border: lch(from var(--canary-colors-yellow-400) l c h / 0.6); /* Border color for warning badges. Defines the boundary of caution status indicators. */
+  --canary-component-badge-warning-background: lch(from var(--canary-colors-yellow-200) l c h / 0.1); /* Background color for warning badges. Creates subtle but recognizable caution indicators. */
+  --canary-component-badge-running-text: var(--canary-colors-orange-700); /* Text color for running state badges. Indicates active or in-progress operations. */
+  --canary-component-badge-running-border: lch(from var(--canary-colors-orange-400) l c h / 0.6); /* Border color for running state badges. Defines the boundary of active status indicators. */
+  --canary-component-badge-running-background: lch(from var(--canary-colors-orange-300) l c h / 0.1); /* Background color for running state badges. Creates subtle visual indication of in-progress states. */
+  --canary-component-badge-merged-text: var(--canary-colors-cyan-700); /* Text color for merged state badges. Indicates completed merge actions in version control contexts. */
+  --canary-component-badge-merged-border: lch(from var(--canary-colors-cyan-400) l c h / 0.6); /* Border color for merged state badges. Defines the boundary of merge status indicators. */
+  --canary-component-badge-merged-background: lch(from var(--canary-colors-cyan-300) l c h / 0.1); /* Background color for merged state badges. Creates subtle but recognizable merge indicators. */
+  --canary-component-badge-ai-background: lch(from var(--canary-colors-pure-white) l c h / 0.5); /* Background color for AI-related badges. Creates a subtle backdrop that highlights the gradient border. */
+  --canary-component-btn-secondary-background: var(--canary-colors-chrome-150); /* Background color for secondary action buttons. Creates visual hierarchy between primary and secondary actions. */
+  --canary-component-btn-success-text: var(--canary-colors-cyan-700); /* Text color for success buttons. Communicates positive actions through readable cyan text. */
+  --canary-component-btn-success-background: lch(from var(--canary-colors-cyan-300) l c h / 0.1); /* Background color for success buttons. Creates subtle but recognizable positive action styling. */
+  --canary-component-btn-success-border: lch(from var(--canary-colors-cyan-400) l c h / 0.6); /* Border color for success buttons. Provides definition for positive action buttons. */
+  --canary-component-btn-success-state-hover: lch(from var(--canary-colors-cyan-300) l c h / 0.15); /* Hover state background color for success buttons. Creates subtle feedback for user interaction. */
+  --canary-component-btn-success-state-active: lch(from var(--canary-colors-cyan-300) l c h / 0.25); /* Active state background color for success buttons. Provides stronger visual feedback for clicks/presses. */
+  --canary-component-btn-danger-text: var(--canary-colors-orange-700); /* Text color for danger buttons. Communicates destructive or warning actions through high-contrast orange text. */
+  --canary-component-btn-danger-background: lch(from var(--canary-colors-orange-300) l c h / 0.1); /* Background color for danger buttons. Creates subtle but recognizable destructive action styling. */
+  --canary-component-btn-danger-border: lch(from var(--canary-colors-orange-400) l c h / 0.6); /* Border color for danger buttons. Provides definition for destructive action buttons. */
+  --canary-component-btn-danger-state-hover: lch(from var(--canary-colors-orange-300) l c h / 0.15); /* Hover state background color for danger buttons. Creates subtle feedback for user interaction. */
+  --canary-component-btn-danger-state-active: lch(from var(--canary-colors-orange-300) l c h / 0.25); /* Active state background color for danger buttons. Provides stronger visual feedback for clicks/presses. */
+  --canary-component-dialog-backdrop: lch(from var(--canary-colors-chrome-500) l c h / 0.5); /* Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath. */
+  --canary-component-dropdown-item-delete-state-hover: lch(from var(--canary-colors-orange-300) l c h / 0.1); /* Specific hover state color for dropdown delete-item. */
+  --canary-component-diff-add-content: lch(from var(--canary-colors-cyan-400) l c h / 0.12); /* Cyan background highlighting newly added code lines while maintaining readability. */
+  --canary-component-diff-add-line-number: lch(from var(--canary-colors-cyan-400) l c h / 0.2); /* Background for line numbers of added code, providing visual connection to added content. */
+  --canary-component-diff-add-content-highlight: lch(from var(--canary-colors-cyan-400) l c h / 0.25); /* Stronger emphasis color for specific character changes within added lines. */
   --canary-component-diff-add-widget: var(--canary-colors-pure-white); /* Background for interactive UI elements related to added content. */
-  --canary-component-diff-del-content: var(--canary-colors-red-500); /* Red background highlighting removed code lines without causing eye strain. */
-  --canary-component-diff-del-line-number: var(--canary-colors-red-500); /* Background for line numbers of deleted code, connecting numbers to removed content. */
-  --canary-component-diff-del-content-highlight: var(--canary-colors-red-500); /* Stronger emphasis color for specific character changes within deleted lines. */
-  --canary-component-diff-hunk-content: var(--canary-colors-blue-500); /* Background for diff section headers ('hunks') that indicate which part of the file is displayed. */
-  --canary-component-diff-hunk-line-number: var(--canary-colors-blue-500); /* Background for line numbers in section headers. */
-  --canary-component-link-visited: var(--canary-colors-purple-600); /* Visited state color for text links. Differentiates links the user has already activated. */
-  --canary-component-pipeline-card-error-border: var(--canary-colors-red-400); /* Border color for error pipeline states. Clearly indicates failed or problematic pipeline execution. */
-  --canary-component-pipeline-card-completed-border: var(--canary-colors-green-400); /* Border color for completed pipeline states. Indicates successful pipeline execution. */
-  --canary-component-pipeline-background-dotes: var(--canary-colors-chrome-300); /* Refers to the dotted pattern visible in the background of the workspace. */
+  --canary-component-diff-del-content: lch(from var(--canary-colors-orange-400) l c h / 0.12); /* Orange background highlighting removed code lines without causing eye strain. */
+  --canary-component-diff-del-line-number: lch(from var(--canary-colors-orange-400) l c h / 0.2); /* Background for line numbers of deleted code, connecting numbers to removed content. */
+  --canary-component-diff-del-content-highlight: lch(from var(--canary-colors-orange-400) l c h / 0.25); /* Stronger emphasis color for specific character changes within deleted lines. */
+  --canary-component-diff-hunk-content: lch(from var(--canary-colors-blue-400) l c h / 0.12); /* Background for diff section headers ('hunks') that indicate which part of the file is displayed. */
+  --canary-component-diff-hunk-line-number: lch(from var(--canary-colors-blue-400) l c h / 0.2); /* Background for line numbers in section headers. */
+  --canary-component-link-visited: var(--canary-colors-blue-600); /* Visited state color for text links. Differentiates links the user has already activated. */
+  --canary-component-pipeline-card-error-border: var(--canary-colors-orange-500); /* Border color for error pipeline states. Clearly indicates failed or problematic pipeline execution. */
+  --canary-component-pipeline-card-completed-border: var(--canary-colors-cyan-500); /* Border color for completed pipeline states. Indicates successful pipeline execution. */
+  --canary-component-pipeline-background-dotes: lch(from var(--canary-colors-chrome-300) l c h / 0.6); /* Refers to the dotted pattern visible in the background of the workspace. */
   --canary-component-sidebar-background: var(--canary-colors-chrome-900); /* Background color for navigation components. Creates a consistent foundation for navigation elements. */
-  --canary-component-sidebar-border: var(--canary-colors-chrome-850); /* Border color for navigation components. Creates visual boundaries and separation from adjacent content. */
-  --canary-component-sidebar-separator: var(--canary-colors-chrome-850); /* Color for separators between navigation sections. Creates visual organization within the navigation structure. */
-  --canary-component-sidebar-hover: var(--canary-colors-chrome-700); /* Hover state for navigation items. */
-  --canary-component-sidebar-selected: var(--canary-colors-chrome-700); /* Selected state for navigation items. */
+  --canary-component-sidebar-border: var(--canary-colors-chrome-800); /* Border color for navigation components. Creates visual boundaries and separation from adjacent content. */
+  --canary-component-sidebar-separator: var(--canary-colors-chrome-800); /* Color for separators between navigation sections. Creates visual organization within the navigation structure. */
+  --canary-component-sidebar-hover: lch(from var(--canary-colors-chrome-700) l c h / 0.15); /* Hover state for navigation items. */
+  --canary-component-sidebar-selected: lch(from var(--canary-colors-chrome-700) l c h / 0.2); /* Selected state for navigation items. */
   --canary-component-sidebar-item-unselected-text: var(--canary-colors-chrome-200); /* Text color for unselected navigation items. Provides readable but less emphasized styling for available options. */
-  --canary-component-sidebar-item-unselected-icon: var(--canary-colors-chrome-500); /* Icon color for unselected navigation items. Creates subtle visual indicators for navigation options. */
+  --canary-component-sidebar-item-unselected-icon: var(--canary-colors-chrome-400); /* Icon color for unselected navigation items. Creates subtle visual indicators for navigation options. */
   --canary-component-sidebar-item-selected-text: var(--canary-colors-pure-white); /* Text color for selected navigation items. Increases contrast to highlight the current location. */
   --canary-component-sidebar-item-selected-icon: var(--canary-colors-pure-white); /* Icon color for selected navigation items. Creates stronger visual indication of the current selection. */
   --canary-component-sidebar-logo-text: var(--canary-colors-chrome-50); /* Text color for Logo in sidebar navigation. */
@@ -192,96 +192,100 @@
   --canary-component-sidebar-search-btn-text: var(--canary-colors-chrome-500); /* Search input specific button text on sidebar navigation. */
   --canary-component-sidebar-footer-username: var(--canary-colors-pure-white); /* Username in the footer sidebar navigation menu. */
   --canary-component-sidebar-footer-data: var(--canary-colors-chrome-500); /* User data in the footer sidebar navigation menu. */
-  --canary-component-scrollbar-thumb: var(--canary-colors-chrome-150); /* Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability. */
+  --canary-component-scrollbar-thumb: var(--canary-colors-chrome-400); /* Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability. */
   --canary-component-selection-selected-item: var(--canary-colors-pure-white); /* Color for selected items in selection controls. Creates high contrast against selected background state. */
   --canary-component-selection-selected-background: var(--canary-colors-chrome-900); /* Background color for selected state in selection controls. Creates strong visual indication of active selection. */
   --canary-component-selection-selected-border: var(--canary-colors-chrome-900); /* Border color for selected elements in selection controls. Reinforces the selected state with consistent styling. */
-  --canary-component-separator-background: var(--canary-border-width-2); /* Background color for separator elements. Creates visual division between content sections with a subtle line or space. */
-  --canary-component-slider-track-base: var(--canary-colors-chrome-150); /* Background color for slider tracks. Represents the full range of available values in an unselected state. */
-  --canary-component-slider-track-segments-base: var(--canary-colors-chrome-300); /* Color for segment markers on the unfilled track portion. Creates visual indicators for specific values or intervals. */
-  --canary-component-slider-handle-background: var(--canary-colors-chrome-100); /* Background color for slider handles. Creates a distinct, interactive element for adjusting values. */
-  --canary-component-slider-handle-border: var(--canary-colors-chrome-900); /* Border color for slider handles. Provides definition and contrast for the interactive control. */
-  --canary-component-status-indicator-completed: var(--canary-colors-green-300); /* Color for success status indicators. Communicates completed or positive states. */
-  --canary-component-status-indicator-cancelled: var(--canary-colors-red-400); /* Color for danger status indicators. Communicates error or critical warning states. */
-  --canary-component-status-indicator-warning: var(--canary-colors-yellow-300); /* Color for warning status indicators. Communicates caution or potential issue states. */
-  --canary-component-status-indicator-running: var(--canary-colors-orange-300); /* Color for running status indicators. Communicates active or in-progress operations. */
-  --canary-component-status-indicator-merged: var(--canary-colors-purple-300); /* Color for merged status indicators. Communicates successful integration or completion in version control contexts. */
-  --canary-component-status-indicator-action-required: var(--canary-colors-blue-400); /* Color for action-required status indicators. Communicates that user attention or intervention is needed.  */
-  --canary-component-status-indicator-waiting: var(--canary-colors-chrome-400); /* Color for pending status indicators. Communicates in waiting states. */
-  --canary-component-switch-unselected-background: var(--canary-colors-chrome-150); /* Background color for the unselected state of switch controls. Creates visual distinction from the selected state. */
-  --canary-component-switch-selected-thumb: var(--canary-colors-chrome-50); /* Color for the movable thumb element in selected switch controls. Provides clear contrast against the active track. */
-  --canary-component-switch-selected-background: var(--canary-colors-chrome-900); /* Background color for the selected state of switch controls. Creates strong visual indication of active state. */
-  --canary-component-table-row-alternate-background: var(--canary-colors-chrome-200); /* Background color for alternate table rows. Improves readability by differentiating adjacent rows. */
-  --canary-component-tag-blue-text: var(--canary-colors-blue-500); /* Text color for blue tags. Ensures readability while maintaining the blue color theme. */
+  --canary-component-slider-track-base: var(--canary-colors-chrome-200); /* Background color for slider tracks. Represents the full range of available values in an unselected state. */
+  --canary-component-slider-track-progress: var(--canary-colors-blue-500); /* Filled portion color for slider tracks. Visually represents the selected value or range within the track. */
+  --canary-component-slider-track-segments-base: var(--canary-colors-chrome-400); /* Color for segment markers on the unfilled track portion. Creates visual indicators for specific values or intervals. */
+  --canary-component-slider-track-segments-progress: var(--canary-colors-blue-700); /* Color for segment markers on the filled track portion. Maintains visibility of markers within the selected range. */
+  --canary-component-slider-handle-background: var(--canary-colors-pure-white); /* Background color for slider handles. Creates a distinct, interactive element for adjusting values. */
+  --canary-component-slider-handle-border: var(--canary-colors-chrome-700); /* Border color for slider handles. Provides definition and contrast for the interactive control. */
+  --canary-component-status-indicator-completed: var(--canary-colors-cyan-500); /* Color for success status indicators. Communicates completed or positive states. */
+  --canary-component-status-indicator-cancelled: var(--canary-colors-orange-500); /* Color for danger status indicators. Communicates error or critical warning states. */
+  --canary-component-status-indicator-warning: var(--canary-colors-yellow-400); /* Color for warning status indicators. Communicates caution or potential issue states. */
+  --canary-component-status-indicator-running: var(--canary-colors-orange-400); /* Color for running status indicators. Communicates active or in-progress operations. */
+  --canary-component-status-indicator-merged: var(--canary-colors-cyan-500); /* Color for merged status indicators. Communicates successful integration or completion in version control contexts. */
+  --canary-component-status-indicator-action-required: var(--canary-colors-blue-400); /* Color for action-required status indicators. Communicates that user attention or intervention is needed. */
+  --canary-component-status-indicator-waiting: var(--canary-colors-chrome-500); /* Color for pending status indicators. Communicates in waiting states. */
+  --canary-component-switch-unselected-thumb: var(--canary-colors-pure-white); /* Color for the movable thumb element in unselected switch controls. Creates visual contrast against the track. */
+  --canary-component-switch-unselected-background: var(--canary-colors-chrome-300); /* Background color for the unselected state of switch controls. Creates visual distinction from the selected state. */
+  --canary-component-switch-selected-thumb: var(--canary-colors-pure-white); /* Color for the movable thumb element in selected switch controls. Provides clear contrast against the active track. */
+  --canary-component-switch-selected-background: var(--canary-colors-blue-600); /* Background color for the selected state of switch controls. Creates strong visual indication of active state. */
+  --canary-component-table-row-alternate-background: lch(from var(--canary-colors-chrome-200) l c h / 0.1); /* Background color for alternate table rows. Improves readability by differentiating adjacent rows. */
+  --canary-component-tag-blue-text: var(--canary-colors-blue-700); /* Text color for blue tags. Ensures readability while maintaining the blue color theme. */
   --canary-component-tag-blue-background: var(--canary-colors-blue-100); /* Background color for blue tags. Creates a distinct surface with blue theme styling. */
   --canary-component-tag-blue-background-subtle: var(--canary-colors-blue-50); /* Subtle background variation for blue tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-brown-text: var(--canary-colors-brown-600); /* Text color for brown tags. Ensures readability while maintaining the brown color theme. */
+  --canary-component-tag-brown-text: var(--canary-colors-brown-700); /* Text color for brown tags. Ensures readability while maintaining the brown color theme. */
   --canary-component-tag-brown-background: var(--canary-colors-brown-100); /* Background color for brown tags. Creates a distinct surface with brown theme styling. */
   --canary-component-tag-brown-background-subtle: var(--canary-colors-brown-50); /* Subtle background variation for brown tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-cyan-text: var(--canary-colors-cyan-500); /* Text color for cyan tags. Ensures readability while maintaining the cyan color theme. */
+  --canary-component-tag-cyan-text: var(--canary-colors-cyan-700); /* Text color for cyan tags. Ensures readability while maintaining the cyan color theme. */
   --canary-component-tag-cyan-background: var(--canary-colors-cyan-100); /* Background color for cyan tags. Creates a distinct surface with cyan theme styling. */
   --canary-component-tag-cyan-background-subtle: var(--canary-colors-cyan-50); /* Subtle background variation for cyan tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-green-text: var(--canary-colors-green-600); /* Text color for green tags. Ensures readability while maintaining the green color theme. */
-  --canary-component-tag-green-background: var(--canary-colors-green-100); /* Background color for green tags. Creates a distinct surface with green theme styling. */
-  --canary-component-tag-green-background-subtle: var(--canary-colors-green-50); /* Subtle background variation for green tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-indigo-text: var(--canary-colors-indigo-500); /* Text color for indigo tags. Ensures readability while maintaining the indigo color theme. */
+  --canary-component-tag-green-text: var(--canary-colors-cyan-700); /* Text color for green tags, replaced with cyan for deuteranopia visibility. */
+  --canary-component-tag-green-background: var(--canary-colors-cyan-100); /* Background color for green tags, replaced with cyan for deuteranopia visibility. */
+  --canary-component-tag-green-background-subtle: var(--canary-colors-cyan-50); /* Subtle background variation for green tags, replaced with cyan for deuteranopia visibility. */
+  --canary-component-tag-indigo-text: var(--canary-colors-indigo-700); /* Text color for indigo tags. Ensures readability while maintaining the indigo color theme. */
   --canary-component-tag-indigo-background: var(--canary-colors-indigo-100); /* Background color for indigo tags. Creates a distinct surface with indigo theme styling. */
   --canary-component-tag-indigo-background-subtle: var(--canary-colors-indigo-50); /* Subtle background variation for indigo tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-lime-text: var(--canary-colors-lime-600); /* Text color for lime tags. Ensures readability while maintaining the lime color theme. */
+  --canary-component-tag-lime-text: var(--canary-colors-lime-700); /* Text color for lime tags. Ensures readability while maintaining the lime color theme. */
   --canary-component-tag-lime-background: var(--canary-colors-lime-100); /* Background color for lime tags. Creates a distinct surface with lime theme styling. */
   --canary-component-tag-lime-background-subtle: var(--canary-colors-lime-50); /* Subtle background variation for lime tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-mint-text: var(--canary-colors-mint-600); /* Text color for mint tags. Ensures readability while maintaining the mint color theme. */
+  --canary-component-tag-mint-text: var(--canary-colors-mint-700); /* Text color for mint tags. Ensures readability while maintaining the mint color theme. */
   --canary-component-tag-mint-background: var(--canary-colors-mint-100); /* Background color for mint tags. Creates a distinct surface with mint theme styling. */
   --canary-component-tag-mint-background-subtle: var(--canary-colors-mint-50); /* Subtle background variation for mint tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-orange-text: var(--canary-colors-orange-500); /* Text color for orange tags. Ensures readability while maintaining the orange color theme. */
+  --canary-component-tag-orange-text: var(--canary-colors-orange-700); /* Text color for orange tags. Ensures readability while maintaining the orange color theme. */
   --canary-component-tag-orange-background: var(--canary-colors-orange-100); /* Background color for orange tags. Creates a distinct surface with orange theme styling. */
   --canary-component-tag-orange-background-subtle: var(--canary-colors-orange-50); /* Subtle background variation for orange tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-pink-text: var(--canary-colors-pink-500); /* Text color for pink tags. Ensures readability while maintaining the pink color theme. */
+  --canary-component-tag-pink-text: var(--canary-colors-pink-700); /* Text color for pink tags. Ensures readability while maintaining the pink color theme. */
   --canary-component-tag-pink-background: var(--canary-colors-pink-100); /* Background color for pink tags. Creates a distinct surface with pink theme styling. */
   --canary-component-tag-pink-background-subtle: var(--canary-colors-pink-50); /* Subtle background variation for pink tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-purple-text: var(--canary-colors-purple-500); /* Text color for purple tags. Ensures readability while maintaining the purple color theme. */
-  --canary-component-tag-purple-background: var(--canary-colors-purple-100); /* Background color for purple tags. Creates a distinct surface with purple theme styling. */
-  --canary-component-tag-purple-background-subtle: var(--canary-colors-purple-50); /* Subtle background variation for purple tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-red-text: var(--canary-colors-red-500); /* Text color for red tags. Ensures readability while maintaining the red color theme. */
-  --canary-component-tag-red-background: var(--canary-colors-red-100); /* Background color for red tags. Creates a distinct surface with red theme styling. */
-  --canary-component-tag-red-background-subtle: var(--canary-colors-red-50); /* Subtle background variation for red tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-violet-text: var(--canary-colors-violet-500); /* Text color for violet tags. Ensures readability while maintaining the violet color theme. */
-  --canary-component-tag-violet-background: var(--canary-colors-violet-100); /* Background color for violet tags. Creates a distinct surface with violet theme styling. */
-  --canary-component-tag-violet-background-subtle: var(--canary-colors-violet-50); /* Subtle background variation for violet tags. Provides a softer alternative for less emphasis. */
-  --canary-component-tag-yellow-text: var(--canary-colors-yellow-600); /* Text color for yellow tags. Ensures readability while maintaining the yellow color theme. */
+  --canary-component-tag-purple-text: var(--canary-colors-cyan-700); /* Text color for purple tags, replaced with cyan for deuteranopia visibility. */
+  --canary-component-tag-purple-background: var(--canary-colors-cyan-100); /* Background color for purple tags, replaced with cyan for deuteranopia visibility. */
+  --canary-component-tag-purple-background-subtle: var(--canary-colors-cyan-50); /* Subtle background variation for purple tags, replaced with cyan for deuteranopia visibility. */
+  --canary-component-tag-red-text: var(--canary-colors-orange-700); /* Text color for red tags, replaced with orange for deuteranopia visibility. */
+  --canary-component-tag-red-background: var(--canary-colors-orange-100); /* Background color for red tags, replaced with orange for deuteranopia visibility. */
+  --canary-component-tag-red-background-subtle: var(--canary-colors-orange-50); /* Subtle background variation for red tags, replaced with orange for deuteranopia visibility. */
+  --canary-component-tag-violet-text: var(--canary-colors-blue-700); /* Text color for violet tags, replaced with blue for deuteranopia visibility. */
+  --canary-component-tag-violet-background: var(--canary-colors-blue-100); /* Background color for violet tags, replaced with blue for deuteranopia visibility. */
+  --canary-component-tag-violet-background-subtle: var(--canary-colors-blue-50); /* Subtle background variation for violet tags, replaced with blue for deuteranopia visibility. */
+  --canary-component-tag-yellow-text: var(--canary-colors-yellow-700); /* Text color for yellow tags. Ensures readability while maintaining the yellow color theme. */
   --canary-component-tag-yellow-background: var(--canary-colors-yellow-100); /* Background color for yellow tags. Creates a distinct surface with yellow theme styling. */
   --canary-component-tag-yellow-background-subtle: var(--canary-colors-yellow-50); /* Subtle background variation for yellow tags. Provides a softer alternative for less emphasis. */
-  --canary-component-toast-danger-background: var(--canary-colors-red-200); /* Background color for danger toast notifications. Creates high-visibility indication of errors or warnings. */
-  --canary-shadow-color-0: var(--canary-colors-chrome-300); /* Transparent shadow color. Used when no shadow effect is desired. */
-  --canary-shadow-color-1: var(--canary-colors-chrome-300); /* Light shadow color with 60% opacity. Creates subtle depth for small UI elements. */
-  --canary-shadow-color-2: var(--canary-colors-chrome-300); /* Medium shadow color with 60% opacity. Provides balanced depth for common UI components. */
-  --canary-shadow-color-3: var(--canary-colors-chrome-300); /* Medium shadow color with 50% opacity. Creates moderate depth for elevated components. */
-  --canary-shadow-color-4: var(--canary-colors-chrome-300); /* Deep shadow color with 50% opacity. Provides significant depth for floating elements. */
-  --canary-shadow-color-5: var(--canary-colors-chrome-300); /* Very deep shadow color with 50% opacity. Creates dramatic elevation for modal content. */
-  --canary-shadow-color-6: var(--canary-colors-chrome-300); /* Extremely deep shadow color with 60% opacity. Provides maximum depth for highly elevated elements. */
-  --canary-shadow-color-inner: var(--canary-colors-chrome-900); /* Subtle inner shadow color with 10% opacity. Creates inset effect for pressed or focused states. */
+  --canary-component-toast-danger-title: var(--canary-colors-pure-white); /* Title text color for danger toast notifications. Provides maximum contrast against the error background. */
+  --canary-component-toast-danger-description: var(--canary-colors-pure-white); /* Description text color for danger toast notifications. Ensures readability of critical information. */
+  --canary-component-toast-danger-background: var(--canary-colors-orange-600); /* Background color for danger toast notifications. Creates high-visibility indication of errors or warnings. */
+  --canary-shadow-color-0: lch(from var(--canary-colors-chrome-950) l c h / 0); /* Transparent shadow color. Used when no shadow effect is desired. */
+  --canary-shadow-color-1: lch(from var(--canary-colors-chrome-950) l c h / 0.6); /* Light shadow color with 60% opacity. Creates subtle depth for small UI elements. */
+  --canary-shadow-color-2: lch(from var(--canary-colors-chrome-950) l c h / 0.6); /* Medium shadow color with 60% opacity. Provides balanced depth for common UI components. */
+  --canary-shadow-color-3: lch(from var(--canary-colors-chrome-950) l c h / 0.5); /* Medium shadow color with 50% opacity. Creates moderate depth for elevated components. */
+  --canary-shadow-color-4: lch(from var(--canary-colors-chrome-950) l c h / 0.5); /* Deep shadow color with 50% opacity. Provides significant depth for floating elements. */
+  --canary-shadow-color-5: lch(from var(--canary-colors-chrome-950) l c h / 0.5); /* Very deep shadow color with 50% opacity. Creates dramatic elevation for modal content. */
+  --canary-shadow-color-6: lch(from var(--canary-colors-chrome-950) l c h / 0.6); /* Extremely deep shadow color with 60% opacity. Provides maximum depth for highly elevated elements. */
+  --canary-shadow-color-inner: lch(from var(--canary-colors-chrome-950) l c h / 0.1); /* Subtle inner shadow color with 10% opacity. Creates inset effect for pressed or focused states. */
   --canary-gradient-ai-gradient-stop-1: var(--canary-colors-yellow-200);
-  --canary-gradient-ai-gradient-stop-2: var(--canary-colors-pink-300);
-  --canary-gradient-ai-gradient-stop-3: var(--canary-colors-purple-300);
-  --canary-gradient-ai-gradient-stop-4: var(--canary-colors-cyan-200);
-  --canary-gradient-skeleton-gradient-stop-1: var(--canary-colors-chrome-850);
-  --canary-gradient-skeleton-gradient-stop-2: var(--canary-colors-chrome-800);
-  --canary-gradient-skeleton-gradient-stop-3: var(--canary-colors-chrome-850);
-  --canary-gradient-pipeline-running-gradient-stop-1: var(--canary-colors-orange-200);
-  --canary-gradient-pipeline-running-gradient-stop-2: var(--canary-colors-chrome-800);
-  --canary-gradient-pipeline-running-gradient-stop-3: var(--canary-colors-orange-200);
-  --canary-gradient-pipeline-arrows-gradient-stop-1: var(--canary-colors-pure-white);
-  --canary-gradient-pipeline-arrows-gradient-stop-2: var(--canary-colors-blue-300);
-  --canary-gradient-pipeline-card-background-gradient-from: var(--canary-colors-chrome-850);
-  --canary-gradient-pipeline-card-background-gradient-to: var(--canary-colors-chrome-900);
-  --canary-gradient-pipeline-card-border-gradient-from: var(--canary-colors-chrome-800);
-  --canary-gradient-pipeline-card-border-gradient-to: var(--canary-colors-chrome-850);
-  --canary-gradient-pipeline-widget-number-gradient-from: var(--canary-colors-chrome-200);
-  --canary-gradient-pipeline-widget-number-gradient-to: var(--canary-colors-chrome-600);
-  --canary-gradient-pipeline-widget-blob-big-gradient-from: var(--canary-colors-chrome-850);
-  --canary-gradient-pipeline-widget-blob-big-gradient-to: var(--canary-colors-chrome-950);
-  --canary-gradient-pipeline-widget-blob-small-gradient-from: var(--canary-colors-chrome-800);
-  --canary-gradient-pipeline-widget-blob-small-gradient-to: var(--canary-colors-chrome-850);
+  --canary-gradient-ai-gradient-stop-2: var(--canary-colors-orange-400);
+  --canary-gradient-ai-gradient-stop-3: var(--canary-colors-cyan-400);
+  --canary-gradient-ai-gradient-stop-4: var(--canary-colors-cyan-300);
+  --canary-gradient-skeleton-gradient-stop-1: var(--canary-colors-chrome-150);
+  --canary-gradient-skeleton-gradient-stop-2: var(--canary-colors-pure-white);
+  --canary-gradient-skeleton-gradient-stop-3: var(--canary-colors-chrome-150);
+  --canary-gradient-pipeline-running-gradient-stop-1: var(--canary-colors-orange-400);
+  --canary-gradient-pipeline-running-gradient-stop-2: lch(from var(--canary-colors-chrome-300) l c h / 0.4);
+  --canary-gradient-pipeline-running-gradient-stop-3: var(--canary-colors-orange-400);
+  --canary-gradient-pipeline-arrows-gradient-stop-1: var(--canary-colors-chrome-300);
+  --canary-gradient-pipeline-arrows-gradient-stop-2: var(--canary-colors-blue-500);
+  --canary-gradient-pipeline-card-background-gradient-from: var(--canary-colors-pure-white);
+  --canary-gradient-pipeline-card-background-gradient-to: var(--canary-colors-chrome-50);
+  --canary-gradient-pipeline-card-border-gradient-from: var(--canary-colors-chrome-100);
+  --canary-gradient-pipeline-card-border-gradient-to: var(--canary-colors-chrome-200);
+  --canary-gradient-pipeline-widget-number-gradient-from: var(--canary-colors-chrome-600);
+  --canary-gradient-pipeline-widget-number-gradient-to: var(--canary-colors-chrome-700);
+  --canary-gradient-pipeline-widget-blob-big-gradient-from: var(--canary-colors-chrome-100);
+  --canary-gradient-pipeline-widget-blob-big-gradient-to: var(--canary-colors-pure-white);
+  --canary-gradient-pipeline-widget-blob-small-gradient-from: var(--canary-colors-chrome-150);
+  --canary-gradient-pipeline-widget-blob-small-gradient-to: var(--canary-colors-pure-white);
   --canary-brand-color-50: var(--canary-colors-chrome-150);
   --canary-brand-color-100: var(--canary-colors-chrome-150);
   --canary-brand-color-200: var(--canary-colors-chrome-150);
@@ -309,7 +313,7 @@
    * 
    * Common uses: Links, buttons, interactive icons, highlighted elements.
    */
-  --canary-text-accent: var(--canary-brand-color-500);
+  --canary-text-accent: var(--canary-brand-color-700);
   /**
    * Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.
    * 
@@ -399,10 +403,8 @@
   --canary-component-selection-unselected-item: var(--canary-text-3); /* Color for unselected items in selection controls. Provides readable but less emphasized styling for available options. */
   --canary-component-selection-unselected-background: var(--canary-background-1); /* Background color for unselected state in selection controls. Creates visual distinction from selected items. */
   --canary-component-selection-unselected-border: var(--canary-border-1); /* Border color for unselected elements in selection controls. Defines the clickable area with a visible boundary. */
+  --canary-component-separator-background: var(--canary-border-3); /* Background color for separator elements. Creates visual division between content sections with a subtle line or space. */
   --canary-component-skeleton-background: linear-gradient(90deg, var(--canary-gradient-skeleton-gradient-stop-1) 0%, var(--canary-gradient-skeleton-gradient-stop-2) 50%, var(--canary-gradient-skeleton-gradient-stop-3) 100%); /* Animation color that sweeps across skeleton elements. Creates a "shimmer" effect indicating content loading states. */
-  --canary-component-slider-track-progress: var(--canary-brand-color-500); /* Filled portion color for slider tracks. Visually represents the selected value or range within the track. */
-  --canary-component-slider-track-segments-progress: var(--canary-brand-color-700); /* Color for segment markers on the filled track portion. Maintains visibility of markers within the selected range. */
-  --canary-component-switch-unselected-thumb: var(--canary-text-3); /* Color for the movable thumb element in unselected switch controls. Creates visual contrast against the track. */
   --canary-component-table-header-text: var(--canary-text-2); /* Text color for table header cells. Ensures readability of column labels and titles. */
   --canary-component-table-header-background: var(--canary-background-3); /* Background color for table header rows. Creates visual distinction between headers and data rows. */
   --canary-component-table-row-border: var(--canary-border-3); /* Border color for table rows. Provides subtle separation between data rows. */
@@ -414,25 +416,23 @@
   --canary-component-tabs-item-selected-text: var(--canary-text-1); /* Text color for the selected tab item. Increases contrast to highlight the active tab. */
   --canary-component-tabs-item-selected-background: var(--canary-background-3); /* Background color for the selected tab item. Creates strong visual indication of the active tab. */
   --canary-component-tabs-item-selected-border: var(--canary-border-2); /* Border color for the selected tab item. Reinforces the active state with defined boundaries. */
-  --canary-component-tag-blue-border: var(--canary-component-tag-blue-background); /* Border color for blue tags.  */
-  --canary-component-tag-brown-border: var(--canary-component-tag-brown-background); /* Border color for brown tags.  */
+  --canary-component-tag-blue-border: var(--canary-component-tag-blue-background); /* Border color for blue tags. */
+  --canary-component-tag-brown-border: var(--canary-component-tag-brown-background); /* Border color for brown tags. */
   --canary-component-tag-cyan-border: var(--canary-component-tag-cyan-background); /* Border color for cyan tags. */
-  --canary-component-tag-green-border: var(--canary-component-tag-green-background); /* Border color for green tags. */
+  --canary-component-tag-green-border: var(--canary-component-tag-green-background); /* Border color for green tags, replaced with cyan. */
   --canary-component-tag-indigo-border: var(--canary-component-tag-indigo-background); /* Border color for indigo tags. */
   --canary-component-tag-lime-border: var(--canary-component-tag-lime-background); /* Border color for lime tags. */
   --canary-component-tag-mint-border: var(--canary-component-tag-mint-background); /* Border color for mint tags. */
   --canary-component-tag-orange-border: var(--canary-component-tag-orange-background); /* Border color for orange tags. */
   --canary-component-tag-pink-border: var(--canary-component-tag-pink-background); /* Border color for pink tags. */
-  --canary-component-tag-purple-border: var(--canary-component-tag-purple-background); /* Border color for purple tags. */
-  --canary-component-tag-red-border: var(--canary-component-tag-red-background); /* Border color for red tags. */
-  --canary-component-tag-violet-border: var(--canary-component-tag-violet-background); /* Border color for violet tags. */
+  --canary-component-tag-purple-border: var(--canary-component-tag-purple-background); /* Border color for purple tags, replaced with cyan. */
+  --canary-component-tag-red-border: var(--canary-component-tag-red-background); /* Border color for red tags, replaced with orange. */
+  --canary-component-tag-violet-border: var(--canary-component-tag-violet-background); /* Border color for violet tags, replaced with blue. */
   --canary-component-tag-yellow-border: var(--canary-component-tag-yellow-background); /* Border color for yellow tags. */
   --canary-component-toast-default-title: var(--canary-text-1); /* Title text color for informational toast notifications. Ensures high visibility for the notification headline. */
   --canary-component-toast-default-description: var(--canary-text-2); /* Description text color for informational toast notifications. Provides readable contrast for notification content. */
   --canary-component-toast-default-background: var(--canary-background-3); /* Background color for informational toast notifications. Creates visual distinction from UI content beneath. */
   --canary-component-toast-default-border: var(--canary-border-3); /* Border color for informational toast notifications. Subtly defines the notification's boundaries. */
-  --canary-component-toast-danger-title: var(--canary-text-1); /* Title text color for danger toast notifications. Provides maximum contrast against the error background. */
-  --canary-component-toast-danger-description: var(--canary-text-1); /* Description text color for danger toast notifications. Ensures readability of critical information. */
   --canary-component-toast-danger-border: var(--canary-component-toast-danger-background); /* Border color for danger toast notifications. Reinforces the critical nature of the notification message. */
   --canary-component-tooltip-text: var(--canary-text-2); /* Text color for tooltip content. Ensures readability of helpful contextual information. */
   --canary-component-tooltip-background: var(--canary-background-3); /* Background color for tooltips. Creates a distinct surface for contextual information that appears above UI elements. */

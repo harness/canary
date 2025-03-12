@@ -1,4 +1,10 @@
 {
+  "palette": {
+    "$description": {
+      "$type": "other",
+      "$value": "Color palette exported from Atmos"
+    }
+  },
   "colors": {
     "$type": "color",
     "pure": {

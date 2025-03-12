@@ -70,7 +70,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.7",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },
@@ -106,7 +106,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.15",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },
@@ -120,7 +120,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.2",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },
@@ -209,7 +209,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -223,7 +223,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.2",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -280,7 +280,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -294,7 +294,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.6",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -315,7 +315,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.6",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -329,7 +329,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -350,7 +350,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.6",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -364,7 +364,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -385,7 +385,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.6",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -399,7 +399,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -420,7 +420,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.6",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -434,7 +434,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -455,7 +455,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.6",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -469,7 +469,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -490,7 +490,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.5",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -641,7 +641,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -655,7 +655,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.6",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -670,7 +670,7 @@
                 "modify": {
                   "type": "alpha",
                   "value": "0.15",
-                  "space": "p3"
+                  "space": "lch"
                 }
               }
             },
@@ -684,7 +684,7 @@
                 "modify": {
                   "type": "alpha",
                   "value": "0.25",
-                  "space": "p3"
+                  "space": "lch"
                 }
               }
             },
@@ -706,7 +706,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -720,7 +720,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.6",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -735,7 +735,7 @@
                 "modify": {
                   "type": "alpha",
                   "value": "0.15",
-                  "space": "p3"
+                  "space": "lch"
                 }
               }
             },
@@ -749,7 +749,7 @@
                 "modify": {
                   "type": "alpha",
                   "value": "0.25",
-                  "space": "p3"
+                  "space": "lch"
                 }
               }
             },
@@ -806,7 +806,7 @@
             "modify": {
               "type": "alpha",
               "value": "0.5",
-              "space": "p3"
+              "space": "lch"
             }
           }
         },
@@ -845,7 +845,7 @@
                   "modify": {
                     "type": "alpha",
                     "value": "0.1",
-                    "space": "p3"
+                    "space": "lch"
                   }
                 }
               },
@@ -869,7 +869,7 @@
             "modify": {
               "type": "alpha",
               "value": "0.12",
-              "space": "p3"
+              "space": "lch"
             }
           }
         },
@@ -883,7 +883,7 @@
             "modify": {
               "type": "alpha",
               "value": "0.2",
-              "space": "p3"
+              "space": "lch"
             }
           }
         },
@@ -897,7 +897,7 @@
             "modify": {
               "type": "alpha",
               "value": "0.25",
-              "space": "p3"
+              "space": "lch"
             }
           }
         },
@@ -921,7 +921,7 @@
             "modify": {
               "type": "alpha",
               "value": "0.12",
-              "space": "p3"
+              "space": "lch"
             }
           }
         },
@@ -935,7 +935,7 @@
             "modify": {
               "type": "alpha",
               "value": "0.2",
-              "space": "p3"
+              "space": "lch"
             }
           }
         },
@@ -949,7 +949,7 @@
             "modify": {
               "type": "alpha",
               "value": "0.25",
-              "space": "p3"
+              "space": "lch"
             }
           }
         },
@@ -983,7 +983,7 @@
             "modify": {
               "type": "alpha",
               "value": "0.12",
-              "space": "p3"
+              "space": "lch"
             }
           }
         },
@@ -997,7 +997,7 @@
             "modify": {
               "type": "alpha",
               "value": "0.2",
-              "space": "p3"
+              "space": "lch"
             }
           }
         },
@@ -1174,7 +1174,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.6",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -1206,7 +1206,7 @@
             "modify": {
               "type": "alpha",
               "value": "0.15",
-              "space": "p3"
+              "space": "lch"
             }
           }
         },
@@ -1220,7 +1220,7 @@
             "modify": {
               "type": "alpha",
               "value": "0.2",
-              "space": "p3"
+              "space": "lch"
             }
           }
         },
@@ -1491,7 +1491,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.1",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },
@@ -2053,7 +2053,7 @@
           "modify": {
             "type": "alpha",
             "value": "0",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },
@@ -2067,7 +2067,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.6",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },
@@ -2081,7 +2081,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.6",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },
@@ -2095,7 +2095,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.5",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },
@@ -2109,7 +2109,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.5",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },
@@ -2123,7 +2123,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.5",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },
@@ -2137,7 +2137,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.6",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },
@@ -2151,7 +2151,7 @@
           "modify": {
             "type": "alpha",
             "value": "0.1",
-            "space": "p3"
+            "space": "lch"
           }
         }
       },
@@ -2229,7 +2229,7 @@
               "modify": {
                 "type": "alpha",
                 "value": "0.4",
-                "space": "p3"
+                "space": "lch"
               }
             }
           },

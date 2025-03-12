@@ -8,9 +8,12 @@
     "remove": "Remove",
     "reorder": "Reorder",
     "unpin": "Unpin",
+<<<<<<< HEAD
     "search": "Search",
     "command-palette": "Command Palette",
     "nothing-found": "Nothing found",
+=======
+>>>>>>> 0114f991 (Add js tokens build)
     "appearence": "Appearance",
     "language": "Language",
     "logout": "Log out",

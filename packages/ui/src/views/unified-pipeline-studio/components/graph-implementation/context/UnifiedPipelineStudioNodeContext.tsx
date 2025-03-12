@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
 
-import { ParallelContainerConfig, SerialContainerConfig } from '@harnessio/pipeline-graph/src/types/container-node'
+import { ParallelContainerConfig, SerialContainerConfig } from '@harnessio/pipeline-graph'
 
 import { CommonNodeDataType } from '../types/common-node-data-type'
 import { YamlEntityType } from '../types/yaml-entity-type'

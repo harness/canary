@@ -1,8 +1,12 @@
 import { cn } from '@utils/cn'
 import { getNestedStepsCount } from '@views/unified-pipeline-studio/components/graph-implementation/utils/common-step-utils'
 
-import { ParallelNodeInternalType, SerialNodeInternalType } from '@harnessio/pipeline-graph'
-import { ParallelContainerConfig, SerialContainerConfig } from '@harnessio/pipeline-graph/src/types/container-node'
+import {
+  ParallelNodeInternalType,
+  SerialNodeInternalType,
+  type ParallelContainerConfig,
+  type SerialContainerConfig
+} from '@harnessio/pipeline-graph'
 
 import { PipelineNodes } from '..'
 

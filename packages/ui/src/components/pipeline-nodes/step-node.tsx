@@ -2,7 +2,7 @@ import { cn } from '@utils/cn'
 
 import './step-node.css'
 
-import { ParallelContainerConfig } from '@harnessio/pipeline-graph/src/types/container-node'
+import { ParallelContainerConfig } from '@harnessio/pipeline-graph'
 
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'

@@ -32,7 +32,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
   const { data, config = {}, customCreateSVGPath, edgesConfig } = props
   const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
 
-  const svgGroupRef = useRef<SVGAElement>(null)
+  const svgGroupRef = useRef<SVGAElement | null>(null)
 
   const rootContainerRef = useRef<HTMLDivElement | null>(null)
   const nodesContainerRef = useRef<HTMLDivElement | null>(null)
@@ -77,6 +77,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
         const allPaths: { level1: string[]; level2: string[] } = { level1: [], level2: [] }
         connections.map(portPair => {
           const levelPaths = getPortsConnectionPath({
+            parentEl: rootContainerEl,
             pipelineGraphRoot: rootContainerEl,
             connection: portPair,
             customCreateSVGPath,

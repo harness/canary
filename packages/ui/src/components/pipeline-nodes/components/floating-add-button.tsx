@@ -3,7 +3,7 @@ import { CSSProperties } from 'react'
 import { Button } from '@components/button'
 import { Icon } from '@components/icon'
 
-import { ParallelContainerConfig } from '@harnessio/pipeline-graph/src/types/container-node'
+import { ParallelContainerConfig } from '@harnessio/pipeline-graph'
 
 const CONTAINER_WIDTH = '40'
 const CONTAINER_HEIGHT = '40'

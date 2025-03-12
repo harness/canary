@@ -2,7 +2,7 @@ import { Button } from '@components/button'
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 
-import { ParallelContainerConfig } from '@harnessio/pipeline-graph/src/types/container-node'
+import { ParallelContainerConfig } from '@harnessio/pipeline-graphs'
 
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'

@@ -7,11 +7,13 @@ export function clear(svgGroup: SVGElement) {
 }
 
 export function getPortsConnectionPath({
+  parentEl,
   pipelineGraphRoot,
   connection,
   customCreateSVGPath,
   edgesConfig = {}
 }: {
+  parentEl: HTMLDivElement
   pipelineGraphRoot: HTMLDivElement
   connection: {
     source: string
@@ -40,8 +42,8 @@ export function getPortsConnectionPath({
 
   const { source, target, parallel, serial, targetNode } = connection
 
-  const fromEl = document.getElementById(source)
-  const toEl = document.getElementById(target)
+  const fromEl = parentEl.querySelector(`#${source}`)
+  const toEl = parentEl.querySelector(`#${target}`)
 
   if (!fromEl || !toEl) return { level1: '', level2: '' }
 

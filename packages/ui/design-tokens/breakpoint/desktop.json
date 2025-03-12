@@ -84,7 +84,7 @@
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.2}",
         "lineHeight": "{lineHeight.2.snug}",
-        "letterSpacing": "{tracking.normal}"
+        "letterSpacing": "{tracking.tight}"
       },
       "$description": "Primary text style for UI and content."
     },
@@ -118,7 +118,7 @@
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.2}",
           "lineHeight": "{lineHeight.2.none}",
-          "letterSpacing": "{tracking.normal}"
+          "letterSpacing": "{tracking.tight}"
         },
         "$description": "Primary text style for UI and content."
       },
@@ -141,7 +141,7 @@
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.2}",
           "lineHeight": "{lineHeight.2.tight}",
-          "letterSpacing": "{tracking.normal}"
+          "letterSpacing": "{tracking.tight}"
         },
         "$description": "Primary text style for UI and content."
       },

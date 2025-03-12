@@ -5,7 +5,7 @@ import { InputConfigType, InputType } from '@views/unified-pipeline-studio/compo
 
 import { IFormDefinition } from '@harnessio/forms'
 
-import { IInputConfigWithConfig } from '../types'
+import { IInputConfigWithConfigInterface } from '../types'
 import {
   getCloningContainer,
   getConnectionContainer,
@@ -15,7 +15,7 @@ import {
 
 export const GITHUB_CONNECTOR_DESCRIPTION = 'Github Connector'
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: IInputConfigWithConfigInterface[] = [
   {
     inputType: InputType.radio,
     path: 'githubType',

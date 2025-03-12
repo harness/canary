@@ -28,6 +28,7 @@ export enum ConnectorType {
 }
 
 export type IInputConfigWithConfig = IInputDefinition & InputConfigType
+export type IInputConfigWithConfigInterface = IInputDefinition & InputConfigType
 
 export const GITHUB_CONNECTOR_IDENTIFIER = 'Github Connector'
 export const TERRAFORM_CONNECTOR_IDENTIFIER = 'Terraform Connector'

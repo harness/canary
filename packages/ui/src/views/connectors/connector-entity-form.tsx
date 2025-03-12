@@ -27,10 +27,15 @@ const connectorPayloadConverters: Partial<Record<HARNESS_CONNECTOR_IDENTIFIER, C
 interface ConnectorEntityFormProps {
   formEntity: ConnectorFormEntityType
   requestClose: () => void
+  onFormSubmit?: (values: any) => void // TODO: TYPE this properly
 }
 
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
-  const { formEntity, requestClose } = props
+  const { formEntity, requestClose, onFormSubmit } = props
+  // TODO: type this properly , Handle form submit for create/edit
+  const onSubmit = (data: any) => {
+    onFormSubmit?.(data)
+  }
 
   // Initialize form with converted payload if editing an existing connector
   const initialFormData = useMemo(() => {
@@ -70,12 +75,14 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       onSubmit={values => {
         // TODO: handle form submit for create/edit
         console.log('values', values)
+        // TODO: hande form submit for create/edit
         if (formEntity.data.identifier === AWS_KMS_CONNECTOR_IDENTIFIER) {
-          const { connector } = awsKmsBuilder.buildPayload(values)
-          console.log('AWS KMS payload:', connector)
+          const { connector: payload } = awsKmsBuilder.buildPayload(values)
+          console.log('AWS KMS payload:', payload)
           const converter = connectorPayloadConverters[formEntity.data.identifier as HARNESS_CONNECTOR_IDENTIFIER]
-          console.log('converted to form: ', converter ? converter.convertToFormData(connector) : {})
+          console.log('converted to form: ', converter ? converter.convertToFormData(payload) : {})
           // TODO: Handle the AWS KMS payload
+          onSubmit(payload)
         }
       }}
       validateAfterFirstSubmit={true}

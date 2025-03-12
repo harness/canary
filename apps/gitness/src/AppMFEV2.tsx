@@ -2,7 +2,7 @@ import './styles/AppMFE.css'
 
 import { useEffect, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import { BrowserRouter, Outlet, useMatches } from 'react-router-dom'
+import { BrowserRouter, useMatches } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
@@ -129,7 +129,6 @@ export default function AppMFE({
                               <RouterContextProvider
                                 Link={Link}
                                 NavLink={NavLink}
-                                Outlet={Outlet}
                                 location={{ ...window.location, state: {}, key: '' }}
                                 navigate={customUtils.navigate}
                                 useSearchParams={customHooks.useSearchParams}

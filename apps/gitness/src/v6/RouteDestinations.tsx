@@ -473,7 +473,6 @@ export const repoRoutes: CustomRouteObject[] = [
               }
             ]
           },
-
           {
             path: 'settings/webhooks/:webhookId',
             element: <WebhookSettingsLayout useTranslationStore={useTranslationStore} />,

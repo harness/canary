@@ -95,6 +95,7 @@ interface AppMFEProps {
   useMFEThemeContext: () => { theme: string }
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
+  customComponents: Unknown
   customHooks: Partial<{
     useGenerateToken: Unknown
   }>
@@ -114,6 +115,7 @@ export default function AppMFE({
   useMFEThemeContext,
   parentLocationPath,
   onRouteChange,
+  customComponents,
   customHooks,
   customUtils
 }: AppMFEProps) {
@@ -177,7 +179,8 @@ export default function AppMFE({
                   scope,
                   renderUrl,
                   customHooks,
-                  customUtils
+                  customUtils,
+                  customComponents
                 }}
               >
                 <I18nextProvider i18n={i18n}>

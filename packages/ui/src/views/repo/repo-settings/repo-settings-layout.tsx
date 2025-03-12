@@ -47,13 +47,19 @@ const getNavItems = (t: TFunction) => [
   // }
 ]
 
-export function RepoSettingsLayout({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) {
+export function RepoSettingsLayout({
+  useTranslationStore,
+  children
+}: {
+  useTranslationStore: () => TranslationStore
+  children?: React.ReactNode
+}) {
   const { Outlet } = useRouterContext()
   const { t } = useTranslationStore()
 
   return (
     <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={100} sidebarViewportClassName="pt-7">
-      <Outlet />
+      {children ? children : <Outlet />}
     </ContentLayoutWithSidebar>
   )
 }

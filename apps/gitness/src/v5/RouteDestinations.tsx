@@ -1,9 +1,10 @@
 import { ComponentType } from 'react'
 
-import { EmptyPage } from '@harnessio/ui/views'
+import { EmptyPage, RepoSettingsLayout } from '@harnessio/ui/views'
 
 import { AppProvider } from '../framework/context/AppContext'
 import { ExplorerPathsProvider } from '../framework/context/ExplorerPathsContext'
+import { useTranslationStore } from '../i18n/stores/i18n-store'
 import PullRequestChanges from '../pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from '../pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from '../pages-v2/pull-request/pull-request-compare'
@@ -11,7 +12,10 @@ import PullRequestConversationPage from '../pages-v2/pull-request/pull-request-c
 import PullRequestDataProvider from '../pages-v2/pull-request/pull-request-data-provider'
 import PullRequestLayout from '../pages-v2/pull-request/pull-request-layout'
 import PullRequestListPage from '../pages-v2/pull-request/pull-request-list'
+import { RepoLabelFormContainer } from '../pages-v2/repo/labels/label-form-container'
+import { RepoLabelsList } from '../pages-v2/repo/labels/labels-list-container'
 import { RepoBranchesListPage } from '../pages-v2/repo/repo-branch-list'
+import { RepoBranchSettingsRulesPageContainer } from '../pages-v2/repo/repo-branch-rules-container'
 import { RepoCode } from '../pages-v2/repo/repo-code'
 import RepoCommitDetailsPage from '../pages-v2/repo/repo-commit-details'
 import RepoCommitsPage from '../pages-v2/repo/repo-commits'
@@ -20,10 +24,18 @@ import { ImportMultipleRepos } from '../pages-v2/repo/repo-import-multiple-conta
 import { ImportRepo } from '../pages-v2/repo/repo-import-page'
 import RepoLayout from '../pages-v2/repo/repo-layout'
 import ReposListPage from '../pages-v2/repo/repo-list'
+import { RepoSettingsGeneralPageContainer } from '../pages-v2/repo/repo-settings-general-container'
 import { RepoSidebar } from '../pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from '../pages-v2/repo/repo-summary'
 import { RepoTagsListContainer } from '../pages-v2/repo/repo-tags-list-container'
+import { CreateWebhookContainer } from '../pages-v2/webhooks/create-webhook-container'
+import WebhookListPage from '../pages-v2/webhooks/webhook-list'
+import { PathParams } from '../RouteDefinitions'
 import { AppShell } from './components/app-shell'
+
+interface RouterMatchInterface {
+  match: { params: PathParams }
+}
 
 export const getRoutes = ({
   pathPrefix,
@@ -48,13 +60,13 @@ export const getRoutes = ({
             <Route path={`${pathPrefix}/repos/import-multiple`} render={() => <ImportMultipleRepos />} />
             <Route
               path={`${pathPrefix}/repos/:repoId`}
-              render={() => (
+              render={({ match }: RouterMatchInterface) => (
                 <RepoLayout>
                   <Switch>
                     <Route
                       path={`${pathPrefix}/repos/:repoId`}
                       exact
-                      render={() => <Redirect to={`${pathPrefix}/repos/:repoId/summary`} />}
+                      render={() => <Redirect to={`${pathPrefix}/repos/${match.params.repoId}/summary`} />}
                     />
                     <Route path={`${pathPrefix}/repos/:repoId/summary`} render={() => <RepoSummaryPage />} />
                     <Route
@@ -115,8 +127,10 @@ export const getRoutes = ({
                                   <Route
                                     path={`${pathPrefix}/repos/:repoId/pulls/:pullRequestId`}
                                     exact
-                                    render={() => (
-                                      <Redirect to={`${pathPrefix}/repos/:repoId/pulls/:pullRequestId/conversation`} />
+                                    render={({ match }: RouterMatchInterface) => (
+                                      <Redirect
+                                        to={`${pathPrefix}/repos/${match.params.repoId}/pulls/${match.params.pullRequestId}/conversation`}
+                                      />
                                     )}
                                   />
                                   <Route
@@ -148,6 +162,82 @@ export const getRoutes = ({
                             )}
                           />
                         </Switch>
+                      )}
+                    />
+                    <Route
+                      path={`${pathPrefix}/repos/:repoId/settings`}
+                      render={() => (
+                        <RepoSettingsLayout useTranslationStore={useTranslationStore}>
+                          <Switch>
+                            <Route
+                              path={`${pathPrefix}/repos/:repoId/settings`}
+                              exact
+                              render={({ match }: RouterMatchInterface) => (
+                                <Redirect to={`${pathPrefix}/repos/${match.params.repoId}/settings/general`} />
+                              )}
+                            />
+                            <Route
+                              path={`${pathPrefix}/repos/:repoId/settings/general`}
+                              render={() => <RepoSettingsGeneralPageContainer />}
+                            />
+                            <Route
+                              path={`${pathPrefix}/repos/:repoId/settings/rules`}
+                              render={() => (
+                                <Switch>
+                                  <Route
+                                    path={`${pathPrefix}/repos/:repoId/settings/rules`}
+                                    exact
+                                    render={() => <RepoSettingsGeneralPageContainer />}
+                                  />
+                                  <Route
+                                    path={`${pathPrefix}/repos/:repoId/settings/rules/create`}
+                                    render={() => <RepoBranchSettingsRulesPageContainer />}
+                                  />
+                                  <Route
+                                    path={`${pathPrefix}/repos/:repoId/settings/rules/:identifier`}
+                                    render={() => <RepoBranchSettingsRulesPageContainer />}
+                                  />
+                                </Switch>
+                              )}
+                            />
+                            <Route
+                              path={`${pathPrefix}/repos/:repoId/settings/webhooks`}
+                              render={() => (
+                                <Switch>
+                                  <Route
+                                    path={`${pathPrefix}/repos/:repoId/settings/webhooks`}
+                                    exact
+                                    render={() => <WebhookListPage />}
+                                  />
+                                  <Route
+                                    path={`${pathPrefix}/repos/:repoId/settings/webhooks/create`}
+                                    render={() => <CreateWebhookContainer />}
+                                  />
+                                </Switch>
+                              )}
+                            />
+                            <Route
+                              path={`${pathPrefix}/repos/:repoId/settings/labels`}
+                              render={() => (
+                                <Switch>
+                                  <Route
+                                    path={`${pathPrefix}/repos/:repoId/settings/labels`}
+                                    exact
+                                    render={() => <RepoLabelsList />}
+                                  />
+                                  <Route
+                                    path={`${pathPrefix}/repos/:repoId/settings/labels/create`}
+                                    render={() => <RepoLabelFormContainer />}
+                                  />
+                                  <Route
+                                    path={`${pathPrefix}/repos/:repoId/settings/labels/:labelId`}
+                                    render={() => <RepoLabelFormContainer />}
+                                  />
+                                </Switch>
+                              )}
+                            />
+                          </Switch>
+                        </RepoSettingsLayout>
                       )}
                     />
                   </Switch>

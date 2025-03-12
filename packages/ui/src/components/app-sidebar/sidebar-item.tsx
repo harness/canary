@@ -99,14 +99,14 @@ export const SidebarItem = ({
 
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
-          <Sidebar.MenuAction className="right-0 text-sidebar-icon-3 hover:text-sidebar-icon-1" showOnHover>
+          <Sidebar.MenuAction className="text-sidebar-icon-3 hover:text-sidebar-icon-1 right-0" showOnHover>
             <span>
               <Icon name="menu-dots" size={12} />
             </span>
           </Sidebar.MenuAction>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content
-          className="w-[128px] border-sidebar-border-3 bg-sidebar-background-4"
+          className="border-sidebar-border-3 bg-sidebar-background-4 w-[128px]"
           align="end"
           sideOffset={3}
           alignOffset={4}

@@ -84,7 +84,7 @@ export const AppSidebar = ({
                 logo={
                   <Link to="/" className="flex h-[58px] items-center justify-start gap-0.5 pl-1">
                     <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-                    <Icon name="harness-logo-text" width={65} height={15} className="mb-px text-sidebar-foreground-1" />
+                    <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1 mb-px" />
                   </Link>
                 }
               />
@@ -95,7 +95,7 @@ export const AppSidebar = ({
               logo={
                 <Link className="flex items-center gap-0.5" to="/">
                   <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-                  <Icon name="harness-logo-text" width={65} height={15} className="mb-px text-sidebar-foreground-1" />
+                  <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1 mb-px" />
                 </Link>
               }
             />
@@ -175,7 +175,7 @@ export const AppSidebar = ({
             </Sidebar.GroupContent>
           </Sidebar.Group>
         </Sidebar.Content>
-        <Sidebar.Footer className="border-t border-sidebar-border-1">
+        <Sidebar.Footer className="border-sidebar-border-1 border-t">
           <User
             user={currentUser}
             openThemeDialog={() => setOpenThemeDialog(true)}

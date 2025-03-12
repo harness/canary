@@ -3,15 +3,20 @@ import { useState } from 'react'
 import { Button, Drawer, Spacer } from '@harnessio/ui/components'
 import { ConnectorHeader, ConnectorReference, ConnectorType, DirectionEnum } from '@harnessio/ui/views'
 
+import mockAccountsData from '../secrets/mock-account-data.json'
+import mockOrgData from '../secrets/mock-org-data.json'
+import mockProjectsData from '../secrets/mock-project-data.json'
+import { ScopeEnum, scopeHierarchy, SecretScope } from '../secrets/types'
 import mockConnectorsData from './mock-connectors-data.json'
 
 export const ConnectorsPage = () => {
   const [selectedType, setSelectedType] = useState<ConnectorType>(ConnectorType.EXISTING)
+  const [, setActiveScope] = useState<SecretScope>(ScopeEnum.ORGANIZATION)
 
   // State for existing connectors
   const [selectedConnector, setSelectedConnector] = useState<any | null>(null)
-  const [parentFolder, setParentFolder] = useState<string | null>('default')
-  const [childFolder, setChildFolder] = useState<string | null>('project1')
+  const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
+  const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
 
   // Handlers for existing connectors
   const handleSelectConnector = (connector: any) => {
@@ -20,15 +25,25 @@ export const ConnectorsPage = () => {
   }
 
   const handleScopeChange = (direction: DirectionEnum) => {
-    if (direction === DirectionEnum.PARENT) {
-      // Navigate up to parent folder
-      setChildFolder(parentFolder)
-      setParentFolder(null)
-    } else if (direction === DirectionEnum.CHILD) {
-      // Navigate down to child folder
-      setParentFolder(childFolder)
-      setChildFolder(null)
-    }
+    setActiveScope(prevScope => {
+      const newScope =
+        direction === DirectionEnum.PARENT ? scopeHierarchy[prevScope].parent! : scopeHierarchy[prevScope].child!
+      switch (newScope) {
+        case ScopeEnum.ACCOUNT:
+          setParentFolder(null)
+          setChildFolder(mockOrgData[0].organizationResponse.organization.identifier)
+          break
+        case ScopeEnum.ORGANIZATION:
+          setParentFolder(mockAccountsData[0].accountName)
+          setChildFolder(mockProjectsData[0].projectResponse.project.identifier)
+          break
+        case ScopeEnum.PROJECT:
+          setParentFolder(mockOrgData[0].organizationResponse.organization.identifier)
+          setChildFolder(null)
+          break
+      }
+      return newScope
+    })
   }
 
   const handleCancel = () => {

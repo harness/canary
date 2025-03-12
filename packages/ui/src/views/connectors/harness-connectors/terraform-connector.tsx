@@ -2,11 +2,11 @@ import { InputConfigType, InputType } from '@views/unified-pipeline-studio/compo
 
 import { IFormDefinition } from '@harnessio/forms'
 
-import { IInputConfigWithConfig } from '../types'
+import { IInputConfigWithConfigInterface } from '../types'
 
 export const TERRAFORM_CONNECTOR_DESCRIPTION = 'Terraform Connector'
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: IInputConfigWithConfigInterface[] = [
   {
     inputType: InputType.text,
     path: `endpoint`,

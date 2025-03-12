@@ -1,8 +1,8 @@
 import { InputType } from '@views/unified-pipeline-studio/components/form-inputs/types'
 
-import { IInputConfigWithConfig } from '../types'
+import { IInputConfigWithConfigInterface } from '../types'
 
-export const getResourcesContainer = (): IInputConfigWithConfig => ({
+export const getResourcesContainer = (): IInputConfigWithConfigInterface => ({
   inputType: InputType.group,
   path: `resources`,
   label: 'Resources',
@@ -25,7 +25,7 @@ export const getResourcesContainer = (): IInputConfigWithConfig => ({
   ]
 })
 
-export const getCloningContainer = (): IInputConfigWithConfig => ({
+export const getCloningContainer = (): IInputConfigWithConfigInterface => ({
   inputType: InputType.group,
   path: `cloning`,
   label: 'Cloning',
@@ -38,7 +38,7 @@ export const getCloningContainer = (): IInputConfigWithConfig => ({
   ]
 })
 
-export const getConnectionContainer = (): IInputConfigWithConfig => ({
+export const getConnectionContainer = (): IInputConfigWithConfigInterface => ({
   inputType: InputType.group,
   path: `connection`,
   label: 'Connection',
@@ -68,7 +68,7 @@ export const getConnectionContainer = (): IInputConfigWithConfig => ({
   ]
 })
 
-export const getMetadataContainer = (): IInputConfigWithConfig => ({
+export const getMetadataContainer = (): IInputConfigWithConfigInterface => ({
   inputType: InputType.group,
   path: `metadata`,
   label: 'Metadata',

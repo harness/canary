@@ -3,7 +3,7 @@ import { ComponentProps } from 'react'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const spacerVariants = cva('mt-4 block', {
+const spacerVariants = cva('mt-4', {
   variants: {
     size: {
       1: 'mt-1',
@@ -29,7 +29,7 @@ const spacerVariants = cva('mt-4 block', {
   }
 })
 
-export interface SpacerProps extends ComponentProps<'span'>, VariantProps<typeof spacerVariants> {}
+export interface SpacerProps extends ComponentProps<'div'>, VariantProps<typeof spacerVariants> {}
 
 // TODO: Revisit the Spacer component
 // 1. Currently, Spacer uses a <span> with `display: block;` and relies on margins instead of height.
@@ -42,7 +42,7 @@ export interface SpacerProps extends ComponentProps<'span'>, VariantProps<typeof
 //      and a reusable abstraction for spacing is beneficial.
 
 const Spacer = ({ className, size, ...props }: SpacerProps) => (
-  <span aria-hidden className={cn(spacerVariants({ size, className }))} {...props}></span>
+  <div aria-hidden className={cn(spacerVariants({ size, className }))} {...props} />
 )
 
 Spacer.displayName = 'Spacer'

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { useListPipelinesQuery } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
 
 import { LinkComponent } from '../../components/LinkComponent'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -18,7 +19,9 @@ import { apiPipelines2Pipelines } from './transform-utils/pipeline-list-transfor
 export default function RepoPipelineListPage() {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
 
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))

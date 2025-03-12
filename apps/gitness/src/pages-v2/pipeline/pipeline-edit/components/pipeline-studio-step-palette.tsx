@@ -1,5 +1,4 @@
 import { useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { Button, Icon, Input, Spacer } from '@harnessio/canary'
 import { useListTemplatesQuery } from '@harnessio/code-service-client'
@@ -13,8 +12,8 @@ import {
   StepsPaletteItem
 } from '@harnessio/views'
 
+import { useGetSpaceURLParam } from '../../../../framework/hooks/useGetSpaceParam.ts'
 import { useTranslationStore } from '../../../../i18n/stores/i18n-store.ts'
-import { PathParams } from '../../../../RouteDefinitions'
 import { PageResponseHeader } from '../../../../types'
 import { StepSource } from '../context/data-store/types'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
@@ -33,7 +32,7 @@ const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Elem
     requestYamlModifications
   } = usePipelineDataContext()
   const { setStepDrawerOpen } = usePipelineViewContext()
-  const { spaceId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
 
   const [page, setPage] = useState(1)
   const [query, setQuery] = useState('')

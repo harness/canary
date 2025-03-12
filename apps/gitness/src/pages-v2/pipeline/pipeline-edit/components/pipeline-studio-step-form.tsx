@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
@@ -27,7 +26,7 @@ import {
   TEMPLATE_STEP_IDENTIFIER
 } from '@harnessio/views'
 
-import { PathParams } from '../../../../RouteDefinitions'
+import { useGetSpaceURLParam } from '../../../../framework/hooks/useGetSpaceParam'
 import { StepSource } from '../context/data-store/types'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { StepDefinitionType } from '../types/api-types'
@@ -44,7 +43,7 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
     requestYamlModifications,
     setFormStep
   } = usePipelineDataContext()
-  const { spaceId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
 
   const [defaultStepValues, setDefaultStepValues] = useState({})
 

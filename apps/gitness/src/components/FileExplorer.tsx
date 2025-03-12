@@ -1,14 +1,16 @@
 import { useEffect } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { getContent, OpenapiContentInfo, OpenapiGetContentOutput } from '@harnessio/code-service-client'
 import { FileExplorer } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 
 import { useOpenFolderPaths } from '../framework/context/ExplorerPathsContext'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { PathParams } from '../RouteDefinitions'
 import { normalizeGitRef } from '../utils/git-utils'
@@ -34,7 +36,9 @@ const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] 
  */
 export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps) {
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
   const location = useLocation()
   const isFileEditMode = location.pathname.includes('edit')

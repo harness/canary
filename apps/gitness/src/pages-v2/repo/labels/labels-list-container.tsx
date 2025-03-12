@@ -1,20 +1,20 @@
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useDeleteRepoLabelMutation, useDeleteSpaceLabelMutation } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { ILabelType, LabelsListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
+import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam.ts'
 import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../../i18n/stores/i18n-store'
-import { PathParams } from '../../../RouteDefinitions'
 import { useLabelsStore } from '../../project/stores/labels-store'
 import { usePopulateLabelStore } from './hooks/use-populate-label-store.ts'
 
 export const RepoLabelsList = () => {
-  const { spaceId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const routes = useRoutes()
   const navigate = useNavigate()
 

@@ -1,18 +1,20 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { useGetPullReqQuery, useUpdatePullReqMutation } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { PullRequestLayout as PullRequestLayoutView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestStore } from './stores/pull-request-store'
 
 const PullRequestLayout = () => {
   const { setPullRequest, setRefetchPullReq, setPullReqError, setPullReqLoading } = usePullRequestStore()
-
-  const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { pullRequestId, repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
 
   const repoRef = useGetRepoRef()
 

@@ -1,14 +1,14 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { DropdownMenu, Icon, Text } from '@harnessio/ui/components'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { PathParams } from '../../RouteDefinitions'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 
 function ProjectDropdown(): JSX.Element {
   const routes = useRoutes()
-  const { spaceId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const navigate = useNavigate()
   const { spaces } = useAppContext()
 

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { cn } from '@harnessio/canary'
 import {
@@ -12,6 +12,7 @@ import {
   SettingsMenu,
   Sidebar
 } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 
 import { useNav } from '../components/stores/recent-pinned-nav-links.store'
 import { getNavbarMenuData } from '../data/navbar-menu-data'
@@ -19,6 +20,7 @@ import { getPinnedMenuItemsData } from '../data/pinned-menu-items-data'
 import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
+import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
 import { useLocationChange } from '../framework/hooks/useLocationChange'
 import { useRepoImportEvents } from '../framework/hooks/useRepoImportEvent'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
@@ -40,7 +42,9 @@ export const AppShell = () => {
   const location = useLocation()
   const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } = useNav()
   const { t } = useTranslationStore()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const spaceIdPathParam = spaceId ?? spaces[0]?.path ?? ''
 
   const [showMoreMenu, setShowMoreMenu] = useState(false)

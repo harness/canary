@@ -1,12 +1,11 @@
 import { useCallback, useMemo } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { RepoRepositoryOutput } from '@harnessio/code-service-client'
 import { ToastAction, useToast } from '@harnessio/ui/components'
 
 import { useRepoStore } from '../../pages-v2/repo/stores/repo-list-store'
 import { transformRepoList } from '../../pages-v2/repo/transform-utils/repo-list-transform'
-import { PathParams } from '../../RouteDefinitions'
 import { SSEEvent } from '../../types'
 import { useRoutes } from '../context/NavigationContext'
 import { useGetSpaceURLParam } from './useGetSpaceParam'
@@ -17,8 +16,7 @@ export const useRepoImportEvents = () => {
   const routes = useRoutes()
   const { importToastId, importRepoIdentifier, setImportRepoIdentifier, setImportToastId, updateRepository } =
     useRepoStore()
-  const spaceURL = useGetSpaceURLParam() ?? ''
-  const { spaceId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam() ?? ''
 
   const onEvent = useCallback(
     (eventData: RepoRepositoryOutput) => {
@@ -44,7 +42,7 @@ export const useRepoImportEvents = () => {
   const events = useMemo(() => [SSEEvent.REPO_IMPORTED], [])
 
   useSpaceSSE({
-    space: spaceURL,
+    space: spaceId,
     events,
     onEvent,
     shouldRun: true

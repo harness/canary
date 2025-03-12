@@ -1,10 +1,11 @@
-import { useParams } from 'react-router-dom'
+import { useRouterContext } from '@harnessio/ui/context'
 
 import type { PathParams } from '../../RouteDefinitions'
 import { useIsMFE } from './useIsMFE'
 import { useMFEContext } from './useMFEContext'
 
 export function useGetSpaceURLParam(): string | undefined {
+  const { useParams } = useRouterContext()
   const { spaceId } = useParams<PathParams>()
 
   const isMFE = useIsMFE()

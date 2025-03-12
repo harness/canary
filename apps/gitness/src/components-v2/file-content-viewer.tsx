@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harnessio/code-service-client'
 import { FileViewerControlBar, MarkdownViewer, Pagination, SkeletonList, ViewTypeValue } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { BranchSelectorTab, CommitsList } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
@@ -12,6 +13,7 @@ import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
 import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 import { useAPIPath } from '../hooks/useAPIPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
@@ -45,7 +47,9 @@ interface FileContentViewerProps {
  */
 export default function FileContentViewer({ repoContent }: FileContentViewerProps) {
   const routes = useRoutes()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const fileName = repoContent?.name || ''
   const language = filenameToLanguage(fileName) || ''
   const fileContent = decodeGitContent(repoContent?.content?.data)

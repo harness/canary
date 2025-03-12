@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { noop } from 'lodash-es'
 
@@ -11,12 +10,11 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { PathParams } from '../../RouteDefinitions'
 import { usePipelineListStore } from './stores/project-pipeline-list-store'
 
 export default function ProjectPipelineListPage() {
   const routes = useRoutes()
-  const { spaceId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const spaceURL = useGetSpaceURLParam()
   const { setPipelinesData, page, setPage } = usePipelineListStore()
   const [query, setQuery] = useQueryState('query')

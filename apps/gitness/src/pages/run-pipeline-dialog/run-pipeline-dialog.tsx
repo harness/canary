@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { omit } from 'lodash-es'
 import { parse } from 'yaml'
@@ -20,10 +20,12 @@ import {
   useZodValidationResolver
 } from '@harnessio/forms'
 import { Alert, Button, Dialog, Spacer } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { inputComponentFactory, InputType } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { PipelineParams } from '../../pages-v2/pipeline/pipeline-edit/context/PipelineStudioDataProvider'
 import { Inputs } from '../../types/pipeline-schema'
 import { decodeGitContent, normalizeGitRef } from '../../utils/git-utils'
@@ -40,7 +42,9 @@ export interface RunPipelineFormProps {
 
 export default function RunPipelineForm({ pipelineId, branch, onClose, open }: RunPipelineFormProps) {
   const routes = useRoutes()
-  const { spaceId, repoId, pipelineId: pipelineIdFromParams = '' } = useParams<PipelineParams>()
+  const { useParams } = useRouterContext()
+  const { repoId, pipelineId: pipelineIdFromParams = '' } = useParams<PipelineParams>()
+  const spaceId = useGetSpaceURLParam()
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(true)

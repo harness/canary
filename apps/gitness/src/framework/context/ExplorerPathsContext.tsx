@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+
+import { useRouterContext } from '@harnessio/ui/context'
 
 import { PathParams } from '../../RouteDefinitions'
 import { useGetRepoRef } from '../hooks/useGetRepoPath'
@@ -25,6 +26,7 @@ interface ExplorerPathsProviderProps {
 
 export const ExplorerPathsProvider: React.FC<ExplorerPathsProviderProps> = ({ children }) => {
   const repoRef = useGetRepoRef()
+  const { useParams } = useRouterContext()
   const { gitRef } = useParams<PathParams>()
   const [openFolderPaths, setOpenFolderPaths] = useState<string[]>([])
 

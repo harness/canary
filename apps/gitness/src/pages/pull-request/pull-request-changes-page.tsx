@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { DiffModeEnum } from '@git-diff-view/react'
 import * as Diff2Html from 'diff2html'
@@ -14,6 +13,7 @@ import {
   useReviewerListPullReqQuery
 } from '@harnessio/code-service-client'
 import { SkeletonList } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { PullRequestChanges } from '@harnessio/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
@@ -44,6 +44,7 @@ function PullRequestChangesPage() {
   const targetRef = useMemo(() => pullReqMetadata?.merge_base_sha, [pullReqMetadata?.merge_base_sha])
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
   const [diffs, setDiffs] = useState<DiffFileEntry[]>()
+  const { useParams } = useRouterContext()
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   const {

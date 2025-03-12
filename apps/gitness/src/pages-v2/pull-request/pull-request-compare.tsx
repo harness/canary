@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import * as Diff2Html from 'diff2html'
 import { useAtom } from 'jotai'
@@ -18,6 +18,7 @@ import {
   useRawDiffQuery
 } from '@harnessio/code-service-client'
 import { Icon } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchSelectorListItem,
@@ -36,6 +37,7 @@ import { BranchSelectorContainer } from '../../components-v2/branch-selector-con
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -55,7 +57,9 @@ export const CreatePullRequest = () => {
   const routes = useRoutes()
   const [desc, setDesc] = useState('')
   const createPullRequestMutation = useCreatePullReqMutation({})
-  const { repoId, spaceId, diffRefs } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId, diffRefs } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
   const { currentUser } = useAppContext()
   const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]

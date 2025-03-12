@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
   useCreateRepoWebhookMutation,
@@ -7,6 +7,7 @@ import {
   useUpdateRepoWebhookMutation
 } from '@harnessio/code-service-client'
 import { SkeletonForm } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import {
   CreateWebhookFormFields,
   NotFoundPage,
@@ -18,6 +19,7 @@ import {
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'
@@ -26,7 +28,9 @@ export const CreateWebhookContainer = () => {
   const routes = useRoutes()
   const repo_ref = useGetRepoRef()
   const navigate = useNavigate()
-  const { spaceId, repoId, webhookId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId, webhookId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
 
   const { setPreSetWebhookData } = useWebhookStore()
 

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { DiffModeEnum } from '@git-diff-view/react'
 import copy from 'clipboard-copy'
@@ -20,6 +19,7 @@ import {
   useRawDiffQuery,
   useReviewerListPullReqQuery
 } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import {
   CommitFilterItemProps,
   CreateCommentPullReqRequest,
@@ -79,6 +79,7 @@ export default function PullRequestChanges() {
   const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const targetRef = useMemo(() => pullReqMetadata?.merge_base_sha, [pullReqMetadata?.merge_base_sha])
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
+  const { useParams } = useRouterContext()
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   const [commentId] = useQueryState('commentId')

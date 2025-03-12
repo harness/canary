@@ -1,8 +1,9 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { OpenapiGetContentOutput } from '@harnessio/code-service-client'
 import { EditViewTypeValue, FileEditorControlBar } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
@@ -10,6 +11,7 @@ import GitCommitDialog from '../components-v2/git-commit-dialog'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitConfirm } from '../framework/hooks/useExitConfirm'
+import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { themes } from '../pages-v2/pipeline/pipeline-edit/theme/monaco-theme'
@@ -27,7 +29,9 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const routes = useRoutes()
   const navigate = useNavigate()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  const { repoId, spaceId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const { show } = useExitConfirm()
   const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 

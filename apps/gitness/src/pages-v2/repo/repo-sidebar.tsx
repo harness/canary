@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Outlet, useNavigate, useParams } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import {
   getContent,
@@ -10,11 +10,13 @@ import {
   useListPathsQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import Explorer from '../../components/FileExplorer'
 import { useRoutes } from '../../framework/context/NavigationContext.tsx'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam.ts'
 import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
@@ -27,6 +29,7 @@ import { transformBranchList } from './transform-utils/branch-transform.ts'
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoSidebar = () => {
+  const { useParams } = useRouterContext()
   const routes = useRoutes()
   const {
     branchList,
@@ -41,7 +44,9 @@ export const RepoSidebar = () => {
   } = useRepoBranchesStore()
 
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const params = useParams<PathParams>()
+  const { repoId } = params
+  const spaceId = useGetSpaceURLParam()
   const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import {
   useCreateBranchMutation,
@@ -10,6 +9,7 @@ import {
   useListTagsQuery
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import {
   CommitTagType,
   CreateBranchDialog,
@@ -21,6 +21,7 @@ import {
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -34,7 +35,9 @@ export const RepoTagsListContainer = () => {
   const repo_ref = useGetRepoRef()
   const { setTags, addTag, removeTag, page, setPage, setPaginationFromHeaders } = useRepoTagsStore()
   const { setBranchList, setDefaultBranch, setSelectedBranchTag, branchList } = useRepoBranchesStore()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
 
   const routes = useRoutes()
   const [query, setQuery] = useQueryState('query')

@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import { useListPullReqCommitsQuery } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { PullRequestCommitsView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -13,7 +15,9 @@ import { usePullRequestCommitsStore } from './stores/pull-request-commit-store'
 
 export function PullRequestCommitPage() {
   const routes = useRoutes()
-  const { repoId, spaceId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
 
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()

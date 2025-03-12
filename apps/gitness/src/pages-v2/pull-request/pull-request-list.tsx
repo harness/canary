@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import {
   ListPullReqQueryQueryParams,
@@ -7,9 +7,11 @@ import {
   useListPrincipalsQuery,
   useListPullReqQuery
 } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { PullRequestListPage as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -19,7 +21,9 @@ import { usePullRequestListStore } from './stores/pull-request-list-store'
 export default function PullRequestListPage() {
   const repoRef = useGetRepoRef() ?? ''
   const { setPullRequests, page, setPage, setOpenClosePullRequests } = usePullRequestListStore()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
 
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { useFindRepositoryQuery, useListBranchesQuery, useListTagsQuery } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { BranchData, BranchSelectorListItem, BranchSelectorTab, BranchSelectorV2 } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { transformBranchList } from '../pages-v2/repo/transform-utils/branch-transform'
 import { PathParams } from '../RouteDefinitions'
@@ -23,7 +24,9 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
   dynamicWidth = false
 }) => {
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const [branchTagQuery, setBranchTagQuery] = useState<string | null>(null)
   const [branchList, setBranchList] = useState<BranchData[]>([])
   const [tagList, setTagList] = useState<BranchSelectorListItem[]>([])

@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 
 import * as Diff2Html from 'diff2html'
 import { compact } from 'lodash-es'
@@ -10,6 +9,7 @@ import {
   useGetContentQuery,
   useListPathsQuery
 } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { CommitDiff, CommitSidebar } from '@harnessio/ui/views'
 
 import Explorer from '../../components/FileExplorer.tsx'
@@ -28,6 +28,7 @@ import { useCommitDetailsStore } from './stores/commit-details-store.ts'
  */
 export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: boolean }) => {
   const repoRef = useGetRepoRef()
+  const { useParams } = useRouterContext()
   const { commitSHA } = useParams<PathParams>()
   const { fullGitRef } = useCodePathDetails()
   const { setDiffs, setDiffStats } = useCommitDetailsStore()

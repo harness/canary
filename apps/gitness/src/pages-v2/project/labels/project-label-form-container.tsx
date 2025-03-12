@@ -1,6 +1,7 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useSaveSpaceLabelMutation } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { CreateLabelFormFields, LabelFormPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
@@ -11,6 +12,7 @@ import { useFillLabelStoreWithProjectLabelValuesData } from './hooks/use-fill-la
 
 export const ProjectLabelFormContainer = () => {
   const routes = useRoutes()
+  const { useParams } = useRouterContext()
   const { spaceId, labelId } = useParams<PathParams>()
   const navigate = useNavigate()
 

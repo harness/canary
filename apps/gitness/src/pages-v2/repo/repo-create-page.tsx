@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
   OpenapiCreateRepositoryRequest,
@@ -8,23 +8,20 @@ import {
 } from '@harnessio/code-service-client'
 import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/views'
 
-// import { Toaster } from '../../components-v2/toaster'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { PathParams } from '../../RouteDefinitions'
 
 export const CreateRepo = () => {
   const routes = useRoutes()
   const { mutate: createRepository, error, isLoading, isSuccess } = useCreateRepositoryMutation({})
-  const { spaceId } = useParams<PathParams>()
-  const spaceURL = useGetSpaceURLParam()
+  const spaceId = useGetSpaceURLParam()
   const navigate = useNavigate()
 
   const onSubmit = (data: FormFields) => {
     const repositoryRequest: OpenapiCreateRepositoryRequest = {
       default_branch: 'main',
-      parent_ref: spaceURL,
+      parent_ref: spaceId,
       description: data.description,
       git_ignore: data.gitignore,
       license: data.license,
@@ -36,7 +33,7 @@ export const CreateRepo = () => {
     createRepository(
       {
         queryParams: {
-          space_path: spaceURL
+          space_path: spaceId
         },
         body: repositoryRequest
       },

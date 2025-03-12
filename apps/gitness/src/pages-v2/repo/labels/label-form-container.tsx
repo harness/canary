@@ -1,9 +1,11 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useSaveRepoLabelMutation } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { CreateLabelFormFields, LabelFormPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
+import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../../i18n/stores/i18n-store'
 import { PathParams } from '../../../RouteDefinitions'
 import { useLabelsStore } from '../../project/stores/labels-store'
@@ -11,7 +13,9 @@ import { usePopulateLabelStore } from './hooks/use-populate-label-store'
 
 export const RepoLabelFormContainer = () => {
   const routes = useRoutes()
-  const { spaceId, repoId, labelId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId, labelId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const navigate = useNavigate()
 
   const { repo_ref } = usePopulateLabelStore({ query: labelId, enabled: !!labelId })

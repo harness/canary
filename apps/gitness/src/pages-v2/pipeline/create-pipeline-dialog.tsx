@@ -1,11 +1,13 @@
 import { useCallback, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useCreatePipelineMutation, useListBranchesQuery } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { CreatePipelineDialog as CreatePipelineDialogView, CreatePipelineFormType } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { PathParams } from '../../RouteDefinitions'
 import { apiBranches2BranchNames, apiBranches2DefaultBranchName } from '../repo/transform-utils/branch-transform'
 import { useCreatePipelineStore } from './stores/create-pipeline-dialog.store'
@@ -17,7 +19,9 @@ interface CreatePipelineDialogProps {
 
 export default function CreatePipelineDialog({ open, onClose }: CreatePipelineDialogProps) {
   const routes = useRoutes()
-  const { repoId, spaceId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
 

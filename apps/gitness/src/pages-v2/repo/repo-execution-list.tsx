@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { noop } from 'lodash-es'
 
 import { ListExecutionsOkResponse, TypesExecution, useListExecutionsQuery } from '@harnessio/code-service-client'
 import { Icon } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { ExecutionListPage, IExecution } from '@harnessio/ui/views'
 
 import { LinkComponent } from '../../components/LinkComponent'
@@ -18,6 +18,7 @@ import { useExecutionListStore } from './stores/repo-execution-list-store'
 
 export default function RepoExecutionListPage() {
   const repoRef = useGetRepoRef()
+  const { useParams } = useRouterContext()
   const { pipelineId } = useParams<PathParams>()
 
   const [query, setQuery] = useQueryState('query')

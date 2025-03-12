@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
 
+import { useRouterContext } from '@harnessio/ui/context'
 import { useYamlEditorContext } from '@harnessio/yaml-editor'
 
 import useThunkReducer from '../../../../hooks/useThunkReducer'
@@ -75,6 +75,7 @@ const PipelineStudioDataContext = createContext<PipelineStudioDataContextProps>(
 
 const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>) => {
   // TODO: PipelineParams is used temporary
+  const { useParams } = useRouterContext()
   const { pipelineId = '', repoId, spaceId } = useParams<PipelineParams>()
   const repoRef = useMemo(() => `${spaceId}/${repoId}/+`, [spaceId, repoId])
 

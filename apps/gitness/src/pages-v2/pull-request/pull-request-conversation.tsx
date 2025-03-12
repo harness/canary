@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
@@ -29,6 +28,7 @@ import {
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
 import { SkeletonList } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { PrincipalType } from '@harnessio/ui/types'
 import { PullRequestConversationPage as PullRequestConversationView } from '@harnessio/ui/views'
 
@@ -36,6 +36,7 @@ import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dial
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -100,7 +101,9 @@ export default function PullRequestConversationPage() {
   const [showDeleteBranchButton, setShowDeleteBranchButton] = useState(false)
   const [showRestoreBranchButton, setShowRestoreBranchButton] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const {
     scope: { accountId }
   } = useMFEContext()

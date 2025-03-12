@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { Button } from '@harnessio/canary'
 import { OpenapiCommitFilesRequest, useCommitFilesMutation } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 
+import { useGetSpaceURLParam } from '../../../../framework/hooks/useGetSpaceParam'
 import RunPipelineDialog from '../../../../pages/run-pipeline-dialog/run-pipeline-dialog'
 import { PipelineParams, usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 
@@ -24,7 +25,9 @@ const PipelineStudioHeaderActions = (): JSX.Element => {
 
   const [openRunPipeline, setOpenRunPipeline] = useState(false)
 
-  const { repoId, spaceId } = useParams<PipelineParams>()
+  const { useParams } = useRouterContext()
+  const { repoId } = useParams<PipelineParams>()
+  const spaceId = useGetSpaceURLParam()
   const repoRef = `${spaceId}/${repoId}/+`
 
   const { mutateAsync: commitAsync } = useCommitFilesMutation({})

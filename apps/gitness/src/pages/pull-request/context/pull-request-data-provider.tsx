@@ -1,5 +1,4 @@
 import { FC, HTMLAttributes, PropsWithChildren, useCallback, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { isEqual } from 'lodash-es'
 
@@ -10,6 +9,7 @@ import {
   useListCommitsQuery,
   useListPullReqActivitiesQuery
 } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { RepoRepositoryOutput } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
@@ -26,7 +26,9 @@ import { extractSpecificViolations } from '../utils'
 const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   const spaceURL = useGetSpaceURLParam() ?? ''
   const repoRef = useGetRepoRef()
-  const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { pullRequestId, repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const pullRequestTab = useGetPullRequestTab({ spaceId, repoId, pullRequestId })
   const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
   const store = usePullRequestDataStore()

@@ -1,20 +1,24 @@
 import { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
   useGetRepoWebhookExecutionQuery,
   useRetriggerRepoWebhookExecutionMutation
 } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { RepoWebhookExecutionDetailsPage, WebhookExecutionType } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'
 
 export const WebhookExecutionDetailsContainer = () => {
-  const { repoId, spaceId, webhookId, executionId } = useParams<PathParams>()
+  const { useParams } = useRouterContext()
+  const { repoId, webhookId, executionId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam()
   const repo_ref = useGetRepoRef()
   const { setExecutionId, updateExecution } = useWebhookStore()
   const navigate = useNavigate()

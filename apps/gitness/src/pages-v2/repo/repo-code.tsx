@@ -31,15 +31,15 @@ export const RepoCode = () => {
   const { spaceId, repoId, selectedBranchTag } = useRepoBranchesStore()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const routes = useRoutes()
-  const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
+  const repoFilesPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 
   // TODO: pathParts - should have all data for files path breadcrumbs
   const pathParts = [
     {
       path: repoId!,
-      parentPath: repoPath
+      parentPath: repoFilesPath
     },
-    ...splitPathWithParents(fullResourcePath || '', repoPath)
+    ...splitPathWithParents(fullResourcePath || '', repoFilesPath)
   ]
   const [files, setFiles] = useState<RepoFile[]>([])
   const [loading, setLoading] = useState(false)

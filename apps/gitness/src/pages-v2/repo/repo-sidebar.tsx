@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
   getContent,
@@ -28,8 +28,8 @@ import { transformBranchList } from './transform-utils/branch-transform.ts'
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
-export const RepoSidebar = () => {
-  const { useParams } = useRouterContext()
+export const RepoSidebar = ({ children }: { children?: React.ReactNode }) => {
+  const { useParams, Outlet } = useRouterContext()
   const routes = useRoutes()
   const {
     branchList,
@@ -233,9 +233,7 @@ export const RepoSidebar = () => {
         )}
         {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
         {/* Total height of both the divs should be 100vh */}
-        <div className="h-[calc(100vh-100px)]">
-          <Outlet />
-        </div>
+        <div className="h-[calc(100vh-100px)]">{children ? children : <Outlet />}</div>
       </div>
     </>
   )

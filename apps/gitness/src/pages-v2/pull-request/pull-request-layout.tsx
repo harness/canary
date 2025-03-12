@@ -10,7 +10,7 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestStore } from './stores/pull-request-store'
 
-const PullRequestLayout = () => {
+const PullRequestLayout = ({ children }: { children?: React.ReactNode }) => {
   const { setPullRequest, setRefetchPullReq, setPullReqError, setPullReqLoading } = usePullRequestStore()
   const { useParams } = useRouterContext()
   const { pullRequestId, repoId } = useParams<PathParams>()
@@ -61,6 +61,7 @@ const PullRequestLayout = () => {
       spaceId={spaceId || ''}
       repoId={repoId}
       updateTitle={handleUpdateTitle}
+      children={children}
     />
   )
 }

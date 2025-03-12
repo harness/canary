@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useCallback } from 'react'
+import React, { FC, PropsWithChildren, useCallback } from 'react'
 
 import { Badge, BadgeProps, Icon, IconProps, Tabs, TabsTriggerProps } from '@/components'
 import { useRouterContext } from '@/context'
@@ -27,6 +27,7 @@ interface PullRequestLayoutProps {
   repoId?: string
   useTranslationStore: () => TranslationStore
   updateTitle: (title: string, description: string) => Promise<void>
+  children?: React.ReactNode
 }
 
 enum PullRequestTabsKeys {
@@ -40,7 +41,8 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   useTranslationStore,
   spaceId,
   repoId,
-  updateTitle
+  updateTitle,
+  children
 }) => {
   const { Outlet, navigate } = useRouterContext()
   const { pullRequest } = usePullRequestStore()
@@ -84,7 +86,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
           </Tabs.List>
         </Tabs.Root>
 
-        <Outlet />
+        {children ? children : <Outlet />}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

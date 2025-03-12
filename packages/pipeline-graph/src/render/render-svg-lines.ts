@@ -42,8 +42,8 @@ export function getPortsConnectionPath({
 
   const { source, target, parallel, serial, targetNode } = connection
 
-  const fromEl = parentEl.querySelector(`#${source}`)
-  const toEl = parentEl.querySelector(`#${target}`)
+  const fromEl = parentEl.querySelector(`[id="${source}"]`)
+  const toEl = parentEl.querySelector(`[id="${target}"]`)
 
   if (!fromEl || !toEl) return { level1: '', level2: '' }
 

@@ -1,4 +1,4 @@
-import { ColorType, ContrastType, FullTheme, ModeType } from '@/context'
+import { ColorType, ContentStyleType, ContrastType, FullTheme, ModeType } from '@/context'
 
 export interface ThemeInterface {
   mode: ModeType
@@ -38,9 +38,11 @@ export enum GrayColor {
 export interface ThemeDialogProps {
   defaultTheme?: ThemeInterface
   theme?: FullTheme
+  isInset?: boolean
   setTheme: (theme: FullTheme) => void
   open: boolean
   onOpenChange: (open: boolean) => void
+  onInsetChange?: (style: ContentStyleType) => void
   children?: React.ReactNode
   showSystemMode?: boolean
   showAccentColor?: boolean

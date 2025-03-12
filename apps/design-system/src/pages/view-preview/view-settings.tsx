@@ -5,6 +5,7 @@ import { getTheme, Themes } from '@utils/theme-utils'
 import { clsx } from 'clsx'
 
 import { Button, Icon, Select, Spacer } from '@harnessio/ui/components'
+import { ContentStyleType } from '@harnessio/ui/context'
 
 import { viewPreviews } from './view-preview'
 import css from './view-settings.module.css'
@@ -16,6 +17,7 @@ export interface ViewSettingsProps {
 const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
   const [showSettings, setShowSettings] = useState(false)
   const [currentTheme, setCurrentTheme] = useState<Themes>(getTheme())
+  const [contentStyle, setContentStyle] = useState<ContentStyleType>(ContentStyleType.NoInset)
 
   useEffect(() => {
     const bodyClass = document.body.classList
@@ -24,9 +26,7 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
       bodyClass.remove(theme)
     }
 
-    const newThemeVal = currentTheme.replace('Inset', '')
-
-    bodyClass.add(newThemeVal)
+    bodyClass.add(currentTheme)
     sessionStorage.setItem('view-preview-theme', currentTheme)
   }, [currentTheme])
 
@@ -39,11 +39,19 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
   )
 
   const onValueChange = (newTheme: Themes) => {
-    const isInsetVal = newTheme.includes('Inset')
-
     setCurrentTheme(newTheme)
-    sessionStorage.setItem('view-preview-is-inset', String(isInsetVal))
   }
+
+  const onInsetChange = (style: ContentStyleType) => {
+    setContentStyle(style)
+    sessionStorage.setItem('view-preview-is-inset', String(style === ContentStyleType.Inset))
+    window.dispatchEvent(new Event('storageChange'))
+  }
+
+  useEffect(() => {
+    const inset = sessionStorage.getItem('view-preview-is-inset')
+    setContentStyle(inset === 'true' ? ContentStyleType.Inset : ContentStyleType.NoInset)
+  }, [])
 
   return (
     <aside className={clsx(css.viewSettings, 'shadow-1')} data-show={showSettings ? 'show' : 'hide'}>
@@ -79,6 +87,21 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
               {Object.values(Themes).map(theme => (
                 <Select.Item key={theme} value={theme}>
                   {theme}
+                </Select.Item>
+              ))}
+            </Select.Content>
+          </Select.Root>
+          <Spacer size={5} />
+          <Select.Root
+            placeholder="Select style"
+            label="Content style"
+            value={contentStyle}
+            onValueChange={onInsetChange}
+          >
+            <Select.Content>
+              {Object.values(ContentStyleType).map(value => (
+                <Select.Item key={value} value={value}>
+                  {value === ContentStyleType.Inset ? 'Inset' : 'No inset'}
                 </Select.Item>
               ))}
             </Select.Content>

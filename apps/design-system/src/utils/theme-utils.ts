@@ -22,5 +22,7 @@ export const getTheme = () => {
 export const useThemeStore = (): IThemeStore => ({
   theme: getTheme() as FullTheme,
   setTheme: (_: FullTheme) => {},
-  isLightTheme: false
+  isLightTheme: false,
+  isInset: false,
+  setInset: (_: boolean) => {}
 })

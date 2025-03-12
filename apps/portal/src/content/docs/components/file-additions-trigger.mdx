@@ -1,0 +1,66 @@
+---
+title: File Additions Trigger
+description: File Additions Trigger component documentation
+---
+
+The File Additions Trigger component provides a UI element for creating new files or uploading files. It uses a dropdown menu to offer these options.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<FileAdditionsTrigger
+  useTranslationStore={() => ({ t: (key, fallback) => fallback })}
+  pathNewFile="/new-file"
+  pathUploadFiles="/upload-files"
+/>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { FileAdditionsTrigger } from '@harnessio/ui/components'
+
+return (
+  <FileAdditionsTrigger
+    useTranslationStore={useTranslationStoreHook}  // [REQUIRED] Translation hook
+    pathNewFile="/new-file"                         // [REQUIRED] New file path
+    pathUploadFiles="/upload-files"                // [REQUIRED] Upload files path
+    className="my-class"                           // [OPTIONAL] Additional CSS classes
+  />
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "useTranslationStore",
+      description:
+        "Function that returns a translation store object with a 't' function for internationalization support. The 't' function takes a key and fallback text.",
+      required: true,
+      value: "() => { t: (key: string, fallback: string) => string }",
+    },
+    {
+      name: "pathNewFile",
+      description:
+        "URL path to navigate to when the user selects the 'Create New File' option from the dropdown",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "pathUploadFiles",
+      description:
+        "URL path to navigate to when the user selects the 'Upload Files' option from the dropdown",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the component",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

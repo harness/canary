@@ -1,7 +1,7 @@
 import { FC, forwardRef, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Avatar, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Select, toast } from '@/components'
+import { Alert, Avatar, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Select } from '@/components'
 import { PrincipalType } from '@/types'
 import { InviteMemberDialogProps, InviteMemberFormFields, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -107,16 +107,6 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
     }
   }, [open, reset])
 
-  /**
-   * Show an unexpected server error message
-   * Ensure that validation errors are handled by the react-hook-form
-   */
-  useEffect(() => {
-    if (!error) return
-
-    toast({ title: `${t('views:repos.error', 'Error:')} ${error}`, variant: 'destructive' })
-  }, [error, t])
-
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
       <Dialog.Content className="max-w-[420px]">
@@ -180,6 +170,14 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
             </ControlGroup>
           </Fieldset>
         </FormWrapper>
+
+        {!!error && (
+          <Alert.Container variant="destructive">
+            <Alert.Title>
+              {t('views:repos.error', 'Error:')} {error}
+            </Alert.Title>
+          </Alert.Container>
+        )}
 
         <Dialog.Footer>
           <Button type="button" variant="outline" onClick={onClose} loading={isInvitingMember}>

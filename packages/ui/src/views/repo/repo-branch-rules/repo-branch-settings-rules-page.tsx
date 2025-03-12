@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, FormWrapper, toast } from '@/components'
+import { Alert, Button, ButtonGroup, FormWrapper } from '@/components'
 import { useRouterContext } from '@/context'
 import { IRepoStore, makeRepoBranchSettingsFormSchema, SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -121,16 +121,6 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
   const fieldProps: FieldProps = { register, errors, setValue, watch, t }
 
-  /**
-   * Show an unexpected server error message
-   * Ensure that validation errors are handled by the react-hook-form
-   */
-  useEffect(() => {
-    if (!apiErrorsValue) return
-
-    toast({ title: apiErrorsValue, variant: 'destructive' })
-  }, [apiErrorsValue])
-
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
       <h1 className="text-foreground-1 mb-10 text-2xl font-medium">
@@ -164,6 +154,12 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             t={t}
           />
         </div>
+
+        {!!apiErrorsValue && (
+          <Alert.Container variant="destructive">
+            <Alert.Title>{apiErrorsValue}</Alert.Title>
+          </Alert.Container>
+        )}
 
         <ButtonGroup className="mt-2">
           <Button type="submit" disabled={isLoading}>

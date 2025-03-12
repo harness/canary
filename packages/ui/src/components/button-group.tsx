@@ -21,7 +21,10 @@ export function ButtonGroup({
   const verticalAlignClass = verticalAlign ? `items-${verticalAlign}` : ''
 
   return (
-    <div className={cn('flex', direction === 'vertical' ? 'flex-col' : '', gapClass, verticalAlignClass, className)}>
+    <div
+      className={cn('flex', direction === 'vertical' ? 'flex-col' : '', gapClass, verticalAlignClass, className)}
+      aria-label="Button control group"
+    >
       {children}
     </div>
   )

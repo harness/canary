@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
+  Alert,
   Button,
   ButtonGroup,
   Fieldset,
@@ -11,8 +12,7 @@ import {
   Legend,
   Separator,
   SkeletonForm,
-  Textarea,
-  toast
+  Textarea
 } from '@/components'
 import {
   makeProjectDescriptionSchema,
@@ -90,16 +90,6 @@ export const ProjectSettingsGeneralPage = ({
     reset({ identifier: data?.identifier ?? '', description: data?.description ?? '' })
   }, [data, reset])
 
-  /**
-   * Show an unexpected server error message
-   * Ensure that validation errors are handled by the react-hook-form
-   */
-  useEffect(() => {
-    if (!updateError) return
-
-    toast({ title: updateError, variant: 'destructive' })
-  }, [updateError])
-
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto max-w-[38.125rem] pt-[3.25rem]">
@@ -133,6 +123,12 @@ export const ProjectSettingsGeneralPage = ({
                   label={t('views:projectSettings.general.projectDescriptionLabel', 'Description')}
                   error={errors?.description?.message?.toString()}
                 />
+
+                {updateError && (
+                  <Alert.Container variant="destructive">
+                    <Alert.Title>{updateError}</Alert.Title>
+                  </Alert.Container>
+                )}
 
                 <ButtonGroup spacing="3">
                   {!submitted ? (

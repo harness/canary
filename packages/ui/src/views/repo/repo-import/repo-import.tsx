@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
+  Alert,
   Button,
   ButtonGroup,
   Checkbox,
@@ -12,8 +13,7 @@ import {
   Input,
   Option,
   Select,
-  Textarea,
-  toast
+  Textarea
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -182,16 +182,6 @@ export function RepoImportPage({
     setValue(fieldName, value, { shouldValidate: true })
   }
 
-  /**
-   * Show an unexpected server error message
-   * Ensure that validation errors are handled by the react-hook-form
-   */
-  useEffect(() => {
-    if (!apiErrorsValue) return
-
-    toast({ title: apiErrorsValue, variant: 'destructive' })
-  }, [apiErrorsValue])
-
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
@@ -348,6 +338,12 @@ export function RepoImportPage({
             error={errors.description?.message?.toString()}
             optional
           />
+
+          {!!apiErrorsValue && (
+            <Alert.Container variant="destructive">
+              <Alert.Title>{apiErrorsValue}</Alert.Title>
+            </Alert.Container>
+          )}
 
           <ButtonGroup className="mt-6">
             <Button type="submit" disabled={isLoading}>

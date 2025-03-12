@@ -1,0 +1,105 @@
+---
+title: Switch
+description: Switch component
+---
+
+The `Switch` component provides a toggle switch for on/off states.
+
+import { DocsPage } from "../../../components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-4">
+    <h5>Standard usage</h5>
+    <div className="flex gap-4 align-middle">
+        <Label htmlFor="airplane-mode">Airplane mode</Label>
+        <Switch id="airplane-mode" />
+    </div>
+
+    <hr className="my-4" />
+
+    <h5>Disabled</h5>
+    <div className="flex gap-4 align-middle">
+        <Label htmlFor="god-mode">God mode</Label>
+        <Switch id="god-mode" disabled />
+    </div>
+
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Switch } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Switch
+    id="airplane-mode"
+    checked={airplaneModeEnabled}
+    onCheckedChange={setAirplaneModeEnabled}
+  />
+)
+```
+
+## API Reference
+
+The `Switch` component can be used either controlled with the `checked` and `onCheckedChange` props, or uncontrolled.
+When used uncontrolled, the `defaultChecked` prop can be used to set the initial state of the switch.
+
+```typescript jsx
+<Switch
+  id="airplane-mode"             // [OPTIONAL] ID of the switch
+  checked                        // [OPTIONAL] whether the switch is checked
+  defaultChecked                 // [OPTIONAL] initial checked state
+  required                       // [OPTIONAL] whether the switch is required
+  onCheckedChange={handleChange} // [OPTIONAL] callback called when the checked state changes
+  disabled                       // [OPTIONAL] whether the switch is disabled
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "id",
+      description: "Unique identifier for the switch",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "checked",
+      description: "Indicates whether the switch is checked",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "defaultChecked",
+      description: "Initial checked state of the switch",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "required",
+      description: "Indicates whether the switch is required",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onCheckedChange",
+      description: "Function to handle checked state change",
+      required: false,
+      value: "(checked: boolean) => void",
+    },
+    {
+      name: "disabled",
+      description: "Indicates whether the switch is disabled",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>

@@ -2336,15 +2336,15 @@
     }
   },
   "iconStrokeWidth": {
-    "xxs": {
+    "xs": {
       "$type": "borderWidth",
       "$value": "1"
     },
-    "xs": {
+    "sm": {
       "$type": "borderWidth",
       "$value": "1.1"
     },
-    "sm": {
+    "default": {
       "$type": "borderWidth",
       "$value": "1.1"
     },

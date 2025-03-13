@@ -359,15 +359,15 @@
     }
   },
   "iconSize": {
-    "xxs": {
+    "xs": {
       "$type": "sizing",
       "$value": "{size.3}"
     },
-    "xs": {
+    "sm": {
       "$type": "sizing",
       "$value": "{size.3-half}"
     },
-    "sm": {
+    "default": {
       "$type": "sizing",
       "$value": "{size.4}"
     },

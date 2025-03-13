@@ -32,6 +32,7 @@ import { CreateWebhookContainer } from '../pages-v2/webhooks/create-webhook-cont
 import WebhookListPage from '../pages-v2/webhooks/webhook-list'
 import { PathParams } from '../RouteDefinitions'
 import { AppShell } from './components/app-shell'
+import { getCreateRepoPath, getImportMultipleReposPath, getImportRepoPath, getReposListPath } from './RouteDefinitions'
 
 interface RouterMatchInterface {
   match: { params: PathParams }
@@ -54,10 +55,10 @@ export const getRoutes = ({
       <AppProvider>
         <AppShell>
           <Switch>
-            <Route path={`${pathPrefix}/repos`} exact render={() => <ReposListPage />} />
-            <Route path={`${pathPrefix}/repos/create`} render={() => <CreateRepo />} />
-            <Route path={`${pathPrefix}/repos/import`} render={() => <ImportRepo />} />
-            <Route path={`${pathPrefix}/repos/import-multiple`} render={() => <ImportMultipleRepos />} />
+            <Route path={getReposListPath(pathPrefix)} exact render={() => <ReposListPage />} />
+            <Route path={getCreateRepoPath(pathPrefix)} render={() => <CreateRepo />} />
+            <Route path={getImportRepoPath(pathPrefix)} render={() => <ImportRepo />} />
+            <Route path={getImportMultipleReposPath(pathPrefix)} render={() => <ImportMultipleRepos />} />
             <Route
               path={`${pathPrefix}/repos/:repoId`}
               render={({ match }: RouterMatchInterface) => (

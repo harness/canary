@@ -143,6 +143,8 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
 })
 
+AppProvider.displayName = 'AppProvider'
+
 export const useAppContext = (): AppContextType => {
   const context = useContext(AppContext)
   if (context === undefined) {

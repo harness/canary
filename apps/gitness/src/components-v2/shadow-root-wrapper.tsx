@@ -16,4 +16,6 @@ const ShadowRootWrapper = memo(({ children }: { children?: ReactNode }) => {
   return shadowRoot ? createPortal(children, shadowRoot) : <div ref={placeholderRef}></div>
 })
 
+ShadowRootWrapper.displayName = 'ShadowRootWrapper'
+
 export default ShadowRootWrapper

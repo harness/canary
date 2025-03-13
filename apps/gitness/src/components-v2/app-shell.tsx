@@ -232,6 +232,8 @@ export const AppShellMFE = memo(() => {
   )
 })
 
+AppShellMFE.displayName = 'AppShellMFE'
+
 function BreadcrumbsAndOutlet({ className }: { className?: string }) {
   return (
     <div className={cn('h-full flex flex-col', className)}>

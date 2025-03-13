@@ -13,6 +13,7 @@ import {
 } from '@harnessio/code-service-client'
 import { ProfileSettingsErrorType } from '@harnessio/ui/views'
 
+import { useIsMFE } from '../hooks/useIsMFE'
 import useLocalStorage from '../hooks/useLocalStorage'
 import usePageTitle from '../hooks/usePageTitle'
 
@@ -48,6 +49,7 @@ const AppContext = createContext<AppContextType>({
 })
 
 export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
+  const isMFE = useIsMFE()
   usePageTitle()
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [isSpacesLoading, setSpacesIsLoading] = useState(false)
@@ -94,6 +96,7 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   }
 
   useEffect(() => {
+    if (isMFE) return
     setSpacesIsLoading(true)
     Promise.allSettled([
       membershipSpaces({
@@ -114,7 +117,7 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
       .finally(() => {
         setSpacesIsLoading(false)
       })
-  }, [])
+  }, [isMFE])
 
   const addSpaces = (newSpaces: TypesSpace[]): void => {
     setSpaces(prevSpaces => [...prevSpaces, ...newSpaces])

@@ -82,7 +82,37 @@ enum Page {
   General = 'General',
   Keys = 'Keys',
   Home = 'Home',
-  Theme = 'Theme'
+  Theme = 'Theme',
+  Search = 'Search'
+}
+
+const labelsRoute = {
+  path: 'labels',
+  handle: {
+    breadcrumb: () => <span>{Page.Labels}</span>,
+    pageTitle: Page.Labels,
+    routeName: RouteConstants.toProjectLabels
+  },
+  children: [
+    {
+      index: true,
+      element: <ProjectLabelsList />
+    },
+    {
+      path: 'create',
+      element: <ProjectLabelFormContainer />,
+      handle: {
+        breadcrumb: () => <span>Create a label</span>
+      }
+    },
+    {
+      path: ':labelId',
+      element: <ProjectLabelFormContainer />,
+      handle: {
+        breadcrumb: ({ labelId }: { labelId: string }) => <span>{labelId}</span>
+      }
+    }
+  ]
 }
 
 export const repoRoutes: CustomRouteObject[] = [
@@ -559,34 +589,7 @@ export const repoRoutes: CustomRouteObject[] = [
           pageTitle: Page.Members
         }
       },
-      {
-        path: 'labels',
-        handle: {
-          breadcrumb: () => <span>{Page.Labels}</span>,
-          pageTitle: Page.Labels,
-          routeName: RouteConstants.toProjectLabels
-        },
-        children: [
-          {
-            index: true,
-            element: <ProjectLabelsList />
-          },
-          {
-            path: 'create',
-            element: <ProjectLabelFormContainer />,
-            handle: {
-              breadcrumb: () => <span>Create a label</span>
-            }
-          },
-          {
-            path: ':labelId',
-            element: <ProjectLabelFormContainer />,
-            handle: {
-              breadcrumb: ({ labelId }: { labelId: string }) => <span>{labelId}</span>
-            }
-          }
-        ]
-      }
+      labelsRoute
     ]
   },
   {
@@ -597,6 +600,29 @@ export const repoRoutes: CustomRouteObject[] = [
       pageTitle: Page.Pipelines
     },
     children: []
+  },
+  {
+    path: 'search',
+    element: <EmptyPage pathName="Search" comingSoon={true} />,
+    handle: {
+      breadcrumb: () => <span>{Page.Search}</span>,
+      pageTitle: Page.Search
+    }
+  },
+  {
+    path: 'manage-repositories',
+    element: <ProjectSettingsLayout />,
+    handle: {
+      breadcrumb: () => <span>{Page.Settings}</span>,
+      pageTitle: Page.Settings
+    },
+    children: [
+      {
+        index: true,
+        element: <Navigate to="labels" replace />
+      },
+      labelsRoute
+    ]
   }
 ]
 

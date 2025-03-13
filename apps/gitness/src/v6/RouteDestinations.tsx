@@ -220,7 +220,10 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'tags',
-            element: <RepoTagsListContainer />
+            element: <RepoTagsListContainer />,
+            handle: {
+              routeName: RouteConstants.toRepoTags
+            }
           },
           {
             path: 'pulls',
@@ -315,7 +318,8 @@ export const repoRoutes: CustomRouteObject[] = [
           {
             path: 'pipelines',
             handle: {
-              breadcrumb: () => <span>{Page.Pipelines}</span>
+              breadcrumb: () => <span>{Page.Pipelines}</span>,
+              routeName: RouteConstants.toRepoPipelines
             },
             children: [
               {

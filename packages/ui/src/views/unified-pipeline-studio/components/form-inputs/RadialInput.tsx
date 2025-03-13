@@ -6,15 +6,7 @@ import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/form
 import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'
 import InputWrapper from './common/InputWrapper'
-import { InputType } from './types'
-
-export interface RadialOption {
-  label: string
-  description: string
-  value: string
-  id: string
-  title: string
-}
+import { InputType, RadialOption } from './types'
 
 export interface RadialInputConfig {
   inputConfig: {

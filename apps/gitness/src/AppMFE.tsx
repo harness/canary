@@ -12,6 +12,7 @@ import {
   useLocation,
   useMatches,
   useNavigate,
+  useParams,
   useSearchParams
 } from 'react-router-dom'
 
@@ -198,6 +199,7 @@ export default function AppMFE({
                                 navigate={router.navigate}
                                 useSearchParams={useSearchParams}
                                 useMatches={useMatches}
+                                useParams={useParams}
                               >
                                 <RouterProvider router={router} />
                               </RouterContextProvider>

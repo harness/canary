@@ -6,12 +6,12 @@ import { ConnectorHeader, ConnectorItem, ConnectorReference, ConnectorType, Dire
 import mockAccountsData from '../secrets/mock-account-data.json'
 import mockOrgData from '../secrets/mock-org-data.json'
 import mockProjectsData from '../secrets/mock-project-data.json'
-import { ScopeEnum, scopeHierarchy, SecretScope } from '../secrets/types'
+import { Scope, ScopeEnum, scopeHierarchy } from '../secrets/types'
 import mockConnectorsData from './mock-connectors-data.json'
 
 export const ConnectorsPage = () => {
   const [selectedType, setSelectedType] = useState<ConnectorType>(ConnectorType.EXISTING)
-  const [, setActiveScope] = useState<SecretScope>(ScopeEnum.ORGANIZATION)
+  const [, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
 
   // State for existing connectors
   const [selectedConnector, setSelectedConnector] = useState<ConnectorItem | null>(null)

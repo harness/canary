@@ -1,7 +1,7 @@
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { memo, ReactNode, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-function ShadowRootWrapper({ children }: { children?: ReactNode }) {
+const ShadowRootWrapper = memo(({ children }: { children?: ReactNode }) => {
   const placeholderRef = useRef<HTMLDivElement>(null)
   const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null)
 
@@ -14,6 +14,6 @@ function ShadowRootWrapper({ children }: { children?: ReactNode }) {
   }, [])
 
   return shadowRoot ? createPortal(children, shadowRoot) : <div ref={placeholderRef}></div>
-}
+})
 
 export default ShadowRootWrapper

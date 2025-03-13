@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { cn } from '@harnessio/canary'
@@ -221,7 +221,7 @@ export const AppShell = () => {
   )
 }
 
-export const AppShellMFE = () => {
+export const AppShellMFE = memo(() => {
   useRepoImportEvents()
 
   return (
@@ -230,7 +230,7 @@ export const AppShellMFE = () => {
       <Toaster />
     </>
   )
-}
+})
 
 function BreadcrumbsAndOutlet({ className }: { className?: string }) {
   return (

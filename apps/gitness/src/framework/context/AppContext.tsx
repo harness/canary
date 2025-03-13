@@ -1,4 +1,4 @@
-import { createContext, FC, ReactNode, useContext, useEffect, useState } from 'react'
+import { createContext, FC, memo, ReactNode, useContext, useEffect, useMemo, useState } from 'react'
 
 import { noop } from 'lodash-es'
 
@@ -47,7 +47,7 @@ const AppContext = createContext<AppContextType>({
   updateUserError: null
 })
 
-export const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   usePageTitle()
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [isSpacesLoading, setSpacesIsLoading] = useState(false)
@@ -117,29 +117,28 @@ export const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, [])
 
   const addSpaces = (newSpaces: TypesSpace[]): void => {
-    setSpaces([...spaces, ...newSpaces])
+    setSpaces(prevSpaces => [...prevSpaces, ...newSpaces])
   }
 
-  return (
-    <AppContext.Provider
-      value={{
-        spaces,
-        setSpaces,
-        addSpaces,
-        currentUser,
-        setCurrentUser,
-        fetchUser,
-        updateUserProfile,
-        isLoadingUser,
-        isUpdatingUser,
-        updateUserError,
-        isSpacesLoading
-      }}
-    >
-      {children}
-    </AppContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      spaces,
+      setSpaces,
+      addSpaces,
+      currentUser,
+      setCurrentUser,
+      fetchUser,
+      updateUserProfile,
+      isLoadingUser,
+      isUpdatingUser,
+      updateUserError,
+      isSpacesLoading
+    }),
+    [spaces, currentUser, isLoadingUser, isUpdatingUser, updateUserError, isSpacesLoading]
   )
-}
+
+  return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
+})
 
 export const useAppContext = (): AppContextType => {
   const context = useContext(AppContext)

@@ -15,7 +15,6 @@ type UseSpaceSSEProps = {
 }
 
 const useSpaceSSE = ({ space, events: _events, onEvent, onError, shouldRun = true }: UseSpaceSSEProps) => {
-  //   const { standalone, routingId, hooks } = useAppContext()
   const apiPath = useAPIPath()
 
   const [events, setEvents] = useState(_events)

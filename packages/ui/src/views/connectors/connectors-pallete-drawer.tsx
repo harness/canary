@@ -12,18 +12,19 @@ import { harnessConnectors } from './connector-utils'
 import { ConnectorRightDrawer } from './types'
 
 interface ConnectorsPaletteProps {
+  connectors: any //TODO: proper type
   requestClose: () => void
   setFormEntity: (formEntity: any) => void
   setRightDrawer: (value: ConnectorRightDrawer) => void
 }
 
 export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element => {
-  const { requestClose, setFormEntity, setRightDrawer } = props
+  const { connectors, requestClose, setFormEntity, setRightDrawer } = props
 
   const [query, setQuery] = useState('')
 
-  const harnessConnectorsFiltered = useMemo(
-    () => harnessConnectors.filter(harnessConnector => harnessConnector.identifier.includes(query)),
+  const connectorsFiltered = useMemo(
+    () => connectors.filter(connector => connector.identifier.includes(query)),
     [query, harnessConnectors]
   )
 
@@ -40,7 +41,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
       </StepsPaletteLayout.Header>
       <StepsPaletteContentLayout.Root>
         <ConnectorsPaletteSection
-          connectors={harnessConnectorsFiltered}
+          connectors={connectorsFiltered}
           onSelect={connector => {
             setFormEntity({
               type: 'connector',

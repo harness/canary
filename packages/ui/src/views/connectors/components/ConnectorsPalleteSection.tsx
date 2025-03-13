@@ -14,7 +14,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
 
   return (
     <StepsPaletteContentLayout.Section>
-      {connectors.length > 0 ? (
+      {connectors?.length > 0 ? (
         connectors.map(connector => (
           <StepsPaletteContentLayout.SectionItem key={connector.identifier}>
             <StepsPaletteItemLayout.Root

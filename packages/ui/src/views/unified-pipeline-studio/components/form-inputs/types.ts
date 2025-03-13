@@ -31,3 +31,11 @@ export type InputConfigType =
   | GroupInputConfig
   | SelectInputConfig
   | RadialInputConfig
+
+export interface RadialOption {
+  label: string
+  description: string
+  value: string
+  id: string
+  title: string
+}

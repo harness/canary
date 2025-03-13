@@ -26,13 +26,11 @@ export type HARNESS_CONNECTOR_IDENTIFIER =
   | typeof TERRAFORM_CONNECTOR_IDENTIFIER
   | typeof AWS_KMS_CONNECTOR_IDENTIFIER
 
-export type AnyConnectorDefinition<T = string> = {
-  identifier: T
+export type AnyConnectorDefinition = {
+  identifier: string
   description: string
   formDefinition: IFormDefinition<InputConfigType>
 }
-
-export type HarnessConnectorDefinitionType = AnyConnectorDefinition<HARNESS_CONNECTOR_IDENTIFIER>
 
 export enum CredTypeValues {
   ManualConfig = 'ManualConfig',

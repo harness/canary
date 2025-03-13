@@ -564,11 +564,6 @@
             "$type": "color",
             "$value": "{border.2}",
             "$description": "Border color for unselected outline buttons. Defines the clickable area with a visible boundary."
-          },
-          "background": {
-            "$type": "color",
-            "$value": "{background.2}",
-            "$description": "Background color for unselected outline buttons."
           }
         },
         "selected": {
@@ -586,11 +581,6 @@
             "$type": "color",
             "$value": "{border.1}",
             "$description": "Border color for selected outline buttons. Creates stronger visual indication of the active state."
-          },
-          "background": {
-            "$type": "color",
-            "$value": "{background.2}",
-            "$description": "Background color for selected outline buttons."
           }
         }
       },

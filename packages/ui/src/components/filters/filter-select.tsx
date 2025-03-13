@@ -37,29 +37,28 @@ const FilterSelect = <FilterKey extends string>({
         align={dropdownAlign}
         onCloseAutoFocus={e => e.preventDefault()}
       >
-        <div className="relative flex items-center border-b border-borders-4 px-3 py-2.5">
+        <div className="flex items-center border-b border-borders-4 px-3 py-2.5">
           <Input
             type="text"
             placeholder={inputPlaceholder}
             value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
+            variant="extended"
+            // This is stop focus shift by dropdown,
+            // It will try to focus on first dropdown menu item on keychange
             onKeyDown={e => e.stopPropagation()}
-            onClick={e => e.preventDefault()}
-          />
-
-          {searchQuery && (
-            <div className="absolute right-3">
-              <button
-                className="p-1.5 hover:text-foreground-1"
-                onClick={e => {
-                  e.preventDefault()
+            onChange={e => setSearchQuery(e.target.value)}
+            rightElement={
+              <Button
+                size="sm_icon"
+                variant="custom"
+                onClick={() => {
                   setSearchQuery('')
                 }}
               >
                 <Icon className="rotate-45" name="plus" size={12} />
-              </button>
-            </div>
-          )}
+              </Button>
+            }
+          />
         </div>
 
         <div className="p-1">

@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { useFiltersContext } from './Filters'
-import { useId } from './hooks/useId'
 import { defaultStringParser } from './parsers'
 
 type Parser<T> = {
@@ -31,8 +30,6 @@ const Filter = <T extends Record<string, unknown>, K extends keyof T>({
   className
 }: FilterProps<T, K>): React.ReactElement | null => {
   const { updateFilter, getFilterValue, removeFilter } = useFiltersContext<any>()
-  const id = useId({ namespace: 'filter' })
-
   // Handles when a new value is set
   const handleChange = (value: T[K]) => {
     const serializedValue = parser.serialize(value)
@@ -51,7 +48,7 @@ const Filter = <T extends Record<string, unknown>, K extends keyof T>({
 
   // Render the children with the injected props
   return (
-    <div id={id} className={className}>
+    <div id={`filter-${String(filterKey)}`} className={className}>
       {children({
         onChange: handleChange,
         value: parsedValue as T[K],

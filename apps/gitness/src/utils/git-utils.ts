@@ -174,18 +174,12 @@ export const isRefABranch = (gitRef: string | undefined) => gitRef?.includes(REF
 // Check if gitRef is a git commit hash (https://github.com/diegohaz/is-git-rev, MIT © Diego Haz)
 export const isGitRev = (gitRef = ''): boolean => /^[0-9a-f]{7,40}$/i.test(gitRef)
 
-export const normalizeGitRef = (gitRef: string | undefined) => {
-  if (isRefATag(gitRef)) {
+export const normalizeGitRef = (gitRef: string | undefined): string | undefined => {
+  if (!gitRef || gitRef === '') return gitRef
+  if (isRefATag(gitRef) || isRefABranch(gitRef) || isGitRev(gitRef)) {
     return gitRef
-  } else if (isRefABranch(gitRef)) {
-    return gitRef
-  } else if (gitRef === '') {
-    return ''
-  } else if (gitRef && isGitRev(gitRef)) {
-    return gitRef
-  } else {
-    return `refs/heads/${gitRef}`
   }
+  return `refs/heads/${gitRef}`
 }
 
 const TRIMMED_SHA_LIMIT = 7

@@ -5,19 +5,23 @@ import { Sheet } from '@components/sheet'
 import { ConnectorEntityForm } from './connector-entity-form'
 import { ConnectorsPalette } from './connectors-pallete-drawer'
 import { ConnectorsProvider, useConnectorsContext } from './context/connectors-context'
-import { ConnectorRightDrawer } from './types'
+import { AnyConnectorDefinition, ConnectorRightDrawer } from './types'
 
 interface ConnectorsRightDrawerBaseProps {
   initialDrawerState?: ConnectorRightDrawer
   standalone?: boolean
   onFormSubmit?: (values: any) => void // TODO: TYPE this properly
   useSheet?: boolean // Whether to wrap content in Sheet.Root
+  connectors: any //TODO: TYPE
+  getConnectorDefinition: (identifier: string) => AnyConnectorDefinition | undefined
 }
 
 const ConnectorsRightDrawerBase = ({
   initialDrawerState,
   useSheet = false,
-  onFormSubmit
+  onFormSubmit,
+  connectors,
+  getConnectorDefinition
 }: ConnectorsRightDrawerBaseProps): JSX.Element => {
   const { rightDrawer, setRightDrawer, formEntity, setFormEntity, clearRightDrawerData } = useConnectorsContext()
   console.log(rightDrawer, formEntity)
@@ -33,6 +37,7 @@ const ConnectorsRightDrawerBase = ({
       case ConnectorRightDrawer.Collection:
         return (
           <ConnectorsPalette
+            connectors={connectors}
             setRightDrawer={setRightDrawer}
             setFormEntity={setFormEntity}
             requestClose={() => {
@@ -48,6 +53,7 @@ const ConnectorsRightDrawerBase = ({
               clearRightDrawerData()
             }}
             onFormSubmit={onFormSubmit}
+            getConnectorDefinition={getConnectorDefinition}
           />
         ) : (
           <></>
@@ -92,8 +98,10 @@ const ConnectorsRightDrawerBase = ({
 // Use this when you need to provide your own context
 const ConnectorsRightDrawer = ({
   initialDrawerState = ConnectorRightDrawer.Collection,
-  useSheet = false,
-  onFormSubmit
+  useSheet = true,
+  onFormSubmit,
+  connectors,
+  getConnectorDefinition
 }: ConnectorsRightDrawerBaseProps): JSX.Element | null => {
   return (
     <ConnectorsProvider>
@@ -101,6 +109,8 @@ const ConnectorsRightDrawer = ({
         initialDrawerState={initialDrawerState}
         useSheet={useSheet}
         onFormSubmit={onFormSubmit}
+        connectors={connectors}
+        getConnectorDefinition={getConnectorDefinition}
       />
     </ConnectorsProvider>
   )
@@ -109,11 +119,18 @@ const ConnectorsRightDrawer = ({
 // Use this when you need a standalone component with its own context
 const ConnectorsRightDrawerWithProvider = ({
   initialDrawerState,
-  useSheet = true
+  useSheet = true,
+  connectors,
+  getConnectorDefinition
 }: ConnectorsRightDrawerBaseProps): JSX.Element | null => {
   return (
     <ConnectorsProvider>
-      <ConnectorsRightDrawerBase initialDrawerState={initialDrawerState} useSheet={useSheet} />
+      <ConnectorsRightDrawerBase
+        initialDrawerState={initialDrawerState}
+        useSheet={useSheet}
+        connectors={connectors}
+        getConnectorDefinition={getConnectorDefinition}
+      />
     </ConnectorsProvider>
   )
 }

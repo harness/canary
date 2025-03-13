@@ -10,39 +10,30 @@ import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-u
 import { IFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
 
 import { getHarnessConnectorDefinition } from './connector-utils'
-import { ConnectorFormEntityType } from './types'
+import { AnyConnectorDefinition, ConnectorFormEntityType } from './types'
 
 interface ConnectorEntityFormProps {
   formEntity: ConnectorFormEntityType
   requestClose: () => void
   onFormSubmit?: (values: any) => void // TODO: TYPE this properly
+  getConnectorDefinition: (identifier: string) => AnyConnectorDefinition | undefined
 }
 
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
-  const { formEntity, requestClose, onFormSubmit } = props
+  const { formEntity, requestClose, onFormSubmit, getConnectorDefinition } = props
   // TODO: type this properly , Handle form submit for create/edit
   const onSubmit = (data: any) => {
     onFormSubmit?.(data)
   }
 
-  // Initialize form with converted payload if editing an existing connector
-  const initialFormData = useMemo(() => {
-    if (formEntity.data.payload) {
-      return {}
-      // const converter = connectorPayloadConverters[formEntity.data.identifier as HARNESS_CONNECTOR_IDENTIFIER]
-      // return converter ? converter.convertToFormData(formEntity.data.payload) : {}
-    }
-    return {}
-  }, [formEntity.data])
-
-  const [defaultConnectorValues, setDefaultConnectorValues] = useState(initialFormData)
+  const [defaultConnectorValues, setDefaultConnectorValues] = useState({})
 
   const formDefinition: IFormDefinition = useMemo(() => {
-    const harnessConnectorDefinition = getHarnessConnectorDefinition(formEntity.data.identifier)
-    if (harnessConnectorDefinition) {
+    const connectorDefinition = getConnectorDefinition(formEntity.data.identifier)
+    if (connectorDefinition) {
       return {
-        ...harnessConnectorDefinition.formDefinition,
-        inputs: addNameInput(harnessConnectorDefinition.formDefinition.inputs, 'name')
+        ...connectorDefinition.formDefinition,
+        inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'name')
       }
     }
     return { inputs: [] }

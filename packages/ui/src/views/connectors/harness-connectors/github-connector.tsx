@@ -1,5 +1,4 @@
-import { RadialOption } from '@views/unified-pipeline-studio/components/form-inputs/RadialInput'
-import { InputConfigType, InputType } from '@views/unified-pipeline-studio/components/form-inputs/types'
+import { InputConfigType, InputType, RadialOption } from '@views/unified-pipeline-studio/components/form-inputs/types'
 
 // import * as zod from 'zod'
 
@@ -46,9 +45,9 @@ const inputs: IInputConfigWithConfigInterface[] = [
     label: 'Authentication',
     inputConfig: {
       options: [
-        { label: 'oauth', value: 'Oauth' },
-        { label: 'GHapp', value: 'Github Application' },
-        { label: 'token', value: 'PersonalToken' }
+        { label: 'Oauth', value: 'Oauth' },
+        { label: 'GitHub Application', value: 'GithubApp' },
+        { label: 'Personal Token', value: 'UsernameToken' }
       ]
     }
   },
@@ -57,7 +56,7 @@ const inputs: IInputConfigWithConfigInterface[] = [
     path: `pat`,
     label: 'Personal Token',
     isVisible: values => {
-      return values?.auth === 'PersonalToken'
+      return values?.auth === 'UsernameToken'
     }
   },
   getResourcesContainer(),

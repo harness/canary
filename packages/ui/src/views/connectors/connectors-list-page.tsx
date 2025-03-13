@@ -4,6 +4,7 @@ import { SandboxLayout } from '@/views'
 import { ConnectorsRightDrawer } from './connectors-right-drawer'
 import { ConnectorsProvider, useConnectorsContext } from './context/connectors-context'
 import { ConnectorRightDrawer } from './types'
+import { getHarnessConnectorDefinition, harnessConnectors } from './connector-utils'
 
 const ConnectorsListPageContent = (): JSX.Element => {
   const { setRightDrawer, setFormEntity } = useConnectorsContext()
@@ -43,7 +44,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
           <Spacer size={5} />
         </>
       </SandboxLayout.Content>
-      <ConnectorsRightDrawer />
+      <ConnectorsRightDrawer connectors={harnessConnectors} getConnectorDefinition={getHarnessConnectorDefinition}/>
     </SandboxLayout.Main>
   )
 }

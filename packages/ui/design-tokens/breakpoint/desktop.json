@@ -53,6 +53,17 @@
       },
       "$description": "Emphasized section headers."
     },
+    "dialog": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.500}",
+        "fontSize": "{fontSize.5}",
+        "lineHeight": "{lineHeight.5.tight}",
+        "letterSpacing": "{tracking.tight}"
+      },
+      "$description": "Dialog headers."
+    },
     "base": {
       "$type": "typography",
       "$value": {

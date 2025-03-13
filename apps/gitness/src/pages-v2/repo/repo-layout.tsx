@@ -17,14 +17,14 @@ const RepoLayout = ({ children }: { children?: React.ReactNode }) => {
           showPipelinesTab={!isMFE}
           useTranslationStore={useTranslationStore}
           tabRoutes={{
-            toSummary: routes.toRepoSummary,
-            toBranches: routes.toRepoBranches,
-            toCode: routes.toRepoFiles,
-            toCommits: routes.toRepoCommits,
-            toPullRequests: routes.toPullRequests,
-            toPipelines: routes.toRepoPipelines,
-            toSettings: routes.toRepoGeneralSettings,
-            toTags: routes.toRepoTags
+            toSummary: ({ spaceId, repoId }) => routes.toRepoSummary({ spaceId, repoId }),
+            toBranches: ({ spaceId, repoId }) => routes.toRepoBranches({ spaceId, repoId }),
+            toCode: ({ spaceId, repoId }) => routes.toRepoFiles({ spaceId, repoId }),
+            toCommits: ({ spaceId, repoId }) => routes.toRepoCommits({ spaceId, repoId }),
+            toPullRequests: ({ spaceId, repoId }) => routes.toPullRequests({ spaceId, repoId }),
+            toPipelines: ({ spaceId, repoId }) => routes.toRepoPipelines({ spaceId, repoId }),
+            toSettings: ({ spaceId, repoId }) => routes.toRepoGeneralSettings({ spaceId, repoId }),
+            toTags: ({ spaceId, repoId }) => routes.toRepoTags({ spaceId, repoId })
           }}
         />
       </div>

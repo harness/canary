@@ -7,7 +7,7 @@ import { BrowserRouter, useMatches } from 'react-router-dom'
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
-import { ToastProvider, Tooltip } from '@harnessio/ui/components'
+import { Toast, Tooltip } from '@harnessio/ui/components'
 import { PortalProvider, RouterContextProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
@@ -122,7 +122,7 @@ export default function AppMFE({
                 <I18nextProvider i18n={i18n}>
                   <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
                     <QueryClientProvider client={queryClient}>
-                      <ToastProvider>
+                      <Toast.Provider>
                         <Tooltip.Provider>
                           <ExitConfirmProvider>
                             <NavigationProvider routes={v6Routes} pathPrefix={renderUrl}>
@@ -140,7 +140,7 @@ export default function AppMFE({
                             </NavigationProvider>
                           </ExitConfirmProvider>
                         </Tooltip.Provider>
-                      </ToastProvider>
+                      </Toast.Provider>
                     </QueryClientProvider>
                   </ThemeProvider>
                 </I18nextProvider>

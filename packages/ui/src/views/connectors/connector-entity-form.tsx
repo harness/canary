@@ -9,20 +9,8 @@ import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-u
 
 import { IFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
 
-import { awsKmsBuilder } from './AwsKmsConnector'
 import { getHarnessConnectorDefinition } from './connector-utils'
-import { awsKmsConnectorPayloadConverter } from './harness-connectors/aws-kms-connector'
-import {
-  AWS_KMS_CONNECTOR_IDENTIFIER,
-  ConnectorFormEntityType,
-  ConnectorPayloadConverter,
-  HARNESS_CONNECTOR_IDENTIFIER
-} from './types'
-
-// Registry of connector payload converters
-const connectorPayloadConverters: Partial<Record<HARNESS_CONNECTOR_IDENTIFIER, ConnectorPayloadConverter>> = {
-  [AWS_KMS_CONNECTOR_IDENTIFIER]: awsKmsConnectorPayloadConverter
-}
+import { ConnectorFormEntityType } from './types'
 
 interface ConnectorEntityFormProps {
   formEntity: ConnectorFormEntityType
@@ -40,8 +28,9 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
   // Initialize form with converted payload if editing an existing connector
   const initialFormData = useMemo(() => {
     if (formEntity.data.payload) {
-      const converter = connectorPayloadConverters[formEntity.data.identifier as HARNESS_CONNECTOR_IDENTIFIER]
-      return converter ? converter.convertToFormData(formEntity.data.payload) : {}
+      return {}
+      // const converter = connectorPayloadConverters[formEntity.data.identifier as HARNESS_CONNECTOR_IDENTIFIER]
+      // return converter ? converter.convertToFormData(formEntity.data.payload) : {}
     }
     return {}
   }, [formEntity.data])
@@ -75,15 +64,16 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       onSubmit={values => {
         // TODO: handle form submit for create/edit
         console.log('values', values)
+        onSubmit(values)
         // TODO: hande form submit for create/edit
-        if (formEntity.data.identifier === AWS_KMS_CONNECTOR_IDENTIFIER) {
-          const { connector: payload } = awsKmsBuilder.buildPayload(values)
-          console.log('AWS KMS payload:', payload)
-          const converter = connectorPayloadConverters[formEntity.data.identifier as HARNESS_CONNECTOR_IDENTIFIER]
-          console.log('converted to form: ', converter ? converter.convertToFormData(payload) : {})
-          // TODO: Handle the AWS KMS payload
-          onSubmit(payload)
-        }
+        // if (formEntity.data.identifier === AWS_KMS_CONNECTOR_IDENTIFIER) {
+        //   const { connector: payload } = awsKmsBuilder.buildPayload(values)
+        //   console.log('AWS KMS payload:', payload)
+        //   const converter = connectorPayloadConverters[formEntity.data.identifier as HARNESS_CONNECTOR_IDENTIFIER]
+        //   console.log('converted to form: ', converter ? converter.convertToFormData(payload) : {})
+        //   // TODO: Handle the AWS KMS payload
+
+        // }
       }}
       validateAfterFirstSubmit={true}
     >

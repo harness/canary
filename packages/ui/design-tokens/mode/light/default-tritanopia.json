@@ -485,17 +485,8 @@
           "$description": "Text color for AI-related badges. Ensures high contrast against AI badge gradient border."
         },
         "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.5",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{colors.pure.white}",
+          "$value": "{background.3}",
           "$description": "Background color for AI-related badges. Creates a subtle backdrop that highlights the gradient border."
         },
         "border": {
@@ -765,6 +756,11 @@
           "$value": "{text.1}",
           "$description": "Text color for AI-powered buttons. Ensures high contrast against AI button gradient border."
         },
+        "background": {
+          "$type": "color",
+          "$value": "{background.2}",
+          "$description": "Background color for AI-powered buttons."
+        },
         "border": {
           "$type": "color",
           "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 65%, {gradient.ai.gradient-stop-4} 100%)",
@@ -799,6 +795,11 @@
         "$type": "color",
         "$value": "{background.3}",
         "$description": "Background color for dialog components. Creates a distinct surface for modal content that appears above the main UI."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{border.2}",
+        "$description": "Border color for dialog components."
       },
       "backdrop": {
         "$extensions": {
@@ -1847,6 +1848,28 @@
           "$value": "{component.tag.yellow.background}",
           "$description": "Border color for yellow tags, replaced with orange."
         }
+      },
+      "gray": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.chrome.850}",
+          "$description": "Text color for gray tags. Ensures readability while maintaining the gray color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.100}",
+          "$description": "Background color for gray tags. Creates a distinct surface with gray theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.chrome.50}",
+          "$description": "Subtle background variation for gray tags. Provides a softer alternative for less emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.tag.gray.background}",
+          "$description": "Border color for gray tags."
+        }
       }
     },
     "toast": {
@@ -2320,11 +2343,11 @@
     },
     "xs": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.1"
     },
     "sm": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.1"
     },
     "md": {
       "$type": "borderWidth",

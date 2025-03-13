@@ -17,6 +17,7 @@ import {
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
 import { useRouterContext } from '@harnessio/ui/context'
+import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 import {
   BranchSelectorListItem,
   BranchSelectorTab,
@@ -40,7 +41,6 @@ import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { sortFilesByType } from '../../utils/common-utils'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
-import { generateAlphaNumericHash } from '../pull-request/pull-request-utils'
 
 // import { useRepoBranchesStore } from './stores/repo-branches-store'
 

@@ -1,5 +1,14 @@
 import { FC } from 'react'
-import { createBrowserRouter, Link, Navigate, RouterProvider } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  Link,
+  Navigate,
+  NavLink,
+  Outlet,
+  RouterProvider,
+  useMatches,
+  useSearchParams
+} from 'react-router-dom'
 
 import ComponentPage from '@/pages/component-page'
 import ViewPreview from '@/pages/view-preview/view-preview'
@@ -19,7 +28,15 @@ const App: FC = () => {
 
   return (
     <ThemeProvider {...themeStore}>
-      <RouterContextProvider Link={Link}>
+      <RouterContextProvider
+        Link={Link}
+        NavLink={NavLink}
+        Outlet={Outlet}
+        navigate={router.navigate}
+        location={{ ...window.location, state: {}, key: '' }}
+        useSearchParams={useSearchParams}
+        useMatches={useMatches}
+      >
         <RouterProvider router={router} />
       </RouterContextProvider>
     </ThemeProvider>

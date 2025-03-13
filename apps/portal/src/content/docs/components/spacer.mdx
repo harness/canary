@@ -1,0 +1,91 @@
+---
+title: Spacer
+description: Spacer component
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import { DocsPage } from "../../../components/docs-page";
+
+The `Spacer` component is used to add vertical spacing between elements.
+
+<Aside>
+  It is preferable to control spacing between elements using CSS layouts with
+  flex or grid and to govern the spacing between elements with `gap`.
+</Aside>
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-8">
+    <div>
+        <h5>Default size</h5>
+        <div className="bg-green-500 p-3"/>
+        <Spacer />
+        <div className="bg-green-500 p-3" />
+    </div>
+
+    <hr />
+
+    <div>
+        <h5>Size 8</h5>
+        <div className="bg-green-500 p-3"/>
+        <Spacer size={8} />
+        <div className="bg-green-500 p-3" />
+    </div>
+
+    <hr />
+
+    <div>
+        <h5>Size 16</h5>
+        <div className="bg-green-500 p-3"/>
+        <Spacer size={16} />
+        <div className="bg-green-500 p-3" />
+    </div>
+
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Spacer } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <>
+    <SomeComponent />
+    <Spacer size={4} />
+    <SomeOtherComponent />
+  </>
+)
+```
+
+## API Reference
+
+The `Spacer` component can be used to add vertical spacing between elements. It accepts a `size` prop that specifies the
+height of the spacer.
+
+```typescript jsx
+<Spacer
+  size={4}          // [OPTIONAL] height of the spacer
+  className="class" // [OPTIONAL] additional CSS classes to apply
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "size",
+      description: "Height of the spacer",
+      required: false,
+      value: "number",
+      defaultValue: "4",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

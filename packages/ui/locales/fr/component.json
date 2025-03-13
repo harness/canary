@@ -1,10 +1,16 @@
 {
   "navbar": {
+    "more": "Plus",
+    "recent": "Récent",
+    "user-management": "Gestion des utilisateurs",
     "settings": "Paramètres",
     "pin": "Épingler",
     "remove": "Supprimer",
     "reorder": "Réorganiser",
     "unpin": "Désépingler",
+    "search": "Rechercher",
+    "command-palette": "Palette de commandes",
+    "nothing-found": "Rien trouvé",
     "appearence": "Appearance",
     "language": "Language",
     "logout": "Se déconnecter",

@@ -86,6 +86,7 @@ export function CreateBranchDialog({
               id="name"
               label="Branch name"
               {...register('name')}
+              maxLength={50}
               placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
               size="md"
               error={

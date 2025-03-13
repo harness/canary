@@ -53,10 +53,7 @@ export const MultiSelect = <T = unknown,>({
           <Icon name="chevron-down" className="chevron-down ml-auto" size={12} />
         </DropdownMenu.Trigger>
 
-        <DropdownMenu.Content
-          style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}
-          onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
-        >
+        <DropdownMenu.Content style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
           {!!handleChangeSearchValue && (
             <>
               <div className="px-2 py-1.5">

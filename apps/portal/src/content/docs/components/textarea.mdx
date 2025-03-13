@@ -1,0 +1,127 @@
+---
+title: Textarea
+description: Textarea component
+---
+
+The `Textarea` component is used to create a multi-line text input field.
+
+import { DocsPage } from "../../../components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Textarea
+    name="about-you"
+    label="About you"
+    placeholder="Tell me about yourself..."
+    caption="What do you like to do in your free time?"
+    optional
+/>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Textarea } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Textarea
+    label="Textarea label"
+    placeholder="Placeholder"
+    name="textarea-name"
+    onChange={handleChange}
+  />
+)
+```
+
+## API Reference
+
+The `Textarea` can be used either controlled or uncontrolled. When controlled, the
+`Textarea` will use the `value` prop as its value and call the `onChange` callback whenever
+the value changes. When uncontrolled, the `Textarea` will use the `defaultValue` prop as
+its initial value and will call `onChange` when its value changes. The `Textarea` also supports
+all attributes of the `textarea` HTML element.
+
+```typescript jsx
+<Textarea
+  name="textarea-name"       // [OPTIONAL] name of the textarea
+  id="textarea-id"           // [OPTIONAL] id of the textarea
+  value="Textarea value"     // [OPTIONAL] value of the textarea
+  onChange={handleChange}    // [OPTIONAL] callback to call when the value changes
+  label="Textarea label"     // [OPTIONAL] label for the textarea
+  caption="Textarea caption" // [OPTIONAL] caption to describe the textarea
+  error="Error message"      // [OPTIONAL] error message to display below
+  optional                   // [OPTIONAL] indicate if the textarea is optional
+  resizable                  // [OPTIONAL] indicate if the textarea should be resizable
+  disabled                   // [OPTIONAL] indicate if the textarea is disabled
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "id",
+      description: "Id of the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Value of the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onChange",
+      description: "Callback to call when the value changes",
+      required: false,
+      value: "(value: string) => void",
+    },
+    {
+      name: "label",
+      description: "Label for the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "caption",
+      description: "Caption to describe the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "error",
+      description: "Error message to display below",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "optional",
+      description: "Indicate if the textarea is optional",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "resizable",
+      description: "Indicate if the textarea should be resizable",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disabled",
+      description: "Indicate if the textarea is disabled",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>

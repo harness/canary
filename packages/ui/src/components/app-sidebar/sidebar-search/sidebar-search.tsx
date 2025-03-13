@@ -3,14 +3,17 @@ import { FormHTMLAttributes, ReactNode } from 'react'
 import { Button, Input, Label } from '@/components'
 import { Icon } from '@components/icon'
 import { Sidebar } from '@components/sidebar/sidebar'
+import { TFunction } from 'i18next'
 
 import { useSearch } from './search-context'
 
 interface SidebarSearchProps extends FormHTMLAttributes<HTMLFormElement> {
   logo: ReactNode
+  t: TFunction
 }
 
 export function SidebarSearch(props: SidebarSearchProps) {
+  const { t } = props
   const searchContext = useSearch()
 
   if (!searchContext) {
@@ -23,30 +26,32 @@ export function SidebarSearch(props: SidebarSearchProps) {
   return (
     <form {...props}>
       {props.logo}
-      <Sidebar.Group className="py-0">
+      <Sidebar.Group className="p-0">
         <Sidebar.GroupContent className="relative">
           <Label htmlFor="search" className="sr-only">
-            Search
+            {t('component:navbar.search', 'Search')}
           </Label>
           <Input
             id="search"
             placeholder="Search"
-            className="pl-8 cursor-pointer border-borders-1 focus:ring-0 focus-visible:outline-none"
+            className="cursor-pointer pl-[30px]"
             onClick={() => setIsOpen(true)}
             autoComplete="off"
             spellCheck={false}
             onFocus={e => e.target.blur()}
+            theme="sidebar"
           />
           <Icon
+            className="text-sidebar-foreground-4 pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 select-none"
             name="search"
-            className="pointer-events-none absolute left-2 top-1/2 size-4 -translate-y-1/2 select-none opacity-50"
+            size={12}
           />
           <Button
-            variant="secondary"
+            variant="custom"
             size="icon"
-            className="pointer-events-none absolute right-2 top-1/2 h-5 -translate-y-1/2 select-none opacity-100 px-1.5 border border-borders-2 rounded-sm p-0"
+            className="border-sidebar-border-5 bg-sidebar-background-9 text-sidebar-foreground-3 pointer-events-none absolute right-1.5 top-1/2 h-5 -translate-y-1/2 select-none rounded-sm border p-0 px-1.5"
           >
-            <span className="text-foreground-2 bg-background-3 size-full text-12">⌘K</span>
+            <span className="text-12 size-full">⌘K</span>
           </Button>
         </Sidebar.GroupContent>
       </Sidebar.Group>

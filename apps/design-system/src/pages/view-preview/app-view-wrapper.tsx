@@ -20,7 +20,51 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
 }) => {
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingsMenu, setShowSettingsMenu] = useState(false)
-  const [pinnedMenu, setPinnedMenu] = useState<NavbarItemType[]>([])
+  const [pinnedMenu, setPinnedMenu] = useState<NavbarItemType[]>([
+    {
+      id: 0,
+      iconName: 'repositories-gradient',
+      title: 'Repositories',
+      description: 'Integrated & familiar git experience.',
+      to: '/pixel/repos',
+      permanentlyPinned: true
+    },
+    {
+      id: 1,
+      iconName: 'pipelines-gradient',
+      title: 'Pipelines',
+      description: 'Up to 4X faster than other solutions.',
+      to: '/pipelines',
+      permanentlyPinned: true
+    },
+    {
+      id: 3,
+      iconName: 'database-gradient',
+      title: 'Databases',
+      description: 'Manage all your infrastructure.',
+      to: '/databases'
+    },
+    {
+      id: 7,
+      iconName: 'dev-portal-gradient',
+      title: 'Developer Portal',
+      description: 'Built for developers, onboard in minutes.',
+      to: '/developer/portal'
+    },
+    {
+      id: 32,
+      iconName: 'user',
+      title: 'Users',
+      to: '/admin/default-settings'
+    },
+    {
+      id: 9,
+      iconName: 'dev-insights-gradient',
+      title: 'Developer Insights',
+      description: 'Actionable insights on SDLC.',
+      to: '/developer/insights'
+    }
+  ])
   const [recentMenu] = useState<NavbarItemType[]>([])
   const { moreMenu, settingsMenu } = useRootViewWrapperStore()
 
@@ -30,7 +74,6 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
 
   const onToggleMoreMenu = useCallback(() => {
     setShowSettingsMenu(false)
-    console.log('open more menu')
     setShowMoreMenu(current => !current)
   }, [])
 

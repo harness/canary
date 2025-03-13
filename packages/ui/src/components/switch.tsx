@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { cn } from '@/utils/cn'

@@ -1,4 +1,5 @@
 import { TypesCodeOwnerEvaluationEntry, TypesOwnerEvaluation, TypesPrincipalInfo } from '@harnessio/code-service-client'
+import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 
 import { PullReqReviewDecision, TypeCheckData } from '../../../pages/pull-request/types/types'
 import {
@@ -11,7 +12,6 @@ import {
   extractSpecificViolations,
   findChangeReqDecisions,
   findWaitingDecisions,
-  generateAlphaNumericHash,
   generateStatusSummary,
   normalizeGitFilePath,
   processReviewDecision

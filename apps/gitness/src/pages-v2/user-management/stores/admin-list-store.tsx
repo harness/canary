@@ -37,7 +37,7 @@ export const useAdminListUsersStore = create<IAdminListUsersStore>(set => ({
       user
     })
   },
-  setGeteneratePassword: (generatePassword: boolean) => {
+  setGeneratePassword: (generatePassword: boolean) => {
     set({
       generatePassword
     })

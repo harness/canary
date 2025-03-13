@@ -31,13 +31,13 @@ export const SecretsHeader = ({
       id: 'new-secret',
       title: 'New Secret',
       description: 'Create a new secret.',
-      value: SecretType.New
+      value: SecretType.NEW
     },
     {
       id: 'existing-secret',
       title: 'Existing Secret',
       description: 'Use an existing secret.',
-      value: SecretType.Existing
+      value: SecretType.EXISTING
     }
   ]
 

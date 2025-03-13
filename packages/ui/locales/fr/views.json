@@ -227,6 +227,8 @@
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
+    "noUsers": "Aucun utilisateur trouvé",
+    "noUsersDescription": "Il n'y a aucun utilisateur dans ce périmètre. Cliquez sur le bouton ci-dessous pour commencer à les ajouter.",
     "commit": "Validation",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
@@ -513,6 +515,87 @@
     "create": "Create webhook",
     "edit": "Edit webhook",
     "delete": "Delete webhook"
+  },
+  "userManagement": {
+    "createUser": {
+      "title": "Ajouter un nouvel utilisateur",
+      "enterDisplayName": "Saisissez le nom d'affichage",
+      "inviting": "Invitation en cours...",
+      "inviteNewUser": "Inviter un nouvel utilisateur",
+      "validation": {
+        "userIdRequired": "Veuillez fournir un identifiant utilisateur",
+        "invalidEmail": "Veuillez saisir une adresse e-mail valide",
+        "displayNameRequired": "Veuillez fournir un nom d'affichage",
+        "emailInvalid": "Veuillez saisir une adresse e-mail valide"
+      }
+    },
+    "userId": "Identifiant utilisateur",
+    "userIdHint": "L'identifiant utilisateur ne peut pas être modifié une fois créé",
+    "enterName": "Saisissez le nom",
+    "enterEmail": "Saisissez l'adresse e-mail",
+    "email": "E-mail",
+    "displayName": "Nom d'affichage",
+    "cancel": "Annuler",
+    "deleteUser": {
+      "title": "Êtes-vous sûr de vouloir supprimer {{name}} ?",
+      "message": "Cela supprimera définitivement l'utilisateur \"{{name}}\" du système.",
+      "pending": "Suppression de l'utilisateur...",
+      "confirm": "Oui, supprimer l'utilisateur"
+    },
+    "editUser": {
+      "title": "Mettre à jour l'utilisateur",
+      "message": "Mettez à jour les informations de {{name}} et confirmez les modifications.",
+      "email": "E-mail",
+      "pending": "Enregistrement...",
+      "save": "Enregistrer",
+      "validation": {
+        "invalidEmail": "Veuillez saisir une adresse e-mail valide",
+        "displayNameRequired": "Veuillez fournir un nom d'affichage"
+      }
+    },
+    "removeAdmin": {
+      "title": "Êtes-vous sûr de vouloir retirer {{name}} en tant qu'administrateur ?",
+      "message": "Cela supprimera le statut d'administrateur pour \"{{name}}\".",
+      "pending": "Suppression de l'administrateur...",
+      "confirm": "Oui, retirer l'administrateur"
+    },
+    "grantAdmin": {
+      "title": "Êtes-vous sûr de vouloir accorder les privilèges d'administrateur à {{name}} ?",
+      "message": "Cela accordera les privilèges d'administrateur à \"{{name}}\".",
+      "pending": "Attribution des privilèges d'administrateur...",
+      "confirm": "Oui, accorder l'administrateur"
+    },
+    "resetPassword": {
+      "title": "Êtes-vous sûr de vouloir réinitialiser le mot de passe de {{name}} ?",
+      "passwordGeneratedMessage": "Votre mot de passe a été généré. Assurez-vous de le copier et de le stocker en lieu sûr, car vous ne pourrez plus le voir.",
+      "message": "Un nouveau mot de passe sera généré pour aider {{name}} à réinitialiser son mot de passe actuel.",
+      "pending": "Réinitialisation du mot de passe...",
+      "confirm": "Confirmer"
+    },
+    "close": "Fermer",
+    "newUserButton": "Nouvel utilisateur",
+    "searchPlaceholder": "Rechercher",
+    "usersHeader": "Utilisateurs",
+    "tabs": {
+      "active": "Utilisateurs actifs",
+      "inactive": "Utilisateurs en attente"
+    },
+    "usersList": {
+      "user": "Utilisateur",
+      "email": "E-mail",
+      "roleBinding": "Attribution de rôle"
+    },
+    "roles": {
+      "admin": "Administrateur",
+      "user": "Utilisateur"
+    },
+    "actions": {
+      "removeAdmin": "Retirer l'administrateur",
+      "setAsAdmin": "Définir comme administrateur",
+      "resetPassword": "Réinitialiser le mot de passe",
+      "editUser": "Modifier l'utilisateur",
+      "deleteUser": "Supprimer l'utilisateur"
+    }
   },
   "secrets": {
     "secretsTitle": "Secrets"

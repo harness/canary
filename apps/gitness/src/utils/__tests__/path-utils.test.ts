@@ -1,4 +1,4 @@
-import { splitPathWithParents } from '../path-utils'
+import { decodeURIComponentIfValid, splitPathWithParents } from '../path-utils'
 
 describe('splitPathWithParents', () => {
   it('should return empty array for empty path', () => {
@@ -81,5 +81,27 @@ describe('splitPathWithParents', () => {
         parentPath: 'repo-name/~/folder-name/file_name.txt'
       }
     ])
+  })
+})
+
+describe('decodeURIComponentIfValid', () => {
+  it('should decode a valid URI component', () => {
+    const result = decodeURIComponentIfValid('folder%20name/file%20name.txt')
+    expect(result).toBe('folder name/file name.txt')
+  })
+
+  it('should return the original string if it is not a valid URI component', () => {
+    const result = decodeURIComponentIfValid('%E0%A4%A')
+    expect(result).toBe('%E0%A4%A')
+  })
+
+  it('should return the original string if there is nothing to decode', () => {
+    const result = decodeURIComponentIfValid('folder-name/file-name.txt')
+    expect(result).toBe('folder-name/file-name.txt')
+  })
+
+  it('should handle empty string', () => {
+    const result = decodeURIComponentIfValid('')
+    expect(result).toBe('')
   })
 })

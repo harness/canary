@@ -104,11 +104,25 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
     return (
       <div className={cn('relative', width === 'full' ? 'w-full' : 'w-96', className)}>
         {hasSearchIcon && (
-          <Icon name="search" size={12} className="absolute left-2.5 top-1/2 z-10 -translate-y-1/2 text-icons-1" />
+          <Icon
+            className={cn('absolute left-2.5 top-1/2 -translate-y-1/2 text-icons-1 z-10', {
+              'text-sidebar-foreground-4': restInputProps?.theme === 'sidebar'
+            })}
+            name="search"
+            size={12}
+          />
         )}
 
         {hasShortcut && !!shortcutLetter && (
-          <div className="absolute right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-background-3 px-1 text-foreground-2 duration-100 ease-in-out">
+          <div
+            className={cn(
+              'absolute right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-background-3 px-1 text-foreground-2 duration-100 ease-in-out',
+              {
+                'border-sidebar-border-5 bg-sidebar-background-9 text-sidebar-foreground-3':
+                  restInputProps?.theme === 'sidebar'
+              }
+            )}
+          >
             <Icon name="apple-shortcut" size={12} />
 
             <span className="text-inherit">{shortcutLetter}</span>

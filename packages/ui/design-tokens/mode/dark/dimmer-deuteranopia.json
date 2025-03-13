@@ -2306,11 +2306,11 @@
     },
     "sm": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.1"
     },
     "default": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.1"
     },
     "md": {
       "$type": "borderWidth",

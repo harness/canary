@@ -10,7 +10,7 @@
       "tags": {},
       "type": "Github",
       "spec": {
-        "url": "https://github.com/organization/repository1",
+        "url": "https://github.com/organization/repository",
         "validationRepo": null,
         "authentication": {
           "type": "Http",

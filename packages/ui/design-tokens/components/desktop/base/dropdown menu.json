@@ -14,10 +14,6 @@
       "radius": {
         "$type": "borderRadius",
         "$value": "{dropdown.sub-item.radius}"
-      },
-      "size": {
-        "$type": "sizing",
-        "$value": "{size.10}"
       }
     },
     "sub-item": {

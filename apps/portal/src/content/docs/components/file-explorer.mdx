@@ -10,29 +10,38 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`<FileExplorer.Root
-  value={['src']}
-  onValueChange={(value) => console.log('Value changed:', value)}
+    value={['src']}
+    onValueChange={(value) => console.log('Value changed:', value)}
 >
-  <FileExplorer.FolderItem content={
-    <div className="flex flex-col">
-      <FileExplorer.FileItem link="/src/index.tsx">index.tsx</FileExplorer.FileItem>
-      <FileExplorer.FileItem link="/src/file-explorer.tsx">FileExplorer.tsx</FileExplorer.FileItem>
-      <FileExplorer.FileItem link="/src/type.ts">type.ts</FileExplorer.FileItem>
-    </div>
-  } value="src" link="/src">
-    src
-  </FileExplorer.FolderItem>
+    <FileExplorer.FolderItem
+        content={
+            <div className="flex flex-col">
+                <FileExplorer.FileItem link="/src/index.tsx">index.tsx</FileExplorer.FileItem>
+                <FileExplorer.FileItem link="/src/file-explorer.tsx">FileExplorer.tsx</FileExplorer.FileItem>
+                <FileExplorer.FileItem link="/src/type.ts">type.ts</FileExplorer.FileItem>
+            </div>
+        }
+        value="src"
+        link="/src"
+    >
+        src
+    </FileExplorer.FolderItem>
 
-  <FileExplorer.FolderItem content={
-    <div className="flex flex-col">
-      <FileExplorer.FileItem link="/src/index.tsx">index.tsx</FileExplorer.FileItem>
-      <FileExplorer.FileItem link="/src/file-explorer.tsx">FileExplorer.tsx</FileExplorer.FileItem>
-      <FileExplorer.FileItem link="/src/type.ts">type.ts</FileExplorer.FileItem>
-    </div>
-  } value="assets" link="/assets">
-    assets
-  </FileExplorer.FolderItem>
-  <FileExplorer.FileItem link="/package.json">package.json</FileExplorer.FileItem>
+    <FileExplorer.FolderItem
+        content={
+            <div className="flex flex-col">
+                <FileExplorer.FileItem link="/src/index.tsx">index.tsx</FileExplorer.FileItem>
+                <FileExplorer.FileItem link="/src/file-explorer.tsx">FileExplorer.tsx</FileExplorer.FileItem>
+                <FileExplorer.FileItem link="/src/type.ts">type.ts</FileExplorer.FileItem>
+            </div>
+        }
+        value="assets"
+        link="/assets"
+    >
+        assets
+    </FileExplorer.FolderItem>
+  
+    <FileExplorer.FileItem link="/package.json">package.json</FileExplorer.FileItem>
 </FileExplorer.Root>`}
 />
 

@@ -54,19 +54,19 @@ import { FileExplorer } from '@harnessio/ui/components'
 
 return (
   <FileExplorer.Root
-    value={['src']}                         // [REQUIRED] Currently selected items
-    onValueChange={(value) => console.log('Value changed:', value)} // [REQUIRED] Handler for selection changes
+    value={['src']}
+    onValueChange={(value) => console.log('Value changed:', value)}
   >
     <FileExplorer.FolderItem
-      value="src"                          // [OPTIONAL] Folder identifier
-      link="/src"                          // [REQUIRED] Navigation link
-      isActive={false}                     // [OPTIONAL] Active state
-      chevronClassName="custom-chevron"    // [OPTIONAL] Custom chevron styling
+      value="src"
+      link="/src"
+      isActive={false}
+      chevronClassName="custom-chevron"
     >
       src
       <FileExplorer.FileItem
-        link="/src/index.tsx"              // [OPTIONAL] Navigation link
-        isActive={false}                   // [OPTIONAL] Active state
+        link="/src/index.tsx"
+        isActive={false}
       >
         index.tsx
       </FileExplorer.FileItem>

@@ -558,6 +558,11 @@
         }
       },
       "outline": {
+        "background": {
+          "$type": "color",
+          "$value": "{background.2}",
+          "$description": "Background color for outline buttons."
+        },
         "unselected": {
           "text": {
             "$type": "color",

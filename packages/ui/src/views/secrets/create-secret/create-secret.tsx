@@ -255,7 +255,7 @@ export function CreateSecretPage({
           </Alert.Container>
         )}
 
-        <div className="fixed inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
+        <div className="absolute inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
           <ControlGroup>
             <ButtonGroup className="flex flex-row justify-between">
               <Button type="button" variant="outline" onClick={handleCancel}>

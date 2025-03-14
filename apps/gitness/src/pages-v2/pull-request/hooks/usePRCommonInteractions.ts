@@ -12,7 +12,7 @@ import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 import { CommitSuggestion } from '@harnessio/ui/views'
 
 import { useAPIPath } from '../../../hooks/useAPIPath'
-import { generateAlphaNumericHash, getErrorMessage } from '../pull-request-utils'
+import { getErrorMessage } from '../pull-request-utils'
 
 interface usePRCommonInteractionsProps {
   repoRef: string

@@ -22,33 +22,25 @@ import {
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 // Define the form schema with optional fields for gitignore and license
-const makeRepoCreateFormSchema = (t: TranslationStore['t']) =>
-  z.object({
+const makeRepoCreateFormSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, specialSymbols, noSpaces } = makeValidationUtils(t)
+
+  return z.object({
     name: z
       .string()
       .trim()
-      .nonempty(t('views:repos.repoCreate.validation.nameNoEmpty', 'Name can’t be blank'))
-      .max(100, t('views:repos.repoCreate.validation.nameMax', 'Name must be no longer than 100 characters'))
-      .regex(
-        /^[a-zA-Z0-9._-\s]+$/,
-        t(
-          'views:repos.repoCreate.validation.nameRegex',
-          'Name must contain only letters, numbers, and the characters: - _ .'
-        )
-      )
-      .refine(
-        data => !data.includes(' '),
-        t('views:repos.repoCreate.validation.nameNoSpaces', 'Name cannot contain spaces')
-      ),
+      .nonempty(required(t('views:repos.repoCreate.nameLabel')))
+      .max(...maxLength(100, t('views:repos.repoCreate.nameLabel')))
+      .regex(...specialSymbols(t('views:repos.repoCreate.nameLabel')))
+      .refine(...noSpaces(t('views:repos.repoCreate.nameLabel'))),
     description: z
       .string()
-      .max(
-        1024,
-        t('views:repos.repoCreate.validation.descriptionMax', 'Description must be no longer than 1024 characters')
-      ),
+      .trim()
+      .max(...maxLength(1024, t('views:repos.repoCreate.descriptionLabel'))),
     gitignore: z.string().optional(),
     license: z.string().optional(),
     access: z.enum(['1', '2'], {
@@ -56,6 +48,7 @@ const makeRepoCreateFormSchema = (t: TranslationStore['t']) =>
     }),
     readme: z.boolean()
   })
+}
 
 export type RepoCreateFormFields = z.infer<ReturnType<typeof makeRepoCreateFormSchema>>
 
@@ -221,7 +214,7 @@ export function RepoCreatePage({
                 control={<RadioButton className="mt-px" value="1" id="access-public" />}
                 id="access-public"
                 label={t('views:repos.repoCreate.access.publicOptionLabel', 'Public')}
-                aria-selected={accessValue === '1'}
+                ariaSelected={accessValue === '1'}
                 description={t(
                   'views:repos.repoCreate.access.publicOptionDescription',
                   'Anyone with access to the Gitness environment can clone this repo.'
@@ -231,7 +224,7 @@ export function RepoCreatePage({
                 control={<RadioButton className="mt-px" value="2" id="access-private" />}
                 id="access-private"
                 label={t('views:repos.repoCreate.access.privateOptionLabel', 'Private')}
-                aria-selected={accessValue === '2'}
+                ariaSelected={accessValue === '2'}
                 description={t(
                   'views:repos.repoCreate.access.privateOptionDescription',
                   'You choose who can see and commit to this repository.'
@@ -256,7 +249,7 @@ export function RepoCreatePage({
               control={<Checkbox id="readme" checked={readmeValue} onCheckedChange={handleReadmeChange} />}
               id="readme"
               label={t('views:repos.repoCreate.initialize.readmeLabel', 'Add a README file')}
-              aria-selected={accessValue === '1'}
+              ariaSelected={accessValue === '1'}
               description={
                 <>
                   {t(
@@ -284,7 +277,7 @@ export function RepoCreatePage({
             <Button type="submit" disabled={isLoading}>
               {!isLoading
                 ? t('views:repos.repoCreate.create.create', 'Create repository')
-                : t('views:repos.repoCreate.create.create', 'Creating repository...')}
+                : t('views:repos.repoCreate.create.creating', 'Creating repository...')}
             </Button>
             <Button type="button" variant="outline" onClick={onFormCancel}>
               {t('views:repos.repoCreate.cancel', 'Cancel')}

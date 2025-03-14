@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Alert, Button, Dialog, Fieldset, FormWrapper, Input, Textarea } from '@/components'
 import { ApiErrorType } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
@@ -15,29 +16,25 @@ interface ProfileSettingsKeysCreateDialogProps {
   useTranslationStore: () => TranslationStore
 }
 
-export const makeKeyCreateFormSchema = (t: TranslationStore['t']) =>
-  z.object({
+export const makeKeyCreateFormSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, specialSymbols, noSpaces } = makeValidationUtils(t)
+
+  const sshName = t('views:profileSettings.sshKey.validation.name', 'Key name')
+
+  return z.object({
     identifier: z
       .string()
       .trim()
-      .nonempty(t('views:profileSettings.sshKey.validation.nameMin', 'Please provide key name'))
-      .max(100, t('views:profileSettings.sshKey.validation.nameMax', 'Name must be no longer than 100 characters'))
-      .regex(
-        /^[a-zA-Z0-9._-\s]+$/,
-        t(
-          'views:profileSettings.sshKey.validation.nameRegex',
-          'Name must contain only letters, numbers, and the characters: - _ .'
-        )
-      )
-      .refine(
-        data => !data.includes(' '),
-        t('views:profileSettings.sshKey.validation.noSpaces', 'Name cannot contain spaces')
-      ),
+      .nonempty(required(sshName))
+      .max(...maxLength(100, sshName))
+      .regex(...specialSymbols(sshName))
+      .refine(...noSpaces(sshName)),
     content: z
       .string()
       .trim()
-      .nonempty(t('views:profileSettings.sshKey.validation.expiration', 'Please add the public key'))
+      .nonempty(required(t('views:profileSettings.sshKey.publicKey')))
   })
+}
 
 type SshKeyFormType = z.infer<ReturnType<typeof makeKeyCreateFormSchema>>
 
@@ -94,6 +91,7 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
               value={content}
               {...register('content')}
               label={t('views:profileSettings.sshKey.publicKey', 'Public key')}
+              placeholder={t('views:profileSettings.sshKey.enterPublicKeyPlaceholder', 'Enter the public key')}
               error={errors.content?.message?.toString()}
             />
           </Fieldset>

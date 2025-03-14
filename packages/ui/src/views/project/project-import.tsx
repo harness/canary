@@ -15,88 +15,56 @@ import {
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeFloatValidationUtils, makeValidationUtils } from '@utils/validation'
 import { ProviderOptionsEnum } from '@views/repo/repo-import/types'
 import { z } from 'zod'
 
-const makeImportProjectFormSchema = (t: TranslationStore['t']) =>
-  z
+const makeImportProjectFormSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, specialSymbols, noSpaces } = makeValidationUtils(t)
+
+  return z
     .object({
       identifier: z
         .string()
         .trim()
-        .nonempty(t('views:importProject.validation.nameNoEmpty', 'Please enter a project name'))
-        .max(100, t('views:importProject.validation.nameMax', 'Name must be no longer than 100 characters'))
-        .regex(
-          /^[a-zA-Z0-9._-\s]+$/,
-          t(
-            'views:importProject.validation.nameRegex',
-            'Name must contain only letters, numbers, and the characters: - _ .'
-          )
-        )
-        .refine(
-          data => !data.includes(' '),
-          t('views:importProject.validation.nameNoSpaces', 'Name cannot contain spaces')
-        ),
+        .nonempty(required(t('views:importProject.projectNameLabel')))
+        .max(...maxLength(100, t('views:importProject.projectNameLabel')))
+        .regex(...specialSymbols(t('views:importProject.projectNameLabel')))
+        .refine(...noSpaces(t('views:importProject.projectNameLabel'))),
       description: z
         .string()
         .trim()
-        .max(
-          1024,
-          t('views:importProject.validation.descriptionMax', 'Description must be no longer than 1024 characters')
-        ),
+        .max(...maxLength(1024, t('views:importProject.descriptionLabel'))),
       hostUrl: z.string().optional(),
       pipelines: z.boolean().optional(),
       repositories: z.boolean().optional(),
       provider: z
         .string()
         .trim()
-        .nonempty(t('views:importProject.validation.providerNoEmpty', 'Please select a provider')),
+        .nonempty(required(t('views:importProject.gitProviderLabel'))),
       password: z.string().optional(),
       organization: z
         .string()
         .trim()
-        .nonempty(t('views:importProject.validation.organizationNoEmpty', 'Please enter an organization'))
-        .max(
-          100,
-          t(
-            'views:importProject.validation.organizationNameMax',
-            'Organization name must be no longer than 100 characters'
-          )
-        )
-        .regex(
-          /^[a-zA-Z0-9._-\s]+$/,
-          t(
-            'views:importProject.validation.nameRegex',
-            'Organization name must contain only letters, numbers, and the characters: - _ .'
-          )
-        )
-        .refine(
-          data => !data.includes(' '),
-          t('views:importProject.validation.noSpaces', 'Organization name cannot contain spaces')
-        )
+        .nonempty(required(t('views:importProject.organizationLabel')))
+        .max(...maxLength(100, t('views:importProject.organizationLabel')))
+        .regex(...specialSymbols(t('views:importProject.organizationLabel')))
+        .refine(...noSpaces(t('views:importProject.organizationLabel')))
     })
-    .superRefine((data, ctx) => {
-      if (data.provider !== ProviderOptionsEnum.GITHUB_ENTERPRISE) return
+    .superRefine(({ provider, hostUrl }, ctx) => {
+      const makeValidators = makeFloatValidationUtils(t, ctx)
 
-      if (!data.hostUrl) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['hostUrl'],
-          message: t('views:importProject.validation.hostUrlRequired', 'Repository URL is required')
+      if (provider === ProviderOptionsEnum.GITHUB_ENTERPRISE) {
+        const { requiredFloat, urlFloat } = makeValidators({
+          value: hostUrl,
+          path: 'hostUrl',
+          name: t('views:importProject.hostUrlLabel', 'Host URL')
         })
-        return
-      }
-
-      try {
-        new URL(data.hostUrl)
-      } catch (error) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['hostUrl'],
-          message: t('views:importProject.validation.hostUrlInvalid', 'Invalid URL')
-        })
+        requiredFloat()
+        urlFloat()
       }
     })
+}
 
 export type ImportProjectFormFields = z.infer<ReturnType<typeof makeImportProjectFormSchema>>
 
@@ -121,6 +89,7 @@ export function ImportProjectPage({
     register,
     handleSubmit,
     setValue,
+    trigger,
     watch,
     formState: { errors }
   } = useForm<ImportProjectFormFields>({
@@ -143,7 +112,11 @@ export function ImportProjectPage({
 
   useEffect(() => {
     setValue('identifier', orgValue)
-  }, [orgValue, setValue])
+
+    if (!errors.organization) return
+
+    trigger('identifier')
+  }, [orgValue, trigger, errors.organization])
 
   const handleSelectProvider = (value: string) => setValue('provider', value, { shouldValidate: true })
 

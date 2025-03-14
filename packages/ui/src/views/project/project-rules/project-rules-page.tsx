@@ -1,4 +1,5 @@
 import { FC, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 
 import { Button, ListActions, NoData, SearchBox, Spacer } from '@/components'
 import { useDebounceSearch } from '@/hooks'
@@ -9,111 +10,99 @@ export interface ProjectRulesPageProps {
   rulesData: RuleDataType[] | null
   isLoading: boolean
   useTranslationStore: () => TranslationStore
+  searchQuery: string
+  setSearchQuery: (query: string) => void
+  page: number
+  setPage: (page: number) => void
 }
-export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({ rulesData, isLoading, useTranslationStore }) =>
-  //   {
-  //   isLoading,
-  //   isInvitingMember,
-  //   useTranslationStore,
-  //   useMemberListStore,
-  //   usePrincipalListStore,
-  //   isInviteMemberDialogOpen,
-  //   setIsInviteMemberDialogOpen,
-  //   inviteMemberError,
-  //   searchQuery,
-  //   setSearchQuery,
-  //   onSubmit,
-  //   onEditMember,
-  //   setPrincipalsSearchQuery,
-  //   principalsSearchQuery,
-  //   onDeleteHandler
-  //   }
-  {
-    // const { t } = useTranslationStore()
+export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
+  rulesData,
+  isLoading,
+  useTranslationStore,
+  searchQuery,
+  setSearchQuery,
+  page,
+  setPage
+}) => {
+  const { t } = useTranslationStore()
 
-    // const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
-    //   handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
-    //   searchValue: searchQuery || ''
-    // })
+  const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
+    handleChangeSearchValue: setSearchQuery,
+    searchValue: searchQuery || ''
+  })
 
-    // const isDirtyList = useMemo(() => {
-    //   return page !== 1 || !!searchQuery
-    // }, [page, searchQuery])
+  const isDirtyList = useMemo(() => {
+    return page !== 1 || !!searchQuery
+  }, [page, searchQuery])
 
-    // const handleResetFiltersQueryAndPages = () => {
-    //   handleResetSearch()
-    //   setPage(1)
-    // }
+  const handleResetFiltersQueryAndPages = () => {
+    handleResetSearch()
+    setPage(1)
+  }
 
-    return (
-      <>
-        {/* {!memberList.length && !isDirtyList && !isLoading ? (
+  console.log(rulesData)
+
+  return (
+    <>
+      {!rulesData?.length && !isDirtyList && !isLoading ? (
         <NoData
           textWrapperClassName="max-w-[350px]"
           iconName="no-data-members"
-          title={t('views:noData.members', 'No members yet')}
+          title={t('views:noData.rules', 'No rules yet')}
           description={[
             t(
-              'views:noData.inviteMembers',
-              'There are no members in this project. Click on the button below to start adding them.'
+              'views:noData.noRules',
+              'There are no rules in this project. Click on the button below to start adding rules.'
             )
           ]}
           primaryButton={{
-            label: t('views:projectSettings.inviteNewMember', 'Invite new member'),
+            label: t('views:projectSettings.', 'Add new rule'),
             onClick: () => {
-              setIsInviteMemberDialogOpen(true)
+              //   setIsInviteMemberDialogOpen(true)
             }
           }}
         />
-      ) : ( */}
+      ) : (
         <SandboxLayout.Main>
           <SandboxLayout.Content maxWidth="3xl">
             {/* <h1 className="mb-6 text-2xl font-medium text-foreground-1">{t('views:projectSettings.rules', 'Rules')}</h1> */}
             <h1 className="mb-6 text-2xl font-medium text-foreground-1">Rules</h1>
 
-            {/* {(!!rulesList.length || (!rulesList.length && isDirtyList)) && ( */}
-            <>
-              <ListActions.Root>
-                <ListActions.Left>
-                  <SearchBox.Root
-                    width="full"
-                    className="max-w-96"
-                    // value={search}
-                    // handleChange={handleSearchChange}
-                    // placeholder={t('views:repos.search', 'Search')}
-                    placeholder="Search"
-                  />
-                </ListActions.Left>
-                <ListActions.Right>
-                  <Button
-                    variant="default"
-                    onClick={() => {
-                      //   setIsInviteMemberDialogOpen(true)
-                    }}
-                  >
-                    {/* {t('views:projectSettings.newMember', 'New member')} */}
-                    New branch rule
-                  </Button>
-                </ListActions.Right>
-              </ListActions.Root>
+            {((rulesData && !!rulesData.length) || (rulesData && !rulesData.length && isDirtyList)) && (
+              <>
+                <ListActions.Root>
+                  <ListActions.Left>
+                    <SearchBox.Root
+                      width="full"
+                      className="max-w-96"
+                      autoFocus
+                      value={search}
+                      handleChange={handleSearchChange}
+                      placeholder={t('views:repos.search', 'Search')}
+                    />
+                  </ListActions.Left>
+                  <ListActions.Right>
+                    <Link to="create">
+                      <Button variant="default">{t('views:projectSettings.newBranchRule', 'New branch rule')}</Button>
+                    </Link>
+                  </ListActions.Right>
+                </ListActions.Root>
 
-              <Spacer size={4.5} />
-            </>
-            {/* )} */}
+                <Spacer size={4.5} />
+              </>
+            )}
             <RepoSettingsGeneralRules
               rules={rulesData}
               isLoading={isLoading}
               apiError={null}
               handleRuleClick={() => {}}
               openRulesAlertDeleteDialog={() => {}}
-              rulesSearchQuery=""
-              setRulesSearchQuery={() => {}}
               useTranslationStore={useTranslationStore}
               showHeader={false}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Main>
-        {/* )} */}
-      </>
-    )
-  }
+      )}
+    </>
+  )
+}

@@ -620,12 +620,31 @@ export const repoRoutes: CustomRouteObject[] = [
       },
       {
         path: 'rules',
-        element: <ProjectRulesListContainer />,
         handle: {
           breadcrumb: () => <span>{Page.Branch_Rules}</span>,
           pageTitle: Page.Branch_Rules
           // routeName: RouteConstants.toProjectBranchRules
-        }
+        },
+        children: [
+          {
+            index: true,
+            element: <ProjectRulesListContainer />
+          },
+          {
+            path: 'create',
+            element: <EmptyPage pathName="create a rule" />,
+            handle: {
+              breadcrumb: () => <span>Create a rule</span>
+            }
+          }
+          // {
+          //   path: ':ruleId',
+          //   element: <ProjectRuleFormContainer />,
+          //   handle: {
+          //     breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>
+          //   }
+          // }
+        ]
       }
     ]
   },

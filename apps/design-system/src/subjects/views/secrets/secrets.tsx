@@ -18,19 +18,13 @@ import mockAccountsData from './mock-account-data.json'
 import mockOrgData from './mock-org-data.json'
 import mockProjectsData from './mock-project-data.json'
 import mockSecretsData from './mock-secrets-data.json'
-import { ScopeEnum, SecretScope } from './types'
+import { Scope, ScopeEnum, scopeHierarchy } from './types'
 
 export const SecretsPage = () => {
-  const scopeHierarchy: Record<SecretScope, { parent: SecretScope | null; child: SecretScope | null }> = {
-    account: { parent: null, child: ScopeEnum.ORGANIZATION },
-    organization: { parent: ScopeEnum.ACCOUNT, child: ScopeEnum.PROJECT },
-    project: { parent: ScopeEnum.ORGANIZATION, child: null }
-  }
-
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.NEW)
 
   // State for existing secrets
-  const [, setActiveScope] = useState<SecretScope>(ScopeEnum.ORGANIZATION)
+  const [, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
   const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)

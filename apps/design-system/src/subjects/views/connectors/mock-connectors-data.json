@@ -1,0 +1,223 @@
+[
+  {
+    "connector": {
+      "name": "connector-1",
+      "identifier": "connector1",
+      "description": "",
+      "accountIdentifier": "account123",
+      "orgIdentifier": "org1",
+      "projectIdentifier": "project1",
+      "tags": {},
+      "type": "Github",
+      "spec": {
+        "url": "https://github.com/organization/repository",
+        "validationRepo": null,
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "UsernameToken",
+            "spec": {
+              "username": "username1",
+              "usernameRef": null,
+              "tokenRef": "token1"
+            }
+          }
+        },
+        "apiAccess": {
+          "type": "Token",
+          "spec": {
+            "tokenRef": "token1"
+          }
+        },
+        "delegateSelectors": [],
+        "executeOnDelegate": false,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Repo"
+      }
+    },
+    "createdAt": 1719353669620,
+    "lastModifiedAt": 1719353669616,
+    "status": {
+      "status": "SUCCESS",
+      "errorSummary": null,
+      "errors": null,
+      "testedAt": 1719353671202,
+      "lastTestedAt": 0,
+      "lastConnectedAt": 1719353671202,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1719353669616
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+  },
+  {
+    "connector": {
+      "name": "connector-2",
+      "identifier": "connector2",
+      "description": "",
+      "accountIdentifier": "account123",
+      "orgIdentifier": "org1",
+      "projectIdentifier": "project1",
+      "tags": {},
+      "type": "Github",
+      "spec": {
+        "url": "https://github.com/organization/repository2",
+        "validationRepo": null,
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "UsernameToken",
+            "spec": {
+              "username": "username2",
+              "usernameRef": null,
+              "tokenRef": "token2"
+            }
+          }
+        },
+        "apiAccess": null,
+        "delegateSelectors": ["delegate-1"],
+        "executeOnDelegate": true,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Repo"
+      }
+    },
+    "createdAt": 1700007726035,
+    "lastModifiedAt": 1700007726032,
+    "status": {
+      "status": "FAILURE",
+      "errorSummary": "Error Encountered (Please ensure that the api access credentials are correct.)",
+      "errors": [
+        {
+          "reason": "Unexpected Error",
+          "message": "Please ensure that the api access credentials are correct.",
+          "code": 450
+        }
+      ],
+      "testedAt": 1700010337928,
+      "lastTestedAt": 0,
+      "lastConnectedAt": 0,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1700007726157
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+  },
+  {
+    "connector": {
+      "name": "connector-3",
+      "identifier": "connector3",
+      "description": "",
+      "accountIdentifier": "account123",
+      "orgIdentifier": "org1",
+      "projectIdentifier": "project1",
+      "tags": {},
+      "type": "Github",
+      "spec": {
+        "url": "https://github.com/organization/repository3",
+        "validationRepo": null,
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "UsernameToken",
+            "spec": {
+              "username": "username3",
+              "usernameRef": null,
+              "tokenRef": "token3"
+            }
+          }
+        },
+        "apiAccess": null,
+        "delegateSelectors": ["delegate-1"],
+        "executeOnDelegate": true,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Repo"
+      }
+    },
+    "createdAt": 1700005553911,
+    "lastModifiedAt": 1700005642847,
+    "status": {
+      "status": "FAILURE",
+      "errorSummary": "Error Encountered (There are no eligible delegates available in the account to execute the task.\n\nNon active delegates , Delegate(s) don't have selectors [delegate-1])",
+      "errors": [
+        {
+          "reason": "Unexpected Error",
+          "message": "There are no eligible delegates available in the account to execute the task.\n\nNon active delegates , Delegate(s) don't have selectors [delegate-1]",
+          "code": 450
+        }
+      ],
+      "testedAt": 1700007688566,
+      "lastTestedAt": 0,
+      "lastConnectedAt": 0,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1700005642977
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+  }
+]

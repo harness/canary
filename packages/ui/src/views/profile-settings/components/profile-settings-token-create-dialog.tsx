@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Alert, Button, CopyButton, Dialog, Fieldset, FormWrapper, Input, Select } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
@@ -18,32 +19,21 @@ interface ProfileSettingsTokenCreateDialogProps {
   useProfileSettingsStore: () => IProfileSettingsStore
 }
 
-export const makeTokenCreateFormSchema = (t: TranslationStore['t']) =>
-  z.object({
+export const makeTokenCreateFormSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, specialSymbols, noSpaces } = makeValidationUtils(t)
+
+  return z.object({
     identifier: z
       .string()
       .trim()
-      .nonempty(t('views:profileSettings.createTokenDialog.validation.nameMin', 'Please provide token name'))
-      .max(
-        100,
-        t('views:profileSettings.createTokenDialog.validation.nameMax', 'Name must be no longer than 100 characters')
-      )
-      .regex(
-        /^[a-zA-Z0-9._-\s]+$/,
-        t(
-          'views:profileSettings.createTokenDialog.validation.nameRegex',
-          'Name must contain only letters, numbers, and the characters: - _ .'
-        )
-      )
-      .refine(
-        data => !data.includes(' '),
-        t('views:profileSettings.createTokenDialog.validation.noSpaces', 'Name cannot contain spaces')
-      ),
-    lifetime: z
-      .string()
-      .nonempty(t('views:profileSettings.createTokenDialog.validation.expiration', 'Please select the expiration')),
+      .nonempty(required(t('views:profileSettings.createTokenDialog.nameLabel')))
+      .max(...maxLength(100, t('views:profileSettings.createTokenDialog.nameLabel')))
+      .regex(...specialSymbols(t('views:profileSettings.createTokenDialog.nameLabel')))
+      .refine(...noSpaces(t('views:profileSettings.createTokenDialog.nameLabel'))),
+    lifetime: z.string().nonempty(required(t('views:profileSettings.createTokenDialog.expirationLabel'))),
     token: z.string()
   })
+}
 
 const getExpirationOptions = (t: TranslationStore['t']) => [
   { value: '7', label: t('views:profileSettings.createTokenDialog.expirationOptions.7_days', '7 days') },

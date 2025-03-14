@@ -175,17 +175,17 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     Commit directly to the
                     <span
                       className="
-                        relative mx-1.5 inline-flex gap-1 px-2.5 text-foreground-8
-                        before:absolute before:-top-1 before:left-0 before:z-[-1] before:h-6 before:w-full before:rounded before:bg-background-8
+                        text-foreground-8 before:bg-background-8 relative mx-1.5 inline-flex gap-1
+                        px-2.5 before:absolute before:-top-1 before:left-0 before:z-[-1] before:h-6 before:w-full before:rounded
                       "
                     >
-                      <Icon className="translate-y-0.5 text-icons-9" name="branch" size={14} />
+                      <Icon className="text-icons-9 translate-y-0.5" name="branch" size={14} />
                       {currentBranch}
                     </span>
                     branch
                   </span>
                 }
-                aria-selected={commitToGitRefValue === CommitToGitRefOption.DIRECTLY}
+                ariaSelected={commitToGitRefValue === CommitToGitRefOption.DIRECTLY}
               />
               <Option
                 control={
@@ -197,7 +197,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                 }
                 id={CommitToGitRefOption.NEW_BRANCH}
                 label="Create a new branch for this commit and start a pull request"
-                aria-selected={commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH}
+                ariaSelected={commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH}
                 description={
                   // TODO: Add correct path
                   <StyledLink to="/">Learn more about pull requests</StyledLink>

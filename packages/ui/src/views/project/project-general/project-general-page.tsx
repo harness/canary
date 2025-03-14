@@ -36,7 +36,10 @@ interface ProjectSettingsGeneralPageProps {
 }
 
 const makeProjectSettingsSchema = (t: TranslationStore['t']) =>
-  z.object({ identifier: makeProjectNameSchema(t), description: makeProjectDescriptionSchema(t) })
+  z.object({
+    identifier: makeProjectNameSchema(t, t('views:projectSettings.general.projectNameLabel')),
+    description: makeProjectDescriptionSchema(t, t('views:projectSettings.general.projectDescriptionLabel'))
+  })
 
 export type ProjectSettingsGeneralFields = z.infer<ReturnType<typeof makeProjectSettingsSchema>>
 

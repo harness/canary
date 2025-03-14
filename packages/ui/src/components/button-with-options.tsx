@@ -123,7 +123,7 @@ export const ButtonWithOptions = <T extends string>({
                       control={<RadioButton className="mt-px" value={String(option.value)} id={String(option.value)} />}
                       id={String(option.value)}
                       label={option.label}
-                      aria-selected={selectedValue === option.value}
+                      ariaSelected={selectedValue === option.value}
                       description={option?.description}
                     />
                   </DropdownMenu.Item>
@@ -139,7 +139,7 @@ export const ButtonWithOptions = <T extends string>({
                   onClick={() => handleOptionChange(option.value)}
                 >
                   <span className="flex flex-col gap-y-1.5">
-                    <span className="leading-none text-foreground-8">{option.label}</span>
+                    <span className="text-foreground-8 leading-none">{option.label}</span>
                     {option?.description && <span className="text-foreground-4">{option.description}</span>}
                   </span>
                 </DropdownMenu.Item>

@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Button, Card, Fieldset, FormWrapper, Input, Message, MessageTheme, StyledLink } from '@/components'
 import { Floating1ColumnLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 import { Agreements } from './components/agreements'
@@ -16,11 +17,17 @@ interface SignInPageProps {
   error?: string
 }
 
-const makeSignInSchema = (t: TranslationStore['t']) =>
-  z.object({
-    email: z.string().trim().nonempty(t('views:signIn.validation.emailNoEmpty', 'Field can’t be blank')),
-    password: z.string().nonempty(t('views:signIn.validation.passwordNoEmpty', 'Password can’t be blank'))
+const makeSignInSchema = (t: TranslationStore['t']) => {
+  const { required } = makeValidationUtils(t)
+
+  return z.object({
+    email: z
+      .string()
+      .trim()
+      .nonempty(required(t('views:signIn.emailTitle'))),
+    password: z.string().nonempty(required(t('views:signIn.passwordTitle')))
   })
+}
 
 export type SignInData = z.infer<ReturnType<typeof makeSignInSchema>>
 
@@ -34,7 +41,10 @@ export function SignInPage({ handleSignIn, useTranslationStore, isLoading, error
     resolver: zodResolver(makeSignInSchema(t))
   })
 
-  const errorMessage = useMemo(() => (error?.includes('Not Found') ? 'Please check your details' : error), [error])
+  const errorMessage = useMemo(
+    () => (error?.includes('Not Found') ? t('views:signIn.checkDetails', 'Please check your details') : error),
+    [error, t]
+  )
 
   const hasError = Object.keys(errors).length > 0 || !!error
 

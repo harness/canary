@@ -4,34 +4,24 @@ import { useForm } from 'react-hook-form'
 import { Alert, Button, Dialog, Fieldset, FormWrapper, Input } from '@/components'
 import { BranchSelector, BranchSelectorListItem, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'
 
-export const makeCreateBranchFormSchema = (t: TranslationStore['t']) =>
-  z.object({
+export const makeCreateBranchFormSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, specialSymbols, noSpaces } = makeValidationUtils(t)
+
+  return z.object({
     name: z
       .string()
-      .nonempty(t('views:repos.createBranchDialog.validation.nameNoEmpty', 'Branch name can’t be blank'))
-      .max(
-        256,
-        t('views:repos.createBranchDialog.validation.nameMax', 'Branch name must be no longer than 256 characters')
-      )
-      .regex(
-        /^[a-zA-Z0-9._-\s]+$/,
-        t(
-          'views:repos.createBranchDialog.validation.nameRegex',
-          'Branch name must contain only letters, numbers, and the characters: - _ .'
-        )
-      )
-      .refine(
-        data => !data.includes(' '),
-        t('views:repos.createBranchDialog.validation.nameNoSpaces', 'Branch name cannot contain spaces')
-      ),
-    target: z
-      .string()
-      .nonempty(t('views:repos.createBranchDialog.validation.targetNoEmpty', 'Target branch can’t be blank'))
+      .nonempty(required(t('views:repos.createBranchDialog.branchNameLabel')))
+      .max(...maxLength(256, t('views:repos.createBranchDialog.branchNameLabel')))
+      .regex(...specialSymbols(t('views:repos.createBranchDialog.branchNameLabel')))
+      .refine(...noSpaces(t('views:repos.createBranchDialog.branchNameLabel'))),
+    target: z.string().nonempty(required(t('views:repos.createBranchDialog.validation.target', 'Target branch')))
   })
+}
 
 export function CreateBranchDialog({
   open,
@@ -102,14 +92,12 @@ export function CreateBranchDialog({
           <Fieldset>
             <Input
               id="name"
-              label="Branch name"
+              label={t('views:repos.createBranchDialog.branchNameLabel', 'Branch name')}
               {...register('name')}
               maxLength={50}
-              placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
+              placeholder={t('views:repos.createBranchDialog.branchNamePlaceholder', 'Enter branch name')}
               size="md"
-              error={
-                errors.name?.message ? t('views:forms.createBranchError', errors.name?.message?.toString()) : undefined
-              }
+              error={errors.name?.message?.toString()}
             />
 
             {/* TODO: Currently the search within BranchSelector is not working, we need to review the current passed states for it to work */}

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Button, Card, Fieldset, FormWrapper, Input, Message, MessageTheme, StyledLink } from '@/components'
 import { Floating1ColumnLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 import { Agreements } from './components/agreements'
@@ -15,39 +16,33 @@ interface SignUpPageProps {
   error?: string
 }
 
-const makeSignUpSchema = (t: TranslationStore['t']) =>
-  z
+const makeSignUpSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, minLength, specialSymbols, noSpaces, invalid } = makeValidationUtils(t)
+
+  return z
     .object({
       userId: z
         .string()
         .trim()
-        .nonempty(t('views:signUp.validation.userIDNoEmpty', 'User ID can’t be blank'))
-        .max(100, t('views:signUp.validation.userIDMax', 'User ID must be no longer than 100 characters'))
-        .regex(
-          /^[a-zA-Z0-9._-\s]+$/,
-          t(
-            'views:signUp.validation.userIDRegex',
-            'User ID must contain only letters, numbers, and the characters: - _ .'
-          )
-        )
-        .refine(
-          data => !data.includes(' '),
-          t('views:signUp.validation.userIDNoSpaces', 'User ID cannot contain spaces')
-        ),
+        .nonempty(required(t('views:signUp.userIDPlaceholder')))
+        .max(...maxLength(100, t('views:signUp.userIDPlaceholder')))
+        .regex(...specialSymbols(t('views:signUp.userIDPlaceholder')))
+        .refine(...noSpaces(t('views:signUp.userIDPlaceholder'))),
       email: z
         .string()
-        .email(t('views:signUp.validation.emailNoEmpty', 'Invalid email address'))
-        .max(250, t('views:signUp.validation.emailMax', 'Email must be no longer than 250 characters')),
+        .email(invalid(t('views:signUp.emailLabel', 'Email')))
+        .max(...maxLength(250, t('views:signUp.emailLabel', 'Email'))),
       password: z
         .string()
-        .min(6, t('views:signUp.validation.passwordNoEmpty', 'Password must be at least 6 characters'))
-        .max(128, t('views:signUp.validation.passwordMax', 'Password must be no longer than 128 characters')),
-      confirmPassword: z.string()
+        .min(...minLength(6, t('views:signUp.passwordLabel', 'Password')))
+        .max(...maxLength(128, t('views:signUp.passwordLabel', 'Password'))),
+      confirmPassword: z.string().min(...minLength(6, t('views:signUp.passwordLabel', 'Password')))
     })
     .refine(data => data.password === data.confirmPassword, {
       message: t('views:signUp.validation.passwordsCheck', "Passwords don't match"),
       path: ['confirmPassword']
     })
+}
 
 export type SignUpData = z.infer<ReturnType<typeof makeSignUpSchema>>
 

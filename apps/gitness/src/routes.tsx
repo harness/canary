@@ -28,6 +28,7 @@ import { ProjectLabelsList } from './pages-v2/project/labels/project-labels-list
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
 import { ImportProjectContainer } from './pages-v2/project/project-import-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
+import { ProjectRulesListContainer } from './pages-v2/project/project-rules-list-container.tsx'
 import { ProjectSettingsLayout } from './pages-v2/project/project-settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
@@ -586,6 +587,15 @@ export const repoRoutes: CustomRouteObject[] = [
             }
           }
         ]
+      },
+      {
+        path: 'rules',
+        element: <ProjectRulesListContainer />,
+        handle: {
+          breadcrumb: () => <span>{Page.Branch_Rules}</span>,
+          pageTitle: Page.Branch_Rules
+          // routeName: RouteConstants.toProjectBranchRules
+        }
       }
     ]
   },

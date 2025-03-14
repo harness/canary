@@ -16,6 +16,7 @@ export const ProjectSettingsTabNav: FC<ProjectSettingsTabNavProps> = ({ useTrans
         <TabNav.Item to="general">{t('views:projectSettings.tabs.general', 'General')}</TabNav.Item>
         <TabNav.Item to="members">{t('views:projectSettings.tabs.members', 'Members')}</TabNav.Item>
         <TabNav.Item to="labels">{t('views:projectSettings.tabs.labels', 'Labels')}</TabNav.Item>
+        <TabNav.Item to="rules">{t('views:projectSettings.tabs.rules', 'Rules')}</TabNav.Item>
       </TabNav.Root>
     </SandboxLayout.SubHeader>
   )

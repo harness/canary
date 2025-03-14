@@ -58,6 +58,7 @@ export interface RepoSettingsGeneralRulesProps {
   isLoading: boolean
   rulesSearchQuery: string
   setRulesSearchQuery: (query: string) => void
+  showHeader?: boolean
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
@@ -68,7 +69,8 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   useTranslationStore,
   isLoading,
   rulesSearchQuery,
-  setRulesSearchQuery
+  setRulesSearchQuery,
+  showHeader = true
 }) => {
   const { Link, NavLink } = useRouterContext()
   const { t } = useTranslationStore()
@@ -91,6 +93,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
       <Text size={13} weight="medium" className="mb-2.5" as="div">
         {t('views:repos.rules', 'Rules')}
       </Text>
+
       <div className="flex flex-row">
         <span className="max-w-[440px]">
           {t(

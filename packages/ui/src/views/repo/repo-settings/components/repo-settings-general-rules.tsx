@@ -56,8 +56,8 @@ export interface RepoSettingsGeneralRulesProps {
   openRulesAlertDeleteDialog: (identifier: string) => void
   useTranslationStore: () => TranslationStore
   isLoading: boolean
-  rulesSearchQuery: string
-  setRulesSearchQuery: (query: string) => void
+  rulesSearchQuery?: string
+  setRulesSearchQuery?: (query: string) => void
   showHeader?: boolean
 }
 
@@ -85,7 +85,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   })
 
   const isShowRulesContent = useMemo(() => {
-    return (!!rules && !!rules.length) || !!rulesSearchQuery.length
+    return (!!rules && !!rules.length) || (!!rulesSearchQuery && rulesSearchQuery.length)
   }, [rulesSearchQuery, rules])
 
   return (
@@ -144,9 +144,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               <Spacer size={7} />
               <SkeletonList />
             </>
-          ) : rules?.length ? (
+          ) : rules?.length !== 0 ? (
             <StackedList.Root>
-              {rules.map((rule, idx) =>
+              {rules?.map((rule, idx) =>
                 rule?.identifier ? (
                   <Link to={`../rules/${rule.identifier}`} key={rule.identifier}>
                     <StackedList.Item key={rule.identifier} className="cursor-pointer py-3 pr-1.5">

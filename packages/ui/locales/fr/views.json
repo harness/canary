@@ -201,6 +201,8 @@
     "noResultsDescription": "No {{type}} match your search. Try adjusting your keywords or filters.",
     "members": "",
     "inviteMembers": "",
+    "rules": "No rules yet",
+    "noRules": "There are no rules in this project. Click on the button below to start adding rules.",
     "noCommitsYet": "No commits yet",
     "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "compareChanges": "Comparez et révisez pratiquement tout",
@@ -270,6 +272,13 @@
     "create": "Create labels"
   },
   "projectSettings": {
+    "newBranchRule": "New branch rule",
+    "tabs": {
+      "general": "General",
+      "members": "Members",
+      "labels": "Labels",
+      "rules": "Rules"
+    },
     "newLabels": "Create label",
     "general": {
       "mainTitle": "",
@@ -298,13 +307,7 @@
     },
     "removeMember": "Remove member",
     "inviteNewMember": "Invite new member",
-    "members": "",
-    "tabs": {
-      "general": "General",
-      "members": "Members",
-      "labels": "Labels",
-      "rules": "Rules"
-    }
+    "members": ""
   },
   "landingPage": {
     "selectProject": "Sélectionnez un projet pour commencer",

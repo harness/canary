@@ -8,12 +8,9 @@
     "remove": "Supprimer",
     "reorder": "Réorganiser",
     "unpin": "Désépingler",
-<<<<<<< HEAD
     "search": "Rechercher",
     "command-palette": "Palette de commandes",
     "nothing-found": "Rien trouvé",
-=======
->>>>>>> 0114f991 (Add js tokens build)
     "appearence": "Appearance",
     "language": "Language",
     "logout": "Se déconnecter",
@@ -105,11 +102,7 @@
     "stars": "Étoiles",
     "ascending": "Croissant",
     "descending": "Décroissant",
-<<<<<<< HEAD
     "author": "Auteur",
-=======
-    "author": "Author",
->>>>>>> 0114f991 (Add js tokens build)
     "createdBefore": "Created Before",
     "createdAfter": "Created After"
   },

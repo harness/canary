@@ -6,7 +6,7 @@
     },
     "gap": {
       "$type": "spacing",
-      "$value": "{spacing.2}"
+      "$value": "{spacing.1}"
     },
     "py": {
       "$type": "spacing",
@@ -16,15 +16,19 @@
       "$type": "spacing",
       "$value": "{spacing.2}"
     },
-    "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.2}"
-    }
-  },
-  "sub-tag": {
-    "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.1}"
+    "default": {
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.2}"
+      }
+    },
+    "sub": {
+      "radius": {
+        "radius": {
+          "$type": "borderRadius",
+          "$value": "{rounded.2}"
+        }
+      }
     }
   }
 }

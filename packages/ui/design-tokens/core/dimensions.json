@@ -363,6 +363,10 @@
       "$type": "sizing",
       "$value": "{size.3}"
     },
+    "xxs": {
+      "$type": "sizing",
+      "$value": "{size.2}"
+    },
     "sm": {
       "$type": "sizing",
       "$value": "{size.3-half}"

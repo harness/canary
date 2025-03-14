@@ -153,6 +153,9 @@ importers:
       '@harnessio/code-service-client':
         specifier: 3.5.0
         version: 3.5.0
+      '@harnessio/core-design-system':
+        specifier: workspace:*
+        version: link:../../packages/core-design-system
       '@harnessio/forms':
         specifier: workspace:*
         version: link:../../packages/forms
@@ -628,6 +631,24 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0(rollup@4.34.9)(typescript@5.8.2)(vite@6.2.0(@types/node@20.17.23)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0))
 
+  packages/core-design-system:
+    devDependencies:
+      '@tokens-studio/sd-transforms':
+        specifier: ^1.2.9
+        version: 1.2.9(style-dictionary@4.3.3)
+      figlet:
+        specifier: ^1.8.0
+        version: 1.8.0
+      gradient-string:
+        specifier: ^3.0.0
+        version: 3.0.0
+      rimraf:
+        specifier: ^6.0.1
+        version: 6.0.1
+      style-dictionary:
+        specifier: ^4.1.4
+        version: 4.3.3
+
   packages/filters:
     dependencies:
       react:
@@ -837,6 +858,9 @@ importers:
       '@git-diff-view/shiki':
         specifier: ^0.0.21
         version: 0.0.21
+      '@harnessio/core-design-system':
+        specifier: workspace:*
+        version: link:../core-design-system
       '@harnessio/filters':
         specifier: workspace:*
         version: link:../filters

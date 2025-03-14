@@ -61,6 +61,7 @@
     "@git-diff-view/react": "^0.0.21",
     "@git-diff-view/shiki": "^0.0.21",
     "@harnessio/filters": "workspace:*",
+    "@harnessio/core-design-system": "workspace:*",
     "@harnessio/pipeline-graph": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
     "@hookform/resolvers": "^3.6.0",

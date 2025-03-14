@@ -1,0 +1,96 @@
+{
+  "brand": {
+    "color": {
+      "50": {
+        "$type": "color",
+        "$value": "{colors.cyan.50}"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "{colors.cyan.100}"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "{colors.cyan.200}"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "{colors.cyan.300}"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "{colors.cyan.400}"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "{colors.cyan.500}"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "{colors.cyan.600}"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "{colors.cyan.700}"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "{colors.cyan.800}"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "{colors.cyan.900}"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "{colors.cyan.950}"
+      }
+    },
+    "onColor": {
+      "50": {
+        "$type": "color",
+        "$value": "{colors.chrome.950}"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "{colors.chrome.950}"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "{colors.chrome.950}"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "{colors.chrome.950}"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "{colors.chrome.950}"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "{colors.pure.white}"
+      }
+    }
+  }
+}

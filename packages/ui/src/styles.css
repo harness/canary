@@ -1,4 +1,7 @@
-@import url('./styles/core-styles.css');
+/* @import url('./styles/core-styles.css');
+ */
+
+@import url('@harnessio/core-design-system/styles');
 
 @tailwind base;
 @tailwind components;

@@ -305,6 +305,11 @@ export default {
             backgroundColor: 'var(--canary-component-badge-running-background)',
             borderColor: 'var(--canary-component-badge-running-border)'
           },
+          '&-harness': {
+            color: 'var(--canary-component-badge-running-text)',
+            backgroundColor: 'var(--canary-component-badge-running-background)',
+            borderColor: 'var(--canary-component-badge-running-border)'
+          },
           '&-merged': {
             color: 'var(--canary-component-badge-merged-text)',
             backgroundColor: 'var(--canary-component-badge-merged-background)',

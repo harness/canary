@@ -16,22 +16,23 @@ interface ConnectorsPaletteProps {
   requestClose: () => void
   setFormEntity: (formEntity: any) => void
   setRightDrawer: (value: ConnectorRightDrawer) => void
+  standalone?: boolean
 }
 
 export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element => {
-  const { connectors, requestClose, setFormEntity, setRightDrawer } = props
+  const { connectors, requestClose, setFormEntity, setRightDrawer, standalone } = props
 
   const [query, setQuery] = useState('')
 
   const connectorsFiltered = useMemo(
-    () => connectors.filter(connector => connector.identifier.includes(query)),
+    () => connectors.filter((connector: { identifier: string | string[] }) => connector.identifier.includes(query)),
     [query, harnessConnectors]
   )
 
   return (
     <StepsPaletteLayout.Root>
       <StepsPaletteLayout.Header>
-        <StepsPaletteLayout.Title>Add Connector</StepsPaletteLayout.Title>
+        {standalone && <StepsPaletteLayout.Title>Add Connector</StepsPaletteLayout.Title>}
         <Input
           placeholder="Search"
           onChange={value => {

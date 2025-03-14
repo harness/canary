@@ -33,6 +33,9 @@ export enum ConnectorRightDrawer {
   Collection = 'palette',
   Form = 'connectorForm'
 }
+
+export type HarnessConnectorDefinitionType = AnyConnectorDefinition<HARNESS_CONNECTOR_IDENTIFIER>
+
 export const GITHUB_CONNECTOR_IDENTIFIER = 'Github Connector'
 export const TERRAFORM_CONNECTOR_IDENTIFIER = 'Terraform Connector'
 export const AWS_KMS_CONNECTOR_IDENTIFIER = 'AWS KMS Connector'
@@ -50,8 +53,8 @@ export type HARNESS_CONNECTOR_IDENTIFIER =
   | typeof TERRAFORM_CONNECTOR_IDENTIFIER
   | typeof AWS_KMS_CONNECTOR_IDENTIFIER
 
-export type AnyConnectorDefinition = {
-  identifier: string
+export type AnyConnectorDefinition<T = string> = {
+  identifier: T
   description: string
   formDefinition: IFormDefinition<InputConfigType>
 }

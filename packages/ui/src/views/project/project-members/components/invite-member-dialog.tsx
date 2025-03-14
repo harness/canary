@@ -6,17 +6,24 @@ import { PrincipalType } from '@/types'
 import { InviteMemberDialogProps, InviteMemberFormFields, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInitials } from '@utils/stringUtils'
+import { makeValidationUtils } from '@utils/validation'
 import { getRolesData } from '@views/project/project-members/constants'
 import { z } from 'zod'
 
-export const makeInviteMemberFormSchema = (t: TranslationStore['t']) =>
-  z.object({
+export const makeInviteMemberFormSchema = (t: TranslationStore['t']) => {
+  const { required } = makeValidationUtils(t)
+
+  return z.object({
     member: z
       .string()
       .trim()
-      .nonempty(t('views:repos.inviteMemberDialog.validation.memberNoEmpty', 'Member name is required')),
-    role: z.string().trim().nonempty(t('views:repos.inviteMemberDialog.validation.roleNoEmpty', 'Role is required'))
+      .nonempty(required(t('views:projectSettings.member', 'Member'))),
+    role: z
+      .string()
+      .trim()
+      .nonempty(required(t('views:projectSettings.role', 'Role')))
   })
+}
 
 interface PrincipalOptionProps {
   principal: PrincipalType

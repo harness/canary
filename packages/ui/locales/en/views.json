@@ -22,12 +22,6 @@
     "executions": "Executions",
     "generalTab": "General",
     "keysTab": "Keys and tokens",
-    "inviteMemberDialog": {
-      "validation": {
-        "memberNoEmpty": "Member name is required",
-        "roleNoEmpty": "Role is required"
-      }
-    },
     "default": "Default",
     "viewAll": "View all {{type}}",
     "branchesLowercase": "branches",
@@ -108,7 +102,6 @@
     "createRuleButton": "Create rule",
     "updatingRule": "Updating rule...",
     "creatingRuleButton": "Creating rule...",
-    "rules": "Rules",
     "branch": "Branch",
     "update": "Updated",
     "checkStatus": "Check status",
@@ -120,33 +113,26 @@
     "browse": "Browse",
     "deleteBranch": "Delete Branch",
     "createBranchDialog": {
+      "branchNameLabel": "Branch name",
       "validation": {
-        "nameNoEmpty": "Branch name can’t be blank",
-        "nameMax": "Branch name must be no longer than 256 characters",
-        "nameRegex": "Branch name must contain only letters, numbers, and the characters: - _ .",
-        "nameNoSpaces": "Branch name cannot contain spaces",
-        "targetNoEmpty": "Target branch can’t be blank"
-      }
+        "target": "Target branch"
+      },
+      "branchNamePlaceholder": "Enter branch name"
     },
     "createBranchTitle": "Create a branch",
     "createBranchButton": "Create branch",
     "newBranch": "New branch",
     "repoCreate": {
+      "nameLabel": "Name",
+      "descriptionLabel": "Description",
       "validation": {
-        "nameNoEmpty": "Name can’t be blank",
-        "nameMax": "Name must be no longer than 100 characters",
-        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
-        "nameNoSpaces": "Name cannot contain spaces",
-        "descriptionMax": "Description must be no longer than 1024 characters",
         "access": "Please select who has access"
       },
       "title": "Create a new repository",
       "description": "A repository contains all project files, including the revision history. Already have a project repository elsewhere?",
       "importRepo": "Import a repository",
-      "nameLabel": "Name",
       "namePlaceholder": "Enter repository name",
       "descriptionPlaceholder": "Enter a description of this repository",
-      "descriptionLabel": "Description",
       "gitignorePlaceholder": "Select",
       "gitignoreLabel": "Add .gitignore",
       "gitignoreCaption": "Choose which files not to track from a list of templates.",
@@ -166,26 +152,21 @@
         "readmeDescription": "This is where you can write a long description for your project"
       },
       "create": {
-        "create": "Creating repository..."
+        "create": "Create repository",
+        "creating": "Creating repository..."
       },
       "cancel": "Cancel"
     },
     "emptyRepo": "This repository is empty.",
     "importRepo": {
-      "validation": {
-        "providerNoEmpty": "Please enter a repository name",
-        "organizationNoEmpty": "Please enter an organization name",
-        "workspaceNoEmpty": "Please enter a Workspace",
-        "groupNoEmpty": "Please enter a Group",
-        "hostUrlNoEmpty": "Please enter a Host URL",
-        "hostUrlInvalid": "Invalid URL",
-        "projectNoEmpty": "Please enter a Project",
-        "repoUrlNoEmpty": "Please enter the Repository URL"
-      },
+      "providerLabel": "Git provider",
+      "organizationLabel": "Organization",
+      "hostLabel": "Host URL",
+      "workspaceLabel": "Workspace",
+      "groupLabel": "Group",
+      "projectLabel": "Project",
       "importMultipleTitle": "Import Repositories",
       "providerPlaceholder": "Select",
-      "providerLabel": "Git provider",
-      "hostLabel": "Host URL",
       "hostPlaceholder": "Enter the host URL",
       "usernameLabel": "Username",
       "usernamePlaceholder": "Enter your username",
@@ -195,13 +176,9 @@
         "passwordPlaceholder": "Enter your password",
         "tokenPlaceholder": "Enter your access token"
       },
-      "groupLabel": "Group",
       "groupPlaceholder": "Enter the group name",
-      "workspaceLabel": "Workspace",
       "workspacePlaceholder": "Enter the workspace name",
-      "organizationLabel": "Organization",
       "organizationPlaceholder": "Enter the organization name",
-      "projectLabel": "Project",
       "projectPlaceholder": "Enter the project name",
       "repositoriesOption": "Repositories",
       "pipelinesOption": "Pipelines",
@@ -210,12 +187,12 @@
         "importing": "Importing repositories..."
       },
       "cancelButton": "Cancel",
-      "importTitle": "Import a repository",
+      "repositoryNameLabel": "Repository name",
       "repositoryLabel": "Repository",
+      "importTitle": "Import a repository",
       "repositoryPlaceholder": "Enter the repository name",
       "authorizationOption": "Authorization",
       "importPipelinesOption": "Import Pipelines",
-      "repositoryNameLabel": "Repository name",
       "repositoryNamePlaceholder": "Enter the repository name",
       "repositoryDescriptionLabel": "Description",
       "repositoryDescriptionPlaceholder": "Enter the repository description",
@@ -245,6 +222,7 @@
     "rulesApplied": "rules applied",
     "bypassAllowed": "bypass allowed",
     "bypassNotAllowed": " bypass not allowed",
+    "rules": "Rules",
     "rulesDescription": "Define standards and automate workflows to ensure better collaboration and control in your repository.",
     "newRule": "New branch rule",
     "settingsToolTip": "Cannot change settings while loading or updating.",
@@ -336,16 +314,23 @@
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
-  "signIn": {
+  "utils": {
     "validation": {
-      "emailNoEmpty": "Field can’t be blank",
-      "passwordNoEmpty": "Password can’t be blank"
-    },
+      "required": "{{name}} is required",
+      "invalid": "{{name}} is invalid",
+      "minLength": "{{name}} must be at least {{length}} characters",
+      "maxLength": "{{name}} must be no longer than {{length}} characters",
+      "specialSymbols": "{{name}} must contain only letters, numbers, and the characters: - _ .",
+      "noSpaces": "{{name}} cannot contain spaces"
+    }
+  },
+  "signIn": {
+    "emailTitle": "Username/Email",
+    "passwordTitle": "Password",
+    "checkDetails": "Please check your details",
     "pageTitle": "Sign in to Harness",
     "pageDescription": "Welcome back! Please enter your details.",
-    "emailTitle": "Username/Email",
     "emailDescription": "Your email",
-    "passwordTitle": "Password",
     "passwordDescription": "Password",
     "buttonText": {
       "signingIn": "Signing in...",
@@ -357,25 +342,17 @@
     }
   },
   "signUp": {
+    "userIDPlaceholder": "User ID",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
     "validation": {
-      "userIDNoEmpty": "User ID can’t be blank",
-      "userIDMax": "User ID must be no longer than 100 characters",
-      "userIDRegex": "User ID must contain only letters, numbers, and the characters: - _ .",
-      "userIDNoSpaces": "User ID cannot contain spaces",
-      "emailNoEmpty": "Invalid email address",
-      "emailMax": "Email must be no longer than 250 characters",
-      "passwordNoEmpty": "Password must be at least 6 characters",
-      "passwordMax": "Password must be no longer than 128 characters",
       "passwordsCheck": "Passwords don't match"
     },
     "pageTitle": "Sign up to Harness",
     "pageDescription": "Let’s start your journey with us today.",
-    "userIDPlaceholder": "User ID",
     "userIDLabel": "User ID",
     "emailPlaceholder": "Your email",
-    "emailLabel": "Email",
     "passwordPlaceholder": "Password (6+ characters)",
-    "passwordLabel": "Password",
     "confirmPasswordPlaceholder": "Confirm password",
     "confirmPasswordLabel": "Confirm password",
     "buttonText": {
@@ -426,11 +403,11 @@
   "projectSettings": {
     "newLabels": "Create label",
     "general": {
+      "projectNameLabel": "Project name",
+      "projectDescriptionLabel": "Description",
       "mainTitle": "General settings",
       "projectNamePlaceholder": "Enter project name",
-      "projectNameLabel": "Project name",
       "projectDescriptionPlaceholder": "Enter description (optional)",
-      "projectDescriptionLabel": "Description",
       "formSubmitButton": {
         "savingState": "Saving...",
         "defaultState": "Save changes",
@@ -441,9 +418,9 @@
       "deleteProjectDescription": "This will permanently delete this project, and everything contained in it. All repositories in it will also be deleted.",
       "deleteProjectButton": "Delete project"
     },
-    "newMember": "New member",
     "member": "Member",
     "role": "Role",
+    "newMember": "New member",
     "addMember": "Add member to this project",
     "membersTable": {
       "user": "User",
@@ -487,8 +464,7 @@
     "compareChangesFormDescriptionLabel": "Description",
     "compare": {
       "validation": {
-        "titleNoEmpty": "Pull request title can’t be blank",
-        "titleMax": "Pull request title must be no longer than 256 characters"
+        "title": "Pull request title"
       }
     },
     "compareChanges": "Comparing changes",
@@ -550,19 +526,11 @@
   },
   "pipelines": {
     "createPipelineDialog": {
-      "validation": {
-        "nameMin": "Pipeline name is required",
-        "nameMax": "Pipeline name must be no longer than 100 characters",
-        "nameRegex": "Pipeline name must contain only letters, numbers, and the characters: - _ .",
-        "noSpaces": "Pipeline name cannot contain spaces",
-        "branchNameRequired": "Branch name is required",
-        "yamlPathRequired": "YAML path is required"
-      },
-      "dialogTitle": "Create Pipeline",
       "nameLabel": "Pipeline name",
-      "yamlPathLabel": "Yaml path",
-      "branchPlaceholder": "Select",
       "branchLabel": "Branch",
+      "yamlPathLabel": "Yaml path",
+      "dialogTitle": "Create Pipeline",
+      "branchPlaceholder": "Select",
       "cancelButton": "Cancel",
       "createButton": "Create Pipeline"
     }
@@ -570,15 +538,12 @@
   "profileSettings": {
     "sshKey": {
       "validation": {
-        "nameMin": "Please provide key name",
-        "nameMax": "Name must be no longer than 100 characters",
-        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
-        "noSpaces": "Name cannot contain spaces",
-        "expiration": "Please add the public key"
+        "name": "Key name"
       },
+      "publicKey": "Public key",
       "newSshKey": "New SSH key",
       "enterNamePlaceholder": "Enter the name",
-      "publicKey": "Public key",
+      "enterPublicKeyPlaceholder": "Enter the public key",
       "cancel": "Cancel",
       "save": "Save"
     },
@@ -588,13 +553,8 @@
     "deleteSshKey": "Delete SSH key",
     "noDataKeysDescription": "There are no SSH keys associated with this account.",
     "createTokenDialog": {
-      "validation": {
-        "nameMin": "Please provide token name",
-        "nameMax": "Name must be no longer than 100 characters",
-        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
-        "noSpaces": "Name cannot contain spaces",
-        "expiration": "Please select the expiration"
-      },
+      "nameLabel": "Name",
+      "expirationLabel": "Expiration",
       "expirationOptions": {
         "7_days": "7 days",
         "30_days": "30 days",
@@ -606,11 +566,9 @@
       "tokenExpiryDate": "Token will expire on",
       "title": "Create a token",
       "namePlaceholder": "Enter token name",
-      "nameLabel": "Name",
       "expiration": "Expiration",
       "tokenFieldLabel": "Token",
       "successDescription": "Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t be able to see it again.",
-      "expirationLabel": "Expiration",
       "expirationPlaceholder": "Select",
       "gotItButton": "Got it",
       "cancelButton": "Cancel",
@@ -625,31 +583,22 @@
     "noExpiration": "No Expiration",
     "deleteToken": "Delete token",
     "noTokenDescription": "There are no personal access tokens associated with this account.",
+    "username": "Username",
+    "accountEmail": "Account email",
+    "newPassword": "New password",
     "validation": {
-      "nameMin": "Please provide your name",
-      "nameMax": "Name must be no longer than 256 characters",
-      "usernameMin": "Please provide a username",
-      "emailInvalid": "Please provide a valid email address",
-      "emailMax": "Email must be no longer than 250 characters",
-      "passwordMin": "New password must be at least 6 characters",
-      "passwordMax": "New password must be no longer than 128 characters",
-      "confirmPasswordMin": "Please confirm your new password",
       "passwordsDoNotMatch": "Passwords do not match"
     },
     "accountSettings": "Account settings",
     "personalInfo": "Personal information",
     "enterNamePlaceholder": "Enter your name",
     "enterUsernamePlaceholder": "Enter your username",
-    "username": "Username",
-    "enterUsernameCaption": "This username will be shown across the platform.",
-    "accountEmail": "Account email",
     "updatingProfileButton": "Updating...",
     "updateProfileButton": "Update profile",
     "updatedButton": "Updated",
     "passwordSettingsTitle": "Password settings",
     "passwordSettingsDesc": "Minimum of 6 characters long containing at least one number and a mixture of uppercase and lowercase letters.",
     "enterPasswordPlaceholder": "Enter a new password",
-    "newPassword": "New password",
     "confirmPasswordPlaceholder": "Confirm your new password",
     "confirmPassword": "Confirm password",
     "updating": "Updating...",
@@ -660,18 +609,19 @@
     "addToken": "Add new token",
     "sshKeys": "My SSH keys",
     "addSshKeyDescription": "SSH keys allow you to establish a secure connection to your code repository.",
-    "addSshKey": "Add new SSH key"
+    "addSshKey": "Add new SSH key",
+    "enterUsernameCaption": "This username will be shown across the platform."
   },
   "createProject": {
+    "form": {
+      "name": "Project name",
+      "description": "Description",
+      "namePlaceholder": "Enter your project name",
+      "descriptionPlaceholder": "Enter a description (optional)"
+    },
     "backButton": "Back",
     "title": "Create your new project",
     "description": "Organize your repositories, pipelines and more.",
-    "form": {
-      "name": "Project name",
-      "namePlaceholder": "Enter your project name",
-      "description": "Description",
-      "descriptionPlaceholder": "Enter a description (optional)"
-    },
     "create": {
       "projectCreation": "Creating project...",
       "createProject": "Create project"
@@ -679,44 +629,23 @@
     "logout": {
       "question": "Want to use a different account?",
       "link": "Log out"
-    },
-    "validation": {
-      "nameNoEmpty": "The field can’t be blank",
-      "nameMinLength": "The project name should be at least 4 characters",
-      "nameMax": "Name must be no longer than 100 characters",
-      "nameRegex": "Pipeline name must contain only letters, numbers, and the characters: - _ .",
-      "noSpaces": "Pipeline name cannot contain spaces",
-      "descriptionMax": "Description must be no longer than 1024 characters"
     }
   },
   "importProject": {
-    "validation": {
-      "nameNoEmpty": "Please enter a project name",
-      "nameMax": "Name must be no longer than 100 characters",
-      "nameRegex": "Organization name must contain only letters, numbers, and the characters: - _ .",
-      "nameNoSpaces": "Name cannot contain spaces",
-      "descriptionMax": "Description must be no longer than 1024 characters",
-      "providerNoEmpty": "Please select a provider",
-      "organizationNoEmpty": "Please enter an organization",
-      "organizationNameMax": "Organization name must be no longer than 100 characters",
-      "noSpaces": "Organization name cannot contain spaces",
-      "hostUrlRequired": "Repository URL is required",
-      "hostUrlInvalid": "Invalid URL"
-    },
+    "projectNameLabel": "Name",
+    "descriptionLabel": "Description",
+    "gitProviderLabel": "Git provider",
+    "organizationLabel": "Organization",
+    "hostUrlLabel": "Host URL",
     "title": "Import a project",
     "gitProviderPlaceholder": "Select provider",
-    "gitProviderLabel": "Git provider",
-    "hostUrlLabel": "Host URL",
     "hostUrlPlaceholder": "Enter the host URL",
     "tokenLabel": "Token",
     "tokenPlaceholder": "Enter your access token",
-    "organizationLabel": "Organization",
     "organizationPlaceholder": "Enter the organization name",
     "repositoriesLabel": "Repositories",
     "pipelinesLabel": "Import Pipelines",
-    "projectNameLabel": "Name",
     "projectNamePlaceholder": "Enter repository name",
-    "descriptionLabel": "Description",
     "descriptionPlaceholder": "Enter a description",
     "importButton": {
       "default": "Import project",
@@ -727,17 +656,8 @@
   "forms": {
     "selectMember": "Select member",
     "selectRole": "Select role",
-    "enterBranchName": "Enter branch name",
-    "createBranchError": "Branch name is required",
-    "enterTagName": "Enter a tag name here",
-    "tagName": "Name",
-    "basedOn": "Based on",
-    "select": "Select",
-    "baseBranch": "Base branch",
-    "selectBranchError": "Base branch is required",
-    "baseTag": "Based on",
-    "selectMemberError": "Member is required",
-    "selectRoleError": "Role is required"
+    "enterTagName": "Enter tag name",
+    "createBranchError": ""
   },
   "roles": {
     "owner": "Owner",
@@ -794,8 +714,7 @@
       "validation": {
         "userIdRequired": "Please provide a user ID",
         "invalidEmail": "Please enter a valid email address",
-        "displayNameRequired": "Please provide a display name",
-        "emailInvalid": "Please enter a valid email"
+        "displayNameRequired": "Please provide a display name"
       }
     },
     "userId": "User ID",

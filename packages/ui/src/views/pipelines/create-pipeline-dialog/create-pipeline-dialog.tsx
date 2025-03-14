@@ -4,43 +4,32 @@ import { useForm } from 'react-hook-form'
 import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Select } from '@/components'
 import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 import { ICreatePipelineStore } from './types'
 
-export const makeCreatePipelineSchema = (t: TranslationStore['t']) =>
-  z.object({
+export const makeCreatePipelineSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, specialSymbols, noSpaces } = makeValidationUtils(t)
+
+  return z.object({
     name: z
       .string()
       .trim()
-      .nonempty(t('views:pipelines.createPipelineDialog.validation.nameMin', 'Pipeline name is required'))
-      .max(
-        100,
-        t(
-          'views:pipelines.createPipelineDialog.validation.nameMax',
-          'Pipeline name must be no longer than 100 characters'
-        )
-      )
-      .regex(
-        /^[a-zA-Z0-9._-\s]+$/,
-        t(
-          'views:pipelines.createPipelineDialog.validation.nameRegex',
-          'Pipeline name must contain only letters, numbers, and the characters: - _ .'
-        )
-      )
-      .refine(
-        data => !data.includes(' '),
-        t('views:pipelines.createPipelineDialog.validation.noSpaces', 'Pipeline name cannot contain spaces')
-      ),
+      .nonempty(required(t('views:pipelines.createPipelineDialog.nameLabel')))
+      .max(...maxLength(100, t('views:pipelines.createPipelineDialog.nameLabel')))
+      .regex(...specialSymbols(t('views:pipelines.createPipelineDialog.nameLabel')))
+      .refine(...noSpaces(t('views:pipelines.createPipelineDialog.nameLabel'))),
     branch: z
       .string()
       .trim()
-      .nonempty(t('views:pipelines.createPipelineDialog.validation.branchNameRequired', 'Branch name is required')),
+      .nonempty(required(t('views:pipelines.createPipelineDialog.branchLabel'))),
     yamlPath: z
       .string()
       .trim()
-      .nonempty(t('views:pipelines.createPipelineDialog.validation.yamlPathRequired', 'YAML path is required'))
+      .nonempty(required(t('views:pipelines.createPipelineDialog.yamlPathLabel')))
   })
+}
 
 export type CreatePipelineFormType = z.infer<ReturnType<typeof makeCreatePipelineSchema>>
 

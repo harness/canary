@@ -16,6 +16,7 @@ import {
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeFloatValidationUtils, makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 import { ProviderOptionsEnum } from './types'
@@ -41,15 +42,15 @@ const checkProvider = (provider: ProviderOptionsEnum) => ({
   isAuthorizationRequired: [ProviderOptionsEnum.BITBUCKET, ProviderOptionsEnum.AZURE_DEVOPS].includes(provider)
 })
 
-const makeImportMultipleReposFormSchema = (t: TranslationStore['t']) =>
-  z
+const makeImportMultipleReposFormSchema = (t: TranslationStore['t']) => {
+  const { required } = makeValidationUtils(t)
+
+  return z
     .object({
       hostUrl: z.string().trim().optional(),
       pipelines: z.boolean().optional(),
       repositories: z.boolean().optional(),
-      provider: z.nativeEnum(ProviderOptionsEnum, {
-        message: t('views:repos.importRepo.validation.providerNoEmpty', 'Please select a provider')
-      }),
+      provider: z.nativeEnum(ProviderOptionsEnum, { message: required(t('views:repos.importRepo.providerLabel')) }),
       password: z.string().trim().optional(),
       organization: z.string().trim().optional(),
       group: z.string().trim().optional(),
@@ -60,59 +61,59 @@ const makeImportMultipleReposFormSchema = (t: TranslationStore['t']) =>
     .superRefine(({ hostUrl, provider, organization, group, workspace, project }, ctx) => {
       const { isGitlab, isBitbucket, isHostUrlRequired, isProjectRequired, isOrganizationRequired } =
         checkProvider(provider)
+      const makeValidators = makeFloatValidationUtils(t, ctx)
 
-      if (isOrganizationRequired && !organization) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['organization'],
-          message: t('views:repos.importRepo.validation.organizationNoEmpty', 'Please enter an organization name')
+      if (isOrganizationRequired) {
+        const { noSpacesFloat, requiredFloat } = makeValidators({
+          value: organization,
+          path: 'organization',
+          name: t('views:repos.importRepo.organizationLabel')
         })
-      }
-
-      if (isBitbucket && !workspace) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['workspace'],
-          message: t('views:repos.importRepo.validation.workspaceNoEmpty', 'Please enter a Workspace')
-        })
-      }
-
-      if (isGitlab && !group) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['group'],
-          message: t('views:repos.importRepo.validation.groupNoEmpty', 'Please enter a Group')
-        })
+        requiredFloat()
+        noSpacesFloat()
       }
 
       if (isHostUrlRequired) {
-        if (!hostUrl) {
-          ctx.addIssue({
-            code: 'custom',
-            path: ['hostUrl'],
-            message: t('views:repos.importRepo.validation.hostUrlNoEmpty', 'Please enter a Host URL')
-          })
-        } else {
-          try {
-            new URL(hostUrl)
-          } catch (error) {
-            ctx.addIssue({
-              code: 'custom',
-              path: ['hostUrl'],
-              message: t('views:repos.importRepo.validation.hostUrlInvalid', 'Invalid URL')
-            })
-          }
-        }
+        const { requiredFloat, urlFloat } = makeValidators({
+          value: hostUrl,
+          path: 'hostUrl',
+          name: t('views:repos.importRepo.hostLabel')
+        })
+        requiredFloat()
+        urlFloat()
       }
 
-      if (isProjectRequired && !project) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['project'],
-          message: t('views:repos.importRepo.validation.projectNoEmpty', 'Please enter a Project')
+      if (isBitbucket) {
+        const { requiredFloat, noSpacesFloat } = makeValidators({
+          value: workspace,
+          path: 'workspace',
+          name: t('views:repos.importRepo.workspaceLabel')
         })
+        requiredFloat()
+        noSpacesFloat()
+      }
+
+      if (isGitlab) {
+        const { requiredFloat, noSpacesFloat } = makeValidators({
+          value: group,
+          path: 'group',
+          name: t('views:repos.importRepo.groupLabel')
+        })
+        requiredFloat()
+        noSpacesFloat()
+      }
+
+      if (isProjectRequired) {
+        const { requiredFloat, noSpacesFloat } = makeValidators({
+          value: project,
+          path: 'project',
+          name: t('views:repos.importRepo.projectLabel')
+        })
+        requiredFloat()
+        noSpacesFloat()
       }
     })
+}
 
 export type ImportMultipleReposFormFields = z.infer<ReturnType<typeof makeImportMultipleReposFormSchema>>
 

@@ -22,12 +22,6 @@
     "executions": "Executions",
     "generalTab": "General",
     "keysTab": "Keys and tokens",
-    "inviteMemberDialog": {
-      "validation": {
-        "memberNoEmpty": "Le nom du membre est requis",
-        "roleNoEmpty": "Le rôle est requis"
-      }
-    },
     "default": "Par défaut",
     "viewAll": "Voir tous les {{type}}",
     "branchesLowercase": "branches",
@@ -108,7 +102,6 @@
     "createRuleButton": "Créer la règle",
     "updatingRule": "Mise à jour de la règle...",
     "creatingRuleButton": "Création de la règle...",
-    "rules": "Règles",
     "branch": "Branche",
     "update": "Mettre à jour",
     "checkStatus": "Vérifier le statut",
@@ -117,36 +110,29 @@
     "pullRequest": "Pull Request",
     "newPullReq": "Nouvelle requête de tirage",
     "viewRules": "Voir les règles",
-    "browse": "Browse",
-    "deleteBranch": "Delete Branch",
+    "browse": "Parcourir",
+    "deleteBranch": "Supprimer la branche",
     "createBranchDialog": {
+      "branchNameLabel": "Nom de la branche",
       "validation": {
-        "nameNoEmpty": "Le nom de la branche ne peut pas être vide",
-        "nameMax": "Le nom de la branche ne doit pas dépasser 256 caractères",
-        "nameRegex": "Le nom de la branche doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
-        "nameNoSpaces": "Le nom de la branche ne peut pas contenir d'espaces",
-        "targetNoEmpty": "La branche cible ne peut pas être vide"
-      }
+        "target": "Branche cible"
+      },
+      "branchNamePlaceholder": "Entrez le nom de la branche"
     },
     "createBranchTitle": "Créer une branche",
     "createBranchButton": "Créer une branche",
     "newBranch": "Nouvelle branche",
     "repoCreate": {
+      "nameLabel": "Nom",
+      "descriptionLabel": "Description",
       "validation": {
-        "nameNoEmpty": "Le nom ne peut pas être vide",
-        "nameMax": "Le nom ne doit pas dépasser 100 caractères",
-        "nameRegex": "Le nom doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
-        "nameNoSpaces": "Le nom ne peut pas contenir d'espaces",
-        "descriptionMax": "La description ne doit pas dépasser 1024 caractères",
         "access": "Veuillez sélectionner qui a accès"
       },
       "title": "Créer un nouveau dépôt",
       "description": "Un dépôt contient tous les fichiers du projet, y compris l'historique des révisions. Vous avez déjà un dépôt de projet ailleurs ?",
       "importRepo": "Importer un dépôt",
-      "nameLabel": "Nom",
       "namePlaceholder": "Entrez le nom du dépôt",
       "descriptionPlaceholder": "Entrez une description de ce dépôt",
-      "descriptionLabel": "Description",
       "gitignorePlaceholder": "Sélectionner",
       "gitignoreLabel": "Ajouter .gitignore",
       "gitignoreCaption": "Choisissez quels fichiers ne pas suivre à partir d'une liste de modèles.",
@@ -166,26 +152,21 @@
         "readmeDescription": "C'est ici que vous pouvez écrire une longue description pour votre projet"
       },
       "create": {
-        "create": "Création du dépôt..."
+        "create": "Créer un dépôt",
+        "creating": "Création du dépôt..."
       },
       "cancel": "Annuler"
     },
     "emptyRepo": "Ce référentiel est vide.",
     "importRepo": {
-      "validation": {
-        "providerNoEmpty": "Veuillez saisir un nom de dépôt",
-        "organizationNoEmpty": "Veuillez saisir un nom d'organisation",
-        "workspaceNoEmpty": "Veuillez saisir un espace de travail",
-        "groupNoEmpty": "Veuillez saisir un groupe",
-        "hostUrlNoEmpty": "Veuillez saisir une URL d'hôte",
-        "hostUrlInvalid": "URL invalide",
-        "projectNoEmpty": "Veuillez saisir un projet",
-        "repoUrlNoEmpty": "Veuillez saisir l'URL du dépôt"
-      },
+      "providerLabel": "Fournisseur Git",
+      "organizationLabel": "Organisation",
+      "hostLabel": "URL d'hôte",
+      "workspaceLabel": "Espace de travail",
+      "groupLabel": "Groupe",
+      "projectLabel": "Projet",
       "importMultipleTitle": "Importer des dépôts",
       "providerPlaceholder": "Sélectionner",
-      "providerLabel": "Fournisseur Git",
-      "hostLabel": "URL d'hôte",
       "hostPlaceholder": "Entrez l'URL d'hôte",
       "usernameLabel": "Nom d'utilisateur",
       "usernamePlaceholder": "Entrez votre nom d'utilisateur",
@@ -195,13 +176,9 @@
         "passwordPlaceholder": "Entrez votre mot de passe",
         "tokenPlaceholder": "Entrez votre jeton d'accès"
       },
-      "groupLabel": "Groupe",
       "groupPlaceholder": "Entrez le nom du groupe",
-      "workspaceLabel": "Espace de travail",
       "workspacePlaceholder": "Entrez le nom de l'espace de travail",
-      "organizationLabel": "Organisation",
       "organizationPlaceholder": "Entrez le nom de l'organisation",
-      "projectLabel": "Projet",
       "projectPlaceholder": "Entrez le nom du projet",
       "repositoriesOption": "Dépôts",
       "pipelinesOption": "Pipelines",
@@ -210,12 +187,12 @@
         "importing": "Importation des dépôts..."
       },
       "cancelButton": "Annuler",
-      "importTitle": "Importer un dépôt",
+      "repositoryNameLabel": "Nom du dépôt",
       "repositoryLabel": "Dépôt",
+      "importTitle": "Importer un dépôt",
       "repositoryPlaceholder": "Entrez le nom du dépôt",
       "authorizationOption": "Autorisation",
       "importPipelinesOption": "Importer les pipelines",
-      "repositoryNameLabel": "Nom du dépôt",
       "repositoryNamePlaceholder": "Entrez le nom du dépôt",
       "repositoryDescriptionLabel": "Description",
       "repositoryDescriptionPlaceholder": "Entrez la description du dépôt",
@@ -245,6 +222,7 @@
     "rulesApplied": "Règles appliquées",
     "bypassAllowed": "Contournement autorisé",
     "bypassNotAllowed": "Contournement non autorisé",
+    "rules": "Règles",
     "rulesDescription": "Define standards and automate workflows to ensure better collaboration and control in your repository.",
     "newRule": "Nouvelle règle de branche",
     "settingsToolTip": "Impossible de modifier les paramètres lors du chargement ou de la mise à jour.",
@@ -335,16 +313,23 @@
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
-  "signIn": {
+  "utils": {
     "validation": {
-      "emailNoEmpty": "Le champ ne peut pas être vide",
-      "passwordNoEmpty": "Le mot de passe ne peut pas être vide"
-    },
+      "required": "{{name}} est requis",
+      "invalid": "{{name}} est invalide",
+      "minLength": "{{name}} doit comporter au moins {{length}} caractères",
+      "maxLength": "{{name}} ne doit pas dépasser {{length}} caractères",
+      "specialSymbols": "{{name}} doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
+      "noSpaces": "{{name}} ne peut pas contenir d'espaces"
+    }
+  },
+  "signIn": {
+    "emailTitle": "Nom d'utilisateur/Adresse e-mail",
+    "passwordTitle": "Mot de passe",
+    "checkDetails": "Please check your details",
     "pageTitle": "Se connecter à Harness",
     "pageDescription": "Bienvenue ! Veuillez entrer vos informations.",
-    "emailTitle": "Nom d'utilisateur/Adresse e-mail",
     "emailDescription": "Votre adresse e-mail",
-    "passwordTitle": "Mot de passe",
     "passwordDescription": "Mot de passe",
     "buttonText": {
       "signingIn": "Connexion en cours...",
@@ -356,25 +341,17 @@
     }
   },
   "signUp": {
+    "userIDPlaceholder": "ID utilisateur",
+    "emailLabel": "Adresse e-mail",
+    "passwordLabel": "Mot de passe",
     "validation": {
-      "userIDNoEmpty": "L'ID utilisateur ne peut pas être vide",
-      "userIDMax": "L'ID utilisateur ne doit pas dépasser 100 caractères",
-      "userIDRegex": "L'ID utilisateur doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
-      "userIDNoSpaces": "L'ID utilisateur ne peut pas contenir d'espaces",
-      "emailNoEmpty": "Adresse e-mail invalide",
-      "emailMax": "L'adresse e-mail ne doit pas dépasser 250 caractères",
-      "passwordNoEmpty": "Le mot de passe doit avoir au moins 6 caractères",
-      "passwordMax": "Le mot de passe ne doit pas dépasser 128 caractères",
       "passwordsCheck": "Les mots de passe ne correspondent pas"
     },
     "pageTitle": "S'inscrire à Harness",
     "pageDescription": "Commencez votre aventure avec nous dès aujourd'hui.",
-    "userIDPlaceholder": "ID utilisateur",
     "userIDLabel": "ID utilisateur",
     "emailPlaceholder": "Votre adresse e-mail",
-    "emailLabel": "Adresse e-mail",
     "passwordPlaceholder": "Mot de passe (6 caractères minimum)",
-    "passwordLabel": "Mot de passe",
     "confirmPasswordPlaceholder": "Confirmer le mot de passe",
     "confirmPasswordLabel": "Confirmer le mot de passe",
     "buttonText": {
@@ -425,11 +402,11 @@
   "projectSettings": {
     "newLabels": "Créer une étiquette",
     "general": {
+      "projectNameLabel": "Nom du projet",
+      "projectDescriptionLabel": "Description",
       "mainTitle": "Paramètres généraux",
       "projectNamePlaceholder": "Entrer le nom du projet",
-      "projectNameLabel": "Nom du projet",
       "projectDescriptionPlaceholder": "Entrer une description (facultatif)",
-      "projectDescriptionLabel": "Description",
       "formSubmitButton": {
         "savingState": "Enregistrement...",
         "defaultState": "Enregistrer les modifications",
@@ -440,9 +417,9 @@
       "deleteProjectDescription": "Cela supprimera définitivement ce projet et tout ce qu'il contient. Tous les référentiels qu'il contient seront également supprimés.",
       "deleteProjectButton": "Supprimer le projet"
     },
-    "newMember": "Nouveau membre",
     "member": "Membre",
     "role": "Rôle",
+    "newMember": "Nouveau membre",
     "addMember": "Ajouter un membre à ce projet",
     "membersTable": {
       "user": "Utilisateur",
@@ -486,8 +463,7 @@
     "compareChangesFormDescriptionLabel": "Description",
     "compare": {
       "validation": {
-        "titleNoEmpty": "Le titre de la demande de tirage ne peut pas être vide",
-        "titleMax": "Le titre de la demande de tirage ne doit pas dépasser 256 caractères"
+        "title": "Titre de la demande de fusion"
       }
     },
     "compareChanges": "Comparaison des modifications",
@@ -545,19 +521,11 @@
   },
   "pipelines": {
     "createPipelineDialog": {
-      "validation": {
-        "nameMin": "Le nom du pipeline est requis",
-        "nameMax": "Le nom du pipeline ne doit pas dépasser 100 caractères",
-        "nameRegex": "Le nom du pipeline doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
-        "noSpaces": "Le nom du pipeline ne peut pas contenir d'espaces",
-        "branchNameRequired": "Le nom de la branche est requis",
-        "yamlPathRequired": "Le chemin YAML est requis"
-      },
-      "dialogTitle": "Créer un pipeline",
       "nameLabel": "Nom du pipeline",
-      "yamlPathLabel": "Chemin YAML",
-      "branchPlaceholder": "Sélectionner",
       "branchLabel": "Branche",
+      "yamlPathLabel": "Chemin YAML",
+      "dialogTitle": "Créer un pipeline",
+      "branchPlaceholder": "Sélectionner",
       "cancelButton": "Annuler",
       "createButton": "Créer le pipeline"
     }
@@ -565,15 +533,12 @@
   "profileSettings": {
     "sshKey": {
       "validation": {
-        "nameMin": "Veuillez fournir un nom de clé",
-        "nameMax": "Le nom ne doit pas dépasser 100 caractères",
-        "nameRegex": "Le nom doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
-        "noSpaces": "Le nom ne peut pas contenir d'espaces",
-        "expiration": "Veuillez ajouter la clé publique"
+        "name": "Nom de la clé"
       },
+      "publicKey": "Clé publique",
       "newSshKey": "Nouvelle clé SSH",
       "enterNamePlaceholder": "Entrer le nom",
-      "publicKey": "Clé publique",
+      "enterPublicKeyPlaceholder": "Entrez la clé publique",
       "cancel": "Annuler",
       "save": "Enregistrer"
     },
@@ -583,13 +548,8 @@
     "deleteSshKey": "Supprimer la clé SSH",
     "noDataKeysDescription": "Il n'y a pas de clés SSH associées à ce compte.",
     "createTokenDialog": {
-      "validation": {
-        "nameMin": "Veuillez fournir un nom de jeton",
-        "nameMax": "Le nom ne doit pas dépasser 100 caractères",
-        "nameRegex": "Le nom doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
-        "noSpaces": "Le nom ne peut pas contenir d'espaces",
-        "expiration": "Veuillez sélectionner la date d'expiration"
-      },
+      "nameLabel": "Nom",
+      "expirationLabel": "Expiration",
       "expirationOptions": {
         "7_days": "7 jours",
         "30_days": "30 jours",
@@ -601,11 +561,9 @@
       "tokenExpiryDate": "Le jeton expirera le",
       "title": "Créer un jeton",
       "namePlaceholder": "Entrer le nom du jeton",
-      "nameLabel": "Nom",
       "expiration": "Expiration",
       "tokenFieldLabel": "Jeton",
       "successDescription": "Votre jeton a été généré. Assurez-vous de copier et stocker votre jeton en lieu sûr, vous ne pourrez pas le voir à nouveau.",
-      "expirationLabel": "Expiration",
       "expirationPlaceholder": "Sélectionner",
       "gotItButton": "Compris",
       "cancelButton": "Annuler",
@@ -620,31 +578,22 @@
     "noExpiration": "Pas d'expiration",
     "deleteToken": "Supprimer le jeton",
     "noTokenDescription": "Il n'y a pas de jetons d'accès personnel associés à ce compte.",
+    "username": "Nom d'utilisateur",
+    "accountEmail": "Adresse e-mail du compte",
+    "newPassword": "Nouveau mot de passe",
     "validation": {
-      "nameMin": "Veuillez fournir votre nom",
-      "nameMax": "Le nom ne doit pas dépasser 256 caractères",
-      "usernameMin": "Veuillez fournir un nom d'utilisateur",
-      "emailInvalid": "Veuillez fournir une adresse e-mail valide",
-      "emailMax": "L'adresse e-mail ne doit pas dépasser 250 caractères",
-      "passwordMin": "Le nouveau mot de passe doit avoir au moins 6 caractères",
-      "passwordMax": "Le nouveau mot de passe ne doit pas dépasser 128 caractères",
-      "confirmPasswordMin": "Veuillez confirmer votre nouveau mot de passe",
       "passwordsDoNotMatch": "Les mots de passe ne correspondent pas"
     },
     "accountSettings": "Paramètres du compte",
     "personalInfo": "Informations personnelles",
     "enterNamePlaceholder": "Entrer votre nom",
     "enterUsernamePlaceholder": "Entrer votre nom d'utilisateur",
-    "username": "Nom d'utilisateur",
-    "enterUsernameCaption": "Ce nom d'utilisateur sera affiché sur toute la plateforme.",
-    "accountEmail": "Adresse e-mail du compte",
     "updatingProfileButton": "Mise à jour...",
     "updateProfileButton": "Mettre à jour le profil",
     "updatedButton": "Mis à jour",
     "passwordSettingsTitle": "Paramètres de mot de passe",
     "passwordSettingsDesc": "Minimum de 6 caractères, contenant au moins un chiffre et un mélange de lettres majuscules et minuscules.",
     "enterPasswordPlaceholder": "Entrer un nouveau mot de passe",
-    "newPassword": "Nouveau mot de passe",
     "confirmPasswordPlaceholder": "Confirmer votre nouveau mot de passe",
     "confirmPassword": "Confirmer le mot de passe",
     "updating": "Mise à jour...",
@@ -656,20 +605,21 @@
     "sshKeys": "Mes clés SSH",
     "addSshKeyDescription": "Les clés SSH vous permettent d'établir une connexion sécurisée à votre référentiel de code.",
     "addSshKey": "Ajouter une nouvelle clé SSH",
+    "enterUsernameCaption": "Ce nom d'utilisateur sera affiché sur toute la plateforme.",
     "generalTab": "Général",
     "keysTab": "Clés et Jetons",
     "saving": "Enregistrement..."
   },
   "createProject": {
+    "form": {
+      "name": "Nom du projet",
+      "description": "Description",
+      "namePlaceholder": "Entrez le nom de votre projet",
+      "descriptionPlaceholder": "Entrez une description (facultatif)"
+    },
     "backButton": "Retour",
     "title": "Créez votre nouveau projet",
     "description": "Organisez vos dépôts, pipelines et plus encore.",
-    "form": {
-      "name": "Nom du projet",
-      "namePlaceholder": "Entrez le nom de votre projet",
-      "description": "Description",
-      "descriptionPlaceholder": "Entrez une description (facultatif)"
-    },
     "create": {
       "projectCreation": "Création du projet...",
       "createProject": "Créer le projet"
@@ -677,44 +627,23 @@
     "logout": {
       "question": "Voulez-vous utiliser un autre compte ?",
       "link": "Se déconnecter"
-    },
-    "validation": {
-      "nameNoEmpty": "Le champ ne peut pas être vide",
-      "nameMinLength": "Le nom du projet doit contenir au moins 4 caractères",
-      "nameMax": "Le nom ne doit pas dépasser 100 caractères",
-      "nameRegex": "Le nom du pipeline doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
-      "noSpaces": "Le nom du pipeline ne peut pas contenir d'espaces",
-      "descriptionMax": "La description ne doit pas dépasser 1024 caractères"
     }
   },
   "importProject": {
-    "validation": {
-      "nameNoEmpty": "Veuillez entrer un nom de projet",
-      "nameMax": "Le nom ne doit pas dépasser 100 caractères",
-      "nameRegex": "Le nom du projet doit contenir uniquement des lettres, des chiffres et les caractères : - _ .",
-      "nameNoSpaces": "Le nom ne peut pas contenir d'espaces",
-      "descriptionMax": "La description ne doit pas dépasser 1024 caractères",
-      "providerNoEmpty": "Veuillez sélectionner un fournisseur",
-      "organizationNoEmpty": "Veuillez entrer une organisation",
-      "organizationNameMax": "Le nom de l'organisation ne doit pas dépasser 100 caractères",
-      "noSpaces": "Le nom de l'organisation ne peut pas contenir d'espaces",
-      "hostUrlRequired": "L'URL du référentiel est requis",
-      "hostUrlInvalid": "URL invalide"
-    },
+    "projectNameLabel": "Nom",
+    "descriptionLabel": "Description",
+    "gitProviderLabel": "Fournisseur Git",
+    "organizationLabel": "Organisation",
+    "hostUrlLabel": "URL d'hôte",
     "title": "Importer un projet",
     "gitProviderPlaceholder": "Sélectionner un fournisseur",
-    "gitProviderLabel": "Fournisseur Git",
-    "hostUrlLabel": "URL d'hôte",
     "hostUrlPlaceholder": "Entrer l'URL d'hôte",
     "tokenLabel": "Jeton",
     "tokenPlaceholder": "Entrer votre jeton d'accès",
-    "organizationLabel": "Organisation",
     "organizationPlaceholder": "Entrer le nom de l'organisation",
     "repositoriesLabel": "Référentiels",
     "pipelinesLabel": "Importer des pipelines",
-    "projectNameLabel": "Nom",
     "projectNamePlaceholder": "Entrer le nom du référentiel",
-    "descriptionLabel": "Description",
     "descriptionPlaceholder": "Entrer une description",
     "importButton": {
       "default": "Importer le projet",
@@ -723,17 +652,10 @@
     "cancelButton": "Annuler"
   },
   "forms": {
-    "selectMember": "",
-    "selectRole": "",
-    "enterBranchName": "Entrez le nom de la branche",
-    "createBranchError": "Le nom de la branche est requis",
+    "selectMember": "Select member",
+    "selectRole": "Select role",
     "enterTagName": "Enter tag name",
-    "select": "Sélectionner",
-    "baseBranch": "Branche de base",
-    "selectBranchError": "La branche de base est requise",
-    "baseTag": "Based on",
-    "selectMemberError": "",
-    "selectRoleError": ""
+    "createBranchError": ""
   },
   "roles": {
     "owner": "Owner",
@@ -788,8 +710,7 @@
       "validation": {
         "userIdRequired": "Veuillez fournir un identifiant utilisateur",
         "invalidEmail": "Veuillez saisir une adresse e-mail valide",
-        "displayNameRequired": "Veuillez fournir un nom d'affichage",
-        "emailInvalid": "Veuillez saisir une adresse e-mail valide"
+        "displayNameRequired": "Veuillez fournir un nom d'affichage"
       }
     },
     "userId": "Identifiant utilisateur",

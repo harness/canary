@@ -12,6 +12,7 @@ interface OptionProps extends HTMLAttributes<HTMLDivElement> {
   description?: string | ReactNode
   disabled?: boolean
   error?: string
+  ariaSelected?: boolean
 }
 
 /**
@@ -24,13 +25,23 @@ interface OptionProps extends HTMLAttributes<HTMLDivElement> {
  *   description="Description for Option 1"
  * />
  */
-export const Option: FC<OptionProps> = ({ control, id, label, description, className, disabled, error, ...props }) => {
+export const Option: FC<OptionProps> = ({
+  control,
+  id,
+  label,
+  description,
+  className,
+  disabled,
+  error,
+  ariaSelected,
+  ...props
+}) => {
   return (
     <div
       className={cn('flex items-start', className)}
       role="option"
       aria-labelledby={`${id}-label`}
-      aria-selected={false}
+      aria-selected={ariaSelected}
       {...props}
     >
       {control}

@@ -33,7 +33,7 @@ export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch,
         <Switch
           {...register('state')}
           checked={watch('state')}
-          onCheckedChange={() => setValue('state', watch('state'))}
+          onCheckedChange={() => setValue('state', !watch('state'))}
         />
       }
     >
@@ -170,7 +170,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
           <Checkbox
             {...register('default')}
             checked={watch('default')}
-            onCheckedChange={() => setValue('default', watch('default'))}
+            onCheckedChange={() => setValue('default', !watch('default'))}
             id="default-branch"
           />
         }
@@ -256,7 +256,7 @@ export const BranchSettingsRuleBypassListField: FC<
           <Checkbox
             {...register('repo_owners')}
             checked={watch('repo_owners')}
-            onCheckedChange={() => setValue('repo_owners', watch('repo_owners'))}
+            onCheckedChange={() => setValue('repo_owners', !watch('repo_owners'))}
             id="edit-permissions"
           />
         }

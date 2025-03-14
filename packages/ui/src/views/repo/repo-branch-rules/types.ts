@@ -1,6 +1,7 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
 import { TranslationStore } from '@/views'
+import { makeValidationUtils } from '@utils/validation'
 import { TFunction } from 'i18next'
 import { z } from 'zod'
 
@@ -44,7 +45,7 @@ export enum BranchRuleId {
   REQUIRE_NO_CHANGE_REQUEST = 'require_no_change_request',
   COMMENTS = 'comments',
   STATUS_CHECKS = 'status_checks',
-  MERGE = 'merge',
+  MERGE = 'merge_strategies',
   DELETE_BRANCH = 'delete_branch',
   BLOCK_BRANCH_CREATION = 'create_forbidden',
   BLOCK_BRANCH_DELETION = 'delete_forbidden',
@@ -66,24 +67,17 @@ export type IBranchRulesStore = {
 
 // Constants
 
-export const makeRepoBranchSettingsFormSchema = (t: TranslationStore['t']) =>
-  z.object({
+export const makeRepoBranchSettingsFormSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, specialSymbols, noSpaces } = makeValidationUtils(t)
+
+  return z.object({
     identifier: z
       .string()
       .trim()
-      .nonempty(t('views:repos.rules.validation.ruleNameMin', 'Please provide rule name'))
-      .max(100, t('views:repos.rules.validation.ruleNameMax', 'Rule name must be no longer than 100 characters'))
-      .regex(
-        /^[a-zA-Z0-9._-\s]+$/,
-        t(
-          'views:repos.rules.validation.ruleNameRegex',
-          'Rule name must contain only letters, numbers, and the characters: - _ .'
-        )
-      )
-      .refine(
-        data => !data.includes(' '),
-        t('views:repos.rules.validation.ruleNameNoSpaces', 'Rule name cannot contain spaces')
-      ),
+      .nonempty(required(t('views:repos.name')))
+      .max(...maxLength(100, t('views:repos.name')))
+      .regex(...specialSymbols(t('views:repos.name')))
+      .refine(...noSpaces(t('views:repos.name'))),
     description: z.string(),
     pattern: z.string(),
     patterns: z.array(
@@ -103,3 +97,4 @@ export const makeRepoBranchSettingsFormSchema = (t: TranslationStore['t']) =>
       })
     )
   })
+}

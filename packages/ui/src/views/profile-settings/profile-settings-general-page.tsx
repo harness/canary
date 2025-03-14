@@ -6,44 +6,46 @@ import { SkeletonForm } from '@/components/skeletons'
 import { IProfileSettingsStore, ProfileSettingsErrorType, SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInitials } from '@utils/stringUtils'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
-const makeProfileSchema = (t: TranslationStore['t']) =>
-  z.object({
+const makeProfileSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, invalid } = makeValidationUtils(t)
+
+  return z.object({
     name: z
       .string()
       .trim()
-      .nonempty(t('views:profileSettings.validation.nameMin', 'Please provide your name'))
-      .max(256, t('views:profileSettings.validation.nameMax', 'Name must be no longer than 256 characters')),
+      .nonempty(required(t('views:profileSettings.name')))
+      .max(...maxLength(256, t('views:profileSettings.name'))),
     username: z
       .string()
       .trim()
-      .nonempty(t('views:profileSettings.validation.usernameMin', 'Please provide a username')),
+      .nonempty(required(t('views:profileSettings.username'))),
     email: z
       .string()
       .trim()
-      .email(t('views:profileSettings.validation.emailInvalid', 'Please provide a valid email address'))
-      .max(250, t('views:profileSettings.validation.emailMax', 'Email must be no longer than 250 characters'))
+      .email(invalid(t('views:profileSettings.accountEmail')))
+      .max(...maxLength(250, t('views:profileSettings.accountEmail')))
   })
+}
 
-const makePasswordSchema = (t: TranslationStore['t']) =>
-  z
+const makePasswordSchema = (t: TranslationStore['t']) => {
+  const { maxLength, minLength } = makeValidationUtils(t)
+
+  return z
     .object({
       newPassword: z
         .string()
-        .min(6, t('views:profileSettings.validation.passwordMin', 'New password must be at least 6 characters'))
-        .max(
-          128,
-          t('views:profileSettings.validation.passwordMax', 'New password must be no longer than 128 characters')
-        ),
-      confirmPassword: z
-        .string()
-        .min(6, t('views:profileSettings.validation.confirmPasswordMin', 'Please confirm your new password'))
+        .min(...minLength(6, t('views:profileSettings.newPassword')))
+        .max(...maxLength(128, t('views:profileSettings.newPassword'))),
+      confirmPassword: z.string().min(...minLength(6, t('views:profileSettings.newPassword')))
     })
     .refine(data => data.newPassword === data.confirmPassword, {
       message: t('views:profileSettings.validation.passwordsDoNotMatch', 'Passwords do not match'),
       path: ['confirmPassword']
     })
+}
 
 export type ProfileFields = z.infer<ReturnType<typeof makeProfileSchema>>
 export type PasswordFields = z.infer<ReturnType<typeof makePasswordSchema>>
@@ -108,12 +110,6 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
       confirmPassword: ''
     }
   })
-
-  useEffect(() => {
-    if (!userData) return
-
-    resetProfileForm(userData)
-  }, [resetProfileForm, userData])
 
   useEffect(() => {
     if (profileUpdateSuccess && userData) {

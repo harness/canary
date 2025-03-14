@@ -1891,6 +1891,11 @@
         "$type": "color",
         "$value": "{background.3}",
         "$description": "Background color for tooltips. Creates a distinct surface for contextual information that appears above UI elements."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{border.3}",
+        "$description": "Border color for tooltips. Creates a distinct surface for contextual information that appears above UI elements."
       }
     }
   },

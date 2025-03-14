@@ -1,0 +1,18 @@
+{
+  "tooltip": {
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.3}"
+    },
+    "padding": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
+      }
+    }
+  }
+}

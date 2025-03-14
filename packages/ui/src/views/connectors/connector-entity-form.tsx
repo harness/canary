@@ -9,10 +9,10 @@ import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-u
 
 import { IFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
 
-import { getHarnessConnectorDefinition } from './connector-utils'
 import { AnyConnectorDefinition, ConnectorFormEntityType } from './types'
 
 interface ConnectorEntityFormProps {
+  standalone: boolean
   formEntity: ConnectorFormEntityType
   requestClose: () => void
   onFormSubmit?: (values: any) => void // TODO: TYPE this properly
@@ -20,13 +20,13 @@ interface ConnectorEntityFormProps {
 }
 
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
-  const { formEntity, requestClose, onFormSubmit, getConnectorDefinition } = props
+  const { standalone, formEntity, requestClose, onFormSubmit, getConnectorDefinition } = props
   // TODO: type this properly , Handle form submit for create/edit
   const onSubmit = (data: any) => {
     onFormSubmit?.(data)
   }
 
-  const [defaultConnectorValues, setDefaultConnectorValues] = useState({})
+  const [defaultConnectorValues, _] = useState({})
 
   const formDefinition: IFormDefinition = useMemo(() => {
     const connectorDefinition = getConnectorDefinition(formEntity.data.identifier)
@@ -55,7 +55,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       onSubmit={values => {
         // TODO: handle form submit for create/edit
         console.log('values', values)
-        onSubmit(values)
+        onSubmit({ values, formEntity })
         // TODO: hande form submit for create/edit
         // if (formEntity.data.identifier === AWS_KMS_CONNECTOR_IDENTIFIER) {
         //   const { connector: payload } = awsKmsBuilder.buildPayload(values)
@@ -71,7 +71,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       {rootForm => (
         <EntityFormLayout.Root>
           <EntityFormLayout.Header>
-            <EntityFormLayout.Title>Add Connector</EntityFormLayout.Title>
+            {standalone && <EntityFormLayout.Title>Add Connector</EntityFormLayout.Title>}
             <EntityFormLayout.Description>{formEntity?.data.description}</EntityFormLayout.Description>
           </EntityFormLayout.Header>
           <EntityFormSectionLayout.Root>

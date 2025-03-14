@@ -21,7 +21,7 @@
     "gap": {
       "sm": {
         "$type": "spacing",
-        "$value": "{spacing.1}"
+        "$value": "{spacing.1-half}"
       },
       "default": {
         "$type": "spacing",

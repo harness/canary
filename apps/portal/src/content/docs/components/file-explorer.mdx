@@ -81,25 +81,11 @@ return (
 The `FileExplorer` component can be used to display a hierarchical view of the file system and handle file or directory selection.
 
 ```typescript jsx
-<FileExplorer.Root
-  value={['src']}                         // [REQUIRED] Currently selected items
-  onValueChange={(value) => console.log('Value changed:', value)} // [REQUIRED] Handler for selection changes
->
-  <FileExplorer.FolderItem
-    value="src"                          // [OPTIONAL] Folder identifier
-    link="/src"                          // [REQUIRED] Navigation link
-    isActive={false}                     // [OPTIONAL] Active state
-    chevronClassName="custom-chevron"    // [OPTIONAL] Custom chevron styling
-  >
-    src
-    <FileItem
-      link="/src/index.tsx"              // [OPTIONAL] Navigation link
-      isActive={false}                   // [OPTIONAL] Active state
-    >
-      index.tsx
-    </FileExplorer.FileItem>
+<FileExplorer.Root>
+  <FileExplorer.FolderItem>
+    <FileExplorer.FileItem />
   </FileExplorer.FolderItem>
-  <FileExplorer.FileItem link="/package.json">package.json</FileExplorer.FileItem>
+  <FileExplorer.FileItem />
 </FileExplorer.Root>
 ```
 

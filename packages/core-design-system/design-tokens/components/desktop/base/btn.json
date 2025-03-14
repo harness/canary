@@ -55,11 +55,11 @@
       },
       "default": {
         "$type": "spacing",
-        "$value": "{spacing.5}"
+        "$value": "{spacing.4}"
       },
       "lg": {
         "$type": "spacing",
-        "$value": "{spacing.6}"
+        "$value": "{spacing.5}"
       }
     },
     "py": {

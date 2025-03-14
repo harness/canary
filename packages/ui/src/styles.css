@@ -25,68 +25,6 @@
   src: url('./fonts/JetBrainsMono-Regular.woff2') format('woff2');
 }
 
-/**
- * Component styles - TEMPORARY
- */
-
-@layer components {
-  /*  ====== BADGE ======  */
-
-  .badge {
-    --badge-color: var(--canary-component-badge-default-text);
-    --badge-bg-color: var(--canary-component-badge-default-background);
-    --badge-border-color: var(--canary-component-badge-default-border);
-
-    border: var(--canary-border-width-1) solid var(--badge-border-color);
-    color: var(--badge-color);
-    background-color: var(--badge-bg-color);
-  }
-  .badge-neutral {
-    --badge-color: var(--canary-component-badge-neutral-text);
-    --badge-bg-color: var(--canary-component-badge-neutral-background);
-    --badge-border-color: var(--canary-component-badge-neutral-border);
-  }
-  .badge-success {
-    --badge-color: var(--canary-component-badge-success-text);
-    --badge-bg-color: var(--canary-component-badge-success-background);
-    --badge-border-color: var(--canary-component-badge-success-border);
-  }
-  .badge-warning {
-    --badge-color: var(--canary-component-badge-warning-text);
-    --badge-bg-color: var(--canary-component-badge-warning-background);
-    --badge-border-color: var(--canary-component-badge-warning-border);
-  }
-  .badge-danger {
-    --badge-color: var(--canary-component-badge-danger-text);
-    --badge-bg-color: var(--canary-component-badge-danger-background);
-    --badge-border-color: var(--canary-component-badge-danger-border);
-  }
-  .badge-running {
-    --badge-color: var(--canary-component-badge-running-text);
-    --badge-bg-color: var(--canary-component-badge-running-background);
-    --badge-border-color: var(--canary-component-badge-running-border);
-  }
-  .badge-merged {
-    --badge-color: var(--canary-component-badge-merged-text);
-    --badge-bg-color: var(--canary-component-badge-merged-background);
-    --badge-border-color: var(--canary-component-badge-merged-border);
-  }
-  .badge-ai {
-    --badge-color: var(--canary-component-badge-ai-text);
-    --badge-bg-color: var(--canary-component-badge-ai-background);
-    border: 1px solid transparent;
-    background-image:
-      linear-gradient(to right, var(--badge-bg-color), var(--badge-bg-color)), var(--canary-component-badge-ai-border);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-  }
-  /* .badge-default {
-    color: oklch(var(--canary-component-badge-default-text));
-    background-color: oklch(var(--canary-component-badge-default-background));
-  }
-  /*  ====== BADGE ======  */
-}
-
 @layer base {
   * {
     @apply border-borders-1;

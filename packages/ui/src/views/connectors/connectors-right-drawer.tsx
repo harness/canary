@@ -11,6 +11,7 @@ interface ConnectorsRightDrawerBaseProps {
   initialDrawerState?: ConnectorRightDrawer
   standalone?: boolean
   onFormSubmit?: (values: any) => void // TODO: TYPE this properly
+  onDrawerClose?: () => void
   useSheet?: boolean // Whether to wrap content in Sheet.Root
   connectors: any //TODO: TYPE
   getConnectorDefinition: (identifier: string) => AnyConnectorDefinition | undefined
@@ -21,7 +22,9 @@ const ConnectorsRightDrawerBase = ({
   useSheet = false,
   onFormSubmit,
   connectors,
-  getConnectorDefinition
+  getConnectorDefinition,
+  onDrawerClose,
+  standalone = false
 }: ConnectorsRightDrawerBaseProps): JSX.Element => {
   const { rightDrawer, setRightDrawer, formEntity, setFormEntity, clearRightDrawerData } = useConnectorsContext()
   console.log(rightDrawer, formEntity)
@@ -37,20 +40,24 @@ const ConnectorsRightDrawerBase = ({
       case ConnectorRightDrawer.Collection:
         return (
           <ConnectorsPalette
+            standalone={standalone}
             connectors={connectors}
             setRightDrawer={setRightDrawer}
             setFormEntity={setFormEntity}
             requestClose={() => {
               clearRightDrawerData()
+              onDrawerClose?.()
             }}
           />
         )
       case ConnectorRightDrawer.Form:
         return formEntity ? (
           <ConnectorEntityForm
+            standalone={standalone}
             formEntity={formEntity}
             requestClose={() => {
               clearRightDrawerData()
+              onDrawerClose?.()
             }}
             onFormSubmit={onFormSubmit}
             getConnectorDefinition={getConnectorDefinition}
@@ -101,7 +108,9 @@ const ConnectorsRightDrawer = ({
   useSheet = true,
   onFormSubmit,
   connectors,
-  getConnectorDefinition
+  getConnectorDefinition,
+  onDrawerClose,
+  standalone = false
 }: ConnectorsRightDrawerBaseProps): JSX.Element | null => {
   return (
     <ConnectorsProvider>
@@ -111,6 +120,8 @@ const ConnectorsRightDrawer = ({
         onFormSubmit={onFormSubmit}
         connectors={connectors}
         getConnectorDefinition={getConnectorDefinition}
+        onDrawerClose={onDrawerClose}
+        standalone={standalone}
       />
     </ConnectorsProvider>
   )

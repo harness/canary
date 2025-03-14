@@ -90,46 +90,54 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
 
   return (
     <>
-      <Text size={13} weight="medium" className="mb-2.5" as="div">
-        {t('views:repos.rules', 'Rules')}
-      </Text>
+      {showHeader && (
+        <>
+          <Text size={13} weight="medium" className="mb-2.5" as="div">
+            {t('views:repos.rules', 'Rules')}
+          </Text>
 
-      <div className="flex flex-row">
-        <span className="max-w-[440px]">
-          {t(
-            'views:repos.rulesDescription',
-            'Define standards and automate workflows to ensure better collaboration and control in your repository.'
-          )}
-        </span>
-        {!isLoading && !isShowRulesContent && (
-          <NavLink className="ml-auto" to="../rules/create">
-            <Button variant="outline">{t('views:repos.createRuleButton', 'Create rule')}</Button>
-          </NavLink>
-        )}
-      </div>
+          <div className="flex flex-row">
+            <span className="max-w-[440px]">
+              {t(
+                'views:repos.rulesDescription',
+                'Define standards and automate workflows to ensure better collaboration and control in your repository.'
+              )}
+            </span>
+            {!isLoading && !isShowRulesContent && (
+              <NavLink className="ml-auto" to="../rules/create">
+                <Button variant="outline">{t('views:repos.createRuleButton', 'Create rule')}</Button>
+              </NavLink>
+            )}
+          </div>
+        </>
+      )}
 
       {isShowRulesContent && (
         <>
           <Spacer size={7} />
 
-          <ListActions.Root>
-            <ListActions.Left>
-              <SearchBox.Root
-                className="max-w-xs"
-                placeholder={t('views:repos.search', 'Search')}
-                width="full"
-                value={search}
-                handleChange={handleInputChange}
-              />
-            </ListActions.Left>
-            <ListActions.Right>
-              <NavLink to="../rules/create">
-                <Button variant="outline">{t('views:repos.newRule', 'New branch rule')}</Button>
-              </NavLink>
-            </ListActions.Right>
-          </ListActions.Root>
+          {showHeader && (
+            <>
+              <ListActions.Root>
+                <ListActions.Left>
+                  <SearchBox.Root
+                    className="max-w-xs"
+                    placeholder={t('views:repos.search', 'Search')}
+                    width="full"
+                    value={search}
+                    handleChange={handleInputChange}
+                  />
+                </ListActions.Left>
+                <ListActions.Right>
+                  <NavLink to="../rules/create">
+                    <Button variant="outline">{t('views:repos.newRule', 'New branch rule')}</Button>
+                  </NavLink>
+                </ListActions.Right>
+              </ListActions.Root>
 
-          <Spacer size={4.5} />
+              <Spacer size={4.5} />
+            </>
+          )}
 
           {isLoading ? (
             <>

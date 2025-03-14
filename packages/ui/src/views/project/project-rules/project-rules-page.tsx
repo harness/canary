@@ -81,6 +81,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({ rulesData, isLoadi
                     // value={search}
                     // handleChange={handleSearchChange}
                     // placeholder={t('views:repos.search', 'Search')}
+                    placeholder="Search"
                   />
                 </ListActions.Left>
                 <ListActions.Right>
@@ -91,7 +92,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({ rulesData, isLoadi
                     }}
                   >
                     {/* {t('views:projectSettings.newMember', 'New member')} */}
-                    New rule
+                    New branch rule
                   </Button>
                 </ListActions.Right>
               </ListActions.Root>
@@ -108,6 +109,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({ rulesData, isLoadi
               rulesSearchQuery=""
               setRulesSearchQuery={() => {}}
               useTranslationStore={useTranslationStore}
+              showHeader={false}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Main>

@@ -17,6 +17,7 @@ import {
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeFloatValidationUtils, makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 import { ProviderOptionsEnum } from './types'
@@ -41,94 +42,90 @@ const checkProvider = (provider: ProviderOptionsEnum) => ({
   isProjectRequired: [ProviderOptionsEnum.BITBUCKET_SERVER, ProviderOptionsEnum.AZURE_DEVOPS].includes(provider)
 })
 
-const makeImportRepoFormSchema = (t: TranslationStore['t']) =>
-  z
+const makeImportRepoFormSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, specialSymbols, noSpaces } = makeValidationUtils(t)
+
+  const getRepositoryValidation = (name: string) =>
+    z
+      .string()
+      .trim()
+      .nonempty(required(name))
+      .max(...maxLength(100, name))
+      .regex(...specialSymbols(name))
+      .refine(...noSpaces(name))
+
+  return z
     .object({
-      identifier: z.string(),
-      hostUrl: z.string().optional(),
-      description: z.string(),
+      identifier: getRepositoryValidation(t('views:repos.importRepo.repositoryNameLabel')),
+      hostUrl: z.string().trim().optional(),
+      description: z.string().trim().optional(),
       pipelines: z.boolean().optional(),
       authorization: z.boolean().optional(),
-      provider: z.nativeEnum(ProviderOptionsEnum, {
-        message: t('views:repos.importRepo.validation.providerNoEmpty', 'Please select a provider')
-      }),
-      password: z.string().optional(),
+      provider: z.nativeEnum(ProviderOptionsEnum, { message: required(t('views:repos.importRepo.providerLabel')) }),
+      password: z.string().trim().optional(),
       organization: z.string().optional(),
-      repository: z
-        .string()
-        .nonempty(t('views:repos.importRepo.validation.providerNoEmpty', 'Please enter a repository name'))
-        .max(100, t('views:signUp.validation.userIDMax', 'Repository name must be no longer than 100 characters'))
-        .regex(
-          /^[a-zA-Z0-9._-\s]+$/,
-          t(
-            'views:signUp.validation.userIDRegex',
-            'Repository name must contain only letters, numbers, and the characters: - _ .'
-          )
-        )
-        .refine(
-          data => !data.includes(' '),
-          t('views:signUp.validation.userIDNoSpaces', 'Repository name cannot contain spaces')
-        ),
-      group: z.string().optional(),
-      workspace: z.string().optional(),
-      project: z.string().optional()
+      repository: getRepositoryValidation(t('views:repos.importRepo.repositoryLabel')),
+      group: z.string().trim().optional(),
+      workspace: z.string().trim().optional(),
+      project: z.string().trim().optional()
     })
     .superRefine(({ hostUrl, provider, organization, group, workspace, project }, ctx) => {
       const { isGitlab, isBitbucket, isHostUrlRequired, isProjectRequired, isOrganizationRequired } =
         checkProvider(provider)
 
-      if (isOrganizationRequired && !organization) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['organization'],
-          message: t('views:repos.importRepo.validation.organizationNoEmpty', 'Please enter an organization name')
+      const makeValidators = makeFloatValidationUtils(t, ctx)
+
+      if (isOrganizationRequired) {
+        const { noSpacesFloat, requiredFloat } = makeValidators({
+          value: organization,
+          path: 'organization',
+          name: t('views:repos.importRepo.organizationLabel')
         })
+        requiredFloat()
+        noSpacesFloat()
       }
 
       if (isHostUrlRequired) {
-        if (!hostUrl) {
-          ctx.addIssue({
-            code: 'custom',
-            path: ['hostUrl'],
-            message: t('views:repos.importRepo.validation.repoUrlNoEmpty', 'Please enter the Repository URL')
-          })
-        } else {
-          try {
-            new URL(hostUrl)
-          } catch (error) {
-            ctx.addIssue({
-              code: 'custom',
-              path: ['hostUrl'],
-              message: t('views:repos.importRepo.validation.hostUrlInvalid', 'Invalid URL')
-            })
-          }
-        }
+        const { requiredFloat, urlFloat } = makeValidators({
+          value: hostUrl,
+          path: 'hostUrl',
+          name: t('views:repos.importRepo.hostLabel')
+        })
+        requiredFloat()
+        urlFloat()
       }
 
-      if (isBitbucket && !workspace) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['workspace'],
-          message: t('views:repos.importRepo.validation.workspaceNoEmpty', 'Please enter a Workspace')
+      if (isBitbucket) {
+        const { requiredFloat, noSpacesFloat } = makeValidators({
+          value: workspace,
+          path: 'workspace',
+          name: t('views:repos.importRepo.workspaceLabel')
         })
+        requiredFloat()
+        noSpacesFloat()
       }
 
-      if (isGitlab && !group) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['group'],
-          message: t('views:repos.importRepo.validation.groupNoEmpty', 'Please enter a Group')
+      if (isGitlab) {
+        const { requiredFloat, noSpacesFloat } = makeValidators({
+          value: group,
+          path: 'group',
+          name: t('views:repos.importRepo.groupLabel')
         })
+        requiredFloat()
+        noSpacesFloat()
       }
 
-      if (isProjectRequired && !project) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['project'],
-          message: t('views:repos.importRepo.validation.projectNoEmpty', 'Please enter a Project')
+      if (isProjectRequired) {
+        const { requiredFloat, noSpacesFloat } = makeValidators({
+          value: project,
+          path: 'project',
+          name: t('views:repos.importRepo.projectLabel')
         })
+        requiredFloat()
+        noSpacesFloat()
       }
     })
+}
 
 export type ImportRepoFormFields = z.infer<ReturnType<typeof makeImportRepoFormSchema>>
 
@@ -154,6 +151,7 @@ export function RepoImportPage({
     handleSubmit,
     setValue,
     watch,
+    trigger,
     formState: { errors }
   } = useForm<ImportRepoFormFields>({
     resolver: zodResolver(makeImportRepoFormSchema(t)),
@@ -176,7 +174,11 @@ export function RepoImportPage({
 
   useEffect(() => {
     setValue('identifier', repositoryValue)
-  }, [repositoryValue, setValue])
+
+    if (!errors.repository) return
+
+    trigger('identifier')
+  }, [repositoryValue, trigger, errors.repository])
 
   const handleSelectChange = (fieldName: keyof ImportRepoFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
@@ -340,7 +342,7 @@ export function RepoImportPage({
           />
 
           {!!apiErrorsValue && (
-            <Alert.Container variant="destructive">
+            <Alert.Container closable variant="destructive">
               <Alert.Title>{apiErrorsValue}</Alert.Title>
             </Alert.Container>
           )}

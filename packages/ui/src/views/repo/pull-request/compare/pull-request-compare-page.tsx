@@ -18,6 +18,7 @@ import {
 } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInitials } from '@utils/stringUtils'
+import { makeValidationUtils } from '@utils/validation'
 import { Layout } from '@views/layouts/layout'
 import { ICommitSelectorStore } from '@views/repo/components/commit-selector/types'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
@@ -36,18 +37,19 @@ import {
 import PullRequestCompareDiffList from './components/pull-request-compare-diff-list'
 import { HeaderProps } from './pull-request-compare.types'
 
-export const makePullRequestFormSchema = (t: TranslationStore['t']) =>
-  z.object({
+const makePullRequestFormSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength } = makeValidationUtils(t)
+  const name = t('views:pullRequests.compare.validation.title', 'Pull request title')
+
+  return z.object({
     title: z
       .string()
       .trim()
-      .nonempty(t('views:pullRequests.compare.validation.titleNoEmpty', 'Pull request title can’t be blank'))
-      .max(
-        256,
-        t('views:pullRequests.compare.validation.titleMax', 'Pull request title must be no longer than 256 characters')
-      ),
+      .nonempty(required(name))
+      .max(...maxLength(256, name)),
     description: z.string().optional()
   })
+}
 
 export type CompareFormFields = z.infer<ReturnType<typeof makePullRequestFormSchema>>
 

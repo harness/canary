@@ -1,9 +1,10 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button, Card, Fieldset, FormWrapper, Input, Message, MessageTheme, StyledLink } from '@/components'
 import { Floating1ColumnLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 import { Agreements } from './components/agreements'
@@ -16,27 +17,49 @@ interface SignInPageProps {
   error?: string
 }
 
-const makeSignInSchema = (t: TranslationStore['t']) =>
-  z.object({
-    email: z.string().trim().nonempty(t('views:signIn.validation.emailNoEmpty', 'Field can’t be blank')),
-    password: z.string().nonempty(t('views:signIn.validation.passwordNoEmpty', 'Password can’t be blank'))
+const makeSignInSchema = (t: TranslationStore['t']) => {
+  const { required } = makeValidationUtils(t)
+
+  return z.object({
+    email: z
+      .string()
+      .trim()
+      .nonempty(required(t('views:signIn.emailTitle'))),
+    password: z.string().nonempty(required(t('views:signIn.passwordTitle')))
   })
+}
 
 export type SignInData = z.infer<ReturnType<typeof makeSignInSchema>>
 
 export function SignInPage({ handleSignIn, useTranslationStore, isLoading, error }: SignInPageProps) {
+  const [serverError, setServerError] = useState<string | null>(null)
+
   const { t } = useTranslationStore()
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<SignInData>({
+    mode: 'onChange',
     resolver: zodResolver(makeSignInSchema(t))
   })
 
-  const errorMessage = useMemo(() => (error?.includes('Not Found') ? 'Please check your details' : error), [error])
+  const errorMessage = useMemo(
+    () => (error?.includes('Not Found') ? t('views:signIn.checkDetails', 'Please check your details') : error),
+    [error, t]
+  )
 
-  const hasError = Object.keys(errors).length > 0 || !!error
+  const handleInputChange = async () => {
+    if (!serverError) return
+    setServerError(null)
+  }
+
+  useEffect(() => {
+    if (!error) return
+    setServerError(error)
+  }, [error])
+
+  const hasError = Object.keys(errors).length > 0 || !!serverError
 
   return (
     <Floating1ColumnLayout
@@ -65,14 +88,14 @@ export function SignInPage({ handleSignIn, useTranslationStore, isLoading, error
                 label={t('views:signIn.emailTitle', 'Username/Email')}
                 placeholder={t('views:signIn.emailDescription', 'Your email')}
                 size="md"
-                {...register('email')}
+                {...register('email', { onChange: handleInputChange })}
                 error={errors.email?.message?.toString()}
                 autoFocus
               />
               <Input
                 id="password"
                 type="password"
-                {...register('password')}
+                {...register('password', { onChange: handleInputChange })}
                 label={t('views:signIn.passwordTitle', 'Password')}
                 placeholder={t('views:signIn.passwordDescription', 'Password')}
                 size="md"

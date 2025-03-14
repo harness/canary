@@ -36,6 +36,7 @@
     "components/desktop/base/badge",
     "components/desktop/base/tag",
     "components/desktop/base/dropdown menu",
+    "components/desktop/base/pagination",
     "components/desktop/base/tooltip"
   ]
 }

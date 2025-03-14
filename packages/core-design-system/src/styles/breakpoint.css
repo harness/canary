@@ -1,0 +1,36 @@
+/**
+ * Harness Design System
+ * Generated style tokens - DO NOT EDIT DIRECTLY
+ * Generated on Fri, 14 Mar 2025 15:14:42 GMT
+ * Copyright (c) Harness.
+ */
+
+:root {
+  --canary-breakpoint-viewport: 1440;
+  --canary-breakpoint-viewport-min: 1080;
+  --canary-breakpoint-viewport-max: 1919;
+  --canary-component-markdown-editor-title-h1: var(--canary-font-weight-default-normal-600) var(--canary-font-size-7)/var(--canary-line-height-7-normal) var(--canary-font-family-default); /* Article main heading. */
+  --canary-component-markdown-editor-title-h2: var(--canary-font-weight-default-normal-600) var(--canary-font-size-6)/var(--canary-line-height-6-normal) var(--canary-font-family-default); /* Article section heading. */
+  --canary-component-markdown-editor-title-h3: var(--canary-font-weight-default-normal-600) var(--canary-font-size-3)/var(--canary-line-height-3-normal) var(--canary-font-family-default); /* Article subsection heading. */
+  --canary-component-markdown-editor-content-lead: var(--canary-font-weight-default-normal-400) var(--canary-font-size-5)/var(--canary-line-height-5-normal) var(--canary-font-family-default); /* Article introduction paragraph. */
+  --canary-component-markdown-editor-content-paragraph: var(--canary-font-weight-default-normal-400) var(--canary-font-size-3)/var(--canary-line-height-3-relaxed) var(--canary-font-family-default); /* Article paragraph text. */
+  --canary-component-markdown-editor-content-emphasized: var(--canary-font-weight-default-normal-500) var(--canary-font-size-3)/var(--canary-line-height-3-relaxed) var(--canary-font-family-default); /* Emphasized paragraph text. */
+  --canary-breakpoint-container: var(--canary-spacing-8);
+  --canary-heading-hero: var(--canary-font-weight-default-normal-500) var(--canary-font-size-9)/var(--canary-line-height-9-tight) var(--canary-font-family-default); /* Large headlines with extra emphasis. */
+  --canary-heading-section: var(--canary-font-weight-default-normal-500) var(--canary-font-size-7)/var(--canary-line-height-7-tight) var(--canary-font-family-default); /* Large headlines, hero sections. */
+  --canary-heading-subsection: var(--canary-font-weight-default-normal-500) var(--canary-font-size-6)/var(--canary-line-height-6-tight) var(--canary-font-family-default); /* Emphasized section headers. */
+  --canary-heading-dialog: var(--canary-font-weight-default-normal-500) var(--canary-font-size-5)/var(--canary-line-height-5-tight) var(--canary-font-family-default); /* Dialog headers. */
+  --canary-heading-base: var(--canary-font-weight-default-normal-500) var(--canary-font-size-3)/var(--canary-line-height-3-tight) var(--canary-font-family-default); /* Section headers. */
+  --canary-heading-small: var(--canary-font-weight-default-normal-600) var(--canary-font-size-2)/var(--canary-line-height-2-snug) var(--canary-font-family-default); /* Section headers. */
+  --canary-body-normal: var(--canary-font-weight-default-normal-400) var(--canary-font-size-2)/var(--canary-line-height-2-snug) var(--canary-font-family-default); /* Primary text style for UI and content. */
+  --canary-body-strong: var(--canary-font-weight-default-normal-500) var(--canary-font-size-2)/var(--canary-line-height-2-snug) var(--canary-font-family-default); /* Primary text style for UI and content. */
+  --canary-body-code: var(--canary-font-weight-default-normal-400) var(--canary-font-size-2)/var(--canary-line-height-2-normal) var(--canary-font-family-mono); /* Code blocks and larger code snippets. */
+  --canary-body-none-normal: var(--canary-font-weight-default-normal-400) var(--canary-font-size-2)/var(--canary-line-height-2-none) var(--canary-font-family-default); /* Primary text style for UI and content. */
+  --canary-body-none-strong: var(--canary-font-weight-default-normal-500) var(--canary-font-size-2)/var(--canary-line-height-2-none) var(--canary-font-family-default);
+  --canary-body-tight-normal: var(--canary-font-weight-default-normal-400) var(--canary-font-size-2)/var(--canary-line-height-2-tight) var(--canary-font-family-default); /* Primary text style for UI and content. */
+  --canary-body-tight-strong: var(--canary-font-weight-default-normal-500) var(--canary-font-size-2)/var(--canary-line-height-2-tight) var(--canary-font-family-default);
+  --canary-caption-normal: var(--canary-font-weight-default-normal-500) var(--canary-font-size-1)/var(--canary-line-height-1-snug) var(--canary-font-family-default); /* Primary caption style, small but important text. */
+  --canary-caption-soft: var(--canary-font-weight-default-normal-400) var(--canary-font-size-1)/var(--canary-line-height-1-snug) var(--canary-font-family-default); /* Helper text, meta information. */
+  --canary-caption-none-normal: var(--canary-font-weight-default-normal-500) var(--canary-font-size-1)/var(--canary-line-height-1-none) var(--canary-font-family-default); /* Primary caption style, small but important text. */
+  --canary-caption-none-soft: var(--canary-font-weight-default-normal-400) var(--canary-font-size-1)/var(--canary-line-height-1-none) var(--canary-font-family-default); /* Helper text, meta information. */
+}

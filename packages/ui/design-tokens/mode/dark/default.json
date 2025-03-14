@@ -818,7 +818,12 @@
         "$description": "Border color for dropdown menus container."
       },
       "item": {
-        "text": {
+        "title": {
+          "$type": "color",
+          "$value": "{text.1}",
+          "$description": "Text color for dropdown menu items. Ensures readability of selectable options."
+        },
+        "description": {
           "$type": "color",
           "$value": "{text.2}",
           "$description": "Text color for dropdown menu items. Ensures readability of selectable options."

@@ -9,7 +9,7 @@ export const EmptyPage = ({ pathName, comingSoon }: { pathName: string; comingSo
         iconName={comingSoon ? 'no-data-cog' : 'no-search-magnifying-glass'}
         title={
           comingSoon
-            ? `The ${pathName} page is under development. It will be available soon.`
+            ? `Coming soon`
             : `Upgrade to Harness Enterprise to access ${pathName}`
         }
         description={[]}

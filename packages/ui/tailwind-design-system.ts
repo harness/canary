@@ -1,5 +1,6 @@
 import typography from '@tailwindcss/typography'
 import tailwindcssAnimate from 'tailwindcss-animate'
+import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
 export default {
@@ -20,7 +21,7 @@ export default {
         code: ['JetBrains Mono', 'monospace']
       },
       colors: {
-        // border: 'oklch(var(--canary-border))',
+        // border: 'var(--canary-border)',
         borders: {
           1: 'var(--canary-border-1)',
           2: 'var(--canary-border-2)',
@@ -39,73 +40,73 @@ export default {
           risk: 'var(--canary-icon-risk)',
           alert: 'var(--canary-border-alert)'
         },
-        'border-background': 'oklch(var(--canary-border-background))',
-        input: 'oklch(var(--canary-input))',
-        'input-background': 'oklch(var(--canary-input-background))',
-        ring: 'oklch(var(--canary-ring))',
+        'border-background': 'var(--canary-border-background)',
+        input: 'var(--canary-input)',
+        'input-background': 'var(--canary-input-background)',
+        ring: 'var(--canary-ring)',
         primary: {
           DEFAULT: '#f00',
-          background: 'oklch(var(--canary-background-1))',
-          foreground: 'oklch(var(--canary-text-1))',
-          muted: 'oklch(var(--canary-state-disabled-background))',
-          accent: 'oklch(var(--canary-primary-accent))'
+          background: 'var(--canary-background-1)',
+          foreground: 'var(--canary-text-1)',
+          muted: 'var(--canary-state-disabled-background)',
+          accent: 'var(--canary-primary-accent)'
         },
         secondary: {
-          DEFAULT: 'oklch(var(--canary-secondary))',
-          background: 'oklch(var(--canary-secondary-background))',
-          foreground: 'oklch(var(--canary-secondary-foreground))',
-          muted: 'oklch(var(--canary-secondary-muted))'
+          DEFAULT: 'var(--canary-secondary)',
+          background: 'var(--canary-secondary-background)',
+          foreground: 'var(--canary-secondary-foreground)',
+          muted: 'var(--canary-secondary-muted)'
         },
         tertiary: {
-          DEFAULT: 'oklch(var(--canary-tertiary))',
-          foreground: 'oklch(var(--canary-tertiary-foreground))',
-          background: 'oklch(var(--canary-tertiary-background))',
-          muted: 'oklch(var(--canary-tertiary-muted))'
+          DEFAULT: 'var(--canary-tertiary)',
+          foreground: 'var(--canary-tertiary-foreground)',
+          background: 'var(--canary-tertiary-background)',
+          muted: 'var(--canary-tertiary-muted)'
         },
         destructive: {
-          DEFAULT: 'oklch(var(--canary-destructive))',
-          foreground: 'oklch(var(--canary-destructive-foreground))'
+          DEFAULT: 'var(--canary-destructive)',
+          foreground: 'var(--canary-destructive-foreground)'
         },
         muted: {
-          DEFAULT: 'oklch(var(--canary-muted))',
-          foreground: 'oklch(var(--canary-muted-foreground))'
+          DEFAULT: 'var(--canary-muted)',
+          foreground: 'var(--canary-muted-foreground)'
         },
         accent: {
-          DEFAULT: 'oklch(var(--canary-accent))',
-          foreground: 'oklch(var(--canary-accent-foreground))'
+          DEFAULT: 'var(--canary-accent)',
+          foreground: 'var(--canary-accent-foreground)'
         },
         popover: {
-          DEFAULT: 'oklch(var(--canary-popover))',
-          foreground: 'oklch(var(--canary-popover-foreground))'
+          DEFAULT: 'var(--canary-popover)',
+          foreground: 'var(--canary-popover-foreground)'
         },
         card: {
-          DEFAULT: 'oklch(var(--canary-card))',
-          foreground: 'oklch(var(--canary-card-foreground))'
+          DEFAULT: 'var(--canary-card)',
+          foreground: 'var(--canary-card-foreground)'
         },
         white: {
-          DEFAULT: 'oklch(var(--canary-white))'
+          DEFAULT: 'var(--canary-white)'
         },
         black: {
-          DEFAULT: 'oklch(var(--canary-black))'
+          DEFAULT: 'var(--canary-black)'
         },
         success: {
-          DEFAULT: 'oklch(var(--canary-success))'
+          DEFAULT: 'var(--canary-success)'
         },
         error: {
-          DEFAULT: 'oklch(var(--canary-error))'
+          DEFAULT: 'var(--canary-error)'
         },
         warning: {
-          DEFAULT: 'oklch(var(--canary-warning))'
+          DEFAULT: 'var(--canary-warning)'
         },
         emphasis: {
-          DEFAULT: 'oklch(var(--canary-emphasis))'
+          DEFAULT: 'var(--canary-emphasis)'
         },
         ai: {
-          DEFAULT: 'oklch(var(--canary-ai))'
+          DEFAULT: 'var(--canary-ai)'
         },
         divergence: {
-          behind: 'oklch(var(--canary-grey-20))',
-          ahead: 'oklch(var(--canary-grey-30))'
+          behind: 'var(--canary-grey-20)',
+          ahead: 'var(--canary-grey-30)'
         },
         /* New colors design variables */
         foreground: {
@@ -221,7 +222,122 @@ export default {
       }
     }
   },
+
+  // .badge {
+  //   --badge-color: var(--canary-component-badge-default-text);
+  //   --badge-bg-color: var(--canary-component-badge-default-background);
+  //   --badge-border-color: var(--canary-component-badge-default-border);
+
+  //   border: var(--canary-border-width-1) solid var(--badge-border-color);
+  //   color: var(--badge-color);
+  //   background-color: var(--badge-bg-color);
+  // }
+  // .badge-neutral {
+  //   --badge-color: var(--canary-component-badge-neutral-text);
+  //   --badge-bg-color: var(--canary-component-badge-neutral-background);
+  //   --badge-border-color: var(--canary-component-badge-neutral-border);
+  // }
+  // .badge-success {
+  //   --badge-color: var(--canary-component-badge-success-text);
+  //   --badge-bg-color: var(--canary-component-badge-success-background);
+  //   --badge-border-color: var(--canary-component-badge-success-border);
+  // }
+  // .badge-warning {
+  //   --badge-color: var(--canary-component-badge-warning-text);
+  //   --badge-bg-color: var(--canary-component-badge-warning-background);
+  //   --badge-border-color: var(--canary-component-badge-warning-border);
+  // }
+  // .badge-danger {
+  //   --badge-color: var(--canary-component-badge-danger-text);
+  //   --badge-bg-color: var(--canary-component-badge-danger-background);
+  //   --badge-border-color: var(--canary-component-badge-danger-border);
+  // }
+  // .badge-running {
+  //   --badge-color: var(--canary-component-badge-running-text);
+  //   --badge-bg-color: var(--canary-component-badge-running-background);
+  //   --badge-border-color: var(--canary-component-badge-running-border);
+  // }
+  // .badge-merged {
+  //   --badge-color: var(--canary-component-badge-merged-text);
+  //   --badge-bg-color: var(--canary-component-badge-merged-background);
+  //   --badge-border-color: var(--canary-component-badge-merged-border);
+  // }
+  // .badge-ai {
+  //   --badge-color: var(--canary-component-badge-ai-text);
+  //   --badge-bg-color: var(--canary-component-badge-ai-background);
+  //   border: 1px solid transparent;
+  //   background-image:
+  //     linear-gradient(to right, var(--badge-bg-color), var(--badge-bg-color)), var(--canary-component-badge-ai-border);
+  //   background-origin: border-box;
+  //   background-clip: padding-box, border-box;
+  // }
+
   plugins: [
+    plugin(({ addComponents }) => {
+      addComponents({
+        '.badge': {
+          border: 'var(--canary-border-width-1) solid var(--canary-component-badge-default-border)',
+          color: 'var(--canary-component-badge-default-text)',
+          backgroundColor: 'var(--canary-component-badge-default-background)',
+
+          '&-neutral': {
+            color: 'var(--canary-component-badge-neutral-text)',
+            backgroundColor: 'var(--canary-component-badge-neutral-background)',
+            borderColor: 'var(--canary-component-badge-neutral-border)'
+          },
+          '&-success': {
+            color: 'var(--canary-component-badge-success-text)',
+            backgroundColor: 'var(--canary-component-badge-success-background)',
+            borderColor: 'var(--canary-component-badge-success-border)'
+          },
+          '&-warning': {
+            color: 'var(--canary-component-badge-warning-text)',
+            backgroundColor: 'var(--canary-component-badge-warning-background)',
+            borderColor: 'var(--canary-component-badge-warning-border)'
+          },
+          '&-danger': {
+            color: 'var(--canary-component-badge-danger-text)',
+            backgroundColor: 'var(--canary-component-badge-danger-background)',
+            borderColor: 'var(--canary-component-badge-danger-border)'
+          },
+          '&-running': {
+            color: 'var(--canary-component-badge-running-text)',
+            backgroundColor: 'var(--canary-component-badge-running-background)',
+            borderColor: 'var(--canary-component-badge-running-border)'
+          },
+          '&-merged': {
+            color: 'var(--canary-component-badge-merged-text)',
+            backgroundColor: 'var(--canary-component-badge-merged-background)',
+            borderColor: 'var(--canary-component-badge-merged-border)'
+          },
+          '&-ai': {
+            color: 'var(--canary-component-badge-ai-text)',
+            backgroundImage: `linear-gradient(to right, var(--canary-component-badge-ai-background), var(--canary-component-badge-ai-background)), var(--canary-component-badge-ai-border)`,
+            backgroundOrigin: 'border-box',
+            backgroundClip: 'padding-box, border-box',
+            border: '1px solid transparent'
+          },
+
+          // Size
+          '&-sm': {
+            padding: 'var(--badge-sm-padding, 0.125rem 0.375rem)',
+            fontSize: 'var(--badge-sm-font-size, 0.625rem)',
+            background: 'rebeccapurple',
+            color: 'white'
+          }
+        }
+        // '.badge-primary': {
+        //   backgroundColor: 'var(--badge-primary-background-color, #3b82f6)',
+        //   color: 'var(--badge-primary-color, white)',
+        //   borderColor: 'var(--badge-primary-border-color, transparent)'
+        // },
+        // '.badge-warning': {
+        //   backgroundColor: 'var(--badge-warning-background-color, #f59e0b)',
+        //   color: 'var(--badge-warning-color, white)',
+        //   borderColor: 'var(--badge-warning-border-color, transparent)'
+        // }
+      })
+    }),
     tailwindcssAnimate,
     typography,
     function ({ addUtilities }: PluginAPI) {

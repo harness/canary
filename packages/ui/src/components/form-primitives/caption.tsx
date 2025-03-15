@@ -1,8 +1,8 @@
-import { PropsWithChildren } from 'react'
+import { HTMLAttributes, PropsWithChildren } from 'react'
 
 import { cn } from '@utils/cn'
 
-interface CaptionProps extends PropsWithChildren<React.HTMLAttributes<HTMLElement>> {
+interface CaptionProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
   className?: string
 }
 

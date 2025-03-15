@@ -2,19 +2,49 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Select } from '@/components'
+import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
-import { CreatePipelineDialogProps, CreatePipelineFormType } from './types'
+import { ICreatePipelineStore } from './types'
 
-const createPipelineSchema = z.object({
-  name: z.string().min(1, { message: 'Pipeline name is required' }),
-  branch: z.string().min(1, { message: 'Branch name is required' }),
-  yamlPath: z.string().min(1, { message: 'YAML path is required' })
-})
+export const makeCreatePipelineSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, specialSymbols, noSpaces } = makeValidationUtils(t)
+
+  return z.object({
+    name: z
+      .string()
+      .trim()
+      .nonempty(required(t('views:pipelines.createPipelineDialog.nameLabel')))
+      .max(...maxLength(100, t('views:pipelines.createPipelineDialog.nameLabel')))
+      .regex(...specialSymbols(t('views:pipelines.createPipelineDialog.nameLabel')))
+      .refine(...noSpaces(t('views:pipelines.createPipelineDialog.nameLabel'))),
+    branch: z
+      .string()
+      .trim()
+      .nonempty(required(t('views:pipelines.createPipelineDialog.branchLabel'))),
+    yamlPath: z
+      .string()
+      .trim()
+      .nonempty(required(t('views:pipelines.createPipelineDialog.yamlPathLabel')))
+  })
+}
+
+export type CreatePipelineFormType = z.infer<ReturnType<typeof makeCreatePipelineSchema>>
+
+interface CreatePipelineDialogProps {
+  useCreatePipelineStore: () => ICreatePipelineStore
+  isOpen: boolean
+  onClose: () => void
+  onCancel: () => void
+  onSubmit: (formValues: CreatePipelineFormType) => Promise<void>
+  useTranslationStore: () => TranslationStore
+}
 
 export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
-  const { onCancel, onSubmit, isOpen, onClose, useCreatePipelineStore } = props
+  const { onCancel, onSubmit, isOpen, onClose, useCreatePipelineStore, useTranslationStore } = props
+  const { t } = useTranslationStore()
 
   const { isLoadingBranchNames, branchNames, defaultBranch, error } = useCreatePipelineStore()
 
@@ -35,7 +65,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     trigger,
     formState: { errors, isValid }
   } = useForm<CreatePipelineFormType>({
-    resolver: zodResolver(createPipelineSchema),
+    resolver: zodResolver(makeCreatePipelineSchema(t)),
     mode: 'onChange',
     defaultValues: {
       name: '',
@@ -66,52 +96,46 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     return () => subscription.unsubscribe()
   }, [watch, setValue, clearErrors, error, trigger])
 
-  const handleSelectChange = (fieldName: keyof CreatePipelineFormType, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
+  const handleSelectBranch = (value: string) => setValue('branch', value, { shouldValidate: true })
+
+  const handleClose = () => {
+    onCancel()
+    onClose()
+    reset()
   }
 
   return (
-    <Dialog.Root
-      open={isOpen}
-      onOpenChange={() => {
-        onClose()
-        reset()
-      }}
-    >
+    <Dialog.Root open={isOpen} onOpenChange={handleClose}>
       <Dialog.Content className="max-w-xl" aria-describedby={undefined}>
         <Dialog.Header>
-          <Dialog.Title>Create Pipeline</Dialog.Title>
+          <Dialog.Title>{t('views:pipelines.createPipelineDialog.dialogTitle', 'Create Pipeline')}</Dialog.Title>
         </Dialog.Header>
         <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-          <Fieldset>
+          <Fieldset legend="Pipeline details">
             <Input
               id="name"
-              label="Pipeline name"
+              label={t('views:pipelines.createPipelineDialog.nameLabel', 'Pipeline name')}
               {...register('name')}
               size="md"
               error={errors.name?.message?.toString()}
             />
-          </Fieldset>
 
-          <Fieldset>
             <Input
               id="yamlPath"
-              label="Yaml path"
+              label={t('views:pipelines.createPipelineDialog.yamlPathLabel', 'Yaml path')}
               {...register('yamlPath')}
               size="md"
               error={errors.name?.message?.toString()}
             />
-          </Fieldset>
 
-          <Fieldset>
             <ControlGroup>
               <Select.Root
                 disabled={isLoadingBranchNames}
                 name="branch"
                 value={branch}
-                onValueChange={value => handleSelectChange('branch', value)}
-                placeholder="Select"
-                label="Branch"
+                onValueChange={handleSelectBranch}
+                placeholder={t('views:pipelines.createPipelineDialog.branchPlaceholder', 'Select')}
+                label={t('views:pipelines.createPipelineDialog.branchLabel', 'Branch')}
               >
                 <Select.Content>
                   {branchNames?.map(branchName => (
@@ -131,19 +155,11 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
           )}
 
           <Dialog.Footer className="-mx-5 -mb-5">
-            <Button
-              type="button"
-              onClick={() => {
-                onCancel()
-                reset()
-              }}
-              className="text-primary"
-              variant="outline"
-            >
-              Cancel
+            <Button type="button" onClick={handleClose} className="text-primary" variant="outline">
+              {t('views:pipelines.createPipelineDialog.cancelButton', 'Cancel')}
             </Button>
             <Button type="submit" disabled={!isValid || isLoadingBranchNames}>
-              Create Pipeline
+              {t('views:pipelines.createPipelineDialog.createButton', 'Create Pipeline')}
             </Button>
           </Dialog.Footer>
         </FormWrapper>

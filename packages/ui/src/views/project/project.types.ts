@@ -1,3 +1,7 @@
+import { makeValidationUtils } from '@utils/validation'
+import { TranslationStore } from '@views/repo'
+import { z } from 'zod'
+
 export interface MemberData {
   display_name: string
   role: string
@@ -25,4 +29,25 @@ export interface IMemberListStore {
   totalPages: number
   page: number
   setPage: (page: number) => void
+}
+
+export const makeProjectNameSchema = (t: TranslationStore['t'], name: string) => {
+  const { required, maxLength, minLength, specialSymbols, noSpaces } = makeValidationUtils(t)
+
+  return z
+    .string()
+    .trim()
+    .nonempty(required(name))
+    .min(...minLength(4, name))
+    .max(...maxLength(100, name))
+    .regex(...specialSymbols(name))
+    .refine(...noSpaces(name))
+}
+
+export const makeProjectDescriptionSchema = (t: TranslationStore['t'], name: string) => {
+  const { maxLength } = makeValidationUtils(t)
+  return z
+    .string()
+    .trim()
+    .max(...maxLength(1024, name))
 }

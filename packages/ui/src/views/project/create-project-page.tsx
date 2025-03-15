@@ -1,9 +1,20 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Fieldset, FormWrapper, Icon, Input, StyledLink, StyledLinkProps } from '@/components'
+import {
+  Button,
+  Card,
+  Fieldset,
+  FormWrapper,
+  Icon,
+  Input,
+  Message,
+  MessageTheme,
+  StyledLink,
+  StyledLinkProps
+} from '@/components'
 import { useTheme } from '@/context'
-import { Floating1ColumnLayout, TranslationStore } from '@/views'
+import { Floating1ColumnLayout, makeProjectDescriptionSchema, makeProjectNameSchema, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
 import { z } from 'zod'
@@ -45,18 +56,13 @@ const getIsFirstProjectPage = (props: CreateProjectPageProps): props is CreateFi
   return 'logoutLinkProps' in props
 }
 
-const createProjectSchema = (t: TranslationStore['t']) =>
+export const makeCreateProjectSchema = (t: TranslationStore['t']) =>
   z.object({
-    name: z
-      .string()
-      .nonempty(t('views:createProject.validation.nameNoEmpty', 'The field can’t be blank'))
-      .min(4, {
-        message: t('views:createProject.validation.nameMinLength', 'The project name should be at least 4 characters')
-      }),
-    description: z.string()
+    name: makeProjectNameSchema(t, t('views:createProject.form.name')),
+    description: makeProjectDescriptionSchema(t, t('views:createProject.form.description'))
   })
 
-export type CreateProjectFields = z.infer<ReturnType<typeof createProjectSchema>>
+export type CreateProjectFields = z.infer<ReturnType<typeof makeCreateProjectSchema>>
 
 export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
   const { error, isLoading, backLinkProps, onFormSubmit, useTranslationStore } = props
@@ -68,43 +74,19 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
   const { t } = useTranslationStore()
 
-  const [serverError, setServerError] = useState<string | null>(null)
   const {
-    trigger,
     register,
-    setError,
     formState: { errors },
-    clearErrors,
     handleSubmit
   } = useForm<CreateProjectFields>({
-    resolver: zodResolver(createProjectSchema(t))
+    resolver: zodResolver(makeCreateProjectSchema(t))
   })
 
-  const handleInputChange = async () => {
-    clearErrors()
-
-    if (serverError) {
-      setServerError(null)
-      await trigger()
-    }
-  }
-
-  useEffect(() => {
-    if (error) {
-      setServerError(error)
-      setError('name', { type: 'manual', message: error })
-    } else {
-      setServerError(null)
-      clearErrors()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error])
-
-  const hasError = Object.keys(errors).length > 0 || !!serverError
+  const hasError = Object.keys(errors).length > 0 || !!error
 
   return (
     <Floating1ColumnLayout
-      className="flex-col justify-start bg-background-7 pt-20 sm:pt-[8.75rem]"
+      className="bg-background-7 flex-col justify-start pt-20 sm:pt-[8.75rem]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
@@ -126,36 +108,42 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}
 
-          <Card.Title className="mt-3 text-center text-foreground-1" as="h1">
+          <Card.Title className="text-foreground-1 mt-3 text-center" as="h1">
             {t('views:createProject.title', 'Create your new project')}
           </Card.Title>
 
-          <p className="mt-0.5 text-center text-sm leading-snug text-foreground-4">
+          <p className="text-foreground-4 mt-0.5 text-center text-sm leading-snug">
             {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}
           </p>
         </div>
 
         <FormWrapper onSubmit={handleSubmit(onFormSubmit)}>
-          <Fieldset>
+          <Fieldset legend="Project details">
             <Input
               id="name"
               label={t('views:createProject.form.name', 'Project name')}
               placeholder={t('views:createProject.form.namePlaceholder', 'Enter your project name')}
               size="md"
-              {...register('name', { onChange: handleInputChange })}
+              {...register('name')}
               error={errors.name?.message?.toString()}
               autoFocus
             />
 
             <Input
               id="description"
-              {...register('description', { onChange: handleInputChange })}
+              {...register('description')}
               label={t('views:createProject.form.description', 'Description')}
               placeholder={t('views:createProject.form.descriptionPlaceholder', 'Enter a description (optional)')}
               size="md"
               error={errors.description?.message?.toString()}
             />
           </Fieldset>
+
+          {error && (
+            <Message className="mt-1" theme={MessageTheme.ERROR}>
+              {error}
+            </Message>
+          )}
 
           <Button
             className="mt-3 w-full"
@@ -172,7 +160,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
         </FormWrapper>
 
         {isFirst && (
-          <p className="foreground-5 mt-4 text-center text-sm text-foreground-5">
+          <p className="foreground-5 text-foreground-5 mt-4 text-center text-sm">
             {t('views:createProject.logout.question', 'Want to use a different account?')}{' '}
             <StyledLink {...props.logoutLinkProps} variant="accent">
               {t('views:createProject.logout.link', 'Log out')}

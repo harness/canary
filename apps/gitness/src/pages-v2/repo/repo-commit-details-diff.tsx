@@ -12,15 +12,16 @@ import {
 } from '@harnessio/code-service-client'
 import { CommitDiff, CommitSidebar } from '@harnessio/ui/views'
 
-import Explorer from '../../components/FileExplorer.tsx'
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
-import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
-import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
+import Explorer from '../../components/FileExplorer'
+import { useThemeStore } from '../../framework/context/ThemeContext'
+import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import useCodePathDetails from '../../hooks/useCodePathDetails'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
-import { PathParams } from '../../RouteDefinitions.ts'
-import { normalizeGitRef } from '../../utils/git-utils.ts'
+import { PathParams } from '../../RouteDefinitions'
+import { normalizeGitRef } from '../../utils/git-utils'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../pull-request/pull-request-utils'
-import { useCommitDetailsStore } from './stores/commit-details-store.ts'
+import { useCommitDetailsStore } from './stores/commit-details-store'
 
 /**
  * TODO: For now, file-tree is static and contains all files.
@@ -31,6 +32,7 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
   const { commitSHA } = useParams<PathParams>()
   const { fullGitRef } = useCodePathDetails()
   const { setDiffs, setDiffStats } = useCommitDetailsStore()
+  const { isInset } = useThemeStore()
 
   const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
   const diffApiPath = `${defaultCommitRange[0]}~1...${defaultCommitRange[defaultCommitRange.length - 1]}`
@@ -100,7 +102,12 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
   return (
     <>
       {showSidebar && (
-        <CommitSidebar useTranslationStore={useTranslationStore} navigateToFile={() => {}} filesList={filesList}>
+        <CommitSidebar
+          useTranslationStore={useTranslationStore}
+          navigateToFile={() => {}}
+          filesList={filesList}
+          isInsetTheme={isInset}
+        >
           {!!repoDetails?.body?.content?.entries?.length && <Explorer repoDetails={repoDetails?.body} />}
         </CommitSidebar>
       )}

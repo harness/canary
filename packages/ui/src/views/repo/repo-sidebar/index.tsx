@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 
 import { Button, ButtonGroup, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
+import { cn } from '@utils/cn'
 import { BranchSelector, BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@views/repo'
 
 interface RepoSidebarProps {
@@ -14,6 +15,7 @@ interface RepoSidebarProps {
   useTranslationStore: () => TranslationStore
   searchQuery: string
   setSearchQuery: (query: string) => void
+  isInsetTheme?: boolean
 }
 
 export const RepoSidebar = ({
@@ -25,14 +27,16 @@ export const RepoSidebar = ({
   useRepoBranchesStore,
   useTranslationStore,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  isInsetTheme
 }: RepoSidebarProps) => {
   const { branchList } = useRepoBranchesStore()
 
   return (
     // 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px)
+    // Inset theme compensation - 8px*2
     // Total height of topbar and outlet should be 100vh
-    <div className="sticky top-[100px] h-[calc(100vh-100px)]">
+    <div className={cn('sticky top-[100px] h-[calc(100vh-100px)]', { 'h-[calc(100vh-100px-16px)]': isInsetTheme })}>
       <SandboxLayout.LeftSubPanel className="w-[248px]">
         <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
           <div className="flex w-full flex-col gap-3 pt-5">
@@ -46,7 +50,7 @@ export const RepoSidebar = ({
                   setSearchQuery={setSearchQuery}
                 />
               )}
-              <ButtonGroup spacing="0" className="h-full rounded shadow-as-border shadow-borders-2">
+              <ButtonGroup spacing="0" className="shadow-as-border shadow-borders-2 h-full rounded">
                 <Button
                   className="hover:border-borders-2 hover:bg-background-3"
                   size="icon"

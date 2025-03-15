@@ -1,4 +1,4 @@
-import { useRouterContext } from '@/context'
+import { IThemeStore, useRouterContext } from '@/context'
 import { ContentLayoutWithSidebar, TranslationStore } from '@/views'
 import { TFunction } from 'i18next'
 
@@ -47,12 +47,24 @@ const getNavItems = (t: TFunction) => [
   // }
 ]
 
-export function RepoSettingsLayout({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) {
+export function RepoSettingsLayout({
+  useTranslationStore,
+  useThemeStore
+}: {
+  useTranslationStore: () => TranslationStore
+  useThemeStore: () => IThemeStore
+}) {
   const { Outlet } = useRouterContext()
   const { t } = useTranslationStore()
+  const { isInset } = useThemeStore()
 
   return (
-    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={100} sidebarViewportClassName="pt-7">
+    <ContentLayoutWithSidebar
+      sidebarMenu={getNavItems(t)}
+      sidebarOffsetTop={100}
+      isInsetTheme={isInset}
+      sidebarViewportClassName="pt-7"
+    >
       <Outlet />
     </ContentLayoutWithSidebar>
   )

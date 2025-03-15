@@ -13,6 +13,7 @@ import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { AppProvider } from './framework/context/AppContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+import { useThemeStore } from './framework/context/ThemeContext.tsx'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { useTranslationStore } from './i18n/stores/i18n-store'
 import { CreateProject } from './pages-v2/create-project'
@@ -400,7 +401,7 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'settings',
-            element: <RepoSettingsLayout useTranslationStore={useTranslationStore} />,
+            element: <RepoSettingsLayout useTranslationStore={useTranslationStore} useThemeStore={useThemeStore} />,
             handle: {
               breadcrumb: () => <span>{Page.Settings}</span>,
               pageTitle: Page.Settings
@@ -506,7 +507,7 @@ export const repoRoutes: CustomRouteObject[] = [
 
           {
             path: 'settings/webhooks/:webhookId',
-            element: <WebhookSettingsLayout useTranslationStore={useTranslationStore} />,
+            element: <WebhookSettingsLayout useTranslationStore={useTranslationStore} useThemeStore={useThemeStore} />,
             children: [
               {
                 index: true,
@@ -1031,7 +1032,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'profile-settings',
-        element: <ProfileSettingsLayout useTranslationStore={useTranslationStore} />,
+        element: <ProfileSettingsLayout useTranslationStore={useTranslationStore} useThemeStore={useThemeStore} />,
         handle: {
           breadcrumb: () => (
             <>

@@ -84,7 +84,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
       ) : (
         <StackedList.Item disableHover>
           <StackedList.Field
-            title={<div className="text-foreground-4 flex h-32 items-center justify-center">No items available</div>}
+            title={<div className="flex h-32 items-center justify-center text-foreground-4">No items available</div>}
           />
         </StackedList.Item>
       )}

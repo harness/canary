@@ -121,7 +121,7 @@ export const LabelsHeader = ({
         <DropdownMenu.Trigger asChild>
           <Button
             className="text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2"
-            size="icon"
+            size="xs_icon"
             variant="custom"
           >
             <Icon name="vertical-ellipsis" size={12} />

@@ -1,3 +1,5 @@
+import { FC, useMemo } from 'react'
+
 import { Accordion, Avatar, Badge, Icon, Layout, StackedList } from '@/components'
 import {
   easyPluralize,
@@ -9,9 +11,64 @@ import {
 } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
+import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
 
 import { LineDescription, LineTitle } from './pull-request-line-title'
+
+const getStatusIcon = (status: string) => {
+  switch (status) {
+    case 'pending':
+      return <Icon name="pending-clock" className="text-icons-alert" />
+    case 'warning':
+      return <Icon name="triangle-warning" className="text-tertiary-background" />
+    case 'error':
+      return <Icon name="triangle-warning" className="text-destructive" />
+    default:
+      return <Icon name="success" className="text-foreground-success" />
+  }
+}
+
+interface HeaderItemProps {
+  header: string
+}
+
+const HeaderItem: FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {
+  return <span className="text-12 text-foreground-1">{header}</span>
+}
+
+interface AvatarItemProps {
+  evaluations: TypesOwnerEvaluation[] | undefined
+}
+
+const AvatarItem: FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {
+  return (
+    <StackedList.Field
+      className="pb-0"
+      title={
+        <div className="flex items-center">
+          {evaluations &&
+            evaluations.map(({ owner }, idx) => {
+              if (idx < 2) {
+                return (
+                  <Avatar.Root key={owner?.id || idx}>
+                    <Avatar.Fallback>{getInitials(owner?.display_name || '')}</Avatar.Fallback>
+                  </Avatar.Root>
+                )
+              }
+              if (idx === 2 && evaluations.length && evaluations.length > 2) {
+                // TODO: do popover with all the names
+                return <span key={owner?.id} className="text-12">{`+${evaluations.length - 2}`}</span>
+              }
+              return null
+            })}
+        </div>
+      }
+    />
+  )
+}
+
+const ACCORDION_VALUE = 'item-1'
 
 interface PullRequestChangesSectionProps {
   changesInfo: { header: string; content: string; status: string }
@@ -50,45 +107,10 @@ interface PullRequestChangesSectionProps {
       }
     | undefined
   )[]
-}
-interface AvatarItemProps {
-  evaluations: TypesOwnerEvaluation[] | undefined
-}
-interface HeaderItemProps {
-  header: string
-}
-const HeaderItem: React.FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {
-  return <span className="text-12 text-foreground-1">{header}</span>
+  accordionValues: string[]
 }
 
-const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {
-  return (
-    <StackedList.Field
-      className="pb-0"
-      title={
-        <div className="flex items-center">
-          {evaluations &&
-            evaluations.map(({ owner }, idx) => {
-              if (idx < 2) {
-                return (
-                  <Avatar.Root key={owner?.id || idx}>
-                    <Avatar.Fallback>{getInitials(owner?.display_name || '')}</Avatar.Fallback>
-                  </Avatar.Root>
-                )
-              }
-              if (idx === 2 && evaluations.length && evaluations.length > 2) {
-                // TODO: do popover with all the names
-                return <span key={owner?.id} className="text-12">{`+${evaluations.length - 2}`}</span>
-              }
-              return null
-            })}
-        </div>
-      }
-    />
-  )
-}
-
-const PullRequestChangesSection = ({
+const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   changesInfo,
   minApproval,
   minReqLatestApproval,
@@ -103,105 +125,77 @@ const PullRequestChangesSection = ({
   codeOwnerChangeReqEntries,
   codeOwnerPendingEntries,
   codeOwnerApprovalEntries,
-  latestCodeOwnerApprovalArr
-}: PullRequestChangesSectionProps) => {
+  latestCodeOwnerApprovalArr,
+  accordionValues
+}) => {
   // TODO: consider when states change like refetchReviewers
   // refetchCodeOwners
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      // TODO: fix icons to use from nucleo
-      case 'pending':
-        return <Icon name="pending-clock" className="text-icons-alert" />
-      case 'warning':
-        return <Icon name="triangle-warning" className="text-tertiary-background" />
-      case 'error':
-        return <Icon name="triangle-warning" className="text-destructive" />
-      default:
-        return <Icon name="success" className="text-foreground-success" />
-    }
-  }
+  const renderCodeOwnerStatus = useMemo(() => {
+    const getData = () => {
+      if (!!codeOwnerPendingEntries?.length && reqCodeOwnerLatestApproval)
+        return {
+          icon: <Icon name="circle" className="text-warning" />,
+          text: 'Waiting on code owner reviews of latest changes'
+        }
 
-  // TODO: refactoring of icon styles is required
-  function renderCodeOwnerStatus() {
-    if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerLatestApproval) {
-      return (
-        <div className="flex items-center gap-x-2">
-          <Icon name="circle" className="text-warning" />
-          <span className="text-14 text-foreground-1">Waiting on code owner reviews of latest changes</span>
-        </div>
-      )
-    }
+      if (!!codeOwnerPendingEntries?.length && reqCodeOwnerApproval)
+        return {
+          icon: <Icon name="circle" className="text-warning" />,
+          text: 'Changes are pending approval from code owners'
+        }
 
-    if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerApproval) {
-      return (
-        <div className="flex items-center gap-x-2">
-          <Icon name="circle" className="text-warning" />
-          <span className="text-14 text-foreground-1">Changes are pending approval from code owners</span>
-        </div>
-      )
-    }
+      if (!!codeOwnerApprovalEntries?.length && !!codeOwnerPendingEntries?.length)
+        return {
+          icon: <Icon name="circle" className="text-tertiary-background" />,
+          text: 'Some changes were approved by code owners'
+        }
 
-    if (
-      codeOwnerPendingEntries &&
-      codeOwnerApprovalEntries &&
-      codeOwnerApprovalEntries?.length > 0 &&
-      codeOwnerPendingEntries?.length > 0
-    ) {
-      return (
-        <div className="flex items-center gap-x-2">
-          <Icon name="circle" className="text-tertiary-background" />
-          <span className="text-14 text-foreground-1">Some changes were approved by code owners</span>
-        </div>
-      )
-    }
-    if (latestCodeOwnerApprovalArr && latestCodeOwnerApprovalArr?.length > 0 && reqCodeOwnerLatestApproval) {
-      return (
-        <div className="flex items-center gap-x-2">
-          <Icon name="success" className="text-foreground-success" />
-          <span className="text-14 text-foreground-1">Latest changes were approved by code owners</span>
-        </div>
-      )
-    }
-    if (codeOwnerApprovalEntries && codeOwnerApprovalEntries?.length > 0 && reqCodeOwnerApproval) {
-      return (
-        <div className="flex items-center gap-x-2">
-          <Icon name="success" className="text-foreground-success" />
-          <span className="text-14 text-foreground-1">Changes were approved by code owners</span>
-        </div>
-      )
-    }
-    if (codeOwnerApprovalEntries && codeOwnerApprovalEntries?.length > 0) {
-      if (
-        reqCodeOwnerLatestApproval &&
-        minReqLatestApproval &&
-        latestCodeOwnerApprovalArr &&
-        latestCodeOwnerApprovalArr.length < minReqLatestApproval
-      ) {
-        return (
-          <div className="flex items-center gap-x-2">
-            <Icon name="pending-clock" className="text-icons-alert" />
-            <span className="text-14 text-foreground-1">
-              Latest changes are pending approval from required reviewers
-            </span>
-          </div>
+      if (!!latestCodeOwnerApprovalArr?.length && reqCodeOwnerLatestApproval)
+        return {
+          icon: <Icon name="success" className="text-foreground-success" />,
+          text: 'Latest changes were approved by code owners'
+        }
+
+      if (!!codeOwnerApprovalEntries?.length && reqCodeOwnerApproval)
+        return {
+          icon: <Icon name="success" className="text-foreground-success" />,
+          text: 'Changes were approved by code owners'
+        }
+
+      if (codeOwnerApprovalEntries?.length) {
+        if (
+          reqCodeOwnerLatestApproval &&
+          minReqLatestApproval &&
+          latestCodeOwnerApprovalArr &&
+          latestCodeOwnerApprovalArr?.length < minReqLatestApproval
         )
+          return {
+            icon: <Icon name="pending-clock" className="text-icons-alert" />,
+            text: 'Latest changes are pending approval from required reviewers'
+          }
+
+        return {
+          icon: <Icon name="circle" className="text-warning" />,
+          text: 'Changes were approved by code owners'
+        }
       }
-      return (
-        <div className="flex items-center gap-x-2">
-          <Icon name="circle" className="text-warning" />
-          <span className="text-14 text-foreground-1">Changes were approved by code owners</span>
-        </div>
-      )
+
+      return {
+        icon: <Icon name="circle" className="text-warning" />,
+        text: 'No codeowner reviews'
+      }
     }
+
+    const data = getData()
 
     return (
       <div className="flex items-center gap-x-2">
-        <Icon name="circle" className="text-tertiary-background" />
-        <span className="text-14 text-foreground-1">No codeowner reviews</span>
+        {data.icon}
+        <span className="text-14 text-foreground-1">{data.text}</span>
       </div>
     )
-  }
+  }, [codeOwnerPendingEntries, reqCodeOwnerLatestApproval])
 
   const viewBtn =
     (minApproval && minApproval > 0) ||
@@ -210,24 +204,21 @@ const PullRequestChangesSection = ({
     (!isEmpty(codeOwners) && !isEmpty(codeOwners?.evaluation_entries))
 
   return (
-    <Accordion.Item value="item-1">
+    <Accordion.Item value={ACCORDION_VALUE}>
       <Accordion.Trigger
-        className="text-left"
+        className="py-3 text-left [&>svg]:-rotate-0 [&>svg]:data-[state=open]:-rotate-180"
+        chevronClassName="text-icons-3 self-start mt-1"
         hideChevron={!viewBtn}
         onClick={e => {
           if (!viewBtn) e.preventDefault()
         }}
       >
         <StackedList.Field
-          className="gap-y-1"
+          className="flex gap-y-1"
           title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
           description={<LineDescription text={changesInfo.content} />}
         />
-        {viewBtn && (
-          <span className="px-2 py-1.5 text-14 text-foreground-2 transition-colors duration-200 group-hover:text-foreground-1">
-            Show more
-          </span>
-        )}
+        <PanelAccordionShowButton isShowButton={viewBtn} value={ACCORDION_VALUE} accordionValues={accordionValues} />
       </Accordion.Trigger>
 
       <Accordion.Content>
@@ -316,7 +307,7 @@ const PullRequestChangesSection = ({
                   </span>
                 </div>
               ) : (
-                renderCodeOwnerStatus()
+                renderCodeOwnerStatus
               )}
               {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && (
                 <Badge variant="quaternary" borderRadius="full" size="xl" disableHover>

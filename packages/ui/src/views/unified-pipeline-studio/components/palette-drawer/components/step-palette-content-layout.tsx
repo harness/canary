@@ -1,8 +1,10 @@
 import { forwardRef } from 'react'
 
+import { cx } from 'class-variance-authority'
+
 const StepsPaletteContentLayout = {
-  Root: function Content({ children }: { children: React.ReactNode }) {
-    return <div className="flex grow flex-col overflow-auto px-4">{children}</div>
+  Root: function Content({ children, className }: { children: React.ReactNode; className?: string }) {
+    return <div className={cx('flex grow flex-col overflow-auto px-4', className)}>{children}</div>
   },
 
   Section: forwardRef<HTMLDivElement, { children: React.ReactNode }>(function Section({ children }, ref) {

@@ -1,3 +1,5 @@
+import { cx } from 'class-variance-authority'
+
 const EntityFormSectionLayout = {
   Root: function Root({ children }: { children: React.ReactNode }) {
     return <div className="flex grow flex-col overflow-auto">{children}</div>
@@ -15,8 +17,8 @@ const EntityFormSectionLayout = {
     return <div className="mt-3 text-muted-foreground">{children}</div>
   },
 
-  Form: function Form({ children }: { children: React.ReactNode }) {
-    return <div className="mb-5 p-5">{children}</div>
+  Form: function Form({ children, className }: { children: React.ReactNode; className?: string }) {
+    return <div className={cx('mb-5 p-5', className)}>{children}</div>
   }
 }
 

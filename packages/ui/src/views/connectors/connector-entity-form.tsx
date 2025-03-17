@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import { Button } from '@components/button'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
@@ -7,7 +7,13 @@ import { inputComponentFactory } from '@views/unified-pipeline-studio/components
 import { InputType } from '@views/unified-pipeline-studio/components/form-inputs/types'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 
-import { IFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
+import {
+  getDefaultValuesFromFormDefinition,
+  IFormDefinition,
+  RenderForm,
+  RootForm,
+  useZodValidationResolver
+} from '@harnessio/forms'
 
 import { AnyConnectorDefinition, ConnectorFormEntityType } from './types'
 
@@ -25,8 +31,12 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
   const onSubmit = (data: any) => {
     onFormSubmit?.(data)
   }
-
-  const [defaultConnectorValues, _] = useState({})
+  const defaultConnectorValues = useMemo(() => {
+    const connectorDefinition = getConnectorDefinition(formEntity.data.identifier)
+    if (!connectorDefinition) return {}
+    console.log(getDefaultValuesFromFormDefinition(connectorDefinition.formDefinition))
+    return getDefaultValuesFromFormDefinition(connectorDefinition.formDefinition)
+  }, [formEntity.data.identifier, getConnectorDefinition])
 
   const formDefinition: IFormDefinition = useMemo(() => {
     const connectorDefinition = getConnectorDefinition(formEntity.data.identifier)
@@ -70,12 +80,13 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     >
       {rootForm => (
         <EntityFormLayout.Root>
-          <EntityFormLayout.Header>
-            {standalone && <EntityFormLayout.Title>Add Connector</EntityFormLayout.Title>}
-            <EntityFormLayout.Description>{formEntity?.data.description}</EntityFormLayout.Description>
-          </EntityFormLayout.Header>
+          {standalone && (
+            <EntityFormLayout.Header>
+              <EntityFormLayout.Title>{formEntity?.data.description}</EntityFormLayout.Title>
+            </EntityFormLayout.Header>
+          )}
           <EntityFormSectionLayout.Root>
-            <EntityFormSectionLayout.Form>
+            <EntityFormSectionLayout.Form className={standalone ? undefined : '!px-0'}>
               <RenderForm className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
             </EntityFormSectionLayout.Form>
           </EntityFormSectionLayout.Root>

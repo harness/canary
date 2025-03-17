@@ -5,10 +5,10 @@ import { Input } from '@components/input'
 import { Spacer } from '@components/spacer'
 import { StepFormLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-form-layout'
 import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-content-layout'
-import { StepsPaletteLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-layout'
 
+import { ConnectorsPaletteLayout } from './components/connectors-pallete-layout'
 import { ConnectorsPaletteSection } from './components/ConnectorsPalleteSection'
-import { harnessConnectors } from './connector-utils'
+import { harnessConnectors } from './harness-connectors/utils'
 import { ConnectorRightDrawer } from './types'
 
 interface ConnectorsPaletteProps {
@@ -16,11 +16,10 @@ interface ConnectorsPaletteProps {
   requestClose: () => void
   setFormEntity: (formEntity: any) => void
   setRightDrawer: (value: ConnectorRightDrawer) => void
-  standalone?: boolean
 }
 
 export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element => {
-  const { connectors, requestClose, setFormEntity, setRightDrawer, standalone } = props
+  const { connectors, requestClose, setFormEntity, setRightDrawer } = props
 
   const [query, setQuery] = useState('')
 
@@ -30,19 +29,18 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
   )
 
   return (
-    <StepsPaletteLayout.Root>
-      {standalone && (
-        <StepsPaletteLayout.Header>
-          <StepsPaletteLayout.Title>Add Connector</StepsPaletteLayout.Title>
-          <Input
-            placeholder="Search"
-            onChange={value => {
-              setQuery(value.target.value)
-            }}
-          />
-        </StepsPaletteLayout.Header>
-      )}
-      <StepsPaletteContentLayout.Root className={standalone ? undefined : '!px-0'}>
+    <ConnectorsPaletteLayout.Root>
+      <ConnectorsPaletteLayout.Header>
+        <ConnectorsPaletteLayout.Title>Connector Setup</ConnectorsPaletteLayout.Title>
+        <ConnectorsPaletteLayout.Subtitle>Select a Connector</ConnectorsPaletteLayout.Subtitle>
+        <Input
+          placeholder="Search"
+          onChange={value => {
+            setQuery(value.target.value)
+          }}
+        />
+      </ConnectorsPaletteLayout.Header>
+      <StepsPaletteContentLayout.Root>
         <ConnectorsPaletteSection
           connectors={connectorsFiltered}
           onSelect={connector => {
@@ -50,7 +48,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
               type: 'connector',
               data: {
                 identifier: connector.identifier,
-                description: connector.description
+                name: connector.name
               }
             })
             setRightDrawer(ConnectorRightDrawer.Form)
@@ -63,6 +61,6 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
           Cancel
         </Button>
       </StepFormLayout.Footer>
-    </StepsPaletteLayout.Root>
+    </ConnectorsPaletteLayout.Root>
   )
 }

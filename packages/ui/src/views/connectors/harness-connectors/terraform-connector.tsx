@@ -4,7 +4,7 @@ import { IFormDefinition } from '@harnessio/forms'
 
 import { IInputConfigWithConfigInterface } from '../types'
 
-export const TERRAFORM_CONNECTOR_DESCRIPTION = 'Terraform Connector'
+export const TERRAFORM_CONNECTOR_CATEGORY = 'Infrastructure'
 
 const inputs: IInputConfigWithConfigInterface[] = [
   {

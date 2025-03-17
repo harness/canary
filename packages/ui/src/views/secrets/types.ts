@@ -33,4 +33,8 @@ export interface SecretItem extends BaseEntityProps {
   createdAt: number
   updatedAt: number
   draft: boolean
+  spec?: {
+    errorMessageForInvalidYaml?: string
+  }
+  type: 'SecretFile' | 'SecretText' | 'SSHKey' | 'WinRmCredentials'
 }

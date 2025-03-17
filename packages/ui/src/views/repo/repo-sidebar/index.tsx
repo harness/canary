@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 import { Button, ButtonGroup, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
+import { useTheme } from '@/context'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { BranchSelector, BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@views/repo'
@@ -15,7 +16,6 @@ interface RepoSidebarProps {
   useTranslationStore: () => TranslationStore
   searchQuery: string
   setSearchQuery: (query: string) => void
-  isInsetTheme?: boolean
 }
 
 export const RepoSidebar = ({
@@ -27,16 +27,16 @@ export const RepoSidebar = ({
   useRepoBranchesStore,
   useTranslationStore,
   searchQuery,
-  setSearchQuery,
-  isInsetTheme
+  setSearchQuery
 }: RepoSidebarProps) => {
   const { branchList } = useRepoBranchesStore()
+  const { isInset } = useTheme()
 
   return (
     // 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px)
     // Inset theme compensation - 8px*2
     // Total height of topbar and outlet should be 100vh
-    <div className={cn('sticky top-[100px] h-[calc(100vh-100px)]', { 'h-[calc(100vh-100px-16px)]': isInsetTheme })}>
+    <div className={cn('sticky top-[100px] h-[calc(100vh-100px)]', { 'h-[calc(100vh-100px-16px)]': isInset })}>
       <SandboxLayout.LeftSubPanel className="w-[248px]">
         <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
           <div className="flex w-full flex-col gap-3 pt-5">

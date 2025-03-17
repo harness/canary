@@ -161,7 +161,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
             </div>
             <Select.Root
               name="color-adjustment"
-              value={isInset ? ContentStyleType.Inset : ContentStyleType.NoInset}
+              value={isInset ? ContentStyleType.Inset : ContentStyleType.Default}
               onValueChange={onInsetChange}
               placeholder="Select"
             >

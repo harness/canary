@@ -191,7 +191,6 @@ export const AppShell = () => {
           pinnedMenuItems={pinnedMenu}
           handleChangePinnedMenuItem={handleChangePinnedMenuItem}
           handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-          useThemeStore={useThemeStore}
           useTranslationStore={useTranslationStore}
         />
 
@@ -238,8 +237,8 @@ function BreadcrumbsAndOutlet({ className }: { className?: string }) {
   const { isInset } = useThemeStore()
 
   return (
-    <div className={cn('h-full', { 'overflow-hidden h-screen p-2 bg-sidebar-background-1': isInset })}>
-      <div className={cn('h-full flex flex-col', { 'rounded-md overflow-auto bg-background-1': isInset }, className)}>
+    <div className={cn('h-full', { 'overflow-hidden h-screen p-2 bg-sidebar-background-1': isInset }, className)}>
+      <div className={cn('h-full flex flex-col', { 'rounded-md overflow-auto bg-background-1': isInset })}>
         <div className="layer-high bg-background-1 sticky top-0">
           <Breadcrumbs />
         </div>

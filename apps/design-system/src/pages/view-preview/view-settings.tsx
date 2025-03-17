@@ -17,7 +17,7 @@ export interface ViewSettingsProps {
 const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
   const [showSettings, setShowSettings] = useState(false)
   const [currentTheme, setCurrentTheme] = useState<Themes>(getTheme())
-  const [contentStyle, setContentStyle] = useState<ContentStyleType>(ContentStyleType.NoInset)
+  const [contentStyle, setContentStyle] = useState<ContentStyleType>(ContentStyleType.Default)
 
   useEffect(() => {
     const bodyClass = document.body.classList
@@ -50,7 +50,7 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
 
   useEffect(() => {
     const inset = sessionStorage.getItem('view-preview-is-inset')
-    setContentStyle(inset === 'true' ? ContentStyleType.Inset : ContentStyleType.NoInset)
+    setContentStyle(inset === 'true' ? ContentStyleType.Inset : ContentStyleType.Default)
   }, [])
 
   return (

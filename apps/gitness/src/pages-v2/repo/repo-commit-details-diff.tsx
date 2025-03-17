@@ -13,7 +13,6 @@ import {
 import { CommitDiff, CommitSidebar } from '@harnessio/ui/views'
 
 import Explorer from '../../components/FileExplorer'
-import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -32,7 +31,6 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
   const { commitSHA } = useParams<PathParams>()
   const { fullGitRef } = useCodePathDetails()
   const { setDiffs, setDiffStats } = useCommitDetailsStore()
-  const { isInset } = useThemeStore()
 
   const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
   const diffApiPath = `${defaultCommitRange[0]}~1...${defaultCommitRange[defaultCommitRange.length - 1]}`
@@ -102,12 +100,7 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
   return (
     <>
       {showSidebar && (
-        <CommitSidebar
-          useTranslationStore={useTranslationStore}
-          navigateToFile={() => {}}
-          filesList={filesList}
-          isInsetTheme={isInset}
-        >
+        <CommitSidebar useTranslationStore={useTranslationStore} navigateToFile={() => {}} filesList={filesList}>
           {!!repoDetails?.body?.content?.entries?.length && <Explorer repoDetails={repoDetails?.body} />}
         </CommitSidebar>
       )}

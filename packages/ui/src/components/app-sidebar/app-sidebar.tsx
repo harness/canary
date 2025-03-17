@@ -10,7 +10,7 @@ import {
   Spacer,
   ThemeDialog
 } from '@/components'
-import { ContentStyleType, IThemeStore, useRouterContext } from '@/context'
+import { ContentStyleType, useRouterContext, useTheme } from '@/context'
 import { TypesUser } from '@/types'
 import { TranslationStore } from '@/views'
 
@@ -33,13 +33,11 @@ interface SidebarProps {
   handleLogOut: () => void
   handleChangePinnedMenuItem: (item: NavbarItemType, pin: boolean) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
-  useThemeStore: () => IThemeStore
   useTranslationStore: () => TranslationStore
   showNewSearch?: boolean
 }
 
 export const AppSidebar = ({
-  useThemeStore,
   useTranslationStore,
   handleChangePinnedMenuItem,
   handleRemoveRecentMenuItem,
@@ -53,7 +51,7 @@ export const AppSidebar = ({
   showNewSearch
 }: SidebarProps) => {
   const { t, i18n, changeLanguage } = useTranslationStore()
-  const { theme, setTheme, setInset, isInset } = useThemeStore()
+  const { theme, setTheme, setInset, isInset } = useTheme()
   const { Link, navigate } = useRouterContext()
 
   const [openThemeDialog, setOpenThemeDialog] = useState(false)

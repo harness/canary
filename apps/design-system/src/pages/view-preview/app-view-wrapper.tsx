@@ -1,7 +1,6 @@
 import { FC, PropsWithChildren, ReactNode, useCallback, useEffect, useState } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 
-import { useThemeStore } from '@utils/theme-utils'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { AppSidebar, MoreSubmenu, NavbarItemType, SettingsMenu, Sidebar } from '@harnessio/ui/components'
@@ -118,7 +117,6 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
               handleChangePinnedMenuItem={setPinned}
               handleRemoveRecentMenuItem={noop}
               useTranslationStore={useTranslationStore}
-              useThemeStore={useThemeStore}
             />
             <Sidebar.Inset>
               <div className={cn('h-full', { 'overflow-hidden h-screen p-2 bg-sidebar-background-1': isInset })}>

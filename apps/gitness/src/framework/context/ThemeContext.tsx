@@ -77,9 +77,5 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     }
   }, [theme, setTheme, systemMode, isInset])
 
-  return (
-    <UIThemeProvider theme={theme} setTheme={setTheme} setInset={setInset} isLightTheme={isLightTheme}>
-      {children}
-    </UIThemeProvider>
-  )
+  return <UIThemeProvider {...{ theme, setTheme, setInset, isLightTheme, isInset }}>{children}</UIThemeProvider>
 }

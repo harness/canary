@@ -10,6 +10,7 @@ import {
   useListPathsQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
+import { cn } from '@harnessio/ui/utils'
 import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import Explorer from '../../components/FileExplorer'
@@ -41,13 +42,13 @@ export const RepoSidebar = () => {
     setSpaceIdAndRepoId
   } = useRepoBranchesStore()
 
+  const { isInset } = useThemeStore()
+
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
-
-  const { isInset } = useThemeStore()
 
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
@@ -224,7 +225,6 @@ export const RepoSidebar = () => {
             filesList={filesList}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            isInsetTheme={isInset}
           >
             {!!repoDetails?.body?.content?.entries?.length && (
               <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />
@@ -232,8 +232,9 @@ export const RepoSidebar = () => {
           </RepoSidebarView>
         )}
         {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
+        {/* Inset theme compensation - 8px*2 */}
         {/* Total height of both the divs should be 100vh */}
-        <div className="h-[calc(100vh-100px)]">
+        <div className={cn('h-[calc(100vh-100px)]', { 'h-[calc(100vh-100px-16px)]': isInset })}>
           <Outlet />
         </div>
       </div>

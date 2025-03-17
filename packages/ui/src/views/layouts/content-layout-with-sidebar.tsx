@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 
 import { NavbarSkeleton, ScrollArea } from '@/components'
-import { INSET_THEME_PADDING, useRouterContext } from '@/context'
+import { INSET_THEME_PADDING, useRouterContext, useTheme } from '@/context'
 import { cn } from '@utils/cn'
 
 export interface SidebarMenuItemSubItem {
@@ -20,7 +20,6 @@ export interface SidebarMenuItem {
 export interface ContentLayoutWithSidebarProps {
   children: ReactNode
   sidebarMenu: SidebarMenuItem[]
-  isInsetTheme?: boolean
   sidebarOffsetTop?: number
   // You need to pass the padding-top value, which is the initial offset of the sidebar from the top of the visible area.
   // This is required to ensure that scrolling within the block goes beyond the boundary
@@ -31,11 +30,11 @@ export interface ContentLayoutWithSidebarProps {
 export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   children,
   sidebarMenu,
-  isInsetTheme,
   sidebarOffsetTop = 0,
   sidebarViewportClassName
 }) => {
   const { NavLink } = useRouterContext()
+  const { isInset } = useTheme()
 
   return (
     <div className="relative mx-auto flex w-full max-w-[1088px] items-start gap-x-20 pr-4">
@@ -43,7 +42,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
         className="sticky w-[220px]"
         style={{
           top: `${sidebarOffsetTop}px`,
-          height: `calc(100svh - ${isInsetTheme ? sidebarOffsetTop + INSET_THEME_PADDING * 2 : sidebarOffsetTop}px)`
+          height: `calc(100svh - ${isInset ? sidebarOffsetTop + INSET_THEME_PADDING * 2 : sidebarOffsetTop}px)`
         }}
       >
         <ScrollArea className="h-full" viewportClassName={cn('pb-11 !px-4', sidebarViewportClassName)}>

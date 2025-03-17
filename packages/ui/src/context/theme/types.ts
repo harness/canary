@@ -12,7 +12,7 @@ export enum ColorType {
 
 export enum ContentStyleType {
   Inset = 'inset',
-  NoInset = 'noInset'
+  Default = 'default'
 }
 
 export enum ContrastType {

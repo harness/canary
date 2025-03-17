@@ -3,21 +3,32 @@ import { useRouterContext } from '@/context'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { cn } from '@utils/cn'
 import { timeDistance } from '@utils/utils'
+import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
 
 import { PullRequestRoutingProps } from '../../../pull-request-details-types'
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
+const ACCORDION_VALUE = 'item-3'
+
 interface ExecutionPayloadType {
   execution_number: number
 }
+
 interface PullRequestMergeSectionProps extends Partial<PullRequestRoutingProps> {
   checkData: TypesPullReqCheck[]
   checksInfo: { header: string; content: string; status: EnumCheckStatus }
+  accordionValues: string[]
 }
 
-const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullRequestMergeSectionProps) => {
+const PullRequestCheckSection = ({
+  checkData,
+  checksInfo,
+  toPRCheck,
+  accordionValues
+}: PullRequestMergeSectionProps) => {
   const { Link } = useRouterContext()
+
   const getStatusIcon = (status: EnumCheckStatus) => {
     switch (status) {
       // TODO: fix icons to use from nucleo
@@ -35,16 +46,17 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
   }
 
   return !isEmpty(checkData) ? (
-    <Accordion.Item value="item-3">
-      <Accordion.Trigger className="text-left">
+    <Accordion.Item value={ACCORDION_VALUE}>
+      <Accordion.Trigger
+        className="py-3 text-left [&>svg]:-rotate-0 [&>svg]:data-[state=open]:-rotate-180"
+        chevronClassName="text-icons-3 self-start mt-1"
+      >
         <StackedList.Field
-          className="gap-y-1"
+          className="flex gap-y-1"
           title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}
           description={<LineDescription text={checksInfo.content} />}
         />
-        <span className="px-2 py-1.5 text-2 text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
-          Show more
-        </span>
+        <PanelAccordionShowButton isShowButton value={ACCORDION_VALUE} accordionValues={accordionValues} />
       </Accordion.Trigger>
       <Accordion.Content className={cn('flex flex-col pl-6', { 'pb-0': checkData.length === 1 })}>
         {checkData.map(check => {

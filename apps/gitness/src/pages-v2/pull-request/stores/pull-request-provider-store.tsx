@@ -1,8 +1,11 @@
 import { produce } from 'immer'
+import { isEqual } from 'lodash-es'
 import { create } from 'zustand'
 
 import { commentStatusPullReq as apiCommentStatusPullReq, mergePullReqOp } from '@harnessio/code-service-client'
 import { CodeCommentState, DiffStatistics, PullRequestDataState, PullRequestState } from '@harnessio/ui/views'
+
+import { extractSpecificViolations, getCommentsInfoData } from '../../../pages/pull-request/utils'
 
 export const codeOwnersNotFoundMessage = 'CODEOWNERS file not found'
 export const codeOwnersNotFoundMessage2 = `path "CODEOWNERS" not found`
@@ -10,6 +13,10 @@ export const codeOwnersNotFoundMessage3 = `failed to find node 'CODEOWNERS' in '
 export const oldCommitRefetchRequired = 'A newer commit is available. Only the latest commit can be merged.'
 export const prMergedRefetchRequired = 'Pull request already merged'
 export const POLLING_INTERVAL = 10000
+
+export enum PR_COMMENTS_RULES {
+  REQUIRE_RESOLVE_ALL = 'pullreq.comments.require_resolve_all'
+}
 
 export const usePullRequestProviderStore = create<PullRequestDataState>((set, get) => ({
   repoMetadata: undefined,
@@ -74,8 +81,10 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
   refetchPullReq: () => {},
   retryOnErrorFunc: () => {},
   dryMerge: () => {
-    const { repoMetadata, pullReqMetadata, refetchPullReq } = get()
+    const { repoMetadata, pullReqMetadata, refetchPullReq, prPanelData: currentPrPanelData } = get()
+
     const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
+
     if (!isClosed && repoMetadata?.path !== undefined && pullReqMetadata?.state !== PullRequestState.MERGED) {
       mergePullReqOp({
         repo_ref: `${repoMetadata?.path}/+`,
@@ -83,47 +92,41 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
         body: { bypass_rules: true, dry_run: true, source_sha: pullReqMetadata?.source_sha }
       })
         .then(({ body: res }) => {
+          const requiresCommentApproval = res?.requires_comment_resolution ?? false
+          const ruleViolationArr = res?.rule_violations ? { data: { rule_violations: res.rule_violations } } : undefined
+          const resolvedCommentArr = extractSpecificViolations(
+            ruleViolationArr,
+            PR_COMMENTS_RULES.REQUIRE_RESOLVE_ALL
+          )?.[0]
+
+          const newPrPanelData = {
+            requiresCommentApproval,
+            ruleViolationArr,
+            resolvedCommentArr,
+            ruleViolation: !!res?.rule_violations?.length,
+            atLeastOneReviewerRule: res?.requires_no_change_requests ?? false,
+            reqCodeOwnerApproval: res?.requires_code_owners_approval ?? false,
+            minApproval: res?.minimum_required_approvals_count ?? 0,
+            reqCodeOwnerLatestApproval: res?.requires_code_owners_approval_latest ?? false,
+            minReqLatestApproval: res?.minimum_required_approvals_count_latest ?? 0,
+            conflictingFiles: res?.conflict_files,
+            PRStateLoading: false,
+            commentsLoading: false,
+            commentsInfoData: getCommentsInfoData({
+              requiresCommentApproval,
+              resolvedCommentArrParams: resolvedCommentArr?.params
+            })
+          }
+
+          // We are adding data object comparison,
+          // as previously the store values would change every time, even if the data was the same.
+          const isDataChanged = !isEqual(newPrPanelData, currentPrPanelData)
+
+          if (!isDataChanged) return
+
           set(
             produce(draft => {
-              if (res?.rule_violations?.length) {
-                draft.prPanelData = {
-                  ruleViolation: true,
-                  ruleViolationArr: { data: { rule_violations: res.rule_violations } },
-                  requiresCommentApproval: res.requires_comment_resolution ?? false,
-                  atLeastOneReviewerRule: res.requires_no_change_requests ?? false,
-                  reqCodeOwnerApproval: res.requires_code_owners_approval ?? false,
-                  minApproval: res.minimum_required_approvals_count ?? 0,
-                  reqCodeOwnerLatestApproval: res.requires_code_owners_approval_latest ?? false,
-                  minReqLatestApproval: res.minimum_required_approvals_count_latest ?? 0,
-                  conflictingFiles: res.conflict_files,
-                  PRStateLoading: false,
-                  commentsLoading: false,
-                  commentsInfoData: {
-                    header: '',
-                    content: undefined,
-                    status: ''
-                  }
-                }
-              } else {
-                draft.prPanelData = {
-                  ruleViolation: false,
-                  ruleViolationArr: undefined,
-                  requiresCommentApproval: res.requires_comment_resolution ?? false,
-                  atLeastOneReviewerRule: res.requires_no_change_requests ?? false,
-                  reqCodeOwnerApproval: res.requires_code_owners_approval ?? false,
-                  minApproval: res.minimum_required_approvals_count ?? 0,
-                  reqCodeOwnerLatestApproval: res.requires_code_owners_approval_latest ?? false,
-                  minReqLatestApproval: res.minimum_required_approvals_count_latest ?? 0,
-                  conflictingFiles: res.conflict_files,
-                  PRStateLoading: false,
-                  commentsLoading: false,
-                  commentsInfoData: {
-                    header: '',
-                    content: undefined,
-                    status: ''
-                  }
-                }
-              }
+              draft.prPanelData = newPrPanelData
             })
           )
         })

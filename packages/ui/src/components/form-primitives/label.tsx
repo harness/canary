@@ -57,4 +57,4 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
 )
 Label.displayName = 'Label'
 
-export { Label }
+export { Label, type LabelProps }

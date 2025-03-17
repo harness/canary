@@ -116,7 +116,7 @@ export const MultiSelect = <T = unknown,>({
         </DropdownMenu.Content>
       </DropdownMenu.Root>
       {!!selectedItems.length && (
-        <div className="flex flex-wrap gap-1.5 mt-2">
+        <div className="mt-2 flex flex-wrap gap-1.5">
           {selectedItems.map(it => (
             <Button
               key={it.id}

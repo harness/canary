@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import {
   Accordion,
@@ -8,9 +8,10 @@ import {
   ButtonWithOptionsTheme,
   ButtonWithOptionsVariant,
   Checkbox,
-  DropdownMenu,
   Icon,
   Layout,
+  MoreActionsTooltip,
+  Option,
   StackedList
 } from '@/components'
 import { useRouterContext } from '@/context'
@@ -34,6 +35,145 @@ import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
 import PullRequestMergeSection from './sections/pull-request-merge-section'
+
+interface HeaderProps {
+  isDraft?: boolean
+  isClosed: boolean
+  unchecked: boolean
+  mergeable: boolean
+  isOpen: boolean
+  ruleViolation?: boolean
+  pullReqMetadata: TypesPullReq | undefined
+  onRestoreBranch: () => void
+  onDeleteBranch: () => void
+  showDeleteBranchButton: boolean
+  showRestoreBranchButton: boolean
+  headerMsg?: string
+}
+
+const HeaderTitle = ({ ...props }: HeaderProps) => {
+  if (props?.pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
+    // Format the parsed date as relative time from now
+    const formattedTime = timeAgo(props?.pullReqMetadata?.merged || 0)
+
+    return (
+      <>
+        <div className="inline-flex w-full items-center justify-between gap-2">
+          <div className="flex items-center gap-1 font-medium">
+            <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
+            <Badge variant="tertiary" size="md">
+              <Icon name="branch" size={12} className="text-icons-9" />
+              {props?.pullReqMetadata?.source_branch}
+            </Badge>
+            <span>into</span>
+            <Badge variant="tertiary" size="md">
+              <Icon name="branch" size={12} className="text-icons-9" />
+              {props?.pullReqMetadata?.target_branch}
+            </Badge>
+            <span>{formattedTime}</span>
+          </div>
+          {props.showDeleteBranchButton ? (
+            <Button variant="destructive" onClick={props.onDeleteBranch}>
+              Delete Branch
+            </Button>
+          ) : props.showRestoreBranchButton ? (
+            <Button onClick={props.onRestoreBranch}>Restore Branch</Button>
+          ) : null}
+        </div>
+        {props.headerMsg && (
+          <div className="flex w-full justify-end">
+            <span className="text-12 text-destructive">{props.headerMsg}</span>
+          </div>
+        )}
+      </>
+    )
+  }
+
+  return (
+    <div className="inline-flex items-center gap-2">
+      <h2 className="font-medium text-foreground-1">
+        {props.isDraft
+          ? 'This pull request is still a work in progress'
+          : props.isClosed
+            ? 'This pull request is closed'
+            : props.unchecked
+              ? 'Checking for ability to merge automatically...'
+              : props.mergeable === false && props.isOpen
+                ? 'Cannot merge pull request'
+                : props.ruleViolation
+                  ? 'Cannot merge pull request'
+                  : `Pull request can be merged`}
+      </h2>
+    </div>
+  )
+}
+
+const getButtonState = ({
+  isMergeable,
+  ruleViolation,
+  isDraft,
+  checksInfo,
+  checkboxBypass,
+  canBypass
+}: {
+  isMergeable?: boolean
+  ruleViolation?: boolean
+  isDraft?: boolean
+  checksInfo: { status: EnumCheckStatus }
+  checkboxBypass?: boolean
+  canBypass?: boolean
+}) => {
+  if (isDraft) {
+    return {
+      disabled: false,
+      theme: 'primary'
+    }
+  }
+
+  if (['pending', 'running', 'failure'].includes(checksInfo.status)) {
+    return {
+      disabled: true,
+      theme: checksInfo.status === 'failure' ? 'disabled' : 'error',
+      variant: checksInfo.status === 'failure' ? 'default' : 'destractive'
+    }
+  }
+
+  if (ruleViolation && canBypass) {
+    return {
+      disabled: !checkboxBypass,
+      theme: checkboxBypass ? 'error' : 'disabled',
+      variant: checkboxBypass ? 'destractive' : 'default'
+    }
+  }
+
+  if (isMergeable && !ruleViolation) {
+    return {
+      disabled: false,
+      theme: 'success'
+    }
+  }
+
+  return {
+    disabled: true,
+    theme: 'disabled'
+  }
+}
+
+const getDataFromPullReqMetadata = (pullReqMetadata?: TypesPullReq) => {
+  const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
+  const isOpen = pullReqMetadata?.state === PullRequestState.OPEN
+  const isDraft = !!pullReqMetadata?.is_draft
+
+  return {
+    isMergeable: pullReqMetadata?.merge_check_status === MergeCheckStatus.MERGEABLE,
+    isClosed,
+    isOpen,
+    isDraft,
+    isUnchecked: pullReqMetadata?.merge_check_status === MergeCheckStatus.UNCHECKED && !isClosed,
+    isRebasable: pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged,
+    isShowMoreTooltip: isOpen && !isDraft
+  }
+}
 
 export interface PullRequestPanelProps
   extends Omit<
@@ -59,132 +199,6 @@ export interface PullRequestPanelProps
   prPanelData: PRPanelData
   spaceId?: string
   repoId?: string
-}
-
-interface HeaderProps {
-  isDraft?: boolean
-  isClosed: boolean
-  unchecked: boolean
-  mergeable: boolean
-  isOpen: boolean
-  ruleViolation?: boolean
-  pullReqMetadata: TypesPullReq | undefined
-  onRestoreBranch: () => void
-  onDeleteBranch: () => void
-  showDeleteBranchButton: boolean
-  showRestoreBranchButton: boolean
-  headerMsg?: string
-}
-
-const HeaderTitle = ({ ...props }: HeaderProps) => {
-  if (props?.pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
-    // Format the parsed date as relative time from now
-    const formattedTime = timeAgo(props?.pullReqMetadata?.merged || 0)
-
-    return (
-      <>
-        <div className="inline-flex w-full items-center justify-between gap-2">
-          <div className="flex items-center gap-2 font-medium">
-            <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
-            <Badge variant="secondary" size="xs">
-              <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
-              {props?.pullReqMetadata?.source_branch}
-            </Badge>
-            <span>into</span>
-            <Badge variant="secondary" size="xs">
-              <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
-              {props?.pullReqMetadata?.target_branch}
-            </Badge>
-            <span>{formattedTime}</span>
-          </div>
-          {props.showDeleteBranchButton ? (
-            <Button variant="secondary" size="sm" onClick={props.onDeleteBranch}>
-              Delete Branch
-            </Button>
-          ) : props.showRestoreBranchButton ? (
-            <Button variant="secondary" size="sm" onClick={props.onRestoreBranch}>
-              Restore Branch
-            </Button>
-          ) : null}
-        </div>
-        {props.headerMsg && (
-          <div className="flex w-full justify-end">
-            <span className="text-12 text-destructive">{props.headerMsg}</span>
-          </div>
-        )}
-      </>
-    )
-  }
-  return (
-    <div className="inline-flex items-center gap-2">
-      <h2 className="font-medium text-foreground-1">
-        {props.isDraft
-          ? 'This pull request is still a work in progress'
-          : props.isClosed
-            ? 'This pull request is closed'
-            : props.unchecked
-              ? 'Checking for ability to merge automatically...'
-              : props.mergeable === false && props.isOpen
-                ? 'Cannot merge pull request'
-                : props.ruleViolation
-                  ? 'Cannot merge pull request'
-                  : `Pull request can be merged`}
-      </h2>
-    </div>
-  )
-}
-
-const getButtonState = ({
-  mergeable,
-  ruleViolation,
-  isDraft,
-  checksInfo,
-  checkboxBypass,
-  canBypass
-}: {
-  mergeable: boolean
-  ruleViolation?: boolean
-  isDraft?: boolean
-  checksInfo: { status: EnumCheckStatus }
-  checkboxBypass?: boolean
-  canBypass?: boolean
-}) => {
-  if (isDraft) {
-    return {
-      disabled: false,
-      theme: 'primary'
-    }
-  }
-
-  if (['pending', 'running', 'failure'].includes(checksInfo.status)) {
-    return {
-      disabled: true,
-      theme: checksInfo.status === 'failure' ? 'disabled' : 'error',
-      variant: checksInfo.status === 'failure' ? 'default' : 'destractive'
-    }
-  }
-
-  if (ruleViolation) {
-    if (canBypass) {
-      return {
-        disabled: !checkboxBypass,
-        theme: checkboxBypass ? 'error' : 'disabled',
-        variant: checkboxBypass ? 'destractive' : 'default'
-      }
-    }
-  }
-
-  if (mergeable && !ruleViolation) {
-    return {
-      disabled: false,
-      theme: 'success'
-    }
-  }
-
-  return {
-    disabled: true,
-    theme: 'disabled'
-  }
 }
 
 const PullRequestPanel = ({
@@ -219,18 +233,18 @@ const PullRequestPanel = ({
   ...routingProps
 }: PullRequestPanelProps) => {
   const { Link } = useRouterContext()
-  const mergeable = useMemo(() => pullReqMetadata?.merge_check_status === MergeCheckStatus.MERGEABLE, [pullReqMetadata])
-  const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
-  const isOpen = pullReqMetadata?.state === PullRequestState.OPEN
-  //   const isConflict = pullReqMetadata?.merge_check_status === MergeCheckStatus.CONFLICT
-  const isDraft = useMemo(() => pullReqMetadata?.is_draft, [pullReqMetadata?.is_draft])
-  const unchecked = useMemo(
-    () => pullReqMetadata?.merge_check_status === MergeCheckStatus.UNCHECKED && !isClosed,
-    [pullReqMetadata, isClosed]
-  )
-  const checkData = checks || []
   const [notBypassable, setNotBypassable] = useState(false)
   const [mergeButtonValue, setMergeButtonValue] = useState(actions[0].id)
+  const [accordionValues, setAccordionValues] = useState<string[]>([])
+
+  const handleAccordionValuesChange = useCallback((data: string | string[]) => {
+    if (typeof data === 'string') return
+
+    setAccordionValues(data)
+  }, [])
+
+  const { isMergeable, isClosed, isOpen, isDraft, isUnchecked, isRebasable, isShowMoreTooltip } =
+    getDataFromPullReqMetadata(pullReqMetadata)
 
   useEffect(() => {
     const ruleViolationArr = prPanelData?.ruleViolationArr
@@ -241,73 +255,20 @@ const PullRequestPanel = ({
     }
   }, [prPanelData?.ruleViolationArr, isDraft])
 
-  const rebasePossible = useMemo(
-    () => pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged,
-    [pullReqMetadata]
-  )
-
-  const isShowMoreTooltip = useMemo(
-    () => pullReqMetadata?.state === PullRequestState.OPEN && !pullReqMetadata?.is_draft,
-    [pullReqMetadata]
-  )
-
-  const moreTooltip = () => {
-    return (
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
-          <Icon
-            className="text-icons-1 transition-colors duration-200 group-hover:text-icons-2"
-            name="vertical-ellipsis"
-            size={12}
-          />
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content className="w-[200px]" align="end">
-          <DropdownMenu.Group>
-            <DropdownMenu.Item
-              onClick={e => {
-                handlePrState('draft')
-                e.stopPropagation()
-              }}
-            >
-              Mark as draft
-            </DropdownMenu.Item>
-            <DropdownMenu.Item
-              onClick={e => {
-                handlePrState('closed')
-                e.stopPropagation()
-              }}
-            >
-              Close pull request
-            </DropdownMenu.Item>
-            {rebasePossible && (
-              <DropdownMenu.Item
-                onClick={e => {
-                  handleRebaseBranch()
-                  e.stopPropagation()
-                }}
-              >
-                Rebase
-              </DropdownMenu.Item>
-            )}
-          </DropdownMenu.Group>
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
-    )
-  }
-
   const buttonState = getButtonState({
-    mergeable,
+    isMergeable,
     ruleViolation: prPanelData.ruleViolation,
     isDraft,
     checksInfo,
     checkboxBypass,
     canBypass: !notBypassable
   })
+
   return (
     <StackedList.Root>
       <StackedList.Item
-        className={cn('items-center py-2.5', {
-          'pr-2': isShowMoreTooltip
+        className={cn('items-center py-2', {
+          'pr-1.5': isShowMoreTooltip
         })}
         disableHover
       >
@@ -317,8 +278,8 @@ const PullRequestPanel = ({
             <HeaderTitle
               isDraft={isDraft}
               isClosed={isClosed}
-              unchecked={unchecked}
-              mergeable={mergeable}
+              unchecked={isUnchecked}
+              mergeable={isMergeable}
               isOpen={isOpen}
               ruleViolation={prPanelData.ruleViolation}
               pullReqMetadata={pullReqMetadata}
@@ -335,73 +296,107 @@ const PullRequestPanel = ({
           <StackedList.Field
             right
             title={
-              !pullReqMetadata?.merged && (
-                <Layout.Horizontal className="items-center justify-center space-x-2.5">
-                  {commitSuggestionsBatchCount > 0 ? (
-                    <Button className="gap-x-2" variant="outline" onClick={() => onCommitSuggestions()}>
-                      Commit suggestion
-                      <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 text-tag-foreground-blue-1">
-                        {commitSuggestionsBatchCount}
-                      </span>
-                    </Button>
-                  ) : (
-                    <></>
-                  )}
-                  {!notBypassable && mergeable && !isDraft && prPanelData.ruleViolation && (
-                    <Layout.Horizontal className="items-center justify-center">
+              <Layout.Horizontal className="items-center justify-center space-x-2.5">
+                {!!commitSuggestionsBatchCount && (
+                  <Button className="gap-x-2" variant="outline" onClick={() => onCommitSuggestions()}>
+                    Commit suggestion
+                    <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 text-tag-foreground-blue-1">
+                      {commitSuggestionsBatchCount}
+                    </span>
+                  </Button>
+                )}
+                {!notBypassable && isMergeable && !isDraft && prPanelData.ruleViolation && (
+                  <Option
+                    className="mr-2.5 items-center"
+                    id="checkbox-bypass"
+                    control={
                       <Checkbox
-                        checked={checkboxBypass}
+                        id="checkbox-bypass"
+                        checked={!!checkboxBypass}
                         onCheckedChange={() => {
                           if (typeof checkboxBypass === 'boolean') {
                             setCheckboxBypass?.(!checkboxBypass)
                           }
                         }}
                       />
-                      <span className="text-12 text-primary">Bypass and merge anyway</span>
-                    </Layout.Horizontal>
-                  )}
+                    }
+                    label="Bypass and merge anyway"
+                    labelProps={{
+                      color: 'secondary'
+                    }}
+                  />
+                )}
 
-                  {actions && !pullReqMetadata?.closed ? (
-                    <ButtonWithOptions
-                      id="pr-type"
-                      theme={buttonState.theme as ButtonWithOptionsTheme}
-                      disabled={buttonState.disabled}
-                      variant={buttonState?.variant as ButtonWithOptionsVariant}
-                      selectedValue={mergeButtonValue}
-                      handleOptionChange={value => setMergeButtonValue(value)}
-                      options={actions.map(action => ({
-                        value: action.id,
-                        label: action.title,
-                        description: action.description
-                      }))}
-                      handleButtonClick={() => {
-                        actions[parseInt(mergeButtonValue)]?.action?.()
-                      }}
-                    >
-                      {actions[parseInt(mergeButtonValue)].title}
-                    </ButtonWithOptions>
-                  ) : (
-                    <Button
-                      theme="primary"
-                      disabled={!checkboxBypass && prPanelData.ruleViolation && !isClosed}
-                      onClick={actions[0].action}
-                    >
-                      Open for review
-                    </Button>
-                  )}
+                {actions && !pullReqMetadata?.closed ? (
+                  <ButtonWithOptions
+                    id="pr-type"
+                    theme={buttonState.theme as ButtonWithOptionsTheme}
+                    disabled={buttonState.disabled}
+                    variant={buttonState?.variant as ButtonWithOptionsVariant}
+                    selectedValue={mergeButtonValue}
+                    handleOptionChange={setMergeButtonValue}
+                    options={actions.map(action => ({
+                      value: action.id,
+                      label: action.title,
+                      description: action.description
+                    }))}
+                    handleButtonClick={() => {
+                      actions[parseInt(mergeButtonValue)]?.action?.()
+                    }}
+                  >
+                    {actions[parseInt(mergeButtonValue)].title}
+                  </ButtonWithOptions>
+                ) : (
+                  <Button
+                    disabled={!checkboxBypass && prPanelData.ruleViolation && !isClosed}
+                    onClick={actions[0].action}
+                  >
+                    Open for review
+                  </Button>
+                )}
 
-                  {isShowMoreTooltip && moreTooltip()}
-                </Layout.Horizontal>
-              )
+                {isShowMoreTooltip && (
+                  <MoreActionsTooltip
+                    className="!ml-2"
+                    iconName="more-dots-fill"
+                    sideOffset={-8}
+                    alignOffset={2}
+                    actions={[
+                      {
+                        title: 'Mark as draft',
+                        onClick: () => handlePrState('draft')
+                      },
+                      {
+                        title: 'Close pull request',
+                        onClick: () => handlePrState('closed')
+                      },
+                      ...(isRebasable
+                        ? [
+                            {
+                              title: 'Rebase',
+                              onClick: () => handleRebaseBranch()
+                            }
+                          ]
+                        : [])
+                    ]}
+                  />
+                )}
+              </Layout.Horizontal>
             }
           />
         )}
       </StackedList.Item>
       <StackedList.Item disableHover className="cursor-default py-0 hover:bg-transparent">
         {!isClosed ? (
-          <Accordion.Root type="multiple" className="w-full">
+          <Accordion.Root
+            className="w-full"
+            type="multiple"
+            value={accordionValues}
+            onValueChange={handleAccordionValuesChange}
+          >
             {!pullReqMetadata?.merged && (
               <PullRequestChangesSection
+                accordionValues={accordionValues}
                 changesInfo={changesInfo}
                 minApproval={prPanelData.minApproval}
                 minReqLatestApproval={prPanelData.minReqLatestApproval}
@@ -419,24 +414,33 @@ const PullRequestPanel = ({
                 latestCodeOwnerApprovalArr={latestCodeOwnerApprovalArr}
               />
             )}
+
             {(!!prPanelData?.resolvedCommentArr || prPanelData.requiresCommentApproval) && !pullReqMetadata?.merged && (
               <PullRequestCommentSection commentsInfo={prPanelData.commentsInfoData} />
             )}
-            <PullRequestCheckSection checkData={checkData} checksInfo={checksInfo} {...routingProps} />
+
+            <PullRequestCheckSection
+              checkData={checks ?? []}
+              checksInfo={checksInfo}
+              accordionValues={accordionValues}
+              {...routingProps}
+            />
 
             {!pullReqMetadata?.merged && (
               <PullRequestMergeSection
-                unchecked={unchecked}
-                mergeable={mergeable}
+                unchecked={isUnchecked}
+                mergeable={isMergeable}
                 pullReqMetadata={pullReqMetadata}
                 conflictingFiles={prPanelData.conflictingFiles}
+                accordionValues={accordionValues}
+                setAccordionValues={setAccordionValues}
               />
             )}
           </Accordion.Root>
         ) : (
-          <Layout.Horizontal gap="space-x-2" className="flex w-full items-center justify-between py-4">
-            <Layout.Horizontal className="flex w-full">
-              <Badge variant="tertiary" size="md" borderRadius="base">
+          <Layout.Horizontal className="flex w-full items-center justify-between py-4" gap="space-x-2">
+            <Layout.Horizontal className="flex w-full items-center" gap="space-x-1">
+              <Badge variant="tertiary" size="md">
                 <Link
                   className="flex items-center gap-x-1.5"
                   to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${pullReqMetadata?.source_branch}`}
@@ -444,18 +448,19 @@ const PullRequestPanel = ({
                   <Icon name="branch" size={12} className="text-icons-9" />
                   {pullReqMetadata?.source_branch}
                 </Link>
-              </Badge>{' '}
-              <span className="text-14 text-foreground-1"> branch has unmerged changes.</span>
+              </Badge>
+              <span className="text-14 text-foreground-4">branch has unmerged changes.</span>
             </Layout.Horizontal>
-            {showDeleteBranchButton ? (
-              <Button theme="primary" size="sm" onClick={onDeleteBranch}>
+            {showDeleteBranchButton && (
+              <Button variant="destructive" onClick={onDeleteBranch}>
                 Delete Branch
               </Button>
-            ) : showRestoreBranchButton ? (
-              <Button theme="primary" size="sm" onClick={onRestoreBranch}>
+            )}
+            {!showDeleteBranchButton && showRestoreBranchButton && (
+              <Button theme="primary" onClick={onRestoreBranch}>
                 Restore Branch
               </Button>
-            ) : null}
+            )}
           </Layout.Horizontal>
         )}
       </StackedList.Item>

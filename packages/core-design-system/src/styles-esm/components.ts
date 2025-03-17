@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Fri, 14 Mar 2025 15:14:54 GMT
+ * Generated on Mon, 17 Mar 2025 12:07:32 GMT
  * Copyright (c) Harness.
  */
 
@@ -178,480 +178,6 @@ export default {
       path: ["input", "py"],
     },
   },
-  dropdown: {
-    item: {
-      px: {
-        $type: "dimension",
-        $value: "4px",
-        $description: "4px\n",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "spacing",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "{spacing.1}",
-          $description: "4px\n",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "spacing",
-            },
-          },
-        },
-        name: "canary-dropdown-item-px",
-        attributes: {
-          category: "dropdown",
-          type: "item",
-          item: "px",
-        },
-        path: ["dropdown", "item", "px"],
-      },
-      gap: {
-        $type: "dimension",
-        $value: "10px",
-        $description: "8px",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "spacing",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "{spacing.2-half}",
-          $description: "8px",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "spacing",
-            },
-          },
-        },
-        name: "canary-dropdown-item-gap",
-        attributes: {
-          category: "dropdown",
-          type: "item",
-          item: "gap",
-        },
-        path: ["dropdown", "item", "gap"],
-      },
-      radius: {
-        $type: "dimension",
-        $value: "2px",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "borderRadius",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "{dropdown.sub-item.radius}",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "borderRadius",
-            },
-          },
-        },
-        name: "canary-dropdown-item-radius",
-        attributes: {
-          category: "dropdown",
-          type: "item",
-          item: "radius",
-        },
-        path: ["dropdown", "item", "radius"],
-      },
-    },
-    "sub-item": {
-      px: {
-        $type: "dimension",
-        $value: "12px",
-        $description: "12px",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "spacing",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "{spacing.3}",
-          $description: "12px",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "spacing",
-            },
-          },
-        },
-        name: "canary-dropdown-sub-item-px",
-        attributes: {
-          category: "dropdown",
-          type: "sub-item",
-          item: "px",
-        },
-        path: ["dropdown", "sub-item", "px"],
-      },
-      py: {
-        $type: "dimension",
-        $value: "8px",
-        $description: "8px",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "spacing",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "{spacing.2}",
-          $description: "8px",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "spacing",
-            },
-          },
-        },
-        name: "canary-dropdown-sub-item-py",
-        attributes: {
-          category: "dropdown",
-          type: "sub-item",
-          item: "py",
-        },
-        path: ["dropdown", "sub-item", "py"],
-      },
-      gap: {
-        $type: "dimension",
-        $value: "10px",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "spacing",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "{spacing.2-half}",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "spacing",
-            },
-          },
-        },
-        name: "canary-dropdown-sub-item-gap",
-        attributes: {
-          category: "dropdown",
-          type: "sub-item",
-          item: "gap",
-        },
-        path: ["dropdown", "sub-item", "gap"],
-      },
-      radius: {
-        $type: "dimension",
-        $value: "2px",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "borderRadius",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "{rounded.1}",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "borderRadius",
-            },
-          },
-        },
-        name: "canary-dropdown-sub-item-radius",
-        attributes: {
-          category: "dropdown",
-          type: "sub-item",
-          item: "radius",
-        },
-        path: ["dropdown", "sub-item", "radius"],
-      },
-      size: {
-        $type: "dimension",
-        $value: "32px",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "sizing",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "{size.8}",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "sizing",
-            },
-          },
-        },
-        name: "canary-dropdown-sub-item-size",
-        attributes: {
-          category: "dropdown",
-          type: "sub-item",
-          item: "size",
-        },
-        path: ["dropdown", "sub-item", "size"],
-      },
-      "gap-y": {
-        $type: "dimension",
-        $value: "4px",
-        $description: "4px gap between text",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "spacing",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "{spacing.1}",
-          $description: "4px gap between text",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "spacing",
-            },
-          },
-        },
-        name: "canary-dropdown-sub-item-gap-y",
-        attributes: {
-          category: "dropdown",
-          type: "sub-item",
-          item: "gap-y",
-        },
-        path: ["dropdown", "sub-item", "gap-y"],
-      },
-    },
-    container: {
-      py: {
-        $type: "dimension",
-        $value: "4px",
-        $description: "4px\n",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "spacing",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "{spacing.1}",
-          $description: "4px\n",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "spacing",
-            },
-          },
-        },
-        name: "canary-dropdown-container-py",
-        attributes: {
-          category: "dropdown",
-          type: "container",
-          item: "py",
-        },
-        path: ["dropdown", "container", "py"],
-      },
-      radius: {
-        $type: "dimension",
-        $value: "6px",
-        $description: "6px",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "borderRadius",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "{rounded.3}",
-          $description: "6px",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "borderRadius",
-            },
-          },
-        },
-        name: "canary-dropdown-container-radius",
-        attributes: {
-          category: "dropdown",
-          type: "container",
-          item: "radius",
-        },
-        path: ["dropdown", "container", "radius"],
-      },
-      "min-w": {
-        $type: "dimension",
-        $value: "320px",
-        filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-        isSource: true,
-        $extensions: {
-          "studio.tokens": {
-            originalType: "sizing",
-          },
-        },
-        original: {
-          $type: "dimension",
-          $value: "320px",
-          $extensions: {
-            "studio.tokens": {
-              originalType: "sizing",
-            },
-          },
-        },
-        name: "canary-dropdown-container-min-w",
-        attributes: {
-          category: "dropdown",
-          type: "container",
-          item: "min-w",
-        },
-        path: ["dropdown", "container", "min-w"],
-      },
-    },
-    "menu-item-branch-selector": {
-      tag: {
-        px: {
-          $type: "dimension",
-          $value: "8px",
-          $description: "8px horizontal padding",
-          filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-          isSource: true,
-          $extensions: {
-            "studio.tokens": {
-              originalType: "spacing",
-            },
-          },
-          original: {
-            $type: "dimension",
-            $value: "{spacing.2}",
-            $description: "8px horizontal padding",
-            $extensions: {
-              "studio.tokens": {
-                originalType: "spacing",
-              },
-            },
-          },
-          name: "canary-dropdown-menu-item-branch-selector-tag-px",
-          attributes: {
-            category: "dropdown",
-            type: "menu-item-branch-selector",
-            item: "tag",
-            subitem: "px",
-          },
-          path: ["dropdown", "menu-item-branch-selector", "tag", "px"],
-        },
-        size: {
-          $type: "dimension",
-          $value: "20px",
-          $description: "20px height\n",
-          filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-          isSource: true,
-          $extensions: {
-            "studio.tokens": {
-              originalType: "sizing",
-            },
-          },
-          original: {
-            $type: "dimension",
-            $value: "{size.5}",
-            $description: "20px height\n",
-            $extensions: {
-              "studio.tokens": {
-                originalType: "sizing",
-              },
-            },
-          },
-          name: "canary-dropdown-menu-item-branch-selector-tag-size",
-          attributes: {
-            category: "dropdown",
-            type: "menu-item-branch-selector",
-            item: "tag",
-            subitem: "size",
-          },
-          path: ["dropdown", "menu-item-branch-selector", "tag", "size"],
-        },
-      },
-    },
-    "menu-items": {
-      "header-footer": {
-        px: {
-          $type: "dimension",
-          $value: "16px",
-          $description: "16px horizontal padding",
-          filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-          isSource: true,
-          $extensions: {
-            "studio.tokens": {
-              originalType: "spacing",
-            },
-          },
-          original: {
-            $type: "dimension",
-            $value: "{spacing.4}",
-            $description: "16px horizontal padding",
-            $extensions: {
-              "studio.tokens": {
-                originalType: "spacing",
-              },
-            },
-          },
-          name: "canary-dropdown-menu-items-header-footer-px",
-          attributes: {
-            category: "dropdown",
-            type: "menu-items",
-            item: "header-footer",
-            subitem: "px",
-          },
-          path: ["dropdown", "menu-items", "header-footer", "px"],
-        },
-        py: {
-          $type: "dimension",
-          $value: "10px",
-          $description: "10px vertical padding",
-          filePath: "design-tokens/components/desktop/base/dropdown menu.json",
-          isSource: true,
-          $extensions: {
-            "studio.tokens": {
-              originalType: "spacing",
-            },
-          },
-          original: {
-            $type: "dimension",
-            $value: "{spacing.2-half}",
-            $description: "10px vertical padding",
-            $extensions: {
-              "studio.tokens": {
-                originalType: "spacing",
-              },
-            },
-          },
-          name: "canary-dropdown-menu-items-header-footer-py",
-          attributes: {
-            category: "dropdown",
-            type: "menu-items",
-            item: "header-footer",
-            subitem: "py",
-          },
-          path: ["dropdown", "menu-items", "header-footer", "py"],
-        },
-      },
-    },
-  },
   btn: {
     size: {
       sm: {
@@ -793,7 +319,7 @@ export default {
       },
       default: {
         $type: "dimension",
-        $value: "10px",
+        $value: "6px",
         filePath: "design-tokens/components/desktop/base/btn.json",
         isSource: true,
         $extensions: {
@@ -803,7 +329,7 @@ export default {
         },
         original: {
           $type: "dimension",
-          $value: "{spacing.2-half}",
+          $value: "{spacing.1-half}",
           $extensions: {
             "studio.tokens": {
               originalType: "spacing",
@@ -933,7 +459,7 @@ export default {
     px: {
       sm: {
         $type: "dimension",
-        $value: "20px",
+        $value: "12px",
         filePath: "design-tokens/components/desktop/base/btn.json",
         isSource: true,
         $extensions: {
@@ -943,7 +469,7 @@ export default {
         },
         original: {
           $type: "dimension",
-          $value: "{spacing.5}",
+          $value: "{spacing.3}",
           $extensions: {
             "studio.tokens": {
               originalType: "spacing",
@@ -960,7 +486,7 @@ export default {
       },
       default: {
         $type: "dimension",
-        $value: "20px",
+        $value: "16px",
         filePath: "design-tokens/components/desktop/base/btn.json",
         isSource: true,
         $extensions: {
@@ -970,7 +496,7 @@ export default {
         },
         original: {
           $type: "dimension",
-          $value: "{spacing.5}",
+          $value: "{spacing.4}",
           $extensions: {
             "studio.tokens": {
               originalType: "spacing",
@@ -987,7 +513,7 @@ export default {
       },
       lg: {
         $type: "dimension",
-        $value: "24px",
+        $value: "20px",
         filePath: "design-tokens/components/desktop/base/btn.json",
         isSource: true,
         $extensions: {
@@ -997,7 +523,7 @@ export default {
         },
         original: {
           $type: "dimension",
-          $value: "{spacing.6}",
+          $value: "{spacing.5}",
           $extensions: {
             "studio.tokens": {
               originalType: "spacing",
@@ -1746,6 +1272,480 @@ export default {
         type: "border",
       },
       path: ["tag", "border"],
+    },
+  },
+  dropdown: {
+    item: {
+      px: {
+        $type: "dimension",
+        $value: "4px",
+        $description: "4px\n",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "spacing",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "{spacing.1}",
+          $description: "4px\n",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "spacing",
+            },
+          },
+        },
+        name: "canary-dropdown-item-px",
+        attributes: {
+          category: "dropdown",
+          type: "item",
+          item: "px",
+        },
+        path: ["dropdown", "item", "px"],
+      },
+      gap: {
+        $type: "dimension",
+        $value: "10px",
+        $description: "8px",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "spacing",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "{spacing.2-half}",
+          $description: "8px",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "spacing",
+            },
+          },
+        },
+        name: "canary-dropdown-item-gap",
+        attributes: {
+          category: "dropdown",
+          type: "item",
+          item: "gap",
+        },
+        path: ["dropdown", "item", "gap"],
+      },
+      radius: {
+        $type: "dimension",
+        $value: "2px",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "borderRadius",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "{dropdown.sub-item.radius}",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "borderRadius",
+            },
+          },
+        },
+        name: "canary-dropdown-item-radius",
+        attributes: {
+          category: "dropdown",
+          type: "item",
+          item: "radius",
+        },
+        path: ["dropdown", "item", "radius"],
+      },
+    },
+    "sub-item": {
+      px: {
+        $type: "dimension",
+        $value: "12px",
+        $description: "12px",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "spacing",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "{spacing.3}",
+          $description: "12px",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "spacing",
+            },
+          },
+        },
+        name: "canary-dropdown-sub-item-px",
+        attributes: {
+          category: "dropdown",
+          type: "sub-item",
+          item: "px",
+        },
+        path: ["dropdown", "sub-item", "px"],
+      },
+      py: {
+        $type: "dimension",
+        $value: "8px",
+        $description: "8px",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "spacing",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "{spacing.2}",
+          $description: "8px",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "spacing",
+            },
+          },
+        },
+        name: "canary-dropdown-sub-item-py",
+        attributes: {
+          category: "dropdown",
+          type: "sub-item",
+          item: "py",
+        },
+        path: ["dropdown", "sub-item", "py"],
+      },
+      gap: {
+        $type: "dimension",
+        $value: "10px",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "spacing",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "{spacing.2-half}",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "spacing",
+            },
+          },
+        },
+        name: "canary-dropdown-sub-item-gap",
+        attributes: {
+          category: "dropdown",
+          type: "sub-item",
+          item: "gap",
+        },
+        path: ["dropdown", "sub-item", "gap"],
+      },
+      radius: {
+        $type: "dimension",
+        $value: "2px",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "borderRadius",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "{rounded.1}",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "borderRadius",
+            },
+          },
+        },
+        name: "canary-dropdown-sub-item-radius",
+        attributes: {
+          category: "dropdown",
+          type: "sub-item",
+          item: "radius",
+        },
+        path: ["dropdown", "sub-item", "radius"],
+      },
+      size: {
+        $type: "dimension",
+        $value: "32px",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "sizing",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "{size.8}",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "sizing",
+            },
+          },
+        },
+        name: "canary-dropdown-sub-item-size",
+        attributes: {
+          category: "dropdown",
+          type: "sub-item",
+          item: "size",
+        },
+        path: ["dropdown", "sub-item", "size"],
+      },
+      "gap-y": {
+        $type: "dimension",
+        $value: "4px",
+        $description: "4px gap between text",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "spacing",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "{spacing.1}",
+          $description: "4px gap between text",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "spacing",
+            },
+          },
+        },
+        name: "canary-dropdown-sub-item-gap-y",
+        attributes: {
+          category: "dropdown",
+          type: "sub-item",
+          item: "gap-y",
+        },
+        path: ["dropdown", "sub-item", "gap-y"],
+      },
+    },
+    container: {
+      py: {
+        $type: "dimension",
+        $value: "4px",
+        $description: "4px\n",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "spacing",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "{spacing.1}",
+          $description: "4px\n",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "spacing",
+            },
+          },
+        },
+        name: "canary-dropdown-container-py",
+        attributes: {
+          category: "dropdown",
+          type: "container",
+          item: "py",
+        },
+        path: ["dropdown", "container", "py"],
+      },
+      radius: {
+        $type: "dimension",
+        $value: "6px",
+        $description: "6px",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "borderRadius",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "{rounded.3}",
+          $description: "6px",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "borderRadius",
+            },
+          },
+        },
+        name: "canary-dropdown-container-radius",
+        attributes: {
+          category: "dropdown",
+          type: "container",
+          item: "radius",
+        },
+        path: ["dropdown", "container", "radius"],
+      },
+      "min-w": {
+        $type: "dimension",
+        $value: "320px",
+        filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+        isSource: true,
+        $extensions: {
+          "studio.tokens": {
+            originalType: "sizing",
+          },
+        },
+        original: {
+          $type: "dimension",
+          $value: "320px",
+          $extensions: {
+            "studio.tokens": {
+              originalType: "sizing",
+            },
+          },
+        },
+        name: "canary-dropdown-container-min-w",
+        attributes: {
+          category: "dropdown",
+          type: "container",
+          item: "min-w",
+        },
+        path: ["dropdown", "container", "min-w"],
+      },
+    },
+    "menu-item-branch-selector": {
+      tag: {
+        px: {
+          $type: "dimension",
+          $value: "8px",
+          $description: "8px horizontal padding",
+          filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+          isSource: true,
+          $extensions: {
+            "studio.tokens": {
+              originalType: "spacing",
+            },
+          },
+          original: {
+            $type: "dimension",
+            $value: "{spacing.2}",
+            $description: "8px horizontal padding",
+            $extensions: {
+              "studio.tokens": {
+                originalType: "spacing",
+              },
+            },
+          },
+          name: "canary-dropdown-menu-item-branch-selector-tag-px",
+          attributes: {
+            category: "dropdown",
+            type: "menu-item-branch-selector",
+            item: "tag",
+            subitem: "px",
+          },
+          path: ["dropdown", "menu-item-branch-selector", "tag", "px"],
+        },
+        size: {
+          $type: "dimension",
+          $value: "20px",
+          $description: "20px height\n",
+          filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+          isSource: true,
+          $extensions: {
+            "studio.tokens": {
+              originalType: "sizing",
+            },
+          },
+          original: {
+            $type: "dimension",
+            $value: "{size.5}",
+            $description: "20px height\n",
+            $extensions: {
+              "studio.tokens": {
+                originalType: "sizing",
+              },
+            },
+          },
+          name: "canary-dropdown-menu-item-branch-selector-tag-size",
+          attributes: {
+            category: "dropdown",
+            type: "menu-item-branch-selector",
+            item: "tag",
+            subitem: "size",
+          },
+          path: ["dropdown", "menu-item-branch-selector", "tag", "size"],
+        },
+      },
+    },
+    "menu-items": {
+      "header-footer": {
+        px: {
+          $type: "dimension",
+          $value: "16px",
+          $description: "16px horizontal padding",
+          filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+          isSource: true,
+          $extensions: {
+            "studio.tokens": {
+              originalType: "spacing",
+            },
+          },
+          original: {
+            $type: "dimension",
+            $value: "{spacing.4}",
+            $description: "16px horizontal padding",
+            $extensions: {
+              "studio.tokens": {
+                originalType: "spacing",
+              },
+            },
+          },
+          name: "canary-dropdown-menu-items-header-footer-px",
+          attributes: {
+            category: "dropdown",
+            type: "menu-items",
+            item: "header-footer",
+            subitem: "px",
+          },
+          path: ["dropdown", "menu-items", "header-footer", "px"],
+        },
+        py: {
+          $type: "dimension",
+          $value: "10px",
+          $description: "10px vertical padding",
+          filePath: "design-tokens/components/desktop/base/dropdown-menu.json",
+          isSource: true,
+          $extensions: {
+            "studio.tokens": {
+              originalType: "spacing",
+            },
+          },
+          original: {
+            $type: "dimension",
+            $value: "{spacing.2-half}",
+            $description: "10px vertical padding",
+            $extensions: {
+              "studio.tokens": {
+                originalType: "spacing",
+              },
+            },
+          },
+          name: "canary-dropdown-menu-items-header-footer-py",
+          attributes: {
+            category: "dropdown",
+            type: "menu-items",
+            item: "header-footer",
+            subitem: "py",
+          },
+          path: ["dropdown", "menu-items", "header-footer", "py"],
+        },
+      },
     },
   },
 };

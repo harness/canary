@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Fri, 14 Mar 2025 15:14:51 GMT
+ * Generated on Mon, 17 Mar 2025 12:07:21 GMT
  * Copyright (c) Harness.
  */
 
@@ -491,14 +491,14 @@ export default {
       },
       background: {
         $type: "color",
-        $value: "lch(90.71% 0.38 284.93)",
+        $value: "lch(85.99% 3.77 285.34)",
         $description:
           "Muted background color for disabled elements. Reduces visual prominence of non-interactive elements in the UI.\n\nCommon uses: Disabled buttons, inactive form controls, unavailable options.",
         filePath: "design-tokens/mode/light/high-contrast-protanopia.json",
         isSource: true,
         original: {
           $type: "color",
-          $value: "{colors.chrome.100}",
+          $value: "{colors.chrome.150}",
           $description:
             "Muted background color for disabled elements. Reduces visual prominence of non-interactive elements in the UI.\n\nCommon uses: Disabled buttons, inactive form controls, unavailable options.",
         },
@@ -1920,6 +1920,27 @@ export default {
         },
       },
       outline: {
+        background: {
+          $type: "color",
+          $value: "lch(98.27% 0.36 135.2)",
+          $description: "Background color for outline buttons.",
+          filePath: "design-tokens/mode/light/high-contrast-protanopia.json",
+          isSource: true,
+          original: {
+            $type: "color",
+            $value: "{background.2}",
+            $description: "Background color for outline buttons.",
+          },
+          name: "canary-component-btn-outline-background",
+          attributes: {
+            category: "component",
+            type: "btn",
+            item: "outline",
+            subitem: "background",
+            themeable: true,
+          },
+          path: ["component", "btn", "outline", "background"],
+        },
         unselected: {
           text: {
             $type: "color",

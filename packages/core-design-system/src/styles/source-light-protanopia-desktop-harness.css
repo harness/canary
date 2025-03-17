@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Fri, 14 Mar 2025 15:14:39 GMT
+ * Generated on Mon, 17 Mar 2025 12:07:17 GMT
  * Copyright (c) Harness.
  */
 
@@ -125,7 +125,7 @@
    * 
    * Common uses: Disabled buttons, inactive form controls, unavailable options.
    */
-  --canary-state-disabled-background: var(--canary-colors-chrome-300);
+  --canary-state-disabled-background: var(--canary-colors-chrome-150);
   --canary-component-alert-danger-title: var(--canary-colors-red-800); /* Text color for danger alerts. Communicates critical information through high-contrast red text. */
   --canary-component-alert-danger-description: var(--canary-colors-red-600); /* Description text color for danger alerts. Ensures readability while maintaining the error state styling. */
   --canary-component-alert-danger-background: lch(from var(--canary-colors-red-500) l c h / 0.1); /* Background color for danger alerts. Creates subtle but recognizable error state styling. */
@@ -349,6 +349,7 @@
   --canary-component-btn-primary-background: var(--canary-brand-color-500); /* Background color for primary action buttons. Creates emphasis for the most important action in a given context. */
   --canary-component-btn-secondary-text: var(--canary-text-2); /* Text and icon color for secondary action buttons. Provides readable contrast for supporting actions. */
   --canary-component-btn-secondary-border: var(--canary-component-btn-secondary-background); /* Border color for secondary action buttons. Matches background for clean, cohesive appearance. */
+  --canary-component-btn-outline-background: var(--canary-background-2); /* Background color for outline buttons. */
   --canary-component-btn-outline-unselected-text: var(--canary-text-2); /* Text color for unselected outline buttons. Provides readable contrast against transparent backgrounds. */
   --canary-component-btn-outline-unselected-icon: var(--canary-text-3); /* Icon color for unselected outline buttons. Creates subtle emphasis for button icons. */
   --canary-component-btn-outline-unselected-border: var(--canary-border-2); /* Border color for unselected outline buttons. Defines the clickable area with a visible boundary. */

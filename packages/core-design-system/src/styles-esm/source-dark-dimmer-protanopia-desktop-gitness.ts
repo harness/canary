@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Fri, 14 Mar 2025 15:14:45 GMT
+ * Generated on Mon, 17 Mar 2025 12:06:58 GMT
  * Copyright (c) Harness.
  */
 
@@ -375,13 +375,13 @@ export default {
         "studio.tokens": {
           modify: {
             type: "alpha",
-            value: "0.15",
+            value: "0.08",
             space: "lch",
           },
         },
       },
       $type: "color",
-      $value: "lch(from var(--canary-colors-chrome-700) l c h / 0.15)",
+      $value: "lch(from var(--canary-colors-pure-white) l c h / 0.08)",
       $description:
         "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items.",
       filePath: "design-tokens/mode/dark/dimmer-protanopia.json",
@@ -391,13 +391,13 @@ export default {
           "studio.tokens": {
             modify: {
               type: "alpha",
-              value: "0.15",
+              value: "0.08",
               space: "lch",
             },
           },
         },
         $type: "color",
-        $value: "{colors.chrome.700}",
+        $value: "{colors.pure.white}",
         $description:
           "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items.",
       },
@@ -414,13 +414,13 @@ export default {
         "studio.tokens": {
           modify: {
             type: "alpha",
-            value: "0.2",
+            value: "0.1",
             space: "lch",
           },
         },
       },
       $type: "color",
-      $value: "lch(from var(--canary-colors-chrome-700) l c h / 0.2)",
+      $value: "lch(from var(--canary-colors-pure-white) l c h / 0.1)",
       $description:
         "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item.",
       filePath: "design-tokens/mode/dark/dimmer-protanopia.json",
@@ -430,13 +430,13 @@ export default {
           "studio.tokens": {
             modify: {
               type: "alpha",
-              value: "0.2",
+              value: "0.1",
               space: "lch",
             },
           },
         },
         $type: "color",
-        $value: "{colors.chrome.700}",
+        $value: "{colors.pure.white}",
         $description:
           "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item.",
       },
@@ -1902,6 +1902,27 @@ export default {
         },
       },
       outline: {
+        background: {
+          $type: "color",
+          $value: "lch(3.66% 1.93 285.7)",
+          $description: "Background color for outline buttons.",
+          filePath: "design-tokens/mode/dark/dimmer-protanopia.json",
+          isSource: true,
+          original: {
+            $type: "color",
+            $value: "{background.2}",
+            $description: "Background color for outline buttons.",
+          },
+          name: "canary-component-btn-outline-background",
+          attributes: {
+            category: "component",
+            type: "btn",
+            item: "outline",
+            subitem: "background",
+            themeable: true,
+          },
+          path: ["component", "btn", "outline", "background"],
+        },
         unselected: {
           text: {
             $type: "color",
@@ -4139,7 +4160,7 @@ export default {
       },
       hover: {
         $type: "color",
-        $value: "lch(from var(--canary-colors-chrome-700) l c h / 0.15)",
+        $value: "lch(from var(--canary-colors-pure-white) l c h / 0.08)",
         $description: "Hover state for navigation items.",
         filePath: "design-tokens/mode/dark/dimmer-protanopia.json",
         isSource: true,
@@ -4159,7 +4180,7 @@ export default {
       },
       selected: {
         $type: "color",
-        $value: "lch(from var(--canary-colors-chrome-700) l c h / 0.2)",
+        $value: "lch(from var(--canary-colors-pure-white) l c h / 0.1)",
         $description: "Selected state for navigation items.",
         filePath: "design-tokens/mode/dark/dimmer-protanopia.json",
         isSource: true,

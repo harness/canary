@@ -12,6 +12,7 @@
     "build:styles": "rm -rf src/styles/design-system && node export-tokens/build.js",
     "build:styles:esm": "rm -rf src/styles/design-system && node export-tokens-js/build.js",
     "build": " pnpm clean && npm run build:styles && npm run build:styles:esm",
+    "build:uni": " pnpm clean && node export-tokens-uni/build.js",
     "clean": "rimraf ./src/styles && rimraf ./src/styles-esm"
   },
   "keywords": [
@@ -23,6 +24,7 @@
   "license": "ISC",
   "devDependencies": {
     "@tokens-studio/sd-transforms": "^1.2.9",
+    "chalk-animation": "^2.0.3",
     "figlet": "^1.8.0",
     "gradient-string": "^3.0.0",
     "rimraf": "^6.0.1",

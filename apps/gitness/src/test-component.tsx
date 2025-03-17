@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import * as styles from '@harnessio/core-design-system/styles-esm'
-import { Badge, Text, Tooltip, TooltipContent, TooltipTrigger } from '@harnessio/ui/components'
+import { Badge, Icon, Text, Tooltip } from '@harnessio/ui/components'
 
 export default function TestComponent() {
   const colorPalette = useMemo(() => {
@@ -22,13 +22,73 @@ export default function TestComponent() {
 
         <div className="space-x-2">
           <Badge>Default</Badge>
+          <Badge variant="neutral">outline</Badge>
           <Badge variant="success">Success</Badge>
           <Badge variant="warning">warning</Badge>
           <Badge variant="danger">danger</Badge>
           <Badge variant="running">running</Badge>
           <Badge variant="merged">merged</Badge>
           <Badge variant="ai">ai</Badge>
-          {/* <Badge variant="danger">Danger</Badge> */}
+        </div>
+
+        <Text as="p" className="mt-10 mb-5 text-gray-400">
+          Rounded full
+        </Text>
+
+        <div className="space-x-2">
+          <Badge borderRadius="full">Default</Badge>
+          <Badge borderRadius="full" variant="neutral">
+            outline
+          </Badge>
+          <Badge borderRadius="full" variant="success">
+            {/* <Icon size={10} name="tick" /> <span>Success</span> */}
+            Success
+          </Badge>
+          <Badge borderRadius="full" variant="warning">
+            warning
+          </Badge>
+          <Badge borderRadius="full" variant="danger">
+            danger
+          </Badge>
+          <Badge borderRadius="full" variant="running">
+            running
+          </Badge>
+          <Badge borderRadius="full" variant="merged">
+            merged
+          </Badge>
+          <Badge borderRadius="full" variant="ai">
+            ai
+          </Badge>
+        </div>
+
+        <Text as="p" className="mt-10 mb-5 text-gray-400">
+          Size sm
+        </Text>
+
+        <div className="space-x-2">
+          <Badge size="sm">Default</Badge>
+          <Badge size="sm" variant="neutral">
+            outline
+          </Badge>
+          <Badge size="sm" variant="success">
+            {/* <Icon size={10} name="tick" /> <span>Success</span> */}
+            Success
+          </Badge>
+          <Badge size="sm" variant="warning">
+            warning
+          </Badge>
+          <Badge size="sm" variant="danger">
+            danger
+          </Badge>
+          <Badge size="sm" variant="running">
+            running
+          </Badge>
+          <Badge size="sm" variant="merged">
+            merged
+          </Badge>
+          <Badge size="sm" variant="ai">
+            ai
+          </Badge>
         </div>
       </div>
 
@@ -67,28 +127,20 @@ export default function TestComponent() {
 
                   return (
                     <div key={shade} className="flex-1 flex justify-center">
-                      {/* <Tooltip> */}
-                      {/* <TooltipTrigger asChild> */}
-                      <div
-                        className="size-14 rounded-md"
-                        style={{
-                          backgroundColor: colorValue,
-                          border: '1px solid rgba(255,255,255,0.1)'
-                        }}
-                      />
-                      {/* </TooltipTrigger> */}
-                      {/* <TooltipContent style={{ backgroundColor: 'black' }} side="top" align="center">
-                        --{color?.name}: {colorValue}
-                      </TooltipContent> */}
-                      {/* </Tooltip> */}
-                      {/* <div
-                        className="size-14 rounded-md"
-                        style={{
-                          backgroundColor: colorValue,
-                          border: '1px solid rgba(255,255,255,0.1)'
-                        }}
-                        title={`--${color?.name}: ${colorValue}`}
-                      /> */}
+                      <Tooltip.Root>
+                        <Tooltip.Trigger asChild>
+                          <div
+                            className="size-14 rounded-md"
+                            style={{
+                              backgroundColor: colorValue,
+                              border: '1px solid rgba(255,255,255,0.1)'
+                            }}
+                          />
+                        </Tooltip.Trigger>
+                        <Tooltip.Content style={{ backgroundColor: 'black' }} side="top" align="center">
+                          --{color?.name}: {colorValue}
+                        </Tooltip.Content>
+                      </Tooltip.Root>
                     </div>
                   )
                 })}

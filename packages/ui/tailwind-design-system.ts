@@ -3,6 +3,9 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
+import { badgeStyles } from './tailwind-utils-config/components'
+import { typography as typographyStyles } from './tailwind-utils-config/utilities'
+
 export default {
   darkMode: ['class'],
   content: ['./src/**/*.{ts,tsx,css}'],
@@ -127,31 +130,6 @@ export default {
       letterSpacing: {
         tight: '-0.02em'
       },
-      //   boxShadow: {
-      //     1: '0px 8px 16px hsl(var(--canary-box-shadow-1))',
-      //     2: '0px 8px 8px hsl(var(--canary-box-shadow-2))',
-      //     'pagination-1': '0px 2px 4px hsl(var(--canary-box-shadow-pagination))',
-      //     'as-border': 'inset 0 0 0 1px',
-      //     'commit-list-bullet':
-      //       '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)'
-      //   },
-      //   borderColor: {
-      //     'borders-1': 'hsl(var(--canary-border-01))',
-      //     'borders-2': 'hsl(var(--canary-border-02))',
-      //     'borders-3': 'hsl(var(--canary-border-03))',
-      //     'borders-4': 'hsl(var(--canary-border-04))',
-      //     'borders-5': 'hsl(var(--canary-border-05))',
-      //     'borders-6': 'hsl(var(--canary-border-06))',
-      //     'borders-7': 'hsl(var(--canary-border-07))',
-      //     'borders-8': 'hsl(var(--canary-border-08))',
-      //     'borders-9': 'hsl(var(--canary-border-09))',
-      //     'borders-10': 'hsl(var(--canary-border-10))',
-      //     'borders-danger': 'hsl(var(--canary-border-danger))',
-      //     'borders-success': 'hsl(var(--canary-border-success))',
-      //     'borders-accent': 'hsl(var(--canary-border-accent))',
-      //     'borders-risk': 'hsl(var(--canary-icon-risk))',
-      //     'borders-alert': 'hsl(var(--canary-border-alert))'
-      //   },
       borderRadius: {
         10: '0.625rem'
       },
@@ -222,126 +200,12 @@ export default {
       }
     }
   },
-
-  // .badge {
-  //   --badge-color: var(--canary-component-badge-default-text);
-  //   --badge-bg-color: var(--canary-component-badge-default-background);
-  //   --badge-border-color: var(--canary-component-badge-default-border);
-
-  //   border: var(--canary-border-width-1) solid var(--badge-border-color);
-  //   color: var(--badge-color);
-  //   background-color: var(--badge-bg-color);
-  // }
-  // .badge-neutral {
-  //   --badge-color: var(--canary-component-badge-neutral-text);
-  //   --badge-bg-color: var(--canary-component-badge-neutral-background);
-  //   --badge-border-color: var(--canary-component-badge-neutral-border);
-  // }
-  // .badge-success {
-  //   --badge-color: var(--canary-component-badge-success-text);
-  //   --badge-bg-color: var(--canary-component-badge-success-background);
-  //   --badge-border-color: var(--canary-component-badge-success-border);
-  // }
-  // .badge-warning {
-  //   --badge-color: var(--canary-component-badge-warning-text);
-  //   --badge-bg-color: var(--canary-component-badge-warning-background);
-  //   --badge-border-color: var(--canary-component-badge-warning-border);
-  // }
-  // .badge-danger {
-  //   --badge-color: var(--canary-component-badge-danger-text);
-  //   --badge-bg-color: var(--canary-component-badge-danger-background);
-  //   --badge-border-color: var(--canary-component-badge-danger-border);
-  // }
-  // .badge-running {
-  //   --badge-color: var(--canary-component-badge-running-text);
-  //   --badge-bg-color: var(--canary-component-badge-running-background);
-  //   --badge-border-color: var(--canary-component-badge-running-border);
-  // }
-  // .badge-merged {
-  //   --badge-color: var(--canary-component-badge-merged-text);
-  //   --badge-bg-color: var(--canary-component-badge-merged-background);
-  //   --badge-border-color: var(--canary-component-badge-merged-border);
-  // }
-  // .badge-ai {
-  //   --badge-color: var(--canary-component-badge-ai-text);
-  //   --badge-bg-color: var(--canary-component-badge-ai-background);
-  //   border: 1px solid transparent;
-  //   background-image:
-  //     linear-gradient(to right, var(--badge-bg-color), var(--badge-bg-color)), var(--canary-component-badge-ai-border);
-  //   background-origin: border-box;
-  //   background-clip: padding-box, border-box;
-  // }
-
   plugins: [
-    plugin(({ addComponents }) => {
-      addComponents({
-        '.badge': {
-          border: 'var(--canary-border-width-1) solid var(--canary-component-badge-default-border)',
-          color: 'var(--canary-component-badge-default-text)',
-          backgroundColor: 'var(--canary-component-badge-default-background)',
-
-          '&-neutral': {
-            color: 'var(--canary-component-badge-neutral-text)',
-            backgroundColor: 'var(--canary-component-badge-neutral-background)',
-            borderColor: 'var(--canary-component-badge-neutral-border)'
-          },
-          '&-success': {
-            color: 'var(--canary-component-badge-success-text)',
-            backgroundColor: 'var(--canary-component-badge-success-background)',
-            borderColor: 'var(--canary-component-badge-success-border)'
-          },
-          '&-warning': {
-            color: 'var(--canary-component-badge-warning-text)',
-            backgroundColor: 'var(--canary-component-badge-warning-background)',
-            borderColor: 'var(--canary-component-badge-warning-border)'
-          },
-          '&-danger': {
-            color: 'var(--canary-component-badge-danger-text)',
-            backgroundColor: 'var(--canary-component-badge-danger-background)',
-            borderColor: 'var(--canary-component-badge-danger-border)'
-          },
-          '&-running': {
-            color: 'var(--canary-component-badge-running-text)',
-            backgroundColor: 'var(--canary-component-badge-running-background)',
-            borderColor: 'var(--canary-component-badge-running-border)'
-          },
-          '&-harness': {
-            color: 'var(--canary-component-badge-running-text)',
-            backgroundColor: 'var(--canary-component-badge-running-background)',
-            borderColor: 'var(--canary-component-badge-running-border)'
-          },
-          '&-merged': {
-            color: 'var(--canary-component-badge-merged-text)',
-            backgroundColor: 'var(--canary-component-badge-merged-background)',
-            borderColor: 'var(--canary-component-badge-merged-border)'
-          },
-          '&-ai': {
-            color: 'var(--canary-component-badge-ai-text)',
-            backgroundImage: `linear-gradient(to right, var(--canary-component-badge-ai-background), var(--canary-component-badge-ai-background)), var(--canary-component-badge-ai-border)`,
-            backgroundOrigin: 'border-box',
-            backgroundClip: 'padding-box, border-box',
-            border: '1px solid transparent'
-          },
-
-          // Size
-          '&-sm': {
-            padding: 'var(--badge-sm-padding, 0.125rem 0.375rem)',
-            fontSize: 'var(--badge-sm-font-size, 0.625rem)',
-            background: 'rebeccapurple',
-            color: 'white'
-          }
-        }
-        // '.badge-primary': {
-        //   backgroundColor: 'var(--badge-primary-background-color, #3b82f6)',
-        //   color: 'var(--badge-primary-color, white)',
-        //   borderColor: 'var(--badge-primary-border-color, transparent)'
-        // },
-        // '.badge-warning': {
-        //   backgroundColor: 'var(--badge-warning-background-color, #f59e0b)',
-        //   color: 'var(--badge-warning-color, white)',
-        //   borderColor: 'var(--badge-warning-border-color, transparent)'
-        // }
-      })
+    plugin(({ addUtilities }) => {
+      addUtilities(typographyStyles)
+    }),
+    plugin(({ addComponents, theme }) => {
+      addComponents(badgeStyles)
     }),
     tailwindcssAnimate,
     typography,

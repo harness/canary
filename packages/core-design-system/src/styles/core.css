@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Fri, 14 Mar 2025 15:14:42 GMT
+ * Generated on Mon, 17 Mar 2025 12:07:32 GMT
  * Copyright (c) Harness.
  */
 
@@ -82,6 +82,84 @@
   --canary-font-size-11: 4.5rem; /* 72px */
   --canary-font-size-12: 6rem; /* 96px */
   --canary-font-size-13: 8rem; /* 128px */
+  --canary-line-height-1-none: 0.75rem;
+  --canary-line-height-1-tight: 0.9375rem;
+  --canary-line-height-1-snug: 1.0313rem;
+  --canary-line-height-1-normal: 1.125rem;
+  --canary-line-height-1-relaxed: 1.2188rem;
+  --canary-line-height-1-loose: 1.5rem;
+  --canary-line-height-2-none: 0.875rem;
+  --canary-line-height-2-tight: 1.0938rem;
+  --canary-line-height-2-snug: 1.2031rem;
+  --canary-line-height-2-normal: 1.3125rem;
+  --canary-line-height-2-relaxed: 1.4219rem;
+  --canary-line-height-2-loose: 1.75rem;
+  --canary-line-height-3-none: 1rem;
+  --canary-line-height-3-tight: 1.25rem;
+  --canary-line-height-3-snug: 1.375rem;
+  --canary-line-height-3-normal: 1.5rem;
+  --canary-line-height-3-relaxed: 1.625rem;
+  --canary-line-height-3-loose: 2rem;
+  --canary-line-height-4-none: 1.125rem;
+  --canary-line-height-4-tight: 1.4063rem;
+  --canary-line-height-4-snug: 1.5469rem;
+  --canary-line-height-4-normal: 1.6875rem;
+  --canary-line-height-4-relaxed: 1.8281rem;
+  --canary-line-height-4-loose: 2.25rem;
+  --canary-line-height-5-none: 1.25rem;
+  --canary-line-height-5-tight: 1.5625rem;
+  --canary-line-height-5-snug: 1.7188rem;
+  --canary-line-height-5-normal: 1.875rem;
+  --canary-line-height-5-relaxed: 2.0313rem;
+  --canary-line-height-5-loose: 2.5rem;
+  --canary-line-height-6-none: 1.5rem;
+  --canary-line-height-6-tight: 1.875rem;
+  --canary-line-height-6-snug: 2.0625rem;
+  --canary-line-height-6-normal: 2.25rem;
+  --canary-line-height-6-relaxed: 2.4375rem;
+  --canary-line-height-6-loose: 3rem;
+  --canary-line-height-7-none: 1.875rem;
+  --canary-line-height-7-tight: 2.3438rem;
+  --canary-line-height-7-snug: 2.5781rem;
+  --canary-line-height-7-normal: 2.8125rem;
+  --canary-line-height-7-relaxed: 3.0469rem;
+  --canary-line-height-7-loose: 3.75rem;
+  --canary-line-height-8-none: 2.25rem;
+  --canary-line-height-8-tight: 2.8125rem;
+  --canary-line-height-8-snug: 3.0938rem;
+  --canary-line-height-8-normal: 3.375rem;
+  --canary-line-height-8-relaxed: 3.6563rem;
+  --canary-line-height-8-loose: 4.5rem;
+  --canary-line-height-9-none: 3rem;
+  --canary-line-height-9-tight: 3.75rem;
+  --canary-line-height-9-snug: 4.125rem;
+  --canary-line-height-9-normal: 4.5rem;
+  --canary-line-height-9-relaxed: 4.875rem;
+  --canary-line-height-9-loose: 6rem;
+  --canary-line-height-10-none: 3.75rem;
+  --canary-line-height-10-tight: 4.6875rem;
+  --canary-line-height-10-snug: 5.1563rem;
+  --canary-line-height-10-normal: 5.625rem;
+  --canary-line-height-10-relaxed: 6.0938rem;
+  --canary-line-height-10-loose: 7.5rem;
+  --canary-line-height-11-none: 4.5rem;
+  --canary-line-height-11-tight: 5.625rem;
+  --canary-line-height-11-snug: 6.1875rem;
+  --canary-line-height-11-normal: 6.75rem;
+  --canary-line-height-11-relaxed: 7.3125rem;
+  --canary-line-height-11-loose: 9rem;
+  --canary-line-height-12-none: 6rem;
+  --canary-line-height-12-tight: 7.5rem;
+  --canary-line-height-12-snug: 8.25rem;
+  --canary-line-height-12-normal: 9rem;
+  --canary-line-height-12-relaxed: 9.75rem;
+  --canary-line-height-12-loose: 12rem;
+  --canary-line-height-13-none: 8rem;
+  --canary-line-height-13-tight: 10rem;
+  --canary-line-height-13-snug: 11rem;
+  --canary-line-height-13-normal: 12rem;
+  --canary-line-height-13-relaxed: 13rem;
+  --canary-line-height-13-loose: 16rem;
   --canary-line-height-none: 1;
   --canary-line-height-tight: 1.25;
   --canary-line-height-snug: 1.375;
@@ -172,92 +250,14 @@
   --canary-border-width-2: 2px; /* Medium border width (border-2) */
   --canary-border-width-4: 4px; /* Thick border width (border-4) */
   --canary-border-width-8: 8px; /* Extra thick border width (border-8) */
-  --canary-line-height-1-none: var(--canary-font-size-1)*var(--canary-line-height-none);
-  --canary-line-height-1-tight: var(--canary-font-size-1)*var(--canary-line-height-tight);
-  --canary-line-height-1-snug: var(--canary-font-size-1)*var(--canary-line-height-snug);
-  --canary-line-height-1-normal: var(--canary-font-size-1)*var(--canary-line-height-normal);
-  --canary-line-height-1-relaxed: var(--canary-font-size-1)*var(--canary-line-height-relaxed);
-  --canary-line-height-1-loose: var(--canary-font-size-1)*var(--canary-line-height-loose);
-  --canary-line-height-2-none: var(--canary-font-size-2)*var(--canary-line-height-none);
-  --canary-line-height-2-tight: var(--canary-font-size-2)*var(--canary-line-height-tight);
-  --canary-line-height-2-snug: var(--canary-font-size-2)*var(--canary-line-height-snug);
-  --canary-line-height-2-normal: var(--canary-font-size-2)*var(--canary-line-height-normal);
-  --canary-line-height-2-relaxed: var(--canary-font-size-2)*var(--canary-line-height-relaxed);
-  --canary-line-height-2-loose: var(--canary-font-size-2)*var(--canary-line-height-loose);
-  --canary-line-height-3-none: var(--canary-font-size-3)*var(--canary-line-height-none);
-  --canary-line-height-3-tight: var(--canary-font-size-3)*var(--canary-line-height-tight);
-  --canary-line-height-3-snug: var(--canary-font-size-3)*var(--canary-line-height-snug);
-  --canary-line-height-3-normal: var(--canary-font-size-3)*var(--canary-line-height-normal);
-  --canary-line-height-3-relaxed: var(--canary-font-size-3)*var(--canary-line-height-relaxed);
-  --canary-line-height-3-loose: var(--canary-font-size-3)*var(--canary-line-height-loose);
-  --canary-line-height-4-none: var(--canary-font-size-4)*var(--canary-line-height-none);
-  --canary-line-height-4-tight: var(--canary-font-size-4)*var(--canary-line-height-tight);
-  --canary-line-height-4-snug: var(--canary-font-size-4)*var(--canary-line-height-snug);
-  --canary-line-height-4-normal: var(--canary-font-size-4)*var(--canary-line-height-normal);
-  --canary-line-height-4-relaxed: var(--canary-font-size-4)*var(--canary-line-height-relaxed);
-  --canary-line-height-4-loose: var(--canary-font-size-4)*var(--canary-line-height-loose);
-  --canary-line-height-5-none: var(--canary-font-size-5)*var(--canary-line-height-none);
-  --canary-line-height-5-tight: var(--canary-font-size-5)*var(--canary-line-height-tight);
-  --canary-line-height-5-snug: var(--canary-font-size-5)*var(--canary-line-height-snug);
-  --canary-line-height-5-normal: var(--canary-font-size-5)*var(--canary-line-height-normal);
-  --canary-line-height-5-relaxed: var(--canary-font-size-5)*var(--canary-line-height-relaxed);
-  --canary-line-height-5-loose: var(--canary-font-size-5)*var(--canary-line-height-loose);
-  --canary-line-height-6-none: var(--canary-font-size-6)*var(--canary-line-height-none);
-  --canary-line-height-6-tight: var(--canary-font-size-6)*var(--canary-line-height-tight);
-  --canary-line-height-6-snug: var(--canary-font-size-6)*var(--canary-line-height-snug);
-  --canary-line-height-6-normal: var(--canary-font-size-6)*var(--canary-line-height-normal);
-  --canary-line-height-6-relaxed: var(--canary-font-size-6)*var(--canary-line-height-relaxed);
-  --canary-line-height-6-loose: var(--canary-font-size-6)*var(--canary-line-height-loose);
-  --canary-line-height-7-none: var(--canary-font-size-7)*var(--canary-line-height-none);
-  --canary-line-height-7-tight: var(--canary-font-size-7)*var(--canary-line-height-tight);
-  --canary-line-height-7-snug: var(--canary-font-size-7)*var(--canary-line-height-snug);
-  --canary-line-height-7-normal: var(--canary-font-size-7)*var(--canary-line-height-normal);
-  --canary-line-height-7-relaxed: var(--canary-font-size-7)*var(--canary-line-height-relaxed);
-  --canary-line-height-7-loose: var(--canary-font-size-7)*var(--canary-line-height-loose);
-  --canary-line-height-8-none: var(--canary-font-size-8)*var(--canary-line-height-none);
-  --canary-line-height-8-tight: var(--canary-font-size-8)*var(--canary-line-height-tight);
-  --canary-line-height-8-snug: var(--canary-font-size-8)*var(--canary-line-height-snug);
-  --canary-line-height-8-normal: var(--canary-font-size-8)*var(--canary-line-height-normal);
-  --canary-line-height-8-relaxed: var(--canary-font-size-8)*var(--canary-line-height-relaxed);
-  --canary-line-height-8-loose: var(--canary-font-size-8)*var(--canary-line-height-loose);
-  --canary-line-height-9-none: var(--canary-font-size-9)*var(--canary-line-height-none);
-  --canary-line-height-9-tight: var(--canary-font-size-9)*var(--canary-line-height-tight);
-  --canary-line-height-9-snug: var(--canary-font-size-9)*var(--canary-line-height-snug);
-  --canary-line-height-9-normal: var(--canary-font-size-9)*var(--canary-line-height-normal);
-  --canary-line-height-9-relaxed: var(--canary-font-size-9)*var(--canary-line-height-relaxed);
-  --canary-line-height-9-loose: var(--canary-font-size-9)*var(--canary-line-height-loose);
-  --canary-line-height-10-none: var(--canary-font-size-10)*var(--canary-line-height-none);
-  --canary-line-height-10-tight: var(--canary-font-size-10)*var(--canary-line-height-tight);
-  --canary-line-height-10-snug: var(--canary-font-size-10)*var(--canary-line-height-snug);
-  --canary-line-height-10-normal: var(--canary-font-size-10)*var(--canary-line-height-normal);
-  --canary-line-height-10-relaxed: var(--canary-font-size-10)*var(--canary-line-height-relaxed);
-  --canary-line-height-10-loose: var(--canary-font-size-10)*var(--canary-line-height-loose);
-  --canary-line-height-11-none: var(--canary-font-size-11)*var(--canary-line-height-none);
-  --canary-line-height-11-tight: var(--canary-font-size-11)*var(--canary-line-height-tight);
-  --canary-line-height-11-snug: var(--canary-font-size-11)*var(--canary-line-height-snug);
-  --canary-line-height-11-normal: var(--canary-font-size-11)*var(--canary-line-height-normal);
-  --canary-line-height-11-relaxed: var(--canary-font-size-11)*var(--canary-line-height-relaxed);
-  --canary-line-height-11-loose: var(--canary-font-size-11)*var(--canary-line-height-loose);
-  --canary-line-height-12-none: var(--canary-font-size-12)*var(--canary-line-height-none);
-  --canary-line-height-12-tight: var(--canary-font-size-12)*var(--canary-line-height-tight);
-  --canary-line-height-12-snug: var(--canary-font-size-12)*var(--canary-line-height-snug);
-  --canary-line-height-12-normal: var(--canary-font-size-12)*var(--canary-line-height-normal);
-  --canary-line-height-12-relaxed: var(--canary-font-size-12)*var(--canary-line-height-relaxed);
-  --canary-line-height-12-loose: var(--canary-font-size-12)*var(--canary-line-height-loose);
-  --canary-line-height-13-none: var(--canary-font-size-13)*var(--canary-line-height-none);
-  --canary-line-height-13-tight: var(--canary-font-size-13)*var(--canary-line-height-tight);
-  --canary-line-height-13-snug: var(--canary-font-size-13)*var(--canary-line-height-snug);
-  --canary-line-height-13-normal: var(--canary-font-size-13)*var(--canary-line-height-normal);
-  --canary-line-height-13-relaxed: var(--canary-font-size-13)*var(--canary-line-height-relaxed);
-  --canary-line-height-13-loose: var(--canary-font-size-13)*var(--canary-line-height-loose);
-  --canary-icon-size-xxs: var(--canary-size-2);
-  --canary-icon-size-xs: var(--canary-size-3);
-  --canary-icon-size-sm: var(--canary-size-3-half);
-  --canary-icon-size-default: var(--canary-size-4);
-  --canary-icon-size-md: var(--canary-size-5);
+  --canary-icon-size-xxs: 8px;
+  --canary-icon-size-xs: 12px;
+  --canary-icon-size-sm: 14px;
+  --canary-icon-size-default: 16px;
+  --canary-icon-size-md: 20px;
   /**
    * 
    * 
    */
-  --canary-icon-size-lg: var(--canary-size-8);
+  --canary-icon-size-lg: 32px;
 }

@@ -38,11 +38,11 @@ export const LandingPageView: FC<LandingPageProps> = ({
   return (
     <SandboxLayout.Main className="min-h-[inherit]">
       <section className="grid min-h-[inherit] place-content-center place-items-center gap-2.5">
-        <h2 className="text-cn-foreground-1 text-2xl font-medium">
+        <h2 className="text-2xl font-medium text-cn-foreground-1">
           {t('views:landingPage.selectProject', 'Select a project to get started')}
         </h2>
 
-        <p className="text-cn-foreground-3 text-center text-sm font-normal">
+        <p className="text-center text-sm font-normal text-cn-foreground-3">
           {t(
             'views:landingPage.description',
             'Projects contain your repositories and pipelines. To start using Gitness, select a project or create a new one.'

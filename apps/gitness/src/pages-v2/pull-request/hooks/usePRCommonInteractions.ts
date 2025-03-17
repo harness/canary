@@ -208,7 +208,7 @@ export function usePRCommonInteractions({
     setSuggestionsBatch(prev => prev.filter(s => s.comment_id !== commentId))
   }, [])
 
-  const onCommitSuggestionsBatch = () => setIsCommitDialogOpen(true)
+  const onCommitSuggestionsBatch = useCallback(() => setIsCommitDialogOpen(true), [])
 
   const onCommentSaveAndStatusChange = useCallback(
     async (commentText: string, status: string, parentId?: number) => {

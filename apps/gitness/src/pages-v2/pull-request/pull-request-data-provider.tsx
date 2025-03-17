@@ -17,11 +17,11 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import useGetPullRequestTab, { PullRequestTab } from '../../hooks/useGetPullRequestTab'
 import { usePRChecksDecision } from '../../pages/pull-request/hooks/usePRChecksDecision'
-import { extractSpecificViolations } from '../../pages/pull-request/utils'
+import { extractSpecificViolations, getCommentsInfoData } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { SSEEvent } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
-import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
+import { PR_COMMENTS_RULES, usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
 const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   const spaceURL = useGetSpaceURLParam() ?? ''
@@ -187,42 +187,31 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
   }, [repoRef, pullReqData?.source_sha, pullRequestTab])
 
   useEffect(() => {
-    const resolvedComments = prPanelData.requiresCommentApproval && !prPanelData.resolvedCommentArr?.params
-    if (resolvedComments) {
-      setCommentsInfoData({ header: 'All comments are resolved', content: undefined, status: 'success' })
-    } else {
-      const unresolvedCount = prPanelData.resolvedCommentArr?.params || 0 // Ensure a default value
-
-      setCommentsInfoData({
-        header: 'Unresolved comments',
-        content: `There are ${unresolvedCount} unresolved comments`,
-        status: 'failed'
+    setCommentsInfoData(
+      getCommentsInfoData({
+        requiresCommentApproval: prPanelData.requiresCommentApproval,
+        resolvedCommentArrParams: prPanelData.resolvedCommentArr?.params
       })
-    }
+    )
     setCommentsLoading(false)
   }, [
-    dryMerge,
-    prPanelData.resolvedCommentArr,
     prPanelData.requiresCommentApproval,
     prPanelData.resolvedCommentArr?.params,
     setCommentsInfoData,
-    setCommentsLoading,
-    setResolvedCommentArr,
-    prPanelData.ruleViolationArr
+    setCommentsLoading
   ])
+
   useEffect(() => {
     if (commits && !isEqual(commits, pullReqCommits)) {
       setPullReqCommits(commits)
     }
   }, [commits, pullReqCommits, setPullReqCommits])
+
   useEffect(() => {
     const ruleViolationArr = prPanelData.ruleViolationArr
-    if (ruleViolationArr) {
-      const requireResCommentRule = extractSpecificViolations(ruleViolationArr, 'pullreq.comments.require_resolve_all')
-      if (requireResCommentRule) {
-        setResolvedCommentArr(requireResCommentRule[0])
-      }
-    }
+
+    const requireResCommentRule = extractSpecificViolations(ruleViolationArr, PR_COMMENTS_RULES.REQUIRE_RESOLVE_ALL)
+    setResolvedCommentArr(requireResCommentRule?.[0])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prPanelData.ruleViolationArr, pullReqMetadata, repoMetadata, prPanelData.ruleViolation])
 

@@ -41,7 +41,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
         <Spacer size={2} />
         {(isLoading || !!branchList.length || isDirtyList) && (
           <>
-            <span className="text-24 text-cn-foreground-1 font-medium">{t('views:repos.branches', 'Branches')}</span>
+            <span className="text-24 font-medium text-cn-foreground-1">{t('views:repos.branches', 'Branches')}</span>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>

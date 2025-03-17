@@ -5,7 +5,7 @@ import { timeAgo } from '@utils/utils'
 import { SecretListProps } from './types'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="text-cn-foreground-1 max-w-full truncate font-medium">{title}</span>
+  <span className="max-w-full truncate font-medium text-cn-foreground-1">{title}</span>
 )
 
 export function SecretList({

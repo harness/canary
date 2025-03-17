@@ -29,9 +29,9 @@ const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCo
   return (
     <div className="flex items-center gap-1.5 pl-6 text-sm">
       {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
-      <span className="bg-cn-background-3 pointer-events-none mx-1 h-3 w-px" aria-hidden />
+      <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden />
       {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
-      <span className="bg-cn-background-3 pointer-events-none mx-1 h-3 w-px" aria-hidden />
+      <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden />
       <span className="flex items-center gap-1">
         {bypassAllowed ? (
           <>

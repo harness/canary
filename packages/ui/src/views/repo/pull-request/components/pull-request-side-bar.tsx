@@ -68,7 +68,7 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
 }) => {
   return (
     <>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4">
         <ReviewersHeader
           currentUserId={currentUserId}
           usersList={usersList}

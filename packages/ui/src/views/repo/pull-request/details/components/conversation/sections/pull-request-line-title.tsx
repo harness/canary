@@ -1,6 +1,11 @@
+import { ReactElement } from 'react'
+
+import { cn } from '@/utils'
+
 interface LineTitleProps {
   text?: string
-  icon?: React.ReactElement
+  icon?: ReactElement
+  textClassName?: string
 }
 
 interface LineDescriptionProps {
@@ -10,8 +15,8 @@ interface LineDescriptionProps {
 export const LineTitle = ({ ...props }: LineTitleProps) => {
   return (
     <div className="inline-flex items-center gap-2">
-      {props.icon}
-      <h3 className="text-2 font-medium leading-snug">{props.text}</h3>
+      {props?.icon}
+      <h3 className={cn('text-2 font-medium leading-snug', props?.textClassName)}>{props?.text}</h3>
     </div>
   )
 }

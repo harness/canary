@@ -8,8 +8,8 @@ import { cva, VariantProps } from 'class-variance-authority'
 const tabNavRootVariants = cva('flex items-center', {
   variants: {
     variant: {
-      underline: 'border-cn-borders-3 h-11 w-full gap-6 border-b px-6',
-      tabs: 'before:border-cn-borders-2 relative w-full before:absolute before:bottom-0 before:left-0 before:w-full before:border-b'
+      underline: 'h-11 w-full gap-6 border-b border-cn-borders-3 px-6',
+      tabs: 'relative w-full before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-cn-borders-2'
     }
   },
   defaultVariants: {
@@ -19,12 +19,12 @@ const tabNavRootVariants = cva('flex items-center', {
 
 const makeTabNavTriggerVariants = (isActive?: boolean) =>
   cva(
-    'text-cn-foreground-2 hover:text-cn-foreground-1 relative flex h-9 place-items-center font-normal duration-150 ease-in-out focus-visible:duration-0',
+    'relative flex h-9 place-items-center font-normal text-cn-foreground-2 duration-150 ease-in-out hover:text-cn-foreground-1 focus-visible:duration-0',
     {
       variants: {
         variant: {
           underline: [
-            'text-2 m-0 my-1 whitespace-nowrap px-0 leading-none',
+            'm-0 my-1 whitespace-nowrap px-0 text-2 leading-none',
             // bottom border of active tab
             'after:pointer-events-none after:absolute after:inset-[-0.25rem_0] after:block after:border-b-2 after:border-solid after:border-b-transparent',
             ...(isActive ? ['text-cn-foreground-1 after:border-cn-borders-accent'] : [])

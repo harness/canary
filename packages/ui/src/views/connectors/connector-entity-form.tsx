@@ -132,7 +132,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
               </EntityFormSectionLayout.Header>
             )}
             <EntityFormSectionLayout.Form className="px-0">
-              <RenderForm className="space-y-4 max-w-xl" factory={inputComponentFactory} inputs={formDefinition} />
+              <RenderForm className="max-w-xl space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
               {apiError && (
                 <Alert.Container variant="destructive" className="my-8">
                   <Alert.Description>{apiError.toString()}</Alert.Description>
@@ -150,7 +150,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
               </div>
             </EntityFormLayout.Footer>
           ) : (
-            <div className="border-cn-borders-3 mt-5 flex flex-row justify-end border-t pt-5">
+            <div className="mt-5 flex flex-row justify-end border-t border-cn-borders-3 pt-5">
               <Button onClick={() => rootForm.submitForm()}>Apply changes</Button>
             </div>
           )}

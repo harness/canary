@@ -47,7 +47,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               </span>
               {isVerified && (
                 <>
-                  <span className="bg-cn-background-3 mx-2.5 h-4 w-px" />
+                  <span className="mx-2.5 h-4 w-px bg-cn-background-3" />
                   <Badge variant="surface" theme="success">
                     {t('views:commits.verified', 'Verified')}
                   </Badge>
@@ -58,7 +58,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
         </div>
         <div className="mt-5 rounded-md border border-cn-borders-2">
           <div className="flex items-center justify-between rounded-t-md border-b border-cn-borders-2 bg-cn-background-2 px-4 py-3">
-            <span className="font-mono text-14 font-medium leading-snug text-cn-foreground-1">{commitData?.title}</span>
+            <span className="text-14 font-mono font-medium leading-snug text-cn-foreground-1">{commitData?.title}</span>
             <Button variant="surface" theme="muted">
               {t('views:commits.browseFiles', 'Browse files')}
             </Button>
@@ -75,7 +75,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
         {!showSidebar && <Outlet />}
       </SandboxLayout.Content>
       {showSidebar && (
-        <SandboxLayout.Content className="mt-5 grid grid-cols-[auto_1fr] border-t border-cn-borders-4 py-0 pl-0 pr-5">
+        <SandboxLayout.Content className="border-cn-borders-4 mt-5 grid grid-cols-[auto_1fr] border-t py-0 pl-0 pr-5">
           <Outlet />
         </SandboxLayout.Content>
       )}

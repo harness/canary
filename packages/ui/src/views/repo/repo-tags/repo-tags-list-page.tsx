@@ -102,7 +102,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
       <SandboxLayout.Content>
         {(isLoading || !!tagsList.length || isDirtyList) && (
           <>
-            <h1 className="text-cn-foreground-1 mb-6 text-2xl font-medium">{t('views:repos.tags', 'Tags')}</h1>
+            <h1 className="mb-6 text-2xl font-medium text-cn-foreground-1">{t('views:repos.tags', 'Tags')}</h1>
 
             <ListActions.Root>
               <ListActions.Left>

@@ -47,7 +47,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   return (
     <>
       <div className="flex flex-col items-start">
-        <div className="flex items-center justify-between w-full">
+        <div className="flex w-full items-center justify-between">
           <span className="truncate text-4 font-medium">{title}</span>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
@@ -76,7 +76,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!description?.length && (
           <>
             <Spacer size={3} />
-            <span className="line-clamp-6 border-y border-cn-borders-4 py-1 text-2 text-cn-foreground-2 w-full">
+            <span className="border-cn-borders-4 line-clamp-6 w-full border-y py-1 text-2 text-cn-foreground-2">
               {description}
             </span>
           </>

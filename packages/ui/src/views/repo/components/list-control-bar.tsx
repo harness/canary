@@ -65,7 +65,7 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
         buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
         displayLabel={<FilterSelectAddIconLabel displayLabel={t('component:filter.defaultLabel', 'Filter')} />}
       />
-      <Button size="sm" variant="ghost" onClick={resetFilters} className="hover:text-cn-foreground-danger gap-x-1.5">
+      <Button size="sm" variant="ghost" onClick={resetFilters} className="gap-x-1.5 hover:text-cn-foreground-danger">
         <Icon className="rotate-45" name="plus" size={12} />
         {t('component:filter.reset', 'Reset')}
       </Button>

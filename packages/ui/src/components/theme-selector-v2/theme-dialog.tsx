@@ -80,7 +80,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                       />
                       {mode === value && (
                         <Icon
-                          className="text-cn-foreground-1 absolute bottom-2 left-2"
+                          className="absolute bottom-2 left-2 text-cn-foreground-1"
                           name="checkbox-circle"
                           size={16}
                         />
@@ -106,7 +106,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
           </div>
           {isAccessibilityThemeEnabled && (
             <>
-              <Separator className="bg-cn-background-2 h-px" />
+              <Separator className="h-px bg-cn-background-2" />
 
               {/* Contrast */}
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
@@ -134,7 +134,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 </Select.Root>
               </div>
 
-              <Separator className="bg-cn-background-2 h-px" />
+              <Separator className="h-px bg-cn-background-2" />
 
               {/* Color Adjustment */}
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
@@ -162,12 +162,12 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 </Select.Root>
               </div>
 
-              <Separator className="bg-cn-background-2 h-px" />
+              <Separator className="h-px bg-cn-background-2" />
 
               {/* Accent Color */}
               {showAccentColor ? (
                 <>
-                  <Separator className="bg-cn-background-2 h-px" />
+                  <Separator className="h-px bg-cn-background-2" />
                   <div className="grid grid-cols-[246px_1fr] gap-x-8">
                     <div>
                       <span className="text-3 font-medium text-cn-foreground-1">Accent color</span>
@@ -204,7 +204,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               {/* Gray Color */}
               {showGrayColor ? (
                 <>
-                  <Separator className="bg-cn-background-2 h-px" />
+                  <Separator className="h-px bg-cn-background-2" />
                   <div className="grid grid-cols-[246px_1fr] gap-x-8">
                     <div>
                       <span className="text-3 font-medium text-cn-foreground-1">Gray color</span>

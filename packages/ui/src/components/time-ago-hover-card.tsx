@@ -67,7 +67,7 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
                 {zone === 'UTC' ? 'UTC' : getTimeZoneAbbreviation()}
               </Badge>
               <time dateTime={date}>{date}</time>
-              <time dateTime={time} className="text-cn-foreground-3 ml-auto">
+              <time dateTime={time} className="ml-auto text-cn-foreground-3">
                 {time}
               </time>
             </>

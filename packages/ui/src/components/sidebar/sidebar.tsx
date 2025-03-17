@@ -184,7 +184,7 @@ const SidebarRoot = forwardRef<
         <Sheet.Content
           data-sidebar="sidebar"
           data-mobile="true"
-          className="bg-cn-background-0 w-[--cn-sidebar-width] p-0 [&>button]:hidden"
+          className="w-[--cn-sidebar-width] bg-cn-background-0 p-0 [&>button]:hidden"
           style={{ '--cn-sidebar-width': SIDEBAR_WIDTH_MOBILE } as CSSProperties}
           side={side}
         >
@@ -421,7 +421,7 @@ const SidebarMenuItem = forwardRef<HTMLLIElement, ComponentProps<'li'>>(({ class
 SidebarMenuItem.displayName = 'SidebarMenuItem'
 
 const sidebarMenuButtonVariants = cva(
-  'peer/menu-button group-hover/menu-item:bg-sidebar-background-3 data-[active=true]:bg-sidebar-background-3 data-[state=open]:hover:bg-sidebar-background-3 flex w-full cursor-pointer items-center overflow-hidden rounded px-2.5 py-2 text-left text-sm outline-none transition-[width,height,padding] disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-7 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-medium group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0',
+  'peer/menu-button flex w-full cursor-pointer items-center overflow-hidden rounded px-2.5 py-2 text-left text-sm outline-none transition-[width,height,padding] disabled:pointer-events-none disabled:opacity-50 group-hover/menu-item:bg-sidebar-background-3 group-has-[[data-sidebar=menu-action]]/menu-item:pr-7 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-background-3 data-[active=true]:font-medium data-[state=open]:hover:bg-sidebar-background-3 group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0',
   {
     variants: {
       variant: {

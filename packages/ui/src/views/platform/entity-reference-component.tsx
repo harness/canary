@@ -126,7 +126,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
 
   return (
     <>
-      <div className="h-full flex flex-col gap-2">
+      <div className="flex h-full flex-col gap-2">
         {showFilter && (
           <ListActions.Root className="gap-2">
             <ListActions.Left>

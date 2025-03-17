@@ -9,7 +9,7 @@ interface ReferenceSecretViewProps {
 export const ReferenceSecretView: React.FC<ReferenceSecretViewProps> = ({ onTest, value, setValue }) => {
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex items-center gap-2 w-full">
+      <div className="flex w-full items-center gap-2">
         <div className="grow">
           <Input value={value} onChange={e => setValue(e.target.value)} placeholder="Enter reference secret value" />
         </div>

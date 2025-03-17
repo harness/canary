@@ -159,7 +159,7 @@ export function MarkdownViewer({
     <Wrapper>
       <div ref={ref} style={styles}>
         {isSuggestion && (
-          <div className="border-cn-borders-2 bg-cn-background-2 rounded-t-md border-x border-t px-4 py-3">
+          <div className="rounded-t-md border-x border-t border-cn-borders-2 bg-cn-background-2 px-4 py-3">
             <span className="text-2 text-cn-foreground-1">
               {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
                 ? 'Suggestion applied'
@@ -207,7 +207,7 @@ export function MarkdownViewer({
               return (
                 <div className="relative">
                   <CopyButton
-                    className="bg-cn-background-3 absolute right-3 top-3 z-10 size-6"
+                    className="absolute right-3 top-3 z-10 size-6 bg-cn-background-3"
                     buttonVariant="surface"
                     name={code}
                     iconSize={13}
@@ -220,7 +220,7 @@ export function MarkdownViewer({
                   >
                     {hasLineNumbers ? (
                       <div className="relative flex w-full bg-transparent">
-                        <div className="bg-cn-background-2 flex-none select-none text-right">
+                        <div className="flex-none select-none bg-cn-background-2 text-right">
                           {filteredLines.map((_, i) => (
                             <span key={i} className="text-cn-foreground-7 block pr-3 pt-[0.5px] text-sm">
                               {i + 1}

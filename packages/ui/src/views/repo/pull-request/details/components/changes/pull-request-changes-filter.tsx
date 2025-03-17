@@ -255,7 +255,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           <p className="text-2 leading-tight text-cn-foreground-2">
             {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
             <DropdownMenu.Trigger className="group">
-              <span className="text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 group-hover:decoration-foreground-accent">
+              <span className="group-hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200">
                 {formatNumber(pullReqStats?.files_changed || 0)}{' '}
                 {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
               </span>
@@ -286,7 +286,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   {diff.addedLines != null &&
                     diff.addedLines > 0 &&
                     diff.deletedLines != null &&
-                    diff.deletedLines > 0 && <span className="bg-cn-background-3 mx-1.5 h-3 w-px" />}
+                    diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
                   {diff.deletedLines != null && diff.deletedLines > 0 && (
                     <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
                   )}

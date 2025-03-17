@@ -110,7 +110,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <span className="text-14 text-cn-foreground-2 leading-tight">
+            <span className="text-14 leading-tight text-cn-foreground-2">
               {t('views:noData.noResults', 'No search results')}
             </span>
           </div>
@@ -136,7 +136,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 key={item.name}
               >
                 <div className="flex w-full min-w-0 items-center gap-x-2">
-                  {isSelected && <Icon name="tick" size={12} className="text-cn-foreground-1 min-w-[12px]" />}
+                  {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-cn-foreground-1" />}
                   <span
                     className={cn('text-cn-foreground-2 truncate', {
                       'text-cn-foreground-1': isSelected
@@ -158,8 +158,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
         <DropdownMenu.Item className="p-0" asChild>
           <Link to={viewAllUrl}>
-            <div className="border-cn-borders-2 w-full border-t px-3 py-2">
-              <span className="text-14 hover:text-cn-foreground-1 font-medium leading-none transition-colors duration-200">
+            <div className="w-full border-t border-cn-borders-2 px-3 py-2">
+              <span className="text-14 font-medium leading-none transition-colors duration-200 hover:text-cn-foreground-1">
                 {t('views:repos.viewAll', `View all ${activeTab}`, {
                   type:
                     activeTab === BranchSelectorTab.BRANCHES

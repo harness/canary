@@ -45,7 +45,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   return (
     <StackedList.Root>
       {/* Breadcrumb header */}
-      <StackedList.Item isHeader disableHover className="!bg-cn-background-3 sticky top-0 h-12 p-2">
+      <StackedList.Item isHeader disableHover className="sticky top-0 h-12 !bg-cn-background-3 p-2">
         <Breadcrumb.Root>
           <Breadcrumb.List>
             {showBreadcrumbEllipsis ? (

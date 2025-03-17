@@ -192,7 +192,7 @@ export const PullRequestCommentBox = ({
                       <Button size="sm" variant="ghost" iconOnly onClick={item?.onClick}>
                         <Icon className="text-icons-9" name={item.icon} />
                       </Button>
-                      {isFirst && <div className="bg-cn-background-3 h-4 w-px" />}
+                      {isFirst && <div className="h-4 w-px bg-cn-background-3" />}
                     </Fragment>
                   )
                 })}

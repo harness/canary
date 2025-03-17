@@ -4,12 +4,12 @@ import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const tabsListVariants = cva('text-cn-foreground-2 inline-flex items-center', {
+const tabsListVariants = cva('inline-flex items-center text-cn-foreground-2', {
   variants: {
     variant: {
-      pills: 'bg-cn-background-softgray h-9 justify-center rounded-lg p-1',
+      pills: 'h-9 justify-center rounded-lg bg-cn-background-softgray p-1',
       underline: 'h-11 justify-center gap-4',
-      tabs: 'before:bg-cn-borders-3 relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full'
+      tabs: 'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-borders-3'
     },
     fontSize: {
       xs: 'text-1',
@@ -23,14 +23,14 @@ const tabsListVariants = cva('text-cn-foreground-2 inline-flex items-center', {
 })
 
 const tabsTriggerVariants = cva(
-  'data-[state=active]:text-cn-foreground-1 group relative inline-flex items-center justify-center whitespace-nowrap px-3 py-1 font-medium transition-all focus-visible:duration-0 disabled:pointer-events-none disabled:opacity-50',
+  'group relative inline-flex items-center justify-center whitespace-nowrap px-3 py-1 font-medium transition-all focus-visible:duration-0 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-cn-foreground-1',
   {
     variants: {
       variant: {
-        pills: 'data-[state=active]:bg-cn-background rounded-md data-[state=active]:shadow',
+        pills: 'rounded-md data-[state=active]:bg-cn-background data-[state=active]:shadow',
         underline:
-          'data-[state=active]:border-cn-borders-1 m-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal',
-        tabs: 'text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1 h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal'
+          'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-cn-borders-1',
+        tabs: 'h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1'
       }
     },
     defaultVariants: {
@@ -40,7 +40,7 @@ const tabsTriggerVariants = cva(
 )
 
 const tabsContentVariants = cva(
-  'ring-offset-background focus-visible:ring-cn-borders-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+  'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cn-borders-accent focus-visible:ring-offset-2',
   {
     variants: {
       variant: {

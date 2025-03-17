@@ -1,10 +1,12 @@
-import { Avatar, Button, DropdownMenu, Icon, SearchBox } from '@/components'
+import { useRef } from 'react'
+
+import { Avatar, Button, DropdownMenu, Icon, ScrollArea, SearchBox } from '@/components'
+import { useDebounceSearch } from '@/hooks'
 import { PrincipalType } from '@/types'
-import { TranslationStore } from '@/views'
+import { PRReviewer, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
-
-import { PRReviewer } from '../../pull-request.types'
+import { debounce } from 'lodash-es'
 
 interface ReviewersHeaderProps {
   usersList?: PrincipalType[]
@@ -28,76 +30,72 @@ const ReviewersHeader = ({
   useTranslationStore
 }: ReviewersHeaderProps) => {
   const { t } = useTranslationStore()
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value)
-  }
+
+  const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
+    handleChangeSearchValue: setSearchQuery,
+    searchValue: searchQuery
+  })
+
+  const handleCloseValuesView = useRef(debounce(handleResetSearch, 300)).current
 
   return (
-    <div className="flex items-center justify-between">
-      <span className="text-2 font-medium text-cn-foreground-1">{t('views:pullRequests.reviewers')}</span>
-      <DropdownMenu.Root>
+    <div className="mb-0.5 flex items-center justify-between">
+      <h5 className="text-2 font-medium text-cn-foreground-1">{t('views:pullRequests.reviewers', 'Reviewers')}</h5>
+
+      <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>
           <Button iconOnly variant="ghost" size="sm">
             <Icon name="vertical-ellipsis" size={12} />
           </Button>
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content className="w-[280px] p-0" align="end">
-          <div
-            className="relative flex items-center justify-between border-b border-cn-borders-2 px-3 py-2.5"
-            role="presentation"
-            onKeyDown={e => e.stopPropagation()}
-          >
+        <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
+          <div className="px-2 py-1.5" role="presentation" onKeyDown={e => e.stopPropagation()}>
             <SearchBox.Root
               className="w-full"
-              placeholder={t('views:pullRequests.searchUsers')}
-              value={searchQuery}
+              placeholder={t('views:pullRequests.searchUsers', 'Search users')}
+              value={search}
               handleChange={handleSearchChange}
               showOnFocus
             />
           </div>
+          <DropdownMenu.Separator />
 
-          <div className="p-1">
-            {usersList?.length === 0 && (
-              <div className="px-5 py-4 text-center">
-                <span className="text-2 leading-tight text-cn-foreground-2">{t('views:pullRequests.searchUsers')}</span>
-              </div>
-            )}
-            <div className="max-h-[360px] overflow-y-auto">
-              {usersList?.length === 1 && usersList[0].uid === currentUserId ? (
-                <div className="px-5 py-4 text-center">
-                  <span className="text-2 leading-tight text-cn-foreground-2">{t('views:pullRequests.noUsers')}</span>
-                </div>
-              ) : (
-                usersList?.map(({ display_name, id, uid }) => {
-                  if (uid === currentUserId) return null
-                  const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
-                  return (
-                    <DropdownMenu.Item
-                      className={cn('py-2', {
-                        'pl-7': !isSelected
-                      })}
-                      key={uid}
-                      onClick={() => {
-                        if (isSelected) {
-                          handleDelete(id as number)
-                        } else {
-                          addReviewers?.(id)
-                        }
-                      }}
-                    >
-                      <div className="flex w-full min-w-0 items-center gap-x-2">
-                        {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
-                        <Avatar.Root>
-                          <Avatar.Fallback>{getInitials(display_name || '')}</Avatar.Fallback>
-                        </Avatar.Root>
-                        <span className="truncate text-2 font-medium text-cn-foreground-1">{display_name}</span>
-                      </div>
-                    </DropdownMenu.Item>
-                  )
-                })
-              )}
+          {!usersList?.length && (
+            <div className="px-5 py-4 text-center leading-tight text-cn-foreground-2">
+              {t('views:pullRequests.noUsers', 'No users found.')}
             </div>
-          </div>
+          )}
+          {usersList?.length === 1 && usersList[0].uid === currentUserId ? (
+            <div className="px-5 py-4 text-center leading-tight text-cn-foreground-2">
+              {t('views:pullRequests.noUsers', 'No users found.')}
+            </div>
+          ) : (
+            <ScrollArea viewportClassName="max-h-80">
+              {usersList?.map(({ display_name, id, uid }) => {
+                if (uid === currentUserId) return null
+
+                const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
+
+                return (
+                  <DropdownMenu.Item
+                    className={cn('py-2', {
+                      'pl-7': !isSelected
+                    })}
+                    key={uid}
+                    onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}
+                  >
+                    <div className="flex w-full min-w-0 items-center gap-x-2 pl-1">
+                      {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
+                      <Avatar.Root>
+                        <Avatar.Fallback>{getInitials(display_name)}</Avatar.Fallback>
+                      </Avatar.Root>
+                      <span className="truncate text-2 font-medium text-cn-foreground-1">{display_name}</span>
+                    </div>
+                  </DropdownMenu.Item>
+                )
+              })}
+            </ScrollArea>
+          )}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </div>

@@ -119,7 +119,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
                 {source_branch}
               </Link>
             </Badge>
-            <span className="bg-cn-background-3 mx-1.5 h-4 w-px" />
+            <span className="mx-1.5 h-4 w-px bg-cn-background-3" />
             <span className="text-cn-foreground-2">{formattedTime}</span>
           </div>
         </div>

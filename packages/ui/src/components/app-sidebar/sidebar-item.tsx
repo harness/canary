@@ -92,12 +92,12 @@ export const SidebarItem = ({
       {!collapsed && (
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
-            <Sidebar.MenuAction className="text-sidebar-icon-3 hover:text-sidebar-icon-1 right-[3px]" showOnHover>
+            <Sidebar.MenuAction className="right-[3px] text-sidebar-icon-3 hover:text-sidebar-icon-1" showOnHover>
               <Icon name="menu-dots" size={12} />
             </Sidebar.MenuAction>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content
-            className="border-sidebar-border-3 bg-sidebar-background-4 w-[128px]"
+            className="w-[128px] border-sidebar-border-3 bg-sidebar-background-4"
             align="end"
             sideOffset={3}
             alignOffset={4}

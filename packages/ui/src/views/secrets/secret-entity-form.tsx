@@ -70,7 +70,7 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
           <EntityFormSectionLayout.Root>
             <EntityFormSectionLayout.Form className="px-0">
               <RenderForm
-                className="space-y-4 max-w-xl"
+                className="max-w-xl space-y-4"
                 factory={inputComponentFactory}
                 inputs={secretsFormDefinition ?? { inputs: [] }}
               />
@@ -82,7 +82,7 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
             </EntityFormSectionLayout.Form>
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer className="border-none">
-            <div className="bg-cn-background-2 absolute inset-x-0 bottom-0 flex justify-between gap-x-3 p-4 shadow-md">
+            <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-cn-background-2 p-4 shadow-md">
               <Button variant="ghost" onClick={() => onBack?.()}>
                 Back
               </Button>

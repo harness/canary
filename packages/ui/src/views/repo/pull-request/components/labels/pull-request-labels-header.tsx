@@ -187,7 +187,7 @@ export const LabelsHeader = ({
 
               <div className="p-2">
                 {/* TODO: replace with StyledLink variant when its update is merged (https://github.com/harness/canary/pull/1134) */}
-                <StyledLink className="text-cn-foreground-1 hover:decoration-foreground-8" {...editLabelsProps}>
+                <StyledLink className="hover:decoration-foreground-8 text-cn-foreground-1" {...editLabelsProps}>
                   {t('views:pullRequests.editLabels', 'Edit labels')}
                 </StyledLink>
               </div>

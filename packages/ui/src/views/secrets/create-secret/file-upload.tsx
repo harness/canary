@@ -47,7 +47,7 @@ export function FileUpload({ selectedFile, onFileChange, error }: FileUploadProp
   return (
     <div>
       <div
-        className="border-cn-borders-2 rounded-md border-2 border-dashed p-4"
+        className="rounded-md border-2 border-dashed border-cn-borders-2 p-4"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
@@ -66,7 +66,7 @@ export function FileUpload({ selectedFile, onFileChange, error }: FileUploadProp
           ) : (
             <div className="flex w-full flex-col">
               <div className="flex items-center justify-between">
-                <span className="text-cn-foreground-2 text-sm">
+                <span className="text-sm text-cn-foreground-2">
                   Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
                 </span>
                 <div className="flex gap-2">
@@ -100,7 +100,7 @@ export function FileUpload({ selectedFile, onFileChange, error }: FileUploadProp
           )}
         </div>
       </div>
-      {error && <div className="text-cn-foreground-danger mt-1 text-sm">{error}</div>}
+      {error && <div className="mt-1 text-sm text-cn-foreground-danger">{error}</div>}
 
       {/* Hidden file input */}
       <Input

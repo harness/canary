@@ -94,7 +94,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
           <Table.Head className="w-40">
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
               <span className="text-right leading-none">{t('views:repos.behind', 'Behind')}</span>
-              <div className="bg-cn-background-3 h-3 w-px" aria-hidden />
+              <div className="h-3 w-px bg-cn-background-3" aria-hidden />
               <span className="leading-none">{t('views:repos.ahead', 'Ahead')}</span>
             </div>
           </Table.Head>
@@ -120,7 +120,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   <div className="flex h-6 items-center">
                     <Badge variant="soft" size="sm">
                       {defaultBranch === branch?.name && (
-                        <Icon name="lock" size={14} className="text-icons-9 -mt-px mr-1 inline-block" />
+                        <Icon name="lock" size={14} className="-mt-px mr-1 inline-block text-icons-9" />
                       )}
                       {branch?.name}
                     </Badge>
@@ -136,7 +136,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                         {getInitials(branch?.user?.name ?? '')}
                       </Avatar.Fallback>
                     </Avatar.Root>
-                    <time className="text-cn-foreground-1 truncate">{branch?.timestamp}</time>
+                    <time className="truncate text-cn-foreground-1">{branch?.timestamp}</time>
                   </div>
                 </Table.Cell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
@@ -144,7 +144,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   {branch?.checks && (
                     <div className="flex items-center">
                       {checkState === 'running' ? (
-                        <span className="bg-icons-alert mr-1.5 size-2 rounded-full" />
+                        <span className="mr-1.5 size-2 rounded-full bg-icons-alert" />
                       ) : (
                         <Icon
                           className={cn('mr-1.5', {
@@ -160,9 +160,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                           size={12}
                         />
                       )}
-                      <span className="text-cn-foreground-3 truncate">{branch?.checks?.done}</span>
+                      <span className="truncate text-cn-foreground-3">{branch?.checks?.done}</span>
                       <span className="mx-px">/</span>
-                      <span className="text-cn-foreground-3 truncate">{branch?.checks?.total}</span>
+                      <span className="truncate text-cn-foreground-3">{branch?.checks?.total}</span>
                     </div>
                   )}
                 </Table.Cell>

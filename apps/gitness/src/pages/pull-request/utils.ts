@@ -187,6 +187,28 @@ export function extractSpecificViolations(violationsData: any, rule: string) {
   return specificViolations
 }
 
+export const getCommentsInfoData = ({
+  requiresCommentApproval,
+  resolvedCommentArrParams
+}: {
+  requiresCommentApproval: boolean
+  resolvedCommentArrParams?: number[]
+}) => {
+  const resolvedComments = requiresCommentApproval && !resolvedCommentArrParams
+
+  if (resolvedComments) {
+    return { header: 'All comments are resolved', content: undefined, status: 'success' }
+  }
+
+  const unresolvedCount = resolvedCommentArrParams?.[0] || 0 // Ensure a default value
+
+  return {
+    header: 'Unresolved comments',
+    content: `There are ${unresolvedCount} unresolved comments`,
+    status: 'failed'
+  }
+}
+
 export const checkIfOutdatedSha = (reviewedSHA?: string, sourceSHA?: string) =>
   reviewedSHA !== sourceSHA || reviewedSHA !== sourceSHA ? true : false
 

@@ -37,7 +37,7 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
         align={dropdownAlign}
         onCloseAutoFocus={e => e.preventDefault()}
       >
-        <div className="flex items-center border-b border-cn-borders-4 px-3 py-2.5">
+        <div className="border-cn-borders-4 flex items-center border-b px-3 py-2.5">
           <Input
             type="text"
             placeholder={inputPlaceholder}
@@ -76,7 +76,7 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
         </div>
 
         {onReset && (
-          <div className="border-t border-cn-borders-4 p-1">
+          <div className="border-cn-borders-4 border-t p-1">
             <DropdownMenu.Item asChild>
               <button className="w-full font-medium" onClick={onReset}>
                 {buttonLabel}
@@ -103,7 +103,7 @@ const FilterSelectLabel = ({
   return (
     <>
       {/* TODO: Design system: Update with proper button */}
-      <span className="flex items-center gap-x-1 text-14 text-cn-foreground-2 hover:text-cn-foreground-1">
+      <span className="text-14 flex items-center gap-x-1 text-cn-foreground-2 hover:text-cn-foreground-1">
         {displayLabel}
         {selectedFilters > 0 && (
           // TODO: Design system: Update badge info variant once it is available

@@ -259,7 +259,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.150}",
+          "$value": "{colors.chrome.100}",
           "$description": "Background color for secondary badges. Creates less prominent badge styling for secondary information."
         },
         "border": {
@@ -539,7 +539,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.150}",
+          "$value": "{colors.chrome.100}",
           "$description": "Background color for secondary action buttons. Creates visual hierarchy between primary and secondary actions."
         },
         "border": {

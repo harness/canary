@@ -31,16 +31,18 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
 
   return (
     <StepsPaletteLayout.Root>
-      <StepsPaletteLayout.Header>
-        {standalone && <StepsPaletteLayout.Title>Add Connector</StepsPaletteLayout.Title>}
-        <Input
-          placeholder="Search"
-          onChange={value => {
-            setQuery(value.target.value)
-          }}
-        />
-      </StepsPaletteLayout.Header>
-      <StepsPaletteContentLayout.Root>
+      {standalone && (
+        <StepsPaletteLayout.Header>
+          <StepsPaletteLayout.Title>Add Connector</StepsPaletteLayout.Title>
+          <Input
+            placeholder="Search"
+            onChange={value => {
+              setQuery(value.target.value)
+            }}
+          />
+        </StepsPaletteLayout.Header>
+      )}
+      <StepsPaletteContentLayout.Root className={standalone ? undefined : '!px-0'}>
         <ConnectorsPaletteSection
           connectors={connectorsFiltered}
           onSelect={connector => {

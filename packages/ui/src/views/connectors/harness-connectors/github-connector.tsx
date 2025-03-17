@@ -43,6 +43,7 @@ const inputs: IInputConfigWithConfigInterface[] = [
     inputType: InputType.select,
     path: `auth`,
     label: 'Authentication',
+    default: 'Oauth',
     inputConfig: {
       options: [
         { label: 'Oauth', value: 'Oauth' },

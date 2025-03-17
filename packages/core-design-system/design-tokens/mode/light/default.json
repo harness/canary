@@ -105,13 +105,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.15",
+            "value": "0.04",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{colors.chrome.400}",
+      "$value": "{colors.pure.black}",
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -119,13 +119,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.2",
+            "value": "0.08",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{colors.chrome.400}",
+      "$value": "{colors.pure.black}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     },
     "disabled": {

@@ -1,0 +1,20 @@
+{
+  "card": {
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.6}"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.6}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.6}"
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.4}"
+    }
+  }
+}

@@ -87,6 +87,16 @@
         "$type": "spacing",
         "$value": "{spacing.1-half}"
       }
+    },
+    "py": {
+      "sm": {
+        "$type": "spacing",
+        "$value": "{spacing.half}"
+      },
+      "default": {
+        "$type": "spacing",
+        "$value": "{spacing.half}"
+      }
     }
   }
 }

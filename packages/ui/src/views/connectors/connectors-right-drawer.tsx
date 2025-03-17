@@ -9,7 +9,6 @@ import { AnyConnectorDefinition, ConnectorRightDrawer } from './types'
 
 interface ConnectorsRightDrawerBaseProps {
   initialDrawerState?: ConnectorRightDrawer
-  standalone?: boolean
   onFormSubmit?: (values: any) => void // TODO: TYPE this properly
   onDrawerClose?: () => void
   useSheet?: boolean // Whether to wrap content in Sheet.Root
@@ -23,8 +22,7 @@ const ConnectorsRightDrawerBase = ({
   onFormSubmit,
   connectors,
   getConnectorDefinition,
-  onDrawerClose,
-  standalone = false
+  onDrawerClose
 }: ConnectorsRightDrawerBaseProps): JSX.Element => {
   const { rightDrawer, setRightDrawer, formEntity, setFormEntity, clearRightDrawerData } = useConnectorsContext()
   console.log(rightDrawer, formEntity)
@@ -40,7 +38,6 @@ const ConnectorsRightDrawerBase = ({
       case ConnectorRightDrawer.Collection:
         return (
           <ConnectorsPalette
-            standalone={standalone}
             connectors={connectors}
             setRightDrawer={setRightDrawer}
             setFormEntity={setFormEntity}
@@ -53,8 +50,8 @@ const ConnectorsRightDrawerBase = ({
       case ConnectorRightDrawer.Form:
         return formEntity ? (
           <ConnectorEntityForm
-            standalone={standalone}
             formEntity={formEntity}
+            setRightDrawer={setRightDrawer}
             requestClose={() => {
               clearRightDrawerData()
               onDrawerClose?.()
@@ -77,7 +74,6 @@ const ConnectorsRightDrawerBase = ({
     return content
   }
 
-  // When used as a standalone sheet
   if (!content) {
     return <></>
   }
@@ -109,8 +105,7 @@ const ConnectorsRightDrawer = ({
   onFormSubmit,
   connectors,
   getConnectorDefinition,
-  onDrawerClose,
-  standalone = false
+  onDrawerClose
 }: ConnectorsRightDrawerBaseProps): JSX.Element | null => {
   return (
     <ConnectorsProvider>
@@ -121,7 +116,6 @@ const ConnectorsRightDrawer = ({
         connectors={connectors}
         getConnectorDefinition={getConnectorDefinition}
         onDrawerClose={onDrawerClose}
-        standalone={standalone}
       />
     </ConnectorsProvider>
   )

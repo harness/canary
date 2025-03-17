@@ -1,9 +1,9 @@
 import { Button, ListActions, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
 
-import { getHarnessConnectorDefinition, harnessConnectors } from './connector-utils'
 import { ConnectorsRightDrawer } from './connectors-right-drawer'
 import { ConnectorsProvider, useConnectorsContext } from './context/connectors-context'
+import { getHarnessConnectorDefinition, harnessConnectors } from './harness-connectors/utils'
 import { ConnectorRightDrawer } from './types'
 
 const ConnectorsListPageContent = (): JSX.Element => {
@@ -31,8 +31,8 @@ const ConnectorsListPageContent = (): JSX.Element => {
                   setFormEntity({
                     type: 'connector',
                     data: {
-                      identifier: 'AWS KMS Connector',
-                      description: 'AWS KMS Connector'
+                      identifier: 'AWS_KMS',
+                      name: 'AWS KMS'
                     }
                   })
                 }}
@@ -44,11 +44,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
           <Spacer size={5} />
         </>
       </SandboxLayout.Content>
-      <ConnectorsRightDrawer
-        standalone={true}
-        connectors={harnessConnectors}
-        getConnectorDefinition={getHarnessConnectorDefinition}
-      />
+      <ConnectorsRightDrawer connectors={harnessConnectors} getConnectorDefinition={getHarnessConnectorDefinition} />
     </SandboxLayout.Main>
   )
 }

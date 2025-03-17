@@ -12,7 +12,7 @@ import {
   getResourcesContainer
 } from './common-connector-utils'
 
-export const GITHUB_CONNECTOR_DESCRIPTION = 'Github Connector'
+export const GITHUB_CONNECTOR_CATEOGRY = 'Code Repository'
 
 const inputs: IInputConfigWithConfigInterface[] = [
   {

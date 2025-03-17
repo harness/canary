@@ -27,10 +27,10 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
               </StepsPaletteItemLayout.Left>
               <StepsPaletteItemLayout.Right>
                 <StepsPaletteItemLayout.Header>
-                  <StepsPaletteItemLayout.Title>{connector.identifier}</StepsPaletteItemLayout.Title>
+                  <StepsPaletteItemLayout.Title>{connector.name}</StepsPaletteItemLayout.Title>
                   {/* <StepsPaletteItem.BadgeWrapper>verified</StepsPaletteItem.BadgeWrapper> */}
                 </StepsPaletteItemLayout.Header>
-                <StepsPaletteItemLayout.Description>{connector.description}</StepsPaletteItemLayout.Description>
+                <StepsPaletteItemLayout.Description>{connector.category}</StepsPaletteItemLayout.Description>
               </StepsPaletteItemLayout.Right>
             </StepsPaletteItemLayout.Root>
           </StepsPaletteContentLayout.SectionItem>

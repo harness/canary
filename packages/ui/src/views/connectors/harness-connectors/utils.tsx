@@ -1,30 +1,30 @@
-import { AWS_KMS_CONNECTOR_DESCRIPTION, awsKmsConnectorFormDefinition } from './harness-connectors/aws-kms-connector'
-import { GITHUB_CONNECTOR_DESCRIPTION, githubConnectorFormDefinition } from './harness-connectors/github-connector'
-import {
-  TERRAFORM_CONNECTOR_DESCRIPTION,
-  terraformConnectorFormDefinition
-} from './harness-connectors/terraform-connector'
 import {
   AWS_KMS_CONNECTOR_IDENTIFIER,
   GITHUB_CONNECTOR_IDENTIFIER,
   HarnessConnectorDefinitionType,
   TERRAFORM_CONNECTOR_IDENTIFIER
-} from './types'
+} from '../types'
+import { AWS_KMS_CONNECTOR_CATEGORY, awsKmsConnectorFormDefinition } from './aws-kms-connector'
+import { GITHUB_CONNECTOR_CATEOGRY, githubConnectorFormDefinition } from './github-connector'
+import { TERRAFORM_CONNECTOR_CATEGORY, terraformConnectorFormDefinition } from './terraform-connector'
 
 export const harnessConnectors: HarnessConnectorDefinitionType[] = [
   {
     identifier: GITHUB_CONNECTOR_IDENTIFIER,
-    description: GITHUB_CONNECTOR_DESCRIPTION,
+    name: GITHUB_CONNECTOR_IDENTIFIER,
+    category: GITHUB_CONNECTOR_CATEOGRY,
     formDefinition: githubConnectorFormDefinition
   },
   {
     identifier: TERRAFORM_CONNECTOR_IDENTIFIER,
-    description: TERRAFORM_CONNECTOR_DESCRIPTION,
+    name: TERRAFORM_CONNECTOR_IDENTIFIER,
+    category: TERRAFORM_CONNECTOR_CATEGORY,
     formDefinition: terraformConnectorFormDefinition
   },
   {
     identifier: AWS_KMS_CONNECTOR_IDENTIFIER,
-    description: AWS_KMS_CONNECTOR_DESCRIPTION,
+    name: AWS_KMS_CONNECTOR_IDENTIFIER,
+    category: AWS_KMS_CONNECTOR_CATEGORY,
     formDefinition: awsKmsConnectorFormDefinition
   }
 ]

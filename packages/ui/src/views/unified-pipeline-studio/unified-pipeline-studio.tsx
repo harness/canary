@@ -44,25 +44,45 @@ export interface UnifiedPipelineStudioProps {
   useTemplateListStore: () => ITemplateListStore
   useTranslationStore: () => TranslationStore
   initialView?: VisualYamlValue
+  // NOTE: new props - wip
+  yamlRevision: YamlRevision
+  onYamlRevisionChange: (yamlRevision: YamlRevision) => void
+  onYamlDownload: (yaml: string) => void
+  onSave: (yaml: string) => void
+  isYamlDirty: boolean
+  theme?: 'light' | 'dark' | string
+  saveInProgress?: boolean
+  loadInProgress?: boolean
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {
-  const { useUnifiedPipelineStudioStore, initialView = 'visual', useTranslationStore, useTemplateListStore } = props
   const {
+    useUnifiedPipelineStudioStore,
+    initialView = 'visual',
+    useTranslationStore,
+    useTemplateListStore,
     yamlRevision,
     onYamlRevisionChange,
-    onSelectedPathChange,
-    selectedPath,
-    errors,
-    onErrorsChange,
-    panelOpen,
-    onPanelOpenChange
-  } = useUnifiedPipelineStudioStore()
+    onYamlDownload,
+    isYamlDirty,
+    onSave,
+    theme,
+    saveInProgress,
+    loadInProgress
+  } = props
+
+  const { onSelectedPathChange, selectedPath, errors, onErrorsChange, panelOpen, onPanelOpenChange } =
+    useUnifiedPipelineStudioStore()
 
   return (
     <UnifiedPipelineStudioProvider
       yamlRevision={yamlRevision}
-      onYamlRevisionChange={onYamlRevisionChange}
+      onYamlRevisionChange={yamlRevision => {
+        onYamlRevisionChange(yamlRevision)
+      }}
+      onDownloadYaml={onYamlDownload}
+      isYamlDirty={isYamlDirty}
+      onSave={onSave}
       onSelectedPathChange={onSelectedPathChange}
       selectedPath={selectedPath}
       errors={errors}
@@ -72,9 +92,12 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       useTranslationStore={useTranslationStore}
       useTemplateListStore={useTemplateListStore}
       initialView={initialView}
+      theme={theme}
+      saveInProgress={saveInProgress}
     >
       <UnifiedPipelineStudioNodeContextProvider>
-        <PipelineStudioInternal />
+        {/* TODO: Loading... */}
+        {loadInProgress ? 'Loading...' : <PipelineStudioInternal />}
         <PipelineStudioNodeContextMenu />
       </UnifiedPipelineStudioNodeContextProvider>
     </UnifiedPipelineStudioProvider>

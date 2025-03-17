@@ -36,7 +36,8 @@ const PipelineStudioYamlView = (): JSX.Element => {
     setRightDrawer,
     setAddStepIntention,
     setEditStepIntention,
-    requestYamlModifications
+    requestYamlModifications,
+    theme
   } = useUnifiedPipelineStudioContext()
 
   const [reRenderYamlEditor, setRerenderYamlEditor] = useState(0)
@@ -149,7 +150,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
           }}
           yamlRevision={newYamlRef.current}
           themeConfig={themeConfig}
-          theme={'dark'} // TODO
+          theme={theme}
           schemaConfig={schemaConfig}
           inlineActions={inlineActions}
           // selection={selection} // TODO

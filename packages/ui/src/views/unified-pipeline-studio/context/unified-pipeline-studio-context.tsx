@@ -33,6 +33,11 @@ export type EditStepIntentionType = {
 export interface UnifiedPipelineStudioContextProps {
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
+  onDownloadYaml: (yaml: string) => void
+  onSave: (yaml: string) => void
+  saveInProgress?: boolean
+  isYamlDirty: boolean
+  theme?: 'light' | 'dark' | string
   selectedPath?: string
   onSelectedPathChange: (path: string) => void
   errors: YamlErrorDataType
@@ -68,6 +73,10 @@ export interface UnifiedPipelineStudioContextProps {
 export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioContextProps>({
   yamlRevision: { yaml: '' },
   onYamlRevisionChange: (_yamlRevision: YamlRevision) => undefined,
+  onDownloadYaml: (_yaml: string) => undefined,
+  onSave: (_yaml: string) => undefined,
+  isYamlDirty: false,
+  saveInProgress: false,
   selectedPath: undefined,
   onSelectedPathChange: (_path: string) => undefined,
   errors: { isYamlValid: true, problems: [], problemsCount: { all: 0, error: 0, info: 0, warning: 0 } },
@@ -107,6 +116,11 @@ export function useUnifiedPipelineStudioContext(): UnifiedPipelineStudioContextP
 export interface UnifiedPipelineStudioProviderProps {
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
+  onDownloadYaml: (yaml: string) => void
+  onSave: (yaml: string) => void
+  saveInProgress?: boolean
+  isYamlDirty: boolean
+  theme?: 'light' | 'dark' | string
   selectedPath?: string
   onSelectedPathChange: (path: string) => void
   errors: YamlErrorDataType

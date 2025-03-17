@@ -19,18 +19,23 @@ export enum SecretType {
 }
 
 export interface SecretData {
-  type: string
+  type: 'SecretFile' | 'SecretText' | 'SSHKey' | 'WinRmCredentials'
   name: string
   identifier: string
   orgIdentifier?: string
   projectIdentifier?: string
-  tags: Record<string, string | undefined>
+  tags?: {
+    [key: string]: string
+  }
   description?: string
+  spec: {
+    errorMessageForInvalidYaml?: string
+  }
 }
 
 export interface SecretItem extends BaseEntityProps {
   secret: SecretData
-  createdAt: number
-  updatedAt: number
-  draft: boolean
+  createdAt?: number
+  updatedAt?: number
+  draft?: boolean
 }

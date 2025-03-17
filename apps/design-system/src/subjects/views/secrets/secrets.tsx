@@ -96,7 +96,9 @@ export const SecretsPage = () => {
             secretsData={mockSecretsData.map(secret => ({
               ...secret,
               identifier: secret.secret.identifier,
-              name: secret.secret.name
+              name: secret.secret.name,
+              type: secret.secret.type,
+              spec: secret.secret.spec
             }))}
             parentFolder={parentFolder}
             childFolder={childFolder}

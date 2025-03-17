@@ -78,24 +78,14 @@
     }
   },
   "btn-link": {
-    "size": {
-      "sm": {
-        "$type": "sizing",
-        "$value": "{size.4}"
-      },
-      "default": {
-        "$type": "sizing",
-        "$value": "{size.4}"
-      }
-    },
     "gap": {
       "sm": {
         "$type": "spacing",
-        "$value": "{spacing.2}"
+        "$value": "{spacing.1}"
       },
       "default": {
         "$type": "spacing",
-        "$value": "{spacing.2-half}"
+        "$value": "{spacing.1-half}"
       }
     }
   }

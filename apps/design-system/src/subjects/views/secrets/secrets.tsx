@@ -95,7 +95,7 @@ export const SecretsPage = () => {
           <SecretReference
             secretsData={mockSecretsData.map(secret => ({
               ...secret,
-              id: secret.secret.identifier,
+              identifier: secret.secret.identifier,
               name: secret.secret.name
             }))}
             parentFolder={parentFolder}

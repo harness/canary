@@ -47,7 +47,6 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
           })}
         </>
       ) : null}
-
       {/* folders */}
       {childFolder ? (
         <>
@@ -57,15 +56,14 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
           })}
         </>
       ) : null}
-
-      {/* entities */}
+      {/* entities */}``
       {entities.length > 0 ? (
         <>
           {entities.map(entity => {
-            const isSelected = entity.id === selectedEntity?.id
+            const isSelected = entity.identifier === selectedEntity?.identifier
 
             return (
-              <Fragment key={entity.id}>
+              <Fragment key={entity.identifier}>
                 {renderEntity
                   ? renderEntity({
                       entity,

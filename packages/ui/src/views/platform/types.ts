@@ -5,7 +5,7 @@ export enum DirectionEnum {
 
 // Base properties that all entities must have
 export interface BaseEntityProps {
-  id: string
+  identifier: string
   name: string
 }
 

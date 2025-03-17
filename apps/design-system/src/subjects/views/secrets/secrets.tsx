@@ -93,11 +93,13 @@ export const SecretsPage = () => {
       case SecretType.EXISTING:
         return (
           <SecretReference
-            secretsData={mockSecretsData.map(secret => ({
-              ...secret,
-              id: secret.secret.identifier,
-              name: secret.secret.name
-            }))}
+            secretsData={
+              mockSecretsData.map(secret => ({
+                ...secret,
+                id: secret.secret.identifier,
+                name: secret.secret.name
+              })) as SecretItem[]
+            }
             parentFolder={parentFolder}
             childFolder={childFolder}
             selectedEntity={selectedSecret}

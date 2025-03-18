@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Mon, 17 Mar 2025 12:07:32 GMT
+ * Generated on Tue, 18 Mar 2025 06:44:26 GMT
  * Copyright (c) Harness.
  */
 
@@ -26,7 +26,7 @@ export default {
             },
             $description: "Article main heading.",
           },
-          name: "canary-component-markdown-editor-title-h1",
+          name: "cn-component-markdown-editor-title-h1",
           attributes: {
             category: "component",
             type: "markdown-editor",
@@ -52,7 +52,7 @@ export default {
             },
             $description: "Article section heading.",
           },
-          name: "canary-component-markdown-editor-title-h2",
+          name: "cn-component-markdown-editor-title-h2",
           attributes: {
             category: "component",
             type: "markdown-editor",
@@ -78,7 +78,7 @@ export default {
             },
             $description: "Article subsection heading.",
           },
-          name: "canary-component-markdown-editor-title-h3",
+          name: "cn-component-markdown-editor-title-h3",
           attributes: {
             category: "component",
             type: "markdown-editor",
@@ -106,7 +106,7 @@ export default {
             },
             $description: "Article introduction paragraph.",
           },
-          name: "canary-component-markdown-editor-content-lead",
+          name: "cn-component-markdown-editor-content-lead",
           attributes: {
             category: "component",
             type: "markdown-editor",
@@ -132,7 +132,7 @@ export default {
             },
             $description: "Article paragraph text.",
           },
-          name: "canary-component-markdown-editor-content-paragraph",
+          name: "cn-component-markdown-editor-content-paragraph",
           attributes: {
             category: "component",
             type: "markdown-editor",
@@ -158,7 +158,7 @@ export default {
             },
             $description: "Emphasized paragraph text.",
           },
-          name: "canary-component-markdown-editor-content-emphasized",
+          name: "cn-component-markdown-editor-content-emphasized",
           attributes: {
             category: "component",
             type: "markdown-editor",
@@ -180,7 +180,7 @@ export default {
         $type: "number",
         $value: "1440",
       },
-      name: "canary-breakpoint-viewport",
+      name: "cn-breakpoint-viewport",
       attributes: {
         category: "breakpoint",
         type: "viewport",
@@ -196,7 +196,7 @@ export default {
         $type: "number",
         $value: "1080",
       },
-      name: "canary-breakpoint-viewport-min",
+      name: "cn-breakpoint-viewport-min",
       attributes: {
         category: "breakpoint",
         type: "viewportMin",
@@ -212,7 +212,7 @@ export default {
         $type: "number",
         $value: "1919",
       },
-      name: "canary-breakpoint-viewport-max",
+      name: "cn-breakpoint-viewport-max",
       attributes: {
         category: "breakpoint",
         type: "viewportMax",
@@ -228,7 +228,7 @@ export default {
         $type: "number",
         $value: "{spacing.8}",
       },
-      name: "canary-breakpoint-container",
+      name: "cn-breakpoint-container",
       attributes: {
         category: "breakpoint",
         type: "container",
@@ -255,7 +255,7 @@ export default {
         },
         $description: "Large headlines with extra emphasis.",
       },
-      name: "canary-heading-hero",
+      name: "cn-heading-hero",
       attributes: {
         category: "heading",
         type: "hero",
@@ -280,7 +280,7 @@ export default {
         },
         $description: "Large headlines, hero sections.",
       },
-      name: "canary-heading-section",
+      name: "cn-heading-section",
       attributes: {
         category: "heading",
         type: "section",
@@ -304,7 +304,7 @@ export default {
         },
         $description: "Emphasized section headers.",
       },
-      name: "canary-heading-subsection",
+      name: "cn-heading-subsection",
       attributes: {
         category: "heading",
         type: "subsection",
@@ -328,7 +328,7 @@ export default {
         },
         $description: "Dialog headers.",
       },
-      name: "canary-heading-dialog",
+      name: "cn-heading-dialog",
       attributes: {
         category: "heading",
         type: "dialog",
@@ -352,7 +352,7 @@ export default {
         },
         $description: "Section headers.",
       },
-      name: "canary-heading-base",
+      name: "cn-heading-base",
       attributes: {
         category: "heading",
         type: "base",
@@ -376,7 +376,7 @@ export default {
         },
         $description: "Section headers.",
       },
-      name: "canary-heading-small",
+      name: "cn-heading-small",
       attributes: {
         category: "heading",
         type: "small",
@@ -402,7 +402,7 @@ export default {
         },
         $description: "Primary text style for UI and content.",
       },
-      name: "canary-body-normal",
+      name: "cn-body-normal",
       attributes: {
         category: "body",
         type: "normal",
@@ -426,7 +426,7 @@ export default {
         },
         $description: "Primary text style for UI and content.",
       },
-      name: "canary-body-strong",
+      name: "cn-body-strong",
       attributes: {
         category: "body",
         type: "strong",
@@ -450,7 +450,7 @@ export default {
         },
         $description: "Code blocks and larger code snippets.",
       },
-      name: "canary-body-code",
+      name: "cn-body-code",
       attributes: {
         category: "body",
         type: "code",
@@ -475,7 +475,7 @@ export default {
           },
           $description: "Primary text style for UI and content.",
         },
-        name: "canary-body-none-normal",
+        name: "cn-body-none-normal",
         attributes: {
           category: "body",
           type: "none",
@@ -498,7 +498,7 @@ export default {
             letterSpacing: "{tracking.normal}",
           },
         },
-        name: "canary-body-none-strong",
+        name: "cn-body-none-strong",
         attributes: {
           category: "body",
           type: "none",
@@ -525,7 +525,7 @@ export default {
           },
           $description: "Primary text style for UI and content.",
         },
-        name: "canary-body-tight-normal",
+        name: "cn-body-tight-normal",
         attributes: {
           category: "body",
           type: "tight",
@@ -548,7 +548,7 @@ export default {
             letterSpacing: "{tracking.normal}",
           },
         },
-        name: "canary-body-tight-strong",
+        name: "cn-body-tight-strong",
         attributes: {
           category: "body",
           type: "tight",
@@ -576,7 +576,7 @@ export default {
         },
         $description: "Primary caption style, small but important text.",
       },
-      name: "canary-caption-normal",
+      name: "cn-caption-normal",
       attributes: {
         category: "caption",
         type: "normal",
@@ -600,7 +600,7 @@ export default {
         },
         $description: "Helper text, meta information.",
       },
-      name: "canary-caption-soft",
+      name: "cn-caption-soft",
       attributes: {
         category: "caption",
         type: "soft",
@@ -625,7 +625,7 @@ export default {
           },
           $description: "Primary caption style, small but important text.",
         },
-        name: "canary-caption-none-normal",
+        name: "cn-caption-none-normal",
         attributes: {
           category: "caption",
           type: "none",
@@ -650,7 +650,7 @@ export default {
           },
           $description: "Helper text, meta information.",
         },
-        name: "canary-caption-none-soft",
+        name: "cn-caption-none-soft",
         attributes: {
           category: "caption",
           type: "none",

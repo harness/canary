@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Mon, 17 Mar 2025 12:07:32 GMT
+ * Generated on Tue, 18 Mar 2025 06:44:26 GMT
  * Copyright (c) Harness.
  */
 
@@ -29,7 +29,7 @@ export default {
             },
           },
         },
-        name: "canary-input-size-sm",
+        name: "cn-input-size-sm",
         attributes: {
           category: "input",
           type: "size",
@@ -58,7 +58,7 @@ export default {
             },
           },
         },
-        name: "canary-input-size-default",
+        name: "cn-input-size-default",
         attributes: {
           category: "input",
           type: "size",
@@ -88,7 +88,7 @@ export default {
           },
         },
       },
-      name: "canary-input-radius",
+      name: "cn-input-radius",
       attributes: {
         category: "input",
         type: "radius",
@@ -114,7 +114,7 @@ export default {
           },
         },
       },
-      name: "canary-input-gap",
+      name: "cn-input-gap",
       attributes: {
         category: "input",
         type: "gap",
@@ -142,7 +142,7 @@ export default {
           },
         },
       },
-      name: "canary-input-px",
+      name: "cn-input-px",
       attributes: {
         category: "input",
         type: "px",
@@ -170,7 +170,7 @@ export default {
           },
         },
       },
-      name: "canary-input-py",
+      name: "cn-input-py",
       attributes: {
         category: "input",
         type: "py",
@@ -199,7 +199,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-size-sm",
+        name: "cn-btn-size-sm",
         attributes: {
           category: "btn",
           type: "size",
@@ -226,7 +226,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-size-default",
+        name: "cn-btn-size-default",
         attributes: {
           category: "btn",
           type: "size",
@@ -253,7 +253,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-size-icon",
+        name: "cn-btn-size-icon",
         attributes: {
           category: "btn",
           type: "size",
@@ -280,7 +280,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-size-lg",
+        name: "cn-btn-size-lg",
         attributes: {
           category: "btn",
           type: "size",
@@ -309,7 +309,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-gap-sm",
+        name: "cn-btn-gap-sm",
         attributes: {
           category: "btn",
           type: "gap",
@@ -336,7 +336,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-gap-default",
+        name: "cn-btn-gap-default",
         attributes: {
           category: "btn",
           type: "gap",
@@ -363,7 +363,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-gap-lg",
+        name: "cn-btn-gap-lg",
         attributes: {
           category: "btn",
           type: "gap",
@@ -392,7 +392,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-default-radius",
+        name: "cn-btn-default-radius",
         attributes: {
           category: "btn",
           type: "default",
@@ -421,7 +421,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-rounded-radius",
+        name: "cn-btn-rounded-radius",
         attributes: {
           category: "btn",
           type: "rounded",
@@ -449,7 +449,7 @@ export default {
           },
         },
       },
-      name: "canary-btn-border",
+      name: "cn-btn-border",
       attributes: {
         category: "btn",
         type: "border",
@@ -476,7 +476,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-px-sm",
+        name: "cn-btn-px-sm",
         attributes: {
           category: "btn",
           type: "px",
@@ -503,7 +503,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-px-default",
+        name: "cn-btn-px-default",
         attributes: {
           category: "btn",
           type: "px",
@@ -530,7 +530,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-px-lg",
+        name: "cn-btn-px-lg",
         attributes: {
           category: "btn",
           type: "px",
@@ -559,7 +559,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-py-sm",
+        name: "cn-btn-py-sm",
         attributes: {
           category: "btn",
           type: "py",
@@ -586,7 +586,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-py-default",
+        name: "cn-btn-py-default",
         attributes: {
           category: "btn",
           type: "py",
@@ -613,7 +613,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-py-lg",
+        name: "cn-btn-py-lg",
         attributes: {
           category: "btn",
           type: "py",
@@ -644,7 +644,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-link-size-sm",
+        name: "cn-btn-link-size-sm",
         attributes: {
           category: "btn-link",
           type: "size",
@@ -671,7 +671,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-link-size-default",
+        name: "cn-btn-link-size-default",
         attributes: {
           category: "btn-link",
           type: "size",
@@ -700,7 +700,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-link-gap-sm",
+        name: "cn-btn-link-gap-sm",
         attributes: {
           category: "btn-link",
           type: "gap",
@@ -727,7 +727,7 @@ export default {
             },
           },
         },
-        name: "canary-btn-link-gap-default",
+        name: "cn-btn-link-gap-default",
         attributes: {
           category: "btn-link",
           type: "gap",
@@ -758,7 +758,7 @@ export default {
             },
           },
         },
-        name: "canary-badge-size-sm",
+        name: "cn-badge-size-sm",
         attributes: {
           category: "badge",
           type: "size",
@@ -785,7 +785,7 @@ export default {
             },
           },
         },
-        name: "canary-badge-size-default",
+        name: "cn-badge-size-default",
         attributes: {
           category: "badge",
           type: "size",
@@ -814,7 +814,7 @@ export default {
             },
           },
         },
-        name: "canary-badge-default-gap",
+        name: "cn-badge-default-gap",
         attributes: {
           category: "badge",
           type: "default",
@@ -841,7 +841,7 @@ export default {
             },
           },
         },
-        name: "canary-badge-default-py",
+        name: "cn-badge-default-py",
         attributes: {
           category: "badge",
           type: "default",
@@ -868,7 +868,7 @@ export default {
             },
           },
         },
-        name: "canary-badge-default-px",
+        name: "cn-badge-default-px",
         attributes: {
           category: "badge",
           type: "default",
@@ -895,7 +895,7 @@ export default {
             },
           },
         },
-        name: "canary-badge-default-radius",
+        name: "cn-badge-default-radius",
         attributes: {
           category: "badge",
           type: "default",
@@ -924,7 +924,7 @@ export default {
             },
           },
         },
-        name: "canary-badge-rounded-radius",
+        name: "cn-badge-rounded-radius",
         attributes: {
           category: "badge",
           type: "rounded",
@@ -951,7 +951,7 @@ export default {
             },
           },
         },
-        name: "canary-badge-rounded-px",
+        name: "cn-badge-rounded-px",
         attributes: {
           category: "badge",
           type: "rounded",
@@ -979,7 +979,7 @@ export default {
           },
         },
       },
-      name: "canary-badge-border",
+      name: "cn-badge-border",
       attributes: {
         category: "badge",
         type: "border",
@@ -1007,7 +1007,7 @@ export default {
           },
         },
       },
-      name: "canary-tag-size",
+      name: "cn-tag-size",
       attributes: {
         category: "tag",
         type: "size",
@@ -1033,7 +1033,7 @@ export default {
           },
         },
       },
-      name: "canary-tag-gap",
+      name: "cn-tag-gap",
       attributes: {
         category: "tag",
         type: "gap",
@@ -1059,7 +1059,7 @@ export default {
           },
         },
       },
-      name: "canary-tag-py",
+      name: "cn-tag-py",
       attributes: {
         category: "tag",
         type: "py",
@@ -1085,7 +1085,7 @@ export default {
           },
         },
       },
-      name: "canary-tag-px",
+      name: "cn-tag-px",
       attributes: {
         category: "tag",
         type: "px",
@@ -1112,7 +1112,7 @@ export default {
             },
           },
         },
-        name: "canary-tag-default-radius",
+        name: "cn-tag-default-radius",
         attributes: {
           category: "tag",
           type: "default",
@@ -1143,7 +1143,7 @@ export default {
                 },
               },
             },
-            name: "canary-tag-split-right-radius-r",
+            name: "cn-tag-split-right-radius-r",
             attributes: {
               category: "tag",
               type: "split",
@@ -1172,7 +1172,7 @@ export default {
                 },
               },
             },
-            name: "canary-tag-split-right-radius-l",
+            name: "cn-tag-split-right-radius-l",
             attributes: {
               category: "tag",
               type: "split",
@@ -1205,7 +1205,7 @@ export default {
                 },
               },
             },
-            name: "canary-tag-split-left-radius-r",
+            name: "cn-tag-split-left-radius-r",
             attributes: {
               category: "tag",
               type: "split",
@@ -1234,7 +1234,7 @@ export default {
                 },
               },
             },
-            name: "canary-tag-split-left-radius-l",
+            name: "cn-tag-split-left-radius-l",
             attributes: {
               category: "tag",
               type: "split",
@@ -1266,7 +1266,7 @@ export default {
           },
         },
       },
-      name: "canary-tag-border",
+      name: "cn-tag-border",
       attributes: {
         category: "tag",
         type: "border",
@@ -1297,7 +1297,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-item-px",
+        name: "cn-dropdown-item-px",
         attributes: {
           category: "dropdown",
           type: "item",
@@ -1326,7 +1326,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-item-gap",
+        name: "cn-dropdown-item-gap",
         attributes: {
           category: "dropdown",
           type: "item",
@@ -1353,7 +1353,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-item-radius",
+        name: "cn-dropdown-item-radius",
         attributes: {
           category: "dropdown",
           type: "item",
@@ -1384,7 +1384,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-sub-item-px",
+        name: "cn-dropdown-sub-item-px",
         attributes: {
           category: "dropdown",
           type: "sub-item",
@@ -1413,7 +1413,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-sub-item-py",
+        name: "cn-dropdown-sub-item-py",
         attributes: {
           category: "dropdown",
           type: "sub-item",
@@ -1440,7 +1440,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-sub-item-gap",
+        name: "cn-dropdown-sub-item-gap",
         attributes: {
           category: "dropdown",
           type: "sub-item",
@@ -1467,7 +1467,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-sub-item-radius",
+        name: "cn-dropdown-sub-item-radius",
         attributes: {
           category: "dropdown",
           type: "sub-item",
@@ -1494,7 +1494,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-sub-item-size",
+        name: "cn-dropdown-sub-item-size",
         attributes: {
           category: "dropdown",
           type: "sub-item",
@@ -1523,7 +1523,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-sub-item-gap-y",
+        name: "cn-dropdown-sub-item-gap-y",
         attributes: {
           category: "dropdown",
           type: "sub-item",
@@ -1554,7 +1554,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-container-py",
+        name: "cn-dropdown-container-py",
         attributes: {
           category: "dropdown",
           type: "container",
@@ -1583,7 +1583,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-container-radius",
+        name: "cn-dropdown-container-radius",
         attributes: {
           category: "dropdown",
           type: "container",
@@ -1610,7 +1610,7 @@ export default {
             },
           },
         },
-        name: "canary-dropdown-container-min-w",
+        name: "cn-dropdown-container-min-w",
         attributes: {
           category: "dropdown",
           type: "container",
@@ -1642,7 +1642,7 @@ export default {
               },
             },
           },
-          name: "canary-dropdown-menu-item-branch-selector-tag-px",
+          name: "cn-dropdown-menu-item-branch-selector-tag-px",
           attributes: {
             category: "dropdown",
             type: "menu-item-branch-selector",
@@ -1672,7 +1672,7 @@ export default {
               },
             },
           },
-          name: "canary-dropdown-menu-item-branch-selector-tag-size",
+          name: "cn-dropdown-menu-item-branch-selector-tag-size",
           attributes: {
             category: "dropdown",
             type: "menu-item-branch-selector",
@@ -1706,7 +1706,7 @@ export default {
               },
             },
           },
-          name: "canary-dropdown-menu-items-header-footer-px",
+          name: "cn-dropdown-menu-items-header-footer-px",
           attributes: {
             category: "dropdown",
             type: "menu-items",
@@ -1736,7 +1736,7 @@ export default {
               },
             },
           },
-          name: "canary-dropdown-menu-items-header-footer-py",
+          name: "cn-dropdown-menu-items-header-footer-py",
           attributes: {
             category: "dropdown",
             type: "menu-items",

@@ -11,8 +11,8 @@
   "scripts": {
     "build:styles": "rm -rf src/styles/design-system && node export-tokens/build.js",
     "build:styles:esm": "rm -rf src/styles/design-system && node export-tokens-js/build.js",
-    "build": " pnpm clean && npm run build:styles && npm run build:styles:esm",
-    "build:uni": " pnpm clean && node export-tokens-uni/build.js",
+    "build": " pnpm clean && pnpm build:uni",
+    "build:uni": "node scripts/build.js",
     "clean": "rimraf ./src/styles && rimraf ./src/styles-esm"
   },
   "keywords": [

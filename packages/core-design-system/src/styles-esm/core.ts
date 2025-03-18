@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Mon, 17 Mar 2025 12:07:32 GMT
+ * Generated on Tue, 18 Mar 2025 06:44:26 GMT
  * Copyright (c) Harness.
  */
 
@@ -28,7 +28,7 @@ export default {
           },
         },
       },
-      name: "canary-tracking-tighter",
+      name: "cn-tracking-tighter",
       attributes: {
         category: "tracking",
         type: "tighter",
@@ -56,7 +56,7 @@ export default {
           },
         },
       },
-      name: "canary-tracking-tight",
+      name: "cn-tracking-tight",
       attributes: {
         category: "tracking",
         type: "tight",
@@ -84,7 +84,7 @@ export default {
           },
         },
       },
-      name: "canary-tracking-normal",
+      name: "cn-tracking-normal",
       attributes: {
         category: "tracking",
         type: "normal",
@@ -112,7 +112,7 @@ export default {
           },
         },
       },
-      name: "canary-tracking-wide",
+      name: "cn-tracking-wide",
       attributes: {
         category: "tracking",
         type: "wide",
@@ -140,7 +140,7 @@ export default {
           },
         },
       },
-      name: "canary-tracking-wider",
+      name: "cn-tracking-wider",
       attributes: {
         category: "tracking",
         type: "wider",
@@ -168,7 +168,7 @@ export default {
           },
         },
       },
-      name: "canary-tracking-widest",
+      name: "cn-tracking-widest",
       attributes: {
         category: "tracking",
         type: "widest",
@@ -198,7 +198,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-default-normal-100",
+          name: "cn-font-weight-default-normal-100",
           attributes: {
             category: "fontWeight",
             type: "default",
@@ -226,7 +226,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-default-normal-200",
+          name: "cn-font-weight-default-normal-200",
           attributes: {
             category: "fontWeight",
             type: "default",
@@ -254,7 +254,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-default-normal-300",
+          name: "cn-font-weight-default-normal-300",
           attributes: {
             category: "fontWeight",
             type: "default",
@@ -282,7 +282,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-default-normal-400",
+          name: "cn-font-weight-default-normal-400",
           attributes: {
             category: "fontWeight",
             type: "default",
@@ -310,7 +310,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-default-normal-500",
+          name: "cn-font-weight-default-normal-500",
           attributes: {
             category: "fontWeight",
             type: "default",
@@ -338,7 +338,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-default-normal-600",
+          name: "cn-font-weight-default-normal-600",
           attributes: {
             category: "fontWeight",
             type: "default",
@@ -366,7 +366,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-default-normal-700",
+          name: "cn-font-weight-default-normal-700",
           attributes: {
             category: "fontWeight",
             type: "default",
@@ -394,7 +394,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-default-normal-800",
+          name: "cn-font-weight-default-normal-800",
           attributes: {
             category: "fontWeight",
             type: "default",
@@ -422,7 +422,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-default-normal-900",
+          name: "cn-font-weight-default-normal-900",
           attributes: {
             category: "fontWeight",
             type: "default",
@@ -453,7 +453,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-100-weight",
+            name: "cn-font-weight-default-italic-100-weight",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -482,7 +482,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-100-style",
+            name: "cn-font-weight-default-italic-100-style",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -513,7 +513,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-200-weight",
+            name: "cn-font-weight-default-italic-200-weight",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -542,7 +542,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-200-style",
+            name: "cn-font-weight-default-italic-200-style",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -573,7 +573,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-300-weight",
+            name: "cn-font-weight-default-italic-300-weight",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -602,7 +602,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-300-style",
+            name: "cn-font-weight-default-italic-300-style",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -633,7 +633,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-400-weight",
+            name: "cn-font-weight-default-italic-400-weight",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -662,7 +662,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-400-style",
+            name: "cn-font-weight-default-italic-400-style",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -693,7 +693,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-500-weight",
+            name: "cn-font-weight-default-italic-500-weight",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -722,7 +722,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-500-style",
+            name: "cn-font-weight-default-italic-500-style",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -753,7 +753,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-600-weight",
+            name: "cn-font-weight-default-italic-600-weight",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -782,7 +782,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-600-style",
+            name: "cn-font-weight-default-italic-600-style",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -813,7 +813,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-700-weight",
+            name: "cn-font-weight-default-italic-700-weight",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -842,7 +842,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-700-style",
+            name: "cn-font-weight-default-italic-700-style",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -873,7 +873,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-800-weight",
+            name: "cn-font-weight-default-italic-800-weight",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -902,7 +902,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-800-style",
+            name: "cn-font-weight-default-italic-800-style",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -933,7 +933,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-900-weight",
+            name: "cn-font-weight-default-italic-900-weight",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -962,7 +962,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-default-italic-900-style",
+            name: "cn-font-weight-default-italic-900-style",
             attributes: {
               category: "fontWeight",
               type: "default",
@@ -996,7 +996,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-mono-normal-100",
+          name: "cn-font-weight-mono-normal-100",
           attributes: {
             category: "fontWeight",
             type: "mono",
@@ -1024,7 +1024,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-mono-normal-200",
+          name: "cn-font-weight-mono-normal-200",
           attributes: {
             category: "fontWeight",
             type: "mono",
@@ -1052,7 +1052,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-mono-normal-300",
+          name: "cn-font-weight-mono-normal-300",
           attributes: {
             category: "fontWeight",
             type: "mono",
@@ -1080,7 +1080,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-mono-normal-400",
+          name: "cn-font-weight-mono-normal-400",
           attributes: {
             category: "fontWeight",
             type: "mono",
@@ -1108,7 +1108,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-mono-normal-500",
+          name: "cn-font-weight-mono-normal-500",
           attributes: {
             category: "fontWeight",
             type: "mono",
@@ -1136,7 +1136,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-mono-normal-700",
+          name: "cn-font-weight-mono-normal-700",
           attributes: {
             category: "fontWeight",
             type: "mono",
@@ -1164,7 +1164,7 @@ export default {
               },
             },
           },
-          name: "canary-font-weight-mono-normal-800",
+          name: "cn-font-weight-mono-normal-800",
           attributes: {
             category: "fontWeight",
             type: "mono",
@@ -1195,7 +1195,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-100-weight",
+            name: "cn-font-weight-mono-italic-100-weight",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1224,7 +1224,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-100-style",
+            name: "cn-font-weight-mono-italic-100-style",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1255,7 +1255,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-200-weight",
+            name: "cn-font-weight-mono-italic-200-weight",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1284,7 +1284,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-200-style",
+            name: "cn-font-weight-mono-italic-200-style",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1315,7 +1315,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-300-weight",
+            name: "cn-font-weight-mono-italic-300-weight",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1344,7 +1344,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-300-style",
+            name: "cn-font-weight-mono-italic-300-style",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1375,7 +1375,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-400-weight",
+            name: "cn-font-weight-mono-italic-400-weight",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1404,7 +1404,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-400-style",
+            name: "cn-font-weight-mono-italic-400-style",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1435,7 +1435,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-500-weight",
+            name: "cn-font-weight-mono-italic-500-weight",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1464,7 +1464,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-500-style",
+            name: "cn-font-weight-mono-italic-500-style",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1495,7 +1495,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-700-weight",
+            name: "cn-font-weight-mono-italic-700-weight",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1524,7 +1524,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-700-style",
+            name: "cn-font-weight-mono-italic-700-style",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1555,7 +1555,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-800-weight",
+            name: "cn-font-weight-mono-italic-800-weight",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1584,7 +1584,7 @@ export default {
                 },
               },
             },
-            name: "canary-font-weight-mono-italic-800-style",
+            name: "cn-font-weight-mono-italic-800-style",
             attributes: {
               category: "fontWeight",
               type: "mono",
@@ -1618,7 +1618,7 @@ export default {
           },
         },
       },
-      name: "canary-font-family-default",
+      name: "cn-font-family-default",
       attributes: {
         category: "fontFamily",
         type: "default",
@@ -1644,7 +1644,7 @@ export default {
           },
         },
       },
-      name: "canary-font-family-mono",
+      name: "cn-font-family-mono",
       attributes: {
         category: "fontFamily",
         type: "mono",
@@ -1662,7 +1662,7 @@ export default {
         $type: "textDecoration",
         $value: "none",
       },
-      name: "canary-text-decoration-none",
+      name: "cn-text-decoration-none",
       attributes: {
         category: "textDecoration",
         type: "none",
@@ -1678,7 +1678,7 @@ export default {
         $type: "textDecoration",
         $value: "underline",
       },
-      name: "canary-text-decoration-underline",
+      name: "cn-text-decoration-underline",
       attributes: {
         category: "textDecoration",
         type: "underline",
@@ -1694,7 +1694,7 @@ export default {
         $type: "textDecoration",
         $value: "line-through",
       },
-      name: "canary-text-decoration-line-through",
+      name: "cn-text-decoration-line-through",
       attributes: {
         category: "textDecoration",
         type: "line-through",
@@ -1712,7 +1712,7 @@ export default {
         $type: "textCase",
         $value: "none",
       },
-      name: "canary-text-case-none",
+      name: "cn-text-case-none",
       attributes: {
         category: "textCase",
         type: "none",
@@ -1728,7 +1728,7 @@ export default {
         $type: "textCase",
         $value: "uppercase",
       },
-      name: "canary-text-case-uppercase",
+      name: "cn-text-case-uppercase",
       attributes: {
         category: "textCase",
         type: "uppercase",
@@ -1744,7 +1744,7 @@ export default {
         $type: "textCase",
         $value: "lowercase",
       },
-      name: "canary-text-case-lowercase",
+      name: "cn-text-case-lowercase",
       attributes: {
         category: "textCase",
         type: "lowercase",
@@ -1760,7 +1760,7 @@ export default {
         $type: "textCase",
         $value: "capitalize",
       },
-      name: "canary-text-case-capitalize",
+      name: "cn-text-case-capitalize",
       attributes: {
         category: "textCase",
         type: "capitalize",
@@ -1790,7 +1790,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-1",
+      name: "cn-font-size-1",
       attributes: {
         category: "fontSize",
         type: "1",
@@ -1818,7 +1818,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-2",
+      name: "cn-font-size-2",
       attributes: {
         category: "fontSize",
         type: "2",
@@ -1846,7 +1846,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-3",
+      name: "cn-font-size-3",
       attributes: {
         category: "fontSize",
         type: "3",
@@ -1874,7 +1874,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-4",
+      name: "cn-font-size-4",
       attributes: {
         category: "fontSize",
         type: "4",
@@ -1902,7 +1902,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-5",
+      name: "cn-font-size-5",
       attributes: {
         category: "fontSize",
         type: "5",
@@ -1930,7 +1930,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-6",
+      name: "cn-font-size-6",
       attributes: {
         category: "fontSize",
         type: "6",
@@ -1958,7 +1958,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-7",
+      name: "cn-font-size-7",
       attributes: {
         category: "fontSize",
         type: "7",
@@ -1986,7 +1986,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-8",
+      name: "cn-font-size-8",
       attributes: {
         category: "fontSize",
         type: "8",
@@ -2014,7 +2014,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-9",
+      name: "cn-font-size-9",
       attributes: {
         category: "fontSize",
         type: "9",
@@ -2042,7 +2042,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-10",
+      name: "cn-font-size-10",
       attributes: {
         category: "fontSize",
         type: "10",
@@ -2070,7 +2070,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-11",
+      name: "cn-font-size-11",
       attributes: {
         category: "fontSize",
         type: "11",
@@ -2098,7 +2098,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-12",
+      name: "cn-font-size-12",
       attributes: {
         category: "fontSize",
         type: "12",
@@ -2126,7 +2126,7 @@ export default {
           },
         },
       },
-      name: "canary-font-size-13",
+      name: "cn-font-size-13",
       attributes: {
         category: "fontSize",
         type: "13",
@@ -2155,7 +2155,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-1-none",
+        name: "cn-line-height-1-none",
         attributes: {
           category: "lineHeight",
           type: "1",
@@ -2182,7 +2182,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-1-tight",
+        name: "cn-line-height-1-tight",
         attributes: {
           category: "lineHeight",
           type: "1",
@@ -2209,7 +2209,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-1-snug",
+        name: "cn-line-height-1-snug",
         attributes: {
           category: "lineHeight",
           type: "1",
@@ -2236,7 +2236,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-1-normal",
+        name: "cn-line-height-1-normal",
         attributes: {
           category: "lineHeight",
           type: "1",
@@ -2263,7 +2263,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-1-relaxed",
+        name: "cn-line-height-1-relaxed",
         attributes: {
           category: "lineHeight",
           type: "1",
@@ -2290,7 +2290,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-1-loose",
+        name: "cn-line-height-1-loose",
         attributes: {
           category: "lineHeight",
           type: "1",
@@ -2319,7 +2319,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-2-none",
+        name: "cn-line-height-2-none",
         attributes: {
           category: "lineHeight",
           type: "2",
@@ -2346,7 +2346,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-2-tight",
+        name: "cn-line-height-2-tight",
         attributes: {
           category: "lineHeight",
           type: "2",
@@ -2373,7 +2373,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-2-snug",
+        name: "cn-line-height-2-snug",
         attributes: {
           category: "lineHeight",
           type: "2",
@@ -2400,7 +2400,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-2-normal",
+        name: "cn-line-height-2-normal",
         attributes: {
           category: "lineHeight",
           type: "2",
@@ -2427,7 +2427,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-2-relaxed",
+        name: "cn-line-height-2-relaxed",
         attributes: {
           category: "lineHeight",
           type: "2",
@@ -2454,7 +2454,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-2-loose",
+        name: "cn-line-height-2-loose",
         attributes: {
           category: "lineHeight",
           type: "2",
@@ -2483,7 +2483,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-3-none",
+        name: "cn-line-height-3-none",
         attributes: {
           category: "lineHeight",
           type: "3",
@@ -2510,7 +2510,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-3-tight",
+        name: "cn-line-height-3-tight",
         attributes: {
           category: "lineHeight",
           type: "3",
@@ -2537,7 +2537,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-3-snug",
+        name: "cn-line-height-3-snug",
         attributes: {
           category: "lineHeight",
           type: "3",
@@ -2564,7 +2564,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-3-normal",
+        name: "cn-line-height-3-normal",
         attributes: {
           category: "lineHeight",
           type: "3",
@@ -2591,7 +2591,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-3-relaxed",
+        name: "cn-line-height-3-relaxed",
         attributes: {
           category: "lineHeight",
           type: "3",
@@ -2618,7 +2618,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-3-loose",
+        name: "cn-line-height-3-loose",
         attributes: {
           category: "lineHeight",
           type: "3",
@@ -2647,7 +2647,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-4-none",
+        name: "cn-line-height-4-none",
         attributes: {
           category: "lineHeight",
           type: "4",
@@ -2674,7 +2674,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-4-tight",
+        name: "cn-line-height-4-tight",
         attributes: {
           category: "lineHeight",
           type: "4",
@@ -2701,7 +2701,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-4-snug",
+        name: "cn-line-height-4-snug",
         attributes: {
           category: "lineHeight",
           type: "4",
@@ -2728,7 +2728,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-4-normal",
+        name: "cn-line-height-4-normal",
         attributes: {
           category: "lineHeight",
           type: "4",
@@ -2755,7 +2755,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-4-relaxed",
+        name: "cn-line-height-4-relaxed",
         attributes: {
           category: "lineHeight",
           type: "4",
@@ -2782,7 +2782,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-4-loose",
+        name: "cn-line-height-4-loose",
         attributes: {
           category: "lineHeight",
           type: "4",
@@ -2811,7 +2811,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-5-none",
+        name: "cn-line-height-5-none",
         attributes: {
           category: "lineHeight",
           type: "5",
@@ -2838,7 +2838,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-5-tight",
+        name: "cn-line-height-5-tight",
         attributes: {
           category: "lineHeight",
           type: "5",
@@ -2865,7 +2865,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-5-snug",
+        name: "cn-line-height-5-snug",
         attributes: {
           category: "lineHeight",
           type: "5",
@@ -2892,7 +2892,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-5-normal",
+        name: "cn-line-height-5-normal",
         attributes: {
           category: "lineHeight",
           type: "5",
@@ -2919,7 +2919,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-5-relaxed",
+        name: "cn-line-height-5-relaxed",
         attributes: {
           category: "lineHeight",
           type: "5",
@@ -2946,7 +2946,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-5-loose",
+        name: "cn-line-height-5-loose",
         attributes: {
           category: "lineHeight",
           type: "5",
@@ -2975,7 +2975,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-6-none",
+        name: "cn-line-height-6-none",
         attributes: {
           category: "lineHeight",
           type: "6",
@@ -3002,7 +3002,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-6-tight",
+        name: "cn-line-height-6-tight",
         attributes: {
           category: "lineHeight",
           type: "6",
@@ -3029,7 +3029,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-6-snug",
+        name: "cn-line-height-6-snug",
         attributes: {
           category: "lineHeight",
           type: "6",
@@ -3056,7 +3056,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-6-normal",
+        name: "cn-line-height-6-normal",
         attributes: {
           category: "lineHeight",
           type: "6",
@@ -3083,7 +3083,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-6-relaxed",
+        name: "cn-line-height-6-relaxed",
         attributes: {
           category: "lineHeight",
           type: "6",
@@ -3110,7 +3110,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-6-loose",
+        name: "cn-line-height-6-loose",
         attributes: {
           category: "lineHeight",
           type: "6",
@@ -3139,7 +3139,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-7-none",
+        name: "cn-line-height-7-none",
         attributes: {
           category: "lineHeight",
           type: "7",
@@ -3166,7 +3166,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-7-tight",
+        name: "cn-line-height-7-tight",
         attributes: {
           category: "lineHeight",
           type: "7",
@@ -3193,7 +3193,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-7-snug",
+        name: "cn-line-height-7-snug",
         attributes: {
           category: "lineHeight",
           type: "7",
@@ -3220,7 +3220,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-7-normal",
+        name: "cn-line-height-7-normal",
         attributes: {
           category: "lineHeight",
           type: "7",
@@ -3247,7 +3247,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-7-relaxed",
+        name: "cn-line-height-7-relaxed",
         attributes: {
           category: "lineHeight",
           type: "7",
@@ -3274,7 +3274,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-7-loose",
+        name: "cn-line-height-7-loose",
         attributes: {
           category: "lineHeight",
           type: "7",
@@ -3303,7 +3303,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-8-none",
+        name: "cn-line-height-8-none",
         attributes: {
           category: "lineHeight",
           type: "8",
@@ -3330,7 +3330,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-8-tight",
+        name: "cn-line-height-8-tight",
         attributes: {
           category: "lineHeight",
           type: "8",
@@ -3357,7 +3357,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-8-snug",
+        name: "cn-line-height-8-snug",
         attributes: {
           category: "lineHeight",
           type: "8",
@@ -3384,7 +3384,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-8-normal",
+        name: "cn-line-height-8-normal",
         attributes: {
           category: "lineHeight",
           type: "8",
@@ -3411,7 +3411,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-8-relaxed",
+        name: "cn-line-height-8-relaxed",
         attributes: {
           category: "lineHeight",
           type: "8",
@@ -3438,7 +3438,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-8-loose",
+        name: "cn-line-height-8-loose",
         attributes: {
           category: "lineHeight",
           type: "8",
@@ -3467,7 +3467,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-9-none",
+        name: "cn-line-height-9-none",
         attributes: {
           category: "lineHeight",
           type: "9",
@@ -3494,7 +3494,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-9-tight",
+        name: "cn-line-height-9-tight",
         attributes: {
           category: "lineHeight",
           type: "9",
@@ -3521,7 +3521,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-9-snug",
+        name: "cn-line-height-9-snug",
         attributes: {
           category: "lineHeight",
           type: "9",
@@ -3548,7 +3548,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-9-normal",
+        name: "cn-line-height-9-normal",
         attributes: {
           category: "lineHeight",
           type: "9",
@@ -3575,7 +3575,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-9-relaxed",
+        name: "cn-line-height-9-relaxed",
         attributes: {
           category: "lineHeight",
           type: "9",
@@ -3602,7 +3602,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-9-loose",
+        name: "cn-line-height-9-loose",
         attributes: {
           category: "lineHeight",
           type: "9",
@@ -3631,7 +3631,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-10-none",
+        name: "cn-line-height-10-none",
         attributes: {
           category: "lineHeight",
           type: "10",
@@ -3658,7 +3658,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-10-tight",
+        name: "cn-line-height-10-tight",
         attributes: {
           category: "lineHeight",
           type: "10",
@@ -3685,7 +3685,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-10-snug",
+        name: "cn-line-height-10-snug",
         attributes: {
           category: "lineHeight",
           type: "10",
@@ -3712,7 +3712,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-10-normal",
+        name: "cn-line-height-10-normal",
         attributes: {
           category: "lineHeight",
           type: "10",
@@ -3739,7 +3739,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-10-relaxed",
+        name: "cn-line-height-10-relaxed",
         attributes: {
           category: "lineHeight",
           type: "10",
@@ -3766,7 +3766,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-10-loose",
+        name: "cn-line-height-10-loose",
         attributes: {
           category: "lineHeight",
           type: "10",
@@ -3795,7 +3795,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-11-none",
+        name: "cn-line-height-11-none",
         attributes: {
           category: "lineHeight",
           type: "11",
@@ -3822,7 +3822,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-11-tight",
+        name: "cn-line-height-11-tight",
         attributes: {
           category: "lineHeight",
           type: "11",
@@ -3849,7 +3849,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-11-snug",
+        name: "cn-line-height-11-snug",
         attributes: {
           category: "lineHeight",
           type: "11",
@@ -3876,7 +3876,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-11-normal",
+        name: "cn-line-height-11-normal",
         attributes: {
           category: "lineHeight",
           type: "11",
@@ -3903,7 +3903,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-11-relaxed",
+        name: "cn-line-height-11-relaxed",
         attributes: {
           category: "lineHeight",
           type: "11",
@@ -3930,7 +3930,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-11-loose",
+        name: "cn-line-height-11-loose",
         attributes: {
           category: "lineHeight",
           type: "11",
@@ -3959,7 +3959,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-12-none",
+        name: "cn-line-height-12-none",
         attributes: {
           category: "lineHeight",
           type: "12",
@@ -3986,7 +3986,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-12-tight",
+        name: "cn-line-height-12-tight",
         attributes: {
           category: "lineHeight",
           type: "12",
@@ -4013,7 +4013,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-12-snug",
+        name: "cn-line-height-12-snug",
         attributes: {
           category: "lineHeight",
           type: "12",
@@ -4040,7 +4040,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-12-normal",
+        name: "cn-line-height-12-normal",
         attributes: {
           category: "lineHeight",
           type: "12",
@@ -4067,7 +4067,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-12-relaxed",
+        name: "cn-line-height-12-relaxed",
         attributes: {
           category: "lineHeight",
           type: "12",
@@ -4094,7 +4094,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-12-loose",
+        name: "cn-line-height-12-loose",
         attributes: {
           category: "lineHeight",
           type: "12",
@@ -4123,7 +4123,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-13-none",
+        name: "cn-line-height-13-none",
         attributes: {
           category: "lineHeight",
           type: "13",
@@ -4150,7 +4150,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-13-tight",
+        name: "cn-line-height-13-tight",
         attributes: {
           category: "lineHeight",
           type: "13",
@@ -4177,7 +4177,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-13-snug",
+        name: "cn-line-height-13-snug",
         attributes: {
           category: "lineHeight",
           type: "13",
@@ -4204,7 +4204,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-13-normal",
+        name: "cn-line-height-13-normal",
         attributes: {
           category: "lineHeight",
           type: "13",
@@ -4231,7 +4231,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-13-relaxed",
+        name: "cn-line-height-13-relaxed",
         attributes: {
           category: "lineHeight",
           type: "13",
@@ -4258,7 +4258,7 @@ export default {
             },
           },
         },
-        name: "canary-line-height-13-loose",
+        name: "cn-line-height-13-loose",
         attributes: {
           category: "lineHeight",
           type: "13",
@@ -4286,7 +4286,7 @@ export default {
           },
         },
       },
-      name: "canary-line-height-none",
+      name: "cn-line-height-none",
       attributes: {
         category: "lineHeight",
         type: "none",
@@ -4312,7 +4312,7 @@ export default {
           },
         },
       },
-      name: "canary-line-height-tight",
+      name: "cn-line-height-tight",
       attributes: {
         category: "lineHeight",
         type: "tight",
@@ -4338,7 +4338,7 @@ export default {
           },
         },
       },
-      name: "canary-line-height-snug",
+      name: "cn-line-height-snug",
       attributes: {
         category: "lineHeight",
         type: "snug",
@@ -4364,7 +4364,7 @@ export default {
           },
         },
       },
-      name: "canary-line-height-normal",
+      name: "cn-line-height-normal",
       attributes: {
         category: "lineHeight",
         type: "normal",
@@ -4390,7 +4390,7 @@ export default {
           },
         },
       },
-      name: "canary-line-height-relaxed",
+      name: "cn-line-height-relaxed",
       attributes: {
         category: "lineHeight",
         type: "relaxed",
@@ -4416,7 +4416,7 @@ export default {
           },
         },
       },
-      name: "canary-line-height-loose",
+      name: "cn-line-height-loose",
       attributes: {
         category: "lineHeight",
         type: "loose",
@@ -4444,7 +4444,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-0",
+      name: "cn-spacing-0",
       attributes: {
         category: "spacing",
         type: "0",
@@ -4470,7 +4470,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-1",
+      name: "cn-spacing-1",
       attributes: {
         category: "spacing",
         type: "1",
@@ -4496,7 +4496,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-2",
+      name: "cn-spacing-2",
       attributes: {
         category: "spacing",
         type: "2",
@@ -4522,7 +4522,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-3",
+      name: "cn-spacing-3",
       attributes: {
         category: "spacing",
         type: "3",
@@ -4548,7 +4548,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-4",
+      name: "cn-spacing-4",
       attributes: {
         category: "spacing",
         type: "4",
@@ -4574,7 +4574,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-5",
+      name: "cn-spacing-5",
       attributes: {
         category: "spacing",
         type: "5",
@@ -4600,7 +4600,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-6",
+      name: "cn-spacing-6",
       attributes: {
         category: "spacing",
         type: "6",
@@ -4626,7 +4626,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-7",
+      name: "cn-spacing-7",
       attributes: {
         category: "spacing",
         type: "7",
@@ -4652,7 +4652,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-8",
+      name: "cn-spacing-8",
       attributes: {
         category: "spacing",
         type: "8",
@@ -4678,7 +4678,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-9",
+      name: "cn-spacing-9",
       attributes: {
         category: "spacing",
         type: "9",
@@ -4704,7 +4704,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-10",
+      name: "cn-spacing-10",
       attributes: {
         category: "spacing",
         type: "10",
@@ -4730,7 +4730,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-11",
+      name: "cn-spacing-11",
       attributes: {
         category: "spacing",
         type: "11",
@@ -4756,7 +4756,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-12",
+      name: "cn-spacing-12",
       attributes: {
         category: "spacing",
         type: "12",
@@ -4782,7 +4782,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-14",
+      name: "cn-spacing-14",
       attributes: {
         category: "spacing",
         type: "14",
@@ -4808,7 +4808,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-16",
+      name: "cn-spacing-16",
       attributes: {
         category: "spacing",
         type: "16",
@@ -4834,7 +4834,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-20",
+      name: "cn-spacing-20",
       attributes: {
         category: "spacing",
         type: "20",
@@ -4860,7 +4860,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-24",
+      name: "cn-spacing-24",
       attributes: {
         category: "spacing",
         type: "24",
@@ -4886,7 +4886,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-28",
+      name: "cn-spacing-28",
       attributes: {
         category: "spacing",
         type: "28",
@@ -4912,7 +4912,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-32",
+      name: "cn-spacing-32",
       attributes: {
         category: "spacing",
         type: "32",
@@ -4938,7 +4938,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-36",
+      name: "cn-spacing-36",
       attributes: {
         category: "spacing",
         type: "36",
@@ -4964,7 +4964,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-40",
+      name: "cn-spacing-40",
       attributes: {
         category: "spacing",
         type: "40",
@@ -4990,7 +4990,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-44",
+      name: "cn-spacing-44",
       attributes: {
         category: "spacing",
         type: "44",
@@ -5016,7 +5016,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-48",
+      name: "cn-spacing-48",
       attributes: {
         category: "spacing",
         type: "48",
@@ -5042,7 +5042,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-52",
+      name: "cn-spacing-52",
       attributes: {
         category: "spacing",
         type: "52",
@@ -5068,7 +5068,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-56",
+      name: "cn-spacing-56",
       attributes: {
         category: "spacing",
         type: "56",
@@ -5094,7 +5094,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-60",
+      name: "cn-spacing-60",
       attributes: {
         category: "spacing",
         type: "60",
@@ -5120,7 +5120,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-64",
+      name: "cn-spacing-64",
       attributes: {
         category: "spacing",
         type: "64",
@@ -5146,7 +5146,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-72",
+      name: "cn-spacing-72",
       attributes: {
         category: "spacing",
         type: "72",
@@ -5172,7 +5172,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-80",
+      name: "cn-spacing-80",
       attributes: {
         category: "spacing",
         type: "80",
@@ -5198,7 +5198,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-96",
+      name: "cn-spacing-96",
       attributes: {
         category: "spacing",
         type: "96",
@@ -5224,7 +5224,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-px",
+      name: "cn-spacing-px",
       attributes: {
         category: "spacing",
         type: "px",
@@ -5252,7 +5252,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-half",
+      name: "cn-spacing-half",
       attributes: {
         category: "spacing",
         type: "half",
@@ -5280,7 +5280,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-1-half",
+      name: "cn-spacing-1-half",
       attributes: {
         category: "spacing",
         type: "1-half",
@@ -5308,7 +5308,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-2-half",
+      name: "cn-spacing-2-half",
       attributes: {
         category: "spacing",
         type: "2-half",
@@ -5336,7 +5336,7 @@ export default {
           },
         },
       },
-      name: "canary-spacing-3-half",
+      name: "cn-spacing-3-half",
       attributes: {
         category: "spacing",
         type: "3-half",
@@ -5364,7 +5364,7 @@ export default {
           },
         },
       },
-      name: "canary-rounded-1",
+      name: "cn-rounded-1",
       attributes: {
         category: "rounded",
         type: "1",
@@ -5390,7 +5390,7 @@ export default {
           },
         },
       },
-      name: "canary-rounded-2",
+      name: "cn-rounded-2",
       attributes: {
         category: "rounded",
         type: "2",
@@ -5416,7 +5416,7 @@ export default {
           },
         },
       },
-      name: "canary-rounded-3",
+      name: "cn-rounded-3",
       attributes: {
         category: "rounded",
         type: "3",
@@ -5442,7 +5442,7 @@ export default {
           },
         },
       },
-      name: "canary-rounded-4",
+      name: "cn-rounded-4",
       attributes: {
         category: "rounded",
         type: "4",
@@ -5468,7 +5468,7 @@ export default {
           },
         },
       },
-      name: "canary-rounded-5",
+      name: "cn-rounded-5",
       attributes: {
         category: "rounded",
         type: "5",
@@ -5494,7 +5494,7 @@ export default {
           },
         },
       },
-      name: "canary-rounded-6",
+      name: "cn-rounded-6",
       attributes: {
         category: "rounded",
         type: "6",
@@ -5520,7 +5520,7 @@ export default {
           },
         },
       },
-      name: "canary-rounded-7",
+      name: "cn-rounded-7",
       attributes: {
         category: "rounded",
         type: "7",
@@ -5548,7 +5548,7 @@ export default {
           },
         },
       },
-      name: "canary-rounded-none",
+      name: "cn-rounded-none",
       attributes: {
         category: "rounded",
         type: "none",
@@ -5576,7 +5576,7 @@ export default {
           },
         },
       },
-      name: "canary-rounded-full",
+      name: "cn-rounded-full",
       attributes: {
         category: "rounded",
         type: "full",
@@ -5604,7 +5604,7 @@ export default {
           },
         },
       },
-      name: "canary-size-0",
+      name: "cn-size-0",
       attributes: {
         category: "size",
         type: "0",
@@ -5630,7 +5630,7 @@ export default {
           },
         },
       },
-      name: "canary-size-1",
+      name: "cn-size-1",
       attributes: {
         category: "size",
         type: "1",
@@ -5656,7 +5656,7 @@ export default {
           },
         },
       },
-      name: "canary-size-2",
+      name: "cn-size-2",
       attributes: {
         category: "size",
         type: "2",
@@ -5682,7 +5682,7 @@ export default {
           },
         },
       },
-      name: "canary-size-3",
+      name: "cn-size-3",
       attributes: {
         category: "size",
         type: "3",
@@ -5708,7 +5708,7 @@ export default {
           },
         },
       },
-      name: "canary-size-4",
+      name: "cn-size-4",
       attributes: {
         category: "size",
         type: "4",
@@ -5734,7 +5734,7 @@ export default {
           },
         },
       },
-      name: "canary-size-5",
+      name: "cn-size-5",
       attributes: {
         category: "size",
         type: "5",
@@ -5760,7 +5760,7 @@ export default {
           },
         },
       },
-      name: "canary-size-6",
+      name: "cn-size-6",
       attributes: {
         category: "size",
         type: "6",
@@ -5786,7 +5786,7 @@ export default {
           },
         },
       },
-      name: "canary-size-7",
+      name: "cn-size-7",
       attributes: {
         category: "size",
         type: "7",
@@ -5812,7 +5812,7 @@ export default {
           },
         },
       },
-      name: "canary-size-8",
+      name: "cn-size-8",
       attributes: {
         category: "size",
         type: "8",
@@ -5838,7 +5838,7 @@ export default {
           },
         },
       },
-      name: "canary-size-9",
+      name: "cn-size-9",
       attributes: {
         category: "size",
         type: "9",
@@ -5864,7 +5864,7 @@ export default {
           },
         },
       },
-      name: "canary-size-10",
+      name: "cn-size-10",
       attributes: {
         category: "size",
         type: "10",
@@ -5890,7 +5890,7 @@ export default {
           },
         },
       },
-      name: "canary-size-11",
+      name: "cn-size-11",
       attributes: {
         category: "size",
         type: "11",
@@ -5916,7 +5916,7 @@ export default {
           },
         },
       },
-      name: "canary-size-12",
+      name: "cn-size-12",
       attributes: {
         category: "size",
         type: "12",
@@ -5942,7 +5942,7 @@ export default {
           },
         },
       },
-      name: "canary-size-14",
+      name: "cn-size-14",
       attributes: {
         category: "size",
         type: "14",
@@ -5968,7 +5968,7 @@ export default {
           },
         },
       },
-      name: "canary-size-16",
+      name: "cn-size-16",
       attributes: {
         category: "size",
         type: "16",
@@ -5994,7 +5994,7 @@ export default {
           },
         },
       },
-      name: "canary-size-20",
+      name: "cn-size-20",
       attributes: {
         category: "size",
         type: "20",
@@ -6020,7 +6020,7 @@ export default {
           },
         },
       },
-      name: "canary-size-24",
+      name: "cn-size-24",
       attributes: {
         category: "size",
         type: "24",
@@ -6046,7 +6046,7 @@ export default {
           },
         },
       },
-      name: "canary-size-28",
+      name: "cn-size-28",
       attributes: {
         category: "size",
         type: "28",
@@ -6072,7 +6072,7 @@ export default {
           },
         },
       },
-      name: "canary-size-32",
+      name: "cn-size-32",
       attributes: {
         category: "size",
         type: "32",
@@ -6098,7 +6098,7 @@ export default {
           },
         },
       },
-      name: "canary-size-36",
+      name: "cn-size-36",
       attributes: {
         category: "size",
         type: "36",
@@ -6124,7 +6124,7 @@ export default {
           },
         },
       },
-      name: "canary-size-40",
+      name: "cn-size-40",
       attributes: {
         category: "size",
         type: "40",
@@ -6150,7 +6150,7 @@ export default {
           },
         },
       },
-      name: "canary-size-44",
+      name: "cn-size-44",
       attributes: {
         category: "size",
         type: "44",
@@ -6176,7 +6176,7 @@ export default {
           },
         },
       },
-      name: "canary-size-48",
+      name: "cn-size-48",
       attributes: {
         category: "size",
         type: "48",
@@ -6202,7 +6202,7 @@ export default {
           },
         },
       },
-      name: "canary-size-52",
+      name: "cn-size-52",
       attributes: {
         category: "size",
         type: "52",
@@ -6228,7 +6228,7 @@ export default {
           },
         },
       },
-      name: "canary-size-56",
+      name: "cn-size-56",
       attributes: {
         category: "size",
         type: "56",
@@ -6254,7 +6254,7 @@ export default {
           },
         },
       },
-      name: "canary-size-60",
+      name: "cn-size-60",
       attributes: {
         category: "size",
         type: "60",
@@ -6280,7 +6280,7 @@ export default {
           },
         },
       },
-      name: "canary-size-64",
+      name: "cn-size-64",
       attributes: {
         category: "size",
         type: "64",
@@ -6306,7 +6306,7 @@ export default {
           },
         },
       },
-      name: "canary-size-72",
+      name: "cn-size-72",
       attributes: {
         category: "size",
         type: "72",
@@ -6332,7 +6332,7 @@ export default {
           },
         },
       },
-      name: "canary-size-80",
+      name: "cn-size-80",
       attributes: {
         category: "size",
         type: "80",
@@ -6358,7 +6358,7 @@ export default {
           },
         },
       },
-      name: "canary-size-96",
+      name: "cn-size-96",
       attributes: {
         category: "size",
         type: "96",
@@ -6384,7 +6384,7 @@ export default {
           },
         },
       },
-      name: "canary-size-px",
+      name: "cn-size-px",
       attributes: {
         category: "size",
         type: "px",
@@ -6412,7 +6412,7 @@ export default {
           },
         },
       },
-      name: "canary-size-half",
+      name: "cn-size-half",
       attributes: {
         category: "size",
         type: "half",
@@ -6440,7 +6440,7 @@ export default {
           },
         },
       },
-      name: "canary-size-1-half",
+      name: "cn-size-1-half",
       attributes: {
         category: "size",
         type: "1-half",
@@ -6468,7 +6468,7 @@ export default {
           },
         },
       },
-      name: "canary-size-2-half",
+      name: "cn-size-2-half",
       attributes: {
         category: "size",
         type: "2-half",
@@ -6496,7 +6496,7 @@ export default {
           },
         },
       },
-      name: "canary-size-3-half",
+      name: "cn-size-3-half",
       attributes: {
         category: "size",
         type: "3-half",
@@ -6526,7 +6526,7 @@ export default {
           },
         },
       },
-      name: "canary-border-width-0",
+      name: "cn-border-width-0",
       attributes: {
         category: "borderWidth",
         type: "0",
@@ -6554,7 +6554,7 @@ export default {
           },
         },
       },
-      name: "canary-border-width-1",
+      name: "cn-border-width-1",
       attributes: {
         category: "borderWidth",
         type: "1",
@@ -6582,7 +6582,7 @@ export default {
           },
         },
       },
-      name: "canary-border-width-2",
+      name: "cn-border-width-2",
       attributes: {
         category: "borderWidth",
         type: "2",
@@ -6610,7 +6610,7 @@ export default {
           },
         },
       },
-      name: "canary-border-width-4",
+      name: "cn-border-width-4",
       attributes: {
         category: "borderWidth",
         type: "4",
@@ -6638,7 +6638,7 @@ export default {
           },
         },
       },
-      name: "canary-border-width-8",
+      name: "cn-border-width-8",
       attributes: {
         category: "borderWidth",
         type: "8",
@@ -6666,7 +6666,7 @@ export default {
           },
         },
       },
-      name: "canary-icon-size-xxs",
+      name: "cn-icon-size-xxs",
       attributes: {
         category: "iconSize",
         type: "xxs",
@@ -6692,7 +6692,7 @@ export default {
           },
         },
       },
-      name: "canary-icon-size-xs",
+      name: "cn-icon-size-xs",
       attributes: {
         category: "iconSize",
         type: "xs",
@@ -6718,7 +6718,7 @@ export default {
           },
         },
       },
-      name: "canary-icon-size-sm",
+      name: "cn-icon-size-sm",
       attributes: {
         category: "iconSize",
         type: "sm",
@@ -6744,7 +6744,7 @@ export default {
           },
         },
       },
-      name: "canary-icon-size-default",
+      name: "cn-icon-size-default",
       attributes: {
         category: "iconSize",
         type: "default",
@@ -6770,7 +6770,7 @@ export default {
           },
         },
       },
-      name: "canary-icon-size-md",
+      name: "cn-icon-size-md",
       attributes: {
         category: "iconSize",
         type: "md",
@@ -6798,7 +6798,7 @@ export default {
           },
         },
       },
-      name: "canary-icon-size-lg",
+      name: "cn-icon-size-lg",
       attributes: {
         category: "iconSize",
         type: "lg",

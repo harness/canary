@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Mon, 17 Mar 2025 12:07:32 GMT
+ * Generated on Tue, 18 Mar 2025 06:44:26 GMT
  * Copyright (c) Harness.
  */
 
@@ -17,7 +17,7 @@ export default {
           $value: "lch(100% 0 134.54)",
           $type: "color",
         },
-        name: "canary-colors-pure-white",
+        name: "cn-colors-pure-white",
         attributes: {
           category: "colors",
           type: "pure",
@@ -34,7 +34,7 @@ export default {
           $value: "lch(2.44% 1.49 285.81)",
           $type: "color",
         },
-        name: "canary-colors-pure-black",
+        name: "cn-colors-pure-black",
         attributes: {
           category: "colors",
           type: "pure",
@@ -53,7 +53,7 @@ export default {
           $value: "lch(98.27% 0.36 135.2)",
           $type: "color",
         },
-        name: "canary-colors-chrome-50",
+        name: "cn-colors-chrome-50",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -70,7 +70,7 @@ export default {
           $value: "lch(90.71% 0.38 284.93)",
           $type: "color",
         },
-        name: "canary-colors-chrome-100",
+        name: "cn-colors-chrome-100",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -87,7 +87,7 @@ export default {
           $value: "lch(85.99% 3.77 285.34)",
           $type: "color",
         },
-        name: "canary-colors-chrome-150",
+        name: "cn-colors-chrome-150",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -104,7 +104,7 @@ export default {
           $value: "lch(81.33% 4.52 285.46)",
           $type: "color",
         },
-        name: "canary-colors-chrome-200",
+        name: "cn-colors-chrome-200",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -121,7 +121,7 @@ export default {
           $value: "lch(74.37% 4.52 285.5)",
           $type: "color",
         },
-        name: "canary-colors-chrome-300",
+        name: "cn-colors-chrome-300",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -138,7 +138,7 @@ export default {
           $value: "lch(67.41% 4.51 285.56)",
           $type: "color",
         },
-        name: "canary-colors-chrome-400",
+        name: "cn-colors-chrome-400",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -155,7 +155,7 @@ export default {
           $value: "lch(58.08% 6.76 286.02)",
           $type: "color",
         },
-        name: "canary-colors-chrome-500",
+        name: "cn-colors-chrome-500",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -172,7 +172,7 @@ export default {
           $value: "lch(46.46% 7.5 286.37)",
           $type: "color",
         },
-        name: "canary-colors-chrome-600",
+        name: "cn-colors-chrome-600",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -189,7 +189,7 @@ export default {
           $value: "lch(39.46% 8.98 286.89)",
           $type: "color",
         },
-        name: "canary-colors-chrome-700",
+        name: "cn-colors-chrome-700",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -206,7 +206,7 @@ export default {
           $value: "lch(26.73% 7.48 287.06)",
           $type: "color",
         },
-        name: "canary-colors-chrome-800",
+        name: "cn-colors-chrome-800",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -223,7 +223,7 @@ export default {
           $value: "lch(18.63% 6.73 287.29)",
           $type: "color",
         },
-        name: "canary-colors-chrome-850",
+        name: "cn-colors-chrome-850",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -240,7 +240,7 @@ export default {
           $value: "lch(8.25% 4.49 287.18)",
           $type: "color",
         },
-        name: "canary-colors-chrome-900",
+        name: "cn-colors-chrome-900",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -257,7 +257,7 @@ export default {
           $value: "lch(5.2% 3.07 285.78)",
           $type: "color",
         },
-        name: "canary-colors-chrome-950",
+        name: "cn-colors-chrome-950",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -274,7 +274,7 @@ export default {
           $value: "lch(3.66% 1.93 285.7)",
           $type: "color",
         },
-        name: "canary-colors-chrome-1000",
+        name: "cn-colors-chrome-1000",
         attributes: {
           category: "colors",
           type: "chrome",
@@ -293,7 +293,7 @@ export default {
           $value: "lch(95.27% 4.16 280.86)",
           $type: "color",
         },
-        name: "canary-colors-blue-50",
+        name: "cn-colors-blue-50",
         attributes: {
           category: "colors",
           type: "blue",
@@ -310,7 +310,7 @@ export default {
           $value: "lch(89.92% 10.91 279.8)",
           $type: "color",
         },
-        name: "canary-colors-blue-100",
+        name: "cn-colors-blue-100",
         attributes: {
           category: "colors",
           type: "blue",
@@ -327,7 +327,7 @@ export default {
           $value: "lch(73.08% 34.81 281.21)",
           $type: "color",
         },
-        name: "canary-colors-blue-200",
+        name: "cn-colors-blue-200",
         attributes: {
           category: "colors",
           type: "blue",
@@ -344,7 +344,7 @@ export default {
           $value: "lch(63.4% 48.44 281.2)",
           $type: "color",
         },
-        name: "canary-colors-blue-300",
+        name: "cn-colors-blue-300",
         attributes: {
           category: "colors",
           type: "blue",
@@ -361,7 +361,7 @@ export default {
           $value: "lch(54.29% 60.55 281.11)",
           $type: "color",
         },
-        name: "canary-colors-blue-400",
+        name: "cn-colors-blue-400",
         attributes: {
           category: "colors",
           type: "blue",
@@ -378,7 +378,7 @@ export default {
           $value: "lch(47.04% 69.94 279.78)",
           $type: "color",
         },
-        name: "canary-colors-blue-500",
+        name: "cn-colors-blue-500",
         attributes: {
           category: "colors",
           type: "blue",
@@ -395,7 +395,7 @@ export default {
           $value: "lch(35.67% 59.7 280.58)",
           $type: "color",
         },
-        name: "canary-colors-blue-600",
+        name: "cn-colors-blue-600",
         attributes: {
           category: "colors",
           type: "blue",
@@ -412,7 +412,7 @@ export default {
           $value: "lch(27.25% 49.8 280.51)",
           $type: "color",
         },
-        name: "canary-colors-blue-700",
+        name: "cn-colors-blue-700",
         attributes: {
           category: "colors",
           type: "blue",
@@ -429,7 +429,7 @@ export default {
           $value: "lch(18.28% 39.2 280.4)",
           $type: "color",
         },
-        name: "canary-colors-blue-800",
+        name: "cn-colors-blue-800",
         attributes: {
           category: "colors",
           type: "blue",
@@ -446,7 +446,7 @@ export default {
           $value: "lch(9.63% 33.17 284.31)",
           $type: "color",
         },
-        name: "canary-colors-blue-900",
+        name: "cn-colors-blue-900",
         attributes: {
           category: "colors",
           type: "blue",
@@ -463,7 +463,7 @@ export default {
           $value: "lch(2.52% 22.28 283.9)",
           $type: "color",
         },
-        name: "canary-colors-blue-950",
+        name: "cn-colors-blue-950",
         attributes: {
           category: "colors",
           type: "blue",
@@ -482,7 +482,7 @@ export default {
           $value: "lch(95.4% 5 238.5)",
           $type: "color",
         },
-        name: "canary-colors-cyan-50",
+        name: "cn-colors-cyan-50",
         attributes: {
           category: "colors",
           type: "cyan",
@@ -499,7 +499,7 @@ export default {
           $value: "lch(90.24% 13.5 239.5)",
           $type: "color",
         },
-        name: "canary-colors-cyan-100",
+        name: "cn-colors-cyan-100",
         attributes: {
           category: "colors",
           type: "cyan",
@@ -516,7 +516,7 @@ export default {
           $value: "lch(74.15% 29 241)",
           $type: "color",
         },
-        name: "canary-colors-cyan-200",
+        name: "cn-colors-cyan-200",
         attributes: {
           category: "colors",
           type: "cyan",
@@ -533,7 +533,7 @@ export default {
           $value: "lch(65.49% 45.28 239)",
           $type: "color",
         },
-        name: "canary-colors-cyan-300",
+        name: "cn-colors-cyan-300",
         attributes: {
           category: "colors",
           type: "cyan",
@@ -550,7 +550,7 @@ export default {
           $value: "lch(56.15% 44.5 246.5)",
           $type: "color",
         },
-        name: "canary-colors-cyan-400",
+        name: "cn-colors-cyan-400",
         attributes: {
           category: "colors",
           type: "cyan",
@@ -567,7 +567,7 @@ export default {
           $value: "lch(46.84% 41.5 250)",
           $type: "color",
         },
-        name: "canary-colors-cyan-500",
+        name: "cn-colors-cyan-500",
         attributes: {
           category: "colors",
           type: "cyan",
@@ -584,7 +584,7 @@ export default {
           $value: "lch(37.53% 36.5 254)",
           $type: "color",
         },
-        name: "canary-colors-cyan-600",
+        name: "cn-colors-cyan-600",
         attributes: {
           category: "colors",
           type: "cyan",
@@ -601,7 +601,7 @@ export default {
           $value: "lch(28.81% 30 257.5)",
           $type: "color",
         },
-        name: "canary-colors-cyan-700",
+        name: "cn-colors-cyan-700",
         attributes: {
           category: "colors",
           type: "cyan",
@@ -618,7 +618,7 @@ export default {
           $value: "lch(19.49% 23 261.5)",
           $type: "color",
         },
-        name: "canary-colors-cyan-800",
+        name: "cn-colors-cyan-800",
         attributes: {
           category: "colors",
           type: "cyan",
@@ -635,7 +635,7 @@ export default {
           $value: "lch(10.76% 15.5 265)",
           $type: "color",
         },
-        name: "canary-colors-cyan-900",
+        name: "cn-colors-cyan-900",
         attributes: {
           category: "colors",
           type: "cyan",
@@ -652,7 +652,7 @@ export default {
           $value: "lch(3.09% 7.5 268)",
           $type: "color",
         },
-        name: "canary-colors-cyan-950",
+        name: "cn-colors-cyan-950",
         attributes: {
           category: "colors",
           type: "cyan",
@@ -671,7 +671,7 @@ export default {
           $value: "lch(95.23% 5.25 32.59)",
           $type: "color",
         },
-        name: "canary-colors-red-50",
+        name: "cn-colors-red-50",
         attributes: {
           category: "colors",
           type: "red",
@@ -688,7 +688,7 @@ export default {
           $value: "lch(89.81% 13.4 32.67)",
           $type: "color",
         },
-        name: "canary-colors-red-100",
+        name: "cn-colors-red-100",
         attributes: {
           category: "colors",
           type: "red",
@@ -705,7 +705,7 @@ export default {
           $value: "lch(72.7% 48.17 33.53)",
           $type: "color",
         },
-        name: "canary-colors-red-200",
+        name: "cn-colors-red-200",
         attributes: {
           category: "colors",
           type: "red",
@@ -722,7 +722,7 @@ export default {
           $value: "lch(65.59% 65.99 34.56)",
           $type: "color",
         },
-        name: "canary-colors-red-300",
+        name: "cn-colors-red-300",
         attributes: {
           category: "colors",
           type: "red",
@@ -739,7 +739,7 @@ export default {
           $value: "lch(53.74% 88.37 37.69)",
           $type: "color",
         },
-        name: "canary-colors-red-400",
+        name: "cn-colors-red-400",
         attributes: {
           category: "colors",
           type: "red",
@@ -756,7 +756,7 @@ export default {
           $value: "lch(44.74% 76.92 37.68)",
           $type: "color",
         },
-        name: "canary-colors-red-500",
+        name: "cn-colors-red-500",
         attributes: {
           category: "colors",
           type: "red",
@@ -773,7 +773,7 @@ export default {
           $value: "lch(35.74% 65.47 37.67)",
           $type: "color",
         },
-        name: "canary-colors-red-600",
+        name: "cn-colors-red-600",
         attributes: {
           category: "colors",
           type: "red",
@@ -790,7 +790,7 @@ export default {
           $value: "lch(27.3% 54.82 37.68)",
           $type: "color",
         },
-        name: "canary-colors-red-700",
+        name: "cn-colors-red-700",
         attributes: {
           category: "colors",
           type: "red",
@@ -807,7 +807,7 @@ export default {
           $value: "lch(18.31% 42.35 35.83)",
           $type: "color",
         },
-        name: "canary-colors-red-800",
+        name: "cn-colors-red-800",
         attributes: {
           category: "colors",
           type: "red",
@@ -824,7 +824,7 @@ export default {
           $value: "lch(9.87% 29.51 28.59)",
           $type: "color",
         },
-        name: "canary-colors-red-900",
+        name: "cn-colors-red-900",
         attributes: {
           category: "colors",
           type: "red",
@@ -841,7 +841,7 @@ export default {
           $value: "lch(2.8% 10.22 21.65)",
           $type: "color",
         },
-        name: "canary-colors-red-950",
+        name: "cn-colors-red-950",
         attributes: {
           category: "colors",
           type: "red",
@@ -860,7 +860,7 @@ export default {
           $value: "lch(95.15% 5.42 350.29)",
           $type: "color",
         },
-        name: "canary-colors-pink-50",
+        name: "cn-colors-pink-50",
         attributes: {
           category: "colors",
           type: "pink",
@@ -877,7 +877,7 @@ export default {
           $value: "lch(89.61% 13.47 350.26)",
           $type: "color",
         },
-        name: "canary-colors-pink-100",
+        name: "cn-colors-pink-100",
         attributes: {
           category: "colors",
           type: "pink",
@@ -894,7 +894,7 @@ export default {
           $value: "lch(72% 46.72 350.11)",
           $type: "color",
         },
-        name: "canary-colors-pink-200",
+        name: "cn-colors-pink-200",
         attributes: {
           category: "colors",
           type: "pink",
@@ -911,7 +911,7 @@ export default {
           $value: "lch(61.26% 69.37 350)",
           $type: "color",
         },
-        name: "canary-colors-pink-300",
+        name: "cn-colors-pink-300",
         attributes: {
           category: "colors",
           type: "pink",
@@ -928,7 +928,7 @@ export default {
           $value: "lch(53.21% 65.17 349.99)",
           $type: "color",
         },
-        name: "canary-colors-pink-400",
+        name: "cn-colors-pink-400",
         attributes: {
           category: "colors",
           type: "pink",
@@ -945,7 +945,7 @@ export default {
           $value: "lch(44.27% 56.78 349.99)",
           $type: "color",
         },
-        name: "canary-colors-pink-500",
+        name: "cn-colors-pink-500",
         attributes: {
           category: "colors",
           type: "pink",
@@ -962,7 +962,7 @@ export default {
           $value: "lch(35.34% 48.39 349.99)",
           $type: "color",
         },
-        name: "canary-colors-pink-600",
+        name: "cn-colors-pink-600",
         attributes: {
           category: "colors",
           type: "pink",
@@ -979,7 +979,7 @@ export default {
           $value: "lch(26.98% 40.34 349.99)",
           $type: "color",
         },
-        name: "canary-colors-pink-700",
+        name: "cn-colors-pink-700",
         attributes: {
           category: "colors",
           type: "pink",
@@ -996,7 +996,7 @@ export default {
           $value: "lch(18.05% 31.95 349.99)",
           $type: "color",
         },
-        name: "canary-colors-pink-800",
+        name: "cn-colors-pink-800",
         attributes: {
           category: "colors",
           type: "pink",
@@ -1013,7 +1013,7 @@ export default {
           $value: "lch(9.69% 23.89 349.99)",
           $type: "color",
         },
-        name: "canary-colors-pink-900",
+        name: "cn-colors-pink-900",
         attributes: {
           category: "colors",
           type: "pink",
@@ -1030,7 +1030,7 @@ export default {
           $value: "lch(2.74% 8.62 350.99)",
           $type: "color",
         },
-        name: "canary-colors-pink-950",
+        name: "cn-colors-pink-950",
         attributes: {
           category: "colors",
           type: "pink",
@@ -1049,7 +1049,7 @@ export default {
           $value: "lch(95.22% 5.2 27.21)",
           $type: "color",
         },
-        name: "canary-colors-peach-50",
+        name: "cn-colors-peach-50",
         attributes: {
           category: "colors",
           type: "peach",
@@ -1066,7 +1066,7 @@ export default {
           $value: "lch(89.79% 12.88 27.31)",
           $type: "color",
         },
-        name: "canary-colors-peach-100",
+        name: "cn-colors-peach-100",
         attributes: {
           category: "colors",
           type: "peach",
@@ -1083,7 +1083,7 @@ export default {
           $value: "lch(72.22% 46.73 23.25)",
           $type: "color",
         },
-        name: "canary-colors-peach-200",
+        name: "cn-colors-peach-200",
         attributes: {
           category: "colors",
           type: "peach",
@@ -1100,7 +1100,7 @@ export default {
           $value: "lch(62.66% 70.81 29.46)",
           $type: "color",
         },
-        name: "canary-colors-peach-300",
+        name: "cn-colors-peach-300",
         attributes: {
           category: "colors",
           type: "peach",
@@ -1117,7 +1117,7 @@ export default {
           $value: "lch(53.64% 82.24 30.93)",
           $type: "color",
         },
-        name: "canary-colors-peach-400",
+        name: "cn-colors-peach-400",
         attributes: {
           category: "colors",
           type: "peach",
@@ -1134,7 +1134,7 @@ export default {
           $value: "lch(44.66% 71.48 30.92)",
           $type: "color",
         },
-        name: "canary-colors-peach-500",
+        name: "cn-colors-peach-500",
         attributes: {
           category: "colors",
           type: "peach",
@@ -1151,7 +1151,7 @@ export default {
           $value: "lch(35.68% 60.73 30.9)",
           $type: "color",
         },
-        name: "canary-colors-peach-600",
+        name: "cn-colors-peach-600",
         attributes: {
           category: "colors",
           type: "peach",
@@ -1168,7 +1168,7 @@ export default {
           $value: "lch(27.25% 50.72 30.88)",
           $type: "color",
         },
-        name: "canary-colors-peach-700",
+        name: "cn-colors-peach-700",
         attributes: {
           category: "colors",
           type: "peach",
@@ -1185,7 +1185,7 @@ export default {
           $value: "lch(18.26% 40.26 30.65)",
           $type: "color",
         },
-        name: "canary-colors-peach-800",
+        name: "cn-colors-peach-800",
         attributes: {
           category: "colors",
           type: "peach",
@@ -1202,7 +1202,7 @@ export default {
           $value: "lch(9.84% 28.78 25.16)",
           $type: "color",
         },
-        name: "canary-colors-peach-900",
+        name: "cn-colors-peach-900",
         attributes: {
           category: "colors",
           type: "peach",
@@ -1219,7 +1219,7 @@ export default {
           $value: "lch(2.79% 10.24 18.76)",
           $type: "color",
         },
-        name: "canary-colors-peach-950",
+        name: "cn-colors-peach-950",
         attributes: {
           category: "colors",
           type: "peach",
@@ -1238,7 +1238,7 @@ export default {
           $value: "lch(95.62% 18.31 92.87)",
           $type: "color",
         },
-        name: "canary-colors-yellow-50",
+        name: "cn-colors-yellow-50",
         attributes: {
           category: "colors",
           type: "yellow",
@@ -1255,7 +1255,7 @@ export default {
           $value: "lch(90.23% 26.34 77.18)",
           $type: "color",
         },
-        name: "canary-colors-yellow-100",
+        name: "cn-colors-yellow-100",
         attributes: {
           category: "colors",
           type: "yellow",
@@ -1272,7 +1272,7 @@ export default {
           $value: "lch(73.82% 74.92 75.35)",
           $type: "color",
         },
-        name: "canary-colors-yellow-200",
+        name: "cn-colors-yellow-200",
         attributes: {
           category: "colors",
           type: "yellow",
@@ -1289,7 +1289,7 @@ export default {
           $value: "lch(64.58% 68.1 76.07)",
           $type: "color",
         },
-        name: "canary-colors-yellow-300",
+        name: "cn-colors-yellow-300",
         attributes: {
           category: "colors",
           type: "yellow",
@@ -1306,7 +1306,7 @@ export default {
           $value: "lch(55.9% 60.21 76.41)",
           $type: "color",
         },
-        name: "canary-colors-yellow-400",
+        name: "cn-colors-yellow-400",
         attributes: {
           category: "colors",
           type: "yellow",
@@ -1323,7 +1323,7 @@ export default {
           $value: "lch(46.64% 52.59 77.11)",
           $type: "color",
         },
-        name: "canary-colors-yellow-500",
+        name: "cn-colors-yellow-500",
         attributes: {
           category: "colors",
           type: "yellow",
@@ -1340,7 +1340,7 @@ export default {
           $value: "lch(37.37% 44.92 77.47)",
           $type: "color",
         },
-        name: "canary-colors-yellow-600",
+        name: "cn-colors-yellow-600",
         attributes: {
           category: "colors",
           type: "yellow",
@@ -1357,7 +1357,7 @@ export default {
           $value: "lch(28.67% 36.97 77.45)",
           $type: "color",
         },
-        name: "canary-colors-yellow-700",
+        name: "cn-colors-yellow-700",
         attributes: {
           category: "colors",
           type: "yellow",
@@ -1374,7 +1374,7 @@ export default {
           $value: "lch(19.4% 27.53 77.01)",
           $type: "color",
         },
-        name: "canary-colors-yellow-800",
+        name: "cn-colors-yellow-800",
         attributes: {
           category: "colors",
           type: "yellow",
@@ -1391,7 +1391,7 @@ export default {
           $value: "lch(10.69% 16.28 73.34)",
           $type: "color",
         },
-        name: "canary-colors-yellow-900",
+        name: "cn-colors-yellow-900",
         attributes: {
           category: "colors",
           type: "yellow",
@@ -1408,7 +1408,7 @@ export default {
           $value: "lch(3.06% 4.5 71.6)",
           $type: "color",
         },
-        name: "canary-colors-yellow-950",
+        name: "cn-colors-yellow-950",
         attributes: {
           category: "colors",
           type: "yellow",
@@ -1427,7 +1427,7 @@ export default {
           $value: "lch(95.42% 10.03 79.83)",
           $type: "color",
         },
-        name: "canary-colors-orange-50",
+        name: "cn-colors-orange-50",
         attributes: {
           category: "colors",
           type: "orange",
@@ -1444,7 +1444,7 @@ export default {
           $value: "lch(90.02% 17.62 61.56)",
           $type: "color",
         },
-        name: "canary-colors-orange-100",
+        name: "cn-colors-orange-100",
         attributes: {
           category: "colors",
           type: "orange",
@@ -1461,7 +1461,7 @@ export default {
           $value: "lch(74.82% 51.93 49.87)",
           $type: "color",
         },
-        name: "canary-colors-orange-200",
+        name: "cn-colors-orange-200",
         attributes: {
           category: "colors",
           type: "orange",
@@ -1478,7 +1478,7 @@ export default {
           $value: "lch(63.38% 78.04 52.26)",
           $type: "color",
         },
-        name: "canary-colors-orange-300",
+        name: "cn-colors-orange-300",
         attributes: {
           category: "colors",
           type: "orange",
@@ -1495,7 +1495,7 @@ export default {
           $value: "lch(54.81% 69.74 52.27)",
           $type: "color",
         },
-        name: "canary-colors-orange-400",
+        name: "cn-colors-orange-400",
         attributes: {
           category: "colors",
           type: "orange",
@@ -1512,7 +1512,7 @@ export default {
           $value: "lch(45.68% 60.45 52.23)",
           $type: "color",
         },
-        name: "canary-colors-orange-500",
+        name: "cn-colors-orange-500",
         attributes: {
           category: "colors",
           type: "orange",
@@ -1529,7 +1529,7 @@ export default {
           $value: "lch(36.54% 51.77 52.28)",
           $type: "color",
         },
-        name: "canary-colors-orange-600",
+        name: "cn-colors-orange-600",
         attributes: {
           category: "colors",
           type: "orange",
@@ -1546,7 +1546,7 @@ export default {
           $value: "lch(27.78% 46.26 47.39)",
           $type: "color",
         },
-        name: "canary-colors-orange-700",
+        name: "cn-colors-orange-700",
         attributes: {
           category: "colors",
           type: "orange",
@@ -1563,7 +1563,7 @@ export default {
           $value: "lch(18.69% 35.31 45.59)",
           $type: "color",
         },
-        name: "canary-colors-orange-800",
+        name: "cn-colors-orange-800",
         attributes: {
           category: "colors",
           type: "orange",
@@ -1580,7 +1580,7 @@ export default {
           $value: "lch(10.26% 21.63 42.58)",
           $type: "color",
         },
-        name: "canary-colors-orange-900",
+        name: "cn-colors-orange-900",
         attributes: {
           category: "colors",
           type: "orange",
@@ -1597,7 +1597,7 @@ export default {
           $value: "lch(2.93% 6.64 36.42)",
           $type: "color",
         },
-        name: "canary-colors-orange-950",
+        name: "cn-colors-orange-950",
         attributes: {
           category: "colors",
           type: "orange",
@@ -1616,7 +1616,7 @@ export default {
           $value: "lch(95.55% 12.75 93.47)",
           $type: "color",
         },
-        name: "canary-colors-brown-50",
+        name: "cn-colors-brown-50",
         attributes: {
           category: "colors",
           type: "brown",
@@ -1633,7 +1633,7 @@ export default {
           $value: "lch(90.24% 19.27 79.52)",
           $type: "color",
         },
-        name: "canary-colors-brown-100",
+        name: "cn-colors-brown-100",
         attributes: {
           category: "colors",
           type: "brown",
@@ -1650,7 +1650,7 @@ export default {
           $value: "lch(73.38% 45.67 56.65)",
           $type: "color",
         },
-        name: "canary-colors-brown-200",
+        name: "cn-colors-brown-200",
         attributes: {
           category: "colors",
           type: "brown",
@@ -1667,7 +1667,7 @@ export default {
           $value: "lch(64.06% 48.96 57.29)",
           $type: "color",
         },
-        name: "canary-colors-brown-300",
+        name: "cn-colors-brown-300",
         attributes: {
           category: "colors",
           type: "brown",
@@ -1684,7 +1684,7 @@ export default {
           $value: "lch(57.17% 44.39 57.69)",
           $type: "color",
         },
-        name: "canary-colors-brown-400",
+        name: "cn-colors-brown-400",
         attributes: {
           category: "colors",
           type: "brown",
@@ -1701,7 +1701,7 @@ export default {
           $value: "lch(46.22% 37.68 57.68)",
           $type: "color",
         },
-        name: "canary-colors-brown-500",
+        name: "cn-colors-brown-500",
         attributes: {
           category: "colors",
           type: "brown",
@@ -1718,7 +1718,7 @@ export default {
           $value: "lch(37.01% 31.77 57.67)",
           $type: "color",
         },
-        name: "canary-colors-brown-600",
+        name: "cn-colors-brown-600",
         attributes: {
           category: "colors",
           type: "brown",
@@ -1735,7 +1735,7 @@ export default {
           $value: "lch(28.37% 26.84 58.1)",
           $type: "color",
         },
-        name: "canary-colors-brown-700",
+        name: "cn-colors-brown-700",
         attributes: {
           category: "colors",
           type: "brown",
@@ -1752,7 +1752,7 @@ export default {
           $value: "lch(19.16% 20.96 58.49)",
           $type: "color",
         },
-        name: "canary-colors-brown-800",
+        name: "cn-colors-brown-800",
         attributes: {
           category: "colors",
           type: "brown",
@@ -1769,7 +1769,7 @@ export default {
           $value: "lch(10.55% 13.64 57.69)",
           $type: "color",
         },
-        name: "canary-colors-brown-900",
+        name: "cn-colors-brown-900",
         attributes: {
           category: "colors",
           type: "brown",
@@ -1786,7 +1786,7 @@ export default {
           $value: "lch(3% 4.01 51.14)",
           $type: "color",
         },
-        name: "canary-colors-brown-950",
+        name: "cn-colors-brown-950",
         attributes: {
           category: "colors",
           type: "brown",
@@ -1805,7 +1805,7 @@ export default {
           $value: "lch(95.82% 11.79 156.15)",
           $type: "color",
         },
-        name: "canary-colors-green-50",
+        name: "cn-colors-green-50",
         attributes: {
           category: "colors",
           type: "green",
@@ -1822,7 +1822,7 @@ export default {
           $value: "lch(91.19% 27.27 156.17)",
           $type: "color",
         },
-        name: "canary-colors-green-100",
+        name: "cn-colors-green-100",
         attributes: {
           category: "colors",
           type: "green",
@@ -1839,7 +1839,7 @@ export default {
           $value: "lch(73.78% 60.44 156.25)",
           $type: "color",
         },
-        name: "canary-colors-green-200",
+        name: "cn-colors-green-200",
         attributes: {
           category: "colors",
           type: "green",
@@ -1856,7 +1856,7 @@ export default {
           $value: "lch(66.65% 55.77 156.25)",
           $type: "color",
         },
-        name: "canary-colors-green-300",
+        name: "cn-colors-green-300",
         attributes: {
           category: "colors",
           type: "green",
@@ -1873,7 +1873,7 @@ export default {
           $value: "lch(57.73% 49.65 156.25)",
           $type: "color",
         },
-        name: "canary-colors-green-400",
+        name: "cn-colors-green-400",
         attributes: {
           category: "colors",
           type: "green",
@@ -1890,7 +1890,7 @@ export default {
           $value: "lch(48.21% 43.17 156.25)",
           $type: "color",
         },
-        name: "canary-colors-green-500",
+        name: "cn-colors-green-500",
         attributes: {
           category: "colors",
           type: "green",
@@ -1907,7 +1907,7 @@ export default {
           $value: "lch(38.71% 37.07 156.25)",
           $type: "color",
         },
-        name: "canary-colors-green-600",
+        name: "cn-colors-green-600",
         attributes: {
           category: "colors",
           type: "green",
@@ -1924,7 +1924,7 @@ export default {
           $value: "lch(29.79% 30.94 156.25)",
           $type: "color",
         },
-        name: "canary-colors-green-700",
+        name: "cn-colors-green-700",
         attributes: {
           category: "colors",
           type: "green",
@@ -1941,7 +1941,7 @@ export default {
           $value: "lch(20.26% 24.09 156.25)",
           $type: "color",
         },
-        name: "canary-colors-green-800",
+        name: "cn-colors-green-800",
         attributes: {
           category: "colors",
           type: "green",
@@ -1958,7 +1958,7 @@ export default {
           $value: "lch(11.35% 18.27 156.36)",
           $type: "color",
         },
-        name: "canary-colors-green-900",
+        name: "cn-colors-green-900",
         attributes: {
           category: "colors",
           type: "green",
@@ -1975,7 +1975,7 @@ export default {
           $value: "lch(3.27% 5.33 156.53)",
           $type: "color",
         },
-        name: "canary-colors-green-950",
+        name: "cn-colors-green-950",
         attributes: {
           category: "colors",
           type: "green",
@@ -1994,7 +1994,7 @@ export default {
           $value: "lch(95.82% 11.97 171.06)",
           $type: "color",
         },
-        name: "canary-colors-mint-50",
+        name: "cn-colors-mint-50",
         attributes: {
           category: "colors",
           type: "mint",
@@ -2011,7 +2011,7 @@ export default {
           $value: "lch(91.09% 25.48 176.08)",
           $type: "color",
         },
-        name: "canary-colors-mint-100",
+        name: "cn-colors-mint-100",
         attributes: {
           category: "colors",
           type: "mint",
@@ -2028,7 +2028,7 @@ export default {
           $value: "lch(73.4% 50.15 176.67)",
           $type: "color",
         },
-        name: "canary-colors-mint-200",
+        name: "cn-colors-mint-200",
         attributes: {
           category: "colors",
           type: "mint",
@@ -2045,7 +2045,7 @@ export default {
           $value: "lch(66.3% 46.27 176.67)",
           $type: "color",
         },
-        name: "canary-colors-mint-300",
+        name: "cn-colors-mint-300",
         attributes: {
           category: "colors",
           type: "mint",
@@ -2062,7 +2062,7 @@ export default {
           $value: "lch(57.46% 42.15 174.53)",
           $type: "color",
         },
-        name: "canary-colors-mint-400",
+        name: "cn-colors-mint-400",
         attributes: {
           category: "colors",
           type: "mint",
@@ -2079,7 +2079,7 @@ export default {
           $value: "lch(48.03% 37.67 171.84)",
           $type: "color",
         },
-        name: "canary-colors-mint-500",
+        name: "cn-colors-mint-500",
         attributes: {
           category: "colors",
           type: "mint",
@@ -2096,7 +2096,7 @@ export default {
           $value: "lch(38.59% 33.16 169.14)",
           $type: "color",
         },
-        name: "canary-colors-mint-600",
+        name: "cn-colors-mint-600",
         attributes: {
           category: "colors",
           type: "mint",
@@ -2113,7 +2113,7 @@ export default {
           $value: "lch(29.72% 28.6 166.42)",
           $type: "color",
         },
-        name: "canary-colors-mint-700",
+        name: "cn-colors-mint-700",
         attributes: {
           category: "colors",
           type: "mint",
@@ -2130,7 +2130,7 @@ export default {
           $value: "lch(20.24% 23.29 164.22)",
           $type: "color",
         },
-        name: "canary-colors-mint-800",
+        name: "cn-colors-mint-800",
         attributes: {
           category: "colors",
           type: "mint",
@@ -2147,7 +2147,7 @@ export default {
           $value: "lch(11.35% 18.26 160.23)",
           $type: "color",
         },
-        name: "canary-colors-mint-900",
+        name: "cn-colors-mint-900",
         attributes: {
           category: "colors",
           type: "mint",
@@ -2164,7 +2164,7 @@ export default {
           $value: "lch(3.26% 5.16 160.96)",
           $type: "color",
         },
-        name: "canary-colors-mint-950",
+        name: "cn-colors-mint-950",
         attributes: {
           category: "colors",
           type: "mint",
@@ -2183,7 +2183,7 @@ export default {
           $value: "lch(95.86% 15.3 127.41)",
           $type: "color",
         },
-        name: "canary-colors-lime-50",
+        name: "cn-colors-lime-50",
         attributes: {
           category: "colors",
           type: "lime",
@@ -2200,7 +2200,7 @@ export default {
           $value: "lch(91.05% 29.33 126.46)",
           $type: "color",
         },
-        name: "canary-colors-lime-100",
+        name: "cn-colors-lime-100",
         attributes: {
           category: "colors",
           type: "lime",
@@ -2217,7 +2217,7 @@ export default {
           $value: "lch(74.24% 53.56 123.85)",
           $type: "color",
         },
-        name: "canary-colors-lime-200",
+        name: "cn-colors-lime-200",
         attributes: {
           category: "colors",
           type: "lime",
@@ -2234,7 +2234,7 @@ export default {
           $value: "lch(65.98% 48.66 123.85)",
           $type: "color",
         },
-        name: "canary-colors-lime-300",
+        name: "cn-colors-lime-300",
         attributes: {
           category: "colors",
           type: "lime",
@@ -2251,7 +2251,7 @@ export default {
           $value: "lch(57.13% 43.37 123.85)",
           $type: "color",
         },
-        name: "canary-colors-lime-400",
+        name: "cn-colors-lime-400",
         attributes: {
           category: "colors",
           type: "lime",
@@ -2268,7 +2268,7 @@ export default {
           $value: "lch(47.69% 37.71 123.86)",
           $type: "color",
         },
-        name: "canary-colors-lime-500",
+        name: "cn-colors-lime-500",
         attributes: {
           category: "colors",
           type: "lime",
@@ -2285,7 +2285,7 @@ export default {
           $value: "lch(38.26% 32.05 123.88)",
           $type: "color",
         },
-        name: "canary-colors-lime-600",
+        name: "cn-colors-lime-600",
         attributes: {
           category: "colors",
           type: "lime",
@@ -2302,7 +2302,7 @@ export default {
           $value: "lch(29.42% 27.17 123.81)",
           $type: "color",
         },
-        name: "canary-colors-lime-700",
+        name: "cn-colors-lime-700",
         attributes: {
           category: "colors",
           type: "lime",
@@ -2319,7 +2319,7 @@ export default {
           $value: "lch(19.97% 21.1 123.91)",
           $type: "color",
         },
-        name: "canary-colors-lime-800",
+        name: "cn-colors-lime-800",
         attributes: {
           category: "colors",
           type: "lime",
@@ -2336,7 +2336,7 @@ export default {
           $value: "lch(11.12% 14.71 126.9)",
           $type: "color",
         },
-        name: "canary-colors-lime-900",
+        name: "cn-colors-lime-900",
         attributes: {
           category: "colors",
           type: "lime",
@@ -2353,7 +2353,7 @@ export default {
           $value: "lch(3.2% 4.34 131.4)",
           $type: "color",
         },
-        name: "canary-colors-lime-950",
+        name: "cn-colors-lime-950",
         attributes: {
           category: "colors",
           type: "lime",
@@ -2372,7 +2372,7 @@ export default {
           $value: "lch(95.14% 7 301.11)",
           $type: "color",
         },
-        name: "canary-colors-purple-50",
+        name: "cn-colors-purple-50",
         attributes: {
           category: "colors",
           type: "purple",
@@ -2389,7 +2389,7 @@ export default {
           $value: "lch(89.58% 17.29 301.92)",
           $type: "color",
         },
-        name: "canary-colors-purple-100",
+        name: "cn-colors-purple-100",
         attributes: {
           category: "colors",
           type: "purple",
@@ -2406,7 +2406,7 @@ export default {
           $value: "lch(72.4% 55.68 305.19)",
           $type: "color",
         },
-        name: "canary-colors-purple-200",
+        name: "cn-colors-purple-200",
         attributes: {
           category: "colors",
           type: "purple",
@@ -2423,7 +2423,7 @@ export default {
           $value: "lch(61.28% 80.51 307.53)",
           $type: "color",
         },
-        name: "canary-colors-purple-300",
+        name: "cn-colors-purple-300",
         attributes: {
           category: "colors",
           type: "purple",
@@ -2440,7 +2440,7 @@ export default {
           $value: "lch(50.99% 105.85 309.98)",
           $type: "color",
         },
-        name: "canary-colors-purple-400",
+        name: "cn-colors-purple-400",
         attributes: {
           category: "colors",
           type: "purple",
@@ -2457,7 +2457,7 @@ export default {
           $value: "lch(40.58% 118.62 311.84)",
           $type: "color",
         },
-        name: "canary-colors-purple-500",
+        name: "cn-colors-purple-500",
         attributes: {
           category: "colors",
           type: "purple",
@@ -2474,7 +2474,7 @@ export default {
           $value: "lch(32.21% 100.98 311.83)",
           $type: "color",
         },
-        name: "canary-colors-purple-600",
+        name: "cn-colors-purple-600",
         attributes: {
           category: "colors",
           type: "purple",
@@ -2491,7 +2491,7 @@ export default {
           $value: "lch(24.34% 84.56 311.84)",
           $type: "color",
         },
-        name: "canary-colors-purple-700",
+        name: "cn-colors-purple-700",
         attributes: {
           category: "colors",
           type: "purple",
@@ -2508,7 +2508,7 @@ export default {
           $value: "lch(15.97% 66.91 311.83)",
           $type: "color",
         },
-        name: "canary-colors-purple-800",
+        name: "cn-colors-purple-800",
         attributes: {
           category: "colors",
           type: "purple",
@@ -2525,7 +2525,7 @@ export default {
           $value: "lch(8.1% 50.49 311.83)",
           $type: "color",
         },
-        name: "canary-colors-purple-900",
+        name: "cn-colors-purple-900",
         attributes: {
           category: "colors",
           type: "purple",
@@ -2542,7 +2542,7 @@ export default {
           $value: "lch(2.32% 21.96 302.37)",
           $type: "color",
         },
-        name: "canary-colors-purple-950",
+        name: "cn-colors-purple-950",
         attributes: {
           category: "colors",
           type: "purple",
@@ -2561,7 +2561,7 @@ export default {
           $value: "lch(95.18% 6.31 296.62)",
           $type: "color",
         },
-        name: "canary-colors-violet-50",
+        name: "cn-colors-violet-50",
         attributes: {
           category: "colors",
           type: "violet",
@@ -2578,7 +2578,7 @@ export default {
           $value: "lch(89.64% 16.29 297.99)",
           $type: "color",
         },
-        name: "canary-colors-violet-100",
+        name: "cn-colors-violet-100",
         attributes: {
           category: "colors",
           type: "violet",
@@ -2595,7 +2595,7 @@ export default {
           $value: "lch(72.11% 52.02 298.43)",
           $type: "color",
         },
-        name: "canary-colors-violet-200",
+        name: "cn-colors-violet-200",
         attributes: {
           category: "colors",
           type: "violet",
@@ -2612,7 +2612,7 @@ export default {
           $value: "lch(65.15% 65.45 298.5)",
           $type: "color",
         },
-        name: "canary-colors-violet-300",
+        name: "cn-colors-violet-300",
         attributes: {
           category: "colors",
           type: "violet",
@@ -2629,7 +2629,7 @@ export default {
           $value: "lch(51.98% 93.37 301.42)",
           $type: "color",
         },
-        name: "canary-colors-violet-400",
+        name: "cn-colors-violet-400",
         attributes: {
           category: "colors",
           type: "violet",
@@ -2646,7 +2646,7 @@ export default {
           $value: "lch(40.56% 121.68 305.61)",
           $type: "color",
         },
-        name: "canary-colors-violet-500",
+        name: "cn-colors-violet-500",
         attributes: {
           category: "colors",
           type: "violet",
@@ -2663,7 +2663,7 @@ export default {
           $value: "lch(31.46% 113.1 306.9)",
           $type: "color",
         },
-        name: "canary-colors-violet-600",
+        name: "cn-colors-violet-600",
         attributes: {
           category: "colors",
           type: "violet",
@@ -2680,7 +2680,7 @@ export default {
           $value: "lch(23.77% 93.78 307.37)",
           $type: "color",
         },
-        name: "canary-colors-violet-700",
+        name: "cn-colors-violet-700",
         attributes: {
           category: "colors",
           type: "violet",
@@ -2697,7 +2697,7 @@ export default {
           $value: "lch(15.62% 72.5 308.3)",
           $type: "color",
         },
-        name: "canary-colors-violet-800",
+        name: "cn-colors-violet-800",
         attributes: {
           category: "colors",
           type: "violet",
@@ -2714,7 +2714,7 @@ export default {
           $value: "lch(8.15% 49.81 312.23)",
           $type: "color",
         },
-        name: "canary-colors-violet-900",
+        name: "cn-colors-violet-900",
         attributes: {
           category: "colors",
           type: "violet",
@@ -2731,7 +2731,7 @@ export default {
           $value: "lch(2.33% 21.62 302.28)",
           $type: "color",
         },
-        name: "canary-colors-violet-950",
+        name: "cn-colors-violet-950",
         attributes: {
           category: "colors",
           type: "violet",
@@ -2750,7 +2750,7 @@ export default {
           $value: "lch(95.23% 6.03 283.32)",
           $type: "color",
         },
-        name: "canary-colors-indigo-50",
+        name: "cn-colors-indigo-50",
         attributes: {
           category: "colors",
           type: "indigo",
@@ -2767,7 +2767,7 @@ export default {
           $value: "lch(89.8% 14.62 283.7)",
           $type: "color",
         },
-        name: "canary-colors-indigo-100",
+        name: "cn-colors-indigo-100",
         attributes: {
           category: "colors",
           type: "indigo",
@@ -2784,7 +2784,7 @@ export default {
           $value: "lch(72.68% 45.97 284.36)",
           $type: "color",
         },
-        name: "canary-colors-indigo-200",
+        name: "cn-colors-indigo-200",
         attributes: {
           category: "colors",
           type: "indigo",
@@ -2801,7 +2801,7 @@ export default {
           $value: "lch(65.79% 58.29 283.92)",
           $type: "color",
         },
-        name: "canary-colors-indigo-300",
+        name: "cn-colors-indigo-300",
         attributes: {
           category: "colors",
           type: "indigo",
@@ -2818,7 +2818,7 @@ export default {
           $value: "lch(53.15% 81.87 288.43)",
           $type: "color",
         },
-        name: "canary-colors-indigo-400",
+        name: "cn-colors-indigo-400",
         attributes: {
           category: "colors",
           type: "indigo",
@@ -2835,7 +2835,7 @@ export default {
           $value: "lch(42.04% 107.17 295.8)",
           $type: "color",
         },
-        name: "canary-colors-indigo-500",
+        name: "cn-colors-indigo-500",
         attributes: {
           category: "colors",
           type: "indigo",
@@ -2852,7 +2852,7 @@ export default {
           $value: "lch(30.63% 128.3 302.36)",
           $type: "color",
         },
-        name: "canary-colors-indigo-600",
+        name: "cn-colors-indigo-600",
         attributes: {
           category: "colors",
           type: "indigo",
@@ -2869,7 +2869,7 @@ export default {
           $value: "lch(23.02% 107.52 302.38)",
           $type: "color",
         },
-        name: "canary-colors-indigo-700",
+        name: "cn-colors-indigo-700",
         attributes: {
           category: "colors",
           type: "indigo",
@@ -2886,7 +2886,7 @@ export default {
           $value: "lch(14.93% 84.93 302.33)",
           $type: "color",
         },
-        name: "canary-colors-indigo-800",
+        name: "cn-colors-indigo-800",
         attributes: {
           category: "colors",
           type: "indigo",
@@ -2903,7 +2903,7 @@ export default {
           $value: "lch(7.38% 63.51 302.14)",
           $type: "color",
         },
-        name: "canary-colors-indigo-900",
+        name: "cn-colors-indigo-900",
         attributes: {
           category: "colors",
           type: "indigo",
@@ -2920,7 +2920,7 @@ export default {
           $value: "lch(2.17% 29.85 290.49)",
           $type: "color",
         },
-        name: "canary-colors-indigo-950",
+        name: "cn-colors-indigo-950",
         attributes: {
           category: "colors",
           type: "indigo",

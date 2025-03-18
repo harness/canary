@@ -72,7 +72,9 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
         <EntityFormLayout.Root>
           <EntityFormSectionLayout.Root>
             <EntityFormSectionLayout.Header>
-              Connect to {formEntity.data.name}
+              <EntityFormSectionLayout.Title className="!my-0">
+                Connect to {formEntity.data.name}
+              </EntityFormSectionLayout.Title>
               <div className="pt-2">
                 <Button variant="ghost" onClick={() => setRightDrawer(ConnectorRightDrawer.Collection)}>
                   <Icon name="arrow-long" className="rotate-180" size={12} />
@@ -85,11 +87,11 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
             </EntityFormSectionLayout.Form>
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer>
-            <div className="flex gap-x-3">
-              <Button onClick={() => rootForm.submitForm()}>Submit</Button>
+            <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-background-2 p-4 shadow-md">
               <Button variant="secondary" onClick={requestClose}>
                 Cancel
               </Button>
+              <Button onClick={() => rootForm.submitForm()}>Submit</Button>
             </div>
           </EntityFormLayout.Footer>
         </EntityFormLayout.Root>

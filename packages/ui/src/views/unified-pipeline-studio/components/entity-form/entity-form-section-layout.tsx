@@ -5,12 +5,12 @@ const EntityFormSectionLayout = {
     return <div className="flex grow flex-col overflow-auto">{children}</div>
   },
 
-  Header: function Header({ children }: { children: React.ReactNode }) {
-    return <div className="p-4">{children}</div>
+  Header: function Header({ children, className }: { children: React.ReactNode; className?: string }) {
+    return <div className={cx('p-4', className)}>{children}</div>
   },
 
-  Title: function Title({ children }: { children: React.ReactNode }) {
-    return <div className="my-3 text-lg text-accent-foreground">{children}</div>
+  Title: function Title({ children, className }: { children: React.ReactNode; className?: string }) {
+    return <div className={cx('my-3 text-lg text-accent-foreground', className)}>{children}</div>
   },
 
   Description: function Description({ children }: { children: React.ReactNode }) {

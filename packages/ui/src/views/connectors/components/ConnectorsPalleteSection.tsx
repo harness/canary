@@ -22,15 +22,19 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                 onSelect(connector)
               }}
             >
-              <StepsPaletteItemLayout.Left>
+              <StepsPaletteItemLayout.Left className="flex items-center">
                 <Icon name="harness-plugin" size={36} />
               </StepsPaletteItemLayout.Left>
               <StepsPaletteItemLayout.Right>
                 <StepsPaletteItemLayout.Header>
-                  <StepsPaletteItemLayout.Title>{connector.name}</StepsPaletteItemLayout.Title>
+                  <StepsPaletteItemLayout.Title className="text-foreground-1">
+                    {connector.name}
+                  </StepsPaletteItemLayout.Title>
                   {/* <StepsPaletteItem.BadgeWrapper>verified</StepsPaletteItem.BadgeWrapper> */}
                 </StepsPaletteItemLayout.Header>
-                <StepsPaletteItemLayout.Description>{connector.category}</StepsPaletteItemLayout.Description>
+                <StepsPaletteItemLayout.Description className="text-foreground-4">
+                  {connector.category}
+                </StepsPaletteItemLayout.Description>
               </StepsPaletteItemLayout.Right>
             </StepsPaletteItemLayout.Root>
           </StepsPaletteContentLayout.SectionItem>

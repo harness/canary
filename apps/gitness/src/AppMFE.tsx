@@ -147,12 +147,12 @@ export default function AppMFE({
   }, [theme])
 
   const shadowRef = useRef<HTMLDivElement>(null)
-  const shadowRootElement = shadowRef.current?.shadowRoot as ShadowRoot | undefined
+  const shadowRoot = shadowRef.current?.shadowRoot as ShadowRoot | undefined
 
   const portalRef = useRef<HTMLDivElement>(null)
   const portalContainer = portalRef.current as Element | undefined
 
-  const isStylesLoaded = useLoadMFEStyles(shadowRootElement)
+  const isStylesLoaded = useLoadMFEStyles(shadowRoot)
 
   // Router Configuration
   const basename = `/ng${renderUrl}`

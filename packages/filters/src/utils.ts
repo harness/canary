@@ -1,7 +1,6 @@
 import { FilterStatus, FilterType } from './types'
 
 export function renderQueryString(search: URLSearchParams) {
-  // @ts-ignore
   if (search.size === 0) {
     return ''
   }

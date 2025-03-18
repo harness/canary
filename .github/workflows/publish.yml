@@ -2,8 +2,15 @@ name: Publish Packages to npm
 
 on:
   push:
-    tags:
-      - 'packages/*@v*' # Example: packages/ui@v1.0.0
+  pull_request_target:
+    paths:
+      - 'packages/*/package.json'
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - main
 
 jobs:
   publish:

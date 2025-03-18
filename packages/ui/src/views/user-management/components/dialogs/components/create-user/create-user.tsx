@@ -1,13 +1,33 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, Dialog, Fieldset, FormWrapper, Input } from '@/components'
+import { Alert, Button, ButtonGroup, Dialog, FormWrapper, Input } from '@/components'
+import { TranslationStore } from '@/views'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  createNewUserSchema,
-  NewUserFields
-} from '@views/user-management/components/dialogs/components/create-user/schema'
+import { makeValidationUtils } from '@utils/validation'
+import { z } from 'zod'
+
+const createNewUserSchema = (t: TranslationStore['t']) => {
+  const { required, maxLength, specialSymbols, noSpaces, invalid } = makeValidationUtils(t)
+
+  return z.object({
+    uid: z
+      .string()
+      .trim()
+      .nonempty(required(t('views:userManagement.userId')))
+      .max(...maxLength(100, t('views:userManagement.userId')))
+      .regex(...specialSymbols(t('views:userManagement.userId')))
+      .refine(...noSpaces(t('views:userManagement.userId'))),
+    email: z.string().email(invalid(t('views:userManagement.email'))),
+    display_name: z
+      .string()
+      .trim()
+      .nonempty(required(t('views:userManagement.displayName')))
+  })
+}
+
+type NewUserFields = z.infer<ReturnType<typeof createNewUserSchema>>
 
 interface CreateUserDialogProps {
   handleCreateUser: (data: NewUserFields) => void
@@ -47,38 +67,40 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
         </Dialog.Header>
 
         <FormWrapper onSubmit={handleSubmit(onSubmit)} id="create-user-form">
-          <Fieldset>
-            <Input
-              id="memberName"
-              size="md"
-              {...register('uid')}
-              label={t('views:userManagement.userId', 'User ID')}
-              caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
-              placeholder={t('views:userManagement.enterName', 'Enter name')}
-              error={errors.uid?.message?.toString()}
-            />
+          <Input
+            id="memberName"
+            size="md"
+            {...register('uid')}
+            label={t('views:userManagement.userId', 'User ID')}
+            caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
+            placeholder={t('views:userManagement.enterName', 'Enter name')}
+            error={errors.uid?.message?.toString()}
+          />
 
-            <Input
-              id="email"
-              type="email"
-              size="md"
-              {...register('email')}
-              placeholder={t('views:userManagement.enterEmail', 'Enter email address')}
-              label={t('views:userManagement.email', 'Email')}
-              error={errors.email?.message?.toString()}
-            />
+          <Input
+            id="email"
+            type="email"
+            size="md"
+            {...register('email')}
+            placeholder={t('views:userManagement.enterEmail', 'Enter email address')}
+            label={t('views:userManagement.email', 'Email')}
+            error={errors.email?.message?.toString()}
+          />
 
-            <Input
-              id="displayName"
-              size="md"
-              {...register('display_name')}
-              placeholder={t('views:userManagement.createUser.enterDisplayName', 'Enter display name')}
-              label={t('views:userManagement.displayName', 'Display name')}
-              error={errors.display_name?.message?.toString()}
-            />
-          </Fieldset>
+          <Input
+            id="displayName"
+            size="md"
+            {...register('display_name')}
+            placeholder={t('views:userManagement.createUser.enterDisplayName', 'Enter display name')}
+            label={t('views:userManagement.displayName', 'Display name')}
+            error={errors.display_name?.message?.toString()}
+          />
 
-          {createUserError && <span className="text-xs text-destructive">{createUserError}</span>}
+          {!!createUserError && (
+            <Alert.Container closable variant="destructive">
+              <Alert.Title>{createUserError}</Alert.Title>
+            </Alert.Container>
+          )}
         </FormWrapper>
 
         <Dialog.Footer>

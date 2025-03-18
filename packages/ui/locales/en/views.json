@@ -324,6 +324,38 @@
       "noSpaces": "{{name}} cannot contain spaces"
     }
   },
+  "signUp": {
+    "emailLabel": "Email",
+    "userIDLabel": "User ID",
+    "passwordLabel": "Password",
+    "validation": {
+      "passwordsCheck": "Passwords don't match"
+    },
+    "pageTitle": "Sign up to Harness",
+    "pageDescription": "Let’s start your journey with us today.",
+    "userIDPlaceholder": "User ID",
+    "emailPlaceholder": "Your email",
+    "passwordPlaceholder": "Password (6+ characters)",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "confirmPasswordLabel": "Confirm password",
+    "buttonText": {
+      "signingUp": "Signing up...",
+      "signUp": "Sign up"
+    },
+    "signInLink": {
+      "question": "Already have an account?",
+      "linkText": "Sign in"
+    }
+  },
+  "forgotPassword": {
+    "emailLabel": "Email"
+  },
+  "newPassword": {
+    "passwordLabel": "New password",
+    "validation": {
+      "passwordsCheck": "Passwords don't match"
+    }
+  },
   "signIn": {
     "emailTitle": "Username/Email",
     "passwordTitle": "Password",
@@ -339,29 +371,6 @@
     "signUpLink": {
       "question": "Don’t have an account?",
       "linkText": "Sign up"
-    }
-  },
-  "signUp": {
-    "userIDPlaceholder": "User ID",
-    "emailLabel": "Email",
-    "passwordLabel": "Password",
-    "validation": {
-      "passwordsCheck": "Passwords don't match"
-    },
-    "pageTitle": "Sign up to Harness",
-    "pageDescription": "Let’s start your journey with us today.",
-    "userIDLabel": "User ID",
-    "emailPlaceholder": "Your email",
-    "passwordPlaceholder": "Password (6+ characters)",
-    "confirmPasswordPlaceholder": "Confirm password",
-    "confirmPasswordLabel": "Confirm password",
-    "buttonText": {
-      "signingUp": "Signing up...",
-      "signUp": "Sign up"
-    },
-    "signInLink": {
-      "question": "Already have an account?",
-      "linkText": "Sign in"
     }
   },
   "execution": {
@@ -705,24 +714,25 @@
     "edit": "Edit webhook",
     "delete": "Delete webhook"
   },
+  "secrets": {
+    "createSecret": {
+      "label": "Secret Name"
+    },
+    "secretsTitle": "Secrets"
+  },
   "userManagement": {
+    "userId": "User ID",
+    "email": "Email",
+    "displayName": "Display name",
     "createUser": {
       "title": "Add a new user",
       "enterDisplayName": "Enter display name",
       "inviting": "Inviting...",
-      "inviteNewUser": "Invite new user",
-      "validation": {
-        "userIdRequired": "Please provide a user ID",
-        "invalidEmail": "Please enter a valid email address",
-        "displayNameRequired": "Please provide a display name"
-      }
+      "inviteNewUser": "Invite new user"
     },
-    "userId": "User ID",
     "userIdHint": "User ID cannot be changed once created",
     "enterName": "Enter name",
     "enterEmail": "Enter email address",
-    "email": "Email",
-    "displayName": "Display name",
     "cancel": "Cancel",
     "deleteUser": {
       "title": "Are you sure you want to delete {{name}}?",
@@ -731,15 +741,11 @@
       "confirm": "Yes, delete user"
     },
     "editUser": {
+      "email": "Email",
       "title": "Update user",
       "message": "Update information for <strong>{{name}}</strong> and confirm changes.",
-      "email": "Email",
       "pending": "Saving...",
-      "save": "Save",
-      "validation": {
-        "invalidEmail": "Please enter a valid email address",
-        "displayNameRequired": "Please provide a display name"
-      }
+      "save": "Save"
     },
     "removeAdmin": {
       "title": "Are you sure you want to remove {{name}} as an admin?",
@@ -784,8 +790,5 @@
       "editUser": "Edit user",
       "deleteUser": "Delete user"
     }
-  },
-  "secrets": {
-    "secretsTitle": "Secrets"
   }
 }

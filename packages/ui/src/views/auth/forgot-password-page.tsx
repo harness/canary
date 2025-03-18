@@ -3,7 +3,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, Card, Input, Spacer, Text } from '@/components'
 import { useRouterContext } from '@/context'
+import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 import { Floating1ColumnLayout } from '..'
@@ -13,6 +15,7 @@ import { AnimatedHarnessLogo } from './components/animated-harness-logo'
 interface ForgotPasswordPageProps {
   isLoading?: boolean
   onSubmit?: (emailData: ForgotPasswordData) => void
+  useTranslationStore: () => TranslationStore
   error?: string
 }
 
@@ -20,11 +23,15 @@ export interface ForgotPasswordData {
   email?: string
 }
 
-const forgotPasswordSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' })
-})
+const makeForgotPasswordSchema = (t: TranslationStore['t']) => {
+  const { invalid } = makeValidationUtils(t)
+  return z.object({
+    email: z.string().email(invalid(t('views:signUp.emailLabel')))
+  })
+}
 
-export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswordPageProps) {
+export function ForgotPasswordPage({ isLoading, onSubmit, useTranslationStore, error }: ForgotPasswordPageProps) {
+  const { t } = useTranslationStore()
   const { Link } = useRouterContext()
   const [serverError, setServerError] = useState<string | null>(null)
   const {
@@ -35,7 +42,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
     trigger,
     formState: { errors }
   } = useForm({
-    resolver: zodResolver(forgotPasswordSchema)
+    resolver: zodResolver(makeForgotPasswordSchema(t))
   })
 
   const handleOnSubmit: SubmitHandler<ForgotPasswordData> = data => {
@@ -70,7 +77,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
 
   return (
     <Floating1ColumnLayout
-      className="flex-col bg-background-7 pt-20 sm:pt-[186px]"
+      className="bg-background-7 flex-col pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
@@ -90,7 +97,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
               id="email"
               type="email"
               placeholder="Your email"
-              label="Email"
+              label={t('views:forgotPassword.emailLabel', 'Email')}
               size="md"
               {...register('email', { onChange: handleInputChange })}
               error={errors.email?.message?.toString()}

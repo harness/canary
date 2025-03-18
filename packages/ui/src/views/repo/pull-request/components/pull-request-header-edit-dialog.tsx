@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react'
 
-import { Button, Dialog, Fieldset, FormWrapper, Input } from '@/components'
+import { Button, Dialog, FormWrapper, Input } from '@/components'
 
 interface PullRequestHeaderEditDialogProps {
   open: boolean
@@ -48,18 +48,16 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
           <Dialog.Title>Edit PR title</Dialog.Title>
         </Dialog.Header>
         <FormWrapper>
-          <Fieldset>
-            <Input
-              value={title}
-              size="md"
-              placeholder="Enter pull request title"
-              label="Title"
-              onFocus={event => event.target.select()}
-              onChange={handleChange}
-              error={error}
-              autoFocus
-            />
-          </Fieldset>
+          <Input
+            value={title}
+            size="md"
+            placeholder="Enter pull request title"
+            label="Title"
+            onFocus={event => event.target.select()}
+            onChange={handleChange}
+            error={error}
+            autoFocus
+          />
         </FormWrapper>
 
         <Dialog.Footer>

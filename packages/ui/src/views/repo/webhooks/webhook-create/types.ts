@@ -3,7 +3,7 @@ import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'rea
 import { TFunction } from 'i18next'
 import { z } from 'zod'
 
-import { createWebhookFormSchema } from './components/create-webhooks-form-schema'
+import { makeCreateWebhookFormSchema } from './components/create-webhooks-form-schema'
 
 export enum WebhookTriggerEnum {
   PR_CREATED = 'pullreq_created',
@@ -21,7 +21,7 @@ export enum WebhookTriggerEnum {
   BRANCH_DELETED = 'branch_deleted'
 }
 
-export type CreateWebhookFormFields = z.infer<typeof createWebhookFormSchema>
+export type CreateWebhookFormFields = z.infer<ReturnType<typeof makeCreateWebhookFormSchema>>
 
 export interface WebhookFormFieldProps {
   register?: UseFormRegister<CreateWebhookFormFields>

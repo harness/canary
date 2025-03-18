@@ -323,6 +323,38 @@
       "noSpaces": "{{name}} ne peut pas contenir d'espaces"
     }
   },
+  "signUp": {
+    "emailLabel": "Adresse e-mail",
+    "userIDLabel": "ID utilisateur",
+    "passwordLabel": "Mot de passe",
+    "validation": {
+      "passwordsCheck": "Les mots de passe ne correspondent pas"
+    },
+    "pageTitle": "S'inscrire à Harness",
+    "pageDescription": "Commencez votre aventure avec nous dès aujourd'hui.",
+    "userIDPlaceholder": "ID utilisateur",
+    "emailPlaceholder": "Votre adresse e-mail",
+    "passwordPlaceholder": "Mot de passe (6 caractères minimum)",
+    "confirmPasswordPlaceholder": "Confirmer le mot de passe",
+    "confirmPasswordLabel": "Confirmer le mot de passe",
+    "buttonText": {
+      "signingUp": "Inscription en cours...",
+      "signUp": "S'inscrire"
+    },
+    "signInLink": {
+      "question": "Vous avez déjà un compte ?",
+      "linkText": "Se connecter"
+    }
+  },
+  "forgotPassword": {
+    "emailLabel": "E-mail"
+  },
+  "newPassword": {
+    "passwordLabel": "Nouveau mot de passe",
+    "validation": {
+      "passwordsCheck": "Les mots de passe ne correspondent pas"
+    }
+  },
   "signIn": {
     "emailTitle": "Nom d'utilisateur/Adresse e-mail",
     "passwordTitle": "Mot de passe",
@@ -338,29 +370,6 @@
     "signUpLink": {
       "question": "Vous n'avez pas de compte ?",
       "linkText": "S'inscrire"
-    }
-  },
-  "signUp": {
-    "userIDPlaceholder": "ID utilisateur",
-    "emailLabel": "Adresse e-mail",
-    "passwordLabel": "Mot de passe",
-    "validation": {
-      "passwordsCheck": "Les mots de passe ne correspondent pas"
-    },
-    "pageTitle": "S'inscrire à Harness",
-    "pageDescription": "Commencez votre aventure avec nous dès aujourd'hui.",
-    "userIDLabel": "ID utilisateur",
-    "emailPlaceholder": "Votre adresse e-mail",
-    "passwordPlaceholder": "Mot de passe (6 caractères minimum)",
-    "confirmPasswordPlaceholder": "Confirmer le mot de passe",
-    "confirmPasswordLabel": "Confirmer le mot de passe",
-    "buttonText": {
-      "signingUp": "Inscription en cours...",
-      "signUp": "S'inscrire"
-    },
-    "signInLink": {
-      "question": "Vous avez déjà un compte ?",
-      "linkText": "Se connecter"
     }
   },
   "execution": {
@@ -701,24 +710,25 @@
     "edit": "Edit webhook",
     "delete": "Delete webhook"
   },
+  "secrets": {
+    "createSecret": {
+      "label": "Nom du secret"
+    },
+    "secretsTitle": "Secrets"
+  },
   "userManagement": {
+    "userId": "Identifiant utilisateur",
+    "email": "E-mail",
+    "displayName": "Nom d'affichage",
     "createUser": {
       "title": "Ajouter un nouvel utilisateur",
       "enterDisplayName": "Saisissez le nom d'affichage",
       "inviting": "Invitation en cours...",
-      "inviteNewUser": "Inviter un nouvel utilisateur",
-      "validation": {
-        "userIdRequired": "Veuillez fournir un identifiant utilisateur",
-        "invalidEmail": "Veuillez saisir une adresse e-mail valide",
-        "displayNameRequired": "Veuillez fournir un nom d'affichage"
-      }
+      "inviteNewUser": "Inviter un nouvel utilisateur"
     },
-    "userId": "Identifiant utilisateur",
     "userIdHint": "L'identifiant utilisateur ne peut pas être modifié une fois créé",
     "enterName": "Saisissez le nom",
     "enterEmail": "Saisissez l'adresse e-mail",
-    "email": "E-mail",
-    "displayName": "Nom d'affichage",
     "cancel": "Annuler",
     "deleteUser": {
       "title": "Êtes-vous sûr de vouloir supprimer {{name}} ?",
@@ -727,15 +737,11 @@
       "confirm": "Oui, supprimer l'utilisateur"
     },
     "editUser": {
+      "email": "E-mail",
       "title": "Mettre à jour l'utilisateur",
       "message": "Mettez à jour les informations de {{name}} et confirmez les modifications.",
-      "email": "E-mail",
       "pending": "Enregistrement...",
-      "save": "Enregistrer",
-      "validation": {
-        "invalidEmail": "Veuillez saisir une adresse e-mail valide",
-        "displayNameRequired": "Veuillez fournir un nom d'affichage"
-      }
+      "save": "Enregistrer"
     },
     "removeAdmin": {
       "title": "Êtes-vous sûr de vouloir retirer {{name}} en tant qu'administrateur ?",
@@ -780,8 +786,5 @@
       "editUser": "Modifier l'utilisateur",
       "deleteUser": "Supprimer l'utilisateur"
     }
-  },
-  "secrets": {
-    "secretsTitle": "Secrets"
   }
 }

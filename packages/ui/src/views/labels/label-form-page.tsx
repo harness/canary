@@ -151,7 +151,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
 
   return (
     <SandboxLayout.Content className={cn('!flex-none w-[610px]', className)}>
-      <h1 className="mb-10 text-2xl font-medium text-foreground-1">
+      <h1 className="text-foreground-1 mb-10 text-2xl font-medium">
         {labelId
           ? t('views:labelData.form.editTitle', 'Label details')
           : t('views:labelData.form.createTitle', 'Create a label')}
@@ -161,7 +161,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
 
       {!isLoading && (
         <FormWrapper className="gap-y-10" onSubmit={handleSubmit(onSubmit)}>
-          <Fieldset>
+          <Fieldset legend="Label details">
             <ControlGroup>
               <Label className="mb-2.5" color="secondary" htmlFor="label-name">
                 {t('views:labelData.form.labelName', 'Label name')}
@@ -241,7 +241,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
           </Fieldset>
 
           <section className="mt-1 flex flex-col gap-y-5">
-            <h3 className="text-sm leading-none text-foreground-2">
+            <h3 className="text-foreground-2 text-sm leading-none">
               {t('views:labelData.form.previewLabel', 'Label preview')}
             </h3>
 
@@ -270,16 +270,14 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
             </Alert.Container>
           )}
 
-          <Fieldset>
-            <ButtonGroup spacing="3">
-              <Button type="submit" disabled={!isValid || isSaving}>
-                {isSaving ? t('views:repos.saving', 'Saving…') : t('views:repos.save', 'Save')}
-              </Button>
-              <Button type="reset" variant="outline" onClick={onFormCancel}>
-                {t('views:repos.cancel', 'Cancel')}
-              </Button>
-            </ButtonGroup>
-          </Fieldset>
+          <ButtonGroup spacing="3">
+            <Button type="submit" disabled={!isValid || isSaving}>
+              {isSaving ? t('views:repos.saving', 'Saving…') : t('views:repos.save', 'Save')}
+            </Button>
+            <Button type="reset" variant="outline" onClick={onFormCancel}>
+              {t('views:repos.cancel', 'Cancel')}
+            </Button>
+          </ButtonGroup>
         </FormWrapper>
       )}
     </SandboxLayout.Content>

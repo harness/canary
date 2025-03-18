@@ -150,9 +150,9 @@ export default function AppMFE({
   const shadowRef = useRef<HTMLDivElement>(null)
   const shadowRoot = shadowRef.current?.shadowRoot as ShadowRoot | undefined
 
-  // Radix UI elements will be rendered inside radixContainer
-  const radixRef = useRef<HTMLDivElement>(null)
-  const radixContainer = radixRef.current as Element | undefined
+  // Radix UI elements will be rendered inside portalContainer
+  const portalRef = useRef<HTMLDivElement>(null)
+  const portalContainer = portalRef.current as Element | undefined
 
   const isStylesLoaded = useLoadMFEStyles(shadowRoot)
 
@@ -169,12 +169,13 @@ export default function AppMFE({
   return (
     <div ref={shadowRef}>
       <ShadowRootWrapper>
-        <div className={theme.toLowerCase()} ref={radixRef}>
+        {/* Radix UI elements need to be rendered inside the following div with the theme class */}
+        <div className={theme.toLowerCase()} ref={portalRef}>
           {!isStylesLoaded ? (
             // Replace it with spinner once it is available
             <ShadowRootLoader theme={theme} />
           ) : (
-            <PortalProvider portalContainer={radixContainer}>
+            <PortalProvider portalContainer={portalContainer}>
               <MFEContext.Provider
                 value={{
                   scope,

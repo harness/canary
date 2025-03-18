@@ -19,7 +19,7 @@ const fetchMarkdownPreviewStyles = async () => {
   return markdownPreviewStyles.default
 }
 
-export function useLoadMFEStyles(portalContainer: Element | undefined) {
+export function useLoadMFEStyles(portalContainer?: ShadowRoot) {
   const [isStylesLoaded, setIsStylesLoaded] = useState(false)
 
   useEffect(() => {

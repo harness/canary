@@ -1,5 +1,3 @@
-import './styles/AppMFE.css'
-
 import { useEffect, useMemo, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import {
@@ -148,10 +146,13 @@ export default function AppMFE({
     }
   }, [theme])
 
-  const portalRef = useRef<HTMLDivElement>(null)
-  const portalContainer = portalRef.current?.shadowRoot as Element | undefined
+  const shadowRef = useRef<HTMLDivElement>(null)
+  const shadowRootElement = shadowRef.current?.shadowRoot as ShadowRoot | undefined
 
-  const isStylesLoaded = useLoadMFEStyles(portalContainer)
+  const portalRef = useRef<HTMLDivElement>(null)
+  const portalContainer = portalRef.current as Element | undefined
+
+  const isStylesLoaded = useLoadMFEStyles(shadowRootElement)
 
   // Router Configuration
   const basename = `/ng${renderUrl}`
@@ -164,9 +165,9 @@ export default function AppMFE({
   const router = createBrowserRouter(routesToRender, { basename })
 
   return (
-    <div ref={portalRef}>
+    <div ref={shadowRef}>
       <ShadowRootWrapper>
-        <div className={theme.toLowerCase()}>
+        <div className={theme.toLowerCase()} ref={portalRef}>
           {!isStylesLoaded ? (
             // Replace it with spinner once it is available
             <ShadowRootLoader theme={theme} />

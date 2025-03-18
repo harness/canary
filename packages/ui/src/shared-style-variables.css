@@ -1,4 +1,5 @@
-:root {
+:root,
+:host {
   /* PP Figma shades */
   --canary-black: 240 13% 3%;
   --canary-grey-6: 240 6% 6%;
@@ -42,7 +43,8 @@
   /*--vscode-scrollbarSlider-activeBackground: #0000ff;*/
 }
 
-:root {
+:root,
+:host {
   /* value */
   /* color */
   --canary-pure-white: 0 0% 100%;
@@ -189,7 +191,8 @@
 
 @layer themes {
   /* TODO: replace hsl with variables for theming */
-  :root {
+  :root,
+  :host {
     --canary-background: 0 0% 100%;
     --canary-foreground: 240 10% 3.9%;
     --canary-card: 0 0% 100%;

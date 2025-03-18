@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Label, Textarea } from '@/components'
+import { Alert, Button, ControlGroup, Dialog, FormWrapper, Input, Label, Textarea } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BranchSelector } from '@views/repo/components'
 import { TranslationStore } from '@views/repo/repo-list/types'
@@ -89,61 +89,55 @@ export function CreateTagDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content className="max-w-[460px] border-border bg-background-1" aria-describedby={undefined}>
+      <Dialog.Content className="border-border bg-background-1 max-w-[460px]" aria-describedby={undefined}>
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createTagTitle', 'Create a tag')}</Dialog.Title>
         </Dialog.Header>
         <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-          <Fieldset>
-            <Input
-              id="name"
-              label="Tag name"
-              {...register('name')}
-              placeholder={t('views:forms.enterTagName', 'Enter tag name')}
-              size="md"
-              error={
-                errors.name?.message ? t('views:forms.createBranchError', errors.name?.message?.toString()) : undefined
-              }
+          <Input
+            id="name"
+            label="Tag name"
+            {...register('name')}
+            placeholder={t('views:forms.enterTagName', 'Enter tag name')}
+            size="md"
+            error={
+              errors.name?.message ? t('views:forms.createBranchError', errors.name?.message?.toString()) : undefined
+            }
+          />
+
+          <ControlGroup>
+            <Label htmlFor="target" className="mb-2.5">
+              Based on
+            </Label>
+            <BranchSelector
+              useRepoBranchesStore={useRepoBranchesStore}
+              useTranslationStore={useTranslationStore}
+              onSelectBranch={value => {
+                handleSelectChange('target', value.name)
+                setSelectedBranchTag(value)
+              }}
+              searchQuery={branchQuery}
+              setSearchQuery={setBranchQuery}
+              buttonSize="md"
+              dynamicWidth
             />
-          </Fieldset>
+          </ControlGroup>
 
-          <Fieldset>
-            <ControlGroup>
-              <Label htmlFor="target" className="mb-2.5">
-                Based on
-              </Label>
-              <BranchSelector
-                useRepoBranchesStore={useRepoBranchesStore}
-                useTranslationStore={useTranslationStore}
-                onSelectBranch={value => {
-                  handleSelectChange('target', value.name)
-                  setSelectedBranchTag(value)
-                }}
-                searchQuery={branchQuery}
-                setSearchQuery={setBranchQuery}
-                buttonSize="md"
-                dynamicWidth
-              />
-            </ControlGroup>
-          </Fieldset>
+          <Textarea
+            id="description"
+            {...register('message')}
+            placeholder={t('views:repos.repoTagDescriptionPlaceholder', 'Enter a description of this tag...')}
+            label={t('views:repos.description', 'Description')}
+            error={errors.message?.message?.toString()}
+          />
 
-          <Fieldset>
-            <Textarea
-              id="description"
-              {...register('message')}
-              placeholder={t('views:repos.repoTagDescriptionPlaceholder', 'Enter a description of this tag...')}
-              label={t('views:repos.description', 'Description')}
-              error={errors.message?.message?.toString()}
-            />
-          </Fieldset>
-
-          {error ? (
+          {error && (
             <Alert.Container variant="destructive">
               <Alert.Title>
                 {t('views:repos.error', 'Error:')} {error}
               </Alert.Title>
             </Alert.Container>
-          ) : null}
+          )}
 
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button

@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button, Card, Input, Text } from '@/components'
+import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 import { Floating1ColumnLayout } from '..'
@@ -12,6 +14,7 @@ import { AnimatedHarnessLogo } from './components/animated-harness-logo'
 interface NewPasswordPageProps {
   isLoading?: boolean
   handleFormSubmit?: (data: NewPasswordData) => void
+  useTranslationStore: () => TranslationStore
   error?: string
 }
 
@@ -20,17 +23,25 @@ export interface NewPasswordData {
   confirmPassword?: string
 }
 
-const newPasswordSchema = z
-  .object({
-    password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
-    confirmPassword: z.string()
-  })
-  .refine(data => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword']
-  })
+const newPasswordSchema = (t: TranslationStore['t']) => {
+  const { maxLength, minLength } = makeValidationUtils(t)
 
-export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPasswordPageProps) {
+  return z
+    .object({
+      password: z
+        .string()
+        .min(...minLength(6, t('views:newPassword.passwordLabel')))
+        .max(...maxLength(128, t('views:newPassword.passwordLabel'))),
+      confirmPassword: z.string().min(...minLength(6, t('views:newPassword.passwordLabel')))
+    })
+    .refine(data => data.password === data.confirmPassword, {
+      message: t('views:newPassword.validation.passwordsCheck', "Passwords don't match"),
+      path: ['confirmPassword']
+    })
+}
+
+export function NewPasswordPage({ isLoading, handleFormSubmit, useTranslationStore, error }: NewPasswordPageProps) {
+  const { t } = useTranslationStore()
   const [serverError, setServerError] = useState<string | null>(null)
   const {
     register,
@@ -40,7 +51,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
     trigger,
     formState: { errors }
   } = useForm({
-    resolver: zodResolver(newPasswordSchema)
+    resolver: zodResolver(newPasswordSchema(t))
   })
 
   const onFormSubmit = (data: NewPasswordData) => {
@@ -76,7 +87,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
 
   return (
     <Floating1ColumnLayout
-      className="flex-col bg-background-7 pt-20 sm:pt-[186px]"
+      className="bg-background-7 flex-col pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
@@ -95,7 +106,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
             <Input
               id="password"
               type="password"
-              label="New password"
+              label={t('views:newPassword.passwordLabel', 'New password')}
               size="md"
               {...register('password', { onChange: handleInputChange })}
               placeholder="Password (6+ characters)"

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { cn } from '@harnessio/ui/utils'
+import { cn } from '@utils/cn'
 
 const StepsPaletteContentLayout = {
   Root: function Content({ children, className }: { children: React.ReactNode; className?: string }) {

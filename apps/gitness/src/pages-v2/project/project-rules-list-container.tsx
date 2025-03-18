@@ -27,7 +27,7 @@ export const ProjectRulesListContainer = () => {
 
   return (
     <ProjectRulesPage
-      rulesData={rulesData}
+      rulesData={rulesData ?? []}
       isLoading={isLoading}
       useTranslationStore={useTranslationStore}
       searchQuery={query}

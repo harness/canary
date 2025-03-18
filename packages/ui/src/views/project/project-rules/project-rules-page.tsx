@@ -98,7 +98,8 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
               handleRuleClick={() => {}}
               openRulesAlertDeleteDialog={() => {}}
               useTranslationStore={useTranslationStore}
-              showHeader={false}
+              rulesSearchQuery={searchQuery}
+              projectScope
             />
           </SandboxLayout.Content>
         </SandboxLayout.Main>

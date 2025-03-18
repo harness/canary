@@ -136,13 +136,28 @@
       },
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.100}",
+        "$value": "{colors.chrome.50}",
         "$description": "Muted background color for disabled elements. Reduces visual prominence of non-interactive elements in the UI.\n\nCommon uses: Disabled buttons, inactive form controls, unavailable options."
       },
       "border": {
         "$type": "color",
         "$value": "{border.3}",
         "$description": "Muted border color for disabled element boundaries. Creates subtle containment while indicating non-interactive state.\n\nCommon uses: Disabled form inputs, inactive controls, unavailable action boundaries."
+      },
+      "text-selected": {
+        "$type": "color",
+        "$value": "{colors.chrome.100}",
+        "$description": "Disabled text or icon element for selected component behavior."
+      },
+      "background-selected": {
+        "$type": "color",
+        "$value": "{colors.chrome.500}",
+        "$description": "Disabled background for selected component behavior."
+      },
+      "border-selected": {
+        "$type": "color",
+        "$value": "{state.disabled.background-selected}",
+        "$description": "Disabled border for selected component behavior."
       }
     }
   },
@@ -519,6 +534,20 @@
           "$type": "color",
           "$value": "{brand.onColor.500}",
           "$description": "Text and icon color for primary action buttons. Ensures maximum contrast and visibility for primary CTA elements."
+        },
+        "separator": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.5",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{brand.onColor.500}",
+          "$description": "Separator color for primary split button."
         },
         "background": {
           "$type": "color",

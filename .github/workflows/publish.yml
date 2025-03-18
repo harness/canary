@@ -36,7 +36,7 @@ jobs:
         run: pnpm install
       - name: Publish package to npm
         if: env.PACKAGE_PATH != ''
-        run: pnpm publish --access public
+        run: pnpm publish --access public --no-git-checks
         working-directory: ${{ env.PACKAGE_PATH }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

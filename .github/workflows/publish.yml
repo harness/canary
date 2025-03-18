@@ -21,8 +21,8 @@ jobs:
       - name: Detect changed package(s)
         id: changed-packages
         run: |
-          git fetch origin main:main
-          CHANGED_FILES=$(git diff --name-only main...HEAD)
+          git fetch origin main
+          CHANGED_FILES=$(git diff --name-only origin/main)
           for file in $CHANGED_FILES; do
             if [[ $file == packages/*/package.json ]]; then
               PACKAGE_PATH=$(dirname "$file")

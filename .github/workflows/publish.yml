@@ -23,22 +23,25 @@ jobs:
         run: |
           git fetch origin main
           CHANGED_FILES=$(git diff --name-only origin/main)
+          DETECTED_PACKAGES=""
           for file in $CHANGED_FILES; do
             if [[ $file == packages/*/package.json ]]; then
               PACKAGE_PATH=$(dirname "$file")
               echo "Detected package change: $PACKAGE_PATH"
-              echo "PACKAGE_PATH=$PACKAGE_PATH" >> $GITHUB_ENV
-              break
+              DETECTED_PACKAGES="$DETECTED_PACKAGES $PACKAGE_PATH"
             fi
           done
+          echo "detected_packages=$DETECTED_PACKAGES" >> $GITHUB_ENV
       - name: Install dependencies and build
-        if: env.PACKAGE_PATH != ''
         run: |
-          pnpm deps
+          pnpm install
           pnpm build
-      - name: Publish package to npm
-        if: env.PACKAGE_PATH != ''
-        run: pnpm publish --access public --no-git-checks
-        working-directory: ${{ env.PACKAGE_PATH }}
+      - name: Publish packages to npm
+        if: env.detected_packages != ''
+        run: |
+          for PACKAGE_PATH in $detected_packages; do
+            echo "Publishing package: $PACKAGE_PATH"
+            pnpm publish --access public --filter "$PACKAGE_PATH" --no-git-checks
+          done
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

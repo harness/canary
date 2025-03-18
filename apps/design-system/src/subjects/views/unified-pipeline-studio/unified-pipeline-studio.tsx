@@ -13,18 +13,16 @@ const PipelineStudioViewWrapper = () => {
   const [yamlRevision, onYamlRevisionChange] = useState<YamlRevision>({ yaml: pipeline1 })
 
   return (
-    <div style={{ width: '80vw' }}>
-      <UnifiedPipelineStudio
-        useUnifiedPipelineStudioStore={usePipelineStudioStore}
-        useTranslationStore={useTranslationStore}
-        useTemplateListStore={useTemplateListStore}
-        yamlRevision={yamlRevision}
-        onYamlRevisionChange={onYamlRevisionChange}
-        onYamlDownload={noop}
-        isYamlDirty={true}
-        onSave={noop}
-      />
-    </div>
+    <UnifiedPipelineStudio
+      useUnifiedPipelineStudioStore={usePipelineStudioStore}
+      useTranslationStore={useTranslationStore}
+      useTemplateListStore={useTemplateListStore}
+      yamlRevision={yamlRevision}
+      onYamlRevisionChange={onYamlRevisionChange}
+      onYamlDownload={noop}
+      isYamlDirty={true}
+      onSave={noop}
+    />
   )
 }
 

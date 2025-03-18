@@ -40,7 +40,7 @@ const ProblemsComponent = {
         role="button"
         tabIndex={0}
         onClick={onClick}
-        className="width-100 flex flex-1 cursor-pointer items-center justify-between gap-2 text-nowrap bg-neutral-800 px-4 py-0.5 text-neutral-200"
+        className="width-100 flex flex-1 cursor-pointer items-center justify-between gap-2 text-nowrap px-4 py-0.5 text-primary"
       >
         {children}
       </div>

@@ -1,14 +1,6 @@
 name: Publish Packages to npm
 
-on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'packages/*/package.json'
-    types:
-      - opened
-      - synchronize
+on: workflow_dispatch
 
 jobs:
   publish:
@@ -30,32 +22,7 @@ jobs:
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISH_TOKEN }}" > ~/.npmrc
 
-      - name: Detect changed package(s)
-        id: changed-packages
-        run: |
-          git fetch origin main
-          CHANGED_FILES=$(git diff --name-only origin/main)
-          DETECTED_PACKAGES=""
-          for file in $CHANGED_FILES; do
-            if [[ $file == packages/*/package.json ]]; then
-              PACKAGE_PATH=$(dirname "$file")
-              echo "Change detected in package: $PACKAGE_PATH"
-              if [[ -z "$DETECTED_PACKAGES" ]]; then
-                DETECTED_PACKAGES="$PACKAGE_PATH"
-              else
-                DETECTED_PACKAGES="$DETECTED_PACKAGES,$PACKAGE_PATH"
-              fi
-            fi
-          done
-          echo "detected_packages=$DETECTED_PACKAGES" >> $GITHUB_ENV
-
       - name: Publish packages to npm
-        if: env.detected_packages != ''
-        run: |
-          IFS=',' read -ra PACKAGES <<< "$detected_packages"
-          for PACKAGE_PATH in "${PACKAGES[@]}"; do
-            echo "Publishing package: $PACKAGE_PATH"
-            pnpm publish --access public --filter "./$PACKAGE_PATH" --no-git-checks
-          done
+        run: pnpm publish:all
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}

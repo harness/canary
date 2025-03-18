@@ -14,12 +14,15 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
       - name: Detect changed package(s)
         id: changed-packages
         run: |
-          CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
+          git fetch origin main:main
+          CHANGED_FILES=$(git diff --name-only main...HEAD)
           for file in $CHANGED_FILES; do
             if [[ $file == packages/*/package.json ]]; then
               PACKAGE_PATH=$(dirname "$file")
@@ -30,7 +33,7 @@ jobs:
           done
       - name: Install dependencies
         if: env.PACKAGE_PATH != ''
-        run: pnpm deps
+        run: pnpm install
       - name: Publish package to npm
         if: env.PACKAGE_PATH != ''
         run: pnpm publish --access public

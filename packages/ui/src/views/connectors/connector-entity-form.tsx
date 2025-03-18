@@ -35,7 +35,6 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
   const defaultConnectorValues = useMemo(() => {
     const connectorDefinition = getConnectorDefinition(formEntity.data.identifier)
     if (!connectorDefinition) return {}
-    console.log(getDefaultValuesFromFormDefinition(connectorDefinition.formDefinition))
     return getDefaultValuesFromFormDefinition(connectorDefinition.formDefinition)
   }, [formEntity.data.identifier, getConnectorDefinition])
 

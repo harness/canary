@@ -25,7 +25,6 @@ const ConnectorsRightDrawerBase = ({
   onDrawerClose
 }: ConnectorsRightDrawerBaseProps): JSX.Element => {
   const { rightDrawer, setRightDrawer, formEntity, setFormEntity, clearRightDrawerData } = useConnectorsContext()
-  console.log(rightDrawer, formEntity)
 
   useEffect(() => {
     if (initialDrawerState) {

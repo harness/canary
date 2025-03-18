@@ -31,9 +31,11 @@ jobs:
               break
             fi
           done
-      - name: Install dependencies
+      - name: Install dependencies and build
         if: env.PACKAGE_PATH != ''
-        run: pnpm install
+        run: |
+          pnpm deps
+          pnpm build
       - name: Publish package to npm
         if: env.PACKAGE_PATH != ''
         run: pnpm publish --access public --no-git-checks

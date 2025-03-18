@@ -325,7 +325,8 @@
     "tabs": {
       "general": "General",
       "members": "Members",
-      "labels": "Labels"
+      "labels": "Labels",
+      "rules": "Rules"
     }
   },
   "landingPage": {

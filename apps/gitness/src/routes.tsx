@@ -28,6 +28,7 @@ import { ProjectLabelsList } from './pages-v2/project/labels/project-labels-list
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
 import { ImportProjectContainer } from './pages-v2/project/project-import-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
+import { ProjectRulesListContainer } from './pages-v2/project/project-rules-list-container.tsx'
 import { ProjectSettingsLayout } from './pages-v2/project/project-settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
@@ -589,7 +590,43 @@ export const repoRoutes: CustomRouteObject[] = [
           pageTitle: Page.Members
         }
       },
-      labelsRoute
+      {
+        path: 'labels',
+        handle: {
+          breadcrumb: () => <span>{Page.Labels}</span>,
+          pageTitle: Page.Labels,
+          routeName: RouteConstants.toProjectLabels
+        },
+        children: [
+          {
+            index: true,
+            element: <ProjectLabelsList />
+          },
+          {
+            path: 'create',
+            element: <ProjectLabelFormContainer />,
+            handle: {
+              breadcrumb: () => <span>Create a label</span>
+            }
+          },
+          {
+            path: ':labelId',
+            element: <ProjectLabelFormContainer />,
+            handle: {
+              breadcrumb: ({ labelId }: { labelId: string }) => <span>{labelId}</span>
+            }
+          }
+        ]
+      },
+      {
+        path: 'rules',
+        element: <ProjectRulesListContainer />,
+        handle: {
+          breadcrumb: () => <span>{Page.Branch_Rules}</span>,
+          pageTitle: Page.Branch_Rules
+          // routeName: RouteConstants.toProjectBranchRules
+        }
+      }
     ]
   },
   {

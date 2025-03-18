@@ -1,0 +1,117 @@
+import { FC, useMemo } from 'react'
+
+import { Button, ListActions, NoData, SearchBox, Spacer } from '@/components'
+import { useDebounceSearch } from '@/hooks'
+import { RuleDataType, SandboxLayout, TranslationStore } from '@/views'
+import { RepoSettingsGeneralRules } from '@views/repo/repo-settings/components/repo-settings-general-rules'
+
+export interface ProjectRulesPageProps {
+  rulesData: RuleDataType[] | null
+  isLoading: boolean
+  useTranslationStore: () => TranslationStore
+}
+export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({ rulesData, isLoading, useTranslationStore }) =>
+  //   {
+  //   isLoading,
+  //   isInvitingMember,
+  //   useTranslationStore,
+  //   useMemberListStore,
+  //   usePrincipalListStore,
+  //   isInviteMemberDialogOpen,
+  //   setIsInviteMemberDialogOpen,
+  //   inviteMemberError,
+  //   searchQuery,
+  //   setSearchQuery,
+  //   onSubmit,
+  //   onEditMember,
+  //   setPrincipalsSearchQuery,
+  //   principalsSearchQuery,
+  //   onDeleteHandler
+  //   }
+  {
+    // const { t } = useTranslationStore()
+
+    // const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
+    //   handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
+    //   searchValue: searchQuery || ''
+    // })
+
+    // const isDirtyList = useMemo(() => {
+    //   return page !== 1 || !!searchQuery
+    // }, [page, searchQuery])
+
+    // const handleResetFiltersQueryAndPages = () => {
+    //   handleResetSearch()
+    //   setPage(1)
+    // }
+
+    return (
+      <>
+        {/* {!memberList.length && !isDirtyList && !isLoading ? (
+        <NoData
+          textWrapperClassName="max-w-[350px]"
+          iconName="no-data-members"
+          title={t('views:noData.members', 'No members yet')}
+          description={[
+            t(
+              'views:noData.inviteMembers',
+              'There are no members in this project. Click on the button below to start adding them.'
+            )
+          ]}
+          primaryButton={{
+            label: t('views:projectSettings.inviteNewMember', 'Invite new member'),
+            onClick: () => {
+              setIsInviteMemberDialogOpen(true)
+            }
+          }}
+        />
+      ) : ( */}
+        <SandboxLayout.Main>
+          <SandboxLayout.Content maxWidth="3xl">
+            {/* <h1 className="mb-6 text-2xl font-medium text-foreground-1">{t('views:projectSettings.rules', 'Rules')}</h1> */}
+            <h1 className="mb-6 text-2xl font-medium text-foreground-1">Rules</h1>
+
+            {/* {(!!rulesList.length || (!rulesList.length && isDirtyList)) && ( */}
+            <>
+              <ListActions.Root>
+                <ListActions.Left>
+                  <SearchBox.Root
+                    width="full"
+                    className="max-w-96"
+                    // value={search}
+                    // handleChange={handleSearchChange}
+                    // placeholder={t('views:repos.search', 'Search')}
+                  />
+                </ListActions.Left>
+                <ListActions.Right>
+                  <Button
+                    variant="default"
+                    onClick={() => {
+                      //   setIsInviteMemberDialogOpen(true)
+                    }}
+                  >
+                    {/* {t('views:projectSettings.newMember', 'New member')} */}
+                    New rule
+                  </Button>
+                </ListActions.Right>
+              </ListActions.Root>
+
+              <Spacer size={4.5} />
+            </>
+            {/* )} */}
+            <RepoSettingsGeneralRules
+              rules={rulesData}
+              isLoading={isLoading}
+              apiError={null}
+              handleRuleClick={() => {}}
+              openRulesAlertDeleteDialog={() => {}}
+              rulesSearchQuery=""
+              setRulesSearchQuery={() => {}}
+              useTranslationStore={useTranslationStore}
+            />
+          </SandboxLayout.Content>
+        </SandboxLayout.Main>
+        {/* )} */}
+      </>
+    )
+  }

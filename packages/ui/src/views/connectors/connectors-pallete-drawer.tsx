@@ -30,9 +30,11 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
 
   return (
     <ConnectorsPaletteLayout.Root>
-      <ConnectorsPaletteLayout.Header>
-        <ConnectorsPaletteLayout.Title>Connector Setup</ConnectorsPaletteLayout.Title>
-        <ConnectorsPaletteLayout.Subtitle>Select a Connector</ConnectorsPaletteLayout.Subtitle>
+      <ConnectorsPaletteLayout.Header className="!border-none">
+        <ConnectorsPaletteLayout.Title className="!mt-0">Connector Setup</ConnectorsPaletteLayout.Title>
+        <ConnectorsPaletteLayout.Subtitle className="text-foreground-4">
+          Select a Connector
+        </ConnectorsPaletteLayout.Subtitle>
         <Input
           placeholder="Search"
           onChange={value => {
@@ -57,9 +59,11 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
         <Spacer size={8} />
       </StepsPaletteContentLayout.Root>
       <StepFormLayout.Footer>
-        <Button variant="secondary" onClick={requestClose}>
-          Cancel
-        </Button>
+        <div className="absolute inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
+          <Button variant="secondary" onClick={requestClose}>
+            Cancel
+          </Button>
+        </div>
       </StepFormLayout.Footer>
     </ConnectorsPaletteLayout.Root>
   )

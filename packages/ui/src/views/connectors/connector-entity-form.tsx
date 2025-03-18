@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 
+import { TranslationStore } from '@/views'
 import { Button } from '@components/button'
 import { Icon } from '@components/icon'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
@@ -24,10 +25,13 @@ interface ConnectorEntityFormProps {
   onFormSubmit?: (values: any) => void // TODO: TYPE this properly
   getConnectorDefinition: (identifier: string) => AnyConnectorDefinition | undefined
   setRightDrawer: (value: ConnectorRightDrawer) => void
+  useTranslationStore: () => TranslationStore
 }
 
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
-  const { formEntity, requestClose, onFormSubmit, getConnectorDefinition, setRightDrawer } = props
+  const { formEntity, requestClose, onFormSubmit, getConnectorDefinition, setRightDrawer, useTranslationStore } = props
+  const { t: _t } = useTranslationStore()
+
   // TODO: type this properly , Handle form submit for create/edit
   const onSubmit = (data: any) => {
     onFormSubmit?.(data)

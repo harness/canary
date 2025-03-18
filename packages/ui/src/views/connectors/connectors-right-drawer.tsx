@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react'
 
+import { TranslationStore } from '@/views'
 import { Sheet } from '@components/sheet'
 
 import { ConnectorEntityForm } from './connector-entity-form'
@@ -14,6 +15,7 @@ interface ConnectorsRightDrawerBaseProps {
   useSheet?: boolean // Whether to wrap content in Sheet.Root
   connectors: any //TODO: TYPE
   getConnectorDefinition: (identifier: string) => AnyConnectorDefinition | undefined
+  useTranslationStore: () => TranslationStore
 }
 
 const ConnectorsRightDrawerBase = ({
@@ -22,7 +24,8 @@ const ConnectorsRightDrawerBase = ({
   onFormSubmit,
   connectors,
   getConnectorDefinition,
-  onDrawerClose
+  onDrawerClose,
+  useTranslationStore
 }: ConnectorsRightDrawerBaseProps): JSX.Element => {
   const { rightDrawer, setRightDrawer, formEntity, setFormEntity, clearRightDrawerData } = useConnectorsContext()
 
@@ -37,6 +40,7 @@ const ConnectorsRightDrawerBase = ({
       case ConnectorRightDrawer.Collection:
         return (
           <ConnectorsPalette
+            useTranslationStore={useTranslationStore}
             connectors={connectors}
             setRightDrawer={setRightDrawer}
             setFormEntity={setFormEntity}
@@ -49,6 +53,7 @@ const ConnectorsRightDrawerBase = ({
       case ConnectorRightDrawer.Form:
         return formEntity ? (
           <ConnectorEntityForm
+            useTranslationStore={useTranslationStore}
             formEntity={formEntity}
             setRightDrawer={setRightDrawer}
             requestClose={() => {
@@ -104,7 +109,8 @@ const ConnectorsRightDrawer = ({
   onFormSubmit,
   connectors,
   getConnectorDefinition,
-  onDrawerClose
+  onDrawerClose,
+  useTranslationStore
 }: ConnectorsRightDrawerBaseProps): JSX.Element | null => {
   return (
     <ConnectorsProvider>
@@ -115,6 +121,7 @@ const ConnectorsRightDrawer = ({
         connectors={connectors}
         getConnectorDefinition={getConnectorDefinition}
         onDrawerClose={onDrawerClose}
+        useTranslationStore={useTranslationStore}
       />
     </ConnectorsProvider>
   )
@@ -125,7 +132,8 @@ const ConnectorsRightDrawerWithProvider = ({
   initialDrawerState,
   useSheet = true,
   connectors,
-  getConnectorDefinition
+  getConnectorDefinition,
+  useTranslationStore
 }: ConnectorsRightDrawerBaseProps): JSX.Element | null => {
   return (
     <ConnectorsProvider>
@@ -134,6 +142,7 @@ const ConnectorsRightDrawerWithProvider = ({
         useSheet={useSheet}
         connectors={connectors}
         getConnectorDefinition={getConnectorDefinition}
+        useTranslationStore={useTranslationStore}
       />
     </ConnectorsProvider>
   )

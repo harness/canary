@@ -1,4 +1,4 @@
-import { cx } from 'class-variance-authority'
+import { cn } from '@harnessio/ui/utils'
 
 const StepsPaletteItemLayout = {
   Root: function Root({ children, ...rest }: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
@@ -9,7 +9,7 @@ const StepsPaletteItemLayout = {
     )
   },
   Left: function Left({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cx('text-accent-foreground', className)}>{children}</div>
+    return <div className={cn('text-accent-foreground', className)}>{children}</div>
   },
   Right: function Right({ children }: { children: React.ReactNode }) {
     return <div className="flex grow flex-col">{children}</div>
@@ -18,10 +18,10 @@ const StepsPaletteItemLayout = {
     return <div className="flex flex-row justify-between">{children}</div>
   },
   Title: function Title({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cx('font-medium', className)}>{children}</div>
+    return <div className={cn('font-medium', className)}>{children}</div>
   },
   Description: function Description({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cx('mt-1.5 line-clamp-2 overflow-hidden text-sm', className)}>{children}</div>
+    return <div className={cn('mt-1.5 line-clamp-2 overflow-hidden text-sm', className)}>{children}</div>
   },
   BadgeWrapper: function BadgeWrapper({ children }: { children: React.ReactNode }) {
     return (

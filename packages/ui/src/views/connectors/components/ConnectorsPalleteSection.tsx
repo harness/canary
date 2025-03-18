@@ -1,3 +1,4 @@
+import { TranslationStore } from '@/views'
 import { Icon } from '@components/icon'
 import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-content-layout'
 import { StepsPaletteItemLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-item-layout'
@@ -7,10 +8,12 @@ import { AnyConnectorDefinition } from '../types'
 export interface ConnectorsPaletteSectionProps {
   connectors: AnyConnectorDefinition[]
   onSelect: (step: AnyConnectorDefinition) => void
+  useTranslationStore: () => TranslationStore
 }
 
 export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
-  const { connectors, onSelect } = props
+  const { connectors, onSelect, useTranslationStore } = props
+  const { t: _t } = useTranslationStore()
 
   return (
     <StepsPaletteContentLayout.Section>
@@ -30,7 +33,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                   <StepsPaletteItemLayout.Title className="text-foreground-1">
                     {connector.name}
                   </StepsPaletteItemLayout.Title>
-                  {/* <StepsPaletteItem.BadgeWrapper>verified</StepsPaletteItem.BadgeWrapper> */}
+                  {/* <StepsPaletteItem.BadgeWrapper>verified</StepsPaletteItem.BadgeWrapper> */}{' '}
                 </StepsPaletteItemLayout.Header>
                 <StepsPaletteItemLayout.Description className="text-foreground-4">
                   {connector.category}

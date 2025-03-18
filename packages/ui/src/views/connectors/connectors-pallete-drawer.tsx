@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 
+import { TranslationStore } from '@/views'
 import { Button } from '@components/button'
 import { Input } from '@components/input'
 import { Spacer } from '@components/spacer'
@@ -16,10 +17,12 @@ interface ConnectorsPaletteProps {
   requestClose: () => void
   setFormEntity: (formEntity: any) => void
   setRightDrawer: (value: ConnectorRightDrawer) => void
+  useTranslationStore: () => TranslationStore
 }
 
 export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element => {
-  const { connectors, requestClose, setFormEntity, setRightDrawer } = props
+  const { connectors, requestClose, setFormEntity, setRightDrawer, useTranslationStore } = props
+  const { t: _t } = useTranslationStore()
 
   const [query, setQuery] = useState('')
 
@@ -33,10 +36,10 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
       <ConnectorsPaletteLayout.Header className="!border-none">
         <ConnectorsPaletteLayout.Title className="!mt-0">Connector Setup</ConnectorsPaletteLayout.Title>
         <ConnectorsPaletteLayout.Subtitle className="text-foreground-4">
-          Select a Connector
+          {'Select a Connector'}
         </ConnectorsPaletteLayout.Subtitle>
         <Input
-          placeholder="Search"
+          placeholder={'Search'}
           onChange={value => {
             setQuery(value.target.value)
           }}
@@ -55,6 +58,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
             })
             setRightDrawer(ConnectorRightDrawer.Form)
           }}
+          useTranslationStore={useTranslationStore}
         />
         <Spacer size={8} />
       </StepsPaletteContentLayout.Root>

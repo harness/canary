@@ -500,8 +500,8 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
   connectors: {
     label: 'Connectors',
     items: {
-      'connector-reference': {
-        label: 'Connector Reference',
+      'connectors-page': {
+        label: 'Connectors Page',
         element: <ConnectorsPage />
       }
     }

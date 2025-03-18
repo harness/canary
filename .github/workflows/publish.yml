@@ -1,43 +1,41 @@
 name: Publish Packages to npm
 
 on:
-  push:
-  pull_request_target:
+  pull_request:
+    branches:
+      - main
     paths:
       - 'packages/*/package.json'
     types:
       - opened
       - synchronize
-      - reopened
-    branches:
-      - main
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
         with:
-          node-version: 18
-          registry-url: 'https://registry.npmjs.org/'
-
-      - name: Extract package info
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: pnpm/action-setup@v4
+      - name: Detect changed package(s)
+        id: changed-packages
         run: |
-          TAG="${{ github.ref_name }}"   # Example: packages/ui@v1.0.0
-          echo "PACKAGE_PATH=${TAG%@*}" >> $GITHUB_ENV  # Extract "packages/ui"
-          echo "PACKAGE_VERSION=${TAG##*@}" >> $GITHUB_ENV  # Extract "v1.0.0"
-          echo "Publishing $PACKAGE_PATH at $PACKAGE_VERSION"
-
+          CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
+          for file in $CHANGED_FILES; do
+            if [[ $file == packages/*/package.json ]]; then
+              PACKAGE_PATH=$(dirname "$file")
+              echo "Detected package change: $PACKAGE_PATH"
+              echo "PACKAGE_PATH=$PACKAGE_PATH" >> $GITHUB_ENV
+              break
+            fi
+          done
       - name: Install dependencies
-        run: npm ci
-
+        if: env.PACKAGE_PATH != ''
+        run: pnpm deps
       - name: Publish package to npm
-        run: npm publish --access public
+        if: env.PACKAGE_PATH != ''
+        run: pnpm publish --access public
         working-directory: ${{ env.PACKAGE_PATH }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

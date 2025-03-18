@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef } from 'react'
 
-import { Fieldset, FormSeparator } from '@/components'
+import { FormSeparator } from '@/components'
 import { useRouterContext } from '@/context'
 import { BranchSelectorListItem, IBranchSelectorStore, SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelectorTab } from '@/views/repo/components'
@@ -74,9 +74,9 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
-      <h1 className="mb-10 text-2xl font-medium text-foreground-1">{t('views:repos.settings', 'Settings')}</h1>
+      <h1 className="text-foreground-1 mb-10 text-2xl font-medium">{t('views:repos.settings', 'Settings')}</h1>
 
-      <Fieldset>
+      <section className="flex flex-col gap-y-7">
         <RepoSettingsGeneralForm
           repoData={repoData}
           handleRepoUpdate={handleRepoUpdate}
@@ -118,7 +118,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
           useTranslationStore={useTranslationStore}
         />
-      </Fieldset>
+      </section>
     </SandboxLayout.Content>
   )
 }

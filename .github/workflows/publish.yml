@@ -21,6 +21,11 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
+      - name: Install and build dependencies
+        run: |
+          pnpm install
+          pnpm build
+
       - name: Authenticate to npm
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISH_TOKEN }}" > ~/.npmrc
@@ -43,11 +48,6 @@ jobs:
             fi
           done
           echo "detected_packages=$DETECTED_PACKAGES" >> $GITHUB_ENV
-
-      - name: Install dependencies and build
-        run: |
-          pnpm install
-          pnpm build
 
       - name: Publish packages to npm
         if: env.detected_packages != ''

@@ -27,7 +27,7 @@ jobs:
           for file in $CHANGED_FILES; do
             if [[ $file == packages/*/package.json ]]; then
               PACKAGE_PATH=$(dirname "$file")
-              echo "Detected package change: $PACKAGE_PATH"
+              echo "Change detected in package: $PACKAGE_PATH"
               if [[ -z "$DETECTED_PACKAGES" ]]; then
                 DETECTED_PACKAGES="$PACKAGE_PATH"
               else
@@ -46,7 +46,7 @@ jobs:
           IFS=',' read -ra PACKAGES <<< "$detected_packages"
           for PACKAGE_PATH in "${PACKAGES[@]}"; do
             echo "Publishing package: $PACKAGE_PATH"
-            pnpm publish --access public --filter "$PACKAGE_PATH" --no-git-checks
+            pnpm publish --access public --filter "./$PACKAGE_PATH" --no-git-checks
           done
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}

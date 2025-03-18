@@ -28,7 +28,11 @@ jobs:
             if [[ $file == packages/*/package.json ]]; then
               PACKAGE_PATH=$(dirname "$file")
               echo "Detected package change: $PACKAGE_PATH"
-              DETECTED_PACKAGES="$DETECTED_PACKAGES $PACKAGE_PATH"
+              if [[ -z "$DETECTED_PACKAGES" ]]; then
+                DETECTED_PACKAGES="$PACKAGE_PATH"
+              else
+                DETECTED_PACKAGES="$DETECTED_PACKAGES,$PACKAGE_PATH"
+              fi
             fi
           done
           echo "detected_packages=$DETECTED_PACKAGES" >> $GITHUB_ENV
@@ -39,9 +43,10 @@ jobs:
       - name: Publish packages to npm
         if: env.detected_packages != ''
         run: |
-          for PACKAGE_PATH in $detected_packages; do
+          IFS=',' read -ra PACKAGES <<< "$detected_packages"
+          for PACKAGE_PATH in "${PACKAGES[@]}"; do
             echo "Publishing package: $PACKAGE_PATH"
             pnpm publish --access public --filter "$PACKAGE_PATH" --no-git-checks
           done
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}

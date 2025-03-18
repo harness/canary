@@ -33,6 +33,7 @@ const InputReferenceExample: React.FC = () => {
           label="With start icon"
           onClick={() => console.log('Clicked on start icon example')}
           onEdit={() => console.log('Edit clicked on start icon example')}
+          onClear={() => console.log('Clear clicked on start icon example')}
         />
       </div>
 

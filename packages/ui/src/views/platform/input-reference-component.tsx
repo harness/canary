@@ -88,7 +88,7 @@ export interface InputReferenceProps extends VariantProps<typeof inputReferenceV
 
 /**
  * InputReference is a component that looks like an input field but acts as a clickable
- * element that can trigger actions like opening a drawer, modal, or dropdown.
+ * InputReference element that can trigger actions like opening a drawer, modal, or dropdown.
  */
 export const InputReference: React.FC<InputReferenceProps> = ({
   value,

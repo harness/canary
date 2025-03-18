@@ -1,4 +1,4 @@
-import { cn } from '@harnessio/ui/utils'
+import { cn } from '@utils/cn'
 
 const StepsPaletteItemLayout = {
   Root: function Root({ children, ...rest }: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {

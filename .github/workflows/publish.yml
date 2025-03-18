@@ -13,11 +13,18 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+
+      - name: Authenticate to npm
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISH_TOKEN }}" > ~/.npmrc
+
       - name: Detect changed package(s)
         id: changed-packages
         run: |
@@ -36,10 +43,12 @@ jobs:
             fi
           done
           echo "detected_packages=$DETECTED_PACKAGES" >> $GITHUB_ENV
+
       - name: Install dependencies and build
         run: |
           pnpm install
           pnpm build
+
       - name: Publish packages to npm
         if: env.detected_packages != ''
         run: |

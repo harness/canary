@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext } from 'react'
 
 interface PortalContextProps {
-  portalContainer?: Element
+  portalContainer?: HTMLDivElement | null
 }
 
 const PortalContext = createContext<PortalContextProps>({})

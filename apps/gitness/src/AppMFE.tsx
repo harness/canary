@@ -148,11 +148,11 @@ export default function AppMFE({
 
   // Styles will be loaded inside shadowRoot
   const shadowRef = useRef<HTMLDivElement>(null)
-  const shadowRoot = shadowRef.current?.shadowRoot as ShadowRoot | undefined
+  const shadowRoot = shadowRef.current?.shadowRoot
 
   // Radix UI elements will be rendered inside portalContainer
   const portalRef = useRef<HTMLDivElement>(null)
-  const portalContainer = portalRef.current as Element | undefined
+  const portalContainer = portalRef.current
 
   const isStylesLoaded = useLoadMFEStyles(shadowRoot)
 

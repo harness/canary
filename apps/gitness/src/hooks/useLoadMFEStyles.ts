@@ -19,7 +19,7 @@ const fetchMarkdownPreviewStyles = async () => {
   return markdownPreviewStyles.default
 }
 
-export function useLoadMFEStyles(shadowRoot?: ShadowRoot) {
+export function useLoadMFEStyles(shadowRoot?: ShadowRoot | null) {
   const [isStylesLoaded, setIsStylesLoaded] = useState(false)
 
   useEffect(() => {

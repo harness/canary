@@ -1,8 +1,6 @@
 import { FC, useMemo } from 'react'
-import { Link } from 'react-router-dom'
 
-import { Button, ListActions, NoData, SearchBox, Spacer } from '@/components'
-import { useDebounceSearch } from '@/hooks'
+import { NoData } from '@/components'
 import { RuleDataType, SandboxLayout, TranslationStore } from '@/views'
 import { RepoSettingsGeneralRules } from '@views/repo/repo-settings/components/repo-settings-general-rules'
 
@@ -26,21 +24,9 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
 }) => {
   const { t } = useTranslationStore()
 
-  const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
-    handleChangeSearchValue: setSearchQuery,
-    searchValue: searchQuery || ''
-  })
-
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
-
-  const handleResetFiltersQueryAndPages = () => {
-    handleResetSearch()
-    setPage(1)
-  }
-
-  console.log(rulesData)
 
   return (
     <>
@@ -56,10 +42,8 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
             )
           ]}
           primaryButton={{
-            label: t('views:projectSettings.', 'Add new rule'),
-            onClick: () => {
-              //   setIsInviteMemberDialogOpen(true)
-            }
+            label: t('views:projectSettings.addRule', 'Add new rule'),
+            to: 'create'
           }}
         />
       ) : (
@@ -68,29 +52,6 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
             {/* <h1 className="mb-6 text-2xl font-medium text-foreground-1">{t('views:projectSettings.rules', 'Rules')}</h1> */}
             <h1 className="mb-6 text-2xl font-medium text-foreground-1">Rules</h1>
 
-            {((rulesData && !!rulesData.length) || (rulesData && !rulesData.length && isDirtyList)) && (
-              <>
-                <ListActions.Root>
-                  <ListActions.Left>
-                    <SearchBox.Root
-                      width="full"
-                      className="max-w-96"
-                      autoFocus
-                      value={search}
-                      handleChange={handleSearchChange}
-                      placeholder={t('views:repos.search', 'Search')}
-                    />
-                  </ListActions.Left>
-                  <ListActions.Right>
-                    <Link to="create">
-                      <Button variant="default">{t('views:projectSettings.newBranchRule', 'New branch rule')}</Button>
-                    </Link>
-                  </ListActions.Right>
-                </ListActions.Root>
-
-                <Spacer size={4.5} />
-              </>
-            )}
             <RepoSettingsGeneralRules
               rules={rulesData}
               isLoading={isLoading}
@@ -99,6 +60,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
               openRulesAlertDeleteDialog={() => {}}
               useTranslationStore={useTranslationStore}
               rulesSearchQuery={searchQuery}
+              setRulesSearchQuery={setSearchQuery}
               projectScope
             />
           </SandboxLayout.Content>

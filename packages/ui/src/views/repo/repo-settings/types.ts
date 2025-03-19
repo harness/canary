@@ -55,6 +55,13 @@ export interface IRepoStore {
   recentStatusChecks: string[] | null
 }
 
+export interface IProjectRulesStore {
+  rules: RuleDataType[] | null
+  presetRuleData: RepoBranchSettingsFormFields | null
+  principals: PrincipalType[] | null
+  recentStatusChecks: string[] | null
+}
+
 // Constants
 
 export const generalSettingsFormSchema = z.object({

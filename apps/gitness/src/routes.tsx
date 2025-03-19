@@ -28,6 +28,7 @@ import { ProjectLabelsList } from './pages-v2/project/labels/project-labels-list
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
 import { ImportProjectContainer } from './pages-v2/project/project-import-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
+import { ProjectRulesCreateOrUpdateContainer } from './pages-v2/project/project-rules-create-container.tsx'
 import { ProjectRulesListContainer } from './pages-v2/project/project-rules-list-container.tsx'
 import { ProjectSettingsLayout } from './pages-v2/project/project-settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
@@ -632,18 +633,18 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'create',
-            element: <EmptyPage pathName="create a rule" />,
+            element: <ProjectRulesCreateOrUpdateContainer />,
             handle: {
               breadcrumb: () => <span>Create a rule</span>
             }
+          },
+          {
+            path: ':ruleId',
+            element: <ProjectRulesCreateOrUpdateContainer />,
+            handle: {
+              breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>
+            }
           }
-          // {
-          //   path: ':ruleId',
-          //   element: <ProjectRuleFormContainer />,
-          //   handle: {
-          //     breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>
-          //   }
-          // }
         ]
       }
     ]

@@ -90,25 +90,27 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
 
   return (
     <>
-      <>
-        <Text size={13} weight="medium" className="mb-2.5" as="div">
-          {t('views:repos.rules', 'Rules')}
-        </Text>
+      {!projectScope ? (
+        <>
+          <Text size={13} weight="medium" className="mb-2.5" as="div">
+            {t('views:repos.rules', 'Rules')}
+          </Text>
 
-        <div className="flex flex-row">
-          <span className="max-w-[440px]">
-            {t(
-              'views:repos.rulesDescription',
-              'Define standards and automate workflows to ensure better collaboration and control in your repository.'
+          <div className="flex flex-row">
+            <span className="max-w-[440px]">
+              {t(
+                'views:repos.rulesDescription',
+                'Define standards and automate workflows to ensure better collaboration and control in your repository.'
+              )}
+            </span>
+            {!isLoading && !isShowRulesContent && (
+              <NavLink className="ml-auto" to="../rules/create">
+                <Button variant="outline">{t('views:repos.createRuleButton', 'Create rule')}</Button>
+              </NavLink>
             )}
-          </span>
-          {!isLoading && !isShowRulesContent && (
-            <NavLink className="ml-auto" to="../rules/create">
-              <Button variant="outline">{t('views:repos.createRuleButton', 'Create rule')}</Button>
-            </NavLink>
-          )}
-        </div>
-      </>
+          </div>
+        </>
+      ) : null}
       {isShowRulesContent && (
         <>
           <Spacer size={7} />
@@ -116,7 +118,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             <ListActions.Root>
               <ListActions.Left>
                 <SearchBox.Root
-                  className={projectScope ? '' : 'max-w-xs'}
+                  className={projectScope ? 'max-w-96' : 'max-w-xs'}
                   placeholder={t('views:repos.search', 'Search')}
                   width="full"
                   value={search}
@@ -125,7 +127,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               </ListActions.Left>
               <ListActions.Right>
                 <NavLink to="../rules/create">
-                  <Button variant={projectScope ? 'outline' : 'default'}>
+                  <Button variant={projectScope ? 'default' : 'outline'}>
                     {t('views:repos.newRule', 'New branch rule')}
                   </Button>
                 </NavLink>

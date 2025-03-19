@@ -1,7 +1,5 @@
 import { useState } from 'react'
 
-import { useQueryClient } from '@tanstack/react-query'
-
 import { useSpaceRuleListQuery } from '@harnessio/code-service-client'
 import { ProjectRulesPage } from '@harnessio/ui/views'
 
@@ -12,7 +10,6 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 export const ProjectRulesListContainer = () => {
   const space_ref = useGetSpaceURLParam()
-  const queryClient = useQueryClient()
   const [query, setQuery] = useQueryState('query')
   const [page, setPage] = useState(1)
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })

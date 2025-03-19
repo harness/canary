@@ -272,13 +272,6 @@
     "create": "Create labels"
   },
   "projectSettings": {
-    "newBranchRule": "New branch rule",
-    "tabs": {
-      "general": "General",
-      "members": "Members",
-      "labels": "Labels",
-      "rules": "Rules"
-    },
     "newLabels": "Create label",
     "general": {
       "mainTitle": "",
@@ -307,7 +300,15 @@
     },
     "removeMember": "Remove member",
     "inviteNewMember": "Invite new member",
-    "members": ""
+    "members": "",
+    "addRule": "Add new rule",
+    "tabs": {
+      "general": "General",
+      "members": "Members",
+      "labels": "Labels",
+      "rules": "Rules"
+    },
+    "newBranchRule": "New branch rule"
   },
   "landingPage": {
     "selectProject": "Sélectionnez un projet pour commencer",

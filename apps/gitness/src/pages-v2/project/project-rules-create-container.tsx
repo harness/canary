@@ -25,7 +25,7 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 // import { PathParams } from '../../RouteDefinitions'
-import { transformFormOutput } from '../../utils/repo-branch-rules-utils'
+import { transformDataFromApi, transformFormOutput } from '../../utils/repo-branch-rules-utils'
 import { useBranchRulesStore } from '../repo/stores/repo-branch-rules-store'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
@@ -173,7 +173,8 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
 
   useEffect(() => {
     if (rulesData) {
-      setPresetRuleData(rulesData)
+      const transformedData = transformDataFromApi(rulesData)
+      setPresetRuleData(transformedData)
     }
   }, [rulesData, setPresetRuleData])
 

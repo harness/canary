@@ -1,28 +1,35 @@
 import { FC, useMemo } from 'react'
 
 import { NoData } from '@/components'
-import { RuleDataType, SandboxLayout, TranslationStore } from '@/views'
+import { ErrorTypes, IProjectRulesStore, SandboxLayout, TranslationStore } from '@/views'
 import { RepoSettingsGeneralRules } from '@views/repo/repo-settings/components/repo-settings-general-rules'
 
 export interface ProjectRulesPageProps {
-  rulesData: RuleDataType[] | null
+  useProjectRulesStore: () => IProjectRulesStore
   isLoading: boolean
   useTranslationStore: () => TranslationStore
   searchQuery: string
   setSearchQuery: (query: string) => void
   page: number
   setPage: (page: number) => void
+  openRulesAlertDeleteDialog: (identifier: string) => void
+  apiError: { type: ErrorTypes; message: string } | null
+  handleRuleClick: (identifier: string) => void
 }
 export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
-  rulesData,
+  useProjectRulesStore,
   isLoading,
   useTranslationStore,
   searchQuery,
   setSearchQuery,
   page,
-  setPage
+  //   _setPage,
+  openRulesAlertDeleteDialog,
+  apiError,
+  handleRuleClick
 }) => {
   const { t } = useTranslationStore()
+  const { rules: rulesData } = useProjectRulesStore()
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
@@ -49,15 +56,14 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
       ) : (
         <SandboxLayout.Main>
           <SandboxLayout.Content maxWidth="3xl">
-            {/* <h1 className="mb-6 text-2xl font-medium text-foreground-1">{t('views:projectSettings.rules', 'Rules')}</h1> */}
-            <h1 className="mb-6 text-2xl font-medium text-foreground-1">Rules</h1>
+            <h1 className="mb-6 text-2xl font-medium text-foreground-1">{t('views:projectSettings.rules', 'Rules')}</h1>
 
             <RepoSettingsGeneralRules
               rules={rulesData}
               isLoading={isLoading}
-              apiError={null}
-              handleRuleClick={() => {}}
-              openRulesAlertDeleteDialog={() => {}}
+              apiError={apiError}
+              handleRuleClick={handleRuleClick}
+              openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
               useTranslationStore={useTranslationStore}
               rulesSearchQuery={searchQuery}
               setRulesSearchQuery={setSearchQuery}

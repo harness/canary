@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 
 import { permutateThemes, register } from '@tokens-studio/sd-transforms'
 import StyleDictionary from 'style-dictionary'
+import { logBrokenReferenceLevels, logVerbosityLevels, logWarningLevels } from 'style-dictionary/enums'
 import { getReferences, usesReferences } from 'style-dictionary/utils'
 
 import { harnessLog } from './complete-log.js'
@@ -84,9 +85,23 @@ async function run() {
   })
 
   for (const cfg of configs) {
-    const sd = new StyleDictionary(cfg, {
-      // verbosity: 'verbose'
-    })
+    const sd = new StyleDictionary(
+      {
+        ...cfg
+
+        // log: {
+
+        //   warnings: logWarningLevels.disabled, // 'warn' | 'error' | 'disabled'
+        //   verbosity: logVerbosityLevels.silent, // 'default' | 'silent' | 'verbose'
+        //   errors: {
+        //     // brokenReferences: logBrokenReferenceLevels.throw // 'throw' | 'console',
+        //   }
+        // }
+      },
+      {
+        verbosity: logVerbosityLevels.silent
+      }
+    )
 
     /**
      * This transform checks for each token whether that token's value could change

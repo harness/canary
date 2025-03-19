@@ -11,7 +11,9 @@ import {
   DESIGN_SYSTEM_ROOT,
   DESIGN_SYSTEM_ROOT_ESM,
   getExportFileHeader,
-  STYLE_BUILD_FORMATS
+  OSS_STYLES_SOURCE_NAME,
+  STYLE_BUILD_FORMATS,
+  THEME_MODE_FILENAME_PREFIX
 } from './constants.js'
 import { generateCoreFiles, generateThemeFiles } from './sd-file-generators.js'
 
@@ -156,19 +158,23 @@ async function createIndexFile() {
   console.log(`\n\x1b[34mCreating import files in ${DESIGN_SYSTEM_ROOT}...\x1b[0m`)
 
   // Get list of all CSS files
-  const cssFiles = (await fs.readdir(DESIGN_SYSTEM_ROOT))
-    .filter(file => file.endsWith('.css') && file !== 'index.css')
-    .sort()
+  const cssFiles = (await fs.readdir(DESIGN_SYSTEM_ROOT)).filter(file => file.endsWith('.css')).sort()
 
   // Organize files by type
-  const coreFiles = cssFiles.filter(file => !file.startsWith('dark-') && !file.startsWith('light-'))
-  const darkFiles = cssFiles.filter(file => file.includes('gitness') && file.startsWith('dark-'))
-  const lightFiles = cssFiles.filter(file => file.includes('gitness') && file.startsWith('light-'))
+  const coreFiles = cssFiles.filter(
+    file => !file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK) && !file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
+  )
+  const ossDarkFiles = cssFiles.filter(
+    file => file.includes(OSS_STYLES_SOURCE_NAME) && file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK)
+  )
+  const ossLightFiles = cssFiles.filter(
+    file => file.includes(OSS_STYLES_SOURCE_NAME) && file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
+  )
 
   console.log('\n=== Theme File Summary (OSS) ===')
   console.table({
-    'Dark Theme Files': { count: darkFiles.length },
-    'Light Theme Files': { count: lightFiles.length }
+    'Dark Theme Files': { count: ossDarkFiles.length },
+    'Light Theme Files': { count: ossLightFiles.length }
   })
   console.log('\n')
 
@@ -186,10 +192,10 @@ ${coreFiles.map(file => `@import './${file}';`).join('\n')}`
   const ossContent = `${getExportFileHeader()}
 
 /* Theme files - Dark */
-${darkFiles.map(file => `@import './${file}';`).join('\n')}
+${ossDarkFiles.map(file => `@import './${file}';`).join('\n')}
 
 /* Theme files - Light */
-${lightFiles.map(file => `@import './${file}';`).join('\n')}`
+${ossLightFiles.map(file => `@import './${file}';`).join('\n')}`
 
   /**
    * Enterprise themes imports
@@ -219,9 +225,11 @@ async function createEsmIndexFile() {
     .sort()
 
   // Organize files by type
-  const coreFiles = styleValueFiles.filter(file => !file.startsWith('dark-') && !file.startsWith('light-'))
-  const darkFiles = styleValueFiles.filter(file => file.startsWith('dark-'))
-  const lightFiles = styleValueFiles.filter(file => file.startsWith('light-'))
+  const coreFiles = styleValueFiles.filter(
+    file => !file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK) && !file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
+  )
+  const darkFiles = styleValueFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK))
+  const lightFiles = styleValueFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT))
 
   console.log('\n=== Theme File Summary (ts) ===')
   console.table({

@@ -1,13 +1,13 @@
 {
   "name": "@harnessio/core-design-system",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Harness Design System",
   "type": "module",
   "main": "src/core-style-esm.js",
   "exports": {
     "./core-styles": "./src/styles/core-imports.css",
-    "./oss-styles": "./src/styles/oss.css",
-    "./enterprise-styles": "./src/styles/enterprise.css",
+    "./oss-themes": "./src/styles/oss.css",
+    "./enterprise-themes": "./src/styles/enterprise.css",
     "./styles-esm": "./src/core-styles-esm.ts"
   },
   "scripts": {

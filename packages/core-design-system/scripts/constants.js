@@ -36,3 +36,10 @@ export const getExportFileHeader = () => `/**
     * DO NOT UPDATE IT MANUALLY
     * Generated on ${new Date().toUTCString()}
     */`
+
+export const THEME_MODE_FILENAME_PREFIX = {
+  DARK: 'dark-',
+  LIGHT: 'light-'
+}
+
+export const OSS_STYLES_SOURCE_NAME = 'gitness'

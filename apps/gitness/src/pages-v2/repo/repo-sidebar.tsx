@@ -234,7 +234,7 @@ export const RepoSidebar = () => {
         {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
         {/* Inset theme compensation - 8px*2 */}
         {/* Total height of both the divs should be 100vh */}
-        <div className={cn('h-[calc(100vh-100px)]', { 'h-[calc(100vh-100px-16px)]': isInset })}>
+        <div className={cn('h-[calc(100vh-100px)]', { 'h-[calc(100vh-100px-6px)]': isInset })}>
           <Outlet />
         </div>
       </div>

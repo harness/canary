@@ -36,7 +36,7 @@ export const RepoSidebar = ({
     // 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px)
     // Inset theme compensation - 8px*2
     // Total height of topbar and outlet should be 100vh
-    <div className={cn('sticky top-[100px] h-[calc(100vh-100px)]', { 'h-[calc(100vh-100px-16px)]': isInset })}>
+    <div className={cn('sticky top-[100px] h-[calc(100vh-100px)]', { 'h-[calc(100vh-100px-6px)]': isInset })}>
       <SandboxLayout.LeftSubPanel className="w-[248px]">
         <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
           <div className="flex w-full flex-col gap-3 pt-5">

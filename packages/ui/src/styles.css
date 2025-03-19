@@ -1193,3 +1193,7 @@ mark {
 .diffViewBlock.hiddenDiff > * > * {
   display: none !important;
 }
+
+.inset-layout .main-content-height {
+  @apply h-[calc(100%-55px)]; /* where 55px is the height of the top bar */
+}

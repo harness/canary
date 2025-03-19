@@ -5,7 +5,7 @@ This package provides the core design system for Harness UI components.
 ## Installation
 
 ```bash
-npm install @harnessio/core-design-system
+pnpm add @harnessio/core-design-system
 ```
 
 ## Usage
@@ -14,11 +14,10 @@ npm install @harnessio/core-design-system
 
 To import all design system styles:
 
-```js
-import '@harnessio/core-design-system/core-styles'
-import '@harnessio/core-design-system/oss-styles'
-import '@harnessio/core-design-system/enterprise-styles'
-import '@harnessio/core-design-system/styles-esm'
+```css
+@import '@harnessio/core-design-system/core-styles';
+@import '@harnessio/core-design-system/oss-styles';
+@import '@harnessio/core-design-system/enterprise-styles';
 ```
 
 ### Importing JavaScript Tokens
@@ -52,13 +51,8 @@ import * as designSystem from '@harnessio/core-design-system'
 To build the design system:
 
 ```bash
-npm run build
+pnpm build
 ```
-
-This will:
-
-1. Build the CSS styles (`npm run build:styles`)
-2. Build the JavaScript ESM exports (`npm run build:styles:esm`)
 
 ## Development
 

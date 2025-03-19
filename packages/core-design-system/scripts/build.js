@@ -153,7 +153,7 @@ async function run() {
 }
 
 async function createIndexFile() {
-  console.log('\n\x1b[34mCreating styles/index.css import file...\x1b[0m')
+  console.log(`\n\x1b[34mCreating import files in ${DESIGN_SYSTEM_ROOT}...\x1b[0m`)
 
   // Get list of all CSS files
   const cssFiles = (await fs.readdir(DESIGN_SYSTEM_ROOT))
@@ -207,14 +207,11 @@ ${lightFiles.map(file => `@import './${file}';`).join('\n')}`
   await fs.writeFile(`${DESIGN_SYSTEM_ROOT}/enterprise.css`, enterpriseContent)
   await fs.writeFile(`${DESIGN_SYSTEM_ROOT}/core-imports.css`, coreStyles)
 
-  console.log(
-    '\n\x1b[1m\x1b[32m%s\x1b[0m',
-    `✔︎ Created ${DESIGN_SYSTEM_ROOT}/index.css with imports to all token files`
-  )
+  console.log('\n\x1b[1m\x1b[32m%s\x1b[0m', `✔︎ Created import files in ${DESIGN_SYSTEM_ROOT}`)
 }
 
 async function createEsmIndexFile() {
-  console.log('\n\x1b[34mCreating styles/index.ts import file...\x1b[0m')
+  console.log(`\n\x1b[34mCreating ${DESIGN_SYSTEM_ROOT_ESM}/index.ts import file...\x1b[0m`)
 
   // Get list of all JS files
   const styleValueFiles = (await fs.readdir(DESIGN_SYSTEM_ROOT_ESM))

@@ -237,12 +237,14 @@ function BreadcrumbsAndOutlet({ className }: { className?: string }) {
   const { isInset } = useThemeStore()
 
   return (
-    <div className={cn('h-full', { 'overflow-hidden h-screen p-2 bg-sidebar-background-1': isInset }, className)}>
-      <div className={cn('h-full flex flex-col', { 'rounded-md overflow-auto bg-background-1': isInset })}>
-        <div className="layer-high bg-background-1 sticky top-0">
-          <Breadcrumbs />
+    <div className={cn('h-full', { 'h-screen inset-layout': isInset }, className)}>
+      <div className={cn('layer-high bg-background-1 sticky top-0', { 'bg-sidebar-background-1': isInset })}>
+        <Breadcrumbs />
+      </div>
+      <div className={cn({ 'overflow-hidden main-content-height px-1.5 pb-1.5 bg-sidebar-background-1': isInset })}>
+        <div className={cn('flex flex-col h-full', { 'rounded-md overflow-auto bg-background-1': isInset })}>
+          <Outlet />
         </div>
-        <Outlet />
       </div>
     </div>
   )

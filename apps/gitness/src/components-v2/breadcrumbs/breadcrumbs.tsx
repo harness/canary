@@ -1,5 +1,6 @@
 import { Link, useMatches } from 'react-router-dom'
 
+import { cn } from '@harnessio/canary'
 import { Breadcrumb, Separator, Sidebar, Topbar } from '@harnessio/ui/components'
 
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
@@ -15,8 +16,8 @@ function Breadcrumbs() {
       <Topbar.Left>
         {!isMFE ? (
           <>
-            <Sidebar.Trigger className="-ml-1" />
-            <Separator orientation="vertical" className="ml-1 mr-2 h-4" />
+            <Sidebar.Trigger className="text-sidebar-foreground-7 -ml-1" />
+            <Separator orientation="vertical" className="bg-sidebar-background-10 ml-1 mr-2 h-4" />
           </>
         ) : null}
         <Breadcrumb.Root className="select-none">
@@ -29,13 +30,17 @@ function Breadcrumbs() {
 
               return (
                 <Breadcrumb.Item key={match.pathname}>
-                  {!isFirst ? <Breadcrumb.Separator /> : null}
+                  {!isFirst && <Breadcrumb.Separator className="text-sidebar-foreground-8" />}
                   {isLast || !asLink ? (
-                    <Breadcrumb.Page className={isLast ? 'text-foreground' : 'text-muted-foreground'}>
+                    <Breadcrumb.Page
+                      className={cn('text-sidebar-foreground-8', {
+                        'text-sidebar-foreground-9': isLast
+                      })}
+                    >
                       {breadcrumbContent}
                     </Breadcrumb.Page>
                   ) : (
-                    <Breadcrumb.Link asChild>
+                    <Breadcrumb.Link className="text-sidebar-foreground-8 hover:text-sidebar-foreground-9" asChild>
                       <Link to={match.pathname}>{breadcrumbContent}</Link>
                     </Breadcrumb.Link>
                   )}

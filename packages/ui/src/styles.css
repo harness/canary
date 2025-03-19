@@ -1,4 +1,7 @@
-@import url('./shared-style-variables.css');
+/* @import url('./shared-style-variables.css'); */
+
+@import url('@harnessio/core-design-system/core-styles');
+@import url('@harnessio/core-design-system/oss-themes');
 
 @tailwind base;
 @tailwind components;

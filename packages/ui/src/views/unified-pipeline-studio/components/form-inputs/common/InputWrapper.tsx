@@ -2,4 +2,4 @@ function InputWrapper({ children }: React.PropsWithChildren<React.HTMLAttributes
   return <>{children}</>
 }
 
-export default InputWrapper
+export { InputWrapper }

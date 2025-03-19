@@ -1,5 +1,8 @@
+import { InputFactory } from '@harnessio/forms'
+
 import { TranslationStore } from '..'
 import { UnifiedPipelineStudioNodeContextProvider } from './components/graph-implementation/context/UnifiedPipelineStudioNodeContext'
+import { AnyStepDefinition } from './components/steps/types'
 import { PipelineStudioNodeContextMenu } from './components/unified-pipeline-studio-node-context-menu'
 import { YamlErrorDataType } from './components/unified-pipeline-studio-yaml-view'
 import { VisualYamlValue } from './components/visual-yaml-toggle'
@@ -53,6 +56,8 @@ export interface UnifiedPipelineStudioProps {
   theme?: 'light' | 'dark' | string
   saveInProgress?: boolean
   loadInProgress?: boolean
+  inputComponentFactory?: InputFactory
+  stepsDefinitions: AnyStepDefinition[]
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {
@@ -68,7 +73,9 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     onSave,
     theme,
     saveInProgress,
-    loadInProgress
+    loadInProgress,
+    inputComponentFactory,
+    stepsDefinitions
   } = props
 
   const { onSelectedPathChange, selectedPath, errors, onErrorsChange, panelOpen, onPanelOpenChange } =
@@ -94,6 +101,8 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       initialView={initialView}
       theme={theme}
       saveInProgress={saveInProgress}
+      inputComponentFactory={inputComponentFactory}
+      stepsDefinitions={stepsDefinitions}
     >
       <UnifiedPipelineStudioNodeContextProvider>
         {/* TODO: Loading... */}

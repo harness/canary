@@ -14,16 +14,15 @@ import {
 } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
-import InputLabel from './common/InputLabel'
-import InputWrapper from './common/InputWrapper'
-import { InputType } from './types'
+import { InputLabel } from './common/InputLabel'
+import { InputWrapper } from './common/InputWrapper'
 
 export type UIInputWithConfigsForList<T = unknown> = Omit<IInputDefinition<T>, 'path'> & {
   relativePath: string
 }
 
 export interface ListInputConfig {
-  inputType: InputType.list
+  inputType: 'list'
   inputConfig: {
     inputs: UIInputWithConfigsForList[]
     layout?: 'grid' | 'default'
@@ -120,7 +119,7 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
 }
 
 export class ListInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.list
+  public internalType = 'list'
 
   renderComponent(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element {
     return <ListInputInternal {...props} />

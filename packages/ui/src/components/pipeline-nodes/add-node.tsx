@@ -9,7 +9,7 @@ export function AddNode(props: AddNodeProp) {
   const { onClick } = props
 
   return (
-    <div className="border-border-2 flex size-full items-center justify-center rounded-full border bg-primary-foreground">
+    <div className="border-border-2 flex size-full items-center justify-center rounded-full border">
       <Button
         className="self-center rounded-full p-3"
         style={{ alignSelf: 'center' }}

@@ -26,6 +26,7 @@ export interface CodeEditorProps<_> {
   theme?: string
   options?: monaco.editor.IStandaloneEditorConstructionOptions
   height?: EditorProps['height']
+  className?: string
 }
 
 export function CodeEditor<T>({
@@ -35,7 +36,8 @@ export function CodeEditor<T>({
   themeConfig,
   options,
   theme: themeFromProps,
-  height = '75vh'
+  height = '75vh',
+  className
 }: CodeEditorProps<T>): JSX.Element {
   const monaco = useMonaco()
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | undefined>()
@@ -99,7 +101,7 @@ export function CodeEditor<T>({
   return (
     <>
       <Editor
-        className="overflow-hidden rounded-b-md border-x border-b"
+        className={className}
         height={height}
         onChange={(value, data) => {
           currentRevisionRef.current = { code: value ?? '', revisionId: data.versionId }

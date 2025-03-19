@@ -7,17 +7,7 @@ import type { SelectInputConfig } from './SelectInput'
 import type { TextAreaInputConfig } from './TextAreaInput'
 import type { TextInputConfig } from './TextInput'
 
-export enum InputType {
-  boolean = 'boolean',
-  text = 'text',
-  number = 'number',
-  array = 'array',
-  list = 'list',
-  group = 'group',
-  textarea = 'textarea',
-  select = 'select',
-  separator = 'separator'
-}
+export type InputType = 'boolean' | 'text' | 'number' | 'array' | 'list' | 'group' | 'textarea' | 'select' | 'separator'
 
 export type InputConfigType =
   | BooleanInputConfig

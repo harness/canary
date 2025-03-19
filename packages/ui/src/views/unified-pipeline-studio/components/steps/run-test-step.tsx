@@ -8,7 +8,7 @@ import {
   unsetEmptyStringOutputTransformer
 } from '@harnessio/forms'
 
-import { InputConfigType, InputType } from '../form-inputs/types'
+import { InputConfigType } from '../form-inputs/types'
 import { getContainerPartial } from './partials/container-partial'
 import { IInputConfigWithConfig, RUN_TEST_STEP_IDENTIFIER } from './types'
 
@@ -16,7 +16,7 @@ export const RUN_TEST_STEP_DESCRIPTION = 'Run test step description.'
 
 const inputs: IInputConfigWithConfig[] = [
   {
-    inputType: InputType.select,
+    inputType: 'select',
     path: `${RUN_TEST_STEP_IDENTIFIER}.shell`,
     label: 'Shell',
     inputConfig: {
@@ -30,7 +30,7 @@ const inputs: IInputConfigWithConfig[] = [
     }
   },
   {
-    inputType: InputType.textarea,
+    inputType: 'textarea',
     path: `${RUN_TEST_STEP_IDENTIFIER}.script`,
     label: 'Script',
     required: true,
@@ -39,12 +39,12 @@ const inputs: IInputConfigWithConfig[] = [
   },
 
   {
-    inputType: InputType.array,
+    inputType: 'array',
     path: `${RUN_TEST_STEP_IDENTIFIER}.match`,
     label: 'Match',
     inputConfig: {
       input: {
-        inputType: InputType.text,
+        inputType: 'text',
         path: ''
       }
     },
@@ -54,20 +54,20 @@ const inputs: IInputConfigWithConfig[] = [
   getContainerPartial(RUN_TEST_STEP_IDENTIFIER),
 
   {
-    inputType: InputType.list,
+    inputType: 'list',
     path: `${RUN_TEST_STEP_IDENTIFIER}.env`,
     label: 'Environment',
     inputConfig: {
       layout: 'grid',
       inputs: [
         {
-          inputType: InputType.text,
+          inputType: 'text',
           relativePath: 'key',
           label: 'Key',
           outputTransform: unsetEmptyStringOutputTransformer()
         },
         {
-          inputType: InputType.text,
+          inputType: 'text',
           relativePath: 'value',
           label: 'Value',
           outputTransform: unsetEmptyStringOutputTransformer()
@@ -78,24 +78,24 @@ const inputs: IInputConfigWithConfig[] = [
     outputTransform: arrayToObjectOutputTransformer({ unsetIfEmpty: true })
   },
   {
-    inputType: InputType.boolean,
+    inputType: 'boolean',
     path: `${RUN_TEST_STEP_IDENTIFIER}.splitting.disabled`,
     label: 'Text splitting disabled'
   },
 
   {
-    inputType: InputType.number,
+    inputType: 'number',
     path: `${RUN_TEST_STEP_IDENTIFIER}.splitting.concurrency`,
     label: 'Text splitting concurrency'
   },
 
   {
-    inputType: InputType.boolean,
+    inputType: 'boolean',
     path: `${RUN_TEST_STEP_IDENTIFIER}.intelligence.disabled`,
     label: 'Text intelligence disabled'
   },
   {
-    inputType: InputType.list,
+    inputType: 'list',
     path: `${RUN_TEST_STEP_IDENTIFIER}.report`,
     label: 'Report',
     description: 'Report uploads reports at the provided paths',
@@ -103,7 +103,7 @@ const inputs: IInputConfigWithConfig[] = [
       layout: 'grid',
       inputs: [
         {
-          inputType: InputType.select,
+          inputType: 'select',
           relativePath: 'type',
           label: 'Type',
           inputConfig: {
@@ -115,7 +115,7 @@ const inputs: IInputConfigWithConfig[] = [
           }
         },
         {
-          inputType: InputType.text,
+          inputType: 'text',
           relativePath: 'path',
           label: 'Path'
         }

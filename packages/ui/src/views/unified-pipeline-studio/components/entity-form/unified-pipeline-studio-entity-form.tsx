@@ -17,8 +17,6 @@ import {
 } from '@harnessio/forms'
 
 import { useUnifiedPipelineStudioContext } from '../../../unified-pipeline-studio/context/unified-pipeline-studio-context'
-import { inputComponentFactory } from '../form-inputs/factory/factory'
-import { InputType } from '../form-inputs/types'
 import { getHarnessSteOrGroupIdentifier, getHarnessStepOrGroupDefinition, isHarnessGroup } from '../steps/harness-steps'
 import { TEMPLATE_STEP_IDENTIFIER } from '../steps/types'
 import { EntityFormLayout } from './entity-form-layout'
@@ -37,7 +35,9 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
     requestYamlModifications,
     setFormEntity,
     formEntity,
-    useTemplateListStore
+    useTemplateListStore,
+    inputComponentFactory,
+    stepsDefinitions
   } = useUnifiedPipelineStudioContext()
 
   const { getTemplateFormDefinition } = useTemplateListStore()
@@ -53,7 +53,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
 
       // process harness step
       if (harnessStepIdentifier) {
-        const stepDefinition = getHarnessStepOrGroupDefinition(harnessStepIdentifier)
+        const stepDefinition = getHarnessStepOrGroupDefinition(harnessStepIdentifier, stepsDefinitions)
 
         if (stepDefinition) {
           const transformers = getTransformers(stepDefinition?.formDefinition ?? { inputs: [] })
@@ -83,7 +83,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
 
   useEffect(() => {
     if (formEntity?.source === 'embedded') {
-      const harnessStepDefinition = getHarnessStepOrGroupDefinition(formEntity.data.identifier)
+      const harnessStepDefinition = getHarnessStepOrGroupDefinition(formEntity.data.identifier, stepsDefinitions)
       if (harnessStepDefinition) {
         setFormDefinition({
           ...harnessStepDefinition.formDefinition,
@@ -102,7 +102,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
   const resolver = useZodValidationResolver(formDefinition ?? { inputs: [] }, {
     validationConfig: {
       requiredMessage: 'Required input',
-      requiredMessagePerInput: { [InputType.select]: 'Selection is required' }
+      requiredMessagePerInput: { ['select']: 'Selection is required' }
     }
   })
 

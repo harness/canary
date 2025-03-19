@@ -3,12 +3,11 @@ import { Switch } from '@components/switch'
 import { InputComponent, InputProps, useController, type AnyFormikValue, type UseFormReturn } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
-import InputLabel from './common/InputLabel'
-import InputWrapper from './common/InputWrapper'
-import { InputType } from './types'
+import { InputLabel } from './common/InputLabel'
+import { InputWrapper } from './common/InputWrapper'
 
 export interface BooleanInputConfig {
-  inputType: InputType.boolean
+  inputType: 'boolean'
   inputConfig?: {
     onChange: (value: AnyFormikValue, formik: UseFormReturn) => void
   }
@@ -40,7 +39,7 @@ function BooleanInputInternal(props: InputProps<AnyFormikValue, BooleanInputConf
 }
 
 export class BooleanInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.boolean
+  public internalType = 'boolean'
 
   renderComponent(props: InputProps<AnyFormikValue, BooleanInputConfig>): JSX.Element {
     return <BooleanInputInternal {...props} />

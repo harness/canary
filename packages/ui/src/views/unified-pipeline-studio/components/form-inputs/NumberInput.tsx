@@ -3,12 +3,11 @@ import { Input } from '@components/input'
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
-import InputLabel from './common/InputLabel'
-import InputWrapper from './common/InputWrapper'
-import { InputType } from './types'
+import { InputLabel } from './common/InputLabel'
+import { InputWrapper } from './common/InputWrapper'
 
 export interface NumberInputConfig {
-  inputType: InputType.number
+  inputType: 'number'
 }
 
 function NumberInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
@@ -29,7 +28,7 @@ function NumberInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
 }
 
 export class NumberInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.number
+  public internalType = 'number'
 
   renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
     return <NumberInputInternal {...props} />

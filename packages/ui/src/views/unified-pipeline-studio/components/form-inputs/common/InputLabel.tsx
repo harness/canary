@@ -18,4 +18,4 @@ function InputLabel(props: InputLabelProps): JSX.Element | null {
   return <Label className={cn('mb-2.5 block', className)}>{labelText}</Label>
 }
 
-export default InputLabel
+export { InputLabel }

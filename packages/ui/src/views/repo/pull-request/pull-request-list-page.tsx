@@ -257,7 +257,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                     {PR_FILTER_OPTIONS.map(filterOption => {
                       return (
                         <PRListFilterHandler.Component
-                          parser={filterOption.parser}
+                          /* TODO: fix any */
+                          parser={filterOption.parser as any}
                           filterKey={filterOption.value}
                           key={filterOption.value}
                         >

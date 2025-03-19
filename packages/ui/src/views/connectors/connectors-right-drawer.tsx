@@ -16,6 +16,7 @@ interface ConnectorsRightDrawerBaseProps {
   connectors: any //TODO: TYPE
   getConnectorDefinition: (identifier: string) => AnyConnectorDefinition | undefined
   useTranslationStore: () => TranslationStore
+  openSecretDrawer?: () => void
 }
 
 const ConnectorsRightDrawerBase = ({
@@ -25,7 +26,8 @@ const ConnectorsRightDrawerBase = ({
   connectors,
   getConnectorDefinition,
   onDrawerClose,
-  useTranslationStore
+  useTranslationStore,
+  openSecretDrawer
 }: ConnectorsRightDrawerBaseProps): JSX.Element => {
   const { rightDrawer, setRightDrawer, formEntity, setFormEntity, clearRightDrawerData } = useConnectorsContext()
 
@@ -53,6 +55,7 @@ const ConnectorsRightDrawerBase = ({
       case ConnectorRightDrawer.Form:
         return formEntity ? (
           <ConnectorEntityForm
+            openSecretDrawer={openSecretDrawer}
             useTranslationStore={useTranslationStore}
             formEntity={formEntity}
             setRightDrawer={setRightDrawer}
@@ -110,7 +113,8 @@ const ConnectorsRightDrawer = ({
   connectors,
   getConnectorDefinition,
   onDrawerClose,
-  useTranslationStore
+  useTranslationStore,
+  openSecretDrawer
 }: ConnectorsRightDrawerBaseProps): JSX.Element | null => {
   return (
     <ConnectorsProvider>
@@ -122,6 +126,7 @@ const ConnectorsRightDrawer = ({
         getConnectorDefinition={getConnectorDefinition}
         onDrawerClose={onDrawerClose}
         useTranslationStore={useTranslationStore}
+        openSecretDrawer={openSecretDrawer}
       />
     </ConnectorsProvider>
   )

@@ -153,6 +153,9 @@ importers:
       '@harnessio/code-service-client':
         specifier: 3.5.0
         version: 3.5.0
+      '@harnessio/core-design-system':
+        specifier: workspace:*
+        version: link:../../packages/core-design-system
       '@harnessio/forms':
         specifier: workspace:*
         version: link:../../packages/forms
@@ -647,6 +650,9 @@ importers:
       '@git-diff-view/shiki':
         specifier: ^0.0.21
         version: 0.0.21
+      '@harnessio/core-design-system':
+        specifier: workspace:*
+        version: link:../core-design-system
       '@harnessio/filters':
         specifier: workspace:*
         version: link:../filters

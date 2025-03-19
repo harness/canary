@@ -20,7 +20,13 @@ import { generateCoreFiles, generateThemeFiles } from './sd-file-generators.js'
 register(StyleDictionary)
 
 async function run() {
-  const $themes = JSON.parse(await fs.readFile('design-tokens/$themes.json'))
+  let $themes
+  try {
+    $themes = JSON.parse(await fs.readFile('design-tokens/$themes.json'))
+  } catch (error) {
+    console.error('Error parsing $themes.json:', error)
+    throw error
+  }
   const themes = permutateThemes($themes)
   // collect all tokensets for all themes and dedupe
   const tokensets = [...new Set(Object.values(themes).reduce((acc, sets) => [...acc, ...sets], []))]
@@ -172,10 +178,10 @@ async function createIndexFile() {
   )
 
   console.log('\n=== Theme File Summary (OSS) ===')
-  console.table({
-    'Dark Theme Files': { count: ossDarkFiles.length },
-    'Light Theme Files': { count: ossLightFiles.length }
-  })
+  console.table([
+    { Type: 'Dark Theme Files', Count: ossDarkFiles.length },
+    { Type: 'Light Theme Files', Count: ossLightFiles.length }
+  ])
   console.log('\n')
 
   /**
@@ -209,9 +215,11 @@ ${ossLightFiles.map(file => `@import './${file}';`).join('\n')}`
 @import './light-harness.css';`
 
   // Write file
-  await fs.writeFile(`${DESIGN_SYSTEM_ROOT}/oss.css`, ossContent)
-  await fs.writeFile(`${DESIGN_SYSTEM_ROOT}/enterprise.css`, enterpriseContent)
-  await fs.writeFile(`${DESIGN_SYSTEM_ROOT}/core-imports.css`, coreStyles)
+  await Promise.all([
+    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/oss.css`, ossContent),
+    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/enterprise.css`, enterpriseContent),
+    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/core-imports.css`, coreStyles)
+  ])
 
   console.log('\n\x1b[1m\x1b[32m%s\x1b[0m', `✔︎ Created import files in ${DESIGN_SYSTEM_ROOT}`)
 }
@@ -232,10 +240,11 @@ async function createEsmIndexFile() {
   const lightFiles = styleValueFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT))
 
   console.log('\n=== Theme File Summary (ts) ===')
-  console.table({
-    'Dark Theme Files': { count: darkFiles.length },
-    'Light Theme Files': { count: lightFiles.length }
-  })
+
+  console.table([
+    { Type: 'Dark Theme Files', Count: darkFiles.length },
+    { Type: 'Light Theme Files', Count: lightFiles.length }
+  ])
   console.log('\n')
 
   // Generate content

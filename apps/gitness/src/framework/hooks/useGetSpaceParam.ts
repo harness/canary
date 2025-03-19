@@ -12,5 +12,5 @@ export function useGetSpaceURLParam(): string | undefined {
     scope: { accountId, orgIdentifier, projectIdentifier }
   } = useMFEContext()
 
-  return !isMFE ? spaceId : [accountId, orgIdentifier, projectIdentifier].filter(Boolean).join('/')
+  return !isMFE ? spaceId : [accountId, orgIdentifier, projectIdentifier].filter(Boolean).join('/') + '/+/'
 }

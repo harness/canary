@@ -117,6 +117,34 @@ const labelsRoute = {
   ]
 }
 
+const rulesRoute = {
+  path: 'rules',
+  handle: {
+    breadcrumb: () => <span>{Page.Branch_Rules}</span>,
+    pageTitle: Page.Branch_Rules
+  },
+  children: [
+    {
+      index: true,
+      element: <ProjectRulesListContainer />
+    },
+    {
+      path: 'create',
+      element: <ProjectRulesCreateOrUpdateContainer />,
+      handle: {
+        breadcrumb: () => <span>Create a rule</span>
+      }
+    },
+    {
+      path: ':ruleId',
+      element: <ProjectRulesCreateOrUpdateContainer />,
+      handle: {
+        breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>
+      }
+    }
+  ]
+}
+
 export const repoRoutes: CustomRouteObject[] = [
   {
     path: 'repos',
@@ -592,33 +620,7 @@ export const repoRoutes: CustomRouteObject[] = [
         }
       },
       labelsRoute,
-      {
-        path: 'rules',
-        handle: {
-          breadcrumb: () => <span>{Page.Branch_Rules}</span>,
-          pageTitle: Page.Branch_Rules
-        },
-        children: [
-          {
-            index: true,
-            element: <ProjectRulesListContainer />
-          },
-          {
-            path: 'create',
-            element: <ProjectRulesCreateOrUpdateContainer />,
-            handle: {
-              breadcrumb: () => <span>Create a rule</span>
-            }
-          },
-          {
-            path: ':ruleId',
-            element: <ProjectRulesCreateOrUpdateContainer />,
-            handle: {
-              breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>
-            }
-          }
-        ]
-      }
+      rulesRoute
     ]
   },
   {
@@ -650,7 +652,8 @@ export const repoRoutes: CustomRouteObject[] = [
         index: true,
         element: <Navigate to="labels" replace />
       },
-      labelsRoute
+      labelsRoute,
+      rulesRoute
     ]
   }
 ]

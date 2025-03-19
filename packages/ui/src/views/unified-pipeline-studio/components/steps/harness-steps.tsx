@@ -108,9 +108,9 @@ export function getHarnessSteOrGroupIdentifier(step: {
 
 export function getHarnessStepOrGroupDefinition(
   identifier: string,
-  preferredStepsDefinitions: AnyStepDefinition[]
+  preferredStepsDefinitions?: AnyStepDefinition[]
 ): HarnessStepDefinitionType | HarnessStepGroupDefinitionType | undefined {
-  const stepDef = preferredStepsDefinitions.find(harnessStep => harnessStep.identifier === identifier)
+  const stepDef = preferredStepsDefinitions?.find(harnessStep => harnessStep.identifier === identifier)
   if (stepDef) {
     return stepDef as HarnessStepDefinitionType
   }

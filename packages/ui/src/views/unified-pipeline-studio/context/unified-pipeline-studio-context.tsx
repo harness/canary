@@ -73,7 +73,7 @@ export interface UnifiedPipelineStudioContextProps {
   setFormEntity: (formEntity: FormEntityType) => void
   useTemplateListStore: () => ITemplateListStore
   inputComponentFactory: InputFactory
-  stepsDefinitions: AnyStepDefinition[]
+  stepsDefinitions?: AnyStepDefinition[]
 }
 
 export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioContextProps>({
@@ -139,7 +139,7 @@ export interface UnifiedPipelineStudioProviderProps {
   initialView?: VisualYamlValue
   useTemplateListStore: () => ITemplateListStore
   inputComponentFactory?: InputFactory
-  stepsDefinitions: AnyStepDefinition[]
+  stepsDefinitions?: AnyStepDefinition[]
 }
 
 export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProviderProps> = props => {

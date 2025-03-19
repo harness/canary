@@ -57,7 +57,7 @@ export interface UnifiedPipelineStudioProps {
   saveInProgress?: boolean
   loadInProgress?: boolean
   inputComponentFactory?: InputFactory
-  stepsDefinitions: AnyStepDefinition[]
+  stepsDefinitions?: AnyStepDefinition[]
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {

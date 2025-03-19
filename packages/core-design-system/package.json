@@ -1,7 +1,6 @@
 {
   "name": "@harnessio/core-design-system",
   "version": "0.0.1",
-  "private": true,
   "description": "Harness Design System",
   "type": "module",
   "main": "src/core-style-esm.js",
@@ -12,7 +11,7 @@
     "./styles-esm": "./src/core-styles-esm.ts"
   },
   "scripts": {
-    "build": "pnpm clean && pnpm build:styles",
+    "build": " pnpm clean && pnpm build:styles",
     "build:styles": "node scripts/build.js",
     "clean": "rimraf ./src/styles && rimraf ./src/styles-esm"
   },

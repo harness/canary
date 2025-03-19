@@ -8,32 +8,25 @@ import {
   useSpaceRuleGetQuery,
   useSpaceRuleUpdateMutation
 } from '@harnessio/code-service-client'
-import { SkeletonForm } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchRulesActionType,
   getBranchRules,
   MergeStrategy,
-  NotFoundPage,
   RepoBranchSettingsFormFields,
   RepoBranchSettingsRulesPage
 } from '@harnessio/ui/views'
 
-// import { useRoutes } from '../../framework/context/NavigationContext'
-// import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-// import { PathParams } from '../../RouteDefinitions'
 import { transformDataFromApi, transformFormOutput } from '../../utils/repo-branch-rules-utils'
 import { useBranchRulesStore } from '../repo/stores/repo-branch-rules-store'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
 export const ProjectRulesCreateOrUpdateContainer = () => {
   const { t } = useTranslationStore()
-  //   const routes = useRoutes()
   const navigate = useNavigate()
-  //   const repoName = useGetRepoId()
 
   const spaceURL = useGetSpaceURLParam()
 
@@ -61,11 +54,7 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
     }
   }, [setPresetRuleData, setPrincipals, setRecentStatusChecks])
 
-  const {
-    data: { body: rulesData } = {},
-    error: fetchRuleError,
-    isLoading: fetchRuleIsLoading
-  } = useSpaceRuleGetQuery(
+  const { data: { body: rulesData } = {} } = useSpaceRuleGetQuery(
     { space_ref: spaceURL ?? '', rule_identifier: ruleIdentifier ?? '' },
     {
       enabled: !!ruleIdentifier
@@ -195,14 +184,6 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
     addRule: addRuleError?.message || null,
     updateRule: updateRuleError?.message || null,
     statusChecks: statusChecksError?.message || null
-  }
-
-  if (!!ruleIdentifier && fetchRuleIsLoading) {
-    return <SkeletonForm className="mt-7" />
-  }
-
-  if (!!ruleIdentifier && !!fetchRuleError) {
-    return <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="rules" />
   }
 
   return (

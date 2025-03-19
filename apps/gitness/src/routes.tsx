@@ -591,40 +591,12 @@ export const repoRoutes: CustomRouteObject[] = [
           pageTitle: Page.Members
         }
       },
-      {
-        path: 'labels',
-        handle: {
-          breadcrumb: () => <span>{Page.Labels}</span>,
-          pageTitle: Page.Labels,
-          routeName: RouteConstants.toProjectLabels
-        },
-        children: [
-          {
-            index: true,
-            element: <ProjectLabelsList />
-          },
-          {
-            path: 'create',
-            element: <ProjectLabelFormContainer />,
-            handle: {
-              breadcrumb: () => <span>Create a label</span>
-            }
-          },
-          {
-            path: ':labelId',
-            element: <ProjectLabelFormContainer />,
-            handle: {
-              breadcrumb: ({ labelId }: { labelId: string }) => <span>{labelId}</span>
-            }
-          }
-        ]
-      },
+      labelsRoute,
       {
         path: 'rules',
         handle: {
           breadcrumb: () => <span>{Page.Branch_Rules}</span>,
           pageTitle: Page.Branch_Rules
-          // routeName: RouteConstants.toProjectBranchRules
         },
         children: [
           {

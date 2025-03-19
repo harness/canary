@@ -44,6 +44,7 @@ const badgeVariants = cva('inline-flex items-center transition-colors badge', {
     size: {
       default: '',
       sm: 'badge-sm',
+
       xl: 'h-[18px] px-2 text-12',
       lg: 'px-3 py-1 text-xs font-normal',
       md: 'h-6 px-2.5',

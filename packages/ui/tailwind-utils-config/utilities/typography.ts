@@ -1,10 +1,10 @@
 export default {
   '.font': {
     '&-caption-soft': {
-      font: 'var(--canary-caption-soft)'
+      font: 'var(--cn-caption-soft)'
     },
     '&-caption-normal': {
-      font: 'var(--canary-caption-normal)'
+      font: 'var(--cn-caption-normal)'
     }
   }
 }

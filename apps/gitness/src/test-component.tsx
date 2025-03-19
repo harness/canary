@@ -22,7 +22,7 @@ export default function TestComponent() {
 
         <div className="space-x-2">
           <Badge>Default</Badge>
-          <Badge variant="neutral">outline</Badge>
+          <Badge variant="neutral">neutral</Badge>
           <Badge variant="success">Success</Badge>
           <Badge variant="warning">warning</Badge>
           <Badge variant="danger">danger</Badge>
@@ -38,7 +38,7 @@ export default function TestComponent() {
         <div className="space-x-2">
           <Badge borderRadius="full">Default</Badge>
           <Badge borderRadius="full" variant="neutral">
-            outline
+            neutral
           </Badge>
           <Badge borderRadius="full" variant="success">
             {/* <Icon size={10} name="tick" /> <span>Success</span> */}
@@ -68,7 +68,7 @@ export default function TestComponent() {
         <div className="space-x-2">
           <Badge size="sm">Default</Badge>
           <Badge size="sm" variant="neutral">
-            outline
+            neutral
           </Badge>
           <Badge size="sm" variant="success">
             {/* <Icon size={10} name="tick" /> <span>Success</span> */}

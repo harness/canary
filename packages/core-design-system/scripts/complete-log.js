@@ -1,4 +1,3 @@
-import chalkAnimation from 'chalk-animation'
 import figlet from 'figlet'
 import { summer } from 'gradient-string'
 
@@ -20,7 +19,6 @@ export function harnessLog() {
         return
       }
       console.log(summer(data))
-      // chalkAnimation.rainbow(data).start()
     }
   )
 }

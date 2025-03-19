@@ -10,6 +10,7 @@ import {
   DESIGN_SYSTEM_PREFIX,
   DESIGN_SYSTEM_ROOT,
   DESIGN_SYSTEM_ROOT_ESM,
+  getExportFileHeader,
   STYLE_BUILD_FORMATS
 } from './constants.js'
 import { generateCoreFiles, generateThemeFiles } from './sd-file-generators.js'
@@ -161,36 +162,50 @@ async function createIndexFile() {
 
   // Organize files by type
   const coreFiles = cssFiles.filter(file => !file.startsWith('dark-') && !file.startsWith('light-'))
-  const darkFiles = cssFiles.filter(file => file.startsWith('dark-'))
-  const lightFiles = cssFiles.filter(file => file.startsWith('light-'))
+  const darkFiles = cssFiles.filter(file => file.includes('gitness') && file.startsWith('dark-'))
+  const lightFiles = cssFiles.filter(file => file.includes('gitness') && file.startsWith('light-'))
 
-  console.log('\n=== Theme File Summary (css) ===')
+  console.log('\n=== Theme File Summary (OSS) ===')
   console.table({
     'Dark Theme Files': { count: darkFiles.length },
     'Light Theme Files': { count: lightFiles.length }
   })
   console.log('\n')
 
-  // Generate content
-  const content = `/**
- * Harness Design System
- * Main stylesheet importing all token files
- * DO NOT UPDATE IT MANUALLY
- * Generated on ${new Date().toUTCString()}
- */
-
+  /**
+   * Core imports
+   * */
+  const coreStyles = `${getExportFileHeader()}
+   
 /* Core tokens */
-${coreFiles.map(file => `@import './${file}';`).join('\n')}
+${coreFiles.map(file => `@import './${file}';`).join('\n')}`
+
+  /**
+   * OSS themes imports
+   * */
+  const ossContent = `${getExportFileHeader()}
 
 /* Theme files - Dark */
 ${darkFiles.map(file => `@import './${file}';`).join('\n')}
 
 /* Theme files - Light */
-${lightFiles.map(file => `@import './${file}';`).join('\n')};
-`
+${lightFiles.map(file => `@import './${file}';`).join('\n')}`
+
+  /**
+   * Enterprise themes imports
+   * */
+  const enterpriseContent = `${getExportFileHeader()}
+
+/* Theme files - Dark */
+@import './dark-harness.css';
+
+/* Theme files - Light */
+@import './light-harness.css';`
 
   // Write file
-  await fs.writeFile(`${DESIGN_SYSTEM_ROOT}/index.css`, content)
+  await fs.writeFile(`${DESIGN_SYSTEM_ROOT}/oss.css`, ossContent)
+  await fs.writeFile(`${DESIGN_SYSTEM_ROOT}/enterprise.css`, enterpriseContent)
+  await fs.writeFile(`${DESIGN_SYSTEM_ROOT}/core-imports.css`, coreStyles)
 
   console.log(
     '\n\x1b[1m\x1b[32m%s\x1b[0m',

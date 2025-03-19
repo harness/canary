@@ -113,17 +113,19 @@ export default {
         },
         /* New colors design variables */
         foreground: {
-          1: 'var(--canary-text-1)',
-          2: 'var(--canary-text-2)',
-          4: 'var(--canary-text-3)',
-          5: 'var(--canary-text-3)',
-          8: 'var(--canary-text-3)',
-          accent: 'var(--canary-text-3)'
+          1: 'var(--cn-text-1)',
+          2: 'var(--cn-text-2)',
+          4: 'var(--cn-text-3)',
+          3: 'var(--cn-text-3)',
+          5: 'var(--cn-text-3)',
+          8: 'var(--cn-text-3)',
+          accent: 'var(--cn-text-3)'
         },
         background: {
-          1: 'var(--canary-background-1)',
-          surface: 'var(--canary-background-1)',
-          9: 'var(--canary-background-3)'
+          1: 'var(--cn-background-1)',
+          3: 'var(--cn-background-1)',
+          surface: 'var(--cn-background-1)',
+          9: 'var(--cn-background-3)'
         }
       },
 
@@ -204,7 +206,7 @@ export default {
     plugin(({ addUtilities }) => {
       addUtilities(typographyStyles)
     }),
-    plugin(({ addComponents, theme }) => {
+    plugin(({ addComponents }) => {
       addComponents(badgeStyles)
     }),
     tailwindcssAnimate,

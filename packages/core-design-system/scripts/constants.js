@@ -29,3 +29,10 @@ export const COMMON_CONFIG = {
   transforms: ['name/kebab', 'attribute/themeable', 'ts/transform/alpha']
   // transformGroup: 'tokens-studio'
 }
+
+export const getExportFileHeader = () => `/**
+    * Harness Design System
+    * Main stylesheet importing all token files
+    * DO NOT UPDATE IT MANUALLY
+    * Generated on ${new Date().toUTCString()}
+    */`

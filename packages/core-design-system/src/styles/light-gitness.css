@@ -1,7 +1,7 @@
 /**
  * Harness Design System
  * Generated style tokens - DO NOT EDIT DIRECTLY
- * Generated on Tue, 18 Mar 2025 06:43:59 GMT
+ * Generated on Tue, 18 Mar 2025 14:53:18 GMT
  * Copyright (c) Harness.
  */
 

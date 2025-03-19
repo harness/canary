@@ -2,7 +2,7 @@
   "pagination": {
     "size": {
       "$type": "sizing",
-      "$value": "{size.7}"
+      "$value": "{size.8}"
     },
     "gap": {
       "$type": "spacing",

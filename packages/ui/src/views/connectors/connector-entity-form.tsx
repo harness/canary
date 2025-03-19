@@ -20,7 +20,7 @@ interface ConnectorEntityFormProps {
   getConnectorDefinition: (identifier: string) => AnyConnectorDefinition | undefined
   setRightDrawer: (value: ConnectorRightDrawer) => void
   useTranslationStore: () => TranslationStore
-  openSecretDrawer: () => void
+  openSecretDrawer?: () => void
 }
 
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
@@ -61,7 +61,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           if (input.inputType === InputType.secretSelect) {
             return {
               ...input,
-              onSecretClick: openSecretDrawer // Add the onSecretClick handler directly to the input
+              onSecretClick: openSecretDrawer?.() // Add the onSecretClick handler directly to the input
             }
           }
           return input

@@ -11,7 +11,7 @@
     "./styles-esm": "./src/core-styles-esm.ts"
   },
   "scripts": {
-    "build": " pnpm clean && pnpm build:styles",
+    "build": "pnpm clean && pnpm build:styles",
     "build:styles": "node scripts/build.js",
     "clean": "rimraf ./src/styles && rimraf ./src/styles-esm"
   },

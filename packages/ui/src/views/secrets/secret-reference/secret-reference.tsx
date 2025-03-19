@@ -87,7 +87,7 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         ) : null}
       </div>
 
-      <div className="bg-background-2 fixed bottom-0 left-0 right-0 p-4 shadow-md">
+      <div className="bg-background-2 absolute bottom-0 left-0 right-0 p-4 shadow-md">
         <ButtonGroup className="flex flex-row justify-between">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel

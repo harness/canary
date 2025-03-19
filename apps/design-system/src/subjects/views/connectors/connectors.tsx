@@ -36,7 +36,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
                   setFormEntity({
                     type: 'connector',
                     data: {
-                      identifier: 'AWS_KMS',
+                      type: 'AwsKms',
                       name: 'AWS KMS'
                     }
                   })

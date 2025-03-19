@@ -6,15 +6,15 @@ import { Sheet } from '@components/sheet'
 import { ConnectorEntityForm } from './connector-entity-form'
 import { ConnectorsPalette } from './connectors-pallete-drawer'
 import { ConnectorsProvider, useConnectorsContext } from './context/connectors-context'
-import { AnyConnectorDefinition, ConnectorRightDrawer } from './types'
+import { AnyConnectorDefinition, ConnectorRightDrawer, HarnessConnectorDefinitionType, onSubmitProps } from './types'
 
 interface ConnectorsRightDrawerBaseProps {
   initialDrawerState?: ConnectorRightDrawer
-  onFormSubmit?: (values: any) => void // TODO: TYPE this properly
+  onFormSubmit?: (values: onSubmitProps) => void
   onDrawerClose?: () => void
   useSheet?: boolean // Whether to wrap content in Sheet.Root
-  connectors: any //TODO: TYPE
-  getConnectorDefinition: (identifier: string) => AnyConnectorDefinition | undefined
+  connectors: HarnessConnectorDefinitionType[]
+  getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   useTranslationStore: () => TranslationStore
   openSecretDrawer?: () => void
 }
@@ -72,6 +72,7 @@ const ConnectorsRightDrawerBase = ({
       default:
         return <></>
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rightDrawer, setRightDrawer, setFormEntity, formEntity])
 
   const content = renderSheetContent()

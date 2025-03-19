@@ -19,7 +19,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
     <StepsPaletteContentLayout.Section>
       {connectors?.length > 0 ? (
         connectors.map(connector => (
-          <StepsPaletteContentLayout.SectionItem key={connector.identifier}>
+          <StepsPaletteContentLayout.SectionItem key={connector.type}>
             <StepsPaletteItemLayout.Root
               onClick={() => {
                 onSelect(connector)

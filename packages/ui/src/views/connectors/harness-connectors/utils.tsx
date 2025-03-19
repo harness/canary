@@ -1,5 +1,6 @@
 import {
   AWS_KMS_CONNECTOR_IDENTIFIER,
+  Connectors,
   GITHUB_CONNECTOR_IDENTIFIER,
   HarnessConnectorDefinitionType,
   TERRAFORM_CONNECTOR_IDENTIFIER
@@ -10,26 +11,26 @@ import { TERRAFORM_CONNECTOR_CATEGORY, terraformConnectorFormDefinition } from '
 
 export const harnessConnectors: HarnessConnectorDefinitionType[] = [
   {
-    identifier: GITHUB_CONNECTOR_IDENTIFIER,
+    type: Connectors.GITHUB,
     name: GITHUB_CONNECTOR_IDENTIFIER,
     category: GITHUB_CONNECTOR_CATEOGRY,
     formDefinition: githubConnectorFormDefinition
   },
   {
-    identifier: TERRAFORM_CONNECTOR_IDENTIFIER,
+    type: Connectors.TERRAFORM_CLOUD,
     name: TERRAFORM_CONNECTOR_IDENTIFIER,
     category: TERRAFORM_CONNECTOR_CATEGORY,
     formDefinition: terraformConnectorFormDefinition
   },
   {
-    identifier: AWS_KMS_CONNECTOR_IDENTIFIER,
+    type: Connectors.AWS_KMS,
     name: AWS_KMS_CONNECTOR_IDENTIFIER,
     category: AWS_KMS_CONNECTOR_CATEGORY,
     formDefinition: awsKmsConnectorFormDefinition
   }
 ]
-export function getHarnessConnectorDefinition(identifier: string): HarnessConnectorDefinitionType | undefined {
-  return harnessConnectors.find(harnessConnector => harnessConnector.identifier === identifier)
+export function getHarnessConnectorDefinition(type: string): HarnessConnectorDefinitionType | undefined {
+  return harnessConnectors.find(harnessConnector => harnessConnector.type === type)
 }
 
 export const getExecuteOnDelegateValue = () => {

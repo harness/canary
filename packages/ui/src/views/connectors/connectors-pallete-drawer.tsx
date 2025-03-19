@@ -9,7 +9,6 @@ import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/compon
 
 import { ConnectorsPaletteLayout } from './components/connectors-pallete-layout'
 import { ConnectorsPaletteSection } from './components/ConnectorsPalleteSection'
-import { harnessConnectors } from './harness-connectors/utils'
 import { ConnectorFormEntityType, ConnectorRightDrawer, HarnessConnectorDefinitionType } from './types'
 
 interface ConnectorsPaletteProps {
@@ -27,8 +26,8 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
   const [query, setQuery] = useState('')
 
   const connectorsFiltered = useMemo(
-    () => connectors.filter((connector: { identifier: string | string[] }) => connector.identifier.includes(query)),
-    [query, harnessConnectors]
+    () => connectors.filter((connector: { type: string | string[] }) => connector.type.includes(query)),
+    [query, connectors]
   )
 
   return (
@@ -52,7 +51,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
             setFormEntity({
               type: 'connector',
               data: {
-                identifier: connector.identifier,
+                type: connector.type,
                 name: connector.name
               }
             })

@@ -11,13 +11,13 @@ import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-u
 
 import { getDefaultValuesFromFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
 
-import { AnyConnectorDefinition, ConnectorFormEntityType, ConnectorRightDrawer } from './types'
+import { AnyConnectorDefinition, ConnectorFormEntityType, ConnectorRightDrawer, onSubmitProps } from './types'
 
 interface ConnectorEntityFormProps {
   formEntity: ConnectorFormEntityType
   requestClose: () => void
-  onFormSubmit?: (values: any) => void // TODO: TYPE this properly
-  getConnectorDefinition: (identifier: string) => AnyConnectorDefinition | undefined
+  onFormSubmit?: (values: onSubmitProps) => void
+  getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   setRightDrawer: (value: ConnectorRightDrawer) => void
   useTranslationStore: () => TranslationStore
   openSecretDrawer?: () => void
@@ -35,33 +35,29 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
   } = props
   const { t: _t } = useTranslationStore()
 
-  // TODO: type this properly , Handle form submit for create/edit
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: onSubmitProps) => {
     onFormSubmit?.(data)
   }
   const defaultConnectorValues = useMemo(() => {
-    const connectorDefinition = getConnectorDefinition(formEntity.data.identifier)
+    const connectorDefinition = getConnectorDefinition(formEntity.data.type)
     if (!connectorDefinition) return {}
     return getDefaultValuesFromFormDefinition(connectorDefinition.formDefinition)
-  }, [formEntity.data.identifier, getConnectorDefinition])
+  }, [formEntity.data.type, getConnectorDefinition])
 
-  // In connector-entity-form.tsx
   const formDefinition = useMemo(() => {
-    const connectorDefinition = getConnectorDefinition(formEntity.data.identifier)
+    const connectorDefinition = getConnectorDefinition(formEntity.data.type)
     if (connectorDefinition) {
-      // Start with original form definition
       const formDef = {
         ...connectorDefinition.formDefinition,
         inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'name')
       }
 
-      // Enhance any secretSelect inputs with the onSecretClick handler
       if (openSecretDrawer) {
         formDef.inputs = formDef.inputs.map(input => {
           if (input.inputType === InputType.secretSelect) {
             return {
               ...input,
-              onSecretClick: openSecretDrawer?.() // Add the onSecretClick handler directly to the input
+              onSecretClick: openSecretDrawer?.()
             }
           }
           return input
@@ -71,7 +67,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       return formDef
     }
     return { inputs: [] }
-  }, [formEntity.data.identifier, getConnectorDefinition, openSecretDrawer])
+  }, [formEntity.data.type, getConnectorDefinition, openSecretDrawer])
 
   const resolver = useZodValidationResolver(formDefinition, {
     validationConfig: {

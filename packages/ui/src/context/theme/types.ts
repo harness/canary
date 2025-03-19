@@ -11,8 +11,8 @@ export enum ColorType {
 }
 
 export enum ContentStyleType {
-  Inset = 'inset',
-  Default = 'default'
+  Default = 'default',
+  Inset = 'inset'
 }
 
 export enum ContrastType {
@@ -33,4 +33,4 @@ export interface IThemeStore {
 
 export const defaultTheme = `${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Standard}` as FullTheme
 
-export const INSET_THEME_PADDING = 8
+export const INSET_THEME_PADDING = 6

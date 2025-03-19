@@ -10,12 +10,10 @@ import {
   useListPathsQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
-import { cn } from '@harnessio/ui/utils'
 import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import Explorer from '../../components/FileExplorer'
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -41,8 +39,6 @@ export const RepoSidebar = () => {
     setSelectedRefType,
     setSpaceIdAndRepoId
   } = useRepoBranchesStore()
-
-  const { isInset } = useThemeStore()
 
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -213,31 +209,26 @@ export const RepoSidebar = () => {
   if (!repoId) return <></>
 
   return (
-    <>
-      <div className="grid grid-cols-[auto_1fr]">
-        {!repository?.is_empty && (
-          <RepoSidebarView
-            selectBranchOrTag={selectBranchOrTag}
-            useRepoBranchesStore={useRepoBranchesStore}
-            useTranslationStore={useTranslationStore}
-            navigateToNewFile={navigateToNewFile}
-            navigateToFile={navigateToFile}
-            filesList={filesList}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          >
-            {!!repoDetails?.body?.content?.entries?.length && (
-              <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />
-            )}
-          </RepoSidebarView>
-        )}
-        {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
-        {/* Inset theme compensation - 8px*2 */}
-        {/* Total height of both the divs should be 100vh */}
-        <div className={cn('h-[calc(100vh-100px)]', { 'h-[calc(100vh-100px-16px)]': isInset })}>
-          <Outlet />
-        </div>
+    <div className="grid grid-cols-[auto_1fr]">
+      {!repository?.is_empty && (
+        <RepoSidebarView
+          selectBranchOrTag={selectBranchOrTag}
+          useRepoBranchesStore={useRepoBranchesStore}
+          useTranslationStore={useTranslationStore}
+          navigateToNewFile={navigateToNewFile}
+          navigateToFile={navigateToFile}
+          filesList={filesList}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        >
+          {!!repoDetails?.body?.content?.entries?.length && (
+            <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />
+          )}
+        </RepoSidebarView>
+      )}
+      <div className="nested-sidebar-height">
+        <Outlet />
       </div>
-    </>
+    </div>
   )
 }

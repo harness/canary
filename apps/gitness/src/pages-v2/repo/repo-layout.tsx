@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 
 import { RepoSubheader } from '@harnessio/ui/components'
+import { SubHeaderWrapper } from '@harnessio/ui/views'
 
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -10,9 +11,9 @@ const RepoLayout = () => {
 
   return (
     <>
-      <div className="layer-high sticky top-[55px] bg-background-1">
+      <SubHeaderWrapper>
         <RepoSubheader showPipelinesTab={!isMFE} useTranslationStore={useTranslationStore} />
-      </div>
+      </SubHeaderWrapper>
       <Outlet />
     </>
   )

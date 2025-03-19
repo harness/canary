@@ -330,7 +330,8 @@ export default {
             6: 'var(--canary-sidebar-background-06)',
             7: 'hsl(var(--canary-sidebar-background-07))',
             8: 'hsl(var(--canary-sidebar-background-08))',
-            9: 'hsl(var(--canary-sidebar-background-09))'
+            9: 'hsl(var(--canary-sidebar-background-09))',
+            10: 'var(--canary-sidebar-background-10)'
           },
           border: {
             1: 'hsl(var(--canary-sidebar-border-01))',
@@ -346,6 +347,9 @@ export default {
             4: 'hsl(var(--canary-sidebar-foreground-04))',
             5: 'hsl(var(--canary-sidebar-foreground-05))',
             6: 'hsl(var(--canary-sidebar-foreground-06))',
+            7: 'hsl(var(--canary-sidebar-foreground-07))',
+            8: 'hsl(var(--canary-sidebar-foreground-08))',
+            9: 'hsl(var(--canary-sidebar-foreground-09))',
             accent: 'hsl(var(--canary-sidebar-foreground-accent))'
           },
           icon: {

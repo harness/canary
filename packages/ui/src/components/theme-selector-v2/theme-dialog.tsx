@@ -168,7 +168,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               <Select.Content>
                 {Object.values(ContentStyleType).map(value => (
                   <Select.Item key={value} value={value}>
-                    {value === ContentStyleType.Inset ? 'Inset' : 'No inset'}
+                    {value === ContentStyleType.Inset ? 'Inset' : 'Default'}
                   </Select.Item>
                 ))}
               </Select.Content>

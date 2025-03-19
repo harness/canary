@@ -3,15 +3,15 @@ import { Route } from 'react-router-dom'
 
 import { useTranslationStore } from '@utils/viewUtils'
 
-import { ProjectSettingsTabNav } from '@harnessio/ui/views'
+import { ProjectSettingsTabNav, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import RootViewWrapper from './root-view-wrapper'
 
 const Layout = () => {
   return (
-    <div className="bg-background-1 sticky top-[55px] z-40">
+    <SubHeaderWrapper>
       <ProjectSettingsTabNav useTranslationStore={useTranslationStore} />
-    </div>
+    </SubHeaderWrapper>
   )
 }
 

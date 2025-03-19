@@ -1193,3 +1193,15 @@ mark {
 .diffViewBlock.hiddenDiff > * > * {
   display: none !important;
 }
+
+.nested-sidebar-height {
+  @apply h-[calc(100vh-100px)]; /* where 55px (Breadcrumbs height) + 45px (SubHeader height) = 100px */
+}
+
+.inset-layout .main-content-height {
+  @apply h-[calc(100%-55px)]; /* where 55px is for the Breadcrumbs height */
+}
+
+.inset-layout .nested-sidebar-height {
+  @apply h-[calc(100vh-100px-6px)]; /* where 6px is the Inset layout bottom padding (=== INSET_THEME_PADDING) */
+}

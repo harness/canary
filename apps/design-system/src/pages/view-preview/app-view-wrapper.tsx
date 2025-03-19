@@ -119,10 +119,18 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
               useTranslationStore={useTranslationStore}
             />
             <Sidebar.Inset>
-              <div className={cn('h-full', { 'overflow-hidden h-screen p-2 bg-sidebar-background-1': isInset })}>
-                <div className={cn('h-full flex flex-col', { 'rounded-md overflow-auto bg-background-1': isInset })}>
-                  <div className="layer-high bg-background-1 sticky top-0">{breadcrumbs}</div>
-                  <Outlet />
+              <div className={cn('h-full', { 'h-screen inset-layout': isInset })}>
+                <div className={cn('layer-high bg-background-1 sticky top-0', { 'bg-sidebar-background-1': isInset })}>
+                  {breadcrumbs}
+                </div>
+                <div
+                  className={cn({
+                    'overflow-hidden main-content-height px-1.5 pb-1.5 bg-sidebar-background-1': isInset
+                  })}
+                >
+                  <div className={cn('flex flex-col h-full', { 'rounded-md overflow-auto bg-background-1': isInset })}>
+                    <Outlet />
+                  </div>
                 </div>
               </div>
               <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />

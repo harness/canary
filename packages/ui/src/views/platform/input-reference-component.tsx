@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode } from 'react'
 
 import { Button, Caption, ControlGroup, Icon, IconProps, Label } from '@/components'
 import { cn } from '@utils/cn'
@@ -33,7 +33,7 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   /**
    * The initial value to display in the input reference
    */
-  initialValue: T | null
+  placeholder: string | ReactNode
 
   /**
    * The current value of the input reference
@@ -53,12 +53,12 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   /**
    * Function called when the clear (cross) icon is clicked
    */
-  onClear?: (previousValue?: T) => void
+  onClear?: () => void
 
   /**
    * Function to render the value as a ReactNode
    */
-  renderValue?: (value: T) => ReactNode
+  renderValue?: (value: T) => ReactNode | string
 
   /**
    * Whether the input reference is disabled
@@ -73,7 +73,7 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   /**
    * Icon to display at the start of the input
    */
-  startIcon?: IconProps['name']
+  icon?: IconProps['name']
 
   /**
    * Label text to display above the input
@@ -83,7 +83,7 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   /**
    * Optional caption text to display below the input
    */
-  caption?: ReactNode
+  caption?: string
 
   /**
    * Whether the field is optional
@@ -97,14 +97,14 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
  * It supports generic types for values and maintains its own internal state.
  */
 export const InputReference = <T,>({
-  initialValue,
+  placeholder,
   value,
   onClick,
   onEdit,
   onClear,
   disabled = false,
   className,
-  startIcon,
+  icon,
   label,
   caption,
   optional = false,
@@ -112,13 +112,15 @@ export const InputReference = <T,>({
   size,
   ...props
 }: InputReferenceProps<T>) => {
-  const [displayValue, setDisplayValue] = useState<T | null>(initialValue)
+  // const [displayValue, setDisplayValue] = useState<T | ReactNode | null>(placeholder)
+  let displayValue = value ?? placeholder
 
-  const hasValue = displayValue !== null && displayValue !== initialValue
+  const hasValue = displayValue !== null && displayValue !== placeholder
 
   const handleClear = (e: React.MouseEvent) => {
     e.stopPropagation()
-    setDisplayValue(initialValue)
+    // setDisplayValue(placeholder)
+    displayValue = placeholder
     onClear?.()
   }
 
@@ -131,9 +133,9 @@ export const InputReference = <T,>({
     }
   }
 
-  useEffect(() => {
-    setDisplayValue(value ?? initialValue)
-  }, [initialValue, value])
+  // useEffect(() => {
+  //   setDisplayValue(value ?? placeholder)
+  // }, [placeholder, value])
 
   const state = disabled ? 'disabled' : 'default'
 
@@ -150,7 +152,7 @@ export const InputReference = <T,>({
         className={cn(inputReferenceVariants({ variant, size, state }), className)}
         {...props}
       >
-        {startIcon && <Icon className="mr-2.5" name={startIcon} />}
+        {icon && <Icon className="mr-2.5" name={icon} />}
         <div className="flex-1 truncate">{displayValue}</div>
         {hasValue && !disabled && (
           <div className="ml-2 flex items-center gap-2">

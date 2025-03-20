@@ -7,7 +7,7 @@ import {
   CreateSecretFormFields,
   CreateSecretPage,
   DirectionEnum,
-  InputReference,
+  // InputReference,
   SecretCreationType,
   SecretItem,
   SecretReference,
@@ -21,17 +21,27 @@ import mockProjectsData from './mock-project-data.json'
 import mockSecretsData from './mock-secrets-data.json'
 import { Scope, ScopeEnum, scopeHierarchy } from './types'
 
-export const SecretsPage = () => {
+export const SecretsPage = ({
+  isDrawerOpen,
+  setIsDrawerOpen,
+  selectedSecret,
+  setSelectedSecret
+}: {
+  isDrawerOpen: boolean
+  setIsDrawerOpen: (isDrawerOpen: boolean) => void
+  selectedSecret: SecretItem | null
+  setSelectedSecret: (selectedSecret: SecretItem | null) => void
+}) => {
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.NEW)
 
   // State for existing secrets
   const [, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
-  const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
+  // const [selectedSecret, setSelectedSecret] = useState<SecretItem | null>(null)
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
 
-  // Drawer state
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  // // Drawer state
+  // const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const onSubmit = (data: CreateSecretFormFields) => {
     console.log('Submitted data:', data)
@@ -117,38 +127,37 @@ export const SecretsPage = () => {
   }
 
   return (
-    <div className="p-5">
-      <h2 className="text-xl font-semibold mb-5">Secret Management Example</h2>
+    // <div className="p-5">
+    //   <h2 className="text-xl font-semibold mb-5">Secret Management Example</h2>
 
-      <div className="max-w-md mb-8">
-        <InputReference<SecretItem | string>
-          initialValue="Please select a secret"
-          value={selectedSecret?.name}
-          label="Select a Secret"
-          startIcon="key"
-          onClick={() => {
-            setIsDrawerOpen(true)
-          }}
-          onEdit={() => {
-            setIsDrawerOpen(true)
-          }}
-          onClear={() => setSelectedSecret(null)}
-        />
-      </div>
+    //   <InputReference<SecretItem | string>
+    //     placeholder="Please select a secret"
+    //     value={selectedSecret?.name}
+    //     label="Select a Secret"
+    //     icon="key"
+    //     onClick={() => {
+    //       setIsDrawerOpen(true)
+    //     }}
+    //     onEdit={() => {
+    //       setIsDrawerOpen(true)
+    //     }}
+    //     onClear={() => setSelectedSecret(null)}
+    //     className="max-w-md mb-8"
+    //   />
 
-      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
-        <Drawer.Content>
-          <Drawer.Header>
-            <Drawer.Title className="text-3xl">Secrets</Drawer.Title>
-            <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
-          </Drawer.Header>
-          <Spacer size={5} />
+    <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title className="text-3xl">Secrets</Drawer.Title>
+          <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
+        </Drawer.Header>
+        <Spacer size={5} />
 
-          <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
-          <Spacer size={5} />
-          {renderSecretContent()}
-        </Drawer.Content>
-      </Drawer.Root>
-    </div>
+        <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
+        <Spacer size={5} />
+        {renderSecretContent()}
+      </Drawer.Content>
+    </Drawer.Root>
+    // </div>
   )
 }

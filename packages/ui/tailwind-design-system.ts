@@ -24,7 +24,7 @@ export default {
         code: ['JetBrains Mono', 'monospace']
       },
       colors: {
-        // border: 'var(--canary-border)',
+        border: 'var(--canary-border)',
         borders: {
           1: 'var(--canary-border-1)',
           2: 'var(--canary-border-2)',
@@ -86,9 +86,7 @@ export default {
           DEFAULT: 'var(--canary-card)',
           foreground: 'var(--canary-card-foreground)'
         },
-        white: {
-          DEFAULT: 'var(--canary-white)'
-        },
+        white: 'var(--cn-colors-pure-white)',
         black: {
           DEFAULT: 'var(--canary-black)'
         },
@@ -115,15 +113,23 @@ export default {
         foreground: {
           1: 'var(--cn-text-1)',
           2: 'var(--cn-text-2)',
-          4: 'var(--cn-text-3)',
           3: 'var(--cn-text-3)',
+
+          // Remove
+          4: 'var(--cn-text-3)',
           5: 'var(--cn-text-3)',
           8: 'var(--cn-text-3)',
-          accent: 'var(--cn-text-3)'
+          accent: 'var(--cn-text-3)',
+          DEFAULT: 'var(--cn-text-1)'
         },
         background: {
           1: 'var(--cn-background-1)',
-          3: 'var(--cn-background-1)',
+          2: 'var(--cn-background-2)',
+          3: 'var(--cn-background-3)',
+
+          // Remove
+          DEFAULT: 'hsl(var(--cn-background-1))',
+          4: 'var(--cn-background-3)',
           surface: 'var(--cn-background-1)',
           9: 'var(--cn-background-3)'
         }

@@ -1,7 +1,9 @@
 {
   "name": "@harnessio/pipeline-graph",
   "version": "1.0.0-alpha.8",
-  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Harness Inc.",
   "license": "Apache-2.0",
   "type": "module",

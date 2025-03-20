@@ -1,7 +1,9 @@
 {
   "name": "@harnessio/yaml-editor",
   "version": "0.15.0",
-  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Harness Inc.",
   "license": "Apache-2.0",
   "type": "module",

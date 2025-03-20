@@ -12,7 +12,9 @@
     "pretty": "prettier --check ./src",
     "pre-commit": "lint-staged"
   },
-  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "module": "./dist/index.js",
   "files": [

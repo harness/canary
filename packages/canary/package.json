@@ -1,6 +1,8 @@
 {
   "name": "@harnessio/canary",
-  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "0.2.19",
   "type": "module",
   "scripts": {

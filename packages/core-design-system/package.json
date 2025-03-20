@@ -1,6 +1,9 @@
 {
   "name": "@harnessio/core-design-system",
   "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Harness Design System",
   "type": "module",
   "main": "src/core-style-esm.js",

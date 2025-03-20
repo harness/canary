@@ -142,6 +142,7 @@ export const InputReference = <T,>({
         onClick={disabled ? undefined : onClick}
         className={cn(inputReferenceVariants({ variant, size, state }), className)}
         role="button"
+        title="Interactive input with edit and clear"
         tabIndex={disabled ? -1 : 0}
         aria-disabled={disabled}
         onKeyDown={e => {

@@ -3,14 +3,13 @@ import { RadioSelect } from '@views/components/RadioSelect'
 
 import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/forms'
 
+import { InputLabel, InputWrapper } from './common'
 import { InputError } from './common/InputError'
-import InputLabel from './common/InputLabel'
-import InputWrapper from './common/InputWrapper'
-import { InputType, RadialOption } from './types'
+import { RadialOption } from './types'
 
 export interface RadialInputConfig {
   inputConfig: {
-    inputType: InputType.radio
+    inputType: 'radio'
     options: RadialOption[]
   }
 }
@@ -39,7 +38,7 @@ function RadialInputInternal(props: Readonly<InputProps<AnyFormikValue, RadialIn
 }
 
 export class RadialInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.radio
+  public internalType = 'radio'
 
   renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
     return <RadialInputInternal {...(props as InputProps<AnyFormikValue, RadialInputConfig>)} />

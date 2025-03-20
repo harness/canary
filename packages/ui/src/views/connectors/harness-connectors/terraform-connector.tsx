@@ -1,4 +1,4 @@
-import { InputConfigType, InputType } from '@views/unified-pipeline-studio/components/form-inputs/types'
+import { InputConfigType } from '@views/unified-pipeline-studio/components/form-inputs/types'
 
 import { IFormDefinition } from '@harnessio/forms'
 
@@ -8,12 +8,12 @@ export const TERRAFORM_CONNECTOR_CATEGORY = 'Infrastructure'
 
 const inputs: IInputConfigWithConfigInterface[] = [
   {
-    inputType: InputType.text,
+    inputType: 'text',
     path: `endpoint`,
     label: 'Endpoint'
   },
   {
-    inputType: InputType.text,
+    inputType: 'text',
     path: `token`,
     label: 'Token'
   }

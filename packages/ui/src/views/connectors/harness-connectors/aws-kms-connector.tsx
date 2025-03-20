@@ -1,4 +1,4 @@
-import { InputConfigType, InputType } from '@views/unified-pipeline-studio/components/form-inputs/types'
+import { InputConfigType } from '@views/unified-pipeline-studio/components/form-inputs/types'
 
 import { IFormDefinition } from '@harnessio/forms'
 
@@ -8,7 +8,7 @@ export const AWS_KMS_CONNECTOR_CATEGORY = 'Secrets Manager'
 
 const inputs: IInputConfigWithConfigInterface[] = [
   {
-    inputType: InputType.select,
+    inputType: 'select',
     path: `credential`,
     label: 'Credential Type',
     inputConfig: {
@@ -21,53 +21,53 @@ const inputs: IInputConfigWithConfigInterface[] = [
     }
   },
   {
-    inputType: InputType.text,
+    inputType: 'text',
     path: `accessKey`,
     label: 'AWS - Access Key',
     isVisible: values => values?.credential === CredTypeValues.ManualConfig
   },
   {
-    inputType: InputType.text,
+    inputType: 'text',
     path: `secretKey`,
     label: 'AWS - Secret Key',
     isVisible: values => values?.credential === CredTypeValues.ManualConfig
   },
   {
-    inputType: InputType.text,
+    inputType: 'text',
     path: `roleArn`,
     label: 'Role ARN',
     isVisible: values => values?.credential === CredTypeValues.AssumeRoleSTS
   },
   {
-    inputType: InputType.text,
+    inputType: 'text',
     path: `externalName`,
     label: 'External Id',
     isVisible: values => values?.credential === CredTypeValues.AssumeRoleSTS
   },
   {
-    inputType: InputType.number,
+    inputType: 'number',
     path: `assumeStsRoleDuration`,
     label: 'Assumed Role duration',
     isVisible: values => values?.credential === CredTypeValues.AssumeRoleSTS
   },
   {
-    inputType: InputType.text,
+    inputType: 'text',
     path: `awsArn`,
     label: 'AWS ARN'
   },
   {
-    inputType: InputType.text,
+    inputType: 'text',
     path: `region`,
     label: 'Region'
   },
   {
-    inputType: InputType.text,
+    inputType: 'text',
     path: `iamRole`,
     label: 'IAM Role',
     isVisible: values => values?.credential === DelegateTypes.DELEGATE_OIDC
   },
   {
-    inputType: InputType.boolean,
+    inputType: 'boolean',
     path: `default`,
     label: 'Use as Default'
   }

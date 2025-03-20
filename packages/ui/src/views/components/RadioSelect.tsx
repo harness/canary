@@ -2,7 +2,7 @@ import { RadioButton, StackedList } from '@components/index'
 import { RadioGroup } from '@radix-ui/react-radio-group'
 import { cn } from '@utils/cn'
 
-export interface RadialSelectOption<T extends string> {
+export interface RadialOption<T extends string> {
   id: string
   title: string
   description: string
@@ -10,7 +10,7 @@ export interface RadialSelectOption<T extends string> {
 }
 
 interface RadioSelectProps<T extends string> {
-  options: RadialSelectOption<T>[]
+  options: RadialOption<T>[]
   value: T
   onValueChange: (value: T) => void
   id?: string

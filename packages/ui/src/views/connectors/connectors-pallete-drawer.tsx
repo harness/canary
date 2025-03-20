@@ -9,10 +9,10 @@ import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/compon
 
 import { ConnectorsPaletteLayout } from './components/connectors-pallete-layout'
 import { ConnectorsPaletteSection } from './components/ConnectorsPalleteSection'
-import { ConnectorFormEntityType, ConnectorRightDrawer, HarnessConnectorDefinitionType } from './types'
+import { ConnectorFormEntityType, ConnectorRightDrawer, AnyConnectorDefinition } from './types'
 
 interface ConnectorsPaletteProps {
-  connectors: HarnessConnectorDefinitionType[] //TODO: proper type
+  connectors: AnyConnectorDefinition[]
   requestClose: () => void
   setFormEntity: (value: ConnectorFormEntityType | null) => void
   setRightDrawer: (value: ConnectorRightDrawer) => void

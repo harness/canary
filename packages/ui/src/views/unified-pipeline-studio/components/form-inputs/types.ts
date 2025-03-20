@@ -9,7 +9,18 @@ import type { SelectInputConfig } from './SelectInput'
 import type { TextAreaInputConfig } from './TextAreaInput'
 import type { TextInputConfig } from './TextInput'
 
-export type InputType = 'boolean' | 'text' | 'number' | 'array' | 'list' | 'group' | 'textarea' | 'select' | 'separator'
+export type InputType =
+  | 'boolean'
+  | 'text'
+  | 'number'
+  | 'array'
+  | 'list'
+  | 'group'
+  | 'textarea'
+  | 'select'
+  | 'separator'
+  | 'radio'
+  | 'secretSelect'
 
 export type InputConfigType =
   | BooleanInputConfig

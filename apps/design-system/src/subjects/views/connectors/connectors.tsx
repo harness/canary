@@ -1,105 +1,77 @@
-import { useState } from 'react'
+import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
+import noop from 'lodash-es/noop'
 
-import { Button, Drawer, Spacer } from '@harnessio/ui/components'
-import { ConnectorHeader, ConnectorItem, ConnectorReference, ConnectorType, DirectionEnum } from '@harnessio/ui/views'
+import { Button, ListActions, Spacer } from '@harnessio/ui/components'
+import {
+  ConnectorRightDrawer,
+  ConnectorsProvider,
+  ConnectorsRightDrawer,
+  SandboxLayout,
+  useConnectorsContext
+} from '@harnessio/ui/views'
 
-import mockAccountsData from '../secrets/mock-account-data.json'
-import mockOrgData from '../secrets/mock-org-data.json'
-import mockProjectsData from '../secrets/mock-project-data.json'
-import { Scope, ScopeEnum, scopeHierarchy } from '../secrets/types'
-import mockConnectorsData from './mock-connectors-data.json'
-
-export const ConnectorsPage = () => {
-  const [selectedType, setSelectedType] = useState<ConnectorType>(ConnectorType.EXISTING)
-  const [, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
-
-  // State for existing connectors
-  const [selectedConnector, setSelectedConnector] = useState<ConnectorItem | null>(null)
-  const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
-  const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
-
-  // Handlers for existing connectors
-  const handleSelectConnector = (connector: ConnectorItem) => {
-    setSelectedConnector(connector)
-    console.log('Selected connector:', connector)
-  }
-
-  const handleScopeChange = (direction: DirectionEnum) => {
-    setActiveScope(prevScope => {
-      const newScope =
-        direction === DirectionEnum.PARENT ? scopeHierarchy[prevScope].parent! : scopeHierarchy[prevScope].child!
-      switch (newScope) {
-        case ScopeEnum.ACCOUNT:
-          setParentFolder(null)
-          setChildFolder(mockOrgData[0].organizationResponse.organization.identifier)
-          break
-        case ScopeEnum.ORGANIZATION:
-          setParentFolder(mockAccountsData[0].accountName)
-          setChildFolder(mockProjectsData[0].projectResponse.project.identifier)
-          break
-        case ScopeEnum.PROJECT:
-          setParentFolder(mockOrgData[0].organizationResponse.organization.identifier)
-          setChildFolder(null)
-          break
-      }
-      return newScope
-    })
-  }
-
-  const handleCancel = () => {
-    console.log('Cancelled')
-  }
-
-  const renderConnectorContent = () => {
-    switch (selectedType) {
-      case ConnectorType.NEW:
-        return (
-          <div className="p-4">
-            <h2 className="text-xl font-semibold mb-4">Create New Connector</h2>
-            <p>Add form for new connector here</p>
-            {/* Render Calvin/Shaurya's create connector flow from here */}
-          </div>
-        )
-      case ConnectorType.EXISTING:
-        return (
-          <ConnectorReference
-            connectorsData={mockConnectorsData.map(connector => {
-              return {
-                ...connector,
-                name: connector.connector.name,
-                id: connector.connector.identifier
-              }
-            })}
-            parentFolder={parentFolder}
-            childFolder={childFolder}
-            selectedEntity={selectedConnector}
-            onSelectEntity={handleSelectConnector}
-            onScopeChange={handleScopeChange}
-            onCancel={handleCancel}
-            isLoading={false}
-            apiError="Could not fetch connectors, unauthorized"
-          />
-        )
-      default:
-        return null
-    }
-  }
-
+const ConnectorsListPageContent = (): JSX.Element => {
+  const { setRightDrawer, setFormEntity } = useConnectorsContext()
   return (
-    <Drawer.Root direction="right">
-      <Drawer.Trigger>
-        <Button>Add Connector</Button>
-      </Drawer.Trigger>
-      <Drawer.Content>
-        <Drawer.Header>
-          <Drawer.Title className="text-3xl">Connectors</Drawer.Title>
-        </Drawer.Header>
-        <Spacer size={5} />
-
-        <ConnectorHeader onChange={setSelectedType} selectedType={selectedType} />
-        <Spacer size={5} />
-        {renderConnectorContent()}
-      </Drawer.Content>
-    </Drawer.Root>
+    <SandboxLayout.Main className="max-w-[1040px]">
+      <SandboxLayout.Content>
+        <>
+          <h1 className="text-24 text-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
+          <Spacer size={6} />
+          <ListActions.Root>
+            <ListActions.Right>
+              <Button
+                variant="default"
+                onClick={() => {
+                  setRightDrawer(ConnectorRightDrawer.Collection)
+                }}
+              >
+                Create Connector
+              </Button>
+              <Button
+                variant="default"
+                onClick={() => {
+                  setRightDrawer(ConnectorRightDrawer.Form)
+                  setFormEntity({
+                    type: 'connector',
+                    data: {
+                      type: 'AwsKms',
+                      name: 'AWS KMS'
+                    }
+                  })
+                }}
+              >
+                Edit Connector
+              </Button>
+            </ListActions.Right>
+          </ListActions.Root>
+          <Spacer size={5} />
+        </>
+      </SandboxLayout.Content>
+      <ConnectorsRightDrawer
+        useTranslationStore={() =>
+          ({
+            t: () => 'dummy',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            i18n: {} as any,
+            changeLanguage: noop
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          }) as any
+        }
+        connectors={harnessConnectors}
+        getConnectorDefinition={getHarnessConnectorDefinition}
+      />
+    </SandboxLayout.Main>
   )
 }
+
+// temp component for testing in standalone
+const ConnectorsPage = (): JSX.Element => {
+  return (
+    <ConnectorsProvider>
+      <ConnectorsListPageContent />
+    </ConnectorsProvider>
+  )
+}
+
+export { ConnectorsPage }

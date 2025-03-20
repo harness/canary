@@ -24,8 +24,8 @@ export type ConnectorFormEntityType = {
   }
 }
 
-export type AnyConnectorDefinition<T = string> = {
-  type: T
+export type AnyConnectorDefinition = {
+  type: ConnectorInfoDTO['type']
   name: string
   category: string
   formDefinition: IFormDefinition<InputConfigType>

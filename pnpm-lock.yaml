@@ -74,6 +74,9 @@ importers:
 
   apps/design-system:
     dependencies:
+      '@harnessio/forms':
+        specifier: workspace:*
+        version: link:../../packages/forms
       '@harnessio/pipeline-graph':
         specifier: workspace:*
         version: link:../../packages/pipeline-graph

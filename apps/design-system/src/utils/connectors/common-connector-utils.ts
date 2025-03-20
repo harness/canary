@@ -1,4 +1,4 @@
-import { IInputConfigWithConfigInterface } from '../types'
+import { IInputConfigWithConfigInterface } from '../../../../../packages/ui/src/views/connectors/types'
 
 export const getResourcesContainer = (): IInputConfigWithConfigInterface => ({
   inputType: 'group',

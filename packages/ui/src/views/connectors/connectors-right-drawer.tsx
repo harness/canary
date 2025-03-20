@@ -6,14 +6,14 @@ import { Sheet } from '@components/sheet'
 import { ConnectorEntityForm } from './connector-entity-form'
 import { ConnectorsPalette } from './connectors-pallete-drawer'
 import { ConnectorsProvider, useConnectorsContext } from './context/connectors-context'
-import { AnyConnectorDefinition, ConnectorRightDrawer, HarnessConnectorDefinitionType, onSubmitProps } from './types'
+import { AnyConnectorDefinition, ConnectorRightDrawer, onSubmitProps } from './types'
 
 interface ConnectorsRightDrawerBaseProps {
   initialDrawerState?: ConnectorRightDrawer
   onFormSubmit?: (values: onSubmitProps) => void
   onDrawerClose?: () => void
   useSheet?: boolean // Whether to wrap content in Sheet.Root
-  connectors: HarnessConnectorDefinitionType[]
+  connectors: AnyConnectorDefinition[]
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   useTranslationStore: () => TranslationStore
   openSecretDrawer?: () => void

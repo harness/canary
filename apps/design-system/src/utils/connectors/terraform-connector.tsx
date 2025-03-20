@@ -2,7 +2,7 @@ import { InputConfigType } from '@views/unified-pipeline-studio/components/form-
 
 import { IFormDefinition } from '@harnessio/forms'
 
-import { IInputConfigWithConfigInterface } from '../types'
+import { IInputConfigWithConfigInterface } from '../../../../../packages/ui/src/views/connectors/types'
 
 export const TERRAFORM_CONNECTOR_CATEGORY = 'Infrastructure'
 

@@ -4,7 +4,7 @@ import { InputConfigType, RadialOption } from '@views/unified-pipeline-studio/co
 
 import { IFormDefinition } from '@harnessio/forms'
 
-import { IInputConfigWithConfigInterface } from '../types'
+import { IInputConfigWithConfigInterface } from '../../../../../packages/ui/src/views/connectors/types'
 import {
   getCloningContainer,
   getConnectionContainer,

@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Button, Icon, Input, ScrollArea, SkeletonList, StackedList } from '@/components'
+import { Alert, Button, Icon, Input, ScrollArea, SkeletonList, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 
 import { EntityReferenceList } from './entity-reference-list'
@@ -29,6 +29,9 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
   isLoading?: boolean
+
+  // Error
+  apiError?: string | null
 }
 
 export function EntityReference<T extends BaseEntityProps, S = string, F = string>({
@@ -47,7 +50,10 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
 
   // Custom renderers
   renderEntity,
-  isLoading = false
+  isLoading = false,
+
+  // Error
+  apiError
 }: EntityReferenceProps<T, S, F>): JSX.Element {
   const handleSelectEntity = useCallback(
     (entity: T) => {
@@ -113,25 +119,29 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       {isLoading ? (
         <SkeletonList />
       ) : (
-        <>
+        <div className="h-[60vh]">
           {showFilter && <Input type="text" placeholder="Search" className="mb-4" />}
-          <ScrollArea className="h-[62%]">
-            <div className="flex-1">
-              <EntityReferenceList
-                entities={entities}
-                selectedEntity={selectedEntity}
-                parentFolder={parentFolder}
-                childFolder={childFolder}
-                handleSelectEntity={handleSelectEntity}
-                handleScopeChange={handleScopeChange}
-                renderEntity={renderEntity}
-                defaultEntityRenderer={defaultEntityRenderer}
-                parentFolderRenderer={parentFolderRenderer}
-                childFolderRenderer={childFolderRenderer}
-              />
-            </div>
+          <ScrollArea className="h-full">
+            <EntityReferenceList
+              entities={entities}
+              selectedEntity={selectedEntity}
+              parentFolder={parentFolder}
+              childFolder={childFolder}
+              handleSelectEntity={handleSelectEntity}
+              handleScopeChange={handleScopeChange}
+              renderEntity={renderEntity}
+              defaultEntityRenderer={defaultEntityRenderer}
+              parentFolderRenderer={parentFolderRenderer}
+              childFolderRenderer={childFolderRenderer}
+              apiError={apiError}
+            />
+            {apiError ? (
+              <Alert.Container variant="destructive" className="mt-4">
+                <Alert.Description>{apiError}</Alert.Description>
+              </Alert.Container>
+            ) : null}
           </ScrollArea>
-        </>
+        </div>
       )}
     </>
   )

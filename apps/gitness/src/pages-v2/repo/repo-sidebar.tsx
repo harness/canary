@@ -209,26 +209,28 @@ export const RepoSidebar = () => {
   if (!repoId) return <></>
 
   return (
-    <div className="grid grid-cols-[auto_1fr]">
-      {!repository?.is_empty && (
-        <RepoSidebarView
-          selectBranchOrTag={selectBranchOrTag}
-          useRepoBranchesStore={useRepoBranchesStore}
-          useTranslationStore={useTranslationStore}
-          navigateToNewFile={navigateToNewFile}
-          navigateToFile={navigateToFile}
-          filesList={filesList}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-        >
-          {!!repoDetails?.body?.content?.entries?.length && (
-            <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />
-          )}
-        </RepoSidebarView>
-      )}
-      <div className="nested-sidebar-height">
-        <Outlet />
+    <>
+      <div className="grid grid-cols-[auto_1fr]">
+        {!repository?.is_empty && (
+          <RepoSidebarView
+            selectBranchOrTag={selectBranchOrTag}
+            useRepoBranchesStore={useRepoBranchesStore}
+            useTranslationStore={useTranslationStore}
+            navigateToNewFile={navigateToNewFile}
+            navigateToFile={navigateToFile}
+            filesList={filesList}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          >
+            {!!repoDetails?.body?.content?.entries?.length && (
+              <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />
+            )}
+          </RepoSidebarView>
+        )}
+        <div className="nested-sidebar-height">
+          <Outlet />
+        </div>
       </div>
-    </div>
+    </>
   )
 }

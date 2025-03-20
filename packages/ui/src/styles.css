@@ -1198,6 +1198,18 @@ mark {
   @apply h-[calc(100vh-100px)]; /* where 55px (Breadcrumbs height) + 45px (SubHeader height) = 100px */
 }
 
+.topbar-bottom-border {
+  @apply border-borders-5 border-b;
+}
+
+.inset-layout {
+  overflow: hidden;
+}
+
+.inset-layout .topbar-bottom-border {
+  @apply border-none;
+}
+
 .inset-layout .main-content-height {
   @apply h-[calc(100%-55px)]; /* where 55px is for the Breadcrumbs height */
 }

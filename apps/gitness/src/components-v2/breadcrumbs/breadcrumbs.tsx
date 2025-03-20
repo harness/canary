@@ -1,6 +1,5 @@
 import { Link, useMatches } from 'react-router-dom'
 
-import { cn } from '@harnessio/canary'
 import { Breadcrumb, Separator, Sidebar, Topbar } from '@harnessio/ui/components'
 
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
@@ -16,8 +15,8 @@ function Breadcrumbs() {
       <Topbar.Left>
         {!isMFE ? (
           <>
-            <Sidebar.Trigger className="text-sidebar-foreground-7 -ml-1" />
-            <Separator orientation="vertical" className="bg-sidebar-background-10 ml-1 mr-2 h-4" />
+            <Sidebar.Trigger className="text-topbar-foreground-2 hover:text-topbar-foreground-1 hover:bg-topbar-background-1 -ml-1" />
+            <Separator orientation="vertical" className="bg-topbar-background-1 ml-1 mr-2 h-4" />
           </>
         ) : null}
         <Breadcrumb.Root className="select-none">
@@ -30,17 +29,13 @@ function Breadcrumbs() {
 
               return (
                 <Breadcrumb.Item key={match.pathname}>
-                  {!isFirst && <Breadcrumb.Separator className="text-sidebar-foreground-8" />}
+                  {!isFirst ? <Breadcrumb.Separator className="text-topbar-foreground-3" /> : null}
                   {isLast || !asLink ? (
-                    <Breadcrumb.Page
-                      className={cn('text-sidebar-foreground-8', {
-                        'text-sidebar-foreground-9': isLast
-                      })}
-                    >
+                    <Breadcrumb.Page className={isLast ? 'text-topbar-foreground-4' : 'text-topbar-foreground-3'}>
                       {breadcrumbContent}
                     </Breadcrumb.Page>
                   ) : (
-                    <Breadcrumb.Link className="text-sidebar-foreground-8 hover:text-sidebar-foreground-9" asChild>
+                    <Breadcrumb.Link className="text-topbar-foreground-3" asChild>
                       <Link to={match.pathname}>{breadcrumbContent}</Link>
                     </Breadcrumb.Link>
                   )}

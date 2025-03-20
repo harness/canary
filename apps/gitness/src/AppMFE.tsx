@@ -17,9 +17,8 @@ import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { Toast, Tooltip } from '@harnessio/ui/components'
-import { PortalProvider, RouterContextProvider } from '@harnessio/ui/context'
+import { RouterContextProvider } from '@harnessio/ui/context'
 
-import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { MFEContext, Unknown } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
@@ -146,13 +145,8 @@ export default function AppMFE({
     }
   }, [theme])
 
-  // Styles will be loaded inside shadowRoot
-  const shadowRef = useRef<HTMLDivElement>(null)
-  const shadowRoot = shadowRef.current?.shadowRoot
-
   // Radix UI elements will be rendered inside portalContainer
   const portalRef = useRef<HTMLDivElement>(null)
-  const portalContainer = portalRef.current
 
   const isStylesLoaded = useLoadMFEStyles(portalRef.current)
 
@@ -167,92 +161,48 @@ export default function AppMFE({
   const router = createBrowserRouter(routesToRender, { basename })
 
   return (
-    <div ref={shadowRef}>
-      {/* Radix UI elements need to be rendered inside the following div with the theme class */}
-      <div className={theme.toLowerCase()} ref={portalRef}>
-        {!isStylesLoaded ? (
-          // Replace it with spinner once it is available
-          <ShadowRootLoader theme={theme} />
-        ) : (
-          <PortalProvider portalContainer={portalContainer}>
-            <MFEContext.Provider
-              value={{
-                scope,
-                renderUrl,
-                customHooks,
-                customUtils
-              }}
-            >
-              <I18nextProvider i18n={i18n}>
-                <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-                  <QueryClientProvider client={queryClient}>
-                    <Toast.Provider>
-                      <Tooltip.Provider>
-                        <ExitConfirmProvider>
-                          <NavigationProvider routes={routesToRender}>
-                            <RouterContextProvider
-                              Link={Link}
-                              NavLink={NavLink}
-                              Outlet={Outlet}
-                              location={{ ...window.location, state: {}, key: '' }}
-                              navigate={router.navigate}
-                              useSearchParams={useSearchParams}
-                              useMatches={useMatches}
-                            >
-                              <RouterProvider router={router} />
-                            </RouterContextProvider>
-                          </NavigationProvider>
-                        </ExitConfirmProvider>
-                      </Tooltip.Provider>
-                    </Toast.Provider>
-                  </QueryClientProvider>
-                </ThemeProvider>
-              </I18nextProvider>
-            </MFEContext.Provider>
-          </PortalProvider>
-        )}
-      </div>
+    <div ref={portalRef}>
+      {!isStylesLoaded ? (
+        // Replace it with spinner once it is available
+        <ShadowRootLoader theme={theme} />
+      ) : (
+        <MFEContext.Provider
+          value={{
+            scope,
+            renderUrl,
+            customHooks,
+            customUtils
+          }}
+        >
+          <I18nextProvider i18n={i18n}>
+            <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+              <QueryClientProvider client={queryClient}>
+                <Toast.Provider>
+                  <Tooltip.Provider>
+                    <ExitConfirmProvider>
+                      <NavigationProvider routes={routesToRender}>
+                        <RouterContextProvider
+                          Link={Link}
+                          NavLink={NavLink}
+                          Outlet={Outlet}
+                          location={{ ...window.location, state: {}, key: '' }}
+                          navigate={router.navigate}
+                          useSearchParams={useSearchParams}
+                          useMatches={useMatches}
+                        >
+                          <RouterProvider router={router} />
+                        </RouterContextProvider>
+                      </NavigationProvider>
+                    </ExitConfirmProvider>
+                  </Tooltip.Provider>
+                </Toast.Provider>
+              </QueryClientProvider>
+            </ThemeProvider>
+          </I18nextProvider>
+        </MFEContext.Provider>
+      )}
     </div>
   )
-
-  // return !isStylesLoaded ? (
-  //   <ShadowRootLoader theme={theme} />
-  // ) : (
-  //   <MFEContext.Provider
-  //     value={{
-  //       scope,
-  //       renderUrl,
-  //       customHooks,
-  //       customUtils
-  //     }}
-  //   >
-  //     <I18nextProvider i18n={i18n}>
-  //       <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-  //         <QueryClientProvider client={queryClient}>
-  //           <Toast.Provider>
-  //             <Tooltip.Provider>
-  //               <ExitConfirmProvider>
-  //                 <NavigationProvider routes={routesToRender}>
-  //                   <RouterContextProvider
-  //                     Link={Link}
-  //                     NavLink={NavLink}
-  //                     Outlet={Outlet}
-  //                     location={{ ...window.location, state: {}, key: '' }}
-  //                     navigate={router.navigate}
-  //                     useSearchParams={useSearchParams}
-  //                     useMatches={useMatches}
-  //                   >
-  //                     <RouterProvider router={router} />
-  //                   </RouterContextProvider>
-  //                 </NavigationProvider>
-  //               </ExitConfirmProvider>
-  //             </Tooltip.Provider>
-  //           </Toast.Provider>
-  //         </QueryClientProvider>
-  //       </ThemeProvider>
-  //     </I18nextProvider>
-  //   </MFEContext.Provider>
-  // )
 }
 
 function ShadowRootLoader({ theme }: { theme: string }) {

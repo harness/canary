@@ -324,7 +324,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.red.900}",
+        "$value": "{colors.red.800}",
         "$description": "Border color for danger elements to provide visual definition"
       },
       "background-hover": {

@@ -154,7 +154,7 @@ export default function AppMFE({
   const portalRef = useRef<HTMLDivElement>(null)
   const portalContainer = portalRef.current
 
-  const isStylesLoaded = useLoadMFEStyles(shadowRoot)
+  const isStylesLoaded = useLoadMFEStyles(portalRef.current)
 
   // Router Configuration
   const basename = `/ng${renderUrl}`
@@ -168,54 +168,91 @@ export default function AppMFE({
 
   return (
     <div ref={shadowRef}>
-      <ShadowRootWrapper>
-        {/* Radix UI elements need to be rendered inside the following div with the theme class */}
-        <div className={theme.toLowerCase()} ref={portalRef}>
-          {!isStylesLoaded ? (
-            // Replace it with spinner once it is available
-            <ShadowRootLoader theme={theme} />
-          ) : (
-            <PortalProvider portalContainer={portalContainer}>
-              <MFEContext.Provider
-                value={{
-                  scope,
-                  renderUrl,
-                  customHooks,
-                  customUtils
-                }}
-              >
-                <I18nextProvider i18n={i18n}>
-                  <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-                    <QueryClientProvider client={queryClient}>
-                      <Toast.Provider>
-                        <Tooltip.Provider>
-                          <ExitConfirmProvider>
-                            <NavigationProvider routes={routesToRender}>
-                              <RouterContextProvider
-                                Link={Link}
-                                NavLink={NavLink}
-                                Outlet={Outlet}
-                                location={{ ...window.location, state: {}, key: '' }}
-                                navigate={router.navigate}
-                                useSearchParams={useSearchParams}
-                                useMatches={useMatches}
-                              >
-                                <RouterProvider router={router} />
-                              </RouterContextProvider>
-                            </NavigationProvider>
-                          </ExitConfirmProvider>
-                        </Tooltip.Provider>
-                      </Toast.Provider>
-                    </QueryClientProvider>
-                  </ThemeProvider>
-                </I18nextProvider>
-              </MFEContext.Provider>
-            </PortalProvider>
-          )}
-        </div>
-      </ShadowRootWrapper>
+      {/* Radix UI elements need to be rendered inside the following div with the theme class */}
+      <div className={theme.toLowerCase()} ref={portalRef}>
+        {!isStylesLoaded ? (
+          // Replace it with spinner once it is available
+          <ShadowRootLoader theme={theme} />
+        ) : (
+          <PortalProvider portalContainer={portalContainer}>
+            <MFEContext.Provider
+              value={{
+                scope,
+                renderUrl,
+                customHooks,
+                customUtils
+              }}
+            >
+              <I18nextProvider i18n={i18n}>
+                <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+                  <QueryClientProvider client={queryClient}>
+                    <Toast.Provider>
+                      <Tooltip.Provider>
+                        <ExitConfirmProvider>
+                          <NavigationProvider routes={routesToRender}>
+                            <RouterContextProvider
+                              Link={Link}
+                              NavLink={NavLink}
+                              Outlet={Outlet}
+                              location={{ ...window.location, state: {}, key: '' }}
+                              navigate={router.navigate}
+                              useSearchParams={useSearchParams}
+                              useMatches={useMatches}
+                            >
+                              <RouterProvider router={router} />
+                            </RouterContextProvider>
+                          </NavigationProvider>
+                        </ExitConfirmProvider>
+                      </Tooltip.Provider>
+                    </Toast.Provider>
+                  </QueryClientProvider>
+                </ThemeProvider>
+              </I18nextProvider>
+            </MFEContext.Provider>
+          </PortalProvider>
+        )}
+      </div>
     </div>
   )
+
+  // return !isStylesLoaded ? (
+  //   <ShadowRootLoader theme={theme} />
+  // ) : (
+  //   <MFEContext.Provider
+  //     value={{
+  //       scope,
+  //       renderUrl,
+  //       customHooks,
+  //       customUtils
+  //     }}
+  //   >
+  //     <I18nextProvider i18n={i18n}>
+  //       <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+  //         <QueryClientProvider client={queryClient}>
+  //           <Toast.Provider>
+  //             <Tooltip.Provider>
+  //               <ExitConfirmProvider>
+  //                 <NavigationProvider routes={routesToRender}>
+  //                   <RouterContextProvider
+  //                     Link={Link}
+  //                     NavLink={NavLink}
+  //                     Outlet={Outlet}
+  //                     location={{ ...window.location, state: {}, key: '' }}
+  //                     navigate={router.navigate}
+  //                     useSearchParams={useSearchParams}
+  //                     useMatches={useMatches}
+  //                   >
+  //                     <RouterProvider router={router} />
+  //                   </RouterContextProvider>
+  //                 </NavigationProvider>
+  //               </ExitConfirmProvider>
+  //             </Tooltip.Provider>
+  //           </Toast.Provider>
+  //         </QueryClientProvider>
+  //       </ThemeProvider>
+  //     </I18nextProvider>
+  //   </MFEContext.Provider>
+  // )
 }
 
 function ShadowRootLoader({ theme }: { theme: string }) {

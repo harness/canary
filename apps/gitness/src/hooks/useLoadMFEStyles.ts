@@ -19,21 +19,21 @@ const fetchMarkdownPreviewStyles = async () => {
   return markdownPreviewStyles.default
 }
 
-export function useLoadMFEStyles(shadowRoot?: ShadowRoot | null) {
+export function useLoadMFEStyles(targetElement?: Element | null) {
   const [isStylesLoaded, setIsStylesLoaded] = useState(false)
 
   useEffect(() => {
-    if (shadowRoot) {
+    if (targetElement) {
       Promise.all([fetchUIStyles(), fetchMonacoStyles(), fetchMarkdownPreviewStyles()]).then(
         ([uiStyles, monacoStyles, markdownPreviewStyles]) => {
           const styleElement = document.createElement('style')
           styleElement.innerHTML = `${uiStyles}\n${monacoStyles}\n${markdownPreviewStyles}`
-          shadowRoot?.appendChild(styleElement)
+          targetElement?.appendChild(styleElement)
           setIsStylesLoaded(true)
         }
       )
     }
-  }, [shadowRoot])
+  }, [targetElement])
 
   return isStylesLoaded
 }

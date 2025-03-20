@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 
 import { TranslationStore } from '@/views'
 import { Button } from '@components/button'
-import { Icon } from '@components/icon'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
 import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
 import { inputComponentFactory } from '@views/unified-pipeline-studio/components/form-inputs/factory/factory'
@@ -26,7 +25,7 @@ interface ConnectorEntityFormProps {
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
   const {
     formEntity,
-    requestClose,
+
     onFormSubmit,
     getConnectorDefinition,
     setRightDrawer,
@@ -94,12 +93,6 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
               <EntityFormSectionLayout.Title className="!my-0">
                 Connect to {formEntity.data.name}
               </EntityFormSectionLayout.Title>
-              <div className="pt-2">
-                <Button variant="ghost" onClick={() => setRightDrawer(ConnectorRightDrawer.Collection)}>
-                  <Icon name="arrow-long" className="rotate-180" size={12} />
-                  <span>Back</span>
-                </Button>
-              </div>
             </EntityFormSectionLayout.Header>
             <EntityFormSectionLayout.Form>
               <RenderForm className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
@@ -107,8 +100,8 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer>
             <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-background-2 p-4 shadow-md">
-              <Button variant="secondary" onClick={requestClose}>
-                Cancel
+              <Button variant="secondary" onClick={() => setRightDrawer(ConnectorRightDrawer.Collection)}>
+                Back
               </Button>
               <Button onClick={() => rootForm.submitForm()}>Submit</Button>
             </div>

@@ -233,7 +233,7 @@
     "neutral": {
       "text": {
         "$type": "color",
-        "$value": "{colors.chrome.850}",
+        "$value": "{colors.chrome.800}",
         "$description": "Primary text color for neutral elements, providing standard readability"
       },
       "background": {
@@ -338,7 +338,7 @@
         "$description": "Background color when selected for danger elements, indicating active state"
       }
     },
-    "running": {
+    "info": {
       "text": {
         "$type": "color",
         "$value": "{colors.blue.600}",

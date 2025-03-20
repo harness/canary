@@ -329,7 +329,7 @@
         "$description": "Background color when selected for danger elements, indicating active state"
       }
     },
-    "running": {
+    "info": {
       "text": {
         "$type": "color",
         "$value": "{colors.blue.200}",

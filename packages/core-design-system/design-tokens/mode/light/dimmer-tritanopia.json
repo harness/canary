@@ -1845,7 +1845,7 @@
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{colors.cyan.300}"
+        "$value": "{colors.orange.300}"
       },
       "gradient-stop-4": {
         "$type": "color",

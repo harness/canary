@@ -14816,8 +14816,10 @@
       "input.py": "c7ae71898285e79260ecb1d681cdc72978ab818a",
       "badge.size.sm": "971d8a416219bea28ec1287a1b54daf028ebb4fa",
       "badge.size.default": "cad204331a3d056d1cd49b8d85f982e03cc768a4",
-      "badge.rounded.radius": "7a19a52ddc4cde699ca52b3100e9532770b9b551",
-      "badge.rounded.px": "6014b3b6218847f226fd965b8138f261aef9610e",
+      "badge.gap": "d78cd5b01cce6b22996f167916bb926b5dfb913c",
+      "badge.py": "122f6bc32c7efab7a5e27a2dc32def7b9a6e0826",
+      "badge.px": "f0bc7c9701c0a55677d9813597af807a8644fe23",
+      "badge.radius": "347be28d0a728945866ff529cd499b1e58bee6f0",
       "badge.border": "d88ba47bad873744978e01f0850a8839922ed608",
       "tag.size": "45fdf4ccb209bc1471e98dcb9f94d14e80bcdaf0",
       "tag.gap": "4f428fa34534b2d68ed54fbaf34bd38e6cc9ee6b",
@@ -14844,11 +14846,7 @@
       "dropdown.menu-item-branch-selector.tag.px": "35594a38718a20c7f3e3fd133e8c44ff831c5a05",
       "dropdown.menu-item-branch-selector.tag.size": "4b9f6544cf9aec4068151e8e37a986d832f5606c",
       "dropdown.menu-items.header-footer.px": "ac04ab19d02649e4354bb5f650c0a9435f7a7f19",
-      "dropdown.menu-items.header-footer.py": "7f108d35da597212c12b81e397b921cf5365874b",
-      "badge.gap": "d78cd5b01cce6b22996f167916bb926b5dfb913c",
-      "badge.py": "122f6bc32c7efab7a5e27a2dc32def7b9a6e0826",
-      "badge.px": "f0bc7c9701c0a55677d9813597af807a8644fe23",
-      "badge.radius": "347be28d0a728945866ff529cd499b1e58bee6f0"
+      "dropdown.menu-items.header-footer.py": "7f108d35da597212c12b81e397b921cf5365874b"
     },
     "group": "breakpoint"
   },

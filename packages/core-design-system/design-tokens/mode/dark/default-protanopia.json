@@ -351,7 +351,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.blue.900}",
+        "$value": "{colors.blue.800}",
         "$description": "Border color for running elements to provide visual definition"
       },
       "background-hover": {
@@ -378,7 +378,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.purple.900}",
+        "$value": "{colors.purple.800}",
         "$description": "Border color for merged elements to provide visual definition"
       },
       "background-hover": {

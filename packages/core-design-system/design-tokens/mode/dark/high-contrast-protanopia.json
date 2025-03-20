@@ -1823,7 +1823,7 @@
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{colors.purple.300}"
+        "$value": "{colors.purple.400}"
       },
       "gradient-stop-4": {
         "$type": "color",

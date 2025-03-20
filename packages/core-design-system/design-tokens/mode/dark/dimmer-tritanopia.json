@@ -261,7 +261,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.cyan.900}",
+        "$value": "{colors.cyan.800}",
         "$description": "Border color for success elements to provide visual definition"
       },
       "background-hover": {
@@ -288,7 +288,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.orange.900}",
+        "$value": "{colors.orange.800}",
         "$description": "Border color for warning elements to provide visual definition"
       },
       "background-hover": {
@@ -315,7 +315,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.red.900}",
+        "$value": "{colors.red.800}",
         "$description": "Border color for danger elements to provide visual definition"
       },
       "background-hover": {
@@ -342,7 +342,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.blue.900}",
+        "$value": "{colors.blue.800}",
         "$description": "Border color for running elements to provide visual definition"
       },
       "background-hover": {
@@ -369,7 +369,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.cyan.900}",
+        "$value": "{colors.cyan.800}",
         "$description": "Border color for merged elements to provide visual definition"
       },
       "background-hover": {

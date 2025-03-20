@@ -260,54 +260,54 @@
     "success": {
       "text": {
         "$type": "color",
-        "$value": "{colors.green.600}",
+        "$value": "{colors.cyan.600}",
         "$description": "Primary text color for success elements, ensuring visibility for confirmation messaging"
       },
       "background": {
         "$type": "color",
-        "$value": "{colors.green.50}",
+        "$value": "{colors.cyan.50}",
         "$description": "Base background color for success elements to indicate positive outcomes"
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.green.200}",
+        "$value": "{colors.cyan.200}",
         "$description": "Border color for success elements to provide visual definition"
       },
       "background-hover": {
         "$type": "color",
-        "$value": "{colors.green.100}",
+        "$value": "{colors.cyan.100}",
         "$description": "Background color on hover for success elements to indicate interactivity"
       },
       "background-selected": {
         "$type": "color",
-        "$value": "{colors.green.100}",
+        "$value": "{colors.cyan.100}",
         "$description": "Background color when selected for success elements, indicating active state"
       }
     },
     "warning": {
       "text": {
         "$type": "color",
-        "$value": "{colors.yellow.600}",
+        "$value": "{colors.orange.600}",
         "$description": "Primary text color for warning elements, ensuring visibility for cautionary messaging"
       },
       "background": {
         "$type": "color",
-        "$value": "{colors.yellow.50}",
+        "$value": "{colors.orange.50}",
         "$description": "Base background color for warning elements to indicate caution states"
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.yellow.200}",
+        "$value": "{colors.orange.200}",
         "$description": "Border color for warning elements to provide visual definition"
       },
       "background-hover": {
         "$type": "color",
-        "$value": "{colors.yellow.100}",
+        "$value": "{colors.orange.100}",
         "$description": "Background color on hover for warning elements to indicate interactivity"
       },
       "background-selected": {
         "$type": "color",
-        "$value": "{colors.yellow.100}",
+        "$value": "{colors.orange.100}",
         "$description": "Background color when selected for warning elements, indicating active state"
       }
     },
@@ -368,27 +368,27 @@
     "merged": {
       "text": {
         "$type": "color",
-        "$value": "{colors.purple.600}",
+        "$value": "{colors.cyan.600}",
         "$description": "Primary text color for merged elements, providing clear readability"
       },
       "background": {
         "$type": "color",
-        "$value": "{colors.purple.50}",
+        "$value": "{colors.cyan.50}",
         "$description": "Base background color for merged elements to indicate completion"
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.purple.200}",
+        "$value": "{colors.cyan.200}",
         "$description": "Border color for merged elements to provide visual definition"
       },
       "background-hover": {
         "$type": "color",
-        "$value": "{colors.purple.100}",
+        "$value": "{colors.cyan.100}",
         "$description": "Background color on hover for merged elements to indicate interactivity"
       },
       "background-selected": {
         "$type": "color",
-        "$value": "{colors.purple.100}",
+        "$value": "{colors.cyan.100}",
         "$description": "Background color when selected for merged elements, indicating active state"
       }
     },

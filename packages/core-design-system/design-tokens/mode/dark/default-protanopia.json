@@ -260,27 +260,27 @@
     "success": {
       "text": {
         "$type": "color",
-        "$value": "{colors.green.200}",
+        "$value": "{colors.blue.200}",
         "$description": "Primary text color for success elements, ensuring visibility for confirmation messaging"
       },
       "background": {
         "$type": "color",
-        "$value": "{colors.green.950}",
+        "$value": "{colors.blue.950}",
         "$description": "Base background color for success elements to indicate positive outcomes"
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.green.900}",
+        "$value": "{colors.blue.900}",
         "$description": "Border color for success elements to provide visual definition"
       },
       "background-hover": {
         "$type": "color",
-        "$value": "{colors.green.900}",
+        "$value": "{colors.blue.900}",
         "$description": "Background color on hover for success elements to indicate interactivity"
       },
       "background-selected": {
         "$type": "color",
-        "$value": "{colors.green.800}",
+        "$value": "{colors.blue.800}",
         "$description": "Background color when selected for success elements, indicating active state"
       }
     },

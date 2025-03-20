@@ -159,7 +159,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
         />
       </div>
     )
-  }, [reRenderYamlEditor, themeConfig, schemaConfig]) // inlineActions, highlightInYamlPath
+  }, [reRenderYamlEditor, themeConfig, schemaConfig, theme]) // inlineActions, highlightInYamlPath
 }
 
 export { PipelineStudioYamlView }

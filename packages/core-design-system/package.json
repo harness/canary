@@ -3,17 +3,16 @@
   "version": "0.0.1",
   "description": "Harness Design System",
   "type": "module",
-  "main": "src/core-style-esm.js",
   "exports": {
-    "./core-styles": "./src/styles/core-imports.css",
-    "./oss-themes": "./src/styles/oss.css",
-    "./enterprise-themes": "./src/styles/enterprise.css",
-    "./styles-esm": "./src/core-styles-esm.ts"
+    "./core-styles": "./dist/styles/core-imports.css",
+    "./oss-themes": "./dist/styles/oss.css",
+    "./enterprise-themes": "./dist/styles/enterprise.css",
+    "./styles-esm": "./dist/styles-esm/index.ts"
   },
   "scripts": {
     "build": " pnpm clean && pnpm build:styles",
     "build:styles": "node scripts/build.js",
-    "clean": "rimraf ./src/styles && rimraf ./src/styles-esm"
+    "clean": "rimraf dist"
   },
   "keywords": [
     "design-system",
@@ -21,7 +20,7 @@
     "styles"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "devDependencies": {
     "@tokens-studio/sd-transforms": "^1.2.9",
     "figlet": "^1.8.0",

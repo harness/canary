@@ -1,7 +1,7 @@
 import { formats } from 'style-dictionary/enums'
 
-export const DESIGN_SYSTEM_ROOT = 'src/styles'
-export const DESIGN_SYSTEM_ROOT_ESM = 'src/styles-esm'
+export const DESIGN_SYSTEM_ROOT = 'dist/styles'
+export const DESIGN_SYSTEM_ROOT_ESM = 'dist/styles-esm'
 
 export const DESIGN_SYSTEM_PREFIX = 'cn'
 

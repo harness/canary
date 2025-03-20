@@ -4,8 +4,8 @@
     "core/colors_lch",
     "core/typography",
     "core/dimensions",
-    "brand/Gitness",
-    "brand/Harness",
+    "brand/oss",
+    "brand/ent",
     "mode/dark/default",
     "mode/dark/dimmer",
     "mode/dark/high-contrast",
@@ -37,6 +37,7 @@
     "components/desktop/base/tag",
     "components/desktop/base/dropdown-menu",
     "components/desktop/base/pagination",
+    "components/desktop/base/card",
     "components/desktop/base/tooltip"
   ]
 }

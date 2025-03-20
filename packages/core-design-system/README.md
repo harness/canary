@@ -56,5 +56,5 @@ pnpm build
 
 ## Development
 
-- `src/styles/` - Contains all CSS stylesheets
-- `src/styles-esm/` - Contains all JavaScript values for the design system
+- `dist/styles/` - Contains all CSS stylesheets
+- `dist/styles-esm/` - Contains all JavaScript values for the design system

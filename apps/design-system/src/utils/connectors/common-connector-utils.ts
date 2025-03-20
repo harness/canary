@@ -1,4 +1,4 @@
-import { IInputConfigWithConfigInterface } from '../../../../../packages/ui/src/views/connectors/types'
+import { IInputConfigWithConfigInterface } from '@harnessio/ui/views'
 
 export const getResourcesContainer = (): IInputConfigWithConfigInterface => ({
   inputType: 'group',

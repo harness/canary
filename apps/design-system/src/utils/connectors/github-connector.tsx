@@ -1,8 +1,5 @@
-import { InputConfigType, RadialOption } from '@views/unified-pipeline-studio/components/form-inputs/types'
-
-// import * as zod from 'zod'
-
 import { IFormDefinition } from '@harnessio/forms'
+import { InputConfigType, RadialOption } from '@harnessio/ui/views'
 
 import { IInputConfigWithConfigInterface } from '../../../../../packages/ui/src/views/connectors/types'
 import {
@@ -55,7 +52,7 @@ const inputs: IInputConfigWithConfigInterface[] = [
     inputType: 'text',
     path: `pat`,
     label: 'Personal Token',
-    isVisible: values => {
+    isVisible: (values: { auth: string }) => {
       return values?.auth === 'UsernameToken'
     }
   },

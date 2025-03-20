@@ -1,6 +1,5 @@
-import { InputConfigType } from '@views/unified-pipeline-studio/components/form-inputs/types'
-
 import { IFormDefinition } from '@harnessio/forms'
+import { InputConfigType } from '@harnessio/ui/views'
 
 import { IInputConfigWithConfigInterface } from '../../../../../packages/ui/src/views/connectors/types'
 

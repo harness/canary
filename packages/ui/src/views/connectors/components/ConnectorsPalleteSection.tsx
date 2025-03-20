@@ -33,12 +33,14 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                   <StepsPaletteItemLayout.Title className="text-foreground-1">
                     {connector.name}
                   </StepsPaletteItemLayout.Title>
-                  {/* <StepsPaletteItem.BadgeWrapper>verified</StepsPaletteItem.BadgeWrapper> */}{' '}
                 </StepsPaletteItemLayout.Header>
                 <StepsPaletteItemLayout.Description className="text-foreground-4">
                   {connector.category}
                 </StepsPaletteItemLayout.Description>
               </StepsPaletteItemLayout.Right>
+              <StepsPaletteItemLayout.RightItem>
+                <Icon name="chevron-right" size={12} />
+              </StepsPaletteItemLayout.RightItem>
             </StepsPaletteItemLayout.Root>
           </StepsPaletteContentLayout.SectionItem>
         ))

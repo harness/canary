@@ -29,6 +29,9 @@ const StepsPaletteItemLayout = {
         <div className="rounded-full bg-background px-2 text-sm">{children}</div>
       </div>
     )
+  },
+  RightItem: function RightItem({ children }: { children: React.ReactNode }) {
+    return <div className="flex items-center p-0.5">{children}</div>
   }
 }
 

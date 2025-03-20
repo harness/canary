@@ -5,23 +5,15 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const inputReferenceVariants = cva(
-  'flex min-h-9 cursor-pointer items-center justify-between rounded px-3 py-2 transition-colors',
+  'bg-input-background text-foreground-1 flex h-9 min-h-9 cursor-pointer items-center justify-between rounded px-3 py-2 transition-colors',
   {
     variants: {
-      variant: {
-        default: 'bg-input-background text-foreground-1'
-      },
-      size: {
-        md: 'h-9'
-      },
       state: {
         default: 'border-borders-2 border',
         disabled: 'bg-background-3 text-foreground-7 border-borders-1 cursor-not-allowed border'
       }
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'md',
       state: 'default'
     }
   }
@@ -106,8 +98,6 @@ export const InputReference = <T,>({
   label,
   caption,
   optional = false,
-  variant,
-  size,
   renderValue,
   ...props
 }: InputReferenceProps<T>) => {
@@ -140,7 +130,7 @@ export const InputReference = <T,>({
       )}
       <div
         onClick={disabled ? undefined : onClick}
-        className={cn(inputReferenceVariants({ variant, size, state }), className)}
+        className={cn(inputReferenceVariants({ state }), className)}
         role="button"
         title="Interactive input with edit and clear"
         tabIndex={disabled ? -1 : 0}

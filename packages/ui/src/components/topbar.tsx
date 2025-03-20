@@ -16,7 +16,12 @@ const Topbar = {
     const gridCols = hasCenter ? 'grid-cols-[auto_1fr_auto]' : 'grid-cols-[1fr_auto]'
 
     return (
-      <div className={cx(`grid w-full ${gridCols} font-regular h-[55px] items-center gap-6 px-5 text-sm`, className)}>
+      <div
+        className={cx(
+          `grid w-full ${gridCols} font-regular h-[55px] topbar-bottom-border items-center gap-6 px-5 text-sm`,
+          className
+        )}
+      >
         {children}
       </div>
     )

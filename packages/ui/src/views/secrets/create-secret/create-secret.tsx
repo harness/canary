@@ -223,7 +223,7 @@ export function CreateSecretPage({
             <Accordion.Item value="secret-details">
               <Accordion.Trigger>Metadata</Accordion.Trigger>
               <Accordion.Content>
-                <Fieldset className="p-4 border">
+                <Fieldset className="p-4 rounded-md border">
                   {/* DESCRIPTION */}
                   <Textarea
                     id="description"

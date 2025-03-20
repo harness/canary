@@ -24,8 +24,8 @@ export type ConnectorFormEntityType = {
   }
 }
 
-export type AnyConnectorDefinition = {
-  type: ConnectorInfoDTO['type']
+export type AnyConnectorDefinition<T = string> = {
+  type: T
   name: string
   category: string
   formDefinition: IFormDefinition<InputConfigType>
@@ -64,138 +64,6 @@ export interface ConnectorPayloadConfig<T extends ConnectorSpec = ConnectorSpec>
 }
 export interface ConnectorConfigDTO {
   [key: string]: any
-}
-export interface ConnectorInfoDTO {
-  accountIdentifier?: string
-  description?: string
-  identifier: string
-  name: string
-  orgIdentifier?: string
-  parentUniqueId?: string
-  projectIdentifier?: string
-  spec: ConnectorConfigDTO
-  tags?: {
-    [key: string]: string
-  }
-  type:
-    | 'K8sCluster'
-    | 'Git'
-    | 'Splunk'
-    | 'AppDynamics'
-    | 'Prometheus'
-    | 'Dynatrace'
-    | 'Vault'
-    | 'AzureKeyVault'
-    | 'DockerRegistry'
-    | 'Local'
-    | 'AwsKms'
-    | 'GcpKms'
-    | 'AwsSecretManager'
-    | 'Gcp'
-    | 'Aws'
-    | 'Azure'
-    | 'Artifactory'
-    | 'Jira'
-    | 'Nexus'
-    | 'Github'
-    | 'Gitlab'
-    | 'Bitbucket'
-    | 'Codecommit'
-    | 'CEAws'
-    | 'CEAzure'
-    | 'GcpCloudCost'
-    | 'CEK8sCluster'
-    | 'HttpHelmRepo'
-    | 'NewRelic'
-    | 'Datadog'
-    | 'SumoLogic'
-    | 'PagerDuty'
-    | 'CustomHealth'
-    | 'ServiceNow'
-    | 'ErrorTracking'
-    | 'Pdc'
-    | 'AzureRepo'
-    | 'Jenkins'
-    | 'OciHelmRepo'
-    | 'CustomSecretManager'
-    | 'ElasticSearch'
-    | 'GcpSecretManager'
-    | 'AzureArtifacts'
-    | 'Tas'
-    | 'Spot'
-    | 'Bamboo'
-    | 'TerraformCloud'
-    | 'SignalFX'
-    | 'Harness'
-    | 'Rancher'
-    | 'JDBC'
-    | 'Zoom'
-    | 'MsTeams'
-    | 'Slack'
-    | 'Confluence'
-  uniqueId?: string
-}
-export interface ConnectorType {
-  [key: string]: ConnectorInfoDTO['type']
-}
-export const Connectors: ConnectorType = {
-  KUBERNETES_CLUSTER: 'K8sCluster',
-  CUSTOM: 'CustomHealth',
-  GIT: 'Git',
-  GITHUB: 'Github',
-  GITLAB: 'Gitlab',
-  BITBUCKET: 'Bitbucket',
-  AZURE_REPO: 'AzureRepo',
-  AZURE_ARTIFACTS: 'AzureArtifacts',
-  VAULT: 'Vault',
-  APP_DYNAMICS: 'AppDynamics',
-  SPLUNK: 'Splunk',
-  DOCKER: 'DockerRegistry',
-  GCP: 'Gcp',
-  GCP_KMS: 'GcpKms',
-  LOCAL: 'Local',
-  AWS: 'Aws',
-  PDC: 'Pdc',
-  AWS_CODECOMMIT: 'Codecommit',
-  NEXUS: 'Nexus',
-  ARTIFACTORY: 'Artifactory',
-  CEAWS: 'CEAws',
-  HttpHelmRepo: 'HttpHelmRepo',
-  OciHelmRepo: 'OciHelmRepo',
-  Jira: 'Jira',
-  NEW_RELIC: 'NewRelic',
-  AWS_KMS: 'AwsKms',
-  PROMETHEUS: 'Prometheus',
-  CE_AZURE: 'CEAzure',
-  CE_KUBERNETES: 'CEK8sCluster',
-  DATADOG: 'Datadog',
-  AZURE_KEY_VAULT: 'AzureKeyVault',
-  DYNATRACE: 'Dynatrace',
-  SUMOLOGIC: 'SumoLogic',
-  CE_GCP: 'GcpCloudCost',
-  AWS_SECRET_MANAGER: 'AwsSecretManager',
-  PAGER_DUTY: 'PagerDuty',
-  SERVICE_NOW: 'ServiceNow',
-  CUSTOM_HEALTH: 'CustomHealth',
-  ERROR_TRACKING: 'ErrorTracking',
-  AZURE: 'Azure',
-  AWSSECRETMANAGER: 'AwsSecretManager',
-  JENKINS: 'Jenkins',
-  CUSTOM_SECRET_MANAGER: 'CustomSecretManager',
-  ELK: 'ElasticSearch',
-  GcpSecretManager: 'GcpSecretManager',
-  SPOT: 'Spot',
-  TAS: 'Tas',
-  TERRAFORM_CLOUD: 'TerraformCloud',
-  Bamboo: 'Bamboo',
-  SignalFX: 'SignalFX',
-  Harness: 'Harness',
-  Rancher: 'Rancher',
-  JDBC: 'JDBC',
-  Zoom: 'Zoom',
-  MicrosoftTeams: 'MsTeams',
-  Slack: 'Slack',
-  Confluence: 'Confluence'
 }
 
 export interface ConnectorFields {

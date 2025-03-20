@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area'
 import { cn } from '@utils/cn'
@@ -26,6 +26,14 @@ const ScrollArea = React.forwardRef<
       timeoutRef.current = null
     }, 1000)
   }
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   return (
     <ScrollAreaPrimitive.Root ref={ref} className={cn('relative overflow-hidden flex-1', className)} {...props}>

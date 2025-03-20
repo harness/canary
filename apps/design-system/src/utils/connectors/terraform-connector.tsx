@@ -1,7 +1,5 @@
 import { IFormDefinition } from '@harnessio/forms'
-import { InputConfigType } from '@harnessio/ui/views'
-
-import { IInputConfigWithConfigInterface } from '../../../../../packages/ui/src/views/connectors/types'
+import { IInputConfigWithConfigInterface, InputConfigType } from '@harnessio/ui/views'
 
 export const TERRAFORM_CONNECTOR_CATEGORY = 'Infrastructure'
 

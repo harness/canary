@@ -1,7 +1,6 @@
 import { IFormDefinition } from '@harnessio/forms'
-import { InputConfigType, RadialOption } from '@harnessio/ui/views'
+import { IInputConfigWithConfigInterface, InputConfigType, RadialOption } from '@harnessio/ui/views'
 
-import { IInputConfigWithConfigInterface } from '../../../../../packages/ui/src/views/connectors/types'
 import {
   getCloningContainer,
   getConnectionContainer,

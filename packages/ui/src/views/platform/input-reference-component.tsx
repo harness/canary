@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 import { Button, Caption, ControlGroup, Icon, IconProps, Label } from '@/components'
 import { cn } from '@utils/cn'
@@ -29,16 +29,16 @@ const inputReferenceVariants = cva(
   }
 )
 
-export interface InputReferenceProps extends VariantProps<typeof inputReferenceVariants> {
+export interface InputReferenceProps<T> extends VariantProps<typeof inputReferenceVariants> {
   /**
-   * The value to display in the input reference
+   * The initial value to display in the input reference
    */
-  value?: string | ReactNode
+  initialValue: T | null
 
   /**
-   * Default value to show when no value is provided
+   * The current value of the input reference
    */
-  defaultValue: string | ReactNode
+  value?: T | null
 
   /**
    * Function called when the input reference is clicked
@@ -53,7 +53,12 @@ export interface InputReferenceProps extends VariantProps<typeof inputReferenceV
   /**
    * Function called when the clear (cross) icon is clicked
    */
-  onClear?: () => void
+  onClear?: (previousValue?: T) => void
+
+  /**
+   * Function to render the value as a ReactNode
+   */
+  renderValue?: (value: T) => ReactNode
 
   /**
    * Whether the input reference is disabled
@@ -89,10 +94,11 @@ export interface InputReferenceProps extends VariantProps<typeof inputReferenceV
 /**
  * InputReference is a component that looks like an input field but acts as a clickable
  * InputReference element that can trigger actions like opening a drawer, modal, or dropdown.
+ * It supports generic types for values and maintains its own internal state.
  */
-export const InputReference: React.FC<InputReferenceProps> = ({
+export const InputReference = <T,>({
+  initialValue,
   value,
-  defaultValue,
   onClick,
   onEdit,
   onClear,
@@ -105,15 +111,15 @@ export const InputReference: React.FC<InputReferenceProps> = ({
   variant,
   size,
   ...props
-}) => {
-  const displayValue = value || defaultValue
-  const hasValue = !!value
+}: InputReferenceProps<T>) => {
+  const [displayValue, setDisplayValue] = useState<T | null>(initialValue)
+
+  const hasValue = displayValue !== null && displayValue !== initialValue
 
   const handleClear = (e: React.MouseEvent) => {
     e.stopPropagation()
-    if (onClear) {
-      onClear()
-    }
+    setDisplayValue(initialValue)
+    onClear?.()
   }
 
   const handleEdit = (e: React.MouseEvent) => {
@@ -124,6 +130,10 @@ export const InputReference: React.FC<InputReferenceProps> = ({
       onClick()
     }
   }
+
+  useEffect(() => {
+    setDisplayValue(value ?? initialValue)
+  }, [initialValue, value])
 
   const state = disabled ? 'disabled' : 'default'
 

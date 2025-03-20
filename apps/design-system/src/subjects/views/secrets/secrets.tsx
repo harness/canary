@@ -2,11 +2,12 @@ import { useState } from 'react'
 
 import { useTranslationStore } from '@utils/viewUtils'
 
-import { Button, Drawer, Spacer } from '@harnessio/ui/components'
+import { Drawer, Spacer } from '@harnessio/ui/components'
 import {
   CreateSecretFormFields,
   CreateSecretPage,
   DirectionEnum,
+  InputReference,
   SecretCreationType,
   SecretItem,
   SecretReference,
@@ -29,14 +30,19 @@ export const SecretsPage = () => {
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
 
+  // Drawer state
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
   const onSubmit = (data: CreateSecretFormFields) => {
     console.log('Submitted data:', data)
+    setIsDrawerOpen(false)
   }
 
   // Handlers for existing secrets
   const handleSelectSecret = (secret: SecretItem) => {
     setSelectedSecret(secret)
     console.log('Selected secret:', secret)
+    setIsDrawerOpen(false)
   }
 
   const handleScopeChange = (direction: DirectionEnum) => {
@@ -63,6 +69,7 @@ export const SecretsPage = () => {
 
   const handleCancel = () => {
     console.log('Cancelled')
+    setIsDrawerOpen(false)
   }
 
   const renderSecretContent = () => {
@@ -110,20 +117,38 @@ export const SecretsPage = () => {
   }
 
   return (
-    <Drawer.Root direction="right">
-      <Drawer.Trigger>
-        <Button>Add Secret</Button>
-      </Drawer.Trigger>
-      <Drawer.Content>
-        <Drawer.Header>
-          <Drawer.Title className="text-3xl">Secrets</Drawer.Title>
-        </Drawer.Header>
-        <Spacer size={5} />
+    <div className="p-5">
+      <h2 className="text-xl font-semibold mb-5">Secret Management Example</h2>
 
-        <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
-        <Spacer size={5} />
-        {renderSecretContent()}
-      </Drawer.Content>
-    </Drawer.Root>
+      <div className="max-w-md mb-8">
+        <InputReference<SecretItem | string>
+          initialValue="Please select a secret"
+          value={selectedSecret?.name}
+          label="Select a Secret"
+          startIcon="key"
+          onClick={() => {
+            setIsDrawerOpen(true)
+          }}
+          onEdit={() => {
+            setIsDrawerOpen(true)
+          }}
+          onClear={() => setSelectedSecret(null)}
+        />
+      </div>
+
+      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
+        <Drawer.Content>
+          <Drawer.Header>
+            <Drawer.Title className="text-3xl">Secrets</Drawer.Title>
+            <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
+          </Drawer.Header>
+          <Spacer size={5} />
+
+          <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
+          <Spacer size={5} />
+          {renderSecretContent()}
+        </Drawer.Content>
+      </Drawer.Root>
+    </div>
   )
 }

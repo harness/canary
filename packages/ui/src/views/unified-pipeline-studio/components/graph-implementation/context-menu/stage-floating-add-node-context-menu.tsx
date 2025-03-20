@@ -1,5 +1,4 @@
-import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon, Text } from '@components/index'
+import { DropdownMenu, Icon, Text } from '@components/index'
 
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 import { YamlEntityType } from '../types/yaml-entity-type'

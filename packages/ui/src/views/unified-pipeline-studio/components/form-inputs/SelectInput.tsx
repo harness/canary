@@ -3,9 +3,8 @@ import { Select } from '@components/select'
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
-import InputLabel from './common/InputLabel'
-import InputWrapper from './common/InputWrapper'
-import { InputType } from './types'
+import { InputLabel } from './common/InputLabel'
+import { InputWrapper } from './common/InputWrapper'
 
 export interface SelectOption {
   label: string
@@ -13,7 +12,7 @@ export interface SelectOption {
 }
 
 export interface SelectInputConfig {
-  inputType: InputType.select
+  inputType: 'select'
   inputConfig: {
     options: SelectOption[]
   }
@@ -52,7 +51,7 @@ function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig
 }
 
 export class SelectInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.select
+  public internalType = 'select'
 
   renderComponent(props: InputProps<AnyFormikValue, SelectInputConfig>): JSX.Element {
     return <SelectInputInternal {...props} />

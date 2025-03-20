@@ -35,7 +35,7 @@ export const StepNodeContextMenu = (): (() => React.ReactNode)[] | null | any =>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
-          key="add"
+          key="add-before"
           className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'before')
@@ -45,7 +45,7 @@ export const StepNodeContextMenu = (): (() => React.ReactNode)[] | null | any =>
           <Text wrap="nowrap">Add before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
-          key="add"
+          key="add-after"
           className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'after') // TODO what to add

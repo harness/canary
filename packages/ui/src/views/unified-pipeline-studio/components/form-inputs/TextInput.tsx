@@ -3,12 +3,11 @@ import { Input } from '@components/input'
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
-import InputLabel from './common/InputLabel'
-import InputWrapper from './common/InputWrapper'
-import { InputType } from './types'
+import { InputLabel } from './common/InputLabel'
+import { InputWrapper } from './common/InputWrapper'
 
 export interface TextInputConfig {
-  inputType: InputType.text
+  inputType: 'text'
 }
 
 function TextInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
@@ -29,7 +28,7 @@ function TextInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
 }
 
 export class TextInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.text
+  public internalType = 'text'
 
   renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
     return <TextInputInternal {...props} />

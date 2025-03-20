@@ -27,6 +27,7 @@ export function YamlEditorContextProvider({
   const updateCursorPosition = useCallback(
     (position: { column: number; lineNumber: number }) => {
       monacoEditor?.setPosition(position)
+      monacoEditor?.revealLineInCenterIfOutsideViewport(position.lineNumber)
       monacoEditor?.focus()
     },
     [monacoEditor]

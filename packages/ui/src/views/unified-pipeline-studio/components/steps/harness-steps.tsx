@@ -9,6 +9,7 @@ import { RUN_STEP_DESCRIPTION, runStepFormDefinition } from './run-step'
 import { RUN_TEST_STEP_DESCRIPTION, runTestStepFormDefinition } from './run-test-step'
 import {
   ACTION_STEP_IDENTIFIER,
+  AnyStepDefinition,
   APPROVAL_STEP_IDENTIFIER,
   BACKGROUND_STEP_IDENTIFIER,
   BARRIER_STEP_IDENTIFIER,
@@ -106,7 +107,13 @@ export function getHarnessSteOrGroupIdentifier(step: {
 }
 
 export function getHarnessStepOrGroupDefinition(
-  identifier: string
+  identifier: string,
+  preferredStepsDefinitions?: AnyStepDefinition[]
 ): HarnessStepDefinitionType | HarnessStepGroupDefinitionType | undefined {
+  const stepDef = preferredStepsDefinitions?.find(harnessStep => harnessStep.identifier === identifier)
+  if (stepDef) {
+    return stepDef as HarnessStepDefinitionType
+  }
+
   return harnessSteps.find(harnessStep => harnessStep.identifier === identifier)
 }

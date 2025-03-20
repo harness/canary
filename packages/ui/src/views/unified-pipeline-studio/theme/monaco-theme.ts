@@ -393,12 +393,12 @@ const harnessDarkTheme = {
   }
 }
 
-export const themes: ThemeDefinition[] = [
+export const monacoThemes: ThemeDefinition[] = [
   { themeName: 'dark', themeData: harnessDarkTheme },
   { themeName: 'light', themeData: harnessLightTheme }
 ]
 
-export const themesForBlame: ThemeDefinition[] = [
+export const monacoThemesForBlame: ThemeDefinition[] = [
   { themeName: 'dark', themeData: harnessDarkTheme },
   { themeName: 'light', themeData: harnessLightTheme }
 ]

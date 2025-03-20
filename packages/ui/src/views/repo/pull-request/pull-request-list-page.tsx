@@ -200,7 +200,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             onChange={onFilterValueChange}
             view="dropdown"
           >
-            <h1 className="mb-6 mt-2 text-24 font-medium leading-snug tracking-tight text-foreground-1">
+            <h1 className="text-24 text-foreground-1 mb-6 mt-2 font-medium leading-snug tracking-tight">
               Pull Requests
             </h1>
 
@@ -257,7 +257,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                     {PR_FILTER_OPTIONS.map(filterOption => {
                       return (
                         <PRListFilterHandler.Component
-                          parser={filterOption.parser}
+                          /* TODO: fix any */
+                          parser={filterOption.parser as any}
                           filterKey={filterOption.value}
                           key={filterOption.value}
                         >

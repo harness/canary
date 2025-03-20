@@ -12,15 +12,15 @@ import {
 } from '@harnessio/code-service-client'
 import { CommitDiff, CommitSidebar } from '@harnessio/ui/views'
 
-import Explorer from '../../components/FileExplorer.tsx'
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
-import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
-import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
+import Explorer from '../../components/FileExplorer'
+import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import useCodePathDetails from '../../hooks/useCodePathDetails'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
-import { PathParams } from '../../RouteDefinitions.ts'
-import { normalizeGitRef } from '../../utils/git-utils.ts'
+import { PathParams } from '../../RouteDefinitions'
+import { normalizeGitRef } from '../../utils/git-utils'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../pull-request/pull-request-utils'
-import { useCommitDetailsStore } from './stores/commit-details-store.ts'
+import { useCommitDetailsStore } from './stores/commit-details-store'
 
 /**
  * TODO: For now, file-tree is static and contains all files.

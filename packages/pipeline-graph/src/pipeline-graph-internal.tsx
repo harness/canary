@@ -162,7 +162,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
     <div
       className={'PipelineGraph-RootContainer'}
       style={{
-        position: 'relative',
+        position: 'absolute',
         height: rootWH.h ? rootWH.h + 'px' : '1x', // IMPORTANT: do not remove this
         width: rootWH.w ? rootWH.w + 'px' : 'auto', // IMPORTANT: do not remove this
         transformOrigin: 'top left',

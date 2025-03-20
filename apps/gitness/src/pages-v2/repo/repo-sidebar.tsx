@@ -10,18 +10,20 @@ import {
   useListPathsQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
+import { cn } from '@harnessio/ui/utils'
 import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import Explorer from '../../components/FileExplorer'
-import { useRoutes } from '../../framework/context/NavigationContext.tsx'
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
-import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
-import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
-import { PathParams } from '../../RouteDefinitions.ts'
-import { orderSortDate } from '../../types.ts'
-import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils.ts'
-import { useRepoBranchesStore } from '././stores/repo-branches-store.ts'
-import { transformBranchList } from './transform-utils/branch-transform.ts'
+import { useRoutes } from '../../framework/context/NavigationContext'
+import { useThemeStore } from '../../framework/context/ThemeContext'
+import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import useCodePathDetails from '../../hooks/useCodePathDetails'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { PathParams } from '../../RouteDefinitions'
+import { orderSortDate } from '../../types'
+import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { useRepoBranchesStore } from '././stores/repo-branches-store'
+import { transformBranchList } from './transform-utils/branch-transform'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -39,6 +41,8 @@ export const RepoSidebar = () => {
     setSelectedRefType,
     setSpaceIdAndRepoId
   } = useRepoBranchesStore()
+
+  const { isInset } = useThemeStore()
 
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -228,8 +232,9 @@ export const RepoSidebar = () => {
           </RepoSidebarView>
         )}
         {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
+        {/* Inset theme compensation - 8px*2 */}
         {/* Total height of both the divs should be 100vh */}
-        <div className="h-[calc(100vh-100px)]">
+        <div className={cn('h-[calc(100vh-100px)]', { 'h-[calc(100vh-100px-16px)]': isInset })}>
           <Outlet />
         </div>
       </div>

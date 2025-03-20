@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 
 import { Dialog, getModeColorContrastFromFullTheme, Icon, Select, Separator } from '@/components'
-import { ColorType, ContrastType, ModeType } from '@/context/theme'
+import { ColorType, ContentStyleType, ContrastType, ModeType } from '@/context/theme'
 import darkModeImage from '@/svgs/theme-dark.png'
 import lightModeImage from '@/svgs/theme-light.png'
 import { cn } from '@/utils/cn'
@@ -10,9 +10,11 @@ import { AccentColor, GrayColor, ThemeDialogProps } from './types'
 
 const ThemeDialog: FC<ThemeDialogProps> = ({
   theme,
+  isInset,
   setTheme,
   open,
   onOpenChange,
+  onInsetChange,
   children,
   showSystemMode,
   showAccentColor,
@@ -45,13 +47,14 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
         {/* Mode */}
         <div className="mt-1 flex flex-col gap-y-5">
           <div className="flex flex-col">
-            <span className="text-16 font-medium text-foreground-1">Mode</span>
-            <p className="mt-1.5 text-14 leading-snug text-foreground-3">
+            <span className="text-16 text-foreground-1 font-medium">Mode</span>
+            <p className="text-14 text-foreground-3 mt-1.5 leading-snug">
               Choose Dark mode for low light or Light mode for bright spaces.
             </p>
             <div className="mt-[18px] grid grid-cols-2 gap-4">
               {Object.entries(ModeType).map(([key, value]) => {
                 if (!showSystemMode && value === ModeType.System) return null
+                const valueMode = value === ModeType.System ? systemMode : value
                 return (
                   <button
                     className="flex flex-col gap-y-2 focus-visible:outline-none"
@@ -62,15 +65,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                   >
                     <div className="relative">
                       <img
-                        src={
-                          value === ModeType.System
-                            ? systemMode === ModeType.Dark
-                              ? darkModeImage
-                              : lightModeImage
-                            : value === ModeType.Dark
-                              ? darkModeImage
-                              : lightModeImage
-                        }
+                        src={valueMode === ModeType.Dark ? darkModeImage : lightModeImage}
                         alt=""
                         className={cn(
                           'w-full h-auto rounded border',
@@ -78,7 +73,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         )}
                       />
                       {mode === value && (
-                        <Icon className="absolute bottom-2 left-2 text-foreground-1" name="checkbox-circle" size={16} />
+                        <Icon className="text-foreground-1 absolute bottom-2 left-2" name="checkbox-circle" size={16} />
                       )}
                       <div
                         className="absolute right-[27px] top-[61px] h-2 w-9 rounded-sm"
@@ -93,20 +88,20 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         aria-hidden
                       />
                     </div>
-                    <span className="text-14 leading-tight text-foreground-1">{key}</span>
+                    <span className="text-14 text-foreground-1 leading-tight">{key}</span>
                   </button>
                 )
               })}
             </div>
           </div>
 
-          <Separator className="h-px bg-borders-4" />
+          <Separator className="bg-borders-4 h-px" />
 
           {/* Contrast */}
           <div className="grid grid-cols-[246px_1fr] gap-x-8">
             <div>
-              <span className="text-16 font-medium text-foreground-1">Contrast</span>
-              <p className="mt-1.5 text-14 leading-snug text-foreground-3">
+              <span className="text-16 text-foreground-1 font-medium">Contrast</span>
+              <p className="text-14 text-foreground-3 mt-1.5 leading-snug">
                 High contrast improves readability, Dimmer mode reduces glare.
               </p>
             </div>
@@ -128,13 +123,13 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
             </Select.Root>
           </div>
 
-          <Separator className="h-px bg-borders-4" />
+          <Separator className="bg-borders-4 h-px" />
 
           {/* Color Adjustment */}
           <div className="grid grid-cols-[246px_1fr] gap-x-8">
             <div>
-              <span className="text-16 font-medium text-foreground-1">Color adjustment</span>
-              <p className="mt-1.5 text-14 leading-snug text-foreground-3">
+              <span className="text-16 text-foreground-1 font-medium">Color adjustment</span>
+              <p className="text-14 text-foreground-3 mt-1.5 leading-snug">
                 Adjust colors for different types of color blindness.
               </p>
             </div>
@@ -156,14 +151,38 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
             </Select.Root>
           </div>
 
+          <Separator className="bg-borders-4 h-px" />
+
+          {/* Inset Adjustment */}
+          <div className="grid grid-cols-[246px_1fr] gap-x-8">
+            <div>
+              <span className="text-16 text-foreground-1 font-medium">Content style</span>
+              <p className="text-14 text-foreground-3 mt-1.5 leading-snug">Choose the style of the content area.</p>
+            </div>
+            <Select.Root
+              name="color-adjustment"
+              value={isInset ? ContentStyleType.Inset : ContentStyleType.Default}
+              onValueChange={onInsetChange}
+              placeholder="Select"
+            >
+              <Select.Content>
+                {Object.values(ContentStyleType).map(value => (
+                  <Select.Item key={value} value={value}>
+                    {value === ContentStyleType.Inset ? 'Inset' : 'No inset'}
+                  </Select.Item>
+                ))}
+              </Select.Content>
+            </Select.Root>
+          </div>
+
           {/* Accent Color */}
           {showAccentColor ? (
             <>
-              <Separator className="h-px bg-borders-4" />
+              <Separator className="bg-borders-4 h-px" />
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
                 <div>
-                  <span className="text-16 font-medium text-foreground-1">Accent color</span>
-                  <p className="mt-1.5 text-14 leading-snug text-foreground-3">Select your application accent color.</p>
+                  <span className="text-16 text-foreground-1 font-medium">Accent color</span>
+                  <p className="text-14 text-foreground-3 mt-1.5 leading-snug">Select your application accent color.</p>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {Object.values(AccentColor).map(item => (
@@ -194,11 +213,11 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
           {/* Gray Color */}
           {showGrayColor ? (
             <>
-              <Separator className="h-px bg-borders-4" />
+              <Separator className="bg-borders-4 h-px" />
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
                 <div>
-                  <span className="text-16 font-medium text-foreground-1">Gray color</span>
-                  <p className="mt-1.5 text-14 leading-snug text-foreground-3">Select your application gray color.</p>
+                  <span className="text-16 text-foreground-1 font-medium">Gray color</span>
+                  <p className="text-14 text-foreground-3 mt-1.5 leading-snug">Select your application gray color.</p>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {Object.values(GrayColor).map(item => (

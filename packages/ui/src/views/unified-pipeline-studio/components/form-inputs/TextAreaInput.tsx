@@ -3,12 +3,11 @@ import { Textarea } from '@components/index'
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
-import InputLabel from './common/InputLabel'
-import InputWrapper from './common/InputWrapper'
-import { InputType } from './types'
+import { InputLabel } from './common/InputLabel'
+import { InputWrapper } from './common/InputWrapper'
 
 export interface TextAreaInputConfig {
-  inputType: InputType.textarea
+  inputType: 'textarea'
 }
 
 function TextAreaInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
@@ -29,7 +28,7 @@ function TextAreaInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
 }
 
 export class TextAreaInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.textarea
+  public internalType = 'textarea'
 
   renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
     return <TextAreaInputInternal {...props} />

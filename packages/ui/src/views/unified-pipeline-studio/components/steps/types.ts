@@ -29,10 +29,10 @@ export type HARNESS_STEP_IDENTIFIER =
 export type HARNESS_STEP_GROUP_IDENTIFIER = typeof GROUP_IDENTIFIER | typeof PARALLEL_IDENTIFIER
 export type HARNESS_STEP_AND_STEP_GROUP_IDENTIFIER = HARNESS_STEP_IDENTIFIER | HARNESS_STEP_GROUP_IDENTIFIER
 
-export type AnyStepDefinition<T = string> = {
+export type AnyStepDefinition<T = string, M = InputConfigType> = {
   identifier: T
   description: string
-  formDefinition: IFormDefinition<InputConfigType>
+  formDefinition: IFormDefinition<M>
 }
 
 export type HarnessStepDefinitionType = AnyStepDefinition<HARNESS_STEP_IDENTIFIER>

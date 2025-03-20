@@ -8,16 +8,16 @@ import {
   unsetEmptyStringOutputTransformer
 } from '@harnessio/forms'
 
-import { InputConfigType, InputType } from '../form-inputs/types'
+import { InputConfigType } from '../form-inputs/types'
 import { getContainerPartial } from './partials/container-partial'
 import { IInputConfigWithConfig, RUN_STEP_IDENTIFIER } from './types'
 
-export const RUN_STEP_DESCRIPTION =
+const RUN_STEP_DESCRIPTION =
   'Execute scripts in the shell session. The scripts can be executed on the pod/instance running a Harness Delegate or on a remote host in the infrastructure.'
 
 const inputs: IInputConfigWithConfig[] = [
   {
-    inputType: InputType.select,
+    inputType: 'select',
     path: `${RUN_STEP_IDENTIFIER}.shell`,
     label: 'Shell',
     inputConfig: {
@@ -31,7 +31,7 @@ const inputs: IInputConfigWithConfig[] = [
     }
   },
   {
-    inputType: InputType.textarea,
+    inputType: 'textarea',
     path: `${RUN_STEP_IDENTIFIER}.script`,
     label: 'Script',
     required: true,
@@ -40,20 +40,20 @@ const inputs: IInputConfigWithConfig[] = [
   },
   getContainerPartial(RUN_STEP_IDENTIFIER),
   {
-    inputType: InputType.list,
+    inputType: 'list',
     path: `${RUN_STEP_IDENTIFIER}.env`,
     label: 'Environment',
     inputConfig: {
       layout: 'grid',
       inputs: [
         {
-          inputType: InputType.text,
+          inputType: 'text',
           relativePath: 'key',
           label: 'Key',
           outputTransform: unsetEmptyStringOutputTransformer()
         },
         {
-          inputType: InputType.text,
+          inputType: 'text',
           relativePath: 'value',
           label: 'Value',
           outputTransform: unsetEmptyStringOutputTransformer()
@@ -64,7 +64,7 @@ const inputs: IInputConfigWithConfig[] = [
     outputTransform: arrayToObjectOutputTransformer({ unsetIfEmpty: true })
   },
   {
-    inputType: InputType.list,
+    inputType: 'list',
     path: `${RUN_STEP_IDENTIFIER}.report`,
     label: 'Report',
     description: 'Report uploads reports at the provided paths',
@@ -72,7 +72,7 @@ const inputs: IInputConfigWithConfig[] = [
       layout: 'grid',
       inputs: [
         {
-          inputType: InputType.select,
+          inputType: 'select',
           relativePath: 'type',
           label: 'Type',
           inputConfig: {
@@ -84,7 +84,7 @@ const inputs: IInputConfigWithConfig[] = [
           }
         },
         {
-          inputType: InputType.text,
+          inputType: 'text',
           relativePath: 'path',
           label: 'Path'
         }
@@ -94,6 +94,8 @@ const inputs: IInputConfigWithConfig[] = [
   }
 ]
 
-export const runStepFormDefinition: IFormDefinition<InputConfigType> = {
+const runStepFormDefinition: IFormDefinition<InputConfigType> = {
   inputs
 }
+
+export { RUN_STEP_IDENTIFIER, RUN_STEP_DESCRIPTION, runStepFormDefinition }

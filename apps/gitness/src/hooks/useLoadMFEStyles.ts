@@ -19,21 +19,21 @@ const fetchMarkdownPreviewStyles = async () => {
   return markdownPreviewStyles.default
 }
 
-export function useLoadMFEStyles(portalContainer: Element | undefined) {
+export function useLoadMFEStyles(shadowRoot?: ShadowRoot | null) {
   const [isStylesLoaded, setIsStylesLoaded] = useState(false)
 
   useEffect(() => {
-    if (portalContainer) {
+    if (shadowRoot) {
       Promise.all([fetchUIStyles(), fetchMonacoStyles(), fetchMarkdownPreviewStyles()]).then(
         ([uiStyles, monacoStyles, markdownPreviewStyles]) => {
           const styleElement = document.createElement('style')
           styleElement.innerHTML = `${uiStyles}\n${monacoStyles}\n${markdownPreviewStyles}`
-          portalContainer?.appendChild(styleElement)
+          shadowRoot?.appendChild(styleElement)
           setIsStylesLoaded(true)
         }
       )
     }
-  }, [portalContainer])
+  }, [shadowRoot])
 
   return isStylesLoaded
 }

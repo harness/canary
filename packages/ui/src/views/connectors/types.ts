@@ -1,7 +1,6 @@
 import { InputConfigType } from '@views/unified-pipeline-studio/components/form-inputs/types'
-
 import { FieldValues, IFormDefinition, IInputDefinition } from '@harnessio/forms'
-
+import { BaseEntityProps } from '@views/platform/types'
 export type IInputConfigWithConfigInterface = IInputDefinition & InputConfigType
 
 export enum ConnectorRightDrawer {
@@ -206,4 +205,27 @@ export const Connectors: ConnectorType = {
   MicrosoftTeams: 'MsTeams',
   Slack: 'Slack',
   Confluence: 'Confluence'
+}
+
+export interface ConnectorFields {
+  name: string
+  identifier: string
+  description: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string
+  tags: Record<string, string>
+  type: string
+}
+
+export interface ConnectorItem extends BaseEntityProps {
+  connector: ConnectorFields
+  createdAt: number
+  lastModifiedAt: number
+}
+
+export enum ConnectorType {
+  NEW = 'new',
+  EXISTING = 'existing'
+
 }

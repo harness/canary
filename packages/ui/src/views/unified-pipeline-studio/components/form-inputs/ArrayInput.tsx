@@ -14,14 +14,13 @@ import {
 } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
-import InputLabel from './common/InputLabel'
-import InputWrapper from './common/InputWrapper'
-import { InputType } from './types'
+import { InputLabel } from './common/InputLabel'
+import { InputWrapper } from './common/InputWrapper'
 
 export type UIInputWithConfigsForArray = Omit<IInputDefinition, 'path'>
 
 export interface ArrayInputConfig {
-  inputType: InputType.array
+  inputType: 'array'
   inputConfig: {
     input: IInputDefinition
   }
@@ -90,7 +89,7 @@ function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>)
 }
 
 export class ArrayInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.array
+  public internalType = 'array'
 
   renderComponent(props: InputProps<AnyFormikValue, ArrayInputConfig>): JSX.Element {
     return <ArrayInputInternal {...props} />

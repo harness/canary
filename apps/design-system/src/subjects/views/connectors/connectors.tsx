@@ -76,3 +76,4 @@ const ConnectorsPage = (): JSX.Element => {
 }
 
 export { ConnectorsPage }
+

@@ -10,7 +10,7 @@ import { InlineAction, MonacoGlobals, useYamlEditorContext, YamlEditor } from '@
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import unifiedSchema from '../schema/unified-schema.json'
-import { themes } from '../theme/monaco-theme'
+import { monacoThemes } from '../theme/monaco-theme'
 import { YamlRevision } from '../types/common-types'
 import { RightDrawer } from '../types/right-drawer-types'
 import { getInlineActionConfig, InlineActionArgsType } from '../utils/inline-actions'
@@ -36,7 +36,8 @@ const PipelineStudioYamlView = (): JSX.Element => {
     setRightDrawer,
     setAddStepIntention,
     setEditStepIntention,
-    requestYamlModifications
+    requestYamlModifications,
+    theme
   } = useUnifiedPipelineStudioContext()
 
   const [reRenderYamlEditor, setRerenderYamlEditor] = useState(0)
@@ -74,7 +75,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
   const themeConfig = useMemo(
     () => ({
       defaultTheme: 'dark',
-      themes
+      themes: monacoThemes
     }),
     []
   )
@@ -149,7 +150,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
           }}
           yamlRevision={newYamlRef.current}
           themeConfig={themeConfig}
-          theme={'dark'} // TODO
+          theme={theme}
           schemaConfig={schemaConfig}
           inlineActions={inlineActions}
           // selection={selection} // TODO

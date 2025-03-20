@@ -6,12 +6,11 @@ import { get } from 'lodash-es'
 
 import { InputComponent, InputProps, RenderInputs, useFormContext, type AnyFormikValue } from '@harnessio/forms'
 
-import InputLabel from './common/InputLabel'
+import { InputLabel } from './common/InputLabel'
 import { Layout } from './common/Layout'
-import { InputType } from './types'
 
 export interface GroupInputConfig {
-  inputType: InputType.group
+  inputType: 'group'
 }
 
 function GroupInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
@@ -53,7 +52,7 @@ function GroupInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
 }
 
 export class GroupInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.group
+  public internalType = 'group'
 
   constructor() {
     super()

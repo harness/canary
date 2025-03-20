@@ -1,0 +1,32 @@
+{
+  "name": "@harnessio/core-design-system",
+  "version": "0.0.1",
+  "description": "Harness Design System",
+  "type": "module",
+  "main": "src/core-style-esm.js",
+  "exports": {
+    "./core-styles": "./src/styles/core-imports.css",
+    "./oss-themes": "./src/styles/oss.css",
+    "./enterprise-themes": "./src/styles/enterprise.css",
+    "./styles-esm": "./src/core-styles-esm.ts"
+  },
+  "scripts": {
+    "build": " pnpm clean && pnpm build:styles",
+    "build:styles": "node scripts/build.js",
+    "clean": "rimraf ./src/styles && rimraf ./src/styles-esm"
+  },
+  "keywords": [
+    "design-system",
+    "css",
+    "styles"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tokens-studio/sd-transforms": "^1.2.9",
+    "figlet": "^1.8.0",
+    "gradient-string": "^3.0.0",
+    "rimraf": "^6.0.1",
+    "style-dictionary": "^4.1.4"
+  }
+}

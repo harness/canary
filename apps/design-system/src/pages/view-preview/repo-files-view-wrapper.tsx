@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useCallback } from 'react'
+import { FC, HTMLAttributes, PropsWithChildren, useCallback } from 'react'
 
 import { repoFilesStore } from '@subjects/views/repo-files/components/repo-files-store'
 import { renderEntries } from '@utils/fileViewUtils'
@@ -7,7 +7,7 @@ import { noop, useTranslationStore } from '@utils/viewUtils'
 import { FileExplorer } from '@harnessio/ui/components'
 import { BranchSelectorTab, IBranchSelectorStore, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
-export const RepoFilesViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => {
+export const RepoFilesViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   const useRepoBranchesStore = useCallback(
     (): IBranchSelectorStore => ({
       ...repoFilesStore.branchSelectorStore,

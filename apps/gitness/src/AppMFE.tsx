@@ -1,5 +1,3 @@
-import './styles/AppMFE.css'
-
 import { useEffect, useMemo, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import {
@@ -148,10 +146,15 @@ export default function AppMFE({
     }
   }, [theme])
 
-  const portalRef = useRef<HTMLDivElement>(null)
-  const portalContainer = portalRef.current?.shadowRoot as Element | undefined
+  // Styles will be loaded inside shadowRoot
+  const shadowRef = useRef<HTMLDivElement>(null)
+  const shadowRoot = shadowRef.current?.shadowRoot
 
-  const isStylesLoaded = useLoadMFEStyles(portalContainer)
+  // Radix UI elements will be rendered inside portalContainer
+  const portalRef = useRef<HTMLDivElement>(null)
+  const portalContainer = portalRef.current
+
+  const isStylesLoaded = useLoadMFEStyles(shadowRoot)
 
   // Router Configuration
   const basename = `/ng${renderUrl}`
@@ -164,9 +167,10 @@ export default function AppMFE({
   const router = createBrowserRouter(routesToRender, { basename })
 
   return (
-    <div ref={portalRef}>
+    <div ref={shadowRef}>
       <ShadowRootWrapper>
-        <div className={theme.toLowerCase()}>
+        {/* Radix UI elements need to be rendered inside the following div with the theme class */}
+        <div className={theme.toLowerCase()} ref={portalRef}>
           {!isStylesLoaded ? (
             // Replace it with spinner once it is available
             <ShadowRootLoader theme={theme} />

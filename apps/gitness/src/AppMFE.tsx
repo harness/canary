@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import {
   createBrowserRouter,
@@ -25,7 +25,6 @@ import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import { extractRedirectRouteObjects } from './framework/routing/utils'
-import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
 import { mfeRoutes, repoRoutes } from './routes'
 import { decodeURIComponentIfValid } from './utils/path-utils'
@@ -145,11 +144,6 @@ export default function AppMFE({
     }
   }, [theme])
 
-  // Radix UI elements will be rendered inside portalContainer
-  const portalRef = useRef<HTMLDivElement>(null)
-
-  const isStylesLoaded = useLoadMFEStyles(portalRef.current)
-
   // Router Configuration
   const basename = `/ng${renderUrl}`
 
@@ -161,76 +155,69 @@ export default function AppMFE({
   const router = createBrowserRouter(routesToRender, { basename })
 
   return (
-    <div ref={portalRef}>
-      {!isStylesLoaded ? (
-        // Replace it with spinner once it is available
-        <ShadowRootLoader theme={theme} />
-      ) : (
-        <MFEContext.Provider
-          value={{
-            scope,
-            renderUrl,
-            customHooks,
-            customUtils
-          }}
-        >
-          <I18nextProvider i18n={i18n}>
-            <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-              <QueryClientProvider client={queryClient}>
-                <Toast.Provider>
-                  <Tooltip.Provider>
-                    <ExitConfirmProvider>
-                      <NavigationProvider routes={routesToRender}>
-                        <RouterContextProvider
-                          Link={Link}
-                          NavLink={NavLink}
-                          Outlet={Outlet}
-                          location={{ ...window.location, state: {}, key: '' }}
-                          navigate={router.navigate}
-                          useSearchParams={useSearchParams}
-                          useMatches={useMatches}
-                        >
-                          <RouterProvider router={router} />
-                        </RouterContextProvider>
-                      </NavigationProvider>
-                    </ExitConfirmProvider>
-                  </Tooltip.Provider>
-                </Toast.Provider>
-              </QueryClientProvider>
-            </ThemeProvider>
-          </I18nextProvider>
-        </MFEContext.Provider>
-      )}
-    </div>
+    <MFEContext.Provider
+      value={{
+        scope,
+        renderUrl,
+        customHooks,
+        customUtils
+      }}
+    >
+      <I18nextProvider i18n={i18n}>
+        <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+          <QueryClientProvider client={queryClient}>
+            <Toast.Provider>
+              <Tooltip.Provider>
+                <ExitConfirmProvider>
+                  <NavigationProvider routes={routesToRender}>
+                    <RouterContextProvider
+                      Link={Link}
+                      NavLink={NavLink}
+                      Outlet={Outlet}
+                      location={{ ...window.location, state: {}, key: '' }}
+                      navigate={router.navigate}
+                      useSearchParams={useSearchParams}
+                      useMatches={useMatches}
+                    >
+                      <RouterProvider router={router} />
+                    </RouterContextProvider>
+                  </NavigationProvider>
+                </ExitConfirmProvider>
+              </Tooltip.Provider>
+            </Toast.Provider>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </I18nextProvider>
+    </MFEContext.Provider>
   )
 }
 
-function ShadowRootLoader({ theme }: { theme: string }) {
-  return (
-    <>
-      <div className="loading-container">
-        <p className="loading-text">Loading, please wait...</p>
-      </div>
-      <style>
-        {`
-      @keyframes blink {
-        0% { opacity: 1; }
-        50% { opacity: 0.5; }
-        100% { opacity: 1; }
-      }
-      .loading-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-      .loading-text {
-        color: ${theme === 'Light' ? '#000' : '#fff'};
-        font-size: 16px;
-        animation: blink 1s infinite;
-      }
-      `}
-      </style>
-    </>
-  )
-}
+// function ShadowRootLoader({ theme }: { theme: string }) {
+//   return (
+//     <>
+//       <div className="loading-container">
+//         <p className="loading-text">Loading, please wait...</p>
+//       </div>
+//       <style>
+//         {`
+//       @keyframes blink {
+//         0% { opacity: 1; }
+//         50% { opacity: 0.5; }
+//         100% { opacity: 1; }
+//       }
+//       .loading-container {
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         height: 100vh;
+//       }
+//       .loading-text {
+//         color: ${theme === 'Light' ? '#000' : '#fff'};
+//         font-size: 16px;
+//         animation: blink 1s infinite;
+//       }
+//       `}
+//       </style>
+//     </>
+//   )
+// }

@@ -1,17 +1,15 @@
-import React, { MouseEvent } from 'react'
+import { MouseEvent } from 'react'
 
 import { Button } from '@components/button'
 import { Icon } from '@components/icon'
 
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
+import { InputLabel, InputWrapper } from './common'
 import { InputError } from './common/InputError'
-import InputLabel from './common/InputLabel'
-import InputWrapper from './common/InputWrapper'
-import { InputType } from './types'
 
 export interface SecretSelectInputConfig {
-  inputType: InputType.secretSelect
+  inputType: 'secretSelect'
   onSecretClick?: () => void
   // Optional field type the secret value represents (text, password, etc.)
   valueType?: string
@@ -66,7 +64,7 @@ function SecretSelectInputInternal(props: SecretSelectInputProps): JSX.Element {
 }
 
 export class SecretSelectInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.secretSelect
+  public internalType = 'secretSelect'
 
   renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
     return <SecretSelectInputInternal {...(props as SecretSelectInputProps)} />

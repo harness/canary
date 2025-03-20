@@ -2,18 +2,18 @@ import { useForm } from 'react-hook-form'
 
 import { RadialOption, RadioSelect } from '@views/components/RadioSelect'
 
-import { ConnectorType } from './types'
+import { ConnectorSelectionType } from './types'
 
 interface ConnectorTypeForm {
-  type: ConnectorType
+  type: ConnectorSelectionType
 }
 
 export const ConnectorHeader = ({
   onChange,
   selectedType: selectedTypeVal
 }: {
-  onChange: (type: ConnectorType) => void
-  selectedType: ConnectorType
+  onChange: (type: ConnectorSelectionType) => void
+  selectedType: ConnectorSelectionType
 }) => {
   const { setValue } = useForm<ConnectorTypeForm>({
     defaultValues: {
@@ -21,23 +21,23 @@ export const ConnectorHeader = ({
     }
   })
 
-  const handleTypeChange = (value: ConnectorType) => {
+  const handleTypeChange = (value: ConnectorSelectionType) => {
     setValue('type', value)
     onChange(value)
   }
 
-  const options: Array<RadialOption<ConnectorType>> = [
+  const options: Array<RadialOption<ConnectorSelectionType>> = [
     {
       id: 'new-connector',
       title: 'New Connector',
       description: 'Create a new connector.',
-      value: ConnectorType.NEW
+      value: ConnectorSelectionType.NEW
     },
     {
       id: 'existing-connector',
       title: 'Existing Connector',
       description: 'Use an existing connector.',
-      value: ConnectorType.EXISTING
+      value: ConnectorSelectionType.EXISTING
     }
   ]
 

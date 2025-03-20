@@ -1,4 +1,4 @@
-import { InputConfigType, InputType, RadialOption } from '@views/unified-pipeline-studio/components/form-inputs/types'
+import { InputConfigType, RadialOption } from '@views/unified-pipeline-studio/components/form-inputs/types'
 
 // import * as zod from 'zod'
 
@@ -16,12 +16,11 @@ export const GITHUB_CONNECTOR_CATEOGRY = 'Code Repository'
 
 const inputs: IInputConfigWithConfigInterface[] = [
   {
-    inputType: InputType.radio,
+    inputType: 'radio',
     path: 'githubType',
     label: 'GitHub Type',
-
     inputConfig: {
-      inputType: InputType.radio,
+      inputType: 'radio',
       options: [
         { label: 'Cloud', value: 'Cloud', description: 'Connect to Github Cloud', id: 'cloud', title: 'Cloud' },
         {
@@ -40,7 +39,7 @@ const inputs: IInputConfigWithConfigInterface[] = [
     // }
   },
   {
-    inputType: InputType.select,
+    inputType: 'select',
     path: `auth`,
     label: 'Authentication',
     default: 'Oauth',
@@ -53,7 +52,7 @@ const inputs: IInputConfigWithConfigInterface[] = [
     }
   },
   {
-    inputType: InputType.text,
+    inputType: 'text',
     path: `pat`,
     label: 'Personal Token',
     isVisible: values => {

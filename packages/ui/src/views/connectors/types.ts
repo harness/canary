@@ -1,6 +1,8 @@
-import { InputConfigType } from '@views/unified-pipeline-studio/components/form-inputs/types'
-import { FieldValues, IFormDefinition, IInputDefinition } from '@harnessio/forms'
 import { BaseEntityProps } from '@views/platform/types'
+import { InputConfigType } from '@views/unified-pipeline-studio/components/form-inputs/types'
+
+import { FieldValues, IFormDefinition, IInputDefinition } from '@harnessio/forms'
+
 export type IInputConfigWithConfigInterface = IInputDefinition & InputConfigType
 
 export enum ConnectorRightDrawer {
@@ -224,8 +226,7 @@ export interface ConnectorItem extends BaseEntityProps {
   lastModifiedAt: number
 }
 
-export enum ConnectorType {
+export enum ConnectorSelectionType {
   NEW = 'new',
   EXISTING = 'existing'
-
 }

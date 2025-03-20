@@ -5,7 +5,6 @@ import { Button } from '@components/button'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
 import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
 import { inputComponentFactory } from '@views/unified-pipeline-studio/components/form-inputs/factory/factory'
-import { InputType } from '@views/unified-pipeline-studio/components/form-inputs/types'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 
 import { getDefaultValuesFromFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
@@ -53,7 +52,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
 
       if (openSecretDrawer) {
         formDef.inputs = formDef.inputs.map(input => {
-          if (input.inputType === InputType.secretSelect) {
+          if (input.inputType === '∂secretSelect') {
             return {
               ...input,
               onSecretClick: openSecretDrawer?.()
@@ -71,7 +70,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
   const resolver = useZodValidationResolver(formDefinition, {
     validationConfig: {
       requiredMessage: 'Required input',
-      requiredMessagePerInput: { [InputType.select]: 'Selection is required' }
+      requiredMessagePerInput: { ['select']: 'Selection is required' }
     }
   })
 

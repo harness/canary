@@ -9,5 +9,6 @@ export * from './SelectInput'
 export * from './Separator'
 export * from './TextAreaInput'
 export * from './TextInput'
-
+export * from './RadialInput'
+export * from './SecretSelectInput'
 export * from './types'

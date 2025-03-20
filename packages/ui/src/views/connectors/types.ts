@@ -23,11 +23,6 @@ export type ConnectorFormEntityType = {
     payload?: ConnectorPayloadConfig
   }
 }
-export type HARNESS_CONNECTOR_IDENTIFIER =
-  | typeof Connectors.GITHUB
-  | typeof Connectors.TERRAFORM_CLOUD
-  | typeof Connectors.AWS_KMS
-  | typeof Connectors.DOCKER
 
 export type AnyConnectorDefinition = {
   type: ConnectorInfoDTO['type']

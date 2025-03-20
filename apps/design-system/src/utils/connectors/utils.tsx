@@ -1,4 +1,4 @@
-import { AnyConnectorDefinition, Connectors } from '@harnessio/ui/views'
+import { AnyConnectorDefinition } from '@harnessio/ui/views'
 
 import { AWS_KMS_CONNECTOR_CATEGORY, awsKmsConnectorFormDefinition } from './aws-kms-connector'
 import { GITHUB_CONNECTOR_CATEOGRY, githubConnectorFormDefinition } from './github-connector'
@@ -10,19 +10,19 @@ export const AWS_KMS_CONNECTOR_IDENTIFIER = 'AWS KMS'
 
 export const harnessConnectors: AnyConnectorDefinition[] = [
   {
-    type: Connectors.GITHUB,
+    type: 'Github',
     name: GITHUB_CONNECTOR_IDENTIFIER,
     category: GITHUB_CONNECTOR_CATEOGRY,
     formDefinition: githubConnectorFormDefinition
   },
   {
-    type: Connectors.TERRAFORM_CLOUD,
+    type: 'Terraform',
     name: TERRAFORM_CONNECTOR_IDENTIFIER,
     category: TERRAFORM_CONNECTOR_CATEGORY,
     formDefinition: terraformConnectorFormDefinition
   },
   {
-    type: Connectors.AWS_KMS,
+    type: 'AwsKms',
     name: AWS_KMS_CONNECTOR_IDENTIFIER,
     category: AWS_KMS_CONNECTOR_CATEGORY,
     formDefinition: awsKmsConnectorFormDefinition

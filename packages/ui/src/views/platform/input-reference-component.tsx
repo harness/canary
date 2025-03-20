@@ -9,11 +9,9 @@ const inputReferenceVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-input-background text-foreground-1',
-        clean: 'bg-transparent'
+        default: 'bg-input-background text-foreground-1'
       },
       size: {
-        sm: 'h-8',
         md: 'h-9'
       },
       state: {
@@ -94,7 +92,7 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
 /**
  * InputReference is a component that looks like an input field but acts as a clickable
  * InputReference element that can trigger actions like opening a drawer, modal, or dropdown.
- * It supports generic types for values and maintains its own internal state.
+ * It supports generic types for values.
  */
 export const InputReference = <T,>({
   placeholder,
@@ -114,10 +112,8 @@ export const InputReference = <T,>({
   ...props
 }: InputReferenceProps<T>) => {
   // Determine what to display: rendered value if value exists, otherwise placeholder
-  const displayContent =
-    value !== null && value !== undefined ? (renderValue ? renderValue(value) : value) : placeholder
-
   const hasValue = value !== null && value !== undefined
+  const displayContent = hasValue ? (renderValue ? renderValue(value as T) : value) : placeholder
 
   const handleClear = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -138,7 +134,6 @@ export const InputReference = <T,>({
   return (
     <ControlGroup>
       {!!label && (
-        // eslint-disable-next-line i18next/no-literal-string
         <Label className="mb-2.5" color={disabled ? 'disabled-dark' : 'secondary'} optional={optional}>
           {label}
         </Label>
@@ -146,6 +141,15 @@ export const InputReference = <T,>({
       <div
         onClick={disabled ? undefined : onClick}
         className={cn(inputReferenceVariants({ variant, size, state }), className)}
+        role="button"
+        tabIndex={disabled ? -1 : 0}
+        aria-disabled={disabled}
+        onKeyDown={e => {
+          if (disabled) return
+          if (e.key === 'Enter' || e.key === ' ') {
+            onClick?.()
+          }
+        }}
         {...props}
       >
         {icon && <Icon className="mr-2.5" name={icon} />}

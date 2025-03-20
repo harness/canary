@@ -108,7 +108,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
             )}
           >
             {active && (
-              <span className="absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2 bg-navbar-item-gradient" />
+              <span className="bg-navbar-item-gradient absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2" />
             )}
             {icon}
           </div>

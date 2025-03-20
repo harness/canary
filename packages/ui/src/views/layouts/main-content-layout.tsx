@@ -24,7 +24,7 @@ export function MainContentLayout({ className, children, breadcrumbs, isInset: _
       )}
       <div
         className={cn('main-content-height', {
-          'overflow-hidden mx-1.5 z- bg-sidebar-background-1 rounded-t-md': isInset
+          'overflow-hidden z- bg-sidebar-background-1 rounded-t-md': isInset
         })}
       >
         <ScrollArea

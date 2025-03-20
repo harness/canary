@@ -5,5 +5,5 @@ import { cn } from '@/utils'
 
 export const SubHeaderWrapper: FC = ({ children }) => {
   // const { isInset } = useTheme()
-  return <div className={cn('layer-high sticky top-0 bg-background-1')}>{children}</div>
+  return <div className={cn('layer-high sticky top-0 bg-topbar-background-1')}>{children}</div>
 }

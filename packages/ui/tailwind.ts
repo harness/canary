@@ -216,16 +216,6 @@ export default {
             },
             red: {
               1: 'hsl(var(--canary-tag-foreground-red-01))'
-            },
-            code: {
-              1: 'hsl(var(--canary-code-foreground-01))',
-              2: 'hsl(var(--canary-code-foreground-02))',
-              3: 'hsl(var(--canary-code-foreground-03))',
-              4: 'hsl(var(--canary-code-foreground-04))',
-              5: 'hsl(var(--canary-code-foreground-05))',
-              6: 'hsl(var(--canary-code-foreground-06))',
-              7: 'hsl(var(--canary-code-foreground-07))',
-              8: 'hsl(var(--canary-code-foreground-08))'
             }
           },
           background: {

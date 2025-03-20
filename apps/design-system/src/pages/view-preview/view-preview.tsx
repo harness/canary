@@ -494,13 +494,8 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
     items: {
       'secrets-page': {
         label: 'Secrets Page',
-        element: <SecretsPage />
-      }
-    }
-  },
-  connectors: {
-    label: 'Connectors',
-    items: {
+        element: <SecretInputExample />
+      },
       'connectors-page': {
         label: 'Connectors Page',
         element: <ConnectorsPage />
@@ -511,6 +506,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       }
     }
   },
+
   project: {
     label: 'Project',
     items: {

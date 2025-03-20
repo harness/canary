@@ -33,15 +33,15 @@ interface HeaderItemProps {
   header: string
 }
 
-const HeaderItem: FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {
+const HeaderItem: FC<HeaderItemProps> = ({ header }) => {
   return <span className="text-12 text-foreground-1">{header}</span>
 }
 
 interface AvatarItemProps {
-  evaluations: TypesOwnerEvaluation[] | undefined
+  evaluations?: TypesOwnerEvaluation[]
 }
 
-const AvatarItem: FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {
+const AvatarItem: FC<AvatarItemProps> = ({ evaluations }) => {
   return (
     <StackedList.Field
       className="pb-0"
@@ -56,9 +56,13 @@ const AvatarItem: FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {
                   </Avatar.Root>
                 )
               }
-              if (idx === 2 && evaluations.length && evaluations.length > 2) {
+              if (idx === 2 && evaluations?.length > 2) {
                 // TODO: do popover with all the names
-                return <span key={owner?.id} className="text-12">{`+${evaluations.length - 2}`}</span>
+                return (
+                  <span key={owner?.id} className="text-12">
+                    +{evaluations.length - 2}
+                  </span>
+                )
               }
               return null
             })}
@@ -131,37 +135,42 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   // TODO: consider when states change like refetchReviewers
   // refetchCodeOwners
 
-  const renderCodeOwnerStatus = useMemo(() => {
+  const codeOwnerStatus = useMemo(() => {
     const getData = () => {
-      if (!!codeOwnerPendingEntries?.length && reqCodeOwnerLatestApproval)
+      if (!!codeOwnerPendingEntries?.length && reqCodeOwnerLatestApproval) {
         return {
           icon: <Icon name="circle" className="text-warning" />,
           text: 'Waiting on code owner reviews of latest changes'
         }
+      }
 
-      if (!!codeOwnerPendingEntries?.length && reqCodeOwnerApproval)
+      if (!!codeOwnerPendingEntries?.length && reqCodeOwnerApproval) {
         return {
           icon: <Icon name="circle" className="text-warning" />,
           text: 'Changes are pending approval from code owners'
         }
+      }
 
-      if (!!codeOwnerApprovalEntries?.length && !!codeOwnerPendingEntries?.length)
+      if (!!codeOwnerApprovalEntries?.length && !!codeOwnerPendingEntries?.length) {
         return {
           icon: <Icon name="circle" className="text-tertiary-background" />,
           text: 'Some changes were approved by code owners'
         }
+      }
 
-      if (!!latestCodeOwnerApprovalArr?.length && reqCodeOwnerLatestApproval)
+      if (!!latestCodeOwnerApprovalArr?.length && reqCodeOwnerLatestApproval) {
         return {
           icon: <Icon name="success" className="text-foreground-success" />,
           text: 'Latest changes were approved by code owners'
         }
+      }
 
-      if (!!codeOwnerApprovalEntries?.length && reqCodeOwnerApproval)
+      if (!!codeOwnerApprovalEntries?.length && reqCodeOwnerApproval) {
         return {
           icon: <Icon name="success" className="text-foreground-success" />,
           text: 'Changes were approved by code owners'
         }
+      }
 
       if (codeOwnerApprovalEntries?.length) {
         if (
@@ -169,11 +178,12 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
           minReqLatestApproval &&
           latestCodeOwnerApprovalArr &&
           latestCodeOwnerApprovalArr?.length < minReqLatestApproval
-        )
+        ) {
           return {
             icon: <Icon name="pending-clock" className="text-icons-alert" />,
             text: 'Latest changes are pending approval from required reviewers'
           }
+        }
 
         return {
           icon: <Icon name="circle" className="text-warning" />,
@@ -195,7 +205,14 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
         <span className="text-14 text-foreground-1">{data.text}</span>
       </div>
     )
-  }, [codeOwnerPendingEntries, reqCodeOwnerLatestApproval])
+  }, [
+    codeOwnerPendingEntries,
+    reqCodeOwnerLatestApproval,
+    codeOwnerApprovalEntries,
+    latestCodeOwnerApprovalArr,
+    minReqLatestApproval,
+    reqCodeOwnerApproval
+  ])
 
   const viewBtn =
     (minApproval && minApproval > 0) ||
@@ -307,7 +324,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                   </span>
                 </div>
               ) : (
-                renderCodeOwnerStatus
+                codeOwnerStatus
               )}
               {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && (
                 <Badge variant="quaternary" borderRadius="full" size="xl" disableHover>

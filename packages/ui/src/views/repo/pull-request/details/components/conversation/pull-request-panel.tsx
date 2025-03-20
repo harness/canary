@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import {
   Accordion,
@@ -116,7 +116,7 @@ const getButtonState = ({
   checkboxBypass,
   canBypass
 }: {
-  isMergeable: boolean
+  isMergeable?: boolean
   ruleViolation?: boolean
   isDraft?: boolean
   checksInfo: { status: EnumCheckStatus }
@@ -156,6 +156,22 @@ const getButtonState = ({
   return {
     disabled: true,
     theme: 'disabled'
+  }
+}
+
+const getDataFromPullReqMetadata = (pullReqMetadata?: TypesPullReq) => {
+  const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
+  const isOpen = pullReqMetadata?.state === PullRequestState.OPEN
+  const isDraft = !!pullReqMetadata?.is_draft
+
+  return {
+    isMergeable: pullReqMetadata?.merge_check_status === MergeCheckStatus.MERGEABLE,
+    isClosed,
+    isOpen,
+    isDraft,
+    isUnchecked: pullReqMetadata?.merge_check_status === MergeCheckStatus.UNCHECKED && !isClosed,
+    isRebasable: pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged,
+    isShowMoreTooltip: isOpen && !isDraft
   }
 }
 
@@ -227,21 +243,8 @@ const PullRequestPanel = ({
     setAccordionValues(data)
   }, [])
 
-  const { isMergeable, isClosed, isOpen, isDraft, isUnchecked, isRebasable, isShowMoreTooltip } = useMemo(() => {
-    const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
-    const isOpen = pullReqMetadata?.state === PullRequestState.OPEN
-    const isDraft = !!pullReqMetadata?.is_draft
-
-    return {
-      isMergeable: pullReqMetadata?.merge_check_status === MergeCheckStatus.MERGEABLE,
-      isClosed,
-      isOpen,
-      isDraft,
-      isUnchecked: pullReqMetadata?.merge_check_status === MergeCheckStatus.UNCHECKED && !isClosed,
-      isRebasable: pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged,
-      isShowMoreTooltip: isOpen && !isDraft
-    }
-  }, [pullReqMetadata])
+  const { isMergeable, isClosed, isOpen, isDraft, isUnchecked, isRebasable, isShowMoreTooltip } =
+    getDataFromPullReqMetadata(pullReqMetadata)
 
   useEffect(() => {
     const ruleViolationArr = prPanelData?.ruleViolationArr
@@ -331,7 +334,7 @@ const PullRequestPanel = ({
                     disabled={buttonState.disabled}
                     variant={buttonState?.variant as ButtonWithOptionsVariant}
                     selectedValue={mergeButtonValue}
-                    handleOptionChange={value => setMergeButtonValue(value)}
+                    handleOptionChange={setMergeButtonValue}
                     options={actions.map(action => ({
                       value: action.id,
                       label: action.title,

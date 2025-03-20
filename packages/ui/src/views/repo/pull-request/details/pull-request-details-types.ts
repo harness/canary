@@ -490,11 +490,9 @@ export interface PullRequestRoutingProps {
   toPRCheck: ({ pipelineId, executionId }: { pipelineId: string; executionId: string }) => string
 }
 
-export type LatestCodeOwnerApprovalArrType =
-  | {
-      entryEvaluation: TypesOwnerEvaluation[]
-    }
-  | undefined
+export type LatestCodeOwnerApprovalArrType = {
+  entryEvaluation: TypesOwnerEvaluation[]
+}
 
 export interface PullRequestChangesSectionProps {
   changesInfo: { header: string; content: string; status: string }

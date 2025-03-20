@@ -1,4 +1,4 @@
-import { Dispatch, MouseEvent, SetStateAction, useState } from 'react'
+import { Dispatch, FC, MouseEvent, SetStateAction, useState } from 'react'
 
 import { Accordion, Button, CopyButton, Icon, Layout, StackedList } from '@/components'
 import { cn } from '@utils/cn'
@@ -7,7 +7,17 @@ import { isEmpty } from 'lodash-es'
 
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
-const stepInfo = (item: { step: string; description: string; code?: string; comment?: string }, index: number) => {
+interface StepInfoProps {
+  item: {
+    step: string
+    description: string
+    code?: string
+    comment?: string
+  }
+  index: number
+}
+
+const StepInfo: FC<StepInfoProps> = ({ item, index }) => {
   return (
     <li key={index}>
       <Layout.Horizontal className="gap-x-1">
@@ -153,7 +163,11 @@ const PullRequestMergeSection = ({
                   If the conflicts on this branch are too complex to resolve in the web editor, you can check it out via
                   command line to resolve the conflicts
                 </p>
-                <ol className="flex flex-col gap-y-3">{stepMap.map((item, index) => stepInfo(item, index))}</ol>
+                <ol className="flex flex-col gap-y-3">
+                  {stepMap.map((item, index) => (
+                    <StepInfo key={item.step} item={item} index={index} />
+                  ))}
+                </ol>
               </div>
             )}
             <span className="text-14 text-foreground-2">

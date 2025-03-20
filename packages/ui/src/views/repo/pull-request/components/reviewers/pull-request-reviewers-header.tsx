@@ -36,7 +36,7 @@ const ReviewersHeader = ({
     searchValue: searchQuery
   })
 
-  const handleCloseValuesView = useRef(debounce(() => handleResetSearch(), 300)).current
+  const handleCloseValuesView = useRef(debounce(handleResetSearch, 300)).current
 
   return (
     <div className="mb-0.5 flex items-center justify-between">
@@ -65,16 +65,16 @@ const ReviewersHeader = ({
           <DropdownMenu.Separator />
 
           {!usersList?.length && (
-            <span className="block px-5 py-4 text-center leading-tight text-foreground-2">
+            <div className="px-5 py-4 text-center leading-tight text-foreground-2">
               {t('views:pullRequests.noUsers', 'No users found.')}
-            </span>
+            </div>
           )}
 
           <ScrollArea viewportClassName="max-h-80">
             {usersList?.length === 1 && usersList[0].uid === currentUserId ? (
-              <span className="block px-5 py-4 text-center leading-tight text-foreground-2">
+              <div className="px-5 py-4 text-center leading-tight text-foreground-2">
                 {t('views:pullRequests.noUsers', 'No users found.')}
-              </span>
+              </div>
             ) : (
               <>
                 {usersList?.map(({ display_name, id, uid }) => {

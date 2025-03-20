@@ -1,13 +1,13 @@
 import { FC } from 'react'
 
 interface PanelAccordionShowButtonProps {
-  isShowButton: boolean
+  isShowButton?: boolean
   value: string
   accordionValues: string[]
 }
 
 export const PanelAccordionShowButton: FC<PanelAccordionShowButtonProps> = ({
-  isShowButton,
+  isShowButton = false,
   value,
   accordionValues
 }) => {

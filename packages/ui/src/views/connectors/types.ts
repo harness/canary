@@ -1,7 +1,7 @@
-import { BaseEntityProps } from '@views/platform/types'
-import { InputConfigType } from '@views/unified-pipeline-studio/components/form-inputs/types'
-
 import { FieldValues, IFormDefinition, IInputDefinition } from '@harnessio/forms'
+
+import { BaseEntityProps } from '../../views/platform/types'
+import { InputConfigType } from '../../views/unified-pipeline-studio/components/form-inputs/types'
 
 export type IInputConfigWithConfigInterface = IInputDefinition & InputConfigType
 

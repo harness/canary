@@ -1,12 +1,13 @@
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useOnRegisterMutation } from '@harnessio/code-service-client'
 import { SignUpData, SignUpPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../framework/context/NavigationContext'
+import { useTranslationStore } from '../i18n/stores/i18n-store'
 
-export const SignUp: React.FC = () => {
+export const SignUp: FC = () => {
   const routes = useRoutes()
   const navigate = useNavigate()
 
@@ -34,5 +35,12 @@ export const SignUp: React.FC = () => {
     })
   }
 
-  return <SignUpPage isLoading={isLoading} handleSignUp={handleSignUp} error={error?.message} />
+  return (
+    <SignUpPage
+      isLoading={isLoading}
+      handleSignUp={handleSignUp}
+      error={error?.message}
+      useTranslationStore={useTranslationStore}
+    />
+  )
 }

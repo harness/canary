@@ -1,9 +1,9 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper } from '@/components'
+import { Alert, Button, ButtonGroup, FormWrapper } from '@/components'
 import { useRouterContext } from '@/context'
-import { IRepoStore, repoBranchSettingsFormSchema, SandboxLayout, TranslationStore } from '@/views'
+import { IRepoStore, makeRepoBranchSettingsFormSchema, SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -14,7 +14,7 @@ import {
   BranchSettingsRuleTargetPatternsField,
   BranchSettingsRuleToggleField
 } from './components/repo-branch-rules-fields'
-import { IBranchRulesStore, RepoBranchSettingsFormFields } from './types'
+import { FieldProps, IBranchRulesStore, RepoBranchSettingsFormFields } from './types'
 
 type BranchSettingsErrors = {
   principals: string | null
@@ -68,7 +68,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     clearErrors,
     formState: { errors }
   } = useForm<RepoBranchSettingsFormFields>({
-    resolver: zodResolver(repoBranchSettingsFormSchema),
+    resolver: zodResolver(makeRepoBranchSettingsFormSchema(t)),
     mode: 'onChange',
     defaultValues: {
       identifier: '',
@@ -117,38 +117,29 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     }
   }, [isSubmitSuccess])
 
-  const apiErrorsValue =
-    apiErrors?.principals || apiErrors?.statusChecks || apiErrors?.addRule || apiErrors?.updateRule || null
+  const apiErrorsValue = apiErrors?.principals ?? apiErrors?.statusChecks ?? apiErrors?.addRule ?? apiErrors?.updateRule
+
+  const fieldProps: FieldProps = { register, errors, setValue, watch, t }
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
-      <h1 className="mb-10 text-2xl font-medium text-foreground-1">
+      <h1 className="text-foreground-1 mb-10 text-2xl font-medium">
         {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
       </h1>
 
       <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-        <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} t={t} />
+        <BranchSettingsRuleToggleField {...fieldProps} />
 
-        <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} t={t} />
+        <BranchSettingsRuleNameField {...fieldProps} disabled={!!presetRuleData} />
 
-        <BranchSettingsRuleDescriptionField register={register} errors={errors} t={t} />
+        <BranchSettingsRuleDescriptionField {...fieldProps} />
 
-        <div className="flex flex-col gap-y-11">
-          <BranchSettingsRuleTargetPatternsField
-            watch={watch}
-            setValue={setValue}
-            register={register}
-            errors={errors}
-            t={t}
-          />
+        <div className="grid gap-y-11">
+          <BranchSettingsRuleTargetPatternsField {...fieldProps} />
 
           <BranchSettingsRuleBypassListField
-            register={register}
-            errors={errors}
-            setValue={setValue}
-            watch={watch}
+            {...fieldProps}
             bypassOptions={principals}
-            t={t}
             setPrincipalsSearchQuery={setPrincipalsSearchQuery}
             principalsSearchQuery={principalsSearchQuery}
           />
@@ -163,26 +154,28 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             t={t}
           />
         </div>
-        <Fieldset className="mt-5">
-          <ControlGroup>
-            <ButtonGroup>
-              <Button type="submit" disabled={isLoading}>
-                {!isLoading
-                  ? presetRuleData
-                    ? t('views:repos.updateRule', 'Update rule')
-                    : t('views:repos.createRuleButton', 'Create rule')
-                  : presetRuleData
-                    ? t('views:repos.updatingRule', 'Updating rule...')
-                    : t('views:repos.creatingRuleButton', 'Creating rule...')}
-              </Button>
-              <Button type="button" variant="outline">
-                <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
-              </Button>
-            </ButtonGroup>
-          </ControlGroup>
-        </Fieldset>
 
-        {!!apiErrorsValue && <span className="text-xs text-destructive">{apiErrorsValue}</span>}
+        {!!apiErrorsValue && (
+          <Alert.Container variant="destructive">
+            <Alert.Title>{apiErrorsValue}</Alert.Title>
+          </Alert.Container>
+        )}
+
+        <ButtonGroup className="mt-2">
+          <Button type="submit" disabled={isLoading}>
+            {!isLoading
+              ? presetRuleData
+                ? t('views:repos.updateRule', 'Update rule')
+                : t('views:repos.createRuleButton', 'Create rule')
+              : presetRuleData
+                ? t('views:repos.updatingRule', 'Updating rule...')
+                : t('views:repos.creatingRuleButton', 'Creating rule...')}
+          </Button>
+
+          <Button type="button" variant="outline" asChild>
+            <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
+          </Button>
+        </ButtonGroup>
       </FormWrapper>
     </SandboxLayout.Content>
   )

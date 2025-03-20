@@ -12,9 +12,9 @@ export const SecretInput = ({
   placeholder,
   label,
   ...props
-}: InputReferenceProps<SecretItem | string>) => {
+}: InputReferenceProps<SecretItem>) => {
   return (
-    <InputReference<SecretItem | string>
+    <InputReference<SecretItem>
       placeholder={placeholder}
       value={value}
       label={label}

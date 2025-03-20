@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { StyledLink } from '@harnessio/ui/components'
 import { SecretInput, SecretItem } from '@harnessio/ui/views'
 
 import { SecretsPage } from './secrets'
@@ -11,8 +12,8 @@ export const SecretInputExample = () => {
   return (
     <>
       <SecretInput
-        placeholder="Please select a secret"
-        value={selectedSecret?.name}
+        placeholder={<StyledLink to="#"> Please select a secret</StyledLink>}
+        value={selectedSecret}
         label="Select a Secret"
         icon="key"
         onClick={() => {
@@ -22,6 +23,7 @@ export const SecretInputExample = () => {
           setIsDrawerOpen(true)
         }}
         onClear={() => setSelectedSecret(null)}
+        renderValue={secret => secret.name}
         className="max-w-xs mb-8"
       />
       <SecretsPage

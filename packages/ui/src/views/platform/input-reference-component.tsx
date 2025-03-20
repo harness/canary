@@ -110,15 +110,17 @@ export const InputReference = <T,>({
   optional = false,
   variant,
   size,
+  renderValue,
   ...props
 }: InputReferenceProps<T>) => {
-  let displayValue = value ?? placeholder
+  // Determine what to display: rendered value if value exists, otherwise placeholder
+  const displayContent =
+    value !== null && value !== undefined ? (renderValue ? renderValue(value) : value) : placeholder
 
-  const hasValue = displayValue !== null && displayValue !== placeholder
+  const hasValue = value !== null && value !== undefined
 
   const handleClear = (e: React.MouseEvent) => {
     e.stopPropagation()
-    displayValue = placeholder
     onClear?.()
   }
 
@@ -147,7 +149,7 @@ export const InputReference = <T,>({
         {...props}
       >
         {icon && <Icon className="mr-2.5" name={icon} />}
-        <div className="flex-1 truncate">{displayValue}</div>
+        <div className="flex-1 truncate">{displayContent}</div>
         {hasValue && !disabled && (
           <div className="ml-2 flex items-center gap-2">
             <Button onClick={handleEdit} variant="ghost" size="icon">

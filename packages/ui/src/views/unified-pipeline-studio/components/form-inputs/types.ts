@@ -34,7 +34,7 @@ export type InputConfigType =
   | RadialInputConfig
   | SecretSelectInputConfig
 
-export interface RadialOption {
+export interface RadioOption {
   label: string
   description: string
   value: string

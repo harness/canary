@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 
-import { RadialOption, RadioSelect } from '@views/components/RadioSelect'
+import { RadioOption, RadioSelect } from '@views/components/RadioSelect'
 
 import { ConnectorSelectionType } from './types'
 
@@ -26,7 +26,7 @@ export const ConnectorHeader = ({
     onChange(value)
   }
 
-  const options: Array<RadialOption<ConnectorSelectionType>> = [
+  const options: Array<RadioOption<ConnectorSelectionType>> = [
     {
       id: 'new-connector',
       title: 'New Connector',

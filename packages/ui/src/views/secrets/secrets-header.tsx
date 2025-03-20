@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 
-import { RadialOption, RadioSelect } from '@views/components/RadioSelect'
+import { RadioOption, RadioSelect } from '@views/components/RadioSelect'
 
 import { SecretType } from './types'
 
@@ -26,7 +26,7 @@ export const SecretsHeader = ({
     onChange(value)
   }
 
-  const options: Array<RadialOption<SecretType>> = [
+  const options: Array<RadioOption<SecretType>> = [
     {
       id: 'new-secret',
       title: 'New Secret',

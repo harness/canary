@@ -63,7 +63,7 @@ export const ConnectorsRefPage = () => {
           <div className="p-4">
             <h2 className="mb-4 text-xl font-semibold">Create New Connector</h2>
             <p>Add form for new connector here</p>
-            {/* Render Calvin/Shaurya's create connector flow from here */}
+            {/* Render create connector flow from here */}
           </div>
         )
       case ConnectorSelectionType.EXISTING:

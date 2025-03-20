@@ -1,5 +1,5 @@
 import { IFormDefinition } from '@harnessio/forms'
-import { IInputConfigWithConfigInterface, InputConfigType, RadialOption } from '@harnessio/ui/views'
+import { IInputConfigWithConfigInterface, InputConfigType } from '@harnessio/ui/views'
 
 import {
   getCloningContainer,
@@ -26,7 +26,7 @@ const inputs: IInputConfigWithConfigInterface[] = [
           id: 'enterprise',
           title: 'Enterprise'
         }
-      ] as RadialOption[]
+      ]
     },
     default: 'Cloud'
     // required: true,

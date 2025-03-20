@@ -23,7 +23,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
         <NavbarSkeleton.Root className="w-[328px]" isSubMenu>
           <NavbarSkeleton.Content className="overflow-hidden">
             <ScrollArea scrollThumbClassName="bg-sidebar-background-8">
-              <Spacer size={9} />
+              <Spacer size={12} />
               {items.map((group, group_idx) => (
                 <NavbarSkeleton.Group
                   key={group.groupId}

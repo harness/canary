@@ -1,6 +1,7 @@
 import { Link, useMatches } from 'react-router-dom'
 
 import { Breadcrumb, Separator, Sidebar, Topbar } from '@harnessio/ui/components'
+import { useTheme } from '@harnessio/ui/context'
 
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { CustomHandle } from '../../framework/routing/types'
@@ -9,6 +10,7 @@ function Breadcrumbs() {
   const matches = useMatches()
   const matchesWithBreadcrumb = matches.filter(match => (match.handle as CustomHandle)?.breadcrumb)
   const isMFE = useIsMFE()
+  const { isLightTheme } = useTheme()
 
   return (
     <Topbar.Root>
@@ -30,8 +32,10 @@ function Breadcrumbs() {
               return (
                 <Breadcrumb.Item key={match.pathname}>
                   {!isFirst ? <Breadcrumb.Separator className="text-topbar-foreground-3" /> : null}
-                  {isLast || !asLink ? (
-                    <Breadcrumb.Page className={isLast ? 'text-topbar-foreground-4' : 'text-topbar-foreground-3'}>
+                  {isLast || !asLink || isLightTheme ? (
+                    <Breadcrumb.Page
+                      className={isLast || isLightTheme ? 'text-topbar-foreground-4' : 'text-topbar-foreground-3'}
+                    >
                       {breadcrumbContent}
                     </Breadcrumb.Page>
                   ) : (

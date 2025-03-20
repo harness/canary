@@ -9,6 +9,7 @@ import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view
 import { ConnectorsPage } from '@subjects/views/connectors/connectors'
 import { ConnectorsRefPage } from '@subjects/views/connectors/connectors-ref'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
+import InputReferenceExample from '@subjects/views/input-reference/InputReferenceExample'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
 import { RepoLabelsList } from '@subjects/views/labels/repo-labels-list'
@@ -490,7 +491,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
     }
   },
   secrets: {
-    label: 'Secrets',
+    label: 'Platform',
     items: {
       'secrets-page': {
         label: 'Secrets Page',

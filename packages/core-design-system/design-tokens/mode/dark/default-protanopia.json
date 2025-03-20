@@ -270,7 +270,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.blue.900}",
+        "$value": "{colors.blue.800}",
         "$description": "Border color for success elements to provide visual definition"
       },
       "background-hover": {
@@ -297,7 +297,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.yellow.900}",
+        "$value": "{colors.yellow.800}",
         "$description": "Border color for warning elements to provide visual definition"
       },
       "background-hover": {

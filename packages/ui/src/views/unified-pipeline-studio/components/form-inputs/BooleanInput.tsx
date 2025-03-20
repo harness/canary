@@ -1,3 +1,4 @@
+import { Layout } from '@components/layout'
 import { Switch } from '@components/switch'
 
 import { InputComponent, InputProps, useController, type AnyFormikValue, type UseFormReturn } from '@harnessio/forms'
@@ -26,14 +27,17 @@ function BooleanInputInternal(props: InputProps<AnyFormikValue, BooleanInputConf
     <InputWrapper>
       {/* TODO: check styling we have on FormItem/}
       {/* <FormItem className="flex space-x-2 space-y-0">  */}
-      <Switch
-        disabled={readonly}
-        checked={field.value}
-        onCheckedChange={value => {
-          field.onChange(value)
-        }}
-      />
-      <InputLabel label={label} required={required} description={description} />
+      <Layout.Horizontal>
+        <Switch
+          disabled={readonly}
+          checked={field.value}
+          onCheckedChange={value => {
+            field.onChange(value)
+          }}
+        />
+        <InputLabel label={label} required={required} description={description} />
+      </Layout.Horizontal>
+
       <InputError path={path} />
     </InputWrapper>
   )

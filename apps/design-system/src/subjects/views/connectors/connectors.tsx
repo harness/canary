@@ -1,3 +1,4 @@
+import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
 import noop from 'lodash-es/noop'
 
 import { Button, ListActions, Spacer } from '@harnessio/ui/components'
@@ -5,8 +6,6 @@ import {
   ConnectorRightDrawer,
   ConnectorsProvider,
   ConnectorsRightDrawer,
-  getHarnessConnectorDefinition,
-  harnessConnectors,
   SandboxLayout,
   useConnectorsContext
 } from '@harnessio/ui/views'
@@ -76,4 +75,3 @@ const ConnectorsPage = (): JSX.Element => {
 }
 
 export { ConnectorsPage }
-

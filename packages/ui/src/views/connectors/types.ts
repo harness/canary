@@ -15,12 +15,6 @@ export interface onSubmitProps {
   formEntity: ConnectorFormEntityType
 }
 
-export type HarnessConnectorDefinitionType = AnyConnectorDefinition<HARNESS_CONNECTOR_IDENTIFIER>
-
-export const GITHUB_CONNECTOR_IDENTIFIER = 'Github'
-export const TERRAFORM_CONNECTOR_IDENTIFIER = 'Terraform'
-export const AWS_KMS_CONNECTOR_IDENTIFIER = 'AWS KMS'
-
 export type ConnectorFormEntityType = {
   type: 'connector'
   data: {
@@ -35,8 +29,8 @@ export type HARNESS_CONNECTOR_IDENTIFIER =
   | typeof Connectors.AWS_KMS
   | typeof Connectors.DOCKER
 
-export type AnyConnectorDefinition<T = string> = {
-  type: T
+export type AnyConnectorDefinition = {
+  type: ConnectorInfoDTO['type']
   name: string
   category: string
   formDefinition: IFormDefinition<InputConfigType>

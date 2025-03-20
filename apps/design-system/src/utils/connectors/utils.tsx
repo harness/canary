@@ -1,15 +1,13 @@
-import {
-  AWS_KMS_CONNECTOR_IDENTIFIER,
-  Connectors,
-  GITHUB_CONNECTOR_IDENTIFIER,
-  HarnessConnectorDefinitionType,
-  TERRAFORM_CONNECTOR_IDENTIFIER
-} from '../types'
+import { AnyConnectorDefinition, Connectors } from '@harnessio/ui/views'
 import { AWS_KMS_CONNECTOR_CATEGORY, awsKmsConnectorFormDefinition } from './aws-kms-connector'
 import { GITHUB_CONNECTOR_CATEOGRY, githubConnectorFormDefinition } from './github-connector'
 import { TERRAFORM_CONNECTOR_CATEGORY, terraformConnectorFormDefinition } from './terraform-connector'
 
-export const harnessConnectors: HarnessConnectorDefinitionType[] = [
+export const GITHUB_CONNECTOR_IDENTIFIER = 'Github'
+export const TERRAFORM_CONNECTOR_IDENTIFIER = 'Terraform'
+export const AWS_KMS_CONNECTOR_IDENTIFIER = 'AWS KMS'
+
+export const harnessConnectors: AnyConnectorDefinition[] = [
   {
     type: Connectors.GITHUB,
     name: GITHUB_CONNECTOR_IDENTIFIER,
@@ -29,7 +27,7 @@ export const harnessConnectors: HarnessConnectorDefinitionType[] = [
     formDefinition: awsKmsConnectorFormDefinition
   }
 ]
-export function getHarnessConnectorDefinition(type: string): HarnessConnectorDefinitionType | undefined {
+export function getHarnessConnectorDefinition(type: string): AnyConnectorDefinition | undefined {
   return harnessConnectors.find(harnessConnector => harnessConnector.type === type)
 }
 

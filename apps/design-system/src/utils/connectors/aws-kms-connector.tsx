@@ -1,8 +1,5 @@
-import { InputConfigType } from '@views/unified-pipeline-studio/components/form-inputs/types'
-
 import { IFormDefinition } from '@harnessio/forms'
-
-import { CredTypeValues, DelegateTypes, IInputConfigWithConfigInterface } from '../types'
+import { CredTypeValues, DelegateTypes, IInputConfigWithConfigInterface, InputConfigType } from '@harnessio/ui/views'
 
 export const AWS_KMS_CONNECTOR_CATEGORY = 'Secrets Manager'
 

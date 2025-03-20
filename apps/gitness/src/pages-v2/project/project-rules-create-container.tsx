@@ -33,7 +33,7 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
   const { ruleId: ruleIdentifier } = useParams()
   const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useProjectRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
-  const { dispatch } = useBranchRulesStore()
+  const { dispatch, resetRules } = useBranchRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
   const {
     scope: { accountId }
@@ -51,8 +51,9 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
       setPresetRuleData(null)
       setPrincipals(null)
       setRecentStatusChecks(null)
+      resetRules()
     }
-  }, [setPresetRuleData, setPrincipals, setRecentStatusChecks])
+  }, [resetRules, setPresetRuleData, setPrincipals, setRecentStatusChecks])
 
   const { data: { body: rulesData } = {} } = useSpaceRuleGetQuery(
     { space_ref: spaceURL ?? '', rule_identifier: ruleIdentifier ?? '' },

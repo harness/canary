@@ -60,6 +60,7 @@ export enum PatternsButtonType {
 export type IBranchRulesStore = {
   rules: Rule[]
   dispatch: Dispatch
+  resetRules: () => void
 }
 
 // Constants

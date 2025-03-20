@@ -20,7 +20,8 @@ export const RepoCreateRule = () => {
   const useBranchRulesStore = useCallback(
     () => ({
       rules: [],
-      dispatch: () => {}
+      dispatch: () => {},
+      resetRules: () => {}
     }),
     []
   )

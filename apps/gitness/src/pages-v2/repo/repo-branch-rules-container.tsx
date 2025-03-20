@@ -40,7 +40,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const { identifier } = useParams()
   const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useRepoRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
-  const { dispatch } = useBranchRulesStore()
+  const { dispatch, resetRules } = useBranchRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
   const {
     scope: { accountId }
@@ -58,8 +58,9 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       setPresetRuleData(null)
       setPrincipals(null)
       setRecentStatusChecks(null)
+      resetRules()
     }
-  }, [setPresetRuleData, setPrincipals, setRecentStatusChecks])
+  }, [resetRules, setPresetRuleData, setPrincipals, setRecentStatusChecks])
 
   const {
     data: { body: rulesData } = {},

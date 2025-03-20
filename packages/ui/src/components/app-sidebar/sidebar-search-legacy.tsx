@@ -25,7 +25,7 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
 
   return (
     <div className="flex w-full flex-col place-items-start pb-3 pt-1.5">
-      <div className="flex h-[58px] items-center pl-1">{logo}</div>
+      <div className="mb-5 mt-3.5 flex items-center pl-2">{logo}</div>
       <SearchBox.Root
         width="full"
         placeholder={`${t('component:navbar.search', 'Search')}...`}

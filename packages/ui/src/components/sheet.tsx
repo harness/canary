@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { usePortal } from '@/context'
+import { usePortal, useTheme } from '@/context'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -45,13 +45,17 @@ const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Ove
 )
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
-const sheetVariants = cva('fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out', {
+const sheetVariants = cva('bg-background fixed z-50 gap-4 p-6 transition ease-in-out', {
   variants: {
     side: {
       top: 'inset-x-0 top-0 border-b',
       bottom: 'inset-x-0 bottom-0 border-t',
       left: 'inset-y-0 left-0 h-full w-3/4 border-r sm:max-w-sm',
       right: 'inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm'
+    },
+    isLightTheme: {
+      true: 'border-sidebar-border-1 border-l',
+      false: 'shadow-lg'
     }
   },
   defaultVariants: {
@@ -85,13 +89,14 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
     ref
   ) => {
     const { portalContainer } = usePortal()
+    const { isLightTheme } = useTheme()
 
     const content = (
-      <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
+      <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side, isLightTheme }), className)} {...props}>
         {children}
         {!hideCloseButton && (
           <SheetPrimitive.Close
-            className="absolute right-[0.1875rem] top-2 flex items-center justify-center transition-colors disabled:pointer-events-none"
+            className="absolute right-1 top-2 flex items-center justify-center transition-colors disabled:pointer-events-none"
             asChild
           >
             <Button

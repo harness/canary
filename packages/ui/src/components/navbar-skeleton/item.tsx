@@ -1,6 +1,7 @@
 import { forwardRef, ReactElement } from 'react'
 
 import { Icon, Text } from '@/components'
+import { useTheme } from '@/context/theme'
 import { cn } from '@utils/cn'
 
 export interface ItemProps {
@@ -16,12 +17,14 @@ export interface ItemProps {
 
 export const Item = forwardRef<HTMLDivElement, ItemProps>(
   ({ icon, text, description, active, submenuItem = false, className, isMainNav, ...props }, ref) => {
+    const { isInset, isLightTheme } = useTheme()
+
     if (submenuItem) {
       return (
         <div
           ref={ref}
           className={cn(
-            'group relative grid cursor-pointer select-none grid-cols-[auto_1fr] items-center gap-3 pb-[0.6875rem] pt-[0.5625rem] py-2 px-3 rounded-md',
+            'group relative grid cursor-pointer select-none grid-cols-[auto_1fr] items-center gap-3 pb-[0.6875rem] pt-[0.5625rem] py-2.5 px-3 rounded-md',
             { 'gap-0': !icon },
             className
           )}
@@ -40,7 +43,8 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
               <div
                 className={cn(
                   'sub-menu-icon-bg relative flex size-8 place-content-center place-items-center rounded border border-borders-1 bg-background-2',
-                  { 'border-sidebar-border-3 bg-sidebar-background-7': isMainNav }
+                  { 'border-sidebar-border-3 bg-sidebar-background-7': isMainNav },
+                  { 'border-sidebar-border-6 bg-sidebar-background-8': active && isLightTheme }
                 )}
               >
                 <Icon
@@ -63,7 +67,8 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
               weight="medium"
               className={cn(
                 'text-foreground-2 group-hover:text-foreground-1 z-10 w-full duration-0 ease-in-out',
-                { 'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1': isMainNav },
+                { 'text-sidebar-foreground-2': isMainNav && (!isInset || isLightTheme) },
+                { 'text-sidebar-foreground-3': isMainNav && isInset && !isLightTheme },
                 { 'text-foreground-1': active },
                 { 'text-sidebar-foreground-1': active && isMainNav }
               )}
@@ -90,25 +95,31 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
       <div
         ref={ref}
         className={cn(
-          'group flex cursor-pointer select-none gap-2.5 py-1.5 px-3 rounded-md',
-          { 'bg-background-4': active },
-          { 'bg-sidebar-background-3': active && isMainNav },
+          'group relative grid cursor-pointer select-none grid-cols-[auto_1fr] gap-2.5 py-1.5 px-2.5 rounded-md',
           { 'gap-0': !icon },
           className
         )}
         {...props}
       >
+        <div
+          className={cn(
+            'absolute z-0 h-full w-full rounded-[4px] bg-transparent transition-colors',
+            { 'group-hover:bg-sidebar-background-2': isMainNav && (isLightTheme || isInset) },
+            { 'bg-background-4': active },
+            { 'bg-sidebar-background-3': active && isMainNav }
+          )}
+        />
         {icon && (
           <div
             className={cn(
-              'text-icons-4 group-hover:text-icons-2 relative z-10 mt-1 flex h-3 w-3 min-w-3 items-center duration-100 ease-in-out',
+              'text-icons-4 group-hover:text-icons-2 relative z-10 flex h-3.5 w-3.5 min-w-3.5 mt-0.5 items-center duration-100 ease-in-out',
               { 'text-sidebar-icon-3 group-hover:text-sidebar-icon-1': isMainNav },
               { 'text-icons-2': active },
               { 'text-sidebar-icon-1': active && isMainNav }
             )}
           >
             {active && (
-              <span className="absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2 bg-navbar-item-gradient" />
+              <span className="bg-navbar-item-gradient absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2" />
             )}
             {icon}
           </div>
@@ -117,7 +128,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
           size={2}
           weight="medium"
           className={cn(
-            'text-foreground-3 group-hover:text-foreground-1 z-10 text-left duration-100 ease-in-out',
+            'text-foreground-3 group-hover:text-foreground-1 relative z-10 text-left duration-100 ease-in-out',
             { 'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1': isMainNav },
             { 'text-foreground-1': active },
             { 'text-sidebar-foreground-1': active && isMainNav }

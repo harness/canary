@@ -103,7 +103,7 @@ export const ButtonWithOptions = <T extends string>({
             buttonVariants({ theme, variant }),
             'relative h-[inherit] w-8 p-0 flex-shrink-0 rounded-l-none before:absolute before:left-0 before:h-[calc(100%-8px)] before:w-px',
             theme !== 'primary' && 'border-y border-r',
-            separatorThemes[theme || 'default']
+            separatorThemes[disabled ? 'disabled' : theme || 'default']
           )}
           disabled={disabled || loading}
         >

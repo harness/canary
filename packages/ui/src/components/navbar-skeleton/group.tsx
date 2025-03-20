@@ -23,7 +23,7 @@ export function Group({
   return (
     <div
       className={cn(
-        'flex w-full flex-col px-3',
+        'flex w-full flex-col px-2',
         { 'border-borders-5 border-t pt-2.5': topBorder },
         { 'border-sidebar-border-1': topBorder && isMainNav },
         isSubMenu ? 'pb-2.5 gap-y-0.5' : 'gap-1 pb-3',

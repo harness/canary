@@ -1,5 +1,6 @@
 import { DropdownMenu, Icon, IconProps, Sidebar, Text } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTheme } from '@/context'
+import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
 interface NavbarItemType {
@@ -29,6 +30,7 @@ export const SidebarItem = ({
   t
 }: NavbarItemProps) => {
   const { NavLink } = useRouterContext()
+  const { isInset } = useTheme()
 
   const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])
 
@@ -90,7 +92,7 @@ export const SidebarItem = ({
           <Sidebar.MenuButton asChild isActive={isActive}>
             <Sidebar.MenuItemText
               text={item.title}
-              icon={iconName && <Icon name={iconName} size={12} />}
+              icon={iconName && <Icon name={iconName} size={14} />}
               active={isActive}
             />
           </Sidebar.MenuButton>
@@ -99,7 +101,10 @@ export const SidebarItem = ({
 
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
-          <Sidebar.MenuAction className="right-0 text-sidebar-icon-3 hover:text-sidebar-icon-1" showOnHover>
+          <Sidebar.MenuAction
+            className={cn('text-sidebar-icon-3 hover:text-sidebar-icon-1', isInset ? 'right-[3px]' : 'right-0')}
+            showOnHover
+          >
             <span>
               <Icon name="menu-dots" size={12} />
             </span>

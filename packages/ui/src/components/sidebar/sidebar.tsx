@@ -14,6 +14,7 @@ import {
 } from 'react'
 
 import { Button, Icon, Input, ScrollArea, Sheet, Tooltip } from '@/components'
+import { useTheme } from '@/context/theme'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -25,6 +26,7 @@ import { useIsMobile } from './use-is-mobile'
 const SIDEBAR_COOKIE_NAME = 'sidebar:state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_WIDTH = '220px'
+const SIDEBAR_WIDTH_INSET = '228px'
 const SIDEBAR_WIDTH_MOBILE = '18rem'
 const SIDEBAR_WIDTH_ICON = '3rem'
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b'
@@ -115,13 +117,15 @@ const SidebarProvider = forwardRef<
     [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
   )
 
+  const { isInset } = useTheme()
+
   return (
     <SidebarContext.Provider value={contextValue}>
       <Tooltip.Provider delayDuration={0}>
         <div
           style={
             {
-              '--sidebar-width': SIDEBAR_WIDTH,
+              '--sidebar-width': isInset ? SIDEBAR_WIDTH_INSET : SIDEBAR_WIDTH,
               '--sidebar-width-icon': SIDEBAR_WIDTH_ICON,
               ...style
             } as CSSProperties
@@ -147,6 +151,7 @@ const SidebarRoot = forwardRef<
   }
 >(({ side = 'left', variant = 'sidebar', collapsible = 'offcanvas', className, children, ...props }, ref) => {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+  const { isLightTheme, isInset } = useTheme()
 
   if (collapsible === 'none') {
     return (
@@ -209,7 +214,7 @@ const SidebarRoot = forwardRef<
           // Adjust the padding for floating and inset variants.
           variant === 'floating' || variant === 'inset'
             ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]'
-            : 'group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l',
+            : `group-data-[collapsible=icon]:w-[--sidebar-width-icon] ${!isInset && !isLightTheme ? 'group-data-[side=left]:border-r group-data-[side=right]:border-l' : ''}`,
           className
         )}
         {...props}
@@ -279,6 +284,7 @@ SidebarRail.displayName = 'SidebarRail'
 
 const SidebarInset = forwardRef<HTMLDivElement, ComponentProps<'main'>>(({ className, ...props }, ref) => {
   const { open, isMobile } = useSidebar()
+  const { isInset } = useTheme()
 
   return (
     <main
@@ -286,6 +292,7 @@ const SidebarInset = forwardRef<HTMLDivElement, ComponentProps<'main'>>(({ class
       className={cn(
         'relative flex min-h-screen flex-1 flex-col main-page-content-background',
         'peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow transition-[max-width] ease-linear duration-200',
+        isInset && 'pr-1.5',
         className
       )}
       style={{ maxWidth: !isMobile && open ? `calc(100vw - ${SIDEBAR_WIDTH})` : '100vw' }}
@@ -313,7 +320,16 @@ const SidebarInput = forwardRef<ElementRef<typeof Input>, ComponentProps<typeof 
 SidebarInput.displayName = 'SidebarInput'
 
 const SidebarHeader = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
-  return <div ref={ref} data-sidebar="header" className={cn('flex flex-col gap-2 px-2.5', className)} {...props} />
+  const { isInset } = useTheme()
+
+  return (
+    <div
+      ref={ref}
+      data-sidebar="header"
+      className={cn('flex flex-col gap-2', isInset ? 'px-3.5' : 'px-3', className)}
+      {...props}
+    />
+  )
 })
 SidebarHeader.displayName = 'SidebarHeader'
 
@@ -354,11 +370,17 @@ const SidebarContent = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ clas
 SidebarContent.displayName = 'SidebarContent'
 
 const SidebarGroup = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
+  const { isInset } = useTheme()
+
   return (
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn('relative flex w-full min-w-0 flex-col px-2.5 py-2 border-sidebar-border-1', className)}
+      className={cn(
+        'relative flex w-full min-w-0 flex-col py-2 border-sidebar-border-1',
+        isInset ? 'px-3.5' : 'px-2.5',
+        className
+      )}
       {...props}
     />
   )
@@ -458,7 +480,6 @@ const SidebarMenuButton = forwardRef<
   const button = (
     <Comp
       ref={ref}
-      data-sidebar="menu-button"
       data-size={size}
       data-active={isActive}
       className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
@@ -503,7 +524,7 @@ const SidebarMenuItemText = forwardRef<
       {icon && (
         <div
           className={cn(
-            'text-sidebar-icon-3 group-hover/menu-item:text-sidebar-icon-1 relative z-10 flex h-3 w-3 min-w-3 items-center duration-100 ease-in-out',
+            'text-sidebar-icon-3 group-hover/menu-item:text-sidebar-icon-1 relative z-10 flex h-3.5 w-3.5 min-w-3.5 items-center duration-100 ease-in-out',
             { 'text-sidebar-icon-1': !!active }
           )}
         >

@@ -120,7 +120,7 @@ export const AppSidebar = ({
                   <Sidebar.MenuButton asChild onClick={handleMoreMenu}>
                     <Sidebar.MenuItemText
                       text={t('component:navbar.more', 'More')}
-                      icon={<Icon name="ellipsis" size={12} />}
+                      icon={<Icon name="ellipsis" size={14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -158,7 +158,7 @@ export const AppSidebar = ({
                     <Sidebar.MenuButton asChild onClick={() => navigate('/admin/default-settings')}>
                       <Sidebar.MenuItemText
                         text={t('component:navbar.user-management', 'User Management')}
-                        icon={<Icon name="account" size={12} />}
+                        icon={<Icon name="account" size={14} />}
                       />
                     </Sidebar.MenuButton>
                   </Sidebar.MenuItem>
@@ -167,7 +167,7 @@ export const AppSidebar = ({
                   <Sidebar.MenuButton asChild onClick={handleSettingsMenu}>
                     <Sidebar.MenuItemText
                       text={t('component:navbar.settings', 'Settings')}
-                      icon={<Icon name="settings-1" size={12} />}
+                      icon={<Icon name="settings-1" size={14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>

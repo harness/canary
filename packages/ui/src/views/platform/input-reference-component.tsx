@@ -112,14 +112,12 @@ export const InputReference = <T,>({
   size,
   ...props
 }: InputReferenceProps<T>) => {
-  // const [displayValue, setDisplayValue] = useState<T | ReactNode | null>(placeholder)
   let displayValue = value ?? placeholder
 
   const hasValue = displayValue !== null && displayValue !== placeholder
 
   const handleClear = (e: React.MouseEvent) => {
     e.stopPropagation()
-    // setDisplayValue(placeholder)
     displayValue = placeholder
     onClear?.()
   }
@@ -132,10 +130,6 @@ export const InputReference = <T,>({
       onClick()
     }
   }
-
-  // useEffect(() => {
-  //   setDisplayValue(value ?? placeholder)
-  // }, [placeholder, value])
 
   const state = disabled ? 'disabled' : 'default'
 

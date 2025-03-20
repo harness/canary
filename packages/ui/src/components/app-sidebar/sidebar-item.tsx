@@ -1,4 +1,4 @@
-import { DropdownMenu, Icon, IconProps, Sidebar, Text } from '@/components'
+import { DropdownMenu, Icon, IconProps, Sidebar, Text, useSidebar } from '@/components'
 import { useRouterContext } from '@/context'
 import { TFunction } from 'i18next'
 
@@ -29,6 +29,7 @@ export const SidebarItem = ({
   t
 }: NavbarItemProps) => {
   const { NavLink } = useRouterContext()
+  const { open } = useSidebar()
 
   const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])
 
@@ -97,23 +98,25 @@ export const SidebarItem = ({
         )}
       </NavLink>
 
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <Sidebar.MenuAction className="text-sidebar-icon-3 hover:text-sidebar-icon-1 right-0" showOnHover>
-            <span>
-              <Icon name="menu-dots" size={12} />
-            </span>
-          </Sidebar.MenuAction>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content
-          className="border-sidebar-border-3 bg-sidebar-background-4 w-[128px]"
-          align="end"
-          sideOffset={3}
-          alignOffset={4}
-        >
-          {dropdownItems}
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
+      {open && (
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
+            <Sidebar.MenuAction className="text-sidebar-icon-3 hover:text-sidebar-icon-1 right-0" showOnHover>
+              <span>
+                <Icon name="menu-dots" size={12} />
+              </span>
+            </Sidebar.MenuAction>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content
+            className="border-sidebar-border-3 bg-sidebar-background-4 w-[128px]"
+            align="end"
+            sideOffset={3}
+            alignOffset={4}
+          >
+            {dropdownItems}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+      )}
     </Sidebar.MenuItem>
   )
 }

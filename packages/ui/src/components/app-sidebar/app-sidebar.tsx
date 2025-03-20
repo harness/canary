@@ -7,8 +7,8 @@ import {
   LanguageInterface,
   languages,
   Sidebar,
-  Spacer,
-  ThemeDialog
+  ThemeDialog,
+  useSidebar
 } from '@/components'
 import { ContentStyleType, useRouterContext, useTheme } from '@/context'
 import { TypesUser } from '@/types'
@@ -53,6 +53,7 @@ export const AppSidebar = ({
   const { t, i18n, changeLanguage } = useTranslationStore()
   const { theme, setTheme, setInset, isInset } = useTheme()
   const { Link, navigate } = useRouterContext()
+  const { open } = useSidebar()
 
   const [openThemeDialog, setOpenThemeDialog] = useState(false)
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)
@@ -84,7 +85,14 @@ export const AppSidebar = ({
                 logo={
                   <Link to="/" className="flex h-[58px] items-center justify-start gap-0.5 pl-1">
                     <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-                    <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1 mb-px" />
+                    {open && (
+                      <Icon
+                        name="harness-logo-text"
+                        width={65}
+                        height={15}
+                        className="text-sidebar-foreground-1 mb-px"
+                      />
+                    )}
                   </Link>
                 }
               />
@@ -95,7 +103,9 @@ export const AppSidebar = ({
               logo={
                 <Link className="flex items-center gap-0.5" to="/">
                   <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-                  <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1 mb-px" />
+                  {open && (
+                    <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1 mb-px" />
+                  )}
                 </Link>
               }
             />
@@ -130,8 +140,7 @@ export const AppSidebar = ({
 
           {!!recentMenuItems.length && (
             <Sidebar.Group title={t('component:navbar.recent', 'Recent')} className="border-t pt-2.5">
-              <Sidebar.GroupLabel>{t('component:navbar.recent', 'Recent')}</Sidebar.GroupLabel>
-              <Spacer size={2} />
+              {open && <Sidebar.GroupLabel>{t('component:navbar.recent', 'Recent')}</Sidebar.GroupLabel>}
               <Sidebar.GroupContent>
                 <Sidebar.Menu>
                   {recentMenuItems.map(item => (

@@ -18,12 +18,7 @@ export const COMMON_CONFIG = {
   prefix: DESIGN_SYSTEM_PREFIX,
   options: {
     fileHeader: () => {
-      return [
-        'Harness Design System',
-        'Generated style tokens - DO NOT EDIT DIRECTLY',
-        `Generated on ${new Date().toUTCString()}`,
-        'Copyright (c) Harness.'
-      ]
+      return ['Harness Design System', 'Generated style tokens - DO NOT EDIT DIRECTLY', 'Copyright (c) Harness.']
     }
   },
   transforms: ['name/kebab', 'attribute/themeable', 'ts/transform/alpha']
@@ -34,7 +29,6 @@ export const getExportFileHeader = () => `/**
     * Harness Design System
     * Main stylesheet importing all token files
     * DO NOT UPDATE IT MANUALLY
-    * Generated on ${new Date().toUTCString()}
     */`
 
 export const THEME_MODE_FILENAME_PREFIX = {

@@ -251,7 +251,6 @@ async function createEsmIndexFile() {
   const content = `/**
  * Harness Design System
  * DO NOT UPDATE IT MANUALLY
- * Generated on ${new Date().toUTCString()}
  */
 
   /* Theme files - Combined */

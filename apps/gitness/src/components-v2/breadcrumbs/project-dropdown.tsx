@@ -16,7 +16,7 @@ function ProjectDropdown(): JSX.Element {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="flex items-center gap-x-1.5" disabled={!spaces.length}>
         {spaceId ?? 'Select project'}
-        <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
+        <Icon className="chevron-down text-topbar-icon-1" name="chevron-fill-down" size={6} />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-[300px]">
         {spaces.map(({ identifier }) => (

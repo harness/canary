@@ -7,6 +7,8 @@ export * from './layouts/Floating1ColumnLayout'
 export * from './layouts/PullRequestLayout'
 export * from './layouts/content-layout-with-sidebar'
 export * from './layouts/webhooks-settings-layout'
+export * from './layouts/subheader-wrapper'
+export * from './layouts/main-content-layout'
 
 // Account
 export * from './account'

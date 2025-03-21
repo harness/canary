@@ -53,17 +53,12 @@ function SubHeader({ children, className }: { children: ReactNode; className?: s
 }
 
 function Main({ children, fullWidth, className }: { children: ReactNode; fullWidth?: boolean; className?: string }) {
-  if (fullWidth) {
-    return (
-      <section aria-label="Main Content" className={cn('h-full w-full bg-background-1 overflow-auto', className)}>
-        {children}
-      </section>
-    )
-  }
-
   return (
-    <section className="size-full flex-1 overflow-auto bg-background-1" aria-label="Main Content">
-      <div className={cn('mx-auto h-full max-w-[1200px]', className)}>{children}</div>
+    <section
+      className={cn('w-full bg-background-1 rounded-[inherit]', { 'w-full flex-1': fullWidth }, className)}
+      aria-label="Main Content"
+    >
+      {fullWidth ? children : <div className={cn('mx-auto h-full max-w-[1200px]', className)}>{children}</div>}
     </section>
   )
 }

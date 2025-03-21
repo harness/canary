@@ -4,6 +4,8 @@ import { NavbarSkeleton, ScrollArea } from '@/components'
 import { INSET_THEME_PADDING, useRouterContext, useTheme } from '@/context'
 import { cn } from '@utils/cn'
 
+const BREADCRUMBS_HEIGHT = 55
+
 export interface SidebarMenuItemSubItem {
   id: string | number
   title: string
@@ -42,7 +44,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
         className="sticky w-[220px]"
         style={{
           top: `${sidebarOffsetTop}px`,
-          height: `calc(100svh - ${isInset ? sidebarOffsetTop + INSET_THEME_PADDING * 2 : sidebarOffsetTop}px)`
+          height: `calc(100svh - ${sidebarOffsetTop + BREADCRUMBS_HEIGHT}px - ${isInset ? INSET_THEME_PADDING : 0}px)`
         }}
       >
         <ScrollArea className="h-full" viewportClassName={cn('pb-11 !px-4', sidebarViewportClassName)}>

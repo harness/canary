@@ -301,8 +301,8 @@
     "removeMember": "Remove member",
     "inviteNewMember": "Invite new member",
     "members": "",
-    "addRule": "Add new rule",
     "rules": "Rules",
+    "addRule": "Add new rule",
     "tabs": {
       "general": "General",
       "members": "Members",

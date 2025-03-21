@@ -41,7 +41,7 @@ export const ProjectRulesListContainer = () => {
     isLoading,
     refetch: refetchRulesList
   } = useSpaceRuleListQuery({
-    space_ref: space_ref ?? '',
+    space_ref: `${space_ref}/+`,
     queryParams: {
       page: queryPage,
       query: query ?? ''
@@ -49,7 +49,7 @@ export const ProjectRulesListContainer = () => {
   })
 
   const { mutate: deleteRule, isLoading: isDeletingRule } = useSpaceRuleDeleteMutation(
-    { space_ref: space_ref },
+    { space_ref: `${space_ref}/+` },
     {
       onSuccess: () => {
         refetchRulesList()
@@ -57,7 +57,7 @@ export const ProjectRulesListContainer = () => {
         setApiError(null)
       },
       onError: error => {
-        queryClient.invalidateQueries(['ruleList', space_ref])
+        queryClient.invalidateQueries(['ruleList', `${space_ref}/+`])
 
         const message = error.message || 'Error deleting rule'
         setApiError({ type: ErrorTypes.DELETE_RULE, message })
@@ -81,7 +81,7 @@ export const ProjectRulesListContainer = () => {
 
   const handleDeleteRule = (identifier: string) => {
     deleteRule({ rule_identifier: identifier })
-    queryClient.invalidateQueries(['ruleList', space_ref])
+    queryClient.invalidateQueries(['ruleList', `${space_ref}/+`])
   }
 
   const handleRuleEditClick = (identifier: string) => {

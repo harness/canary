@@ -56,7 +56,7 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
   }, [resetRules, setPresetRuleData, setPrincipals, setRecentStatusChecks])
 
   const { data: { body: rulesData } = {} } = useSpaceRuleGetQuery(
-    { space_ref: spaceURL ?? '', rule_identifier: ruleIdentifier ?? '' },
+    { space_ref: `${spaceURL}/+`, rule_identifier: ruleIdentifier ?? '' },
     {
       enabled: !!ruleIdentifier
     }
@@ -67,7 +67,7 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
     error: addRuleError,
     isLoading: addingRule
   } = useSpaceRuleAddMutation(
-    { space_ref: spaceURL },
+    { space_ref: `${spaceURL}/+` },
     {
       onSuccess: () => {
         setIsSubmitSuccess(true)
@@ -86,7 +86,7 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
     error: updateRuleError,
     isLoading: updatingRule
   } = useSpaceRuleUpdateMutation(
-    { space_ref: spaceURL, rule_identifier: ruleIdentifier! },
+    { space_ref: `${spaceURL}/+`, rule_identifier: ruleIdentifier! },
     {
       onSuccess: () => {
         setIsSubmitSuccess(true)
@@ -95,7 +95,7 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
     }
   )
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentSpaceQuery({
-    space_ref: spaceURL ?? '',
+    space_ref: `${spaceURL}/+`,
     queryParams: {}
   })
 

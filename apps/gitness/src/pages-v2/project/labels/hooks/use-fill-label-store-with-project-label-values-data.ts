@@ -38,7 +38,7 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
 
   const { data: { body: labels } = {}, isLoading: isLoadingSpaceLabels } = useListSpaceLabelsQuery(
     {
-      space_ref: space_ref ?? '',
+      space_ref: `${space_ref}/+`,
       queryParams: { page: queryPage || 1, limit: 10, query: query ?? '' }
     },
     { enabled }

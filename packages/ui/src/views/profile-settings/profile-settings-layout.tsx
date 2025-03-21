@@ -18,7 +18,7 @@ export function ProfileSettingsLayout({ useTranslationStore }: { useTranslationS
   const { t } = useTranslationStore()
 
   return (
-    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={55} sidebarViewportClassName="pt-7">
+    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={0} sidebarViewportClassName="pt-7">
       <Outlet />
     </ContentLayoutWithSidebar>
   )

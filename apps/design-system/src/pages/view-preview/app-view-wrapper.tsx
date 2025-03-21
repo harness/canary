@@ -4,7 +4,7 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { AppSidebar, MoreSubmenu, NavbarItemType, SettingsMenu, Sidebar } from '@harnessio/ui/components'
-import { cn } from '@harnessio/ui/utils'
+import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useRootViewWrapperStore } from './root-view-wrapper-store'
 
@@ -119,12 +119,9 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
               useTranslationStore={useTranslationStore}
             />
             <Sidebar.Inset>
-              <div className={cn('h-full', { 'overflow-hidden h-screen p-2 bg-sidebar-background-1': isInset })}>
-                <div className={cn('h-full flex flex-col', { 'rounded-md overflow-auto bg-background-1': isInset })}>
-                  <div className="layer-high bg-background-1 sticky top-0">{breadcrumbs}</div>
-                  <Outlet />
-                </div>
-              </div>
+              <MainContentLayout breadcrumbs={breadcrumbs} isInset={isInset}>
+                <Outlet />
+              </MainContentLayout>
               <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />
               <SettingsMenu
                 showSettingMenu={showSettingsMenu}

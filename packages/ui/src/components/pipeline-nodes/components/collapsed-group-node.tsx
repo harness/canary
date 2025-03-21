@@ -54,6 +54,7 @@ export function CollapsedGroupNode({
           isCollapsedNode
           parallelContainerConfig={parallelContainerConfig}
           serialContainerConfig={serialContainerConfig}
+          config={node.config}
         />
 
         {/* other nodes without content*/}

@@ -80,7 +80,7 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
   }, [])
 
   return (
-    <div className="relative flex grow">
+    <div className="relative flex grow bg-graph-bg-gradient bg-graph-bg-size">
       <CanvasProvider>
         <PipelineGraph
           customCreateSVGPath={props => {

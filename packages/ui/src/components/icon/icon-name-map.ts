@@ -94,6 +94,7 @@ import Folder from '../../icons/folder.svg'
 import GitBranch from '../../icons/git-branch.svg'
 import GithubActions from '../../icons/github-actions.svg'
 import GitnessLogo from '../../icons/gitness-logo.svg'
+import GolangIcon from '../../icons/golang-icon.svg'
 import GreenCircle from '../../icons/green-circle.svg'
 import GridDots from '../../icons/grid-dots.svg'
 import HarnessLogoText from '../../icons/harness-logo-text.svg'
@@ -146,6 +147,7 @@ import Merged from '../../icons/merged.svg'
 import Minus from '../../icons/minus-icon.svg'
 import Ellipsis from '../../icons/more-dots-icon.svg'
 import Navigation from '../../icons/navigation-icon.svg'
+import NodeIcon from '../../icons/node-icon.svg'
 import NodeLogo from '../../icons/node-logo.svg'
 import Notification from '../../icons/notification-icon.svg'
 import OpenPR from '../../icons/open-pr.svg'
@@ -440,5 +442,7 @@ export const IconNameMap = {
   stop: Stop,
   'collapse-out': CollapseOut,
   'collapse-in': CollapseIn,
-  'square-dashed': SquareDashed
+  'square-dashed': SquareDashed,
+  'node-icon': NodeIcon,
+  'golang-icon': GolangIcon
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

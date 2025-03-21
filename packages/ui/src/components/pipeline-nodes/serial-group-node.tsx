@@ -56,10 +56,10 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
       <ExecutionStatus executionStatus={executionStatus} />
 
       <div
-        className={cn('absolute inset-0 -z-10 rounded-md border bg-graph-background-1', {
+        className={cn('absolute inset-0 -z-10 rounded-md border-[1.2px] bg-graph-background-1', {
           'border-borders-4': !selected,
           'border-borders-3': selected,
-          'bg-background-2 border-borders-2': collapsed
+          'bg-graph-background-2 border-graph-border-1': collapsed
         })}
       />
 

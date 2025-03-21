@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper } from '@/components'
 import { useRouterContext } from '@/context'
-import { IRepoStore, repoBranchSettingsFormSchema, SandboxLayout, TranslationStore } from '@/views'
+import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -18,7 +18,7 @@ import { IBranchRulesStore, RepoBranchSettingsFormFields } from './types'
 
 type BranchSettingsErrors = {
   principals: string | null
-  statusChecks: string | null
+  statusChecks?: string | null
   addRule: string | null
   updateRule: string | null
 }
@@ -27,7 +27,7 @@ interface RepoBranchSettingsRulesPageProps {
   isLoading?: boolean
   handleRuleUpdate: (data: RepoBranchSettingsFormFields) => void
   apiErrors?: BranchSettingsErrors
-  useRepoRulesStore: () => IRepoStore
+  useRepoRulesStore: () => IRepoStore | IProjectRulesStore
   useBranchRulesStore: () => IBranchRulesStore
   useTranslationStore: () => TranslationStore
   handleCheckboxChange: (id: string, checked: boolean) => void
@@ -38,6 +38,7 @@ interface RepoBranchSettingsRulesPageProps {
   setPrincipalsSearchQuery: (val: string) => void
   principalsSearchQuery: string
   isSubmitSuccess?: boolean
+  projectScope?: boolean
 }
 
 export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> = ({
@@ -54,7 +55,8 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   handleInitialRules,
   setPrincipalsSearchQuery,
   principalsSearchQuery,
-  isSubmitSuccess
+  isSubmitSuccess,
+  projectScope = false
 }) => {
   const { NavLink } = useRouterContext()
   const { t } = useTranslationStore()
@@ -121,7 +123,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     apiErrors?.principals || apiErrors?.statusChecks || apiErrors?.addRule || apiErrors?.updateRule || null
 
   return (
-    <SandboxLayout.Content className="max-w-[570px] px-0">
+    <SandboxLayout.Content className={`max-w-[570px] px-0 ${projectScope ? 'mx-auto' : ''}`}>
       <h1 className="mb-10 text-2xl font-medium text-foreground-1">
         {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
       </h1>

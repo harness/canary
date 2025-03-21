@@ -56,8 +56,9 @@ export interface RepoSettingsGeneralRulesProps {
   openRulesAlertDeleteDialog: (identifier: string) => void
   useTranslationStore: () => TranslationStore
   isLoading: boolean
-  rulesSearchQuery: string
-  setRulesSearchQuery: (query: string) => void
+  rulesSearchQuery?: string
+  setRulesSearchQuery?: (query: string) => void
+  projectScope?: boolean
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
@@ -68,7 +69,8 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   useTranslationStore,
   isLoading,
   rulesSearchQuery,
-  setRulesSearchQuery
+  setRulesSearchQuery,
+  projectScope = false
 }) => {
   const { Link, NavLink } = useRouterContext()
   const { t } = useTranslationStore()
@@ -83,59 +85,65 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   })
 
   const isShowRulesContent = useMemo(() => {
-    return (!!rules && !!rules.length) || !!rulesSearchQuery.length
+    return !!rules?.length || !!rulesSearchQuery?.length
   }, [rulesSearchQuery, rules])
 
   return (
     <>
-      <Text size={13} weight="medium" className="mb-2.5" as="div">
-        {t('views:repos.rules', 'Rules')}
-      </Text>
-      <div className="flex flex-row">
-        <span className="max-w-[440px]">
-          {t(
-            'views:repos.rulesDescription',
-            'Define standards and automate workflows to ensure better collaboration and control in your repository.'
-          )}
-        </span>
-        {!isLoading && !isShowRulesContent && (
-          <NavLink className="ml-auto" to="../rules/create">
-            <Button variant="outline">{t('views:repos.createRuleButton', 'Create rule')}</Button>
-          </NavLink>
-        )}
-      </div>
+      {!projectScope ? (
+        <>
+          <Text size={13} weight="medium" className="mb-2.5" as="div">
+            {t('views:repos.rules', 'Rules')}
+          </Text>
 
+          <div className="flex flex-row">
+            <span className="max-w-[440px]">
+              {t(
+                'views:repos.rulesDescription',
+                'Define standards and automate workflows to ensure better collaboration and control in your repository.'
+              )}
+            </span>
+            {!isLoading && !isShowRulesContent && (
+              <NavLink className="ml-auto" to="../rules/create">
+                <Button variant="outline">{t('views:repos.createRuleButton', 'Create rule')}</Button>
+              </NavLink>
+            )}
+          </div>
+        </>
+      ) : null}
       {isShowRulesContent && (
         <>
           <Spacer size={7} />
+          <>
+            <ListActions.Root>
+              <ListActions.Left>
+                <SearchBox.Root
+                  className={projectScope ? 'max-w-96' : 'max-w-xs'}
+                  placeholder={t('views:repos.search', 'Search')}
+                  width="full"
+                  value={search}
+                  handleChange={handleInputChange}
+                />
+              </ListActions.Left>
+              <ListActions.Right>
+                <NavLink to="../rules/create">
+                  <Button variant={projectScope ? 'default' : 'outline'}>
+                    {t('views:repos.newRule', 'New branch rule')}
+                  </Button>
+                </NavLink>
+              </ListActions.Right>
+            </ListActions.Root>
 
-          <ListActions.Root>
-            <ListActions.Left>
-              <SearchBox.Root
-                className="max-w-xs"
-                placeholder={t('views:repos.search', 'Search')}
-                width="full"
-                value={search}
-                handleChange={handleInputChange}
-              />
-            </ListActions.Left>
-            <ListActions.Right>
-              <NavLink to="../rules/create">
-                <Button variant="outline">{t('views:repos.newRule', 'New branch rule')}</Button>
-              </NavLink>
-            </ListActions.Right>
-          </ListActions.Root>
-
-          <Spacer size={4.5} />
-
+            <Spacer size={4.5} />
+          </>
           {isLoading ? (
             <>
               <Spacer size={7} />
               <SkeletonList />
             </>
-          ) : rules?.length ? (
+          ) : rules?.length !== 0 ? (
             <StackedList.Root>
-              {rules.map((rule, idx) =>
+              {rules?.map((rule, idx) =>
                 rule?.identifier ? (
                   <Link to={`../rules/${rule.identifier}`} key={rule.identifier}>
                     <StackedList.Item key={rule.identifier} className="cursor-pointer py-3 pr-1.5">
@@ -208,7 +216,6 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               }}
             />
           )}
-
           {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
             <>
               <Spacer size={2} />

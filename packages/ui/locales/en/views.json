@@ -223,6 +223,8 @@
     "noResultsDescription": "No {{type}} match your search. Try adjusting your keywords or filters.",
     "members": "No members yet",
     "inviteMembers": "There are no members in this project. Click on the button below to start adding them.",
+    "rules": "No rules yet",
+    "noRules": "There are no rules in this project. Click on the button below to start adding rules.",
     "noCommitsYet": "No commits yet",
     "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "compareChanges": "Compare and review just about anything",
@@ -322,11 +324,15 @@
     "removeMember": "Remove member",
     "inviteNewMember": "Invite new member",
     "members": "Members",
+    "rules": "Rules",
+    "addRule": "Add new rule",
     "tabs": {
       "general": "General",
       "members": "Members",
-      "labels": "Labels"
-    }
+      "labels": "Labels",
+      "rules": "Rules"
+    },
+    "newBranchRule": "New branch rule"
   },
   "landingPage": {
     "selectProject": "Select a project to get started",

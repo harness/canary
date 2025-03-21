@@ -28,7 +28,7 @@ export const ProjectLabelFormContainer = () => {
     mutate,
     isLoading: isSaving,
     error: createError
-  } = useSaveSpaceLabelMutation({ space_ref: space_ref ?? '' }, { onSuccess: onFormCancel })
+  } = useSaveSpaceLabelMutation({ space_ref: `${space_ref}/+` }, { onSuccess: onFormCancel })
 
   const onSubmit = (data: CreateLabelFormFields) => {
     const { values, ...rest } = data

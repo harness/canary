@@ -33,7 +33,7 @@ export const ProjectLabelsList = () => {
   }
 
   const { mutate: deleteSpaceLabel, isLoading: isDeletingSpaceLabel } = useDeleteSpaceLabelMutation(
-    { space_ref: space_ref ?? '' },
+    { space_ref: `${space_ref}/+` },
     {
       onSuccess: (_data, variables) => {
         setOpenAlertDeleteDialog(false)

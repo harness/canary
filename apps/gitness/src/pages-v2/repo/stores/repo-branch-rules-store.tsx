@@ -17,5 +17,6 @@ const initialState: Rule[] = branchRules.map(rule => ({
 
 export const useBranchRulesStore = create<IBranchRulesStore>(set => ({
   rules: initialState,
-  dispatch: (action: BranchRulesAction) => set(state => ({ rules: branchSettingsReducer(state.rules, action) }))
+  dispatch: (action: BranchRulesAction) => set(state => ({ rules: branchSettingsReducer(state.rules, action) })),
+  resetRules: () => set({ rules: initialState })
 }))

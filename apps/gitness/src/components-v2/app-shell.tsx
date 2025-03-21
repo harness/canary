@@ -225,7 +225,7 @@ export const AppShellMFE = memo(() => {
 
   return (
     <>
-      <BreadcrumbsAndOutlet className="text-foreground-2 min-h-screen" />
+      <BreadcrumbsAndOutlet className="min-h-screen text-foreground-2" />
       <Toaster />
     </>
   )
@@ -239,7 +239,7 @@ function BreadcrumbsAndOutlet({ className }: { className?: string }) {
   return (
     <div className={cn('h-full', { 'overflow-hidden h-screen p-2 bg-sidebar-background-1': isInset }, className)}>
       <div className={cn('h-full flex flex-col', { 'rounded-md overflow-auto bg-background-1': isInset })}>
-        <div className="layer-high bg-background-1 sticky top-0">
+        <div className="layer-high sticky top-0 bg-background-1">
           <Breadcrumbs />
         </div>
         <Outlet />

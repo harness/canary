@@ -1,4 +1,4 @@
-import { useRouterContext, useTheme } from '@/context'
+import { useRouterContext } from '@/context'
 import { ContentLayoutWithSidebar, TranslationStore } from '@/views'
 import { TFunction } from 'i18next'
 
@@ -16,14 +16,9 @@ const getNavItems = (t: TFunction) => [
 export function WebhookSettingsLayout({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) {
   const { Outlet } = useRouterContext()
   const { t } = useTranslationStore()
-  const { isInset } = useTheme()
 
   return (
-    <ContentLayoutWithSidebar
-      sidebarMenu={getNavItems(t)}
-      sidebarOffsetTop={isInset ? 45 : 100}
-      sidebarViewportClassName="pt-7"
-    >
+    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={45} sidebarViewportClassName="pt-7">
       <Outlet />
     </ContentLayoutWithSidebar>
   )

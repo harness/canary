@@ -27,6 +27,7 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
     }
 
     bodyClass.add(currentTheme)
+    bodyClass.add('overflow-hidden')
     sessionStorage.setItem('view-preview-theme', currentTheme)
   }, [currentTheme])
 
@@ -42,15 +43,29 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
     setCurrentTheme(newTheme)
   }
 
+  const toggleInsetClass = (isInset: boolean) => {
+    if (isInset) {
+      document.body.classList.add('inset-layout')
+    } else {
+      document.body.classList.remove('inset-layout')
+    }
+  }
+
   const onInsetChange = (style: ContentStyleType) => {
+    const isInset = style === ContentStyleType.Inset
+
     setContentStyle(style)
-    sessionStorage.setItem('view-preview-is-inset', String(style === ContentStyleType.Inset))
+    sessionStorage.setItem('view-preview-is-inset', String(isInset))
     window.dispatchEvent(new Event('storageChange'))
+    toggleInsetClass(isInset)
   }
 
   useEffect(() => {
     const inset = sessionStorage.getItem('view-preview-is-inset')
-    setContentStyle(inset === 'true' ? ContentStyleType.Inset : ContentStyleType.Default)
+    const isInset = inset === 'true'
+
+    setContentStyle(isInset ? ContentStyleType.Inset : ContentStyleType.Default)
+    toggleInsetClass(isInset)
   }, [])
 
   return (

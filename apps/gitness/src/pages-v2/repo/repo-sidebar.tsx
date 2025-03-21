@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { CSSProperties, useCallback, useEffect, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -210,7 +210,7 @@ export const RepoSidebar = () => {
 
   return (
     <>
-      <div className="grid grid-cols-[auto_1fr]">
+      <div className="grid" style={{ 'grid-template-columns': 'auto 1px 1fr' } as CSSProperties}>
         {!repository?.is_empty && (
           <RepoSidebarView
             selectBranchOrTag={selectBranchOrTag}
@@ -227,9 +227,8 @@ export const RepoSidebar = () => {
             )}
           </RepoSidebarView>
         )}
-        <div className="nested-sidebar-height">
-          <Outlet />
-        </div>
+
+        <Outlet />
       </div>
     </>
   )

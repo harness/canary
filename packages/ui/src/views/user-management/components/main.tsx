@@ -9,7 +9,7 @@ export const UserManagementPageContent = ({ handlers }: Pick<IUserManagementPage
   const { totalPages, page: currentPage, setPage } = useAdminListUsersStore()
 
   return (
-    <SandboxLayout.Main className="max-w-[1000px]">
+    <SandboxLayout.Main>
       <Content totalPages={totalPages} currentPage={currentPage} setPage={setPage} />
       <Dialogs handlers={handlers} />
     </SandboxLayout.Main>

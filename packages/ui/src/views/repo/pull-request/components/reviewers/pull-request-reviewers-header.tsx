@@ -69,40 +69,37 @@ const ReviewersHeader = ({
               {t('views:pullRequests.noUsers', 'No users found.')}
             </div>
           )}
+          {usersList?.length === 1 && usersList[0].uid === currentUserId ? (
+            <div className="px-5 py-4 text-center leading-tight text-foreground-2">
+              {t('views:pullRequests.noUsers', 'No users found.')}
+            </div>
+          ) : (
+            <ScrollArea viewportClassName="max-h-80">
+              {usersList?.map(({ display_name, id, uid }) => {
+                if (uid === currentUserId) return null
 
-          <ScrollArea viewportClassName="max-h-80">
-            {usersList?.length === 1 && usersList[0].uid === currentUserId ? (
-              <div className="px-5 py-4 text-center leading-tight text-foreground-2">
-                {t('views:pullRequests.noUsers', 'No users found.')}
-              </div>
-            ) : (
-              <>
-                {usersList?.map(({ display_name, id, uid }) => {
-                  if (uid === currentUserId) return null
+                const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
 
-                  const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
-
-                  return (
-                    <DropdownMenu.Item
-                      className={cn('py-2', {
-                        'pl-7': !isSelected
-                      })}
-                      key={uid}
-                      onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}
-                    >
-                      <div className="flex w-full min-w-0 items-center gap-x-2 pl-1">
-                        {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
-                        <Avatar.Root>
-                          <Avatar.Fallback>{getInitials(display_name)}</Avatar.Fallback>
-                        </Avatar.Root>
-                        <span className="truncate text-14 font-medium text-foreground-8">{display_name}</span>
-                      </div>
-                    </DropdownMenu.Item>
-                  )
-                })}
-              </>
-            )}
-          </ScrollArea>
+                return (
+                  <DropdownMenu.Item
+                    className={cn('py-2', {
+                      'pl-7': !isSelected
+                    })}
+                    key={uid}
+                    onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}
+                  >
+                    <div className="flex w-full min-w-0 items-center gap-x-2 pl-1">
+                      {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
+                      <Avatar.Root>
+                        <Avatar.Fallback>{getInitials(display_name)}</Avatar.Fallback>
+                      </Avatar.Root>
+                      <span className="truncate text-14 font-medium text-foreground-8">{display_name}</span>
+                    </div>
+                  </DropdownMenu.Item>
+                )
+              })}
+            </ScrollArea>
+          )}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </div>

@@ -8,18 +8,15 @@ import { isEmpty } from 'lodash-es'
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
 interface StepInfoProps {
-  item: {
-    step: string
-    description: string
-    code?: string
-    comment?: string
-  }
-  index: number
+  step: string
+  description: string
+  code?: string
+  comment?: string
 }
 
-const StepInfo: FC<StepInfoProps> = ({ item, index }) => {
+const StepInfo: FC<StepInfoProps> = item => {
   return (
-    <li key={index}>
+    <li>
       <Layout.Horizontal className="gap-x-1">
         <h3 className="text-14 font-medium text-foreground-1">{item.step}</h3>
         <Layout.Vertical className="w-[90%] max-w-full">
@@ -96,7 +93,7 @@ const PullRequestMergeSection = ({
     e.stopPropagation()
 
     setAccordionValues(prevState => [...prevState, ACCORDION_VALUE])
-    setShowCommandLineInfo(!showCommandLineInfo)
+    setShowCommandLineInfo(prevState => !prevState)
   }
 
   return (
@@ -164,20 +161,20 @@ const PullRequestMergeSection = ({
                   command line to resolve the conflicts
                 </p>
                 <ol className="flex flex-col gap-y-3">
-                  {stepMap.map((item, index) => (
-                    <StepInfo key={item.step} item={item} index={index} />
+                  {stepMap.map(item => (
+                    <StepInfo key={item.step} {...item} />
                   ))}
                 </ol>
               </div>
             )}
             <span className="text-14 text-foreground-2">
-              Conflicting files <span className="text-foreground-4">{`(${conflictingFiles?.length || 0})`}</span>
+              Conflicting files <span className="text-foreground-4">{conflictingFiles?.length || 0}</span>
             </span>
 
             {!isEmpty(conflictingFiles) && (
               <div className="mt-1">
-                {conflictingFiles?.map((file, idx) => (
-                  <div className="flex items-center gap-x-2 py-1.5" key={`${file}-${idx}`}>
+                {conflictingFiles?.map(file => (
+                  <div className="flex items-center gap-x-2 py-1.5" key={file}>
                     <Icon className="text-icons-1" size={16} name="file" />
                     <span className="text-14 text-foreground-1">{file}</span>
                   </div>

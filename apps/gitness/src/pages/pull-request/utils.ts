@@ -200,7 +200,7 @@ export const getCommentsInfoData = ({
     return { header: 'All comments are resolved', content: undefined, status: 'success' }
   }
 
-  const unresolvedCount = resolvedCommentArrParams?.length || 0 // Ensure a default value
+  const unresolvedCount = resolvedCommentArrParams?.[0] || 0 // Ensure a default value
 
   return {
     header: 'Unresolved comments',

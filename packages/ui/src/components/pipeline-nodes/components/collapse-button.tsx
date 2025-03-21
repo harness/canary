@@ -8,11 +8,11 @@ export const CollapseButton = ({ collapsed, onToggle }: CollapseButtonProps) => 
     <Button
       className="bg-graph-background-3 text-icons-1 hover:bg-graph-background-4 hover:text-icons-3"
       variant="custom"
-      size="xs_icon"
+      size="sm_icon"
       onMouseDown={e => e.stopPropagation()}
       onClick={onToggle}
     >
-      <Icon name={collapsed ? 'collapse-out' : 'collapse-in'} />
+      <Icon size={18} name={collapsed ? 'collapse-out' : 'collapse-in'} />
     </Button>
   )
 }

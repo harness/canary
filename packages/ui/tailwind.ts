@@ -360,6 +360,9 @@ export default {
             2: 'hsl(var(--canary-graph-background-2))',
             3: 'var(--canary-graph-background-3)',
             4: 'hsl(var(--canary-graph-background-4))'
+          },
+          border: {
+            1: 'hsl(var(--canary-graph-border-1))'
           }
         }
       },

@@ -2,7 +2,7 @@ import { cn } from '@utils/cn'
 
 import './step-node.css'
 
-import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
+import { ContainerNodeConfig, ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
@@ -27,6 +27,7 @@ export interface StepNodeProps {
   isCollapsedNode?: boolean
   parallelContainerConfig?: Partial<ParallelContainerConfigType>
   serialContainerConfig?: Partial<SerialContainerConfigType>
+  config?: ContainerNodeConfig
 }
 
 export function StepNode(props: StepNodeProps) {
@@ -46,7 +47,8 @@ export function StepNode(props: StepNodeProps) {
     hideContextMenu,
     hideFloatingButtons,
     parallelContainerConfig,
-    serialContainerConfig
+    serialContainerConfig,
+    config
   } = props
 
   return (
@@ -57,14 +59,22 @@ export function StepNode(props: StepNodeProps) {
         className={cn('bg-background-8 rounded-md', {
           'unified-pipeline-studio_card-wrapper': executionStatus === 'executing'
         })}
+        // The collapse node should have the same width as in the node config. Therefore, we set the style.
+        style={
+          config?.minWidth
+            ? {
+                width: `${config?.minWidth}px`
+              }
+            : {}
+        }
       >
         <div
           role="button"
           tabIndex={0}
           className={cn(
-            'flex flex-col justify-end gap-y-2 box size-full rounded-md border bg-graph-gradient-1 cursor-pointer px-2.5 pt-2.5 pb-3 shadow-1',
+            'flex flex-col justify-end gap-y-2 box size-full rounded-md border bg-graph-gradient-1 cursor-pointer p-2.5 pt-2 shadow-1',
             {
-              'border-borders-2': !selected,
+              'border-graph-border-1': !selected,
               'border-borders-3': selected,
               'border-borders-success': executionStatus === 'success',
               'border-borders-alert': executionStatus === 'warning',
@@ -98,10 +108,10 @@ export function StepNode(props: StepNodeProps) {
               serialContainerConfig={serialContainerConfig}
             />
           )}
-          {!!icon && <div className="mb-0.5">{icon}</div>}
-          <span className="line-clamp-2 text-14 leading-snug text-foreground-1">
+          {icon}
+          <span className="line-clamp-2 text-14 font-medium leading-snug text-foreground-1">
             {name}
-            {!!counter && <span className="text-foreground-5"> ({counter})</span>}
+            {!!counter && <span className="font-normal text-foreground-4"> ({counter})</span>}
           </span>
           {warningMessage && <WarningLabel>{warningMessage}</WarningLabel>}
         </div>

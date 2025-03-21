@@ -465,6 +465,7 @@
     --canary-graph-background-2: var(--canary-grey-8); /* dashed nodes group - dark color */
     --canary-graph-background-3: hsla(var(--canary-grey-50) / 0.1); /* collapse button bg */
     --canary-graph-background-4: var(--canary-grey-15); /* collapse button Hover bg */
+    --canary-graph-border-1: var(--canary-grey-20);
   }
 
   /* Need .light and .dark classes for MFE */
@@ -738,6 +739,7 @@
     --canary-graph-background-2: 240 8% 95%; /* dashed nodes group - dark color */
     --canary-graph-background-3: hsla(240, 4%, 90%, 1); /* collapse button bg */
     --canary-graph-background-4: 240 5% 79%; /* collapse button Hover bg */
+    --canary-graph-border-1: 240 5% 79%;
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -1031,10 +1033,11 @@
     --canary-graph-gradient-executing-3: hsla(var(--canary-amber-100));
     --canary-graph-gradient-executing-4: hsla(var(--canary-amber-100));
     --canary-graph-viewport-bg: hsla(240, 1%, 73%, 1);
-    --canary-graph-background-1: 0 0% 98%; /* nodes group - light color */
-    --canary-graph-background-2: 240 8% 95%; /* dashed nodes group - dark color */
+    --canary-graph-background-1: 0 0% 100%; /* nodes group - light color */
+    --canary-graph-background-2: 0 0% 98%; /* dashed nodes group - dark color */
     --canary-graph-background-3: hsla(240, 4%, 90%, 1); /* collapse button bg */
     --canary-graph-background-4: 240 5% 79%; /* collapse button Hover bg */
+    --canary-graph-border-1: 240 5% 79%; /* node step border */ /* border-2*/
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -1619,10 +1622,11 @@
     --canary-graph-gradient-executing-1: hsla(var(--canary-amber-150));
     --canary-graph-gradient-executing-2: hsla(var(--canary-amber-600));
     --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-150));
-    --canary-graph-background-1: 0 0% 98%; /* nodes group - light color */
-    --canary-graph-background-2: 240 8% 95%; /* dashed nodes group - dark color */
+    --canary-graph-background-1: 0 0% 100%; /* nodes group - light color */
+    --canary-graph-background-2: 0 0% 98%; /* dashed nodes group - dark color */
     --canary-graph-background-3: hsla(240, 4%, 90%, 1); /* collapse button bg */
     --canary-graph-background-4: 240 5% 79%; /* collapse button Hover bg */
+    --canary-graph-border-1: 240 5% 79%; /* node step border */
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -1916,10 +1920,11 @@
     --canary-graph-gradient-executing-3: hsla(var(--canary-amber-100));
     --canary-graph-gradient-executing-4: hsla(var(--canary-amber-100));
     --canary-graph-viewport-bg: hsla(240, 1%, 73%, 1);
-    --canary-graph-background-1: 0 0% 98%; /* nodes group - light color */
-    --canary-graph-background-2: 240 8% 95%; /* dashed nodes group - dark color */
+    --canary-graph-background-1: 0 0% 100%; /* nodes group - light color */
+    --canary-graph-background-2: 0 0% 98%; /* dashed nodes group - dark color */
     --canary-graph-background-3: hsla(240, 4%, 90%, 1); /* collapse button bg */
     --canary-graph-background-4: 240 5% 79%; /* collapse button Hover bg */
+    --canary-graph-border-1: 240 5% 79%; /* node step border */
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -2228,6 +2233,7 @@
     --canary-graph-background-2: var(--canary-base-chrome-950);
     --canary-graph-background-3: hsla(var(--canary-base-chrome-850) / 0.5);
     --canary-graph-background-4: var(--canary-base-chrome-850);
+    --canary-graph-border-1: var(--canary-grey-20);
   }
 
   .dark-std-std {
@@ -2491,6 +2497,7 @@
     --canary-graph-background-2: var(--canary-base-chrome-950);
     --canary-graph-background-3: hsla(var(--canary-base-chrome-850) / 0.5);
     --canary-graph-background-4: var(--canary-base-chrome-850);
+    --canary-graph-border-1: var(--canary-base-chrome-850);
 
     --canary-widget-number-gradient-from: var(--canary-base-chrome-200) / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 0;
@@ -2789,6 +2796,7 @@
     --canary-graph-background-2: var(--canary-base-chrome-950);
     --canary-graph-background-3: hsla(var(--canary-base-chrome-400) / 0.1);
     --canary-graph-background-4: var(--canary-base-chrome-850);
+    --canary-graph-border-1: var(--canary-base-chrome-700);
 
     --canary-widget-number-gradient-from: var(--canary-base-chrome-100);
     --canary-widget-number-gradient-to: var(--canary-base-chrome-500);
@@ -3077,6 +3085,7 @@
     --canary-graph-background-2: var(--canary-base-chrome-950);
     --canary-graph-background-3: hsla(var(--canary-base-chrome-850) / 0.5);
     --canary-graph-background-4: var(--canary-base-chrome-850);
+    --canary-graph-border-1: var(--canary-base-chrome-850);
 
     --canary-widget-number-gradient-from: var(--canary-base-chrome-200) / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 0;

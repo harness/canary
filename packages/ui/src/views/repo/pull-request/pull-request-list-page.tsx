@@ -191,7 +191,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main className="max-w-[1040px]">
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
         {showTopBar && (
           <PRListFilterHandler

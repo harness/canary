@@ -1202,16 +1202,20 @@ mark {
   @apply border-borders-5 border-b;
 }
 
-.inset-layout {
-  overflow: hidden;
+.main-page-content-background {
+  @apply bg-background-1;
+}
+
+.main-content-height {
+  @apply h-[calc(100%-55px)]; /* where 55px is for the Breadcrumbs height */
+}
+
+.inset-layout .main-page-content-background {
+  @apply bg-sidebar-background-1;
 }
 
 .inset-layout .topbar-bottom-border {
   @apply border-none;
-}
-
-.inset-layout .main-content-height {
-  @apply h-[calc(100%-55px)]; /* where 55px is for the Breadcrumbs height */
 }
 
 .inset-layout .nested-sidebar-height {

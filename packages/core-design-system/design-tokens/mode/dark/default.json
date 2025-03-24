@@ -162,234 +162,435 @@
     }
   },
   "set": {
-    "default": {
-      "text": {
-        "$type": "color",
-        "$value": "{brand.onColor.600}",
-        "$description": "Text and icon color for primary elements. Ensures maximum contrast and visibility."
-      },
-      "background": {
-        "$type": "color",
-        "$value": "{brand.color.600}",
-        "$description": "Background color for primary elements. Creates emphasis for the most important action in a given context."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{set.default.background}",
-        "$description": "Border color for primary elements."
-      },
-      "separator": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.5",
-              "space": "lch"
-            }
-          }
+    "brand": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{brand.onColor.600}",
+          "$description": "Text and icon color for primary elements. Ensures maximum contrast and visibility."
         },
-        "$type": "color",
-        "$value": "{brand.onColor.600}",
-        "$description": "Separator color for primary split elements."
-      },
-      "background-hover": {
-        "$type": "color",
-        "$value": "{brand.color.500}",
-        "$description": "Background color on hover for default elements to provide interactive feedback"
-      },
-      "background-selected": {
-        "$type": "color",
-        "$value": "{brand.color.400}",
-        "$description": "Background color when selected for default elements, indicating active state"
+        "background": {
+          "$type": "color",
+          "$value": "{brand.color.600}",
+          "$description": "Background color for primary elements. Creates emphasis for the most important action in a given context."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.brand.solid.background}",
+          "$description": "Border color for primary elements."
+        },
+        "separator": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.5",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{brand.onColor.600}",
+          "$description": "Separator color for primary split elements."
+        },
+        "background-hover": {
+          "$type": "color",
+          "$value": "{brand.color.500}",
+          "$description": "Background color on hover for default elements to provide interactive feedback"
+        },
+        "background-selected": {
+          "$type": "color",
+          "$value": "{brand.color.400}",
+          "$description": "Background color when selected for default elements, indicating active state"
+        }
       }
     },
-    "secondary": {
-      "text": {
-        "$type": "color",
-        "$value": "{colors.chrome.200}",
-        "$description": "Text color for secondary elements, providing contrast for supporting actions"
+    "gray": {
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.chrome.200}",
+          "$description": "Text color for gray elements, providing contrast for supporting actions"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.850}",
+          "$description": "Background color for gray elements that complement primary actions"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.gray.soft.background}",
+          "$description": "Border color for gray elements to create subtle visual hierarchy"
+        },
+        "background-hover": {
+          "$type": "color",
+          "$value": "{colors.chrome.800}",
+          "$description": "Background color on hover for gray elements to provide interactive feedback"
+        },
+        "background-selected": {
+          "$type": "color",
+          "$value": "{colors.chrome.700}",
+          "$description": "Background color when selected for gray elements, indicating active state"
+        }
       },
-      "background": {
-        "$type": "color",
-        "$value": "{colors.chrome.850}",
-        "$description": "Background color for secondary elements that complement primary actions"
+      "surface": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.chrome.300}",
+          "$description": "Primary text color for gray elements, providing standard readability"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.900}",
+          "$description": "Base background color for gray elements used in default states"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{colors.chrome.850}",
+          "$description": "Border color for gray elements to provide visual definition"
+        },
+        "background-hover": {
+          "$type": "color",
+          "$value": "{colors.chrome.850}",
+          "$description": "Background color on hover for gray elements to indicate interactivity"
+        },
+        "background-selected": {
+          "$type": "color",
+          "$value": "{colors.chrome.800}",
+          "$description": "Background color when selected for gray elements, indicating active state"
+        }
       },
-      "border": {
-        "$type": "color",
-        "$value": "{set.secondary.background}",
-        "$description": "Border color for secondary elements to create subtle visual hierarchy"
-      },
-      "background-hover": {
-        "$type": "color",
-        "$value": "{colors.chrome.800}",
-        "$description": "Background color on hover for secondary elements to provide interactive feedback"
-      },
-      "background-selected": {
-        "$type": "color",
-        "$value": "{colors.chrome.700}",
-        "$description": "Background color when selected for secondary elements, indicating active state"
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.chrome.950}",
+          "$description": "Text color for gray elements, providing contrast for supporting actions"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.400}",
+          "$description": "Background color for gray elements that complement primary actions"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.gray.solid.background}",
+          "$description": "Border color for gray elements to create subtle visual hierarchy"
+        }
       }
     },
-    "neutral": {
-      "text": {
-        "$type": "color",
-        "$value": "{colors.chrome.300}",
-        "$description": "Primary text color for neutral elements, providing standard readability"
+    "green": {
+      "surface": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.green.200}",
+          "$description": "Primary text color for green elements, ensuring visibility for confirmation messaging"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.green.950}",
+          "$description": "Base background color for green elements to indicate positive outcomes"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{colors.green.800}",
+          "$description": "Border color for green elements to provide visual definition"
+        },
+        "background-hover": {
+          "$type": "color",
+          "$value": "{colors.green.900}",
+          "$description": "Background color on hover for green elements to indicate interactivity"
+        },
+        "background-selected": {
+          "$type": "color",
+          "$value": "{colors.green.800}",
+          "$description": "Background color when selected for green elements, indicating active state"
+        }
       },
-      "background": {
-        "$type": "color",
-        "$value": "{colors.chrome.900}",
-        "$description": "Base background color for neutral elements used in default states"
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.green.200}",
+          "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.green.900}",
+          "$description": "Background color for green tags. Creates a distinct surface with green theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.green.soft.background}",
+          "$description": "Border color for green tags."
+        }
       },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.chrome.850}",
-        "$description": "Border color for neutral elements to provide visual definition"
-      },
-      "background-hover": {
-        "$type": "color",
-        "$value": "{colors.chrome.850}",
-        "$description": "Background color on hover for neutral elements to indicate interactivity"
-      },
-      "background-selected": {
-        "$type": "color",
-        "$value": "{colors.chrome.800}",
-        "$description": "Background color when selected for neutral elements, indicating active state"
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.green.950}",
+          "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.green.300}",
+          "$description": "Background color for green tags. Creates a distinct surface with green theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.green.solid.background}",
+          "$description": "Border color for green tags."
+        }
       }
     },
-    "success": {
-      "text": {
-        "$type": "color",
-        "$value": "{colors.green.200}",
-        "$description": "Primary text color for success elements, ensuring visibility for confirmation messaging"
+    "yellow": {
+      "surface": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.yellow.200}",
+          "$description": "Primary text color for yellow elements, ensuring visibility for cautionary messaging"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.yellow.950}",
+          "$description": "Base background color for yellow elements to indicate caution states"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{colors.yellow.800}",
+          "$description": "Border color for yellow elements to provide visual definition"
+        },
+        "background-hover": {
+          "$type": "color",
+          "$value": "{colors.yellow.900}",
+          "$description": "Background color on hover for yellow elements to indicate interactivity"
+        },
+        "background-selected": {
+          "$type": "color",
+          "$value": "{colors.yellow.800}",
+          "$description": "Background color when selected for yellow elements, indicating active state"
+        }
       },
-      "background": {
-        "$type": "color",
-        "$value": "{colors.green.950}",
-        "$description": "Base background color for success elements to indicate positive outcomes"
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.yellow.200}",
+          "$description": "Text color for yellow tags. Ensures readability while maintaining the yellow color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.yellow.900}",
+          "$description": "Background color for yellow tags. Creates a distinct surface with yellow theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.yellow.soft.background}",
+          "$description": "Border color for yellow tags."
+        }
       },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.green.800}",
-        "$description": "Border color for success elements to provide visual definition"
-      },
-      "background-hover": {
-        "$type": "color",
-        "$value": "{colors.green.900}",
-        "$description": "Background color on hover for success elements to indicate interactivity"
-      },
-      "background-selected": {
-        "$type": "color",
-        "$value": "{colors.green.800}",
-        "$description": "Background color when selected for success elements, indicating active state"
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.yellow.950}",
+          "$description": "Text color for yellow tags. Ensures readability while maintaining the yellow color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.yellow.300}",
+          "$description": "Background color for yellow tags. Creates a distinct surface with yellow theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.yellow.solid.background}",
+          "$description": "Border color for yellow tags."
+        }
       }
     },
-    "warning": {
-      "text": {
-        "$type": "color",
-        "$value": "{colors.yellow.200}",
-        "$description": "Primary text color for warning elements, ensuring visibility for cautionary messaging"
+    "red": {
+      "surface": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.red.200}",
+          "$description": "Primary text color for red elements, ensuring visibility for critical messaging"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.950}",
+          "$description": "Base background color for red elements to indicate error or warning states"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{colors.red.800}",
+          "$description": "Border color for red elements to provide visual definition"
+        },
+        "background-hover": {
+          "$type": "color",
+          "$value": "{colors.red.900}",
+          "$description": "Background color on hover for red elements to indicate interactivity"
+        },
+        "background-selected": {
+          "$type": "color",
+          "$value": "{colors.red.800}",
+          "$description": "Background color when selected for red elements, indicating active state"
+        }
       },
-      "background": {
-        "$type": "color",
-        "$value": "{colors.yellow.950}",
-        "$description": "Base background color for warning elements to indicate caution states"
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.red.200}",
+          "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}",
+          "$description": "Background color for red tags. Creates a distinct surface with red theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.red.soft.background}",
+          "$description": "Border color for red tags."
+        }
       },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.yellow.800}",
-        "$description": "Border color for warning elements to provide visual definition"
-      },
-      "background-hover": {
-        "$type": "color",
-        "$value": "{colors.yellow.900}",
-        "$description": "Background color on hover for warning elements to indicate interactivity"
-      },
-      "background-selected": {
-        "$type": "color",
-        "$value": "{colors.yellow.800}",
-        "$description": "Background color when selected for warning elements, indicating active state"
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.red.950}",
+          "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.300}",
+          "$description": "Background color for red tags. Creates a distinct surface with red theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.red.solid.background}",
+          "$description": "Border color for red tags."
+        }
       }
     },
-    "danger": {
-      "text": {
-        "$type": "color",
-        "$value": "{colors.red.200}",
-        "$description": "Primary text color for danger elements, ensuring visibility for critical messaging"
+    "blue": {
+      "surface": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.blue.200}",
+          "$description": "Primary text color for blue elements, ensuring visibility for in-progress states"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.blue.950}",
+          "$description": "Base background color for blue elements to indicate active processes"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{colors.blue.800}",
+          "$description": "Border color for blue elements to provide visual definition"
+        },
+        "background-hover": {
+          "$type": "color",
+          "$value": "{colors.blue.900}",
+          "$description": "Background color on hover for blue elements to indicate interactivity"
+        },
+        "background-selected": {
+          "$type": "color",
+          "$value": "{colors.blue.800}",
+          "$description": "Background color when selected for blue elements, indicating active state"
+        }
       },
-      "background": {
-        "$type": "color",
-        "$value": "{colors.red.950}",
-        "$description": "Base background color for danger elements to indicate error or warning states"
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.blue.200}",
+          "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.blue.900}",
+          "$description": "Background color for blue tags. Creates a distinct surface with blue theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.blue.soft.background}",
+          "$description": "Border color for blue tags. "
+        }
       },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.red.800}",
-        "$description": "Border color for danger elements to provide visual definition"
-      },
-      "background-hover": {
-        "$type": "color",
-        "$value": "{colors.red.900}",
-        "$description": "Background color on hover for danger elements to indicate interactivity"
-      },
-      "background-selected": {
-        "$type": "color",
-        "$value": "{colors.red.800}",
-        "$description": "Background color when selected for danger elements, indicating active state"
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.blue.950}",
+          "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.blue.300}",
+          "$description": "Background color for blue tags. Creates a distinct surface with blue theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.blue.solid.background}",
+          "$description": "Border color for blue tags. "
+        }
       }
     },
-    "info": {
-      "text": {
-        "$type": "color",
-        "$value": "{colors.blue.200}",
-        "$description": "Primary text color for info elements, ensuring visibility for in-progress states"
+    "purple": {
+      "surface": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.purple.200}",
+          "$description": "Primary text color for purple elements, providing clear readability"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.purple.950}",
+          "$description": "Base background color for purple elements to indicate completion"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{colors.purple.800}",
+          "$description": "Border color for purple elements to provide visual definition"
+        },
+        "background-hover": {
+          "$type": "color",
+          "$value": "{colors.purple.900}",
+          "$description": "Background color on hover for purple elements to indicate interactivity"
+        },
+        "background-selected": {
+          "$type": "color",
+          "$value": "{colors.purple.800}",
+          "$description": "Background color when selected for purple elements, indicating active state"
+        }
       },
-      "background": {
-        "$type": "color",
-        "$value": "{colors.blue.950}",
-        "$description": "Base background color for info elements to indicate active processes"
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.purple.200}",
+          "$description": "Text color for purple tags. Ensures readability while maintaining the purple color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.purple.900}",
+          "$description": "Background color for purple tags. Creates a distinct surface with purple theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.purple.soft.background}",
+          "$description": "Border color for purple tags."
+        }
       },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.blue.800}",
-        "$description": "Border color for info elements to provide visual definition"
-      },
-      "background-hover": {
-        "$type": "color",
-        "$value": "{colors.blue.900}",
-        "$description": "Background color on hover for info elements to indicate interactivity"
-      },
-      "background-selected": {
-        "$type": "color",
-        "$value": "{colors.blue.800}",
-        "$description": "Background color when selected for info elements, indicating active state"
-      }
-    },
-    "merged": {
-      "text": {
-        "$type": "color",
-        "$value": "{colors.purple.200}",
-        "$description": "Primary text color for merged elements, providing clear readability"
-      },
-      "background": {
-        "$type": "color",
-        "$value": "{colors.purple.950}",
-        "$description": "Base background color for merged elements to indicate completion"
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.purple.800}",
-        "$description": "Border color for merged elements to provide visual definition"
-      },
-      "background-hover": {
-        "$type": "color",
-        "$value": "{colors.purple.900}",
-        "$description": "Background color on hover for merged elements to indicate interactivity"
-      },
-      "background-selected": {
-        "$type": "color",
-        "$value": "{colors.purple.800}",
-        "$description": "Background color when selected for merged elements, indicating active state"
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.purple.950}",
+          "$description": "Text color for purple tags. Ensures readability while maintaining the purple color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.purple.900}",
+          "$description": "Background color for purple tags. Creates a distinct surface with purple theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.purple.solid.background}",
+          "$description": "Border color for purple tags."
+        }
       }
     },
     "ai": {
@@ -417,6 +618,158 @@
         "$type": "color",
         "$value": "{colors.chrome.800}",
         "$description": "Background color when selected for AI-related elements, indicating active state"
+      }
+    },
+    "brown": {
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.brown.200}",
+          "$description": "Text color for brown tags. Ensures readability while maintaining the brown color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.brown.900}",
+          "$description": "Background color for brown tags. Creates a distinct surface with brown theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.brown.soft.background}",
+          "$description": "Border color for brown tags. "
+        }
+      }
+    },
+    "cyan": {
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.cyan.200}",
+          "$description": "Text color for cyan tags. Ensures readability while maintaining the cyan color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.cyan.900}",
+          "$description": "Background color for cyan tags. Creates a distinct surface with cyan theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.cyan.soft.background}",
+          "$description": "Border color for cyan tags."
+        }
+      }
+    },
+    "indigo": {
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.indigo.200}",
+          "$description": "Text color for indigo tags. Ensures readability while maintaining the indigo color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.indigo.900}",
+          "$description": "Background color for indigo tags. Creates a distinct surface with indigo theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.indigo.soft.background}",
+          "$description": "Border color for indigo tags."
+        }
+      }
+    },
+    "lime": {
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.lime.200}",
+          "$description": "Text color for lime tags. Ensures readability while maintaining the lime color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.lime.900}",
+          "$description": "Background color for lime tags. Creates a distinct surface with lime theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.lime.soft.background}",
+          "$description": "Border color for lime tags."
+        }
+      }
+    },
+    "mint": {
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.mint.200}",
+          "$description": "Text color for mint tags. Ensures readability while maintaining the mint color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.mint.900}",
+          "$description": "Background color for mint tags. Creates a distinct surface with mint theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.mint.soft.background}",
+          "$description": "Border color for mint tags."
+        }
+      }
+    },
+    "orange": {
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.orange.200}",
+          "$description": "Text color for orange tags. Ensures readability while maintaining the orange color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.orange.900}",
+          "$description": "Background color for orange tags. Creates a distinct surface with orange theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.orange.soft.background}",
+          "$description": "Border color for orange tags."
+        }
+      }
+    },
+    "pink": {
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.pink.200}",
+          "$description": "Text color for pink tags. Ensures readability while maintaining the pink color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.pink.900}",
+          "$description": "Background color for pink tags. Creates a distinct surface with pink theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.pink.soft.background}",
+          "$description": "Border color for pink tags."
+        }
+      }
+    },
+    "violet": {
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.violet.200}",
+          "$description": "Text color for violet tags. Ensures readability while maintaining the violet color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.violet.900}",
+          "$description": "Background color for violet tags. Creates a distinct surface with violet theme styling."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.violet.soft.background}",
+          "$description": "Border color for violet tags."
+        }
       }
     }
   },
@@ -1182,316 +1535,6 @@
             "$value": "{border.2}",
             "$description": "Border color for the selected tab item. Reinforces the active state with defined boundaries."
           }
-        }
-      }
-    },
-    "tag": {
-      "blue": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.blue.200}",
-          "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.blue.900}",
-          "$description": "Background color for blue tags. Creates a distinct surface with blue theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.blue.950}",
-          "$description": "Subtle background variation for blue tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.blue.background}",
-          "$description": "Border color for blue tags. "
-        }
-      },
-      "brown": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.brown.200}",
-          "$description": "Text color for brown tags. Ensures readability while maintaining the brown color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.brown.900}",
-          "$description": "Background color for brown tags. Creates a distinct surface with brown theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.brown.950}",
-          "$description": "Subtle background variation for brown tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.brown.background}",
-          "$description": "Border color for brown tags. "
-        }
-      },
-      "cyan": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.cyan.200}",
-          "$description": "Text color for cyan tags. Ensures readability while maintaining the cyan color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.cyan.900}",
-          "$description": "Background color for cyan tags. Creates a distinct surface with cyan theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.cyan.950}",
-          "$description": "Subtle background variation for cyan tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.cyan.background}",
-          "$description": "Border color for cyan tags."
-        }
-      },
-      "green": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.green.200}",
-          "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.green.900}",
-          "$description": "Background color for green tags. Creates a distinct surface with green theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.green.950}",
-          "$description": "Subtle background variation for green tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.green.background}",
-          "$description": "Border color for green tags."
-        }
-      },
-      "indigo": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.indigo.200}",
-          "$description": "Text color for indigo tags. Ensures readability while maintaining the indigo color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.indigo.900}",
-          "$description": "Background color for indigo tags. Creates a distinct surface with indigo theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.indigo.950}",
-          "$description": "Subtle background variation for indigo tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.indigo.background}",
-          "$description": "Border color for indigo tags."
-        }
-      },
-      "lime": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.lime.200}",
-          "$description": "Text color for lime tags. Ensures readability while maintaining the lime color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.lime.900}",
-          "$description": "Background color for lime tags. Creates a distinct surface with lime theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.lime.950}",
-          "$description": "Subtle background variation for lime tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.lime.background}",
-          "$description": "Border color for lime tags."
-        }
-      },
-      "mint": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.mint.200}",
-          "$description": "Text color for mint tags. Ensures readability while maintaining the mint color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.mint.900}",
-          "$description": "Background color for mint tags. Creates a distinct surface with mint theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.mint.950}",
-          "$description": "Subtle background variation for mint tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.mint.background}",
-          "$description": "Border color for mint tags."
-        }
-      },
-      "orange": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.orange.200}",
-          "$description": "Text color for orange tags. Ensures readability while maintaining the orange color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.orange.900}",
-          "$description": "Background color for orange tags. Creates a distinct surface with orange theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.orange.950}",
-          "$description": "Subtle background variation for orange tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.orange.background}",
-          "$description": "Border color for orange tags."
-        }
-      },
-      "pink": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pink.200}",
-          "$description": "Text color for pink tags. Ensures readability while maintaining the pink color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.pink.900}",
-          "$description": "Background color for pink tags. Creates a distinct surface with pink theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.pink.950}",
-          "$description": "Subtle background variation for pink tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.pink.background}",
-          "$description": "Border color for pink tags."
-        }
-      },
-      "purple": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.purple.200}",
-          "$description": "Text color for purple tags. Ensures readability while maintaining the purple color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.purple.900}",
-          "$description": "Background color for purple tags. Creates a distinct surface with purple theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.purple.950}",
-          "$description": "Subtle background variation for purple tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.purple.background}",
-          "$description": "Border color for purple tags."
-        }
-      },
-      "red": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.red.200}",
-          "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}",
-          "$description": "Background color for red tags. Creates a distinct surface with red theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}",
-          "$description": "Subtle background variation for red tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.red.background}",
-          "$description": "Border color for red tags."
-        }
-      },
-      "violet": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.violet.200}",
-          "$description": "Text color for violet tags. Ensures readability while maintaining the violet color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.violet.900}",
-          "$description": "Background color for violet tags. Creates a distinct surface with violet theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.violet.950}",
-          "$description": "Subtle background variation for violet tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.violet.background}",
-          "$description": "Border color for violet tags."
-        }
-      },
-      "yellow": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.yellow.200}",
-          "$description": "Text color for yellow tags. Ensures readability while maintaining the yellow color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.yellow.900}",
-          "$description": "Background color for yellow tags. Creates a distinct surface with yellow theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.yellow.950}",
-          "$description": "Subtle background variation for yellow tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.yellow.background}",
-          "$description": "Border color for yellow tags."
-        }
-      },
-      "gray": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.chrome.200}",
-          "$description": "Text color for gray tags. Ensures readability while maintaining the gray color theme."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.chrome.850}",
-          "$description": "Background color for gray tags. Creates a distinct surface with gray theme styling."
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.chrome.900}",
-          "$description": "Subtle background variation for gray tags. Provides a softer alternative for less emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.tag.gray.background}",
-          "$description": "Border color for gray tags."
         }
       }
     },

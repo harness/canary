@@ -5,15 +5,12 @@ import { cn, wrapConditionalObjectElement } from '@/utils'
 import { ScrollArea, ScrollAreaProps } from '@components/scroll-area'
 
 interface MainContentLayoutProps extends PropsWithChildren<unknown> {
-  isInset?: boolean
   className?: string
   breadcrumbs?: ReactNode
 }
 
-export function MainContentLayout({ className, children, breadcrumbs, isInset: _isInset }: MainContentLayoutProps) {
-  const { isInset: __isInset } = useTheme()
-
-  const isInset = _isInset ?? __isInset
+export function MainContentLayout({ className, children, breadcrumbs }: MainContentLayoutProps) {
+  const { isInset } = useTheme()
 
   return (
     <div className={cn('h-screen', className)}>

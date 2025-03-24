@@ -13,10 +13,12 @@ const RepoViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> 
     <Route
       path="*"
       element={
-        <SubHeaderWrapper>
-          <RepoSubheader useTranslationStore={useTranslationStore} />
+        <>
+          <SubHeaderWrapper>
+            <RepoSubheader useTranslationStore={useTranslationStore} />
+          </SubHeaderWrapper>
           {children}
-        </SubHeaderWrapper>
+        </>
       }
     />
   </RootViewWrapper>

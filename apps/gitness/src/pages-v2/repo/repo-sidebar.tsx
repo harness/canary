@@ -1,4 +1,4 @@
-import { CSSProperties, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -210,7 +210,7 @@ export const RepoSidebar = () => {
 
   return (
     <>
-      <div className="grid" style={{ 'grid-template-columns': 'auto 1px 1fr' } as CSSProperties}>
+      <div className="grid" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
         {!repository?.is_empty && (
           <RepoSidebarView
             selectBranchOrTag={selectBranchOrTag}

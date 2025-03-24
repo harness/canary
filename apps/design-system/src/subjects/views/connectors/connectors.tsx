@@ -1,9 +1,12 @@
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
+import { useState } from 'react'
+
 import noop from 'lodash-es/noop'
 
 import { Button, ListActions, Spacer } from '@harnessio/ui/components'
 import {
-  ConnectorRightDrawer,
+  ConnectorEntityIntent,
+  ConnectorRightDrawerMode,
   ConnectorsProvider,
   ConnectorsRightDrawer,
   SandboxLayout,
@@ -11,7 +14,8 @@ import {
 } from '@harnessio/ui/views'
 
 const ConnectorsListPageContent = (): JSX.Element => {
-  const { setRightDrawer, setFormEntity } = useConnectorsContext()
+  const { setRightDrawer, formEntity, setFormEntity } = useConnectorsContext()
+  const [intent, setIntent] = useState<ConnectorEntityIntent>(ConnectorEntityIntent.Create)
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
@@ -23,7 +27,8 @@ const ConnectorsListPageContent = (): JSX.Element => {
               <Button
                 variant="default"
                 onClick={() => {
-                  setRightDrawer(ConnectorRightDrawer.Collection)
+                  setRightDrawer(ConnectorRightDrawerMode.Collection)
+                  setIntent(ConnectorEntityIntent.Create)
                 }}
               >
                 Create Connector
@@ -31,7 +36,8 @@ const ConnectorsListPageContent = (): JSX.Element => {
               <Button
                 variant="default"
                 onClick={() => {
-                  setRightDrawer(ConnectorRightDrawer.Form)
+                  setRightDrawer(ConnectorRightDrawerMode.Form)
+                  setIntent(ConnectorEntityIntent.Edit)
                   setFormEntity({
                     type: 'connector',
                     data: {
@@ -60,6 +66,9 @@ const ConnectorsListPageContent = (): JSX.Element => {
         }
         connectors={harnessConnectors}
         getConnectorDefinition={getHarnessConnectorDefinition}
+        intent={intent}
+        formEntity={formEntity}
+        setFormEntity={setFormEntity}
       />
     </SandboxLayout.Main>
   )

@@ -45,7 +45,8 @@ const inputs: IInputConfigWithConfigInterface[] = [
         { label: 'GitHub Application', value: 'GithubApp' },
         { label: 'Personal Token', value: 'UsernameToken' }
       ]
-    }
+    },
+    required: true
   },
   {
     inputType: 'text',

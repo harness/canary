@@ -1,17 +1,17 @@
 import { createContext, useCallback, useContext, useState } from 'react'
 
-import { ConnectorFormEntityType, ConnectorRightDrawer } from '../types'
+import { ConnectorFormEntityType, ConnectorRightDrawerMode } from '../types'
 
 interface ConnectorsContextProps {
-  rightDrawer: ConnectorRightDrawer
-  setRightDrawer: (value: ConnectorRightDrawer) => void
+  rightDrawer: ConnectorRightDrawerMode
+  setRightDrawer: (value: ConnectorRightDrawerMode) => void
   formEntity: ConnectorFormEntityType | null
   setFormEntity: (value: ConnectorFormEntityType | null) => void
   clearRightDrawerData: () => void
 }
 
 const ConnectorsContext = createContext<ConnectorsContextProps>({
-  rightDrawer: ConnectorRightDrawer.None,
+  rightDrawer: ConnectorRightDrawerMode.None,
   setRightDrawer: () => undefined,
   formEntity: null,
   setFormEntity: () => undefined,
@@ -31,11 +31,11 @@ type ConnectorsProviderProps = {
 }
 
 export const ConnectorsProvider = ({ children }: ConnectorsProviderProps): JSX.Element => {
-  const [rightDrawer, setRightDrawer] = useState<ConnectorRightDrawer>(ConnectorRightDrawer.None)
+  const [rightDrawer, setRightDrawer] = useState<ConnectorRightDrawerMode>(ConnectorRightDrawerMode.None)
   const [formEntity, setFormEntity] = useState<ConnectorFormEntityType | null>(null)
 
   const clearRightDrawerData = useCallback(() => {
-    setRightDrawer(ConnectorRightDrawer.None)
+    setRightDrawer(ConnectorRightDrawerMode.None)
     setFormEntity(null)
   }, [])
 

@@ -5,7 +5,7 @@ import { InputConfigType } from '../../views/unified-pipeline-studio/components/
 
 export type IInputConfigWithConfigInterface = IInputDefinition & InputConfigType
 
-export enum ConnectorRightDrawer {
+export enum ConnectorRightDrawerMode {
   None = 'none',
   Collection = 'palette',
   Form = 'connectorForm'
@@ -13,6 +13,7 @@ export enum ConnectorRightDrawer {
 export interface onSubmitProps {
   values: FieldValues
   formEntity: ConnectorFormEntityType
+  intent: ConnectorEntityIntent
 }
 
 export type ConnectorFormEntityType = {
@@ -31,15 +32,6 @@ export type AnyConnectorDefinition<T = string> = {
   formDefinition: IFormDefinition<InputConfigType>
 }
 
-export enum CredTypeValues {
-  ManualConfig = 'ManualConfig',
-  AssumeIAMRole = 'AssumeIAMRole',
-  AssumeRoleSTS = 'AssumeSTSRole',
-  PermanentTokenConfig = 'PermanentTokenConfig'
-}
-export enum DelegateTypes {
-  DELEGATE_OIDC = 'DelegateOidc'
-}
 // Base interfaces
 export interface ConnectorSpec {
   auth?: AuthenticationSpec
@@ -51,7 +43,6 @@ export interface AuthenticationSpec {
   type: string
 }
 
-// Base connector configuration
 export interface ConnectorPayloadConfig<T extends ConnectorSpec = ConnectorSpec> {
   name: string
   description?: string
@@ -146,4 +137,9 @@ export interface ConnectorItem extends BaseEntityProps {
 export enum ConnectorSelectionType {
   NEW = 'new',
   EXISTING = 'existing'
+}
+
+export enum ConnectorEntityIntent {
+  Create = 'create',
+  Edit = 'edit'
 }

@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { TranslationStore } from '@/views'
 import { Alert } from '@components/alert'
@@ -10,17 +10,25 @@ import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-u
 
 import { getDefaultValuesFromFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
 
-import { AnyConnectorDefinition, ConnectorFormEntityType, ConnectorRightDrawer, onSubmitProps } from './types'
+import {
+  AnyConnectorDefinition,
+  ConnectorEntityIntent,
+  ConnectorFormEntityType,
+  ConnectorRightDrawerMode,
+  onSubmitProps
+} from './types'
 
 interface ConnectorEntityFormProps {
   formEntity: ConnectorFormEntityType
   requestClose: () => void
   onFormSubmit?: (values: onSubmitProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
-  setRightDrawer: (value: ConnectorRightDrawer) => void
+  setRightDrawerMode: (value: ConnectorRightDrawerMode) => void
   useTranslationStore: () => TranslationStore
   openSecretDrawer?: () => void
   apiError?: string | null
+  intent: ConnectorEntityIntent
+  connectorData?: any //TODO: type this to connector data
 }
 
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
@@ -29,9 +37,11 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     apiError = null,
     onFormSubmit,
     getConnectorDefinition,
-    setRightDrawer,
+    setRightDrawerMode,
     useTranslationStore,
-    openSecretDrawer
+    openSecretDrawer,
+    intent,
+    connectorData
   } = props
   const { t: _t } = useTranslationStore()
 
@@ -77,6 +87,12 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     }
   })
 
+  useEffect(() => {
+    if (intent === ConnectorEntityIntent.Edit && connectorData) {
+      
+    }
+  }, [intent])
+
   return (
     <RootForm
       autoFocusPath={formDefinition.inputs[0]?.path}
@@ -84,7 +100,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       resolver={resolver}
       mode="onSubmit"
       onSubmit={values => {
-        onSubmit({ values, formEntity })
+        onSubmit({ values, formEntity, intent })
       }}
       validateAfterFirstSubmit={true}
     >
@@ -93,7 +109,8 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           <EntityFormSectionLayout.Root>
             <EntityFormSectionLayout.Header>
               <EntityFormSectionLayout.Title className="!my-0">
-                Connect to {formEntity.data.name}
+                {intent === ConnectorEntityIntent.Create ? 'Connect to ' : 'Edit '}
+                {formEntity.data.name}
               </EntityFormSectionLayout.Title>
             </EntityFormSectionLayout.Header>
             <EntityFormSectionLayout.Form>
@@ -107,7 +124,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer>
             <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-background-2 p-4 shadow-md">
-              <Button variant="secondary" onClick={() => setRightDrawer(ConnectorRightDrawer.Collection)}>
+              <Button variant="secondary" onClick={() => setRightDrawerMode(ConnectorRightDrawerMode.Collection)}>
                 Back
               </Button>
               <Button onClick={() => rootForm.submitForm()}>Submit</Button>

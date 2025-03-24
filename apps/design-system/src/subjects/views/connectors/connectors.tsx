@@ -1,6 +1,6 @@
-import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
 import { useState } from 'react'
 
+import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
 import noop from 'lodash-es/noop'
 
 import { Button, ListActions, Spacer } from '@harnessio/ui/components'

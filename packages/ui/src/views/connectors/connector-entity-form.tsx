@@ -89,7 +89,6 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
 
   useEffect(() => {
     if (intent === ConnectorEntityIntent.Edit && connectorData) {
-      
     }
   }, [intent])
 

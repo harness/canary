@@ -58,6 +58,8 @@ export interface UnifiedPipelineStudioProps {
   loadInProgress?: boolean
   inputComponentFactory?: InputFactory
   stepsDefinitions?: AnyStepDefinition[]
+  selectedPath?: string
+  onSelectedPathChange: (path: string) => void
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {
@@ -75,11 +77,12 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     saveInProgress,
     loadInProgress,
     inputComponentFactory,
-    stepsDefinitions
+    stepsDefinitions,
+    onSelectedPathChange,
+    selectedPath
   } = props
 
-  const { onSelectedPathChange, selectedPath, errors, onErrorsChange, panelOpen, onPanelOpenChange } =
-    useUnifiedPipelineStudioStore()
+  const { errors, onErrorsChange, panelOpen, onPanelOpenChange } = useUnifiedPipelineStudioStore()
 
   return (
     <UnifiedPipelineStudioProvider

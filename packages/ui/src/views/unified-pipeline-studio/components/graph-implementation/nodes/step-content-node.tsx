@@ -8,6 +8,7 @@ import { GlobalData } from '../../../types/common-types'
 import { StepNodeContextMenu } from '../context-menu/step-node-context-menu'
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 import { CommonNodeDataType } from '../types/common-node-data-type'
+import { YamlEntityType } from '../types/yaml-entity-type'
 
 export interface StepNodeDataType extends CommonNodeDataType {
   icon?: React.ReactElement
@@ -56,7 +57,7 @@ export function StepContentNode(props: {
       }}
       onClick={e => {
         e.stopPropagation()
-        onSelectIntention(data)
+        onSelectIntention(data, YamlEntityType.Step)
       }}
       onAddClick={position => {
         onAddIntention(data, position)

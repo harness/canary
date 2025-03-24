@@ -69,18 +69,78 @@ export interface ConnectorConfigDTO {
 export interface ConnectorFields {
   name: string
   identifier: string
-  description: string
-  accountIdentifier: string
-  orgIdentifier: string
-  projectIdentifier: string
-  tags: Record<string, string>
-  type: string
+  description?: string
+  accountIdentifier?: string
+  orgIdentifier?: string
+  projectIdentifier?: string
+  tags?: {
+    [key: string]: string
+  }
+  spec: ConnectorConfigDTO
+  type: ConnectorConfigType
 }
 
+export type ConnectorConfigType =
+  | 'K8sCluster'
+  | 'Git'
+  | 'Splunk'
+  | 'AppDynamics'
+  | 'Prometheus'
+  | 'Dynatrace'
+  | 'Vault'
+  | 'AzureKeyVault'
+  | 'DockerRegistry'
+  | 'Local'
+  | 'AwsKms'
+  | 'GcpKms'
+  | 'AwsSecretManager'
+  | 'Gcp'
+  | 'Aws'
+  | 'Azure'
+  | 'Artifactory'
+  | 'Jira'
+  | 'Nexus'
+  | 'Github'
+  | 'Gitlab'
+  | 'Bitbucket'
+  | 'Codecommit'
+  | 'CEAws'
+  | 'CEAzure'
+  | 'GcpCloudCost'
+  | 'CEK8sCluster'
+  | 'HttpHelmRepo'
+  | 'NewRelic'
+  | 'Datadog'
+  | 'SumoLogic'
+  | 'PagerDuty'
+  | 'CustomHealth'
+  | 'ServiceNow'
+  | 'ErrorTracking'
+  | 'Pdc'
+  | 'AzureRepo'
+  | 'Jenkins'
+  | 'OciHelmRepo'
+  | 'CustomSecretManager'
+  | 'ElasticSearch'
+  | 'GcpSecretManager'
+  | 'AzureArtifacts'
+  | 'Tas'
+  | 'Spot'
+  | 'Bamboo'
+  | 'TerraformCloud'
+  | 'SignalFX'
+  | 'Harness'
+  | 'Rancher'
+  | 'JDBC'
+  | 'Zoom'
+  | 'MsTeams'
+  | 'Slack'
+  | 'Confluence'
+
 export interface ConnectorItem extends BaseEntityProps {
-  connector: ConnectorFields
-  createdAt: number
-  lastModifiedAt: number
+  connector?: ConnectorFields
+  createdAt?: number
+  lastModifiedAt?: number
 }
 
 export enum ConnectorSelectionType {

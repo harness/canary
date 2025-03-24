@@ -11,6 +11,7 @@ import { usePipelineStudioStore } from './unified-pipeline-studio.store'
 
 const PipelineStudioViewWrapper = () => {
   const [yamlRevision, onYamlRevisionChange] = useState<YamlRevision>({ yaml: pipeline1 })
+  const [selectedPath, onSelectedPathChange] = useState<string | undefined>()
 
   return (
     <UnifiedPipelineStudio
@@ -22,6 +23,8 @@ const PipelineStudioViewWrapper = () => {
       onYamlDownload={noop}
       isYamlDirty={true}
       onSave={noop}
+      selectedPath={selectedPath}
+      onSelectedPathChange={onSelectedPathChange}
     />
   )
 }

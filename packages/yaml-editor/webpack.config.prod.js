@@ -1,10 +1,7 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
-
-const path = require('path')
+import path from 'path'
 
 module.exports = {
+  target: ['web', 'node'],
   entry: 'src/index.tsx',
   mode: 'production',
   output: {

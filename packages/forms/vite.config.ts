@@ -5,7 +5,7 @@ import { uniq } from 'lodash-es'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 
-const pkg = require('./package.json')
+import pkg from './package.json'
 
 const external = uniq(Object.keys(pkg.devDependencies || []).concat(Object.keys(pkg.peerDependencies || [])))
 
@@ -25,7 +25,7 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'forms',
       fileName: 'index',
-      formats: ['es']
+      formats: ['es', 'cjs']
     },
     rollupOptions: { external }
   }

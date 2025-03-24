@@ -83,7 +83,7 @@ const processStages = (
     // parallel stage
     const groupKey = getGroupKey(stage)
     if (groupKey === 'group') {
-      const name = stage.name ?? `Serial ${idx + 1}`
+      const name = stage.name
       const path = `${currentPath}.${idx}`
       const childrenPath = `${path}.${groupKey}.stages`
 
@@ -105,7 +105,7 @@ const processStages = (
         children: processStages(stage[groupKey].stages, childrenPath, options)
       } satisfies SerialContainerNodeType
     } else if (groupKey === 'parallel') {
-      const name = stage.name ?? `Parallel ${idx + 1}`
+      const name = stage.name
       const path = `${currentPath}.${idx}`
       const childrenPath = `${path}.${groupKey}.stages`
 
@@ -129,7 +129,7 @@ const processStages = (
     }
     // regular stage
     else {
-      const name = stage.name ?? `Stage ${idx + 1}`
+      const name = stage.name
       const path = `${currentPath}.${idx}`
       const childrenPath = `${path}.steps`
 
@@ -166,7 +166,7 @@ const processSteps = (
     // parallel stage
     const groupKey = getGroupKey(step)
     if (groupKey === 'group') {
-      const name = step.name ?? `Serial steps ${idx + 1}`
+      const name = step.name
       const path = `${currentPath}.${idx}`
       const childrenPath = `${path}.${groupKey}.steps`
 
@@ -187,7 +187,7 @@ const processSteps = (
         children: processSteps(step[groupKey].steps, childrenPath, options)
       } satisfies SerialContainerNodeType
     } else if (groupKey === 'parallel') {
-      const name = step.name ?? `Parallel steps ${idx + 1}`
+      const name = step.name
       const path = `${currentPath}.${idx}`
       const childrenPath = `${path}.${groupKey}.steps`
 

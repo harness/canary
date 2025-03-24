@@ -163,6 +163,7 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
 
   const clearEditStepIntention = useCallback(() => {
     setEditStepIntention(null)
+    onSelectedPathChange(undefined)
   }, [setEditStepIntention])
 
   const clearAddStepIntention = useCallback(() => {

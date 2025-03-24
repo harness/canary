@@ -33,7 +33,7 @@ export interface PipelineStudioNodeContextProps<T> {
   // selected entity path
   selectionPath?: string
   setSelectionPath: (path: string) => void
-  onSelectIntention: (nodeData: CommonNodeDataType, yamlEntityType?: YamlEntityType) => void
+  onSelectIntention: (nodeData: CommonNodeDataType) => void
   // step manipulation
   onAddIntention: (
     nodeData: CommonNodeDataType,
@@ -62,7 +62,7 @@ export const PipelineStudioNodeContext = createContext<PipelineStudioNodeContext
   //
   selectionPath: undefined,
   setSelectionPath: (_path: string | null) => undefined,
-  onSelectIntention: (_nodeData: CommonNodeDataType, _yamlEntityType?: YamlEntityType) => undefined,
+  onSelectIntention: (_nodeData: CommonNodeDataType) => undefined,
   //
   onAddIntention: (
     _nodeData: CommonNodeDataType,
@@ -106,13 +106,14 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
   const onEditIntention = (nodeData: CommonNodeDataType) => {
     setRightDrawer(RightDrawer.Form)
     setEditStepIntention({ path: nodeData.yamlPath })
+    onSelectedPathChange(nodeData.yamlPath)
   }
 
-  const onSelectIntention = (data: CommonNodeDataType, yamlEntityType?: YamlEntityType) => {
+  const onSelectIntention = (data: CommonNodeDataType) => {
     // TODO: why not data instead of path
     onSelectedPathChange(data.yamlPath)
 
-    if (yamlEntityType === YamlEntityType.Step) {
+    if (data.yamlEntityType === YamlEntityType.Step) {
       onEditIntention(data)
     }
   }

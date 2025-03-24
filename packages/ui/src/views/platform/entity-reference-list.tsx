@@ -83,13 +83,19 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
             )
           })}
         </>
-      ) : !apiError ? (
+      ) : (
         <StackedList.Item disableHover>
           <StackedList.Field
-            title={<div className="text-foreground-4 flex h-32 items-center justify-center">No items available</div>}
+            title={
+              <div
+                className={`text-foreground-4 flex h-32 items-center justify-center ${apiError ? 'text-foreground-danger' : ''}`}
+              >
+                {apiError ? apiError : 'No items available'}
+              </div>
+            }
           />
         </StackedList.Item>
-      ) : null}
+      )}
     </StackedList.Root>
   )
 }

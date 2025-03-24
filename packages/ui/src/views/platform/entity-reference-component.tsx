@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Alert, Button, Icon, Input, ScrollArea, SkeletonList, StackedList } from '@/components'
+import { Button, Icon, Input, ScrollArea, SkeletonList, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 
 import { EntityReferenceList } from './entity-reference-list'
@@ -135,11 +135,6 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
               childFolderRenderer={childFolderRenderer}
               apiError={apiError}
             />
-            {apiError ? (
-              <Alert.Container variant="destructive" className="mt-4">
-                <Alert.Description>{apiError}</Alert.Description>
-              </Alert.Container>
-            ) : null}
           </ScrollArea>
         </div>
       )}

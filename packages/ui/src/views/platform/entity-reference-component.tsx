@@ -119,9 +119,9 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       {isLoading ? (
         <SkeletonList />
       ) : (
-        <div className="h-[60vh]">
+        <div className="h-full">
           {showFilter && <Input type="text" placeholder="Search" className="mb-4" />}
-          <ScrollArea className="h-full">
+          <ScrollArea className="h-[69vh]">
             <EntityReferenceList
               entities={entities}
               selectedEntity={selectedEntity}

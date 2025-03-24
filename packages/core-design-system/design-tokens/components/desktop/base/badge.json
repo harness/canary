@@ -30,5 +30,43 @@
       "$type": "borderWidth",
       "$value": "{borderWidth.1}"
     }
+  },
+  "badge-status": {
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.1-half}"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.1}"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
+    }
+  },
+  "badge-counter": {
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.half}"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.1-half}"
+    },
+    "size": {
+      "sm": {
+        "$type": "sizing",
+        "$value": "{size.2-half}"
+      },
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.4-half}"
+      }
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.full}"
+    }
   }
 }

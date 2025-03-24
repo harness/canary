@@ -175,7 +175,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{default.background}",
+        "$value": "{set.default.background}",
         "$description": "Border color for primary elements."
       },
       "separator": {
@@ -216,7 +216,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{secondary.background}",
+        "$value": "{set.secondary.background}",
         "$description": "Border color for secondary elements to create subtle visual hierarchy"
       },
       "background-hover": {

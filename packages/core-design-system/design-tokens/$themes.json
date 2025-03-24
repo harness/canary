@@ -14779,7 +14779,10 @@
       "components/desktop/base/btn": "enabled",
       "components/desktop/base/badge": "enabled",
       "components/desktop/base/tag": "enabled",
-      "components/desktop/base/dropdown-menu": "enabled"
+      "components/desktop/base/dropdown-menu": "enabled",
+      "components/desktop/base/pagination": "enabled",
+      "components/desktop/base/card": "enabled",
+      "components/desktop/base/tooltip": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",
@@ -14846,7 +14849,18 @@
       "dropdown.menu-item-branch-selector.tag.px": "35594a38718a20c7f3e3fd133e8c44ff831c5a05",
       "dropdown.menu-item-branch-selector.tag.size": "4b9f6544cf9aec4068151e8e37a986d832f5606c",
       "dropdown.menu-items.header-footer.px": "ac04ab19d02649e4354bb5f650c0a9435f7a7f19",
-      "dropdown.menu-items.header-footer.py": "7f108d35da597212c12b81e397b921cf5365874b"
+      "dropdown.menu-items.header-footer.py": "7f108d35da597212c12b81e397b921cf5365874b",
+      "pagination.size": "db5ed4443014a9d4c3a4e17c68ccf3b21fb322ec",
+      "pagination.gap": "fab302990edaa41ff0adb03ae086f9376029d995",
+      "pagination.radius": "6cd82f27eb4680d8786c867d3d0e5c0107583895",
+      "pagination.subpages": "aedbe2b4c211a2a6eb305958cc613a36983c0f66",
+      "card.px": "397f3852034f93e93fc5cd4ba9e282439187c2fb",
+      "card.py": "eeaafbf49a3d15ca5a48027c2437b959086b0a59",
+      "card.gap": "af2af0fb7fd6da67ad1282ca640e4fffd974ac7e",
+      "card.radius": "c9396b3ccd8cf0fc2b1d6e4eb4c85fe794cdb03a",
+      "tooltip.radius": "f75277905b2f6c6bbee278e7d79cea149254d620",
+      "tooltip.padding.py": "1a270d3047ced1ec7041b25fbd3ebb5fb7b54f7c",
+      "tooltip.padding.px": "0300d437976ce5969072f3b1c3f4159a32b355a6"
     },
     "group": "breakpoint"
   },

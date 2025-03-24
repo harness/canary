@@ -89,8 +89,8 @@ const PullRequestMergeSection = ({
     }
   ]
 
-  const handleCommandLineClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
+  const handleCommandLineClick = (e?: MouseEvent<HTMLButtonElement>) => {
+    e?.stopPropagation()
 
     setAccordionValues(prevState => [...prevState, ACCORDION_VALUE])
     setShowCommandLineInfo(prevState => !prevState)
@@ -135,7 +135,19 @@ const PullRequestMergeSection = ({
                   <p className="text-14 font-normal text-foreground-4">
                     Use the&nbsp;
                     <Button variant="link_accent" size="text" onClick={handleCommandLineClick} asChild>
-                      <span>command line</span>
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Open command line"
+                        onKeyDown={e => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.stopPropagation()
+                            handleCommandLineClick()
+                          }
+                        }}
+                      >
+                        command line
+                      </span>
                     </Button>
                     &nbsp;to resolve conflicts
                   </p>

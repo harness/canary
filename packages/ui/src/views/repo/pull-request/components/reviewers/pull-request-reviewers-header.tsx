@@ -48,6 +48,7 @@ const ReviewersHeader = ({
             className="text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2"
             size="xs_icon"
             variant="custom"
+            aria-label="Open reviewers list"
           >
             <Icon name="vertical-ellipsis" size={12} />
           </Button>

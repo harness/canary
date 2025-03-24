@@ -62,7 +62,7 @@ import { usePullRequestProviderStore } from './stores/pull-request-provider-stor
 
 const getMockPullRequestActions = (
   handlePrState: (data: string) => void,
-  handleMerge: (data: string) => void,
+  handleMerge: (data: EnumMergeMethod) => void,
   pullReqMetadata?: TypesPullReq
 ) => {
   return [
@@ -189,7 +189,7 @@ export default function PullRequestConversationPage() {
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()
 
-  const prId = useMemo(() => (pullRequestId && Number(pullRequestId)) || -1, [pullRequestId])
+  const prId = (pullRequestId && Number(pullRequestId)) || -1
 
   const filtersData = usePrFilters()
 
@@ -295,7 +295,11 @@ export default function PullRequestConversationPage() {
         if (res?.body?.rule_violations) {
           const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(res.body?.rule_violations)
 
-          checkIfBypassAllowed ? setShowDeleteBranchButton(true) : onSuccessDeleteCommon()
+          if (checkIfBypassAllowed) {
+            setShowDeleteBranchButton(true)
+          } else {
+            onSuccessDeleteCommon()
+          }
         } else {
           onSuccessDeleteCommon()
         }
@@ -518,9 +522,9 @@ export default function PullRequestConversationPage() {
   }, [refetchCodeOwners, refetchPullReq, refetchActivities])
 
   const handleMerge = useCallback(
-    (method: string) => {
+    (method: EnumMergeMethod) => {
       const payload: OpenapiMergePullReq = {
-        method: method as EnumMergeMethod,
+        method: method,
         source_sha: pullReqMetadata?.source_sha,
         bypass_rules: checkboxBypass,
         dry_run: false
@@ -530,7 +534,7 @@ export default function PullRequestConversationPage() {
         handleRefetchData()
         setRuleViolationArr(undefined)
       })
-      //todo: add catch t o show errors
+      //todo: add catch to show errors
       // .catch(exception => showError(getErrorMessage(exception)))
     },
     [pullReqMetadata?.source_sha, checkboxBypass, repoRef, prId, handleRefetchData, setRuleViolationArr]
@@ -538,9 +542,11 @@ export default function PullRequestConversationPage() {
 
   const handlePrState = useCallback(
     (state: string) => {
-      const payload: OpenapiStatePullReqRequest = {
-        ...(state === 'draft' && { is_draft: true }),
-        state: state === 'draft' ? 'open' : (state as EnumPullReqState)
+      const payload: OpenapiStatePullReqRequest = { state: state as EnumPullReqState }
+
+      if (state === 'draft') {
+        payload.is_draft = true
+        payload.state = 'open'
       }
 
       statePullReq({ body: payload, repo_ref: repoRef, pullreq_number: prId }).then(() => {
@@ -597,13 +603,12 @@ export default function PullRequestConversationPage() {
         : {})
     }
 
-    rebaseBranch({ body: payload, repo_ref: repoRef }).then(
-      () => {
+    rebaseBranch({ body: payload, repo_ref: repoRef })
+      .then(() => {
         handleRefetchData()
         setRuleViolationArr(undefined)
-      },
-      error => setRebaseErrorMessage(error.message)
-    )
+      })
+      .catch(error => setRebaseErrorMessage(error.message))
   }, [pullReqMetadata, handleRefetchData, setRuleViolationArr, repoRef])
 
   /**

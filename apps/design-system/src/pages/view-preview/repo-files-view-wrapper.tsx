@@ -30,7 +30,7 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLEleme
   )
 
   return (
-    <div className="grid grid-cols-[auto_1fr]">
+    <div className="grid" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
       <RepoSidebarView
         selectBranchOrTag={noop}
         useRepoBranchesStore={useRepoBranchesStore}

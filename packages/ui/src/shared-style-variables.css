@@ -1079,16 +1079,18 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
-  }
 
-  .light-std-std.inset-layout {
-    /* Topbar */
-    --canary-topbar-background-01: var(--canary-base-chrome-800); /* collapse hover, pipe --canary-background-12 */
-    --canary-topbar-foreground-01: var(--canary-white); /* collapse hover --canary-accent-foreground */
-    --canary-topbar-foreground-02: var(--canary-base-chrome-200); /* collapse default --canary-foreground-02 */
-    --canary-topbar-foreground-03: var(--canary-base-chrome-500); /* dd default, bread def --canary-muted-foreground */
-    --canary-topbar-foreground-04: var(--canary-pure-white); /* bread hover, last bread --canary-foreground */
-    --canary-topbar-icon-01: var(--canary-base-chrome-500); /* dd icon def --canary-muted-foreground */
+    &.inset-layout {
+      /* Topbar */
+      --canary-topbar-background-01: var(--canary-base-chrome-800); /* collapse hover, pipe --canary-background-12 */
+      --canary-topbar-foreground-01: var(--canary-white); /* collapse hover --canary-accent-foreground */
+      --canary-topbar-foreground-02: var(--canary-base-chrome-200); /* collapse default --canary-foreground-02 */
+      --canary-topbar-foreground-03: var(
+        --canary-base-chrome-500
+      ); /* dd default, bread def --canary-muted-foreground */
+      --canary-topbar-foreground-04: var(--canary-pure-white); /* bread hover, last bread --canary-foreground */
+      --canary-topbar-icon-01: var(--canary-base-chrome-500); /* dd icon def --canary-muted-foreground */
+    }
   }
 
   .light-std-high {

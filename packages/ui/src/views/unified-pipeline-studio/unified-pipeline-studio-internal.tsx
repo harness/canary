@@ -27,7 +27,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
 
   return (
     <YamlEditorContextProvider>
-      <PipelineStudioLayout.Root>
+      <PipelineStudioLayout.Root className="h-[calc(100%-45px)]">
         <PipelineStudioLayout.Header>
           <VisualYamlToggle view={view} setView={setView} isYamlValid={errors.isYamlValid} />
           <PipelineStudioLayout.HeaderLeft>

@@ -37,3 +37,4 @@ export const THEME_MODE_FILENAME_PREFIX = {
 }
 
 export const OSS_STYLES_SOURCE_NAME = 'gitness'
+export const ENTERPRISE_STYLES_SOURCE_NAME = 'harness'

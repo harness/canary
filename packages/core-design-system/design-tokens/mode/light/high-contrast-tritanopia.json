@@ -80,22 +80,22 @@
     },
     "focus": {
       "$type": "color",
-      "$value": "{brand.color.500}",
+      "$value": "{set.brand.solid.border}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
       "$type": "color",
-      "$value": "{color.cyan.500}",
+      "$value": "{set.green.solid.border}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{color.red.500}",
+      "$value": "{set.red.solid.border}",
       "$description": "Border color for error containers. Emphasizes critical information through visual framing.\n\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
       "$type": "color",
-      "$value": "{color.orange.500}",
+      "$value": "{set.yellow.solid.border}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },

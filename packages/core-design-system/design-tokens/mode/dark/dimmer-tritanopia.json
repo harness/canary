@@ -71,22 +71,22 @@
     },
     "focus": {
       "$type": "color",
-      "$value": "{brand.color.600}",
+      "$value": "{set.brand.solid.border}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
       "$type": "color",
-      "$value": "{color.cyan.500}",
+      "$value": "{set.green.solid.border}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{color.red.500}",
+      "$value": "{set.red.solid.border}",
       "$description": "Border color for error containers. Emphasizes critical information through visual framing.\n\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
       "$type": "color",
-      "$value": "{color.orange.600}",
+      "$value": "{set.yellow.solid.border}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -157,17 +157,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{brand.onColor.600}",
+          "$value": "{brand.onColor.500}",
           "$description": "Text and icon color for primary brand elements with maximum contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{brand.color.600}",
+          "$value": "{brand.color.500}",
           "$description": "Background color for primary brand items with strong emphasis."
         },
         "border": {
           "$type": "color",
-          "$value": "{brand.color.600}",
+          "$value": "{brand.color.500}",
           "$description": "Border color for primary brand boundaries."
         },
         "separator": {
@@ -181,12 +181,12 @@
             }
           },
           "$type": "color",
-          "$value": "{brand.onColor.600}",
+          "$value": "{brand.onColor.500}",
           "$description": "Separator color for dividing brand areas."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{brand.color.500}",
+          "$value": "{brand.color.400}",
           "$description": "Hover state background color for interactive brand surfaces."
         },
         "bg-selected": {

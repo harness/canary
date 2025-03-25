@@ -330,6 +330,11 @@
       "$value": "10px",
       "$description": "2.5"
     },
+    "3-half": {
+      "$type": "sizing",
+      "$value": "14px",
+      "$description": "3.5"
+    },
     "4-half": {
       "$type": "sizing",
       "$value": "18px",
@@ -374,7 +379,7 @@
     },
     "sm": {
       "$type": "sizing",
-      "$value": "{size.4-half}"
+      "$value": "{size.3-half}"
     },
     "default": {
       "$type": "sizing",

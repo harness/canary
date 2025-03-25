@@ -1,3 +1,5 @@
+import { ExecutionState } from '@/views'
+
 import { FieldValues, IFormDefinition, IInputDefinition } from '@harnessio/forms'
 
 import { BaseEntityProps } from '../../views/platform/types'
@@ -141,6 +143,11 @@ export interface ConnectorItem extends BaseEntityProps {
   connector?: ConnectorFields
   createdAt?: number
   lastModifiedAt?: number
+  status?: {
+    status?: ExecutionState
+    lastTestedAt?: number
+    lastConnectedAt?: number
+  }
 }
 
 export enum ConnectorSelectionType {

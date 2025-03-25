@@ -3,7 +3,7 @@
     "connector": {
       "name": "connector-1",
       "identifier": "connector1",
-      "description": "",
+      "description": "Connects to Github",
       "accountIdentifier": "account123",
       "orgIdentifier": "org1",
       "projectIdentifier": "project1",
@@ -76,7 +76,7 @@
     "connector": {
       "name": "connector-2",
       "identifier": "connector2",
-      "description": "",
+      "description": "Connects to Github Enterprise",
       "accountIdentifier": "account123",
       "orgIdentifier": "org1",
       "projectIdentifier": "project1",

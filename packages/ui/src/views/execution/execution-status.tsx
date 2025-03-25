@@ -5,7 +5,7 @@ import { BadgeProps, ExecutionStatusProps } from './types'
 
 const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
   const { status, duration, minimal } = props
-  switch (status) {
+  switch (status.toLowerCase()) {
     case ExecutionState.WAITING_ON_DEPENDENCIES:
     case ExecutionState.BLOCKED:
     case ExecutionState.PENDING:
@@ -78,7 +78,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
 
 const Icon: React.FC<ExecutionStatusProps> = props => {
   const { status } = props
-  switch (status) {
+  switch (status.toLowerCase()) {
     case ExecutionState.WAITING_ON_DEPENDENCIES:
     case ExecutionState.PENDING:
       return <CanaryIcon size={16} name="pending-clock" />

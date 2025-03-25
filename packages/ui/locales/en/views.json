@@ -184,6 +184,7 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "status": "Status",
     "tagger": "Tagger",
     "creationDate": "Creation date",
     "createBranchDialog": {

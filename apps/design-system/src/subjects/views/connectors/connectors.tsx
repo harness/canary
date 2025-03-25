@@ -36,47 +36,40 @@ const ConnectorsListPageContent = (): JSX.Element => {
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
-        <>
-          <h1 className="text-24 text-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
-          <Spacer size={6} />
-          <ListActions.Root>
-            <ListActions.Right>
-              <Button
-                variant="default"
-                onClick={() => {
-                  setDrawerState(ConnectorRightDrawer.Collection)
-                }}
-              >
-                Create Connector
-              </Button>
-              <Button
-                variant="default"
-                onClick={() => {
-                  setDrawerState(ConnectorRightDrawer.Form)
-                  setFormEntity({
-                    type: 'connector',
-                    data: {
-                      type: 'AwsKms',
-                      name: 'AWS KMS'
-                    }
-                  })
-                }}
-              >
-                Edit Connector
-              </Button>
-            </ListActions.Right>
-          </ListActions.Root>
-          <Spacer size={5} />
-        </>
+        <h1 className="text-24 text-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
+        <Spacer size={6} />
+        <ListActions.Root>
+          <ListActions.Right>
+            <Button variant="default" onClick={() => setDrawerState(ConnectorRightDrawer.Collection)}>
+              Create Connector
+            </Button>
+            <Button
+              variant="default"
+              onClick={() => {
+                setDrawerState(ConnectorRightDrawer.Form)
+                setFormEntity({
+                  type: 'connector',
+                  data: { type: 'AwsKms', name: 'AWS KMS' }
+                })
+              }}
+            >
+              Edit Connector
+            </Button>
+          </ListActions.Right>
+        </ListActions.Root>
+        <Spacer size={5} />
         <ConnectorsList
           connectors={
-            mockConnectorsData.map(connector => {
-              return {
-                ...connector,
-                name: connector.connector.name,
-                id: connector.connector.identifier
+            mockConnectorsData.map(connector => ({
+              ...connector,
+              name: connector.connector.name,
+              id: connector.connector.identifier,
+              status: {
+                status: connector.status.status,
+                lastConnectedAt: connector.status.lastConnectedAt,
+                lastTestedAt: connector.status.lastTestedAt
               }
-            }) as ConnectorItem[]
+            })) as ConnectorItem[]
           }
           useTranslationStore={mockUseTranslationStore}
           isLoading={false}

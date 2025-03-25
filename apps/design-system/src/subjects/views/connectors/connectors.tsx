@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react'
+
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
 import noop from 'lodash-es/noop'
 
 import { Button, ListActions, Spacer } from '@harnessio/ui/components'
 import {
+  ConnectorItem,
   ConnectorRightDrawer,
   ConnectorsList,
   ConnectorsProvider,
@@ -15,6 +18,21 @@ import mockConnectorsData from './mock-connectors-data.json'
 
 const ConnectorsListPageContent = (): JSX.Element => {
   const { setRightDrawer, setFormEntity } = useConnectorsContext()
+  const [drawerState, setDrawerState] = useState(ConnectorRightDrawer.None)
+
+  useEffect(() => {
+    setRightDrawer(drawerState)
+  }, [drawerState])
+
+  const mockUseTranslationStore = () =>
+    ({
+      t: () => 'dummy',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      i18n: {} as any,
+      changeLanguage: noop
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }) as any
+
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
@@ -26,7 +44,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
               <Button
                 variant="default"
                 onClick={() => {
-                  setRightDrawer(ConnectorRightDrawer.Collection)
+                  setDrawerState(ConnectorRightDrawer.Collection)
                 }}
               >
                 Create Connector
@@ -34,7 +52,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
               <Button
                 variant="default"
                 onClick={() => {
-                  setRightDrawer(ConnectorRightDrawer.Form)
+                  setDrawerState(ConnectorRightDrawer.Form)
                   setFormEntity({
                     type: 'connector',
                     data: {
@@ -51,29 +69,22 @@ const ConnectorsListPageContent = (): JSX.Element => {
           <Spacer size={5} />
         </>
         <ConnectorsList
-          connectors={mockConnectorsData}
-          useTranslationStore={() =>
-            ({
-              t: () => 'dummy',
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              i18n: {} as any,
-              changeLanguage: noop
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            }) as any
+          connectors={
+            mockConnectorsData.map(connector => {
+              return {
+                ...connector,
+                name: connector.connector.name,
+                id: connector.connector.identifier
+              }
+            }) as ConnectorItem[]
           }
+          useTranslationStore={mockUseTranslationStore}
           isLoading={false}
         />
       </SandboxLayout.Content>
       <ConnectorsRightDrawer
-        useTranslationStore={() =>
-          ({
-            t: () => 'dummy',
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            i18n: {} as any,
-            changeLanguage: noop
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          }) as any
-        }
+        initialDrawerState={drawerState}
+        useTranslationStore={mockUseTranslationStore}
         connectors={harnessConnectors}
         getConnectorDefinition={getHarnessConnectorDefinition}
       />

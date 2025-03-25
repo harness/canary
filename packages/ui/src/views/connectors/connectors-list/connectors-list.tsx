@@ -45,13 +45,12 @@ export function ConnectorsList({ connectors, useTranslationStore, isLoading }: P
         const connector = item.connector
         return (
           <Link
-            key={connector?.name}
-            to={`/connectors/${connector?.name}`}
+            key={connector?.identifier}
+            to={`/connectors/${connector?.identifier}`}
             className={idx === connectors.length - 1 ? 'border-b border-background-3' : ''}
           >
             <StackedList.Item
               thumbnail={<Icon name="connectors" size={16} className="text-foreground-5" />}
-              title={connector?.name}
               isLast={idx === connectors.length - 1}
             >
               <StackedList.Field

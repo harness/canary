@@ -4,11 +4,14 @@ import noop from 'lodash-es/noop'
 import { Button, ListActions, Spacer } from '@harnessio/ui/components'
 import {
   ConnectorRightDrawer,
+  ConnectorsList,
   ConnectorsProvider,
   ConnectorsRightDrawer,
   SandboxLayout,
   useConnectorsContext
 } from '@harnessio/ui/views'
+
+import mockConnectorsData from './mock-connectors-data.json'
 
 const ConnectorsListPageContent = (): JSX.Element => {
   const { setRightDrawer, setFormEntity } = useConnectorsContext()
@@ -47,6 +50,19 @@ const ConnectorsListPageContent = (): JSX.Element => {
           </ListActions.Root>
           <Spacer size={5} />
         </>
+        <ConnectorsList
+          connectors={mockConnectorsData}
+          useTranslationStore={() =>
+            ({
+              t: () => 'dummy',
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              i18n: {} as any,
+              changeLanguage: noop
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            }) as any
+          }
+          isLoading={false}
+        />
       </SandboxLayout.Content>
       <ConnectorsRightDrawer
         useTranslationStore={() =>

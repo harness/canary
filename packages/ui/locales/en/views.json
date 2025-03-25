@@ -215,6 +215,9 @@
   },
   "noData": {
     "noResults": "No search results",
+    "noConnectors": "No connectors yet",
+    "noConnectorsProject": "There are no connectors in this project yet.",
+    "createOrImportConnectors": "Create new or import an existing connector.",
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
     "clearSearch": "Clear search",

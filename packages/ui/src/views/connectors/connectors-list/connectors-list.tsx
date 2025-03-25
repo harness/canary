@@ -42,31 +42,38 @@ export function ConnectorsList({ connectors, useTranslationStore, isLoading }: P
 
   return (
     <StackedList.Root>
-      {connectors.map(({ connector, status }, idx) => (
-        <Link
-          key={connector?.identifier}
-          to={`/connectors/${connector?.identifier}`}
-          className={idx === connectors.length - 1 ? 'border-b border-background-3' : ''}
-        >
-          <StackedList.Item
-            thumbnail={<Icon name="github-actions" size={16} className="text-foreground-5" />}
-            isLast={idx === connectors.length - 1}
+      {connectors.map(({ connector, status }, idx) => {
+        const isLastItem = idx === connectors.length - 1
+        const connectorId = connector?.identifier
+        const connectorName = connector?.name ?? ''
+        const connectorDescription = connector?.description
+
+        return (
+          <Link
+            key={connectorId}
+            to={`/connectors/${connectorId}`}
+            className={isLastItem ? 'border-b border-background-3' : ''}
           >
-            <StackedList.Field
-              primary
-              description={<span className="max-w-full truncate">{connector?.description}</span>}
-              title={<Title title={connector?.name ?? ''} />}
-              className="flex max-w-[80%] gap-1.5 text-wrap"
-            />
-            {status?.status ? (
+            <StackedList.Item
+              thumbnail={<Icon name="github-actions" size={16} className="text-foreground-5" />}
+              isLast={isLastItem}
+            >
               <StackedList.Field
-                title={<ExecutionStatus.Badge status={status.status} />}
-                description={timeAgo(status.lastConnectedAt)}
+                primary
+                description={<span className="max-w-full truncate">{connectorDescription}</span>}
+                title={<Title title={connectorName} />}
+                className="flex max-w-[80%] gap-1.5 text-wrap"
               />
-            ) : null}
-          </StackedList.Item>
-        </Link>
-      ))}
+              {status?.status && (
+                <StackedList.Field
+                  title={<ExecutionStatus.Badge status={status.status} />}
+                  description={timeAgo(status.lastConnectedAt)}
+                />
+              )}
+            </StackedList.Item>
+          </Link>
+        )
+      })}
     </StackedList.Root>
   )
 }

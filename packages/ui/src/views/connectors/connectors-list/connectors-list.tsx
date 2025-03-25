@@ -1,7 +1,7 @@
 import { Icon, NoData, SkeletonList, StackedList } from '@/components'
 import { useRouterContext } from '@/context'
-import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
+import { formatDistanceToNow } from 'date-fns'
 
 import { ConnectorItem } from '../types'
 import { TranslationStore } from './types'
@@ -10,6 +10,7 @@ interface PageProps {
   connectors: ConnectorItem[]
   useTranslationStore: () => TranslationStore
   isLoading: boolean
+  onEditConnector: (connector: ConnectorItem) => void
 }
 
 const Title = ({ title }: { title: string }): JSX.Element => (
@@ -42,7 +43,7 @@ export function ConnectorsList({ connectors, useTranslationStore, isLoading }: P
 
   return (
     <StackedList.Root>
-      {connectors.map(({ connector, status }, idx) => {
+      {connectors.map(({ connector, status, lastModifiedAt }, idx) => {
         const isLastItem = idx === connectors.length - 1
         const connectorId = connector?.identifier
         const connectorName = connector?.name ?? ''
@@ -64,10 +65,24 @@ export function ConnectorsList({ connectors, useTranslationStore, isLoading }: P
                 title={<Title title={connectorName} />}
                 className="flex max-w-[80%] gap-1.5 text-wrap"
               />
+              {lastModifiedAt ? (
+                <StackedList.Field
+                  title={
+                    <div className="inline-flex items-center gap-1">
+                      <Title title={t('component:sort.lastUpdated', 'Last updated')} />
+                      <span className="max-w-full truncate">
+                        {formatDistanceToNow(lastModifiedAt, { addSuffix: true })}
+                      </span>
+                    </div>
+                  }
+                  className="flex max-w-[80%] gap-1.5 text-wrap"
+                />
+              ) : null}
               {status?.status && (
                 <StackedList.Field
+                  right
                   title={<ExecutionStatus.Badge status={status.status} />}
-                  description={timeAgo(status.lastConnectedAt)}
+                  description={status.lastTestedAt ? formatDistanceToNow(status.lastTestedAt, { addSuffix: true }) : ''}
                 />
               )}
             </StackedList.Item>

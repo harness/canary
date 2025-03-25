@@ -650,6 +650,10 @@
       "deleteUser": "Delete user"
     }
   },
+  "connectors": {
+    "updated": "Last updated",
+    "lastConnected": "Last connected"
+  },
   "secrets": {
     "secretsTitle": "Secrets"
   }

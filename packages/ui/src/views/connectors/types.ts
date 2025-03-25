@@ -146,7 +146,6 @@ export interface ConnectorItem extends BaseEntityProps {
   status?: {
     status?: ExecutionState
     lastTestedAt?: number
-    lastConnectedAt?: number
   }
 }
 

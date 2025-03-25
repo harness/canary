@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
-import noop from 'lodash-es/noop'
+import { useTranslationStore } from '@utils/viewUtils'
 
 import { Button, ListActions, Spacer } from '@harnessio/ui/components'
 import {
@@ -24,15 +24,6 @@ const ConnectorsListPageContent = (): JSX.Element => {
     setRightDrawer(drawerState)
   }, [drawerState])
 
-  const mockUseTranslationStore = () =>
-    ({
-      t: () => 'dummy',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      i18n: {} as any,
-      changeLanguage: noop
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }) as any
-
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
@@ -42,18 +33,6 @@ const ConnectorsListPageContent = (): JSX.Element => {
           <ListActions.Right>
             <Button variant="default" onClick={() => setDrawerState(ConnectorRightDrawer.Collection)}>
               Create Connector
-            </Button>
-            <Button
-              variant="default"
-              onClick={() => {
-                setDrawerState(ConnectorRightDrawer.Form)
-                setFormEntity({
-                  type: 'connector',
-                  data: { type: 'AwsKms', name: 'AWS KMS' }
-                })
-              }}
-            >
-              Edit Connector
             </Button>
           </ListActions.Right>
         </ListActions.Root>
@@ -66,18 +45,25 @@ const ConnectorsListPageContent = (): JSX.Element => {
               id: connector.connector.identifier,
               status: {
                 status: connector.status.status,
-                lastConnectedAt: connector.status.lastConnectedAt,
                 lastTestedAt: connector.status.lastTestedAt
-              }
+              },
+              lastModifiedAt: connector.lastModifiedAt
             })) as ConnectorItem[]
           }
-          useTranslationStore={mockUseTranslationStore}
+          useTranslationStore={useTranslationStore}
           isLoading={false}
+          onEditConnector={_connector => {
+            setDrawerState(ConnectorRightDrawer.Form)
+            setFormEntity({
+              type: 'connector',
+              data: { type: 'AwsKms', name: 'AWS KMS' }
+            })
+          }}
         />
       </SandboxLayout.Content>
       <ConnectorsRightDrawer
         initialDrawerState={drawerState}
-        useTranslationStore={mockUseTranslationStore}
+        useTranslationStore={useTranslationStore}
         connectors={harnessConnectors}
         getConnectorDefinition={getHarnessConnectorDefinition}
       />

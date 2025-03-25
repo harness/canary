@@ -1,7 +1,7 @@
 [
   {
     "connector": {
-      "name": "connector-1",
+      "name": "Github SaaS Connector",
       "identifier": "connector1",
       "description": "Connects to Github",
       "accountIdentifier": "account123",
@@ -43,7 +43,7 @@
       "errorSummary": null,
       "errors": null,
       "testedAt": 1719353671202,
-      "lastTestedAt": 0,
+      "lastTestedAt": 1719353671202,
       "lastConnectedAt": 1719353671202,
       "lastAlertSent": null
     },
@@ -74,7 +74,7 @@
   },
   {
     "connector": {
-      "name": "connector-2",
+      "name": "Github Enterprise Connector",
       "identifier": "connector2",
       "description": "Connects to Github Enterprise",
       "accountIdentifier": "account123",
@@ -117,8 +117,8 @@
         }
       ],
       "testedAt": 1700010337928,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 0,
+      "lastTestedAt": 1742941008000,
+      "lastConnectedAt": 1742941008000,
       "lastAlertSent": null
     },
     "activityDetails": {
@@ -148,9 +148,9 @@
   },
   {
     "connector": {
-      "name": "connector-3",
+      "name": "Github Repository Connector 3",
       "identifier": "connector3",
-      "description": "",
+      "description": "Github connector for repository",
       "accountIdentifier": "account123",
       "orgIdentifier": "org1",
       "projectIdentifier": "project1",
@@ -191,8 +191,8 @@
         }
       ],
       "testedAt": 1700007688566,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 0,
+      "lastTestedAt": 1742931008000,
+      "lastConnectedAt": 1742931008000,
       "lastAlertSent": null
     },
     "activityDetails": {

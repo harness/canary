@@ -13,14 +13,16 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Install and build dependencies
+      - name: Install dependencies and build
         run: |
           pnpm install
           pnpm build
 
       - name: Authenticate to npm
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISH_TOKEN }}" > ~/.npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISH_TOKEN }}" > ~/.npmrc
 
-      - name: Publish packages to npm
+      - name: Publish packages
         run: pnpm publish:all
+
+      - name: Generate publish report
+        run: pnpm ls --depth=0 | grep '└──'

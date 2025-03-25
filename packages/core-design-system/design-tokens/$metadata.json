@@ -38,6 +38,7 @@
     "components/desktop/base/dropdown-menu",
     "components/desktop/base/pagination",
     "components/desktop/base/card",
+    "components/desktop/base/table",
     "components/desktop/base/tooltip"
   ]
 }

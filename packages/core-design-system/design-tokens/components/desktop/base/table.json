@@ -1,0 +1,22 @@
+{
+  "cellHeight": {
+    "single": {
+      "$type": "sizing",
+      "$value": "{size.12}"
+    },
+    "double": {
+      "$type": "sizing",
+      "$value": "{size.16}"
+    }
+  },
+  "cell": {
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.4}"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.3}"
+    }
+  }
+}

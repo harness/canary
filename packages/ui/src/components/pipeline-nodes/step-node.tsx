@@ -2,7 +2,7 @@ import { cn } from '@utils/cn'
 
 import './step-node.css'
 
-import { ContainerNodeConfig, ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
+import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
@@ -27,7 +27,6 @@ export interface StepNodeProps {
   isCollapsedNode?: boolean
   parallelContainerConfig?: Partial<ParallelContainerConfigType>
   serialContainerConfig?: Partial<SerialContainerConfigType>
-  config?: ContainerNodeConfig
 }
 
 export function StepNode(props: StepNodeProps) {
@@ -47,8 +46,7 @@ export function StepNode(props: StepNodeProps) {
     hideContextMenu,
     hideFloatingButtons,
     parallelContainerConfig,
-    serialContainerConfig,
-    config
+    serialContainerConfig
   } = props
 
   return (
@@ -59,14 +57,6 @@ export function StepNode(props: StepNodeProps) {
         className={cn('bg-background-8 rounded-md', {
           'unified-pipeline-studio_card-wrapper': executionStatus === 'executing'
         })}
-        // The collapse node should have the same width as in the node config. Therefore, we set the style.
-        style={
-          config?.minWidth
-            ? {
-                width: `${config?.minWidth}px`
-              }
-            : {}
-        }
       >
         <div
           role="button"

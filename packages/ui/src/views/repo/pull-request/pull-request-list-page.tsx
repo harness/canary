@@ -191,7 +191,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main className="max-w-[1040px]">
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
         {showTopBar && (
           <PRListFilterHandler
@@ -200,9 +200,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             onChange={onFilterValueChange}
             view="dropdown"
           >
-            <h1 className="text-24 text-foreground-1 mb-6 mt-2 font-medium leading-snug tracking-tight">
-              Pull Requests
-            </h1>
+            <h1 className="text-24 text-foreground-1 mb-6 font-medium leading-snug tracking-tight">Pull Requests</h1>
 
             <ListActions.Root>
               <ListActions.Left>

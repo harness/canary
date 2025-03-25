@@ -1193,3 +1193,31 @@ mark {
 .diffViewBlock.hiddenDiff > * > * {
   display: none !important;
 }
+
+.nested-sidebar-height {
+  @apply h-[calc(100vh-100px)]; /* where 55px (Breadcrumbs height) + 45px (SubHeader height) = 100px */
+
+  .inset-layout & {
+    @apply h-[calc(100vh-100px-6px)]; /* where 6px is the Inset layout bottom padding (=== INSET_THEME_PADDING) */
+  }
+}
+
+.topbar-bottom-border {
+  @apply border-borders-5 border-b;
+
+  .inset-layout & {
+    @apply border-none;
+  }
+}
+
+.main-page-content-background {
+  @apply bg-background-1;
+
+  .inset-layout & {
+    @apply bg-sidebar-background-1;
+  }
+}
+
+.main-content-height {
+  @apply h-[calc(100%-55px)]; /* where 55px is for the Breadcrumbs height */
+}

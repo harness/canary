@@ -1,10 +1,10 @@
-import { FC, PropsWithChildren, ReactNode, useCallback, useEffect, useState } from 'react'
+import { FC, PropsWithChildren, ReactNode, useCallback, useState } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { AppSidebar, MoreSubmenu, NavbarItemType, SettingsMenu, Sidebar } from '@harnessio/ui/components'
-import { cn } from '@harnessio/ui/utils'
+import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useRootViewWrapperStore } from './root-view-wrapper-store'
 
@@ -67,7 +67,6 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
   ])
   const [recentMenu] = useState<NavbarItemType[]>([])
   const { moreMenu, settingsMenu } = useRootViewWrapperStore()
-  const [isInset, setIsInset] = useState<boolean>(false)
 
   const setPinned = useCallback((item: NavbarItemType, pin: boolean) => {
     setPinnedMenu(current => (pin ? [...current, item] : current.filter(pinnedItem => pinnedItem !== item)))
@@ -81,21 +80,6 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
   const onToggleSettingsMenu = useCallback(() => {
     setShowMoreMenu(false)
     setShowSettingsMenu(current => !current)
-  }, [])
-
-  /**
-   * Set inset on mount and listen for changes in ViewSettings
-   */
-  useEffect(() => {
-    const setInset = () => {
-      const inset = sessionStorage.getItem('view-preview-is-inset')
-      setIsInset(inset === 'true')
-    }
-
-    setInset()
-    window.addEventListener('storageChange', setInset)
-
-    return () => window.removeEventListener('storageChange', setInset)
   }, [])
 
   return (
@@ -119,12 +103,9 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
               useTranslationStore={useTranslationStore}
             />
             <Sidebar.Inset>
-              <div className={cn('h-full', { 'overflow-hidden h-screen p-2 bg-sidebar-background-1': isInset })}>
-                <div className={cn('h-full flex flex-col', { 'rounded-md overflow-auto bg-background-1': isInset })}>
-                  <div className="layer-high bg-background-1 sticky top-0">{breadcrumbs}</div>
-                  <Outlet />
-                </div>
-              </div>
+              <MainContentLayout breadcrumbs={breadcrumbs}>
+                <Outlet />
+              </MainContentLayout>
               <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />
               <SettingsMenu
                 showSettingMenu={showSettingsMenu}

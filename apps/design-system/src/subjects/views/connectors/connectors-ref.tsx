@@ -69,13 +69,15 @@ export const ConnectorsRefPage = () => {
       case ConnectorSelectionType.EXISTING:
         return (
           <ConnectorReference
-            connectorsData={mockConnectorsData.map(connector => {
-              return {
-                ...connector,
-                name: connector.connector.name,
-                id: connector.connector.identifier
-              }
-            })}
+            connectorsData={
+              mockConnectorsData.map(connector => {
+                return {
+                  ...connector,
+                  name: connector.connector.name,
+                  id: connector.connector.identifier
+                }
+              }) as ConnectorItem[]
+            }
             parentFolder={parentFolder}
             childFolder={childFolder}
             selectedEntity={selectedConnector}

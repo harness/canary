@@ -13,3 +13,6 @@ export * from './project-settings-tab-nav'
 export * from '@views/project/project-import'
 
 export * from '@views/project/create-project-page'
+
+// project rules
+export * from '@views/project/project-rules/project-rules-page'

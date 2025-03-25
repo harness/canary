@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 
-import { cn } from '@harnessio/canary'
 import {
   AppSidebar,
   ManageNavigation,
@@ -12,13 +11,13 @@ import {
   SettingsMenu,
   Sidebar
 } from '@harnessio/ui/components'
+import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useNav } from '../components/stores/recent-pinned-nav-links.store'
 import { getNavbarMenuData } from '../data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '../data/pinned-menu-items-data'
 import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
-import { useThemeStore } from '../framework/context/ThemeContext'
 import { useLocationChange } from '../framework/hooks/useLocationChange'
 import { useRepoImportEvents } from '../framework/hooks/useRepoImportEvent'
 import { useSelectedSpaceId } from '../framework/hooks/useSelectedSpaceId'
@@ -195,7 +194,9 @@ export const AppShell = () => {
         />
 
         <Sidebar.Inset>
-          <BreadcrumbsAndOutlet />
+          <MainContentLayout breadcrumbs={<Breadcrumbs />}>
+            <Outlet />
+          </MainContentLayout>
 
           <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
           <SettingsMenu
@@ -225,25 +226,12 @@ export const AppShellMFE = memo(() => {
 
   return (
     <>
-      <BreadcrumbsAndOutlet className="text-foreground-2 min-h-screen" />
+      <MainContentLayout breadcrumbs={<Breadcrumbs />} className="text-foreground-2 min-h-screen">
+        <Outlet />
+      </MainContentLayout>
       <Toaster />
     </>
   )
 })
 
 AppShellMFE.displayName = 'AppShellMFE'
-
-function BreadcrumbsAndOutlet({ className }: { className?: string }) {
-  const { isInset } = useThemeStore()
-
-  return (
-    <div className={cn('h-full', { 'overflow-hidden h-screen p-2 bg-sidebar-background-1': isInset }, className)}>
-      <div className={cn('h-full flex flex-col', { 'rounded-md overflow-auto bg-background-1': isInset })}>
-        <div className="layer-high bg-background-1 sticky top-0">
-          <Breadcrumbs />
-        </div>
-        <Outlet />
-      </div>
-    </div>
-  )
-}

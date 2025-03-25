@@ -28,6 +28,8 @@ import { ProjectLabelsList } from './pages-v2/project/labels/project-labels-list
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
 import { ImportProjectContainer } from './pages-v2/project/project-import-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
+import { ProjectRulesCreateOrUpdateContainer } from './pages-v2/project/project-rules-create-container.tsx'
+import { ProjectRulesListContainer } from './pages-v2/project/project-rules-list-container.tsx'
 import { ProjectSettingsLayout } from './pages-v2/project/project-settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
@@ -110,6 +112,34 @@ const labelsRoute = {
       element: <ProjectLabelFormContainer />,
       handle: {
         breadcrumb: ({ labelId }: { labelId: string }) => <span>{labelId}</span>
+      }
+    }
+  ]
+}
+
+const rulesRoute = {
+  path: 'rules',
+  handle: {
+    breadcrumb: () => <span>{Page.Branch_Rules}</span>,
+    pageTitle: Page.Branch_Rules
+  },
+  children: [
+    {
+      index: true,
+      element: <ProjectRulesListContainer />
+    },
+    {
+      path: 'create',
+      element: <ProjectRulesCreateOrUpdateContainer />,
+      handle: {
+        breadcrumb: () => <span>Create a rule</span>
+      }
+    },
+    {
+      path: ':ruleId',
+      element: <ProjectRulesCreateOrUpdateContainer />,
+      handle: {
+        breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>
       }
     }
   ]
@@ -589,7 +619,8 @@ export const repoRoutes: CustomRouteObject[] = [
           pageTitle: Page.Members
         }
       },
-      labelsRoute
+      labelsRoute,
+      rulesRoute
     ]
   },
   {
@@ -621,7 +652,8 @@ export const repoRoutes: CustomRouteObject[] = [
         index: true,
         element: <Navigate to="labels" replace />
       },
-      labelsRoute
+      labelsRoute,
+      rulesRoute
     ]
   }
 ]

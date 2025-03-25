@@ -333,27 +333,27 @@
       "text": {
         "$type": "color",
         "$value": "{colors.blue.200}",
-        "$description": "Primary text color for running elements, ensuring visibility for in-progress states"
+        "$description": "Primary text color for info elements, ensuring visibility for in-progress states"
       },
       "background": {
         "$type": "color",
         "$value": "{colors.blue.950}",
-        "$description": "Base background color for running elements to indicate active processes"
+        "$description": "Base background color for info elements to indicate active processes"
       },
       "border": {
         "$type": "color",
         "$value": "{colors.blue.800}",
-        "$description": "Border color for running elements to provide visual definition"
+        "$description": "Border color for info elements to provide visual definition"
       },
       "background-hover": {
         "$type": "color",
         "$value": "{colors.blue.900}",
-        "$description": "Background color on hover for running elements to indicate interactivity"
+        "$description": "Background color on hover for info elements to indicate interactivity"
       },
       "background-selected": {
         "$type": "color",
         "$value": "{colors.blue.800}",
-        "$description": "Background color when selected for running elements, indicating active state"
+        "$description": "Background color when selected for info elements, indicating active state"
       }
     },
     "merged": {

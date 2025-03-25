@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import {
   createBrowserRouter,
   Link,
@@ -24,10 +24,26 @@ const router = createBrowserRouter([
 ])
 
 const App: FC = () => {
+  const [isInset, setIsInset] = useState<boolean>(false)
   const themeStore = useThemeStore()
 
+  /**
+   * Set inset on mount and listen for changes in ViewSettings
+   */
+  useEffect(() => {
+    const setInset = () => {
+      const inset = sessionStorage.getItem('view-preview-is-inset')
+      setIsInset(inset === 'true')
+    }
+
+    setInset()
+    window.addEventListener('storageChange', setInset)
+
+    return () => window.removeEventListener('storageChange', setInset)
+  }, [])
+
   return (
-    <ThemeProvider {...themeStore}>
+    <ThemeProvider {...{ ...themeStore, isInset }}>
       <RouterContextProvider
         Link={Link}
         NavLink={NavLink}

@@ -36,13 +36,13 @@ export const LandingPageView: FC<LandingPageProps> = ({
   const { t } = useTranslationStore()
 
   return (
-    <SandboxLayout.Main>
+    <SandboxLayout.Main className="h-full">
       <section className="grid h-full place-content-center place-items-center gap-2.5">
-        <h2 className="text-2xl font-medium text-foreground-1">
+        <h2 className="text-foreground-1 text-2xl font-medium">
           {t('views:landingPage.selectProject', 'Select a project to get started')}
         </h2>
 
-        <p className="text-center text-sm font-normal text-foreground-3">
+        <p className="text-foreground-3 text-center text-sm font-normal">
           {t(
             'views:landingPage.description',
             'Projects contain your repositories and pipelines. To start using Gitness, select a project or create a new one.'
@@ -53,7 +53,7 @@ export const LandingPageView: FC<LandingPageProps> = ({
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button variant="default" size="lg">
-                <span className="mr-5 text-sm font-normal text-foreground-6">
+                <span className="text-foreground-6 mr-5 text-sm font-normal">
                   {t('views:landingPage.projectSelector', 'Select Project')}
                 </span>
                 <Icon name="chevron-down" size={15} className="chevron-down" />

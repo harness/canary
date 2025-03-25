@@ -143,6 +143,11 @@
       "$type": "spacing",
       "$value": "14px",
       "$description": "3.5"
+    },
+    "4-half": {
+      "$type": "spacing",
+      "$value": "18px",
+      "$description": "4.5"
     }
   },
   "rounded": {
@@ -325,10 +330,10 @@
       "$value": "10px",
       "$description": "2.5"
     },
-    "3-half": {
+    "4-half": {
       "$type": "sizing",
-      "$value": "14px",
-      "$description": "3.5"
+      "$value": "18px",
+      "$description": "4.5"
     }
   },
   "borderWidth": {
@@ -369,7 +374,7 @@
     },
     "sm": {
       "$type": "sizing",
-      "$value": "{size.3-half}"
+      "$value": "{size.4-half}"
     },
     "default": {
       "$type": "sizing",

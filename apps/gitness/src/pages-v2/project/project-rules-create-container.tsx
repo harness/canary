@@ -3,42 +3,35 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import {
   useListPrincipalsQuery,
-  useListStatusCheckRecentQuery,
-  useRepoRuleAddMutation,
-  useRepoRuleGetQuery,
-  useRepoRuleUpdateMutation
+  useListStatusCheckRecentSpaceQuery,
+  useSpaceRuleAddMutation,
+  useSpaceRuleGetQuery,
+  useSpaceRuleUpdateMutation
 } from '@harnessio/code-service-client'
-import { SkeletonForm } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchRulesActionType,
   getBranchRules,
   MergeStrategy,
-  NotFoundPage,
   RepoBranchSettingsFormFields,
   RepoBranchSettingsRulesPage
 } from '@harnessio/ui/views'
 
-import { useRoutes } from '../../framework/context/NavigationContext'
-import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { PathParams } from '../../RouteDefinitions'
-import { transformFormOutput } from '../../utils/repo-branch-rules-utils'
-import { useBranchRulesStore } from './stores/repo-branch-rules-store'
-import { useRepoRulesStore } from './stores/repo-settings-store'
+import { transformDataFromApi, transformFormOutput } from '../../utils/repo-branch-rules-utils'
+import { useBranchRulesStore } from '../repo/stores/repo-branch-rules-store'
+import { useProjectRulesStore } from './stores/project-rules-store'
 
-export const RepoBranchSettingsRulesPageContainer = () => {
+export const ProjectRulesCreateOrUpdateContainer = () => {
   const { t } = useTranslationStore()
-  const routes = useRoutes()
   const navigate = useNavigate()
-  const repoRef = useGetRepoRef()
-  const repoName = useGetRepoId()
 
-  const { spaceId } = useParams<PathParams>()
-  const { identifier } = useParams()
-  const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useRepoRulesStore()
+  const spaceURL = useGetSpaceURLParam()
+
+  const { ruleId: ruleIdentifier } = useParams()
+  const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useProjectRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const { dispatch, resetRules } = useBranchRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
@@ -62,14 +55,10 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     }
   }, [resetRules, setPresetRuleData, setPrincipals, setRecentStatusChecks])
 
-  const {
-    data: { body: rulesData } = {},
-    error: fetchRuleError,
-    isLoading: fetchRuleIsLoading
-  } = useRepoRuleGetQuery(
-    { repo_ref: repoRef, rule_identifier: identifier ?? '' },
+  const { data: { body: rulesData } = {} } = useSpaceRuleGetQuery(
+    { space_ref: `${spaceURL}/+`, rule_identifier: ruleIdentifier ?? '' },
     {
-      enabled: !!identifier
+      enabled: !!ruleIdentifier
     }
   )
 
@@ -77,12 +66,12 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     mutate: addRule,
     error: addRuleError,
     isLoading: addingRule
-  } = useRepoRuleAddMutation(
-    { repo_ref: repoRef },
+  } = useSpaceRuleAddMutation(
+    { space_ref: `${spaceURL}/+` },
     {
       onSuccess: () => {
         setIsSubmitSuccess(true)
-        navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
+        navigate('..')
       }
     }
   )
@@ -92,29 +81,28 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery, accountIdentifier: accountId }
   })
 
-  const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentQuery({
-    repo_ref: repoRef,
-    queryParams: {}
-  })
-
   const {
     mutate: updateRule,
     error: updateRuleError,
     isLoading: updatingRule
-  } = useRepoRuleUpdateMutation(
-    { repo_ref: repoRef, rule_identifier: identifier! },
+  } = useSpaceRuleUpdateMutation(
+    { space_ref: `${spaceURL}/+`, rule_identifier: ruleIdentifier! },
     {
       onSuccess: () => {
         setIsSubmitSuccess(true)
-        navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
+        navigate('..')
       }
     }
   )
+  const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentSpaceQuery({
+    space_ref: `${spaceURL}/+`,
+    queryParams: {}
+  })
 
   const handleRuleUpdate = (data: RepoBranchSettingsFormFields) => {
     const formattedData = transformFormOutput(data)
 
-    if (identifier) {
+    if (ruleIdentifier) {
       // Update existing rule
       updateRule({
         body: formattedData
@@ -175,7 +163,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
 
   useEffect(() => {
     if (rulesData) {
-      setPresetRuleData(rulesData)
+      const transformedData = transformDataFromApi(rulesData)
+      setPresetRuleData(transformedData)
     }
   }, [rulesData, setPresetRuleData])
 
@@ -193,17 +182,9 @@ export const RepoBranchSettingsRulesPageContainer = () => {
 
   const errors = {
     principals: principalsError?.message || null,
-    statusChecks: statusChecksError?.message || null,
     addRule: addRuleError?.message || null,
-    updateRule: updateRuleError?.message || null
-  }
-
-  if (!!identifier && fetchRuleIsLoading) {
-    return <SkeletonForm className="mt-7" />
-  }
-
-  if (!!identifier && !!fetchRuleError) {
-    return <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="rules" />
+    updateRule: updateRuleError?.message || null,
+    statusChecks: statusChecksError?.message || null
   }
 
   return (
@@ -211,7 +192,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       handleRuleUpdate={handleRuleUpdate}
       apiErrors={errors}
       isLoading={addingRule || updatingRule}
-      useRepoRulesStore={useRepoRulesStore}
+      useRepoRulesStore={useProjectRulesStore}
       useBranchRulesStore={useBranchRulesStore}
       handleCheckboxChange={handleCheckboxChange}
       handleSubmenuChange={handleSubmenuChange}
@@ -222,6 +203,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}
       isSubmitSuccess={isSubmitSuccess}
+      projectScope
     />
   )
 }

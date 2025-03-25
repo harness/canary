@@ -10,17 +10,15 @@
         "$value": "{size.6}"
       }
     },
-    "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.1}"
-    },
-    "py": {
-      "$type": "spacing",
-      "$value": "{spacing.half}"
-    },
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.2}"
+    "default": {
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      }
     },
     "radius": {
       "$type": "borderRadius",
@@ -29,6 +27,54 @@
     "border": {
       "$type": "borderWidth",
       "$value": "{borderWidth.1}"
+    },
+    "sm": {
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.half}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
+      }
+    }
+  },
+  "badge-status": {
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.1-half}"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.1}"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
+    }
+  },
+  "badge-counter": {
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.half}"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.1-half}"
+    },
+    "size": {
+      "sm": {
+        "$type": "sizing",
+        "$value": "{size.2-half}"
+      },
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.4-half}"
+      }
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.full}"
     }
   }
 }

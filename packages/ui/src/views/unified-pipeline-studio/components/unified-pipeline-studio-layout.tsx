@@ -1,8 +1,11 @@
+import { ReactElement, ReactNode } from 'react'
+
+import { cn } from '@/utils'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@components/resizable'
 
 const PipelineStudioLayout = {
-  Root: ({ children }: { children: React.ReactNode }) => {
-    return <div className="flex grow flex-col">{children}</div>
+  Root: ({ children, className }: { children: ReactNode; className?: string }) => {
+    return <div className={cn('flex grow flex-col', className)}>{children}</div>
   },
   Header: ({ children }: { children: JSX.Element | JSX.Element[] | string }) => {
     return <div className="flex h-[55px] items-center justify-between border-b px-5">{children}</div>
@@ -10,24 +13,24 @@ const PipelineStudioLayout = {
   HeaderLeft: ({ children }: { children: JSX.Element | JSX.Element[] | string }) => {
     return <div className="flex items-center gap-x-3">{children}</div>
   },
-  View: ({ children }: { children: React.ReactElement }) => {
+  View: ({ children }: { children: ReactElement }) => {
     return <div>{children}</div>
   },
-  Split: ({ children }: { children: React.ReactElement[] }) => {
+  Split: ({ children }: { children: ReactElement[] }) => {
     return (
       <ResizablePanelGroup direction="vertical" className="border-5 grow">
         {children}
       </ResizablePanelGroup>
     )
   },
-  SplitMain: ({ children }: { children: React.ReactElement }) => {
+  SplitMain: ({ children }: { children: ReactElement }) => {
     return (
       <ResizablePanel order={1} className="flex">
         {children}{' '}
       </ResizablePanel>
     )
   },
-  SplitPanel: ({ children, open }: { children: React.ReactElement; open?: boolean }) => {
+  SplitPanel: ({ children, open }: { children: ReactElement; open?: boolean }) => {
     return open ? (
       <>
         <ResizableHandle />

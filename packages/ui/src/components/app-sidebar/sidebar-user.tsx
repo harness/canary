@@ -12,7 +12,7 @@ const UserAvatar = ({ user }: Pick<UserProps, 'user'>) => {
 
   return (
     <>
-      <Avatar.Root className="size-8 rounded-lg">
+      <Avatar.Root className="mr-2 size-8 rounded-lg">
         {!!user?.url && <Avatar.Image src={user.url} alt="user" />}
         <Avatar.Fallback className="rounded-lg bg-sidebar-background-5 text-sidebar-foreground-1">
           {getInitials(userName)}

@@ -4,6 +4,10 @@
     "recent": "Recent",
     "user-management": "User Management",
     "settings": "Settings",
+    "sidebarToggle": {
+      "expand": "Expand",
+      "collapse": "Collapse"
+    },
     "pin": "Pin",
     "remove": "Remove",
     "reorder": "Reorder",

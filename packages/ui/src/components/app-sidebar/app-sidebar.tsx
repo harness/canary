@@ -7,12 +7,13 @@ import {
   LanguageInterface,
   languages,
   Sidebar,
-  Spacer,
-  ThemeDialog
+  ThemeDialog,
+  useSidebar
 } from '@/components'
 import { ContentStyleType, useRouterContext, useTheme } from '@/context'
 import { TypesUser } from '@/types'
 import { TranslationStore } from '@/views'
+import { cn } from '@utils/cn'
 
 import { SidebarItem } from './sidebar-item'
 import { SidebarSearchLegacy } from './sidebar-search-legacy'
@@ -35,6 +36,7 @@ interface SidebarProps {
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
   useTranslationStore: () => TranslationStore
   showNewSearch?: boolean
+  hasToggle?: boolean
 }
 
 export const AppSidebar = ({
@@ -48,11 +50,13 @@ export const AppSidebar = ({
   handleSettingsMenu,
   handleCustomNav,
   handleLogOut,
+  hasToggle = true,
   showNewSearch
 }: SidebarProps) => {
   const { t, i18n, changeLanguage } = useTranslationStore()
   const { theme, setTheme, setInset, isInset } = useTheme()
   const { Link, navigate } = useRouterContext()
+  const { collapsed, toggleSidebar } = useSidebar()
 
   const [openThemeDialog, setOpenThemeDialog] = useState(false)
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)
@@ -72,6 +76,19 @@ export const AppSidebar = ({
 
   const onInsetChange = (style: ContentStyleType) => setInset(style === ContentStyleType.Inset)
 
+  const HarnessLogo = ({ className }: { className?: string }) => (
+    <Link to="/" className={cn('flex items-center gap-0.5 overflow-hidden', className)}>
+      <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
+      <div
+        className={cn('overflow-hidden max-w-20 mb-px opacity-100 transition-[max-width,opacity] ease-linear', {
+          'max-w-0 opacity-0': collapsed
+        })}
+      >
+        <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1" />
+      </div>
+    </Link>
+  )
+
   return (
     <>
       <Sidebar.Root className="z-20">
@@ -81,24 +98,11 @@ export const AppSidebar = ({
               <SidebarSearch
                 className="pb-3 pt-1.5"
                 t={t}
-                logo={
-                  <Link to="/" className="flex h-[58px] items-center justify-start gap-0.5 pl-1">
-                    <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-                    <Icon name="harness-logo-text" width={65} height={15} className="mb-px text-sidebar-foreground-1" />
-                  </Link>
-                }
+                logo={<HarnessLogo className="h-[58px] justify-start pl-1" />}
               />
             </SearchProvider>
           ) : (
-            <SidebarSearchLegacy
-              t={t}
-              logo={
-                <Link className="flex items-center gap-0.5" to="/">
-                  <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-                  <Icon name="harness-logo-text" width={65} height={15} className="mb-px text-sidebar-foreground-1" />
-                </Link>
-              }
-            />
+            <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
           )}
         </Sidebar.Header>
         <Sidebar.Content>
@@ -131,7 +135,6 @@ export const AppSidebar = ({
           {!!recentMenuItems.length && (
             <Sidebar.Group title={t('component:navbar.recent', 'Recent')} className="border-t pt-2.5">
               <Sidebar.GroupLabel>{t('component:navbar.recent', 'Recent')}</Sidebar.GroupLabel>
-              <Spacer size={2} />
               <Sidebar.GroupContent>
                 <Sidebar.Menu>
                   {recentMenuItems.map(item => (
@@ -155,27 +158,54 @@ export const AppSidebar = ({
               <Sidebar.Menu>
                 {!!currentUser?.admin && (
                   <Sidebar.MenuItem>
-                    <Sidebar.MenuButton asChild onClick={() => navigate('/admin/default-settings')}>
-                      <Sidebar.MenuItemText
-                        text={t('component:navbar.user-management', 'User Management')}
-                        icon={<Icon name="account" size={14} />}
-                      />
-                    </Sidebar.MenuButton>
+                    <button className="w-full" onClick={() => navigate('/admin/default-settings')}>
+                      <Sidebar.MenuButton asChild>
+                        <Sidebar.MenuItemText
+                          text={t('component:navbar.user-management', 'User Management')}
+                          icon={<Icon name="account" size={14} />}
+                        />
+                      </Sidebar.MenuButton>
+                    </button>
                   </Sidebar.MenuItem>
                 )}
                 <Sidebar.MenuItem>
-                  <Sidebar.MenuButton asChild onClick={handleSettingsMenu}>
-                    <Sidebar.MenuItemText
-                      text={t('component:navbar.settings', 'Settings')}
-                      icon={<Icon name="settings-1" size={14} />}
-                    />
-                  </Sidebar.MenuButton>
+                  <button className="w-full" onClick={handleSettingsMenu}>
+                    <Sidebar.MenuButton asChild>
+                      <Sidebar.MenuItemText
+                        text={t('component:navbar.settings', 'Settings')}
+                        icon={<Icon name="settings-1" size={14} />}
+                      />
+                    </Sidebar.MenuButton>
+                  </button>
                 </Sidebar.MenuItem>
               </Sidebar.Menu>
             </Sidebar.GroupContent>
           </Sidebar.Group>
         </Sidebar.Content>
-        <Sidebar.Footer className="border-t border-sidebar-border-1">
+
+        {hasToggle && (
+          <Sidebar.Group>
+            <Sidebar.Menu>
+              <Sidebar.MenuItem>
+                <button className="w-full" onClick={toggleSidebar}>
+                  <Sidebar.MenuButton asChild>
+                    <Sidebar.MenuItemText
+                      aria-label={
+                        collapsed
+                          ? t('component:navbar.sidebarToggle.expand', 'Expand')
+                          : t('component:navbar.sidebarToggle.collapse', 'Collapse')
+                      }
+                      text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
+                      icon={<Icon name={collapsed ? 'sidebar-right' : 'sidebar-left'} size={14} />}
+                    />
+                  </Sidebar.MenuButton>
+                </button>
+              </Sidebar.MenuItem>
+            </Sidebar.Menu>
+          </Sidebar.Group>
+        )}
+
+        <Sidebar.Footer className="border-sidebar-border-1 border-t">
           <User
             user={currentUser}
             openThemeDialog={() => setOpenThemeDialog(true)}

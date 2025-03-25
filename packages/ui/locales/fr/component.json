@@ -4,6 +4,10 @@
     "recent": "Récent",
     "user-management": "Gestion des utilisateurs",
     "settings": "Paramètres",
+    "sidebarToggle": {
+      "expand": "Développer",
+      "collapse": "Réduire"
+    },
     "pin": "Épingler",
     "remove": "Supprimer",
     "reorder": "Réorganiser",

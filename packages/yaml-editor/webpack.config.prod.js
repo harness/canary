@@ -10,7 +10,6 @@ module.exports = {
     library: 'YamlEditor'
   },
   externals: {
-    'monaco-editor-react': '@monaco-editor/react',
     'monaco-editor': 'monaco-editor',
     'monaco-yaml': 'monaco-yaml',
     react: 'react',

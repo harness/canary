@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import { Icon } from '@/components'
-import { CommandPalette } from './command-palette'
 import { TFunction } from 'i18next'
 
+import { CommandPalette } from './command-palette'
 import { useSearch } from './search-context'
 
 enum PageKey {

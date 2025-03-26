@@ -64,7 +64,6 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
 
       if (openSecretDrawer) {
         formDef.inputs = formDef.inputs.map(input => {
-          console.log('input', input)
           if (input.inputType === 'secretSelect') {
             return {
               ...input,
@@ -79,7 +78,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     }
     return { inputs: [] }
   }, [formEntity.data.type, getConnectorDefinition, openSecretDrawer])
-  console.log(formDefinition, 'formDefinition')
+
   const resolver = useZodValidationResolver(formDefinition, {
     validationConfig: {
       requiredMessage: 'Required input',

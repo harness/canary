@@ -22,6 +22,23 @@ import { SidebarSearch } from './sidebar-search/sidebar-search'
 import { User } from './sidebar-user'
 import { NavbarItemType } from './types'
 
+const HarnessLogo = ({ className }: { className?: string }) => {
+  const { Link } = useRouterContext()
+
+  return (
+    <Link to="/" className={cn('flex items-center', className)}>
+      <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
+      <div
+        className={cn(
+          'overflow-hidden max-w-20 mb-px ml-0.5 opacity-100 transition-[max-width,opacity,margin-left] group-data-[state=collapsed]:opacity-0 group-data-[state=collapsed]:max-w-0 group-data-[state=collapsed]:ml-0 ease-linear'
+        )}
+      >
+        <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1" />
+      </div>
+    </Link>
+  )
+}
+
 interface SidebarProps {
   recentMenuItems: NavbarItemType[]
   pinnedMenuItems: NavbarItemType[]
@@ -55,7 +72,7 @@ export const AppSidebar = ({
 }: SidebarProps) => {
   const { t, i18n, changeLanguage } = useTranslationStore()
   const { theme, setTheme, setInset, isInset } = useTheme()
-  const { Link, navigate } = useRouterContext()
+  const { navigate } = useRouterContext()
   const { collapsed, toggleSidebar } = useSidebar()
 
   const [openThemeDialog, setOpenThemeDialog] = useState(false)
@@ -76,29 +93,20 @@ export const AppSidebar = ({
 
   const onInsetChange = (style: ContentStyleType) => setInset(style === ContentStyleType.Inset)
 
-  const HarnessLogo = ({ className }: { className?: string }) => (
-    <Link to="/" className={cn('flex items-center gap-0.5 overflow-hidden', className)}>
-      <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-      <div
-        className={cn('overflow-hidden max-w-20 mb-px opacity-100 transition-[max-width,opacity] ease-linear', {
-          'max-w-0 opacity-0': collapsed
-        })}
-      >
-        <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1" />
-      </div>
-    </Link>
-  )
-
   return (
     <>
       <Sidebar.Root className="z-20">
-        <Sidebar.Header>
+        <Sidebar.Header className="pb-3">
           {showNewSearch ? (
             <SearchProvider t={t}>
               <SidebarSearch
                 className="pb-3 pt-1.5"
                 t={t}
-                logo={<HarnessLogo className="h-[58px] justify-start pl-1" />}
+                logo={
+                  <div className="my-5 flex items-center pl-2">
+                    <HarnessLogo />
+                  </div>
+                }
               />
             </SearchProvider>
           ) : (
@@ -121,8 +129,9 @@ export const AppSidebar = ({
                 ))}
 
                 <Sidebar.MenuItem>
-                  <Sidebar.MenuButton asChild onClick={handleMoreMenu}>
+                  <Sidebar.MenuButton onClick={handleMoreMenu}>
                     <Sidebar.MenuItemText
+                      className="pl-0"
                       text={t('component:navbar.more', 'More')}
                       icon={<Icon name="ellipsis" size={14} />}
                     />
@@ -158,25 +167,23 @@ export const AppSidebar = ({
               <Sidebar.Menu>
                 {!!currentUser?.admin && (
                   <Sidebar.MenuItem>
-                    <button className="w-full" onClick={() => navigate('/admin/default-settings')}>
-                      <Sidebar.MenuButton asChild>
-                        <Sidebar.MenuItemText
-                          text={t('component:navbar.user-management', 'User Management')}
-                          icon={<Icon name="account" size={14} />}
-                        />
-                      </Sidebar.MenuButton>
-                    </button>
+                    <Sidebar.MenuButton onClick={() => navigate('/admin/default-settings')}>
+                      <Sidebar.MenuItemText
+                        className="pl-0"
+                        text={t('component:navbar.user-management', 'User Management')}
+                        icon={<Icon name="account" size={14} />}
+                      />
+                    </Sidebar.MenuButton>
                   </Sidebar.MenuItem>
                 )}
                 <Sidebar.MenuItem>
-                  <button className="w-full" onClick={handleSettingsMenu}>
-                    <Sidebar.MenuButton asChild>
-                      <Sidebar.MenuItemText
-                        text={t('component:navbar.settings', 'Settings')}
-                        icon={<Icon name="settings-1" size={14} />}
-                      />
-                    </Sidebar.MenuButton>
-                  </button>
+                  <Sidebar.MenuButton onClick={handleSettingsMenu}>
+                    <Sidebar.MenuItemText
+                      className="pl-0"
+                      text={t('component:navbar.settings', 'Settings')}
+                      icon={<Icon name="settings-1" size={14} />}
+                    />
+                  </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
               </Sidebar.Menu>
             </Sidebar.GroupContent>
@@ -187,19 +194,18 @@ export const AppSidebar = ({
           <Sidebar.Group>
             <Sidebar.Menu>
               <Sidebar.MenuItem>
-                <button className="w-full" onClick={toggleSidebar}>
-                  <Sidebar.MenuButton asChild>
-                    <Sidebar.MenuItemText
-                      aria-label={
-                        collapsed
-                          ? t('component:navbar.sidebarToggle.expand', 'Expand')
-                          : t('component:navbar.sidebarToggle.collapse', 'Collapse')
-                      }
-                      text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
-                      icon={<Icon name={collapsed ? 'sidebar-right' : 'sidebar-left'} size={14} />}
-                    />
-                  </Sidebar.MenuButton>
-                </button>
+                <Sidebar.MenuButton onClick={toggleSidebar}>
+                  <Sidebar.MenuItemText
+                    className="pl-0"
+                    aria-label={
+                      collapsed
+                        ? t('component:navbar.sidebarToggle.expand', 'Expand')
+                        : t('component:navbar.sidebarToggle.collapse', 'Collapse')
+                    }
+                    text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
+                    icon={<Icon name={collapsed ? 'sidebar-right' : 'sidebar-left'} size={14} />}
+                  />
+                </Sidebar.MenuButton>
               </Sidebar.MenuItem>
             </Sidebar.Menu>
           </Sidebar.Group>

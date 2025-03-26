@@ -185,6 +185,7 @@ import Shield from '../../icons/shield-icon.svg'
 import ShieldLock from '../../icons/shield-lock.svg'
 import SidebarIcon from '../../icons/sidebar-icon.svg'
 import SidebarLeft from '../../icons/sidebar-left.svg'
+import SidebarMobile from '../../icons/sidebar-mobile.svg'
 import SidebarRight from '../../icons/sidebar-right.svg'
 import Signpost from '../../icons/signpost.svg'
 import Slack from '../../icons/slack.svg'
@@ -354,6 +355,7 @@ export const IconNameMap = {
   'sidebar-icon': SidebarIcon,
   'sidebar-left': SidebarLeft,
   'sidebar-right': SidebarRight,
+  'sidebar-mobile': SidebarMobile,
   variable: Variable,
   'clock-icon': ClockIcon,
   eye: Eye,

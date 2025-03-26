@@ -12,13 +12,12 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
   const { NavLink } = useRouterContext()
 
   return (
-    <Sheet.Root modal={false} open={showMoreMenu}>
+    <Sheet.Root open={showMoreMenu} onOpenChange={handleMoreMenu}>
       <Sheet.Content
-        className="inset-y-0 z-40 h-screen w-[328px] translate-x-[var(--sidebar-width)] bg-transparent p-0 transition-transform duration-200 ease-linear"
+        className="inset-y-0 z-40 h-screen w-[328px] translate-x-[--sidebar-width] p-0 transition-transform duration-200 ease-linear"
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
+        overlayClassName="bg-transparent"
         side="left"
-        onClick={handleMoreMenu}
-        modal={false}
       >
         <Sheet.Title className="sr-only">More Menu</Sheet.Title>
         <NavbarSkeleton.Root className="w-[328px]" isSubMenu>

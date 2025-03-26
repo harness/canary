@@ -3,6 +3,9 @@ import { useRouterContext, useTheme } from '@/context'
 import { cn } from '@/utils'
 import { TFunction } from 'i18next'
 
+const dropdownItemClassNames =
+  'text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1'
+
 interface NavbarItemType {
   id: number | string
   title: string
@@ -42,9 +45,6 @@ export const SidebarItem = ({
   const handleRemoveRecent = () => {
     handleRemoveRecentMenuItem(item)
   }
-
-  const dropdownItemClassNames =
-    'text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1'
 
   const dropdownItems = isRecent ? (
     <>

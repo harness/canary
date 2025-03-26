@@ -42,7 +42,10 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, 
       <Sidebar.MenuItem>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
-            <Sidebar.MenuButton size="lg" className="data-[state=open]:bg-sidebar-background-2">
+            <Sidebar.MenuButton
+              size="lg"
+              className="data-[state=open]:bg-sidebar-background-2 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-[7px]"
+            >
               <UserAvatar user={user} />
             </Sidebar.MenuButton>
           </DropdownMenu.Trigger>

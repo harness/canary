@@ -12,6 +12,7 @@
     "remove": "Remove",
     "reorder": "Reorder",
     "unpin": "Unpin",
+    "searchButton": "Open search dialog",
     "search": "Search",
     "command-palette": "Command Palette",
     "nothing-found": "Nothing found",

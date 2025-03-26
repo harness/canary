@@ -12,13 +12,12 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
   const { NavLink } = useRouterContext()
 
   return (
-    <Sheet.Root modal={false} open={showSettingMenu}>
+    <Sheet.Root open={showSettingMenu} onOpenChange={handleSettingsMenu}>
       <Sheet.Content
-        className="inset-y-0 z-40 h-screen w-[364px] translate-x-[var(--sidebar-width)] bg-transparent p-0 transition-transform duration-200 ease-linear"
+        className="inset-y-0 z-40 h-screen w-[364px] translate-x-[--sidebar-width] p-0 transition-transform duration-200 ease-linear"
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
+        overlayClassName="bg-transparent"
         side="left"
-        onClick={handleSettingsMenu}
-        modal={false}
       >
         <Sheet.Title className="sr-only">System Administration menu</Sheet.Title>
         <NavbarSkeleton.Root className="w-[364px]" isSubMenu>

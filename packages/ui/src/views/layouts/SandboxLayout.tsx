@@ -44,7 +44,7 @@ function Header({ children, className }: { children: ReactNode; className?: stri
   return (
     <header
       className={cn(
-        'bg-background fixed translate-x-[var(--sidebar-width)] transition-transform duration-200 ease-linear right-0 top-0 z-40 h-[55px]',
+        'bg-background fixed translate-x-[--sidebar-width] transition-transform duration-200 ease-linear right-0 top-0 z-40 h-[55px]',
         className
       )}
       role="banner"

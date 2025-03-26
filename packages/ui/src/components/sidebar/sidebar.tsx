@@ -121,6 +121,8 @@ const SidebarProvider = forwardRef<
   const { isInset } = useTheme()
 
   useEffect(() => {
+    if (isMobile) return
+
     if (!open) {
       document.body.style.setProperty('--sidebar-width', SIDEBAR_COLLAPSED_WIDTH)
     }
@@ -136,7 +138,7 @@ const SidebarProvider = forwardRef<
     return () => {
       document.body.style.removeProperty('--sidebar-width')
     }
-  }, [isInset, open])
+  }, [isInset, open, isMobile])
 
   return (
     <SidebarContext.Provider value={contextValue}>
@@ -264,7 +266,7 @@ const SidebarTrigger = forwardRef<ElementRef<typeof Button>, ComponentProps<type
         }}
         {...props}
       >
-        <Icon name="sidebar-left" />
+        <Icon name="sidebar-mobile" />
         <span className="sr-only">Toggle Sidebar</span>
       </Button>
     )
@@ -312,8 +314,7 @@ const SidebarInset = forwardRef<HTMLDivElement, ComponentProps<'main'>>(({ class
         className
       )}
       style={{
-        maxWidth:
-          !isMobile && !collapsed ? `calc(100vw - ${SIDEBAR_WIDTH})` : `calc(100vw - ${SIDEBAR_COLLAPSED_WIDTH})`
+        maxWidth: `calc(100vw - ${isMobile ? '0px' : collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH})`
       }}
       {...props}
     />
@@ -339,16 +340,7 @@ const SidebarInput = forwardRef<ElementRef<typeof Input>, ComponentProps<typeof 
 SidebarInput.displayName = 'SidebarInput'
 
 const SidebarHeader = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
-  const { isInset } = useTheme()
-
-  return (
-    <div
-      ref={ref}
-      data-sidebar="header"
-      className={cn('flex flex-col gap-2', isInset ? 'px-3.5' : 'px-3', className)}
-      {...props}
-    />
-  )
+  return <div ref={ref} data-sidebar="header" className={cn('flex flex-col gap-2 px-3.5', className)} {...props} />
 })
 SidebarHeader.displayName = 'SidebarHeader'
 
@@ -389,17 +381,11 @@ const SidebarContent = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ clas
 SidebarContent.displayName = 'SidebarContent'
 
 const SidebarGroup = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
-  const { isInset } = useTheme()
-
   return (
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn(
-        'relative flex w-full min-w-0 flex-col py-2 border-sidebar-border-1',
-        isInset ? 'px-3.5' : 'px-2.5',
-        className
-      )}
+      className={cn('relative flex w-full min-w-0 flex-col py-2 px-3.5 border-sidebar-border-1', className)}
       {...props}
     />
   )
@@ -408,7 +394,6 @@ SidebarGroup.displayName = 'SidebarGroup'
 
 const SidebarGroupLabel = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'> & { asChild?: boolean }>(
   ({ className, asChild = false, ...props }, ref) => {
-    const { collapsed } = useSidebar()
     const Comp = asChild ? Slot : 'div'
 
     return (
@@ -417,8 +402,7 @@ const SidebarGroupLabel = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'d
         data-sidebar="group-label"
         className={cn(
           'flex h-8 shrink-0 items-center rounded-md px-2 mb-2 text-xs text-sidebar-foreground-5 outline-none ring-sidebar-ring opacity-1 transition-[height,opacity,margin-bottom] duration-150 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
-          'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0',
-          { 'h-0 opacity-0 mb-0': collapsed },
+          'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 group-data-[state=collapsed]:opacity-0 group-data-[state=collapsed]:mb-0 group-data-[state=collapsed]:h-0',
           className
         )}
         {...props}
@@ -536,9 +520,8 @@ const SidebarMenuItemText = forwardRef<
     active?: boolean
   }
 >(({ icon, text, className, active = false, ...props }, ref) => {
-  const { collapsed } = useSidebar()
   return (
-    <div ref={ref} className={cn('flex items-center select-none pl-2.5 ', { 'gap-x-0': !icon }, className)} {...props}>
+    <div ref={ref} className={cn('flex items-center select-none pl-2.5 w-full', className)} {...props}>
       {icon && (
         <div
           className={cn(
@@ -554,9 +537,10 @@ const SidebarMenuItemText = forwardRef<
       )}
       <span
         className={cn(
-          'font-medium text-sidebar-foreground-2 whitespace-nowrap group-hover/menu-item:text-sidebar-foreground-1 z-10 text-left transition-[opacity,width,margin] duration-100 ease-in-out',
-          { 'text-sidebar-foreground-1': active },
-          { 'opacity-0 w-0 duration-150': collapsed }
+          // 14px - icon size, 8px - gap, 16px - sum of container paddings. This makes truncate work well
+          'max-w-[calc(100%-14px-8px-16px)] w-full truncate',
+          'font-medium text-sidebar-foreground-2 whitespace-nowrap group-hover/menu-item:text-sidebar-foreground-1 z-10 text-left transition-[opacity,max-width,margin] duration-100 ease-in-out group-data-[state=collapsed]:duration-150 group-data-[state=collapsed]:ease-linear group-data-[state=collapsed]:opacity-0 group-data-[state=collapsed]:max-w-0 group-data-[state=collapsed]:ml-0',
+          { 'text-sidebar-foreground-1': active }
         )}
       >
         {text}

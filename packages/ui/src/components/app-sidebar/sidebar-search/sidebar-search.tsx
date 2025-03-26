@@ -24,37 +24,35 @@ export function SidebarSearch(props: SidebarSearchProps) {
   const { setIsOpen } = searchContext
 
   return (
-    <form {...props}>
+    <div>
       {props.logo}
-      <Sidebar.Group className="p-0">
-        <Sidebar.GroupContent className="relative">
-          <Label htmlFor="search" className="sr-only">
-            {t('component:navbar.search', 'Search')}
-          </Label>
-          <Input
-            id="search"
-            placeholder="Search"
-            className="cursor-pointer pl-[30px]"
-            onClick={() => setIsOpen(true)}
-            autoComplete="off"
-            spellCheck={false}
-            onFocus={e => e.target.blur()}
-            theme="sidebar"
-          />
-          <Icon
-            className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 select-none text-sidebar-foreground-4"
-            name="search"
-            size={12}
-          />
-          <Button
-            variant="custom"
-            size="icon"
-            className="pointer-events-none absolute right-1.5 top-1/2 h-5 -translate-y-1/2 select-none rounded-sm border border-sidebar-border-5 bg-sidebar-background-9 p-0 px-1.5 text-sidebar-foreground-3"
-          >
-            <span className="size-full text-12">⌘K</span>
-          </Button>
-        </Sidebar.GroupContent>
-      </Sidebar.Group>
-    </form>
+      <Sidebar.MenuButton className="relative p-0" onClick={() => setIsOpen(true)}>
+        <Label htmlFor="search" className="sr-only">
+          {t('component:navbar.search', 'Search')}
+        </Label>
+        <Input
+          id="search"
+          placeholder="Search"
+          className="pl-[30px] transition-[width,padding-left] duration-150 ease-linear group-data-[state=collapsed]:w-[34px] group-data-[state=collapsed]:pl-1"
+          autoComplete="off"
+          spellCheck={false}
+          theme="sidebar"
+          tabIndex={-1}
+          readOnly
+        />
+        <div className="text-sidebar-foreground-4 bg-sidebar-background-1 absolute left-px top-px z-10 flex h-[calc(100%-2px)] w-[30px] items-center justify-center rounded">
+          <Icon name="search" size={12} className="ml-0.5" />
+        </div>
+        <Button
+          variant="custom"
+          size="icon"
+          type="button"
+          className="bg-background-3 border-sidebar-border-5 text-sidebar-foreground-3 absolute right-1.5 top-1/2 z-[5px] h-5 -translate-y-1/2 select-none rounded-sm border p-0 px-1.5 opacity-100 transition-opacity group-data-[state=collapsed]:opacity-0"
+          tabIndex={-1}
+        >
+          <span className="text-12 size-full">⌘K</span>
+        </Button>
+      </Sidebar.MenuButton>
+    </div>
   )
 }

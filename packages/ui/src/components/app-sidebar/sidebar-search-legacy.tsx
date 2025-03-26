@@ -27,25 +27,24 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
 
   return (
     <div className="flex w-full flex-col place-items-start pb-3 pt-1.5">
-      <div className="mb-5 mt-3.5 flex max-w-full items-center overflow-hidden pl-2">{logo}</div>
+      <div className="mb-5 mt-3.5 flex items-center pl-2">{logo}</div>
       <div className="relative w-full">
         <Button
           variant="ghost"
           tabIndex={collapsed ? 0 : -1}
-          aria-label="Open search dialog"
           className={cn(
-            'absolute opacity-0 -z-10 left-0 top-0 px-2.5 py-[9px] bg-sidebar-background-1 pointer-events-none transition-[opacity] duration-150 ease-linear',
-            { 'z-10 opacity-100 pointer-events-auto': collapsed }
+            'absolute opacity-0 -z-10 left-0 top-0 px-[9px] py-2 bg-sidebar-background-1 rounded border border-sidebar-border-2 pointer-events-none transition-[opacity,z-index] duration-75 delay-0 ease-linear group-data-[state=collapsed]:opacity-100 group-data-[state=collapsed]:pointer-events-auto group-data-[state=collapsed]:z-10 group-data-[state=collapsed]:delay-150'
           )}
           onClick={openSearchDialog}
         >
           <Icon className="text-sidebar-foreground-4" name="search" size={12} />
+          <span className="sr-only">{t('component:navbar.searchButton', 'Open search dialog')}</span>
         </Button>
 
         <SearchBox.Root
-          className={cn('overflow-hidden opacity-100 transition-[width,opacity] duration-150 ease-linear', {
-            'w-8 opacity-0': collapsed
-          })}
+          className={cn(
+            'overflow-hidden opacity-100 transition-[width,opacity] duration-200 ease-linear group-data-[state=collapsed]:opacity-0 group-data-[state=collapsed]:w-8'
+          )}
           width="full"
           placeholder={`${t('component:navbar.search', 'Search')}...`}
           hasShortcut

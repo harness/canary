@@ -23,11 +23,7 @@ export function MainContentLayout({ className, children, breadcrumbs }: MainCont
           {breadcrumbs}
         </div>
       )}
-      <div
-        className={cn('main-content-height', {
-          'overflow-hidden z- bg-sidebar-background-1': isInset
-        })}
-      >
+      <div className={cn('main-content-height', { 'overflow-hidden bg-sidebar-background-1': isInset })}>
         <ScrollArea
           type="always"
           orientation="both"

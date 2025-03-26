@@ -150,7 +150,7 @@
     "connector": {
       "name": "Github Repository Connector 3",
       "identifier": "connector3",
-      "description": "Github connector for repository",
+      "description": "",
       "accountIdentifier": "account123",
       "orgIdentifier": "org1",
       "projectIdentifier": "project1",

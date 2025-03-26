@@ -72,9 +72,11 @@ export function ConnectorsList({ connectors, useTranslationStore, isLoading }: P
                 description={
                   <div className="flex items-center gap-1">
                     {connector?.description ? (
-                      <span className="max-w-full truncate">{connector.description}</span>
+                      <>
+                        <span className="max-w-full truncate">{connector.description}</span>
+                        <Pipe />
+                      </>
                     ) : null}
-                    <Pipe />
                     {lastModifiedAt ? <LastUpdated lastModifiedAt={lastModifiedAt} t={t} /> : null}
                   </div>
                 }

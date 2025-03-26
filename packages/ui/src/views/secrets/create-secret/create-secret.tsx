@@ -114,9 +114,7 @@ export function CreateSecretPage({
 
   // Watch for changes to connectorValue prop and update form value
   useEffect(() => {
-    if (connectorValue) {
-      setValue('connector', connectorValue.connector?.identifier, { shouldValidate: true })
-    }
+    setValue('connector', connectorValue?.connector?.identifier, { shouldValidate: true })
   }, [connectorValue, setValue])
 
   const onSubmit: SubmitHandler<CreateSecretFormFields> = data => {

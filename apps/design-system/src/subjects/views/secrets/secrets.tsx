@@ -36,7 +36,7 @@ export const SecretsPage = ({
 
   const [, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
   const [selectedConnector, setSelectedConnector] = useState<ConnectorItem | null>(null)
-  const [isConnectotDrawerOpen, setIsConnectotDrawerOpen] = useState<boolean>(false)
+  const [isConnectorDrawerOpen, setIsConnectorDrawerOpen] = useState<boolean>(false)
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
 
@@ -89,8 +89,8 @@ export const SecretsPage = ({
             useTranslationStore={useTranslationStore}
             isLoading={false}
             apiError={null}
-            onConnectorClick={() => setIsConnectotDrawerOpen(true)}
-            onConnectorEdit={() => setIsConnectotDrawerOpen(true)}
+            onConnectorClick={() => setIsConnectorDrawerOpen(true)}
+            onConnectorEdit={() => setIsConnectorDrawerOpen(true)}
             onConnectorClear={() => setSelectedConnector(null)}
             connectorValue={selectedConnector}
           />
@@ -137,8 +137,8 @@ export const SecretsPage = ({
       </Drawer.Root>
       <ConnectorsRefPage
         selectedConnector={selectedConnector}
-        isDrawerOpen={isConnectotDrawerOpen}
-        setIsDrawerOpen={setIsConnectotDrawerOpen}
+        isDrawerOpen={isConnectorDrawerOpen}
+        setIsDrawerOpen={setIsConnectorDrawerOpen}
         setSelectedConnector={setSelectedConnector}
       />
     </>

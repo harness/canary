@@ -4,6 +4,7 @@ import { useTranslationStore } from '@utils/viewUtils'
 
 import { Drawer, Spacer } from '@harnessio/ui/components'
 import {
+  ConnectorItem,
   CreateSecretFormFields,
   CreateSecretPage,
   DirectionEnum,
@@ -14,6 +15,7 @@ import {
   SecretType
 } from '@harnessio/ui/views'
 
+import { ConnectorsRefPage } from '../connectors/connectors-ref'
 import mockAccountsData from './mock-account-data.json'
 import mockOrgData from './mock-org-data.json'
 import mockProjectsData from './mock-project-data.json'
@@ -34,6 +36,8 @@ export const SecretsPage = ({
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.NEW)
 
   const [, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
+  const [selectedConnector, setSelectedConnector] = useState<ConnectorItem | null>(null)
+  const [isConnectotDrawerOpen, setIsConnectotDrawerOpen] = useState<boolean>(false)
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
 
@@ -86,13 +90,10 @@ export const SecretsPage = ({
             useTranslationStore={useTranslationStore}
             isLoading={false}
             apiError={null}
-            prefilledFormData={{
-              name: 'mock-secret',
-              identifier: 'mock-identifier',
-              description: 'mock-description',
-              tags: 'mock-tags, mock-tags-2',
-              type: SecretCreationType.SECRET_FILE
-            }}
+            onConnectorClick={() => setIsConnectotDrawerOpen(true)}
+            onConnectorEdit={() => setIsConnectotDrawerOpen(true)}
+            onConnectorClear={() => setSelectedConnector(null)}
+            connectorValue={selectedConnector}
           />
         )
       case SecretType.EXISTING:
@@ -121,18 +122,26 @@ export const SecretsPage = ({
   }
 
   return (
-    <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
-      <Drawer.Content>
-        <Drawer.Header>
-          <Drawer.Title className="text-3xl">Secrets</Drawer.Title>
-          <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
-        </Drawer.Header>
-        <Spacer size={5} />
+    <>
+      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
+        <Drawer.Content>
+          <Drawer.Header>
+            <Drawer.Title className="text-3xl">Secrets</Drawer.Title>
+            <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
+          </Drawer.Header>
+          <Spacer size={5} />
 
-        <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
-        <Spacer size={5} />
-        {renderSecretContent()}
-      </Drawer.Content>
-    </Drawer.Root>
+          <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
+          <Spacer size={5} />
+          {renderSecretContent()}
+        </Drawer.Content>
+      </Drawer.Root>
+      <ConnectorsRefPage
+        selectedConnector={selectedConnector}
+        isDrawerOpen={isConnectotDrawerOpen}
+        setIsDrawerOpen={setIsConnectotDrawerOpen}
+        setSelectedConnector={setSelectedConnector}
+      />
+    </>
   )
 }

@@ -1,7 +1,8 @@
 import { Icon, NoData, SkeletonList, StackedList } from '@/components'
 import { useRouterContext } from '@/context'
+import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
-import { formatDistanceToNow } from 'date-fns'
+import { TFunction } from 'i18next'
 
 import { ConnectorItem } from '../types'
 import { TranslationStore } from './types'
@@ -16,6 +17,15 @@ interface PageProps {
 const Title = ({ title }: { title: string }): JSX.Element => (
   <div className="inline-flex items-center gap-2.5">
     <span className="max-w-full truncate font-medium">{title}</span>
+  </div>
+)
+
+const Pipe = (): JSX.Element => <span className="pointer-events-none h-3.5 w-px bg-borders-2" aria-hidden />
+
+const LastUpdated = ({ lastModifiedAt, t }: { lastModifiedAt: number; t: TFunction }): JSX.Element => (
+  <div className="inline-flex items-center gap-1">
+    <Title title={t('views:repos.updated', 'Updated')} />
+    {timeAgo(lastModifiedAt)}
   </div>
 )
 
@@ -61,28 +71,21 @@ export function ConnectorsList({ connectors, useTranslationStore, isLoading }: P
             >
               <StackedList.Field
                 primary
-                description={<span className="max-w-full truncate">{connectorDescription}</span>}
+                description={
+                  <div className="flex items-center gap-1">
+                    <span className="max-w-full truncate">{connectorDescription}</span>
+                    <Pipe />
+                    {lastModifiedAt ? <LastUpdated lastModifiedAt={lastModifiedAt} t={t} /> : null}
+                  </div>
+                }
                 title={<Title title={connectorName} />}
                 className="flex max-w-[80%] gap-1.5 text-wrap"
               />
-              {lastModifiedAt ? (
-                <StackedList.Field
-                  title={
-                    <div className="inline-flex items-center gap-1">
-                      <Title title={t('component:sort.lastUpdated', 'Last updated')} />
-                      <span className="max-w-full truncate">
-                        {formatDistanceToNow(lastModifiedAt, { addSuffix: true })}
-                      </span>
-                    </div>
-                  }
-                  className="flex max-w-[80%] gap-1.5 text-wrap"
-                />
-              ) : null}
               {status?.status && (
                 <StackedList.Field
                   right
-                  title={<ExecutionStatus.Badge status={status.status} />}
-                  description={status.lastTestedAt ? formatDistanceToNow(status.lastTestedAt, { addSuffix: true }) : ''}
+                  title={status?.status ? <ExecutionStatus.Badge status={status.status} /> : null}
+                  description={status?.lastTestedAt ? timeAgo(status.lastTestedAt) : null}
                 />
               )}
             </StackedList.Item>

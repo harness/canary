@@ -2,34 +2,34 @@
   "bg": {
     "1": {
       "$type": "color",
-      "$value": "{color.chrome.1000}",
+      "$value": "{chrome.1000}",
       "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background.\n\nCommon uses: Application background, page base layer, lowest-level containers."
     },
     "2": {
       "$type": "color",
-      "$value": "{color.chrome.950}",
+      "$value": "{chrome.950}",
       "$description": "Level 2. Represents elements that sit on top of the bottom layer. Creates visual hierarchy through subtle elevation.\n\nCommon uses: Cards, containers, form fields, dropdown menus."
     },
     "3": {
       "$type": "color",
-      "$value": "{color.chrome.900}",
+      "$value": "{chrome.900}",
       "$description": "Level 3. Represents elements that sit on top of the middle layer. Creates strong visual emphasis through maximum elevation.\n\nCommon uses: Popovers, tooltips, highlighted containers."
     }
   },
   "text": {
     "1": {
       "$type": "color",
-      "$value": "{color.chrome.50}",
+      "$value": "{chrome.50}",
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text, primary buttons."
     },
     "2": {
       "$type": "color",
-      "$value": "{color.chrome.300}",
+      "$value": "{chrome.300}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
       "$type": "color",
-      "$value": "{color.chrome.500}",
+      "$value": "{chrome.500}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "accent": {
@@ -39,29 +39,29 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{color.blue.200}",
+      "$value": "{blue.200}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{color.red.100}",
+      "$value": "{red.100}",
       "$description": "Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.\n\nCommon uses: Error message text, validation text, destructive action labels."
     },
     "warning": {
       "$type": "color",
-      "$value": "{color.yellow.200}",
+      "$value": "{yellow.200}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     }
   },
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{color.chrome.300}",
+      "$value": "{chrome.300}",
       "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\n\nCommon uses: Focus states, hover states, active elements, primary containers."
     },
     "2": {
       "$type": "color",
-      "$value": "{color.chrome.850}",
+      "$value": "{chrome.850}",
       "$description": "Standard border color for general use. Provides balanced visual definition for common UI elements.\n\nCommon uses: Containers, cards, dividers, separators, default form inputs."
     },
     "3": {
@@ -75,7 +75,7 @@
         }
       },
       "$type": "color",
-      "$value": "{color.chrome.850}",
+      "$value": "{chrome.850}",
       "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\n\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
     },
     "focus": {
@@ -111,7 +111,7 @@
         }
       },
       "$type": "color",
-      "$value": "{color.pure.white}",
+      "$value": "{pure.white}",
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -125,18 +125,18 @@
         }
       },
       "$type": "color",
-      "$value": "{color.pure.white}",
+      "$value": "{pure.white}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     },
     "disabled": {
       "text": {
         "$type": "color",
-        "$value": "{color.chrome.700}",
+        "$value": "{chrome.700}",
         "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
       },
       "bg": {
         "$type": "color",
-        "$value": "{color.chrome.950}",
+        "$value": "{chrome.950}",
         "$description": "Muted background color for disabled elements. Reduces visual prominence of non-interactive elements in the UI.\n\nCommon uses: Disabled buttons, inactive form controls, unavailable options."
       },
       "border": {
@@ -146,12 +146,12 @@
       },
       "text-selected": {
         "$type": "color",
-        "$value": "{color.chrome.950}",
+        "$value": "{chrome.950}",
         "$description": "Disabled text or icon element for selected component behavior."
       },
       "bg-selected": {
         "$type": "color",
-        "$value": "{color.chrome.700}",
+        "$value": "{chrome.700}",
         "$description": "Disabled background for selected component behavior."
       },
       "border-selected": {
@@ -209,12 +209,12 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.chrome.50}",
+          "$value": "{chrome.50}",
           "$description": "Primary text color for AI-related content with optimal readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.chrome.900}",
+          "$value": "{chrome.900}",
           "$description": "Base background color for AI-related surfaces."
         },
         "border": {
@@ -224,12 +224,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{color.chrome.850}",
+          "$value": "{chrome.850}",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{color.chrome.800}",
+          "$value": "{chrome.800}",
           "$description": "Selected state background color for active AI items."
         }
       }
@@ -238,81 +238,81 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{color.chrome.950}",
+          "$value": "{chrome.950}",
           "$description": "Text color for high-contrast gray surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.chrome.400}",
+          "$value": "{chrome.400}",
           "$description": "Background color for prominent gray surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.chrome.400}",
+          "$value": "{chrome.400}",
           "$description": "Border color for gray boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{color.chrome.300}",
+          "$value": "{chrome.300}",
           "$description": "Hover state background color for prominent gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{color.chrome.200}",
+          "$value": "{chrome.200}",
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.chrome.200}",
+          "$value": "{chrome.200}",
           "$description": "Text color for subtle gray surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.chrome.850}",
+          "$value": "{chrome.850}",
           "$description": "Background color for subdued gray surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.chrome.850}",
+          "$value": "{chrome.850}",
           "$description": "Border color for subtle gray boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{color.chrome.800}",
+          "$value": "{chrome.800}",
           "$description": "Hover state background color for interactive soft gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{color.chrome.700}",
+          "$value": "{chrome.700}",
           "$description": "Selected state background color for active soft gray items."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.chrome.300}",
+          "$value": "{chrome.300}",
           "$description": "Standard text color for gray surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.chrome.900}",
+          "$value": "{chrome.900}",
           "$description": "Base background color for gray surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.chrome.850}",
+          "$value": "{chrome.850}",
           "$description": "Border color for standard gray boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{color.chrome.850}",
+          "$value": "{chrome.850}",
           "$description": "Hover state background color for interactive gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{color.chrome.800}",
+          "$value": "{chrome.800}",
           "$description": "Selected state background color for active gray items."
         }
       }
@@ -321,61 +321,61 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{color.blue.950}",
+          "$value": "{blue.950}",
           "$description": "Text color for high-contrast green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.blue.300}",
+          "$value": "{blue.300}",
           "$description": "Background color for prominent green surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.blue.300}",
+          "$value": "{blue.300}",
           "$description": "Border color for green boundaries."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.blue.200}",
+          "$value": "{blue.200}",
           "$description": "Text color for subtle green surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.blue.900}",
+          "$value": "{blue.900}",
           "$description": "Background color for subdued green surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.blue.900}",
+          "$value": "{blue.900}",
           "$description": "Border color for subtle green boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.blue.200}",
+          "$value": "{blue.200}",
           "$description": "Standard text color for green surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.blue.950}",
+          "$value": "{blue.950}",
           "$description": "Base background color for green surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.blue.800}",
+          "$value": "{blue.800}",
           "$description": "Border color for standard green boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{color.blue.900}",
+          "$value": "{blue.900}",
           "$description": "Hover state background color for interactive green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{color.blue.800}",
+          "$value": "{blue.800}",
           "$description": "Selected state background color for active green items."
         }
       }
@@ -384,71 +384,71 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{color.red.950}",
+          "$value": "{red.950}",
           "$description": "Text color for high-contrast red surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.red.300}",
+          "$value": "{red.300}",
           "$description": "Background color for prominent red surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.red.300}",
+          "$value": "{red.300}",
           "$description": "Border color for red boundaries."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.red.200}",
+          "$value": "{red.200}",
           "$description": "Text color for subtle red surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.red.900}",
+          "$value": "{red.900}",
           "$description": "Background color for subdued red surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.red.900}",
+          "$value": "{red.900}",
           "$description": "Border color for subtle red boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{color.red.800}",
+          "$value": "{red.800}",
           "$description": "Hover state for background color for subdued red surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{color.red.700}",
+          "$value": "{red.700}",
           "$description": "Selected state for background color for subdued red surfaces."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.red.200}",
+          "$value": "{red.200}",
           "$description": "Standard text color for red surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.red.950}",
+          "$value": "{red.950}",
           "$description": "Base background color for red surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.red.800}",
+          "$value": "{red.800}",
           "$description": "Border color for standard red boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{color.red.900}",
+          "$value": "{red.900}",
           "$description": "Hover state background color for interactive red surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{color.red.800}",
+          "$value": "{red.800}",
           "$description": "Selected state background color for active red items."
         }
       }
@@ -457,61 +457,61 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{color.yellow.950}",
+          "$value": "{yellow.950}",
           "$description": "Text color for high-contrast yellow surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.yellow.300}",
+          "$value": "{yellow.300}",
           "$description": "Background color for prominent yellow surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.yellow.300}",
+          "$value": "{yellow.300}",
           "$description": "Border color for yellow boundaries."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.yellow.200}",
+          "$value": "{yellow.200}",
           "$description": "Text color for subtle yellow surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.yellow.900}",
+          "$value": "{yellow.900}",
           "$description": "Background color for subdued yellow surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.yellow.900}",
+          "$value": "{yellow.900}",
           "$description": "Border color for subtle yellow boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.yellow.200}",
+          "$value": "{yellow.200}",
           "$description": "Standard text color for yellow surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.yellow.950}",
+          "$value": "{yellow.950}",
           "$description": "Base background color for yellow surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.yellow.800}",
+          "$value": "{yellow.800}",
           "$description": "Border color for standard yellow boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{color.yellow.900}",
+          "$value": "{yellow.900}",
           "$description": "Hover state background color for interactive yellow surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{color.yellow.800}",
+          "$value": "{yellow.800}",
           "$description": "Selected state background color for active yellow items."
         }
       }
@@ -520,61 +520,61 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{color.blue.950}",
+          "$value": "{blue.950}",
           "$description": "Text color for high-contrast blue surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.blue.300}",
+          "$value": "{blue.300}",
           "$description": "Background color for prominent blue surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.blue.300}",
+          "$value": "{blue.300}",
           "$description": "Border color for blue boundaries."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.blue.200}",
+          "$value": "{blue.200}",
           "$description": "Text color for subtle blue surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.blue.900}",
+          "$value": "{blue.900}",
           "$description": "Background color for subdued blue surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.blue.900}",
+          "$value": "{blue.900}",
           "$description": "Border color for subtle blue boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.blue.200}",
+          "$value": "{blue.200}",
           "$description": "Standard text color for blue surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.blue.950}",
+          "$value": "{blue.950}",
           "$description": "Base background color for blue surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.blue.800}",
+          "$value": "{blue.800}",
           "$description": "Border color for standard blue boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{color.blue.900}",
+          "$value": "{blue.900}",
           "$description": "Hover state background color for interactive blue surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{color.blue.800}",
+          "$value": "{blue.800}",
           "$description": "Selected state background color for active blue items."
         }
       }
@@ -583,61 +583,61 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{color.purple.950}",
+          "$value": "{purple.950}",
           "$description": "Text color for high-contrast purple surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.purple.300}",
+          "$value": "{purple.300}",
           "$description": "Background color for prominent purple surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.purple.300}",
+          "$value": "{purple.300}",
           "$description": "Border color for purple boundaries."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.purple.200}",
+          "$value": "{purple.200}",
           "$description": "Text color for subtle purple surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.purple.900}",
+          "$value": "{purple.900}",
           "$description": "Background color for subdued purple surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.purple.900}",
+          "$value": "{purple.900}",
           "$description": "Border color for subtle purple boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.purple.200}",
+          "$value": "{purple.200}",
           "$description": "Standard text color for purple surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.purple.950}",
+          "$value": "{purple.950}",
           "$description": "Base background color for purple surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.purple.800}",
+          "$value": "{purple.800}",
           "$description": "Border color for standard purple boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{color.purple.900}",
+          "$value": "{purple.900}",
           "$description": "Hover state background color for interactive purple surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{color.purple.800}",
+          "$value": "{purple.800}",
           "$description": "Selected state background color for active purple items."
         }
       }
@@ -646,34 +646,34 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.brown.200}",
+          "$value": "{brown.200}",
           "$description": "Text color for subtle brown surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.brown.900}",
+          "$value": "{brown.900}",
           "$description": "Background color for subdued brown surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.brown.900}",
+          "$value": "{brown.900}",
           "$description": "Border color for subtle brown boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.brown.200}",
+          "$value": "{brown.200}",
           "$description": "Standard text color for brown surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.brown.950}",
+          "$value": "{brown.950}",
           "$description": "Base background color for brown surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.brown.800}",
+          "$value": "{brown.800}",
           "$description": "Border color for standard brown boundaries."
         }
       }
@@ -682,34 +682,34 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.cyan.200}",
+          "$value": "{cyan.200}",
           "$description": "Text color for subtle cyan surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.cyan.900}",
+          "$value": "{cyan.900}",
           "$description": "Background color for subdued cyan surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.cyan.900}",
+          "$value": "{cyan.900}",
           "$description": "Border color for subtle cyan boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.cyan.200}",
+          "$value": "{cyan.200}",
           "$description": "Standard text color for cyan surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.cyan.950}",
+          "$value": "{cyan.950}",
           "$description": "Base background color for cyan surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.cyan.800}",
+          "$value": "{cyan.800}",
           "$description": "Border color for standard cyan boundaries."
         }
       }
@@ -718,34 +718,34 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.indigo.200}",
+          "$value": "{indigo.200}",
           "$description": "Text color for subtle indigo surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.indigo.900}",
+          "$value": "{indigo.900}",
           "$description": "Background color for subdued indigo surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.indigo.900}",
+          "$value": "{indigo.900}",
           "$description": "Border color for subtle indigo boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.indigo.200}",
+          "$value": "{indigo.200}",
           "$description": "Standard text color for indigo surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.indigo.950}",
+          "$value": "{indigo.950}",
           "$description": "Base background color for indigo surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.indigo.800}",
+          "$value": "{indigo.800}",
           "$description": "Border color for standard indigo boundaries."
         }
       }
@@ -754,34 +754,34 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.cyan.200}",
+          "$value": "{cyan.200}",
           "$description": "Text color for subtle lime surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.cyan.900}",
+          "$value": "{cyan.900}",
           "$description": "Background color for subdued lime surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.cyan.900}",
+          "$value": "{cyan.900}",
           "$description": "Border color for subtle lime boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.cyan.200}",
+          "$value": "{cyan.200}",
           "$description": "Standard text color for lime surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.cyan.950}",
+          "$value": "{cyan.950}",
           "$description": "Base background color for lime surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.cyan.800}",
+          "$value": "{cyan.800}",
           "$description": "Border color for standard lime boundaries."
         }
       }
@@ -790,34 +790,34 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.blue.200}",
+          "$value": "{blue.200}",
           "$description": "Text color for subtle mint surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.blue.900}",
+          "$value": "{blue.900}",
           "$description": "Background color for subdued mint surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.blue.900}",
+          "$value": "{blue.900}",
           "$description": "Border color for subtle mint boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.blue.200}",
+          "$value": "{blue.200}",
           "$description": "Standard text color for mint surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.blue.950}",
+          "$value": "{blue.950}",
           "$description": "Base background color for mint surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.blue.800}",
+          "$value": "{blue.800}",
           "$description": "Border color for standard mint boundaries."
         }
       }
@@ -826,34 +826,34 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.orange.200}",
+          "$value": "{orange.200}",
           "$description": "Text color for subtle orange surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.orange.900}",
+          "$value": "{orange.900}",
           "$description": "Background color for subdued orange surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.orange.900}",
+          "$value": "{orange.900}",
           "$description": "Border color for subtle orange boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.orange.200}",
+          "$value": "{orange.200}",
           "$description": "Standard text color for orange surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.orange.950}",
+          "$value": "{orange.950}",
           "$description": "Base background color for orange surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.orange.800}",
+          "$value": "{orange.800}",
           "$description": "Border color for standard orange boundaries."
         }
       }
@@ -862,34 +862,34 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.pink.200}",
+          "$value": "{pink.200}",
           "$description": "Text color for subtle pink surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.pink.900}",
+          "$value": "{pink.900}",
           "$description": "Background color for subdued pink surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.pink.900}",
+          "$value": "{pink.900}",
           "$description": "Border color for subtle pink boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.pink.200}",
+          "$value": "{pink.200}",
           "$description": "Standard text color for pink surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.pink.950}",
+          "$value": "{pink.950}",
           "$description": "Base background color for pink surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.pink.800}",
+          "$value": "{pink.800}",
           "$description": "Border color for standard pink boundaries."
         }
       }
@@ -898,34 +898,34 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{color.violet.200}",
+          "$value": "{violet.200}",
           "$description": "Text color for subtle violet surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.violet.900}",
+          "$value": "{violet.900}",
           "$description": "Background color for subdued violet surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.violet.900}",
+          "$value": "{violet.900}",
           "$description": "Border color for subtle violet boundaries."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{color.violet.200}",
+          "$value": "{violet.200}",
           "$description": "Standard text color for violet surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.violet.950}",
+          "$value": "{violet.950}",
           "$description": "Base background color for violet surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.violet.800}",
+          "$value": "{violet.800}",
           "$description": "Border color for standard violet boundaries."
         }
       }
@@ -1054,7 +1054,7 @@
           }
         },
         "$type": "color",
-        "$value": "{color.chrome.950}",
+        "$value": "{chrome.950}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       }
     },
@@ -1099,7 +1099,7 @@
           }
         },
         "$type": "color",
-        "$value": "{color.blue.500}",
+        "$value": "{blue.500}",
         "$description": "Blue background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
@@ -1113,7 +1113,7 @@
           }
         },
         "$type": "color",
-        "$value": "{color.blue.500}",
+        "$value": "{blue.500}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -1127,12 +1127,12 @@
           }
         },
         "$type": "color",
-        "$value": "{color.blue.500}",
+        "$value": "{blue.500}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
         "$type": "color",
-        "$value": "{color.chrome.900}",
+        "$value": "{chrome.900}",
         "$description": "Background for interactive UI elements related to added content."
       },
       "add-widget-color": {
@@ -1151,7 +1151,7 @@
           }
         },
         "$type": "color",
-        "$value": "{color.red.500}",
+        "$value": "{red.500}",
         "$description": "Red background highlighting removed code lines without causing eye strain."
       },
       "del-lineNumber": {
@@ -1165,7 +1165,7 @@
           }
         },
         "$type": "color",
-        "$value": "{color.red.500}",
+        "$value": "{red.500}",
         "$description": "Background for line numbers of deleted code, connecting numbers to removed content."
       },
       "del-content-highlight": {
@@ -1179,7 +1179,7 @@
           }
         },
         "$type": "color",
-        "$value": "{color.red.500}",
+        "$value": "{red.500}",
         "$description": "Stronger emphasis color for specific character changes within deleted lines."
       },
       "plain-content": {
@@ -1213,7 +1213,7 @@
           }
         },
         "$type": "color",
-        "$value": "{color.blue.500}",
+        "$value": "{blue.500}",
         "$description": "Background for diff section headers ('hunks') that indicate which part of the file is displayed."
       },
       "hunk-lineNumber": {
@@ -1227,7 +1227,7 @@
           }
         },
         "$type": "color",
-        "$value": "{color.blue.500}",
+        "$value": "{blue.500}",
         "$description": "Background for line numbers in section headers."
       },
       "hunk-content-color": {
@@ -1283,7 +1283,7 @@
       },
       "visited": {
         "$type": "color",
-        "$value": "{color.purple.300}",
+        "$value": "{purple.300}",
         "$description": "Visited state color for text links. Differentiates links the user has already activated."
       }
     },
@@ -1354,14 +1354,14 @@
         "error": {
           "border": {
             "$type": "color",
-            "$value": "{color.red.300}",
+            "$value": "{red.300}",
             "$description": "Border color for error pipeline states. Clearly indicates failed or problematic pipeline execution."
           }
         },
         "completed": {
           "border": {
             "$type": "color",
-            "$value": "{color.blue.300}",
+            "$value": "{blue.300}",
             "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
           }
         }
@@ -1404,7 +1404,7 @@
             }
           },
           "$type": "color",
-          "$value": "{color.chrome.850}",
+          "$value": "{chrome.850}",
           "$description": "Refers to the dotted pattern visible in the background of the workspace."
         }
       }
@@ -1412,7 +1412,7 @@
     "sidebar": {
       "bg": {
         "$type": "color",
-        "$value": "{color.pure.black}",
+        "$value": "{pure.black}",
         "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
       },
       "border": {
@@ -1477,7 +1477,7 @@
     "scrollbar": {
       "thumb": {
         "$type": "color",
-        "$value": "{color.chrome.850}",
+        "$value": "{chrome.850}",
         "$description": "Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability."
       }
     },
@@ -1502,17 +1502,17 @@
       "selected": {
         "item": {
           "$type": "color",
-          "$value": "{color.chrome.950}",
+          "$value": "{chrome.950}",
           "$description": "Color for selected items in selection controls. Creates high contrast against selected background state."
         },
         "bg": {
           "$type": "color",
-          "$value": "{color.pure.white}",
+          "$value": "{pure.white}",
           "$description": "Background color for selected state in selection controls. Creates strong visual indication of active selection."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.pure.white}",
+          "$value": "{pure.white}",
           "$description": "Border color for selected elements in selection controls. Reinforces the selected state with consistent styling."
         }
       }
@@ -1535,7 +1535,7 @@
       "track": {
         "base": {
           "$type": "color",
-          "$value": "{color.chrome.850}",
+          "$value": "{chrome.850}",
           "$description": "Background color for slider tracks. Represents the full range of available values in an unselected state."
         },
         "progress": {
@@ -1547,7 +1547,7 @@
       "track-segments": {
         "base": {
           "$type": "color",
-          "$value": "{color.chrome.600}",
+          "$value": "{chrome.600}",
           "$description": "Color for segment markers on the unfilled track portion. Creates visual indicators for specific values or intervals."
         },
         "progress": {
@@ -1559,12 +1559,12 @@
       "handle": {
         "bg": {
           "$type": "color",
-          "$value": "{color.chrome.100}",
+          "$value": "{chrome.100}",
           "$description": "Background color for slider handles. Creates a distinct, interactive element for adjusting values."
         },
         "border": {
           "$type": "color",
-          "$value": "{color.chrome.850}",
+          "$value": "{chrome.850}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
       }
@@ -1572,37 +1572,37 @@
     "status-indicator": {
       "completed": {
         "$type": "color",
-        "$value": "{color.blue.300}",
+        "$value": "{blue.300}",
         "$description": "Color for success status indicators. Communicates completed or positive states."
       },
       "cancelled": {
         "$type": "color",
-        "$value": "{color.red.300}",
+        "$value": "{red.300}",
         "$description": "Color for danger status indicators. Communicates error or critical warning states."
       },
       "warning": {
         "$type": "color",
-        "$value": "{color.yellow.300}",
+        "$value": "{yellow.300}",
         "$description": "Color for warning status indicators. Communicates caution or potential issue states."
       },
       "running": {
         "$type": "color",
-        "$value": "{color.blue.300}",
+        "$value": "{blue.300}",
         "$description": "Color for running status indicators. Communicates active or in-progress operations."
       },
       "merged": {
         "$type": "color",
-        "$value": "{color.purple.300}",
+        "$value": "{purple.300}",
         "$description": "Color for merged status indicators. Communicates successful integration or completion in version control contexts."
       },
       "action-required": {
         "$type": "color",
-        "$value": "{color.orange.300}",
+        "$value": "{orange.300}",
         "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed."
       },
       "waiting": {
         "$type": "color",
-        "$value": "{color.chrome.400}",
+        "$value": "{chrome.400}",
         "$description": "Color for pending status indicators. Communicates in waiting states."
       }
     },
@@ -1631,7 +1631,7 @@
             }
           },
           "$type": "color",
-          "$value": "{color.chrome.200}",
+          "$value": "{chrome.200}",
           "$description": "Background color for alternate table rows. Improves readability by differentiating adjacent rows."
         },
         "border": {
@@ -1886,7 +1886,7 @@
         }
       },
       "$type": "color",
-      "$value": "{color.pure.black}",
+      "$value": "{pure.black}",
       "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
     "1": {
@@ -1900,7 +1900,7 @@
         }
       },
       "$type": "color",
-      "$value": "{color.pure.black}",
+      "$value": "{pure.black}",
       "$description": "Light shadow color with 60% opacity. Creates subtle depth for small UI elements."
     },
     "2": {
@@ -1914,7 +1914,7 @@
         }
       },
       "$type": "color",
-      "$value": "{color.pure.black}",
+      "$value": "{pure.black}",
       "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
     },
     "3": {
@@ -1928,7 +1928,7 @@
         }
       },
       "$type": "color",
-      "$value": "{color.pure.black}",
+      "$value": "{pure.black}",
       "$description": "Medium shadow color with 50% opacity. Creates moderate depth for elevated components."
     },
     "4": {
@@ -1942,7 +1942,7 @@
         }
       },
       "$type": "color",
-      "$value": "{color.pure.black}",
+      "$value": "{pure.black}",
       "$description": "Deep shadow color with 50% opacity. Provides significant depth for floating elements."
     },
     "5": {
@@ -1956,7 +1956,7 @@
         }
       },
       "$type": "color",
-      "$value": "{color.pure.black}",
+      "$value": "{pure.black}",
       "$description": "Very deep shadow color with 50% opacity. Creates dramatic elevation for modal content."
     },
     "6": {
@@ -1970,7 +1970,7 @@
         }
       },
       "$type": "color",
-      "$value": "{color.pure.black}",
+      "$value": "{pure.black}",
       "$description": "Extremely deep shadow color with 60% opacity. Provides maximum depth for highly elevated elements."
     },
     "inner": {
@@ -1984,7 +1984,7 @@
         }
       },
       "$type": "color",
-      "$value": "{color.pure.white}",
+      "$value": "{pure.white}",
       "$description": "Subtle inner shadow color with 10% opacity. Creates inset effect for pressed or focused states."
     }
   },
@@ -2016,40 +2016,40 @@
     "ai": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{color.yellow.100}"
+        "$value": "{yellow.100}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{color.pink.200}"
+        "$value": "{pink.200}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{color.purple.400}"
+        "$value": "{purple.400}"
       },
       "gradient-stop-4": {
         "$type": "color",
-        "$value": "{color.cyan.200}"
+        "$value": "{cyan.200}"
       }
     },
     "skeleton": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{color.chrome.850}"
+        "$value": "{chrome.850}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{color.chrome.800}"
+        "$value": "{chrome.800}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{color.chrome.850}"
+        "$value": "{chrome.850}"
       }
     },
     "pipeline": {
       "running": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{color.blue.200}"
+          "$value": "{blue.200}"
         },
         "gradient-stop-2": {
           "$extensions": {
@@ -2062,21 +2062,21 @@
             }
           },
           "$type": "color",
-          "$value": "{color.chrome.800}"
+          "$value": "{chrome.800}"
         },
         "gradient-stop-3": {
           "$type": "color",
-          "$value": "{color.blue.200}"
+          "$value": "{blue.200}"
         }
       },
       "arrows": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{color.pure.white}"
+          "$value": "{pure.white}"
         },
         "gradient-stop-2": {
           "$type": "color",
-          "$value": "{color.blue.300}"
+          "$value": "{blue.300}"
         },
         "gradient-stop-3": {
           "$type": "color",
@@ -2087,21 +2087,21 @@
         "bg": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{color.chrome.850}"
+            "$value": "{chrome.850}"
           },
           "gradient-to": {
             "$type": "color",
-            "$value": "{color.chrome.900}"
+            "$value": "{chrome.900}"
           }
         },
         "border": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{color.chrome.800}"
+            "$value": "{chrome.800}"
           },
           "gradient-to": {
             "$type": "color",
-            "$value": "{color.chrome.850}"
+            "$value": "{chrome.850}"
           }
         }
       },
@@ -2109,32 +2109,32 @@
         "number": {
           "gradient-from": {
             "$type": "color",
-            "$value": "{color.chrome.200}"
+            "$value": "{chrome.200}"
           },
           "gradient-to": {
             "$type": "color",
-            "$value": "{color.chrome.600}"
+            "$value": "{chrome.600}"
           }
         },
         "blob": {
           "big": {
             "gradient-from": {
               "$type": "color",
-              "$value": "{color.chrome.850}"
+              "$value": "{chrome.850}"
             },
             "gradient-to": {
               "$type": "color",
-              "$value": "{color.chrome.950}"
+              "$value": "{chrome.950}"
             }
           },
           "small": {
             "gradient-from": {
               "$type": "color",
-              "$value": "{color.chrome.800}"
+              "$value": "{chrome.800}"
             },
             "gradient-to": {
               "$type": "color",
-              "$value": "{color.chrome.850}"
+              "$value": "{chrome.850}"
             }
           }
         }

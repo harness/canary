@@ -22,12 +22,13 @@ export const PipelineStudioInternal = (): JSX.Element => {
     onDownloadYaml,
     onSave,
     saveInProgress,
-    isYamlDirty
+    isYamlDirty,
+    hideSaveBtn
   } = useUnifiedPipelineStudioContext()
 
   return (
     <YamlEditorContextProvider>
-      <PipelineStudioLayout.Root className="h-[calc(100%-45px)]">
+      <PipelineStudioLayout.Root>
         <PipelineStudioLayout.Header>
           <VisualYamlToggle view={view} setView={setView} isYamlValid={errors.isYamlValid} />
           <PipelineStudioLayout.HeaderLeft>
@@ -38,14 +39,16 @@ export const PipelineStudioInternal = (): JSX.Element => {
               copyContent={yamlRevision.yaml}
               onEditClick={noop}
             />
-            <Button
-              loading={saveInProgress}
-              size="sm"
-              onClick={() => onSave(yamlRevision.yaml)}
-              disabled={!isYamlDirty}
-            >
-              Save
-            </Button>
+            {!hideSaveBtn ? (
+              <Button
+                loading={saveInProgress}
+                size="sm"
+                onClick={() => onSave(yamlRevision.yaml)}
+                disabled={!isYamlDirty}
+              >
+                Save
+              </Button>
+            ) : null}
           </PipelineStudioLayout.HeaderLeft>
         </PipelineStudioLayout.Header>
 

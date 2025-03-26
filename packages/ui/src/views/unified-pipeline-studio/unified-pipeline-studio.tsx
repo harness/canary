@@ -26,28 +26,11 @@ export interface ITemplateListStore {
   getTemplateFormDefinition: (identifier: string) => Promise<any> // << TODO
 }
 
-export interface IUnifiedPipelineStudioStore {
-  /** yaml state */
-  yamlRevision: YamlRevision
-  /** yaml change callback */
-  onYamlRevisionChange: (YamlRevision: YamlRevision) => void
-  /** NOTE: selected node path may change on node deletion to keep same node selected */
-  selectedPath?: string
-  onSelectedPathChange: (path: string) => void
-  /** yaml errors */
-  errors: YamlErrorDataType
-  onErrorsChange?: (errors: YamlErrorDataType) => void
-  /** problems and other tabs open state */
-  panelOpen: boolean
-  onPanelOpenChange?: (open: boolean) => void
-}
-
 export interface UnifiedPipelineStudioProps {
-  useUnifiedPipelineStudioStore: () => IUnifiedPipelineStudioStore
   useTemplateListStore: () => ITemplateListStore
   useTranslationStore: () => TranslationStore
-  initialView?: VisualYamlValue
-  // NOTE: new props - wip
+  view: VisualYamlValue
+  setView: (view: VisualYamlValue) => void
   yamlRevision: YamlRevision
   onYamlRevisionChange: (yamlRevision: YamlRevision) => void
   onYamlDownload: (yaml: string) => void
@@ -60,12 +43,19 @@ export interface UnifiedPipelineStudioProps {
   stepsDefinitions?: AnyStepDefinition[]
   selectedPath?: string
   onSelectedPathChange: (path: string) => void
+  errors: YamlErrorDataType
+  onErrorsChange?: (errors: YamlErrorDataType) => void
+  panelOpen: boolean
+  onPanelOpenChange?: (open: boolean) => void
+  animateOnUpdate?: boolean
+  onAnimateEnd?: () => void
+  hideSaveBtn?: boolean
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {
   const {
-    useUnifiedPipelineStudioStore,
-    initialView = 'visual',
+    view,
+    setView,
     useTranslationStore,
     useTemplateListStore,
     yamlRevision,
@@ -78,11 +68,16 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     loadInProgress,
     inputComponentFactory,
     stepsDefinitions,
+    selectedPath,
     onSelectedPathChange,
-    selectedPath
+    errors,
+    onErrorsChange,
+    panelOpen,
+    onPanelOpenChange,
+    animateOnUpdate,
+    onAnimateEnd,
+    hideSaveBtn
   } = props
-
-  const { errors, onErrorsChange, panelOpen, onPanelOpenChange } = useUnifiedPipelineStudioStore()
 
   return (
     <UnifiedPipelineStudioProvider
@@ -101,11 +96,15 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       onPanelOpenChange={onPanelOpenChange}
       useTranslationStore={useTranslationStore}
       useTemplateListStore={useTemplateListStore}
-      initialView={initialView}
+      view={view}
+      setView={setView}
       theme={theme}
       saveInProgress={saveInProgress}
       inputComponentFactory={inputComponentFactory}
       stepsDefinitions={stepsDefinitions}
+      animateOnUpdate={animateOnUpdate}
+      onAnimateEnd={onAnimateEnd}
+      hideSaveBtn={hideSaveBtn}
     >
       <UnifiedPipelineStudioNodeContextProvider>
         {/* TODO: Loading... */}

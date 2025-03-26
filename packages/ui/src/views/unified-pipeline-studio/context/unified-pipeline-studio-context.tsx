@@ -74,6 +74,9 @@ export interface UnifiedPipelineStudioContextProps {
   useTemplateListStore: () => ITemplateListStore
   inputComponentFactory: InputFactory
   stepsDefinitions?: AnyStepDefinition[]
+  animateOnUpdate?: boolean
+  onAnimateEnd?: () => void
+  hideSaveBtn?: boolean
 }
 
 export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioContextProps>({
@@ -136,16 +139,19 @@ export interface UnifiedPipelineStudioProviderProps {
   panelOpen: boolean
   onPanelOpenChange?: (open: boolean) => void
   useTranslationStore: () => TranslationStore
-  initialView?: VisualYamlValue
+  view: VisualYamlValue
+  setView: (view: VisualYamlValue) => void
   useTemplateListStore: () => ITemplateListStore
   inputComponentFactory?: InputFactory
   stepsDefinitions?: AnyStepDefinition[]
+  animateOnUpdate?: boolean
+  onAnimateEnd?: () => void
+  hideSaveBtn?: boolean
 }
 
 export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProviderProps> = props => {
   const {
     children,
-    initialView = 'visual',
     yamlRevision,
     onYamlRevisionChange,
     inputComponentFactory: inputComponentFactoryFromProps,
@@ -153,7 +159,6 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
     ...rest
   } = props
 
-  const [view, setView] = useState(initialView)
   const [rightDrawer, setRightDrawer] = useState<RightDrawer>(RightDrawer.None)
 
   const [addStepIntention, setAddStepIntention] = useState<AddStepIntentionType>(null)
@@ -220,8 +225,6 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
     <UnifiedPipelineStudioContext.Provider
       value={{
         ...rest,
-        view,
-        setView,
         rightDrawer,
         setRightDrawer,
         addStepIntention,

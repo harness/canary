@@ -10,7 +10,7 @@ const PipelineStudioLayout = {
   Header: ({ children }: { children: JSX.Element | JSX.Element[] | string }) => {
     return <div className="flex h-[55px] items-center justify-between border-b px-5">{children}</div>
   },
-  HeaderLeft: ({ children }: { children: JSX.Element | JSX.Element[] | string }) => {
+  HeaderLeft: ({ children }: { children: JSX.Element | (JSX.Element | null)[] | string }) => {
     return <div className="flex items-center gap-x-3">{children}</div>
   },
   View: ({ children }: { children: ReactElement }) => {

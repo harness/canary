@@ -52,9 +52,6 @@
     },
     "harnessManaged": false,
     "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
       "rootFolder": null,
       "filePath": null,
       "repoName": null,
@@ -126,9 +123,9 @@
     },
     "harnessManaged": false,
     "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
+      "objectId": "dds232323232",
+      "branch": "main",
+      "repoIdentifier": "organization/repository2",
       "rootFolder": null,
       "filePath": null,
       "repoName": null,
@@ -200,9 +197,6 @@
     },
     "harnessManaged": false,
     "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
       "rootFolder": null,
       "filePath": null,
       "repoName": null,

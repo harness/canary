@@ -1,7 +1,19 @@
-import { i18n, TFunction } from 'i18next'
+import { TranslationStore } from '@views/repo'
 
-export interface TranslationStore {
-  t: TFunction
-  i18n: i18n
-  changeLanguage: (lng: string) => void
+import { ConnectorItem } from '../types'
+
+interface RoutingProps {
+  toConnectorDetails: (connector: ConnectorItem) => string
+}
+
+export interface ConnectorListProps extends Partial<RoutingProps> {
+  connectors: ConnectorItem[]
+  useTranslationStore: () => TranslationStore
+  isLoading: boolean
+  onEditConnector: (connector: ConnectorItem) => void
+}
+
+export interface ConnectorListPageProps extends ConnectorListProps {
+  isError?: boolean
+  errorMessage?: string
 }

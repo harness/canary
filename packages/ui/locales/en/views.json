@@ -216,6 +216,8 @@
   },
   "noData": {
     "noResults": "No search results",
+    "errorApiTitle": "Failed to load {{type}}",
+    "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noConnectors": "No connectors yet",
     "noConnectorsProject": "There are no connectors in this project yet.",
     "createOrImportConnectors": "Create new or import an existing connector.",
@@ -244,8 +246,6 @@
     "createBranch": "Create new branch",
     "noCommitsHistory": "No commits history",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
-    "errorApiTitle": "Failed to load {{type}}",
-    "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noRepos": "No repositories yet",
     "noReposProject": "There are no repositories in this project yet.",
     "createOrImportRepos": "Create new or import an existing repository.",
@@ -261,6 +261,12 @@
     "commit": "Commit",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
+  },
+  "notFound": {
+    "button": "Reload page",
+    "title": "Something went wrong…",
+    "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
+    "description": "The requested page is not found."
   },
   "execution": {
     "summary": "Summary",
@@ -409,12 +415,6 @@
     "largeDiff": "Large diffs are not rendered by default.",
     "fileNoChanges": "File without changes.",
     "binaryNotShown": "Binary file not shown."
-  },
-  "notFound": {
-    "title": "Something went wrong…",
-    "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
-    "description": "The requested page is not found.",
-    "button": "Reload page"
   },
   "profileSettings": {
     "newSshKey": "New SSH key",

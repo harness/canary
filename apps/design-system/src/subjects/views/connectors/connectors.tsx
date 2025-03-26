@@ -6,8 +6,8 @@ import { useTranslationStore } from '@utils/viewUtils'
 import { Button, ListActions, Spacer } from '@harnessio/ui/components'
 import {
   ConnectorItem,
+  ConnectorListPage,
   ConnectorRightDrawer,
-  ConnectorsList,
   ConnectorsProvider,
   ConnectorsRightDrawer,
   SandboxLayout,
@@ -37,7 +37,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={5} />
-        <ConnectorsList
+        <ConnectorListPage
           connectors={
             mockConnectorsData.map(connector => ({
               ...connector,
@@ -52,7 +52,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
           }
           useTranslationStore={useTranslationStore}
           isLoading={false}
-          onEditConnector={_connector => {
+          onEditConnector={(_connector: ConnectorItem) => {
             setDrawerState(ConnectorRightDrawer.Form)
             setFormEntity({
               type: 'connector',

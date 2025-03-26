@@ -4,19 +4,7 @@ import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
 import { TFunction } from 'i18next'
 
-import { ConnectorItem } from '../types'
-import { TranslationStore } from './types'
-
-interface RoutingProps {
-  toConnectorDetails: (connector: ConnectorItem) => string
-}
-
-interface PageProps extends Partial<RoutingProps> {
-  connectors: ConnectorItem[]
-  useTranslationStore: () => TranslationStore
-  isLoading: boolean
-  onEditConnector: (connector: ConnectorItem) => void
-}
+import { ConnectorListProps } from './types'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
   <div className="inline-flex items-center gap-2.5">
@@ -38,7 +26,7 @@ export function ConnectorsList({
   useTranslationStore,
   isLoading,
   toConnectorDetails
-}: PageProps): JSX.Element {
+}: ConnectorListProps): JSX.Element {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
 

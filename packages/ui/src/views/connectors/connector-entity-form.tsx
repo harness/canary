@@ -57,7 +57,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           if (input.inputType === 'secretSelect') {
             return {
               ...input,
-              onSecretClick: openSecretDrawer
+              onSecretClick: () => openSecretDrawer?.()
             }
           }
           return input

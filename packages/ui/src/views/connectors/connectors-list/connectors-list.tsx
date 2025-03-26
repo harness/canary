@@ -56,8 +56,6 @@ export function ConnectorsList({ connectors, useTranslationStore, isLoading }: P
       {connectors.map(({ connector, status, lastModifiedAt }, idx) => {
         const isLastItem = idx === connectors.length - 1
         const connectorId = connector?.identifier
-        const connectorName = connector?.name ?? ''
-        const connectorDescription = connector?.description
 
         return (
           <Link
@@ -73,12 +71,14 @@ export function ConnectorsList({ connectors, useTranslationStore, isLoading }: P
                 primary
                 description={
                   <div className="flex items-center gap-1">
-                    <span className="max-w-full truncate">{connectorDescription}</span>
+                    {connector?.description ? (
+                      <span className="max-w-full truncate">{connector.description}</span>
+                    ) : null}
                     <Pipe />
                     {lastModifiedAt ? <LastUpdated lastModifiedAt={lastModifiedAt} t={t} /> : null}
                   </div>
                 }
-                title={<Title title={connectorName} />}
+                title={<Title title={connector?.name ?? ''} />}
                 className="flex max-w-[80%] gap-1.5 text-wrap"
               />
               {status?.status && (

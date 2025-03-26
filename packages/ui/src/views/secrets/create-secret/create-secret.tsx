@@ -15,39 +15,44 @@ import {
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 import { SecretCreationType, SecretDataType } from '../types'
 
-const createSecretFormSchema = z
-  .object({
-    name: z.string().min(1, { message: 'Please provide a name' }),
-    value: z.string().optional(),
-    file: z.instanceof(File).optional(),
-    description: z.string().optional(),
-    tags: z.string().optional()
-  })
-  .superRefine((data, ctx) => {
-    // Check if either value or file is provided
-    if (!data.value && !data.file) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Please provide a Secret Value or a Secret File',
-        path: ['file']
-      })
-    }
+const makeCreateSecretFormSchema = (t: TranslationStore['t']) => {
+  const { required } = makeValidationUtils(t)
 
-    // Check if both value and file are provided
-    if (data.value && data.file) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Please provide either a Secret Value or a Secret File',
-        path: ['file']
-      })
-    }
-  })
+  return z
+    .object({
+      name: z.string().nonempty(required(t('views:secrets.createSecret.label'))),
+      value: z.string().optional(),
+      file: z.instanceof(File).optional(),
+      description: z.string().optional(),
+      tags: z.string().optional()
+    })
+    .superRefine((data, ctx) => {
+      // Check if either value or file is provided
+      if (!data.value && !data.file) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Please provide a Secret Value or a Secret File',
+          path: ['file']
+        })
+      }
 
-export type CreateSecretFormFields = z.infer<typeof createSecretFormSchema>
+      // Check if both value and file are provided
+      if (data.value && data.file) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Please provide either a Secret Value or a Secret File',
+          path: ['file']
+        })
+      }
+    })
+}
+
+export type CreateSecretFormFields = z.infer<ReturnType<typeof makeCreateSecretFormSchema>>
 
 interface CreateSecretProps {
   prefilledFormData?: SecretDataType
@@ -66,7 +71,7 @@ export function CreateSecretPage({
   apiError = null,
   prefilledFormData
 }: CreateSecretProps) {
-  const { t: _t } = useTranslationStore()
+  const { t } = useTranslationStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Determine the secret type from prefilledFormData
@@ -80,7 +85,7 @@ export function CreateSecretPage({
     trigger,
     formState: { errors }
   } = useForm<CreateSecretFormFields>({
-    resolver: zodResolver(createSecretFormSchema),
+    resolver: zodResolver(makeCreateSecretFormSchema(t)),
     mode: 'onChange',
     defaultValues: {
       name: prefilledFormData?.name ?? '',
@@ -157,7 +162,7 @@ export function CreateSecretPage({
         <Fieldset className="mb-0">
           <Input
             id="name"
-            label="Secret Name"
+            label={t('views:secrets.createSecret.label', 'Secret Name')}
             {...register('name')}
             placeholder="Enter secret name"
             size="md"
@@ -181,18 +186,18 @@ export function CreateSecretPage({
           )}
           {(!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_FILE) && (
             <div>
-              <label htmlFor="secret-file-input" className="mb-2.5 block text-sm font-medium text-foreground-2">
+              <label htmlFor="secret-file-input" className="text-foreground-2 mb-2.5 block text-sm font-medium">
                 Secret File
               </label>
               <div
-                className="rounded-md border-2 border-dashed border-borders-2 p-4"
+                className="border-borders-2 rounded-md border-2 border-dashed p-4"
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
               >
                 <div className="flex flex-col items-center justify-center">
                   {!selectedFile ? (
                     <>
-                      <p className="mb-2 text-sm text-foreground-2">Drag and drop your file here or click to browse</p>
+                      <p className="text-foreground-2 mb-2 text-sm">Drag and drop your file here or click to browse</p>
                       <Button type="button" variant="outline" onClick={openFileInput}>
                         Browse Files
                       </Button>
@@ -200,7 +205,7 @@ export function CreateSecretPage({
                   ) : (
                     <div className="flex w-full flex-col">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-foreground-2">
+                        <span className="text-foreground-2 text-sm">
                           Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
                         </span>
                         <div className="flex gap-2">
@@ -216,7 +221,7 @@ export function CreateSecretPage({
                   )}
                 </div>
               </div>
-              {errors.file && <div className="mt-1 text-sm text-destructive">{errors.file.message?.toString()}</div>}
+              {errors.file && <div className="text-destructive mt-1 text-sm">{errors.file.message?.toString()}</div>}
             </div>
           )}
           <Accordion.Root type="single" collapsible>
@@ -255,7 +260,7 @@ export function CreateSecretPage({
           </Alert.Container>
         )}
 
-        <div className="absolute inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
+        <div className="bg-background-2 absolute inset-x-0 bottom-0 p-4 shadow-md">
           <ControlGroup>
             <ButtonGroup className="flex flex-row justify-between">
               <Button type="button" variant="outline" onClick={handleCancel}>

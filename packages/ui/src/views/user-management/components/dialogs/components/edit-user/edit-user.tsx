@@ -1,14 +1,28 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, Dialog, Fieldset, FormWrapper, Input } from '@/components'
-import {
-  createEditUserSchema,
-  type EditUserFields
-} from '@/views/user-management/components/dialogs/components/edit-user/schema'
+import { Alert, Button, ButtonGroup, Dialog, FormWrapper, Input } from '@/components'
+import { TranslationStore } from '@/views'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { makeValidationUtils } from '@utils/validation'
 import { useStates } from '@views/user-management/providers/state-provider'
+import { z } from 'zod'
+
+const createEditUserSchema = (t: TranslationStore['t']) => {
+  const { required, invalid } = makeValidationUtils(t)
+
+  return z.object({
+    email: z.string().email(invalid(t('views:userManagement.editUser.email'))),
+    displayName: z
+      .string()
+      .trim()
+      .nonempty(required(t('views:userManagement.displayName'))),
+    userID: z.string()
+  })
+}
+
+type EditUserFields = z.infer<ReturnType<typeof createEditUserSchema>>
 
 interface EditUserDialogProps {
   handleUpdateUser: (data: EditUserFields) => void
@@ -65,41 +79,39 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
         />
 
         <FormWrapper onSubmit={handleSubmit(handleUpdateUser)} id="edit-user-form">
-          <Fieldset>
-            <Input
-              id="userID"
-              size="md"
-              disabled
-              {...register('userID')}
-              className="cursor-not-allowed"
-              label={t('views:userManagement.userId', 'User ID')}
-              caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
-              error={errors.userID?.message?.toString()}
-            />
-          </Fieldset>
+          <Input
+            id="userID"
+            size="md"
+            disabled
+            {...register('userID')}
+            className="cursor-not-allowed"
+            label={t('views:userManagement.userId', 'User ID')}
+            caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
+            error={errors.userID?.message?.toString()}
+          />
 
-          <Fieldset>
-            <Input
-              id="email"
-              type="email"
-              size="md"
-              {...register('email')}
-              label={t('views:userManagement.editUser.email', 'Email')}
-              error={errors.email?.message?.toString()}
-            />
-          </Fieldset>
+          <Input
+            id="email"
+            type="email"
+            size="md"
+            {...register('email')}
+            label={t('views:userManagement.editUser.email', 'Email')}
+            error={errors.email?.message?.toString()}
+          />
 
-          <Fieldset>
-            <Input
-              id="displayName"
-              size="md"
-              {...register('displayName')}
-              label={t('views:userManagement.displayName', 'Display name')}
-              error={errors.displayName?.message?.toString()}
-            />
-          </Fieldset>
+          <Input
+            id="displayName"
+            size="md"
+            {...register('displayName')}
+            label={t('views:userManagement.displayName', 'Display name')}
+            error={errors.displayName?.message?.toString()}
+          />
 
-          {updateUserError && <span className="text-xs text-destructive">{updateUserError}</span>}
+          {!!updateUserError && (
+            <Alert.Container closable variant="destructive">
+              <Alert.Title>{updateUserError}</Alert.Title>
+            </Alert.Container>
+          )}
         </FormWrapper>
         <Dialog.Footer>
           <ButtonGroup className="justify-end">

@@ -25,19 +25,19 @@ const makeSignUpSchema = (t: TranslationStore['t']) => {
       userId: z
         .string()
         .trim()
-        .nonempty(required(t('views:signUp.userIDPlaceholder')))
-        .max(...maxLength(100, t('views:signUp.userIDPlaceholder')))
-        .regex(...specialSymbols(t('views:signUp.userIDPlaceholder')))
-        .refine(...noSpaces(t('views:signUp.userIDPlaceholder'))),
+        .nonempty(required(t('views:signUp.userIDLabel')))
+        .max(...maxLength(100, t('views:signUp.userIDLabel')))
+        .regex(...specialSymbols(t('views:signUp.userIDLabel')))
+        .refine(...noSpaces(t('views:signUp.userIDLabel'))),
       email: z
         .string()
-        .email(invalid(t('views:signUp.emailLabel', 'Email')))
-        .max(...maxLength(250, t('views:signUp.emailLabel', 'Email'))),
+        .email(invalid(t('views:signUp.emailLabel')))
+        .max(...maxLength(250, t('views:signUp.emailLabel'))),
       password: z
         .string()
-        .min(...minLength(6, t('views:signUp.passwordLabel', 'Password')))
-        .max(...maxLength(128, t('views:signUp.passwordLabel', 'Password'))),
-      confirmPassword: z.string().min(...minLength(6, t('views:signUp.passwordLabel', 'Password')))
+        .min(...minLength(6, t('views:signUp.passwordLabel')))
+        .max(...maxLength(128, t('views:signUp.passwordLabel'))),
+      confirmPassword: z.string().min(...minLength(6, t('views:signUp.passwordLabel')))
     })
     .refine(data => data.password === data.confirmPassword, {
       message: t('views:signUp.validation.passwordsCheck', "Passwords don't match"),

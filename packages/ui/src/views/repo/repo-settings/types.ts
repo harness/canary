@@ -1,5 +1,6 @@
 import { PrincipalType } from '@/types'
-import { RepoBranchSettingsFormFields } from '@/views'
+import { RepoBranchSettingsFormFields, TranslationStore } from '@/views'
+import { makeValidationUtils } from '@utils/validation'
 import { z } from 'zod'
 
 export interface RepoBranch {
@@ -32,7 +33,7 @@ export enum ErrorTypes {
   DELETE_RULE = 'deleteRule'
 }
 
-export type RepoUpdateData = z.infer<typeof generalSettingsFormSchema>
+export type RepoUpdateData = z.infer<ReturnType<typeof makeGeneralSettingsFormSchema>>
 
 export interface SecurityScanning {
   secretScanning: boolean
@@ -69,12 +70,16 @@ export interface IProjectRulesStore {
 
 // Constants
 
-export const generalSettingsFormSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  description: z.string(),
-  branch: z.string(),
-  access: z.enum([AccessLevel.PUBLIC, AccessLevel.PRIVATE], {})
-})
+export const makeGeneralSettingsFormSchema = (t: TranslationStore['t']) => {
+  const { required } = makeValidationUtils(t)
+
+  return z.object({
+    name: z.string().nonempty(required(t('views:repos.name'))),
+    description: z.string(),
+    branch: z.string(),
+    access: z.enum([AccessLevel.PUBLIC, AccessLevel.PRIVATE], {})
+  })
+}
 
 export const errorTypes = new Set([
   ErrorTypes.FETCH_REPO,

@@ -8,7 +8,6 @@ import {
   CreateSecretFormFields,
   CreateSecretPage,
   DirectionEnum,
-  SecretCreationType,
   SecretItem,
   SecretReference,
   SecretsHeader,

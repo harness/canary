@@ -111,7 +111,6 @@ export function CreateSecretPage({
   }, [prefilledFormData])
 
   const selectedFile = watch('file')
-  // const secretValue = watch('value')
 
   // Watch for changes to connectorValue prop and update form value
   useEffect(() => {

@@ -74,7 +74,7 @@ export function ConnectorsList({
             className={isLastItem ? 'border-b border-background-3' : ''}
           >
             <StackedList.Item
-              thumbnail={<Icon name="github" size={20} className="text-foreground-5" />}
+              thumbnail={<Icon name="connectors" size={20} className="text-foreground-5" />}
               isLast={isLastItem}
             >
               <StackedList.Field

@@ -7,7 +7,11 @@ import { TFunction } from 'i18next'
 import { ConnectorItem } from '../types'
 import { TranslationStore } from './types'
 
-interface PageProps {
+interface RoutingProps {
+  toConnectorDetails: (connector: ConnectorItem) => string
+}
+
+interface PageProps extends Partial<RoutingProps> {
   connectors: ConnectorItem[]
   useTranslationStore: () => TranslationStore
   isLoading: boolean
@@ -29,7 +33,12 @@ const LastUpdated = ({ lastModifiedAt, t }: { lastModifiedAt: number; t: TFuncti
   </div>
 )
 
-export function ConnectorsList({ connectors, useTranslationStore, isLoading }: PageProps): JSX.Element {
+export function ConnectorsList({
+  connectors,
+  useTranslationStore,
+  isLoading,
+  toConnectorDetails
+}: PageProps): JSX.Element {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
 
@@ -53,18 +62,19 @@ export function ConnectorsList({ connectors, useTranslationStore, isLoading }: P
 
   return (
     <StackedList.Root>
-      {connectors.map(({ connector, status, lastModifiedAt }, idx) => {
+      {connectors.map((item, idx) => {
+        const { connector, status, lastModifiedAt } = item
         const isLastItem = idx === connectors.length - 1
         const connectorId = connector?.identifier
 
         return (
           <Link
             key={connectorId}
-            to={`/connectors/${connectorId}`}
+            to={toConnectorDetails?.(item) || ''}
             className={isLastItem ? 'border-b border-background-3' : ''}
           >
             <StackedList.Item
-              thumbnail={<Icon name="github-actions" size={16} className="text-foreground-5" />}
+              thumbnail={<Icon name="github" size={20} className="text-foreground-5" />}
               isLast={isLastItem}
             >
               <StackedList.Field

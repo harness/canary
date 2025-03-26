@@ -147,6 +147,11 @@ export interface ConnectorItem extends BaseEntityProps {
     status?: ExecutionState
     lastTestedAt?: number
   }
+  gitDetails?: {
+    repoIdentifier?: string
+    branch?: string
+    objectId?: string
+  }
 }
 
 export enum ConnectorSelectionType {

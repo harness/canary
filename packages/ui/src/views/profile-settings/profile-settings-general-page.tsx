@@ -179,7 +179,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
 
   return (
     <SandboxLayout.Content className="max-w-[476px] px-0">
-      <h1 className="text-24 text-foreground-1 mb-10 font-medium">
+      <h1 className="mb-10 text-24 font-medium text-foreground-1">
         {t('views:profileSettings.accountSettings', 'Account settings')}
       </h1>
 
@@ -195,7 +195,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
             */}
             <Avatar.Root size="20" className="shadow-md">
               <Avatar.Image src="/images/anon.jpg" />
-              <Avatar.Fallback className="text-24 text-foreground-3 font-medium">
+              <Avatar.Fallback className="text-24 font-medium text-foreground-3">
                 {getInitials(userData?.name || '')}
               </Avatar.Fallback>
             </Avatar.Root>
@@ -260,7 +260,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
             </ControlGroup>
           </FormWrapper>
 
-          <FormSeparator className="border-borders-4 my-7" />
+          <FormSeparator className="my-7 border-borders-4" />
 
           <FormWrapper onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
             <Legend

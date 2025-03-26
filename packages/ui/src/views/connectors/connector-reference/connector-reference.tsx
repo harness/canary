@@ -68,7 +68,7 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
 
   return (
     <div className="flex flex-col">
-      <span className="font-medium mb-4">Select an existing Connector:</span>
+      <span className="mb-4 font-medium">Select an existing Connector:</span>
       <div className="flex-1">
         <EntityReference<ConnectorItem>
           entities={connectorsData}
@@ -87,7 +87,7 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
         ) : null}
       </div>
 
-      <div className="bg-background-2 fixed bottom-0 left-0 right-0 p-4 shadow-md">
+      <div className="fixed inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
         <ButtonGroup className="flex flex-row justify-between">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel

@@ -36,7 +36,8 @@ const buttonVariants = cva(
         sm_icon: 'size-7',
         xs_split: 'h-auto p-0 text-xs font-medium',
         md_split: 'h-8 text-14 font-medium',
-        lg_split: 'h-10 p-0 font-medium'
+        lg_split: 'h-10 p-0 font-medium',
+        text: 'h-auto p-0'
       },
       borderRadius: {
         default: '',

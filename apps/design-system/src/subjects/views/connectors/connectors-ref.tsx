@@ -37,6 +37,7 @@ export const ConnectorsRefPage = ({
   const handleSelectConnector = (connector: ConnectorItem) => {
     setSelectedConnector(connector)
     console.log('Selected connector:', connector)
+    setIsDrawerOpen(false)
   }
 
   const handleScopeChange = (direction: DirectionEnum) => {

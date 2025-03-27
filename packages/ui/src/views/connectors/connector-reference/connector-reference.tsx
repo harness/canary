@@ -47,7 +47,7 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
     return (
       <StackedList.Item
         onClick={() => onSelect(entity)}
-        className={isSelected ? 'bg-background-4' : ''}
+        className={isSelected ? 'bg-cds-background-4' : ''}
         thumbnail={<Icon name="connectors" size={16} className="text-foreground-5" />}
         actions={
           <Button
@@ -87,7 +87,7 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
         ) : null}
       </div>
 
-      <div className="bg-background-2 fixed bottom-0 left-0 right-0 p-4 shadow-md">
+      <div className="bg-cds-background-2 fixed bottom-0 left-0 right-0 p-4 shadow-md">
         <ButtonGroup className="flex flex-row justify-between">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel

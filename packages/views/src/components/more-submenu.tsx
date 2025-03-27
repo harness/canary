@@ -23,7 +23,7 @@ function MoreIcon({ iconName }: { iconName: IconProps['name'] }) {
   return (
     <div
       className={cn(
-        'bg-background border-primary/10 text-primary/80 relative flex h-8 w-8 place-content-center place-items-center rounded-md border',
+        'bg-cds-background border-primary/10 text-primary/80 relative flex h-8 w-8 place-content-center place-items-center rounded-md border',
         { 'text-success': iconName === 'pin' },
         { 'text-destructive': iconName === 'unpin' }
       )}

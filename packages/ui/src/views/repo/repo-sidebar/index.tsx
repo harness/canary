@@ -47,7 +47,7 @@ export const RepoSidebar = ({
                 )}
                 <ButtonGroup spacing="0" className="shadow-as-border shadow-borders-2 h-full rounded">
                   <Button
-                    className="hover:border-borders-2 hover:bg-background-3"
+                    className="hover:border-borders-2 hover:bg-cds-background-3"
                     size="icon"
                     variant="outline"
                     aria-label="Create new file"

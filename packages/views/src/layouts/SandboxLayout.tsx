@@ -58,7 +58,7 @@ function LeftSubPanel({
 
 function Header({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <header className={cn('bg-background fixed left-[220px] right-0 top-0 z-40 h-[55px]', className)} role="banner">
+    <header className={cn('bg-cds-background fixed left-[220px] right-0 top-0 z-40 h-[55px]', className)} role="banner">
       {children}
     </header>
   )
@@ -67,7 +67,7 @@ function Header({ children, className }: { children: React.ReactNode; className?
 function SubHeader({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <header
-      className={cn('bg-background fixed left-[220px] right-0 top-[55px] z-40 h-[45px]', className)}
+      className={cn('bg-cds-background fixed left-[220px] right-0 top-[55px] z-40 h-[45px]', className)}
       role="banner"
     >
       {children}

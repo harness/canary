@@ -18,7 +18,7 @@ const Example: FC<ExampleProps> = ({ code, scope }) => {
     {
       path: "*",
       element: (
-        <LivePreview className="not-content border-borders-4 bg-background-4 dark-std-std mb-0 rounded-lg border p-6 shadow-md" />
+        <LivePreview className="not-content border-borders-4 bg-cds-background-4 dark-std-std mb-0 rounded-lg border p-6 shadow-md" />
       ),
     },
   ]);

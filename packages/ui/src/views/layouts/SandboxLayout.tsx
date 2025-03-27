@@ -42,7 +42,7 @@ function LeftSubPanel({ children, className }: { children: ReactNode; className?
 
 function Header({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <header className={cn('bg-background fixed left-[220px] right-0 top-0 z-40 h-[55px]', className)} role="banner">
+    <header className={cn('bg-cds-background fixed left-[220px] right-0 top-0 z-40 h-[55px]', className)} role="banner">
       {children}
     </header>
   )
@@ -55,7 +55,7 @@ function SubHeader({ children, className }: { children: ReactNode; className?: s
 function Main({ children, fullWidth, className }: { children: ReactNode; fullWidth?: boolean; className?: string }) {
   return (
     <section
-      className={cn('w-full bg-background-1 rounded-[inherit]', { 'w-full flex-1': fullWidth }, className)}
+      className={cn('w-full bg-cds-background-1 rounded-[inherit]', { 'w-full flex-1': fullWidth }, className)}
       aria-label="Main Content"
     >
       {fullWidth ? children : <div className={cn('mx-auto h-full max-w-[1200px]', className)}>{children}</div>}

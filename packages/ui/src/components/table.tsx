@@ -8,7 +8,7 @@ const tableVariants = cva('w-full text-sm', {
     variant: {
       default: 'caption-bottom',
       asStackedList:
-        'rounded-md border bg-background-surface [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-background-2'
+        'rounded-md border bg-cds-background-surface [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-cds-background-2'
     }
   },
   defaultVariants: {
@@ -47,7 +47,7 @@ const TableBody = forwardRef<
 >(({ className, hasHighlightOnHover, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn('[&_tr:last-child]:border-0', { '[&>tr:hover]:bg-background-4': hasHighlightOnHover }, className)}
+    className={cn('[&_tr:last-child]:border-0', { '[&>tr:hover]:bg-cds-background-4': hasHighlightOnHover }, className)}
     {...props}
   />
 ))

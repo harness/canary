@@ -117,7 +117,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
-                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-background-8 px-2.5 text-14 text-foreground-8">
+                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-cds-background-8 px-2.5 text-14 text-foreground-8">
                       {defaultBranch === branch?.name && (
                         <Icon name="lock" size={14} className="-mt-px mr-1 inline-block text-icons-9" />
                       )}
@@ -170,7 +170,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   <div className="flex items-center justify-center gap-1.5 align-middle">
                     {branch?.behindAhead?.default ? (
                       <Badge
-                        className="m-auto rounded-full bg-background-2 px-2 text-center font-medium text-foreground-3"
+                        className="m-auto rounded-full bg-cds-background-2 px-2 text-center font-medium text-foreground-3"
                         variant="outline"
                         size="sm"
                       >
@@ -189,7 +189,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="max-w-20 content-center">
                   {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                     <Button
-                      className="flex w-fit items-center gap-1 bg-background-8 px-2.5 text-sm text-foreground-8 hover:bg-background-9 hover:text-foreground-1"
+                      className="flex w-fit items-center gap-1 bg-cds-background-8 px-2.5 text-sm text-foreground-8 hover:bg-cds-background-9 hover:text-foreground-1"
                       variant="custom"
                       size="xs"
                       asChild

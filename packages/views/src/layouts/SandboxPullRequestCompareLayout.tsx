@@ -197,7 +197,7 @@ const SandboxPullRequestCompare: FC<SandboxPullRequestCompareProps> = ({
         </Layout.Vertical>
         <Spacer size={3} />
         {!prBranchCombinationExists && (
-          <Layout.Horizontal className="items-center justify-between rounded-md border-2 border-border bg-background p-3">
+          <Layout.Horizontal className="items-center justify-between rounded-md border-2 border-border bg-cds-background p-3">
             <div>
               <Layout.Horizontal className="py-2">
                 {isBranchSelected ? (
@@ -223,7 +223,7 @@ const SandboxPullRequestCompare: FC<SandboxPullRequestCompareProps> = ({
         {prBranchCombinationExists && (
           <>
             {/* <Spacer size={2} /> */}
-            <Layout.Horizontal className="items-center justify-between rounded-md border-2 border-border bg-background p-3">
+            <Layout.Horizontal className="items-center justify-between rounded-md border-2 border-border bg-cds-background p-3">
               <div>
                 <Layout.Horizontal className="py-2">
                   <>

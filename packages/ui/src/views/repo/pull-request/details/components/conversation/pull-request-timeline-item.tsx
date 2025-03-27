@@ -243,7 +243,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             <Card.Root className={cn('rounded-md bg-transparent overflow-hidden shadow-none', contentClassName)}>
               {!!contentHeader && (
                 <div
-                  className={cn('flex w-full items-center justify-between p-4 py-3.5 bg-background-2', {
+                  className={cn('flex w-full items-center justify-between p-4 py-3.5 bg-cds-background-2', {
                     'pr-1.5': isResolved
                   })}
                 >
@@ -297,14 +297,14 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                       setComment={setComment}
                     />
                   ) : (
-                    <div className={cn('flex items-center gap-3 border-t bg-background-2', replyBoxClassName)}>
+                    <div className={cn('flex items-center gap-3 border-t bg-cds-background-2', replyBoxClassName)}>
                       {!!currentUser && (
                         <Avatar.Root>
                           <Avatar.Fallback>{getInitials(currentUser)}</Avatar.Fallback>
                         </Avatar.Root>
                       )}
                       <Input
-                        className="bg-background-2"
+                        className="bg-cds-background-2"
                         placeholder="Reply here"
                         size="md"
                         onClick={() => {

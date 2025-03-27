@@ -14,6 +14,8 @@ export interface ConnectorListProps extends Partial<RoutingProps> {
 }
 
 export interface ConnectorListPageProps extends ConnectorListProps {
+  searchQuery?: string | null
+  setSearchQuery: (query: string | null) => void
   isError?: boolean
   errorMessage?: string
 }

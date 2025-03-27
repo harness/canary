@@ -23,7 +23,8 @@ export const PipelineStudioInternal = (): JSX.Element => {
     onSave,
     saveInProgress,
     isYamlDirty,
-    hideSaveBtn
+    hideSaveBtn,
+    lastCommitInfo
   } = useUnifiedPipelineStudioContext()
 
   return (
@@ -69,6 +70,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
           togglePane={() => {
             onPanelOpenChange?.(!panelOpen)
           }}
+          lastCommitInfo={lastCommitInfo}
         />
       </PipelineStudioLayout.Root>
 

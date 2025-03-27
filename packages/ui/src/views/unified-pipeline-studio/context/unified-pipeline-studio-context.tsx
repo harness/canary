@@ -24,6 +24,14 @@ export type FormEntityType = {
   }
 }
 
+export type lastCommitInfoType = {
+  committedTimeAgo: string
+  authorName: string
+  authorInitials?: string
+  commitSha?: string
+  commitMessage?: string
+}
+
 // add step intention
 export type AddStepIntentionType = {
   path: string
@@ -46,6 +54,7 @@ export interface UnifiedPipelineStudioContextProps {
   selectedPath?: string
   onSelectedPathChange: (path: string) => void
   errors: YamlErrorDataType
+  lastCommitInfo?: lastCommitInfoType
   onErrorsChange?: (errors: YamlErrorDataType) => void
   panelOpen: boolean
   onPanelOpenChange?: (open: boolean) => void
@@ -119,7 +128,11 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
   setFormEntity: (_formEntity: FormEntityType) => undefined,
   useTemplateListStore: () => ({}) as ITemplateListStore,
   inputComponentFactory: new InputFactory(),
-  stepsDefinitions: []
+  stepsDefinitions: [],
+  lastCommitInfo: {
+    committedTimeAgo: '',
+    authorName: ''
+  }
 })
 
 export function useUnifiedPipelineStudioContext(): UnifiedPipelineStudioContextProps {
@@ -150,6 +163,7 @@ export interface UnifiedPipelineStudioProviderProps {
   onAnimateEnd?: () => void
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
+  lastCommitInfo?: lastCommitInfoType
 }
 
 export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProviderProps> = props => {
@@ -159,6 +173,7 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
     onYamlRevisionChange,
     inputComponentFactory: inputComponentFactoryFromProps,
     onSelectedPathChange: onSelectedPathChangeFromProps,
+    lastCommitInfo,
     ...rest
   } = props
 
@@ -243,7 +258,8 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
         setFormEntity,
         clearRightDrawerData,
         inputComponentFactory: inputComponentFactoryFromProps ?? inputComponentFactory,
-        onSelectedPathChange
+        onSelectedPathChange,
+        lastCommitInfo
       }}
     >
       {children}

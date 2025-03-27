@@ -7,7 +7,7 @@ import { AnyStepDefinition } from './components/steps/types'
 import { PipelineStudioNodeContextMenu } from './components/unified-pipeline-studio-node-context-menu'
 import { YamlErrorDataType } from './components/unified-pipeline-studio-yaml-view'
 import { VisualYamlValue } from './components/visual-yaml-toggle'
-import { UnifiedPipelineStudioProvider } from './context/unified-pipeline-studio-context'
+import { lastCommitInfoType, UnifiedPipelineStudioProvider } from './context/unified-pipeline-studio-context'
 import { YamlRevision } from './types/common-types'
 import { PipelineStudioInternal } from './unified-pipeline-studio-internal'
 
@@ -52,6 +52,7 @@ export interface UnifiedPipelineStudioProps {
   onAnimateEnd?: () => void
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
+  lastCommitInfo?: lastCommitInfoType
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {
@@ -79,7 +80,8 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     animateOnUpdate,
     onAnimateEnd,
     hideSaveBtn,
-    yamlParserOptions
+    yamlParserOptions,
+    lastCommitInfo
   } = props
 
   return (
@@ -109,6 +111,7 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       onAnimateEnd={onAnimateEnd}
       hideSaveBtn={hideSaveBtn}
       yamlParserOptions={yamlParserOptions}
+      lastCommitInfo={lastCommitInfo}
     >
       <UnifiedPipelineStudioNodeContextProvider>
         {/* TODO: Loading... */}

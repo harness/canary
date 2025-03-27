@@ -1,46 +1,70 @@
 ---
-title: Search Box
-description: Search Box component documentation
+title: SearchBox
+description: SearchBox component documentation
 ---
 
-The Search Box component provides a UI element for entering search queries. It includes optional features like search icon, keyboard shortcuts, and custom content.
+The `SearchBox` component provides a UI element for entering search queries. It includes optional features like search icon, keyboard shortcuts, and custom content.
 
 import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
   code={`<SearchBox.Root
-    placeholder="Search..."        
-    hasSearchIcon={true}           
-    hasShortcut={true}             
-    shortcutLetter="K"             
-    shortcutModifier="alt"         
-    width="fixed"                  
-    textSize="text-sm"             
-    showOnFocus={false}        
+      placeholder="Search..."        
+      hasSearchIcon={true}           
+      hasShortcut={true}             
+      shortcutLetter="K"             
+      shortcutModifier="alt"         
+      width="fixed"                  
+      textSize="text-sm"             
+      showOnFocus={false}        
   />
 `}
 />
 
 ## Usage
 
-```typescript jsx
+````typescript jsx
 import { SearchBox } from '@harnessio/ui/components'
 
 return (
   <SearchBox.Root
-    placeholder="Search..."            // [REQUIRED] Placeholder text
-    hasSearchIcon={true}               // [OPTIONAL] Show search icon
-    hasShortcut={true}                 // [OPTIONAL] Enable keyboard shortcut
-    shortcutLetter="K"                 // [OPTIONAL] Shortcut key
-    shortcutModifier="cmd"             // [OPTIONAL] Modifier key (alt/cmd/ctrl)
-    onSearch={() => handleSearch()}    // [OPTIONAL] Search handler
-    handleChange={e => onChange(e)}     // [OPTIONAL] Input change handler
-    className="custom-class"           // [OPTIONAL] Container styles
+    placeholder="Search..."
+    hasSearchIcon={true}
+    hasShortcut={true}
+    shortcutLetter="K"
+    shortcutModifier="cmd"
+    onSearch={() => handleSearch()}
+    handleChange={e => onChange(e)}
+    className="custom-class"
   />
 )
 
 ## API Reference
+
+### `Root`
+
+The root component that provides search functionality.
+
+```typescript jsx
+<SearchBox.Root
+  width="fixed"                       // [Optional] Width of the search box ('full' | 'fixed')
+  hasShortcut={true}                  // [Optional] Show keyboard shortcut indicator
+  hasSearchIcon={true}                // [Optional] Show search icon
+  shortcutLetter="k"                  // [Optional] Keyboard shortcut key
+  shortcutModifier="cmd"              // [Optional] Keyboard shortcut modifier ('cmd' | 'ctrl' | 'alt' | 'shift')
+  textSize={TextSize['text-sm']}      // [Optional] Text size of the input
+  onSearch={() => searchHandler()}    // [Optional] Callback when search is triggered
+  onFocus={() => focusHandler()}      // [Optional] Callback when input is focused
+  handleChange={e => handleChange(e)} // [Optional] Callback when input value changes
+  showOnFocus={false}                 // [Optional] Trigger search on focus
+  inputClassName="h-8"                // [Optional] Additional classes for the input
+  placeholder="Search..."             // [Optional] Placeholder text
+  value=""                            // [Optional] Controlled input value
+  defaultValue=""                     // [Optional] Default input value
+  theme="default"                     // [Optional] Theme variant
+/>
+````
 
 <DocsPage.PropsTable
   props={[

@@ -6,6 +6,7 @@ import { InputFactory } from '@harnessio/forms'
 
 import { ITemplateListStore } from '..'
 import { inputComponentFactory } from '../components/form-inputs/factory/factory'
+import { Yaml2PipelineGraphOptions } from '../components/graph-implementation/utils/yaml-to-pipeline-graph'
 import { AnyStepDefinition } from '../components/steps/types'
 import { YamlErrorDataType } from '../components/unified-pipeline-studio-yaml-view'
 import { VisualYamlValue } from '../components/visual-yaml-toggle'
@@ -77,6 +78,7 @@ export interface UnifiedPipelineStudioContextProps {
   animateOnUpdate?: boolean
   onAnimateEnd?: () => void
   hideSaveBtn?: boolean
+  yamlParserOptions?: Yaml2PipelineGraphOptions
 }
 
 export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioContextProps>({
@@ -147,6 +149,7 @@ export interface UnifiedPipelineStudioProviderProps {
   animateOnUpdate?: boolean
   onAnimateEnd?: () => void
   hideSaveBtn?: boolean
+  yamlParserOptions?: Yaml2PipelineGraphOptions
 }
 
 export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProviderProps> = props => {

@@ -2,6 +2,7 @@ import { InputFactory } from '@harnessio/forms'
 
 import { TranslationStore } from '..'
 import { UnifiedPipelineStudioNodeContextProvider } from './components/graph-implementation/context/UnifiedPipelineStudioNodeContext'
+import { Yaml2PipelineGraphOptions } from './components/graph-implementation/utils/yaml-to-pipeline-graph'
 import { AnyStepDefinition } from './components/steps/types'
 import { PipelineStudioNodeContextMenu } from './components/unified-pipeline-studio-node-context-menu'
 import { YamlErrorDataType } from './components/unified-pipeline-studio-yaml-view'
@@ -50,6 +51,7 @@ export interface UnifiedPipelineStudioProps {
   animateOnUpdate?: boolean
   onAnimateEnd?: () => void
   hideSaveBtn?: boolean
+  yamlParserOptions?: Yaml2PipelineGraphOptions
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {
@@ -76,7 +78,8 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     onPanelOpenChange,
     animateOnUpdate,
     onAnimateEnd,
-    hideSaveBtn
+    hideSaveBtn,
+    yamlParserOptions
   } = props
 
   return (
@@ -105,6 +108,7 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       animateOnUpdate={animateOnUpdate}
       onAnimateEnd={onAnimateEnd}
       hideSaveBtn={hideSaveBtn}
+      yamlParserOptions={yamlParserOptions}
     >
       <UnifiedPipelineStudioNodeContextProvider>
         {/* TODO: Loading... */}

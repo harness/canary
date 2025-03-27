@@ -12,7 +12,6 @@ import { CommonNodeDataType } from '../types/common-node-data-type'
 export interface StepNodeDataType extends CommonNodeDataType {
   icon?: React.ReactElement
   state?: 'success' | 'executing' | 'executed' | 'warning' | 'error'
-  selected?: boolean
   warningMessage?: string
 }
 

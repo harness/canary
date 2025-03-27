@@ -11,14 +11,14 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 300 500;
-  src: url('./fonts/InterVariable.ttf') format('truetype');
+  src: url('./fonts/InterVariable.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
-  src: url('./fonts/InterVariable.ttf') format('truetype');
+  src: url('./fonts/InterVariable.woff2') format('woff2');
 }
 
 @font-face {
@@ -638,9 +638,9 @@
 }
 
 @layer base {
-  * {
-    @apply border-borders-1;
-  }
+  /* * {
+    @apply border-borders-3;
+  } */
 
   html {
     @apply text-base antialiased;
@@ -1101,7 +1101,7 @@ mark {
 }
 
 .monaco-diff-editor.side-by-side .editor.modified {
-  @apply !border-borders-1 !border-l !border-solid !shadow-none;
+  @apply !border-borders-2 !border-l !border-solid !shadow-none;
 }
 
 /* In View Diff Renderer */

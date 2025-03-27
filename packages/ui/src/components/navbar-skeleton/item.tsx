@@ -42,7 +42,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
             {icon ? (
               <div
                 className={cn(
-                  'sub-menu-icon-bg relative flex size-8 place-content-center place-items-center rounded border border-borders-1 bg-background-2',
+                  'sub-menu-icon-bg relative flex size-8 place-content-center place-items-center rounded border border-borders-2 bg-background-2',
                   { 'border-sidebar-border-3 bg-sidebar-background-7': isMainNav }
                   // { 'border-sidebar-border-6 bg-sidebar-background-8': active && isLightTheme }
                 )}

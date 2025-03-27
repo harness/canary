@@ -1,9 +1,9 @@
 ---
-title: Scroll Area
-description: Scroll Area component documentation
+title: ScrollArea
+description: ScrollArea component
 ---
 
-The Scroll Area component provides a UI element for creating scrollable areas with custom scrollbars. It includes various customization options.
+The `ScrollArea` component provides a UI element for creating scrollable areas with custom scrollbars. It includes various customization options.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -11,11 +11,11 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`<ScrollArea className="h-24 w-64">
     <div className="p-4">
-      <p>Scrollable content goes here.</p>
-      <p>Scrollable content goes here.</p>
-      <p>Scrollable content goes here.</p>
-      <p>Scrollable content goes here.</p>
-      <p>Scrollable content goes here.</p>
+        <p>Scrollable content goes here.</p>
+        <p>Scrollable content goes here.</p>
+        <p>Scrollable content goes here.</p>
+        <p>Scrollable content goes here.</p>
+        <p>Scrollable content goes here.</p>
     </div>
 </ScrollArea>`}
 />
@@ -24,6 +24,8 @@ import { DocsPage } from "@/components/docs-page";
 
 ```typescript jsx
 import { ScrollArea } from '@harnessio/ui/components'
+
+// ...
 
 return (
   <ScrollArea
@@ -43,7 +45,7 @@ return (
 
 ## Anatomy
 
-The Scroll Area component can be used to create scrollable areas with custom scrollbars.
+The ScrollArea component can be used to create scrollable areas with custom scrollbars.
 
 ```typescript jsx
 <ScrollArea className="h-64 w-64">
@@ -62,6 +64,16 @@ The Scroll Area component can be used to create scrollable areas with custom scr
 ### ScrollArea
 
 The `ScrollArea` component serves as the main container for the scrollable area.
+
+```typescript jsx
+<ScrollArea
+  className="h-[300px] w-[400px]"      // Container dimensions and styles
+  viewportClassName="p-4"               // [Optional] Viewport styles
+  scrollThumbClassName="bg-gray-400"    // [Optional] Scroll thumb styles
+>
+  {/* Scrollable content */}
+</ScrollArea>
+```
 
 <DocsPage.PropsTable
   props={[
@@ -89,6 +101,14 @@ The `ScrollArea` component serves as the main container for the scrollable area.
 ### ScrollBar
 
 The `ScrollBar` component is used to display a custom scrollbar inside the scroll area.
+
+```typescript jsx
+<ScrollBar
+  orientation="vertical"               // Scrollbar orientation
+  className="bg-gray-100"             // [Optional] Scrollbar styles
+  scrollThumbClassName="bg-gray-400"  // [Optional] Scroll thumb styles
+/>
+```
 
 <DocsPage.PropsTable
   props={[

@@ -1,5 +1,3 @@
-import { ExecutionState } from '@/views'
-
 import { FieldValues, IFormDefinition, IInputDefinition } from '@harnessio/forms'
 
 import { BaseEntityProps } from '../../views/platform/types'

@@ -220,7 +220,7 @@
     "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noConnectors": "No connectors yet",
     "noConnectorsProject": "There are no connectors in this project yet.",
-    "createOrImportConnectors": "Create new or import an existing connector.",
+    "createConnector": "Create new connector.",
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
     "clearSearch": "Clear search",

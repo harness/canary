@@ -42,7 +42,7 @@ export function ConnectorsList({
         title={t('views:noData.noConnectors', 'No connectors yet')}
         description={[
           t('views:noData.noConnectorsProject', 'There are no connectors in this project yet.'),
-          t('views:noData.createOrImportConnectors', 'Create new or import an existing connector.')
+          t('views:noData.createConnector', 'Create new connector.')
         ]}
       />
     )

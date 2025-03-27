@@ -6,7 +6,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-settings-view-wrapper.tsx'
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
-import { ConnectorsPage } from '@subjects/views/connectors/connectors-list'
+import { ConnectorsListPage } from '@subjects/views/connectors/connectors-list'
 import { ConnectorsRefPage } from '@subjects/views/connectors/connectors-ref'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
@@ -496,9 +496,9 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         label: 'Secrets Page',
         element: <SecretInputExample />
       },
-      'connectors-page': {
-        label: 'Connectors Page',
-        element: <ConnectorsPage />
+      'connectors-list-page': {
+        label: 'Connectors List Page',
+        element: <ConnectorsListPage />
       },
       'connector-reference': {
         label: 'Connector Reference',

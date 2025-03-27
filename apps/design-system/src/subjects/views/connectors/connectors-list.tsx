@@ -51,8 +51,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
   )
 }
 
-// temp component for testing in standalone
-const ConnectorsPage = (): JSX.Element => {
+const ConnectorsListPage = (): JSX.Element => {
   return (
     <ConnectorsProvider>
       <ConnectorsListPageContent />
@@ -60,4 +59,4 @@ const ConnectorsPage = (): JSX.Element => {
   )
 }
 
-export { ConnectorsPage }
+export { ConnectorsListPage }

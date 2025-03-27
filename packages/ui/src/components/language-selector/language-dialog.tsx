@@ -44,7 +44,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
                 onChange(lang)
               }}
             >
-              <div className="flex items-center gap-2 relative z-[1]">
+              <div className="relative z-[1] flex items-center gap-2">
                 <div className="flex size-6 items-center justify-center rounded bg-background-12 text-12 uppercase text-foreground-3">
                   {lang.code}
                 </div>
@@ -57,7 +57,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
                   {lang.name}
                 </span>
               </div>
-              {selectedLanguage === lang.code && <Icon className="text-icons-2 relative z-[1]" name="tick" size={12} />}
+              {selectedLanguage === lang.code && <Icon className="relative z-[1] text-icons-2" name="tick" size={12} />}
               <span
                 className={cn(
                   'absolute -inset-x-2 -inset-y-1 rounded -z-[1] group-hover:bg-background-4',

@@ -43,8 +43,8 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
               <div
                 className={cn(
                   'sub-menu-icon-bg relative flex size-8 place-content-center place-items-center rounded border border-borders-1 bg-background-2',
-                  { 'border-sidebar-border-3 bg-sidebar-background-7': isMainNav },
-                  { 'border-sidebar-border-6 bg-sidebar-background-8': active && isLightTheme }
+                  { 'border-sidebar-border-3 bg-sidebar-background-7': isMainNav }
+                  // { 'border-sidebar-border-6 bg-sidebar-background-8': active && isLightTheme }
                 )}
               >
                 <Icon
@@ -67,8 +67,9 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
               weight="medium"
               className={cn(
                 'text-foreground-2 group-hover:text-foreground-1 z-10 w-full duration-0 ease-in-out',
-                { 'text-sidebar-foreground-2': isMainNav && (!isInset || isLightTheme) },
-                { 'text-sidebar-foreground-3': isMainNav && isInset && !isLightTheme },
+                // { 'text-sidebar-foreground-2': isMainNav && (!isInset || isLightTheme) },
+                // { 'text-sidebar-foreground-3': isMainNav && isInset && !isLightTheme },
+                { 'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1': isMainNav },
                 { 'text-foreground-1': active },
                 { 'text-sidebar-foreground-1': active && isMainNav }
               )}
@@ -119,7 +120,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
             )}
           >
             {active && (
-              <span className="bg-navbar-item-gradient absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2" />
+              <span className="absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2 bg-navbar-item-gradient" />
             )}
             {icon}
           </div>

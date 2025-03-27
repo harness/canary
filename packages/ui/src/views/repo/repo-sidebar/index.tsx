@@ -73,7 +73,7 @@ export const RepoSidebar = ({
         </SandboxLayout.LeftSubPanel>
       </div>
       {/* Sticky right border */}
-      <div className="sticky top-0 h-screen w-px border-r border-borders-4" />
+      <div className="sticky top-0 w-px border-r border-borders-4" />
     </>
   )
 }

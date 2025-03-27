@@ -21,11 +21,14 @@ interface SheetOverlayProps extends React.ComponentPropsWithoutRef<typeof SheetP
 
 const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Overlay>, SheetOverlayProps>(
   ({ className, modal, handleClose, ...props }, ref) => {
+    const { isLightTheme } = useTheme()
+
     if (modal) {
       return (
         <SheetPrimitive.Overlay
           className={cn(
-            'bg-background-7/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50',
+            'bg-background-7/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50',
+            { 'bg-background-10/60': isLightTheme },
             className
           )}
           {...props}
@@ -37,7 +40,11 @@ const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Ove
     return (
       <div
         aria-hidden="true"
-        className={cn('bg-background-7/50 fixed left-0 top-0 h-full w-full', className)}
+        className={cn(
+          'layer-high bg-background-7/80 fixed left-0 top-0 h-full w-full',
+          { 'bg-background-10/60': isLightTheme },
+          className
+        )}
         onClick={e => handleClose?.(e)}
       />
     )
@@ -45,17 +52,13 @@ const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Ove
 )
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
-const sheetVariants = cva('bg-background fixed z-50 gap-4 p-6 transition ease-in-out', {
+const sheetVariants = cva('fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out', {
   variants: {
     side: {
       top: 'inset-x-0 top-0 border-b',
       bottom: 'inset-x-0 bottom-0 border-t',
       left: 'inset-y-0 left-0 h-full w-3/4 border-r sm:max-w-sm',
       right: 'inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm'
-    },
-    isLightTheme: {
-      true: 'border-sidebar-border-1 border-l',
-      false: 'shadow-lg'
     }
   },
   defaultVariants: {
@@ -89,10 +92,9 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
     ref
   ) => {
     const { portalContainer } = usePortal()
-    const { isLightTheme } = useTheme()
 
     const content = (
-      <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side, isLightTheme }), className)} {...props}>
+      <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
         {children}
         {!hideCloseButton && (
           <SheetPrimitive.Close

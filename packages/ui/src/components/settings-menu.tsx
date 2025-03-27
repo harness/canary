@@ -18,7 +18,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
       <Sheet.Content
         className={cn(
           'inset-y-0 z-40 h-screen w-[364px] bg-transparent p-0',
-          isInset ? 'left-[228px]' : 'left-[220px]'
+          isInset ? 'border-l left-[228px]' : 'left-[220px]'
         )}
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
         side="left"

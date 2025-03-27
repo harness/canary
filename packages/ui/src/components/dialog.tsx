@@ -1,7 +1,7 @@
 import { Children, ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, isValidElement } from 'react'
 
 import { Button, Icon } from '@/components'
-import { usePortal } from '@/context'
+import { usePortal, useTheme } from '@/context'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 
@@ -16,17 +16,22 @@ interface DialogOverlayProps extends ComponentPropsWithoutRef<typeof DialogPrimi
 }
 
 const DialogOverlay = forwardRef<ElementRef<typeof DialogPrimitive.Overlay>, DialogOverlayProps>(
-  ({ className, onClick, ...props }, ref) => (
-    <DialogPrimitive.Overlay
-      ref={ref}
-      className={cn(
-        'fixed inset-0 z-50 bg-background-7/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        className
-      )}
-      {...props}
-      onClick={onClick}
-    />
-  )
+  ({ className, onClick, ...props }, ref) => {
+    const { isLightTheme } = useTheme()
+
+    return (
+      <DialogPrimitive.Overlay
+        ref={ref}
+        className={cn(
+          'fixed inset-0 z-50 bg-background-7/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+          { 'bg-background-10/60': isLightTheme },
+          className
+        )}
+        {...props}
+        onClick={onClick}
+      />
+    )
+  }
 )
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 

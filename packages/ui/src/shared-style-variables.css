@@ -687,23 +687,23 @@
     --canary-label-foreground-yellow-01: hsla(var(--canary-yellow-700));
 
     /* Button */
-    --canary-button-foreground-danger-01: 3 60% 45%;
+    --canary-button-foreground-danger-01: 355 40% 25%;
     --canary-button-background-danger-01: 4 81% 96%;
     --canary-button-background-danger-02: 2 83% 93%;
     --canary-button-background-danger-03: 4 80% 96%;
     --canary-button-border-danger-01: 3 93% 88%;
-    --canary-button-foreground-success-01: 133 50% 29%;
-    --canary-button-background-success-01: 130 86% 97%;
-    --canary-button-background-success-02: 133 73% 90%;
-    --canary-button-border-success-01: 133 59% 79%;
+    --canary-button-foreground-success-01: 148 40% 25%;
+    --canary-button-background-success-01: 135 67% 98%;
+    --canary-button-background-success-02: 129 68% 93%;
+    --canary-button-border-success-01: 130 49% 83%;
     --canary-button-foreground-disabled-01: 240 3% 66%;
     --canary-button-background-disabled-01: 0 0% 98%;
-    --canary-button-border-disabled-01: 240 5% 85%;
+    --canary-button-border-disabled-01: 240 4% 90%;
     --canary-button-foreground-accent-1: var(--canary-pure-white);
-    --canary-button-foreground-accent-2: 240 4% 56%;
-    --canary-button-background-accent-1: 240 5% 25%;
+    --canary-button-foreground-accent-2: 240 4% 90%;
+    --canary-button-background-accent-1: 240 2% 8%;
     --canary-button-background-accent-2: 240 5% 25%;
-    --canary-button-background-accent-3: 240 4% 90%;
+    --canary-button-background-accent-3: 240 4% 56%;
     --canary-button-border-accent-1: 240 4% 40%;
 
     /* Box shadow colors */
@@ -1008,29 +1008,29 @@
     --canary-label-background-cyan-01: hsla(185, 71%, 90%, 1);
 
     /* Button */
-    --canary-button-foreground-danger-01: 3 60% 45%;
+    --canary-button-foreground-danger-01: 355 40% 25%;
     --canary-button-background-danger-01: 4 81% 96%;
     --canary-button-background-danger-02: 2 83% 93%;
     --canary-button-background-danger-03: 4 80% 96%;
     --canary-button-border-danger-01: 3 93% 88%;
-    --canary-button-foreground-success-01: 133 50% 29%;
-    --canary-button-background-success-01: 130 86% 97%;
-    --canary-button-background-success-02: 133 73% 90%;
-    --canary-button-border-success-01: 133 59% 79%;
+    --canary-button-foreground-success-01: 148 40% 25%;
+    --canary-button-background-success-01: 135 67% 98%;
+    --canary-button-background-success-02: 129 68% 93%;
+    --canary-button-border-success-01: 130 49% 83%;
     --canary-button-foreground-disabled-01: 240 3% 66%;
     --canary-button-background-disabled-01: 0 0% 98%;
-    --canary-button-border-disabled-01: 240 5% 85%;
+    --canary-button-border-disabled-01: 240 4% 90%;
     --canary-button-foreground-accent-1: var(--canary-pure-white);
-    --canary-button-foreground-accent-2: 240 4% 56%;
-    --canary-button-background-accent-1: 240 5% 25%;
+    --canary-button-foreground-accent-2: 240 4% 90%;
+    --canary-button-background-accent-1: 240 2% 8%;
     --canary-button-background-accent-2: 240 5% 25%;
-    --canary-button-background-accent-3: 240 4% 90%;
+    --canary-button-background-accent-3: 240 4% 56%;
     --canary-button-border-accent-1: 240 4% 40%;
 
     /* Box shadow colors */
-    --canary-box-shadow-1: hsla(var(--canary-pure-white) / 0.07);
-    --canary-box-shadow-2: hsla(var(--canary-pure-white) / 0.15);
-    --canary-box-shadow-pagination: hsla(var(--canary-pure-white) / 0.06);
+    --canary-box-shadow-1: hsla(var(--canary-pure-black) / 0.07);
+    --canary-box-shadow-2: hsla(var(--canary-pure-black) / 0.15);
+    --canary-box-shadow-pagination: hsla(var(--canary-pure-black) / 0.06);
 
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
     --canary-widget-bg-gradient-to: var(--canary-pure-white) / 1;
@@ -1328,29 +1328,29 @@
     --canary-label-background-cyan-01: hsla(185, 71%, 90%, 1);
 
     /* Button */
-    --canary-button-foreground-danger-01: 3 60% 45%;
+    --canary-button-foreground-danger-01: 355 40% 25%;
     --canary-button-background-danger-01: 4 81% 96%;
     --canary-button-background-danger-02: 2 83% 93%;
     --canary-button-background-danger-03: 4 80% 96%;
     --canary-button-border-danger-01: 3 93% 88%;
-    --canary-button-foreground-success-01: 133 50% 29%;
-    --canary-button-background-success-01: 130 86% 97%;
-    --canary-button-background-success-02: 133 73% 90%;
-    --canary-button-border-success-01: 133 59% 79%;
+    --canary-button-foreground-success-01: 148 40% 25%;
+    --canary-button-background-success-01: 135 67% 98%;
+    --canary-button-background-success-02: 129 68% 93%;
+    --canary-button-border-success-01: 130 49% 83%;
     --canary-button-foreground-disabled-01: 240 3% 66%;
     --canary-button-background-disabled-01: 0 0% 98%;
-    --canary-button-border-disabled-01: 240 5% 85%;
+    --canary-button-border-disabled-01: 240 4% 90%;
     --canary-button-foreground-accent-1: var(--canary-pure-white);
-    --canary-button-foreground-accent-2: 240 4% 56%;
-    --canary-button-background-accent-1: 240 5% 25%;
+    --canary-button-foreground-accent-2: 240 4% 90%;
+    --canary-button-background-accent-1: 240 2% 8%;
     --canary-button-background-accent-2: 240 5% 25%;
-    --canary-button-background-accent-3: 240 4% 90%;
+    --canary-button-background-accent-3: 240 4% 56%;
     --canary-button-border-accent-1: 240 4% 40%;
 
     /* Box shadow colors */
-    --canary-box-shadow-1: hsla(var(--canary-pure-white) / 0.07);
-    --canary-box-shadow-2: hsla(var(--canary-pure-white) / 0.15);
-    --canary-box-shadow-pagination: hsla(var(--canary-pure-white) / 0.06);
+    --canary-box-shadow-1: hsla(var(--canary-pure-black) / 0.07);
+    --canary-box-shadow-2: hsla(var(--canary-pure-black) / 0.15);
+    --canary-box-shadow-pagination: hsla(var(--canary-pure-black) / 0.06);
 
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
     --canary-widget-bg-gradient-to: var(--canary-pure-white) / 1;
@@ -1648,29 +1648,29 @@
     --canary-label-background-cyan-01: hsla(185, 71%, 90%, 1);
 
     /* Button */
-    --canary-button-foreground-danger-01: 3 60% 45%;
+    --canary-button-foreground-danger-01: 355 40% 25%;
     --canary-button-background-danger-01: 4 81% 96%;
     --canary-button-background-danger-02: 2 83% 93%;
     --canary-button-background-danger-03: 4 80% 96%;
     --canary-button-border-danger-01: 3 93% 88%;
-    --canary-button-foreground-success-01: 133 50% 29%;
-    --canary-button-background-success-01: 130 86% 97%;
-    --canary-button-background-success-02: 133 73% 90%;
-    --canary-button-border-success-01: 133 59% 79%;
+    --canary-button-foreground-success-01: 148 40% 25%;
+    --canary-button-background-success-01: 135 67% 98%;
+    --canary-button-background-success-02: 129 68% 93%;
+    --canary-button-border-success-01: 130 49% 83%;
     --canary-button-foreground-disabled-01: 240 3% 66%;
     --canary-button-background-disabled-01: 0 0% 98%;
-    --canary-button-border-disabled-01: 240 5% 85%;
+    --canary-button-border-disabled-01: 240 4% 90%;
     --canary-button-foreground-accent-1: var(--canary-pure-white);
-    --canary-button-foreground-accent-2: 240 4% 56%;
-    --canary-button-background-accent-1: 240 5% 25%;
+    --canary-button-foreground-accent-2: 240 4% 90%;
+    --canary-button-background-accent-1: 240 2% 8%;
     --canary-button-background-accent-2: 240 5% 25%;
-    --canary-button-background-accent-3: 240 4% 90%;
+    --canary-button-background-accent-3: 240 4% 56%;
     --canary-button-border-accent-1: 240 4% 40%;
 
     /* Box shadow colors */
-    --canary-box-shadow-1: hsla(var(--canary-pure-white) / 0.07);
-    --canary-box-shadow-2: hsla(var(--canary-pure-white) / 0.15);
-    --canary-box-shadow-pagination: hsla(var(--canary-pure-white) / 0.06);
+    --canary-box-shadow-1: hsla(var(--canary-pure-black) / 0.07);
+    --canary-box-shadow-2: hsla(var(--canary-pure-black) / 0.15);
+    --canary-box-shadow-pagination: hsla(var(--canary-pure-black) / 0.06);
 
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
     --canary-widget-bg-gradient-to: var(--canary-pure-white) / 1;
@@ -2035,7 +2035,7 @@
       --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
       --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
       --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
-      --canary-sidebar-border-01: 240 6% 15%; /* menu items divider */
+      --canary-sidebar-border-01: 240 6% 20%; /* menu items divider */
       --canary-sidebar-border-02: 240 6% 20%; /* search border */
       --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
       --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */

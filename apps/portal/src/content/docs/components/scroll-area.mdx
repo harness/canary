@@ -67,9 +67,13 @@ The `ScrollArea` component serves as the main container for the scrollable area.
 
 ```typescript jsx
 <ScrollArea
-  className="h-[300px] w-[400px]"      // Container dimensions and styles
-  viewportClassName="p-4"               // [Optional] Viewport styles
-  scrollThumbClassName="bg-gray-400"    // [Optional] Scroll thumb styles
+  type="hover"                         // [Optional] Scrollbar visibility behavior ('auto' | 'always' | 'scroll' | 'hover')
+  dir="ltr"                            // [Optional] Reading direction ('ltr' | 'rtl')
+  scrollHideDelay={600}               // [Optional] Delay before hiding scrollbar (in ms)
+  className="h-[300px] w-[400px]"      // [Optional] Container dimensions and styles
+  viewportClassName="p-4"              // [Optional] Viewport styles
+  scrollThumbClassName="bg-gray-400"   // [Optional] Scroll thumb styles
+  asChild={false}                      // [Optional] Change the rendered element
 >
   {/* Scrollable content */}
 </ScrollArea>
@@ -84,16 +88,51 @@ The `ScrollArea` component serves as the main container for the scrollable area.
       value: "ReactNode",
     },
     {
+      name: "type",
+      description: "Describes the nature of scrollbar visibility",
+      required: false,
+      value: "'auto' | 'always' | 'scroll' | 'hover'",
+      defaultValue: "'hover'",
+    },
+    {
+      name: "dir",
+      description: "The reading direction of the scroll area",
+      required: false,
+      value: "'ltr' | 'rtl'",
+    },
+    {
+      name: "scrollHideDelay",
+      description:
+        "The duration from when the user stops interacting with scrollbar to when it's hidden",
+      required: false,
+      value: "number",
+      defaultValue: "600",
+    },
+    {
       name: "className",
-      description: "Additional class names for the scroll area",
+      description: "Additional class names for the scroll area container",
       required: false,
       value: "string",
     },
     {
       name: "viewportClassName",
-      description: "Additional class names for the viewport",
+      description:
+        "Class names for the viewport element that wraps the content",
       required: false,
       value: "string",
+    },
+    {
+      name: "scrollThumbClassName",
+      description: "Class names for the scroll thumb element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child",
+      required: false,
+      value: "boolean",
     },
   ]}
 />
@@ -104,9 +143,10 @@ The `ScrollBar` component is used to display a custom scrollbar inside the scrol
 
 ```typescript jsx
 <ScrollBar
-  orientation="vertical"               // Scrollbar orientation
-  className="bg-gray-100"             // [Optional] Scrollbar styles
-  scrollThumbClassName="bg-gray-400"  // [Optional] Scroll thumb styles
+  orientation="vertical"               // [Optional] Scrollbar orientation ('horizontal' | 'vertical')
+  className="bg-gray-100"              // [Optional] Scrollbar styles
+  scrollThumbClassName="bg-gray-400"   // [Optional] Scroll thumb styles
+  forceMount                           // [Optional] Force mounting when more control is needed
 />
 ```
 
@@ -122,10 +162,21 @@ The `ScrollBar` component is used to display a custom scrollbar inside the scrol
     },
     {
       name: "className",
-      description:
-        "Additional class names for styling the scrollbar's appearance",
+      description: "Additional class names for the scrollbar",
       required: false,
       value: "string",
+    },
+    {
+      name: "scrollThumbClassName",
+      description: "Class names for the scroll thumb element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "forceMount",
+      description: "Used to force mounting when more control is needed",
+      required: false,
+      value: "boolean",
     },
   ]}
 />

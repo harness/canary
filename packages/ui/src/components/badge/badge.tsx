@@ -17,24 +17,26 @@ enum BadgesHoverStates {
 const badgeVariants = cva('inline-flex items-center transition-colors badge', {
   variants: {
     variant: {
+      // default: '',
+      // solid: 'badge-solid',
+      // surface: 'badge-surface',
+      // soft: 'badge-soft',
+      // outline: 'badge-outline',
+
       // default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
-      secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
-      tertiary: 'border-transparent bg-background-8 text-foreground-8',
-      quaternary: 'border-borders-1 bg-background-2 text-foreground-5',
-      destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
-      outline: 'text-foreground',
+      // secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+      // tertiary: 'border-transparent bg-background-8 text-foreground-8',
+      // quaternary: 'border-borders-2 bg-background-2 text-foreground-5',
+      // destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
+      // outline: 'text-foreground',
+      solid: 'badge-solid badge',
+      soft: 'badge-soft',
+      surface: 'badge-surface',
 
       /**
        * New variants
        */
-      default: '',
-      neutral: 'badge-neutral',
-      success: 'badge-success',
-      warning: 'badge-warning',
-      danger: 'badge-danger',
-      running: 'badge-running',
-      merged: 'badge-merged',
-      ai: 'badge-ai'
+      default: ''
     },
     /**
      * CDS: How to take it forward?
@@ -66,16 +68,23 @@ const badgeVariants = cva('inline-flex items-center transition-colors badge', {
      */
     theme: {
       default: '',
-      destructive:
-        'border-tag-border-red-1 bg-tag-background-red-1 text-tag-foreground-red-1 hover:bg-tag-background-red-2',
-      warning:
-        'border-tag-border-amber-1 bg-tag-background-amber-1 text-tag-foreground-amber-1 hover:bg-tag-background-amber-2',
-      success:
-        'border-tag-border-mint-1 bg-tag-background-mint-1 text-tag-foreground-mint-1 hover:bg-tag-background-mint-2',
-      emphasis:
-        'border-tag-border-purple-1 bg-tag-background-purple-1 text-tag-foreground-purple-1 hover:bg-tag-background-purple-2',
-      muted:
-        'border-tag-border-gray-1 bg-tag-background-gray-1 text-tag-foreground-gray-1 hover:bg-tag-background-gray-2'
+      // destructive:
+      //   'border-tag-border-red-1 bg-tag-background-red-1 text-tag-foreground-red-1 hover:bg-tag-background-red-2',
+      // warning:
+      //   'border-tag-border-amber-1 bg-tag-background-amber-1 text-tag-foreground-amber-1 hover:bg-tag-background-amber-2',
+      // success:
+      //   'border-tag-border-mint-1 bg-tag-background-mint-1 text-tag-foreground-mint-1 hover:bg-tag-background-mint-2',
+      // emphasis:
+      //   'border-tag-border-purple-1 bg-tag-background-purple-1 text-tag-foreground-purple-1 hover:bg-tag-background-purple-2',
+      // muted:
+      //   'border-tag-border-gray-1 bg-tag-background-gray-1 text-tag-foreground-gray-1 hover:bg-tag-background-gray-2'
+      muted: 'badge-muted',
+      success: 'badge-success',
+      warning: 'badge-warning',
+      destructive: 'badge-destructive',
+      info: 'badge-info',
+      merged: 'badge-merged',
+      ai: 'badge-ai'
     }
   },
   compoundVariants: [
@@ -113,6 +122,7 @@ function Badge({
 
   return (
     <div
+      inert
       className={cn(
         badgeVariants({
           variant,

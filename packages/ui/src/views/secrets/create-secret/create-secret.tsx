@@ -266,7 +266,7 @@ export function CreateSecretPage({
               <Accordion.Trigger>Secret Manager</Accordion.Trigger>
               <Accordion.Content>
                 <ConnectorInput
-                  placeholder="Harness Built-in Secret Manager"
+                  placeholder="Create or Select a Secret Manager"
                   value={connectorValue}
                   icon="connectors"
                   onClick={onConnectorClick}

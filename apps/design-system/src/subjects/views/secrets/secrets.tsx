@@ -15,6 +15,7 @@ import {
 } from '@harnessio/ui/views'
 
 import { ConnectorsRefPage } from '../connectors/connectors-ref'
+import mockConnectorData from '../connectors/mock-connectors-data.json'
 import mockAccountsData from './mock-account-data.json'
 import mockOrgData from './mock-org-data.json'
 import mockProjectsData from './mock-project-data.json'
@@ -35,7 +36,11 @@ export const SecretsPage = ({
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.NEW)
 
   const [, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
-  const [selectedConnector, setSelectedConnector] = useState<ConnectorItem | null>(null)
+  const [selectedConnector, setSelectedConnector] = useState<ConnectorItem | null>({
+    ...mockConnectorData[0],
+    id: mockConnectorData[0].connector.identifier,
+    name: mockConnectorData[0].connector.name
+  } as ConnectorItem)
   const [isConnectorDrawerOpen, setIsConnectorDrawerOpen] = useState<boolean>(false)
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)

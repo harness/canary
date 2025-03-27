@@ -2186,11 +2186,12 @@
     --canary-icon-08: var(--canary-pure-white);
     --canary-icon-09: var(--canary-base-chrome-400);
     --canary-icon-10: var(--canary-base-chrome-1000);
-    --canary-icon-danger: var(--canary-red-200);
-    --canary-icon-alert: var(--canary-amber-200);
+    --canary-icon-danger: var(--canary-red-400);
+    --canary-icon-warning: 20 100% 65%;
+    --canary-icon-alert: var(--canary-yellow-300);
     --canary-icon-success: var(--canary-green-200);
     --canary-icon-accent: var(--canary-accent-200);
-    --canary-icon-merged: var(--canary-purple-200);
+    --canary-icon-merged: var(--canary-purple-300);
     --canary-sub-menu-icon-01: 0 0% 94%;
     --canary-sub-menu-icon-02: 0 0% 61%;
 
@@ -2533,6 +2534,7 @@
     --canary-icon-09: var(--canary-base-chrome-150);
     --canary-icon-10: var(--canary-base-chrome-1000);
     --canary-icon-danger: var(--canary-red-200);
+    --canary-icon-warning: 20 100% 65%;
     --canary-icon-alert: var(--canary-amber-200);
     --canary-icon-success: var(--canary-green-200);
     --canary-icon-accent: var(--canary-accent-200);
@@ -2876,6 +2878,7 @@
     --canary-icon-09: var(--canary-base-chrome-400);
     --canary-icon-10: var(--canary-base-chrome-1000);
     --canary-icon-danger: var(--canary-yellow-200);
+    --canary-icon-warning: 20 100% 65%;
     --canary-icon-alert: var(--canary-amber-200);
     --canary-icon-success: var(--canary-indigo-300);
     --canary-icon-accent: var(--canary-accent-200);

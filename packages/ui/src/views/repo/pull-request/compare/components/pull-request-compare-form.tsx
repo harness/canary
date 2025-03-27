@@ -118,7 +118,11 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
           />
 
           <div
+<<<<<<< HEAD
             className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md', {
+=======
+            className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cds-background-surface border border-borders-2 rounded-md', {
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
               // 'border rounded-md': !inReplyMode || isEditMode,
               // 'border-t': inReplyMode
             })}
@@ -130,10 +134,17 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
               onValueChange={handleTabChange}
             >
               <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
+<<<<<<< HEAD
                 <Tabs.Trigger className="data-[state=active]:bg-cn-background-1" value={TABS_KEYS.WRITE}>
                   Write
                 </Tabs.Trigger>
                 <Tabs.Trigger className="data-[state=active]:bg-cn-background-1" value={TABS_KEYS.PREVIEW}>
+=======
+                <Tabs.Trigger className="data-[state=active]:bg-cds-background-1" value={TABS_KEYS.WRITE}>
+                  Write
+                </Tabs.Trigger>
+                <Tabs.Trigger className="data-[state=active]:bg-cds-background-1" value={TABS_KEYS.PREVIEW}>
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                   Preview
                 </Tabs.Trigger>
               </Tabs.List>
@@ -174,7 +185,11 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
               <Tabs.Content className="mt-4" value={TABS_KEYS.PREVIEW}>
                 <div className="min-h-24">
                   {desc ? (
+<<<<<<< HEAD
                     <MarkdownViewer markdownClassName="!bg-cn-background-2" source={desc} />
+=======
+                    <MarkdownViewer markdownClassName="!bg-cds-background-2" source={desc} />
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                   ) : (
                     <span>Nothing to preview</span>
                   )}
@@ -187,7 +202,11 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                 <div>
                   <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
                   <Button
+<<<<<<< HEAD
                     className="gap-x-2 px-2.5 font-normal text-cn-foreground-3 hover:bg-cn-background-8"
+=======
+                    className="gap-x-2 px-2.5 font-normal text-foreground-3 hover:bg-cds-background-8"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                     variant="custom"
                     onClick={e => handleFileSelect(e)}
                   >

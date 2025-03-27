@@ -10,7 +10,11 @@ function Root({ children }: { children: React.ReactNode }) {
 
 function Header({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
+<<<<<<< HEAD
     <header className={cn('bg-cn-background fixed left-[220px] right-0 top-0 z-40 h-[55px]', className)} role="banner">
+=======
+    <header className={cn('bg-cds-background fixed left-[220px] right-0 top-0 z-40 h-[55px]', className)} role="banner">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
       {children}
     </header>
   )

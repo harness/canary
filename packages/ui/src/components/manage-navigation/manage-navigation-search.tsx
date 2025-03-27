@@ -98,7 +98,11 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
         />
       </Popover.Trigger>
       <Popover.Content
+<<<<<<< HEAD
         className="w-[368px] overflow-hidden !rounded border-cn-borders-2 bg-cn-background-2 !p-0"
+=======
+        className="w-[368px] overflow-hidden !rounded border-borders-2 bg-cds-background-2 !p-0"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
         ref={popoverRef}
         align="start"
         onWheel={e => e.stopPropagation()}

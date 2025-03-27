@@ -50,7 +50,11 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 setCurrentTab(CloneRepoTabs.HTTPS)
               }}
             >
+<<<<<<< HEAD
               <Tabs.Trigger className="px-4 data-[state=active]:bg-cn-background-2" value={CloneRepoTabs.HTTPS}>
+=======
+              <Tabs.Trigger className="px-4 data-[state=active]:bg-cds-background-2" value={CloneRepoTabs.HTTPS}>
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                 {t('views:repos.cloneHttps', 'HTTPS')}
               </Tabs.Trigger>
             </DropdownMenu.Item>
@@ -62,7 +66,11 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
               }}
             >
               <Tabs.Trigger
+<<<<<<< HEAD
                 className="px-4 data-[state=active]:bg-cn-background-2"
+=======
+                className="px-4 data-[state=active]:bg-cds-background-2"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                 value={CloneRepoTabs.SSH}
                 onClick={e => e.stopPropagation()}
               >

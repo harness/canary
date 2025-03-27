@@ -45,7 +45,11 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
               }}
             >
               <div className="relative z-[1] flex items-center gap-2">
+<<<<<<< HEAD
                 <div className="flex size-6 items-center justify-center rounded bg-cn-background-12 text-12 uppercase text-cn-foreground-3">
+=======
+                <div className="flex size-6 items-center justify-center rounded bg-cn-background-12 text-12 uppercase text-foreground-3">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                   {lang.code}
                 </div>
                 <span
@@ -60,8 +64,13 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
               {selectedLanguage === lang.code && <Icon className="relative z-[1] text-icons-2" name="tick" size={12} />}
               <span
                 className={cn(
+<<<<<<< HEAD
                   'absolute -inset-x-2 -inset-y-1 rounded -z-[1] group-hover:bg-cn-background-hover',
                   selectedLanguage === lang.code && 'bg-cn-background-hover'
+=======
+                  'absolute -inset-x-2 -inset-y-1 rounded -z-[1] group-hover:bg-cn-background-4',
+                  selectedLanguage === lang.code && 'bg-cn-background-4'
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                 )}
                 aria-hidden
               />

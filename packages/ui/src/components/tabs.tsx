@@ -38,7 +38,11 @@ const tabsTriggerVariants = cva(
   {
     variants: {
       variant: {
+<<<<<<< HEAD
         default: 'rounded-md data-[state=active]:bg-cn-background data-[state=active]:shadow',
+=======
+        default: 'rounded-md data-[state=active]:bg-cds-background data-[state=active]:shadow',
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
         underline:
           'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-primary',
         /**
@@ -53,7 +57,11 @@ const tabsTriggerVariants = cva(
         navigation:
           'm-0 -mb-px h-[44px] border-b-2 border-solid border-b-transparent px-0 font-normal text-cn-foreground-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-9',
         tabnav:
+<<<<<<< HEAD
           'h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1'
+=======
+          'h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-2 data-[state=active]:bg-cds-background-1 data-[state=active]:text-foreground-1'
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
       }
     },
     defaultVariants: {

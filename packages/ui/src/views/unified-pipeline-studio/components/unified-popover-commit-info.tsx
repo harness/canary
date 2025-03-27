@@ -31,6 +31,10 @@ export const PopoverCommitInfo = {
   },
 
   CommitMessage: function Root({ children }: { children: string | React.ReactNode }) {
+<<<<<<< HEAD
     return <div className="bg-cn-background p-3">{children}</div>
+=======
+    return <div className="bg-cds-background p-3">{children}</div>
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
   }
 }

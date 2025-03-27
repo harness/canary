@@ -287,7 +287,11 @@ const File = forwardRef<
           className={cn(
             'flex relative w-full cursor-pointer items-center gap-1 rounded-md text-sm duration-200 ease-in-out rtl:pl-1 rtl:pr-0',
             {
+<<<<<<< HEAD
               ['after:absolute after:bg-cn-background-hover after:-inset-x-1 after:-inset-y-1.5 after:-z-10 after:rounded']:
+=======
+              ['after:absolute after:bg-cds-background-4 after:-inset-x-1 after:-inset-y-1.5 after:-z-10 after:rounded']:
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                 isSelected
             },
             isSelectable ? 'cursor-pointer' : 'cursor-not-allowed opacity-50',

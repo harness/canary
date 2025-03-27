@@ -61,7 +61,11 @@ function SubHeader({ children, className }: { children: ReactNode; className?: s
 function Main({ children, fullWidth, className }: { children: ReactNode; fullWidth?: boolean; className?: string }) {
   return (
     <section
+<<<<<<< HEAD
       className={cn('w-full bg-cn-background-1 rounded-[inherit]', { 'w-full flex-1': fullWidth }, className)}
+=======
+      className={cn('w-full bg-cds-background-1 rounded-[inherit]', { 'w-full flex-1': fullWidth }, className)}
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
       aria-label="Main Content"
     >
       {fullWidth ? children : <div className={cn('mx-auto h-full max-w-[1200px]', className)}>{children}</div>}

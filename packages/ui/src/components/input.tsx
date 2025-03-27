@@ -9,7 +9,11 @@ export interface BaseInputProps
     VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
+<<<<<<< HEAD
   'bg-cn-background-2 px-3 py-1 text-cn-foreground-1 disabled:cursor-not-allowed disabled:bg-cn-background-3 disabled:text-cn-foreground-3',
+=======
+  'bg-input-background px-3 py-1 text-foreground-1 disabled:cursor-not-allowed disabled:bg-cds-background-3 disabled:text-foreground-7',
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
   {
     variants: {
       variant: {

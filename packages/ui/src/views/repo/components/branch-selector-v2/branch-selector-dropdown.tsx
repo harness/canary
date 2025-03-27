@@ -81,7 +81,11 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               }}
             >
               <Tabs.Trigger
+<<<<<<< HEAD
                 className="data-[state=active]:bg-cn-background-2"
+=======
+                className="data-[state=active]:bg-cds-background-2"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                 value="branches"
                 onClick={e => e.stopPropagation()}
               >
@@ -96,7 +100,11 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               }}
             >
               <Tabs.Trigger
+<<<<<<< HEAD
                 className="data-[state=active]:bg-cn-background-2"
+=======
+                className="data-[state=active]:bg-cds-background-2"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                 value="tags"
                 onClick={e => e.stopPropagation()}
               >
@@ -125,9 +133,15 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
             return (
               <DropdownMenu.Item
+<<<<<<< HEAD
                 className={cn('hover:bg-cn-background-hover cursor-pointer py-1', {
                   'justify-between gap-x-2': isDefault,
                   'bg-cn-background-hover': isSelected,
+=======
+                className={cn('hover:bg-cds-background-4 cursor-pointer py-1', {
+                  'justify-between gap-x-2': isDefault,
+                  'bg-cds-background-4': isSelected,
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                   'pl-7': !isSelected
                 })}
                 onClick={() => {

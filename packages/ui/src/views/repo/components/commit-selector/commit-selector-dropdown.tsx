@@ -56,8 +56,13 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
 
             return (
               <DropdownMenu.Item
+<<<<<<< HEAD
                 className={cn('hover:bg-cn-background-hover cursor-pointer py-2 leading-none', {
                   'bg-cn-background-hover': isSelected,
+=======
+                className={cn('hover:bg-cds-background-4 cursor-pointer py-2 leading-none', {
+                  'bg-cds-background-4': isSelected,
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                   'pl-7': !isSelected
                 })}
                 onClick={() => {

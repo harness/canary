@@ -120,7 +120,11 @@ export const MultiSelect = <T = unknown,>({
           {selectedItems.map(it => (
             <Button
               key={it.id}
+<<<<<<< HEAD
               className="group flex h-6 items-center gap-x-1.5 bg-cn-background-8 px-2.5 text-cn-foreground-1"
+=======
+              className="group flex h-6 items-center gap-x-1.5 bg-cds-background-8 px-2.5 text-foreground-8"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
               type="button"
               variant="custom"
               onClick={() => handleChange(it)}

@@ -150,7 +150,11 @@
     }
   }
 
+<<<<<<< HEAD
   @apply !bg-cn-background-2 !text-16 !text-cn-foreground-1 !max-w-full font-sans !leading-[1.625rem];
+=======
+  @apply !bg-cds-background-surface !text-16 !text-foreground-8 !max-w-full font-sans !leading-[1.625rem];
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
 
   h1,
   h2,
@@ -208,7 +212,11 @@
   }
 
   code {
+<<<<<<< HEAD
     @apply bg-cn-background-9 border-cn-borders-2 font-code text-cn-foreground-2 text-15 rounded border px-1 py-px font-normal tracking-normal before:hidden after:hidden;
+=======
+    @apply bg-cds-background-9 border-borders-2 font-code text-foreground-2 text-15 rounded border px-1 py-px font-normal tracking-normal before:hidden after:hidden;
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
   }
 
   strong {
@@ -216,7 +224,11 @@
   }
 
   pre {
+<<<<<<< HEAD
     @apply bg-cn-background-2 border-cn-borders-2 rounded border px-4 py-[13px];
+=======
+    @apply bg-cds-background-surface border-borders-2 rounded border px-4 py-[13px];
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
 
     code {
       @apply p-0 pr-14 text-sm;

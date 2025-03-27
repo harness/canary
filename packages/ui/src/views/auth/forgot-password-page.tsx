@@ -70,7 +70,11 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
 
   return (
     <Floating1ColumnLayout
+<<<<<<< HEAD
       className="flex-col bg-cn-background-1 pt-20 sm:pt-[186px]"
+=======
+      className="flex-col bg-cds-background-7 pt-20 sm:pt-[186px]"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >

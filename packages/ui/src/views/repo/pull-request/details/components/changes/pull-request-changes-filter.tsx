@@ -259,7 +259,11 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               {DiffModeOptions.map(item => (
                 <DropdownMenu.Item
                   className={cn({
+<<<<<<< HEAD
                     'bg-cn-background-hover':
+=======
+                    'bg-cds-background-4':
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                       diffMode === (item.value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
                   })}
                   key={item.value}

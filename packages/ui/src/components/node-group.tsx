@@ -33,7 +33,11 @@ function Icon({
     <div className="col-start-1 row-start-1 self-start">
       <div
         className={cn(
+<<<<<<< HEAD
           'border-cn-borders-4 bg-cn-background-2 text-icons-8 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium',
+=======
+          'border-borders-4 bg-cds-background-2 text-icons-8 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium',
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
           { 'bg-transparent border-none size-1 p-0 mt-2 shadow-commit-list-bullet': simpleNodeIcon },
           className
         )}

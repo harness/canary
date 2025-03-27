@@ -154,7 +154,11 @@ const SelectContent = forwardRef<
           )}
         >
           {!!withSearch && (
+<<<<<<< HEAD
             <div className="sticky -top-1 z-[1] -mx-1 -mt-1 mb-1 border-b bg-cn-background-2 px-3 py-2.5">
+=======
+            <div className="sticky -top-1 z-[1] -mx-1 -mt-1 mb-1 border-b bg-cds-background-2 px-3 py-2.5">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
               <SearchBox.Root
                 className="w-full"
                 placeholder={searchProps?.placeholder || ''}

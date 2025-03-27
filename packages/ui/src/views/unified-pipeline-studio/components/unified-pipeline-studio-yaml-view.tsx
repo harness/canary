@@ -141,7 +141,11 @@ const PipelineStudioYamlView = (): JSX.Element => {
 
   return useMemo(() => {
     //   const selection = highlightInYamlPath
+<<<<<<< HEAD
     //     ? { path: highlightInYamlPath, className: 'bg-cn-background-4', revealInCenter: true }
+=======
+    //     ? { path: highlightInYamlPath, className: 'bg-cds-background-4', revealInCenter: true }
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
     //     : undefined
 
     return (

@@ -76,7 +76,11 @@ export function CreateBranchDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
+<<<<<<< HEAD
       <Dialog.Content className="max-w-[460px] border-border bg-cn-background-1" aria-describedby={undefined}>
+=======
+      <Dialog.Content className="max-w-[460px] border-border bg-cds-background-1" aria-describedby={undefined}>
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
         </Dialog.Header>

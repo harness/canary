@@ -261,7 +261,11 @@ export function CreateSecretPage({
           </Alert.Container>
         )}
 
+<<<<<<< HEAD
         <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
+=======
+        <div className="absolute inset-x-0 bottom-0 bg-cds-background-2 p-4 shadow-md">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
           <ControlGroup>
             <ButtonGroup className="flex flex-row justify-between">
               <Button type="button" variant="outline" onClick={handleCancel}>

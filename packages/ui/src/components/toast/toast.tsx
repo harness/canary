@@ -27,8 +27,13 @@ const toastVariants = cva(
   {
     variants: {
       variant: {
+<<<<<<< HEAD
         default: 'border-cn-borders-2 bg-cn-background-3 text-cn-foreground [&_svg]:text-icons-1',
         destructive: 'border-cn-borders-danger bg-foreground-danger text-cn-foreground-1 [&_svg]:text-icons-2',
+=======
+        default: 'border-borders-2 bg-cds-background-3 text-foreground [&_svg]:text-icons-1',
+        destructive: 'border-borders-danger bg-foreground-danger text-foreground-1 [&_svg]:text-icons-2',
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
         success:
           'border-cn-borders-success border-tag-border-mint-1 bg-tag-background-mint-1 text-tag-foreground-mint-1 [&_svg]:text-icons-2'
       }

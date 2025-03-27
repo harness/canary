@@ -24,8 +24,13 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
                 filter.selectedValues.map(value => {
                   const label = filterOption.options?.find(opt => opt.value === value)?.label
                   return (
+<<<<<<< HEAD
                     <div className="flex h-6 items-center gap-x-1.5 rounded bg-cn-background-8 px-2" key={value}>
                       <span className="text-14 text-cn-foreground-1">{label}</span>
+=======
+                    <div className="flex h-6 items-center gap-x-1.5 rounded bg-cds-background-8 px-2" key={value}>
+                      <span className="text-14 text-foreground-8">{label}</span>
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                       <button
                         className="text-icons-1 transition-colors duration-200 hover:text-cn-foreground-1"
                         onClick={() => {

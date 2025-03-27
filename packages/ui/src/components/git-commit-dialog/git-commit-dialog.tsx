@@ -175,8 +175,13 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     Commit directly to the
                     <span
                       className="
+<<<<<<< HEAD
                         relative mx-1.5 inline-flex gap-1 px-2.5 text-cn-foreground-1
                         before:absolute before:-top-1 before:left-0 before:z-[-1] before:h-6 before:w-full before:rounded before:bg-cn-background-8
+=======
+                        relative mx-1.5 inline-flex gap-1 px-2.5 text-foreground-8
+                        before:absolute before:-top-1 before:left-0 before:z-[-1] before:h-6 before:w-full before:rounded before:bg-cds-background-8
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                       "
                     >
                       <Icon className="translate-y-0.5 text-icons-9" name="branch" size={14} />

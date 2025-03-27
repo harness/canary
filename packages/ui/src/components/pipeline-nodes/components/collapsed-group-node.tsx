@@ -92,10 +92,17 @@ function StackedNode({ state }: { state: string }) {
       <div
         role="button"
         tabIndex={0}
+<<<<<<< HEAD
         className={cn('box size-full rounded-md border bg-cn-background-3 cursor-pointer shadow-1', {
           'border-cn-borders-success': state === 'success',
           'border-cn-borders-alert': state === 'warning',
           'border-cn-borders-danger': state === 'error'
+=======
+        className={cn('box size-full rounded-md border bg-cds-background-3 cursor-pointer shadow-1', {
+          'border-borders-success': state === 'success',
+          'border-borders-alert': state === 'warning',
+          'border-borders-danger': state === 'error'
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
         })}
       ></div>
     </div>

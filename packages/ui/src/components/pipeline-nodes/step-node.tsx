@@ -54,7 +54,11 @@ export function StepNode(props: StepNodeProps) {
       <ExecutionStatus executionStatus={executionStatus} />
 
       <div
+<<<<<<< HEAD
         className={cn('bg-cn-background-8 rounded-md', {
+=======
+        className={cn('bg-cds-background-8 rounded-md', {
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
           'unified-pipeline-studio_card-wrapper ': executionStatus === 'executing'
         })}
       >

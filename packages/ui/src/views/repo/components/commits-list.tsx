@@ -95,7 +95,11 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                             <div className="flex gap-2.5">
                               <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
                               <Button
+<<<<<<< HEAD
                                 className="border hover:bg-cn-background-3"
+=======
+                                className="border hover:bg-cds-background-3"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                                 title="View repository at this point of history"
                                 variant="custom"
                                 size="sm_icon"

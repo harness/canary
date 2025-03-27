@@ -354,7 +354,11 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
+<<<<<<< HEAD
         <div className="flex w-full flex-col border-l border-cn-borders-2 bg-cn-background-1 p-4">
+=======
+        <div className="flex w-full flex-col border-l border-borders-2 bg-cds-background-1 p-4">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
           <PullRequestCommentBox
             handleUpload={handleUpload}
             isEditMode
@@ -390,7 +394,11 @@ const PullRequestDiffViewer = ({
       if (!threads) return <></>
 
       return (
+<<<<<<< HEAD
         <div className="border-l border-cn-borders-2 bg-cn-background-1">
+=======
+        <div className="border-l border-borders-2 bg-cds-background-1">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
           {threads.map(thread => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`

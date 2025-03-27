@@ -119,7 +119,11 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
               rightElement={
                 createdTokenData && (
                   <CopyButton
+<<<<<<< HEAD
                     className="absolute right-2.5 bg-cn-background-1"
+=======
+                    className="absolute right-2.5 bg-cds-background-1"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                     name={createdTokenData.identifier || ''}
                   />
                 )
@@ -149,7 +153,11 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                   label={t('views:profileSettings.token', 'Token')}
                   rightElement={
                     <CopyButton
+<<<<<<< HEAD
                       className="absolute right-2.5 bg-cn-background-1"
+=======
+                      className="absolute right-2.5 bg-cds-background-1"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                       name={createdTokenData?.token || ''}
                     />
                   }

@@ -8,7 +8,11 @@ const tableVariants = cva('w-full text-sm', {
     variant: {
       default: 'caption-bottom',
       asStackedList:
+<<<<<<< HEAD
         'rounded-md border bg-cn-background-2 [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-cn-background-2'
+=======
+        'rounded-md border bg-cds-background-surface [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-cds-background-2'
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
     }
   },
   defaultVariants: {
@@ -47,11 +51,15 @@ const TableBody = forwardRef<
 >(({ className, hasHighlightOnHover, ...props }, ref) => (
   <tbody
     ref={ref}
+<<<<<<< HEAD
     className={cn(
       '[&_tr:last-child]:border-0',
       { '[&>tr:hover]:bg-cn-background-hover': hasHighlightOnHover },
       className
     )}
+=======
+    className={cn('[&_tr:last-child]:border-0', { '[&>tr:hover]:bg-cds-background-4': hasHighlightOnHover }, className)}
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
     {...props}
   />
 ))

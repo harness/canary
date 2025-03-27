@@ -44,7 +44,11 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({
               <Table.Row key={key.identifier}>
                 <Table.Cell className="content-center">
                   <div className="inline-flex items-center gap-x-2.5">
+<<<<<<< HEAD
                     <Icon name="ssh-key" size={32} className="rounded-md bg-cn-background-8 text-cn-foreground-2" />
+=======
+                    <Icon name="ssh-key" size={32} className="rounded-md bg-cds-background-8 text-foreground-2" />
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                     <div className="flex flex-col">
                       <span className="block w-[200px] truncate font-medium text-cn-foreground-1">
                         {key.identifier}

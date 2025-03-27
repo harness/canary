@@ -24,7 +24,11 @@ const Description = ({ sha, description, version }: { sha?: string; description?
         </div>
       )}
       {sha && (
+<<<<<<< HEAD
         <div className="flex h-4 items-center gap-1 rounded bg-cn-background-8 px-1.5 text-12 text-cn-foreground-1">
+=======
+        <div className="flex h-4 items-center gap-1 rounded bg-cds-background-8 px-1.5 text-12 text-foreground-8">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
           <Icon className="text-icons-9" size={12} name={'tube-sign'} />
           {sha?.slice(0, 7)}
         </div>

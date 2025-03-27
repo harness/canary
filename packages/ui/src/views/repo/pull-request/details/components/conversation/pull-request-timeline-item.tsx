@@ -243,7 +243,11 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             <Card.Root className={cn('rounded-md bg-transparent overflow-hidden shadow-none', contentClassName)}>
               {!!contentHeader && (
                 <div
+<<<<<<< HEAD
                   className={cn('flex w-full items-center justify-between p-4 py-3.5 bg-cn-background-2', {
+=======
+                  className={cn('flex w-full items-center justify-between p-4 py-3.5 bg-cds-background-2', {
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                     'pr-1.5': isResolved
                   })}
                 >
@@ -297,14 +301,22 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                       setComment={setComment}
                     />
                   ) : (
+<<<<<<< HEAD
                     <div className={cn('flex items-center gap-3 border-t bg-cn-background-2', replyBoxClassName)}>
+=======
+                    <div className={cn('flex items-center gap-3 border-t bg-cds-background-2', replyBoxClassName)}>
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                       {!!currentUser && (
                         <Avatar.Root>
                           <Avatar.Fallback>{getInitials(currentUser)}</Avatar.Fallback>
                         </Avatar.Root>
                       )}
                       <Input
+<<<<<<< HEAD
                         className="bg-cn-background-2"
+=======
+                        className="bg-cds-background-2"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                         placeholder="Reply here"
                         size="md"
                         onClick={() => {

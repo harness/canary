@@ -56,6 +56,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
             </>
           )}
         </div>
+<<<<<<< HEAD
         <div className="mt-5 rounded-md border border-cn-borders-2">
           <div className="flex items-center justify-between rounded-t-md border-b border-cn-borders-2 bg-cn-background-2 px-4 py-3">
             <span className="font-mono text-14 font-medium leading-snug text-cn-foreground-1">{commitData?.title}</span>
@@ -63,6 +64,15 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
           </div>
           <div className="flex items-center justify-between px-4 py-3">
             <div className="flex h-6 items-center gap-x-1 rounded-md bg-cn-background-8 px-2.5">
+=======
+        <div className="mt-5 rounded-md border border-borders-2">
+          <div className="flex items-center justify-between rounded-t-md border-b border-borders-2 bg-cds-background-2 px-4 py-3">
+            <span className="font-mono text-14 font-medium leading-snug text-foreground-8">{commitData?.title}</span>
+            <Button variant="outline">{t('views:commits.browseFiles', 'Browse files')}</Button>
+          </div>
+          <div className="flex items-center justify-between px-4 py-3">
+            <div className="flex h-6 items-center gap-x-1 rounded-md bg-cds-background-8 px-2.5">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
               <Icon name="branch" size={14} className="text-icons-9" />
               {/* TODO: get branch name from commitData */}
               <span className="text-14 font-medium leading-snug text-cn-foreground-1">main</span>

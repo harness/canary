@@ -97,7 +97,11 @@ const ScrollBar = forwardRef<ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScr
       {...props}
     >
       <ScrollAreaPrimitive.ScrollAreaThumb
+<<<<<<< HEAD
         className={cn('relative flex-1 rounded-full bg-cn-background-9', scrollThumbClassName)}
+=======
+        className={cn('relative flex-1 rounded-full bg-cds-background-9', scrollThumbClassName)}
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
       />
     </ScrollAreaPrimitive.ScrollAreaScrollbar>
   )

@@ -238,7 +238,11 @@ export function RepoSummaryView({
                   right
                   title={
                     <Button
+<<<<<<< HEAD
                       className="flex border border-cn-borders-2 hover:bg-cn-background-3"
+=======
+                      className="flex border border-borders-2 hover:bg-cds-background-3"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                       variant="ghost"
                       size="icon"
                       asChild

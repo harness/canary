@@ -35,7 +35,11 @@ export const RadioSelect = <T extends string>({
               <StackedList.Root className="overflow-hidden" borderBackground>
                 <StackedList.Item
                   className={cn('cursor-pointer !rounded px-5 py-3', {
+<<<<<<< HEAD
                     '!bg-cn-background-hover': value === option.value
+=======
+                    '!bg-cds-background-4': value === option.value
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                   })}
                   isHeader
                   isLast

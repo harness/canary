@@ -906,7 +906,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
         {
           lines: [
             {
-              content: '               <div className="bg-background-1 sticky top-0 z-40">',
+              content: '               <div className="bg-cds-background-1 sticky top-0 z-40">',
               type: 'context',
               oldNumber: 62,
               newNumber: 53
@@ -1095,7 +1095,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'apps/design-system/src/pages/view-preview/root-view-wrapper.tsx::::apps/design-system/src/pages/view-preview/root-view-wrapper.tsx',
       filePath: 'apps/design-system/src/pages/view-preview/root-view-wrapper.tsx',
-      raw: 'diff --git a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\nindex 31551abd93ce31e564e2304d83638dca29b302f2..57549ac177fdd0b5197f562edb3983a2f0197a1f 100644\n--- a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n+++ b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n@@ -3,16 +3,7 @@ import { Outlet, Route, Routes } from \'react-router-dom\'\n \n import { noop, useThemeStore, useTranslationStore } from \'@utils/viewUtils\'\n \n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbSeparator,\n-  Navbar,\n-  NavbarItemType,\n-  Topbar\n-} from \'@harnessio/ui/components\'\n+import { Breadcrumb, Navbar, NavbarItemType, Topbar } from \'@harnessio/ui/components\'\n import { SandboxLayout } from \'@harnessio/ui/views\'\n \n const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ children, asChild = false }) => {\n@@ -62,19 +53,19 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre\n               <div className="bg-background-1 sticky top-0 z-40">\n                 <Topbar.Root>\n                   <Topbar.Left>\n-                    <Breadcrumb className="select-none">\n-                      <BreadcrumbList>\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href="#">Lorem</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href="#">Ipsum</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>Dolor</BreadcrumbItem>\n-                      </BreadcrumbList>\n-                    </Breadcrumb>\n+                    <Breadcrumb.Root className="select-none">\n+                      <Breadcrumb.List>\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>Dolor</Breadcrumb.Item>\n+                      </Breadcrumb.List>\n+                    </Breadcrumb.Root>\n                   </Topbar.Left>\n                 </Topbar.Root>\n               </div>\n'
+      raw: 'diff --git a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\nindex 31551abd93ce31e564e2304d83638dca29b302f2..57549ac177fdd0b5197f562edb3983a2f0197a1f 100644\n--- a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n+++ b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n@@ -3,16 +3,7 @@ import { Outlet, Route, Routes } from \'react-router-dom\'\n \n import { noop, useThemeStore, useTranslationStore } from \'@utils/viewUtils\'\n \n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbSeparator,\n-  Navbar,\n-  NavbarItemType,\n-  Topbar\n-} from \'@harnessio/ui/components\'\n+import { Breadcrumb, Navbar, NavbarItemType, Topbar } from \'@harnessio/ui/components\'\n import { SandboxLayout } from \'@harnessio/ui/views\'\n \n const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ children, asChild = false }) => {\n@@ -62,19 +53,19 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre\n               <div className="bg-cds-background-1 sticky top-0 z-40">\n                 <Topbar.Root>\n                   <Topbar.Left>\n-                    <Breadcrumb className="select-none">\n-                      <BreadcrumbList>\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href="#">Lorem</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href="#">Ipsum</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>Dolor</BreadcrumbItem>\n-                      </BreadcrumbList>\n-                    </Breadcrumb>\n+                    <Breadcrumb.Root className="select-none">\n+                      <Breadcrumb.List>\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>Dolor</Breadcrumb.Item>\n+                      </Breadcrumb.List>\n+                    </Breadcrumb.Root>\n                   </Topbar.Left>\n                 </Topbar.Root>\n               </div>\n'
     },
     {
       blocks: [
@@ -3719,13 +3719,21 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
+<<<<<<< HEAD
                 "-          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-1 data-[state=active]:text-foreground-1 data-[state=active]:bg-background-1'",
+=======
+                "-          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-2 data-[state=active]:text-foreground-1 data-[state=active]:bg-cds-background-1'",
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
               type: 'delete',
               oldNumber: 33
             },
             {
               content:
+<<<<<<< HEAD
                 "+          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-1 data-[state=active]:bg-background-1 data-[state=active]:text-foreground-1'",
+=======
+                "+          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-2 data-[state=active]:bg-cds-background-1 data-[state=active]:text-foreground-1'",
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
               type: 'insert',
               newNumber: 33
             },

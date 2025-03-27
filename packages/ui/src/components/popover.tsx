@@ -20,7 +20,11 @@ const PopoverContent = forwardRef<
     <PopoverPrimitive.Portal container={portalContainer}>
       <PopoverPrimitive.Content
         className={cn(
+<<<<<<< HEAD
           'bg-cn-background-2 text-cn-foreground-1 shadow-1 z-50 rounded border p-4 outline-none',
+=======
+          'bg-cds-background-2 text-foreground-1 shadow-1 z-50 rounded border p-4 outline-none',
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
           'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
           className
         )}

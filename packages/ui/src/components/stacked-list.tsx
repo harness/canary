@@ -63,7 +63,11 @@ const List: React.FC<ListProps> = ({
 }) => (
   <div
     className={cn(
+<<<<<<< HEAD
       'w-full bg-cn-background-2',
+=======
+      'w-full bg-cds-background-surface',
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
       'border [&>div:last-child]:border-0',
       '[&>*:first-child_>.stacked-list-item]:rounded-t-md [&>.stacked-list-item:first-child]:rounded-t-md',
       {
@@ -103,8 +107,13 @@ const ListItem = ({
         listItemVariants({}),
         className,
         isLast ? 'border-none' : 'border-b',
+<<<<<<< HEAD
         isHeader ? 'bg-cn-background-2' : '',
         disableHover ? '' : 'hover:bg-cn-background-hover cursor-pointer duration-150 ease-in-out'
+=======
+        isHeader ? 'bg-cds-background-2' : '',
+        disableHover ? '' : 'hover:bg-cds-background-4 cursor-pointer duration-150 ease-in-out'
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
       )}
       {...props}
     >

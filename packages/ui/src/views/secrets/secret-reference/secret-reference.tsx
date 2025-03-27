@@ -47,8 +47,13 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
     return (
       <StackedList.Item
         onClick={() => onSelect(entity)}
+<<<<<<< HEAD
         className={isSelected ? 'bg-cn-background-hover' : ''}
         thumbnail={<Icon name="secrets" size={16} className="text-cn-foreground-3" />}
+=======
+        className={isSelected ? 'bg-cds-background-4' : ''}
+        thumbnail={<Icon name="secrets" size={16} className="text-foreground-5" />}
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
         actions={
           <Button
             variant="default"

@@ -27,7 +27,11 @@ interface MarkdownViewerWrapperProps {
 }
 
 const MarkdownViewerWrapper: FC<MarkdownViewerWrapperProps> = ({ children }) => {
+<<<<<<< HEAD
   return <div className="rounded-b-md border-x border-b bg-cn-background-2 p-6">{children}</div>
+=======
+  return <div className="rounded-b-md border-x border-b bg-cds-background-surface p-6">{children}</div>
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
 }
 
 interface MarkdownViewerProps {
@@ -157,8 +161,13 @@ export function MarkdownViewer({
     <Wrapper>
       <div ref={ref} style={styles}>
         {isSuggestion && (
+<<<<<<< HEAD
           <div className="rounded-t-md border-x border-t border-cn-borders-2 bg-cn-background-2 px-4 py-3">
             <span className="text-14 text-cn-foreground-1">
+=======
+          <div className="rounded-t-md border-x border-t border-borders-2 bg-cds-background-2 px-4 py-3">
+            <span className="text-14 text-foreground-1">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
               {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
                 ? 'Suggestion applied'
                 : 'Suggested change'}
@@ -188,12 +197,20 @@ export function MarkdownViewer({
               return (
                 <div className="relative">
                   <CopyButton
+<<<<<<< HEAD
                     className="absolute right-3 top-3 z-10 size-6 bg-cn-background-3"
+=======
+                    className="absolute right-3 top-3 z-10 size-6 bg-cds-background-3"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                     buttonVariant="outline"
                     name={code}
                     iconSize={13}
                   />
+<<<<<<< HEAD
                   <pre className="!bg-cn-background-1">{children}</pre>
+=======
+                  <pre className="!bg-cds-background-1">{children}</pre>
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                 </div>
               )
             },

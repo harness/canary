@@ -36,10 +36,17 @@ export function CodeSuggestionBlock({ code, suggestionBlock }: CodeSuggestionBlo
 
   return (
     <div className="pt-1">
+<<<<<<< HEAD
       <pre className="!bg-cn-background-danger">
         <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: highlightedHtmlOld }}></code>
       </pre>
       <pre className="!bg-cn-background-success">
+=======
+      <pre className="!bg-cds-background-danger">
+        <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: highlightedHtmlOld }}></code>
+      </pre>
+      <pre className="!bg-cds-background-success">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
         <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: highlightedHtmlNew }}></code>
       </pre>
     </div>

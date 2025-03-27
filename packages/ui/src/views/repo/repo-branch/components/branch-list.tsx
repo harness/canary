@@ -117,7 +117,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
+<<<<<<< HEAD
                     <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-cn-background-8 px-2.5 text-14 text-cn-foreground-1">
+=======
+                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-cds-background-8 px-2.5 text-14 text-foreground-8">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                       {defaultBranch === branch?.name && (
                         <Icon name="lock" size={14} className="-mt-px mr-1 inline-block text-icons-9" />
                       )}
@@ -169,7 +173,15 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="content-center">
                   <div className="flex items-center justify-center gap-1.5 align-middle">
                     {branch?.behindAhead?.default ? (
+<<<<<<< HEAD
                       <Badge variant="surface" size="sm">
+=======
+                      <Badge
+                        className="m-auto rounded-full bg-cds-background-2 px-2 text-center font-medium text-foreground-3"
+                        variant="outline"
+                        size="sm"
+                      >
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                         {t('views:repos.default', 'Default')}
                       </Badge>
                     ) : (
@@ -185,7 +197,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="max-w-20 content-center">
                   {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                     <Button
+<<<<<<< HEAD
                       className="flex w-fit items-center gap-1 bg-cn-background-8 px-2.5 text-sm text-cn-foreground-1 hover:bg-cn-background-9 hover:text-cn-foreground-1"
+=======
+                      className="flex w-fit items-center gap-1 bg-cds-background-8 px-2.5 text-sm text-foreground-8 hover:bg-cds-background-9 hover:text-foreground-1"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                       variant="custom"
                       size="xs"
                       asChild

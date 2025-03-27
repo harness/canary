@@ -20,7 +20,11 @@ const StepsPaletteContentLayout = {
   },
 
   SectionItem: function SectionHeader({ children }: { children: React.ReactNode }) {
+<<<<<<< HEAD
     return <div className="mb-3 flex flex-col rounded-md border hover:!bg-cn-background-hover">{children}</div>
+=======
+    return <div className="mb-3 flex flex-col rounded-md border hover:!bg-background-cn-4">{children}</div>
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
   }
 }
 

@@ -251,7 +251,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         </Layout.Vertical>
         {!prBranchCombinationExists && (
+<<<<<<< HEAD
           <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 p-4">
+=======
+          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-2 bg-cds-background-2 p-4">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
             <p className="text-14 leading-none">
               {isBranchSelected ? (
                 <>
@@ -282,7 +286,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         )}
         {prBranchCombinationExists && (
+<<<<<<< HEAD
           <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 p-4">
+=======
+          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-2 bg-cds-background-2 p-4">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
             <div className="flex items-center gap-x-1.5">
               <div>
                 <Layout.Horizontal className="items-center">

@@ -143,17 +143,28 @@ export const PullRequestCommentBox = ({
     <div className={cn('flex items-start gap-x-3 font-sans', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && avatar}
       <div
+<<<<<<< HEAD
         className={cn('pb-4 pt-1.5 px-4 flex-1 bg-cn-background-2 border-border-1 overflow-auto', {
+=======
+        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-cds-background-2 border-border-1 overflow-auto', {
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
           'border rounded-md': !inReplyMode || isEditMode,
           'border-t': inReplyMode
         })}
       >
         <Tabs.Root variant="tabnav" defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
           <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
+<<<<<<< HEAD
             <Tabs.Trigger className="data-[state=active]:bg-cn-background-2" value={TABS_KEYS.WRITE}>
               Write
             </Tabs.Trigger>
             <Tabs.Trigger className="data-[state=active]:bg-cn-background-2" value={TABS_KEYS.PREVIEW}>
+=======
+            <Tabs.Trigger className="data-[state=active]:bg-cds-background-2" value={TABS_KEYS.WRITE}>
+              Write
+            </Tabs.Trigger>
+            <Tabs.Trigger className="data-[state=active]:bg-cds-background-2" value={TABS_KEYS.PREVIEW}>
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
               Preview
             </Tabs.Trigger>
           </Tabs.List>
@@ -168,7 +179,11 @@ export const PullRequestCommentBox = ({
               ref={dropZoneRef}
             >
               <Textarea
+<<<<<<< HEAD
                 className="min-h-24 bg-cn-background-2 p-3 pb-10 text-cn-foreground-1"
+=======
+                className="min-h-24 bg-cds-background-2 p-3 pb-10 text-foreground-1"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                 autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}
@@ -184,12 +199,20 @@ export const PullRequestCommentBox = ({
                 <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
               )}
 
+<<<<<<< HEAD
               <div className="absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center bg-cn-background-2 pb-2 pt-1">
+=======
+              <div className="absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center bg-cds-background-2 pb-2 pt-1">
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (
                     <Fragment key={`${comment}-${index}`}>
+<<<<<<< HEAD
                       <Button className="hover:bg-cn-background-8" size="icon" variant="ghost" onClick={item?.onClick}>
+=======
+                      <Button className="hover:bg-cds-background-8" size="icon" variant="ghost" onClick={item?.onClick}>
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                         <Icon className="text-icons-9" name={item.icon} />
                       </Button>
                       {isFirst && <div className="bg-borders-2 h-4 w-px" />}
@@ -202,7 +225,11 @@ export const PullRequestCommentBox = ({
           <Tabs.Content className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>
             <div className="min-h-24 w-full">
               {comment ? (
+<<<<<<< HEAD
                 <MarkdownViewer markdownClassName="!bg-cn-background-2 w-full" source={comment} />
+=======
+                <MarkdownViewer markdownClassName="!bg-cds-background-2 w-full" source={comment} />
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
               ) : (
                 <span className="text-cn-foreground-1">Nothing to preview</span>
               )}
@@ -215,7 +242,11 @@ export const PullRequestCommentBox = ({
             <div>
               <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
               <Button
+<<<<<<< HEAD
                 className="gap-x-2 px-2.5 font-normal text-cn-foreground-3 hover:bg-cn-background-8"
+=======
+                className="gap-x-2 px-2.5 font-normal text-foreground-3 hover:bg-cds-background-8"
+>>>>>>> b1385c7b8 (Update bg-background variants to bg-cds-background containing new colors)
                 variant="custom"
                 onClick={handleFileSelect}
               >

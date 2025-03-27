@@ -87,7 +87,7 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
         ) : null}
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
+      <div className="bg-background-2 absolute bottom-0 left-0 right-0 p-4 shadow-md">
         <ButtonGroup className="flex flex-row justify-between">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel

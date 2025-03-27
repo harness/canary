@@ -17,7 +17,7 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
     <ToggleGroup.Root
       className={cn(
         'h-8 rounded-md border px-1 bg-background-3 inline-flex',
-        isLightTheme ? 'border-borders-5' : 'border-borders-1'
+        isLightTheme ? 'border-borders-5' : 'border-borders-2'
       )}
       onValueChange={value => {
         if (value) {

@@ -45,7 +45,7 @@ const ReviewersHeader = ({
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-[280px] p-0" align="end">
           <div
-            className="relative flex items-center justify-between border-b border-borders-1 px-3 py-2.5"
+            className="relative flex items-center justify-between border-b border-borders-2 px-3 py-2.5"
             role="presentation"
             onKeyDown={e => e.stopPropagation()}
           >

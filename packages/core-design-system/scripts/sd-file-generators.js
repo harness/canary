@@ -1,3 +1,4 @@
+import { ENTERPRISE_STYLES_SOURCE_NAME } from './constants.js'
 import { breakpointFilter, componentsFilter, coreFilter, lchColorsFilter, semanticFilter } from './sd-filters.js'
 
 // const format = 'css/variables'
@@ -51,7 +52,10 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
 
   let mfeSupportedClass = ''
 
-  if (entityName === 'light-harness' || entityName === 'dark-harness') {
+  if (
+    entityName === `light-${ENTERPRISE_STYLES_SOURCE_NAME}` ||
+    entityName === `dark-${ENTERPRISE_STYLES_SOURCE_NAME}`
+  ) {
     mfeSupportedClass = '.' + entityName.split('-')[0]
   }
 
@@ -65,7 +69,7 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
         // ADD REFERENCE ONLY TO NON-ALPHA TOKENS, ALPHA TOKENS ARE TRANSFORMED AND REFERENCED MANUALLY
         return token?.$extensions?.['studio.tokens']?.modify?.type !== 'alpha'
       },
-      // To add .dark for dark-harness and .light for light-harness to support MFE
+      // To add .dark for dark-ent and .light for light-ent to support MFE
       selector: `.${entityName}${mfeSupportedClass ? ', ' + mfeSupportedClass : ''}`
     }
   })

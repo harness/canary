@@ -89,7 +89,7 @@ const SelectTrigger = forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'border-borders-2 ring-offset-background flex h-9 w-full items-center justify-between whitespace-nowrap rounded border bg-input-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed disabled:border-borders-1 [&>span]:line-clamp-1',
+      'border-borders-2 ring-offset-background flex h-9 w-full items-center justify-between whitespace-nowrap rounded border bg-input-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed disabled:border-borders-2 [&>span]:line-clamp-1',
       className
     )}
     {...props}

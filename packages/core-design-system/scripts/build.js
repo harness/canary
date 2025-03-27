@@ -10,6 +10,7 @@ import {
   DESIGN_SYSTEM_PREFIX,
   DESIGN_SYSTEM_ROOT,
   DESIGN_SYSTEM_ROOT_ESM,
+  ENTERPRISE_STYLES_SOURCE_NAME,
   getExportFileHeader,
   OSS_STYLES_SOURCE_NAME,
   STYLE_BUILD_FORMATS,
@@ -209,10 +210,10 @@ ${ossLightFiles.map(file => `@import './${file}';`).join('\n')}`
   const enterpriseContent = `${getExportFileHeader()}
 
 /* Theme files - Dark */
-@import './dark-harness.css';
+@import './dark-${ENTERPRISE_STYLES_SOURCE_NAME}.css';
 
 /* Theme files - Light */
-@import './light-harness.css';`
+@import './light-${ENTERPRISE_STYLES_SOURCE_NAME}.css';`
 
   // Write file
   await Promise.all([

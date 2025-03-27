@@ -98,7 +98,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
         />
       </Popover.Trigger>
       <Popover.Content
-        className="w-[368px] overflow-hidden !rounded border-borders-1 bg-background-2 !p-0"
+        className="w-[368px] overflow-hidden !rounded border-borders-2 bg-background-2 !p-0"
         ref={popoverRef}
         align="start"
         onWheel={e => e.stopPropagation()}

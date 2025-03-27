@@ -36,5 +36,5 @@ export const THEME_MODE_FILENAME_PREFIX = {
   LIGHT: 'light-'
 }
 
-export const OSS_STYLES_SOURCE_NAME = 'gitness'
-export const ENTERPRISE_STYLES_SOURCE_NAME = 'harness'
+export const OSS_STYLES_SOURCE_NAME = 'oss'
+export const ENTERPRISE_STYLES_SOURCE_NAME = 'ent'

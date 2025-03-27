@@ -36,7 +36,7 @@ TableRoot.displayName = 'TableRoot'
 
 const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
   ({ className, ...props }, ref) => (
-    <thead ref={ref} className={cn('[&_tr]:border-b border-borders-1', className)} {...props} />
+    <thead ref={ref} className={cn('[&_tr]:border-b border-borders-2', className)} {...props} />
   )
 )
 TableHeader.displayName = 'TableHeader'

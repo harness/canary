@@ -32,10 +32,11 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 interface DialogContentProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
   onOverlayClick?: () => void
+  isShowCloseIcon?: boolean
 }
 
 const DialogContent = forwardRef<ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
-  ({ className, children, onOverlayClick, ...props }, ref) => {
+  ({ className, children, onOverlayClick, isShowCloseIcon = true, ...props }, ref) => {
     const { portalContainer } = usePortal()
     const mainContent: React.ReactNode[] = []
     let footer: React.ReactNode = null
@@ -67,12 +68,14 @@ const DialogContent = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dia
             {mainContent}
           </div>
           {footer}
-          <DialogPrimitive.Close className="absolute right-3 top-3.5 disabled:pointer-events-none" asChild>
-            <Button size="icon" variant="custom" className="text-icons-4 hover:text-icons-2">
-              <Icon name="close" size={16} />
-              <span className="sr-only">Close</span>
-            </Button>
-          </DialogPrimitive.Close>
+          {isShowCloseIcon && (
+            <DialogPrimitive.Close className="absolute right-3 top-3.5 disabled:pointer-events-none" asChild>
+              <Button size="icon" variant="custom" className="text-icons-4 hover:text-icons-2">
+                <Icon name="close" size={16} />
+                <span className="sr-only">Close</span>
+              </Button>
+            </DialogPrimitive.Close>
+          )}
         </DialogPrimitive.Content>
       </DialogPortal>
     )

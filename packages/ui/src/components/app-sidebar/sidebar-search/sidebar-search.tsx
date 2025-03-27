@@ -42,16 +42,16 @@ export function SidebarSearch(props: SidebarSearchProps) {
             theme="sidebar"
           />
           <Icon
-            className="text-sidebar-foreground-4 pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 select-none"
+            className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 select-none text-sidebar-foreground-4"
             name="search"
             size={12}
           />
           <Button
             variant="custom"
             size="icon"
-            className="border-sidebar-border-5 bg-sidebar-background-9 text-sidebar-foreground-3 pointer-events-none absolute right-1.5 top-1/2 h-5 -translate-y-1/2 select-none rounded-sm border p-0 px-1.5"
+            className="bg-sidebar-background-9 pointer-events-none absolute right-1.5 top-1/2 h-5 -translate-y-1/2 select-none rounded-sm border border-sidebar-border-5 p-0 px-1.5 text-sidebar-foreground-3"
           >
-            <span className="text-12 size-full">⌘K</span>
+            <span className="size-full text-12">⌘K</span>
           </Button>
         </Sidebar.GroupContent>
       </Sidebar.Group>

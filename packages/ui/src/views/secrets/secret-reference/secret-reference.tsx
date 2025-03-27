@@ -68,7 +68,7 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
 
   return (
     <div className="flex flex-col">
-      <span className="font-medium mb-4">Select an existing Secret:</span>
+      <span className="mb-4 font-medium">Select an existing Secret:</span>
       <EntityReference<SecretItem>
         entities={secretsData}
         selectedEntity={selectedEntity}
@@ -81,7 +81,7 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         apiError={apiError}
       />
 
-      <div className="bg-background-2 absolute bottom-0 left-0 right-0 p-4 shadow-md">
+      <div className="absolute inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
         <ButtonGroup className="flex flex-row justify-between">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel

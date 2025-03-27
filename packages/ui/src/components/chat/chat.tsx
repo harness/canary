@@ -11,7 +11,7 @@ const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) 
 const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className="sticky top-0 flex items-center justify-between bg-background-1 px-6 py-4">
-      <p className="text-16 font-medium text-foreground-1">AI Assistant</p>
+      <p className="text-16 font-medium text-foreground-1">Harness AI</p>
       <Button size="icon" variant="custom" className="-mr-2 text-icons-4 hover:text-icons-2" onClick={onClose}>
         <Icon name="close" size={16} />
         <span className="sr-only">Close</span>

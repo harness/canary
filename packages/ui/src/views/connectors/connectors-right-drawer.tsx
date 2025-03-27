@@ -7,11 +7,11 @@ import { Drawer } from '@components/drawer'
 import { ConnectorEntityForm } from './connector-entity-form'
 import { ConnectorsPalette } from './connectors-pallete-drawer'
 import { ConnectorsProvider, useConnectorsContext } from './context/connectors-context'
-import { AnyConnectorDefinition, ConnectorRightDrawer, onSubmitProps } from './types'
+import { AnyConnectorDefinition, ConnectorRightDrawerMode, onSubmitConnectorProps } from './types'
 
 interface ConnectorsRightDrawerBaseProps {
-  initialDrawerState?: ConnectorRightDrawer
-  onFormSubmit?: (values: onSubmitProps) => void
+  initialDrawerState?: ConnectorRightDrawerMode
+  onFormSubmit?: (values: onSubmitConnectorProps) => void
   onDrawerClose?: () => void
   useSheet?: boolean // Whether to wrap content in Sheet.Root
   connectors: AnyConnectorDefinition[]
@@ -34,22 +34,23 @@ const ConnectorsRightDrawerBase = ({
   apiError,
   children
 }: ConnectorsRightDrawerBaseProps): JSX.Element => {
-  const { rightDrawer, setRightDrawer, formEntity, setFormEntity, clearRightDrawerData } = useConnectorsContext()
+  const { rightDrawerMode, setRightDrawerMode, formEntity, setFormEntity, clearRightDrawerData } =
+    useConnectorsContext()
 
   useEffect(() => {
     if (initialDrawerState) {
-      setRightDrawer(initialDrawerState)
+      setRightDrawerMode(initialDrawerState)
     }
-  }, [initialDrawerState, setRightDrawer])
+  }, [initialDrawerState, setRightDrawerMode])
 
   const renderSheetContent = useCallback(() => {
-    switch (rightDrawer) {
-      case ConnectorRightDrawer.Collection:
+    switch (rightDrawerMode) {
+      case ConnectorRightDrawerMode.Collection:
         return (
           <ConnectorsPalette
             useTranslationStore={useTranslationStore}
             connectors={connectors}
-            setRightDrawer={setRightDrawer}
+            setRightDrawerMode={setRightDrawerMode}
             setFormEntity={setFormEntity}
             requestClose={() => {
               clearRightDrawerData()
@@ -57,13 +58,13 @@ const ConnectorsRightDrawerBase = ({
             }}
           />
         )
-      case ConnectorRightDrawer.Form:
+      case ConnectorRightDrawerMode.Form:
         return formEntity ? (
           <ConnectorEntityForm
             openSecretDrawer={openSecretDrawer}
             useTranslationStore={useTranslationStore}
             formEntity={formEntity}
-            setRightDrawer={setRightDrawer}
+            setRightDrawerMode={setRightDrawerMode}
             requestClose={() => {
               clearRightDrawerData()
               onDrawerClose?.()
@@ -79,7 +80,7 @@ const ConnectorsRightDrawerBase = ({
         return <></>
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rightDrawer, setRightDrawer, setFormEntity, formEntity])
+  }, [rightDrawerMode, setRightDrawerMode, setFormEntity, formEntity])
 
   const content = renderSheetContent()
 
@@ -95,10 +96,10 @@ const ConnectorsRightDrawerBase = ({
   return (
     <>
       <Drawer.Root
-        open={rightDrawer !== ConnectorRightDrawer.None}
+        open={rightDrawerMode !== ConnectorRightDrawerMode.None}
         onOpenChange={open => {
           if (!open) {
-            setRightDrawer(ConnectorRightDrawer.None)
+            setRightDrawerMode(ConnectorRightDrawerMode.None)
           }
         }}
       >
@@ -118,7 +119,7 @@ const ConnectorsRightDrawerBase = ({
 
 // Use this when you need to provide your own context
 const ConnectorsRightDrawer = ({
-  initialDrawerState = ConnectorRightDrawer.Collection,
+  initialDrawerState = ConnectorRightDrawerMode.Collection,
   useSheet = true,
   onFormSubmit,
   connectors,

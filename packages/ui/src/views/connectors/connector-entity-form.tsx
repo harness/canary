@@ -10,14 +10,14 @@ import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-u
 
 import { getDefaultValuesFromFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
 
-import { AnyConnectorDefinition, ConnectorFormEntityType, ConnectorRightDrawer, onSubmitProps } from './types'
+import { AnyConnectorDefinition, ConnectorFormEntityType, ConnectorRightDrawerMode, onSubmitConnectorProps } from './types'
 
 interface ConnectorEntityFormProps {
   formEntity: ConnectorFormEntityType
   requestClose: () => void
-  onFormSubmit?: (values: onSubmitProps) => void
+  onFormSubmit?: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
-  setRightDrawer: (value: ConnectorRightDrawer) => void
+  setRightDrawerMode: (value: ConnectorRightDrawerMode) => void
   useTranslationStore: () => TranslationStore
   openSecretDrawer?: () => void
   apiError?: string | null
@@ -29,13 +29,13 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     apiError = null,
     onFormSubmit,
     getConnectorDefinition,
-    setRightDrawer,
+    setRightDrawerMode,
     useTranslationStore,
     openSecretDrawer
   } = props
   const { t: _t } = useTranslationStore()
 
-  const onSubmit = (data: onSubmitProps) => {
+  const onSubmit = (data: onSubmitConnectorProps) => {
     onFormSubmit?.(data)
   }
   const defaultConnectorValues = useMemo(() => {
@@ -106,7 +106,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer>
             <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-background-2 p-4 shadow-md">
-              <Button variant="secondary" onClick={() => setRightDrawer(ConnectorRightDrawer.Collection)}>
+              <Button variant="secondary" onClick={() => setRightDrawerMode(ConnectorRightDrawerMode.Collection)}>
                 Back
               </Button>
               <Button onClick={() => rootForm.submitForm()}>Submit</Button>

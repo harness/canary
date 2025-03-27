@@ -3,7 +3,7 @@ import noop from 'lodash-es/noop'
 
 import { Button, ListActions, Spacer } from '@harnessio/ui/components'
 import {
-  ConnectorRightDrawer,
+  ConnectorRightDrawerMode,
   ConnectorsProvider,
   ConnectorsRightDrawer,
   SandboxLayout,
@@ -11,7 +11,7 @@ import {
 } from '@harnessio/ui/views'
 
 const ConnectorsListPageContent = (): JSX.Element => {
-  const { setRightDrawer, setFormEntity } = useConnectorsContext()
+  const { setRightDrawerMode, setFormEntity } = useConnectorsContext()
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
@@ -23,7 +23,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
               <Button
                 variant="default"
                 onClick={() => {
-                  setRightDrawer(ConnectorRightDrawer.Collection)
+                  setRightDrawerMode(ConnectorRightDrawerMode.Collection)
                 }}
               >
                 Create Connector
@@ -31,7 +31,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
               <Button
                 variant="default"
                 onClick={() => {
-                  setRightDrawer(ConnectorRightDrawer.Form)
+                  setRightDrawerMode(ConnectorRightDrawerMode.Form)
                   setFormEntity({
                     type: 'connector',
                     data: {

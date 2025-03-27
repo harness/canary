@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { useTranslationStore } from '@utils/viewUtils'
+import { noop } from 'lodash-es'
 
 import {
   ConnectorItem,
@@ -43,6 +44,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
           data: { type: 'AwsKms', name: 'AWS KMS' }
         })
       }}
+      setSearchQuery={noop}
     />
   )
 }

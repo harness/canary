@@ -45,7 +45,7 @@ return (
 
 ## Anatomy
 
-The ScrollArea component can be used to create scrollable areas with custom scrollbars.
+The ScrollArea component can be used to create scrollable areas.
 
 ```typescript jsx
 <ScrollArea className="h-64 w-64">
@@ -69,7 +69,7 @@ The `ScrollArea` component serves as the main container for the scrollable area.
 <ScrollArea
   type="hover"                         // [Optional] Scrollbar visibility behavior ('auto' | 'always' | 'scroll' | 'hover')
   dir="ltr"                            // [Optional] Reading direction ('ltr' | 'rtl')
-  scrollHideDelay={600}               // [Optional] Delay before hiding scrollbar (in ms)
+  scrollHideDelay={600}                // [Optional] Delay before hiding scrollbar (in ms)
   className="h-[300px] w-[400px]"      // [Optional] Container dimensions and styles
   viewportClassName="p-4"              // [Optional] Viewport styles
   scrollThumbClassName="bg-gray-400"   // [Optional] Scroll thumb styles
@@ -131,50 +131,6 @@ The `ScrollArea` component serves as the main container for the scrollable area.
       name: "asChild",
       description:
         "Change the default rendered element for the one passed as a child",
-      required: false,
-      value: "boolean",
-    },
-  ]}
-/>
-
-### ScrollBar
-
-The `ScrollBar` component is used to display a custom scrollbar inside the scroll area.
-
-```typescript jsx
-<ScrollBar
-  orientation="vertical"               // [Optional] Scrollbar orientation ('horizontal' | 'vertical')
-  className="bg-gray-100"              // [Optional] Scrollbar styles
-  scrollThumbClassName="bg-gray-400"   // [Optional] Scroll thumb styles
-  forceMount                           // [Optional] Force mounting when more control is needed
-/>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "orientation",
-      description:
-        "The orientation of the scrollbar. Controls whether it appears on the side or bottom.",
-      required: false,
-      value: "'horizontal' | 'vertical'",
-      defaultValue: "'vertical'",
-    },
-    {
-      name: "className",
-      description: "Additional class names for the scrollbar",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "scrollThumbClassName",
-      description: "Class names for the scroll thumb element",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "forceMount",
-      description: "Used to force mounting when more control is needed",
       required: false,
       value: "boolean",
     },

@@ -35,7 +35,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   const activeBranchTag = selectedBranchTag ?? selectedBranchTagFromStore
 
   return (
-    <div className="flex h-11 items-center justify-between rounded-md border border-borders-1 bg-background-2 pl-4 pr-1.5">
+    <div className="flex h-11 items-center justify-between rounded-md border border-borders-2 bg-background-2 pl-4 pr-1.5">
       <div className="flex items-center gap-x-1.5">
         <span className="text-14 leading-tight text-foreground-1">
           This branch is{' '}

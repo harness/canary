@@ -1,6 +1,5 @@
 import { TranslationStore } from '@/views'
 import { Icon } from '@components/icon'
-import { Logo, LogoNameMap } from '@components/logo'
 import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-content-layout'
 import { StepsPaletteItemLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-item-layout'
 
@@ -27,7 +26,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
               }}
             >
               <StepsPaletteItemLayout.Left className="flex items-center">
-                <Logo name={connector.type.toLowerCase() as keyof typeof LogoNameMap} size={24} />
+                <Icon name="harness-plugin" size={36} />
               </StepsPaletteItemLayout.Left>
               <StepsPaletteItemLayout.Right>
                 <StepsPaletteItemLayout.Header>

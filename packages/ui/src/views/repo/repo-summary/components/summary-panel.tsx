@@ -46,7 +46,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   }
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col items-start">
         <div className="flex items-center justify-between">
           <span className="truncate text-18 font-medium">{title}</span>
           <DropdownMenu.Root>
@@ -69,19 +69,15 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
           </>
         )}
         <Spacer size={3} />
-        <Badge
-          size="md"
-          disableHover
-          borderRadius="full"
-          theme={!is_public ? 'muted' : 'success'}
-          className="w-1/4 items-center justify-center"
-        >
+        <Badge disableHover theme={!is_public ? 'muted' : 'success'}>
           {!is_public ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
         </Badge>
         {!!description?.length && (
           <>
             <Spacer size={3} />
-            <span className="line-clamp-6 border-y border-borders-4 py-1 text-14 text-foreground-2">{description}</span>
+            <span className="line-clamp-6 border-y border-borders-4 py-1 text-14 text-foreground-2 w-full">
+              {description}
+            </span>
           </>
         )}
         <Spacer size={5} />

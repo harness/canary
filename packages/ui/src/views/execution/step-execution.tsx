@@ -31,16 +31,16 @@ const StepExecutionToolbar: FC<
         </div>
       </SearchBox.Root>
       <div className="flex">
-        <Button variant="outline" size="icon" className="rounded-r-none border-r-0 border-borders-1" onClick={onCopy}>
+        <Button variant="outline" size="icon" className="rounded-r-none border-r-0 border-borders-2" onClick={onCopy}>
           <Icon name="clone" className="size-4 text-icons-3" />
         </Button>
-        <Button variant="outline" size="icon" className="rounded-none border-borders-1" onClick={onEdit}>
+        <Button variant="outline" size="icon" className="rounded-none border-borders-2" onClick={onEdit}>
           <Icon name="edit-pen" className="size-4 text-icons-3" />
         </Button>
         <Button
           variant="outline"
           size="icon"
-          className="rounded-l-none border-l-0 border-borders-1"
+          className="rounded-l-none border-l-0 border-borders-2"
           onClick={onDownload}
         >
           <Icon name="download" className="size-4 text-icons-3" />
@@ -63,7 +63,7 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
     <Tabs.Root defaultValue={StepExecutionTab.LOG} className="size-full">
       <Layout.Vertical className="space-y-0">
         <Layout.Horizontal className="flex justify-between py-2.5 pl-5 pr-3.5">
-          <Tabs.List className="h-8 w-fit gap-x-0.5 border border-borders-1 bg-background-3">
+          <Tabs.List className="h-8 w-fit gap-x-0.5 border border-borders-2 bg-background-3">
             <Tabs.Trigger
               className="h-6 w-[68px] data-[state=active]:border data-[state=active]:border-borders-2 data-[state=active]:bg-background-9"
               value={StepExecutionTab.LOG}

@@ -251,7 +251,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         </Layout.Vertical>
         {!prBranchCombinationExists && (
-          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
+          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-2 bg-background-2 p-4">
             <p className="text-14 leading-none">
               {isBranchSelected ? (
                 <>
@@ -282,7 +282,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         )}
         {prBranchCombinationExists && (
-          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
+          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-2 bg-background-2 p-4">
             <div className="flex items-center gap-x-1.5">
               <div>
                 <Layout.Horizontal className="items-center">

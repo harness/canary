@@ -1,3 +1,4 @@
+import { ENTERPRISE_STYLES_SOURCE_NAME } from './constants.js'
 import { breakpointFilter, componentsFilter, coreFilter, lchColorsFilter, semanticFilter } from './sd-filters.js'
 
 // const format = 'css/variables'
@@ -9,7 +10,8 @@ export const generateCoreFiles = ({ destination, type, format }) => [
     format,
     filter: coreFilter,
     options: {
-      outputReferences: false
+      outputReferences: false,
+      selector: `:root, :host`
     }
   },
   {
@@ -17,7 +19,8 @@ export const generateCoreFiles = ({ destination, type, format }) => [
     format,
     filter: lchColorsFilter,
     options: {
-      outputReferences: true
+      outputReferences: true,
+      selector: `:root, :host`
     }
   },
   {
@@ -25,7 +28,8 @@ export const generateCoreFiles = ({ destination, type, format }) => [
     format,
     filter: breakpointFilter,
     options: {
-      outputReferences: true
+      outputReferences: true,
+      selector: `:root, :host`
     }
   },
   {
@@ -33,7 +37,8 @@ export const generateCoreFiles = ({ destination, type, format }) => [
     format,
     filter: componentsFilter,
     options: {
-      outputReferences: true
+      outputReferences: true,
+      selector: `:root, :host`
     }
   }
 ]
@@ -43,17 +48,29 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
   const filesArr = []
   const themeLower = theme.toLowerCase().replace(/(source-|desktop-)/g, '')
 
+  const entityName = themeLower.toLowerCase()
+
+  let mfeSupportedClass = ''
+
+  if (
+    entityName === `light-${ENTERPRISE_STYLES_SOURCE_NAME}` ||
+    entityName === `dark-${ENTERPRISE_STYLES_SOURCE_NAME}`
+  ) {
+    mfeSupportedClass = '.' + entityName.split('-')[0]
+  }
+
   // theme-specific outputs
   filesArr.push({
     format,
     filter: semanticFilter(true),
-    destination: `${destination}/${themeLower.toLowerCase()}.${type}`,
+    destination: `${destination}/${entityName}.${type}`,
     options: {
       outputReferences: token => {
         // ADD REFERENCE ONLY TO NON-ALPHA TOKENS, ALPHA TOKENS ARE TRANSFORMED AND REFERENCED MANUALLY
         return token?.$extensions?.['studio.tokens']?.modify?.type !== 'alpha'
       },
-      selector: `.${themeLower.toLowerCase()}`
+      // To add .dark for dark-ent and .light for light-ent to support MFE
+      selector: `.${entityName}${mfeSupportedClass ? ', ' + mfeSupportedClass : ''}`
     }
   })
   return filesArr

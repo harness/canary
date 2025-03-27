@@ -9,6 +9,7 @@ import { IconType } from '../pull-request.types'
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
 
+// TODO: CDS remove this
 type ThemeType = 'default' | 'destructive' | 'success' | 'emphasis' | 'muted' | null | undefined
 interface PullRequestTitleProps {
   className?: string

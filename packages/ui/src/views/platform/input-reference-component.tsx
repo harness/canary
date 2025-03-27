@@ -10,7 +10,7 @@ const inputReferenceVariants = cva(
     variants: {
       state: {
         default: 'border-borders-2 border',
-        disabled: 'bg-background-3 text-foreground-7 border-borders-1 cursor-not-allowed border'
+        disabled: 'bg-background-3 text-foreground-7 border-borders-2 cursor-not-allowed border'
       }
     },
     defaultVariants: {

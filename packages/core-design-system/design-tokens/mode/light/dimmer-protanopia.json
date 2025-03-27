@@ -34,22 +34,22 @@
     },
     "accent": {
       "$type": "color",
-      "$value": "{brand.color.400}",
+      "$value": "{set.brand.surface.text}",
       "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\n\nCommon uses: Links, buttons, interactive icons, highlighted elements."
     },
     "success": {
       "$type": "color",
-      "$value": "{blue.500}",
+      "$value": "{set.green.soft.text}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states. Using blue instead of green for protanopia visibility.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{red.500}",
+      "$value": "{set.red.soft.text}",
       "$description": "Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.\n\nCommon uses: Error message text, validation text, destructive action labels."
     },
     "warning": {
       "$type": "color",
-      "$value": "{yellow.500}",
+      "$value": "{set.yellow.soft.text}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     }
   },
@@ -1648,43 +1648,6 @@
           "$value": "{chrome.700}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
-      }
-    },
-    "status-indicator": {
-      "completed": {
-        "$type": "color",
-        "$value": "{blue.300}",
-        "$description": "Color for success status indicators. Communicates completed or positive states. Using blue instead of green for protanopia visibility."
-      },
-      "cancelled": {
-        "$type": "color",
-        "$value": "{red.400}",
-        "$description": "Color for danger status indicators. Communicates error or critical warning states."
-      },
-      "warning": {
-        "$type": "color",
-        "$value": "{yellow.300}",
-        "$description": "Color for warning status indicators. Communicates caution or potential issue states."
-      },
-      "running": {
-        "$type": "color",
-        "$value": "{blue.400}",
-        "$description": "Color for running status indicators. Communicates active or in-progress operations."
-      },
-      "merged": {
-        "$type": "color",
-        "$value": "{purple.300}",
-        "$description": "Color for merged status indicators. Communicates successful integration or completion in version control contexts."
-      },
-      "action-required": {
-        "$type": "color",
-        "$value": "{orange.300}",
-        "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed."
-      },
-      "waiting": {
-        "$type": "color",
-        "$value": "{chrome.400}",
-        "$description": "Color for pending status indicators. Communicates in waiting states."
       }
     },
     "table": {

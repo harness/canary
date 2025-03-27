@@ -39,7 +39,7 @@ export const UnifiedPipelineStudioPanel = ({
       <Tabs.Content value="problems" className="h-full overflow-scroll py-2">
         <UnifiedPipelineStudioProblemsPanel problems={problems} />
       </Tabs.Content>
-      <Tabs.Content value="console">
+      <Tabs.Content value="console" className="h-full overflow-scroll py-2">
         <UnifiedPipelineStudioProblemsPanel problems={problems} />
       </Tabs.Content>
     </Tabs.Root>

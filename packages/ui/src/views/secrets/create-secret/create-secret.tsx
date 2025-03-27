@@ -57,10 +57,11 @@ interface CreateSecretProps {
   useTranslationStore: () => TranslationStore
   isLoading: boolean
   apiError: string | null
-  onConnectorClick: () => void
-  onConnectorEdit: () => void
-  onConnectorClear: () => void
-  connectorValue?: ConnectorItem | null
+  // onConnectorClick: () => void
+  // onConnectorEdit: () => void
+  // onConnectorClear: () => void
+  // connectorValue?: ConnectorItem | null
+  connectorInput: React.ReactElement
 }
 
 export function CreateSecretPage({
@@ -70,10 +71,11 @@ export function CreateSecretPage({
   isLoading = false,
   apiError = null,
   prefilledFormData,
-  onConnectorClick,
-  onConnectorEdit,
-  onConnectorClear,
-  connectorValue
+  // onConnectorClick,
+  // onConnectorEdit,
+  // onConnectorClear,
+  // connectorValue
+  connectorInput
 }: CreateSecretProps) {
   const { t: _t } = useTranslationStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -112,10 +114,10 @@ export function CreateSecretPage({
 
   const selectedFile = watch('file')
 
-  // Watch for changes to connectorValue prop and update form value
-  useEffect(() => {
-    setValue('connector', connectorValue?.connector?.identifier, { shouldValidate: true })
-  }, [connectorValue, setValue])
+  // // Watch for changes to connectorValue prop and update form value
+  // useEffect(() => {
+  //   setValue('connector', connectorValue?.connector?.identifier, { shouldValidate: true })
+  // }, [connectorValue, setValue])
 
   const onSubmit: SubmitHandler<CreateSecretFormFields> = data => {
     onFormSubmit(data)
@@ -263,9 +265,9 @@ export function CreateSecretPage({
 
           <Accordion.Root type="single" collapsible>
             <Accordion.Item value="secret-manager">
-              <Accordion.Trigger>Secret Manager</Accordion.Trigger>
+              <Accordion.Trigger>Storage</Accordion.Trigger>
               <Accordion.Content>
-                <ConnectorInput
+                {/* <ConnectorInput
                   placeholder="Create or Select a Secret Manager"
                   value={connectorValue}
                   icon="connectors"
@@ -276,7 +278,8 @@ export function CreateSecretPage({
                     setValue('connector', undefined, { shouldValidate: true })
                   }}
                   renderValue={connector => connector.name}
-                />
+                /> */}
+                {connectorInput}
               </Accordion.Content>
             </Accordion.Item>
           </Accordion.Root>

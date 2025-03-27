@@ -23,7 +23,7 @@ export const ConnectorInputExample = () => {
         }}
         onClear={() => setSelectedConnector(null)}
         renderValue={connector => connector.name}
-        className="max-w-xs"
+        icon="connectors"
       />
       <ConnectorsRefPage
         isDrawerOpen={isDrawerOpen}

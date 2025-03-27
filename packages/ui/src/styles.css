@@ -647,7 +647,7 @@
   }
 
   body {
-    @apply bg-background-1 text-foreground-2 text-sm font-normal -tracking-[0.02em];
+    @apply bg-cds-background-1 text-foreground-2 text-sm font-normal -tracking-[0.02em];
   }
 }
 
@@ -1074,7 +1074,7 @@ mark {
 }
 
 .breadcrumbs {
-  @apply bg-background-1 fixed top-0 z-30 ml-56 w-full;
+  @apply bg-cds-background-1 fixed top-0 z-30 ml-56 w-full;
 }
 
 .top-\[100px\] {
@@ -1138,7 +1138,7 @@ mark {
 }
 
 .main-page-content-background {
-  @apply bg-background-1;
+  @apply bg-cds-background-1;
 
   .inset-layout & {
     @apply bg-sidebar-background-1;

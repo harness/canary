@@ -150,7 +150,7 @@
     }
   }
 
-  @apply !bg-background-surface !text-16 !text-foreground-8 !max-w-full font-sans !leading-[1.625rem];
+  @apply !bg-cds-background-surface !text-16 !text-foreground-8 !max-w-full font-sans !leading-[1.625rem];
 
   h1,
   h2,
@@ -208,7 +208,7 @@
   }
 
   code {
-    @apply bg-background-9 border-borders-2 font-code text-foreground-2 text-15 rounded border px-1 py-px font-normal tracking-normal before:hidden after:hidden;
+    @apply bg-cds-background-9 border-borders-2 font-code text-foreground-2 text-15 rounded border px-1 py-px font-normal tracking-normal before:hidden after:hidden;
   }
 
   strong {
@@ -216,7 +216,7 @@
   }
 
   pre {
-    @apply bg-background-surface border-borders-2 rounded border px-4 py-[13px];
+    @apply bg-cds-background-surface border-borders-2 rounded border px-4 py-[13px];
 
     code {
       @apply p-0 pr-14 text-sm;

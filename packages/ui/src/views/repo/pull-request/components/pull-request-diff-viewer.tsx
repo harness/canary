@@ -354,7 +354,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="flex w-full flex-col border-l border-borders-2 bg-background-1 p-4">
+        <div className="flex w-full flex-col border-l border-borders-2 bg-cds-background-1 p-4">
           <PullRequestCommentBox
             handleUpload={handleUpload}
             isEditMode
@@ -390,7 +390,7 @@ const PullRequestDiffViewer = ({
       if (!threads) return <></>
 
       return (
-        <div className="border-l border-borders-2 bg-background-1">
+        <div className="border-l border-borders-2 bg-cds-background-1">
           {threads.map(thread => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`

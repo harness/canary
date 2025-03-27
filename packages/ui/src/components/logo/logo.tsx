@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { Icon } from '@components/icon'
-
 import { LogoNameMap } from './logo-name-map'
 
 interface LogoProps {

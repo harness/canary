@@ -1514,7 +1514,7 @@
         },
         "icon": {
           "$type": "color",
-          "$value": "{brand.color.300}",
+          "$value": "{cyan.300}",
           "$description": "Icon color for Logo in sidebar navigation."
         }
       }

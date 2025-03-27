@@ -271,6 +271,7 @@ export default {
           9: 'hsl(var(--canary-icon-09))',
           10: 'hsl(var(--canary-icon-10))',
           danger: 'hsl(var(--canary-icon-danger))',
+          warning: 'hsl(var(--canary-icon-warning))',
           alert: 'hsl(var(--canary-icon-alert))',
           success: 'hsl(var(--canary-icon-success))',
           accent: 'hsl(var(--canary-icon-accent))',

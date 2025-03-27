@@ -154,7 +154,7 @@ const SelectContent = forwardRef<
           )}
         >
           {!!withSearch && (
-            <div className="sticky -top-1 z-[1] -mx-1 -mt-1 mb-1 border-b bg-background-2 px-3 py-2.5">
+            <div className="sticky -top-1 z-[1] -mx-1 -mt-1 mb-1 border-b bg-cds-background-2 px-3 py-2.5">
               <SearchBox.Root
                 className="w-full"
                 placeholder={searchProps?.placeholder || ''}

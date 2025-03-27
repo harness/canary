@@ -53,7 +53,7 @@ const SortableItem = ({
       <div className="flex items-center justify-between gap-x-2">
         <div className="flex items-center gap-x-2">
           <div
-            className="cursor-grab rounded p-1 hover:bg-background-3 active:cursor-grabbing"
+            className="cursor-grab rounded p-1 hover:bg-cds-background-3 active:cursor-grabbing"
             {...attributes}
             {...listeners}
           >
@@ -158,7 +158,7 @@ const Sorts = ({
 
   return (
     <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-background-3 px-2.5 transition-colors duration-200 hover:bg-background-8">
+      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-cds-background-3 px-2.5 transition-colors duration-200 hover:bg-cds-background-8">
         <div className="flex items-center gap-x-1">
           <Icon
             className={cn('text-icons-1', getSortTriggerLabel(activeSorts, sortOptions).isDescending && 'rotate-180')}

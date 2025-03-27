@@ -24,7 +24,7 @@ const StepsPaletteItem = {
   BadgeWrapper: function BadgeWrapper({ children }: { children: React.ReactNode }) {
     return (
       <div className="self-start rounded-full bg-gradient-to-r from-[#B1CBFF] via-[#6D6B75] to-[#B1CBFF] p-0.5">
-        <div className="rounded-full bg-background px-2 text-sm">{children}</div>
+        <div className="rounded-full bg-cds-background px-2 text-sm">{children}</div>
       </div>
     )
   }

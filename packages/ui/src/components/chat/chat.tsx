@@ -7,12 +7,12 @@ import ChatAvatarIcon from '@/icons/chat-avatar.svg'
 import { cn } from '@utils/cn'
 
 const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  return <div className="flex size-full max-w-[460px] flex-col bg-background-1">{children}</div>
+  return <div className="flex size-full max-w-[460px] flex-col bg-cds-background-1">{children}</div>
 }
 
 const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="sticky top-0 flex items-center justify-between bg-background-1 px-6 py-4">
+    <div className="sticky top-0 flex items-center justify-between bg-cn-background-1 px-6 py-4">
       <p className="text-16 font-medium text-foreground-1">Harness AI</p>
       <Button size="icon" variant="custom" className="-mr-2 text-icons-4 hover:text-icons-2" onClick={onClose}>
         <Icon name="close" size={16} />
@@ -31,7 +31,7 @@ const Body: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) 
 }
 
 const Footer: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  return <div className="sticky bottom-0 bg-background-1 px-6 py-3">{children}</div>
+  return <div className="sticky bottom-0 bg-cds-background-1 px-6 py-3">{children}</div>
 }
 
 interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
@@ -62,7 +62,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
       >
         <div
           className={cn('text-14 text-foreground-1 leading-relaxed', {
-            'px-3.5 py-2 bg-background-8 rounded-[8px_8px_2px_8px]': self
+            'px-3.5 py-2 bg-cds-background-8 rounded-[8px_8px_2px_8px]': self
           })}
         >
           {children}
@@ -77,7 +77,7 @@ const CodeBlock: FC<PropsWithChildren<{ className?: string }>> = ({ children, cl
   return (
     <code
       className={cn(
-        'inline-block rounded-[3px] border border-borders-2 bg-background-8 px-1.5 text-13 leading-[18px]',
+        'inline-block rounded-[3px] border border-borders-2 bg-cds-background-8 px-1.5 text-13 leading-[18px]',
         className
       )}
     >
@@ -139,7 +139,7 @@ const EmptyState: FC = () => {
           {emptyStateButtons.map(({ text }, index) => (
             <li key={index}>
               <Button
-                className="w-full justify-start rounded-lg bg-background-3 px-3.5 text-foreground-1 hover:bg-background-12"
+                className="w-full justify-start rounded-lg bg-cds-background-3 px-3.5 text-foreground-1 hover:bg-cds-background-12"
                 size="lg"
               >
                 {text}

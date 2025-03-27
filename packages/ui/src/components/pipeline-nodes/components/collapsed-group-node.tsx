@@ -92,7 +92,7 @@ function StackedNode({ state }: { state: string }) {
       <div
         role="button"
         tabIndex={0}
-        className={cn('box size-full rounded-md border bg-background-3 cursor-pointer shadow-1', {
+        className={cn('box size-full rounded-md border bg-cds-background-3 cursor-pointer shadow-1', {
           'border-borders-success': state === 'success',
           'border-borders-alert': state === 'warning',
           'border-borders-danger': state === 'error'

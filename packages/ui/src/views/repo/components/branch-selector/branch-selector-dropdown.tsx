@@ -81,7 +81,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               }}
             >
               <Tabs.Trigger
-                className="data-[state=active]:bg-background-2"
+                className="data-[state=active]:bg-cds-background-2"
                 value="branches"
                 onClick={e => e.stopPropagation()}
               >
@@ -96,7 +96,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               }}
             >
               <Tabs.Trigger
-                className="data-[state=active]:bg-background-2"
+                className="data-[state=active]:bg-cds-background-2"
                 value="tags"
                 onClick={e => e.stopPropagation()}
               >
@@ -125,9 +125,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
             return (
               <DropdownMenu.Item
-                className={cn('hover:bg-background-4 cursor-pointer py-1', {
+                className={cn('hover:bg-cds-background-4 cursor-pointer py-1', {
                   'justify-between gap-x-2': isDefault,
-                  'bg-background-4': isSelected,
+                  'bg-cds-background-4': isSelected,
                   'pl-7': !isSelected
                 })}
                 onClick={() => {

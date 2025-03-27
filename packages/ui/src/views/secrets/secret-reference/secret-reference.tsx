@@ -47,7 +47,7 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
     return (
       <StackedList.Item
         onClick={() => onSelect(entity)}
-        className={isSelected ? 'bg-background-4' : ''}
+        className={isSelected ? 'bg-cds-background-4' : ''}
         thumbnail={<Icon name="secrets" size={16} className="text-foreground-5" />}
         actions={
           <Button
@@ -81,7 +81,7 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         apiError={apiError}
       />
 
-      <div className="absolute inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
+      <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
         <ButtonGroup className="flex flex-row justify-between">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel

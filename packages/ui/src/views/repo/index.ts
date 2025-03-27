@@ -6,7 +6,7 @@ export * from '@views/repo/repo-list/types'
 export * from '@views/repo/repo-sidebar'
 
 // repo create
-export * from '@views/repo/repo-create'
+export * from '@views/repo/repo-create/repo-create'
 
 // repo summary
 export * from '@views/repo/repo-summary/repo-summary'

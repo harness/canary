@@ -156,7 +156,7 @@
       },
       "border-selected": {
         "$type": "color",
-        "$value": "{state.disabled.bg-selected}",
+        "$value": "{chrome.500}",
         "$description": "Disabled border for selected component behavior."
       }
     }

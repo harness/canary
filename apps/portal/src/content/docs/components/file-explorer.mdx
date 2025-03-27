@@ -40,8 +40,9 @@ import { DocsPage } from "@/components/docs-page";
     >
         assets
     </FileExplorer.FolderItem>
-  
+
     <FileExplorer.FileItem link="/package.json">package.json</FileExplorer.FileItem>
+
 </FileExplorer.Root>`}
 />
 
@@ -95,6 +96,15 @@ The `FileExplorer` component can be used to display a hierarchical view of the f
 
 The `Root` component serves as the main container for displaying the file system hierarchy and handling file or directory selection.
 
+```typescript jsx
+<FileExplorer.Root
+  value={['src', 'components']}                  // Array of selected folder values
+  onValueChange={(value) => handleChange(value)} // Callback when selection changes
+>
+  {/* FileItem and FolderItem components */}
+</FileExplorer.Root>
+```
+
 <DocsPage.PropsTable
   props={[
     {
@@ -124,6 +134,22 @@ The `Root` component serves as the main container for displaying the file system
 ### `FolderItem`
 
 The `FolderItem` component is used to display a folder in the file explorer.
+
+```typescript jsx
+<FileExplorer.FolderItem
+  value="src"                     // [Optional] Unique identifier for the folder
+  link="/src"                     // Navigation link for the folder
+  isActive={false}                // [Optional] Visual active state
+  chevronClassName="custom-icon"  // [Optional] Custom chevron styling
+  content={                       // [Optional] Additional content inside folder
+    <div className="flex flex-col">
+      {/* Nested FileItem components */}
+    </div>
+  }
+>
+  src {/* Folder label */}
+</FileExplorer.FolderItem>
+```
 
 <DocsPage.PropsTable
   props={[
@@ -176,6 +202,15 @@ The `FolderItem` component is used to display a folder in the file explorer.
 ### `FileItem`
 
 The `FileItem` component is used to display a file in the file explorer.
+
+```typescript jsx
+<FileExplorer.FileItem
+  link="/src/index.tsx"           // [Optional] Navigation link for the file
+  isActive={false}                // [Optional] Visual active state
+>
+  index.tsx {/* File label */}
+</FileExplorer.FileItem>
+```
 
 <DocsPage.PropsTable
   props={[

@@ -51,13 +51,12 @@ export function ConnectorsList({
   return (
     <StackedList.Root>
       {connectors.map((item, idx) => {
-        const { connector, status, lastModifiedAt } = item
+        const { identifier, name, description, status, lastModifiedAt, lastTestedAt } = item
         const isLastItem = idx === connectors.length - 1
-        const connectorId = connector?.identifier
 
         return (
           <Link
-            key={connectorId}
+            key={identifier}
             to={toConnectorDetails?.(item) || ''}
             className={isLastItem ? 'border-b border-background-3' : ''}
           >
@@ -69,23 +68,23 @@ export function ConnectorsList({
                 primary
                 description={
                   <div className="flex items-center gap-1">
-                    {connector?.description ? (
+                    {description ? (
                       <>
-                        <span className="max-w-full truncate">{connector.description}</span>
+                        <span className="max-w-full truncate">{description}</span>
                         <Pipe />
                       </>
                     ) : null}
                     {lastModifiedAt ? <LastUpdated lastModifiedAt={lastModifiedAt} t={t} /> : null}
                   </div>
                 }
-                title={<Title title={connector?.name ?? ''} />}
+                title={<Title title={name ?? ''} />}
                 className="flex max-w-[80%] gap-1.5 text-wrap"
               />
-              {status?.status && (
+              {status && (
                 <StackedList.Field
                   right
-                  title={status?.status ? <ExecutionStatus.Badge status={status.status} /> : null}
-                  description={status?.lastTestedAt ? timeAgo(status.lastTestedAt) : null}
+                  title={<ExecutionStatus.Badge status={status} />}
+                  description={lastTestedAt ? timeAgo(lastTestedAt) : null}
                 />
               )}
             </StackedList.Item>

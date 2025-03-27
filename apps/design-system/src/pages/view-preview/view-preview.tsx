@@ -6,7 +6,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-settings-view-wrapper.tsx'
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
-import { ConnectorsPage } from '@subjects/views/connectors/connectors'
+import { ConnectorsPage } from '@subjects/views/connectors/connectors-list'
 import { ConnectorsRefPage } from '@subjects/views/connectors/connectors-ref'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'

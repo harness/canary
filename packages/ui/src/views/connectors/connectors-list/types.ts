@@ -1,16 +1,29 @@
 import { TranslationStore } from '@views/repo'
-
-import { ConnectorItem } from '../types'
+import { ExecutionState } from '@views/repo/pull-request'
 
 interface RoutingProps {
-  toConnectorDetails: (connector: ConnectorItem) => string
+  toConnectorDetails: (connector: ConnectorListItem) => string
+}
+
+export interface ConnectorListItem {
+  identifier: string
+  name?: string
+  description?: string
+  status?: ExecutionState
+  lastModifiedAt?: number
+  lastTestedAt?: number
+  gitDetails?: {
+    repoIdentifier?: string
+    branch?: string
+    objectId?: string
+  }
 }
 
 export interface ConnectorListProps extends Partial<RoutingProps> {
-  connectors: ConnectorItem[]
+  connectors: ConnectorListItem[]
   useTranslationStore: () => TranslationStore
   isLoading: boolean
-  onEditConnector: (connector: ConnectorItem) => void
+  onEditConnector: (connector: ConnectorListItem) => void
 }
 
 export interface ConnectorListPageProps extends ConnectorListProps {

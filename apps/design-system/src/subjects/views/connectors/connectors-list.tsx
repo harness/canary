@@ -4,7 +4,7 @@ import { useTranslationStore } from '@utils/viewUtils'
 import { noop } from 'lodash-es'
 
 import {
-  ConnectorItem,
+  ConnectorListItem,
   ConnectorListPage,
   ConnectorRightDrawer,
   ConnectorsProvider,
@@ -25,19 +25,21 @@ const ConnectorsListPageContent = (): JSX.Element => {
     <ConnectorListPage
       connectors={
         mockConnectorsData.map(connector => ({
-          ...connector,
           name: connector.connector.name,
-          id: connector.connector.identifier,
-          status: {
-            status: connector.status.status,
-            lastTestedAt: connector.status.lastTestedAt
-          },
-          lastModifiedAt: connector.lastModifiedAt
-        })) as ConnectorItem[]
+          identifier: connector.connector.identifier,
+          status: connector.status.status,
+          lastTestedAt: connector.status.lastTestedAt,
+          lastModifiedAt: connector.lastModifiedAt,
+          gitDetails: {
+            repoIdentifier: connector.gitDetails.repoIdentifier || '',
+            branch: connector.gitDetails.branch || '',
+            objectId: connector.gitDetails.objectId || ''
+          }
+        })) as ConnectorListItem[]
       }
       useTranslationStore={useTranslationStore}
       isLoading={false}
-      onEditConnector={(_connector: ConnectorItem) => {
+      onEditConnector={(_connector: ConnectorListItem) => {
         setDrawerState(ConnectorRightDrawer.Form)
         setFormEntity({
           type: 'connector',

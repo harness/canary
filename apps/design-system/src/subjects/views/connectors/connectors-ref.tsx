@@ -63,7 +63,7 @@ export const ConnectorsRefPage = ({
   }
 
   const handleCancel = () => {
-    console.log('Cancelled')
+    setIsDrawerOpen(false)
   }
 
   const renderConnectorContent = () => {

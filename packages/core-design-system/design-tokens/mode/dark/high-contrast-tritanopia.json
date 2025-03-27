@@ -203,6 +203,60 @@
           "$value": "{brand.color.400}",
           "$description": "Selected state background color for active brand items."
         }
+      },
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{brand.color.100}",
+          "$description": "Text and icon color for primary subtle brand elements with maximum contrast."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{brand.color.800}",
+          "$description": "Background color for primary subtle brand items with strong emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{brand.color.800}",
+          "$description": "Border color for primary subtle brand boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{brand.color.700}",
+          "$description": "Hover state background color for interactive brand subtle surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{brand.color.700}",
+          "$description": "Selected state background color for active brand subtle items."
+        }
+      },
+      "surface": {
+        "text": {
+          "$type": "color",
+          "$value": "{brand.color.200}",
+          "$description": "Text and icon color for primary brand elements with minimum contrast."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{brand.color.900}",
+          "$description": "Background color for primary brand items with minimum emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{brand.color.600}",
+          "$description": "Border color for primary brand with minimum emphasis boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{brand.color.800}",
+          "$description": "Hover state background color for interactive brand with minimum emphasis surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{brand.color.700}",
+          "$description": "Selected state background color for active brand with minimum emphasis items."
+        }
       }
     },
     "ai": {

@@ -23,11 +23,11 @@
       },
       "500": {
         "$type": "color",
-        "$value": "{chrome.900}"
+        "$value": "{chrome.150}"
       },
       "600": {
         "$type": "color",
-        "$value": "{chrome.150}"
+        "$value": "{chrome.900}"
       },
       "700": {
         "$type": "color",
@@ -69,11 +69,11 @@
       },
       "500": {
         "$type": "color",
-        "$value": "{pure.white}"
+        "$value": "{pure.black}"
       },
       "600": {
         "$type": "color",
-        "$value": "{pure.black}"
+        "$value": "{pure.white}"
       },
       "700": {
         "$type": "color",

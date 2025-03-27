@@ -2,7 +2,7 @@
   {
     "connector": {
       "name": "Github SaaS Connector",
-      "identifier": "connector1",
+      "identifier": "Github_SaaS_Connector",
       "description": "Connects to Github",
       "accountIdentifier": "account123",
       "orgIdentifier": "org1",
@@ -72,7 +72,7 @@
   {
     "connector": {
       "name": "Github Enterprise Connector",
-      "identifier": "connector2",
+      "identifier": "Github_Enterprise_Connector",
       "description": "Connects to Github Enterprise",
       "accountIdentifier": "account123",
       "orgIdentifier": "org1",
@@ -146,7 +146,7 @@
   {
     "connector": {
       "name": "Github Repository Connector 3",
-      "identifier": "connector3",
+      "identifier": "Github_Repository_Connector_3",
       "description": "",
       "accountIdentifier": "account123",
       "orgIdentifier": "org1",

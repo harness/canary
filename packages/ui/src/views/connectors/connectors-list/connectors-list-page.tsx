@@ -68,7 +68,7 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
             />
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default">Create</Button>
+            <Button variant="default">Create new Connector</Button>
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={4} />

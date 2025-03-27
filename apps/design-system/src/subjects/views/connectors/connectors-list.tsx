@@ -30,6 +30,9 @@ const ConnectorsListPageContent = (): JSX.Element => {
           status: connector.status.status,
           lastTestedAt: connector.status.lastTestedAt,
           lastModifiedAt: connector.lastModifiedAt,
+          spec: {
+            url: connector.connector.spec.url
+          },
           gitDetails: {
             repoIdentifier: connector.gitDetails.repoIdentifier || '',
             branch: connector.gitDetails.branch || '',
@@ -39,6 +42,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
       }
       useTranslationStore={useTranslationStore}
       isLoading={false}
+      setSearchQuery={noop}
       onEditConnector={(_connector: ConnectorListItem) => {
         setDrawerState(ConnectorRightDrawer.Form)
         setFormEntity({
@@ -46,7 +50,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
           data: { type: 'AwsKms', name: 'AWS KMS' }
         })
       }}
-      setSearchQuery={noop}
+      onTestConnection={noop}
     />
   )
 }

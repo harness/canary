@@ -1,10 +1,10 @@
-import { Icon, NoData, SkeletonList, StackedList } from '@/components'
+import { Button, Icon, NoData, SkeletonList, Table } from '@/components'
 import { useRouterContext } from '@/context'
 import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
-import { TFunction } from 'i18next'
+import { ExecutionState } from '@views/repo/pull-request'
 
-import { ConnectorListProps } from './types'
+import { ConnectorListItem, ConnectorListProps } from './types'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
   <div className="inline-flex items-center gap-2.5">
@@ -12,20 +12,29 @@ const Title = ({ title }: { title: string }): JSX.Element => (
   </div>
 )
 
-const Pipe = (): JSX.Element => <span className="pointer-events-none h-3.5 w-px bg-borders-2" aria-hidden />
-
-const LastUpdated = ({ lastModifiedAt, t }: { lastModifiedAt: number; t: TFunction }): JSX.Element => (
-  <div className="inline-flex items-center gap-1">
-    <Title title={t('views:repos.updated', 'Updated')} />
-    {timeAgo(lastModifiedAt)}
-  </div>
-)
+const ConnectivityStatus = ({
+  item,
+  onClick
+}: {
+  item: ConnectorListItem
+  onClick: ConnectorListProps['onTestConnection']
+}): JSX.Element => {
+  return (
+    <div className="inline-flex items-center gap-2.5">
+      {item?.status ? <ExecutionStatus.Badge status={item.status} /> : null}
+      <Button size="icon" variant="outline" onClick={() => onClick(item)}>
+        <Icon name="refresh" size={24} />
+      </Button>
+    </div>
+  )
+}
 
 export function ConnectorsList({
   connectors,
   useTranslationStore,
   isLoading,
-  toConnectorDetails
+  toConnectorDetails,
+  onTestConnection
 }: ConnectorListProps): JSX.Element {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
@@ -49,48 +58,34 @@ export function ConnectorsList({
   }
 
   return (
-    <StackedList.Root>
-      {connectors.map((item, idx) => {
-        const { identifier, name, description, status, lastModifiedAt, lastTestedAt } = item
-        const isLastItem = idx === connectors.length - 1
-
-        return (
-          <Link
-            key={identifier}
-            to={toConnectorDetails?.(item) || ''}
-            className={isLastItem ? 'border-b border-background-3' : ''}
-          >
-            <StackedList.Item
-              thumbnail={<Icon name="connectors" size={20} className="text-foreground-5" />}
-              isLast={isLastItem}
-            >
-              <StackedList.Field
-                primary
-                description={
-                  <div className="flex items-center gap-1">
-                    {description ? (
-                      <>
-                        <span className="max-w-full truncate">{description}</span>
-                        <Pipe />
-                      </>
-                    ) : null}
-                    {lastModifiedAt ? <LastUpdated lastModifiedAt={lastModifiedAt} t={t} /> : null}
-                  </div>
-                }
-                title={<Title title={name ?? ''} />}
-                className="flex max-w-[80%] gap-1.5 text-wrap"
-              />
-              {status && (
-                <StackedList.Field
-                  right
-                  title={<ExecutionStatus.Badge status={status} />}
-                  description={lastTestedAt ? timeAgo(lastTestedAt) : null}
-                />
-              )}
-            </StackedList.Item>
-          </Link>
-        )
-      })}
-    </StackedList.Root>
+    <Table.Root variant="asStackedList">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Connector</Table.Head>
+          <Table.Head>Details</Table.Head>
+          <Table.Head>Connectivity status</Table.Head>
+          <Table.Head>Last updated</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {connectors.map(connector => (
+          <Table.Row key={connector.identifier}>
+            <Table.Cell>
+              <Link to={toConnectorDetails?.(connector) || ''}>
+                <div className="flex items-center gap-2.5">
+                  <Icon name="connectors" size={24} />
+                  <Title title={connector.identifier} />
+                </div>
+              </Link>
+            </Table.Cell>
+            <Table.Cell className="max-w-80 truncate">{connector.spec?.url}</Table.Cell>
+            <Table.Cell>
+              {connector?.status ? <ConnectivityStatus item={connector} onClick={onTestConnection} /> : null}
+            </Table.Cell>
+            <Table.Cell>{connector?.lastModifiedAt ? timeAgo(connector.lastModifiedAt) : null}</Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table.Root>
   )
 }

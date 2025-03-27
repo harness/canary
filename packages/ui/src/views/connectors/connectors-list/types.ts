@@ -12,6 +12,9 @@ export interface ConnectorListItem {
   status?: ExecutionState
   lastModifiedAt?: number
   lastTestedAt?: number
+  spec?: {
+    url?: string
+  }
   gitDetails?: {
     repoIdentifier?: string
     branch?: string
@@ -24,6 +27,7 @@ export interface ConnectorListProps extends Partial<RoutingProps> {
   useTranslationStore: () => TranslationStore
   isLoading: boolean
   onEditConnector: (connector: ConnectorListItem) => void
+  onTestConnection: (connector: ConnectorListItem) => void
 }
 
 export interface ConnectorListPageProps extends ConnectorListProps {

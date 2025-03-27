@@ -14,7 +14,6 @@ export const ConnectorInputExample = () => {
       <ConnectorInput
         placeholder={<StyledLink to="#">Please select a connector</StyledLink>}
         value={selectedConnector}
-        label="Select a Connector"
         onClick={() => {
           setIsDrawerOpen(true)
         }}

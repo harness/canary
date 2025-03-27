@@ -13,7 +13,7 @@ import {
   Spacer,
   Textarea
 } from '@/components'
-import { ConnectorInput, ConnectorItem, SandboxLayout, TranslationStore } from '@/views'
+import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 

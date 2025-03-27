@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 
 import { PipelineNodes } from '@components/pipeline-nodes'
+import { ExecutionStatusType } from '@components/pipeline-nodes/types/types'
 
 import { LeafNodeInternalType } from '@harnessio/pipeline-graph'
 
@@ -11,7 +12,7 @@ import { CommonNodeDataType } from '../types/common-node-data-type'
 
 export interface StepNodeDataType extends CommonNodeDataType {
   icon?: React.ReactElement
-  state?: 'success' | 'executing' | 'executed' | 'warning' | 'error'
+  state?: ExecutionStatusType
   warningMessage?: string
 }
 
@@ -40,6 +41,7 @@ export function StepContentNode(props: {
 
   return (
     <PipelineNodes.StepNode
+      executionStatus={data.state}
       parallelContainerConfig={parallelContainerConfig}
       serialContainerConfig={serialContainerConfig}
       name={data.name}

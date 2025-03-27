@@ -12,7 +12,7 @@ export const ConnectorInput = ({
   placeholder,
   label,
   ...props
-}: InputReferenceProps<ConnectorItem>) => {
+}: Omit<InputReferenceProps<ConnectorItem>, 'icon'>) => {
   return (
     <InputReference<ConnectorItem>
       placeholder={placeholder}

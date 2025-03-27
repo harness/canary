@@ -6,7 +6,7 @@ import { InputConfigType } from '../../views/unified-pipeline-studio/components/
 export type IInputConfigWithConfigInterface = IInputDefinition & InputConfigType
 
 export enum ConnectorRightDrawer {
-  None = 'none',
+  None = 'None',
   Collection = 'palette',
   Form = 'connectorForm'
 }

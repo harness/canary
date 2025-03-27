@@ -25,8 +25,7 @@ const createSecretFormSchema = z
     value: z.string().optional(),
     file: z.instanceof(File).optional(),
     description: z.string().optional(),
-    tags: z.string().optional(),
-    connector: z.string().optional()
+    tags: z.string().optional()
   })
   .superRefine((data, ctx) => {
     // Check if either value or file is provided
@@ -57,10 +56,6 @@ interface CreateSecretProps {
   useTranslationStore: () => TranslationStore
   isLoading: boolean
   apiError: string | null
-  // onConnectorClick: () => void
-  // onConnectorEdit: () => void
-  // onConnectorClear: () => void
-  // connectorValue?: ConnectorItem | null
   connectorInput: React.ReactElement
 }
 
@@ -71,16 +66,10 @@ export function CreateSecretPage({
   isLoading = false,
   apiError = null,
   prefilledFormData,
-  // onConnectorClick,
-  // onConnectorEdit,
-  // onConnectorClear,
-  // connectorValue
   connectorInput
 }: CreateSecretProps) {
   const { t: _t } = useTranslationStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
-
-  // Determine the secret type from prefilledFormData
 
   const {
     register,
@@ -95,8 +84,6 @@ export function CreateSecretPage({
     mode: 'onChange',
     defaultValues: {
       name: prefilledFormData?.name ?? '',
-      // value: prefilledFormData?.value ?? '',
-      // file: prefilledFormData?.file,
       description: prefilledFormData?.description ?? '',
       tags: prefilledFormData?.tags ?? ''
     }
@@ -113,11 +100,6 @@ export function CreateSecretPage({
   }, [prefilledFormData])
 
   const selectedFile = watch('file')
-
-  // // Watch for changes to connectorValue prop and update form value
-  // useEffect(() => {
-  //   setValue('connector', connectorValue?.connector?.identifier, { shouldValidate: true })
-  // }, [connectorValue, setValue])
 
   const onSubmit: SubmitHandler<CreateSecretFormFields> = data => {
     onFormSubmit(data)
@@ -266,21 +248,7 @@ export function CreateSecretPage({
           <Accordion.Root type="single" collapsible>
             <Accordion.Item value="secret-manager">
               <Accordion.Trigger>Storage</Accordion.Trigger>
-              <Accordion.Content>
-                {/* <ConnectorInput
-                  placeholder="Create or Select a Secret Manager"
-                  value={connectorValue}
-                  icon="connectors"
-                  onClick={onConnectorClick}
-                  onEdit={onConnectorEdit}
-                  onClear={() => {
-                    onConnectorClear()
-                    setValue('connector', undefined, { shouldValidate: true })
-                  }}
-                  renderValue={connector => connector.name}
-                /> */}
-                {connectorInput}
-              </Accordion.Content>
+              <Accordion.Content>{connectorInput}</Accordion.Content>
             </Accordion.Item>
           </Accordion.Root>
         </Fieldset>

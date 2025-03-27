@@ -27,7 +27,7 @@ interface MarkdownViewerWrapperProps {
 }
 
 const MarkdownViewerWrapper: FC<MarkdownViewerWrapperProps> = ({ children }) => {
-  return <div className="rounded-b-md border-x border-b bg-background-surface p-6">{children}</div>
+  return <div className="rounded-b-md border-x border-b bg-cds-background-surface p-6">{children}</div>
 }
 
 interface MarkdownViewerProps {
@@ -157,7 +157,7 @@ export function MarkdownViewer({
     <Wrapper>
       <div ref={ref} style={styles}>
         {isSuggestion && (
-          <div className="rounded-t-md border-x border-t border-borders-2 bg-background-2 px-4 py-3">
+          <div className="rounded-t-md border-x border-t border-borders-2 bg-cds-background-2 px-4 py-3">
             <span className="text-14 text-foreground-1">
               {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
                 ? 'Suggestion applied'
@@ -188,12 +188,12 @@ export function MarkdownViewer({
               return (
                 <div className="relative">
                   <CopyButton
-                    className="absolute right-3 top-3 z-10 size-6 bg-background-3"
+                    className="absolute right-3 top-3 z-10 size-6 bg-cds-background-3"
                     buttonVariant="outline"
                     name={code}
                     iconSize={13}
                   />
-                  <pre className="!bg-background-1">{children}</pre>
+                  <pre className="!bg-cds-background-1">{children}</pre>
                 </div>
               )
             },

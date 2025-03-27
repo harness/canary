@@ -25,6 +25,14 @@ const LogoComponent: FC = () => {
 
       <DocsPage.ComponentExample code={`<Logo name="github" size={40} />`} />
 
+      <DocsPage.Section title="Original Brand Color">
+        <Text as="p">
+          By default, the <code>Logo</code> component inherits the text color using <code>currentColor</code>. Use the{' '}
+          <code>original</code> prop to render the logo in its official brand color.
+        </Text>
+        <DocsPage.ComponentExample code={`<Logo name="gitlab" size={48} original />`} />
+      </DocsPage.Section>
+
       <DocsPage.Section title="Size">
         <Text as="p">
           Customize the size using the <code>size</code> prop.

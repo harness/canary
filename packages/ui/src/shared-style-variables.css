@@ -1,5 +1,5 @@
 /* move to shared styles */
-/* @import url('@harnessio/core-design-system/enterprise-themes'); */
+@import url('@harnessio/core-design-system/enterprise-themes');
 
 :root,
 :host {

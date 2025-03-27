@@ -174,7 +174,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
         <DropdownMenu.Item className="p-0" asChild>
           <Link to={viewAllUrl}>
-            <div className="w-full border-t border-borders-1 px-3 py-2">
+            <div className="w-full border-t border-borders-2 px-3 py-2">
               <span className="text-14 font-medium leading-none transition-colors duration-200 hover:text-foreground-1">
                 {t('views:repos.viewAll', `View all ${activeTab}`, {
                   type:

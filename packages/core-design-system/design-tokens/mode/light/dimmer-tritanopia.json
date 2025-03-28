@@ -355,27 +355,27 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.800}",
+          "$value": "{chrome.700}",
           "$description": "Standard text color for gray surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.100}",
+          "$value": "{chrome.50}",
           "$description": "Base background color for gray surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{chrome.300}",
+          "$value": "{chrome.200}",
           "$description": "Border color for standard gray boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.150}",
+          "$value": "{chrome.100}",
           "$description": "Hover state background color for interactive gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.200}",
+          "$value": "{chrome.150}",
           "$description": "Selected state background color for active gray items."
         }
       }

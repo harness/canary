@@ -15,11 +15,7 @@ export function MainContentLayout({ className, children, breadcrumbs }: MainCont
   return (
     <div className={cn('h-screen', className)}>
       {!!breadcrumbs && (
-        <div
-          className={cn('bg-background-1 sticky top-0', {
-            'bg-sidebar-background-1': isInset
-          })}
-        >
+        <div className={cn('bg-background-1 sticky top-0 focus-within:z-20', { 'bg-sidebar-background-1': isInset })}>
           {breadcrumbs}
         </div>
       )}

@@ -301,7 +301,7 @@ const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'>>(({ c
 SidebarRail.displayName = 'SidebarRail'
 
 const SidebarInset = forwardRef<HTMLDivElement, ComponentProps<'main'>>(({ className, ...props }, ref) => {
-  const { collapsed, isMobile } = useSidebar()
+  const { isMobile } = useSidebar()
   const { isInset } = useTheme()
 
   return (
@@ -313,9 +313,7 @@ const SidebarInset = forwardRef<HTMLDivElement, ComponentProps<'main'>>(({ class
         isInset && 'pr-1.5',
         className
       )}
-      style={{
-        maxWidth: `calc(100vw - ${isMobile ? '0px' : collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH})`
-      }}
+      style={{ maxWidth: `calc(100vw - ${isMobile ? '0px' : 'var(--sidebar-width)'})` }}
       {...props}
     />
   )
@@ -345,7 +343,9 @@ const SidebarHeader = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ class
 SidebarHeader.displayName = 'SidebarHeader'
 
 const SidebarFooter = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
-  return <div ref={ref} data-sidebar="footer" className={cn('flex flex-col gap-2 px-2 py-3', className)} {...props} />
+  return (
+    <div ref={ref} data-sidebar="footer" className={cn('flex flex-col gap-2 px-2 pt-2.5 pb-2', className)} {...props} />
+  )
 })
 SidebarFooter.displayName = 'SidebarFooter'
 
@@ -450,7 +450,7 @@ const SidebarMenuItem = forwardRef<HTMLLIElement, ComponentProps<'li'>>(({ class
 SidebarMenuItem.displayName = 'SidebarMenuItem'
 
 const sidebarMenuButtonVariants = cva(
-  'peer/menu-button group-hover/menu-item:bg-sidebar-background-3 data-[active=true]:bg-sidebar-background-3 data-[state=open]:hover:bg-sidebar-background-3 flex w-full cursor-pointer items-center overflow-hidden rounded px-2.5 py-2 text-left text-sm outline-none transition-[width,height,padding] disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-medium group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0',
+  'peer/menu-button group-hover/menu-item:bg-sidebar-background-3 data-[active=true]:bg-sidebar-background-3 data-[state=open]:hover:bg-sidebar-background-3 flex w-full cursor-pointer items-center overflow-hidden rounded px-2.5 py-2 text-left text-sm outline-none transition-[width,height,padding] disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-7 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-medium group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0',
   {
     variants: {
       variant: {
@@ -537,8 +537,8 @@ const SidebarMenuItemText = forwardRef<
       )}
       <span
         className={cn(
-          // 14px - icon size, 8px - gap, 16px - sum of container paddings. This makes truncate work well
-          'max-w-[calc(100%-14px-8px-16px)] w-full truncate',
+          // 14px - icon size, 8px - gap. This makes truncate work well
+          'max-w-[calc(100%-14px-8px)] w-full truncate',
           'font-medium text-sidebar-foreground-2 whitespace-nowrap group-hover/menu-item:text-sidebar-foreground-1 z-10 text-left transition-[opacity,max-width,margin] duration-100 ease-in-out group-data-[state=collapsed]:duration-150 group-data-[state=collapsed]:ease-linear group-data-[state=collapsed]:opacity-0 group-data-[state=collapsed]:max-w-0 group-data-[state=collapsed]:ml-0',
           { 'text-sidebar-foreground-1': active }
         )}

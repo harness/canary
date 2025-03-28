@@ -44,8 +44,8 @@ interface SidebarProps {
   pinnedMenuItems: NavbarItemType[]
   showMoreMenu: boolean
   showSettingMenu: boolean
-  handleMoreMenu: () => void
-  handleSettingsMenu: () => void
+  handleMoreMenu: (state?: boolean) => void
+  handleSettingsMenu: (state?: boolean) => void
   currentUser: TypesUser | undefined
   handleCustomNav: () => void
   handleLogOut: () => void
@@ -91,6 +91,12 @@ export const AppSidebar = ({
     setOpenLanguageDialog(false)
   }
 
+  const handleToggleSidebar = () => {
+    toggleSidebar()
+    handleMoreMenu(false)
+    handleSettingsMenu(false)
+  }
+
   const onInsetChange = (style: ContentStyleType) => setInset(style === ContentStyleType.Inset)
 
   return (
@@ -129,7 +135,7 @@ export const AppSidebar = ({
                 ))}
 
                 <Sidebar.MenuItem>
-                  <Sidebar.MenuButton onClick={handleMoreMenu}>
+                  <Sidebar.MenuButton onClick={() => handleMoreMenu()}>
                     <Sidebar.MenuItemText
                       className="pl-0"
                       text={t('component:navbar.more', 'More')}
@@ -177,7 +183,7 @@ export const AppSidebar = ({
                   </Sidebar.MenuItem>
                 )}
                 <Sidebar.MenuItem>
-                  <Sidebar.MenuButton onClick={handleSettingsMenu}>
+                  <Sidebar.MenuButton onClick={() => handleSettingsMenu()}>
                     <Sidebar.MenuItemText
                       className="pl-0"
                       text={t('component:navbar.settings', 'Settings')}
@@ -194,7 +200,7 @@ export const AppSidebar = ({
           <Sidebar.Group>
             <Sidebar.Menu>
               <Sidebar.MenuItem>
-                <Sidebar.MenuButton onClick={toggleSidebar}>
+                <Sidebar.MenuButton onClick={handleToggleSidebar}>
                   <Sidebar.MenuItemText
                     className="pl-0"
                     aria-label={
@@ -211,7 +217,7 @@ export const AppSidebar = ({
           </Sidebar.Group>
         )}
 
-        <Sidebar.Footer className="border-sidebar-border-1 border-t">
+        <Sidebar.Footer className="border-sidebar-border-1 border-t px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">
           <User
             user={currentUser}
             openThemeDialog={() => setOpenThemeDialog(true)}

@@ -98,7 +98,7 @@ export const SidebarItem = ({
               className={cn('text-sidebar-icon-3 hover:text-sidebar-icon-1', isInset ? 'right-[3px]' : 'right-0')}
               showOnHover
             >
-              <Icon name="menu-dots" size={14} />
+              <Icon name="menu-dots" size={12} />
             </Sidebar.MenuAction>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content

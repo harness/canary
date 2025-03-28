@@ -15,7 +15,7 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
   onDownloadClick,
   onEditClick,
   copyContent,
-  showEdit = true
+  showEdit = false
 }) => {
   return (
     <ButtonGroup spacing="0" className="h-full rounded shadow-as-border shadow-borders-1">

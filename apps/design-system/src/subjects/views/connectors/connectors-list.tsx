@@ -51,6 +51,9 @@ const ConnectorsListPageContent = (): JSX.Element => {
         })
       }}
       onTestConnection={noop}
+      currentPage={1}
+      totalPages={5}
+      goToPage={noop}
     />
   )
 }

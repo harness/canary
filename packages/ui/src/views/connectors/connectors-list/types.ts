@@ -1,3 +1,4 @@
+import { PaginationProps } from '@components/index'
 import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 
@@ -30,7 +31,9 @@ export interface ConnectorListProps extends Partial<RoutingProps> {
   onTestConnection: (connector: ConnectorListItem) => void
 }
 
-export interface ConnectorListPageProps extends ConnectorListProps {
+export interface ConnectorListPageProps
+  extends ConnectorListProps,
+    Pick<PaginationProps, 'totalPages' | 'currentPage' | 'goToPage'> {
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
   isError?: boolean

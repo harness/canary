@@ -4,7 +4,7 @@ import { Button, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/co
 import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
-import { noop } from 'lodash-es'
+import { cn } from '@utils/cn'
 
 import { ConnectorsList } from './connectors-list'
 import { ConnectorListPageProps } from './types'
@@ -15,6 +15,11 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
   isError,
   errorMessage,
   useTranslationStore,
+  currentPage,
+  totalPages,
+  goToPage,
+  isLoading,
+  connectors,
   ...props
 }) => {
   const { t } = useTranslationStore()
@@ -24,8 +29,6 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
     handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
     searchValue: searchQuery || ''
   })
-
-  const mockPageHeaders = { totalPages: 5, currentPage: 1, setPage: noop }
 
   if (isError) {
     return (
@@ -54,32 +57,36 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content>
-        <h1 className="text-24 text-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
-        <Spacer size={6} />
-        <ListActions.Root>
-          <ListActions.Left>
-            <SearchBox.Root
-              width="full"
-              className="max-w-96"
-              value={searchInput}
-              handleChange={handleInputChange}
-              placeholder={'Search'}
-            />
-          </ListActions.Left>
-          <ListActions.Right>
-            <Button variant="default">Create new Connector</Button>
-          </ListActions.Right>
-        </ListActions.Root>
-        <Spacer size={4} />
-        <ConnectorsList useTranslationStore={useTranslationStore} {...props} />
-        <Spacer size={8} />
-        <Pagination
-          totalPages={mockPageHeaders.totalPages}
-          currentPage={mockPageHeaders.currentPage}
-          goToPage={mockPageHeaders.setPage}
-          t={t}
+      <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !connectors.length && !searchQuery })}>
+        {(isLoading || !!connectors.length) && (
+          <>
+            <h1 className="text-24 text-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
+            <Spacer size={6} />
+            <ListActions.Root>
+              <ListActions.Left>
+                <SearchBox.Root
+                  width="full"
+                  className="max-w-96"
+                  value={searchInput}
+                  handleChange={handleInputChange}
+                  placeholder={'Search'}
+                />
+              </ListActions.Left>
+              <ListActions.Right>
+                <Button variant="default">Create new Connector</Button>
+              </ListActions.Right>
+            </ListActions.Root>
+            <Spacer size={4} />
+          </>
+        )}
+        <ConnectorsList
+          connectors={connectors}
+          useTranslationStore={useTranslationStore}
+          isLoading={isLoading}
+          {...props}
         />
+        <Spacer size={8} />
+        <Pagination totalPages={totalPages} currentPage={currentPage} goToPage={goToPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

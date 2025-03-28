@@ -56,7 +56,7 @@ const PullRequestFilters = <T extends FilterOption>({
   className
 }: PullRequestFilterProps<T>) => {
   return (
-    <div className={cn('grid grid-cols-[1fr_auto] items-center border-b border-borders-2 pb-2', className)}>
+    <div className={cn('grid grid-cols-[1fr_auto] items-center border-b border-cn-borders-2 pb-2', className)}>
       <h3 className="text-18 font-medium leading-snug text-foreground-1">Overview</h3>
 
       <div className="flex items-center gap-x-5">

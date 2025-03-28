@@ -56,13 +56,13 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
             </>
           )}
         </div>
-        <div className="mt-5 rounded-md border border-borders-2">
-          <div className="flex items-center justify-between rounded-t-md border-b border-borders-2 bg-cds-background-2 px-4 py-3">
+        <div className="mt-5 rounded-md border border-cn-borders-2">
+          <div className="flex items-center justify-between rounded-t-md border-b border-cn-borders-2 bg-cn-background-2 px-4 py-3">
             <span className="font-mono text-14 font-medium leading-snug text-foreground-8">{commitData?.title}</span>
             <Button variant="outline">{t('views:commits.browseFiles', 'Browse files')}</Button>
           </div>
           <div className="flex items-center justify-between px-4 py-3">
-            <div className="flex h-6 items-center gap-x-1 rounded-md bg-cds-background-8 px-2.5">
+            <div className="flex h-6 items-center gap-x-1 rounded-md bg-cn-background-8 px-2.5">
               <Icon name="branch" size={14} className="text-icons-9" />
               {/* TODO: get branch name from commitData */}
               <span className="text-14 font-medium leading-snug text-foreground-8">main</span>
@@ -73,7 +73,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
         {!showSidebar && <Outlet />}
       </SandboxLayout.Content>
       {showSidebar && (
-        <SandboxLayout.Content className="mt-5 grid grid-cols-[auto_1fr] border-t border-borders-4 py-0 pl-0 pr-5">
+        <SandboxLayout.Content className="mt-5 grid grid-cols-[auto_1fr] border-t border-cn-borders-4 py-0 pl-0 pr-5">
           <Outlet />
         </SandboxLayout.Content>
       )}

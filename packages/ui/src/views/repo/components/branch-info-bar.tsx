@@ -35,7 +35,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   const activeBranchTag = selectedBranchTag ?? selectedBranchTagFromStore
 
   return (
-    <div className="flex h-11 items-center justify-between rounded-md border border-borders-2 bg-cds-background-2 pl-4 pr-1.5">
+    <div className="flex h-11 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 pl-4 pr-1.5">
       <div className="flex items-center gap-x-1.5">
         <span className="text-14 leading-tight text-foreground-1">
           This branch is{' '}
@@ -61,7 +61,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <Button
-            className="group/contribute gap-x-2 px-2.5 data-[state=open]:border-borders-9 data-[state=open]:text-foreground-8 [&_svg]:data-[state=open]:text-icons-9"
+            className="group/contribute gap-x-2 px-2.5 data-[state=open]:border-cn-borders-9 data-[state=open]:text-foreground-8 [&_svg]:data-[state=open]:text-icons-9"
             variant="outline"
           >
             <Icon name="merged" size={14} />
@@ -75,7 +75,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-60 p-4" align="end">
           <div className="flex gap-x-2">
-            <div className="flex size-6 shrink-0 items-center justify-center rounded-full border border-borders-4">
+            <div className="flex size-6 shrink-0 items-center justify-center rounded-full border border-cn-borders-4">
               <Icon name="merged" size={12} />
             </div>
             <div>

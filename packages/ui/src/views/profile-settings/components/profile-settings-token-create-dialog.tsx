@@ -119,7 +119,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
               rightElement={
                 createdTokenData && (
                   <CopyButton
-                    className="absolute right-2.5 bg-cds-background-1"
+                    className="absolute right-2.5 bg-cn-background-1"
                     name={createdTokenData.identifier || ''}
                   />
                 )
@@ -149,7 +149,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                   label={t('views:profileSettings.token', 'Token')}
                   rightElement={
                     <CopyButton
-                      className="absolute right-2.5 bg-cds-background-1"
+                      className="absolute right-2.5 bg-cn-background-1"
                       name={createdTokenData?.token || ''}
                     />
                   }

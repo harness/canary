@@ -98,7 +98,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
         />
       </Popover.Trigger>
       <Popover.Content
-        className="w-[368px] overflow-hidden !rounded border-borders-2 bg-cds-background-2 !p-0"
+        className="w-[368px] overflow-hidden !rounded border-cn-borders-2 bg-cn-background-2 !p-0"
         ref={popoverRef}
         align="start"
         onWheel={e => e.stopPropagation()}
@@ -120,7 +120,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
             ) : (
               filteredItems.map((category, index) => (
                 <div
-                  className={cn(index > 0 ? 'border-borders-4 mt-0.5 border-t pt-2' : 'pt-1')}
+                  className={cn(index > 0 ? 'border-cn-borders-4 mt-0.5 border-t pt-2' : 'pt-1')}
                   key={`category-${category.groupId}-${index}`}
                 >
                   <Text className="inline-block px-2 leading-none text-foreground-7" size={1}>

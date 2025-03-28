@@ -325,7 +325,7 @@ const PullRequestAccordion: React.FC<{
       <StackedList.Item className="overflow-hidden p-0" disableHover>
         <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle}>
           <Accordion.Item isLast value={header?.text ?? ''}>
-            <Accordion.Trigger leftChevron className="bg-cds-background-2 px-4 py-3.5 text-left">
+            <Accordion.Trigger leftChevron className="bg-cn-background-2 px-4 py-3.5 text-left">
               <StackedList.Field
                 title={
                   <LineTitle

@@ -17,14 +17,14 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
   return (
     <>
       {filter.condition !== 'is_empty' && (
-        <div className="border-b border-borders-2 px-3 pb-2.5">
-          <div className="flex min-h-8 justify-between gap-x-1 rounded border border-borders-2 px-1 py-[3px] outline-none transition-colors duration-200 focus-within:border focus-within:border-borders-3">
+        <div className="border-b border-cn-borders-2 px-3 pb-2.5">
+          <div className="flex min-h-8 justify-between gap-x-1 rounded border border-cn-borders-2 px-1 py-[3px] outline-none transition-colors duration-200 focus-within:border focus-within:border-cn-borders-3">
             <div className="flex flex-1 flex-wrap items-center gap-1">
               {!!filter.selectedValues.length &&
                 filter.selectedValues.map(value => {
                   const label = filterOption.options?.find(opt => opt.value === value)?.label
                   return (
-                    <div className="flex h-6 items-center gap-x-1.5 rounded bg-cds-background-8 px-2" key={value}>
+                    <div className="flex h-6 items-center gap-x-1.5 rounded bg-cn-background-8 px-2" key={value}>
                       <span className="text-14 text-foreground-8">{label}</span>
                       <button
                         className="text-icons-1 transition-colors duration-200 hover:text-foreground-1"

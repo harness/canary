@@ -22,7 +22,7 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
           `relative w-full p-0 pr-1.5
           before:absolute before:z-[-1] before:top-0 before:-left-1.5 before:right-0 before:h-full before:rounded`,
           {
-            'before:bg-cds-background-4': isActive
+            'before:bg-cn-background-4': isActive
           }
         )}
         leftChevron
@@ -80,7 +80,7 @@ function FileItem({ children, isActive, link }: FileItemProps) {
         hover:text-foreground-1
         before:absolute before:z-[-1] before:top-0 before:left-2.5 before:right-0 before:h-full before:rounded`,
         {
-          'text-foreground-1 before:bg-cds-background-4': isActive
+          'text-foreground-1 before:bg-cn-background-4': isActive
         }
       )}
     >

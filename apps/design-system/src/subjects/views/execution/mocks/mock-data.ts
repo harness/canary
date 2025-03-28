@@ -253,14 +253,14 @@ export const elements: ExecutionTreeProps['elements'] = [
   {
     id: 'slack-notification-stage',
     name: 'Slack Notification Stage',
-    status: ExecutionState.PENDING,
+    status: ExecutionState.FAILURE,
     duration: '--:--',
     isSelectable: true,
     children: [
       {
         id: 'send-slack-notification',
         name: 'Send Slack notification',
-        status: ExecutionState.PENDING,
+        status: ExecutionState.FAILURE,
         duration: '--:--',
         isSelectable: true
       }

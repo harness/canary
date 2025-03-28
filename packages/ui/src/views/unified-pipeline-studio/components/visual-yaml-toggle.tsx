@@ -34,7 +34,7 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
         className="text-13 rounded disabled:opacity-100"
         size="xs"
       >
-        {!isYamlValid && <Icon name="fail" className="text-destructive mr-1" />}
+        {!isYamlValid && <Icon name="fail-legacy" className="mr-1 text-destructive" />}
         Visual
       </ToggleGroup.Item>
       <ToggleGroup.Item value="yaml" className="text-13 rounded" size="xs">

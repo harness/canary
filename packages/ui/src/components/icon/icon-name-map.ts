@@ -83,6 +83,7 @@ import Execution from '../../icons/execution-icon.svg'
 import ExpandComment from '../../icons/expand-comment.svg'
 import ExpandDiff from '../../icons/expand-diff.svg'
 import Eye from '../../icons/eye-icon.svg'
+import FailLegacy from '../../icons/fail-legacy.svg'
 import Fail from '../../icons/fail.svg'
 import FileIcon from '../../icons/file-icon.svg'
 import File from '../../icons/file.svg'
@@ -253,6 +254,7 @@ export const IconNameMap = {
   'arrow-long': ArrowLong,
   success: Success,
   fail: Fail,
+  'fail-legacy': FailLegacy,
   'tube-sign': TubeSign,
   signpost: Signpost,
   merged: Merged,

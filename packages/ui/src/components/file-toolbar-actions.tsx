@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { Button, ButtonGroup, CopyButton, Icon } from '@/components'
 
-const buttonClassName = 'rounded-none border-l border-borders-1 hover:bg-background-4'
+const buttonClassName = 'rounded-none border-borders-1 hover:bg-background-4'
 
 export interface FileToolbarActionsProps {
   onDownloadClick: () => void
@@ -26,7 +26,7 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
         </Button>
       )}
       <Button
-        className={`${buttonClassName} rounded-r`}
+        className={`${buttonClassName} border-l rounded-r`}
         size="icon"
         variant="custom"
         aria-label="Download"

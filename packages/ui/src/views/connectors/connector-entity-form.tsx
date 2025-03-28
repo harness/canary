@@ -71,7 +71,6 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
         }
         return input
       })
-      console.log(formDef, 'formDef')
 
       return formDef
     }

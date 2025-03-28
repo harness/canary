@@ -75,7 +75,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           </div>
 
           <Button
-            className="group border border-borders-2"
+            className="group border border-cn-borders-2"
             size="xs_icon"
             variant="custom"
             aria-label="Edit"

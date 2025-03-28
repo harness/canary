@@ -89,7 +89,7 @@ const Filters = ({
 
   return (
     <DropdownMenu.Root key={filter.type} open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-cds-background-3 pl-2.5 pr-2 transition-colors duration-200 hover:bg-cds-background-8">
+      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-cn-background-3 pl-2.5 pr-2 transition-colors duration-200 hover:bg-cn-background-8">
         <div className="flex items-center gap-x-1.5 text-13">
           <span className="text-foreground-1">
             {filterOption.label}
@@ -112,7 +112,7 @@ const Filters = ({
               <span className="text-14 text-foreground-4">{filterOption.label}</span>
 
               <DropdownMenu.Root>
-                <DropdownMenu.Trigger className="flex h-[18px] items-center gap-x-1 rounded bg-cds-background-3 pl-1.5 pr-1 text-14 text-foreground-2">
+                <DropdownMenu.Trigger className="flex h-[18px] items-center gap-x-1 rounded bg-cn-background-3 pl-1.5 pr-1 text-14 text-foreground-2">
                   {filterOption.conditions?.find(c => c.value === filter.condition)?.label}
                   <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
                 </DropdownMenu.Trigger>

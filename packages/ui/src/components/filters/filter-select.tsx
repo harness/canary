@@ -37,7 +37,7 @@ const FilterSelect = <FilterKey extends string>({
         align={dropdownAlign}
         onCloseAutoFocus={e => e.preventDefault()}
       >
-        <div className="flex items-center border-b border-borders-4 px-3 py-2.5">
+        <div className="flex items-center border-b border-cn-borders-4 px-3 py-2.5">
           <Input
             type="text"
             placeholder={inputPlaceholder}
@@ -76,7 +76,7 @@ const FilterSelect = <FilterKey extends string>({
         </div>
 
         {onReset && (
-          <div className="border-t border-borders-4 p-1">
+          <div className="border-t border-cn-borders-4 p-1">
             <DropdownMenu.Item asChild>
               <button className="w-full font-medium" onClick={onReset}>
                 {buttonLabel}

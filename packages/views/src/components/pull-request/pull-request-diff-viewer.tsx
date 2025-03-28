@@ -272,7 +272,7 @@ const PullRequestDiffViewer = ({
           diffFile={diffFileInstance}
           extendData={extend}
           renderExtendLine={({ data }) => (
-            <div className="bg-cds-background/50 px-6 py-[6px]">
+            <div className="bg-cn-background/50 px-6 py-[6px]">
               <Card.Root className="rounded-md bg-transparent">
                 <div className="flex flex-col p-4">
                   <div className="flex items-center space-x-2">

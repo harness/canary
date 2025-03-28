@@ -9,7 +9,7 @@ export interface BaseInputProps
     VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
-  'bg-input-background px-3 py-1 text-foreground-1 disabled:cursor-not-allowed disabled:bg-cds-background-3 disabled:text-foreground-7',
+  'bg-cn-background-3 px-3 py-1 text-foreground-1 disabled:cursor-not-allowed disabled:bg-cn-background-3 disabled:text-foreground-7',
   {
     variants: {
       variant: {
@@ -23,11 +23,11 @@ const inputVariants = cva(
       },
       theme: {
         default:
-          'border-borders-2 focus-within:border-borders-3 focus-visible:border-borders-3 disabled:border-borders-2 disabled:placeholder:text-foreground-9',
-        danger: 'border-borders-danger',
+          'border-cn-borders-2 focus-within:border-cn-borders-3 focus-visible:border-cn-borders-3 disabled:border-cn-borders-2 disabled:placeholder:text-foreground-9',
+        danger: 'border-cn-borders-danger',
         clean: 'bg-transparent outline-none focus:outline-none',
         sidebar:
-          'border-sidebar-border-2 bg-transparent text-sidebar-foreground-1 placeholder:text-sidebar-foreground-4 focus-within:border-sidebar-border-4 focus-visible:border-sidebar-border-4'
+          'border-cn-borders-2 bg-transparent text-sidebar-foreground-1 placeholder:text-sidebar-foreground-4 focus-within:border-sidebar-border-4 focus-visible:border-sidebar-border-4'
       }
     },
     defaultVariants: {

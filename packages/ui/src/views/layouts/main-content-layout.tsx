@@ -15,7 +15,7 @@ export function MainContentLayout({ className, children, breadcrumbs }: MainCont
   return (
     <div className={cn('h-screen', className)}>
       {!!breadcrumbs && (
-        <div className={cn('layer-high bg-cds-background-1 sticky top-0', { 'bg-sidebar-background-1': isInset })}>
+        <div className={cn('layer-high bg-cn-background-1 sticky top-0', { 'bg-sidebar-background-1': isInset })}>
           {breadcrumbs}
         </div>
       )}
@@ -43,7 +43,7 @@ export function MainContentLayout({ className, children, breadcrumbs }: MainCont
             isInset
           )}
         >
-          <div className={cn({ 'rounded-b-md mb-1.5 bg-cds-background-1 min-w-fit': isInset })}>{children}</div>
+          <div className={cn({ 'rounded-b-md mb-1.5 bg-cn-background-1 min-w-fit': isInset })}>{children}</div>
         </ScrollArea>
       </div>
     </div>

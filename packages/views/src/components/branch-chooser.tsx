@@ -41,7 +41,7 @@ export const BranchSelector = ({ ...props }: PageProps) => {
           size={size}
           className={cn(widthClasses[width], 'flex items-center gap-1.5 overflow-hidden px-3', {
             'bg-muted': !prefix,
-            'bg-cds-background': prefix,
+            'bg-cn-background': prefix,
             'border-border': prefix,
             'border-2': prefix
           })}

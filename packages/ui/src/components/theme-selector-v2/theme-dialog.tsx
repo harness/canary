@@ -69,7 +69,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         alt=""
                         className={cn(
                           'w-full h-auto rounded border',
-                          mode === value ? 'border-borders-accent' : 'border-borders-4'
+                          mode === value ? 'border-cn-borders-accent' : 'border-cn-borders-4'
                         )}
                       />
                       {mode === value && (
@@ -190,7 +190,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                       key={item}
                       className={cn(
                         'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
-                        accentColor === item && 'border border-borders-8'
+                        accentColor === item && 'border border-cn-borders-8'
                       )}
                       onClick={() => {
                         setAccentColor(item)
@@ -225,7 +225,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                       key={item}
                       className={cn(
                         'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
-                        grayColor === item && 'border border-borders-8'
+                        grayColor === item && 'border border-cn-borders-8'
                       )}
                       onClick={() => {
                         setGrayColor(item)

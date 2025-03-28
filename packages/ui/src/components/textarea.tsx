@@ -27,12 +27,12 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         )}
         <textarea
           className={cn(
-            'placeholder:text-foreground-4 flex min-h-[74px] w-full rounded border bg-input-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed',
+            'placeholder:text-foreground-4 flex min-h-[74px] w-full rounded border bg-cn-background-3 px-3 py-2 text-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed',
             resizable ? 'resize-y [field-sizing:content] whitespace-pre-wrap [word-break:break-word]' : 'resize-none',
             className,
             error
-              ? 'border-borders-danger'
-              : 'border-borders-2 focus-visible:border-borders-3 disabled:placeholder:text-foreground-9 disabled:border-borders-2'
+              ? 'border-cn-borders-danger'
+              : 'border-cn-borders-2 focus-visible:border-cn-borders-3 disabled:placeholder:text-foreground-9 disabled:border-cn-borders-2'
           )}
           id={id}
           disabled={disabled}

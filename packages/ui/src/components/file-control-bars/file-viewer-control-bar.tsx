@@ -42,7 +42,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
     return (
       <ButtonGroup verticalAlign="center" spacing="2">
         <span className="text-sm text-foreground-4">{`${fileContent?.split('\n').length || 0} lines`}</span>
-        <span className="h-3 border-l border-borders-2" />
+        <span className="h-3 border-l border-cn-borders-2" />
         <span className="mr-5 text-sm text-foreground-4">{fileBytesSize}</span>
         <FileToolbarActions
           showEdit

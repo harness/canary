@@ -111,7 +111,7 @@ export const RootLayout: React.FC<RootLayoutProps> = ({ currentUser }) => {
 
   return (
     <>
-      <div className="min-w-screen grid bg-cds-background md:grid-cols-[220px_minmax(900px,_1fr)]">
+      <div className="min-w-screen grid bg-cn-background md:grid-cols-[220px_minmax(900px,_1fr)]">
         {showNavbar && (
           <Navbar.Root className="fixed inset-y-0 left-0 z-50 max-md:hidden">
             <Navbar.Header>

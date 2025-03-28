@@ -11,7 +11,7 @@ import {
   useConnectorsContext
 } from '@harnessio/ui/views'
 
-import mockConnectorsData from './mock-connectors-data.json'
+import mockConnectorsList from './mock-connectors-list.json'
 
 const ConnectorsListPageContent = (): JSX.Element => {
   const { setRightDrawer, setFormEntity } = useConnectorsContext()
@@ -24,7 +24,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
   return (
     <ConnectorListPage
       connectors={
-        mockConnectorsData.map(connector => ({
+        mockConnectorsList.map(connector => ({
           name: connector.connector.name,
           identifier: connector.connector.identifier,
           status: connector.status.status,

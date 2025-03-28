@@ -1,32 +1,37 @@
-// <Badge variant="solid" theme="success">Private</Badge>
-
-import { CSSProperties } from 'react'
-
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-// Private
-// - bg - --cn-set-green-solid-bg
-// - text - --cn-set-green-solid-text
-// - border - --cn-set-green-solid-border
-// - border - --cn-comp-badge-
-
+/** Variants */
 const variants = ['solid', 'soft', 'surface']
 
-const themes = ['success', 'info', 'warning', 'destructive', 'primary', 'muted']
+/**
+ *  Themes
+ *
+ * "ai" theme is not allowed with variant.
+ *  If any variant is specified, TS will throw an error.
+ *
+ *  ✅ <Badge theme="ai">AI Theme</Badge>
+ *  ❌ <Badge theme="ai" variant="solid">Invalid</Badge>
+ *
+ *  */
+const themes = ['success', 'info', 'warning', 'destructive', 'primary', 'muted', 'merged', 'ai'] as const
 
-const themeStyleMapper: Record<(typeof themes)[number], string> = {
+const themeStyleMapper: Record<Exclude<(typeof themes)[number], 'ai'>, string> = {
   success: 'green',
   info: 'blue',
-  warning: 'orange',
+  warning: 'yellow',
   destructive: 'red',
   primary: 'brand',
-  muted: 'gray'
+  muted: 'gray',
+  merged: 'purple'
 }
 
-function createBadgeStyles() {
+function createBadgeVariantStyles() {
+  // Exclude "ai" theme from variants
+  const aiFilteredThemes = themes.filter(theme => theme !== 'ai')
   const combinationStyles: CSSRuleObject = {}
+
   variants.forEach(variant => {
-    themes.forEach(theme => {
+    aiFilteredThemes.forEach(theme => {
       const style: CSSRuleObject = {}
 
       const themeStyle = themeStyleMapper[theme as keyof typeof themeStyleMapper]
@@ -44,87 +49,35 @@ function createBadgeStyles() {
 
 export default {
   '.badge': {
-    ...createBadgeStyles()
+    padding: 'var(--cn-badge-status-py) var(--cn-badge-default-px)',
+    gap: 'var(--cn-badge-default-gap)',
+    height: 'var(--cn-badge-size-default)',
+    borderRadius: 'var(--cn-badge-radius)',
+    border: '1px solid var(--cn-set-gray-solid-border)',
+    '@apply select-none pointer-events-none': '',
+
+    /** Size */
+    '&-sm': {
+      height: 'var(--cn-badge-size-sm)',
+      gap: 'var(--cn-badge-sm-gap)',
+      padding: 'var(--cn-badge-sm-px)',
+      '@apply font-caption-soft': ''
+    },
+
+    /**
+     * ai theme
+     *
+     * Excluded from theme createBadgeVariantStyles themes and added here
+     */
+    '&-ai': {
+      color: 'var(--cn-set-ai-surface-text)',
+      backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg), var(--cn-set-ai-surface-bg)), var(--cn-set-ai-surface-border)`,
+      backgroundOrigin: 'border-box',
+      backgroundClip: 'padding-box, border-box',
+      border: '1px solid transparent'
+    },
+
+    /** Variants */
+    ...createBadgeVariantStyles()
   }
 }
-// export default {
-//   '.badge': {
-//     border: 'var(--cn-badge-border) solid var(--cn-set-default-border)',
-//     color: 'var(--cn-set-default-text)',
-//     backgroundColor: 'var(--cn-set-default-background)',
-//     padding: 'var(--cn-badge-py) var(--cn-badge-px)',
-//     gap: 'var(--cn-badge-gap)',
-//     height: 'var(--cn-badge-size-default)',
-
-//     // '&:hover': {
-//     //   backgroundColor: 'var(--cn-state-hover)'
-//     // },
-//     // font: theme!('font.caption.soft'),
-
-//     /**
-//      * Variants
-//      */
-//     '&-neutral': {
-//       color: 'var(--cn-set-neutral-text)',
-//       backgroundColor: 'var(--cn-set-neutral-background)',
-//       borderColor: 'var(--cn-set-neutral-border)'
-//     },
-//     '&-success': {
-//       color: 'var(--cn-set-success-text)',
-//       backgroundColor: 'var(--cn-set-success-background)',
-//       borderColor: 'var(--cn-set-success-border)'
-//     },
-//     '&-warning': {
-//       color: 'var(--cn-set-warning-text)',
-//       backgroundColor: 'var(--cn-set-warning-background)',
-//       borderColor: 'var(--cn-set-warning-border)'
-//     },
-//     '&-danger': {
-//       color: 'var(--cn-set-danger-text)',
-//       backgroundColor: 'var(--cn-set-danger-background)',
-//       borderColor: 'var(--cn-set-danger-border)'
-//     },
-//     '&-info': {
-//       color: 'var(--cn-set-info-text)',
-//       backgroundColor: 'var(--cn-set-info-background)',
-//       borderColor: 'var(--cn-set-info-border)'
-//     },
-//     '&-merged': {
-//       color: 'var(--cn-set-merged-text)',
-//       backgroundColor: 'var(--cn-set-merged-background)',
-//       borderColor: 'var(--cn-set-merged-border)'
-//     },
-//     '&-ai': {
-//       color: 'var(--cn-set-ai-text)',
-//       backgroundImage: `linear-gradient(to right, var(--cn-set-ai-background), var(--cn-set-ai-background)), var(--cn-set-ai-border)`,
-//       backgroundOrigin: 'border-box',
-//       backgroundClip: 'padding-box, border-box',
-//       border: '1px solid transparent'
-//     },
-
-//     /**
-//      * Rounded
-//      */
-
-//     '&-rounded': {
-//       '&-default': {
-//         borderRadius: 'var(--cn-badge-radius)'
-//       }
-
-//       // '&-full': {
-//       //   padding: 'var(--cn-badge-default-py) var(--cn-badge-rounded-px)',
-//       //   borderRadius: 'var(--cn-badge-rounded-radius)'
-//       // }
-//     },
-
-//     /**
-//      * Size
-//      */
-
-//     '&-sm': {
-//       height: 'var(--cn-badge-size-sm)',
-//       // font: 'var(--cn-caption-soft)'
-//       '@apply font-caption-soft': ''
-//     }
-//   }
-// }

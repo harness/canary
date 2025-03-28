@@ -34,8 +34,8 @@ export interface ConnectorListProps extends Partial<RoutingProps> {
 export interface ConnectorListPageProps
   extends ConnectorListProps,
     Pick<PaginationProps, 'totalPages' | 'currentPage' | 'goToPage'> {
-  searchQuery?: string | null
-  setSearchQuery: (query: string | null) => void
+  searchQuery?: string
+  setSearchQuery: (query?: string) => void
   isError?: boolean
   errorMessage?: string
 }

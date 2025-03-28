@@ -26,7 +26,7 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
   const { navigate } = useRouterContext()
 
   const { search: searchInput, handleSearchChange: handleInputChange } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
+    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : undefined),
     searchValue: searchQuery || ''
   })
 
@@ -58,27 +58,23 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !connectors.length && !searchQuery })}>
-        {(isLoading || !!connectors.length) && (
-          <>
-            <h1 className="text-24 text-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
-            <Spacer size={6} />
-            <ListActions.Root>
-              <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-96"
-                  value={searchInput}
-                  handleChange={handleInputChange}
-                  placeholder={'Search'}
-                />
-              </ListActions.Left>
-              <ListActions.Right>
-                <Button variant="default">Create new Connector</Button>
-              </ListActions.Right>
-            </ListActions.Root>
-            <Spacer size={4} />
-          </>
-        )}
+        <h1 className="text-24 text-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
+        <Spacer size={6} />
+        <ListActions.Root>
+          <ListActions.Left>
+            <SearchBox.Root
+              width="full"
+              className="max-w-96"
+              value={searchInput}
+              handleChange={handleInputChange}
+              placeholder={'Search'}
+            />
+          </ListActions.Left>
+          <ListActions.Right>
+            <Button variant="default">Create new Connector</Button>
+          </ListActions.Right>
+        </ListActions.Root>
+        <Spacer size={4} />
         <ConnectorsList
           connectors={connectors}
           useTranslationStore={useTranslationStore}

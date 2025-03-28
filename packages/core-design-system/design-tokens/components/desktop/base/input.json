@@ -21,9 +21,14 @@
       "$type": "spacing",
       "$value": "{spacing.1-half}"
     },
-    "px": {
+    "pl": {
       "$type": "spacing",
       "$value": "{spacing.3}",
+      "$description": "12px horizontal padding"
+    },
+    "pr": {
+      "$type": "spacing",
+      "$value": "{spacing.2}",
       "$description": "12px horizontal padding"
     },
     "py": {

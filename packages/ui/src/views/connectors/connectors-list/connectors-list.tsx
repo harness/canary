@@ -1,4 +1,4 @@
-import { Button, Icon, NoData, SkeletonList, Table } from '@/components'
+import { Button, Icon, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { useRouterContext } from '@/context'
 import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
@@ -53,7 +53,10 @@ export function ConnectorsList({
   }
 
   return (
-    <Table.Root variant="asStackedList">
+    <Table.Root
+      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
+      variant="asStackedList"
+    >
       <Table.Header>
         <Table.Row>
           <Table.Head>Connector</Table.Head>
@@ -62,25 +65,31 @@ export function ConnectorsList({
           <Table.Head>Last updated</Table.Head>
         </Table.Row>
       </Table.Header>
-      <Table.Body>
-        {connectors.map(connector => (
-          <Table.Row key={connector.identifier}>
-            <Table.Cell className="max-w-80 truncate">
-              <Link to={toConnectorDetails?.(connector) || ''}>
-                <div className="flex items-center gap-2.5">
-                  <Icon name="connectors" size={24} />
-                  <Title title={connector.identifier} />
-                </div>
-              </Link>
-            </Table.Cell>
-            <Table.Cell className="max-w-80 truncate">{connector.spec?.url}</Table.Cell>
-            <Table.Cell>
-              {connector?.status ? <ConnectivityStatus item={connector} onClick={onTestConnection} /> : null}
-            </Table.Cell>
-            <Table.Cell>{connector?.lastModifiedAt ? timeAgo(connector.lastModifiedAt) : null}</Table.Cell>
-          </Table.Row>
-        ))}
-      </Table.Body>
+      {isLoading ? (
+        <SkeletonTable countRows={12} countColumns={5} />
+      ) : (
+        <Table.Body>
+          {connectors.map(connector => (
+            <Table.Row key={connector.identifier} className="cursor-pointer">
+              <Table.Cell className="content-center max-w-80 truncate">
+                <Link to={toConnectorDetails?.(connector) || ''}>
+                  <div className="flex items-center gap-2.5">
+                    <Icon name="connectors" size={24} />
+                    <Title title={connector.identifier} />
+                  </div>
+                </Link>
+              </Table.Cell>
+              <Table.Cell className="content-center max-w-80 truncate">{connector.spec?.url}</Table.Cell>
+              <Table.Cell className="content-center">
+                {connector?.status ? <ConnectivityStatus item={connector} onClick={onTestConnection} /> : null}
+              </Table.Cell>
+              <Table.Cell className="content-center">
+                {connector?.lastModifiedAt ? timeAgo(connector.lastModifiedAt) : null}
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      )}
     </Table.Root>
   )
 }

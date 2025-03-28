@@ -1,6 +1,85 @@
 [
   {
     "connector": {
+      "name": "github-test",
+      "identifier": "githubtest",
+      "description": "",
+      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+      "orgIdentifier": null,
+      "projectIdentifier": null,
+      "tags": {},
+      "type": "Github",
+      "spec": {
+        "url": "https://github.com/sathish-soundarapandian/onboarding-test",
+        "validationRepo": null,
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "UsernameToken",
+            "spec": {
+              "username": "yashr-harness",
+              "usernameRef": null,
+              "tokenRef": "account.idp_integrations_git_gitlab_repo_tokenJfzgXUSyN5"
+            }
+          }
+        },
+        "apiAccess": {
+          "type": "Token",
+          "spec": {
+            "tokenRef": "account.idp_integrations_git_gitlab_repo_tokenJfzgXUSyN5"
+          }
+        },
+        "delegateSelectors": [],
+        "executeOnDelegate": false,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Repo"
+      }
+    },
+    "createdAt": 1743143906414,
+    "lastModifiedAt": 1743143906407,
+    "status": {
+      "status": "FAILURE",
+      "errorSummary": "Error Encountered (Bad credentials)",
+      "errors": [
+        {
+          "reason": "Unexpected Error",
+          "message": "Bad credentials",
+          "code": 450
+        }
+      ],
+      "testedAt": 1743143907993,
+      "lastTestedAt": 0,
+      "lastConnectedAt": 0,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1743143906407
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+  },
+  {
+    "connector": {
       "name": "idp_automation_gitlab_repo_token_manager_with_api_accesswCyh2Q8Knz",
       "identifier": "idp_automation_gitlab_repo_token_manager_with_api_accesswCyh2Q8Knz",
       "description": "",
@@ -6897,71 +6976,6 @@
     },
     "activityDetails": {
       "lastActivityTime": 1701148220402
-    },
-    "harnessManaged": false,
-    "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
-      "rootFolder": null,
-      "filePath": null,
-      "repoName": null,
-      "commitId": null,
-      "fileUrl": null,
-      "repoUrl": null,
-      "parentEntityConnectorRef": null,
-      "parentEntityRepoName": null,
-      "isHarnessCodeRepo": null
-    },
-    "entityValidityDetails": {
-      "valid": true,
-      "invalidYaml": null
-    },
-    "governanceMetadata": null,
-    "isFavorite": false
-  },
-  {
-    "connector": {
-      "name": "qwe123",
-      "identifier": "qwe123",
-      "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
-      "orgIdentifier": null,
-      "projectIdentifier": null,
-      "tags": {},
-      "type": "Gcp",
-      "spec": {
-        "credential": {
-          "type": "ManualConfig",
-          "spec": {
-            "secretKeyRef": "account.idp_secret_file"
-          }
-        },
-        "delegateSelectors": [],
-        "executeOnDelegate": true,
-        "proxy": false,
-        "ignoreTestConnection": false
-      }
-    },
-    "createdAt": 1720167049874,
-    "lastModifiedAt": 1731920311582,
-    "status": {
-      "status": "FAILURE",
-      "errorSummary": "Error Encountered (Connector with identifier [idp_auto_sm_i987MY9PF2] in project [null], org [null] not found)",
-      "errors": [
-        {
-          "reason": "Unexpected Error",
-          "message": "Connector with identifier [idp_auto_sm_i987MY9PF2] in project [null], org [null] not found",
-          "code": 450
-        }
-      ],
-      "testedAt": 1732004264045,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 1722545316689,
-      "lastAlertSent": null
-    },
-    "activityDetails": {
-      "lastActivityTime": 1731920311582
     },
     "harnessManaged": false,
     "gitDetails": {

@@ -1,16 +1,26 @@
 import { useMemo } from 'react'
 
-import { TranslationStore } from '@/views'
+import { SecretItem, TranslationStore } from '@/views'
 import { Alert } from '@components/alert'
 import { Button } from '@components/button'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
 import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
-import { inputComponentFactory } from '@views/unified-pipeline-studio/components/form-inputs/factory/factory'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 
-import { getDefaultValuesFromFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
+import {
+  getDefaultValuesFromFormDefinition,
+  InputFactory,
+  RenderForm,
+  RootForm,
+  useZodValidationResolver
+} from '@harnessio/forms'
 
-import { AnyConnectorDefinition, ConnectorFormEntityType, ConnectorRightDrawerMode, onSubmitConnectorProps } from './types'
+import {
+  AnyConnectorDefinition,
+  ConnectorFormEntityType,
+  ConnectorRightDrawerMode,
+  onSubmitConnectorProps
+} from './types'
 
 interface ConnectorEntityFormProps {
   formEntity: ConnectorFormEntityType
@@ -19,8 +29,10 @@ interface ConnectorEntityFormProps {
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   setRightDrawerMode: (value: ConnectorRightDrawerMode) => void
   useTranslationStore: () => TranslationStore
+  inputComponentFactory: InputFactory
   openSecretDrawer?: () => void
   apiError?: string | null
+  selectedSecret?: SecretItem
 }
 
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
@@ -31,7 +43,9 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     getConnectorDefinition,
     setRightDrawerMode,
     useTranslationStore,
-    openSecretDrawer
+    openSecretDrawer,
+    selectedSecret,
+    inputComponentFactory
   } = props
   const { t: _t } = useTranslationStore()
 
@@ -52,22 +66,22 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
         inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'name')
       }
 
-      if (openSecretDrawer) {
-        formDef.inputs = formDef.inputs.map(input => {
-          if (input.inputType === 'secretSelect') {
-            return {
-              ...input,
-              onSecretClick: () => openSecretDrawer?.()
-            }
+      formDef.inputs = formDef.inputs.map(input => {
+        if (input.inputType === 'secretSelect') {
+          return {
+            ...input
+            // ...(openSecretDrawer && { onSecretClick: openSecretDrawer }),
+            // ...(selectedSecret && { selectedSecretData: selectedSecret })
           }
-          return input
-        })
-      }
+        }
+        return input
+      })
+      console.log(formDef, 'formDef')
 
       return formDef
     }
     return { inputs: [] }
-  }, [formEntity.data.type, getConnectorDefinition, openSecretDrawer])
+  }, [formEntity.data.type, getConnectorDefinition, openSecretDrawer, selectedSecret])
 
   const resolver = useZodValidationResolver(formDefinition, {
     validationConfig: {
@@ -75,6 +89,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       requiredMessagePerInput: { ['select']: 'Selection is required' }
     }
   })
+  console.log(selectedSecret, 'selectedSecret', formEntity)
 
   return (
     <RootForm

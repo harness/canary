@@ -19,11 +19,11 @@ export function MainContentLayout({ className, children, breadcrumbs }: MainCont
           {breadcrumbs}
         </div>
       )}
-      <div className={cn('main-content-height', { 'overflow-hidden bg-sidebar-background-1': isInset })}>
+      <div className={cn('main-content-height', { 'overflow-hidden bg-sidebar-background-1 pb-1.5': isInset })}>
         <ScrollArea
           type="always"
           orientation="both"
-          className={cn('h-full', { 'rounded-t-md border-t': isInset })}
+          className={cn('h-full', { 'rounded-md border': isInset })}
           viewportClassName={cn('!overflow-scroll min-h-full [&>div]:!grid [&>div]:min-h-full', {
             'min-h-[calc(100%-6px)]': isInset
           })}
@@ -39,9 +39,7 @@ export function MainContentLayout({ className, children, breadcrumbs }: MainCont
             isInset
           )}
         >
-          <div className={cn({ 'rounded-md border border-t-0 mb-1.5 bg-background-1 min-w-fit': isInset })}>
-            {children}
-          </div>
+          <div className={cn({ 'rounded-md bg-background-1 min-w-fit': isInset })}>{children}</div>
         </ScrollArea>
       </div>
     </div>

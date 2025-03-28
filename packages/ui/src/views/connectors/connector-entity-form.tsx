@@ -15,11 +15,7 @@ import {
   useZodValidationResolver
 } from '@harnessio/forms'
 
-import {
-  AnyConnectorDefinition,
-  ConnectorFormEntityType,
-  onSubmitConnectorProps
-} from './types'
+import { AnyConnectorDefinition, ConnectorFormEntityType, onSubmitConnectorProps } from './types'
 
 interface ConnectorEntityFormProps {
   formEntity: ConnectorFormEntityType

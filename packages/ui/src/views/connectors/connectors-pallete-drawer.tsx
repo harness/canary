@@ -9,7 +9,7 @@ import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/compon
 
 import { ConnectorsPaletteLayout } from './components/connectors-pallete-layout'
 import { ConnectorsPaletteSection } from './components/ConnectorsPalleteSection'
-import { AnyConnectorDefinition, ConnectorFormEntityType, ConnectorRightDrawerMode } from './types'
+import { AnyConnectorDefinition, ConnectorFormEntityType } from './types'
 
 interface ConnectorsPaletteProps {
   connectors: AnyConnectorDefinition[]

@@ -18,7 +18,6 @@ import {
 import {
   AnyConnectorDefinition,
   ConnectorFormEntityType,
-  ConnectorRightDrawerMode,
   onSubmitConnectorProps
 } from './types'
 

@@ -27,12 +27,10 @@ export const PipelineStudioInternal = (): JSX.Element => {
     lastCommitInfo
   } = useUnifiedPipelineStudioContext()
 
-  const isFloatingHeader = view === 'visual'
-
   return (
     <YamlEditorContextProvider>
       <PipelineStudioLayout.Root>
-        <PipelineStudioLayout.Header floating={isFloatingHeader}>
+        <PipelineStudioLayout.Header isYamlView={view === 'yaml'}>
           <VisualYamlToggle view={view} setView={setView} isYamlValid={errors.isYamlValid} />
           <PipelineStudioLayout.HeaderLeft>
             {view === 'yaml' ? (
@@ -58,7 +56,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
         </PipelineStudioLayout.Header>
 
         <PipelineStudioLayout.Split>
-          <PipelineStudioLayout.SplitMain floating={isFloatingHeader}>
+          <PipelineStudioLayout.SplitMain>
             <PipelineStudioView />
           </PipelineStudioLayout.SplitMain>
 

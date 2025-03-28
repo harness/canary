@@ -3,17 +3,17 @@ import { ReactElement, ReactNode } from 'react'
 import { cn } from '@/utils'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@components/resizable'
 
-const HEADER_HEIGHT = 55
+export const HEADER_HEIGHT = 55
 
 const PipelineStudioLayout = {
   Root: ({ children, className }: { children: ReactNode; className?: string }) => {
     return <div className={cn('flex grow flex-col', className)}>{children}</div>
   },
-  Header: ({ floating, children }: { floating?: boolean; children: JSX.Element | JSX.Element[] | string }) => {
-    const className = floating ? 'absolute left-0 right-0 z-[1000] border-b-transparent' : ''
+  Header: ({ isYamlView, children }: { isYamlView?: boolean; children: JSX.Element | JSX.Element[] | string }) => {
+    const className = isYamlView ? 'border-b' : 'border-b-transparent'
     return (
       <div
-        className={cn(`flex items-center justify-between px-5 border-b`, className)}
+        className={cn(`absolute left-0 right-0 z-[1000] flex items-center justify-between px-5`, className)}
         style={{ height: `${HEADER_HEIGHT}px`, minHeight: `${HEADER_HEIGHT}px` }}
       >
         {children}
@@ -33,9 +33,9 @@ const PipelineStudioLayout = {
       </ResizablePanelGroup>
     )
   },
-  SplitMain: ({ floating, children }: { floating?: boolean; children: ReactElement }) => {
+  SplitMain: ({ children }: { children: ReactElement }) => {
     return (
-      <ResizablePanel order={1} className="flex" style={{ paddingTop: `${floating ? HEADER_HEIGHT : 0}px` }}>
+      <ResizablePanel order={1} className="flex">
         {children}
       </ResizablePanel>
     )

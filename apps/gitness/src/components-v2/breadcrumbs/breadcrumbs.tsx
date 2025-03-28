@@ -1,24 +1,28 @@
 import { Link, useMatches } from 'react-router-dom'
 
-import { Breadcrumb, Separator, Sidebar, Topbar } from '@harnessio/ui/components'
+import { Breadcrumb, Separator, Sidebar, Topbar, useSidebar } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
+import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { CustomHandle } from '../../framework/routing/types'
 
 function Breadcrumbs() {
   const matches = useMatches()
+  const { isMobile } = useSidebar()
   const matchesWithBreadcrumb = matches.filter(match => (match.handle as CustomHandle)?.breadcrumb)
   const isMFE = useIsMFE()
+  const { isInset } = useThemeStore()
 
   return (
-    <Topbar.Root>
+    <Topbar.Root className={cn({ 'pl-0': isInset && !isMobile })}>
       <Topbar.Left>
-        {!isMFE ? (
+        {!isMFE && isMobile && (
           <>
             <Sidebar.Trigger className="text-topbar-foreground-2 hover:text-topbar-foreground-1 hover:bg-topbar-background-1 -ml-1" />
             <Separator orientation="vertical" className="bg-sidebar-background-1 ml-1 mr-2 h-4" />
           </>
-        ) : null}
+        )}
         <Breadcrumb.Root className="select-none">
           <Breadcrumb.List>
             {matchesWithBreadcrumb.map((match, index) => {

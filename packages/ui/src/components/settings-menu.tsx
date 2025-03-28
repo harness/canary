@@ -1,7 +1,6 @@
 import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
-import { useRouterContext, useTheme } from '@/context'
+import { useRouterContext } from '@/context'
 import { MenuGroupType } from '@components/app-sidebar/types'
-import { cn } from '@utils/cn'
 
 interface SystemAdminMenuProps {
   showSettingMenu: boolean
@@ -11,19 +10,15 @@ interface SystemAdminMenuProps {
 
 export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: SystemAdminMenuProps) => {
   const { NavLink } = useRouterContext()
-  const { isInset } = useTheme()
 
   return (
     <Sheet.Root modal={false} open={showSettingMenu}>
       <Sheet.Content
-        className={cn(
-          'inset-y-0 z-40 h-screen w-[364px] bg-transparent p-0',
-          isInset ? 'border-l left-[228px]' : 'left-[220px]'
-        )}
+        className="inset-y-0 z-40 h-screen w-[364px] translate-x-[--sidebar-width] border-l p-0 shadow-none"
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
-        side="left"
         onClick={handleSettingsMenu}
         modal={false}
+        side="left"
       >
         <Sheet.Title className="sr-only">System Administration menu</Sheet.Title>
         <NavbarSkeleton.Root className="w-[364px]" isSubMenu>

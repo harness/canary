@@ -20,7 +20,7 @@ const tabsListVariants = cva('inline-flex items-center text-foreground-4', {
        */
       navigation: 'h-[44px] w-full justify-start gap-6 border-b border-borders-5 px-5',
       tabnav:
-        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-borders-1'
+        'before:bg-borders-1 relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full'
     },
     fontSize: {
       xs: 'text-12',

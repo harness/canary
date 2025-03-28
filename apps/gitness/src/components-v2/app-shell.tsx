@@ -115,17 +115,17 @@ export const AppShell = () => {
   /**
    * Toggle show more menu
    */
-  const handleMoreMenu = useCallback(() => {
+  const handleMoreMenu = useCallback((state?: boolean) => {
     setShowSettingMenu(false)
-    setShowMoreMenu(prevState => !prevState)
+    setShowMoreMenu(prevState => state ?? !prevState)
   }, [])
 
   /**
    * Toggle system settings menu
    */
-  const handleSettingsMenu = useCallback(() => {
+  const handleSettingsMenu = useCallback((state?: boolean) => {
     setShowMoreMenu(false)
-    setShowSettingMenu(prevState => !prevState)
+    setShowSettingMenu(prevState => state ?? !prevState)
   }, [])
 
   /**

@@ -339,6 +339,7 @@
     --canary-border-10: var(--canary-grey-6);
     --canary-border-danger: var(--canary-red-65);
     --canary-border-success: var(--canary-green-65);
+    --canary-border-warning: 20 100% 65%;
     --canary-border-accent: var(--canary-blue-60);
     --canary-border-alert: var(--canary-orange-55);
     /* Icons */
@@ -563,6 +564,7 @@
     --canary-border-10: var(--canary-base-chrome-150);
     --canary-border-danger: var(--canary-red-400);
     --canary-border-success: var(--canary-green-400);
+    --canary-border-warning: 30 95% 47%;
     --canary-border-accent: var(--canary-accent-400);
     --canary-border-alert: var(--canary-amber-500);
 
@@ -714,7 +716,7 @@
 
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
     --canary-widget-bg-gradient-to: var(--canary-pure-white) / 1;
-    --canary-widget-number-gradient-from: var(--canary-base-chrome-500) / 1;
+    --canary-widget-number-gradient-from: 240 4% 40% / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 1;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-150) / 1;
     --canary-widget-number-bg-gradient-to: var(--canary-pure-white) / 1;
@@ -1034,7 +1036,7 @@
 
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
     --canary-widget-bg-gradient-to: var(--canary-pure-white) / 1;
-    --canary-widget-number-gradient-from: var(--canary-base-chrome-500) / 1;
+    --canary-widget-number-gradient-from: 240 4% 40% / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 1;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-150) / 1;
     --canary-widget-number-bg-gradient-to: var(--canary-pure-white) / 1;
@@ -1354,7 +1356,7 @@
 
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
     --canary-widget-bg-gradient-to: var(--canary-pure-white) / 1;
-    --canary-widget-number-gradient-from: var(--canary-base-chrome-500) / 1;
+    --canary-widget-number-gradient-from: 240 4% 40% / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 1;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-150) / 1;
     --canary-widget-number-bg-gradient-to: var(--canary-pure-white) / 1;
@@ -1674,7 +1676,7 @@
 
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
     --canary-widget-bg-gradient-to: var(--canary-pure-white) / 1;
-    --canary-widget-number-gradient-from: var(--canary-base-chrome-500) / 1;
+    --canary-widget-number-gradient-from: 240 4% 40% / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 1;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-150) / 1;
     --canary-widget-number-bg-gradient-to: var(--canary-pure-white) / 1;
@@ -2172,6 +2174,7 @@
     --canary-border-10: var(--canary-base-chrome-850);
     --canary-border-danger: var(--canary-red-300);
     --canary-border-success: var(--canary-green-300);
+    --canary-border-warning: 20 100% 65%;
     --canary-border-accent: var(--canary-accent-500);
     --canary-border-alert: var(--canary-amber-400);
 
@@ -2519,6 +2522,7 @@
     --canary-border-10: var(--canary-base-chrome-700);
     --canary-border-danger: var(--canary-red-300);
     --canary-border-success: var(--canary-green-300);
+    --canary-border-warning: 20 100% 65%;
     --canary-border-accent: var(--canary-accent-500);
     --canary-border-alert: var(--canary-amber-400);
 
@@ -2863,6 +2867,7 @@
     --canary-border-10: var(--canary-base-chrome-850);
     --canary-border-danger: var(--canary-yellow-400);
     --canary-border-success: var(--canary-indigo-300);
+    --canary-border-warning: 20 100% 65%;
     --canary-border-accent: var(--canary-accent-500);
     --canary-border-alert: var(--canary-amber-400);
 

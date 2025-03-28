@@ -1,26 +1,33 @@
 import { useMemo } from 'react'
 
-import { TranslationStore } from '@/views'
+import { SecretItem, TranslationStore } from '@/views'
 import { Alert } from '@components/alert'
 import { Button } from '@components/button'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
 import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
-import { inputComponentFactory } from '@views/unified-pipeline-studio/components/form-inputs/factory/factory'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 
-import { getDefaultValuesFromFormDefinition, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
+import {
+  getDefaultValuesFromFormDefinition,
+  InputFactory,
+  RenderForm,
+  RootForm,
+  useZodValidationResolver
+} from '@harnessio/forms'
 
-import { AnyConnectorDefinition, ConnectorFormEntityType, ConnectorRightDrawer, onSubmitProps } from './types'
+import { AnyConnectorDefinition, ConnectorFormEntityType, onSubmitConnectorProps } from './types'
 
 interface ConnectorEntityFormProps {
   formEntity: ConnectorFormEntityType
   requestClose: () => void
-  onFormSubmit?: (values: onSubmitProps) => void
+  onFormSubmit?: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
-  setRightDrawer: (value: ConnectorRightDrawer) => void
+  onBack: () => void
   useTranslationStore: () => TranslationStore
+  inputComponentFactory: InputFactory
   openSecretDrawer?: () => void
   apiError?: string | null
+  selectedSecret?: SecretItem
 }
 
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
@@ -29,13 +36,15 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     apiError = null,
     onFormSubmit,
     getConnectorDefinition,
-    setRightDrawer,
+    onBack,
     useTranslationStore,
-    openSecretDrawer
+    openSecretDrawer,
+    selectedSecret,
+    inputComponentFactory
   } = props
   const { t: _t } = useTranslationStore()
 
-  const onSubmit = (data: onSubmitProps) => {
+  const onSubmit = (data: onSubmitConnectorProps) => {
     onFormSubmit?.(data)
   }
   const defaultConnectorValues = useMemo(() => {
@@ -52,30 +61,29 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
         inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'name')
       }
 
-      if (openSecretDrawer) {
-        formDef.inputs = formDef.inputs.map(input => {
-          console.log('input', input)
-          if (input.inputType === 'secretSelect') {
-            return {
-              ...input,
-              onSecretClick: openSecretDrawer?.()
-            }
+      formDef.inputs = formDef.inputs.map(input => {
+        if (input.inputType === 'secretSelect') {
+          return {
+            ...input
+            // ...(openSecretDrawer && { onSecretClick: openSecretDrawer }),
+            // ...(selectedSecret && { selectedSecretData: selectedSecret })
           }
-          return input
-        })
-      }
+        }
+        return input
+      })
 
       return formDef
     }
     return { inputs: [] }
-  }, [formEntity.data.type, getConnectorDefinition, openSecretDrawer])
-  console.log(formDefinition, 'formDefinition')
+  }, [formEntity.data.type, getConnectorDefinition, openSecretDrawer, selectedSecret])
+
   const resolver = useZodValidationResolver(formDefinition, {
     validationConfig: {
       requiredMessage: 'Required input',
       requiredMessagePerInput: { ['select']: 'Selection is required' }
     }
   })
+  console.log(selectedSecret, 'selectedSecret', formEntity)
 
   return (
     <RootForm
@@ -107,7 +115,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer>
             <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-background-2 p-4 shadow-md">
-              <Button variant="secondary" onClick={() => setRightDrawer(ConnectorRightDrawer.Collection)}>
+              <Button variant="secondary" onClick={onBack}>
                 Back
               </Button>
               <Button onClick={() => rootForm.submitForm()}>Submit</Button>

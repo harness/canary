@@ -15,6 +15,7 @@ import { YamlRevision } from '../types/common-types'
 import { RightDrawer } from '../types/right-drawer-types'
 import { getInlineActionConfig, InlineActionArgsType } from '../utils/inline-actions'
 import { countProblems, monacoMarkers2Problems } from './graph-implementation/utils/problems-utils'
+import { HEADER_HEIGHT } from './unified-pipeline-studio-layout'
 
 MonacoGlobals.set({
   ILanguageFeaturesService,
@@ -144,7 +145,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
     //     : undefined
 
     return (
-      <div className="flex size-full">
+      <div className="flex size-full" style={{ paddingTop: `${HEADER_HEIGHT}px` }}>
         <YamlEditor
           onYamlRevisionChange={value => {
             currentYamlRef.current = value?.yaml

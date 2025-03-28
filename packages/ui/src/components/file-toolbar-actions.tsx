@@ -18,7 +18,7 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
   showEdit = false
 }) => {
   return (
-    <ButtonGroup spacing="0" className="h-full rounded shadow-as-border shadow-borders-1">
+    <ButtonGroup spacing="0" className="shadow-borders-1 h-full rounded shadow-as-border">
       <CopyButton className={`${buttonClassName} rounded-l`} name={copyContent} />
       {showEdit && (
         <Button className={buttonClassName} size="icon" variant="custom" aria-label="Edit" onClick={onEditClick}>

@@ -5,12 +5,7 @@ import { InputConfigType } from '../../views/unified-pipeline-studio/components/
 
 export type IInputConfigWithConfigInterface = IInputDefinition & InputConfigType
 
-export enum ConnectorRightDrawer {
-  None = 'none',
-  Collection = 'palette',
-  Form = 'connectorForm'
-}
-export interface onSubmitProps {
+export interface onSubmitConnectorProps {
   values: FieldValues
   formEntity: ConnectorFormEntityType
 }

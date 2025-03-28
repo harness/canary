@@ -8,7 +8,7 @@ export const ExecutionStatus = ({ executionStatus }: { executionStatus: Executio
   return (
     <div className="absolute right-0" style={{ top: '-25px' }}>
       {executionStatus === 'executing' ? (
-        <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="muted">
+        <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
           <Icon name="running" size={10} className="mr-1 animate-spin" />
           Running
         </Badge>

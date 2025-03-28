@@ -53,7 +53,11 @@ export function StepNode(props: StepNodeProps) {
     <>
       <ExecutionStatus executionStatus={executionStatus} />
 
-      <div className="bg-background-8 rounded-md">
+      <div
+        className={cn('bg-background-8 rounded-md', {
+          'unified-pipeline-studio_card-wrapper ': executionStatus === 'executing'
+        })}
+      >
         <div
           role="button"
           tabIndex={0}
@@ -63,8 +67,9 @@ export function StepNode(props: StepNodeProps) {
               'border-graph-border-1': !selected,
               'border-borders-3': selected,
               'border-borders-success': executionStatus === 'success',
-              'border-borders-alert': executionStatus === 'warning' || executionStatus === 'executing',
-              'border-borders-danger': executionStatus === 'error'
+              'border-borders-alert': executionStatus === 'warning',
+              'border-borders-danger': executionStatus === 'error',
+              'border-0': executionStatus === 'executing'
             }
           )}
           onClick={onClick}

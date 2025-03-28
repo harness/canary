@@ -12,10 +12,11 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
   const { NavLink } = useRouterContext()
 
   return (
-    <Sheet.Root modal={false} open={showSettingMenu} onOpenChange={handleSettingsMenu}>
+    <Sheet.Root modal={false} open={showSettingMenu}>
       <Sheet.Content
         className="inset-y-0 z-40 h-screen w-[364px] translate-x-[--sidebar-width] border-l p-0 shadow-none"
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
+        onClick={handleSettingsMenu}
         modal={false}
         side="left"
       >

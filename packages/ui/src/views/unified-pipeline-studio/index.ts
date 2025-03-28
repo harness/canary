@@ -15,3 +15,5 @@ export type { YamlErrorDataType } from './components/unified-pipeline-studio-yam
 
 export { PipelineStudioNodeContext } from './components/graph-implementation/context/UnifiedPipelineStudioNodeContext'
 export { contentNodeBank } from './components/graph-implementation/factory/content-node-bank'
+
+export type { VisualYamlValue } from './components/visual-yaml-toggle'

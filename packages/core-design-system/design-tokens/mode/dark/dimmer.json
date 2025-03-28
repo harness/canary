@@ -1286,40 +1286,6 @@
         "$description": "Background for controls that expand/collapse code sections to show additional context."
       }
     },
-    "input": {
-      "text": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Text color for input field content. Ensures readability of user-entered information."
-      },
-      "placeholder": {
-        "$type": "color",
-        "$value": "{text.3}",
-        "$description": "Text color for input field placeholders. Provides lower-contrast guidance text that doesn't compete with entered content."
-      },
-      "icon": {
-        "$type": "color",
-        "$value": "{text.3}",
-        "$description": "Color for icons within input components. Creates visual harmony with placeholder text and decorative elements."
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.2}",
-        "$description": "Background color for input fields. Creates a distinct surface for user interaction and data entry."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.2}",
-        "$description": "Border color for input fields. Defines the input area with a visible boundary for improved usability."
-      }
-    },
-    "label": {
-      "text": {
-        "$type": "color",
-        "$value": "{text.1}",
-        "$description": "Text color for form labels and field identifiers. Ensures high contrast for important contextual information."
-      }
-    },
     "link": {
       "default": {
         "$type": "color",

@@ -1,6 +1,15 @@
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
+// Extend HTMLAttributes to include inert attribute
+// move it to right place where we have global types
+// declare module 'react' {
+//   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+//     // Add inert attribute support
+//     inert?: boolean
+//   }
+// }
+
 enum BadgesHoverStates {
   ENABLED = 'enabled',
   DISABLED_DEFAULT = 'disabled-default',
@@ -25,11 +34,11 @@ const badgeVariants = cva('inline-flex items-center transition-colors badge', {
 
       // default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
       // secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
-      // tertiary: 'border-transparent bg-cds-background-8 text-foreground-8',
-      // quaternary: 'border-borders-2 bg-cds-background-2 text-foreground-5',
+      // tertiary: 'border-transparent bg-cn-background-8 text-foreground-8',
+      // quaternary: 'border-cn-borders-2 bg-cn-background-2 text-foreground-5',
       // destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
       // outline: 'text-foreground',
-      solid: 'badge-solid badge',
+      solid: 'badge-solid',
       soft: 'badge-soft',
       surface: 'badge-surface',
 
@@ -45,23 +54,23 @@ const badgeVariants = cva('inline-flex items-center transition-colors badge', {
      */
     size: {
       default: '',
-      sm: 'badge-sm',
+      sm: 'badge-sm'
 
-      xl: 'h-[18px] px-2 text-12',
-      lg: 'px-3 py-1 text-xs font-normal',
-      md: 'h-6 px-2.5',
-      xs: 'h-[18px] px-1.5 text-11 font-light'
+      // xl: 'h-[18px] px-2 text-12',
+      // lg: 'px-3 py-1 text-xs font-normal',
+      // md: 'h-6 px-2.5',
+      // xs: 'h-[18px] px-1.5 text-11 font-light'
     },
     /**
      * CDS: How to take it forward?
      *
      * Delete -base and have -base and -full?
      */
-    borderRadius: {
-      default: 'badge-rounded-default',
-      base: 'badge-rounded-default',
-      full: 'badge-rounded-full'
-    },
+    // borderRadius: {
+    //   default: 'badge-rounded-default',
+    //   base: 'badge-rounded-default',
+    //   full: 'badge-rounded-full'
+    // },
     /**
      * CDS: How to take it forward?
      * Delete -theme?
@@ -84,50 +93,59 @@ const badgeVariants = cva('inline-flex items-center transition-colors badge', {
       destructive: 'badge-destructive',
       info: 'badge-info',
       merged: 'badge-merged',
-      ai: 'badge-ai'
+      ai: 'badge-ai',
+      primary: 'badge-primary'
     }
   },
   compoundVariants: [
     {
       size: 'sm',
-      borderRadius: 'full',
       className: 'px-2'
     }
   ],
   defaultVariants: {
-    variant: 'default',
+    variant: 'surface',
     size: 'default',
-    // hover: BadgesHoverStates.ENABLED,
-    theme: 'default'
+    theme: 'muted'
   }
 })
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
-  disableHover?: boolean
-  color?: 'destructive' | 'success' | 'warning' | 'muted' | 'default'
+// Base props without theme-specific requirements
+type BadgeBaseProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'color' | 'role' | 'aria-readonly' | 'tabIndex' | 'onClick'
+> & {
+  size?: 'default' | 'sm'
 }
 
-function Badge({
-  className,
-  variant = 'default',
-  size,
-  borderRadius = 'default',
-  theme = 'default',
-  disableHover,
-  ...props
-}: BadgeProps) {
-  const hover = (
-    disableHover ? (theme !== 'default' ? `disabled-${theme}-theme` : `disabled-${variant}`) : BadgesHoverStates.ENABLED
-  ) as BadgesHoverStates
+// AI theme props (variant not allowed)
+type BadgeAIThemeProps = BadgeBaseProps & {
+  theme: 'ai'
+  variant?: never
+}
+
+// Non-AI theme props (variant is required)
+type BadgeOtherThemeProps = BadgeBaseProps & {
+  theme?: Exclude<VariantProps<typeof badgeVariants>['theme'], 'ai'>
+  variant: NonNullable<VariantProps<typeof badgeVariants>['variant']> // Make variant required
+}
+
+// Combined props using discriminated union
+export type BadgeProps = BadgeAIThemeProps | BadgeOtherThemeProps
+
+function Badge({ className, variant, size, theme = 'default', ...props }: BadgeProps) {
+  // If theme is 'ai', we don't use variant
+  const effectiveVariant = theme === 'ai' ? undefined : variant
 
   return (
     <div
-      inert
+      role="status"
+      aria-readonly="true"
+      tabIndex={-1}
       className={cn(
         badgeVariants({
-          variant,
+          variant: effectiveVariant,
           size,
-          borderRadius,
           theme
         }),
         className

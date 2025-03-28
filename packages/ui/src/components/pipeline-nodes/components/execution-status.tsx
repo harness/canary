@@ -3,13 +3,7 @@ import { Badge, Icon } from '@/components'
 import { ExecutionStatusType } from '../types/types'
 
 export const ExecutionStatus = ({ executionStatus }: { executionStatus: ExecutionStatusType }) => {
-  if (!executionStatus)
-    return (
-      <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
-        <Icon name="running" size={10} className="mr-1 animate-spin" />
-        Running
-      </Badge>
-    )
+  if (!executionStatus) return null
 
   return (
     <div className="absolute right-0" style={{ top: '-25px' }}>

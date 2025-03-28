@@ -66,14 +66,14 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                               {toCommitDetails ? (
                                 <p>
                                   <Link
-                                    className="text-16 font-medium leading-snug hover:underline"
+                                    className="text-sm font-medium leading-snug hover:underline"
                                     to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
                                   >
                                     <span className="truncate">{commit.title}</span>
                                   </Link>
                                 </p>
                               ) : (
-                                <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
+                                <span className="truncate text-sm font-medium leading-snug">{commit.title}</span>
                               )}
                               <div className="flex items-center gap-x-1.5">
                                 {authorName && (

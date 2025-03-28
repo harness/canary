@@ -25,7 +25,7 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
     searchValue: searchQuery || ''
   })
 
-  const mockPageHeaders = { totalPages: 1, page: 1, setPage: noop }
+  const mockPageHeaders = { totalPages: 5, currentPage: 1, setPage: noop }
 
   if (isError) {
     return (
@@ -76,7 +76,7 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
         <Spacer size={8} />
         <Pagination
           totalPages={mockPageHeaders.totalPages}
-          currentPage={mockPageHeaders.page}
+          currentPage={mockPageHeaders.currentPage}
           goToPage={mockPageHeaders.setPage}
           t={t}
         />

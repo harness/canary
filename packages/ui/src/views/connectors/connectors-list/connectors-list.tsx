@@ -2,7 +2,6 @@ import { Button, Icon, NoData, SkeletonList, Table } from '@/components'
 import { useRouterContext } from '@/context'
 import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
-import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorListItem, ConnectorListProps } from './types'
 
@@ -18,16 +17,14 @@ const ConnectivityStatus = ({
 }: {
   item: ConnectorListItem
   onClick: ConnectorListProps['onTestConnection']
-}): JSX.Element => {
-  return (
-    <div className="inline-flex items-center gap-2.5">
-      {item?.status ? <ExecutionStatus.Badge status={item.status} /> : null}
-      <Button size="icon" variant="outline" onClick={() => onClick(item)}>
-        <Icon name="refresh" size={24} />
-      </Button>
-    </div>
-  )
-}
+}): JSX.Element => (
+  <div className="inline-flex items-center gap-3">
+    {item?.status ? <ExecutionStatus.Badge status={item.status} /> : null}
+    <Button size="icon" variant="outline" onClick={() => onClick(item)}>
+      <Icon name="refresh" size={16} />
+    </Button>
+  </div>
+)
 
 export function ConnectorsList({
   connectors,

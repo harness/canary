@@ -3,24 +3,24 @@ import { useState } from 'react'
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
 import noop from 'lodash-es/noop'
 
+import { InputFactory } from '@harnessio/forms'
 import { Button, Drawer, ListActions, Spacer } from '@harnessio/ui/components'
 import {
+  ArrayInput,
+  BooleanInput,
   ConnectorEntityForm,
   ConnectorFormEntityType,
   ConnectorsPalette,
-  SandboxLayout,
-  TextInput,
-  BooleanInput,
-  NumberInput,
-  ArrayInput,
-  ListInput,
-  TextAreaInput,
   GroupInput,
+  ListInput,
+  NumberInput,
+  RadialInput,
+  SandboxLayout,
   SelectInput,
   SeparatorInput,
-  RadialInput
+  TextAreaInput,
+  TextInput
 } from '@harnessio/ui/views'
-import { InputFactory } from '@harnessio/forms';
 
 const inputComponentFactory = new InputFactory()
 inputComponentFactory.registerComponent(new TextInput())

@@ -32,9 +32,9 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
         >
           <div
             className={cn(
-              'group-hover:bg-cds-background-4 absolute z-0 h-full w-full rounded-[10px] bg-transparent transition-colors',
+              'group-hover:bg-cn-background-4 absolute z-0 h-full w-full rounded-[10px] bg-transparent transition-colors',
               { 'group-hover:bg-sidebar-background-2': isMainNav },
-              { 'bg-cds-background-4': active },
+              { 'bg-cn-background-4': active },
               { 'bg-sidebar-background-2': active && isMainNav }
             )}
           />
@@ -42,7 +42,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
             {icon ? (
               <div
                 className={cn(
-                  'sub-menu-icon-bg relative flex size-8 place-content-center place-items-center rounded border border-borders-2 bg-cds-background-2',
+                  'sub-menu-icon-bg relative flex size-8 place-content-center place-items-center rounded border border-cn-borders-2 bg-cn-background-2',
                   { 'border-sidebar-border-3 bg-sidebar-background-7': isMainNav }
                   // { 'border-sidebar-border-6 bg-sidebar-background-8': active && isLightTheme }
                 )}

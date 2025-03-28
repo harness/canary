@@ -47,7 +47,7 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
     return (
       <StackedList.Item
         onClick={() => onSelect(entity)}
-        className={isSelected ? 'bg-cds-background-4' : ''}
+        className={isSelected ? 'bg-cn-background-4' : ''}
         thumbnail={<Icon name="connectors" size={16} className="text-foreground-5" />}
         actions={
           <Button

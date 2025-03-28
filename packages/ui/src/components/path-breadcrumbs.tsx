@@ -36,7 +36,7 @@ const InputPathBreadcrumbItem = ({
         autoFocus={!!isNew}
       />
       <span>in</span>
-      <span className="flex h-6 items-center gap-1 rounded bg-cds-background-8 px-2.5 text-foreground-8">
+      <span className="flex h-6 items-center gap-1 rounded bg-cn-background-8 px-2.5 text-foreground-8">
         <Icon className="text-icons-9" name="branch" size={14} />
         {gitRefName}
       </span>

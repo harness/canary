@@ -104,7 +104,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
   return (
     <Floating1ColumnLayout
-      className="flex-col justify-start bg-cds-background-7 pt-20 sm:pt-[8.75rem]"
+      className="flex-col justify-start bg-cn-background-7 pt-20 sm:pt-[8.75rem]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >

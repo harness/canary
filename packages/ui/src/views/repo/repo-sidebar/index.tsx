@@ -47,7 +47,7 @@ export const RepoSidebar = ({
                 )}
                 <ButtonGroup spacing="0" className="shadow-borders-2 h-full rounded shadow-as-border">
                   <Button
-                    className="hover:border-borders-2 hover:bg-cds-background-3"
+                    className="hover:border-cn-borders-2 hover:bg-cn-background-3"
                     size="icon"
                     variant="outline"
                     aria-label="Create new file"
@@ -73,7 +73,7 @@ export const RepoSidebar = ({
         </SandboxLayout.LeftSubPanel>
       </div>
       {/* Sticky right border */}
-      <div className="sticky top-0 w-px border-r border-borders-4" />
+      <div className="sticky top-0 w-px border-r border-cn-borders-4" />
     </>
   )
 }

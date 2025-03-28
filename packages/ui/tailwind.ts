@@ -128,23 +128,6 @@ export default {
           danger: 'hsla(var(--canary-background-danger))',
           success: 'hsla(var(--canary-background-success))'
         },
-        borders: {
-          1: 'hsl(var(--canary-border-01))',
-          2: 'hsl(var(--canary-border-02))',
-          3: 'hsl(var(--canary-border-03))',
-          4: 'hsl(var(--canary-border-04))',
-          5: 'hsl(var(--canary-border-05))',
-          6: 'hsl(var(--canary-border-06))',
-          7: 'hsl(var(--canary-border-07))',
-          8: 'hsl(var(--canary-border-08))',
-          9: 'hsl(var(--canary-border-09))',
-          10: 'hsl(var(--canary-border-10))',
-          danger: 'hsl(var(--canary-border-danger))',
-          success: 'hsl(var(--canary-border-success))',
-          accent: 'hsl(var(--canary-border-accent))',
-          risk: 'hsl(var(--canary-icon-risk))',
-          alert: 'hsl(var(--canary-border-alert))'
-        },
         button: {
           foreground: {
             'disabled-1': 'hsl(var(--canary-button-foreground-disabled-01))',
@@ -398,7 +381,7 @@ export default {
         'borders-danger': 'hsl(var(--canary-border-danger))',
         'borders-success': 'hsl(var(--canary-border-success))',
         'borders-accent': 'hsl(var(--canary-border-accent))',
-        'borders-risk': 'hsl(var(--canary-icon-risk))',
+        'borders-warning': 'hsl(var(--canary-border-warning))',
         'borders-alert': 'hsl(var(--canary-border-alert))'
       },
       borderRadius: {
@@ -439,8 +422,10 @@ export default {
           'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-item-gradient-1)) 0%, hsla(var(--canary-nav-item-gradient-2)) 17.63%, hsla(var(--canary-nav-item-gradient-3)) 40.23%, hsla(var(--canary-nav-item-gradient-4)) 61.54%, hsla(var(--canary-nav-item-gradient-5)) 80%, hsla(var(--canary-nav-item-gradient-6)) 100%)',
         'widget-bg-gradient':
           'radial-gradient(80.82% 77.84% at 80.15% 11.99%, hsla(var(--canary-widget-bg-gradient-from)) 8.43%, hsla(var(--canary-widget-bg-gradient-to)) 100%)',
-        'widget-number-gradient':
+        'widget-number-gradient-dark':
           'linear-gradient(180deg, hsla(var(--canary-widget-number-gradient-from)) 35.9%, hsla(var(--canary-widget-number-gradient-to)) 100%)',
+        'widget-number-gradient-light':
+          'linear-gradient(180deg, hsla(var(--canary-widget-number-gradient-from)) 0%, hsl(var(--canary-foreground-4)) 64.1%)',
         'widget-number-bg-gradient':
           'linear-gradient(135deg, hsla(var(--canary-widget-number-bg-gradient-from)) 0%, hsla(var(--canary-widget-number-bg-gradient-to)) 67.67%)',
         'graph-gradient-1':
@@ -540,7 +525,6 @@ export default {
     { pattern: /^bg-graph-/ },
     { pattern: /^bg-background-/ },
     { pattern: /^text-foreground-/ },
-    { pattern: /^border-borders-/ },
     { pattern: /^text-icons-/ },
     { pattern: /^bg-icons-/ },
     // button classes
@@ -568,7 +552,6 @@ export default {
     { pattern: /^hover:bg-graph-/ },
     { pattern: /^hover:bg-background-/ },
     { pattern: /^hover:text-foreground-/ },
-    { pattern: /^hover:border-borders-/ },
     { pattern: /^hover:text-icons-/ },
     { pattern: /^hover:bg-icons-/ },
     // button classes

@@ -245,6 +245,10 @@
     "descriptionWithType": "La page demandée est introuvable. Vous pouvez revenir pour voir tous les {{type}} et gérer vos paramètres.",
     "description": "La page demandée est introuvable."
   },
+  "search": "Rechercher",
+  "connectors": {
+    "createNew": "Créer un nouveau connecteur"
+  },
   "execution": {
     "summary": "Résumé",
     "logs": "Journaux",

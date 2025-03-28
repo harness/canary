@@ -67,11 +67,11 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
               className="max-w-96"
               value={searchInput}
               handleChange={handleInputChange}
-              placeholder={'Search'}
+              placeholder={t('views:search', 'Search')}
             />
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default">Create new Connector</Button>
+            <Button variant="default">{t('views:connectors.createNew', 'Create new connector')}</Button>
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={4} />

@@ -7,8 +7,8 @@ const PipelineStudioLayout = {
   Root: ({ children, className }: { children: ReactNode; className?: string }) => {
     return <div className={cn('flex grow flex-col', className)}>{children}</div>
   },
-  Header: ({ children }: { children: JSX.Element | JSX.Element[] | string }) => {
-    return <div className="flex h-[55px] items-center justify-between border-b px-5">{children}</div>
+  Header: ({ children, className }: { children: JSX.Element | JSX.Element[] | string; className?: string }) => {
+    return <div className={cn('flex h-[55px] items-center justify-between border-b px-5', className)}>{children}</div>
   },
   HeaderLeft: ({ children }: { children: JSX.Element | (JSX.Element | null)[] | string }) => {
     return <div className="flex items-center gap-x-3">{children}</div>

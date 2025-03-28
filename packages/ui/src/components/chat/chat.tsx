@@ -1,18 +1,20 @@
 import { ChangeEvent, FC, HTMLAttributes, KeyboardEvent, PropsWithChildren, ReactNode, RefObject } from 'react'
 
 import { Button, Icon, Input } from '@/components'
+import { useTheme } from '@/context'
+import ChatAvatarIconLightTheme from '@/icons/chat-avatar-light-theme.svg'
 import ChatAvatarIcon from '@/icons/chat-avatar.svg'
 import { cn } from '@utils/cn'
 
 const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  return <div className="flex size-full max-w-[460px] flex-col bg-background-1">{children}</div>
+  return <div className="bg-background-1 flex size-full max-w-[460px] flex-col">{children}</div>
 }
 
 const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="sticky top-0 flex items-center justify-between bg-background-1 px-6 py-4">
-      <p className="text-16 font-medium text-foreground-1">Harness AI</p>
-      <Button size="icon" variant="custom" className="-mr-2 text-icons-4 hover:text-icons-2" onClick={onClose}>
+    <div className="bg-background-1 sticky top-0 flex items-center justify-between px-6 py-4">
+      <p className="text-16 text-foreground-1 font-medium">Harness AI</p>
+      <Button size="icon" variant="custom" className="text-icons-4 hover:text-icons-2 -mr-2" onClick={onClose}>
         <Icon name="close" size={16} />
         <span className="sr-only">Close</span>
       </Button>
@@ -29,7 +31,7 @@ const Body: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) 
 }
 
 const Footer: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  return <div className="sticky bottom-0 bg-background-1 px-6 py-3">{children}</div>
+  return <div className="bg-background-1 sticky bottom-0 px-6 py-3">{children}</div>
 }
 
 interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
@@ -39,13 +41,19 @@ interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
 }
 
 const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
+  const { isLightTheme } = useTheme()
+
   return (
     <div
       className={cn('flex gap-x-3 content-center items-start', {
         'place-content-end': self
       })}
     >
-      {!self && <div className="mt-0.5">{avatar ? avatar : <ChatAvatarIcon />}</div>}
+      {!self && (
+        <div className="mt-0.5">
+          {avatar ? avatar : isLightTheme ? <ChatAvatarIconLightTheme /> : <ChatAvatarIcon />}
+        </div>
+      )}
       <div
         className={cn('flex flex-col gap-3', {
           'w-[85%] items-end': self,
@@ -83,10 +91,12 @@ interface TypingProps {
 }
 
 const Typing: FC<TypingProps> = ({ avatar }) => {
+  const { isLightTheme } = useTheme()
+
   return (
     <div className="mt-3 flex items-center gap-x-3.5">
-      {avatar || <ChatAvatarIcon />}
-      <span className="size-2.5 rounded-full bg-foreground-2" aria-hidden />
+      {avatar || (isLightTheme ? <ChatAvatarIconLightTheme /> : <ChatAvatarIcon />)}
+      <span className="bg-foreground-2 size-2.5 rounded-full" aria-hidden />
     </div>
   )
 }
@@ -118,18 +128,18 @@ const EmptyState: FC = () => {
   return (
     <div className="mt-auto flex flex-col gap-5">
       <div>
-        <span className="block text-20 font-semibold leading-none text-foreground-4">Hello Steven,</span>
-        <span className="mt-[3px] block text-20 font-semibold leading-none text-foreground-1">how can I help?</span>
+        <span className="text-20 text-foreground-4 block font-semibold leading-none">Hello Steven,</span>
+        <span className="text-20 text-foreground-1 mt-[3px] block font-semibold leading-none">how can I help?</span>
       </div>
       <div>
-        <span className="text-14 leading-relaxed text-foreground-2">
+        <span className="text-14 text-foreground-2 leading-relaxed">
           Here are some suggestions to enhance your CI/CD pipeline:
         </span>
         <ul className="mt-3 flex flex-col gap-y-1.5">
           {emptyStateButtons.map(({ text }, index) => (
             <li key={index}>
               <Button
-                className="w-full justify-start rounded-lg bg-background-3 px-3.5 text-foreground-1 hover:bg-background-12"
+                className="bg-background-3 text-foreground-1 hover:bg-background-12 w-full justify-start rounded-lg px-3.5"
                 size="lg"
               >
                 {text}

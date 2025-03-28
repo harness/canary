@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { toggleVariants } from '@/components'
+import { useTheme } from '@/context'
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -51,6 +52,7 @@ type ToggleGroupItemProps = React.ComponentPropsWithoutRef<typeof ToggleGroupPri
 const ToggleGroupItem = React.forwardRef<React.ElementRef<typeof ToggleGroupPrimitive.Item>, ToggleGroupItemProps>(
   ({ className, children, variant, size, ...props }, ref) => {
     const context = React.useContext(ToggleGroupContext)
+    const { isLightTheme } = useTheme()
 
     return (
       <ToggleGroupPrimitive.Item
@@ -58,7 +60,8 @@ const ToggleGroupItem = React.forwardRef<React.ElementRef<typeof ToggleGroupPrim
         className={cn(
           toggleVariants({
             variant: context.variant || variant,
-            size: context.size || size
+            size: context.size || size,
+            theme: isLightTheme ? 'light' : 'dark'
           }),
           className
         )}

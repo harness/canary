@@ -12,7 +12,7 @@ const UserAvatar = ({ user }: Pick<UserProps, 'user'>) => {
 
   return (
     <>
-      <Avatar.Root className="size-8 rounded-lg">
+      <Avatar.Root className="mr-2 size-8 rounded-lg">
         {!!user?.url && <Avatar.Image src={user.url} alt="user" />}
         <Avatar.Fallback className="rounded-lg bg-sidebar-background-5 text-sidebar-foreground-1">
           {getInitials(userName)}
@@ -42,7 +42,10 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, 
       <Sidebar.MenuItem>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
-            <Sidebar.MenuButton size="lg" className="data-[state=open]:bg-sidebar-background-2">
+            <Sidebar.MenuButton
+              size="lg"
+              className="px-[9px] transition-[padding] duration-150 ease-linear data-[state=open]:bg-sidebar-background-2 group-data-[state=collapsed]:px-[7px]"
+            >
               <UserAvatar user={user} />
             </Sidebar.MenuButton>
           </DropdownMenu.Trigger>

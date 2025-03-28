@@ -186,25 +186,6 @@
     --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
     --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
     --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
-
-    /* Code Backgrounds; this token group exist in Figma, just added it here as well */
-    --canary-code-foreground-01: var(--canary-harness-pink-800);
-    --canary-code-foreground-02: var(--canary-harness-primary-700);
-    --canary-code-foreground-03: var(--canary-harness-green-800);
-    --canary-code-foreground-04: var(--canary-harness-purple-800);
-    --canary-code-foreground-05: var(--canary-harness-orange-900);
-    --canary-code-foreground-06: var(--canary-harness-grey-500);
-    --canary-code-foreground-07: var(--canary-harness-grey-400);
-    --canary-code-foreground-08: var(--canary-harness-grey-400);
-    --canary-code-foreground-09: var(--canary-harness-grey-500);
-    --canary-code-background-01: var(--canary-harness-grey-400) / 0.1;
-    --canary-code-background-02: var(--canary-harness-green-300) / 0.25;
-    --canary-code-background-03: var(--canary-harness-300) / 0.45;
-    --canary-code-background-04: var(--canary-harness-350) / 0.2;
-    --canary-code-background-05: var(--canary-harness-350) / 0.25;
-    --canary-code-background-06: var(--canary-harness-yellow-800) / 0.1;
-    --canary-code-background-07: var(--canary-harness-yellow-800) / 0.25;
-    --canary-code-background-08: var(--canary-blue) / 0.1;
   }
   .dark-tri-std {
     --canary-background: var(--canary-grey-6);
@@ -347,25 +328,6 @@
     --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
     --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
     --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
-
-    /* Code Backgrounds; this token group exist in Figma, just added it here as well */
-    --canary-code-foreground-01: var(--canary-harness-pink-800);
-    --canary-code-foreground-02: var(--canary-harness-primary-700);
-    --canary-code-foreground-03: var(--canary-harness-green-800);
-    --canary-code-foreground-04: var(--canary-harness-purple-800);
-    --canary-code-foreground-05: var(--canary-harness-orange-900);
-    --canary-code-foreground-06: var(--canary-harness-grey-500);
-    --canary-code-foreground-07: var(--canary-harness-grey-400);
-    --canary-code-foreground-08: var(--canary-harness-grey-400);
-    --canary-code-foreground-09: var(--canary-harness-grey-500);
-    --canary-code-background-01: var(--canary-harness-grey-400) / 0.1;
-    --canary-code-background-02: var(--canary-harness-green-300) / 0.25;
-    --canary-code-background-03: var(--canary-harness-300) / 0.45;
-    --canary-code-background-04: var(--canary-harness-350) / 0.2;
-    --canary-code-background-05: var(--canary-harness-350) / 0.25;
-    --canary-code-background-06: var(--canary-harness-yellow-800) / 0.1;
-    --canary-code-background-07: var(--canary-harness-yellow-800) / 0.25;
-    --canary-code-background-08: var(--canary-blue) / 0.1;
   }
   .light-pnd-std {
     --canary-background: 0 0% 100%;
@@ -527,25 +489,6 @@
     --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
     --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
     --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
-
-    /* Code Backgrounds; this token group exist in Figma, just added it here as well */
-    --canary-code-foreground-01: var(--canary-harness-pink-800);
-    --canary-code-foreground-02: var(--canary-harness-primary-700);
-    --canary-code-foreground-03: var(--canary-harness-green-800);
-    --canary-code-foreground-04: var(--canary-harness-purple-800);
-    --canary-code-foreground-05: var(--canary-harness-orange-900);
-    --canary-code-foreground-06: var(--canary-harness-grey-500);
-    --canary-code-foreground-07: var(--canary-harness-grey-400);
-    --canary-code-foreground-08: var(--canary-harness-grey-400);
-    --canary-code-foreground-09: var(--canary-harness-grey-500);
-    --canary-code-background-01: var(--canary-harness-grey-400) / 0.1;
-    --canary-code-background-02: var(--canary-harness-green-300) / 0.25;
-    --canary-code-background-03: var(--canary-harness-300) / 0.45;
-    --canary-code-background-04: var(--canary-harness-350) / 0.2;
-    --canary-code-background-05: var(--canary-harness-350) / 0.25;
-    --canary-code-background-06: var(--canary-harness-yellow-800) / 0.1;
-    --canary-code-background-07: var(--canary-harness-yellow-800) / 0.25;
-    --canary-code-background-08: var(--canary-blue) / 0.1;
   }
   .dark-pnd-std {
     --canary-background: var(--canary-grey-6);
@@ -688,25 +631,6 @@
     --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
     --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
     --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
-
-    /* Code Backgrounds; this token group exist in Figma, just added it here as well */
-    --canary-code-foreground-01: var(--canary-harness-pink-800);
-    --canary-code-foreground-02: var(--canary-harness-primary-700);
-    --canary-code-foreground-03: var(--canary-harness-green-800);
-    --canary-code-foreground-04: var(--canary-harness-purple-800);
-    --canary-code-foreground-05: var(--canary-harness-orange-900);
-    --canary-code-foreground-06: var(--canary-harness-grey-500);
-    --canary-code-foreground-07: var(--canary-harness-grey-400);
-    --canary-code-foreground-08: var(--canary-harness-grey-400);
-    --canary-code-foreground-09: var(--canary-harness-grey-500);
-    --canary-code-background-01: var(--canary-harness-grey-400) / 0.1;
-    --canary-code-background-02: var(--canary-harness-green-300) / 0.25;
-    --canary-code-background-03: var(--canary-harness-300) / 0.45;
-    --canary-code-background-04: var(--canary-harness-350) / 0.2;
-    --canary-code-background-05: var(--canary-harness-350) / 0.25;
-    --canary-code-background-06: var(--canary-harness-yellow-800) / 0.1;
-    --canary-code-background-07: var(--canary-harness-yellow-800) / 0.25;
-    --canary-code-background-08: var(--canary-blue) / 0.1;
   }
 }
 
@@ -1092,10 +1016,10 @@
 
 .sub-menu-icon-bg {
   stop {
-    stop-color: #f0f0f0;
+    stop-color: hsl(var(--canary-sub-menu-icon-01));
 
     & + stop {
-      stop-color: #9c9c9c;
+      stop-color: hsl(var(--canary-sub-menu-icon-02));
     }
   }
 }
@@ -1198,7 +1122,7 @@ mark {
   @apply h-[calc(100vh-100px)]; /* where 55px (Breadcrumbs height) + 45px (SubHeader height) = 100px */
 
   .inset-layout & {
-    @apply h-[calc(100vh-100px-6px)]; /* where 6px is the Inset layout bottom padding (=== INSET_THEME_PADDING) */
+    @apply h-[calc(100vh-100px-8px)]; /* where 6px is the Inset layout bottom padding (=== INSET_THEME_PADDING) */
   }
 }
 

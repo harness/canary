@@ -6,6 +6,7 @@ import { InputFactory } from '@harnessio/forms'
 
 import { ITemplateListStore } from '..'
 import { inputComponentFactory } from '../components/form-inputs/factory/factory'
+import { Yaml2PipelineGraphOptions } from '../components/graph-implementation/utils/yaml-to-pipeline-graph'
 import { AnyStepDefinition } from '../components/steps/types'
 import { YamlErrorDataType } from '../components/unified-pipeline-studio-yaml-view'
 import { VisualYamlValue } from '../components/visual-yaml-toggle'
@@ -21,6 +22,14 @@ export type FormEntityType = {
     identifier: string
     description?: string
   }
+}
+
+export type lastCommitInfoType = {
+  committedTimeAgo: string
+  authorName: string
+  authorInitials?: string
+  commitSha?: string
+  commitMessage?: string
 }
 
 // add step intention
@@ -45,6 +54,7 @@ export interface UnifiedPipelineStudioContextProps {
   selectedPath?: string
   onSelectedPathChange: (path: string) => void
   errors: YamlErrorDataType
+  lastCommitInfo?: lastCommitInfoType
   onErrorsChange?: (errors: YamlErrorDataType) => void
   panelOpen: boolean
   onPanelOpenChange?: (open: boolean) => void
@@ -77,6 +87,7 @@ export interface UnifiedPipelineStudioContextProps {
   animateOnUpdate?: boolean
   onAnimateEnd?: () => void
   hideSaveBtn?: boolean
+  yamlParserOptions?: Yaml2PipelineGraphOptions
 }
 
 export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioContextProps>({
@@ -117,7 +128,11 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
   setFormEntity: (_formEntity: FormEntityType) => undefined,
   useTemplateListStore: () => ({}) as ITemplateListStore,
   inputComponentFactory: new InputFactory(),
-  stepsDefinitions: []
+  stepsDefinitions: [],
+  lastCommitInfo: {
+    committedTimeAgo: '',
+    authorName: ''
+  }
 })
 
 export function useUnifiedPipelineStudioContext(): UnifiedPipelineStudioContextProps {
@@ -147,6 +162,8 @@ export interface UnifiedPipelineStudioProviderProps {
   animateOnUpdate?: boolean
   onAnimateEnd?: () => void
   hideSaveBtn?: boolean
+  yamlParserOptions?: Yaml2PipelineGraphOptions
+  lastCommitInfo?: lastCommitInfoType
 }
 
 export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProviderProps> = props => {
@@ -156,6 +173,7 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
     onYamlRevisionChange,
     inputComponentFactory: inputComponentFactoryFromProps,
     onSelectedPathChange: onSelectedPathChangeFromProps,
+    lastCommitInfo,
     ...rest
   } = props
 
@@ -240,7 +258,8 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
         setFormEntity,
         clearRightDrawerData,
         inputComponentFactory: inputComponentFactoryFromProps ?? inputComponentFactory,
-        onSelectedPathChange
+        onSelectedPathChange,
+        lastCommitInfo
       }}
     >
       {children}

@@ -33,4 +33,4 @@ export interface IThemeStore {
 
 export const defaultTheme = `${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Standard}` as FullTheme
 
-export const INSET_THEME_PADDING = 6
+export const INSET_THEME_PADDING = 8 // 6px + top and bottom borders

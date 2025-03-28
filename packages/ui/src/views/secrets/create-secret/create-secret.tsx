@@ -56,6 +56,7 @@ interface CreateSecretProps {
   useTranslationStore: () => TranslationStore
   isLoading: boolean
   apiError: string | null
+  connectorInput: React.ReactElement
 }
 
 export function CreateSecretPage({
@@ -64,12 +65,11 @@ export function CreateSecretPage({
   useTranslationStore,
   isLoading = false,
   apiError = null,
-  prefilledFormData
+  prefilledFormData,
+  connectorInput
 }: CreateSecretProps) {
   const { t: _t } = useTranslationStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
-
-  // Determine the secret type from prefilledFormData
 
   const {
     register,
@@ -84,8 +84,6 @@ export function CreateSecretPage({
     mode: 'onChange',
     defaultValues: {
       name: prefilledFormData?.name ?? '',
-      // value: prefilledFormData?.value ?? '',
-      // file: prefilledFormData?.file,
       description: prefilledFormData?.description ?? '',
       tags: prefilledFormData?.tags ?? ''
     }
@@ -102,7 +100,6 @@ export function CreateSecretPage({
   }, [prefilledFormData])
 
   const selectedFile = watch('file')
-  // const secretValue = watch('value')
 
   const onSubmit: SubmitHandler<CreateSecretFormFields> = data => {
     onFormSubmit(data)
@@ -245,6 +242,13 @@ export function CreateSecretPage({
                   />
                 </Fieldset>
               </Accordion.Content>
+            </Accordion.Item>
+          </Accordion.Root>
+
+          <Accordion.Root type="single" collapsible>
+            <Accordion.Item value="secret-manager">
+              <Accordion.Trigger>Storage</Accordion.Trigger>
+              <Accordion.Content>{connectorInput}</Accordion.Content>
             </Accordion.Item>
           </Accordion.Root>
         </Fieldset>

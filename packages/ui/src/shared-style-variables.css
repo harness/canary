@@ -339,6 +339,7 @@
     --canary-border-10: var(--canary-grey-6);
     --canary-border-danger: var(--canary-red-65);
     --canary-border-success: var(--canary-green-65);
+    --canary-border-warning: 20 100% 65%;
     --canary-border-accent: var(--canary-blue-60);
     --canary-border-alert: var(--canary-orange-55);
     /* Icons */
@@ -394,25 +395,6 @@
     --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
     --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
     --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
-
-    /* Code Backgrounds; this token group exist in Figma, just added it here as well */
-    --canary-code-foreground-01: var(--canary-harness-pink-800);
-    --canary-code-foreground-02: var(--canary-harness-primary-700);
-    --canary-code-foreground-03: var(--canary-harness-green-800);
-    --canary-code-foreground-04: var(--canary-harness-purple-800);
-    --canary-code-foreground-05: var(--canary-harness-orange-900);
-    --canary-code-foreground-06: var(--canary-harness-grey-500);
-    --canary-code-foreground-07: var(--canary-harness-grey-400);
-    --canary-code-foreground-08: var(--canary-harness-grey-400);
-    --canary-code-foreground-09: var(--canary-harness-grey-500);
-    --canary-code-background-01: var(--canary-harness-grey-400) / 0.1;
-    --canary-code-background-02: var(--canary-harness-green-300) / 0.25;
-    --canary-code-background-03: var(--canary-harness-300) / 0.45;
-    --canary-code-background-04: var(--canary-harness-350) / 0.2;
-    --canary-code-background-05: var(--canary-harness-350) / 0.25;
-    --canary-code-background-06: var(--canary-harness-yellow-800) / 0.1;
-    --canary-code-background-07: var(--canary-harness-yellow-800) / 0.25;
-    --canary-code-background-08: var(--canary-blue) / 0.1;
 
     /* Box shadow colors */
     --canary-box-shadow-1: hsla(var(--canary-harness-grey-400) / 0.1);
@@ -582,6 +564,7 @@
     --canary-border-10: var(--canary-base-chrome-150);
     --canary-border-danger: var(--canary-red-400);
     --canary-border-success: var(--canary-green-400);
+    --canary-border-warning: 30 95% 47%;
     --canary-border-accent: var(--canary-accent-400);
     --canary-border-alert: var(--canary-amber-500);
 
@@ -601,39 +584,42 @@
     --canary-icon-success: var(--canary-green-600);
     --canary-icon-accent: var(--canary-accent-600);
     --canary-icon-merged: var(--canary-purple-700);
+    --canary-sub-menu-icon-01: 240 4% 40%;
+    --canary-sub-menu-icon-02: 240 5% 25%;
 
     /* Sidebar */
-    --canary-sidebar-background-01: var(--canary-base-chrome-50);
-    --canary-sidebar-background-02: hsla(var(--canary-base-chrome-500) / 0.12);
-    --canary-sidebar-background-03: hsla(var(--canary-base-chrome-500) / 0.12);
-    --canary-sidebar-background-04: var(--canary-base-chrome-50);
-    --canary-sidebar-background-05: var(--canary-base-chrome-200);
-    --canary-sidebar-background-06: hsl(var(--canary-base-chrome-50));
-    --canary-sidebar-background-07: var(--canary-pure-white);
-    --canary-sidebar-background-08: var(--canary-base-chrome-150);
-    --canary-sidebar-background-09: var(--canary-base-chrome-100);
-    --canary-sidebar-border-01: var(--canary-base-chrome-150);
-    --canary-sidebar-border-02: var(--canary-base-chrome-150);
-    --canary-sidebar-border-03: var(--canary-base-chrome-150);
-    --canary-sidebar-border-04: var(--canary-base-chrome-500);
-    --canary-sidebar-border-05: var(--canary-base-chrome-150);
-    --canary-sidebar-foreground-01: var(--canary-base-chrome-1000);
-    --canary-sidebar-foreground-02: var(--canary-base-chrome-700);
-    --canary-sidebar-foreground-03: var(--canary-base-chrome-800);
-    --canary-sidebar-foreground-04: var(--canary-base-chrome-600);
-    --canary-sidebar-foreground-05: var(--canary-base-chrome-600);
-    --canary-sidebar-foreground-06: var(--canary-base-chrome-800);
-    --canary-sidebar-foreground-accent: var(--canary-base-chrome-1000); /* logo */
-    --canary-sidebar-icon-01: var(--canary-base-chrome-1000);
-    --canary-sidebar-icon-02: var(--canary-base-chrome-700);
-    --canary-sidebar-icon-03: var(--canary-base-chrome-500);
+    --canary-sidebar-background-01: 240 8% 95%; /* main background */
+    --canary-sidebar-background-02: hsl(240 4% 90%); /* background for open state user panel */
+    --canary-sidebar-background-03: hsl(240 4% 90%); /* menu hover background */
+    --canary-sidebar-background-04: 0 0% 98%; /* menu background */
+    --canary-sidebar-background-05: 240 5% 79%; /* avatar background */
+    --canary-sidebar-background-06: hsl(240 8% 95%); /* more menu background */
+    --canary-sidebar-background-07: 240 4% 90%; /* icons background inside menu */
+    --canary-sidebar-background-08: 240 5% 85%; /* scrollbars */
+    --canary-sidebar-background-09: 240 4% 90%; /* letter K in search background */
+    --canary-sidebar-border-01: 240 4% 90%; /* menu items divider */
+    --canary-sidebar-border-02: 240 5% 85%; /* search border */
+    --canary-sidebar-border-03: 240 5% 85%; /* menu items group border */
+    --canary-sidebar-border-04: 240 4% 56%; /* search focus border */
+    --canary-sidebar-border-05: 240 5% 85%; /* letter K in search border */
+    --canary-sidebar-border-06: 240 5% 79%; /* active icon more menu background */
+    --canary-sidebar-foreground-01: 240 2% 8%; /* logo text */
+    --canary-sidebar-foreground-02: 240 2% 8%; /* menu item title */
+    --canary-sidebar-foreground-03: 240 4% 40%; /* letter K in search */
+    --canary-sidebar-foreground-04: 240 4% 40%; /* search placeholder */
+    --canary-sidebar-foreground-05: 240 4% 40%; /* group title */
+    --canary-sidebar-foreground-06: 240 5% 15%; /* popover menu item text */
+    --canary-sidebar-foreground-accent: 240 2% 8%; /* logo icon */
+    --canary-sidebar-icon-01: 240 2% 8%; /* menu item icon hover */
+    --canary-sidebar-icon-02: 240 4% 40%; /* menu item icon in more menu */
+    --canary-sidebar-icon-03: 240 4% 40%; /* menu item icon */
 
     /* Topbar */
     --canary-topbar-background-01: var(--canary-base-chrome-150); /* collapse hover, pipe --canary-background-12 */
     --canary-topbar-foreground-01: var(--canary-base-chrome-1000); /* collapse hover --canary-accent-foreground */
     --canary-topbar-foreground-02: var(--canary-base-chrome-800); /* collapse default --canary-foreground-02 */
-    --canary-topbar-foreground-03: var(--canary-base-chrome-600); /* dd default, bread def --canary-muted-foreground */
-    --canary-topbar-foreground-04: var(--canary-base-chrome-850); /* bread hover, last bread --canary-foreground */
+    --canary-topbar-foreground-03: 240 4% 40%; /* dd default, bread def --canary-muted-foreground */
+    --canary-topbar-foreground-04: 240 4% 40%; /* bread hover, last bread --canary-foreground */
     --canary-topbar-icon-01: var(--canary-base-chrome-600); /* dd icon def --canary-muted-foreground */
 
     /* Tags */
@@ -703,24 +689,24 @@
     --canary-label-foreground-yellow-01: hsla(var(--canary-yellow-700));
 
     /* Button */
-    --canary-button-foreground-danger-01: var(--canary-red-700);
-    --canary-button-background-danger-01: var(--canary-red-50);
-    --canary-button-background-danger-02: var(--canary-red-100);
-    --canary-button-background-danger-03: var(--canary-red-50);
-    --canary-button-border-danger-01: var(--canary-red-150);
-    --canary-button-foreground-success-01: var(--canary-green-700);
-    --canary-button-background-success-01: var(--canary-green-50);
-    --canary-button-background-success-02: var(--canary-green-100);
-    --canary-button-border-success-01: var(--canary-green-150);
-    --canary-button-foreground-disabled-01: var(--canary-base-chrome-500);
-    --canary-button-background-disabled-01: var(--canary-base-chrome-50);
-    --canary-button-border-disabled-01: var(--canary-base-chrome-150);
+    --canary-button-foreground-danger-01: 355 40% 25%;
+    --canary-button-background-danger-01: 4 81% 96%;
+    --canary-button-background-danger-02: 2 83% 93%;
+    --canary-button-background-danger-03: 4 80% 96%;
+    --canary-button-border-danger-01: 3 93% 88%;
+    --canary-button-foreground-success-01: 148 40% 25%;
+    --canary-button-background-success-01: 135 67% 98%;
+    --canary-button-background-success-02: 129 68% 93%;
+    --canary-button-border-success-01: 130 49% 83%;
+    --canary-button-foreground-disabled-01: 240 3% 66%;
+    --canary-button-background-disabled-01: 0 0% 98%;
+    --canary-button-border-disabled-01: 240 4% 90%;
     --canary-button-foreground-accent-1: var(--canary-pure-white);
-    --canary-button-foreground-accent-2: var(--canary-base-chrome-600);
-    --canary-button-background-accent-1: var(--canary-base-chrome-950);
-    --canary-button-background-accent-2: var(--canary-base-chrome-850);
-    --canary-button-background-accent-3: var(--canary-base-chrome-850);
-    --canary-button-border-accent-1: var(--canary-pure-white);
+    --canary-button-foreground-accent-2: 240 4% 90%;
+    --canary-button-background-accent-1: 240 2% 8%;
+    --canary-button-background-accent-2: 240 5% 25%;
+    --canary-button-background-accent-3: 240 4% 56%;
+    --canary-button-border-accent-1: 240 4% 40%;
 
     /* Box shadow colors */
     --canary-box-shadow-1: hsla(var(--canary-base-chrome-300) / 0.3);
@@ -730,7 +716,7 @@
 
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
     --canary-widget-bg-gradient-to: var(--canary-pure-white) / 1;
-    --canary-widget-number-gradient-from: var(--canary-base-chrome-500) / 1;
+    --canary-widget-number-gradient-from: 240 4% 40% / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 1;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-150) / 1;
     --canary-widget-number-bg-gradient-to: var(--canary-pure-white) / 1;
@@ -776,11 +762,20 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
+    &.inset-layout {
+      /* Topbar */
+      --canary-topbar-background-01: var(--canary-pure-white); /* collapse hover, pipe --canary-background-12 */
+      --canary-topbar-foreground-01: var(--canary-base-chrome-1000); /* collapse hover --canary-accent-foreground */
+      --canary-topbar-foreground-02: 240 5% 15%; /* collapse default --canary-foreground-02 */
+      --canary-topbar-foreground-03: 240 4% 40%; /* dd default, bread def --canary-muted-foreground */
+      --canary-topbar-foreground-04: 240 5% 25%; /* bread hover, last bread --canary-foreground */
+      --canary-topbar-icon-01: 240 4% 40%; /* dd icon def --canary-muted-foreground */
+    }
   }
 
   .light-std-std {
     --canary-background: var(--canary-base-chrome-50);
-    --canary-foreground: var(--canary-base-chrome-850);
+    --canary-foreground: 240 5% 15%;
     --canary-card: var(--canary-pure-white);
     --canary-card-foreground: var(--canary-base-chrome-1000);
     --canary-popover: var(--canary-pure-white);
@@ -842,7 +837,7 @@
     /* Text */
     --canary-foreground-01: 240 2% 8%;
     --canary-foreground-02: 240 5% 15%;
-    --canary-foreground-03: 240 5% 30%;
+    --canary-foreground-03: 240 5% 25%;
     --canary-foreground-04: 240 4% 40%;
     --canary-foreground-05: 240 4% 56%;
     --canary-foreground-06: var(--canary-pure-white);
@@ -850,47 +845,48 @@
     --canary-foreground-08: 240 5% 15%;
     --canary-foreground-09: 240 3% 66%;
     --canary-foreground-10: 240 5% 79%;
-    --canary-foreground-danger: var(--canary-red-500);
-    --canary-foreground-alert: 30 100% 32%;
-    --canary-foreground-success: var(--canary-green-600);
-    --canary-foreground-accent: var(--canary-accent-500);
+    --canary-foreground-danger: 5 66% 35%;
+    --canary-foreground-alert: 36 93% 32%;
+    --canary-foreground-success: 143 87% 27%;
+    --canary-foreground-accent: 213 100% 47%;
 
     /* Backgrounds */
     --canary-background-01: var(--canary-pure-white);
     --canary-background-02: 0 0% 98%;
-    --canary-background-03: 0 0% 98%;
-    --canary-background-04: 240 8% 95% / 1;
-    --canary-background-05: var(--canary-accent-500);
-    --canary-background-06: 240 5% 15%;
+    --canary-background-03: 240 8% 95%;
+    --canary-background-04: 240 8% 95%;
+    --canary-background-05: 240 2% 8%;
+    --canary-background-06: 240 5% 25%;
     --canary-background-07: 0 0% 98%;
-    --canary-background-08: 240 4% 90%;
+    --canary-background-08: 240 8% 95%;
     --canary-background-09: 240 4% 90%;
     --canary-background-10: 240 5% 15%;
     --canary-background-11: 240 5% 79%;
-    --canary-background-12: 240 5% 85%;
+    --canary-background-12: 240 4% 90%;
     --canary-background-13: 240 5% 85%;
     --canary-background-14: 240 3% 66%;
     --canary-background-surface: var(--canary-pure-white);
-    --canary-background-accent: var(--canary-accent-500);
+    --canary-background-accent: 213 100% 47%;
     --canary-background-danger: 2 83% 93%;
-    --canary-background-success: 134 74% 91%;
+    --canary-background-success: 129 68% 93%;
     --canary-toast-background-danger: var(--canary-red-200);
 
     /* Borders */
     --canary-border-01: 240 5% 85%;
     --canary-border-02: 240 5% 85%;
     --canary-border-03: 240 4% 56%;
-    --canary-border-04: 240 5% 85%;
+    --canary-border-04: 240 4% 90%;
     --canary-border-05: 240 4% 90%;
     --canary-border-06: 240 4% 40%;
     --canary-border-07: 240 2% 8%;
     --canary-border-08: 240 5% 15%;
-    --canary-border-09: var(--canary-accent-500);
-    --canary-border-10: 240 4% 90%;
-    --canary-border-danger: var(--canary-red-500);
-    --canary-border-success: var(--canary-green-500);
-    --canary-border-accent: var(--canary-accent-500);
-    --canary-border-alert: var(--canary-amber-500);
+    --canary-border-09: 240 4% 40%;
+    --canary-border-10: 240 5% 79%;
+    --canary-border-danger: 5 70% 60%;
+    --canary-border-warning: 30 95% 47%;
+    --canary-border-success: 148 75% 40%;
+    --canary-border-accent: 213 100% 47%;
+    --canary-border-alert: 43 100% 45%;
 
     /* Icons */
     --canary-icon-01: 240 4% 40%;
@@ -899,49 +895,53 @@
     --canary-icon-04: 240 4% 40%;
     --canary-icon-05: var(--canary-pure-white);
     --canary-icon-06: 240 5% 79%;
-    --canary-icon-07: 240 5% 30%;
+    --canary-icon-07: 240 5% 25%;
     --canary-icon-08: 240 2% 8%;
-    --canary-icon-09: 240 5% 30%;
+    --canary-icon-09: 240 5% 25%;
     --canary-icon-10: 0 0% 98%;
-    --canary-icon-danger: var(--canary-red-500);
-    --canary-icon-alert: 30 100% 32%;
-    --canary-icon-success: var(--canary-green-500);
-    --canary-icon-accent: var(--canary-accent-600);
-    --canary-icon-merged: 274 67% 41%;
+    --canary-icon-danger: 0 69% 58%;
+    --canary-icon-warning: 30 95% 47%;
+    --canary-icon-alert: 43 100% 45%;
+    --canary-icon-success: 148 82% 34%;
+    --canary-icon-accent: 213 100% 47%;
+    --canary-icon-merged: 260 100% 67%;
+    --canary-sub-menu-icon-01: 240 4% 40%;
+    --canary-sub-menu-icon-02: 240 5% 25%;
 
     /* Sidebar */
-    --canary-sidebar-background-01: 240 2% 8%;
-    --canary-sidebar-background-02: hsl(240 5% 15%);
-    --canary-sidebar-background-03: hsl(240 5% 15%);
-    --canary-sidebar-background-04: 240 2% 8%;
-    --canary-sidebar-background-05: 240 4% 40%;
-    --canary-sidebar-background-06: hsl(240 2% 8%);
-    --canary-sidebar-background-07: 240 2% 8%;
-    --canary-sidebar-background-08: 240 5% 25%;
-    --canary-sidebar-background-09: 240 5% 15%;
-    --canary-sidebar-border-01: 240 5% 15%;
-    --canary-sidebar-border-02: 240 5% 30% / 0.4;
-    --canary-sidebar-border-03: 240 5% 30%;
-    --canary-sidebar-border-04: 240 5% 20%;
-    --canary-sidebar-border-05: 240 5% 30%;
-    --canary-sidebar-foreground-01: var(--canary-pure-white);
-    --canary-sidebar-foreground-02: 240 5% 79%;
-    --canary-sidebar-foreground-03: 240 3% 66%;
-    --canary-sidebar-foreground-04: 240 4% 56%;
-    --canary-sidebar-foreground-05: 240 4% 40%;
-    --canary-sidebar-foreground-06: 240 5% 79%;
-    --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo */
-    --canary-sidebar-icon-01: var(--canary-pure-white);
-    --canary-sidebar-icon-02: 240 3% 66%;
-    --canary-sidebar-icon-03: 240 4% 56%;
+    --canary-sidebar-background-01: 240 8% 95%; /* main background */
+    --canary-sidebar-background-02: hsl(240 4% 90%); /* background for open state user panel */
+    --canary-sidebar-background-03: hsl(240 4% 90%); /* menu hover background */
+    --canary-sidebar-background-04: 0 0% 98%; /* menu background */
+    --canary-sidebar-background-05: 240 5% 79%; /* avatar background */
+    --canary-sidebar-background-06: hsl(240 8% 95%); /* more menu background */
+    --canary-sidebar-background-07: 240 4% 90%; /* icons background inside menu */
+    --canary-sidebar-background-08: 240 5% 85%; /* scrollbars */
+    --canary-sidebar-background-09: 240 4% 90%; /* letter K in search background */
+    --canary-sidebar-border-01: 240 4% 90%; /* menu items divider */
+    --canary-sidebar-border-02: 240 5% 85%; /* search border */
+    --canary-sidebar-border-03: 240 5% 85%; /* menu items group border */
+    --canary-sidebar-border-04: 240 4% 56%; /* search focus border */
+    --canary-sidebar-border-05: 240 5% 85%; /* letter K in search border */
+    --canary-sidebar-border-06: 240 5% 79%; /* active icon more menu background */
+    --canary-sidebar-foreground-01: 240 2% 8%; /* logo text */
+    --canary-sidebar-foreground-02: 240 2% 8%; /* menu item title */
+    --canary-sidebar-foreground-03: 240 4% 40%; /* letter K in search */
+    --canary-sidebar-foreground-04: 240 4% 40%; /* search placeholder */
+    --canary-sidebar-foreground-05: 240 4% 40%; /* group title */
+    --canary-sidebar-foreground-06: 240 5% 15%; /* popover menu item text */
+    --canary-sidebar-foreground-accent: 240 2% 8%; /* logo icon */
+    --canary-sidebar-icon-01: 240 2% 8%; /* menu item icon hover */
+    --canary-sidebar-icon-02: 240 4% 40%; /* menu item icon in more menu */
+    --canary-sidebar-icon-03: 240 4% 40%; /* menu item icon */
 
     /* Topbar */
-    --canary-topbar-background-01: 240 5% 85%; /* collapse hover, pipe --canary-background-12 */
+    --canary-topbar-background-01: var(--canary-pure-white); /* collapse hover, pipe --canary-background-12 */
     --canary-topbar-foreground-01: var(--canary-base-chrome-1000); /* collapse hover --canary-accent-foreground */
     --canary-topbar-foreground-02: 240 5% 15%; /* collapse default --canary-foreground-02 */
-    --canary-topbar-foreground-03: var(--canary-base-chrome-600); /* dd default, bread def --canary-muted-foreground */
-    --canary-topbar-foreground-04: var(--canary-base-chrome-850); /* bread hover, last bread --canary-foreground */
-    --canary-topbar-icon-01: var(--canary-base-chrome-600); /* dd icon def --canary-muted-foreground */
+    --canary-topbar-foreground-03: 240 4% 40%; /* dd default, bread def --canary-muted-foreground */
+    --canary-topbar-foreground-04: 240 4% 40%; /* bread hover, last bread --canary-foreground */
+    --canary-topbar-icon-01: 240 4% 40%; /* dd icon def --canary-muted-foreground */
 
     /* Tags */
     /* --gray */
@@ -950,84 +950,84 @@
     --canary-tag-background-gray-01: 0 0% 98%;
     --canary-tag-background-gray-02: 240 8% 95%;
     /* --purple */
-    --canary-tag-foreground-purple-01: 274 67% 41%;
-    --canary-tag-border-purple-01: 263 100% 89%;
-    --canary-tag-background-purple-01: 264 100% 97%;
-    --canary-tag-background-purple-02: 263 100% 95%;
+    --canary-tag-foreground-purple-01: 275 40% 25%;
+    --canary-tag-border-purple-01: 269 91% 91%;
+    --canary-tag-background-purple-01: 266 100% 99%;
+    --canary-tag-background-purple-02: 269 100% 95%;
     /* --blue */
-    --canary-tag-foreground-blue-01: 211 100% 42%;
-    --canary-tag-border-blue-01: 210 100% 87%;
-    --canary-tag-background-blue-01: 212 100% 97%;
-    --canary-tag-background-blue-02: 211 100% 94%;
+    --canary-tag-foreground-blue-01: 227 40% 25%;
+    --canary-tag-border-blue-01: 214 97% 87%;
+    --canary-tag-background-blue-01: 213 100% 98%;
+    --canary-tag-background-blue-02: 214 95% 93%;
     /* --mint */
-    --canary-tag-foreground-mint-01: 133 50% 29%;
-    --canary-tag-border-mint-01: 133 59% 79%;
-    --canary-tag-background-mint-01: 130 86% 97%;
-    --canary-tag-background-mint-02: 134 74% 91%;
+    --canary-tag-foreground-mint-01: 148 40% 25%;
+    --canary-tag-border-mint-01: 130 49% 83%;
+    --canary-tag-background-mint-01: 135 67% 98%;
+    --canary-tag-background-mint-02: 129 68% 93%;
     /* --amber */
-    --canary-tag-foreground-amber-01: 30 100% 32%;
-    --canary-tag-border-amber-01: 40 79% 83%;
-    --canary-tag-background-amber-01: 51 100% 95%;
-    --canary-tag-background-amber-02: 47 100% 89%;
+    --canary-tag-foreground-amber-01: 33 40% 25%;
+    --canary-tag-border-amber-01: 50 86% 77%;
+    --canary-tag-background-amber-01: 52 79% 96%;
+    --canary-tag-background-amber-02: 52 84% 88%;
     /* --peach */
-    --canary-tag-foreground-peach-01: 17 88% 40%;
-    --canary-tag-border-peach-01: 30 88% 84%;
-    --canary-tag-background-peach-01: 30 90% 96%;
-    --canary-tag-background-peach-02: 30 100% 93%;
+    --canary-tag-foreground-peach-01: 18 40% 25%;
+    --canary-tag-border-peach-01: 35 95% 85%;
+    --canary-tag-background-peach-01: 38 85% 97%;
+    --canary-tag-background-peach-02: 35 91% 92%;
     /* --red */
-    --canary-tag-foreground-red-01: 3 60% 45%;
-    --canary-tag-border-red-01: 3 93% 88%;
-    --canary-tag-background-red-01: 4 81% 96%;
-    --canary-tag-background-red-02: 2 83% 93%;
+    --canary-tag-foreground-red-01: 355 40% 25%;
+    --canary-tag-border-red-01: 0 100% 91%;
+    --canary-tag-background-red-01: 0 100% 98%;
+    --canary-tag-background-red-02: 0 93% 94%;
 
     /* Labels */
-    --canary-label-background-black-01: hsla(var(--canary-pure-white) / 0.7);
-    --canary-label-foreground-orange-01: hsla(17, 88%, 40%, 1);
-    --canary-label-background-orange-01: hsla(29, 88%, 90%, 1);
-    --canary-label-foreground-blue-01: hsla(211, 100%, 42%, 1);
-    --canary-label-background-blue-01: hsla(210, 100%, 93%, 1);
-    --canary-label-foreground-red-01: hsla(3, 60%, 45%, 1);
-    --canary-label-background-red-01: hsla(3, 94%, 93%, 1);
-    --canary-label-foreground-green-01: hsla(133, 50%, 29%, 1);
-    --canary-label-background-green-01: hsla(132, 71%, 89%, 1);
-    --canary-label-foreground-purple-01: hsla(274, 67%, 41%, 1);
-    --canary-label-background-purple-01: hsla(263, 100%, 93%, 1);
-    --canary-label-foreground-pink-01: hsla(329, 60%, 42%, 1);
-    --canary-label-background-pink-01: hsla(306, 100%, 94%, 1);
-    --canary-label-foreground-yellow-01: hsla(30, 100%, 32%, 1);
-    --canary-label-background-yellow-01: hsla(41, 100%, 87%, 1);
-    --canary-label-foreground-brown-01: hsla(33, 56%, 32%, 1);
-    --canary-label-background-brown-01: hsla(37, 69%, 87%, 1);
-    --canary-label-foreground-mint-01: hsla(174, 91%, 22%, 1);
-    --canary-label-background-mint-01: hsla(159, 71%, 89%, 1);
-    --canary-label-foreground-lime-01: hsla(86, 78%, 25%, 1);
-    --canary-label-background-lime-01: hsla(91, 70%, 88%, 1);
-    --canary-label-foreground-violet-01: hsla(255, 55%, 46%, 1);
-    --canary-label-background-violet-01: hsla(254, 94%, 93%, 1);
-    --canary-label-foreground-indigo-01: hsla(230, 45%, 46%, 1);
-    --canary-label-background-indigo-01: hsla(229, 66%, 92%, 1);
-    --canary-label-foreground-cyan-01: hsla(193, 82%, 29%, 1);
-    --canary-label-background-cyan-01: hsla(190, 69%, 90%, 1);
+    --canary-label-background-white-01: hsla(var(--canary-pure-white) / 0.7);
+    --canary-label-foreground-orange-01: hsla(18, 40%, 25%, 1);
+    --canary-label-background-orange-01: hsla(35, 91%, 92%, 1);
+    --canary-label-foreground-blue-01: hsla(227, 40%, 25%, 1);
+    --canary-label-background-blue-01: hsla(214, 95%, 93%, 1);
+    --canary-label-foreground-red-01: hsla(355, 40%, 25%, 1);
+    --canary-label-background-red-01: hsla(0, 93%, 94%, 1);
+    --canary-label-foreground-green-01: hsla(148, 40%, 25%, 1);
+    --canary-label-background-green-01: hsla(129, 68%, 93%, 1);
+    --canary-label-foreground-purple-01: hsla(275, 40%, 25%, 1);
+    --canary-label-background-purple-01: hsla(269, 100%, 95%, 1);
+    --canary-label-foreground-pink-01: hsla(332, 40%, 25%, 1);
+    --canary-label-background-pink-01: hsla(326, 78%, 95%, 1);
+    --canary-label-foreground-yellow-01: hsla(33, 40%, 25%, 1);
+    --canary-label-background-yellow-01: hsla(52, 84%, 88%, 1);
+    --canary-label-foreground-brown-01: hsla(23, 50%, 25%, 1);
+    --canary-label-background-brown-01: hsla(20, 29%, 90%, 1);
+    --canary-label-foreground-mint-01: hsla(162, 40%, 25%, 1);
+    --canary-label-background-mint-01: hsla(163, 69%, 90%, 1);
+    --canary-label-foreground-lime-01: hsla(84, 40%, 25%, 1);
+    --canary-label-background-lime-01: hsla(79, 69%, 90%, 1);
+    --canary-label-foreground-violet-01: hsla(267, 40%, 25%, 1);
+    --canary-label-background-violet-01: hsla(251, 91%, 95%, 1);
+    --canary-label-foreground-indigo-01: hsla(246, 40%, 25%, 1);
+    --canary-label-background-indigo-01: hsla(226, 100%, 94%, 1);
+    --canary-label-foreground-cyan-01: hsla(193, 40%, 25%, 1);
+    --canary-label-background-cyan-01: hsla(185, 71%, 90%, 1);
 
     /* Button */
-    --canary-button-foreground-danger-01: 3 60% 45%;
+    --canary-button-foreground-danger-01: 355 40% 25%;
     --canary-button-background-danger-01: 4 81% 96%;
     --canary-button-background-danger-02: 2 83% 93%;
     --canary-button-background-danger-03: 4 80% 96%;
     --canary-button-border-danger-01: 3 93% 88%;
-    --canary-button-foreground-success-01: 133 50% 29%;
-    --canary-button-background-success-01: 130 86% 97%;
-    --canary-button-background-success-02: 133 73% 90%;
-    --canary-button-border-success-01: 133 59% 79%;
+    --canary-button-foreground-success-01: 148 40% 25%;
+    --canary-button-background-success-01: 135 67% 98%;
+    --canary-button-background-success-02: 129 68% 93%;
+    --canary-button-border-success-01: 130 49% 83%;
     --canary-button-foreground-disabled-01: 240 3% 66%;
     --canary-button-background-disabled-01: 0 0% 98%;
     --canary-button-border-disabled-01: 240 4% 90%;
     --canary-button-foreground-accent-1: var(--canary-pure-white);
-    --canary-button-foreground-accent-2: 211 100% 92%;
-    --canary-button-background-accent-1: 213 100% 47%;
-    --canary-button-background-accent-2: 213 100% 42%;
-    --canary-button-background-accent-3: 213 100% 67%;
-    --canary-button-border-accent-1: 214 81% 36%;
+    --canary-button-foreground-accent-2: 240 4% 90%;
+    --canary-button-background-accent-1: 240 2% 8%;
+    --canary-button-background-accent-2: 240 5% 25%;
+    --canary-button-background-accent-3: 240 4% 56%;
+    --canary-button-border-accent-1: 240 4% 40%;
 
     /* Box shadow colors */
     --canary-box-shadow-1: hsla(var(--canary-pure-black) / 0.07);
@@ -1036,7 +1036,7 @@
 
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
     --canary-widget-bg-gradient-to: var(--canary-pure-white) / 1;
-    --canary-widget-number-gradient-from: var(--canary-base-chrome-500) / 1;
+    --canary-widget-number-gradient-from: 240 4% 40% / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 1;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-150) / 1;
     --canary-widget-number-bg-gradient-to: var(--canary-pure-white) / 1;
@@ -1082,17 +1082,14 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
-
     &.inset-layout {
       /* Topbar */
-      --canary-topbar-background-01: var(--canary-base-chrome-800); /* collapse hover, pipe --canary-background-12 */
-      --canary-topbar-foreground-01: var(--canary-white); /* collapse hover --canary-accent-foreground */
-      --canary-topbar-foreground-02: var(--canary-base-chrome-200); /* collapse default --canary-foreground-02 */
-      --canary-topbar-foreground-03: var(
-        --canary-base-chrome-500
-      ); /* dd default, bread def --canary-muted-foreground */
-      --canary-topbar-foreground-04: var(--canary-pure-white); /* bread hover, last bread --canary-foreground */
-      --canary-topbar-icon-01: var(--canary-base-chrome-500); /* dd icon def --canary-muted-foreground */
+      --canary-topbar-background-01: var(--canary-pure-white); /* collapse hover, pipe --canary-background-12 */
+      --canary-topbar-foreground-01: var(--canary-base-chrome-1000); /* collapse hover --canary-accent-foreground */
+      --canary-topbar-foreground-02: 240 5% 15%; /* collapse default --canary-foreground-02 */
+      --canary-topbar-foreground-03: 240 4% 40%; /* dd default, bread def --canary-muted-foreground */
+      --canary-topbar-foreground-04: 240 5% 25%; /* bread hover, last bread --canary-foreground */
+      --canary-topbar-icon-01: 240 4% 40%; /* dd icon def --canary-muted-foreground */
     }
   }
 
@@ -1158,219 +1155,225 @@
 
     /* New colors design variables */
     /* Text */
-    --canary-foreground-01: var(--canary-base-chrome-1000);
-    --canary-foreground-02: var(--canary-base-chrome-800);
-    --canary-foreground-03: var(--canary-base-chrome-700);
-    --canary-foreground-04: var(--canary-base-chrome-600);
-    --canary-foreground-05: var(--canary-base-chrome-500);
+    --canary-foreground-01: 240 2% 8%;
+    --canary-foreground-02: 240 5% 15%;
+    --canary-foreground-03: 240 5% 25%;
+    --canary-foreground-04: 240 4% 40%;
+    --canary-foreground-05: 240 4% 56%;
     --canary-foreground-06: var(--canary-pure-white);
-    --canary-foreground-07: var(--canary-base-chrome-600);
-    --canary-foreground-08: var(--canary-base-chrome-800);
-    --canary-foreground-09: var(--canary-base-chrome-600);
-    --canary-foreground-10: var(--canary-base-chrome-200);
-    --canary-foreground-danger: var(--canary-red-500);
-    --canary-foreground-alert: var(--canary-amber-700);
-    --canary-foreground-success: var(--canary-green-600);
-    --canary-foreground-accent: var(--canary-accent-600);
+    --canary-foreground-07: 240 4% 56%;
+    --canary-foreground-08: 240 5% 15%;
+    --canary-foreground-09: 240 3% 66%;
+    --canary-foreground-10: 240 5% 79%;
+    --canary-foreground-danger: 5 66% 35%;
+    --canary-foreground-alert: 36 93% 32%;
+    --canary-foreground-success: 143 87% 27%;
+    --canary-foreground-accent: 213 100% 47%;
 
     /* Backgrounds */
-    --canary-background-01: var(--canary-base-chrome-50);
-    --canary-background-02: var(--canary-pure-white);
-    --canary-background-03: var(--canary-base-chrome-100);
-    --canary-background-04: var(--canary-base-chrome-500) / 0.12;
-    --canary-background-05: var(--canary-base-chrome-950);
-    --canary-background-06: var(--canary-base-chrome-850);
-    --canary-background-07: var(--canary-base-chrome-50);
-    --canary-background-08: var(--canary-pure-white);
-    --canary-background-09: var(--canary-base-chrome-150);
-    --canary-background-10: var(--canary-base-chrome-850);
-    --canary-background-11: var(--canary-base-chrome-200);
-    --canary-background-12: var(--canary-base-chrome-150);
-    --canary-background-13: var(--canary-base-chrome-600);
-    --canary-background-14: var(--canary-base-chrome-200);
+    --canary-background-01: var(--canary-pure-white);
+    --canary-background-02: 0 0% 98%;
+    --canary-background-03: 240 8% 95%;
+    --canary-background-04: 240 8% 95%;
+    --canary-background-05: 240 2% 8%;
+    --canary-background-06: 240 5% 25%;
+    --canary-background-07: 0 0% 98%;
+    --canary-background-08: 240 8% 95%;
+    --canary-background-09: 240 4% 90%;
+    --canary-background-10: 240 5% 15%;
+    --canary-background-11: 240 5% 79%;
+    --canary-background-12: 240 4% 90%;
+    --canary-background-13: 240 5% 85%;
+    --canary-background-14: 240 3% 66%;
     --canary-background-surface: var(--canary-pure-white);
-    --canary-background-accent: var(--canary-accent-500);
-    --canary-background-danger: var(--canary-red-50);
-    --canary-background-success: var(--canary-green-50);
+    --canary-background-accent: 213 100% 47%;
+    --canary-background-danger: 2 83% 93%;
+    --canary-background-success: 129 68% 93%;
     --canary-toast-background-danger: var(--canary-red-200);
 
     /* Borders */
-    --canary-border-01: var(--canary-base-chrome-150);
-    --canary-border-02: var(--canary-base-chrome-150);
-    --canary-border-03: var(--canary-base-chrome-500);
-    --canary-border-04: var(--canary-base-chrome-150);
-    --canary-border-05: var(--canary-base-chrome-150);
-    --canary-border-06: var(--canary-base-chrome-600);
-    --canary-border-07: var(--canary-pure-white);
-    --canary-border-08: var(--canary-base-chrome-150);
-    --canary-border-09: var(--canary-base-chrome-1000);
-    --canary-border-10: var(--canary-base-chrome-150);
-    --canary-border-danger: var(--canary-red-400);
-    --canary-border-success: var(--canary-green-400);
-    --canary-border-accent: var(--canary-accent-400);
-    --canary-border-alert: var(--canary-amber-500);
+    --canary-border-01: 240 5% 85%;
+    --canary-border-02: 240 5% 85%;
+    --canary-border-03: 240 4% 56%;
+    --canary-border-04: 240 4% 90%;
+    --canary-border-05: 240 4% 90%;
+    --canary-border-06: 240 4% 40%;
+    --canary-border-07: 240 2% 8%;
+    --canary-border-08: 240 5% 15%;
+    --canary-border-09: 240 4% 40%;
+    --canary-border-10: 240 5% 79%;
+    --canary-border-danger: 5 70% 60%;
+    --canary-border-warning: 30 95% 47%;
+    --canary-border-success: 148 75% 40%;
+    --canary-border-accent: 213 100% 47%;
+    --canary-border-alert: 43 100% 45%;
 
     /* Icons */
-    --canary-icon-01: var(--canary-base-chrome-600);
-    --canary-icon-02: var(--canary-base-chrome-1000);
-    --canary-icon-03: var(--canary-base-chrome-800);
-    --canary-icon-04: var(--canary-base-chrome-500);
+    --canary-icon-01: 240 4% 40%;
+    --canary-icon-02: 240 2% 8%;
+    --canary-icon-03: 240 5% 15%;
+    --canary-icon-04: 240 4% 40%;
     --canary-icon-05: var(--canary-pure-white);
-    --canary-icon-06: var(--canary-base-chrome-200);
-    --canary-icon-07: var(--canary-base-chrome-800);
-    --canary-icon-08: var(--canary-base-chrome-1000);
-    --canary-icon-09: var(--canary-base-chrome-500);
-    --canary-icon-10: var(--canary-pure-white);
-    --canary-icon-danger: var(--canary-red-500);
-    --canary-icon-alert: var(--canary-amber-700);
-    --canary-icon-success: var(--canary-green-600);
-    --canary-icon-accent: var(--canary-accent-600);
-    --canary-icon-merged: var(--canary-purple-700);
+    --canary-icon-06: 240 5% 79%;
+    --canary-icon-07: 240 5% 25%;
+    --canary-icon-08: 240 2% 8%;
+    --canary-icon-09: 240 5% 25%;
+    --canary-icon-10: 0 0% 98%;
+    --canary-icon-danger: 0 69% 58%;
+    --canary-icon-warning: 30 95% 47%;
+    --canary-icon-alert: 43 100% 45%;
+    --canary-icon-success: 148 82% 34%;
+    --canary-icon-accent: 213 100% 47%;
+    --canary-icon-merged: 260 100% 67%;
+    --canary-sub-menu-icon-01: 240 4% 40%;
+    --canary-sub-menu-icon-02: 240 5% 25%;
 
     /* Sidebar */
-    --canary-sidebar-background-01: var(--canary-base-chrome-50);
-    --canary-sidebar-background-02: hsla(var(--canary-base-chrome-500) / 0.12);
-    --canary-sidebar-background-03: hsla(var(--canary-base-chrome-500) / 0.12);
-    --canary-sidebar-background-04: var(--canary-base-chrome-50);
-    --canary-sidebar-background-05: var(--canary-base-chrome-200);
-    --canary-sidebar-background-06: hsl(var(--canary-base-chrome-50));
-    --canary-sidebar-background-07: var(--canary-pure-white);
-    --canary-sidebar-background-08: var(--canary-base-chrome-150);
-    --canary-sidebar-background-09: var(--canary-base-chrome-100);
-    --canary-sidebar-border-01: var(--canary-base-chrome-150);
-    --canary-sidebar-border-02: var(--canary-base-chrome-150);
-    --canary-sidebar-border-03: var(--canary-base-chrome-150);
-    --canary-sidebar-border-04: var(--canary-base-chrome-500);
-    --canary-sidebar-border-05: var(--canary-base-chrome-150);
-    --canary-sidebar-foreground-01: var(--canary-base-chrome-1000);
-    --canary-sidebar-foreground-02: var(--canary-base-chrome-700);
-    --canary-sidebar-foreground-03: var(--canary-base-chrome-800);
-    --canary-sidebar-foreground-04: var(--canary-base-chrome-600);
-    --canary-sidebar-foreground-05: var(--canary-base-chrome-600);
-    --canary-sidebar-foreground-06: var(--canary-base-chrome-800);
-    --canary-sidebar-foreground-accent: var(--canary-base-chrome-1000);
-    --canary-sidebar-icon-01: var(--canary-base-chrome-1000);
-    --canary-sidebar-icon-02: var(--canary-base-chrome-700);
-    --canary-sidebar-icon-03: var(--canary-base-chrome-500);
+    --canary-sidebar-background-01: 240 8% 95%; /* main background */
+    --canary-sidebar-background-02: hsl(240 4% 90%); /* background for open state user panel */
+    --canary-sidebar-background-03: hsl(240 4% 90%); /* menu hover background */
+    --canary-sidebar-background-04: 0 0% 98%; /* menu background */
+    --canary-sidebar-background-05: 240 5% 79%; /* avatar background */
+    --canary-sidebar-background-06: hsl(240 8% 95%); /* more menu background */
+    --canary-sidebar-background-07: 240 5% 85%; /* icons background inside menu */
+    --canary-sidebar-background-08: 240 5% 85%; /* scrollbars */
+    --canary-sidebar-background-09: 240 4% 90%; /* letter K in search background */
+    --canary-sidebar-border-01: 240 4% 90%; /* menu items divider */
+    --canary-sidebar-border-02: 240 5% 85%; /* search border */
+    --canary-sidebar-border-03: 240 5% 85%; /* menu items group border */
+    --canary-sidebar-border-04: 240 4% 56%; /* search focus border */
+    --canary-sidebar-border-05: 240 5% 85%; /* letter K in search border */
+    --canary-sidebar-border-06: 240 5% 79%; /* active icon more menu background */
+    --canary-sidebar-foreground-01: 240 2% 8%; /* logo text */
+    --canary-sidebar-foreground-02: 240 2% 8%; /* menu item title */
+    --canary-sidebar-foreground-03: 240 4% 40%; /* letter K in search */
+    --canary-sidebar-foreground-04: 240 4% 40%; /* search placeholder */
+    --canary-sidebar-foreground-05: 240 4% 40%; /* group title */
+    --canary-sidebar-foreground-06: 240 5% 15%; /* popover menu item text */
+    --canary-sidebar-foreground-accent: 240 2% 8%; /* logo icon */
+    --canary-sidebar-icon-01: 240 2% 8%; /* menu item icon hover */
+    --canary-sidebar-icon-02: 240 4% 40%; /* menu item icon in more menu */
+    --canary-sidebar-icon-03: 240 4% 40%; /* menu item icon */
 
     /* Topbar */
-    --canary-topbar-background-01: var(--canary-base-chrome-150); /* collapse hover, pipe --canary-background-12 */
+    --canary-topbar-background-01: var(--canary-pure-white); /* collapse hover, pipe --canary-background-12 */
     --canary-topbar-foreground-01: var(--canary-base-chrome-1000); /* collapse hover --canary-accent-foreground */
-    --canary-topbar-foreground-02: var(--canary-base-chrome-800); /* collapse default --canary-foreground-02 */
-    --canary-topbar-foreground-03: var(--canary-base-chrome-600); /* dd default, bread def --canary-muted-foreground */
-    --canary-topbar-foreground-04: var(--canary-base-chrome-850); /* bread hover, last bread --canary-foreground */
-    --canary-topbar-icon-01: var(--canary-base-chrome-600); /* dd icon def --canary-muted-foreground */
+    --canary-topbar-foreground-02: 240 5% 15%; /* collapse default --canary-foreground-02 */
+    --canary-topbar-foreground-03: 240 4% 40%; /* dd default, bread def --canary-muted-foreground */
+    --canary-topbar-foreground-04: 240 4% 40%; /* bread hover, last bread --canary-foreground */
+    --canary-topbar-icon-01: 240 4% 40%; /* dd icon def --canary-muted-foreground */
 
     /* Tags */
     /* --gray */
-    --canary-tag-foreground-gray-01: var(--canary-base-chrome-800);
-    --canary-tag-border-gray-01: var(--canary-base-chrome-200);
-    --canary-tag-background-gray-01: var(--canary-base-chrome-100);
-    --canary-tag-background-gray-02: var(--canary-base-chrome-150);
+    --canary-tag-foreground-gray-01: 240 5% 25%;
+    --canary-tag-border-gray-01: 240 5% 85%;
+    --canary-tag-background-gray-01: 0 0% 98%;
+    --canary-tag-background-gray-02: 240 8% 95%;
     /* --purple */
-    --canary-tag-foreground-purple-01: var(--canary-purple-700);
-    --canary-tag-border-purple-01: var(--canary-purple-150);
-    --canary-tag-background-purple-01: var(--canary-purple-50);
-    --canary-tag-background-purple-02: var(--canary-purple-100);
+    --canary-tag-foreground-purple-01: 275 40% 25%;
+    --canary-tag-border-purple-01: 269 91% 91%;
+    --canary-tag-background-purple-01: 266 100% 99%;
+    --canary-tag-background-purple-02: 269 100% 95%;
     /* --blue */
-    --canary-tag-foreground-blue-01: var(--canary-accent-700);
-    --canary-tag-border-blue-01: var(--canary-accent-150);
-    --canary-tag-background-blue-01: var(--canary-accent-50);
-    --canary-tag-background-blue-02: var(--canary-accent-100);
+    --canary-tag-foreground-blue-01: 227 40% 25%;
+    --canary-tag-border-blue-01: 214 97% 87%;
+    --canary-tag-background-blue-01: 213 100% 98%;
+    --canary-tag-background-blue-02: 214 95% 93%;
     /* --mint */
-    --canary-tag-foreground-mint-01: var(--canary-green-700);
-    --canary-tag-border-mint-01: var(--canary-green-150);
-    --canary-tag-background-mint-01: var(--canary-green-50);
-    --canary-tag-background-mint-02: var(--canary-green-100);
+    --canary-tag-foreground-mint-01: 148 40% 25%;
+    --canary-tag-border-mint-01: 130 49% 83%;
+    --canary-tag-background-mint-01: 135 67% 98%;
+    --canary-tag-background-mint-02: 129 68% 93%;
     /* --amber */
-    --canary-tag-foreground-amber-01: var(--canary-amber-700);
-    --canary-tag-border-amber-01: var(--canary-amber-150);
-    --canary-tag-background-amber-01: var(--canary-amber-50);
-    --canary-tag-background-amber-02: var(--canary-amber-100);
+    --canary-tag-foreground-amber-01: 33 40% 25%;
+    --canary-tag-border-amber-01: 50 86% 77%;
+    --canary-tag-background-amber-01: 52 79% 96%;
+    --canary-tag-background-amber-02: 52 84% 88%;
     /* --peach */
-    --canary-tag-foreground-peach-01: var(--canary-peach-700);
-    --canary-tag-border-peach-01: var(--canary-peach-150);
-    --canary-tag-background-peach-01: var(--canary-peach-50);
-    --canary-tag-background-peach-02: var(--canary-peach-100);
+    --canary-tag-foreground-peach-01: 18 40% 25%;
+    --canary-tag-border-peach-01: 35 95% 85%;
+    --canary-tag-background-peach-01: 38 85% 97%;
+    --canary-tag-background-peach-02: 35 91% 92%;
     /* --red */
-    --canary-tag-foreground-red-01: var(--canary-red-700);
-    --canary-tag-border-red-01: var(--canary-red-150);
-    --canary-tag-background-red-01: var(--canary-red-50);
-    --canary-tag-background-red-02: var(--canary-red-100);
+    --canary-tag-foreground-red-01: 355 40% 25%;
+    --canary-tag-border-red-01: 0 100% 91%;
+    --canary-tag-background-red-01: 0 100% 98%;
+    --canary-tag-background-red-02: 0 93% 94%;
 
     /* Labels */
-    --canary-label-background-black-01: hsla(var(--canary-pure-white) / 0.7);
-    --canary-label-background-blue-01: hsla(var(--canary-accent-100));
-    --canary-label-background-brown-01: hsla(var(--canary-brown-100));
-    --canary-label-background-cyan-01: hsla(var(--canary-cyan-100));
-    --canary-label-background-green-01: hsla(var(--canary-green-100));
-    --canary-label-background-indigo-01: hsla(var(--canary-indigo-100));
-    --canary-label-background-lime-01: hsla(var(--canary-lime-100));
-    --canary-label-background-mint-01: hsla(var(--canary-mint-100));
-    --canary-label-background-orange-01: hsla(var(--canary-orange-100));
-    --canary-label-background-pink-01: hsla(var(--canary-pink-100));
-    --canary-label-background-purple-01: hsla(var(--canary-purple-100));
-    --canary-label-background-red-01: hsla(var(--canary-red-100));
-    --canary-label-background-violet-01: hsla(var(--canary-violet-100));
-    --canary-label-background-yellow-01: hsla(var(--canary-yellow-100));
-    --canary-label-foreground-blue-01: hsla(var(--canary-accent-700));
-    --canary-label-foreground-brown-01: hsla(var(--canary-brown-700));
-    --canary-label-foreground-cyan-01: hsla(var(--canary-cyan-700));
-    --canary-label-foreground-green-01: hsla(var(--canary-green-700));
-    --canary-label-foreground-indigo-01: hsla(var(--canary-indigo-700));
-    --canary-label-foreground-lime-01: hsla(var(--canary-lime-700));
-    --canary-label-foreground-mint-01: hsla(var(--canary-mint-700));
-    --canary-label-foreground-orange-01: hsla(var(--canary-orange-700));
-    --canary-label-foreground-pink-01: hsla(var(--canary-pink-700));
-    --canary-label-foreground-purple-01: hsla(var(--canary-purple-700));
-    --canary-label-foreground-red-01: hsla(var(--canary-red-700));
-    --canary-label-foreground-violet-01: hsla(var(--canary-violet-700));
-    --canary-label-foreground-yellow-01: hsla(var(--canary-yellow-700));
+    --canary-label-background-white-01: hsla(var(--canary-pure-white) / 0.7);
+    --canary-label-foreground-orange-01: hsla(18, 40%, 25%, 1);
+    --canary-label-background-orange-01: hsla(35, 91%, 92%, 1);
+    --canary-label-foreground-blue-01: hsla(227, 40%, 25%, 1);
+    --canary-label-background-blue-01: hsla(214, 95%, 93%, 1);
+    --canary-label-foreground-red-01: hsla(355, 40%, 25%, 1);
+    --canary-label-background-red-01: hsla(0, 93%, 94%, 1);
+    --canary-label-foreground-green-01: hsla(148, 40%, 25%, 1);
+    --canary-label-background-green-01: hsla(129, 68%, 93%, 1);
+    --canary-label-foreground-purple-01: hsla(275, 40%, 25%, 1);
+    --canary-label-background-purple-01: hsla(269, 100%, 95%, 1);
+    --canary-label-foreground-pink-01: hsla(332, 40%, 25%, 1);
+    --canary-label-background-pink-01: hsla(326, 78%, 95%, 1);
+    --canary-label-foreground-yellow-01: hsla(33, 40%, 25%, 1);
+    --canary-label-background-yellow-01: hsla(52, 84%, 88%, 1);
+    --canary-label-foreground-brown-01: hsla(23, 50%, 25%, 1);
+    --canary-label-background-brown-01: hsla(20, 29%, 90%, 1);
+    --canary-label-foreground-mint-01: hsla(162, 40%, 25%, 1);
+    --canary-label-background-mint-01: hsla(163, 69%, 90%, 1);
+    --canary-label-foreground-lime-01: hsla(84, 40%, 25%, 1);
+    --canary-label-background-lime-01: hsla(79, 69%, 90%, 1);
+    --canary-label-foreground-violet-01: hsla(267, 40%, 25%, 1);
+    --canary-label-background-violet-01: hsla(251, 91%, 95%, 1);
+    --canary-label-foreground-indigo-01: hsla(246, 40%, 25%, 1);
+    --canary-label-background-indigo-01: hsla(226, 100%, 94%, 1);
+    --canary-label-foreground-cyan-01: hsla(193, 40%, 25%, 1);
+    --canary-label-background-cyan-01: hsla(185, 71%, 90%, 1);
 
     /* Button */
-    --canary-button-foreground-danger-01: var(--canary-red-700);
-    --canary-button-background-danger-01: var(--canary-red-50);
-    --canary-button-background-danger-02: var(--canary-red-100);
-    --canary-button-background-danger-03: var(--canary-red-50);
-    --canary-button-border-danger-01: var(--canary-red-150);
-    --canary-button-foreground-success-01: var(--canary-green-700);
-    --canary-button-background-success-01: var(--canary-green-50);
-    --canary-button-background-success-02: var(--canary-green-100);
-    --canary-button-border-success-01: var(--canary-green-150);
-    --canary-button-foreground-disabled-01: var(--canary-base-chrome-500);
-    --canary-button-background-disabled-01: var(--canary-base-chrome-50);
-    --canary-button-border-disabled-01: var(--canary-base-chrome-150);
+    --canary-button-foreground-danger-01: 355 40% 25%;
+    --canary-button-background-danger-01: 4 81% 96%;
+    --canary-button-background-danger-02: 2 83% 93%;
+    --canary-button-background-danger-03: 4 80% 96%;
+    --canary-button-border-danger-01: 3 93% 88%;
+    --canary-button-foreground-success-01: 148 40% 25%;
+    --canary-button-background-success-01: 135 67% 98%;
+    --canary-button-background-success-02: 129 68% 93%;
+    --canary-button-border-success-01: 130 49% 83%;
+    --canary-button-foreground-disabled-01: 240 3% 66%;
+    --canary-button-background-disabled-01: 0 0% 98%;
+    --canary-button-border-disabled-01: 240 4% 90%;
     --canary-button-foreground-accent-1: var(--canary-pure-white);
-    --canary-button-foreground-accent-2: var(--canary-base-chrome-600);
-    --canary-button-background-accent-1: var(--canary-base-chrome-950);
-    --canary-button-background-accent-2: var(--canary-base-chrome-850);
-    --canary-button-background-accent-3: var(--canary-base-chrome-850);
-    --canary-button-border-accent-1: var(--canary-pure-white);
+    --canary-button-foreground-accent-2: 240 4% 90%;
+    --canary-button-background-accent-1: 240 2% 8%;
+    --canary-button-background-accent-2: 240 5% 25%;
+    --canary-button-background-accent-3: 240 4% 56%;
+    --canary-button-border-accent-1: 240 4% 40%;
 
     /* Box shadow colors */
-    --canary-box-shadow-1: hsla(var(--canary-base-chrome-300) / 0.3);
-    --canary-box-shadow-2: hsla(var(--canary-base-chrome-300) / 0.12);
-    --canary-box-shadow-pagination: hsla(var(--canary-base-chrome-300) / 0.12);
-    --shadow-sm: var(--canary-base-chrome-100);
+    --canary-box-shadow-1: hsla(var(--canary-pure-black) / 0.07);
+    --canary-box-shadow-2: hsla(var(--canary-pure-black) / 0.15);
+    --canary-box-shadow-pagination: hsla(var(--canary-pure-black) / 0.06);
 
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
     --canary-widget-bg-gradient-to: var(--canary-pure-white) / 1;
-    --canary-widget-number-gradient-from: var(--canary-base-chrome-500) / 1;
+    --canary-widget-number-gradient-from: 240 4% 40% / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 1;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-150) / 1;
     --canary-widget-number-bg-gradient-to: var(--canary-pure-white) / 1;
 
     /* Graph */
-    --canary-graph-gradient-bg-1: hsla(var(--canary-pure-white) / 0.5);
-    --canary-graph-gradient-bg-2: hsla(var(--canary-base-chrome-100) / 0.3);
-    --canary-graph-gradient-executing-1: hsla(var(--canary-amber-150));
-    --canary-graph-gradient-executing-2: hsla(var(--canary-amber-600));
-    --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-150));
+    --canary-graph-gradient-bg-1: hsla(var(--canary-pure-white) / 1);
+    --canary-graph-gradient-bg-2: hsla(var(--canary-pure-white) / 1);
+    --canary-graph-gradient-executing-1: hsla(var(--canary-amber-100));
+    --canary-graph-gradient-executing-2: hsla(var(--canary-amber-500));
+    --canary-graph-gradient-executing-3: hsla(var(--canary-amber-100));
+    --canary-graph-gradient-executing-4: hsla(var(--canary-amber-100));
+    --canary-graph-viewport-bg: hsla(240, 1%, 73%, 1);
     --canary-graph-background-1: 0 0% 100%; /* nodes group - light color */
     --canary-graph-background-2: 0 0% 98%; /* dashed nodes group - dark color */
     --canary-graph-background-3: hsla(240, 4%, 90%, 1); /* collapse button bg */
     --canary-graph-background-4: 240 5% 79%; /* collapse button Hover bg */
-    --canary-graph-border-1: 240 5% 79%; /* node step border */
+    --canary-graph-border-1: 240 5% 79%; /* node step border */ /* border-2*/
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -1399,6 +1402,15 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
+    &.inset-layout {
+      /* Topbar */
+      --canary-topbar-background-01: var(--canary-pure-white); /* collapse hover, pipe --canary-background-12 */
+      --canary-topbar-foreground-01: var(--canary-base-chrome-1000); /* collapse hover --canary-accent-foreground */
+      --canary-topbar-foreground-02: 240 5% 15%; /* collapse default --canary-foreground-02 */
+      --canary-topbar-foreground-03: 240 4% 40%; /* dd default, bread def --canary-muted-foreground */
+      --canary-topbar-foreground-04: 240 5% 25%; /* bread hover, last bread --canary-foreground */
+      --canary-topbar-icon-01: 240 4% 40%; /* dd icon def --canary-muted-foreground */
+    }
   }
 
   .light-prot-std {
@@ -1465,7 +1477,7 @@
     /* Text */
     --canary-foreground-01: 240 2% 8%;
     --canary-foreground-02: 240 5% 15%;
-    --canary-foreground-03: 240 5% 30%;
+    --canary-foreground-03: 240 5% 25%;
     --canary-foreground-04: 240 4% 40%;
     --canary-foreground-05: 240 4% 56%;
     --canary-foreground-06: var(--canary-pure-white);
@@ -1473,47 +1485,48 @@
     --canary-foreground-08: 240 5% 15%;
     --canary-foreground-09: 240 3% 66%;
     --canary-foreground-10: 240 5% 79%;
-    --canary-foreground-danger: var(--canary-red-500);
-    --canary-foreground-alert: 30 100% 32%;
-    --canary-foreground-success: var(--canary-green-600);
-    --canary-foreground-accent: var(--canary-accent-500);
+    --canary-foreground-danger: 5 66% 35%;
+    --canary-foreground-alert: 36 93% 32%;
+    --canary-foreground-success: 143 87% 27%;
+    --canary-foreground-accent: 213 100% 47%;
 
     /* Backgrounds */
     --canary-background-01: var(--canary-pure-white);
     --canary-background-02: 0 0% 98%;
-    --canary-background-03: 0 0% 98%;
-    --canary-background-04: 240 8% 95% / 1;
-    --canary-background-05: var(--canary-accent-500);
-    --canary-background-06: 240 5% 15%;
+    --canary-background-03: 240 8% 95%;
+    --canary-background-04: 240 8% 95%;
+    --canary-background-05: 240 2% 8%;
+    --canary-background-06: 240 5% 25%;
     --canary-background-07: 0 0% 98%;
-    --canary-background-08: 240 4% 90%;
+    --canary-background-08: 240 8% 95%;
     --canary-background-09: 240 4% 90%;
     --canary-background-10: 240 5% 15%;
     --canary-background-11: 240 5% 79%;
-    --canary-background-12: 240 5% 85%;
+    --canary-background-12: 240 4% 90%;
     --canary-background-13: 240 5% 85%;
     --canary-background-14: 240 3% 66%;
     --canary-background-surface: var(--canary-pure-white);
-    --canary-background-accent: var(--canary-accent-500);
+    --canary-background-accent: 213 100% 47%;
     --canary-background-danger: 2 83% 93%;
-    --canary-background-success: 134 74% 91%;
+    --canary-background-success: 129 68% 93%;
     --canary-toast-background-danger: var(--canary-red-200);
 
     /* Borders */
     --canary-border-01: 240 5% 85%;
     --canary-border-02: 240 5% 85%;
     --canary-border-03: 240 4% 56%;
-    --canary-border-04: 240 5% 85%;
+    --canary-border-04: 240 4% 90%;
     --canary-border-05: 240 4% 90%;
     --canary-border-06: 240 4% 40%;
     --canary-border-07: 240 2% 8%;
     --canary-border-08: 240 5% 15%;
-    --canary-border-09: var(--canary-accent-500);
-    --canary-border-10: 240 4% 90%;
-    --canary-border-danger: var(--canary-red-500);
-    --canary-border-success: var(--canary-green-500);
-    --canary-border-accent: var(--canary-accent-500);
-    --canary-border-alert: var(--canary-amber-500);
+    --canary-border-09: 240 4% 40%;
+    --canary-border-10: 240 5% 79%;
+    --canary-border-danger: 5 70% 60%;
+    --canary-border-warning: 30 95% 47%;
+    --canary-border-success: 148 75% 40%;
+    --canary-border-accent: 213 100% 47%;
+    --canary-border-alert: 43 100% 45%;
 
     /* Icons */
     --canary-icon-01: 240 4% 40%;
@@ -1522,49 +1535,53 @@
     --canary-icon-04: 240 4% 40%;
     --canary-icon-05: var(--canary-pure-white);
     --canary-icon-06: 240 5% 79%;
-    --canary-icon-07: 240 5% 30%;
+    --canary-icon-07: 240 5% 25%;
     --canary-icon-08: 240 2% 8%;
-    --canary-icon-09: 240 5% 30%;
+    --canary-icon-09: 240 5% 25%;
     --canary-icon-10: 0 0% 98%;
-    --canary-icon-danger: var(--canary-red-500);
-    --canary-icon-alert: 30 100% 32%;
-    --canary-icon-success: var(--canary-green-500);
-    --canary-icon-accent: var(--canary-accent-600);
-    --canary-icon-merged: 274 67% 41%;
+    --canary-icon-danger: 0 69% 58%;
+    --canary-icon-warning: 30 95% 47%;
+    --canary-icon-alert: 43 100% 45%;
+    --canary-icon-success: 148 82% 34%;
+    --canary-icon-accent: 213 100% 47%;
+    --canary-icon-merged: 260 100% 67%;
+    --canary-sub-menu-icon-01: 240 4% 40%;
+    --canary-sub-menu-icon-02: 240 5% 25%;
 
     /* Sidebar */
-    --canary-sidebar-background-01: 240 2% 8%;
-    --canary-sidebar-background-02: hsl(240 5% 15%);
-    --canary-sidebar-background-03: hsl(240 5% 15%);
-    --canary-sidebar-background-04: 240 2% 8%;
-    --canary-sidebar-background-05: 240 4% 40%;
-    --canary-sidebar-background-06: hsl(240 2% 8%);
-    --canary-sidebar-background-07: 240 2% 8%;
-    --canary-sidebar-background-08: 240 5% 25%;
-    --canary-sidebar-background-09: 240 5% 15%;
-    --canary-sidebar-border-01: 240 5% 15%;
-    --canary-sidebar-border-02: 240 5% 30% / 0.4;
-    --canary-sidebar-border-03: 240 5% 30%;
-    --canary-sidebar-border-04: 240 5% 20%;
-    --canary-sidebar-border-05: 240 5% 30%;
-    --canary-sidebar-foreground-01: var(--canary-pure-white);
-    --canary-sidebar-foreground-02: 240 5% 79%;
-    --canary-sidebar-foreground-03: 240 3% 66%;
-    --canary-sidebar-foreground-04: 240 4% 56%;
-    --canary-sidebar-foreground-05: 240 4% 40%;
-    --canary-sidebar-foreground-06: 240 5% 79%;
-    --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo */
-    --canary-sidebar-icon-01: var(--canary-pure-white);
-    --canary-sidebar-icon-02: 240 3% 66%;
-    --canary-sidebar-icon-03: 240 4% 56%;
+    --canary-sidebar-background-01: 240 8% 95%; /* main background */
+    --canary-sidebar-background-02: hsl(240 4% 90%); /* background for open state user panel */
+    --canary-sidebar-background-03: hsl(240 4% 90%); /* menu hover background */
+    --canary-sidebar-background-04: 0 0% 98%; /* menu background */
+    --canary-sidebar-background-05: 240 5% 79%; /* avatar background */
+    --canary-sidebar-background-06: hsl(240 8% 95%); /* more menu background */
+    --canary-sidebar-background-07: 240 5% 85%; /* icons background inside menu */
+    --canary-sidebar-background-08: 240 5% 85%; /* scrollbars */
+    --canary-sidebar-background-09: 240 4% 90%; /* letter K in search background */
+    --canary-sidebar-border-01: 240 4% 90%; /* menu items divider */
+    --canary-sidebar-border-02: 240 5% 85%; /* search border */
+    --canary-sidebar-border-03: 240 5% 85%; /* menu items group border */
+    --canary-sidebar-border-04: 240 4% 56%; /* search focus border */
+    --canary-sidebar-border-05: 240 5% 85%; /* letter K in search border */
+    --canary-sidebar-border-06: 240 5% 79%; /* active icon more menu background */
+    --canary-sidebar-foreground-01: 240 2% 8%; /* logo text */
+    --canary-sidebar-foreground-02: 240 2% 8%; /* menu item title */
+    --canary-sidebar-foreground-03: 240 4% 40%; /* letter K in search */
+    --canary-sidebar-foreground-04: 240 4% 40%; /* search placeholder */
+    --canary-sidebar-foreground-05: 240 4% 40%; /* group title */
+    --canary-sidebar-foreground-06: 240 5% 15%; /* popover menu item text */
+    --canary-sidebar-foreground-accent: 240 2% 8%; /* logo icon */
+    --canary-sidebar-icon-01: 240 2% 8%; /* menu item icon hover */
+    --canary-sidebar-icon-02: 240 4% 40%; /* menu item icon in more menu */
+    --canary-sidebar-icon-03: 240 4% 40%; /* menu item icon */
 
     /* Topbar */
-    --canary-topbar-background-01: 240 5% 85%; /* collapse hover, pipe --canary-background-12 */
+    --canary-topbar-background-01: var(--canary-pure-white); /* collapse hover, pipe --canary-background-12 */
     --canary-topbar-foreground-01: var(--canary-base-chrome-1000); /* collapse hover --canary-accent-foreground */
     --canary-topbar-foreground-02: 240 5% 15%; /* collapse default --canary-foreground-02 */
-    --canary-topbar-foreground-03: var(--canary-base-chrome-600); /* dd default, bread def --canary-muted-foreground */
-    --canary-topbar-foreground-04: var(--canary-base-chrome-850); /* bread hover, last bread --canary-foreground */
-    --canary-topbar-icon-01: var(--canary-base-chrome-600); /* dd icon def --canary-muted-foreground */
+    --canary-topbar-foreground-03: 240 4% 40%; /* dd default, bread def --canary-muted-foreground */
+    --canary-topbar-foreground-04: 240 4% 40%; /* bread hover, last bread --canary-foreground */
+    --canary-topbar-icon-01: 240 4% 40%; /* dd icon def --canary-muted-foreground */
 
     /* Tags */
     /* --gray */
@@ -1573,84 +1590,84 @@
     --canary-tag-background-gray-01: 0 0% 98%;
     --canary-tag-background-gray-02: 240 8% 95%;
     /* --purple */
-    --canary-tag-foreground-purple-01: 274 67% 41%;
-    --canary-tag-border-purple-01: 263 100% 89%;
-    --canary-tag-background-purple-01: 264 100% 97%;
-    --canary-tag-background-purple-02: 263 100% 95%;
+    --canary-tag-foreground-purple-01: 275 40% 25%;
+    --canary-tag-border-purple-01: 269 91% 91%;
+    --canary-tag-background-purple-01: 266 100% 99%;
+    --canary-tag-background-purple-02: 269 100% 95%;
     /* --blue */
-    --canary-tag-foreground-blue-01: 211 100% 42%;
-    --canary-tag-border-blue-01: 210 100% 87%;
-    --canary-tag-background-blue-01: 212 100% 97%;
-    --canary-tag-background-blue-02: 211 100% 94%;
+    --canary-tag-foreground-blue-01: 227 40% 25%;
+    --canary-tag-border-blue-01: 214 97% 87%;
+    --canary-tag-background-blue-01: 213 100% 98%;
+    --canary-tag-background-blue-02: 214 95% 93%;
     /* --mint */
-    --canary-tag-foreground-mint-01: 133 50% 29%;
-    --canary-tag-border-mint-01: 133 59% 79%;
-    --canary-tag-background-mint-01: 130 86% 97%;
-    --canary-tag-background-mint-02: 134 74% 91%;
+    --canary-tag-foreground-mint-01: 148 40% 25%;
+    --canary-tag-border-mint-01: 130 49% 83%;
+    --canary-tag-background-mint-01: 135 67% 98%;
+    --canary-tag-background-mint-02: 129 68% 93%;
     /* --amber */
-    --canary-tag-foreground-amber-01: 30 100% 32%;
-    --canary-tag-border-amber-01: 40 79% 83%;
-    --canary-tag-background-amber-01: 51 100% 95%;
-    --canary-tag-background-amber-02: 47 100% 89%;
+    --canary-tag-foreground-amber-01: 33 40% 25%;
+    --canary-tag-border-amber-01: 50 86% 77%;
+    --canary-tag-background-amber-01: 52 79% 96%;
+    --canary-tag-background-amber-02: 52 84% 88%;
     /* --peach */
-    --canary-tag-foreground-peach-01: 17 88% 40%;
-    --canary-tag-border-peach-01: 30 88% 84%;
-    --canary-tag-background-peach-01: 30 90% 96%;
-    --canary-tag-background-peach-02: 30 100% 93%;
+    --canary-tag-foreground-peach-01: 18 40% 25%;
+    --canary-tag-border-peach-01: 35 95% 85%;
+    --canary-tag-background-peach-01: 38 85% 97%;
+    --canary-tag-background-peach-02: 35 91% 92%;
     /* --red */
-    --canary-tag-foreground-red-01: 3 60% 45%;
-    --canary-tag-border-red-01: 3 93% 88%;
-    --canary-tag-background-red-01: 4 81% 96%;
-    --canary-tag-background-red-02: 2 83% 93%;
+    --canary-tag-foreground-red-01: 355 40% 25%;
+    --canary-tag-border-red-01: 0 100% 91%;
+    --canary-tag-background-red-01: 0 100% 98%;
+    --canary-tag-background-red-02: 0 93% 94%;
 
     /* Labels */
-    --canary-label-background-black-01: hsla(var(--canary-pure-white) / 0.7);
-    --canary-label-foreground-orange-01: hsla(17, 88%, 40%, 1);
-    --canary-label-background-orange-01: hsla(29, 88%, 90%, 1);
-    --canary-label-foreground-blue-01: hsla(211, 100%, 42%, 1);
-    --canary-label-background-blue-01: hsla(210, 100%, 93%, 1);
-    --canary-label-foreground-red-01: hsla(3, 60%, 45%, 1);
-    --canary-label-background-red-01: hsla(3, 94%, 93%, 1);
-    --canary-label-foreground-green-01: hsla(133, 50%, 29%, 1);
-    --canary-label-background-green-01: hsla(132, 71%, 89%, 1);
-    --canary-label-foreground-purple-01: hsla(274, 67%, 41%, 1);
-    --canary-label-background-purple-01: hsla(263, 100%, 93%, 1);
-    --canary-label-foreground-pink-01: hsla(329, 60%, 42%, 1);
-    --canary-label-background-pink-01: hsla(306, 100%, 94%, 1);
-    --canary-label-foreground-yellow-01: hsla(30, 100%, 32%, 1);
-    --canary-label-background-yellow-01: hsla(41, 100%, 87%, 1);
-    --canary-label-foreground-brown-01: hsla(33, 56%, 32%, 1);
-    --canary-label-background-brown-01: hsla(37, 69%, 87%, 1);
-    --canary-label-foreground-mint-01: hsla(174, 91%, 22%, 1);
-    --canary-label-background-mint-01: hsla(159, 71%, 89%, 1);
-    --canary-label-foreground-lime-01: hsla(86, 78%, 25%, 1);
-    --canary-label-background-lime-01: hsla(91, 70%, 88%, 1);
-    --canary-label-foreground-violet-01: hsla(255, 55%, 46%, 1);
-    --canary-label-background-violet-01: hsla(254, 94%, 93%, 1);
-    --canary-label-foreground-indigo-01: hsla(230, 45%, 46%, 1);
-    --canary-label-background-indigo-01: hsla(229, 66%, 92%, 1);
-    --canary-label-foreground-cyan-01: hsla(193, 82%, 29%, 1);
-    --canary-label-background-cyan-01: hsla(190, 69%, 90%, 1);
+    --canary-label-background-white-01: hsla(var(--canary-pure-white) / 0.7);
+    --canary-label-foreground-orange-01: hsla(18, 40%, 25%, 1);
+    --canary-label-background-orange-01: hsla(35, 91%, 92%, 1);
+    --canary-label-foreground-blue-01: hsla(227, 40%, 25%, 1);
+    --canary-label-background-blue-01: hsla(214, 95%, 93%, 1);
+    --canary-label-foreground-red-01: hsla(355, 40%, 25%, 1);
+    --canary-label-background-red-01: hsla(0, 93%, 94%, 1);
+    --canary-label-foreground-green-01: hsla(148, 40%, 25%, 1);
+    --canary-label-background-green-01: hsla(129, 68%, 93%, 1);
+    --canary-label-foreground-purple-01: hsla(275, 40%, 25%, 1);
+    --canary-label-background-purple-01: hsla(269, 100%, 95%, 1);
+    --canary-label-foreground-pink-01: hsla(332, 40%, 25%, 1);
+    --canary-label-background-pink-01: hsla(326, 78%, 95%, 1);
+    --canary-label-foreground-yellow-01: hsla(33, 40%, 25%, 1);
+    --canary-label-background-yellow-01: hsla(52, 84%, 88%, 1);
+    --canary-label-foreground-brown-01: hsla(23, 50%, 25%, 1);
+    --canary-label-background-brown-01: hsla(20, 29%, 90%, 1);
+    --canary-label-foreground-mint-01: hsla(162, 40%, 25%, 1);
+    --canary-label-background-mint-01: hsla(163, 69%, 90%, 1);
+    --canary-label-foreground-lime-01: hsla(84, 40%, 25%, 1);
+    --canary-label-background-lime-01: hsla(79, 69%, 90%, 1);
+    --canary-label-foreground-violet-01: hsla(267, 40%, 25%, 1);
+    --canary-label-background-violet-01: hsla(251, 91%, 95%, 1);
+    --canary-label-foreground-indigo-01: hsla(246, 40%, 25%, 1);
+    --canary-label-background-indigo-01: hsla(226, 100%, 94%, 1);
+    --canary-label-foreground-cyan-01: hsla(193, 40%, 25%, 1);
+    --canary-label-background-cyan-01: hsla(185, 71%, 90%, 1);
 
     /* Button */
-    --canary-button-foreground-danger-01: 3 60% 45%;
+    --canary-button-foreground-danger-01: 355 40% 25%;
     --canary-button-background-danger-01: 4 81% 96%;
     --canary-button-background-danger-02: 2 83% 93%;
     --canary-button-background-danger-03: 4 80% 96%;
     --canary-button-border-danger-01: 3 93% 88%;
-    --canary-button-foreground-success-01: 133 50% 29%;
-    --canary-button-background-success-01: 130 86% 97%;
-    --canary-button-background-success-02: 133 73% 90%;
-    --canary-button-border-success-01: 133 59% 79%;
+    --canary-button-foreground-success-01: 148 40% 25%;
+    --canary-button-background-success-01: 135 67% 98%;
+    --canary-button-background-success-02: 129 68% 93%;
+    --canary-button-border-success-01: 130 49% 83%;
     --canary-button-foreground-disabled-01: 240 3% 66%;
     --canary-button-background-disabled-01: 0 0% 98%;
-    --canary-button-border-disabled-01: 213 70% 57%;
+    --canary-button-border-disabled-01: 240 4% 90%;
     --canary-button-foreground-accent-1: var(--canary-pure-white);
-    --canary-button-foreground-accent-2: 211 100% 92%;
-    --canary-button-background-accent-1: 213 100% 47%;
-    --canary-button-background-accent-2: 213 100% 42%;
-    --canary-button-background-accent-3: 213 100% 67%;
-    --canary-button-border-accent-1: 214 81% 36%;
+    --canary-button-foreground-accent-2: 240 4% 90%;
+    --canary-button-background-accent-1: 240 2% 8%;
+    --canary-button-background-accent-2: 240 5% 25%;
+    --canary-button-background-accent-3: 240 4% 56%;
+    --canary-button-border-accent-1: 240 4% 40%;
 
     /* Box shadow colors */
     --canary-box-shadow-1: hsla(var(--canary-pure-black) / 0.07);
@@ -1659,7 +1676,7 @@
 
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
     --canary-widget-bg-gradient-to: var(--canary-pure-white) / 1;
-    --canary-widget-number-gradient-from: var(--canary-base-chrome-500) / 1;
+    --canary-widget-number-gradient-from: 240 4% 40% / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 1;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-150) / 1;
     --canary-widget-number-bg-gradient-to: var(--canary-pure-white) / 1;
@@ -1676,7 +1693,7 @@
     --canary-graph-background-2: 0 0% 98%; /* dashed nodes group - dark color */
     --canary-graph-background-3: hsla(240, 4%, 90%, 1); /* collapse button bg */
     --canary-graph-background-4: 240 5% 79%; /* collapse button Hover bg */
-    --canary-graph-border-1: 240 5% 79%; /* node step border */
+    --canary-graph-border-1: 240 5% 79%; /* node step border */ /* border-2*/
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -1705,6 +1722,15 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
+    &.inset-layout {
+      /* Topbar */
+      --canary-topbar-background-01: var(--canary-pure-white); /* collapse hover, pipe --canary-background-12 */
+      --canary-topbar-foreground-01: var(--canary-base-chrome-1000); /* collapse hover --canary-accent-foreground */
+      --canary-topbar-foreground-02: 240 5% 15%; /* collapse default --canary-foreground-02 */
+      --canary-topbar-foreground-03: 240 4% 40%; /* dd default, bread def --canary-muted-foreground */
+      --canary-topbar-foreground-04: 240 5% 25%; /* bread hover, last bread --canary-foreground */
+      --canary-topbar-icon-01: 240 4% 40%; /* dd icon def --canary-muted-foreground */
+    }
   }
 
   .dark,
@@ -1796,14 +1822,14 @@
     --canary-button-background-disabled-01: var(--canary-grey-40) / 0.1; /* grey70/10 */
     --canary-button-background-success-01: var(--canary-green-65) / 0.1; /* green65/10 */
     --canary-button-background-success-02: 155 26% 14%;
-    --canary-button-border-disabled-01: var(--canary-grey-40) / 0.15; /* grey70/15 */
+    --canary-button-border-disabled-01: 240 3% 66%;
     --canary-button-border-success-01: var(--canary-green-65) / 0.15; /* green65/15 */
     --canary-button-border-danger-01: var(--canary-red-65) / 0.15; /* red65/15 */
     --canary-button-foreground-accent-1: var(--canary-black);
     --canary-button-foreground-accent-2: var(--canary-grey-30);
     --canary-button-background-accent-1: var(--canary-white);
     --canary-button-background-accent-2: var(--canary-grey-94);
-    --canary-button-background-accent-3: var(--canary-grey-80);
+    --canary-button-background-accent-3: 240 4% 56%;
     --canary-button-border-accent-1: var(--canary-grey-90);
 
     /* Borders */
@@ -1818,6 +1844,7 @@
     --canary-border-09: var(--canary-grey-60);
     --canary-border-10: var(--canary-grey-6);
     --canary-border-danger: var(--canary-red-65);
+    --canary-border-warning: 20 100% 65%;
     --canary-border-success: var(--canary-green-65);
     --canary-border-accent: var(--canary-blue-60);
     --canary-border-alert: var(--canary-orange-55);
@@ -1834,10 +1861,13 @@
     --canary-icon-09: var(--canary-grey-70);
     --canary-icon-10: var(--canary-grey-6);
     --canary-icon-danger: var(--canary-red-65);
+    --canary-icon-warning: 20 100% 65%;
     --canary-icon-alert: var(--canary-orange-55);
     --canary-icon-success: var(--canary-green-65);
     --canary-icon-accent: var(--canary-blue-60);
     --canary-icon-merged: var(--canary-purple);
+    --canary-sub-menu-icon-01: 0 0% 94%;
+    --canary-sub-menu-icon-02: 0 0% 61%;
 
     /* Sidebar */
     --canary-sidebar-background-01: var(--canary-black);
@@ -1854,6 +1884,7 @@
     --canary-sidebar-border-03: var(--canary-grey-15);
     --canary-sidebar-border-04: var(--canary-grey-70);
     --canary-sidebar-border-05: var(--canary-grey-20);
+    --canary-sidebar-border-06: var(--canary-grey-15);
     --canary-sidebar-foreground-01: var(--canary-white);
     --canary-sidebar-foreground-02: var(--canary-grey-70);
     --canary-sidebar-foreground-03: var(--canary-grey-80);
@@ -1866,7 +1897,7 @@
     --canary-sidebar-icon-03: var(--canary-grey-50);
 
     /* Topbar */
-    --canary-topbar-background-01: var(--canary-grey-20); /* collapse hover, pipe --canary-background-12 */
+    --canary-topbar-background-01: 240 6% 6%; /* collapse hover, pipe --canary-background-12 */
     --canary-topbar-foreground-01: var(--canary-white); /* collapse hover --canary-accent-foreground */
     --canary-topbar-foreground-02: var(--canary-grey-80); /* collapse default --canary-foreground-02 */
     --canary-topbar-foreground-03: var(--canary-grey-60); /* dd default, bread def --canary-muted-foreground */
@@ -1994,6 +2025,42 @@
     --canary-graph-background-3: hsla(var(--canary-base-chrome-850) / 0.5);
     --canary-graph-background-4: var(--canary-base-chrome-850);
     --canary-graph-border-1: var(--canary-grey-20);
+
+    &.inset-layout {
+      /* Sidebar */
+      --canary-sidebar-background-01: 240 6% 10%; /* main background */
+      --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
+      --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
+      --canary-sidebar-background-04: 240 7% 8%; /* menu background */
+      --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
+      --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
+      --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
+      --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
+      --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
+      --canary-sidebar-border-01: 240 6% 20%; /* menu items divider */
+      --canary-sidebar-border-02: 240 6% 20%; /* search border */
+      --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
+      --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
+      --canary-sidebar-border-05: 240 6% 20%;
+      --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
+      --canary-sidebar-foreground-02: 240 6% 70%;
+      --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
+      --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
+      --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
+      --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
+      --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
+      --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
+      --canary-sidebar-icon-02: 240 6% 70%;
+      --canary-sidebar-icon-03: 240 6% 50%;
+
+      /* Topbar */
+      --canary-topbar-background-01: 240 6% 6%; /* collapse hover, pipe --canary-background-12 */
+      --canary-topbar-foreground-01: 240 6% 90%; /* collapse hover --canary-accent-foreground */
+      --canary-topbar-foreground-02: var(--canary-grey-80); /* collapse default --canary-foreground-02 */
+      --canary-topbar-foreground-03: 240 6% 60%; /* dd default, bread def --canary-muted-foreground */
+      --canary-topbar-foreground-04: var(--canary-grey-94); /* bread hover, last bread --canary-foreground */
+      --canary-topbar-icon-01: 240 6% 60%; /* dd icon def --canary-muted-foreground */
+    }
   }
 
   .dark-std-std {
@@ -2107,6 +2174,7 @@
     --canary-border-10: var(--canary-base-chrome-850);
     --canary-border-danger: var(--canary-red-300);
     --canary-border-success: var(--canary-green-300);
+    --canary-border-warning: 20 100% 65%;
     --canary-border-accent: var(--canary-accent-500);
     --canary-border-alert: var(--canary-amber-400);
 
@@ -2121,11 +2189,14 @@
     --canary-icon-08: var(--canary-pure-white);
     --canary-icon-09: var(--canary-base-chrome-400);
     --canary-icon-10: var(--canary-base-chrome-1000);
-    --canary-icon-danger: var(--canary-red-200);
-    --canary-icon-alert: var(--canary-amber-200);
+    --canary-icon-danger: var(--canary-red-400);
+    --canary-icon-warning: 20 100% 65%;
+    --canary-icon-alert: var(--canary-yellow-300);
     --canary-icon-success: var(--canary-green-200);
     --canary-icon-accent: var(--canary-accent-200);
-    --canary-icon-merged: var(--canary-purple-200);
+    --canary-icon-merged: var(--canary-purple-300);
+    --canary-sub-menu-icon-01: 0 0% 94%;
+    --canary-sub-menu-icon-02: 0 0% 61%;
 
     /* Sidebar */
     --canary-sidebar-background-01: var(--canary-base-chrome-1000);
@@ -2142,6 +2213,7 @@
     --canary-sidebar-border-03: var(--canary-base-chrome-850);
     --canary-sidebar-border-04: var(--canary-base-chrome-400);
     --canary-sidebar-border-05: var(--canary-base-chrome-850);
+    --canary-sidebar-border-06: var(--canary-base-chrome-850);
     --canary-sidebar-foreground-01: var(--canary-pure-white);
     --canary-sidebar-foreground-02: var(--canary-base-chrome-400);
     --canary-sidebar-foreground-03: var(--canary-base-chrome-200);
@@ -2154,7 +2226,7 @@
     --canary-sidebar-icon-03: var(--canary-base-chrome-500);
 
     /* Topbar */
-    --canary-topbar-background-01: var(--canary-base-chrome-800); /* collapse hover, pipe --canary-background-12 */
+    --canary-topbar-background-01: 240 6% 6%; /* collapse hover, pipe --canary-background-12 */
     --canary-topbar-foreground-01: var(--canary-white); /* collapse hover --canary-accent-foreground */
     --canary-topbar-foreground-02: var(--canary-base-chrome-200); /* collapse default --canary-foreground-02 */
     --canary-topbar-foreground-03: var(--canary-base-chrome-500); /* dd default, bread def --canary-muted-foreground */
@@ -2239,12 +2311,12 @@
     --canary-button-border-success-01: var(--canary-green-850);
     --canary-button-foreground-disabled-01: var(--canary-base-chrome-800);
     --canary-button-background-disabled-01: var(--canary-base-chrome-950);
-    --canary-button-border-disabled-01: var(--canary-base-chrome-850);
+    --canary-button-border-disabled-01: 240 3% 66%;
     --canary-button-foreground-accent-1: var(--canary-base-chrome-1000);
     --canary-button-foreground-accent-2: var(--canary-base-chrome-400);
     --canary-button-background-accent-1: var(--canary-base-chrome-100);
     --canary-button-background-accent-2: var(--canary-base-chrome-150);
-    --canary-button-background-accent-3: var(--canary-base-chrome-150);
+    --canary-button-background-accent-3: 240 4% 56%;
     --canary-button-border-accent-1: var(--canary-pure-white);
 
     /* Box shadow colors */
@@ -2301,6 +2373,42 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
+
+    &.inset-layout {
+      /* Sidebar */
+      --canary-sidebar-background-01: 240 6% 10%; /* main background */
+      --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
+      --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
+      --canary-sidebar-background-04: 240 7% 8%; /* menu background */
+      --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
+      --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
+      --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
+      --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
+      --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
+      --canary-sidebar-border-01: 240 6% 15%; /* menu items divider */
+      --canary-sidebar-border-02: 240 6% 20%; /* search border */
+      --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
+      --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
+      --canary-sidebar-border-05: 240 6% 20%;
+      --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
+      --canary-sidebar-foreground-02: 240 6% 70%;
+      --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
+      --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
+      --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
+      --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
+      --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
+      --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
+      --canary-sidebar-icon-02: 240 6% 70%;
+      --canary-sidebar-icon-03: 240 6% 50%;
+
+      /* Topbar */
+      --canary-topbar-background-01: 240 6% 6%; /* collapse hover, pipe --canary-background-12 */
+      --canary-topbar-foreground-01: 240 6% 90%; /* collapse hover --canary-accent-foreground */
+      --canary-topbar-foreground-02: var(--canary-grey-80); /* collapse default --canary-foreground-02 */
+      --canary-topbar-foreground-03: 240 6% 60%; /* dd default, bread def --canary-muted-foreground */
+      --canary-topbar-foreground-04: var(--canary-grey-94); /* bread hover, last bread --canary-foreground */
+      --canary-topbar-icon-01: 240 6% 60%; /* dd icon def --canary-muted-foreground */
+    }
   }
 
   .dark-std-high {
@@ -2414,6 +2522,7 @@
     --canary-border-10: var(--canary-base-chrome-700);
     --canary-border-danger: var(--canary-red-300);
     --canary-border-success: var(--canary-green-300);
+    --canary-border-warning: 20 100% 65%;
     --canary-border-accent: var(--canary-accent-500);
     --canary-border-alert: var(--canary-amber-400);
 
@@ -2429,10 +2538,13 @@
     --canary-icon-09: var(--canary-base-chrome-150);
     --canary-icon-10: var(--canary-base-chrome-1000);
     --canary-icon-danger: var(--canary-red-200);
+    --canary-icon-warning: 20 100% 65%;
     --canary-icon-alert: var(--canary-amber-200);
     --canary-icon-success: var(--canary-green-200);
     --canary-icon-accent: var(--canary-accent-200);
     --canary-icon-merged: var(--canary-purple-200);
+    --canary-sub-menu-icon-01: 0 0% 94%;
+    --canary-sub-menu-icon-02: 0 0% 61%;
 
     /* Sidebar */
     --canary-sidebar-background-01: var(--canary-black);
@@ -2449,6 +2561,7 @@
     --canary-sidebar-border-03: var(--canary-base-chrome-700);
     --canary-sidebar-border-04: var(--canary-base-chrome-200);
     --canary-sidebar-border-05: var(--canary-base-chrome-700);
+    --canary-sidebar-border-06: var(--canary-base-chrome-700);
     --canary-sidebar-foreground-01: var(--canary-pure-white);
     --canary-sidebar-foreground-02: var(--canary-base-chrome-200);
     --canary-sidebar-foreground-03: var(--canary-base-chrome-100);
@@ -2461,7 +2574,7 @@
     --canary-sidebar-icon-03: var(--canary-base-chrome-200);
 
     /* Topbar */
-    --canary-topbar-background-01: var(--canary-base-chrome-800); /* collapse hover, pipe --canary-background-12 */
+    --canary-topbar-background-01: 240 6% 6%; /* collapse hover, pipe --canary-background-12 */
     --canary-topbar-foreground-01: var(--canary-pure-white); /* collapse hover --canary-accent-foreground */
     --canary-topbar-foreground-02: var(--canary-base-chrome-100); /* collapse default --canary-foreground-02 */
     --canary-topbar-foreground-03: var(--canary-base-chrome-400); /* dd default, bread def --canary-muted-foreground */
@@ -2546,12 +2659,12 @@
     --canary-button-border-success-01: var(--canary-green-850);
     --canary-button-foreground-disabled-01: var(--canary-base-chrome-800);
     --canary-button-background-disabled-01: var(--canary-base-chrome-950);
-    --canary-button-border-disabled-01: var(--canary-base-chrome-850);
+    --canary-button-border-disabled-01: 240 3% 66%;
     --canary-button-foreground-accent-1: var(--canary-base-chrome-1000);
     --canary-button-foreground-accent-2: var(--canary-base-chrome-400);
     --canary-button-background-accent-1: var(--canary-base-chrome-100);
     --canary-button-background-accent-2: var(--canary-base-chrome-150);
-    --canary-button-background-accent-3: var(--canary-base-chrome-150);
+    --canary-button-background-accent-3: 240 4% 56%;
     --canary-button-border-accent-1: var(--canary-pure-white);
 
     /* Box shadow colors */
@@ -2608,6 +2721,42 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
+
+    &.inset-layout {
+      /* Sidebar */
+      --canary-sidebar-background-01: 240 6% 10%; /* main background */
+      --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
+      --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
+      --canary-sidebar-background-04: 240 7% 8%; /* menu background */
+      --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
+      --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
+      --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
+      --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
+      --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
+      --canary-sidebar-border-01: 240 6% 15%; /* menu items divider */
+      --canary-sidebar-border-02: 240 6% 20%; /* search border */
+      --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
+      --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
+      --canary-sidebar-border-05: 240 6% 20%;
+      --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
+      --canary-sidebar-foreground-02: 240 6% 70%;
+      --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
+      --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
+      --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
+      --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
+      --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
+      --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
+      --canary-sidebar-icon-02: 240 6% 70%;
+      --canary-sidebar-icon-03: 240 6% 50%;
+
+      /* Topbar */
+      --canary-topbar-background-01: 240 6% 6%; /* collapse hover, pipe --canary-background-12 */
+      --canary-topbar-foreground-01: 240 6% 90%; /* collapse hover --canary-accent-foreground */
+      --canary-topbar-foreground-02: var(--canary-grey-80); /* collapse default --canary-foreground-02 */
+      --canary-topbar-foreground-03: 240 6% 60%; /* dd default, bread def --canary-muted-foreground */
+      --canary-topbar-foreground-04: var(--canary-grey-94); /* bread hover, last bread --canary-foreground */
+      --canary-topbar-icon-01: 240 6% 60%; /* dd icon def --canary-muted-foreground */
+    }
   }
 
   .dark-prot-std {
@@ -2718,6 +2867,7 @@
     --canary-border-10: var(--canary-base-chrome-850);
     --canary-border-danger: var(--canary-yellow-400);
     --canary-border-success: var(--canary-indigo-300);
+    --canary-border-warning: 20 100% 65%;
     --canary-border-accent: var(--canary-accent-500);
     --canary-border-alert: var(--canary-amber-400);
 
@@ -2733,10 +2883,13 @@
     --canary-icon-09: var(--canary-base-chrome-400);
     --canary-icon-10: var(--canary-base-chrome-1000);
     --canary-icon-danger: var(--canary-yellow-200);
+    --canary-icon-warning: 20 100% 65%;
     --canary-icon-alert: var(--canary-amber-200);
     --canary-icon-success: var(--canary-indigo-300);
     --canary-icon-accent: var(--canary-accent-200);
     --canary-icon-merged: var(--canary-purple-200);
+    --canary-sub-menu-icon-01: 0 0% 94%;
+    --canary-sub-menu-icon-02: 0 0% 61%;
 
     /* Sidebar */
     --canary-sidebar-background-01: var(--canary-base-chrome-1000);
@@ -2753,6 +2906,7 @@
     --canary-sidebar-border-03: var(--canary-base-chrome-850);
     --canary-sidebar-border-04: var(--canary-base-chrome-400);
     --canary-sidebar-border-05: var(--canary-base-chrome-850);
+    --canary-sidebar-border-06: var(--canary-base-chrome-850);
     --canary-sidebar-foreground-01: var(--canary-pure-white);
     --canary-sidebar-foreground-02: var(--canary-base-chrome-400);
     --canary-sidebar-foreground-03: var(--canary-base-chrome-200);
@@ -2764,7 +2918,7 @@
     --canary-sidebar-icon-03: var(--canary-base-chrome-500);
 
     /* Topbar */
-    --canary-topbar-background-01: var(--canary-base-chrome-800); /* collapse hover, pipe --canary-background-12 */
+    --canary-topbar-background-01: 240 6% 6%; /* collapse hover, pipe --canary-background-12 */
     --canary-topbar-foreground-01: var(--canary-pure-white); /* collapse hover --canary-accent-foreground */
     --canary-topbar-foreground-02: var(--canary-base-chrome-200); /* collapse default --canary-foreground-02 */
     --canary-topbar-foreground-03: var(--canary-base-chrome-500); /* dd default, bread def --canary-muted-foreground */
@@ -2849,7 +3003,7 @@
     --canary-button-border-success-01: var(--canary-indigo-850);
     --canary-button-foreground-disabled-01: var(--canary-base-chrome-800);
     --canary-button-background-disabled-01: var(--canary-base-chrome-950);
-    --canary-button-border-disabled-01: var(--canary-base-chrome-850);
+    --canary-button-border-disabled-01: 240 3% 66%;
 
     /* Box shadow colors */
     --canary-box-shadow-1: hsla(var(--canary-base-chrome-1000) / 0.8);
@@ -2877,5 +3031,41 @@
     --canary-widget-number-bg-gradient-to: var(--canary-base-chrome-850);
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-850);
     --canary-widget-bg-gradient-to: var(--canary-base-chrome-950);
+
+    &.inset-layout {
+      /* Sidebar */
+      --canary-sidebar-background-01: 240 6% 10%; /* main background */
+      --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
+      --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
+      --canary-sidebar-background-04: 240 7% 8%; /* menu background */
+      --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
+      --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
+      --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
+      --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
+      --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
+      --canary-sidebar-border-01: 240 6% 15%; /* menu items divider */
+      --canary-sidebar-border-02: 240 6% 20%; /* search border */
+      --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
+      --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
+      --canary-sidebar-border-05: 240 6% 20%;
+      --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
+      --canary-sidebar-foreground-02: 240 6% 70%;
+      --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
+      --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
+      --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
+      --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
+      --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
+      --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
+      --canary-sidebar-icon-02: 240 6% 70%;
+      --canary-sidebar-icon-03: 240 6% 50%;
+
+      /* Topbar */
+      --canary-topbar-background-01: 240 6% 6%; /* collapse hover, pipe --canary-background-12 */
+      --canary-topbar-foreground-01: 240 6% 90%; /* collapse hover --canary-accent-foreground */
+      --canary-topbar-foreground-02: var(--canary-grey-80); /* collapse default --canary-foreground-02 */
+      --canary-topbar-foreground-03: 240 6% 60%; /* dd default, bread def --canary-muted-foreground */
+      --canary-topbar-foreground-04: var(--canary-grey-94); /* bread hover, last bread --canary-foreground */
+      --canary-topbar-icon-01: 240 6% 60%; /* dd icon def --canary-muted-foreground */
+    }
   }
 }

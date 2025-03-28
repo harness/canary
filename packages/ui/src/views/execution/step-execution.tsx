@@ -80,7 +80,7 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
               className="h-6 w-[68px] data-[state=active]:border data-[state=active]:border-borders-2 data-[state=active]:bg-background-9"
               value={StepExecutionTab.OUTPUT}
             >
-              Output
+              Outputs
             </Tabs.Trigger>
           </Tabs.List>
           <StepExecutionToolbar

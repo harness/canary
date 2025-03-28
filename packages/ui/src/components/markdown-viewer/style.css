@@ -255,7 +255,7 @@
     @apply !text-14 !text-foreground-2 !bg-transparent !leading-snug;
 
     blockquote {
-      @apply before:bg-borders-2 relative border-0 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:rounded-sm;
+      @apply before:bg-background-12 relative border-0 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:rounded-sm;
     }
   }
 }

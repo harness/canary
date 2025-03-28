@@ -44,7 +44,7 @@ const endNode = {
 } satisfies AnyContainerNodeType
 
 export const PipelineStudioGraphView = (): React.ReactElement => {
-  const { yamlRevision } = useUnifiedPipelineStudioContext()
+  const { yamlRevision, yamlParserOptions } = useUnifiedPipelineStudioContext()
 
   const [data, setData] = useState<AnyContainerNodeType[]>([])
 
@@ -56,7 +56,7 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
 
   useEffect(() => {
     const yamlJson = parse(yamlRevision.yaml)
-    const newData = yaml2Nodes(yamlJson)
+    const newData = yaml2Nodes(yamlJson, yamlParserOptions)
 
     if (newData.length === 0) {
       newData.push({

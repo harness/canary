@@ -6,7 +6,7 @@ import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
 const linkVariants = cva(
-  'whitespace-nowrap underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200',
+  'whitespace-nowrap decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200',
   {
     variants: {
       variant: {

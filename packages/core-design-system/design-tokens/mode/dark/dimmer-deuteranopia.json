@@ -157,17 +157,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{brand.onColor.500}",
+          "$value": "{brand.onColor.600}",
           "$description": "Text and icon color for primary brand elements with maximum contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{brand.color.500}",
+          "$value": "{brand.color.600}",
           "$description": "Background color for primary brand items with strong emphasis."
         },
         "border": {
           "$type": "color",
-          "$value": "{brand.color.500}",
+          "$value": "{brand.color.600}",
           "$description": "Border color for primary brand boundaries."
         },
         "separator": {
@@ -181,17 +181,17 @@
             }
           },
           "$type": "color",
-          "$value": "{brand.onColor.500}",
+          "$value": "{brand.onColor.600}",
           "$description": "Separator color for dividing brand areas."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{brand.color.400}",
+          "$value": "{brand.color.500}",
           "$description": "Hover state background color for interactive brand surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{brand.color.400}",
+          "$value": "{brand.color.500}",
           "$description": "Selected state background color for active brand items."
         }
       },
@@ -342,7 +342,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.900}",
+          "$value": "{chrome.950}",
           "$description": "Base background color for gray surfaces in default states."
         },
         "border": {
@@ -352,12 +352,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{chrome.900}",
           "$description": "Hover state background color for interactive gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.800}",
+          "$value": "{chrome.850}",
           "$description": "Selected state background color for active gray items."
         }
       }

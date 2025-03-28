@@ -15,13 +15,19 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
   onDownloadClick,
   onEditClick,
   copyContent,
-  showEdit = false
+  showEdit = true
 }) => {
   return (
     <ButtonGroup spacing="0" className="h-full rounded shadow-as-border shadow-borders-1">
       <CopyButton className={`${buttonClassName} rounded-l`} name={copyContent} />
       {showEdit && (
-        <Button className={buttonClassName} size="icon" variant="custom" aria-label="Edit" onClick={onEditClick}>
+        <Button
+          className={`${buttonClassName} border-l`}
+          size="icon"
+          variant="custom"
+          aria-label="Edit"
+          onClick={onEditClick}
+        >
           <Icon name="edit-pen" size={16} className="text-icons-3" />
         </Button>
       )}

@@ -27,7 +27,7 @@ interface ConnectorEntityFormProps {
   requestClose: () => void
   onFormSubmit?: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
-  setRightDrawerMode: (value: ConnectorRightDrawerMode) => void
+  onBack: () => void
   useTranslationStore: () => TranslationStore
   inputComponentFactory: InputFactory
   openSecretDrawer?: () => void
@@ -41,7 +41,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     apiError = null,
     onFormSubmit,
     getConnectorDefinition,
-    setRightDrawerMode,
+    onBack,
     useTranslationStore,
     openSecretDrawer,
     selectedSecret,
@@ -121,7 +121,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer>
             <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-background-2 p-4 shadow-md">
-              <Button variant="secondary" onClick={() => setRightDrawerMode(ConnectorRightDrawerMode.Collection)}>
+              <Button variant="secondary" onClick={onBack}>
                 Back
               </Button>
               <Button onClick={() => rootForm.submitForm()}>Submit</Button>

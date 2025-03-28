@@ -15,12 +15,12 @@ interface ConnectorsPaletteProps {
   connectors: AnyConnectorDefinition[]
   requestClose: () => void
   setFormEntity: (value: ConnectorFormEntityType | null) => void
-  setRightDrawerMode: (value: ConnectorRightDrawerMode) => void
+  onSelectConnector: () => void
   useTranslationStore: () => TranslationStore
 }
 
 export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element => {
-  const { connectors, requestClose, setFormEntity, setRightDrawerMode, useTranslationStore } = props
+  const { connectors, requestClose, setFormEntity, onSelectConnector, useTranslationStore } = props
   const { t: _t } = useTranslationStore()
 
   const [query, setQuery] = useState('')
@@ -55,7 +55,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
                 name: connector.name
               }
             })
-            setRightDrawerMode(ConnectorRightDrawerMode.Form)
+            onSelectConnector()
           }}
           useTranslationStore={useTranslationStore}
         />

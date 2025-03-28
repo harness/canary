@@ -425,7 +425,7 @@ export default {
         'widget-number-gradient-dark':
           'linear-gradient(180deg, hsla(var(--canary-widget-number-gradient-from)) 35.9%, hsla(var(--canary-widget-number-gradient-to)) 100%)',
         'widget-number-gradient-light':
-          'linear-gradient(180deg, hsla(var(--canary-widget-number-gradient-from)) 0%, hsl(var(--canary-foreground-4)) 64.1%)',
+          'linear-gradient(180deg, hsla(var(--canary-foreground-04) / 0) 0%, hsl(var(--canary-foreground-04)) 64.1%)',
         'widget-number-bg-gradient':
           'linear-gradient(135deg, hsla(var(--canary-widget-number-bg-gradient-from)) 0%, hsla(var(--canary-widget-number-bg-gradient-to)) 67.67%)',
         'graph-gradient-1':

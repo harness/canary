@@ -2,11 +2,12 @@ import { InputFactory } from '@harnessio/forms'
 
 import { TranslationStore } from '..'
 import { UnifiedPipelineStudioNodeContextProvider } from './components/graph-implementation/context/UnifiedPipelineStudioNodeContext'
+import { Yaml2PipelineGraphOptions } from './components/graph-implementation/utils/yaml-to-pipeline-graph'
 import { AnyStepDefinition } from './components/steps/types'
 import { PipelineStudioNodeContextMenu } from './components/unified-pipeline-studio-node-context-menu'
 import { YamlErrorDataType } from './components/unified-pipeline-studio-yaml-view'
 import { VisualYamlValue } from './components/visual-yaml-toggle'
-import { UnifiedPipelineStudioProvider } from './context/unified-pipeline-studio-context'
+import { lastCommitInfoType, UnifiedPipelineStudioProvider } from './context/unified-pipeline-studio-context'
 import { YamlRevision } from './types/common-types'
 import { PipelineStudioInternal } from './unified-pipeline-studio-internal'
 
@@ -26,28 +27,11 @@ export interface ITemplateListStore {
   getTemplateFormDefinition: (identifier: string) => Promise<any> // << TODO
 }
 
-export interface IUnifiedPipelineStudioStore {
-  /** yaml state */
-  yamlRevision: YamlRevision
-  /** yaml change callback */
-  onYamlRevisionChange: (YamlRevision: YamlRevision) => void
-  /** NOTE: selected node path may change on node deletion to keep same node selected */
-  selectedPath?: string
-  onSelectedPathChange: (path: string) => void
-  /** yaml errors */
-  errors: YamlErrorDataType
-  onErrorsChange?: (errors: YamlErrorDataType) => void
-  /** problems and other tabs open state */
-  panelOpen: boolean
-  onPanelOpenChange?: (open: boolean) => void
-}
-
 export interface UnifiedPipelineStudioProps {
-  useUnifiedPipelineStudioStore: () => IUnifiedPipelineStudioStore
   useTemplateListStore: () => ITemplateListStore
   useTranslationStore: () => TranslationStore
-  initialView?: VisualYamlValue
-  // NOTE: new props - wip
+  view: VisualYamlValue
+  setView: (view: VisualYamlValue) => void
   yamlRevision: YamlRevision
   onYamlRevisionChange: (yamlRevision: YamlRevision) => void
   onYamlDownload: (yaml: string) => void
@@ -60,12 +44,21 @@ export interface UnifiedPipelineStudioProps {
   stepsDefinitions?: AnyStepDefinition[]
   selectedPath?: string
   onSelectedPathChange: (path: string) => void
+  errors: YamlErrorDataType
+  onErrorsChange?: (errors: YamlErrorDataType) => void
+  panelOpen: boolean
+  onPanelOpenChange?: (open: boolean) => void
+  animateOnUpdate?: boolean
+  onAnimateEnd?: () => void
+  hideSaveBtn?: boolean
+  yamlParserOptions?: Yaml2PipelineGraphOptions
+  lastCommitInfo?: lastCommitInfoType
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {
   const {
-    useUnifiedPipelineStudioStore,
-    initialView = 'visual',
+    view,
+    setView,
     useTranslationStore,
     useTemplateListStore,
     yamlRevision,
@@ -78,11 +71,18 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     loadInProgress,
     inputComponentFactory,
     stepsDefinitions,
+    selectedPath,
     onSelectedPathChange,
-    selectedPath
+    errors,
+    onErrorsChange,
+    panelOpen,
+    onPanelOpenChange,
+    animateOnUpdate,
+    onAnimateEnd,
+    hideSaveBtn,
+    yamlParserOptions,
+    lastCommitInfo
   } = props
-
-  const { errors, onErrorsChange, panelOpen, onPanelOpenChange } = useUnifiedPipelineStudioStore()
 
   return (
     <UnifiedPipelineStudioProvider
@@ -101,11 +101,17 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       onPanelOpenChange={onPanelOpenChange}
       useTranslationStore={useTranslationStore}
       useTemplateListStore={useTemplateListStore}
-      initialView={initialView}
+      view={view}
+      setView={setView}
       theme={theme}
       saveInProgress={saveInProgress}
       inputComponentFactory={inputComponentFactory}
       stepsDefinitions={stepsDefinitions}
+      animateOnUpdate={animateOnUpdate}
+      onAnimateEnd={onAnimateEnd}
+      hideSaveBtn={hideSaveBtn}
+      yamlParserOptions={yamlParserOptions}
+      lastCommitInfo={lastCommitInfo}
     >
       <UnifiedPipelineStudioNodeContextProvider>
         {/* TODO: Loading... */}

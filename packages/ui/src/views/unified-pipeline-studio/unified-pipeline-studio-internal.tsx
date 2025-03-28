@@ -22,30 +22,36 @@ export const PipelineStudioInternal = (): JSX.Element => {
     onDownloadYaml,
     onSave,
     saveInProgress,
-    isYamlDirty
+    isYamlDirty,
+    hideSaveBtn,
+    lastCommitInfo
   } = useUnifiedPipelineStudioContext()
 
   return (
     <YamlEditorContextProvider>
-      <PipelineStudioLayout.Root className="h-[calc(100%-45px)]">
+      <PipelineStudioLayout.Root>
         <PipelineStudioLayout.Header>
           <VisualYamlToggle view={view} setView={setView} isYamlValid={errors.isYamlValid} />
           <PipelineStudioLayout.HeaderLeft>
-            <FileToolbarActions
-              onDownloadClick={() => {
-                onDownloadYaml(yamlRevision.yaml)
-              }}
-              copyContent={yamlRevision.yaml}
-              onEditClick={noop}
-            />
-            <Button
-              loading={saveInProgress}
-              size="sm"
-              onClick={() => onSave(yamlRevision.yaml)}
-              disabled={!isYamlDirty}
-            >
-              Save
-            </Button>
+            {view === 'yaml' ? (
+              <FileToolbarActions
+                onDownloadClick={() => {
+                  onDownloadYaml(yamlRevision.yaml)
+                }}
+                copyContent={yamlRevision.yaml}
+                onEditClick={noop}
+              />
+            ) : null}
+            {!hideSaveBtn ? (
+              <Button
+                loading={saveInProgress}
+                size="sm"
+                onClick={() => onSave(yamlRevision.yaml)}
+                disabled={!isYamlDirty}
+              >
+                Save
+              </Button>
+            ) : null}
           </PipelineStudioLayout.HeaderLeft>
         </PipelineStudioLayout.Header>
 
@@ -64,6 +70,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
           togglePane={() => {
             onPanelOpenChange?.(!panelOpen)
           }}
+          lastCommitInfo={lastCommitInfo}
         />
       </PipelineStudioLayout.Root>
 

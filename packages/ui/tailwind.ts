@@ -216,16 +216,6 @@ export default {
             },
             red: {
               1: 'hsl(var(--canary-tag-foreground-red-01))'
-            },
-            code: {
-              1: 'hsl(var(--canary-code-foreground-01))',
-              2: 'hsl(var(--canary-code-foreground-02))',
-              3: 'hsl(var(--canary-code-foreground-03))',
-              4: 'hsl(var(--canary-code-foreground-04))',
-              5: 'hsl(var(--canary-code-foreground-05))',
-              6: 'hsl(var(--canary-code-foreground-06))',
-              7: 'hsl(var(--canary-code-foreground-07))',
-              8: 'hsl(var(--canary-code-foreground-08))'
             }
           },
           background: {
@@ -281,6 +271,7 @@ export default {
           9: 'hsl(var(--canary-icon-09))',
           10: 'hsl(var(--canary-icon-10))',
           danger: 'hsl(var(--canary-icon-danger))',
+          warning: 'hsl(var(--canary-icon-warning))',
           alert: 'hsl(var(--canary-icon-alert))',
           success: 'hsl(var(--canary-icon-success))',
           accent: 'hsl(var(--canary-icon-accent))',
@@ -329,14 +320,16 @@ export default {
             5: 'hsl(var(--canary-sidebar-background-05))',
             6: 'var(--canary-sidebar-background-06)',
             7: 'hsl(var(--canary-sidebar-background-07))',
-            8: 'hsl(var(--canary-sidebar-background-08))'
+            8: 'hsl(var(--canary-sidebar-background-08))',
+            9: 'hsl(var(--canary-sidebar-background-09))'
           },
           border: {
             1: 'hsl(var(--canary-sidebar-border-01))',
             2: 'hsla(var(--canary-sidebar-border-02))',
             3: 'hsl(var(--canary-sidebar-border-03))',
             4: 'hsl(var(--canary-sidebar-border-04))',
-            5: 'hsl(var(--canary-sidebar-border-05))'
+            5: 'hsl(var(--canary-sidebar-border-05))',
+            6: 'hsl(var(--canary-sidebar-border-06))'
           },
           foreground: {
             1: 'hsl(var(--canary-sidebar-foreground-01))',
@@ -373,6 +366,9 @@ export default {
             2: 'hsl(var(--canary-graph-background-2))',
             3: 'var(--canary-graph-background-3)',
             4: 'hsl(var(--canary-graph-background-4))'
+          },
+          border: {
+            1: 'hsl(var(--canary-graph-border-1))'
           }
         }
       },

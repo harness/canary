@@ -84,7 +84,7 @@ export const AppSidebar = ({
                 logo={
                   <Link to="/" className="flex h-[58px] items-center justify-start gap-0.5 pl-1">
                     <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-                    <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1 mb-px" />
+                    <Icon name="harness-logo-text" width={65} height={15} className="mb-px text-sidebar-foreground-1" />
                   </Link>
                 }
               />
@@ -95,7 +95,7 @@ export const AppSidebar = ({
               logo={
                 <Link className="flex items-center gap-0.5" to="/">
                   <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-                  <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1 mb-px" />
+                  <Icon name="harness-logo-text" width={65} height={15} className="mb-px text-sidebar-foreground-1" />
                 </Link>
               }
             />
@@ -120,7 +120,7 @@ export const AppSidebar = ({
                   <Sidebar.MenuButton asChild onClick={handleMoreMenu}>
                     <Sidebar.MenuItemText
                       text={t('component:navbar.more', 'More')}
-                      icon={<Icon name="ellipsis" size={12} />}
+                      icon={<Icon name="ellipsis" size={14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -158,7 +158,7 @@ export const AppSidebar = ({
                     <Sidebar.MenuButton asChild onClick={() => navigate('/admin/default-settings')}>
                       <Sidebar.MenuItemText
                         text={t('component:navbar.user-management', 'User Management')}
-                        icon={<Icon name="account" size={12} />}
+                        icon={<Icon name="account" size={14} />}
                       />
                     </Sidebar.MenuButton>
                   </Sidebar.MenuItem>
@@ -167,7 +167,7 @@ export const AppSidebar = ({
                   <Sidebar.MenuButton asChild onClick={handleSettingsMenu}>
                     <Sidebar.MenuItemText
                       text={t('component:navbar.settings', 'Settings')}
-                      icon={<Icon name="settings-1" size={12} />}
+                      icon={<Icon name="settings-1" size={14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -175,7 +175,7 @@ export const AppSidebar = ({
             </Sidebar.GroupContent>
           </Sidebar.Group>
         </Sidebar.Content>
-        <Sidebar.Footer className="border-sidebar-border-1 border-t">
+        <Sidebar.Footer className="border-t border-sidebar-border-1">
           <User
             user={currentUser}
             openThemeDialog={() => setOpenThemeDialog(true)}

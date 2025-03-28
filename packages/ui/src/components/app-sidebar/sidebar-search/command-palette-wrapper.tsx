@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Icon } from '@components/icon'
+import { Icon } from '@/components'
 import { TFunction } from 'i18next'
 
 import { CommandPalette } from './command-palette'

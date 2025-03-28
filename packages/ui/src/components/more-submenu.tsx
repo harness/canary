@@ -1,6 +1,7 @@
 import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTheme } from '@/context'
 import { MenuGroupType } from '@components/app-sidebar/types'
+import { cn } from '@utils/cn'
 
 interface MoreSubmenuProps {
   showMoreMenu: boolean
@@ -10,10 +11,15 @@ interface MoreSubmenuProps {
 
 export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenuProps) {
   const { NavLink } = useRouterContext()
+  const { isInset } = useTheme()
+
   return (
     <Sheet.Root modal={false} open={showMoreMenu}>
       <Sheet.Content
-        className="inset-y-0 left-[220px] z-40 h-screen w-[328px] bg-transparent p-0"
+        className={cn(
+          'inset-y-0 z-40 h-screen w-[328px] bg-transparent p-0',
+          isInset ? 'border-l left-[228px]' : 'left-[220px]'
+        )}
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
         side="left"
         onClick={handleMoreMenu}
@@ -23,7 +29,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
         <NavbarSkeleton.Root className="w-[328px]" isSubMenu>
           <NavbarSkeleton.Content className="overflow-hidden">
             <ScrollArea scrollThumbClassName="bg-sidebar-background-8">
-              <Spacer size={9} />
+              <Spacer size={10} />
               {items.map((group, group_idx) => (
                 <NavbarSkeleton.Group
                   key={group.groupId}

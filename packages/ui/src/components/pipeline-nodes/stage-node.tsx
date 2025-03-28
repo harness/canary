@@ -57,7 +57,7 @@ export function StageNode(props: StageNodeProps) {
 
       <div
         className={cn('absolute inset-0 -z-10 rounded-md border border-dashed bg-graph-background-2', {
-          'border-borders-2': !selected, // gray/8
+          'border-graph-border-1': !selected,
           'border-borders-3': selected
         })}
       />

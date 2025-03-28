@@ -114,7 +114,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.mono}",
-        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontWeight": "{fontWeight.default.normal.300}",
         "fontSize": "{fontSize.2}",
         "lineHeight": "{lineHeight.2.normal}",
         "letterSpacing": "{tracking.tight}"

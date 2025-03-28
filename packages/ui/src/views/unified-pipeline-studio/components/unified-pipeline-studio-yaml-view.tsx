@@ -37,7 +37,9 @@ const PipelineStudioYamlView = (): JSX.Element => {
     setAddStepIntention,
     setEditStepIntention,
     requestYamlModifications,
-    theme
+    theme,
+    animateOnUpdate,
+    onAnimateEnd
   } = useUnifiedPipelineStudioContext()
 
   const [reRenderYamlEditor, setRerenderYamlEditor] = useState(0)
@@ -153,13 +155,13 @@ const PipelineStudioYamlView = (): JSX.Element => {
           theme={theme}
           schemaConfig={schemaConfig}
           inlineActions={inlineActions}
-          // selection={selection} // TODO
-          // animateOnUpdate={animateOnUpdate}
-          // onAnimateEnd={onAnimateEnd}
+          // selection={selection}
+          animateOnUpdate={animateOnUpdate}
+          onAnimateEnd={onAnimateEnd}
         />
       </div>
     )
-  }, [reRenderYamlEditor, themeConfig, schemaConfig, theme]) // inlineActions, highlightInYamlPath
+  }, [reRenderYamlEditor, themeConfig, schemaConfig, theme, animateOnUpdate, onAnimateEnd]) // inlineActions, highlightInYamlPath
 }
 
 export { PipelineStudioYamlView }

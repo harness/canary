@@ -1,6 +1,7 @@
 import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTheme } from '@/context'
 import { MenuGroupType } from '@components/app-sidebar/types'
+import { cn } from '@utils/cn'
 
 interface SystemAdminMenuProps {
   showSettingMenu: boolean
@@ -10,10 +11,15 @@ interface SystemAdminMenuProps {
 
 export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: SystemAdminMenuProps) => {
   const { NavLink } = useRouterContext()
+  const { isInset } = useTheme()
+
   return (
     <Sheet.Root modal={false} open={showSettingMenu}>
       <Sheet.Content
-        className="inset-y-0 left-[220px] z-40 h-screen w-[364px] bg-transparent p-0"
+        className={cn(
+          'inset-y-0 z-40 h-screen w-[364px] bg-transparent p-0',
+          isInset ? 'border-l left-[228px]' : 'left-[220px]'
+        )}
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
         side="left"
         onClick={handleSettingsMenu}
@@ -23,7 +29,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
         <NavbarSkeleton.Root className="w-[364px]" isSubMenu>
           <NavbarSkeleton.Content className="overflow-hidden">
             <ScrollArea scrollThumbClassName="bg-sidebar-background-8">
-              <Spacer size={9} />
+              <Spacer size={10} />
               {items.map((group, group_idx) => (
                 <NavbarSkeleton.Group
                   key={group.groupId}
@@ -38,7 +44,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
                         {({ isActive }) => (
                           <NavbarSkeleton.Item
                             text={item.title || ''}
-                            icon={item.iconName && <Icon name={item.iconName} size={12} />}
+                            icon={item.iconName && <Icon name={item.iconName} size={14} />}
                             active={isActive}
                             isMainNav
                           />

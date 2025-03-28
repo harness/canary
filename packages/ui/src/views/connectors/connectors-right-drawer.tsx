@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react'
 
 import { TranslationStore } from '@/views'
+import { Alert } from '@components/alert'
 import { Sheet } from '@components/sheet'
 
 import { ConnectorEntityForm } from './connector-entity-form'
@@ -17,6 +18,7 @@ interface ConnectorsRightDrawerBaseProps {
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   useTranslationStore: () => TranslationStore
   openSecretDrawer?: () => void
+  apiError?: string | null
 }
 
 const ConnectorsRightDrawerBase = ({
@@ -27,7 +29,8 @@ const ConnectorsRightDrawerBase = ({
   getConnectorDefinition,
   onDrawerClose,
   useTranslationStore,
-  openSecretDrawer
+  openSecretDrawer,
+  apiError
 }: ConnectorsRightDrawerBaseProps): JSX.Element => {
   const { rightDrawer, setRightDrawer, formEntity, setFormEntity, clearRightDrawerData } = useConnectorsContext()
 
@@ -64,6 +67,7 @@ const ConnectorsRightDrawerBase = ({
               onDrawerClose?.()
             }}
             onFormSubmit={onFormSubmit}
+            apiError={apiError}
             getConnectorDefinition={getConnectorDefinition}
           />
         ) : (
@@ -87,22 +91,29 @@ const ConnectorsRightDrawerBase = ({
   }
 
   return (
-    <Sheet.Root
-      open={rightDrawer !== ConnectorRightDrawer.None}
-      onOpenChange={open => {
-        if (!open) {
-          setRightDrawer(ConnectorRightDrawer.None)
-        }
-      }}
-    >
-      <Sheet.Content
-        onOpenAutoFocus={e => e.preventDefault()}
-        hideCloseButton={true}
-        className="max-w-lg p-0 sm:max-w-lg"
+    <>
+      <Sheet.Root
+        open={rightDrawer !== ConnectorRightDrawer.None}
+        onOpenChange={open => {
+          if (!open) {
+            setRightDrawer(ConnectorRightDrawer.None)
+          }
+        }}
       >
-        {content}
-      </Sheet.Content>
-    </Sheet.Root>
+        <Sheet.Content
+          onOpenAutoFocus={e => e.preventDefault()}
+          hideCloseButton={true}
+          className="max-w-lg p-0 sm:max-w-lg"
+        >
+          {content}
+        </Sheet.Content>
+      </Sheet.Root>
+      {apiError && (
+        <Alert.Container variant="destructive" className="mb-8">
+          <Alert.Description>{apiError?.toString()}</Alert.Description>
+        </Alert.Container>
+      )}
+    </>
   )
 }
 
@@ -115,7 +126,8 @@ const ConnectorsRightDrawer = ({
   getConnectorDefinition,
   onDrawerClose,
   useTranslationStore,
-  openSecretDrawer
+  openSecretDrawer,
+  apiError
 }: ConnectorsRightDrawerBaseProps): JSX.Element | null => {
   return (
     <ConnectorsProvider>
@@ -128,6 +140,7 @@ const ConnectorsRightDrawer = ({
         onDrawerClose={onDrawerClose}
         useTranslationStore={useTranslationStore}
         openSecretDrawer={openSecretDrawer}
+        apiError={apiError}
       />
     </ConnectorsProvider>
   )

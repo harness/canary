@@ -35,11 +35,15 @@ export function CollapsedGroupNode({
       ? getNestedStepsCount(firstNode?.children)
       : undefined
 
+  const w = node.config?.width ? node.config?.width + 'px' : 'auto'
+  const minW = node.config?.minWidth ? node.config?.minWidth + 'px' : 'auto'
+
   return (
     <>
       <div
         style={{
-          width: firstNode?.config?.minWidth + 'px',
+          width: w,
+          minWidth: minW,
           position: 'relative',
           [containerNodeType === 'parallel' ? 'marginBottom' : 'marginRight']: nodesToShow.length * 10 + 'px'
         }}

@@ -2,7 +2,7 @@ export default function Port(props: { side: 'left' | 'right'; id?: string; adjus
   const { adjustment = 0 } = props
 
   const lineWeight = 1
-  const r = 5
+  const r = 7
 
   return (
     <div

@@ -28,5 +28,5 @@ const getIconNameBasedOnStep = (step: any): IconProps['name'] => {
 }
 
 export const getIconBasedOnStep = (step: any): JSX.Element => {
-  return <Icon className="size-6" name={getIconNameBasedOnStep(step)} />
+  return <Icon size={32} name={getIconNameBasedOnStep(step)} />
 }

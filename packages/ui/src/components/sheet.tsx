@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { usePortal } from '@/context'
+import { usePortal, useTheme } from '@/context'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -21,11 +21,14 @@ interface SheetOverlayProps extends React.ComponentPropsWithoutRef<typeof SheetP
 
 const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Overlay>, SheetOverlayProps>(
   ({ className, modal, handleClose, ...props }, ref) => {
+    const { isLightTheme } = useTheme()
+
     if (modal) {
       return (
         <SheetPrimitive.Overlay
           className={cn(
-            'bg-background-7/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50',
+            'bg-background-7/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50',
+            { 'bg-background-10/60': isLightTheme },
             className
           )}
           {...props}
@@ -37,7 +40,11 @@ const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Ove
     return (
       <div
         aria-hidden="true"
-        className={cn('bg-background-7/50 fixed left-0 top-0 h-full w-full', className)}
+        className={cn(
+          'layer-high bg-background-7/80 fixed left-0 top-0 h-full w-full',
+          { 'bg-background-10/60': isLightTheme },
+          className
+        )}
         onClick={e => handleClose?.(e)}
       />
     )
@@ -85,31 +92,40 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
     ref
   ) => {
     const { portalContainer } = usePortal()
+
+    const content = (
+      <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
+        {children}
+        {!hideCloseButton && (
+          <SheetPrimitive.Close
+            className="absolute right-1 top-2 flex items-center justify-center transition-colors disabled:pointer-events-none"
+            asChild
+          >
+            <Button
+              className={cn('text-icons-4 hover:text-icons-2 focus:ring-0 focus-visible:outline-none', closeClassName)}
+              variant="custom"
+              size="icon"
+            >
+              <Icon name="close" size={16} />
+              <span className="sr-only">Close</span>
+            </Button>
+          </SheetPrimitive.Close>
+        )}
+      </SheetPrimitive.Content>
+    )
+
     return (
       <SheetPortal container={portalContainer}>
-        <SheetOverlay modal={modal} className={overlayClassName} handleClose={handleClose || props.onClick}>
-          <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
-            {children}
-            {!hideCloseButton && (
-              <SheetPrimitive.Close
-                className="absolute right-[0.1875rem] top-2 flex items-center justify-center transition-colors disabled:pointer-events-none"
-                asChild
-              >
-                <Button
-                  className={cn(
-                    'text-icons-4 hover:text-icons-2 focus:ring-0 focus-visible:outline-none',
-                    closeClassName
-                  )}
-                  variant="custom"
-                  size="icon"
-                >
-                  <Icon name="close" size={16} />
-                  <span className="sr-only">Close</span>
-                </Button>
-              </SheetPrimitive.Close>
-            )}
-          </SheetPrimitive.Content>
-        </SheetOverlay>
+        {modal ? (
+          <SheetOverlay modal={modal} className={overlayClassName} handleClose={handleClose || props.onClick}>
+            {content}
+          </SheetOverlay>
+        ) : (
+          <>
+            <SheetOverlay modal={modal} className={overlayClassName} handleClose={handleClose || props.onClick} />
+            {content}
+          </>
+        )}
       </SheetPortal>
     )
   }

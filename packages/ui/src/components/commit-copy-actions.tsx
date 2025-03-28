@@ -39,7 +39,7 @@ export const CommitCopyActions = ({
             if (e.key === 'Enter' || e.key === ' ') handleNavigation()
           }}
         >
-          {sha.substring(0, 7)}
+          {sha.substring(0, 6)}
         </button>
       </ShaBadge.Content>
       <ShaBadge.Icon

@@ -16,7 +16,7 @@ function Breadcrumbs() {
         {!isMFE ? (
           <>
             <Sidebar.Trigger className="text-topbar-foreground-2 hover:text-topbar-foreground-1 hover:bg-topbar-background-1 -ml-1" />
-            <Separator orientation="vertical" className="bg-topbar-background-1 ml-1 mr-2 h-4" />
+            <Separator orientation="vertical" className="bg-sidebar-background-1 ml-1 mr-2 h-4" />
           </>
         ) : null}
         <Breadcrumb.Root className="select-none">
@@ -29,13 +29,13 @@ function Breadcrumbs() {
 
               return (
                 <Breadcrumb.Item key={match.pathname}>
-                  {!isFirst ? <Breadcrumb.Separator className="text-topbar-foreground-3" /> : null}
+                  {!isFirst && <Breadcrumb.Separator className="text-foreground-9" />}
                   {isLast || !asLink ? (
-                    <Breadcrumb.Page className={isLast ? 'text-topbar-foreground-4' : 'text-topbar-foreground-3'}>
+                    <Breadcrumb.Page className={isLast ? 'text-foreground-3' : 'text-foreground-1'}>
                       {breadcrumbContent}
                     </Breadcrumb.Page>
                   ) : (
-                    <Breadcrumb.Link className="text-topbar-foreground-3" asChild>
+                    <Breadcrumb.Link className="text-foreground-4 hover:text-foreground-2" asChild>
                       <Link to={match.pathname}>{breadcrumbContent}</Link>
                     </Breadcrumb.Link>
                   )}

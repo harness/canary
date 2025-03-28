@@ -73,7 +73,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(entity)}
-        className={cn({ 'bg-cds-background-4': isSelected })}
+        className={cn({ 'bg-cn-background-4': isSelected })}
         thumbnail={<Icon name="file" size={16} className="text-foreground-5" />}
         actions={
           <Button

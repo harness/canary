@@ -30,6 +30,10 @@
       "$type": "spacing",
       "$value": "{spacing.2}",
       "$description": "8px vertical padding"
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     }
   }
 }

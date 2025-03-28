@@ -1331,13 +1331,6 @@
         "$description": "Border color for input fields. Defines the input area with a visible boundary for improved usability."
       }
     },
-    "label": {
-      "text": {
-        "$type": "color",
-        "$value": "{text.1}",
-        "$description": "Text color for form labels and field identifiers. Ensures high contrast for important contextual information."
-      }
-    },
     "link": {
       "default": {
         "$type": "color",

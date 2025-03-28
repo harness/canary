@@ -60,7 +60,7 @@ export const MultiSelect = <T = unknown,>({
         </Label>
       )}
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger className="flex h-9 w-full items-center justify-between rounded border border-borders-2 bg-input-background px-3 transition-colors data-[state=open]:border-borders-8">
+        <DropdownMenu.Trigger className="flex h-9 w-full items-center justify-between rounded border border-cn-borders-2 bg-cn-background-3 px-3 transition-colors data-[state=open]:border-cn-borders-8">
           {placeholder}
           <Icon name="chevron-down" className="chevron-down ml-auto" size={12} />
         </DropdownMenu.Trigger>
@@ -120,7 +120,7 @@ export const MultiSelect = <T = unknown,>({
           {selectedItems.map(it => (
             <Button
               key={it.id}
-              className="group flex h-6 items-center gap-x-1.5 bg-cds-background-8 px-2.5 text-foreground-8"
+              className="group flex h-6 items-center gap-x-1.5 bg-cn-background-8 px-2.5 text-foreground-8"
               type="button"
               variant="custom"
               onClick={() => handleChange(it)}

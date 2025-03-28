@@ -89,7 +89,7 @@ const SelectTrigger = forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'border-borders-2 ring-offset-background flex h-9 w-full items-center justify-between whitespace-nowrap rounded border bg-input-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed disabled:border-borders-2 [&>span]:line-clamp-1',
+      'border-cn-borders-2 ring-offset-background flex h-9 w-full items-center justify-between whitespace-nowrap rounded border bg-cn-background-3 px-3 py-2 text-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed disabled:border-cn-borders-2 [&>span]:line-clamp-1',
       className
     )}
     {...props}
@@ -154,7 +154,7 @@ const SelectContent = forwardRef<
           )}
         >
           {!!withSearch && (
-            <div className="sticky -top-1 z-[1] -mx-1 -mt-1 mb-1 border-b bg-cds-background-2 px-3 py-2.5">
+            <div className="sticky -top-1 z-[1] -mx-1 -mt-1 mb-1 border-b bg-cn-background-2 px-3 py-2.5">
               <SearchBox.Root
                 className="w-full"
                 placeholder={searchProps?.placeholder || ''}

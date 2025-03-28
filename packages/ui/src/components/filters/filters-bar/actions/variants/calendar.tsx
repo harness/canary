@@ -283,7 +283,7 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
           <Input
             type="text"
             className={cn({
-              'border-borders-danger focus:border-borders-danger': rangeState.from.isError
+              'border-cn-borders-danger focus:border-cn-borders-danger': rangeState.from.isError
             })}
             value={rangeState.from.value}
             onChange={e => handleDateInput(e.target.value, 'from')}
@@ -295,7 +295,7 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
           <Input
             type="text"
             className={cn({
-              'border-borders-danger focus:border-borders-danger': rangeState.to.isError
+              'border-cn-borders-danger focus:border-cn-borders-danger': rangeState.to.isError
             })}
             value={rangeState.to.value}
             onChange={e => handleDateInput(e.target.value, 'to')}
@@ -339,7 +339,7 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
         <Input
           type="text"
           className={cn({
-            'border-borders-danger focus:border-borders-danger': singleState.input.isError
+            'border-cn-borders-danger focus:border-cn-borders-danger': singleState.input.isError
           })}
           value={singleState.input.value}
           onChange={e => handleDateInput(e.target.value)}

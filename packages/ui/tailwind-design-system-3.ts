@@ -1,6 +1,10 @@
 import typography from '@tailwindcss/typography'
 import tailwindcssAnimate from 'tailwindcss-animate'
+import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
+
+import { badgeStyles, dialogStyles } from './tailwind-utils-config/components'
+import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
 export default {
   darkMode: ['class'],
@@ -20,10 +24,10 @@ export default {
         code: ['JetBrains Mono', 'monospace']
       },
       colors: {
-        border: 'hsl(var(--canary-border))',
+        border: 'var(--cn-border-1)',
         'border-background': 'hsl(var(--canary-border-background))',
         input: 'hsl(var(--canary-input))',
-        'input-background': 'hsl(var(--canary-input-background))',
+        'remove-input-background': 'hsl(var(--canary-input-background))',
         ring: 'hsl(var(--canary-ring))',
         primary: {
           DEFAULT: 'hsl(var(--canary-primary))',
@@ -108,6 +112,19 @@ export default {
           success: 'hsl(var(--canary-foreground-success))',
           accent: 'hsl(var(--canary-foreground-accent))'
         },
+        'cn-foreground': {
+          1: 'var(--cn-text-1)',
+          2: 'var(--cn-text-2)',
+          3: 'var(--cn-text-3)',
+
+          // Remove
+          4: 'var(--cn-text-3)',
+          5: 'var(--cn-text-3)',
+          8: 'var(--cn-text-3)',
+          accent: 'var(--cn-text-3)',
+          // DEFAULT - 1
+          DEFAULT: 'var(--cn-text-1)'
+        },
         background: {
           // TODO: remove DEFAULT, cause use old color var
           DEFAULT: 'hsl(var(--canary-background))',
@@ -128,7 +145,7 @@ export default {
           danger: 'hsla(var(--canary-background-danger))',
           success: 'hsla(var(--canary-background-success))'
         },
-        'cds-background': {
+        'cn-background': {
           // @deprecated Use 'cds-background-1' instead
           DEFAULT: 'var(--cn-bg-1)',
           1: 'var(--cn-bg-1)',
@@ -159,7 +176,7 @@ export default {
           risk: 'hsl(var(--canary-icon-risk))',
           alert: 'hsl(var(--canary-border-alert))'
         },
-        'cds-borders': {
+        'cn-borders': {
           1: 'var(--cn-border-1)',
           2: 'var(--cn-border-2)',
           3: 'var(--cn-border-3)',
@@ -358,7 +375,7 @@ export default {
             8: 'hsl(var(--canary-sidebar-background-08))'
           },
           border: {
-            1: 'hsl(var(--canary-sidebar-border-01))',
+            1: 'var(--cn-border-3)',
             2: 'hsla(var(--canary-sidebar-border-02))',
             3: 'hsl(var(--canary-sidebar-border-03))',
             4: 'hsl(var(--canary-sidebar-border-04))',
@@ -418,6 +435,7 @@ export default {
         auth: '0px 0px 20px var(--canary-box-shadow-2)'
       },
       borderColor: {
+        DEFAULT: 'var(--cn-border-3)',
         'borders-1': 'hsl(var(--canary-border-01))',
         'borders-2': 'hsl(var(--canary-border-02))',
         'borders-3': 'hsl(var(--canary-border-03))',
@@ -505,6 +523,13 @@ export default {
     }
   },
   plugins: [
+    plugin(({ addUtilities }) => {
+      addUtilities(typographyStyles)
+    }),
+    plugin(({ addComponents }) => {
+      addComponents(badgeStyles)
+      addComponents(dialogStyles)
+    }),
     tailwindcssAnimate,
     typography,
     function ({ addUtilities }: PluginAPI) {
@@ -571,8 +596,8 @@ export default {
     'prose-img',
     'prose-code',
     /** CDS Variants  */
-    { pattern: /^bg-cds-background-/ },
-    { pattern: /^border-cds-borders-/ },
+    { pattern: /^bg-cn-background-/ },
+    { pattern: /^border-cn-borders-/ },
 
     /** Existing Variants  */
     { pattern: /^bg-graph-/ },

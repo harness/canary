@@ -53,7 +53,7 @@ const SortableItem = ({
       <div className="flex items-center justify-between gap-x-2">
         <div className="flex items-center gap-x-2">
           <div
-            className="cursor-grab rounded p-1 hover:bg-cds-background-3 active:cursor-grabbing"
+            className="cursor-grab rounded p-1 hover:bg-cn-background-3 active:cursor-grabbing"
             {...attributes}
             {...listeners}
           >
@@ -61,7 +61,7 @@ const SortableItem = ({
           </div>
 
           <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-borders-2 pl-2.5 pr-1.5 text-14 text-foreground-8">
+            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-cn-borders-2 pl-2.5 pr-1.5 text-14 text-foreground-8">
               {sortOptions.find(opt => opt.value === sort.type)?.label}
               <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
             </DropdownMenu.Trigger>
@@ -78,7 +78,7 @@ const SortableItem = ({
           </DropdownMenu.Root>
 
           <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-borders-2 pl-2.5 pr-1.5 text-14 text-foreground-8">
+            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-cn-borders-2 pl-2.5 pr-1.5 text-14 text-foreground-8">
               {sortDirections.find(dir => dir.value === sort.direction)?.label}
               <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
             </DropdownMenu.Trigger>
@@ -158,7 +158,7 @@ const Sorts = ({
 
   return (
     <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-cds-background-3 px-2.5 transition-colors duration-200 hover:bg-cds-background-8">
+      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-cn-background-3 px-2.5 transition-colors duration-200 hover:bg-cn-background-8">
         <div className="flex items-center gap-x-1">
           <Icon
             className={cn('text-icons-1', getSortTriggerLabel(activeSorts, sortOptions).isDescending && 'rotate-180')}
@@ -201,7 +201,7 @@ const Sorts = ({
                 Add sort
               </DropdownMenu.Trigger>
               <DropdownMenu.Content className="min-w-[224px] p-0" align="start">
-                <div className="relative flex items-center justify-between border-b border-borders-4 px-3 py-2.5">
+                <div className="relative flex items-center justify-between border-b border-cn-borders-4 px-3 py-2.5">
                   <DropdownMenu.Item className="hover:bg-transparent focus:bg-transparent" asChild>
                     <Input
                       type="text"

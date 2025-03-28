@@ -102,7 +102,7 @@ export const SidebarItem = ({
             </Sidebar.MenuAction>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content
-            className="border-sidebar-border-3 bg-sidebar-background-4 w-[128px]"
+            className="w-[128px] border-sidebar-border-3 bg-sidebar-background-4"
             align="end"
             sideOffset={3}
             alignOffset={4}

@@ -14,13 +14,13 @@ const UserAvatar = ({ user }: Pick<UserProps, 'user'>) => {
     <>
       <Avatar.Root className="mr-2 size-8 rounded-lg">
         {!!user?.url && <Avatar.Image src={user.url} alt="user" />}
-        <Avatar.Fallback className="bg-sidebar-background-5 text-sidebar-foreground-1 rounded-lg">
+        <Avatar.Fallback className="rounded-lg bg-sidebar-background-5 text-sidebar-foreground-1">
           {getInitials(userName)}
         </Avatar.Fallback>
       </Avatar.Root>
-      <div className="text-13 grid flex-1 text-left leading-tight">
-        <span className="text-sidebar-foreground-1 truncate font-medium">{userName}</span>
-        <span className="text-sidebar-foreground-4 truncate">{user?.email}</span>
+      <div className="grid flex-1 text-left text-13 leading-tight">
+        <span className="truncate font-medium text-sidebar-foreground-1">{userName}</span>
+        <span className="truncate text-sidebar-foreground-4">{user?.email}</span>
       </div>
     </>
   )
@@ -44,13 +44,13 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, 
           <DropdownMenu.Trigger asChild>
             <Sidebar.MenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-background-2 px-[9px] transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-[7px]"
+              className="px-[9px] transition-[padding] duration-150 ease-linear data-[state=open]:bg-sidebar-background-2 group-data-[state=collapsed]:px-[7px]"
             >
               <UserAvatar user={user} />
             </Sidebar.MenuButton>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content
-            className="border-sidebar-border-3 bg-sidebar-background-4 w-[--radix-dropdown-menu-trigger-width] min-w-56 !rounded-lg"
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 !rounded-lg border-sidebar-border-3 bg-sidebar-background-4"
             side="right"
             align="end"
             sideOffset={4}
@@ -65,10 +65,10 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, 
               <DropdownMenu.Item className="data-[highlighted]:bg-sidebar-background-2" asChild>
                 <Link
                   to="/profile-settings"
-                  className="text-sidebar-foreground-6 data-[highlighted]:text-sidebar-foreground-1 group gap-2.5"
+                  className="group gap-2.5 text-sidebar-foreground-6 data-[highlighted]:text-sidebar-foreground-1"
                 >
                   <Icon
-                    className="text-sidebar-icon-3 group-hover:text-sidebar-icon-1 transition-colors"
+                    className="text-sidebar-icon-3 transition-colors group-hover:text-sidebar-icon-1"
                     name="settings-1"
                     size={12}
                   />
@@ -76,22 +76,22 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, 
                 </Link>
               </DropdownMenu.Item>
               <DropdownMenu.Item
-                className="text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1 group gap-2.5"
+                className="group gap-2.5 text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1"
                 onClick={openThemeDialog}
               >
                 <Icon
-                  className="text-sidebar-icon-3 group-hover:text-sidebar-icon-1 transition-colors"
+                  className="text-sidebar-icon-3 transition-colors group-hover:text-sidebar-icon-1"
                   name="paint"
                   size={12}
                 />
                 <span>{t('component:navbar.appearence', 'Appearance')}</span>
               </DropdownMenu.Item>
               <DropdownMenu.Item
-                className="text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1 group gap-2.5"
+                className="group gap-2.5 text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1"
                 onClick={openLanguageDialog}
               >
                 <Icon
-                  className="text-sidebar-icon-3 group-hover:text-sidebar-icon-1 transition-colors"
+                  className="text-sidebar-icon-3 transition-colors group-hover:text-sidebar-icon-1"
                   name="language"
                   size={12}
                 />
@@ -99,11 +99,11 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, 
               </DropdownMenu.Item>
               <DropdownMenu.Separator className="bg-sidebar-border-1" />
               <DropdownMenu.Item
-                className="text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1 group gap-2.5"
+                className="group gap-2.5 text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1"
                 onClick={handleLogOut}
               >
                 <Icon
-                  className="text-sidebar-icon-3 group-hover:text-sidebar-icon-1 transition-colors"
+                  className="text-sidebar-icon-3 transition-colors group-hover:text-sidebar-icon-1"
                   name="logOut"
                   size={12}
                 />

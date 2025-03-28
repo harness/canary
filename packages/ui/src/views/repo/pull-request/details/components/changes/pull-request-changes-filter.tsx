@@ -306,7 +306,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   {diff.addedLines != null &&
                     diff.addedLines > 0 &&
                     diff.deletedLines != null &&
-                    diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-borders-2" />}
+                    diff.deletedLines > 0 && <span className="bg-borders-2 mx-1.5 h-3 w-px" />}
                   {diff.deletedLines != null && diff.deletedLines > 0 && (
                     <span className="text-foreground-danger">-{diff.deletedLines}</span>
                   )}

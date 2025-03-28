@@ -93,7 +93,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
           <Table.Head className="w-40">
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
               <span className="text-right leading-none">{t('views:repos.behind', 'Behind')}</span>
-              <div className="h-3 w-px bg-borders-2" aria-hidden />
+              <div className="bg-borders-2 h-3 w-px" aria-hidden />
               <span className="leading-none">{t('views:repos.ahead', 'Ahead')}</span>
             </div>
           </Table.Head>

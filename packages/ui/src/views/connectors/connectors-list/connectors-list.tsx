@@ -6,9 +6,7 @@ import { ExecutionStatus } from '@views/execution/execution-status'
 import { ConnectorListItem, ConnectorListProps } from './types'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <div className="inline-flex items-center gap-2.5">
-    <span className="max-w-full truncate font-medium">{title}</span>
-  </div>
+  <span className="max-w-full truncate font-medium">{title}</span>
 )
 
 const ConnectivityStatus = ({
@@ -67,7 +65,7 @@ export function ConnectorsList({
       <Table.Body>
         {connectors.map(connector => (
           <Table.Row key={connector.identifier}>
-            <Table.Cell>
+            <Table.Cell className="max-w-80 truncate">
               <Link to={toConnectorDetails?.(connector) || ''}>
                 <div className="flex items-center gap-2.5">
                   <Icon name="connectors" size={24} />

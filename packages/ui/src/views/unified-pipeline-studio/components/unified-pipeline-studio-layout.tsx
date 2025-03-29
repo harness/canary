@@ -13,7 +13,7 @@ const PipelineStudioLayout = {
     const className = isYamlView ? 'border-b' : 'border-b-transparent'
     return (
       <div
-        className={cn(`absolute left-0 right-0 z-[48] flex items-center justify-between px-5`, className)}
+        className={cn(`absolute left-0 right-0 z-40 flex items-center justify-between px-5`, className)}
         style={{ height: `${HEADER_HEIGHT}px`, minHeight: `${HEADER_HEIGHT}px` }}
       >
         {children}

@@ -4,7 +4,7 @@ import { MenuGroupType } from '@components/app-sidebar/types'
 
 interface MoreSubmenuProps {
   showMoreMenu: boolean
-  handleMoreMenu: () => void
+  handleMoreMenu: (state?: boolean) => void
   items: MenuGroupType[]
 }
 
@@ -17,7 +17,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
         className="inset-y-0 z-40 h-screen w-[328px] translate-x-[--sidebar-width] border-l p-0 shadow-none"
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
         modal={false}
-        onClick={handleMoreMenu}
+        onClick={() => handleMoreMenu(false)}
         side="left"
       >
         <Sheet.Title className="sr-only">More Menu</Sheet.Title>

@@ -4,7 +4,7 @@ import { MenuGroupType } from '@components/app-sidebar/types'
 
 interface SystemAdminMenuProps {
   showSettingMenu: boolean
-  handleSettingsMenu: () => void
+  handleSettingsMenu: (state?: boolean) => void
   items: MenuGroupType[]
 }
 
@@ -16,7 +16,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
       <Sheet.Content
         className="inset-y-0 z-40 h-screen w-[364px] translate-x-[--sidebar-width] border-l p-0 shadow-none"
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
-        onClick={handleSettingsMenu}
+        onClick={() => handleSettingsMenu(false)}
         modal={false}
         side="left"
       >

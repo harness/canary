@@ -28,7 +28,7 @@ const Topbar = {
   },
 
   Left: React.memo(function Header({ children }: { children: React.ReactNode }) {
-    return <div className="order-1 flex items-center gap-3">{children}</div>
+    return <div className="order-1 flex items-center">{children}</div>
   }),
 
   Center: React.memo(function Center({ children }: { children: React.ReactNode }) {

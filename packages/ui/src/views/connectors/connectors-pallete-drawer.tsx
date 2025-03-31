@@ -26,13 +26,14 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
   const [query, setQuery] = useState('')
 
   const connectorsFiltered = useMemo(
-    () => connectors.filter((connector: { type: string | string[] }) => connector.type.includes(query)),
+    () =>
+      connectors.filter((connector: { name: string }) => connector.name.toLowerCase().includes(query.toLowerCase())),
     [query, connectors]
   )
 
   return (
     <ConnectorsPaletteLayout.Root>
-      <ConnectorsPaletteLayout.Header className="!border-none">
+      <ConnectorsPaletteLayout.Header className="!border-none !p-0">
         <ConnectorsPaletteLayout.Title className="!mt-0">Connector Setup</ConnectorsPaletteLayout.Title>
         <ConnectorsPaletteLayout.Subtitle className="text-foreground-4">
           {'Select a Connector'}
@@ -44,7 +45,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
           }}
         />
       </ConnectorsPaletteLayout.Header>
-      <StepsPaletteContentLayout.Root>
+      <StepsPaletteContentLayout.Root className="!px-0">
         <ConnectorsPaletteSection
           connectors={connectorsFiltered}
           onSelect={connector => {

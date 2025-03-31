@@ -83,7 +83,6 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       requiredMessagePerInput: { ['select']: 'Selection is required' }
     }
   })
-  console.log(selectedSecret, 'selectedSecret', formEntity)
 
   return (
     <RootForm
@@ -99,12 +98,12 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       {rootForm => (
         <EntityFormLayout.Root>
           <EntityFormSectionLayout.Root>
-            <EntityFormSectionLayout.Header>
+            <EntityFormSectionLayout.Header className="!px-0">
               <EntityFormSectionLayout.Title className="!my-0">
                 Connect to {formEntity.data.name}
               </EntityFormSectionLayout.Title>
             </EntityFormSectionLayout.Header>
-            <EntityFormSectionLayout.Form>
+            <EntityFormSectionLayout.Form className="!px-0">
               <RenderForm className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
               {apiError && (
                 <Alert.Container variant="destructive" className="my-8">

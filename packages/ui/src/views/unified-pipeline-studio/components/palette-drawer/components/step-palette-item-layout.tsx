@@ -3,7 +3,7 @@ import { cn } from '@utils/cn'
 const StepsPaletteItemLayout = {
   Root: function Root({ children, ...rest }: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
     return (
-      <div className="flex size-full cursor-pointer flex-row gap-2" {...rest}>
+      <div className="flex size-full cursor-pointer flex-row gap-2 p-2" {...rest}>
         {children}
       </div>
     )

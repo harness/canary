@@ -68,7 +68,6 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
 
   return (
     <div className="flex flex-col">
-      <span className="mb-4 font-medium">Select an existing Connector:</span>
       <div className="flex-1">
         <EntityReference<ConnectorItem>
           entities={connectorsData}

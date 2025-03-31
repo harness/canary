@@ -15,7 +15,7 @@ type ExecutionDetail = {
 const getStatusIcon = (status: ExecutionState): React.ReactElement => {
   switch (status) {
     case ExecutionState.RUNNING:
-      return <CanaryIcon size={20} name="running" className="text-icons-warning animate-spin" />
+      return <CanaryIcon size={20} name="running" className="animate-spin text-icons-warning" />
     case ExecutionState.SUCCESS:
       return <CanaryIcon name="success" size={16} className="text-icons-success" />
     case ExecutionState.FAILURE:
@@ -24,7 +24,7 @@ const getStatusIcon = (status: ExecutionState): React.ReactElement => {
     case ExecutionState.PENDING:
       return (
         <div className="flex size-5 items-center justify-center">
-          <span className="border-icons-7 size-4 rounded-full border" />
+          <span className="size-4 rounded-full border border-icons-7" />
         </div>
       )
     case ExecutionState.SKIPPED:
@@ -218,14 +218,14 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
           <div className="flex w-full justify-between gap-x-2">
             <div className="flex gap-x-2">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="text-foreground-8 mt-0.5 text-left leading-tight">
+              <span className="mt-0.5 text-left leading-tight text-foreground-8">
                 {element}&nbsp;<span className="text-foreground-5">({React.Children.count(children)})</span>
               </span>
             </div>
-            <span className="text-foreground-4 flex-none">{duration ?? '--'}</span>
+            <span className="flex-none text-foreground-4">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
-        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down relative h-full overflow-visible px-5 text-sm">
+        <AccordionPrimitive.Content className="relative h-full overflow-visible px-5 text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
           <AccordionPrimitive.Root
             dir={direction}
             type="multiple"
@@ -303,9 +303,9 @@ const File = forwardRef<
           <div className="relative flex w-full justify-between gap-x-2 pl-4">
             <div className="flex gap-x-2">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="text-foreground-8 mt-0.5 text-left leading-tight">{children}</span>
+              <span className="mt-0.5 text-left leading-tight text-foreground-8">{children}</span>
             </div>
-            <span className="text-foreground-4 flex-none">{duration ?? '--'}</span>
+            <span className="flex-none text-foreground-4">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Item>

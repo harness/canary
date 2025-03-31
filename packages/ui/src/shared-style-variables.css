@@ -724,10 +724,8 @@
     /* Graph */
     --canary-graph-gradient-bg-1: hsla(var(--canary-pure-white) / 0.5);
     --canary-graph-gradient-bg-2: hsla(var(--canary-base-chrome-100) / 0.3);
-    --canary-graph-gradient-executing-1: hsla(var(--canary-amber-100));
-    --canary-graph-gradient-executing-2: hsla(var(--canary-amber-500));
-    --canary-graph-gradient-executing-3: hsla(var(--canary-amber-100));
-    --canary-graph-gradient-executing-4: hsla(var(--canary-amber-100));
+    --canary-graph-gradient-executing-1: hsla(43, 100%, 45%, 1);
+    --canary-graph-gradient-executing-2: hsla(43, 100%, 45%, 0.5);
     --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-150));
     --canary-graph-background-1: 0 0% 98%; /* nodes group - light color */
     --canary-graph-background-2: 240 8% 95%; /* dashed nodes group - dark color */
@@ -1044,10 +1042,8 @@
     /* Graph */
     --canary-graph-gradient-bg-1: hsla(var(--canary-pure-white) / 1);
     --canary-graph-gradient-bg-2: hsla(var(--canary-pure-white) / 1);
-    --canary-graph-gradient-executing-1: hsla(var(--canary-amber-100));
-    --canary-graph-gradient-executing-2: hsla(var(--canary-amber-500));
-    --canary-graph-gradient-executing-3: hsla(var(--canary-amber-100));
-    --canary-graph-gradient-executing-4: hsla(var(--canary-amber-100));
+    --canary-graph-gradient-executing-1: hsla(43, 100%, 45%, 1);
+    --canary-graph-gradient-executing-2: hsla(43, 100%, 45%, 0.5);
     --canary-graph-viewport-bg: hsla(240, 1%, 73%, 1);
     --canary-graph-background-1: 0 0% 100%; /* nodes group - light color */
     --canary-graph-background-2: 0 0% 98%; /* dashed nodes group - dark color */
@@ -1364,10 +1360,8 @@
     /* Graph */
     --canary-graph-gradient-bg-1: hsla(var(--canary-pure-white) / 1);
     --canary-graph-gradient-bg-2: hsla(var(--canary-pure-white) / 1);
-    --canary-graph-gradient-executing-1: hsla(var(--canary-amber-100));
-    --canary-graph-gradient-executing-2: hsla(var(--canary-amber-500));
-    --canary-graph-gradient-executing-3: hsla(var(--canary-amber-100));
-    --canary-graph-gradient-executing-4: hsla(var(--canary-amber-100));
+    --canary-graph-gradient-executing-1: hsla(43, 100%, 45%, 1);
+    --canary-graph-gradient-executing-2: hsla(43, 100%, 45%, 0.5);
     --canary-graph-viewport-bg: hsla(240, 1%, 73%, 1);
     --canary-graph-background-1: 0 0% 100%; /* nodes group - light color */
     --canary-graph-background-2: 0 0% 98%; /* dashed nodes group - dark color */
@@ -1684,10 +1678,8 @@
     /* Graph */
     --canary-graph-gradient-bg-1: hsla(var(--canary-pure-white) / 1);
     --canary-graph-gradient-bg-2: hsla(var(--canary-pure-white) / 1);
-    --canary-graph-gradient-executing-1: hsla(var(--canary-amber-100));
-    --canary-graph-gradient-executing-2: hsla(var(--canary-amber-500));
-    --canary-graph-gradient-executing-3: hsla(var(--canary-amber-100));
-    --canary-graph-gradient-executing-4: hsla(var(--canary-amber-100));
+    --canary-graph-gradient-executing-1: hsla(43, 100%, 45%, 1);
+    --canary-graph-gradient-executing-2: hsla(43, 100%, 45%, 0.5);
     --canary-graph-viewport-bg: hsla(240, 1%, 73%, 1);
     --canary-graph-background-1: 0 0% 100%; /* nodes group - light color */
     --canary-graph-background-2: 0 0% 98%; /* dashed nodes group - dark color */
@@ -2017,8 +2009,6 @@
     --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
     --canary-graph-gradient-executing-1: hsla(var(--canary-orange-55));
     --canary-graph-gradient-executing-2: hsla(var(--canary-orange-55) / 0.2);
-    --canary-graph-gradient-executing-3: hsla(var(--canary-orange-55));
-    --canary-graph-gradient-executing-4: hsla(var(--canary-orange-55));
     --canary-graph-viewport-bg: hsla(var(--canary-grey-12));
     --canary-graph-background-1: var(--canary-base-chrome-1000);
     --canary-graph-background-2: var(--canary-base-chrome-950);
@@ -2330,8 +2320,6 @@
     --canary-graph-gradient-bg-2: hsla(var(--canary-base-chrome-900));
     --canary-graph-gradient-executing-1: hsla(var(--canary-amber-200));
     --canary-graph-gradient-executing-2: hsla(var(--canary-base-chrome-850));
-    --canary-graph-gradient-executing-3: hsla(var(--canary-amber-200));
-    --canary-graph-gradient-executing-4: hsla(var(--canary-amber-200));
     --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-850) / 0.6);
     --canary-graph-background-1: var(--canary-base-chrome-1000);
     --canary-graph-background-2: var(--canary-base-chrome-950);
@@ -2678,8 +2666,6 @@
     --canary-graph-gradient-bg-2: hsla(var(--canary-base-chrome-900));
     --canary-graph-gradient-executing-1: hsla(var(--canary-amber-200));
     --canary-graph-gradient-executing-2: hsla(var(--canary-base-chrome-700));
-    --canary-graph-gradient-executing-3: hsla(var(--canary-amber-200));
-    --canary-graph-gradient-executing-4: hsla(var(--canary-amber-200));
     --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-700) / 0.5);
     --canary-graph-background-1: var(--canary-base-chrome-1000);
     --canary-graph-background-2: var(--canary-base-chrome-950);
@@ -3016,8 +3002,6 @@
     --canary-graph-gradient-bg-2: hsla(var(--canary-base-chrome-900));
     --canary-graph-gradient-executing-1: hsla(var(--canary-amber-200));
     --canary-graph-gradient-executing-2: hsla(var(--canary-base-chrome-850));
-    --canary-graph-gradient-executing-3: hsla(var(--canary-amber-200));
-    --canary-graph-gradient-executing-4: hsla(var(--canary-amber-200));
     --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-850) / 0.4);
     --canary-graph-background-1: var(--canary-base-chrome-1000);
     --canary-graph-background-2: var(--canary-base-chrome-950);

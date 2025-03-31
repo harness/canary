@@ -71,7 +71,7 @@ export function ConnectorsList({
         <Table.Body>
           {connectors.map(connector => (
             <Table.Row key={connector.identifier} className="cursor-pointer">
-              <Table.Cell className="content-center max-w-80 truncate">
+              <Table.Cell className="max-w-80 content-center truncate">
                 <Link to={toConnectorDetails?.(connector) || ''}>
                   <div className="flex items-center gap-2.5">
                     <Icon name="connectors" size={24} />
@@ -79,7 +79,7 @@ export function ConnectorsList({
                   </div>
                 </Link>
               </Table.Cell>
-              <Table.Cell className="content-center max-w-80 truncate">{connector.spec?.url}</Table.Cell>
+              <Table.Cell className="max-w-80 content-center truncate">{connector.spec?.url}</Table.Cell>
               <Table.Cell className="content-center">
                 {connector?.status ? <ConnectivityStatus item={connector} onClick={onTestConnection} /> : null}
               </Table.Cell>

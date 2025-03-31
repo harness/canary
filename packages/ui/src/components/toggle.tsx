@@ -5,15 +5,15 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const toggleVariants = cva(
-  `text-foreground-4 hover:text-foreground-2 data-[state=on]:text-foreground-1 inline-flex items-center justify-center 
-  text-xs 
-  font-medium transition-colors 
-  disabled:pointer-events-none disabled:opacity-50`,
+  `inline-flex items-center justify-center text-xs font-medium text-foreground-4 
+  transition-colors 
+  hover:text-foreground-2 disabled:pointer-events-none 
+  disabled:opacity-50 data-[state=on]:text-foreground-1`,
   {
     variants: {
       variant: {
         default: 'rounded bg-transparent',
-        outline: 'border-input hover:bg-accent hover:text-accent-foreground rounded border bg-transparent shadow-sm',
+        outline: 'rounded border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground',
         compact: ''
       },
       size: {

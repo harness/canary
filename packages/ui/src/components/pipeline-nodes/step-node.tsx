@@ -69,7 +69,7 @@ export function StepNode(props: StepNodeProps) {
               'border-borders-success': executionStatus === 'success',
               'border-borders-alert': executionStatus === 'warning',
               'border-borders-danger': executionStatus === 'error',
-              'border-0': executionStatus === 'executing'
+              'border-transparent': executionStatus === 'executing'
             }
           )}
           onClick={onClick}

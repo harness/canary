@@ -16,7 +16,7 @@ import {
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
-import { Sidebar, Toast, Tooltip } from '@harnessio/ui/components'
+import { Toast, Tooltip } from '@harnessio/ui/components'
 import { PortalProvider, RouterContextProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
@@ -176,42 +176,40 @@ export default function AppMFE({
             <ShadowRootLoader theme={theme} />
           ) : (
             <PortalProvider portalContainer={portalContainer}>
-              <Sidebar.Provider>
-                <MFEContext.Provider
-                  value={{
-                    scope,
-                    renderUrl,
-                    customHooks,
-                    customUtils
-                  }}
-                >
-                  <I18nextProvider i18n={i18n}>
-                    <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-                      <QueryClientProvider client={queryClient}>
-                        <Toast.Provider>
-                          <Tooltip.Provider>
-                            <ExitConfirmProvider>
-                              <NavigationProvider routes={routesToRender}>
-                                <RouterContextProvider
-                                  Link={Link}
-                                  NavLink={NavLink}
-                                  Outlet={Outlet}
-                                  location={{ ...window.location, state: {}, key: '' }}
-                                  navigate={router.navigate}
-                                  useSearchParams={useSearchParams}
-                                  useMatches={useMatches}
-                                >
-                                  <RouterProvider router={router} />
-                                </RouterContextProvider>
-                              </NavigationProvider>
-                            </ExitConfirmProvider>
-                          </Tooltip.Provider>
-                        </Toast.Provider>
-                      </QueryClientProvider>
-                    </ThemeProvider>
-                  </I18nextProvider>
-                </MFEContext.Provider>
-              </Sidebar.Provider>
+              <MFEContext.Provider
+                value={{
+                  scope,
+                  renderUrl,
+                  customHooks,
+                  customUtils
+                }}
+              >
+                <I18nextProvider i18n={i18n}>
+                  <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+                    <QueryClientProvider client={queryClient}>
+                      <Toast.Provider>
+                        <Tooltip.Provider>
+                          <ExitConfirmProvider>
+                            <NavigationProvider routes={routesToRender}>
+                              <RouterContextProvider
+                                Link={Link}
+                                NavLink={NavLink}
+                                Outlet={Outlet}
+                                location={{ ...window.location, state: {}, key: '' }}
+                                navigate={router.navigate}
+                                useSearchParams={useSearchParams}
+                                useMatches={useMatches}
+                              >
+                                <RouterProvider router={router} />
+                              </RouterContextProvider>
+                            </NavigationProvider>
+                          </ExitConfirmProvider>
+                        </Tooltip.Provider>
+                      </Toast.Provider>
+                    </QueryClientProvider>
+                  </ThemeProvider>
+                </I18nextProvider>
+              </MFEContext.Provider>
             </PortalProvider>
           )}
         </div>

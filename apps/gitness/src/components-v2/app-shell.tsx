@@ -24,6 +24,7 @@ import { useSelectedSpaceId } from '../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
 import Breadcrumbs from './breadcrumbs/breadcrumbs'
+import BreadcrumbsMFE from './breadcrumbs/breadcrumbs-mfe'
 import { Toaster } from './toaster'
 
 interface NavLinkStorageInterface {
@@ -226,7 +227,7 @@ export const AppShellMFE = memo(() => {
 
   return (
     <>
-      <MainContentLayout breadcrumbs={<Breadcrumbs />} className="text-foreground-2 min-h-screen">
+      <MainContentLayout breadcrumbs={<BreadcrumbsMFE />} className="text-foreground-2 min-h-screen">
         <Outlet />
       </MainContentLayout>
       <Toaster />

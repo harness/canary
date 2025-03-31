@@ -39,6 +39,18 @@
     "border": {
       "$type": "borderWidth",
       "$value": "{borderWidth.1}"
+    },
+    "wrapper": {
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      }
+    }
+  },
+  "input-text-area": {
+    "min-height": {
+      "$type": "sizing",
+      "$value": "{size.36}"
     }
   }
 }

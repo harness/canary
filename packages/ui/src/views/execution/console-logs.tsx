@@ -66,26 +66,34 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
   if (!logs || !logs.length) return null
 
   return (
-    <div ref={containerRef} className="overflow-y-auto pl-5">
-      {logs.filter(Boolean).map(({ pos, out, time, type = LivelogLineType.INFO }, index) => (
-        <div className="w-full" key={index}>
-          <div className="flex w-full items-baseline gap-5 font-mono text-15">
-            {pos !== undefined && pos >= 0 ? (
-              <span className="text-log flex min-w-5 justify-end text-foreground-7">{pos}</span>
-            ) : null}
-            <span
-              className={cn(
-                'text-log flex shrink-0 grow font-normal',
-                type === LivelogLineType.ERROR && 'text-foreground-danger bg-tag-background-red-2',
-                type === LivelogLineType.WARNING && 'text-foreground-alert bg-tag-background-amber-2'
-              )}
-            >
-              {time ? `[${formatTimestamp(time * 1_000)}]` : null}
+    <div ref={containerRef} className="bg-logs-background-1 overflow-y-auto pt-4">
+      {logs.filter(Boolean).map(({ out, time, type }, index) => {
+        const dateTime = time ? formatTimestamp(time * 1_000) : ''
+
+        return (
+          <div
+            key={index}
+            className={cn('text-15 flex w-full items-center pl-5  font-mono leading-normal', {
+              'bg-logs-background-6': type === LivelogLineType.WARNING,
+              'bg-logs-background-7': type === LivelogLineType.ERROR,
+              'pt-1.5': index !== 0
+            })}
+          >
+            <div
+              className={cn('w-1 h-[21px] mr-1.5 bg-logs-background-2', {
+                'bg-logs-background-3': type === LivelogLineType.INFO,
+                'bg-logs-background-4': type === LivelogLineType.WARNING,
+                'bg-logs-background-5': type === LivelogLineType.ERROR
+              })}
+            />
+
+            <span className="text-log text-logs-foreground-1 flex shrink-0 grow font-normal">
+              <time className="text-logs-foreground-2" dateTime={dateTime}>{`[${dateTime}]`}</time>
               {out ? logText(out) : null}
             </span>
           </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }

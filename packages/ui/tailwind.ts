@@ -353,6 +353,21 @@ export default {
           border: {
             1: 'hsl(var(--canary-graph-border-1))'
           }
+        },
+        logs: {
+          background: {
+            1: 'var(--canary-logs-background-01)',
+            2: 'var(--canary-logs-background-02)',
+            3: 'var(--canary-logs-background-03)',
+            4: 'var(--canary-logs-background-04)',
+            5: 'var(--canary-logs-background-05)',
+            6: 'var(--canary-logs-background-06)',
+            7: 'var(--canary-logs-background-07)'
+          },
+          foreground: {
+            1: 'var(--canary-logs-foreground-01)',
+            2: 'var(--canary-logs-foreground-02)'
+          }
         }
       },
       letterSpacing: {

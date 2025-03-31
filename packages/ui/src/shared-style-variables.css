@@ -733,6 +733,17 @@
     --canary-graph-background-4: 240 5% 79%; /* collapse button Hover bg */
     --canary-graph-border-1: 240 5% 79%;
 
+    /* Logs */
+    --canary-logs-background-01: hsl(240, 2%, 8%);
+    --canary-logs-background-02: hsl(240, 5%, 25%);
+    --canary-logs-background-03: hsl(var(--canary-accent-600));
+    --canary-logs-background-04: hsl(43, 100%, 45%);
+    --canary-logs-background-05: hsl(0, 69%, 58%);
+    --canary-logs-background-06: hsla(35, 75%, 55%, 0.1);
+    --canary-logs-background-07: hsla(0, 90%, 67%, 0.1);
+    --canary-logs-foreground-01: hsl(var(--canary-pure-white));
+    --canary-logs-foreground-02: hsl(240, 3%, 66%);
+
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
     --canary-nav-gradient-1-1: var();
@@ -1050,6 +1061,17 @@
     --canary-graph-background-3: hsla(240, 4%, 90%, 1); /* collapse button bg */
     --canary-graph-background-4: 240 5% 79%; /* collapse button Hover bg */
     --canary-graph-border-1: 240 5% 79%; /* node step border */ /* border-2*/
+
+    /* Logs */
+    --canary-logs-background-01: hsl(240, 2%, 8%);
+    --canary-logs-background-02: hsl(240, 5%, 25%);
+    --canary-logs-background-03: hsl(var(--canary-accent-600));
+    --canary-logs-background-04: hsl(43, 100%, 45%);
+    --canary-logs-background-05: hsl(0, 69%, 58%);
+    --canary-logs-background-06: hsla(35, 75%, 55%, 0.1);
+    --canary-logs-background-07: hsla(0, 90%, 67%, 0.1);
+    --canary-logs-foreground-01: hsl(var(--canary-pure-white));
+    --canary-logs-foreground-02: hsl(240, 3%, 66%);
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -1369,6 +1391,17 @@
     --canary-graph-background-4: 240 5% 79%; /* collapse button Hover bg */
     --canary-graph-border-1: 240 5% 79%; /* node step border */ /* border-2*/
 
+    /* Logs */
+    --canary-logs-background-01: hsl(240, 2%, 8%);
+    --canary-logs-background-02: hsl(240, 5%, 25%);
+    --canary-logs-background-03: hsl(var(--canary-accent-600));
+    --canary-logs-background-04: hsl(43, 100%, 45%);
+    --canary-logs-background-05: hsl(0, 69%, 58%);
+    --canary-logs-background-06: hsla(35, 75%, 55%, 0.1);
+    --canary-logs-background-07: hsla(0, 90%, 67%, 0.1);
+    --canary-logs-foreground-01: hsl(var(--canary-pure-white));
+    --canary-logs-foreground-02: hsl(240, 3%, 66%);
+
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
     --canary-nav-gradient-1-1: var();
@@ -1686,6 +1719,17 @@
     --canary-graph-background-3: hsla(240, 4%, 90%, 1); /* collapse button bg */
     --canary-graph-background-4: 240 5% 79%; /* collapse button Hover bg */
     --canary-graph-border-1: 240 5% 79%; /* node step border */ /* border-2*/
+
+    /* Logs */
+    --canary-logs-background-01: hsl(240, 2%, 8%);
+    --canary-logs-background-02: hsl(240, 5%, 25%);
+    --canary-logs-background-03: hsl(var(--canary-accent-600));
+    --canary-logs-background-04: hsl(43, 100%, 45%);
+    --canary-logs-background-05: hsl(0, 69%, 58%);
+    --canary-logs-background-06: hsla(35, 75%, 55%, 0.1);
+    --canary-logs-background-07: hsla(0, 90%, 67%, 0.1);
+    --canary-logs-foreground-01: hsl(var(--canary-pure-white));
+    --canary-logs-foreground-02: hsl(240, 3%, 66%);
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -2016,6 +2060,17 @@
     --canary-graph-background-4: var(--canary-base-chrome-850);
     --canary-graph-border-1: var(--canary-grey-20);
 
+    /* Logs */
+    --canary-logs-background-01: hsl(240, 6%, 6%);
+    --canary-logs-background-02: hsl(240, 6%, 20%);
+    --canary-logs-background-03: hsl(216, 100%, 60%);
+    --canary-logs-background-04: hsl(var(--canary-orange-55));
+    --canary-logs-background-05: hsl(var(--canary-red-65));
+    --canary-logs-background-06: hsla(var(--canary-logs-background-04), 0.1);
+    --canary-logs-background-07: hsla(0 80% 60% / 0.1);
+    --canary-logs-foreground-01: hsl(var(--canary-pure-white));
+    --canary-logs-foreground-02: hsl(240, 6%, 60%);
+
     &.inset-layout {
       /* Sidebar */
       --canary-sidebar-background-01: 240 6% 10%; /* main background */
@@ -2333,6 +2388,17 @@
     --canary-widget-number-bg-gradient-to: var(--canary-base-chrome-850);
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-850);
     --canary-widget-bg-gradient-to: var(--canary-base-chrome-950);
+
+    /* Logs */
+    --canary-logs-background-01: hsl(240, 6%, 6%);
+    --canary-logs-background-02: hsl(240, 6%, 20%);
+    --canary-logs-background-03: hsl(216, 100%, 60%);
+    --canary-logs-background-04: hsl(var(--canary-orange-55));
+    --canary-logs-background-05: hsl(var(--canary-red-65));
+    --canary-logs-background-06: hsla(var(--canary-logs-background-04), 0.1);
+    --canary-logs-background-07: hsla(0 80% 60% / 0.1);
+    --canary-logs-foreground-01: hsl(var(--canary-pure-white));
+    --canary-logs-foreground-02: hsl(240, 6%, 60%);
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -2680,6 +2746,17 @@
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-850);
     --canary-widget-bg-gradient-to: var(--canary-base-chrome-950);
 
+    /* Logs */
+    --canary-logs-background-01: hsl(240, 6%, 6%);
+    --canary-logs-background-02: hsl(240, 6%, 20%);
+    --canary-logs-background-03: hsl(216, 100%, 60%);
+    --canary-logs-background-04: hsl(var(--canary-orange-55));
+    --canary-logs-background-05: hsl(var(--canary-red-65));
+    --canary-logs-background-06: hsla(var(--canary-logs-background-04), 0.1);
+    --canary-logs-background-07: hsla(0 80% 60% / 0.1);
+    --canary-logs-foreground-01: hsl(var(--canary-pure-white));
+    --canary-logs-foreground-02: hsl(240, 6%, 60%);
+
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
     --canary-nav-gradient-1-1: var();
@@ -3015,6 +3092,17 @@
     --canary-widget-number-bg-gradient-to: var(--canary-base-chrome-850);
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-850);
     --canary-widget-bg-gradient-to: var(--canary-base-chrome-950);
+
+    /* Logs */
+    --canary-logs-background-01: hsl(240, 6%, 6%);
+    --canary-logs-background-02: hsl(240, 6%, 20%);
+    --canary-logs-background-03: hsl(216, 100%, 60%);
+    --canary-logs-background-04: hsl(var(--canary-orange-55));
+    --canary-logs-background-05: hsl(var(--canary-red-65));
+    --canary-logs-background-06: hsla(var(--canary-logs-background-04), 0.1);
+    --canary-logs-background-07: hsla(0 80% 60% / 0.1);
+    --canary-logs-foreground-01: hsl(var(--canary-pure-white));
+    --canary-logs-foreground-02: hsl(240, 6%, 60%);
 
     &.inset-layout {
       /* Sidebar */

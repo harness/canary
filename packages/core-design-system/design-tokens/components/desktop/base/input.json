@@ -50,7 +50,7 @@
   "input-text-area": {
     "min-height": {
       "$type": "sizing",
-      "$value": "{size.36}"
+      "$value": "{size.32}"
     }
   }
 }

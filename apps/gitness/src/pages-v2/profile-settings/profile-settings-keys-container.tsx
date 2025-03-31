@@ -121,7 +121,7 @@ export const SettingsProfileKeysPage = () => {
           lifetime: newToken.token?.expires_at
             ? new Date(newToken.token.expires_at).toLocaleDateString()
             : 'No Expiration',
-          token: newToken?.access_token ?? 'Token not available'
+          token: newToken.access_token ?? 'Token not available'
         }
 
         setCreatedTokenData(tokenData)

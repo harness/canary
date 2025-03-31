@@ -100,7 +100,6 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                                 variant="custom"
                                 size="sm_icon"
                                 onClick={() => {
-                                  console.log(commit?.sha)
                                   navigate(toCode?.({ sha: commit?.sha || '' }) || '')
                                 }}
                               >

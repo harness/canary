@@ -86,7 +86,7 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
             <Select.Content>
               {Object.entries(viewPreviews).map(([groupKey, group]) => (
                 <Select.Group key={groupKey} title={group.label} className="pt-2 first:pt-0">
-                  <div className="text-foreground-3 px-2 py-1.5 text-sm font-medium">{group.label}</div>
+                  <div className="text-cn-foreground-3 px-2 py-1.5 text-sm font-medium">{group.label}</div>
                   {Object.entries(group.items).map(([path, { label }]) => (
                     <Select.Item key={path} value={path}>
                       {label}

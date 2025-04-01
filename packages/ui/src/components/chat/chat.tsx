@@ -13,7 +13,7 @@ const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) 
 const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className="sticky top-0 flex items-center justify-between bg-cn-background-1 px-6 py-4">
-      <p className="text-16 font-medium text-foreground-1">Harness AI</p>
+      <p className="text-16 font-medium text-cn-foreground-1">Harness AI</p>
       <Button size="icon" variant="custom" className="-mr-2 text-icons-4 hover:text-icons-2" onClick={onClose}>
         <Icon name="close" size={16} />
         <span className="sr-only">Close</span>
@@ -61,7 +61,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
         })}
       >
         <div
-          className={cn('text-14 text-foreground-1 leading-relaxed', {
+          className={cn('text-14 text-cn-foreground-1 leading-relaxed', {
             'px-3.5 py-2 bg-cn-background-8 rounded-[8px_8px_2px_8px]': self
           })}
         >
@@ -128,18 +128,18 @@ const EmptyState: FC = () => {
   return (
     <div className="mt-auto flex flex-col gap-5">
       <div>
-        <span className="block text-20 font-semibold leading-none text-foreground-4">Hello Steven,</span>
-        <span className="mt-[3px] block text-20 font-semibold leading-none text-foreground-1">how can I help?</span>
+        <span className="block text-20 font-semibold leading-none text-cn-foreground-4">Hello Steven,</span>
+        <span className="mt-[3px] block text-20 font-semibold leading-none text-cn-foreground-1">how can I help?</span>
       </div>
       <div>
-        <span className="text-14 leading-relaxed text-foreground-2">
+        <span className="text-14 leading-relaxed text-cn-foreground-2">
           Here are some suggestions to enhance your CI/CD pipeline:
         </span>
         <ul className="mt-3 flex flex-col gap-y-1.5">
           {emptyStateButtons.map(({ text }, index) => (
             <li key={index}>
               <Button
-                className="w-full justify-start rounded-lg bg-cn-background-3 px-3.5 text-foreground-1 hover:bg-cn-background-12"
+                className="w-full justify-start rounded-lg bg-cn-background-3 px-3.5 text-cn-foreground-1 hover:bg-cn-background-12"
                 size="lg"
               >
                 {text}

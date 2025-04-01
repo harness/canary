@@ -118,7 +118,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
           />
 
           <div
-            className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-surface border border-cn-borders-2 rounded-md', {
+            className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md', {
               // 'border rounded-md': !inReplyMode || isEditMode,
               // 'border-t': inReplyMode
             })}
@@ -187,7 +187,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                 <div>
                   <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
                   <Button
-                    className="gap-x-2 px-2.5 font-normal text-foreground-3 hover:bg-cn-background-8"
+                    className="gap-x-2 px-2.5 font-normal text-cn-foreground-3 hover:bg-cn-background-8"
                     variant="custom"
                     onClick={e => handleFileSelect(e)}
                   >

@@ -30,7 +30,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
       case ExecutionState.ERROR:
         return <Icon name="triangle-warning" className="text-destructive" />
       default:
-        return <Icon name="success" className="text-foreground-success" />
+        return <Icon name="success" className="text-cn-foreground-success" />
     }
   }
 
@@ -42,7 +42,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
           title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}
           description={<LineDescription text={checksInfo.content} />}
         />
-        <span className="px-2 py-1.5 text-14 text-foreground-2 transition-colors duration-200 group-hover:text-foreground-1">
+        <span className="px-2 py-1.5 text-14 text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
           Show more
         </span>
       </Accordion.Trigger>

@@ -178,7 +178,7 @@ export function CreateSecretPage({
           )}
           {(!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_FILE) && (
             <div>
-              <label htmlFor="secret-file-input" className="mb-2.5 block text-sm font-medium text-foreground-2">
+              <label htmlFor="secret-file-input" className="mb-2.5 block text-sm font-medium text-cn-foreground-2">
                 Secret File
               </label>
               <div
@@ -189,7 +189,9 @@ export function CreateSecretPage({
                 <div className="flex flex-col items-center justify-center">
                   {!selectedFile ? (
                     <>
-                      <p className="mb-2 text-sm text-foreground-2">Drag and drop your file here or click to browse</p>
+                      <p className="mb-2 text-sm text-cn-foreground-2">
+                        Drag and drop your file here or click to browse
+                      </p>
                       <Button type="button" variant="outline" onClick={openFileInput}>
                         Browse Files
                       </Button>
@@ -197,7 +199,7 @@ export function CreateSecretPage({
                   ) : (
                     <div className="flex w-full flex-col">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-foreground-2">
+                        <span className="text-sm text-cn-foreground-2">
                           Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
                         </span>
                         <div className="flex gap-2">

@@ -4,7 +4,7 @@ import { Command, Popover, SearchBox, Text } from '@/components'
 import { TranslationStore } from '@/views'
 import { debounce } from 'lodash-es'
 
-const markedFileClassName = 'w-full text-foreground-8'
+const markedFileClassName = 'w-full text-cn-foreground-8'
 
 /**
  * Get marked file component with query

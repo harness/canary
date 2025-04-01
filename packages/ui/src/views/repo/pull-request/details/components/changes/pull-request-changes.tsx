@@ -120,7 +120,7 @@ const LineTitle: React.FC<LineTitleProps> = ({
           >
             <Icon name={useFullDiff ? 'collapse-comment' : 'expand-comment'} size={16} />
           </Button>
-          <span className="font-medium leading-tight text-foreground-1">{text}</span>
+          <span className="font-medium leading-tight text-cn-foreground-1">{text}</span>
           <CopyButton name={text} className="size-6" color="gray" />
         </div>
 
@@ -348,7 +348,7 @@ const PullRequestAccordion: React.FC<{
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                   <Layout.Vertical gap="space-y-0" className="items-center py-5">
                     <Button
-                      className="text-foreground-accent"
+                      className="text-cn-foreground-accent"
                       variant="link_accent"
                       size="sm"
                       aria-label="show diff"

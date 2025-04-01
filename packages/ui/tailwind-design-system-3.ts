@@ -116,12 +116,15 @@ export default {
           1: 'var(--cn-text-1)',
           2: 'var(--cn-text-2)',
           3: 'var(--cn-text-3)',
+          success: 'var(--cn-text-success)',
+          danger: 'var(--cn-text-danger)',
+          warning: 'var(--cn-text-warning)',
+          accent: 'var(--cn-text-accent)',
 
           // Remove
           4: 'var(--cn-text-3)',
           5: 'var(--cn-text-3)',
           8: 'var(--cn-text-3)',
-          accent: 'var(--cn-text-3)',
           // DEFAULT - 1
           DEFAULT: 'var(--cn-text-1)'
         },
@@ -141,7 +144,7 @@ export default {
           11: 'hsl(var(--canary-background-11))',
           12: 'hsl(var(--canary-background-12))',
           13: 'hsl(var(--canary-background-13))',
-          surface: 'hsl(var(--canary-background-surface))',
+          // surface: 'hsl(var(--canary-background-surface))',
           danger: 'hsla(var(--canary-background-danger))',
           success: 'hsla(var(--canary-background-success))'
         },
@@ -156,7 +159,7 @@ export default {
           // 4 - 2
           4: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
           // surface - 2
-          surface: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
+          // surface: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
           // 9 - 2
           9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)'
         },
@@ -604,8 +607,8 @@ export default {
     { pattern: /^bg-graph-/ },
     { pattern: /^bg-background-/ },
 
-    { pattern: /^text-foreground-/ },
-    { pattern: /^border-borders-/ },
+    { pattern: /^text-cn-foreground-/ },
+    { pattern: /^border-cn-borders-/ },
     { pattern: /^text-icons-/ },
     { pattern: /^bg-icons-/ },
     // button classes
@@ -632,8 +635,8 @@ export default {
     // Hover classes
     { pattern: /^hover:bg-graph-/ },
     { pattern: /^hover:bg-background-/ },
-    { pattern: /^hover:text-foreground-/ },
-    { pattern: /^hover:border-borders-/ },
+    { pattern: /^hover:text-cn-foreground-/ },
+    { pattern: /^hover:border-cn-borders-/ },
     { pattern: /^hover:text-icons-/ },
     { pattern: /^hover:bg-icons-/ },
     // button classes

@@ -55,7 +55,7 @@ const PaginationPrimitiveLink = ({
         size: size ? size : 'sm_icon',
         borderRadius: isFullRounded ? 'full' : 'default'
       }),
-      'text-12 bg-cn-background-2 text-foreground-1 hover:bg-cn-background-3 w-auto min-w-7 px-1.5 font-normal',
+      'text-12 bg-cn-background-2 text-cn-foreground-1 hover:bg-cn-background-3 w-auto min-w-7 px-1.5 font-normal',
       {
         'bg-cn-background-8 shadow-pagination-1 hover:bg-cn-background-8 cursor-default': isActive
       },
@@ -80,9 +80,9 @@ const PaginationPrimitivePrevious = ({
     size="default"
     isFullRounded={false}
     className={cn(
-      'text-foreground-2 cursor-pointer gap-1.5 bg-transparent text-sm font-normal',
-      'hover:text-foreground-1 hover:bg-transparent',
-      { 'text-foreground-7 pointer-events-none cursor-default': disabled },
+      'text-cn-foreground-2 cursor-pointer gap-1.5 bg-transparent text-sm font-normal',
+      'hover:text-cn-foreground-1 hover:bg-transparent',
+      { 'text-cn-foreground-7 pointer-events-none cursor-default': disabled },
       className
     )}
     href={href}
@@ -106,9 +106,9 @@ const PaginationPrimitiveNext = ({
     size="default"
     isFullRounded={false}
     className={cn(
-      'text-foreground-2 cursor-pointer gap-1.5 bg-transparent text-sm font-normal',
-      'hover:text-foreground-1 hover:bg-transparent',
-      { 'text-foreground-7 pointer-events-none cursor-default': disabled },
+      'text-cn-foreground-2 cursor-pointer gap-1.5 bg-transparent text-sm font-normal',
+      'hover:text-cn-foreground-1 hover:bg-transparent',
+      { 'text-cn-foreground-7 pointer-events-none cursor-default': disabled },
       className
     )}
     href={href}

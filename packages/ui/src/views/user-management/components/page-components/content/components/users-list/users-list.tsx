@@ -57,14 +57,16 @@ export const UsersList = () => {
                       {user.avatarUrl && <Avatar.Image src={user.avatarUrl} />}
                       <Avatar.Fallback>{getInitials(user.uid!, 2)}</Avatar.Fallback>
                     </Avatar.Root>
-                    <span className="truncate whitespace-nowrap text-sm font-medium text-foreground-8">{user.uid}</span>
+                    <span className="truncate whitespace-nowrap text-sm font-medium text-cn-foreground-8">
+                      {user.uid}
+                    </span>
                   </div>
                 </Table.Cell>
 
                 {/* EMAIL */}
                 <Table.Cell className="my-6 content-center">
                   <div className="flex gap-1.5">
-                    <span className="truncate whitespace-nowrap text-sm text-foreground-3">{user.email}</span>
+                    <span className="truncate whitespace-nowrap text-sm text-cn-foreground-3">{user.email}</span>
                   </div>
                 </Table.Cell>
 

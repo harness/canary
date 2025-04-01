@@ -70,8 +70,8 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
       <div className={cn('flex w-full flex-col gap-y-4', className)}>
         <div className="flex w-full max-w-full items-center gap-x-3 text-24">
           <div className="flex items-center gap-x-2.5 leading-snug">
-            <h1 className="flex max-w-[95%] items-center truncate font-medium text-foreground-1">{title}</h1>
-            <span className="font-normal text-foreground-4">#{number}</span>
+            <h1 className="flex max-w-[95%] items-center truncate font-medium text-cn-foreground-1">{title}</h1>
+            <span className="font-normal text-cn-foreground-4">#{number}</span>
           </div>
 
           <Button
@@ -99,10 +99,10 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
             {stateObject.text}
           </Badge>
 
-          <div className="inline-flex flex-wrap items-center gap-1 text-foreground-4">
-            <span className="font-medium text-foreground-1">{author?.display_name || author?.email || ''}</span>
+          <div className="inline-flex flex-wrap items-center gap-1 text-cn-foreground-4">
+            <span className="font-medium text-cn-foreground-1">{author?.display_name || author?.email || ''}</span>
             <span>{merged ? 'merged' : ' wants to merge'}</span>
-            <span className="font-medium text-foreground-1">
+            <span className="font-medium text-cn-foreground-1">
               {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
             </span>
             <span>into</span>
@@ -126,7 +126,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               </Link>
             </Badge>
             <span className="bg-borders-2 mx-1.5 h-4 w-px" />
-            <span className="text-foreground-4">{formattedTime}</span>
+            <span className="text-cn-foreground-4">{formattedTime}</span>
           </div>
         </div>
       </div>

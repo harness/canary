@@ -33,7 +33,7 @@ export function Group({
       {title && (
         <div
           className={cn(
-            'text-foreground-7 mt-1.5',
+            'text-cn-foreground-7 mt-1.5',
             { 'text-sidebar-foreground-5': isMainNav },
             isSubMenu ? 'mb-3' : 'mb-1.5',
             titleClassName

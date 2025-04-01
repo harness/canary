@@ -29,7 +29,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
       <DropdownMenu.Trigger asChild>
         <Button className="items-center gap-x-2 pl-5 pr-2.5">
           {t('views:repos.cloneRepo', 'Clone repository')}
-          <Icon name="chevron-down" size={12} className="text-foreground-6" />
+          <Icon name="chevron-down" size={12} className="text-cn-foreground-6" />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-[328px] p-0 shadow-2" align="end">
@@ -73,14 +73,14 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
         </Tabs.Root>
         <div className="p-4">
           <div className="mb-2.5 flex items-center">
-            <span className="inline-block leading-none text-foreground-2">
+            <span className="inline-block leading-none text-cn-foreground-2">
               {t('views:repos.gitCloneUrl', 'Git clone URL')}
             </span>
           </div>
           {currentTab === 'https' ? (
             <>
               <Input
-                className="py-px text-foreground-1"
+                className="py-px text-cn-foreground-1"
                 id="httpsUrl"
                 readOnly
                 value={httpsUrl}
@@ -89,7 +89,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 rightElement={<CopyButton name={httpsUrl} />}
               />
               <div className="mt-4 flex items-center">
-                <span className="leading-snug text-foreground-4">
+                <span className="leading-snug text-cn-foreground-4">
                   {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
                 </span>
               </div>
@@ -101,7 +101,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
             </>
           ) : (
             <Input
-              className="py-px text-foreground-1"
+              className="py-px text-cn-foreground-1"
               id="sshUrl"
               readOnly
               value={sshUrl}

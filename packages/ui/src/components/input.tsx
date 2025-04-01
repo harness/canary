@@ -9,12 +9,12 @@ export interface BaseInputProps
     VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
-  'bg-cn-background-3 px-3 py-1 text-foreground-1 disabled:cursor-not-allowed disabled:bg-cn-background-3 disabled:text-foreground-7',
+  'bg-cn-background-2 px-3 py-1 text-cn-foreground-1 disabled:cursor-not-allowed disabled:bg-cn-background-3 disabled:text-cn-foreground-7',
   {
     variants: {
       variant: {
         default:
-          'flex w-full rounded border text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-4 focus-visible:rounded focus-visible:outline-none',
+          'flex w-full rounded border text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-cn-foreground-4 focus-visible:rounded focus-visible:outline-none',
         extended: 'grow border-none focus-visible:outline-none'
       },
       size: {
@@ -23,7 +23,7 @@ const inputVariants = cva(
       },
       theme: {
         default:
-          'border-cn-borders-2 focus-within:border-cn-borders-3 focus-visible:border-cn-borders-3 disabled:border-cn-borders-2 disabled:placeholder:text-foreground-9',
+          'border-cn-borders-2 focus-within:border-cn-borders-3 focus-visible:border-cn-borders-3 disabled:border-cn-borders-2 disabled:placeholder:text-cn-foreground-9',
         danger: 'border-cn-borders-danger',
         clean: 'bg-transparent outline-none focus:outline-none',
         sidebar:
@@ -176,7 +176,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           </Message>
         )}
 
-        {caption && <Caption className={cn({ 'text-foreground-9': disabled })}>{caption}</Caption>}
+        {caption && <Caption className={cn({ 'text-cn-foreground-9': disabled })}>{caption}</Caption>}
       </ControlGroup>
     )
   }

@@ -94,7 +94,7 @@ const ListControlBar = <T extends Record<string, any>, V = T[keyof T]>({
         size="xs"
         variant="ghost"
         onClick={resetFilters}
-        className="gap-x-1.5 hover:bg-transparent hover:text-foreground-danger"
+        className="gap-x-1.5 hover:bg-transparent hover:text-cn-foreground-danger"
       >
         <Icon className="rotate-45" name="plus" size={12} />
         {t('component:filter.reset', 'Reset')}

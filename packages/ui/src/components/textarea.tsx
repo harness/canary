@@ -27,12 +27,12 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         )}
         <textarea
           className={cn(
-            'placeholder:text-foreground-4 flex min-h-[74px] w-full rounded border bg-cn-background-3 px-3 py-2 text-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed',
+            'placeholder:text-cn-foreground-4 flex min-h-[74px] w-full rounded border bg-cn-background-2 px-3 py-2 text-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed',
             resizable ? 'resize-y [field-sizing:content] whitespace-pre-wrap [word-break:break-word]' : 'resize-none',
             className,
             error
               ? 'border-cn-borders-danger'
-              : 'border-cn-borders-2 focus-visible:border-cn-borders-3 disabled:placeholder:text-foreground-9 disabled:border-cn-borders-2'
+              : 'border-cn-borders-2 focus-visible:border-cn-borders-3 disabled:placeholder:text-cn-foreground-9 disabled:border-cn-borders-2'
           )}
           id={id}
           disabled={disabled}
@@ -44,7 +44,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             {error}
           </Message>
         )}
-        {caption && <Caption className={cn({ 'text-foreground-9': disabled })}>{caption}</Caption>}
+        {caption && <Caption className={cn({ 'text-cn-foreground-9': disabled })}>{caption}</Caption>}
       </ControlGroup>
     )
   }

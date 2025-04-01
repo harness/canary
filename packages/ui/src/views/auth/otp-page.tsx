@@ -95,7 +95,7 @@ export function OTPPage({
           </Card.Title>
           <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
             Please enter the verification code we’ve sent to your email{' '}
-            <span className="text-foreground-1">{email}</span>
+            <span className="text-cn-foreground-1">{email}</span>
           </Text>
         </Card.Header>
         <Card.Content className="mt-10">
@@ -118,7 +118,7 @@ export function OTPPage({
               />
               {(errors.otp || serverError) && (
                 <Text
-                  className="absolute top-full w-full translate-y-2 leading-none tracking-tight text-foreground-danger"
+                  className="absolute top-full w-full translate-y-2 leading-none tracking-tight text-cn-foreground-danger"
                   align="center"
                   size={1}
                   as="p"

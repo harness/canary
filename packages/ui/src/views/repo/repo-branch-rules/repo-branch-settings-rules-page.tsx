@@ -124,7 +124,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
   return (
     <SandboxLayout.Content className={`max-w-[570px] px-0 ${projectScope ? 'mx-auto' : ''}`}>
-      <h1 className="mb-10 text-2xl font-medium text-foreground-1">
+      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">
         {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
       </h1>
 

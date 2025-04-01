@@ -43,13 +43,13 @@ const textVariants = cva('text-base', {
       bold: 'font-bold'
     },
     color: {
-      primary: 'text-foreground-1',
-      secondary: 'text-foreground-9',
+      primary: 'text-cn-foreground-1',
+      secondary: 'text-cn-foreground-9',
       tertiary: 'text-tertiary',
-      tertiaryBackground: 'text-foreground-3',
+      tertiaryBackground: 'text-cn-foreground-3',
       inherit: 'text-inherit',
-      'foreground-4': 'text-foreground-4',
-      'foreground-5': 'text-foreground-5'
+      'foreground-4': 'text-cn-foreground-4',
+      'foreground-5': 'text-cn-foreground-5'
     },
     wrap: {
       wrap: 'text-wrap',

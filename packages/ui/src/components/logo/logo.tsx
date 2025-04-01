@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 
 import { LogoNameMap } from './logo-name-map'
 
@@ -8,8 +8,12 @@ interface LogoProps {
   original?: boolean // Uses brand color when true
 }
 
-const Logo: React.FC<LogoProps> = ({ name, size = 24, original = false }) => {
+const Logo: FC<LogoProps> = ({ name, size = 24, original = false }) => {
   const icon = LogoNameMap[name]
+
+  if (!icon) {
+    return <></>
+  }
 
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,4 +22,4 @@ const Logo: React.FC<LogoProps> = ({ name, size = 24, original = false }) => {
   )
 }
 
-export { Logo }
+export { Logo, LogoNameMap }

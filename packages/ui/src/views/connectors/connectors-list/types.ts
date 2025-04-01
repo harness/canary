@@ -29,6 +29,7 @@ export interface ConnectorListProps extends Partial<RoutingProps> {
   isLoading: boolean
   onEditConnector: (connector: ConnectorListItem) => void
   onTestConnection: (connector: ConnectorListItem) => void
+  onDeleteConnector: (connectorId: string) => void
 }
 
 export interface ConnectorListPageProps

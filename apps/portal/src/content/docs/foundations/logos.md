@@ -30,9 +30,10 @@ Customize the size using the `size` prop.
 
 ## Available Icons
 
-| Icon                                                     | Name        |
-| -------------------------------------------------------- | ----------- |
-| ![GitHub Logo](https://cdn.simpleicons.org/github)       | `github`    |
-| ![GitLab Logo](https://cdn.simpleicons.org/gitlab)       | `gitlab`    |
-| ![Bitbucket Logo](https://cdn.simpleicons.org/bitbucket) | `bitbucket` |
-| ![Git Logo](https://cdn.simpleicons.org/git)             | `git`       |
+| Icon                                                       | Name         |
+| ---------------------------------------------------------- | ------------ |
+| ![GitHub Logo](https://cdn.simpleicons.org/github)         | `github`     |
+| ![GitLab Logo](https://cdn.simpleicons.org/gitlab)         | `gitlab`     |
+| ![Bitbucket Logo](https://cdn.simpleicons.org/bitbucket)   | `bitbucket`  |
+| ![Git Logo](https://cdn.simpleicons.org/git)               | `git`        |
+| ![Kubernetes Logo](https://cdn.simpleicons.org/kubernetes) | `kubernetes` |

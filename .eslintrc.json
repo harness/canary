@@ -45,6 +45,23 @@
 
     "jsx-a11y/click-events-have-key-events": "warn",
     "jsx-a11y/no-autofocus": "off",
+    "no-restricted-imports": [
+      "warn",
+      {
+        "paths": [
+          {
+            "name": "@harnessio/canary",
+            "message": " @harnessio/canary is deprecated. Import from @harnessio/ui/components instead"
+          }
+        ],
+        "patterns": [
+          {
+            "group": ["@harnessio/canary/*"],
+            "message": " @harnessio/canary is deprecated. Import from @harnessio/ui/components instead"
+          }
+        ]
+      }
+    ],
     "i18next/no-literal-string": [
       "warn",
       {

@@ -7,7 +7,8 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-settings-view-wrapper.tsx'
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
 import { ConnectorsPage } from '@subjects/views/connectors/connectors'
-import { ConnectorsRefPage } from '@subjects/views/connectors/connectors-ref'
+import { ConnectorInputExample } from '@subjects/views/connectors/connectors-input'
+import { ConnectorsListPage } from '@subjects/views/connectors/connectors-list'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
@@ -496,13 +497,17 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         label: 'Secrets Page',
         element: <SecretInputExample />
       },
-      'connectors-page': {
-        label: 'Connectors Page',
+      'connectors-list-page': {
+        label: 'Connectors List Page',
+        element: <ConnectorsListPage />
+      },
+      'create-edit-connector': {
+        label: 'Create or Edit Connector',
         element: <ConnectorsPage />
       },
       'connector-reference': {
         label: 'Connector Reference',
-        element: <ConnectorsRefPage />
+        element: <ConnectorInputExample />
       }
     }
   },

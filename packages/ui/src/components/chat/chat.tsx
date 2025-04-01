@@ -1,6 +1,8 @@
 import { ChangeEvent, FC, HTMLAttributes, KeyboardEvent, PropsWithChildren, ReactNode, RefObject } from 'react'
 
 import { Button, Icon, Input } from '@/components'
+import { useTheme } from '@/context'
+import ChatAvatarIconLightTheme from '@/icons/chat-avatar-light-theme.svg'
 import ChatAvatarIcon from '@/icons/chat-avatar.svg'
 import { cn } from '@utils/cn'
 
@@ -11,7 +13,7 @@ const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) 
 const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className="sticky top-0 flex items-center justify-between bg-background-1 px-6 py-4">
-      <p className="text-16 font-medium text-foreground-1">AI Assistant</p>
+      <p className="text-16 font-medium text-foreground-1">Harness AI</p>
       <Button size="icon" variant="custom" className="-mr-2 text-icons-4 hover:text-icons-2" onClick={onClose}>
         <Icon name="close" size={16} />
         <span className="sr-only">Close</span>
@@ -39,13 +41,19 @@ interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
 }
 
 const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
+  const { isLightTheme } = useTheme()
+
   return (
     <div
       className={cn('flex gap-x-3 content-center items-start', {
         'place-content-end': self
       })}
     >
-      {!self && <div className="mt-0.5">{avatar ? avatar : <ChatAvatarIcon />}</div>}
+      {!self && (
+        <div className="mt-0.5">
+          {avatar ? avatar : isLightTheme ? <ChatAvatarIconLightTheme /> : <ChatAvatarIcon />}
+        </div>
+      )}
       <div
         className={cn('flex flex-col gap-3', {
           'w-[85%] items-end': self,
@@ -83,9 +91,11 @@ interface TypingProps {
 }
 
 const Typing: FC<TypingProps> = ({ avatar }) => {
+  const { isLightTheme } = useTheme()
+
   return (
     <div className="mt-3 flex items-center gap-x-3.5">
-      {avatar || <ChatAvatarIcon />}
+      {avatar || (isLightTheme ? <ChatAvatarIconLightTheme /> : <ChatAvatarIcon />)}
       <span className="size-2.5 rounded-full bg-foreground-2" aria-hidden />
     </div>
   )

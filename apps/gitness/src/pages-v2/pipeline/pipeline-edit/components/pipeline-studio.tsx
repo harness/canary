@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo } from 'react'
 
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup, Sheet, SheetContent } from '@harnessio/canary'
 import { useListBranchesQuery } from '@harnessio/code-service-client'
-import { getInitials, PipelineStudioFooterBar } from '@harnessio/views'
+import { Resizable, Sheet } from '@harnessio/ui/components'
+import { getInitials } from '@harnessio/ui/utils'
+import { PipelineStudioFooterBar } from '@harnessio/views'
 
 import { useExitPrompt } from '../../../../framework/hooks/useExitPrompt'
 import { useGetRepoRef } from '../../../../framework/hooks/useGetRepoPath'
@@ -50,19 +51,19 @@ export default function PipelineEdit() {
   const main = useMemo(() => {
     return (
       <>
-        <ResizablePanelGroup direction="vertical" className="border-5">
-          <ResizablePanel order={1}>
+        <Resizable.PanelGroup direction="vertical" className="border-5">
+          <Resizable.Panel order={1}>
             {view === 'visual' ? <PipelineStudioGraphView /> : <PipelineStudioYamlView />}
-          </ResizablePanel>
+          </Resizable.Panel>
           {panelOpen && (
             <>
-              <ResizableHandle />
-              <ResizablePanel defaultSize={30} id="panel" minSize={10} maxSize={90} order={2} className="h-full">
+              <Resizable.Handle />
+              <Resizable.Panel defaultSize={30} id="panel" minSize={10} maxSize={90} order={2} className="h-full">
                 <PipelineStudioPanel />
-              </ResizablePanel>
+              </Resizable.Panel>
             </>
           )}
-        </ResizablePanelGroup>
+        </Resizable.PanelGroup>
       </>
     )
   }, [panelOpen, view])
@@ -98,7 +99,7 @@ export default function PipelineEdit() {
 
   const drawer = useMemo(
     () => (
-      <Sheet
+      <Sheet.Root
         open={stepDrawerOpen !== StepDrawer.None}
         onOpenChange={open => {
           if (!open) {
@@ -109,14 +110,14 @@ export default function PipelineEdit() {
           }
         }}
       >
-        <SheetContent
+        <Sheet.Content
           onOpenAutoFocus={e => e.preventDefault()}
           hideCloseButton={true}
           className="max-w-lg p-0 sm:max-w-lg"
         >
           {renderSheetContent()}
-        </SheetContent>
-      </Sheet>
+        </Sheet.Content>
+      </Sheet.Root>
     ),
     [stepDrawerOpen, setStepDrawerOpen]
   )
@@ -140,7 +141,7 @@ export default function PipelineEdit() {
         currentBranch={currentBranch}
         branches={branchesNames}
         branchesLoading={listBranchesLoading || fetchingPipelineFileContent}
-        onBranchChange={branch => confirmExit().then(confirmed => confirmed && setCurrentBranch(branch))}
+        onBranchChange={(branch: any) => confirmExit().then(confirmed => confirmed && setCurrentBranch(branch))}
         problems={problemsCount}
         togglePane={() => setPanelOpen(!panelOpen)}
       />

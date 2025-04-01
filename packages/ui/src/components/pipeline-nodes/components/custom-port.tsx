@@ -16,7 +16,8 @@ export default function Port(props: { side: 'left' | 'right'; id?: string; adjus
         background: 'hsl(var(--canary-background-02))',
         border: `${lineWeight}px solid hsl(var(--canary-border-03))`,
         borderRadius: '50%',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        zIndex: 1
       }}
     ></div>
   )

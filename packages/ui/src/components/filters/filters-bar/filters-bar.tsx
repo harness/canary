@@ -115,7 +115,7 @@ const FiltersBar = ({
         />
       )}
 
-      {activeFilters.length > 0 && activeSorts.length > 0 && <div className="h-7 w-px bg-borders-1" />}
+      {activeFilters.length > 0 && activeSorts.length > 0 && <div className="bg-borders-1 h-7 w-px" />}
 
       {activeFilters.map(filter => (
         <Filters

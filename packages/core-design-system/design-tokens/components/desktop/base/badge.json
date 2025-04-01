@@ -43,14 +43,6 @@
     "gap": {
       "$type": "spacing",
       "$value": "{spacing.1-half}"
-    },
-    "py": {
-      "$type": "spacing",
-      "$value": "{spacing.1}"
-    },
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.2}"
     }
   },
   "badge-counter": {
@@ -63,10 +55,6 @@
       "$value": "{spacing.1-half}"
     },
     "size": {
-      "sm": {
-        "$type": "sizing",
-        "$value": "{size.2-half}"
-      },
       "default": {
         "$type": "sizing",
         "$value": "{size.4-half}"
@@ -74,7 +62,15 @@
     },
     "radius": {
       "$type": "borderRadius",
-      "$value": "{rounded.full}"
+      "$value": "{rounded.2}"
+    }
+  },
+  "badge-indicator": {
+    "size": {
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.2-half}"
+      }
     }
   }
 }

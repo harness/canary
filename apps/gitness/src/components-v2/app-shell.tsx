@@ -24,6 +24,7 @@ import { useSelectedSpaceId } from '../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
 import Breadcrumbs from './breadcrumbs/breadcrumbs'
+import BreadcrumbsMFE from './breadcrumbs/breadcrumbs-mfe'
 import { Toaster } from './toaster'
 
 interface NavLinkStorageInterface {
@@ -115,17 +116,17 @@ export const AppShell = () => {
   /**
    * Toggle show more menu
    */
-  const handleMoreMenu = useCallback(() => {
+  const handleMoreMenu = useCallback((state?: boolean) => {
     setShowSettingMenu(false)
-    setShowMoreMenu(prevState => !prevState)
+    setShowMoreMenu(prevState => state ?? !prevState)
   }, [])
 
   /**
    * Toggle system settings menu
    */
-  const handleSettingsMenu = useCallback(() => {
+  const handleSettingsMenu = useCallback((state?: boolean) => {
     setShowMoreMenu(false)
-    setShowSettingMenu(prevState => !prevState)
+    setShowSettingMenu(prevState => state ?? !prevState)
   }, [])
 
   /**
@@ -226,7 +227,7 @@ export const AppShellMFE = memo(() => {
 
   return (
     <>
-      <MainContentLayout breadcrumbs={<Breadcrumbs />} className="text-foreground-2 min-h-screen">
+      <MainContentLayout breadcrumbs={<BreadcrumbsMFE />} className="min-h-screen text-foreground-2">
         <Outlet />
       </MainContentLayout>
       <Toaster />

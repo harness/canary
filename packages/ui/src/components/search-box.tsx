@@ -104,21 +104,22 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
     return (
       <div className={cn('relative', width === 'full' ? 'w-full' : 'w-96', className)}>
         {hasSearchIcon && (
-          <Icon
-            className={cn('absolute left-2.5 top-1/2 -translate-y-1/2 text-icons-1 z-10', {
-              'text-sidebar-foreground-4': restInputProps?.theme === 'sidebar'
-            })}
-            name="search"
-            size={12}
-          />
+          <div
+            className={cn(
+              'absolute left-px top-px z-10 rounded text-icons-1 h-[calc(100%-2px)] w-7 flex items-center justify-center',
+              { 'text-sidebar-foreground-4 bg-sidebar-background-1': restInputProps?.theme === 'sidebar' }
+            )}
+          >
+            <Icon name="search" size={12} className="ml-0.5" />
+          </div>
         )}
 
         {hasShortcut && !!shortcutLetter && (
           <div
             className={cn(
-              'absolute right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-background-3 px-1 text-foreground-2 duration-100 ease-in-out',
+              'absolute z-[5] right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-background-3 px-1 text-foreground-2 duration-100 ease-in-out',
               {
-                'border-sidebar-border-5 bg-sidebar-background-9 text-sidebar-foreground-3':
+                'border-sidebar-border-5 bg-sidebar-background-1 text-sidebar-foreground-3':
                   restInputProps?.theme === 'sidebar'
               }
             )}

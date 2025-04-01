@@ -23,8 +23,8 @@ const TabNavItem: FC<NavLinkProps> = ({ className, ...props }) => {
         cn(
           'block relative place-content-center whitespace-nowrap m-0 my-1 h-9 px-0 text-14 font-normal leading-none text-foreground-2 focus-visible:duration-0 duration-150 ease-in-out hover:text-foreground-1 disabled:pointer-events-none disabled:opacity-50 ',
           // bottom border of active tab
-          'after:pointer-events-none after:absolute after:inset-[-0.25rem_0] after:block after:border-b after:border-solid after:border-b-transparent',
-          { 'text-foreground-1 after:border-borders-9': isActive },
+          'after:pointer-events-none after:absolute after:inset-[-0.25rem_0] after:block after:border-b-2 after:border-solid after:border-b-transparent',
+          { 'text-foreground-1 after:border-borders-7': isActive },
           /*
            * TODO: Active tab Radial background is hidden until it's adjusted to the light theme
            */

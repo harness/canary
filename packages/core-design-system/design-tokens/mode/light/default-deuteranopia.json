@@ -78,7 +78,7 @@
       "$value": "{chrome.100}",
       "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\n\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
     },
-    "focus": {
+    "accent": {
       "$type": "color",
       "$value": "{set.brand.solid.border}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
@@ -346,27 +346,27 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.800}",
+          "$value": "{chrome.700}",
           "$description": "Standard text color for gray surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.100}",
+          "$value": "{chrome.50}",
           "$description": "Base background color for gray surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{chrome.300}",
+          "$value": "{chrome.200}",
           "$description": "Border color for standard gray boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.150}",
+          "$value": "{chrome.100}",
           "$description": "Hover state background color for interactive gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.200}",
+          "$value": "{chrome.150}",
           "$description": "Selected state background color for active gray items."
         }
       }
@@ -1322,13 +1322,6 @@
         "$description": "Border color for input fields. Defines the input area with a visible boundary for improved usability."
       }
     },
-    "label": {
-      "text": {
-        "$type": "color",
-        "$value": "{text.1}",
-        "$description": "Text color for form labels and field identifiers. Ensures high contrast for important contextual information."
-      }
-    },
     "link": {
       "default": {
         "$type": "color",
@@ -1357,7 +1350,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.focus}",
+          "$value": "{border.accent}",
           "$description": "Selected tab item border."
         }
       },
@@ -2035,7 +2028,7 @@
           "y": "0",
           "blur": "0",
           "spread": "4",
-          "color": "{border.focus}",
+          "color": "{border.accent}",
           "type": "dropShadow"
         }
       ],

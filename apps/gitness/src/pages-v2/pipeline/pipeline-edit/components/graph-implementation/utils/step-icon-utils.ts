@@ -1,4 +1,4 @@
-import { IconProps } from '@harnessio/canary'
+import { IconProps } from '@harnessio/ui/components'
 
 import {
   getIsActionStep,

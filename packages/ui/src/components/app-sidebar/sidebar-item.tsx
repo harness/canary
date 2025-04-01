@@ -1,6 +1,10 @@
-import { DropdownMenu, Icon, IconProps, Sidebar, Text } from '@/components'
-import { useRouterContext } from '@/context'
+import { DropdownMenu, Icon, IconProps, Sidebar, Text, useSidebar } from '@/components'
+import { useRouterContext, useTheme } from '@/context'
+import { cn } from '@/utils'
 import { TFunction } from 'i18next'
+
+const dropdownItemClassNames =
+  'text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1'
 
 interface NavbarItemType {
   id: number | string
@@ -29,6 +33,8 @@ export const SidebarItem = ({
   t
 }: NavbarItemProps) => {
   const { NavLink } = useRouterContext()
+  const { collapsed } = useSidebar()
+  const { isInset } = useTheme()
 
   const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])
 
@@ -42,18 +48,12 @@ export const SidebarItem = ({
 
   const dropdownItems = isRecent ? (
     <>
-      <DropdownMenu.Item
-        className="text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1"
-        onSelect={handlePin}
-      >
+      <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handlePin}>
         <Text size={2} truncate color="inherit">
           {t('component:navbar.pin', 'Pin')}
         </Text>
       </DropdownMenu.Item>
-      <DropdownMenu.Item
-        className="text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1"
-        onSelect={handleRemoveRecent}
-      >
+      <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handleRemoveRecent}>
         <Text size={2} truncate color="inherit">
           {t('component:navbar.remove', 'Remove')}
         </Text>
@@ -61,25 +61,19 @@ export const SidebarItem = ({
     </>
   ) : (
     <>
-      <DropdownMenu.Item
-        className="text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1"
-        onSelect={handleCustomNav}
-      >
+      <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handleCustomNav}>
         <Text size={2} truncate color="inherit">
           {t('component:navbar.reorder', 'Reorder')}
         </Text>
       </DropdownMenu.Item>
 
-      {!item.permanentlyPinned ? (
-        <DropdownMenu.Item
-          className="text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1"
-          onSelect={handlePin}
-        >
+      {!item.permanentlyPinned && (
+        <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handlePin}>
           <Text size={2} truncate color="inherit">
             {t('component:navbar.unpin', 'Unpin')}
           </Text>
         </DropdownMenu.Item>
-      ) : null}
+      )}
     </>
   )
 
@@ -90,30 +84,33 @@ export const SidebarItem = ({
           <Sidebar.MenuButton asChild isActive={isActive}>
             <Sidebar.MenuItemText
               text={item.title}
-              icon={iconName && <Icon name={iconName} size={12} />}
+              icon={iconName && <Icon name={iconName} size={14} />}
               active={isActive}
             />
           </Sidebar.MenuButton>
         )}
       </NavLink>
 
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <Sidebar.MenuAction className="right-0 text-sidebar-icon-3 hover:text-sidebar-icon-1" showOnHover>
-            <span>
+      {!collapsed && (
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
+            <Sidebar.MenuAction
+              className={cn('text-sidebar-icon-3 hover:text-sidebar-icon-1', isInset ? 'right-[3px]' : 'right-0')}
+              showOnHover
+            >
               <Icon name="menu-dots" size={12} />
-            </span>
-          </Sidebar.MenuAction>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content
-          className="w-[128px] border-sidebar-border-3 bg-sidebar-background-4"
-          align="end"
-          sideOffset={3}
-          alignOffset={4}
-        >
-          {dropdownItems}
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
+            </Sidebar.MenuAction>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content
+            className="w-[128px] border-sidebar-border-3 bg-sidebar-background-4"
+            align="end"
+            sideOffset={3}
+            alignOffset={4}
+          >
+            {dropdownItems}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+      )}
     </Sidebar.MenuItem>
   )
 }

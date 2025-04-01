@@ -65,7 +65,7 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
   return <>{items}</>
 }
 
-interface PaginationProps {
+export interface PaginationProps {
   currentPage: number
   goToPage: (pageNum: number) => void
   totalPages?: number

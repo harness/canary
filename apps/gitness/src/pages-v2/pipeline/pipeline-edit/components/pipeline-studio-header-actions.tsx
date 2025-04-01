@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Button } from '@harnessio/canary'
 import { OpenapiCommitFilesRequest, useCommitFilesMutation } from '@harnessio/code-service-client'
+import { Button } from '@harnessio/ui/components'
 
 import RunPipelineDialog from '../../../../pages/run-pipeline-dialog/run-pipeline-dialog'
 import { PipelineParams, usePipelineDataContext } from '../context/PipelineStudioDataProvider'

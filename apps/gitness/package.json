@@ -21,7 +21,6 @@
     "start:webpack": "webpack serve --config webpack.config.cjs"
   },
   "dependencies": {
-    "@harnessio/canary": "workspace:*",
     "@harnessio/code-service-client": "3.5.0",
     "@harnessio/forms": "workspace:*",
     "@harnessio/pipeline-graph": "workspace:*",

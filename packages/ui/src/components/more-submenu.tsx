@@ -4,26 +4,27 @@ import { MenuGroupType } from '@components/app-sidebar/types'
 
 interface MoreSubmenuProps {
   showMoreMenu: boolean
-  handleMoreMenu: () => void
+  handleMoreMenu: (state?: boolean) => void
   items: MenuGroupType[]
 }
 
 export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenuProps) {
   const { NavLink } = useRouterContext()
+
   return (
     <Sheet.Root modal={false} open={showMoreMenu}>
       <Sheet.Content
-        className="inset-y-0 left-[220px] z-40 h-screen w-[328px] bg-transparent p-0"
+        className="inset-y-0 z-40 h-screen w-[328px] translate-x-[--sidebar-width] border-l p-0 shadow-none"
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
-        side="left"
-        onClick={handleMoreMenu}
         modal={false}
+        onClick={() => handleMoreMenu(false)}
+        side="left"
       >
         <Sheet.Title className="sr-only">More Menu</Sheet.Title>
         <NavbarSkeleton.Root className="w-[328px]" isSubMenu>
           <NavbarSkeleton.Content className="overflow-hidden">
             <ScrollArea scrollThumbClassName="bg-sidebar-background-8">
-              <Spacer size={9} />
+              <Spacer size={10} />
               {items.map((group, group_idx) => (
                 <NavbarSkeleton.Group
                   key={group.groupId}

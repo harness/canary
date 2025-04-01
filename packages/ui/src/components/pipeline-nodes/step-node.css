@@ -1,12 +1,8 @@
-.unified-pipeline-studio_card-wrapper {
-  position: relative;
-}
-
 .unified-pipeline-studio_card-wrapper::after {
   pointer-events: none;
   content: '';
   position: absolute;
-  inset: -1px; /* Cover border area */
+  inset: 0;
   border-radius: 6px;
   background: conic-gradient(
     from var(--angle),
@@ -20,7 +16,7 @@
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   mask-composite: exclude;
-  padding: 1px; /* Border thickness */
+  padding: 1px;
 }
 
 @property --angle {

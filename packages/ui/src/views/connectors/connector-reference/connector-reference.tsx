@@ -68,26 +68,23 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
 
   return (
     <div className="flex flex-col">
-      <span className="mb-4 font-medium">Select an existing Connector:</span>
-      <div className="flex-1">
-        <EntityReference<ConnectorItem>
-          entities={connectorsData}
-          selectedEntity={selectedEntity}
-          onSelectEntity={onSelectEntity}
-          onScopeChange={onScopeChange}
-          renderEntity={renderEntity}
-          parentFolder={parentFolder}
-          childFolder={childFolder}
-          isLoading={isLoading}
-        />
-        {apiError ? (
-          <Alert.Container variant="destructive" className="mt-4">
-            <Alert.Description>{apiError}</Alert.Description>
-          </Alert.Container>
-        ) : null}
-      </div>
+      <EntityReference<ConnectorItem>
+        entities={connectorsData}
+        selectedEntity={selectedEntity}
+        onSelectEntity={onSelectEntity}
+        onScopeChange={onScopeChange}
+        renderEntity={renderEntity}
+        parentFolder={parentFolder}
+        childFolder={childFolder}
+        isLoading={isLoading}
+      />
+      {apiError ? (
+        <Alert.Container variant="destructive" className="mt-4">
+          <Alert.Description>{apiError}</Alert.Description>
+        </Alert.Container>
+      ) : null}
 
-      <div className="fixed inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
+      <div className="absolute inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
         <ButtonGroup className="flex flex-row justify-between">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel

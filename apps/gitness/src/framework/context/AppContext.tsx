@@ -96,20 +96,14 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   }
 
   useEffect(() => {
+    fetchUser()
     if (isMFE) return
     setSpacesIsLoading(true)
-    Promise.allSettled([
-      membershipSpaces({
-        queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
-      }),
-      fetchUser()
-    ])
-      .then(results => {
-        const [membershipResult] = results
-
-        if (membershipResult.status === 'fulfilled') {
-          setSpaces(membershipResult.value.body.filter(item => item?.space).map(item => item.space as TypesSpace))
-        }
+    membershipSpaces({
+      queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
+    })
+      .then(response => {
+        setSpaces(response.body.filter(item => item?.space).map(item => item.space as TypesSpace))
       })
       .catch(() => {
         // Optionally handle error or show toast

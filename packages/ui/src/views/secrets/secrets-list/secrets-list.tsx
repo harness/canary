@@ -41,10 +41,10 @@ export function SecretList({
     >
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-96">Secret</Table.Head>
-          <Table.Head className="w-96">Details</Table.Head>
-          <Table.Head className="w-44">Created at</Table.Head>
-          <Table.Head className="w-44">Updated at</Table.Head>
+          <Table.Head className="w-96">{t('views:secret.title', 'Secret')}</Table.Head>
+          <Table.Head className="w-96">{t('views:common.details', 'Details')}</Table.Head>
+          <Table.Head className="w-44">{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
+          <Table.Head className="w-44">{t('views:common.created', 'Created')}</Table.Head>
         </Table.Row>
       </Table.Header>
       {isLoading ? (
@@ -62,8 +62,8 @@ export function SecretList({
               <Table.Cell className="max-w-80 content-center truncate">
                 {t('views:common.manager', 'Manager')}: {secret.spec?.secretManagerIdentifier}
               </Table.Cell>
-              <Table.Cell className="content-center">{secret?.createdAt ? timeAgo(secret.createdAt) : null}</Table.Cell>
               <Table.Cell className="content-center">{secret?.updatedAt ? timeAgo(secret.updatedAt) : null}</Table.Cell>
+              <Table.Cell className="content-center">{secret?.createdAt ? timeAgo(secret.createdAt) : null}</Table.Cell>
               <Table.Cell className="text-right">
                 <MoreActionsTooltip
                   isInTable

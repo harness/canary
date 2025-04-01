@@ -586,7 +586,13 @@
     "delete": "Delete Secret",
     "secretsTitle": "Secrets"
   },
+  "secret": {
+    "title": "Secret"
+  },
   "common": {
+    "details": "Details",
+    "lastActivity": "Last Activity",
+    "created": "Created",
     "manager": "Manager"
   },
   "userManagement": {

@@ -147,17 +147,18 @@ export default {
         },
         'cn-background': {
           // @deprecated Use 'cds-background-1' instead
-          DEFAULT: 'var(--cn-bg-1)',
-          1: 'var(--cn-bg-1)',
-          2: 'var(--cn-bg-2)',
-          3: 'var(--cn-bg-3)',
+          // lch(from var(--cn-text-2) l c h / <alpha-value>)
+          DEFAULT: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
+          1: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
+          2: 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
+          3: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
 
           // 4 - 2
-          4: 'var(--cn-bg-3)',
+          4: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
           // surface - 2
-          surface: 'var(--cn-bg-1)',
+          surface: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
           // 9 - 2
-          9: 'var(--cn-bg-3)'
+          9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)'
         },
         borders: {
           1: 'hsl(var(--canary-border-01))',

@@ -5,7 +5,7 @@ import { Badge } from '@harnessio/ui/components'
  * for demonstration purposes.
  */
 export const BadgeShowcase = () => {
-  const variants = ['solid', 'soft', 'surface'] as const
+  const variants = ['solid', 'soft', 'surface', 'status'] as const
   const themes = ['success', 'info', 'warning', 'destructive', 'primary', 'muted', 'merged', 'ai'] as const
   const sizes = ['default', 'sm'] as const
 
@@ -16,10 +16,12 @@ export const BadgeShowcase = () => {
       {/* Section demonstrating conditional variant requirements */}
       <div className="space-y-8 mb-8">
         <div>
-          <h2 className="text-lg font-medium mb-2">1. Theme "ai" (variant prop not allowed)</h2>
+          <h2 className="text-lg font-medium mb-2">1. Theme &quot;ai&quot; (variant prop not allowed)</h2>
           <div className="flex flex-wrap gap-2">
             {/* For AI theme, variant should not be specified */}
             <Badge theme="ai">AI Theme</Badge>
+
+            <Badge theme="ai">Passing</Badge>
 
             {/* The line below would cause a TypeScript error because variant is not allowed with theme="ai" */}
             {/* <Badge theme="ai" variant="solid">Invalid</Badge> */}

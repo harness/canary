@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
-import { noop } from 'lodash-es'
+import { useTranslationStore } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
 import { Drawer, Separator, Spacer } from '@harnessio/ui/components'
@@ -105,15 +105,7 @@ export const ConnectorsRefPage = ({
             <Spacer size={2.5} />
             {/* Render create connector flow from here */}
             <ConnectorsPalette
-              useTranslationStore={() =>
-                ({
-                  t: () => 'dummy',
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  i18n: {} as any,
-                  changeLanguage: noop
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                }) as any
-              }
+              useTranslationStore={useTranslationStore}
               connectors={harnessConnectors}
               onSelectConnector={() => setIsConnectorSelected(true)}
               setFormEntity={setFormEntity}
@@ -127,15 +119,7 @@ export const ConnectorsRefPage = ({
               <Drawer.Content>
                 {formEntity ? (
                   <ConnectorEntityForm
-                    useTranslationStore={() =>
-                      ({
-                        t: () => 'dummy',
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        i18n: {} as any,
-                        changeLanguage: noop
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      }) as any
-                    }
+                    useTranslationStore={useTranslationStore}
                     formEntity={formEntity}
                     onBack={() => setIsConnectorSelected(false)}
                     requestClose={() => {

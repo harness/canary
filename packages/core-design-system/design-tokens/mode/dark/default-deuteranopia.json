@@ -1041,16 +1041,6 @@
       }
     },
     "avatar": {
-      "text": {
-        "$type": "color",
-        "$value": "{set.gray.soft.text}",
-        "$description": "Text color for avatar initials or text. Ensures visibility against the avatar background."
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{set.gray.soft.bg}",
-        "$description": "Background color for avatar components. Provides contrast for text or image content."
-      },
       "border": {
         "$extensions": {
           "studio.tokens": {
@@ -1063,7 +1053,7 @@
         },
         "$type": "color",
         "$value": "{chrome.500}",
-        "$description": "Border color for avatars. Creates subtle definition around the avatar element."
+        "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
       }
     },
     "breadcrumb": {
@@ -1874,6 +1864,21 @@
         "type": "innerShadow"
       },
       "$description": "Inner shadow. \nCommon uses: Pressed buttons, selected states, inset form fields."
+    },
+    "comp": {
+      "avatar": {
+        "inner": {
+          "$type": "boxShadow",
+          "$value": {
+            "x": "0",
+            "y": "0",
+            "blur": "0",
+            "spread": "1",
+            "color": "{comp.avatar.border}",
+            "type": "innerShadow"
+          }
+        }
+      }
     }
   },
   "shadow-color": {

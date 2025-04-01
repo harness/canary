@@ -1,9 +1,10 @@
 import { CSSProperties, useCallback, useEffect, useState } from 'react'
 
-import { DiffFile, DiffModeEnum, DiffView } from '@git-diff-view/react'
+import { DiffFile, DiffModeEnum, DiffView, type DiffHighlighter } from '@git-diff-view/react'
 import { getDiffViewHighlighter } from '@git-diff-view/shiki'
-import { HighlighterType } from '@views/repo/pull-request/hooks/useDiffHighlighter'
 import { debounce } from 'lodash-es'
+
+export type HighlighterType = Omit<DiffHighlighter, 'getHighlighterEngine'>
 
 interface ChatDiffViewerProps {
   data: string

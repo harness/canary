@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react'
 
 import { AlertDialog, Button, Fieldset, Input } from '@/components'
-import { TranslationStore } from '@/views'
+import { TranslationStore } from '@/types'
 
 const DELETION_KEYWORD = 'DELETE'
 

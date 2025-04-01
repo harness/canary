@@ -10,20 +10,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 //   }
 // }
 
-enum BadgesHoverStates {
-  ENABLED = 'enabled',
-  DISABLED_DEFAULT = 'disabled-default',
-  DISABLED_SECONDARY = 'disabled-secondary',
-  DISABLED_DESTRUCTIVE = 'disabled-destructive',
-  DISABLED_OUTLINE = 'disabled-outline',
-  DISABLED_DESTRUCTIVE_THEME = 'disabled-destructive-theme',
-  DISABLED_WARNING_THEME = 'disabled-warning-theme',
-  DISABLED_SUCCESS_THEME = 'disabled-success-theme',
-  DISABLED_EMPHASIS_THEME = 'disabled-emphasis-theme',
-  DISABLED_MUTED_THEME = 'disabled-muted-theme'
-}
-
-const badgeVariants = cva('inline-flex items-center transition-colors badge', {
+const badgeVariants = cva('badge inline-flex items-center transition-colors', {
   variants: {
     variant: {
       solid: 'badge-solid',
@@ -32,10 +19,10 @@ const badgeVariants = cva('inline-flex items-center transition-colors badge', {
       status: 'badge-status'
       // default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
       // secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
-      // tertiary: 'border-transparent bg-cn-background-8 text-foreground-8',
-      // quaternary: 'border-cn-borders-2 bg-cn-background-2 text-foreground-5',
+      // tertiary: 'border-transparent bg-cn-background-8 text-cn-foreground-8',
+      // quaternary: 'border-cn-borders-2 bg-cn-background-2 text-cn-foreground-5',
       // destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
-      // outline: 'text-foreground',
+      // outline: 'text-cn-foreground',
     },
     /**
      * CDS: How to take it forward?
@@ -122,13 +109,15 @@ type BadgeOtherThemeProps = BadgeBaseProps & {
 // Combined props using discriminated union
 export type BadgeProps = BadgeAIThemeProps | BadgeOtherThemeProps
 
-function Badge({ className, variant, size, theme = 'muted', ...props }: BadgeProps) {
+function Badge({ className, variant, size, theme = 'muted', children, ...props }: BadgeProps) {
   // If theme is 'ai', we don't use variant
   const effectiveVariant = theme === 'ai' ? undefined : variant
 
+  const isStatusVariant = variant === 'status'
+
   return (
     <div
-      role="status"
+      // role="status"
       aria-readonly="true"
       tabIndex={-1}
       className={cn(
@@ -140,7 +129,10 @@ function Badge({ className, variant, size, theme = 'muted', ...props }: BadgePro
         className
       )}
       {...props}
-    />
+    >
+      {isStatusVariant && <span className="badge-indicator size-1.5 rounded-full" aria-hidden="true" />}
+      {children}
+    </div>
   )
 }
 

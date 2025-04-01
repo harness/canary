@@ -48,7 +48,7 @@ function createBadgeVariantStyles() {
         combinationStyles[`&:where(.badge-${variant}.badge-${theme})`] = style
       } else {
         // Add status circle styles for each theme
-        statusCircleStyles[`&.badge-status.badge-${theme}::before`] = {
+        statusCircleStyles[`&.badge-status.badge-${theme} > .badge-indicator`] = {
           backgroundColor: `var(--cn-set-${themeStyle}-solid-bg)`
         }
       }
@@ -81,17 +81,21 @@ export default {
         paddingLeft: 'calc(10px + var(--cn-badge-status-px))'
       },
 
-      '&::before': {
-        content: '""',
-        position: 'absolute',
-        left: 'var(--cn-badge-status-py)',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        width: '8px',
-        height: '8px',
-        borderRadius: '50%',
-        backgroundColor: 'var(--cn-set-gray-solid-bg)' // Default color
+      '> .badge-indicator': {
+        backgroundColor: 'var(--cn-set-gray-solid-bg)'
       }
+
+      // '&::before': {
+      //   content: '""',
+      //   position: 'absolute',
+      //   left: 'var(--cn-badge-status-py)',
+      //   top: '50%',
+      //   transform: 'translateY(-50%)',
+      //   width: '8px',
+      //   height: '8px',
+      //   borderRadius: '50%',
+      //   backgroundColor: 'var(--cn-set-gray-solid-bg)' // Default color
+      // }
     },
 
     /** Size */

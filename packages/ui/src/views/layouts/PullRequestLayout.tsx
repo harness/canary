@@ -16,7 +16,7 @@ const TabTitleWithIcon = ({ icon, children }: PropsWithChildren<{ icon: IconProp
 )
 
 const badgeCommonProps: BadgeProps = {
-  className: 'font-normal text-foreground-2',
+  className: 'font-normal text-cn-foreground-2',
   variant: 'quaternary',
   size: 'xs',
   borderRadius: 'base'

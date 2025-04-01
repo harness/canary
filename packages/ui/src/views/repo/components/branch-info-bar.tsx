@@ -37,7 +37,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   return (
     <div className="flex h-11 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 pl-4 pr-1.5">
       <div className="flex items-center gap-x-1.5">
-        <span className="text-14 leading-tight text-foreground-1">
+        <span className="text-14 leading-tight text-cn-foreground-1">
           This branch is{' '}
           {hasAhead && (
             <>
@@ -55,13 +55,13 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
         </span>
         <Badge className="gap-x-1" variant="tertiary" borderRadius="base" size="md">
           <Icon className="text-icons-9" name="branch" size={14} />
-          <span className="text-foreground-8">{defaultBranchName}</span>
+          <span className="text-cn-foreground-8">{defaultBranchName}</span>
         </Badge>
       </div>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <Button
-            className="group/contribute gap-x-2 px-2.5 data-[state=open]:border-cn-borders-9 data-[state=open]:text-foreground-8 [&_svg]:data-[state=open]:text-icons-9"
+            className="group/contribute gap-x-2 px-2.5 data-[state=open]:border-cn-borders-9 data-[state=open]:text-cn-foreground-8 [&_svg]:data-[state=open]:text-icons-9"
             variant="outline"
           >
             <Icon name="merged" size={14} />
@@ -79,13 +79,15 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               <Icon name="merged" size={12} />
             </div>
             <div>
-              <span className="text-14 leading-snug text-foreground-1">This branch is {ahead} commits ahead of </span>
+              <span className="text-14 leading-snug text-cn-foreground-1">
+                This branch is {ahead} commits ahead of{' '}
+              </span>
               <Badge className="gap-x-1" variant="tertiary" borderRadius="base" size="sm">
                 <Icon className="text-icons-9" name="branch" size={14} />
-                <span className="text-foreground-8">{defaultBranchName}</span>
+                <span className="text-cn-foreground-8">{defaultBranchName}</span>
               </Badge>
               .
-              <p className="mt-2.5 text-14 leading-tight text-foreground-4">
+              <p className="mt-2.5 text-14 leading-tight text-cn-foreground-4">
                 Open a pull request to contribute your changes upstream.
               </p>
             </div>

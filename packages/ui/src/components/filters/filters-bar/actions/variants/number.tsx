@@ -59,7 +59,7 @@ const Number = ({ filter, onUpdateFilter }: NumberFilterProps) => {
 
       {value && (
         <button
-          className="absolute right-3 text-icons-1 transition-colors duration-200 hover:text-foreground-1"
+          className="absolute right-3 text-icons-1 transition-colors duration-200 hover:text-cn-foreground-1"
           onClick={e => {
             e.stopPropagation()
             handleClear()

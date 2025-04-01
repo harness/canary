@@ -86,12 +86,12 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         <div className="inline-flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-2 font-medium">
             <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
-            <Badge variant="secondary" size="xs">
+            <Badge variant="secondary" size="sm">
               <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
               {props?.pullReqMetadata?.source_branch}
             </Badge>
             <span>into</span>
-            <Badge variant="secondary" size="xs">
+            <Badge variant="secondary" size="sm">
               <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
               {props?.pullReqMetadata?.target_branch}
             </Badge>
@@ -117,7 +117,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
   }
   return (
     <div className="inline-flex items-center gap-2">
-      <h2 className="font-medium text-foreground-1">
+      <h2 className="font-medium text-cn-foreground-1">
         {props.isDraft
           ? 'This pull request is still a work in progress'
           : props.isClosed
@@ -445,7 +445,7 @@ const PullRequestPanel = ({
                   {pullReqMetadata?.source_branch}
                 </Link>
               </Badge>{' '}
-              <span className="text-14 text-foreground-1"> branch has unmerged changes.</span>
+              <span className="text-14 text-cn-foreground-1"> branch has unmerged changes.</span>
             </Layout.Horizontal>
             {showDeleteBranchButton ? (
               <Button theme="primary" size="sm" onClick={onDeleteBranch}>

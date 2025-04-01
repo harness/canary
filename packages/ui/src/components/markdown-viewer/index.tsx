@@ -27,7 +27,7 @@ interface MarkdownViewerWrapperProps {
 }
 
 const MarkdownViewerWrapper: FC<MarkdownViewerWrapperProps> = ({ children }) => {
-  return <div className="rounded-b-md border-x border-b bg-cn-background-surface p-6">{children}</div>
+  return <div className="rounded-b-md border-x border-b bg-cn-background-2 p-6">{children}</div>
 }
 
 interface MarkdownViewerProps {
@@ -158,7 +158,7 @@ export function MarkdownViewer({
       <div ref={ref} style={styles}>
         {isSuggestion && (
           <div className="rounded-t-md border-x border-t border-cn-borders-2 bg-cn-background-2 px-4 py-3">
-            <span className="text-14 text-foreground-1">
+            <span className="text-14 text-cn-foreground-1">
               {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
                 ? 'Suggestion applied'
                 : 'Suggested change'}

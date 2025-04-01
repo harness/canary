@@ -47,8 +47,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
         {/* Mode */}
         <div className="mt-1 flex flex-col gap-y-5">
           <div className="flex flex-col">
-            <span className="text-16 font-medium text-foreground-1">Mode</span>
-            <p className="mt-1.5 text-14 leading-snug text-foreground-3">
+            <span className="text-16 font-medium text-cn-foreground-1">Mode</span>
+            <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
               Choose Dark mode for low light or Light mode for bright spaces.
             </p>
             <div className="mt-[18px] grid grid-cols-2 gap-4">
@@ -73,7 +73,11 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         )}
                       />
                       {mode === value && (
-                        <Icon className="absolute bottom-2 left-2 text-foreground-1" name="checkbox-circle" size={16} />
+                        <Icon
+                          className="absolute bottom-2 left-2 text-cn-foreground-1"
+                          name="checkbox-circle"
+                          size={16}
+                        />
                       )}
                       <div
                         className="absolute right-[27px] top-[61px] h-2 w-9 rounded-sm"
@@ -88,7 +92,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         aria-hidden
                       />
                     </div>
-                    <span className="text-14 leading-tight text-foreground-1">{key}</span>
+                    <span className="text-14 leading-tight text-cn-foreground-1">{key}</span>
                   </button>
                 )
               })}
@@ -100,8 +104,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
           {/* Contrast */}
           <div className="grid grid-cols-[246px_1fr] gap-x-8">
             <div>
-              <span className="text-16 font-medium text-foreground-1">Contrast</span>
-              <p className="mt-1.5 text-14 leading-snug text-foreground-3">
+              <span className="text-16 font-medium text-cn-foreground-1">Contrast</span>
+              <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
                 High contrast improves readability, Dimmer mode reduces glare.
               </p>
             </div>
@@ -128,8 +132,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
           {/* Color Adjustment */}
           <div className="grid grid-cols-[246px_1fr] gap-x-8">
             <div>
-              <span className="text-16 font-medium text-foreground-1">Color adjustment</span>
-              <p className="mt-1.5 text-14 leading-snug text-foreground-3">
+              <span className="text-16 font-medium text-cn-foreground-1">Color adjustment</span>
+              <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
                 Adjust colors for different types of color blindness.
               </p>
             </div>
@@ -156,8 +160,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
           {/* Inset Adjustment */}
           <div className="grid grid-cols-[246px_1fr] gap-x-8">
             <div>
-              <span className="text-16 font-medium text-foreground-1">Content style</span>
-              <p className="mt-1.5 text-14 leading-snug text-foreground-3">Choose the style of the content area.</p>
+              <span className="text-16 font-medium text-cn-foreground-1">Content style</span>
+              <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">Choose the style of the content area.</p>
             </div>
             <Select.Root
               name="color-adjustment"
@@ -181,8 +185,10 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               <Separator className="bg-borders-4 h-px" />
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
                 <div>
-                  <span className="text-16 font-medium text-foreground-1">Accent color</span>
-                  <p className="mt-1.5 text-14 leading-snug text-foreground-3">Select your application accent color.</p>
+                  <span className="text-16 font-medium text-cn-foreground-1">Accent color</span>
+                  <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
+                    Select your application accent color.
+                  </p>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {Object.values(AccentColor).map(item => (
@@ -216,8 +222,10 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               <Separator className="bg-borders-4 h-px" />
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
                 <div>
-                  <span className="text-16 font-medium text-foreground-1">Gray color</span>
-                  <p className="mt-1.5 text-14 leading-snug text-foreground-3">Select your application gray color.</p>
+                  <span className="text-16 font-medium text-cn-foreground-1">Gray color</span>
+                  <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
+                    Select your application gray color.
+                  </p>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {Object.values(GrayColor).map(item => (

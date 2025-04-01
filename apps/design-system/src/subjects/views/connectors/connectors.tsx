@@ -48,7 +48,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
         <>
-          <h1 className="text-24 text-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
+          <h1 className="text-24 text-cn-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
           <Spacer size={6} />
           <ListActions.Root>
             <ListActions.Right>

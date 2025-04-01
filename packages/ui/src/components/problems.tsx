@@ -110,7 +110,7 @@ const Problems = <T,>(props: ProblemsProps<T>): React.ReactElement => {
 function NoProblemsFound(): JSX.Element {
   return (
     <div className="flex items-center gap-2 pl-4">
-      <Icon name="success" className="text-foreground-success" /> No problems found
+      <Icon name="success" className="text-cn-foreground-success" /> No problems found
     </div>
   )
 }

@@ -38,7 +38,7 @@ type BreadcrumbLinkProps = ComponentPropsWithoutRef<'a'> & {
 const BreadcrumbLink = forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(({ asChild, className, ...props }, ref) => {
   const Comp = asChild ? Slot : 'a'
 
-  return <Comp ref={ref} className={cn('hover:text-foreground transition-colors', className)} {...props} />
+  return <Comp ref={ref} className={cn('hover:text-cn-foreground transition-colors', className)} {...props} />
 })
 BreadcrumbLink.displayName = 'BreadcrumbLink'
 
@@ -50,7 +50,7 @@ const BreadcrumbPage = forwardRef<HTMLSpanElement, BreadcrumbPageProps>(({ class
     role="link"
     aria-disabled="true"
     aria-current="page"
-    className={cn('text-foreground font-normal', className)}
+    className={cn('text-cn-foreground font-normal', className)}
     {...props}
   />
 ))

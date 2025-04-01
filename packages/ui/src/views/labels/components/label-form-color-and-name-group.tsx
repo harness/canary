@@ -39,7 +39,7 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
             <Select.Item key={color} value={color}>
               <div className="flex max-w-full items-center gap-x-1.5">
                 <div className={`bg-label-foreground-${color} size-2 min-h-2 min-w-2 rounded-full`} />
-                <span className="text-foreground-3 truncate">{color}</span>
+                <span className="text-cn-foreground-3 truncate">{color}</span>
               </div>
             </Select.Item>
           ))}

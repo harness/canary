@@ -1,12 +1,12 @@
 import { useTranslationStore } from '@utils/viewUtils'
 import { noop } from 'lodash-es'
 
-import { ConnectorListItem, ConnectorListPage } from '@harnessio/ui/views'
+import { ConnectorListItem, ConnectorsListPage } from '@harnessio/ui/views'
 
 import mockConnectorsList from './mock-connectors-list.json'
 
-const ConnectorsListPage = (): JSX.Element => (
-  <ConnectorListPage
+const ConnectorsListPageWrapper = (): JSX.Element => (
+  <ConnectorsListPage
     connectors={
       mockConnectorsList.map(connector => ({
         name: connector.connector.name,
@@ -28,6 +28,7 @@ const ConnectorsListPage = (): JSX.Element => (
     isLoading={false}
     setSearchQuery={noop}
     onEditConnector={noop}
+    onDeleteConnector={noop}
     onTestConnection={noop}
     currentPage={1}
     totalPages={5}
@@ -35,4 +36,4 @@ const ConnectorsListPage = (): JSX.Element => (
   />
 )
 
-export { ConnectorsListPage }
+export { ConnectorsListPageWrapper }

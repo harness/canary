@@ -8,7 +8,7 @@ import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-setting
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
 import { ConnectorsPage } from '@subjects/views/connectors/connectors'
 import { ConnectorInputExample } from '@subjects/views/connectors/connectors-input'
-import { ConnectorsListPage } from '@subjects/views/connectors/connectors-list'
+import { ConnectorsListPageWrapper } from '@subjects/views/connectors/connectors-list'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
@@ -504,7 +504,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       },
       'connectors-list-page': {
         label: 'Connectors List Page',
-        element: <ConnectorsListPage />
+        element: <ConnectorsListPageWrapper />
       },
       'create-edit-connector': {
         label: 'Create or Edit Connector',

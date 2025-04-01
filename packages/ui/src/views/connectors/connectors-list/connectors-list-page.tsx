@@ -9,7 +9,7 @@ import { cn } from '@utils/cn'
 import { ConnectorsList } from './connectors-list'
 import { ConnectorListPageProps } from './types'
 
-const ConnectorListPage: FC<ConnectorListPageProps> = ({
+const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   searchQuery,
   setSearchQuery,
   isError,
@@ -88,4 +88,4 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
   )
 }
 
-export { ConnectorListPage }
+export { ConnectorsListPage }

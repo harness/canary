@@ -168,7 +168,7 @@ export const PullRequestCommentBox = ({
               ref={dropZoneRef}
             >
               <Textarea
-                className="min-h-24 bg-cn-background-2 p-3 pb-10 text-foreground-1"
+                className="min-h-24 bg-cn-background-2 p-3 pb-10 text-cn-foreground-1"
                 autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}
@@ -204,7 +204,7 @@ export const PullRequestCommentBox = ({
               {comment ? (
                 <MarkdownViewer markdownClassName="!bg-cn-background-2 w-full" source={comment} />
               ) : (
-                <span className="text-foreground-8">Nothing to preview</span>
+                <span className="text-cn-foreground-8">Nothing to preview</span>
               )}
             </div>
           </Tabs.Content>
@@ -215,7 +215,7 @@ export const PullRequestCommentBox = ({
             <div>
               <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
               <Button
-                className="gap-x-2 px-2.5 font-normal text-foreground-3 hover:bg-cn-background-8"
+                className="gap-x-2 px-2.5 font-normal text-cn-foreground-3 hover:bg-cn-background-8"
                 variant="custom"
                 onClick={handleFileSelect}
               >

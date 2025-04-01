@@ -1,4 +1,4 @@
-/* @import url('./shared-style-variables.css'); */
+@import url('./shared-style-variables.css');
 
 @import url('@harnessio/core-design-system/core-styles');
 @import url('@harnessio/core-design-system/oss-themes');
@@ -35,7 +35,7 @@
   }
 
   body {
-    @apply bg-cn-background-1 text-foreground-2 text-sm font-normal -tracking-[0.02em];
+    @apply bg-cn-background-1 text-cn-foreground-2 text-sm font-normal -tracking-[0.02em];
   }
 }
 

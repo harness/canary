@@ -126,11 +126,11 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}
 
-          <Card.Title className="mt-3 text-center text-foreground-1" as="h1">
+          <Card.Title className="mt-3 text-center text-cn-foreground-1" as="h1">
             {t('views:createProject.title', 'Create your new project')}
           </Card.Title>
 
-          <p className="mt-0.5 text-center text-sm leading-snug text-foreground-4">
+          <p className="mt-0.5 text-center text-sm leading-snug text-cn-foreground-4">
             {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}
           </p>
         </div>
@@ -172,7 +172,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
         </FormWrapper>
 
         {isFirst && (
-          <p className="foreground-5 mt-4 text-center text-sm text-foreground-5">
+          <p className="foreground-5 mt-4 text-center text-sm text-cn-foreground-5">
             {t('views:createProject.logout.question', 'Want to use a different account?')}{' '}
             <StyledLink {...props.logoutLinkProps} variant="accent">
               {t('views:createProject.logout.link', 'Log out')}

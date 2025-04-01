@@ -45,13 +45,13 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
               }}
             >
               <div className="relative z-[1] flex items-center gap-2">
-                <div className="flex size-6 items-center justify-center rounded bg-cn-background-12 text-12 uppercase text-foreground-3">
+                <div className="flex size-6 items-center justify-center rounded bg-cn-background-12 text-12 uppercase text-cn-foreground-3">
                   {lang.code}
                 </div>
                 <span
                   className={cn(
-                    'group-hover:text-foreground-1',
-                    selectedLanguage === lang.code ? 'text-foreground-1' : 'text-foreground-2'
+                    'group-hover:text-cn-foreground-1',
+                    selectedLanguage === lang.code ? 'text-cn-foreground-1' : 'text-cn-foreground-2'
                   )}
                 >
                   {lang.name}

@@ -124,7 +124,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
             />
             {serverError && (
               <>
-                <Text className="mt-1 leading-none tracking-tight text-foreground-danger" size={0}>
+                <Text className="mt-1 leading-none tracking-tight text-cn-foreground-danger" size={0}>
                   {serverError}
                 </Text>
               </>

@@ -35,7 +35,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
     <ConnectorsPaletteLayout.Root>
       <ConnectorsPaletteLayout.Header className="!border-none !p-0">
         <ConnectorsPaletteLayout.Title className="!mt-0">Connector Setup</ConnectorsPaletteLayout.Title>
-        <ConnectorsPaletteLayout.Subtitle className="text-foreground-4">
+        <ConnectorsPaletteLayout.Subtitle className="text-cn-foreground-4">
           {'Select a Connector'}
         </ConnectorsPaletteLayout.Subtitle>
         <Input

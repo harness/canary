@@ -8,7 +8,7 @@ const tableVariants = cva('w-full text-sm', {
     variant: {
       default: 'caption-bottom',
       asStackedList:
-        'rounded-md border bg-cn-background-surface [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-cn-background-2'
+        'rounded-md border bg-cn-background-2 [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-cn-background-2'
     }
   },
   defaultVariants: {
@@ -72,7 +72,7 @@ const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCel
     <th
       ref={ref}
       className={cn(
-        'text-foreground-4 h-11 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        'text-cn-foreground-4 h-11 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
         className
       )}
       {...props}

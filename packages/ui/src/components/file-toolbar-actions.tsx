@@ -1,8 +1,7 @@
 import { FC } from 'react'
 
 import { Button, ButtonGroup, CopyButton, Icon } from '@/components'
-
-const buttonClassName = 'rounded-none border-l border-borders-1 hover:bg-background-4'
+import { cn } from '@utils/cn'
 
 export interface FileToolbarActionsProps {
   onDownloadClick: () => void
@@ -17,16 +16,23 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
   copyContent,
   showEdit = false
 }) => {
+  const commonButtonClasses = 'border-borders-1 hover:bg-background-4'
   return (
-    <ButtonGroup spacing="0" className="h-full rounded shadow-as-border shadow-borders-1">
-      <CopyButton className={`${buttonClassName} rounded-l`} name={copyContent} />
+    <ButtonGroup spacing="0" className="h-full rounded">
+      <CopyButton className={cn(commonButtonClasses, 'border rounded-r-none')} name={copyContent} />
       {showEdit && (
-        <Button className={buttonClassName} size="icon" variant="custom" aria-label="Edit" onClick={onEditClick}>
+        <Button
+          className={cn(commonButtonClasses, 'border-y rounded-none')}
+          size="icon"
+          variant="custom"
+          aria-label="Edit"
+          onClick={onEditClick}
+        >
           <Icon name="edit-pen" size={16} className="text-icons-3" />
         </Button>
       )}
       <Button
-        className={`${buttonClassName} rounded-r`}
+        className={cn(commonButtonClasses, 'rounded-l-none', showEdit ? 'border' : 'border-l-0 border-y border-r')}
         size="icon"
         variant="custom"
         aria-label="Download"

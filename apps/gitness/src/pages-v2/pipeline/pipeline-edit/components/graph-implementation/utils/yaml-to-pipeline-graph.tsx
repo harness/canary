@@ -1,10 +1,10 @@
-import { Icon } from '@harnessio/canary'
 import {
   AnyContainerNodeType,
   LeafContainerNodeType,
   ParallelContainerNodeType,
   SerialContainerNodeType
 } from '@harnessio/pipeline-graph'
+import { Icon } from '@harnessio/ui/components'
 
 import { ContentNodeTypes } from '../content-node-types'
 import { ParallelGroupContentNodeDataType } from '../nodes/parallel-group-node'

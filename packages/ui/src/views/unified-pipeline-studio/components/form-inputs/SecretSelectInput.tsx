@@ -1,12 +1,12 @@
-import { MouseEvent } from 'react'
-
-import { Button } from '@components/button'
-import { Icon } from '@components/icon'
+import { SecretInput } from '@views/secrets/secret-input/secret-input'
+import { SecretCreationType } from '@views/secrets/types'
 
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
 import { InputLabel, InputWrapper } from './common'
 import { InputError } from './common/InputError'
+
+const DEFAULT_PLACEHOLDER = 'Select secret value'
 
 export interface SecretSelectInputConfig {
   inputType: 'secretSelect'
@@ -33,31 +33,43 @@ function SecretSelectInputInternal(props: SecretSelectInputProps): JSX.Element {
     name: path
   })
 
-  // Handle click on the field - trigger the secret drawer/dialog
-  const handleClick = (_e: MouseEvent<HTMLButtonElement>) => {
-    // Get the onSecretClick function from props or from input config
+  const handleClick = () => {
     const secretClickHandler = props.onSecretClick || (input as unknown as SecretSelectInputConfig)?.onSecretClick
-
-    // Call the handler if it exists
     if (typeof secretClickHandler === 'function') {
       secretClickHandler()
     }
   }
 
+  const handleClear = () => {
+    field.onChange('')
+  }
+  console.log(field)
   return (
     <InputWrapper>
       <InputLabel label={label} description={description} required={required} />
-      <Button
-        variant="outline"
-        className="w-full justify-between text-left font-normal"
-        disabled={readonly}
+      <SecretInput
+        value={
+          field.value
+            ? {
+                id: field.value,
+                name: field.value,
+                secret: {
+                  type: SecretCreationType.SECRET_TEXT,
+                  name: field.value,
+                  identifier: field.value,
+                  tags: {},
+                  description: '',
+                  spec: {}
+                }
+              }
+            : undefined
+        }
+        placeholder={placeholder || DEFAULT_PLACEHOLDER}
         onClick={handleClick}
-        {...field}
-        type="button" // Prevent form submission
-      >
-        <span>{field.value || placeholder || `Select secret value`}</span>
-        <Icon name="lock" className="size-4" />
-      </Button>
+        onClear={handleClear}
+        renderValue={value => value.secret.identifier}
+        disabled={readonly}
+      />
       <InputError path={path} />
     </InputWrapper>
   )

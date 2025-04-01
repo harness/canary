@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react'
 
-import { Button, Icon, Layout, ScrollArea, SearchBox, Tabs } from '@/components'
+import { Button, Icon, Layout, ScrollArea, SearchBox, Tabs, TabsTriggerProps } from '@/components'
+import { useTheme } from '@/context'
 import { cn } from '@utils/cn'
 
 import ConsoleLogs from './console-logs'
@@ -50,6 +51,18 @@ const StepExecutionToolbar: FC<
   )
 }
 
+const TabsTrigger = ({ isLightTheme, ...props }: TabsTriggerProps & { isLightTheme?: boolean }) => (
+  <Tabs.Trigger
+    className={cn(
+      'h-6 w-[68px]',
+      isLightTheme
+        ? 'data-[state=active]:bg-background-1 data-[state=active]:shadow-none'
+        : 'data-[state=active]:bg-background-9 data-[state=active]:border-borders-2 data-[state=active]:border'
+    )}
+    {...props}
+  />
+)
+
 export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDownload, onCopy, isDrawer = false }) => {
   const inputTable = step?.inputs || []
   const outputTable = step?.outputs || []
@@ -58,30 +71,22 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
     const value = event.target.value
     setQuery(value)
   }
+  const { isLightTheme } = useTheme()
 
   return (
     <Tabs.Root defaultValue={StepExecutionTab.LOG} className="size-full">
       <Layout.Vertical className="space-y-0">
         <Layout.Horizontal className="flex justify-between py-2.5 pl-5 pr-3.5">
           <Tabs.List className="h-8 w-fit gap-x-0.5 border border-borders-1 bg-background-3">
-            <Tabs.Trigger
-              className="h-6 w-[68px] data-[state=active]:border data-[state=active]:border-borders-2 data-[state=active]:bg-background-9"
-              value={StepExecutionTab.LOG}
-            >
+            <TabsTrigger isLightTheme={isLightTheme} value={StepExecutionTab.LOG}>
               Logs
-            </Tabs.Trigger>
-            <Tabs.Trigger
-              className="h-6 w-[68px] data-[state=active]:border data-[state=active]:border-borders-2 data-[state=active]:bg-background-9"
-              value={StepExecutionTab.INPUT}
-            >
+            </TabsTrigger>
+            <TabsTrigger isLightTheme={isLightTheme} value={StepExecutionTab.INPUT}>
               Inputs
-            </Tabs.Trigger>
-            <Tabs.Trigger
-              className="h-6 w-[68px] data-[state=active]:border data-[state=active]:border-borders-2 data-[state=active]:bg-background-9"
-              value={StepExecutionTab.OUTPUT}
-            >
-              Output
-            </Tabs.Trigger>
+            </TabsTrigger>
+            <TabsTrigger isLightTheme={isLightTheme} value={StepExecutionTab.OUTPUT}>
+              Outputs
+            </TabsTrigger>
           </Tabs.List>
           <StepExecutionToolbar
             onEdit={onEdit}
@@ -92,7 +97,7 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
           />
         </Layout.Horizontal>
         <Tabs.Content value={StepExecutionTab.LOG}>
-          <ScrollArea className={cn(isDrawer ? 'pt-1.5 h-[calc(100vh-196px)]' : 'pt-4 h-[calc(100vh-278px)] border-t')}>
+          <ScrollArea className={cn(isDrawer ? 'h-[calc(100vh-196px)]' : 'h-[calc(100vh-278px)] border-t')}>
             <ConsoleLogs logs={logs} query={query} />
           </ScrollArea>
         </Tabs.Content>

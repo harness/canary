@@ -15,11 +15,11 @@ type ExecutionDetail = {
 const getStatusIcon = (status: ExecutionState): React.ReactElement => {
   switch (status) {
     case ExecutionState.RUNNING:
-      return <CanaryIcon size={20} name="running" className="animate-spin text-warning" />
+      return <CanaryIcon size={20} name="running" className="animate-spin text-icons-warning" />
     case ExecutionState.SUCCESS:
-      return <CanaryIcon name="success" size={16} className="text-foreground-success" />
+      return <CanaryIcon name="success" size={16} className="text-icons-success" />
     case ExecutionState.FAILURE:
-      return <CanaryIcon name="fail" size={16} />
+      return <CanaryIcon name="fail" className="text-icons-danger" size={16} />
     case ExecutionState.WAITING_ON_DEPENDENCIES:
     case ExecutionState.PENDING:
       return (

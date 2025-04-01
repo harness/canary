@@ -184,6 +184,7 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "status": "Statut",
     "tagger": "Tagger",
     "renameBranch": "Renommer la branche",
     "add": "Ajouter",
@@ -193,6 +194,11 @@
   },
   "noData": {
     "noResults": "Aucun résultat de recherche",
+    "errorApiTitle": "Échec du chargement de {{type}}",
+    "errorApiDescription": "Une erreur s'est produite lors du chargement des données. Veuillez réessayer et recharger la page.",
+    "noConnectors": "Aucun connecteur pour le moment",
+    "noConnectorsProject": "Il n'y a pas encore de connecteurs dans ce projet.",
+    "createConnector": "Créez un nouveau connecteur.",
     "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
     "changeSearch": "ou recherchez un autre mot-clé.",
     "clearSearch": "Effacer la recherche",
@@ -218,8 +224,6 @@
     "createBranch": "Créer une nouvelle branche",
     "noCommitsHistory": "No commits history",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
-    "errorApiTitle": "Failed to load {{type}}",
-    "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noRepos": "Pas encore de dépôts",
     "noReposProject": "Il n'y a pas encore de dépôts dans ce projet.",
     "createOrImportRepos": "Créer un nouveau dépôt ou importer un dépôt existant.",
@@ -234,6 +238,16 @@
     "commit": "Validation",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
+  },
+  "notFound": {
+    "button": "Recharger la page",
+    "title": "Quelque chose s'est mal passé…",
+    "descriptionWithType": "La page demandée est introuvable. Vous pouvez revenir pour voir tous les {{type}} et gérer vos paramètres.",
+    "description": "La page demandée est introuvable."
+  },
+  "search": "Rechercher",
+  "connectors": {
+    "createNew": "Créer un nouveau connecteur"
   },
   "execution": {
     "summary": "Résumé",
@@ -378,12 +392,6 @@
     "largeDiff": "Les différences de grande taille ne sont pas affichées par défaut.",
     "fileNoChanges": "Fichier sans modifications.",
     "binaryNotShown": "Fichier binaire non affiché."
-  },
-  "notFound": {
-    "title": "Quelque chose s'est mal passé…",
-    "descriptionWithType": "La page demandée est introuvable. Vous pouvez revenir pour voir tous les {{type}} et gérer vos paramètres.",
-    "description": "La page demandée est introuvable.",
-    "button": "Recharger la page"
   },
   "profileSettings": {
     "newSshKey": "Nouvelle clé SSH",

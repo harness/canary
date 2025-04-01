@@ -1,7 +1,7 @@
 import { Children, ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, isValidElement } from 'react'
 
 import { Button, Icon } from '@/components'
-import { usePortal } from '@/context'
+import { usePortal, useTheme } from '@/context'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 
@@ -16,26 +16,32 @@ interface DialogOverlayProps extends ComponentPropsWithoutRef<typeof DialogPrimi
 }
 
 const DialogOverlay = forwardRef<ElementRef<typeof DialogPrimitive.Overlay>, DialogOverlayProps>(
-  ({ className, onClick, ...props }, ref) => (
-    <DialogPrimitive.Overlay
-      ref={ref}
-      className={cn(
-        'fixed inset-0 z-50 bg-background-7/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        className
-      )}
-      {...props}
-      onClick={onClick}
-    />
-  )
+  ({ className, onClick, ...props }, ref) => {
+    const { isLightTheme } = useTheme()
+
+    return (
+      <DialogPrimitive.Overlay
+        ref={ref}
+        className={cn(
+          'fixed inset-0 z-50 bg-background-7/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+          { 'bg-background-10/60': isLightTheme },
+          className
+        )}
+        {...props}
+        onClick={onClick}
+      />
+    )
+  }
 )
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 interface DialogContentProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
   onOverlayClick?: () => void
+  isShowCloseIcon?: boolean
 }
 
 const DialogContent = forwardRef<ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
-  ({ className, children, onOverlayClick, ...props }, ref) => {
+  ({ className, children, onOverlayClick, isShowCloseIcon = true, ...props }, ref) => {
     const { portalContainer } = usePortal()
     const mainContent: React.ReactNode[] = []
     let footer: React.ReactNode = null
@@ -67,12 +73,14 @@ const DialogContent = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dia
             {mainContent}
           </div>
           {footer}
-          <DialogPrimitive.Close className="absolute right-3 top-3.5 disabled:pointer-events-none" asChild>
-            <Button size="icon" variant="custom" className="text-icons-4 hover:text-icons-2">
-              <Icon name="close" size={16} />
-              <span className="sr-only">Close</span>
-            </Button>
-          </DialogPrimitive.Close>
+          {isShowCloseIcon && (
+            <DialogPrimitive.Close className="absolute right-3 top-3.5 disabled:pointer-events-none" asChild>
+              <Button size="icon" variant="custom" className="text-icons-4 hover:text-icons-2">
+                <Icon name="close" size={16} />
+                <span className="sr-only">Close</span>
+              </Button>
+            </DialogPrimitive.Close>
+          )}
         </DialogPrimitive.Content>
       </DialogPortal>
     )

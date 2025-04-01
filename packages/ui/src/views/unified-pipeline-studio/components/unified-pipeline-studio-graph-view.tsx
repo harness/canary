@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
+import { PipelineNodesComponents } from '@/components'
 import { parse } from 'yaml'
 
 import { AnyContainerNodeType, CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
@@ -8,9 +9,6 @@ import { CanvasControls } from './graph-implementation/canvas/canvas-controls'
 import { yaml2Nodes } from './graph-implementation/utils/yaml-to-pipeline-graph'
 
 import '@harnessio/pipeline-graph/dist/index.css'
-
-import { CollapseButton } from '@components/pipeline-nodes/components/collapse-button'
-import Port from '@components/pipeline-nodes/components/custom-port'
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import { parallelContainerConfig, serialContainerConfig } from './graph-implementation/config/config'
@@ -44,7 +42,7 @@ const endNode = {
 } satisfies AnyContainerNodeType
 
 export const PipelineStudioGraphView = (): React.ReactElement => {
-  const { yamlRevision } = useUnifiedPipelineStudioContext()
+  const { yamlRevision, yamlParserOptions } = useUnifiedPipelineStudioContext()
 
   const [data, setData] = useState<AnyContainerNodeType[]>([])
 
@@ -56,7 +54,7 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
 
   useEffect(() => {
     const yamlJson = parse(yamlRevision.yaml)
-    const newData = yaml2Nodes(yamlJson)
+    const newData = yaml2Nodes(yamlJson, yamlParserOptions)
 
     if (newData.length === 0) {
       newData.push({
@@ -94,8 +92,8 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
             parallelNodeOffset: 10,
             serialNodeOffset: 10
           }}
-          portComponent={Port}
-          collapseButtonComponent={CollapseButton}
+          portComponent={PipelineNodesComponents.Port}
+          collapseButtonComponent={PipelineNodesComponents.CollapseButton}
           serialContainerConfig={serialContainerConfig}
           parallelContainerConfig={parallelContainerConfig}
           data={data}

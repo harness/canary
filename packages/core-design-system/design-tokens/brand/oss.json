@@ -3,23 +3,23 @@
     "color": {
       "50": {
         "$type": "color",
-        "$value": "{chrome.150}"
+        "$value": "{chrome.300}"
       },
       "100": {
         "$type": "color",
-        "$value": "{chrome.150}"
+        "$value": "{chrome.300}"
       },
       "200": {
         "$type": "color",
-        "$value": "{chrome.150}"
+        "$value": "{chrome.300}"
       },
       "300": {
         "$type": "color",
-        "$value": "{chrome.150}"
+        "$value": "{chrome.300}"
       },
       "400": {
         "$type": "color",
-        "$value": "{chrome.150}"
+        "$value": "{chrome.300}"
       },
       "500": {
         "$type": "color",
@@ -27,7 +27,7 @@
       },
       "600": {
         "$type": "color",
-        "$value": "{chrome.150}"
+        "$value": "{chrome.300}"
       },
       "700": {
         "$type": "color",

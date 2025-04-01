@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, Drawer, Spacer } from '@harnessio/ui/components'
+import { Drawer, Spacer } from '@harnessio/ui/components'
 import {
   ConnectorHeader,
   ConnectorItem,
@@ -15,12 +15,21 @@ import mockProjectsData from '../secrets/mock-project-data.json'
 import { Scope, ScopeEnum, scopeHierarchy } from '../secrets/types'
 import mockConnectorsData from './mock-connectors-data.json'
 
-export const ConnectorsRefPage = () => {
+export const ConnectorsRefPage = ({
+  isDrawerOpen,
+  setIsDrawerOpen,
+  selectedConnector,
+  setSelectedConnector
+}: {
+  isDrawerOpen: boolean
+  setIsDrawerOpen: (open: boolean) => void
+  selectedConnector: ConnectorItem | null
+  setSelectedConnector: (connector: ConnectorItem | null) => void
+}) => {
   const [selectedType, setSelectedType] = useState<ConnectorSelectionType>(ConnectorSelectionType.EXISTING)
   const [, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
 
   // State for existing connectors
-  const [selectedConnector, setSelectedConnector] = useState<ConnectorItem | null>(null)
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
 
@@ -28,6 +37,7 @@ export const ConnectorsRefPage = () => {
   const handleSelectConnector = (connector: ConnectorItem) => {
     setSelectedConnector(connector)
     console.log('Selected connector:', connector)
+    setIsDrawerOpen(false)
   }
 
   const handleScopeChange = (direction: DirectionEnum) => {
@@ -53,7 +63,7 @@ export const ConnectorsRefPage = () => {
   }
 
   const handleCancel = () => {
-    console.log('Cancelled')
+    setIsDrawerOpen(false)
   }
 
   const renderConnectorContent = () => {
@@ -94,10 +104,7 @@ export const ConnectorsRefPage = () => {
   }
 
   return (
-    <Drawer.Root direction="right">
-      <Drawer.Trigger>
-        <Button>Add Connector</Button>
-      </Drawer.Trigger>
+    <Drawer.Root direction="right" open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <Drawer.Content>
         <Drawer.Header>
           <Drawer.Title className="text-3xl">Connectors</Drawer.Title>

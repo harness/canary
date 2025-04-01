@@ -7,12 +7,13 @@ import {
   LanguageInterface,
   languages,
   Sidebar,
-  Spacer,
-  ThemeDialog
+  ThemeDialog,
+  useSidebar
 } from '@/components'
 import { ContentStyleType, useRouterContext, useTheme } from '@/context'
 import { TypesUser } from '@/types'
 import { TranslationStore } from '@/views'
+import { cn } from '@utils/cn'
 
 import { SidebarItem } from './sidebar-item'
 import { SidebarSearchLegacy } from './sidebar-search-legacy'
@@ -21,13 +22,30 @@ import { SidebarSearch } from './sidebar-search/sidebar-search'
 import { User } from './sidebar-user'
 import { NavbarItemType } from './types'
 
+const HarnessLogo = ({ className }: { className?: string }) => {
+  const { Link } = useRouterContext()
+
+  return (
+    <Link to="/" className={cn('flex items-center', className)}>
+      <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
+      <div
+        className={cn(
+          'overflow-hidden max-w-20 mb-px ml-0.5 opacity-100 transition-[max-width,opacity,margin-left] group-data-[state=collapsed]:opacity-0 group-data-[state=collapsed]:max-w-0 group-data-[state=collapsed]:ml-0 ease-linear'
+        )}
+      >
+        <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1" />
+      </div>
+    </Link>
+  )
+}
+
 interface SidebarProps {
   recentMenuItems: NavbarItemType[]
   pinnedMenuItems: NavbarItemType[]
   showMoreMenu: boolean
   showSettingMenu: boolean
-  handleMoreMenu: () => void
-  handleSettingsMenu: () => void
+  handleMoreMenu: (state?: boolean) => void
+  handleSettingsMenu: (state?: boolean) => void
   currentUser: TypesUser | undefined
   handleCustomNav: () => void
   handleLogOut: () => void
@@ -35,6 +53,7 @@ interface SidebarProps {
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
   useTranslationStore: () => TranslationStore
   showNewSearch?: boolean
+  hasToggle?: boolean
 }
 
 export const AppSidebar = ({
@@ -48,11 +67,13 @@ export const AppSidebar = ({
   handleSettingsMenu,
   handleCustomNav,
   handleLogOut,
+  hasToggle = true,
   showNewSearch
 }: SidebarProps) => {
   const { t, i18n, changeLanguage } = useTranslationStore()
   const { theme, setTheme, setInset, isInset } = useTheme()
-  const { Link, navigate } = useRouterContext()
+  const { navigate } = useRouterContext()
+  const { collapsed, toggleSidebar } = useSidebar()
 
   const [openThemeDialog, setOpenThemeDialog] = useState(false)
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)
@@ -70,35 +91,32 @@ export const AppSidebar = ({
     setOpenLanguageDialog(false)
   }
 
+  const handleToggleSidebar = () => {
+    toggleSidebar()
+    handleMoreMenu(false)
+    handleSettingsMenu(false)
+  }
+
   const onInsetChange = (style: ContentStyleType) => setInset(style === ContentStyleType.Inset)
 
   return (
     <>
       <Sidebar.Root className="z-20">
-        <Sidebar.Header>
+        <Sidebar.Header className="pb-3">
           {showNewSearch ? (
             <SearchProvider t={t}>
               <SidebarSearch
                 className="pb-3 pt-1.5"
                 t={t}
                 logo={
-                  <Link to="/" className="flex h-[58px] items-center justify-start gap-0.5 pl-1">
-                    <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-                    <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1 mb-px" />
-                  </Link>
+                  <div className="my-5 flex items-center pl-2">
+                    <HarnessLogo />
+                  </div>
                 }
               />
             </SearchProvider>
           ) : (
-            <SidebarSearchLegacy
-              t={t}
-              logo={
-                <Link className="flex items-center gap-0.5" to="/">
-                  <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-                  <Icon name="harness-logo-text" width={65} height={15} className="text-sidebar-foreground-1 mb-px" />
-                </Link>
-              }
-            />
+            <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
           )}
         </Sidebar.Header>
         <Sidebar.Content>
@@ -117,10 +135,11 @@ export const AppSidebar = ({
                 ))}
 
                 <Sidebar.MenuItem>
-                  <Sidebar.MenuButton asChild onClick={handleMoreMenu}>
+                  <Sidebar.MenuButton onClick={() => handleMoreMenu()}>
                     <Sidebar.MenuItemText
+                      className="pl-0"
                       text={t('component:navbar.more', 'More')}
-                      icon={<Icon name="ellipsis" size={12} />}
+                      icon={<Icon name="ellipsis" size={14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -131,7 +150,6 @@ export const AppSidebar = ({
           {!!recentMenuItems.length && (
             <Sidebar.Group title={t('component:navbar.recent', 'Recent')} className="border-t pt-2.5">
               <Sidebar.GroupLabel>{t('component:navbar.recent', 'Recent')}</Sidebar.GroupLabel>
-              <Spacer size={2} />
               <Sidebar.GroupContent>
                 <Sidebar.Menu>
                   {recentMenuItems.map(item => (
@@ -155,19 +173,21 @@ export const AppSidebar = ({
               <Sidebar.Menu>
                 {!!currentUser?.admin && (
                   <Sidebar.MenuItem>
-                    <Sidebar.MenuButton asChild onClick={() => navigate('/admin/default-settings')}>
+                    <Sidebar.MenuButton onClick={() => navigate('/admin/default-settings')}>
                       <Sidebar.MenuItemText
+                        className="pl-0"
                         text={t('component:navbar.user-management', 'User Management')}
-                        icon={<Icon name="account" size={12} />}
+                        icon={<Icon name="account" size={14} />}
                       />
                     </Sidebar.MenuButton>
                   </Sidebar.MenuItem>
                 )}
                 <Sidebar.MenuItem>
-                  <Sidebar.MenuButton asChild onClick={handleSettingsMenu}>
+                  <Sidebar.MenuButton onClick={() => handleSettingsMenu()}>
                     <Sidebar.MenuItemText
+                      className="pl-0"
                       text={t('component:navbar.settings', 'Settings')}
-                      icon={<Icon name="settings-1" size={12} />}
+                      icon={<Icon name="settings-1" size={14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -175,7 +195,29 @@ export const AppSidebar = ({
             </Sidebar.GroupContent>
           </Sidebar.Group>
         </Sidebar.Content>
-        <Sidebar.Footer className="border-sidebar-border-1 border-t">
+
+        {hasToggle && (
+          <Sidebar.Group>
+            <Sidebar.Menu>
+              <Sidebar.MenuItem>
+                <Sidebar.MenuButton onClick={handleToggleSidebar}>
+                  <Sidebar.MenuItemText
+                    className="pl-0"
+                    aria-label={
+                      collapsed
+                        ? t('component:navbar.sidebarToggle.expand', 'Expand')
+                        : t('component:navbar.sidebarToggle.collapse', 'Collapse')
+                    }
+                    text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
+                    icon={<Icon name={collapsed ? 'sidebar-right' : 'sidebar-left'} size={14} />}
+                  />
+                </Sidebar.MenuButton>
+              </Sidebar.MenuItem>
+            </Sidebar.Menu>
+          </Sidebar.Group>
+        )}
+
+        <Sidebar.Footer className="border-t border-sidebar-border-1 px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">
           <User
             user={currentUser}
             openThemeDialog={() => setOpenThemeDialog(true)}

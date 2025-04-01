@@ -1,11 +1,17 @@
 import { TabNav } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { SandboxLayout, SubHeaderWrapper, TranslationStore } from '@/views'
 
-export const ExecutionTabs = ({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) => {
+export const ExecutionTabs = ({
+  useTranslationStore,
+  className
+}: {
+  useTranslationStore: () => TranslationStore
+  className?: string
+}) => {
   const { t } = useTranslationStore()
 
   return (
-    <>
+    <SubHeaderWrapper className={className}>
       <SandboxLayout.SubHeader>
         <TabNav.Root>
           <TabNav.Item to="summary">{t('views:execution.summary', 'Summary')}</TabNav.Item>
@@ -19,6 +25,6 @@ export const ExecutionTabs = ({ useTranslationStore }: { useTranslationStore: ()
           <TabNav.Item to="secrets">{t('views:execution.secrets', 'Secrets')}</TabNav.Item>
         </TabNav.Root>
       </SandboxLayout.SubHeader>
-    </>
+    </SubHeaderWrapper>
   )
 }

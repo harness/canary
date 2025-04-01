@@ -18,13 +18,12 @@ import { YamlEntityType } from '../types/yaml-entity-type'
 import { getIconBasedOnStep } from './step-icon-utils'
 import { getNameBasedOnStep } from './step-name-utils'
 
-export const yamlString2Nodes = (
-  yaml: string,
-  options: {
-    selectedPath?: string
-    getStepIcon?: (step: Record<string, any>) => JSX.Element
-  } = {}
-) => {
+export interface Yaml2PipelineGraphOptions {
+  getStepIcon?: (step: Record<string, any>) => JSX.Element
+  getName?: (entityType: YamlEntityType, data: Record<string, any>, idx: number) => string
+}
+
+export const yamlString2Nodes = (yaml: string, options: Yaml2PipelineGraphOptions = {}) => {
   const yamlJson = parse(yaml)
   return yaml2Nodes(yamlJson, options)
 }
@@ -48,10 +47,7 @@ export const processGithubJobsToStages = (yamlJson: Record<string, any>) => {
 
 export const yaml2Nodes = (
   yamlObject: Record<string, any>,
-  options: {
-    selectedPath?: string
-    getStepIcon?: (step: Record<string, any>) => JSX.Element
-  } = {}
+  options: Yaml2PipelineGraphOptions = {}
 ): AnyContainerNodeType[] => {
   const nodes: AnyContainerNodeType[] = []
   const processedYamlObject = processGithubJobsToStages(yamlObject)
@@ -74,16 +70,13 @@ const getGroupKey = (stage: Record<string, any>): 'group' | 'parallel' | undefin
 const processStages = (
   stages: any[],
   currentPath: string,
-  options: {
-    selectedPath?: string
-    getStepIcon?: (step: Record<string, any>) => JSX.Element
-  }
+  options: Yaml2PipelineGraphOptions
 ): AnyContainerNodeType[] => {
   return stages.map((stage, idx) => {
     // parallel stage
     const groupKey = getGroupKey(stage)
     if (groupKey === 'group') {
-      const name = stage.name
+      const name = options.getName?.(YamlEntityType.SerialStageGroup, stage, idx) ?? stage.name
       const path = `${currentPath}.${idx}`
       const childrenPath = `${path}.${groupKey}.stages`
 
@@ -105,7 +98,7 @@ const processStages = (
         children: processStages(stage[groupKey].stages, childrenPath, options)
       } satisfies SerialContainerNodeType
     } else if (groupKey === 'parallel') {
-      const name = stage.name
+      const name = options.getName?.(YamlEntityType.ParallelStageGroup, stage, idx) ?? stage.name
       const path = `${currentPath}.${idx}`
       const childrenPath = `${path}.${groupKey}.stages`
 
@@ -129,7 +122,7 @@ const processStages = (
     }
     // regular stage
     else {
-      const name = stage.name
+      const name = options.getName?.(YamlEntityType.Stage, stage, idx) ?? stage.name
       const path = `${currentPath}.${idx}`
       const childrenPath = `${path}.steps`
 
@@ -157,16 +150,13 @@ const processStages = (
 const processSteps = (
   steps: any[],
   currentPath: string,
-  options: {
-    selectedPath?: string
-    getStepIcon?: (step: Record<string, any>) => JSX.Element
-  }
+  options: Yaml2PipelineGraphOptions
 ): AnyContainerNodeType[] => {
   return steps.map((step, idx) => {
     // parallel stage
     const groupKey = getGroupKey(step)
     if (groupKey === 'group') {
-      const name = step.name
+      const name = options.getName?.(YamlEntityType.SerialStepGroup, step, idx) ?? step.name
       const path = `${currentPath}.${idx}`
       const childrenPath = `${path}.${groupKey}.steps`
 
@@ -187,7 +177,7 @@ const processSteps = (
         children: processSteps(step[groupKey].steps, childrenPath, options)
       } satisfies SerialContainerNodeType
     } else if (groupKey === 'parallel') {
-      const name = step.name
+      const name = options.getName?.(YamlEntityType.ParallelStepGroup, step, idx) ?? step.name
       const path = `${currentPath}.${idx}`
       const childrenPath = `${path}.${groupKey}.steps`
 
@@ -209,7 +199,7 @@ const processSteps = (
     }
     // regular step
     else {
-      const name = getNameBasedOnStep(step, idx + 1)
+      const name = options.getName?.(YamlEntityType.Step, step, idx) ?? getNameBasedOnStep(step, idx + 1)
       const path = `${currentPath}.${idx}`
 
       return {
@@ -225,9 +215,7 @@ const processSteps = (
           yamlPath: path,
           yamlEntityType: YamlEntityType.Step,
           name,
-          icon: options.getStepIcon?.(step) ?? getIconBasedOnStep(step),
-
-          selected: path === options?.selectedPath
+          icon: options.getStepIcon?.(step) ?? getIconBasedOnStep(step)
         } satisfies StepNodeDataType
       } satisfies LeafContainerNodeType
     }

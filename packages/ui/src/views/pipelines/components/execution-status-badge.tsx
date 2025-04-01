@@ -55,7 +55,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
       ) : (
         <div className="flex items-center gap-1 rounded-md border border-solid border-[#F76E6E1F] bg-[#F76E6E1A]/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5">
-            <CanaryIcon name="fail" width={20} />
+            <CanaryIcon name="fail-legacy" width={20} />
             <span className="text-[#ED5E5E]">Failed</span>
           </div>
           {duration && <span className="text-[#ED5E5E]">{duration}</span>}

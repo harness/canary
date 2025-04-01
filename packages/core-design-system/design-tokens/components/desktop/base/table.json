@@ -17,6 +17,10 @@
     "py": {
       "$type": "spacing",
       "$value": "{spacing.3}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
     }
   }
 }

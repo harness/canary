@@ -8,7 +8,7 @@ export const MonacoCommonDefaultOptions: monaco.editor.IStandaloneDiffEditorCons
     bottom: 16
   },
   minimap: { enabled: false },
-  fontSize: 13,
+  fontSize: 14,
   fontFamily: '"JetBrains Mono", "monospace"',
   lineHeight: 20,
   scrollbar: {

@@ -1,0 +1,28 @@
+{
+  "diff": {
+    "number": {
+      "pl": {
+        "$type": "spacing",
+        "$value": "{spacing.5}"
+      },
+      "pr": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      }
+    },
+    "expanded": {
+      "$type": "sizing",
+      "$value": "{size.11}"
+    },
+    "single": {
+      "$type": "sizing",
+      "$value": "{size.6}"
+    },
+    "code": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      }
+    }
+  }
+}

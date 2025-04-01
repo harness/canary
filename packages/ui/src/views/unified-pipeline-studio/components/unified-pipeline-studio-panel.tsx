@@ -21,7 +21,7 @@ export const UnifiedPipelineStudioPanel = ({
               </Badge>
             )} */}
           </Tabs.Trigger>
-          {/* <Tabs.Trigger value="suggestions">Suggestions</Tabs.Trigger> */}
+          <Tabs.Trigger value="console">Console</Tabs.Trigger>
         </Tabs.List>
         <div className="flex items-center">
           <Button
@@ -39,7 +39,9 @@ export const UnifiedPipelineStudioPanel = ({
       <Tabs.Content value="problems" className="h-full overflow-scroll py-2">
         <UnifiedPipelineStudioProblemsPanel problems={problems} />
       </Tabs.Content>
-      {/* <Tabs.Content value="suggestions">Suggestions placeholder</Tabs.Content> */}
+      <Tabs.Content value="console" className="h-full overflow-scroll py-2">
+        <UnifiedPipelineStudioProblemsPanel problems={problems} />
+      </Tabs.Content>
     </Tabs.Root>
   )
 }

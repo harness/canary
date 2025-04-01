@@ -4,10 +4,15 @@
     "recent": "Recent",
     "user-management": "User Management",
     "settings": "Settings",
+    "sidebarToggle": {
+      "expand": "Expand",
+      "collapse": "Collapse"
+    },
     "pin": "Pin",
     "remove": "Remove",
     "reorder": "Reorder",
     "unpin": "Unpin",
+    "searchButton": "Open search dialog",
     "search": "Search",
     "command-palette": "Command Palette",
     "nothing-found": "Nothing found",

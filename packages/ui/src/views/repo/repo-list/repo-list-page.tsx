@@ -63,7 +63,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
       <NoData
         textWrapperClassName="max-w-[350px]"
         iconName="no-data-error"
-        title={t('views:noData.errorApiTitle', 'Failed to load repositories', {
+        title={t('views:noData.errorApiTitle', 'Failed to load', {
           type: 'repositories'
         })}
         description={[
@@ -99,7 +99,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           <>
             <Spacer size={8} />
             <div className="flex items-end">
-              <h1 className="text-foreground-1 text-2xl font-medium">
+              <h1 className="text-2xl font-medium text-foreground-1">
                 {t('views:repos.repositories', 'Repositories')}
               </h1>
               {viewManagement.currentView && (

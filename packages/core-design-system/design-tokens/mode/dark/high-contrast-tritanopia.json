@@ -34,22 +34,22 @@
     },
     "accent": {
       "$type": "color",
-      "$value": "{cyan.200}",
+      "$value": "{set.brand.surface.text}",
       "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\n\nCommon uses: Links, buttons, interactive icons, highlighted elements."
     },
     "success": {
       "$type": "color",
-      "$value": "{cyan.200}",
+      "$value": "{set.green.soft.text}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{red.200}",
+      "$value": "{set.red.soft.text}",
       "$description": "Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.\n\nCommon uses: Error message text, validation text, destructive action labels."
     },
     "warning": {
       "$type": "color",
-      "$value": "{orange.200}",
+      "$value": "{set.yellow.soft.text}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     }
   },
@@ -78,7 +78,7 @@
       "$value": "{chrome.800}",
       "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\n\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
     },
-    "focus": {
+    "accent": {
       "$type": "color",
       "$value": "{set.brand.solid.border}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
@@ -156,7 +156,7 @@
       },
       "border-selected": {
         "$type": "color",
-        "$value": "{state.disabled.bg-selected}",
+        "$value": "{chrome.700}",
         "$description": "Disabled border for selected component behavior."
       }
     }
@@ -166,17 +166,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{brand.onColor.500}",
+          "$value": "{brand.onColor.600}",
           "$description": "Text and icon color for primary brand elements with maximum contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{brand.color.500}",
+          "$value": "{brand.color.600}",
           "$description": "Background color for primary brand items with strong emphasis."
         },
         "border": {
           "$type": "color",
-          "$value": "{brand.color.500}",
+          "$value": "{brand.color.600}",
           "$description": "Border color for primary brand boundaries."
         },
         "separator": {
@@ -190,18 +190,72 @@
             }
           },
           "$type": "color",
-          "$value": "{brand.onColor.500}",
+          "$value": "{brand.onColor.600}",
           "$description": "Separator color for dividing brand areas."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{brand.color.400}",
+          "$value": "{brand.color.500}",
           "$description": "Hover state background color for interactive brand surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{brand.color.400}",
+          "$value": "{brand.color.500}",
           "$description": "Selected state background color for active brand items."
+        }
+      },
+      "soft": {
+        "text": {
+          "$type": "color",
+          "$value": "{brand.color.100}",
+          "$description": "Text and icon color for primary subtle brand elements with maximum contrast."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{brand.color.800}",
+          "$description": "Background color for primary subtle brand items with strong emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{brand.color.800}",
+          "$description": "Border color for primary subtle brand boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{brand.color.700}",
+          "$description": "Hover state background color for interactive brand subtle surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{brand.color.700}",
+          "$description": "Selected state background color for active brand subtle items."
+        }
+      },
+      "surface": {
+        "text": {
+          "$type": "color",
+          "$value": "{brand.color.200}",
+          "$description": "Text and icon color for primary brand elements with minimum contrast."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{brand.color.900}",
+          "$description": "Background color for primary brand items with minimum emphasis."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{brand.color.600}",
+          "$description": "Border color for primary brand with minimum emphasis boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{brand.color.800}",
+          "$description": "Hover state background color for interactive brand with minimum emphasis surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{brand.color.700}",
+          "$description": "Selected state background color for active brand with minimum emphasis items."
         }
       }
     },
@@ -297,7 +351,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.900}",
+          "$value": "{chrome.950}",
           "$description": "Base background color for gray surfaces in default states."
         },
         "border": {
@@ -307,12 +361,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{chrome.900}",
           "$description": "Hover state background color for interactive gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.800}",
+          "$value": "{chrome.850}",
           "$description": "Selected state background color for active gray items."
         }
       }
@@ -1241,40 +1295,6 @@
         "$description": "Background for controls that expand/collapse code sections to show additional context."
       }
     },
-    "input": {
-      "text": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Text color for input field content. Ensures readability of user-entered information."
-      },
-      "placeholder": {
-        "$type": "color",
-        "$value": "{text.3}",
-        "$description": "Text color for input field placeholders. Provides lower-contrast guidance text that doesn't compete with entered content."
-      },
-      "icon": {
-        "$type": "color",
-        "$value": "{text.3}",
-        "$description": "Color for icons within input components. Creates visual harmony with placeholder text and decorative elements."
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.2}",
-        "$description": "Background color for input fields. Creates a distinct surface for user interaction and data entry."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.2}",
-        "$description": "Border color for input fields. Defines the input area with a visible boundary for improved usability."
-      }
-    },
-    "label": {
-      "text": {
-        "$type": "color",
-        "$value": "{text.1}",
-        "$description": "Text color for form labels and field identifiers. Ensures high contrast for important contextual information."
-      }
-    },
     "link": {
       "default": {
         "$type": "color",
@@ -1303,7 +1323,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.focus}",
+          "$value": "{border.accent}",
           "$description": "Selected tab item border."
         }
       },
@@ -1567,43 +1587,6 @@
           "$value": "{chrome.850}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
-      }
-    },
-    "status-indicator": {
-      "completed": {
-        "$type": "color",
-        "$value": "{cyan.300}",
-        "$description": "Color for success status indicators. Communicates completed or positive states."
-      },
-      "cancelled": {
-        "$type": "color",
-        "$value": "{red.300}",
-        "$description": "Color for danger status indicators. Communicates error or critical warning states."
-      },
-      "warning": {
-        "$type": "color",
-        "$value": "{orange.300}",
-        "$description": "Color for warning status indicators. Communicates caution or potential issue states."
-      },
-      "running": {
-        "$type": "color",
-        "$value": "{blue.300}",
-        "$description": "Color for running status indicators. Communicates active or in-progress operations."
-      },
-      "merged": {
-        "$type": "color",
-        "$value": "{cyan.300}",
-        "$description": "Color for merged status indicators. Communicates successful integration or completion in version control contexts."
-      },
-      "action-required": {
-        "$type": "color",
-        "$value": "{orange.300}",
-        "$description": "Color for action-required status indicators. Communicates that user attention or intervention is needed."
-      },
-      "waiting": {
-        "$type": "color",
-        "$value": "{chrome.400}",
-        "$description": "Color for pending status indicators. Communicates in waiting states."
       }
     },
     "table": {
@@ -2005,7 +1988,7 @@
           "y": "0",
           "blur": "0",
           "spread": "4",
-          "color": "{border.focus}",
+          "color": "{border.accent}",
           "type": "dropShadow"
         }
       ],

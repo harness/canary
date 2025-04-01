@@ -107,7 +107,6 @@ export const ExecutionLogsView = () => {
 
   return (
     <div className="flex h-full flex-col">
-      <ExecutionTabs useTranslationStore={useTranslationStore} />
       <ExecutionHeader
         commitName="8fbru3ix"
         branchName="master"
@@ -127,7 +126,8 @@ export const ExecutionLogsView = () => {
         createdTime={createdTimeElapsed}
         pipelineName="build scan push test - k8s - Clone 2"
       />
-      <div className="border-borders-4 grid h-[inherit] border-t" style={{ gridTemplateColumns: '1fr 3fr' }}>
+      <ExecutionTabs className="border-borders-4 border-t" useTranslationStore={useTranslationStore} />
+      <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
         <div className="border-borders-4 flex h-[calc(100vh-226px)] flex-col gap-4 border-r">
           <ExecutionTree
             defaultSelectedId={currentNode?.id ?? selectedStep?.id ?? elements[0].id}

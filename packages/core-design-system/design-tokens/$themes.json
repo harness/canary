@@ -15482,7 +15482,6 @@
       "input.py": "c7ae71898285e79260ecb1d681cdc72978ab818a",
       "input.border": "692f3dbf4c9605821b390aef770c106e00fd4899",
       "input.wrapper.gap": "682409b988f52c5974ae4d8c9e7ff34329bab6bd",
-      "input-text-area.min-height": "9e253424e3247c4bb2f547a4783ca3a612c77421",
       "badge.size.sm": "2aaf247c1dcb25b9744e4a10e2c0315c096468fe",
       "badge.size.default": "2b7170084780c9924660ee2aa997511f778b83ee",
       "badge.default.gap": "0c5418b2e9318e1ce2963748e72056c7c6736142",
@@ -15538,7 +15537,8 @@
       "cell.gap": "056e9b6dfe6ca80520f800bfb778ff0752e3ad30",
       "tooltip.radius": "f75277905b2f6c6bbee278e7d79cea149254d620",
       "tooltip.padding.py": "1a270d3047ced1ec7041b25fbd3ebb5fb7b54f7c",
-      "tooltip.padding.px": "0300d437976ce5969072f3b1c3f4159a32b355a6"
+      "tooltip.padding.px": "0300d437976ce5969072f3b1c3f4159a32b355a6",
+      "input-text-area.min": "9e253424e3247c4bb2f547a4783ca3a612c77421"
     },
     "group": "breakpoint"
   },

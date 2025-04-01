@@ -53,7 +53,7 @@ import { Logo, LogoNameMap } from "@harnessio/ui/components";
           {Object.keys(LogoNameMap).map(name => (
             <tr key={name} className="border-b border-gray-200">
               <td className="p-2 cursor-pointer flex items-center gap-2 hover:bg-gray-100 transition w-1/2">
-                <Logo name={name as keyof typeof LogoNameMap} size={24} original/>
+                <Logo name={name as keyof typeof LogoNameMap} size={24} original />
               </td>
               <td className="p-2">
                 <code>{name}</code>
@@ -68,7 +68,7 @@ import { Logo, LogoNameMap } from "@harnessio/ui/components";
 
 ## Usage
 
-```typescript jsx
+```typescript
 import { Logo } from '@harnessio/ui/components'
 
 //...

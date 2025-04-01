@@ -4,7 +4,7 @@ import { cn } from '@utils/cn'
 
 const StepsPaletteContentLayout = {
   Root: function Content({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('flex grow flex-col overflow-auto px-4', className)}>{children}</div>
+    return <div className={cn('flex grow flex-col overflow-auto', className)}>{children}</div>
   },
 
   Section: forwardRef<HTMLDivElement, { children: React.ReactNode }>(function Section({ children }, ref) {

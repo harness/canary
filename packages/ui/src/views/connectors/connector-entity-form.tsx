@@ -98,12 +98,12 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       {rootForm => (
         <EntityFormLayout.Root>
           <EntityFormSectionLayout.Root>
-            <EntityFormSectionLayout.Header className="!px-0">
+            <EntityFormSectionLayout.Header>
               <EntityFormSectionLayout.Title className="!my-0">
                 Connect to {formEntity.data.name}
               </EntityFormSectionLayout.Title>
             </EntityFormSectionLayout.Header>
-            <EntityFormSectionLayout.Form className="!px-0">
+            <EntityFormSectionLayout.Form>
               <RenderForm className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
               {apiError && (
                 <Alert.Container variant="destructive" className="my-8">

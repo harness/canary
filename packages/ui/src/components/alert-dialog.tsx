@@ -115,7 +115,7 @@ const AlertDialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Title
     ref={ref}
-    className={cn('text-foreground-1 text-xl font-medium tracking-tight', className)}
+    className={cn('text-cn-foreground-1 text-xl font-medium tracking-tight', className)}
     {...props}
   />
 ))
@@ -130,8 +130,8 @@ const AlertDialogDescription = React.forwardRef<
 >(({ className, variant = 'quaternary', size = 'sm', ...props }, ref) => {
   const variants = {
     variant: {
-      secondary: 'text-foreground-2',
-      quaternary: 'text-foreground-4'
+      secondary: 'text-cn-foreground-2',
+      quaternary: 'text-cn-foreground-4'
     },
     size: {
       sm: 'text-sm'

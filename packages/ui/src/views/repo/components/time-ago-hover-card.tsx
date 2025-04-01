@@ -61,7 +61,7 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
               {zone === 'UTC' ? 'UTC' : getTimeZoneAbbreviation()}
             </Badge>
             <span>{zone === 'UTC' ? formattedDates.utcDate : formattedDates.localDate}</span>
-            <span className="ml-auto text-foreground-5">
+            <span className="ml-auto text-cn-foreground-5">
               {zone === 'UTC' ? formattedDates.utcTime : formattedDates.localTime}
             </span>
           </div>

@@ -13,17 +13,17 @@ export const ExecutionStatus = ({ executionStatus }: { executionStatus: Executio
           Running
         </Badge>
       ) : executionStatus === 'success' ? (
-        <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme={'success'}>
+        <Badge className="leading-none" size="sm" theme="success">
           <Icon name="tick" size={10} className="mr-1" />
           Completed
         </Badge>
       ) : executionStatus === 'warning' ? (
-        <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
+        <Badge className="leading-none" size="sm" theme="warning">
           <Icon name="triangle-warning" size={10} className="mr-1" />
           Warning
         </Badge>
       ) : executionStatus === 'error' ? (
-        <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="destructive">
+        <Badge className="leading-none" size="sm" theme="destructive">
           <Icon name="cross" size={10} className="mr-1" />
           Error
         </Badge>

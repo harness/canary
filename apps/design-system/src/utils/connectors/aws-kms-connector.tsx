@@ -1,7 +1,17 @@
 import { IFormDefinition } from '@harnessio/forms'
-import { CredTypeValues, DelegateTypes, IInputConfigWithConfigInterface, InputConfigType } from '@harnessio/ui/views'
+import { IInputConfigWithConfigInterface, InputConfigType } from '@harnessio/ui/views'
 
 export const AWS_KMS_CONNECTOR_CATEGORY = 'Secrets Manager'
+
+export enum CredTypeValues {
+  ManualConfig = 'ManualConfig',
+  AssumeIAMRole = 'AssumeIAMRole',
+  AssumeRoleSTS = 'AssumeSTSRole',
+  PermanentTokenConfig = 'PermanentTokenConfig'
+}
+export enum DelegateTypes {
+  DELEGATE_OIDC = 'DelegateOidc'
+}
 
 const inputs: IInputConfigWithConfigInterface[] = [
   {

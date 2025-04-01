@@ -9,18 +9,18 @@ import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/compon
 
 import { ConnectorsPaletteLayout } from './components/connectors-pallete-layout'
 import { ConnectorsPaletteSection } from './components/ConnectorsPalleteSection'
-import { AnyConnectorDefinition, ConnectorFormEntityType } from './types'
+import { AnyConnectorDefinition, ConnectorEntity } from './types'
 
 interface ConnectorsPaletteProps {
   connectors: AnyConnectorDefinition[]
   requestClose: () => void
-  setFormEntity: (value: ConnectorFormEntityType | null) => void
+  setConnectorEntity: (value: ConnectorEntity | null) => void
   onSelectConnector: () => void
   useTranslationStore: () => TranslationStore
 }
 
 export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element => {
-  const { connectors, requestClose, setFormEntity, onSelectConnector, useTranslationStore } = props
+  const { connectors, requestClose, setConnectorEntity, onSelectConnector, useTranslationStore } = props
   const { t: _t } = useTranslationStore()
 
   const [query, setQuery] = useState('')
@@ -49,12 +49,10 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
         <ConnectorsPaletteSection
           connectors={connectorsFiltered}
           onSelect={connector => {
-            setFormEntity({
-              type: 'connector',
-              data: {
-                type: connector.type,
-                name: connector.name
-              }
+            setConnectorEntity({
+              type: connector.type,
+              name: connector.name,
+              spec: {}
             })
             onSelectConnector()
           }}

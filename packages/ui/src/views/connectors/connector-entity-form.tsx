@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { SecretItem, TranslationStore } from '@/views'
 import { Alert } from '@components/alert'
@@ -9,16 +9,18 @@ import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-u
 
 import {
   getDefaultValuesFromFormDefinition,
+  getTransformers,
   InputFactory,
+  inputTransformValues,
   RenderForm,
   RootForm,
   useZodValidationResolver
 } from '@harnessio/forms'
 
-import { AnyConnectorDefinition, ConnectorFormEntityType, onSubmitConnectorProps } from './types'
+import { AnyConnectorDefinition, ConnectorEntity, ConnectorEntityIntent, onSubmitConnectorProps } from './types'
 
 interface ConnectorEntityFormProps {
-  formEntity: ConnectorFormEntityType
+  connector: ConnectorEntity
   requestClose: () => void
   onFormSubmit?: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
@@ -28,11 +30,12 @@ interface ConnectorEntityFormProps {
   openSecretDrawer?: () => void
   apiError?: string | null
   selectedSecret?: SecretItem
+  intent: ConnectorEntityIntent
 }
 
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
   const {
-    formEntity,
+    connector,
     apiError = null,
     onFormSubmit,
     getConnectorDefinition,
@@ -40,21 +43,23 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     useTranslationStore,
     openSecretDrawer,
     selectedSecret,
-    inputComponentFactory
+    inputComponentFactory,
+    intent
   } = props
   const { t: _t } = useTranslationStore()
+  const [connectorEditValues, setConnectorEditValues] = useState({})
 
   const onSubmit = (data: onSubmitConnectorProps) => {
     onFormSubmit?.(data)
   }
   const defaultConnectorValues = useMemo(() => {
-    const connectorDefinition = getConnectorDefinition(formEntity.data.type)
+    const connectorDefinition = getConnectorDefinition(connector.type)
     if (!connectorDefinition) return {}
     return getDefaultValuesFromFormDefinition(connectorDefinition.formDefinition)
-  }, [formEntity.data.type, getConnectorDefinition])
+  }, [connector.type, getConnectorDefinition])
 
   const formDefinition = useMemo(() => {
-    const connectorDefinition = getConnectorDefinition(formEntity.data.type)
+    const connectorDefinition = getConnectorDefinition(connector.type)
     if (connectorDefinition) {
       const formDef = {
         ...connectorDefinition.formDefinition,
@@ -75,7 +80,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       return formDef
     }
     return { inputs: [] }
-  }, [formEntity.data.type, getConnectorDefinition, openSecretDrawer, selectedSecret])
+  }, [connector.type, getConnectorDefinition, openSecretDrawer, selectedSecret])
 
   const resolver = useZodValidationResolver(formDefinition, {
     validationConfig: {
@@ -84,14 +89,25 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     }
   })
 
+  useEffect(() => {
+    if (intent === ConnectorEntityIntent.EDIT && connector?.spec) {
+      const definition = getConnectorDefinition(connector.type)
+      if (definition) {
+        const transformers = getTransformers(definition?.formDefinition)
+        const connectorValues = inputTransformValues(connector?.spec, transformers)
+        setConnectorEditValues(connectorValues)
+      }
+    }
+  }, [intent])
+
   return (
     <RootForm
       autoFocusPath={formDefinition.inputs[0]?.path}
-      defaultValues={defaultConnectorValues}
+      defaultValues={intent === ConnectorEntityIntent.CREATE ? defaultConnectorValues : connectorEditValues}
       resolver={resolver}
       mode="onSubmit"
       onSubmit={values => {
-        onSubmit({ values, formEntity })
+        onSubmit({ values, connector, intent })
       }}
       validateAfterFirstSubmit={true}
     >
@@ -100,7 +116,8 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           <EntityFormSectionLayout.Root>
             <EntityFormSectionLayout.Header>
               <EntityFormSectionLayout.Title className="!my-0">
-                Connect to {formEntity.data.name}
+                {intent === ConnectorEntityIntent.CREATE ? 'Connect to ' : 'Edit '}
+                {connector.name}
               </EntityFormSectionLayout.Title>
             </EntityFormSectionLayout.Header>
             <EntityFormSectionLayout.Form>

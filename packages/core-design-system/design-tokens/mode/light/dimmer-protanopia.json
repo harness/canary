@@ -709,17 +709,17 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{brown.600}",
           "$description": "Text color for subtle brown surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{brown.300}",
+          "$value": "{brown.100}",
           "$description": "Background color for subdued brown surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{brown.300}",
+          "$value": "{brown.100}",
           "$description": "Border color for subtle brown boundaries."
         }
       },

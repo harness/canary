@@ -26,26 +26,16 @@ enum BadgesHoverStates {
 const badgeVariants = cva('inline-flex items-center transition-colors badge', {
   variants: {
     variant: {
-      // default: '',
-      // solid: 'badge-solid',
-      // surface: 'badge-surface',
-      // soft: 'badge-soft',
-      // outline: 'badge-outline',
-
+      solid: 'badge-solid',
+      soft: 'badge-soft',
+      surface: 'badge-surface',
+      status: 'badge-status'
       // default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
       // secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
       // tertiary: 'border-transparent bg-cn-background-8 text-foreground-8',
       // quaternary: 'border-cn-borders-2 bg-cn-background-2 text-foreground-5',
       // destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
       // outline: 'text-foreground',
-      solid: 'badge-solid',
-      soft: 'badge-soft',
-      surface: 'badge-surface',
-
-      /**
-       * New variants
-       */
-      default: ''
     },
     /**
      * CDS: How to take it forward?
@@ -76,7 +66,6 @@ const badgeVariants = cva('inline-flex items-center transition-colors badge', {
      * Delete -theme?
      */
     theme: {
-      default: '',
       // destructive:
       //   'border-tag-border-red-1 bg-tag-background-red-1 text-tag-foreground-red-1 hover:bg-tag-background-red-2',
       // warning:
@@ -97,12 +86,12 @@ const badgeVariants = cva('inline-flex items-center transition-colors badge', {
       primary: 'badge-primary'
     }
   },
-  compoundVariants: [
-    {
-      size: 'sm',
-      className: 'px-2'
-    }
-  ],
+  // compoundVariants: [
+  //   {
+  //     variant: 'status',
+  //     className: 'bg-red-500'
+  //   }
+  // ],
   defaultVariants: {
     variant: 'surface',
     size: 'default',
@@ -133,7 +122,7 @@ type BadgeOtherThemeProps = BadgeBaseProps & {
 // Combined props using discriminated union
 export type BadgeProps = BadgeAIThemeProps | BadgeOtherThemeProps
 
-function Badge({ className, variant, size, theme = 'default', ...props }: BadgeProps) {
+function Badge({ className, variant, size, theme = 'muted', ...props }: BadgeProps) {
   // If theme is 'ai', we don't use variant
   const effectiveVariant = theme === 'ai' ? undefined : variant
 

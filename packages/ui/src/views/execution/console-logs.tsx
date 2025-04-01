@@ -66,7 +66,7 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
   if (!logs || !logs.length) return null
 
   return (
-    <div ref={containerRef} className="bg-logs-background-1 overflow-y-auto pt-4">
+    <div ref={containerRef} className="overflow-y-auto bg-logs-background-1 pt-4">
       {logs.filter(Boolean).map(({ out, time, type }, index) => {
         const dateTime = time ? formatTimestamp(time * 1_000) : ''
 
@@ -87,7 +87,7 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
               })}
             />
 
-            <span className="text-log text-logs-foreground-1 flex shrink-0 grow font-normal">
+            <span className="text-log flex shrink-0 grow font-normal text-logs-foreground-1">
               <time className="text-logs-foreground-2" dateTime={dateTime}>{`[${dateTime}]`}</time>
               {out ? logText(out) : null}
             </span>

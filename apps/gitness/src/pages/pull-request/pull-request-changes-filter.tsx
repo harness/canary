@@ -1,22 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 
 // import { FileViewGauge } from '@harnessio/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Icon,
-  ListActions,
-  RadioGroup,
-  RadioGroupItem,
-  Text
-} from '@harnessio/canary'
 import { EnumPullReqReviewDecision } from '@harnessio/code-service-client'
+import { Button, DropdownMenu, Icon, ListActions, RadioButton, RadioGroup, Text } from '@harnessio/ui/components'
 import { DiffModeOptions } from '@harnessio/views'
 
 import { approvalItems, determineOverallDecision, getApprovalItems, getApprovalStateTheme } from './diff-utils'
@@ -29,7 +17,7 @@ import { processReviewDecision } from './utils'
 // }
 
 // TODO: workon on filter and files viewed
-export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
+export const PullRequestChangesFilter: FC<FilterViewProps> = ({
   currentUser,
   pullRequestMetadata,
   reviewers,
@@ -94,7 +82,7 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
 
   function renderDropdownMenuItems(items: ApprovalItem[]): JSX.Element[] {
     return items.map(itm => (
-      <DropdownMenuItem
+      <DropdownMenu.Item
         key={itm.id}
         disabled={isActiveUserPROwner}
         onClick={() => {
@@ -102,14 +90,14 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
         }}
       >
         <RadioGroup className="flex items-start gap-2">
-          <RadioGroupItem value="false" className="mt-1 size-3 text-tertiary-background" />
+          <RadioButton value="false" className="mt-1 size-3 text-tertiary-background" />
           <div className="flex flex-col">
             <Text truncate size={1} color="primary">
               {itm.title}
             </Text>
           </div>
         </RadioGroup>
-      </DropdownMenuItem>
+      </DropdownMenu.Item>
     ))
   }
 
@@ -159,14 +147,14 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
             size="xs_split"
             theme={getApprovalStateTheme(approveState) as ButtonEnum}
             dropdown={
-              <DropdownMenu>
-                <DropdownMenuTrigger insideSplitButton>
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger insideSplitButton>
                   <Icon name="chevron-down" size={11} className="chevron-down" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="mt-1">
-                  <DropdownMenuGroup>{dropdownMenuItems}</DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content align="end" className="mt-1">
+                  <DropdownMenu.Group>{dropdownMenuItems}</DropdownMenu.Group>
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
             }
           >
             {approveState === PullReqReviewDecision.approve ? approvalItems[0].title : getApprovalState(approveState)}

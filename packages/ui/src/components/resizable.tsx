@@ -1,9 +1,10 @@
+import { ComponentProps } from 'react'
 import * as ResizablePrimitive from 'react-resizable-panels'
 
 import { DragHandleDots2Icon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
 
-const ResizablePanelGroup = ({ className, ...props }: React.ComponentProps<typeof ResizablePrimitive.PanelGroup>) => (
+const ResizablePanelGroup = ({ className, ...props }: ComponentProps<typeof ResizablePrimitive.PanelGroup>) => (
   <ResizablePrimitive.PanelGroup
     className={cn('flex h-full w-full data-[panel-group-direction=vertical]:flex-col', className)}
     {...props}
@@ -16,7 +17,7 @@ const ResizableHandle = ({
   withHandle,
   className,
   ...props
-}: React.ComponentProps<typeof ResizablePrimitive.PanelResizeHandle> & {
+}: ComponentProps<typeof ResizablePrimitive.PanelResizeHandle> & {
   withHandle?: boolean
 }) => (
   <ResizablePrimitive.PanelResizeHandle
@@ -34,4 +35,10 @@ const ResizableHandle = ({
   </ResizablePrimitive.PanelResizeHandle>
 )
 
-export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
+const Resizable = {
+  PanelGroup: ResizablePanelGroup,
+  Panel: ResizablePanel,
+  Handle: ResizableHandle
+}
+
+export { Resizable }

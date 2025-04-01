@@ -150,9 +150,6 @@ importers:
 
   apps/gitness:
     dependencies:
-      '@harnessio/canary':
-        specifier: workspace:*
-        version: link:../../packages/canary
       '@harnessio/code-service-client':
         specifier: 3.5.0
         version: 3.5.0

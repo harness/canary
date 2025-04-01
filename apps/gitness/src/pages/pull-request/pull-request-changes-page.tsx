@@ -6,14 +6,13 @@ import * as Diff2Html from 'diff2html'
 import { useAtom } from 'jotai'
 import { compact, isEqual } from 'lodash-es'
 
-import { Spacer } from '@harnessio/canary'
 import {
   EnumPullReqReviewDecision,
   reviewSubmitPullReq,
   useRawDiffQuery,
   useReviewerListPullReqQuery
 } from '@harnessio/code-service-client'
-import { SkeletonList } from '@harnessio/ui/components'
+import { SkeletonList, Spacer } from '@harnessio/ui/components'
 import { PullRequestChanges } from '@harnessio/views'
 
 import { useAppContext } from '../../framework/context/AppContext'

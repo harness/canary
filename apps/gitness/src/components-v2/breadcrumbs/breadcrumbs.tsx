@@ -19,8 +19,8 @@ function Breadcrumbs() {
       <Topbar.Left>
         {!isMFE && isMobile && (
           <>
-            <Sidebar.Trigger className="text-topbar-foreground-2 hover:text-topbar-foreground-1 hover:bg-topbar-background-1 -ml-1" />
-            <Separator orientation="vertical" className="bg-sidebar-background-1 ml-1 mr-2 h-4" />
+            <Sidebar.Trigger className="-ml-1 text-topbar-foreground-2 hover:bg-topbar-background-1 hover:text-topbar-foreground-1" />
+            <Separator orientation="vertical" className="ml-1 mr-2 h-4 bg-sidebar-background-1" />
           </>
         )}
         <Breadcrumb.Root className="select-none">

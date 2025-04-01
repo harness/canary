@@ -395,6 +395,16 @@
           "$type": "color",
           "$value": "{cyan.900}",
           "$description": "Border color for subtle green boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{cyan.800}",
+          "$description": "Background color for subdued green surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{cyan.800}",
+          "$description": "Background color for subdued green surfaces."
         }
       },
       "surface": {
@@ -1024,17 +1034,26 @@
     "avatar": {
       "text": {
         "$type": "color",
-        "$value": "{text.2}",
+        "$value": "{set.gray.soft.text}",
         "$description": "Text color for avatar initials or text. Ensures visibility against the avatar background."
       },
       "bg": {
         "$type": "color",
-        "$value": "{bg.3}",
+        "$value": "{set.gray.soft.bg}",
         "$description": "Background color for avatar components. Provides contrast for text or image content."
       },
       "border": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.2",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{border.3}",
+        "$value": "{chrome.500}",
         "$description": "Border color for avatars. Creates subtle definition around the avatar element."
       }
     },

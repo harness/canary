@@ -404,6 +404,16 @@
           "$type": "color",
           "$value": "{green.100}",
           "$description": "Border color for subtle green boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{green.200}",
+          "$description": "Background color for subdued green surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{green.200}",
+          "$description": "Background color for subdued green surfaces."
         }
       },
       "surface": {

@@ -1,0 +1,10 @@
+{
+  "height": {
+    "$type": "sizing",
+    "$value": "{size.11}"
+  },
+  "gap": {
+    "$type": "spacing",
+    "$value": "{spacing.6}"
+  }
+}

@@ -45,7 +45,7 @@ export const generateCoreFiles = ({ destination, type, format }) => [
 // ✨ Building theme-specific tokens
 export const generateThemeFiles = ({ destination, type, theme, format }) => {
   const filesArr = []
-  const themeLower = theme.toLowerCase().replace(/(source-|desktop-)/g, '')
+  const themeLower = theme.toLowerCase().replace(/(source-|-desktop)/g, '')
 
   const entityName = themeLower.toLowerCase()
 

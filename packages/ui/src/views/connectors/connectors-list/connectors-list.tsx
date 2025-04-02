@@ -1,9 +1,27 @@
-import { Button, Icon, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import {
+  Button,
+  Icon,
+  Logo,
+  LogoName,
+  MoreActionsTooltip,
+  NoData,
+  SkeletonList,
+  SkeletonTable,
+  Table
+} from '@/components'
 import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
 
-import { getConnectorLogo } from '../utils'
+import { ConnectorConfigType } from '../types'
 import { ConnectorListItem, ConnectorListProps } from './types'
+
+export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, LogoName> = new Map([
+  ['Github', 'github'],
+  ['Gitlab', 'gitlab'],
+  ['Bitbucket', 'bitbucket'],
+  ['Jira', 'jira'],
+  ['K8sCluster', 'kubernetes']
+])
 
 const Title = ({ title }: { title: string }): JSX.Element => (
   <span className="max-w-full truncate font-medium">{title}</span>
@@ -69,39 +87,47 @@ export function ConnectorsList({
         <SkeletonTable countRows={12} countColumns={5} />
       ) : (
         <Table.Body>
-          {connectors.map(connector => (
-            <Table.Row
-              key={connector.identifier}
-              className="cursor-pointer"
-              onClick={() => toConnectorDetails?.(connector)}
-            >
-              <Table.Cell className="max-w-80 content-center truncate">
-                <div className="flex items-center gap-2.5">
-                  {connector?.type ? <div className="min-w-[40px]">{getConnectorLogo(connector.type)}</div> : null}
-                  <Title title={connector.identifier} />
-                </div>
-              </Table.Cell>
-              <Table.Cell className="max-w-80 content-center truncate">{connector.spec?.url}</Table.Cell>
-              <Table.Cell className="content-center">
-                {connector?.status ? <ConnectivityStatus item={connector} onClick={onTestConnection} /> : null}
-              </Table.Cell>
-              <Table.Cell className="content-center">
-                {connector?.lastModifiedAt ? timeAgo(connector.lastModifiedAt) : null}
-              </Table.Cell>
-              <Table.Cell className="text-right">
-                <MoreActionsTooltip
-                  isInTable
-                  actions={[
-                    {
-                      isDanger: true,
-                      title: t('views:connectors.delete', 'Delete Connector'),
-                      onClick: () => onDeleteConnector(connector.identifier)
-                    }
-                  ]}
-                />
-              </Table.Cell>
-            </Table.Row>
-          ))}
+          {connectors.map(({ identifier, type, spec, status, lastModifiedAt }) => {
+            const connectorLogo = type ? ConnectorTypeToLogoNameMap.get(type) : undefined
+            return (
+              <Table.Row
+                key={identifier}
+                className="cursor-pointer"
+                onClick={() => toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt })}
+              >
+                <Table.Cell className="max-w-80 content-center truncate">
+                  <div className="flex items-center gap-2.5">
+                    <div className="min-w-[40px]">
+                      {connectorLogo ? <Logo name={connectorLogo} size={32} /> : <Icon name="connectors" size={32} />}
+                    </div>
+                    <Title title={identifier} />
+                  </div>
+                </Table.Cell>
+                <Table.Cell className="max-w-80 content-center truncate">{spec?.url}</Table.Cell>
+                <Table.Cell className="content-center">
+                  {status && (
+                    <ConnectivityStatus
+                      item={{ identifier, type, spec, status, lastModifiedAt }}
+                      onClick={onTestConnection}
+                    />
+                  )}
+                </Table.Cell>
+                <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
+                <Table.Cell className="text-right">
+                  <MoreActionsTooltip
+                    isInTable
+                    actions={[
+                      {
+                        isDanger: true,
+                        title: t('views:connectors.delete', 'Delete Connector'),
+                        onClick: () => onDeleteConnector(identifier)
+                      }
+                    ]}
+                  />
+                </Table.Cell>
+              </Table.Row>
+            )
+          })}
         </Table.Body>
       )}
     </Table.Root>

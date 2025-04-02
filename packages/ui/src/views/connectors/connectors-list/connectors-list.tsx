@@ -86,11 +86,13 @@ export function ConnectorsList({
             >
               <Table.Cell className="max-w-80 content-center truncate">
                 <div className="flex items-center gap-2.5">
-                  {connector.type && LogoNameMap[connector.type.toLowerCase()] ? (
-                    <Logo name={connector.type.toLowerCase()} size={32} original />
-                  ) : (
-                    <Icon name="connectors" size={32} />
-                  )}
+                  <div className="min-w-[40px]">
+                    {connector.type && LogoNameMap[connector.type.toLowerCase()] ? (
+                      <Logo name={connector.type.toLowerCase()} size={32} original />
+                    ) : (
+                      <Icon name="connectors" size={32} />
+                    )}
+                  </div>
                   <Title title={connector.identifier} />
                 </div>
               </Table.Cell>

@@ -17,7 +17,7 @@ export const PipelineStudioPanel = (): JSX.Element => {
           <Tabs.Trigger value="problems">
             Problems
             {problemsCount.all > 0 && (
-              <Badge className="ml-2 h-5 rounded-full bg-red-950 p-2 text-xs font-normal text-red-400">
+              <Badge className="ml-2" theme="danger" variant="counter">
                 {problemsCount.all}
               </Badge>
             )}

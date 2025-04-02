@@ -67,7 +67,7 @@ const badgeVariants = cva('badge inline-flex items-center transition-colors', {
       muted: 'badge-muted',
       success: 'badge-success',
       warning: 'badge-warning',
-      destructive: 'badge-destructive',
+      danger: 'badge-danger',
       info: 'badge-info',
       merged: 'badge-merged',
       ai: 'badge-ai',
@@ -93,13 +93,13 @@ type BadgeBaseProps = Omit<
   'color' | 'role' | 'aria-readonly' | 'tabIndex' | 'onClick'
 > & {
   size?: 'default' | 'sm'
-  pulse?: never
 }
 
 // AI theme props (variant not allowed)
 type BadgeAIThemeProps = BadgeBaseProps & {
   theme: 'ai'
   variant?: never
+  pulse?: never
 }
 
 // Status theme props (variant is required)
@@ -109,16 +109,18 @@ type BadgeStatusVariantProps = BadgeBaseProps & {
   pulse?: boolean
 }
 
-// Status theme props (variant is required)
+// Counter theme props (variant is required)
 type BadgeCounterVariantProps = BadgeBaseProps & {
-  theme: Extract<VariantProps<typeof badgeVariants>['theme'], 'primary'>
+  theme?: Extract<VariantProps<typeof badgeVariants>['theme'], 'primary'>
   variant: 'counter'
+  pulse?: never
 }
 
-// Non-AI theme props (variant is required)
+// Other theme props (variant is required)
 type BadgeOtherThemeProps = BadgeBaseProps & {
   theme?: Exclude<VariantProps<typeof badgeVariants>['theme'], 'ai'>
-  variant: NonNullable<VariantProps<typeof badgeVariants>['variant']> // Make variant required
+  variant: NonNullable<Exclude<VariantProps<typeof badgeVariants>['variant'], 'status' | 'counter'>> // Make variant required
+  pulse?: never
 }
 
 // Combined props using discriminated union
@@ -154,3 +156,11 @@ function Badge({ className, variant, size, pulse, theme = 'muted', children, ...
 }
 
 export { Badge, badgeVariants }
+
+const a = <Badge variant="counter">test</Badge>
+
+const b = (
+  <Badge className="leading-none" variant="status" theme="warning" pulse>
+    Running
+  </Badge>
+)

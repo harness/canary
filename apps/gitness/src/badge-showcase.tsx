@@ -5,8 +5,8 @@ import { Badge } from '@harnessio/ui/components'
  * for demonstration purposes.
  */
 export const BadgeShowcase = () => {
-  const variants = ['solid', 'soft', 'surface', 'status'] as const
-  const themes = ['success', 'info', 'warning', 'destructive', 'primary', 'muted', 'merged', 'ai'] as const
+  const variants = ['solid', 'soft', 'surface', 'status', 'counter'] as const
+  const themes = ['success', 'info', 'warning', 'danger', 'primary', 'muted', 'merged', 'ai'] as const
   const sizes = ['default', 'sm'] as const
 
   // Section titles
@@ -21,6 +21,9 @@ export const BadgeShowcase = () => {
     <div className="space-y-6 p-6">
       <h1 className="text-2xl font-bold mb-4">Badge Variants and Conditional Properties</h1>
 
+      <Badge className="leading-none" variant="status" theme="warning" pulse>
+        Running
+      </Badge>
       {/* Section demonstrating conditional variant requirements */}
       <div className="space-y-8 mb-8">
         <div>
@@ -72,24 +75,26 @@ export const BadgeShowcase = () => {
       {sizes.map(size => (
         <div key={size} className="space-y-6">
           <h2 className="text-lg font-medium capitalize">{size} Size</h2>
-          {variants.map(variant => (
-            <div key={variant} className="space-y-4">
-              <h3 className="text-md font-medium capitalize">{variant} Variant</h3>
-              <div className="flex flex-wrap gap-3">
-                {themes
-                  .filter(theme => {
-                    // Skip combinations that would cause type errors:
-                    // - Skip 'ai' theme when rendering variants, as it doesn't allow variant prop
-                    return theme !== 'ai'
-                  })
-                  .map(theme => (
-                    <Badge key={`${variant}-${theme}`} size={size} variant={variant} theme={theme}>
-                      {theme}
-                    </Badge>
-                  ))}
+          {variants
+            .filter(variant => variant !== 'counter')
+            .map(variant => (
+              <div key={variant} className="space-y-4">
+                <h3 className="text-md font-medium capitalize">{variant} Variant</h3>
+                <div className="flex flex-wrap gap-3">
+                  {themes
+                    .filter(theme => {
+                      // Skip combinations that would cause type errors:
+                      // - Skip 'ai' theme when rendering variants, as it doesn't allow variant prop
+                      return theme !== 'ai'
+                    })
+                    .map(theme => (
+                      <Badge key={`${variant}-${theme}`} size={size} variant={variant} theme={theme}>
+                        {theme}
+                      </Badge>
+                    ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
           <hr />
         </div>
       ))}
@@ -111,7 +116,7 @@ export const BadgeShowcase = () => {
         <pre className="bg-gray-100 p-4 rounded-md text-sm">
           {`// For non-AI themes, variant is required:
 <Badge variant="solid" theme="success">success</Badge>
-<Badge variant="soft" theme="destructive">destructive</Badge>
+<Badge variant="soft" theme="danger">danger</Badge>
 <Badge variant="surface" theme="info">info</Badge>
 
 // For AI theme, variant is not allowed:

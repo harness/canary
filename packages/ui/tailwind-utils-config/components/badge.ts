@@ -13,13 +13,13 @@ const variants = ['solid', 'soft', 'surface', 'status', 'counter'] as const
  *  ❌ <Badge theme="ai" variant="solid">Invalid</Badge>
  *
  *  */
-const themes = ['success', 'info', 'warning', 'destructive', 'primary', 'muted', 'merged', 'ai'] as const
+const themes = ['success', 'info', 'warning', 'danger', 'primary', 'muted', 'merged', 'ai'] as const
 
 const themeStyleMapper: Record<Exclude<(typeof themes)[number], 'ai'>, string> = {
   success: 'green',
   info: 'blue',
   warning: 'yellow',
-  destructive: 'red',
+  danger: 'red',
   primary: 'brand',
   muted: 'gray',
   merged: 'purple'

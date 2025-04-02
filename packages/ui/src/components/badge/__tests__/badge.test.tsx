@@ -14,29 +14,27 @@ describe('Badge', () => {
     expect(screen.getByText('badge')).toBeInTheDocument()
   })
 
-  test('it should apply variant styles correctly', () => {
-    renderComponent({ variant: 'destructive' })
+  test('it should apply theme styles correctly', () => {
+    renderComponent({ theme: 'danger' })
 
-    expect(screen.getByText('badge')).toHaveClass(/destructive/)
+    expect(screen.getByText('badge')).toHaveClass(/danger/)
   })
 
   test('it should apply size styles correctly', () => {
-    renderComponent({ size: 'xl' })
+    renderComponent({ size: 'sm' })
 
-    expect(screen.getByText('badge')).toHaveClass('h-[18px] px-2 text-12')
+    expect(screen.getByText('badge')).toHaveClass('badge-sm')
   })
 
-  test('it should apply borderRadius styles correctly', () => {
-    renderComponent({ borderRadius: 'full' })
+  test('it should apply ai theme styles correctly', () => {
+    renderComponent({ theme: 'ai' })
 
-    expect(screen.getByText('badge')).toHaveClass('rounded-full')
+    expect(screen.getByText('badge')).toHaveClass('badge-ai')
   })
 
-  test('it should apply theme styles correctly', () => {
-    renderComponent({ theme: 'success' })
+  test('it should apply variant styles correctly', () => {
+    renderComponent({ variant: 'counter' })
 
-    expect(screen.getByText('badge')).toHaveClass(
-      'border-tag-border-mint-1 bg-tag-background-mint-1 text-tag-foreground-mint-1'
-    )
+    expect(screen.getByText('badge')).toHaveClass('badge-counter')
   })
 })

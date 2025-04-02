@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
+import { useTranslationStore } from '@utils/viewUtils'
 import noop from 'lodash-es/noop'
 
 import { InputFactory } from '@harnessio/forms'
@@ -87,15 +88,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
       <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
         <Drawer.Content>
           <ConnectorsPalette
-            useTranslationStore={() =>
-              ({
-                t: () => 'dummy',
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                i18n: {} as any,
-                changeLanguage: noop
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              }) as any
-            }
+            useTranslationStore={useTranslationStore}
             connectors={harnessConnectors}
             onSelectConnector={() => setIsConnectorSelected(true)}
             setConnectorEntity={setConnectorEntity}
@@ -139,15 +132,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
           {connectorEntity ? (
             <ConnectorEntityForm
               openSecretDrawer={() => setIsSecretDrawerOpen(true)}
-              useTranslationStore={() =>
-                ({
-                  t: () => 'dummy',
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  i18n: {} as any,
-                  changeLanguage: noop
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                }) as any
-              }
+              useTranslationStore={useTranslationStore}
               connector={connectorEntity}
               onBack={() => setIsConnectorSelected(false)}
               requestClose={() => {

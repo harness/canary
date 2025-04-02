@@ -1,4 +1,3 @@
-import { ENTERPRISE_STYLES_SOURCE_NAME } from './constants.js'
 import { breakpointFilter, componentsFilter, coreFilter, lchColorsFilter, semanticFilter } from './sd-filters.js'
 
 // const format = 'css/variables'
@@ -52,11 +51,9 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
 
   let mfeSupportedClass = ''
 
-  if (
-    entityName === `light-${ENTERPRISE_STYLES_SOURCE_NAME}` ||
-    entityName === `dark-${ENTERPRISE_STYLES_SOURCE_NAME}`
-  ) {
-    mfeSupportedClass = '.' + entityName.split('-')[0]
+  // To support backward compatibility
+  if (entityName === `light` || entityName === `dark`) {
+    mfeSupportedClass = `.${entityName}-std-std`
   }
 
   // theme-specific outputs

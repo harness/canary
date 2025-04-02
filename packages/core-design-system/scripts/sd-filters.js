@@ -20,7 +20,7 @@ export const componentsFilter = token => token.filePath.startsWith('design-token
 export const semanticFilter =
   (themeable = false) =>
   token => {
-    const themeDimensions = ['mode', 'brand']
+    const themeDimensions = ['mode']
     const tokenThemable = Boolean(token.attributes.themeable)
     // return true;
     return (

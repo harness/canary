@@ -15,6 +15,8 @@ export type ConnectorEntity<T = any> = {
   type: string
   name?: string
   spec: T
+  description?: string
+  tags?: string[]
 }
 
 export type AnyConnectorDefinition<T = string> = {

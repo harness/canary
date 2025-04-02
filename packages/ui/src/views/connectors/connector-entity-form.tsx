@@ -95,7 +95,13 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       if (definition) {
         const transformers = getTransformers(definition?.formDefinition)
         const connectorValues = inputTransformValues(
-          { ...connector?.spec, name: connector.name, type: connector.type },
+          {
+            ...connector?.spec,
+            name: connector.name,
+            type: connector.type,
+            ...(connector?.description && { description: connector?.description }),
+            ...(connector?.tags && { tags: connector?.tags })
+          },
           transformers
         )
         setConnectorEditValues(connectorValues)

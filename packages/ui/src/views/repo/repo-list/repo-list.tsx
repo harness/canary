@@ -26,7 +26,7 @@ const Stats = ({ pulls }: { pulls: number }) => (
 const Title = ({ title, isPrivate, t }: { title: string; isPrivate: boolean; t: TFunction }) => (
   <div className="inline-flex items-center gap-2.5">
     <span className="max-w-full truncate font-medium">{title}</span>
-    <Badge className="leading-none" size="sm" disableHover borderRadius="full" theme={isPrivate ? 'muted' : 'success'}>
+    <Badge variant="surface" className="leading-none" size="sm" theme={isPrivate ? 'muted' : 'success'}>
       {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
     </Badge>
   </div>

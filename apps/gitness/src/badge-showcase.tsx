@@ -1,11 +1,15 @@
-import { Badge } from '@harnessio/ui/components'
+import { Badge, Icon } from '@harnessio/ui/components'
+
+const getTimeZoneAbbreviation = () =>
+  new Date().toLocaleTimeString(undefined, { timeZoneName: 'short' }).split(' ').pop()
 
 /**
  * This component showcases all the different badge variants and themes
  * for demonstration purposes.
  */
 export const BadgeShowcase = () => {
-  const variants = ['solid', 'soft', 'surface', 'status', 'counter'] as const
+  // Define valid variants and themes
+  const regularVariants = ['solid', 'soft', 'surface', 'status'] as const
   const themes = ['success', 'info', 'warning', 'danger', 'primary', 'muted', 'merged', 'ai'] as const
   const sizes = ['default', 'sm'] as const
 
@@ -21,9 +25,21 @@ export const BadgeShowcase = () => {
     <div className="space-y-6 p-6">
       <h1 className="text-2xl font-bold mb-4">Badge Variants and Conditional Properties</h1>
 
-      <Badge className="leading-none" variant="status" theme="warning" pulse>
-        Running
-      </Badge>
+      <div className="space-x-4">
+        <Badge className="leading-none" size="sm" variant="status" theme="warning" pulse>
+          Running
+        </Badge>
+        <Badge className="gap-x-1" variant="surface" theme="merged">
+          <Icon name="branch" size={14} />
+          <span>Test</span>
+        </Badge>
+        <Badge variant="soft" size="sm" theme="primary">
+          {getTimeZoneAbbreviation()}
+        </Badge>
+        <Badge variant="soft" size="sm" theme="success">
+          {getTimeZoneAbbreviation()}
+        </Badge>
+      </div>
       {/* Section demonstrating conditional variant requirements */}
       <div className="space-y-8 mb-8">
         <div>
@@ -75,26 +91,37 @@ export const BadgeShowcase = () => {
       {sizes.map(size => (
         <div key={size} className="space-y-6">
           <h2 className="text-lg font-medium capitalize">{size} Size</h2>
-          {variants
-            .filter(variant => variant !== 'counter')
-            .map(variant => (
-              <div key={variant} className="space-y-4">
-                <h3 className="text-md font-medium capitalize">{variant} Variant</h3>
-                <div className="flex flex-wrap gap-3">
-                  {themes
-                    .filter(theme => {
-                      // Skip combinations that would cause type errors:
-                      // - Skip 'ai' theme when rendering variants, as it doesn't allow variant prop
-                      return theme !== 'ai'
-                    })
-                    .map(theme => (
-                      <Badge key={`${variant}-${theme}`} size={size} variant={variant} theme={theme}>
-                        {theme}
-                      </Badge>
-                    ))}
-                </div>
+          {regularVariants.map(variant => (
+            <div key={variant} className="space-y-4">
+              <h3 className="text-md font-medium capitalize">{variant} Variant</h3>
+              <div className="flex flex-wrap gap-3">
+                {themes
+                  .filter(theme => {
+                    // Skip combinations that would cause type errors:
+                    // - Skip 'ai' theme when rendering variants, as it doesn't allow variant prop
+                    return theme !== 'ai'
+                  })
+                  .map(theme => {
+                    // Use a more specific type for each combination
+                    if (variant === 'status') {
+                      // Status variant works with any theme except 'ai'
+                      return (
+                        <Badge key={`${variant}-${theme}`} size={size} variant="status" theme={theme}>
+                          {theme}
+                        </Badge>
+                      )
+                    } else {
+                      // Other variants (solid, soft, surface) work with any theme except 'ai'
+                      return (
+                        <Badge key={`${variant}-${theme}`} size={size} variant={variant} theme={theme}>
+                          {theme}
+                        </Badge>
+                      )
+                    }
+                  })}
               </div>
-            ))}
+            </div>
+          ))}
           <hr />
         </div>
       ))}

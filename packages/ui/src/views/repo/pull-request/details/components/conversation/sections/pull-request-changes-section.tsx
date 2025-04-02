@@ -251,9 +251,7 @@ const PullRequestChangesSection = ({
                   </span>
                 </div>
               )}
-              <Badge variant="quaternary" borderRadius="full" size="xl" disableHover>
-                Required
-              </Badge>
+              <Badge variant="soft">Required</Badge>
             </div>
           )}
 
@@ -274,9 +272,7 @@ const PullRequestChangesSection = ({
                   </span>
                 </div>
               )}
-              <Badge variant="quaternary" borderRadius="full" size="xl" disableHover>
-                Required
-              </Badge>
+              <Badge variant="soft">Required</Badge>
             </div>
           )}
 
@@ -292,11 +288,7 @@ const PullRequestChangesSection = ({
                 />
                 <span className="text-14 text-cn-foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
               </div>
-              {reqNoChangeReq && (
-                <Badge variant="quaternary" borderRadius="full" size="xl" disableHover>
-                  Required
-                </Badge>
-              )}
+              {reqNoChangeReq && <Badge variant="soft">Required</Badge>}
             </div>
           )}
 
@@ -318,11 +310,7 @@ const PullRequestChangesSection = ({
               ) : (
                 renderCodeOwnerStatus()
               )}
-              {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && (
-                <Badge variant="quaternary" borderRadius="full" size="xl" disableHover>
-                  Required
-                </Badge>
-              )}
+              {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && <Badge variant="soft">Required</Badge>}
             </div>
           )}
           {/* TODO: add codeowners table */}

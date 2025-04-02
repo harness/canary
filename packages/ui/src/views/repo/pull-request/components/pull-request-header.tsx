@@ -9,8 +9,6 @@ import { IconType } from '../pull-request.types'
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
 
-// TODO: CDS remove this
-type ThemeType = 'default' | 'destructive' | 'success' | 'emphasis' | 'muted' | null | undefined
 interface PullRequestTitleProps {
   className?: string
   data: {
@@ -88,13 +86,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         </div>
 
         <div className="flex items-center gap-x-3">
-          <Badge
-            className="gap-x-1 font-normal"
-            size="md"
-            disableHover
-            borderRadius="full"
-            theme={stateObject.theme as ThemeType}
-          >
+          <Badge variant="surface" theme={stateObject.theme}>
             <Icon name={stateObject.icon as IconType} size={13} />
             {stateObject.text}
           </Badge>
@@ -106,7 +98,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
             </span>
             <span>into</span>
-            <Badge variant="tertiary" size="md" borderRadius="base">
+            <Badge variant="soft" theme="primary">
               <Link
                 className="flex items-center gap-x-1.5"
                 to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}
@@ -116,7 +108,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               </Link>
             </Badge>
             <span>from</span>
-            <Badge variant="tertiary" size="md" borderRadius="base">
+            <Badge variant="soft" theme="primary">
               <Link
                 className="flex items-center gap-x-1"
                 to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${source_branch}`}

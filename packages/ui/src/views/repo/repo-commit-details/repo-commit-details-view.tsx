@@ -48,7 +48,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               {isVerified && (
                 <>
                   <span className="bg-borders-2 mx-2.5 h-4 w-px" />
-                  <Badge size="md" theme="success" borderRadius="full">
+                  <Badge variant="surface" theme="success">
                     {t('views:commits.verified', 'Verified')}
                   </Badge>
                 </>

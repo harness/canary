@@ -53,9 +53,10 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
             </StyledLink>
           )}
         </span>
-        <Badge className="gap-x-1" variant="tertiary" borderRadius="base" size="md">
-          <Icon className="text-icons-9" name="branch" size={14} />
-          <span className="text-cn-foreground-8">{defaultBranchName}</span>
+        {/* TODO: Design system: change it to tag */}
+        <Badge variant="soft" theme="primary" size="sm">
+          <Icon name="branch" size={14} />
+          <span>{defaultBranchName}</span>
         </Badge>
       </div>
       <DropdownMenu.Root>
@@ -82,9 +83,9 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               <span className="text-14 leading-snug text-cn-foreground-1">
                 This branch is {ahead} commits ahead of{' '}
               </span>
-              <Badge className="gap-x-1" variant="tertiary" borderRadius="base" size="sm">
-                <Icon className="text-icons-9" name="branch" size={14} />
-                <span className="text-cn-foreground-8">{defaultBranchName}</span>
+              <Badge className="mt-1" variant="soft" theme="primary" size="sm">
+                <Icon name="branch" size={14} />
+                <span>{defaultBranchName}</span>
               </Badge>
               .
               <p className="mt-2.5 text-14 leading-tight text-cn-foreground-4">

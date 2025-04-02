@@ -2,9 +2,10 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
-import { Toast, useToast } from '@harnessio/ui/components'
+import { Badge, Toast, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
+import BadgeShowcase from '../../badge-showcase'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
@@ -105,6 +106,7 @@ export default function ReposListPage() {
 
   return (
     <>
+      <BadgeShowcase />
       <SandboxRepoListPage
         useRepoStore={useRepoStore}
         useTranslationStore={useTranslationStore}

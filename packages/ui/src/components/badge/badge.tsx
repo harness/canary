@@ -156,11 +156,3 @@ function Badge({ className, variant, size, pulse, theme = 'muted', children, ...
 }
 
 export { Badge, badgeVariants }
-
-const a = <Badge variant="counter">test</Badge>
-
-const b = (
-  <Badge className="leading-none" variant="status" theme="warning" pulse>
-    Running
-  </Badge>
-)

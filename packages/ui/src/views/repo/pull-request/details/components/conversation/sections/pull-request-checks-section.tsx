@@ -101,7 +101,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
                 </div>
                 <div className="col-span-1 flex justify-end">
                   {check?.check?.status === ExecutionState.PENDING ? (
-                    <Badge variant="outline" size="sm">
+                    <Badge variant="surface" size="sm">
                       <Text size={1} color="tertiaryBackground">
                         Required
                       </Text>

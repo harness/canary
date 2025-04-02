@@ -147,23 +147,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 </div>
 
                 {isDefault && (
-                  <Badge
-                    className="bg-transparent font-medium text-cn-foreground-3"
-                    variant="outline"
-                    // TODO: Review and update 'muted' theme implementation
-                    // Current 'muted' theme styles don't fully match the design requirements
-                    // Steps before updating:
-                    // 1. Audit all instances of 'muted' theme usage
-                    // 2. Compare with design specs across different components
-                    // 3. Ensure changes won't break existing implementations
-                    // 4. Consider creating a new theme variant if changes affect existing usage
-                    // 5. After theme update, remove overriding classes (text-primary-muted, bg-transparent, -tracking, font-medium)
-                    //    as they should be part of the theme definition
-                    theme="muted"
-                    size="xl"
-                    borderRadius="full"
-                    disableHover
-                  >
+                  <Badge variant="surface" theme="muted" size="sm">
                     {t('views:repos.default', 'Default')}
                   </Badge>
                 )}

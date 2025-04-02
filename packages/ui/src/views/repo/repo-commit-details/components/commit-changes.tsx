@@ -42,12 +42,12 @@ const LineTitle: FC<LineTitleProps> = ({ header, useTranslationStore }) => {
         <span className="text-16 font-medium">{text}</span>
         <CopyButton name={text} color="gray" />
         {!!numAdditions && (
-          <Badge variant="outline" size="sm" theme="success">
+          <Badge variant="surface" size="sm" theme="success">
             +{numAdditions}
           </Badge>
         )}
         {!!numDeletions && (
-          <Badge variant="outline" size="sm" theme="destructive">
+          <Badge variant="surface" size="sm" theme="danger">
             -{numDeletions}
           </Badge>
         )}

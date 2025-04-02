@@ -69,7 +69,8 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
           </>
         )}
         <Spacer size={3} />
-        <Badge disableHover theme={!is_public ? 'muted' : 'success'}>
+        {/* TODO: Design system: Replace with Tag */}
+        <Badge variant="surface" theme={!is_public ? 'muted' : 'success'}>
           {!is_public ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
         </Badge>
         {!!description?.length && (
@@ -88,7 +89,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
               <div key={item.id} className="flex items-center gap-1.5">
                 <Icon name={item.iconName} size={14} className="fill-none text-tertiary-background" />
                 <Text>{item.name}</Text>
-                <Badge className="hover:bg-tag-background-gray-1" theme="muted" size="sm">
+                <Badge variant="counter" size="sm">
                   {item.count}
                 </Badge>
               </div>

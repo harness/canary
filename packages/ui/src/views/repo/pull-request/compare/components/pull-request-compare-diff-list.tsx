@@ -251,12 +251,12 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                     </Text>
                     <div className="ml-4 flex items-center space-x-2">
                       {diff.addedLines != null && diff.addedLines > 0 && (
-                        <Badge variant="outline" size="sm" theme="success">
+                        <Badge variant="surface" size="sm" theme="success">
                           +{diff.addedLines}
                         </Badge>
                       )}
                       {diff.removedLines != null && diff.removedLines > 0 && (
-                        <Badge variant="outline" size="sm" theme="destructive">
+                        <Badge variant="surface" size="sm" theme="danger">
                           -{diff.removedLines}
                         </Badge>
                       )}

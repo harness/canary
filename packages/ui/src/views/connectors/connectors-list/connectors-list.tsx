@@ -1,27 +1,9 @@
-import {
-  Button,
-  Icon,
-  Logo,
-  LogoName,
-  MoreActionsTooltip,
-  NoData,
-  SkeletonList,
-  SkeletonTable,
-  Table
-} from '@/components'
+import { Button, Icon, Logo, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
 
-import { ConnectorConfigType } from '../types'
 import { ConnectorListItem, ConnectorListProps } from './types'
-
-export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, LogoName> = new Map([
-  ['Github', 'github'],
-  ['Gitlab', 'gitlab'],
-  ['Bitbucket', 'bitbucket'],
-  ['Jira', 'jira'],
-  ['K8sCluster', 'kubernetes']
-])
+import { ConnectorTypeToLogoNameMap } from './utils'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
   <span className="max-w-full truncate font-medium">{title}</span>

@@ -10,7 +10,7 @@ interface RoutingProps {
 
 export interface ConnectorListItem {
   identifier: string
-  type: ConnectorConfigType
+  type?: ConnectorConfigType
   name?: string
   description?: string
   status?: ExecutionState

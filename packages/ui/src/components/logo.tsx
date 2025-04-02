@@ -19,10 +19,6 @@ interface LogoProps {
 const Logo: FC<LogoProps> = ({ name, size = 24, original = false }) => {
   const icon = LogoNameMap[name]
 
-  if (!icon) {
-    return <></>
-  }
-
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d={icon.path} fill={original ? `#${icon.hex}` : 'currentColor'} />

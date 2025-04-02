@@ -1,17 +1,8 @@
-import {
-  Button,
-  Icon,
-  Logo,
-  LogoNameMap,
-  MoreActionsTooltip,
-  NoData,
-  SkeletonList,
-  SkeletonTable,
-  Table
-} from '@/components'
+import { Button, Icon, Logo, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
 
+import { getConnectorLogo, mapConnectorTypeToLogoName } from '../utils'
 import { ConnectorListItem, ConnectorListProps } from './types'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
@@ -86,13 +77,7 @@ export function ConnectorsList({
             >
               <Table.Cell className="max-w-80 content-center truncate">
                 <div className="flex items-center gap-2.5">
-                  <div className="min-w-[40px]">
-                    {connector.type && LogoNameMap[connector.type.toLowerCase()] ? (
-                      <Logo name={connector.type.toLowerCase()} size={32} />
-                    ) : (
-                      <Icon name="connectors" size={32} />
-                    )}
-                  </div>
+                  {connector?.type ? <div className="min-w-[40px]">{getConnectorLogo(connector.type)}</div> : null}
                   <Title title={connector.identifier} />
                 </div>
               </Table.Cell>

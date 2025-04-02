@@ -2,7 +2,9 @@ import { FC } from 'react'
 
 import { siBitbucket, siGithub, siGitlab, siJira, siKubernetes, type SimpleIcon } from 'simple-icons'
 
-const LogoNameMap: Record<string, SimpleIcon> = {
+export type LogoName = 'github' | 'gitlab' | 'bitbucket' | 'jira' | 'kubernetes'
+
+const LogoNameMap: Record<LogoName, SimpleIcon> = {
   github: siGithub,
   gitlab: siGitlab,
   bitbucket: siBitbucket,
@@ -11,7 +13,7 @@ const LogoNameMap: Record<string, SimpleIcon> = {
 }
 
 interface LogoProps {
-  name: keyof typeof LogoNameMap
+  name: LogoName
   size?: number
   original?: boolean // Uses brand color when true
 }

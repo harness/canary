@@ -250,7 +250,7 @@
   "search": "Rechercher",
   "connectors": {
     "createNew": "Créer un nouveau connecteur",
-    "delete": "Delete Connector"
+    "delete": "Supprimer le connecteur"
   },
   "execution": {
     "summary": "Résumé",

@@ -1,10 +1,10 @@
 import { Icon } from '@components/icon'
-import { Logo, LogoName } from '@components/logo'
+import { Logo } from '@components/logo/logo'
 import { SimpleIcon } from 'simple-icons'
 
 import { ConnectorConfigType } from './types'
 
-export const mapConnectorTypeToLogoName = (type: ConnectorConfigType): LogoName | undefined => {
+export const mapConnectorTypeToLogoName = (type: ConnectorConfigType): string | undefined => {
   switch (type) {
     case 'Github':
       return 'github'

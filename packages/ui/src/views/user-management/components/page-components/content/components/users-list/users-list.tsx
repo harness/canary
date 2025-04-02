@@ -73,7 +73,7 @@ export const UsersList = () => {
                 {/* ROLE BINDING */}
                 <Table.Cell className="my-6 content-center">
                   <div className="flex gap-1.5">
-                    <Badge disableHover variant="outline" size="sm" theme={user.admin ? 'emphasis' : 'destructive'}>
+                    <Badge variant="surface" size="sm" theme={user.admin ? 'merged' : 'destructive'}>
                       {user.admin ? 'Admin' : 'User'}
                     </Badge>
                   </div>

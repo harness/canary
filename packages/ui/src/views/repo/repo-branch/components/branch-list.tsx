@@ -169,11 +169,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="content-center">
                   <div className="flex items-center justify-center gap-1.5 align-middle">
                     {branch?.behindAhead?.default ? (
-                      <Badge
-                        className="m-auto rounded-full bg-cn-background-2 px-2 text-center font-medium text-cn-foreground-3"
-                        variant="outline"
-                        size="sm"
-                      >
+                      <Badge variant="surface" size="sm">
                         {t('views:repos.default', 'Default')}
                       </Badge>
                     ) : (

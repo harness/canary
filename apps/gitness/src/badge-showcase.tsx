@@ -9,14 +9,22 @@ export const BadgeShowcase = () => {
   const themes = ['success', 'info', 'warning', 'destructive', 'primary', 'muted', 'merged', 'ai'] as const
   const sizes = ['default', 'sm'] as const
 
+  // Section titles
+  const SECTION_TITLES = {
+    AI_THEME: '1. Theme "ai" (variant prop not allowed)',
+    COUNTER_BADGES: '2. Counter Badges',
+    DEFAULT_COUNTER: 'Default Counter',
+    PRIMARY_COUNTER: 'Primary Counter'
+  }
+
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6 p-6">
       <h1 className="text-2xl font-bold mb-4">Badge Variants and Conditional Properties</h1>
 
       {/* Section demonstrating conditional variant requirements */}
       <div className="space-y-8 mb-8">
         <div>
-          <h2 className="text-lg font-medium mb-2">1. Theme &quot;ai&quot; (variant prop not allowed)</h2>
+          <h2 className="mb-2 text-lg font-medium">{SECTION_TITLES.AI_THEME}</h2>
           <div className="flex flex-wrap gap-2">
             {/* For AI theme, variant should not be specified */}
             <Badge theme="ai">AI Theme</Badge>
@@ -25,6 +33,35 @@ export const BadgeShowcase = () => {
 
             {/* The line below would cause a TypeScript error because variant is not allowed with theme="ai" */}
             {/* <Badge theme="ai" variant="solid">Invalid</Badge> */}
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div>
+        <h2 className="mb-2 mt-4 text-lg font-medium">{SECTION_TITLES.COUNTER_BADGES}</h2>
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-md font-medium">{SECTION_TITLES.DEFAULT_COUNTER}</h3>
+            <div className="mt-2 flex flex-wrap gap-3">
+              <Badge variant="counter">1</Badge>
+              <Badge variant="counter">99</Badge>
+              <Badge variant="counter">999+</Badge>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-md font-medium">{SECTION_TITLES.PRIMARY_COUNTER}</h3>
+            <div className="mt-2 flex flex-wrap gap-3">
+              <Badge theme={themes[4]} variant="counter">
+                1
+              </Badge>
+              <Badge theme={themes[4]} variant="counter">
+                99
+              </Badge>
+              <Badge theme={themes[4]} variant="counter">
+                999+
+              </Badge>
+            </div>
           </div>
         </div>
       </div>
@@ -38,7 +75,7 @@ export const BadgeShowcase = () => {
           {variants.map(variant => (
             <div key={variant} className="space-y-4">
               <h3 className="text-md font-medium capitalize">{variant} Variant</h3>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {themes
                   .filter(theme => {
                     // Skip combinations that would cause type errors:

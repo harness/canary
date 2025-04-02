@@ -8,22 +8,22 @@ export const ExecutionStatus = ({ executionStatus }: { executionStatus: Executio
   return (
     <div className="absolute right-0" style={{ top: '-25px' }}>
       {executionStatus === 'executing' ? (
-        <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
+        <Badge className="leading-none" size="sm" variant="status" theme="warning">
           <Icon name="running" size={10} className="mr-1 animate-spin" />
           Running
         </Badge>
       ) : executionStatus === 'success' ? (
-        <Badge className="leading-none" size="sm" theme="success">
+        <Badge className="leading-none" size="sm" variant="status" theme="success">
           <Icon name="tick" size={10} className="mr-1" />
           Completed
         </Badge>
       ) : executionStatus === 'warning' ? (
-        <Badge className="leading-none" size="sm" theme="warning">
+        <Badge className="leading-none" size="sm" variant="status" theme="warning">
           <Icon name="triangle-warning" size={10} className="mr-1" />
           Warning
         </Badge>
       ) : executionStatus === 'error' ? (
-        <Badge className="leading-none" size="sm" theme="destructive">
+        <Badge className="leading-none" size="sm" variant="status" theme="danger">
           <Icon name="cross" size={10} className="mr-1" />
           Error
         </Badge>

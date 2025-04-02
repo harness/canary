@@ -36,6 +36,7 @@ export interface UnifiedPipelineStudioProps {
   onYamlRevisionChange: (yamlRevision: YamlRevision) => void
   onYamlDownload: (yaml: string) => void
   onSave: (yaml: string) => void
+  onRun: () => void
   isYamlDirty: boolean
   theme?: 'light' | 'dark' | string
   saveInProgress?: boolean
@@ -66,6 +67,7 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     onYamlDownload,
     isYamlDirty,
     onSave,
+    onRun,
     theme,
     saveInProgress,
     loadInProgress,
@@ -93,6 +95,7 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       onDownloadYaml={onYamlDownload}
       isYamlDirty={isYamlDirty}
       onSave={onSave}
+      onRun={onRun}
       onSelectedPathChange={onSelectedPathChange}
       selectedPath={selectedPath}
       errors={errors}

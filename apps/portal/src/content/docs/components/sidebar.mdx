@@ -1,0 +1,55 @@
+---
+title: Sidebar
+description: A responsive, collapsible sidebar navigation component
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Sidebar } from "@harnessio/ui/components";
+
+The `Sidebar` component provides a responsive, collapsible navigation interface that can be used for application navigation. It supports various states including expanded, collapsed, and mobile views with offcanvas functionality.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+
+  <Sidebar.Provider>
+    <Sidebar.Root className="-ml-[13px] h-[600px] mt-[20px]">
+        <Sidebar.Header>
+          <div className="flex items-center px-4 py-3">
+            <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
+            <span className="ml-2 font-medium">Harness</span>
+          </div>
+        </Sidebar.Header>
+        <Sidebar.Content>
+          <Sidebar.Group>
+            <Sidebar.GroupContent>
+             <Sidebar.Menu>
+      <Sidebar.MenuItem>
+                  <Sidebar.MenuButton>
+                    <Sidebar.MenuItemText
+                      className="pl-0"
+                      text='More'
+                      icon={<Icon name="ellipsis" size={14} />}
+                    />
+                  </Sidebar.MenuButton>
+                </Sidebar.MenuItem>
+
+             </Sidebar.Menu>
+            </Sidebar.GroupContent>
+          </Sidebar.Group>
+        </Sidebar.Content>
+        <Sidebar.Footer>
+          <div className="px-4 py-3 text-sm text-sidebar-foreground-2">
+            <p> 2025 Harness Inc.</p>
+          </div>
+        </Sidebar.Footer>
+      </Sidebar.Root>
+      <div className="flex-1 p-4">
+        <Sidebar.Trigger className="mb-4" />
+        <h3 className="text-lg font-medium">Main Content</h3>
+        <p className="mt-2">This is where your main content would appear.</p>
+    </div>
+    </Sidebar.Provider>
+
+`}
+/>

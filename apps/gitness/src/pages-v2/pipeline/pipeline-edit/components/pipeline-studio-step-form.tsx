@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
-import { Button, Icon } from '@harnessio/canary'
 import { listTemplates } from '@harnessio/code-service-client'
 import {
   getTransformers,
@@ -15,6 +14,7 @@ import {
   RootForm,
   useZodValidationResolver
 } from '@harnessio/forms'
+import { Button, Icon } from '@harnessio/ui/components'
 import {
   getHarnessStepDefinition,
   getHarnessStepIdentifier,

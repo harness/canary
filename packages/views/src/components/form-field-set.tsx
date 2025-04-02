@@ -82,24 +82,6 @@ function Root({ children, box, shaded, className }: RootProps) {
   )
 }
 
-/** @deprecated: Use FormLegend from @harnessio/ui/components instead */
-function Legend({ children, className }: CompProps) {
-  return (
-    <Text size={3} weight={'medium'} className={cn('mb-0', className)} as="p" role="heading">
-      {children}
-    </Text>
-  )
-}
-
-/** @deprecated: Use FormLegend from @harnessio/ui/components instead */
-function SubLegend({ children, className }: CompProps) {
-  return (
-    <Text size={2} weight={'normal'} className={cn('text-primary/70 mb-0', className)} as="p" id="fieldset-description">
-      {children}
-    </Text>
-  )
-}
-
 /** @deprecated */
 function Item({ children, className }: CompProps) {
   return (
@@ -192,4 +174,4 @@ function Spacer({ className }: SpacerProps) {
   return <div className={cn('mt-1', className)} role="presentation" aria-hidden="true" />
 }
 
-export { Root, Legend, SubLegend, Item, Label, ControlGroup, Caption, Message, Option, Separator, Spacer, MessageTheme }
+export { Root, Item, Label, ControlGroup, Caption, Message, Option, Separator, Spacer, MessageTheme }

@@ -1,0 +1,28 @@
+{
+  "avatar": {
+    "size": {
+      "sm": {
+        "$type": "sizing",
+        "$value": "{size.4-half}"
+      },
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.6}"
+      },
+      "lg": {
+        "$type": "sizing",
+        "$value": "{size.8}"
+      }
+    },
+    "radius": {
+      "default": {
+        "$type": "borderRadius",
+        "$value": "{rounded.3}"
+      },
+      "rounded": {
+        "$type": "borderRadius",
+        "$value": "{rounded.full}"
+      }
+    }
+  }
+}

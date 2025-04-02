@@ -1,9 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Button, Icon, Input, Spacer } from '@harnessio/canary'
 import { useListTemplatesQuery } from '@harnessio/code-service-client'
-import { Pagination, SkeletonList } from '@harnessio/ui/components'
+import { Button, Icon, Input, Pagination, SkeletonList, Spacer } from '@harnessio/ui/components'
 import {
   harnessStepGroups,
   harnessSteps,

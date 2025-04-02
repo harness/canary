@@ -216,6 +216,11 @@
     }
   },
   "fontSize": {
+    "0": {
+      "$type": "fontSizes",
+      "$value": "0.625rem",
+      "$description": "10px"
+    },
     "1": {
       "$type": "fontSizes",
       "$value": "0.75rem",
@@ -283,6 +288,32 @@
     }
   },
   "lineHeight": {
+    "0": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.0}*{lineHeight.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.0}*{lineHeight.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.0}*{lineHeight.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.0}*{lineHeight.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.0}*{lineHeight.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.0}*{lineHeight.loose}"
+      }
+    },
     "1": {
       "none": {
         "$type": "lineHeights",

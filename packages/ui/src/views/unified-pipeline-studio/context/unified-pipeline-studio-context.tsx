@@ -48,6 +48,7 @@ export interface UnifiedPipelineStudioContextProps {
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
   onDownloadYaml: (yaml: string) => void
   onSave: (yaml: string) => void
+  onRun: () => void
   saveInProgress?: boolean
   isYamlDirty: boolean
   theme?: 'light' | 'dark' | string
@@ -95,6 +96,7 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
   onYamlRevisionChange: (_yamlRevision: YamlRevision) => undefined,
   onDownloadYaml: (_yaml: string) => undefined,
   onSave: (_yaml: string) => undefined,
+  onRun: () => undefined,
   isYamlDirty: false,
   saveInProgress: false,
   selectedPath: undefined,
@@ -144,6 +146,7 @@ export interface UnifiedPipelineStudioProviderProps {
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
   onDownloadYaml: (yaml: string) => void
   onSave: (yaml: string) => void
+  onRun: () => void
   saveInProgress?: boolean
   isYamlDirty: boolean
   theme?: 'light' | 'dark' | string

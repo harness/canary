@@ -6,10 +6,10 @@ import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 
-import { ConnectorsList } from './connectors-list'
-import { ConnectorListPageProps } from './types'
+import { SecretList } from './secrets-list'
+import { SecretListPageProps } from './types'
 
-const ConnectorsListPage: FC<ConnectorListPageProps> = ({
+const SecretListPage: FC<SecretListPageProps> = ({
   searchQuery,
   setSearchQuery,
   isError,
@@ -19,7 +19,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   totalPages,
   goToPage,
   isLoading,
-  connectors,
+  secrets,
   ...props
 }) => {
   const { t } = useTranslationStore()
@@ -36,7 +36,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
         textWrapperClassName="max-w-[350px]"
         iconName="no-data-error"
         title={t('views:noData.errorApiTitle', 'Failed to load', {
-          type: 'connectors'
+          type: 'secrets'
         })}
         description={[
           errorMessage ||
@@ -57,8 +57,8 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !connectors.length && !searchQuery })}>
-        <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Connectors</h1>
+      <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !secrets.length && !searchQuery })}>
+        <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Secrets</h1>
         <Spacer size={6} />
         <ListActions.Root>
           <ListActions.Left>
@@ -71,16 +71,11 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
             />
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default">{t('views:connectors.createNew', 'Create new connector')}</Button>
+            <Button variant="default">{t('views:secrets.createNew', 'Create new secret')}</Button>
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={4} />
-        <ConnectorsList
-          connectors={connectors}
-          useTranslationStore={useTranslationStore}
-          isLoading={isLoading}
-          {...props}
-        />
+        <SecretList secrets={secrets} useTranslationStore={useTranslationStore} isLoading={isLoading} {...props} />
         <Spacer size={8} />
         <Pagination totalPages={totalPages} currentPage={currentPage} goToPage={goToPage} t={t} />
       </SandboxLayout.Content>
@@ -88,4 +83,4 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   )
 }
 
-export { ConnectorsListPage }
+export { SecretListPage }

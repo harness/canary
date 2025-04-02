@@ -197,7 +197,6 @@
     "errorApiTitle": "Échec du chargement de {{type}}",
     "errorApiDescription": "Une erreur s'est produite lors du chargement des données. Veuillez réessayer et recharger la page.",
     "noConnectors": "Aucun connecteur pour le moment",
-    "noConnectorsProject": "Il n'y a pas encore de connecteurs dans ce projet.",
     "createConnector": "Créez un nouveau connecteur.",
     "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
     "changeSearch": "ou recherchez un autre mot-clé.",
@@ -233,8 +232,11 @@
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
+    "noSecrets": "Il n'y a pas encore de secrets dans ce projet.",
+    "createSecret": "Créer un nouveau secret.",
     "noUsers": "Aucun utilisateur trouvé",
     "noUsersDescription": "Il n'y a aucun utilisateur dans ce périmètre. Cliquez sur le bouton ci-dessous pour commencer à les ajouter.",
+    "noConnectorsProject": "Il n'y a pas encore de connecteurs dans ce projet.",
     "commit": "Validation",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
@@ -247,7 +249,8 @@
   },
   "search": "Rechercher",
   "connectors": {
-    "createNew": "Créer un nouveau connecteur"
+    "createNew": "Créer un nouveau connecteur",
+    "delete": "Supprimer le connecteur"
   },
   "execution": {
     "summary": "Résumé",
@@ -542,6 +545,20 @@
     "edit": "Edit webhook",
     "delete": "Delete webhook"
   },
+  "secrets": {
+    "createNew": "Créer un nouveau secret",
+    "delete": "Supprimer le secret",
+    "secretsTitle": "Secrets"
+  },
+  "secret": {
+    "title": "Secret"
+  },
+  "common": {
+    "details": "Détails",
+    "lastActivity": "Dernière activité",
+    "created": "Créé",
+    "manager": "Gestionnaire"
+  },
   "userManagement": {
     "createUser": {
       "title": "Ajouter un nouvel utilisateur",
@@ -622,8 +639,5 @@
       "editUser": "Modifier l'utilisateur",
       "deleteUser": "Supprimer l'utilisateur"
     }
-  },
-  "secrets": {
-    "secretsTitle": "Secrets"
   }
 }

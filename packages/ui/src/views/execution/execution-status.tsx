@@ -17,7 +17,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       ) : (
         <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-0.5">
-            <CanaryIcon size={12} name="pending-clock" />
+            <CanaryIcon size={16} name="pending-clock" />
             <span className="text-muted">Pending</span>
           </div>
           {duration ? <span className="text-muted">{duration}</span> : null}
@@ -49,7 +49,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       ) : (
         <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-1.5">
-            <CanaryIcon name="fail-legacy" width={20} />
+            <CanaryIcon size={16} name="fail-legacy" />
             <span className="text-[#ED5E5E]">Failed</span>
           </div>
           {duration && <span className="text-[#ED5E5E]">{duration}</span>}
@@ -62,9 +62,9 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
           <span className="text-foreground-success">Success</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1.5 rounded-md">
-          <div className="flex items-center gap-0.5 text-foreground-success">
-            <CanaryIcon size={12} name="success" />
+        <div className="flex items-center gap-1 rounded-md">
+          <div className="flex items-center gap-1.5 text-foreground-success">
+            <CanaryIcon size={16} name="success" />
             <span>Success</span>
           </div>
           {duration && <span className="text-foreground-success">{duration}</span>}

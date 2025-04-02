@@ -1,12 +1,29 @@
 import { useState } from 'react'
 
-import { Drawer, Spacer } from '@harnessio/ui/components'
+import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
+import { useTranslationStore } from '@utils/viewUtils'
+
+import { InputFactory } from '@harnessio/forms'
+import { Drawer, Separator, Spacer } from '@harnessio/ui/components'
 import {
+  ArrayInput,
+  BooleanInput,
+  ConnectorEntityForm,
+  ConnectorFormEntityType,
   ConnectorHeader,
   ConnectorItem,
   ConnectorReference,
   ConnectorSelectionType,
-  DirectionEnum
+  ConnectorsPalette,
+  DirectionEnum,
+  GroupInput,
+  ListInput,
+  NumberInput,
+  RadialInput,
+  SelectInput,
+  SeparatorInput,
+  TextAreaInput,
+  TextInput
 } from '@harnessio/ui/views'
 
 import mockAccountsData from '../secrets/mock-account-data.json'
@@ -14,6 +31,18 @@ import mockOrgData from '../secrets/mock-org-data.json'
 import mockProjectsData from '../secrets/mock-project-data.json'
 import { Scope, ScopeEnum, scopeHierarchy } from '../secrets/types'
 import mockConnectorsData from './mock-connectors-data.json'
+
+const inputComponentFactory = new InputFactory()
+inputComponentFactory.registerComponent(new TextInput())
+inputComponentFactory.registerComponent(new BooleanInput())
+inputComponentFactory.registerComponent(new NumberInput())
+inputComponentFactory.registerComponent(new ArrayInput())
+inputComponentFactory.registerComponent(new ListInput())
+inputComponentFactory.registerComponent(new TextAreaInput())
+inputComponentFactory.registerComponent(new GroupInput())
+inputComponentFactory.registerComponent(new SelectInput())
+inputComponentFactory.registerComponent(new SeparatorInput())
+inputComponentFactory.registerComponent(new RadialInput())
 
 export const ConnectorsRefPage = ({
   isDrawerOpen,
@@ -32,7 +61,8 @@ export const ConnectorsRefPage = ({
   // State for existing connectors
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
-
+  const [formEntity, setFormEntity] = useState<ConnectorFormEntityType | null>(null)
+  const [isConnectorSelected, setIsConnectorSelected] = useState(false)
   // Handlers for existing connectors
   const handleSelectConnector = (connector: ConnectorItem) => {
     setSelectedConnector(connector)
@@ -70,10 +100,39 @@ export const ConnectorsRefPage = ({
     switch (selectedType) {
       case ConnectorSelectionType.NEW:
         return (
-          <div className="p-4">
-            <h2 className="mb-4 text-xl font-semibold">Create New Connector</h2>
-            <p>Add form for new connector here</p>
+          <div>
+            <Separator />
+            <Spacer size={2.5} />
             {/* Render create connector flow from here */}
+            <ConnectorsPalette
+              useTranslationStore={useTranslationStore}
+              connectors={harnessConnectors}
+              onSelectConnector={() => setIsConnectorSelected(true)}
+              setFormEntity={setFormEntity}
+              requestClose={() => {
+                setFormEntity(null)
+                setIsConnectorSelected(false)
+                handleCancel()
+              }}
+            />
+            <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
+              <Drawer.Content>
+                {formEntity ? (
+                  <ConnectorEntityForm
+                    useTranslationStore={useTranslationStore}
+                    formEntity={formEntity}
+                    onBack={() => setIsConnectorSelected(false)}
+                    requestClose={() => {
+                      setFormEntity(null)
+                      setIsConnectorSelected(false)
+                    }}
+                    // onFormSubmit={handleFormSubmit}
+                    getConnectorDefinition={getHarnessConnectorDefinition}
+                    inputComponentFactory={inputComponentFactory}
+                  />
+                ) : null}
+              </Drawer.Content>
+            </Drawer.Root>
           </div>
         )
       case ConnectorSelectionType.EXISTING:
@@ -112,6 +171,7 @@ export const ConnectorsRefPage = ({
         <Spacer size={5} />
 
         <ConnectorHeader onChange={setSelectedType} selectedType={selectedType} />
+
         <Spacer size={5} />
         {renderConnectorContent()}
       </Drawer.Content>

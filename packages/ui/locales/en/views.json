@@ -184,6 +184,8 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "deleteConnector": "Delete Connector",
+    "deleteSecret": "Delete Secret",
     "status": "Status",
     "tagger": "Tagger",
     "creationDate": "Creation date",
@@ -219,7 +221,6 @@
     "errorApiTitle": "Failed to load {{type}}",
     "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noConnectors": "No connectors yet",
-    "noConnectorsProject": "There are no connectors in this project yet.",
     "createConnector": "Create new connector.",
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
@@ -255,8 +256,12 @@
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
+    "noSecrets": "No secrets yet",
+    "createSecret": "Create new secret.",
     "noUsers": "No Users Found",
     "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
+    "noConnectorsProject": "There are no connectors in this project yet.",
+    "noSecretsProject": "There are no secrets in this project yet.",
     "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
     "commit": "Commit",
     "noLabels": "No labels yet",
@@ -271,6 +276,7 @@
   "search": "Search",
   "connectors": {
     "createNew": "Create new connector",
+    "delete": "Delete Connector",
     "updated": "Last updated",
     "lastConnected": "Last connected"
   },
@@ -575,6 +581,20 @@
     "edit": "Edit webhook",
     "delete": "Delete webhook"
   },
+  "secrets": {
+    "createNew": "Create new secret",
+    "delete": "Delete Secret",
+    "secretsTitle": "Secrets"
+  },
+  "secret": {
+    "title": "Secret"
+  },
+  "common": {
+    "details": "Details",
+    "lastActivity": "Last Activity",
+    "created": "Created",
+    "manager": "Manager"
+  },
   "userManagement": {
     "createUser": {
       "title": "Add a new user",
@@ -655,8 +675,5 @@
       "editUser": "Edit user",
       "deleteUser": "Delete user"
     }
-  },
-  "secrets": {
-    "secretsTitle": "Secrets"
   }
 }

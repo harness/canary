@@ -1,18 +1,20 @@
 {
-  "gap": {
-    "$type": "spacing",
-    "$value": "{spacing.2}"
-  },
-  "px": {
-    "$type": "spacing",
-    "$value": "{spacing.4}"
-  },
-  "height": {
-    "$type": "sizing",
-    "$value": "{size.9}"
-  },
-  "radius": {
-    "$type": "borderRadius",
-    "$value": "{rounded.3}"
+  "navtab": {
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.4}"
+    },
+    "height": {
+      "$type": "sizing",
+      "$value": "{size.9}"
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.3}"
+    }
   }
 }

@@ -21,6 +21,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
     yamlRevision,
     onDownloadYaml,
     onSave,
+    onRun,
     saveInProgress,
     isYamlDirty,
     hideSaveBtn,
@@ -43,14 +44,19 @@ export const PipelineStudioInternal = (): JSX.Element => {
               />
             ) : null}
             {!hideSaveBtn ? (
-              <Button
-                loading={saveInProgress}
-                size="sm"
-                onClick={() => onSave(yamlRevision.yaml)}
-                disabled={!isYamlDirty}
-              >
-                Save
-              </Button>
+              <>
+                <Button
+                  loading={saveInProgress}
+                  size="sm"
+                  onClick={() => onSave(yamlRevision.yaml)}
+                  disabled={!isYamlDirty}
+                >
+                  Save
+                </Button>
+                <Button loading={saveInProgress} size="sm" onClick={() => onRun()} disabled={isYamlDirty}>
+                  Run
+                </Button>
+              </>
             ) : null}
           </PipelineStudioLayout.HeaderLeft>
         </PipelineStudioLayout.Header>

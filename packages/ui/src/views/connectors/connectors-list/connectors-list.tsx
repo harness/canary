@@ -1,5 +1,4 @@
-import { Button, Icon, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
-import { useRouterContext } from '@/context'
+import { Button, Icon, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
 
@@ -29,9 +28,9 @@ export function ConnectorsList({
   useTranslationStore,
   isLoading,
   toConnectorDetails,
-  onTestConnection
+  onTestConnection,
+  onDeleteConnector
 }: ConnectorListProps): JSX.Element {
-  const { Link } = useRouterContext()
   const { t } = useTranslationStore()
 
   if (isLoading) {
@@ -45,7 +44,7 @@ export function ConnectorsList({
         iconName="no-data-cog"
         title={t('views:noData.noConnectors', 'No connectors yet')}
         description={[
-          t('views:noData.noConnectorsProject', 'There are no connectors in this project yet.'),
+          t('views:noData.noConnectors', 'There are no connectors in this project yet.'),
           t('views:noData.createConnector', 'Create new connector.')
         ]}
       />
@@ -59,10 +58,10 @@ export function ConnectorsList({
     >
       <Table.Header>
         <Table.Row>
-          <Table.Head>Connector</Table.Head>
-          <Table.Head>Details</Table.Head>
-          <Table.Head>Connectivity status</Table.Head>
-          <Table.Head>Last updated</Table.Head>
+          <Table.Head className="w-96">Connector</Table.Head>
+          <Table.Head className="w-96">Details</Table.Head>
+          <Table.Head className="w-44">Connectivity status</Table.Head>
+          <Table.Head className="w-44">Last updated</Table.Head>
         </Table.Row>
       </Table.Header>
       {isLoading ? (
@@ -70,14 +69,16 @@ export function ConnectorsList({
       ) : (
         <Table.Body>
           {connectors.map(connector => (
-            <Table.Row key={connector.identifier} className="cursor-pointer">
+            <Table.Row
+              key={connector.identifier}
+              className="cursor-pointer"
+              onClick={() => toConnectorDetails?.(connector)}
+            >
               <Table.Cell className="max-w-80 content-center truncate">
-                <Link to={toConnectorDetails?.(connector) || ''}>
-                  <div className="flex items-center gap-2.5">
-                    <Icon name="connectors" size={24} />
-                    <Title title={connector.identifier} />
-                  </div>
-                </Link>
+                <div className="flex items-center gap-2.5">
+                  <Icon name="connectors" size={24} />
+                  <Title title={connector.identifier} />
+                </div>
               </Table.Cell>
               <Table.Cell className="max-w-80 content-center truncate">{connector.spec?.url}</Table.Cell>
               <Table.Cell className="content-center">
@@ -85,6 +86,18 @@ export function ConnectorsList({
               </Table.Cell>
               <Table.Cell className="content-center">
                 {connector?.lastModifiedAt ? timeAgo(connector.lastModifiedAt) : null}
+              </Table.Cell>
+              <Table.Cell className="text-right">
+                <MoreActionsTooltip
+                  isInTable
+                  actions={[
+                    {
+                      isDanger: true,
+                      title: t('views:connectors.delete', 'Delete Connector'),
+                      onClick: () => onDeleteConnector(connector.identifier)
+                    }
+                  ]}
+                />
               </Table.Cell>
             </Table.Row>
           ))}

@@ -22,23 +22,26 @@ const PipelineStudioViewWrapper = () => {
   const [view, setView] = useState<UnifiedPipelineStudioProps['view']>('visual')
 
   return (
-    <UnifiedPipelineStudio
-      useTranslationStore={useTranslationStore}
-      useTemplateListStore={useTemplateListStore}
-      yamlRevision={yamlRevision}
-      onYamlRevisionChange={onYamlRevisionChange}
-      onYamlDownload={noop}
-      isYamlDirty={true}
-      onSave={noop}
-      selectedPath={selectedPath}
-      onSelectedPathChange={onSelectedPathChange}
-      errors={errors}
-      onErrorsChange={onErrorsChange}
-      panelOpen={panelOpen}
-      onPanelOpenChange={onPanelOpenChange}
-      setView={setView}
-      view={view}
-    />
+    <div style={{ height: '600px', display: 'flex', flexDirection: 'column', left: '1.25em' }}>
+      <UnifiedPipelineStudio
+        useTranslationStore={useTranslationStore}
+        useTemplateListStore={useTemplateListStore}
+        yamlRevision={yamlRevision}
+        onYamlRevisionChange={onYamlRevisionChange}
+        onYamlDownload={noop}
+        isYamlDirty={true}
+        onSave={noop}
+        selectedPath={selectedPath}
+        onSelectedPathChange={onSelectedPathChange}
+        errors={errors}
+        onErrorsChange={onErrorsChange}
+        panelOpen={panelOpen}
+        onPanelOpenChange={onPanelOpenChange}
+        setView={setView}
+        view={view}
+        onRun={noop}
+      />
+    </div>
   )
 }
 

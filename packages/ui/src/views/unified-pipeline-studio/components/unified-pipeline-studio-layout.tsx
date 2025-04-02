@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode } from 'react'
 
+import { Resizable } from '@/components'
 import { cn } from '@/utils'
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@components/resizable'
 
 export const HEADER_HEIGHT = 55
 
@@ -28,25 +28,25 @@ const PipelineStudioLayout = {
   },
   Split: ({ children }: { children: ReactElement[] }) => {
     return (
-      <ResizablePanelGroup direction="vertical" className="border-5 grow">
+      <Resizable.PanelGroup direction="vertical" className="border-5 grow">
         {children}
-      </ResizablePanelGroup>
+      </Resizable.PanelGroup>
     )
   },
   SplitMain: ({ children }: { children: ReactElement }) => {
     return (
-      <ResizablePanel order={1} className="flex">
+      <Resizable.Panel order={1} className="flex">
         {children}
-      </ResizablePanel>
+      </Resizable.Panel>
     )
   },
   SplitPanel: ({ children, open }: { children: ReactElement; open?: boolean }) => {
     return open ? (
       <>
-        <ResizableHandle />
-        <ResizablePanel defaultSize={30} id="panel" minSize={10} maxSize={90} order={2} className="h-full">
+        <Resizable.Handle />
+        <Resizable.Panel defaultSize={30} id="panel" minSize={10} maxSize={90} order={2} className="h-full">
           {children}
-        </ResizablePanel>
+        </Resizable.Panel>
       </>
     ) : null
   }

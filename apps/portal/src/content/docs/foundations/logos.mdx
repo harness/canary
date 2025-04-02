@@ -1,0 +1,87 @@
+---
+title: Logos
+description: Logo component
+---
+
+The `Logo` component renders brand icons from the `simple-icons` package.
+
+import { DocsPage } from "@/components/docs-page";
+import { Logo, LogoNameMap } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<>
+    <h5>With theme colors</h5>
+    <div className="overflow-x-auto mt-4">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="border-b border-gray-300">
+            <th className="text-left p-2 w-1/2">Icon</th>
+            <th className="text-left p-2 w-1/2">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.keys(LogoNameMap).map(name => (
+            <tr key={name} className="border-b border-gray-200">
+              <td className="p-2 cursor-pointer flex items-center gap-2 hover:bg-gray-100 transition w-1/2">
+                <Logo name={name as keyof typeof LogoNameMap} size={24} />
+              </td>
+              <td className="p-2">
+                <code>{name}</code>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </>`}
+/>
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<>
+    <h5>With original brand colors</h5>
+    <div className="overflow-x-auto mt-4">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="border-b border-gray-300">
+            <th className="text-left p-2 w-1/2">Icon</th>
+            <th className="text-left p-2 w-1/2">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.keys(LogoNameMap).map(name => (
+            <tr key={name} className="border-b border-gray-200">
+              <td className="p-2 cursor-pointer flex items-center gap-2 hover:bg-gray-100 transition w-1/2">
+                <Logo name={name as keyof typeof LogoNameMap} size={24} original />
+              </td>
+              <td className="p-2">
+                <code>{name}</code>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </>`}
+/>
+
+## Usage
+
+```typescript
+import { Logo } from '@harnessio/ui/components'
+
+//...
+
+return <Logo name="github" size={48} />
+```
+
+## API Reference
+
+### Props
+
+| Name                                                          | Type                                                                          | Default | Description                                                                 |
+| ------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------- |
+| <p style={{ whiteSpace: 'nowrap' }}><code>original</code></p> | `boolean`                                                                     | `false` | If `true`, the logo will use its brand-specific color. Defaults to `false`. |
+| `name`                                                        | <p style={{ whiteSpace: 'nowrap' }}><code>keyof typeof LogoNameMap</code></p> | N/A     | The name of the brand icon to render (must match a key in `LogoNameMap`).   |
+| `size`                                                        | `number`                                                                      | `24`    | The size (in pixels) of the logo.                                           |

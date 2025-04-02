@@ -16,8 +16,8 @@ To import all design system styles:
 
 ```css
 @import '@harnessio/core-design-system/core-styles';
-@import '@harnessio/core-design-system/oss-themes';
-@import '@harnessio/core-design-system/enterprise-themes';
+@import '@harnessio/core-design-system/themes';
+@import '@harnessio/core-design-system/mfe-themes';
 ```
 
 ### Importing JavaScript Tokens

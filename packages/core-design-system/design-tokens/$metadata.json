@@ -4,8 +4,6 @@
     "core/colors_lch",
     "core/typography",
     "core/dimensions",
-    "brand/oss",
-    "brand/ent",
     "mode/dark/default",
     "mode/dark/dimmer",
     "mode/dark/high-contrast",

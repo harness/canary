@@ -84,7 +84,7 @@ async function run() {
 
   for (const cfg of configs) {
     const sd = new StyleDictionary(cfg, {
-      verbosity: 'verbose'
+      // verbosity: 'verbose'
     })
 
     /**

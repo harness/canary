@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react'
+import { FC, ReactNode, useRef, useState } from 'react'
 
 import { Button, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/components'
 import { useRouterContext } from '@/context'
@@ -7,6 +7,8 @@ import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
 import FilterTrigger from '@components/filters/triggers/filter-trigger'
 import { cn } from '@utils/cn'
+import ListControlBar from '@views/repo/components/list-control-bar'
+import { useFilters } from '@views/repo/hooks'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
 
@@ -34,6 +36,7 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
 }) => {
   const { t } = useTranslationStore()
   const { navigate } = useRouterContext()
+  const filterHandlers = useFilters()
   const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
   const [openedFilter, setOpenedFilter] = useState<ConnectorListFiltersKeys>()
   const filtersRef = useRef<FilterRefType<ConnectorListFilters> | null>(null)
@@ -124,34 +127,53 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
               <Button variant="default">{t('views:connectors.createNew', 'Create new connector')}</Button>
             </ListActions.Right>
           </ListActions.Root>
-          {selectedFiltersCnt > 0 && (
-            <>
-              <Spacer size={4} />
-              <ConnectorListFilterHandler.Content className={'flex items-center gap-x-2'}>
-                {CONNECTOR_FILTER_OPTIONS.map(filterOption => {
-                  return (
-                    <ConnectorListFilterHandler.Component
-                      parser={filterOption.parser as any}
-                      filterKey={filterOption.value}
-                      key={filterOption.value}
-                    >
-                      {({ onChange, removeFilter, value }) => (
-                        <FilterTrigger
-                          type="filter"
-                          label={filterOption.label}
-                          activeFilters={value ? [value] : []}
-                          onChange={onChange}
-                          onReset={removeFilter}
-                          options={filterOption.filterFieldConfig?.options || []}
-                          t={t}
-                        />
-                      )}
-                    </ConnectorListFilterHandler.Component>
-                  )
-                })}
-              </ConnectorListFilterHandler.Content>
-            </>
-          )}
+          <>
+            <Spacer size={4} />
+            <ListControlBar<ConnectorListFilters>
+              renderSelectedFilters={filterFieldRenderer => (
+                <ConnectorListFilterHandler.Content className={'flex items-center gap-x-2'}>
+                  {CONNECTOR_FILTER_OPTIONS.map(filterOption => {
+                    return (
+                      <ConnectorListFilterHandler.Component
+                        parser={filterOption.parser as any}
+                        filterKey={filterOption.value}
+                        key={filterOption.value}
+                      >
+                        {({ onChange, removeFilter, value }) =>
+                          filterFieldRenderer({
+                            filterOption,
+                            onChange,
+                            removeFilter,
+                            value: value,
+                            onOpenChange: isOpen => {
+                              // handleFilterOpen?.(filterOption.value, isOpen)
+                            }
+                          })
+                        }
+                      </ConnectorListFilterHandler.Component>
+                    )
+                  })}
+                </ConnectorListFilterHandler.Content>
+              )}
+              openedFilter={openedFilter}
+              setOpenedFilter={setOpenedFilter}
+              filterOptions={CONNECTOR_FILTER_OPTIONS}
+              sortOptions={[]}
+              selectedFiltersCnt={0}
+              renderFilterOptions={filterOptionsRenderer => (
+                <ConnectorListFilterHandler.Dropdown>
+                  {(addFilter, availableFilters, resetFilters) => (
+                    <div className="flex items-center gap-x-4">
+                      {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
+                    </div>
+                  )}
+                </ConnectorListFilterHandler.Dropdown>
+              )}
+              sortDirections={[]}
+              t={t}
+              filterHandlers={filterHandlers}
+            />
+          </>
         </ConnectorListFilterHandler>
         <Spacer size={4} />
         <ConnectorsList

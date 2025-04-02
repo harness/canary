@@ -1,11 +1,3 @@
-export enum PRCommentFilterType {
-  SHOW_EVERYTHING = 'showEverything',
-  ALL_COMMENTS = 'allComments',
-  MY_COMMENTS = 'myComments',
-  RESOLVED_COMMENTS = 'resolvedComments',
-  UNRESOLVED_COMMENTS = 'unresolvedComments'
-}
-
 export interface TypesListCommitResponse {
   commits?: TypesCommit[] | null
   rename_details?: TypesRenameDetails[] | null
@@ -26,30 +18,6 @@ export interface TypesRenameDetails {
 
 export type EnumPullReqReviewDecision = 'approved' | 'changereq' | 'pending' | 'reviewed' | 'outdated'
 
-export enum orderSortDate {
-  ASC = 'asc',
-  DESC = 'desc'
-}
-export enum CommentType {
-  COMMENT = 'comment',
-  CODE_COMMENT = 'code-comment',
-  TITLE_CHANGE = 'title-change',
-  REVIEW_SUBMIT = 'review-submit',
-  MERGE = 'merge',
-  REVIEW_DELETE = 'reviewer-delete',
-  BRANCH_UPDATE = 'branch-update',
-  BRANCH_DELETE = 'branch-delete',
-  STATE_CHANGE = 'state-change',
-  REVIEW_ADD = 'reviewer-add',
-  LABEL_MODIFY = 'label-modify'
-}
-
-export enum LabelActivity {
-  ASSIGN = 'assign',
-  UN_ASSIGN = 'unassign',
-  RE_ASSIGN = 'reassign'
-}
-
 export enum PullReqReviewDecision {
   approved = 'approved',
   changeReq = 'changereq',
@@ -66,12 +34,6 @@ export interface Reviewer {
   updated: number
 }
 
-export enum MergeCheckStatus {
-  MERGEABLE = 'mergeable',
-  UNCHECKED = 'unchecked',
-  CONFLICT = 'conflict'
-}
-
 export enum PullRequestState {
   OPEN = 'open',
   MERGED = 'merged',
@@ -86,17 +48,6 @@ export interface AddedBy {
   type: string
   created: number
   updated: number
-}
-
-export interface ReviewerData {
-  created: number
-  updated: number
-  type: string
-  latest_review_id: number
-  review_decision: EnumPullReqReviewDecision
-  sha: string
-  reviewer: Reviewer
-  added_by: AddedBy
 }
 
 export interface TypesPullReq {
@@ -278,45 +229,6 @@ export interface TypesCodeOwnerEvaluationEntry {
   user_group_owner_evaluations?: TypesUserGroupOwnerEvaluation[] | null
 }
 
-export interface PullRequestChangesSectionProps {
-  changesInfo: { header: string; content: string; status: string }
-  minApproval?: number
-  codeOwners?: TypesCodeOwnerEvaluation | null
-  minReqLatestApproval?: number
-  approvedEvaluations?: TypesPullReqReviewer[]
-  changeReqEvaluations?: TypesPullReqReviewer[]
-  latestApprovalArr?: TypesPullReqReviewer[]
-  reqNoChangeReq?: boolean
-  changeReqReviewer?: string
-  codeOwnerChangeReqEntries?: (
-    | {
-        owner_evaluations: TypesOwnerEvaluation[]
-        line_number?: number
-        pattern?: string
-        user_group_owner_evaluations?: TypesUserGroupOwnerEvaluation[] | null
-      }
-    | undefined
-  )[]
-  reqCodeOwnerApproval?: boolean
-  reqCodeOwnerLatestApproval?: boolean
-  codeOwnerPendingEntries?: TypesCodeOwnerEvaluationEntry[]
-  codeOwnerApprovalEntries?: (
-    | {
-        owner_evaluations: TypesOwnerEvaluation[]
-        line_number?: number
-        pattern?: string
-        user_group_owner_evaluations?: TypesUserGroupOwnerEvaluation[] | null
-      }
-    | undefined
-  )[]
-  latestCodeOwnerApprovalArr?: (
-    | {
-        entryEvaluation: TypesOwnerEvaluation[]
-      }
-    | undefined
-  )[]
-}
-
 export interface TypesPullReqActivity {
   author?: TypesPrincipalInfo
   code_comment?: TypesCodeCommentFields
@@ -417,72 +329,20 @@ export enum ReviewerAddActivity {
   SELF_ASSIGNED = 'self_assigned'
 }
 
-export enum CodeCommentState {
-  ACTIVE = 'active',
-  RESOLVED = 'resolved'
-}
-
 export interface GeneralPayload extends TypesPullReqActivity {
   text?: string
-  [key: string]: unknown
   payload?: GeneralPayload
   type?: EnumPullReqActivityType
   kind?: EnumPullReqActivityKind
   message?: string
   reviewer_type?: ReviewerAddActivity
+
+  [key: string]: unknown
 }
 
 export interface PayloadAuthor {
   display_name: string
 }
-
-export interface PayloadCreated {
-  created: number
-}
-
-export interface Payload {
-  payload: {
-    author: PayloadAuthor
-  }
-}
-export interface PayloadCodeComment {
-  path: string
-}
-
-export interface CommentItem<T = unknown> {
-  id: number
-  author: string
-  created: string | number
-  edited: string | number
-  updated: string | number
-  deleted: string | number
-  outdated: boolean
-  content: string
-  payload?: T // optional payload for callers to handle on callback calls
-}
-
-export enum MergeStrategy {
-  MERGE = 'merge',
-  SQUASH = 'squash',
-  REBASE = 'rebase'
-}
-
-export interface PullRequestAction {
-  id: string
-  title: string
-  description?: string
-  action?: () => void
-}
-
-export const PullRequestFilterOption = {
-  ...PullRequestState,
-  // REJECTED: 'rejected',
-  DRAFT: 'draft',
-  YOURS: 'yours',
-  ALL: 'all'
-}
-
-export type IconType = 'pr-open' | 'pr-closed' | 'pr-draft' | 'pr-merge'
 
 export interface TypesViolation {
   code?: string
@@ -504,16 +364,3 @@ export interface TypesRuleInfo {
   type?: string
 }
 export type EnumRuleState = 'active' | 'disabled' | 'monitor' | null
-
-export interface ReviewerItemProps {
-  reviewer?: { display_name?: string; id?: number }
-  reviewDecision?: EnumPullReqReviewDecision
-  sha?: string
-  sourceSHA?: string
-  processReviewDecision: (
-    review_decision: EnumPullReqReviewDecision,
-    reviewedSHA?: string,
-    sourceSHA?: string
-  ) => EnumPullReqReviewDecision | PullReqReviewDecision.outdated
-  handleDelete: (id: number) => void
-}

@@ -520,6 +520,7 @@ export default {
     { pattern: /^text-tag-foreground-/ },
     { pattern: /^border-tag-border-/ },
     // label classes
+    { pattern: /^bg-label-foreground-/ },
     { pattern: /^bg-label-background-/ },
     { pattern: /^text-label-foreground-/ },
     // sidebar classes
@@ -546,6 +547,7 @@ export default {
     { pattern: /^hover:text-tag-foreground-/ },
     { pattern: /^hover:border-tag-border-/ },
     // label classes
+    { pattern: /^hover:bg-label-foreground-/ },
     { pattern: /^hover:bg-label-background-/ },
     { pattern: /^hover:text-label-foreground-/ },
     // sidebar classes

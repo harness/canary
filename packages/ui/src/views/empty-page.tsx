@@ -1,12 +1,10 @@
 import { NoData } from '@/components'
-import { useRouterContext, useTheme } from '@/context'
-import { cn } from '@utils/cn'
+import { useRouterContext } from '@/context'
 
 export const EmptyPage = ({ pathName, comingSoon }: { pathName: string; comingSoon?: boolean }) => {
   const { navigate } = useRouterContext()
-  const { isInset } = useTheme()
   return (
-    <div className={cn('flex min-h-screen items-center', { 'min-h-full': isInset })}>
+    <div className="flex min-h-[inherit] items-center">
       <NoData
         iconName={comingSoon ? 'no-data-cog' : 'no-search-magnifying-glass'}
         title={comingSoon ? 'Coming soon' : `Upgrade to Harness Enterprise to access ${pathName}`}

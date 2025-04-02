@@ -7,7 +7,7 @@ export const HEADER_HEIGHT = 55
 
 const PipelineStudioLayout = {
   Root: ({ children, className }: { children: ReactNode; className?: string }) => {
-    return <div className={cn('flex grow flex-col', className)}>{children}</div>
+    return <div className={cn('flex grow flex-col min-h-[calc(100vh-55px-45px)]', className)}>{children}</div>
   },
   Header: ({ isYamlView, children }: { isYamlView?: boolean; children: JSX.Element | JSX.Element[] | string }) => {
     const className = isYamlView ? 'border-b' : 'border-b-transparent'

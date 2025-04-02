@@ -7,12 +7,19 @@ import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { CustomHandle } from '../../framework/routing/types'
 
-function Breadcrumbs() {
+export const useGetBreadcrumbs = () => {
   const matches = useMatches()
+  const breadcrumbs = matches.filter(match => (match.handle as CustomHandle)?.breadcrumb)
+  return { breadcrumbs }
+}
+
+function Breadcrumbs() {
   const { isMobile } = useSidebar()
-  const matchesWithBreadcrumb = matches.filter(match => (match.handle as CustomHandle)?.breadcrumb)
+  const { breadcrumbs } = useGetBreadcrumbs()
   const isMFE = useIsMFE()
   const { isInset } = useThemeStore()
+
+  if (!breadcrumbs.length) return null
 
   return (
     <Topbar.Root className={cn({ 'pl-0': isInset && !isMobile })}>
@@ -25,10 +32,10 @@ function Breadcrumbs() {
         )}
         <Breadcrumb.Root className="select-none">
           <Breadcrumb.List>
-            {matchesWithBreadcrumb.map((match, index) => {
+            {breadcrumbs.map((match, index) => {
               const { breadcrumb, asLink = true } = (match.handle || {}) as CustomHandle
               const isFirst = index === 0
-              const isLast = index === matchesWithBreadcrumb.length - 1
+              const isLast = index === breadcrumbs.length - 1
               const breadcrumbContent = breadcrumb!(match.params)
 
               return (

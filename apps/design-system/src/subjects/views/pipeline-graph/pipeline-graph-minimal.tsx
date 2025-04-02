@@ -224,9 +224,9 @@ const PipelineGraphMinimalWrapper = () => {
   // const [view, setView] = useState<VisualYamlValue>('visual')
   return (
     <CanvasProvider>
-      <div className="flex px-6 pt-3">
-        {/* <VisualYamlToggle view={view} setView={setView} isYamlValid={true} /> */}
-      </div>
+      {/* <div className="flex px-6 pt-3">
+        <VisualYamlToggle view={view} setView={setView} isYamlValid={true} />
+      </div> */}
       <PipelineGraph data={data} nodes={nodes} />
     </CanvasProvider>
   )

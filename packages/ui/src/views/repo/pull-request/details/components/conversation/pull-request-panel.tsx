@@ -86,12 +86,12 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         <div className="inline-flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-2 font-medium">
             <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
-            <Badge variant="secondary" size="sm">
+            <Badge variant="soft" theme="primary" size="sm">
               <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
               {props?.pullReqMetadata?.source_branch}
             </Badge>
             <span>into</span>
-            <Badge variant="secondary" size="sm">
+            <Badge variant="soft" theme="primary" size="sm">
               <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
               {props?.pullReqMetadata?.target_branch}
             </Badge>
@@ -436,7 +436,8 @@ const PullRequestPanel = ({
         ) : (
           <Layout.Horizontal gap="space-x-2" className="flex w-full items-center justify-between py-4">
             <Layout.Horizontal className="flex w-full">
-              <Badge variant="tertiary" size="md" borderRadius="base">
+              {/* TODO: Design system: fix this */}
+              <Badge variant="soft" size="sm">
                 <Link
                   className="flex items-center gap-x-1.5"
                   to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${pullReqMetadata?.source_branch}`}

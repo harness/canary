@@ -126,12 +126,12 @@ const LineTitle: React.FC<LineTitleProps> = ({
 
         <div className="flex items-center gap-x-1">
           {addedLines != null && addedLines > 0 && (
-            <Badge variant="outline" size="sm" theme="success" disableHover>
+            <Badge variant="surface" size="sm" theme="success">
               +{addedLines}
             </Badge>
           )}
           {deletedLines != null && deletedLines > 0 && (
-            <Badge variant="outline" size="sm" theme="destructive" disableHover>
+            <Badge variant="surface" size="sm" theme="danger">
               -{deletedLines}
             </Badge>
           )}

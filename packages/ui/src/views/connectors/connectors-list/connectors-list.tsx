@@ -88,7 +88,7 @@ export function ConnectorsList({
                 <div className="flex items-center gap-2.5">
                   <div className="min-w-[40px]">
                     {connector.type && LogoNameMap[connector.type.toLowerCase()] ? (
-                      <Logo name={connector.type.toLowerCase()} size={32} original />
+                      <Logo name={connector.type.toLowerCase()} size={32} />
                     ) : (
                       <Icon name="connectors" size={32} />
                     )}

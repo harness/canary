@@ -16,7 +16,7 @@ interface LogoProps {
   original?: boolean // Uses brand color when true
 }
 
-const Logo: FC<LogoProps> = ({ name, size = 24, original = false }) => {
+const Logo: FC<LogoProps> = ({ name, size = 24, original = true }) => {
   const icon = LogoNameMap[name]
 
   return (

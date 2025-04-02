@@ -19,7 +19,7 @@ import { Logo, LogoNameMap } from "@harnessio/ui/components";
               {name}
             </div>
             <div className="p-2 rounded-md bg-foreground-1">
-              <Logo name={name as keyof typeof LogoNameMap} size={24} original />
+              <Logo name={name as keyof typeof LogoNameMap} size={24} />
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@ import { Logo, LogoNameMap } from "@harnessio/ui/components";
               {name}
             </div>
             <div className="p-2 rounded-md bg-foreground-1">
-              <Logo name={name as keyof typeof LogoNameMap} size={24} />
+              <Logo name={name as keyof typeof LogoNameMap} size={24} original={false}/>
             </div>
           </div>
         </div>

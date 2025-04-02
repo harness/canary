@@ -11,28 +11,19 @@ import { Logo, LogoNameMap } from "@harnessio/ui/components";
 <DocsPage.ComponentExample
   client:only
   code={`<>
-    <h5>With theme colors</h5>
-    <div className="overflow-x-auto mt-4">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="border-b border-gray-300">
-            <th className="text-left p-2 w-1/2">Icon</th>
-            <th className="text-left p-2 w-1/2">Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.keys(LogoNameMap).map(name => (
-            <tr key={name} className="border-b border-gray-200">
-              <td className="p-2 cursor-pointer flex items-center gap-2 hover:bg-gray-100 transition w-1/2">
-                <Logo name={name as keyof typeof LogoNameMap} size={24} />
-              </td>
-              <td className="p-2">
-                <code>{name}</code>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="flex flex-wrap gap-4 mt-4">
+      {Object.keys(LogoNameMap).map(name => (
+        <div key={name} className="flex items-center gap-4">
+          <div className="group relative">
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-xs rounded py-1 px-2">
+              {name}
+            </div>
+            <div className="p-2 rounded-md bg-foreground-1">
+              <Logo name={name as keyof typeof LogoNameMap} size={24} original />
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   </>`}
 />
@@ -40,28 +31,20 @@ import { Logo, LogoNameMap } from "@harnessio/ui/components";
 <DocsPage.ComponentExample
   client:only
   code={`<>
-    <h5>With original brand colors</h5>
-    <div className="overflow-x-auto mt-4">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="border-b border-gray-300">
-            <th className="text-left p-2 w-1/2">Icon</th>
-            <th className="text-left p-2 w-1/2">Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.keys(LogoNameMap).map(name => (
-            <tr key={name} className="border-b border-gray-200">
-              <td className="p-2 cursor-pointer flex items-center gap-2 hover:bg-gray-100 transition w-1/2">
-                <Logo name={name as keyof typeof LogoNameMap} size={24} original />
-              </td>
-              <td className="p-2">
-                <code>{name}</code>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <h5>With theme colors</h5>
+    <div className="flex flex-wrap gap-4 mt-4">
+      {Object.keys(LogoNameMap).map(name => (
+        <div key={name} className="flex items-center gap-4">
+          <div className="group relative">
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-xs rounded py-1 px-2">
+              {name}
+            </div>
+            <div className="p-2 rounded-md bg-foreground-1">
+              <Logo name={name as keyof typeof LogoNameMap} size={24} />
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   </>`}
 />

@@ -57,6 +57,10 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
     onFilterChange?.(filterValues)
   }
 
+  const handleFilterOpen = (filter: ConnectorListFiltersKeys, isOpen: boolean) => {
+    setOpenedFilter(isOpen ? filter : undefined)
+  }
+
   if (isError) {
     return (
       <NoData
@@ -105,24 +109,27 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
             </ListActions.Left>
             <ListActions.Right>
               <ConnectorListFilterHandler.Dropdown>
-                {(addFilter, availableFilters, resetFilters) => (
-                  <FilterSelect<ConnectorListFiltersKeys>
-                    options={CONNECTOR_FILTER_OPTIONS.filter(option => availableFilters.includes(option.value))}
-                    onChange={option => {
-                      addFilter(option.value)
-                      setOpenedFilter(option.value)
-                    }}
-                    onReset={resetFilters}
-                    inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
-                    buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                    displayLabel={
-                      <FilterSelectLabel
-                        selectedFilters={CONNECTOR_FILTER_OPTIONS.length - availableFilters.length}
-                        displayLabel={t('component:filter.defaultLabel', 'Filter')}
-                      />
-                    }
-                  />
-                )}
+                {(addFilter, availableFilters, resetFilters) => {
+                  console.log(availableFilters)
+                  return (
+                    <FilterSelect<ConnectorListFiltersKeys>
+                      options={CONNECTOR_FILTER_OPTIONS.filter(option => availableFilters.includes(option.value))}
+                      onChange={option => {
+                        addFilter(option.value)
+                        setOpenedFilter(option.value)
+                      }}
+                      onReset={resetFilters}
+                      inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+                      buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+                      displayLabel={
+                        <FilterSelectLabel
+                          selectedFilters={CONNECTOR_FILTER_OPTIONS.length - availableFilters.length}
+                          displayLabel={t('component:filter.defaultLabel', 'Filter')}
+                        />
+                      }
+                    />
+                  )
+                }}
               </ConnectorListFilterHandler.Dropdown>
               <Button variant="default">{t('views:connectors.createNew', 'Create new connector')}</Button>
             </ListActions.Right>
@@ -146,7 +153,7 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
                             removeFilter,
                             value: value,
                             onOpenChange: isOpen => {
-                              // handleFilterOpen?.(filterOption.value, isOpen)
+                              handleFilterOpen?.(filterOption.value, isOpen)
                             }
                           })
                         }

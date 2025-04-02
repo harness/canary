@@ -9,7 +9,7 @@ export const mapConnectorTypeToLogoName = (type: ConnectorConfigType): string | 
     case 'Github':
       return 'github'
     case 'Gitlab':
-      return 'github'
+      return 'gitlab'
     case 'Bitbucket':
       return 'bitbucket'
     case 'Jira':

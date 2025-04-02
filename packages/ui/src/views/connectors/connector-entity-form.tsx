@@ -94,11 +94,14 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       const definition = getConnectorDefinition(connector.type)
       if (definition) {
         const transformers = getTransformers(definition?.formDefinition)
-        const connectorValues = inputTransformValues(connector?.spec, transformers)
+        const connectorValues = inputTransformValues(
+          { ...connector?.spec, name: connector.name, type: connector.type },
+          transformers
+        )
         setConnectorEditValues(connectorValues)
       }
     }
-  }, [intent])
+  }, [intent, connector.name, connector.spec, connector.type, getConnectorDefinition])
 
   return (
     <RootForm
@@ -117,7 +120,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
             <EntityFormSectionLayout.Header>
               <EntityFormSectionLayout.Title className="!my-0">
                 {intent === ConnectorEntityIntent.CREATE ? 'Connect to ' : 'Edit '}
-                {connector.name}
+                {intent === ConnectorEntityIntent.EDIT ? `${connector.type} connector` : connector.name}
               </EntityFormSectionLayout.Title>
             </EntityFormSectionLayout.Header>
             <EntityFormSectionLayout.Form>

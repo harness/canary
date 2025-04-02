@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Icon } from '@harnessio/canary'
+import { Icon } from '@harnessio/ui/components'
 
 export type ProblemSeverity = 'error' | 'warning' | 'info'
 

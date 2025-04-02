@@ -1,4 +1,5 @@
-import { Checkbox, cn, RadioGroupItem, Label as ShadLabel, Text } from '@harnessio/canary'
+import { Checkbox, RadioButton, Text, Label as UILabel } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 interface CompProps {
   children: React.ReactNode
@@ -31,7 +32,7 @@ interface ControlProps {
   className?: string
 }
 
-type ControlType = React.ReactElement<typeof RadioGroupItem> | React.ReactElement<typeof Checkbox>
+type ControlType = React.ReactElement<typeof RadioButton> | React.ReactElement<typeof Checkbox>
 
 interface OptionProps {
   control: ControlType
@@ -94,10 +95,10 @@ function Item({ children, className }: CompProps) {
 /** @deprecated: Use Label from @harnessio/ui/components instead */
 function Label({ htmlFor, required, children, className }: LabelProps) {
   return (
-    <ShadLabel htmlFor={htmlFor} variant="sm" className={cn('text-primary/80 font-normal', className)}>
+    <UILabel htmlFor={htmlFor} className={cn('text-primary/80 font-normal', className)}>
       {children}
       {required && <span className="pl-0.5 align-top text-destructive">*</span>}
-    </ShadLabel>
+    </UILabel>
   )
 }
 

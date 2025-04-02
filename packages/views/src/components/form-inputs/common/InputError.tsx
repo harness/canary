@@ -1,6 +1,8 @@
 import { forwardRef } from 'react'
 
-import { cn, useFormField } from '@harnessio/canary'
+import { cn } from '@harnessio/ui/utils'
+
+import { useFormField } from '../../form'
 
 export const InputError = forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
   ({ className, ...props }, ref) => {

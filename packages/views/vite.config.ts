@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 
-const external = ['react', 'react-dom', '@harnessio/canary', '@harnessio/forms', 'react-router-dom']
+const external = ['react', 'react-dom', '@harnessio/ui', '@harnessio/forms', 'react-router-dom']
 
 // https://vitejs.dev/config/
 export default defineConfig({

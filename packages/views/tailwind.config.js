@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   presets: [require('@harnessio/ui/tailwind.config')],
-  content: ['./src/**/*.{ts,tsx}', 'node_modules/@harnessio/canary/src/**/*.{ts,tsx}'],
+  content: ['./src/**/*.{ts,tsx}', 'node_modules/@harnessio/ui/src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {

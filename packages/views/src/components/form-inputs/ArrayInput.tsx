@@ -1,6 +1,5 @@
 import { useCallback } from 'react'
 
-import { Button, FormField, FormItem, Icon } from '@harnessio/canary'
 import {
   AnyFormikValue,
   Controller,
@@ -10,7 +9,9 @@ import {
   RenderInputs,
   useFieldArray
 } from '@harnessio/forms'
+import { Button, Icon } from '@harnessio/ui/components'
 
+import { FormField, FormItem } from '../form'
 import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'
 import InputWrapper from './common/InputWrapper'

@@ -1,5 +1,3 @@
-// import { Icon, Tooltip, TooltipContent, TooltipTrigger } from '@harnessio/canary'
-
 export interface InputLabelProps {
   label?: string
   description?: string

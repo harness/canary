@@ -1,4 +1,4 @@
-import { cn } from '@harnessio/canary'
+import { cn } from '@harnessio/ui/utils'
 
 function Root({ children }: { children: React.ReactNode }) {
   return (

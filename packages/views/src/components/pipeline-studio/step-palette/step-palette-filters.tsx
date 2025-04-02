@@ -1,4 +1,4 @@
-import { Button, Icon, Toggle } from '@harnessio/canary'
+import { Button, Icon, Toggle } from '@harnessio/ui/components'
 
 const StepPaletteFiltersLayout = {
   Root: function Content({ children }: { children: React.ReactNode }) {

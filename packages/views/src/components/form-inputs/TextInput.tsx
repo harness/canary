@@ -1,6 +1,7 @@
-import { FormControl, FormField, FormItem, Input } from '@harnessio/canary'
 import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/forms'
+import { Input } from '@harnessio/ui/components'
 
+import { FormControl, FormField, FormItem } from '../form'
 import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'
 import InputWrapper from './common/InputWrapper'

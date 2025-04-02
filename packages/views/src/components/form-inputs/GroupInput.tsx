@@ -9,8 +9,8 @@ import { useEffect, useState } from 'react'
 
 import { get } from 'lodash-es'
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Icon } from '@harnessio/canary'
 import { InputComponent, InputProps, RenderInputs, useFormContext, type AnyFormikValue } from '@harnessio/forms'
+import { Accordion, Icon } from '@harnessio/ui/components'
 
 import { Layout } from '../layout/layout'
 import InputLabel from './common/InputLabel'
@@ -37,24 +37,24 @@ function GroupInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
   }, [])
 
   return (
-    <Accordion
+    <Accordion.Root
       type="single"
       collapsible
       className="w-full bg-muted/30 px-3"
       // onValueChange={value => setIsOpen(!!value)}
     >
-      <AccordionItem value={'group'} className="border-b-0">
-        <AccordionTrigger>
+      <Accordion.Item value={'group'} className="border-b-0">
+        <Accordion.Trigger>
           <Layout.Horizontal className="items-center">
             <InputLabel label={label} required={required} description={description} />
             {error && <Icon name="triangle-warning" className="text-destructive" />}
           </Layout.Horizontal>
-        </AccordionTrigger>
-        <AccordionContent className="space-y-4" forceMount={forceMount}>
+        </Accordion.Trigger>
+        <Accordion.Content className="space-y-4" forceMount={forceMount}>
           <RenderInputs items={inputs} factory={factory} />
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+        </Accordion.Content>
+      </Accordion.Item>
+    </Accordion.Root>
   )
 }
 

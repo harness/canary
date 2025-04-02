@@ -1,17 +1,25 @@
 import { FC } from 'react'
 
-import { getLogoNameMap } from './utils'
+import { siBitbucket, siGithub, siGitlab, siJira, siKubernetes, type SimpleIcon } from 'simple-icons'
+
+export type LogoName = 'github' | 'gitlab' | 'bitbucket' | 'jira' | 'kubernetes'
+
+const LogoNameMap: Record<LogoName, SimpleIcon> = {
+  github: siGithub,
+  gitlab: siGitlab,
+  bitbucket: siBitbucket,
+  jira: siJira,
+  kubernetes: siKubernetes
+}
 
 interface LogoProps {
-  name: string
+  name: keyof typeof LogoNameMap
   size?: number
   original?: boolean // Uses brand color when true
 }
 
-const LogoNameMap = getLogoNameMap()
-
 const Logo: FC<LogoProps> = ({ name, size = 24, original = true }) => {
-  const icon = LogoNameMap.get(name)
+  const icon = LogoNameMap[name]
 
   if (!icon) return <></>
 

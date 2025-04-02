@@ -1,8 +1,8 @@
-import { Button, Icon, Logo, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { Button, Icon, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
 
-import { getConnectorLogo, mapConnectorTypeToLogoName } from '../utils'
+import { getConnectorLogo } from '../utils'
 import { ConnectorListItem, ConnectorListProps } from './types'
 
 const Title = ({ title }: { title: string }): JSX.Element => (

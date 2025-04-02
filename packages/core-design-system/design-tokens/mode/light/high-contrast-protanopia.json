@@ -1614,7 +1614,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{blue.500}",
+          "$value": "{set.brand.solid.bg}",
           "$description": "Filled portion color for slider tracks. Adjusted for protanopia using blue instead of green."
         }
       },
@@ -1626,7 +1626,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{blue.700}",
+          "$value": "{set.brand.surface.bg}",
           "$description": "Color for segment markers on the filled track portion. Adjusted for protanopia using blue instead of green."
         }
       },

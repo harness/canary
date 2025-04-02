@@ -1614,7 +1614,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{blue.500}",
+          "$value": "{set.brand.solid.bg}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         }
       },
@@ -1626,7 +1626,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{cyan.700}",
+          "$value": "{set.brand.surface.bg}",
           "$description": "Color for segment markers on the filled track portion. Maintains visibility of markers within the selected range."
         }
       },

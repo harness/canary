@@ -3,6 +3,11 @@ import { DropdownMenu, Icon, Input } from '@/components'
 import { CheckboxFilterOption, FilterHandlers, FilterValue } from '../../../types'
 import { getFilteredOptions } from '../../../utils'
 
+export interface CheckboxOptions {
+  label: string
+  value: string
+}
+
 interface CheckboxFilterProps {
   filter: FilterValue
   filterOption: CheckboxFilterOption

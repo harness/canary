@@ -158,7 +158,8 @@ export enum FilterFieldTypes {
   Calendar = 'calendar',
   Text = 'text',
   Number = 'number',
-  ComboBox = 'combobox'
+  ComboBox = 'combobox',
+  Checkbox = 'checkbox'
 }
 
 interface FilterField<T = string | number> {
@@ -196,12 +197,19 @@ interface NumberFilterOptionConfig<T extends string = string> extends FilterOpti
   type: FilterFieldTypes.Number
 }
 
+interface CheckboxFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T> {
+  type: FilterFieldTypes.Checkbox
+  filterFieldConfig?: {
+    options?: Array<{ label: string; value: string }>
+  }
+}
+
 type FilterOptionConfig<T extends string = string> =
   | ComboBoxFilterOptionConfig<T>
   | CalendarFilterOptionConfig<T>
   | TextFilterOptionConfig<T>
   | NumberFilterOptionConfig<T>
-
+  | CheckboxFilterOptionConfig<T>
 type FilterValueTypes = string | number | unknown
 
 export type {

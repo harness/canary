@@ -271,6 +271,13 @@
   "search": "Search",
   "connectors": {
     "createNew": "Create new connector",
+    "filterOptions": {
+      "statusOption": {
+        "label": "Status",
+        "success": "Success",
+        "failure": "Failure"
+      }
+    },
     "updated": "Last updated",
     "lastConnected": "Last connected"
   },

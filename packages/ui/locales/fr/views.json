@@ -247,7 +247,14 @@
   },
   "search": "Rechercher",
   "connectors": {
-    "createNew": "Créer un nouveau connecteur"
+    "createNew": "Créer un nouveau connecteur",
+    "filterOptions": {
+      "statusOption": {
+        "label": "Status",
+        "success": "Success",
+        "failure": "Failure"
+      }
+    }
   },
   "execution": {
     "summary": "Résumé",

@@ -2,12 +2,15 @@ import { PaginationProps } from '@components/index'
 import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 
+import { ConnectorConfigType } from '../types'
+
 interface RoutingProps {
   toConnectorDetails: (connector: ConnectorListItem) => string
 }
 
 export interface ConnectorListItem {
   identifier: string
+  type: ConnectorConfigType
   name?: string
   description?: string
   status?: ExecutionState

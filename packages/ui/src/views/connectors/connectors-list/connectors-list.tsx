@@ -1,4 +1,4 @@
-import { Button, Icon, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { Button, Icon, Logo, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
 
@@ -76,7 +76,7 @@ export function ConnectorsList({
             >
               <Table.Cell className="max-w-80 content-center truncate">
                 <div className="flex items-center gap-2.5">
-                  <Icon name="connectors" size={24} />
+                  <Logo name={connector.type.toLowerCase()} size={32} original />
                   <Title title={connector.identifier} />
                 </div>
               </Table.Cell>

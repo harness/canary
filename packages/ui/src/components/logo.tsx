@@ -1,6 +1,14 @@
 import { FC } from 'react'
 
-import { LogoNameMap } from './logo-name-map'
+import { siBitbucket, siGithub, siGitlab, siJira, siKubernetes, type SimpleIcon } from 'simple-icons'
+
+const LogoNameMap: Record<string, SimpleIcon> = {
+  github: siGithub,
+  gitlab: siGitlab,
+  bitbucket: siBitbucket,
+  jira: siJira,
+  kubernetes: siKubernetes
+}
 
 interface LogoProps {
   name: keyof typeof LogoNameMap

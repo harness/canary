@@ -1,712 +1,33 @@
 [
   {
     "connector": {
-      "name": "GitHub-Connector-Sarthak12",
-      "identifier": "GitHubConnector123",
+      "name": "idp_automation_gitlab_repo_token_delegate_with_api_accessTqIO4qjN8S",
+      "identifier": "idp_automation_gitlab_repo_token_delegate_with_api_accessTqIO4qjN8S",
       "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+      "accountIdentifier": "vpCkHKsDSxK9_KYfjCTMKA",
       "orgIdentifier": null,
       "projectIdentifier": null,
       "tags": {},
-      "type": "Github",
+      "type": "Gitlab",
       "spec": {
-        "url": "https://github.com/seanfromharness/",
-        "validationRepo": "harness-devsecops-demo",
-        "authentication": {
-          "type": "Http",
-          "spec": {
-            "type": "UsernameToken",
-            "spec": {
-              "username": "seanfromharness",
-              "usernameRef": null,
-              "tokenRef": "account.github-access-token-4-harness"
-            }
-          }
-        },
-        "apiAccess": {
-          "type": "Token",
-          "spec": {
-            "tokenRef": "account.github-access-token-4-harness"
-          }
-        },
-        "delegateSelectors": [],
-        "executeOnDelegate": false,
-        "proxy": false,
-        "ignoreTestConnection": false,
-        "type": "Account"
-      }
-    },
-    "createdAt": 1717078069489,
-    "lastModifiedAt": 1717078069485,
-    "status": {
-      "status": "FAILURE",
-      "errorSummary": "Error Encountered (Please check your credentials (potential token expiration issue))",
-      "errors": [
-        {
-          "reason": "Unexpected Error",
-          "message": "Please check your credentials (potential token expiration issue)",
-          "code": 450
-        }
-      ],
-      "testedAt": 1717078086035,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 0,
-      "lastAlertSent": null
-    },
-    "activityDetails": {
-      "lastActivityTime": 1717078069485
-    },
-    "harnessManaged": false,
-    "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
-      "rootFolder": null,
-      "filePath": null,
-      "repoName": null,
-      "commitId": null,
-      "fileUrl": null,
-      "repoUrl": null,
-      "parentEntityConnectorRef": null,
-      "parentEntityRepoName": null,
-      "isHarnessCodeRepo": null
-    },
-    "entityValidityDetails": {
-      "valid": true,
-      "invalidYaml": null
-    },
-    "governanceMetadata": null,
-    "isFavorite": false
-  },
-  {
-    "connector": {
-      "name": "GitHub-Connector-Sean",
-      "identifier": "GitHubConnectorSean",
-      "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
-      "orgIdentifier": null,
-      "projectIdentifier": null,
-      "tags": {},
-      "type": "Github",
-      "spec": {
-        "url": "https://github.com/seanfromharness/",
-        "validationRepo": "harness-devsecops-demo",
-        "authentication": {
-          "type": "Http",
-          "spec": {
-            "type": "UsernameToken",
-            "spec": {
-              "username": "seanfromharness",
-              "usernameRef": null,
-              "tokenRef": "account.github-access-token-4-harness"
-            }
-          }
-        },
-        "apiAccess": {
-          "type": "Token",
-          "spec": {
-            "tokenRef": "account.github-access-token-4-harness"
-          }
-        },
-        "delegateSelectors": [],
-        "executeOnDelegate": false,
-        "proxy": false,
-        "ignoreTestConnection": false,
-        "type": "Account"
-      }
-    },
-    "createdAt": 1716585666714,
-    "lastModifiedAt": 1717024000273,
-    "status": {
-      "status": "FAILURE",
-      "errorSummary": "Error Encountered (Bad credentials)",
-      "errors": [
-        {
-          "reason": "Unexpected Error",
-          "message": "Bad credentials",
-          "code": 450
-        }
-      ],
-      "testedAt": 1717024001053,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 1716585977996,
-      "lastAlertSent": null
-    },
-    "activityDetails": {
-      "lastActivityTime": 1717024000273
-    },
-    "harnessManaged": false,
-    "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
-      "rootFolder": null,
-      "filePath": null,
-      "repoName": null,
-      "commitId": null,
-      "fileUrl": null,
-      "repoUrl": null,
-      "parentEntityConnectorRef": null,
-      "parentEntityRepoName": null,
-      "isHarnessCodeRepo": null
-    },
-    "entityValidityDetails": {
-      "valid": true,
-      "invalidYaml": null
-    },
-    "governanceMetadata": null,
-    "isFavorite": false
-  },
-  {
-    "connector": {
-      "name": "Github App",
-      "identifier": "Github_App",
-      "description": null,
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
-      "orgIdentifier": null,
-      "projectIdentifier": null,
-      "tags": {},
-      "type": "CustomSecretManager",
-      "spec": {
-        "delegateSelectors": [],
-        "onDelegate": true,
-        "connectorRef": null,
-        "host": null,
-        "workingDirectory": null,
-        "template": {
-          "templateRef": "account.GitHub_App_Pat_Dispenser",
-          "versionLabel": "",
-          "templateInputs": {
-            "environmentVariables": [
-              {
-                "name": "installation_id",
-                "value": "31437931",
-                "type": "String"
-              },
-              {
-                "name": "app_id",
-                "value": "264043",
-                "type": "String"
-              },
-              {
-                "name": "github_app_private_key",
-                "value": "<+secrets.getValue(\"account.github_app_pem\")>",
-                "type": "String"
-              }
-            ]
-          }
-        },
-        "timeout": 20,
-        "ignoreTestConnection": false,
-        "default": false
-      }
-    },
-    "createdAt": 1716474837522,
-    "lastModifiedAt": 1716474837510,
-    "status": {
-      "status": "FAILURE",
-      "errorSummary": "Error Encountered (HTTP Error Status (400 - Invalid Format) received. Invalid argument(s): Hierarchy identifier cannot be empty/null)",
-      "errors": [
-        {
-          "reason": "Unexpected Error",
-          "message": "HTTP Error Status (400 - Invalid Format) received. Invalid argument(s): Hierarchy identifier cannot be empty/null",
-          "code": 450
-        }
-      ],
-      "testedAt": 1716474837674,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 0,
-      "lastAlertSent": null
-    },
-    "activityDetails": {
-      "lastActivityTime": 1716474837510
-    },
-    "harnessManaged": false,
-    "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
-      "rootFolder": null,
-      "filePath": null,
-      "repoName": null,
-      "commitId": null,
-      "fileUrl": null,
-      "repoUrl": null,
-      "parentEntityConnectorRef": null,
-      "parentEntityRepoName": null,
-      "isHarnessCodeRepo": null
-    },
-    "entityValidityDetails": {
-      "valid": true,
-      "invalidYaml": null
-    },
-    "governanceMetadata": null,
-    "isFavorite": false
-  },
-  {
-    "connector": {
-      "name": "deba-github-demo",
-      "identifier": "debagithubdemo",
-      "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
-      "orgIdentifier": null,
-      "projectIdentifier": null,
-      "tags": {},
-      "type": "Github",
-      "spec": {
-        "url": "https://github.com/harness-community",
-        "validationRepo": "idp-samples",
-        "authentication": {
-          "type": "Http",
-          "spec": {
-            "type": "UsernameToken",
-            "spec": {
-              "username": "Debanitrkl",
-              "usernameRef": null,
-              "tokenRef": "account.deba-github"
-            }
-          }
-        },
-        "apiAccess": {
-          "type": "Token",
-          "spec": {
-            "tokenRef": "account.deba-github"
-          }
-        },
-        "delegateSelectors": [],
-        "executeOnDelegate": false,
-        "proxy": false,
-        "ignoreTestConnection": false,
-        "type": "Account"
-      }
-    },
-    "createdAt": 1716379112210,
-    "lastModifiedAt": 1716379112206,
-    "status": {
-      "status": "SUCCESS",
-      "errorSummary": null,
-      "errors": null,
-      "testedAt": 1716379114048,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 1716379114048,
-      "lastAlertSent": null
-    },
-    "activityDetails": {
-      "lastActivityTime": 1716379112206
-    },
-    "harnessManaged": false,
-    "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
-      "rootFolder": null,
-      "filePath": null,
-      "repoName": null,
-      "commitId": null,
-      "fileUrl": null,
-      "repoUrl": null,
-      "parentEntityConnectorRef": null,
-      "parentEntityRepoName": null,
-      "isHarnessCodeRepo": null
-    },
-    "entityValidityDetails": {
-      "valid": true,
-      "invalidYaml": null
-    },
-    "governanceMetadata": null,
-    "isFavorite": false
-  },
-  {
-    "connector": {
-      "name": "test github connector",
-      "identifier": "test_github_connector",
-      "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
-      "orgIdentifier": null,
-      "projectIdentifier": null,
-      "tags": {},
-      "type": "Github",
-      "spec": {
-        "url": "https://github.com/wings-softwar",
-        "validationRepo": "mohit-to-delete-5",
-        "authentication": {
-          "type": "Http",
-          "spec": {
-            "type": "UsernameToken",
-            "spec": {
-              "username": "mohitg0795",
-              "usernameRef": null,
-              "tokenRef": "account.mohit_git_token"
-            }
-          }
-        },
-        "apiAccess": {
-          "type": "Token",
-          "spec": {
-            "tokenRef": "account.mohit_git_token"
-          }
-        },
-        "delegateSelectors": [],
-        "executeOnDelegate": false,
-        "proxy": false,
-        "ignoreTestConnection": false,
-        "type": "Account"
-      }
-    },
-    "createdAt": 1699989870572,
-    "lastModifiedAt": 1715843600921,
-    "status": {
-      "status": "FAILURE",
-      "errorSummary": "Error Encountered (Couldn't connect to given repo)",
-      "errors": [
-        {
-          "reason": "Unexpected Error",
-          "message": "Couldn't connect to given repo",
-          "code": 450
-        }
-      ],
-      "testedAt": 1715843617774,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 1702499002426,
-      "lastAlertSent": null
-    },
-    "activityDetails": {
-      "lastActivityTime": 1702499001025
-    },
-    "harnessManaged": false,
-    "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
-      "rootFolder": null,
-      "filePath": null,
-      "repoName": null,
-      "commitId": null,
-      "fileUrl": null,
-      "repoUrl": null,
-      "parentEntityConnectorRef": null,
-      "parentEntityRepoName": null,
-      "isHarnessCodeRepo": null
-    },
-    "entityValidityDetails": {
-      "valid": true,
-      "invalidYaml": null
-    },
-    "governanceMetadata": null,
-    "isFavorite": false
-  },
-  {
-    "connector": {
-      "name": "deba-github-new",
-      "identifier": "debagithubnew",
-      "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
-      "orgIdentifier": null,
-      "projectIdentifier": null,
-      "tags": {},
-      "type": "Github",
-      "spec": {
-        "url": "https://github.com/Debanitrkl",
-        "validationRepo": "backstage-test",
-        "authentication": {
-          "type": "Http",
-          "spec": {
-            "type": "UsernameToken",
-            "spec": {
-              "username": "Debanitrkl",
-              "usernameRef": null,
-              "tokenRef": "account.deba-github"
-            }
-          }
-        },
-        "apiAccess": {
-          "type": "Token",
-          "spec": {
-            "tokenRef": "account.deba-github"
-          }
-        },
-        "delegateSelectors": [],
-        "executeOnDelegate": false,
-        "proxy": false,
-        "ignoreTestConnection": false,
-        "type": "Account"
-      }
-    },
-    "createdAt": 1714711538641,
-    "lastModifiedAt": 1714711590937,
-    "status": {
-      "status": "FAILURE",
-      "errorSummary": "Error Encountered (Cannot invoke \"io.harness.service.ScmClient.getUserRepos(io.harness.delegate.beans.connector.scm.ScmConnector, io.harness.beans.PageRequestDTO)\" because \"this.scmClient\" is null)",
-      "errors": [
-        {
-          "reason": "Unexpected Error",
-          "message": "Cannot invoke \"io.harness.service.ScmClient.getUserRepos(io.harness.delegate.beans.connector.scm.ScmConnector, io.harness.beans.PageRequestDTO)\" because \"this.scmClient\" is null",
-          "code": 450
-        }
-      ],
-      "testedAt": 1722537004712,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 1714711592962,
-      "lastAlertSent": null
-    },
-    "activityDetails": {
-      "lastActivityTime": 1714711590937
-    },
-    "harnessManaged": false,
-    "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
-      "rootFolder": null,
-      "filePath": null,
-      "repoName": null,
-      "commitId": null,
-      "fileUrl": null,
-      "repoUrl": null,
-      "parentEntityConnectorRef": null,
-      "parentEntityRepoName": null,
-      "isHarnessCodeRepo": null
-    },
-    "entityValidityDetails": {
-      "valid": true,
-      "invalidYaml": null
-    },
-    "governanceMetadata": null,
-    "isFavorite": false
-  },
-  {
-    "connector": {
-      "name": "deba-github2",
-      "identifier": "debagithub",
-      "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
-      "orgIdentifier": null,
-      "projectIdentifier": null,
-      "tags": {},
-      "type": "Github",
-      "spec": {
-        "url": "https://github.com/Debanitrkl",
-        "validationRepo": "backstage-test",
-        "authentication": {
-          "type": "Http",
-          "spec": {
-            "type": "UsernameToken",
-            "spec": {
-              "username": "Debanitrkl",
-              "usernameRef": null,
-              "tokenRef": "account.debagithub"
-            }
-          }
-        },
-        "apiAccess": {
-          "type": "Token",
-          "spec": {
-            "tokenRef": "account.debagithub"
-          }
-        },
-        "delegateSelectors": [],
-        "executeOnDelegate": false,
-        "proxy": false,
-        "ignoreTestConnection": false,
-        "type": "Account"
-      }
-    },
-    "createdAt": 1705589113325,
-    "lastModifiedAt": 1712225243022,
-    "status": {
-      "status": "SUCCESS",
-      "errorSummary": null,
-      "errors": null,
-      "testedAt": 1712225245306,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 1712225245306,
-      "lastAlertSent": null
-    },
-    "activityDetails": {
-      "lastActivityTime": 1708964154955
-    },
-    "harnessManaged": false,
-    "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
-      "rootFolder": null,
-      "filePath": null,
-      "repoName": null,
-      "commitId": null,
-      "fileUrl": null,
-      "repoUrl": null,
-      "parentEntityConnectorRef": null,
-      "parentEntityRepoName": null,
-      "isHarnessCodeRepo": null
-    },
-    "entityValidityDetails": {
-      "valid": true,
-      "invalidYaml": null
-    },
-    "governanceMetadata": null,
-    "isFavorite": false
-  },
-  {
-    "connector": {
-      "name": "vikyath-github",
-      "identifier": "vikyathgithub",
-      "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
-      "orgIdentifier": null,
-      "projectIdentifier": null,
-      "tags": {},
-      "type": "Github",
-      "spec": {
-        "url": "https://github.com/GoelPratyush99/PipelineNgAutomation",
+        "url": "https://gitlab.com/sathish1293/sathish",
         "validationRepo": null,
         "authentication": {
           "type": "Http",
           "spec": {
             "type": "UsernameToken",
             "spec": {
-              "username": "test",
+              "username": "sathish1293",
               "usernameRef": null,
-              "tokenRef": "account.qastresstarget"
-            }
-          }
-        },
-        "apiAccess": null,
-        "delegateSelectors": ["kubernetes-delegate-idp"],
-        "executeOnDelegate": true,
-        "proxy": false,
-        "ignoreTestConnection": false,
-        "type": "Repo"
-      }
-    },
-    "createdAt": 1657105092169,
-    "lastModifiedAt": 1710943248443,
-    "status": {
-      "status": "SUCCESS",
-      "errorSummary": null,
-      "errors": null,
-      "testedAt": 1710943252537,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 1710943252537,
-      "lastAlertSent": null
-    },
-    "activityDetails": {
-      "lastActivityTime": 1658516678690
-    },
-    "harnessManaged": false,
-    "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
-      "rootFolder": null,
-      "filePath": null,
-      "repoName": null,
-      "commitId": null,
-      "fileUrl": null,
-      "repoUrl": null,
-      "parentEntityConnectorRef": null,
-      "parentEntityRepoName": null,
-      "isHarnessCodeRepo": null
-    },
-    "entityValidityDetails": {
-      "valid": true,
-      "invalidYaml": null
-    },
-    "governanceMetadata": null,
-    "isFavorite": false
-  },
-  {
-    "connector": {
-      "name": "vlvlvlvgithubtest22",
-      "identifier": "vlvlvlvgithubtest22",
-      "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
-      "orgIdentifier": null,
-      "projectIdentifier": null,
-      "tags": {},
-      "type": "Github",
-      "spec": {
-        "url": "https://github.com/vlica-harness/prerequisites.git",
-        "validationRepo": null,
-        "authentication": {
-          "type": "Http",
-          "spec": {
-            "type": "Anonymous",
-            "spec": {}
-          }
-        },
-        "apiAccess": null,
-        "delegateSelectors": [],
-        "executeOnDelegate": false,
-        "proxy": false,
-        "ignoreTestConnection": false,
-        "type": "Repo"
-      }
-    },
-    "createdAt": 1706623094838,
-    "lastModifiedAt": 1709881511880,
-    "status": {
-      "status": "SUCCESS",
-      "errorSummary": null,
-      "errors": null,
-      "testedAt": 1716391736963,
-      "lastTestedAt": 0,
-      "lastConnectedAt": 1716391736963,
-      "lastAlertSent": null
-    },
-    "activityDetails": {
-      "lastActivityTime": 1706623094945
-    },
-    "harnessManaged": false,
-    "gitDetails": {
-      "objectId": null,
-      "branch": null,
-      "repoIdentifier": null,
-      "rootFolder": null,
-      "filePath": null,
-      "repoName": null,
-      "commitId": null,
-      "fileUrl": null,
-      "repoUrl": null,
-      "parentEntityConnectorRef": null,
-      "parentEntityRepoName": null,
-      "isHarnessCodeRepo": null
-    },
-    "entityValidityDetails": {
-      "valid": true,
-      "invalidYaml": null
-    },
-    "governanceMetadata": null,
-    "isFavorite": false
-  },
-  {
-    "connector": {
-      "name": "mohit github connector via gcp sm",
-      "identifier": "mohit_github_connector_via_gcp_sm",
-      "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
-      "orgIdentifier": null,
-      "projectIdentifier": null,
-      "tags": {},
-      "type": "Github",
-      "spec": {
-        "url": "https://github.com/wings-software/mohit-to-delete-5",
-        "validationRepo": null,
-        "authentication": {
-          "type": "Http",
-          "spec": {
-            "type": "UsernameToken",
-            "spec": {
-              "username": "mohitg0795",
-              "usernameRef": null,
-              "tokenRef": "account.mohitgithubtokenviagcpsm"
+              "tokenRef": "account.idp_integrations_git_gitlab_repo_tokenmKcPW7X8I4"
             }
           }
         },
         "apiAccess": {
           "type": "Token",
           "spec": {
-            "tokenRef": "account.mohitgithubtokenviagcpsm"
+            "tokenRef": "account.idp_integrations_git_gitlab_repo_tokenmKcPW7X8I4",
+            "apiUrl": ""
           }
         },
         "delegateSelectors": [],
@@ -716,19 +37,19 @@
         "type": "Repo"
       }
     },
-    "createdAt": 1709146247727,
-    "lastModifiedAt": 1709146247723,
+    "createdAt": 1733229200306,
+    "lastModifiedAt": 1733229200304,
     "status": {
       "status": "SUCCESS",
       "errorSummary": null,
       "errors": null,
-      "testedAt": 1709146251761,
+      "testedAt": 1733229203620,
       "lastTestedAt": 0,
-      "lastConnectedAt": 1709146251761,
+      "lastConnectedAt": 1733229203620,
       "lastAlertSent": null
     },
     "activityDetails": {
-      "lastActivityTime": 1709146247723
+      "lastActivityTime": 1733229200304
     },
     "harnessManaged": false,
     "gitDetails": {
@@ -754,55 +75,55 @@
   },
   {
     "connector": {
-      "name": "test_logout_github",
-      "identifier": "test_logout_github",
+      "name": "idp_automation_gitlab_repo_token_delegate_with_api_accessfyRKtovEDP",
+      "identifier": "idp_automation_gitlab_repo_token_delegate_with_api_accessfyRKtovEDP",
       "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+      "accountIdentifier": "vpCkHKsDSxK9_KYfjCTMKA",
       "orgIdentifier": null,
       "projectIdentifier": null,
       "tags": {},
-      "type": "Github",
+      "type": "Gitlab",
       "spec": {
-        "url": "https://github.com/harness/harness-core",
+        "url": "https://gitlab.com/sathish1293/sathish",
         "validationRepo": null,
         "authentication": {
           "type": "Http",
           "spec": {
             "type": "UsernameToken",
             "spec": {
-              "username": "tejas.tiwari",
+              "username": "sathish1293",
               "usernameRef": null,
-              "tokenRef": "account.idp_onboarding_secretRKxJwKVXGQ"
+              "tokenRef": "account.idp_integrations_git_gitlab_repo_tokenN2i3hdz0AB"
             }
           }
         },
-        "apiAccess": null,
+        "apiAccess": {
+          "type": "Token",
+          "spec": {
+            "tokenRef": "account.idp_integrations_git_gitlab_repo_tokenN2i3hdz0AB",
+            "apiUrl": ""
+          }
+        },
         "delegateSelectors": [],
-        "executeOnDelegate": false,
+        "executeOnDelegate": true,
         "proxy": false,
         "ignoreTestConnection": false,
         "type": "Repo"
       }
     },
-    "createdAt": 1708939942712,
-    "lastModifiedAt": 1708939942709,
+    "createdAt": 1733229191871,
+    "lastModifiedAt": 1733229191867,
     "status": {
-      "status": "FAILURE",
-      "errorSummary": "Error Encountered (Please check your credentials (potential token expiration issue))",
-      "errors": [
-        {
-          "reason": "Unexpected Error",
-          "message": "Please check your credentials (potential token expiration issue)",
-          "code": 450
-        }
-      ],
-      "testedAt": 1708939959612,
+      "status": "SUCCESS",
+      "errorSummary": null,
+      "errors": null,
+      "testedAt": 1733229196534,
       "lastTestedAt": 0,
-      "lastConnectedAt": 0,
+      "lastConnectedAt": 1733229196534,
       "lastAlertSent": null
     },
     "activityDetails": {
-      "lastActivityTime": 1708939942709
+      "lastActivityTime": 1733229191867
     },
     "harnessManaged": false,
     "gitDetails": {
@@ -828,25 +149,256 @@
   },
   {
     "connector": {
-      "name": "vlvlvlvgithubtest111",
-      "identifier": "vlvlvlvgithubtest111",
+      "name": "idp_automation_gitlab_account_token_manager_with_api_accessnyRvINsPm3",
+      "identifier": "idp_automation_gitlab_account_token_manager_with_api_accessnyRvINsPm3",
       "description": "",
-      "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+      "accountIdentifier": "vpCkHKsDSxK9_KYfjCTMKA",
+      "orgIdentifier": null,
+      "projectIdentifier": null,
+      "tags": {},
+      "type": "Gitlab",
+      "spec": {
+        "url": "https://gitlab.com/sathish1293",
+        "validationRepo": "sathish",
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "UsernameToken",
+            "spec": {
+              "username": "sathish1293",
+              "usernameRef": null,
+              "tokenRef": "account.idp_integrations_git_gitlab_account_tokendhosPoZS9T"
+            }
+          }
+        },
+        "apiAccess": {
+          "type": "Token",
+          "spec": {
+            "tokenRef": "account.idp_integrations_git_gitlab_account_tokendhosPoZS9T",
+            "apiUrl": ""
+          }
+        },
+        "delegateSelectors": [],
+        "executeOnDelegate": false,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Account"
+      }
+    },
+    "createdAt": 1733229189527,
+    "lastModifiedAt": 1733229189525,
+    "status": {
+      "status": "SUCCESS",
+      "errorSummary": null,
+      "errors": null,
+      "testedAt": 1733229190997,
+      "lastTestedAt": 0,
+      "lastConnectedAt": 1733229190997,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1733229189525
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+  },
+  {
+    "connector": {
+      "name": "idp_automation_gitlab_account_token_delegate_with_api_access9piJ0v8Hu7",
+      "identifier": "idp_automation_gitlab_account_token_delegate_with_api_access9piJ0v8Hu7",
+      "description": "",
+      "accountIdentifier": "vpCkHKsDSxK9_KYfjCTMKA",
+      "orgIdentifier": null,
+      "projectIdentifier": null,
+      "tags": {},
+      "type": "Gitlab",
+      "spec": {
+        "url": "https://gitlab.com/sathish1293",
+        "validationRepo": "sathish",
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "UsernameToken",
+            "spec": {
+              "username": "sathish1293",
+              "usernameRef": null,
+              "tokenRef": "account.idp_integrations_git_gitlab_account_tokensjKVKRWDEU"
+            }
+          }
+        },
+        "apiAccess": {
+          "type": "Token",
+          "spec": {
+            "tokenRef": "account.idp_integrations_git_gitlab_account_tokensjKVKRWDEU",
+            "apiUrl": ""
+          }
+        },
+        "delegateSelectors": [],
+        "executeOnDelegate": true,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Account"
+      }
+    },
+    "createdAt": 1733229183940,
+    "lastModifiedAt": 1733229183938,
+    "status": {
+      "status": "SUCCESS",
+      "errorSummary": null,
+      "errors": null,
+      "testedAt": 1733229187135,
+      "lastTestedAt": 0,
+      "lastConnectedAt": 1733229187135,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1733229183938
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+  },
+  {
+    "connector": {
+      "name": "idp_automation_gitlab_account_token_delegate_with_api_accessNsHoen6Sia",
+      "identifier": "idp_automation_gitlab_account_token_delegate_with_api_accessNsHoen6Sia",
+      "description": "",
+      "accountIdentifier": "vpCkHKsDSxK9_KYfjCTMKA",
+      "orgIdentifier": null,
+      "projectIdentifier": null,
+      "tags": {},
+      "type": "Gitlab",
+      "spec": {
+        "url": "https://gitlab.com/sathish1293",
+        "validationRepo": "sathish",
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "UsernameToken",
+            "spec": {
+              "username": "sathish1293",
+              "usernameRef": null,
+              "tokenRef": "account.idp_integrations_git_gitlab_account_tokenC0zTA80pjU"
+            }
+          }
+        },
+        "apiAccess": {
+          "type": "Token",
+          "spec": {
+            "tokenRef": "account.idp_integrations_git_gitlab_account_tokenC0zTA80pjU",
+            "apiUrl": ""
+          }
+        },
+        "delegateSelectors": [],
+        "executeOnDelegate": true,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Account"
+      }
+    },
+    "createdAt": 1733229176811,
+    "lastModifiedAt": 1733229176807,
+    "status": {
+      "status": "SUCCESS",
+      "errorSummary": null,
+      "errors": null,
+      "testedAt": 1733229180994,
+      "lastTestedAt": 0,
+      "lastConnectedAt": 1733229180994,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1733229176807
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+  },
+  {
+    "connector": {
+      "name": "idp_automation_github_repo_token_manager_with_api_accesslI57BbIiO8",
+      "identifier": "idp_automation_github_repo_token_manager_with_api_accesslI57BbIiO8",
+      "description": "",
+      "accountIdentifier": "vpCkHKsDSxK9_KYfjCTMKA",
       "orgIdentifier": null,
       "projectIdentifier": null,
       "tags": {},
       "type": "Github",
       "spec": {
-        "url": "https://github.com/vlica-harness/prerequisites.git",
+        "url": "https://github.com/sathish-soundarapandian/onboarding-test",
         "validationRepo": null,
         "authentication": {
           "type": "Http",
           "spec": {
-            "type": "Anonymous",
-            "spec": {}
+            "type": "UsernameToken",
+            "spec": {
+              "username": "sathish-soundarapandian",
+              "usernameRef": null,
+              "tokenRef": "account.idp_integrations_git_github_repo_tokenPe9FVjWpgt"
+            }
           }
         },
-        "apiAccess": null,
+        "apiAccess": {
+          "type": "Token",
+          "spec": {
+            "tokenRef": "account.idp_integrations_git_github_repo_tokenPe9FVjWpgt"
+          }
+        },
         "delegateSelectors": [],
         "executeOnDelegate": false,
         "proxy": false,
@@ -854,19 +406,323 @@
         "type": "Repo"
       }
     },
-    "createdAt": 1706623069552,
-    "lastModifiedAt": 1706623164948,
+    "createdAt": 1733229174390,
+    "lastModifiedAt": 1733229174387,
     "status": {
       "status": "SUCCESS",
       "errorSummary": null,
       "errors": null,
-      "testedAt": 1706623069950,
+      "testedAt": 1733229175369,
       "lastTestedAt": 0,
-      "lastConnectedAt": 1706623069950,
+      "lastConnectedAt": 1733229175369,
       "lastAlertSent": null
     },
     "activityDetails": {
-      "lastActivityTime": 1706623165070
+      "lastActivityTime": 1733229174387
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+  },
+  {
+    "connector": {
+      "name": "idp_automation_github_repo_token_delegate_with_api_accessEpB5zc4UBb",
+      "identifier": "idp_automation_github_repo_token_delegate_with_api_accessEpB5zc4UBb",
+      "description": "",
+      "accountIdentifier": "vpCkHKsDSxK9_KYfjCTMKA",
+      "orgIdentifier": null,
+      "projectIdentifier": null,
+      "tags": {},
+      "type": "Github",
+      "spec": {
+        "url": "https://github.com/sathish-soundarapandian/onboarding-test",
+        "validationRepo": null,
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "UsernameToken",
+            "spec": {
+              "username": "sathish-soundarapandian",
+              "usernameRef": null,
+              "tokenRef": "account.idp_integrations_git_github_repo_tokenUmdYZQwOww"
+            }
+          }
+        },
+        "apiAccess": {
+          "type": "Token",
+          "spec": {
+            "tokenRef": "account.idp_integrations_git_github_repo_tokenUmdYZQwOww"
+          }
+        },
+        "delegateSelectors": [],
+        "executeOnDelegate": true,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Repo"
+      }
+    },
+    "createdAt": 1733229168140,
+    "lastModifiedAt": 1733229168137,
+    "status": {
+      "status": "SUCCESS",
+      "errorSummary": null,
+      "errors": null,
+      "testedAt": 1733229172390,
+      "lastTestedAt": 0,
+      "lastConnectedAt": 1733229172390,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1733229168137
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+  },
+  {
+    "connector": {
+      "name": "idp_automation_github_repo_token_delegate_with_api_accessgs6FHpUozM",
+      "identifier": "idp_automation_github_repo_token_delegate_with_api_accessgs6FHpUozM",
+      "description": "",
+      "accountIdentifier": "vpCkHKsDSxK9_KYfjCTMKA",
+      "orgIdentifier": null,
+      "projectIdentifier": null,
+      "tags": {},
+      "type": "Github",
+      "spec": {
+        "url": "https://github.com/sathish-soundarapandian/onboarding-test",
+        "validationRepo": null,
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "UsernameToken",
+            "spec": {
+              "username": "sathish-soundarapandian",
+              "usernameRef": null,
+              "tokenRef": "account.idp_integrations_git_github_repo_tokenPImmNIqBEy"
+            }
+          }
+        },
+        "apiAccess": {
+          "type": "Token",
+          "spec": {
+            "tokenRef": "account.idp_integrations_git_github_repo_tokenPImmNIqBEy"
+          }
+        },
+        "delegateSelectors": [],
+        "executeOnDelegate": true,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Repo"
+      }
+    },
+    "createdAt": 1733229158922,
+    "lastModifiedAt": 1733229158917,
+    "status": {
+      "status": "SUCCESS",
+      "errorSummary": null,
+      "errors": null,
+      "testedAt": 1733229161468,
+      "lastTestedAt": 0,
+      "lastConnectedAt": 1733229161468,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1733229158917
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+  },
+  {
+    "connector": {
+      "name": "idp_automation_github_repo_github_app_manager_with_api_accessCbEHVnGnKG",
+      "identifier": "idp_automation_github_repo_github_app_manager_with_api_accessCbEHVnGnKG",
+      "description": "",
+      "accountIdentifier": "vpCkHKsDSxK9_KYfjCTMKA",
+      "orgIdentifier": null,
+      "projectIdentifier": null,
+      "tags": {},
+      "type": "Github",
+      "spec": {
+        "url": "https://github.com/sathish-soundarapandian/onboarding-test",
+        "validationRepo": null,
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "GithubApp",
+            "spec": {
+              "installationId": "36899459",
+              "applicationId": "307885",
+              "installationIdRef": null,
+              "applicationIdRef": null,
+              "privateKeyRef": "account.idp_integrations_git_github_repo_github_app_private_keyxcBsgQ6nkY"
+            }
+          }
+        },
+        "apiAccess": {
+          "type": "GithubApp",
+          "spec": {
+            "installationId": "36899459",
+            "applicationId": "307885",
+            "installationIdRef": null,
+            "applicationIdRef": null,
+            "privateKeyRef": "account.idp_integrations_git_github_repo_github_app_private_keyxcBsgQ6nkY"
+          }
+        },
+        "delegateSelectors": [],
+        "executeOnDelegate": false,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Repo"
+      }
+    },
+    "createdAt": 1733229155967,
+    "lastModifiedAt": 1733229155962,
+    "status": {
+      "status": "SUCCESS",
+      "errorSummary": null,
+      "errors": null,
+      "testedAt": 1733229156585,
+      "lastTestedAt": 0,
+      "lastConnectedAt": 1733229156585,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1733229155962
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+  },
+  {
+    "connector": {
+      "name": "idp_automation_github_repo_github_app_delegate_with_api_accessnHXHYyYHSB",
+      "identifier": "idp_automation_github_repo_github_app_delegate_with_api_accessnHXHYyYHSB",
+      "description": "",
+      "accountIdentifier": "vpCkHKsDSxK9_KYfjCTMKA",
+      "orgIdentifier": null,
+      "projectIdentifier": null,
+      "tags": {},
+      "type": "Github",
+      "spec": {
+        "url": "https://github.com/sathish-soundarapandian/onboarding-test",
+        "validationRepo": null,
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "GithubApp",
+            "spec": {
+              "installationId": "36899459",
+              "applicationId": "307885",
+              "installationIdRef": null,
+              "applicationIdRef": null,
+              "privateKeyRef": "account.idp_integrations_git_github_repo_github_app_private_key6l0fFUCFfi"
+            }
+          }
+        },
+        "apiAccess": {
+          "type": "GithubApp",
+          "spec": {
+            "installationId": "36899459",
+            "applicationId": "307885",
+            "installationIdRef": null,
+            "applicationIdRef": null,
+            "privateKeyRef": "account.idp_integrations_git_github_repo_github_app_private_key6l0fFUCFfi"
+          }
+        },
+        "delegateSelectors": [],
+        "executeOnDelegate": true,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Repo"
+      }
+    },
+    "createdAt": 1733229148812,
+    "lastModifiedAt": 1733229148807,
+    "status": {
+      "status": "SUCCESS",
+      "errorSummary": null,
+      "errors": null,
+      "testedAt": 1733229154306,
+      "lastTestedAt": 0,
+      "lastConnectedAt": 1733229154306,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1733229148807
     },
     "harnessManaged": false,
     "gitDetails": {

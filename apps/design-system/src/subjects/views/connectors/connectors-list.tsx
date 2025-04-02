@@ -11,6 +11,7 @@ const ConnectorsListPageWrapper = (): JSX.Element => (
       mockConnectorsList.map(connector => ({
         name: connector.connector.name,
         identifier: connector.connector.identifier,
+        type: connector.connector.type,
         status: connector.status.status,
         lastTestedAt: connector.status.lastTestedAt,
         lastModifiedAt: connector.lastModifiedAt,

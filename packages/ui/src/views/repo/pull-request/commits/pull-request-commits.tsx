@@ -35,7 +35,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
         />
       )}
 
-      {commitsList?.length && (
+      {!!commitsList?.length && (
         <CommitsList
           toCode={toCode}
           toCommitDetails={toCommitDetails}

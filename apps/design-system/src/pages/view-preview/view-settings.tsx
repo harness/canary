@@ -27,7 +27,6 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
     }
 
     bodyClass.add(currentTheme)
-    bodyClass.add('overflow-hidden')
     sessionStorage.setItem('view-preview-theme', currentTheme)
   }, [currentTheme])
 

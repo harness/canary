@@ -16,7 +16,8 @@ const badgeVariants = cva('badge inline-flex items-center transition-colors', {
       solid: 'badge-solid',
       soft: 'badge-soft',
       surface: 'badge-surface',
-      status: 'badge-status'
+      status: 'badge-status',
+      counter: 'badge-counter'
       // default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
       // secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
       // tertiary: 'border-transparent bg-cn-background-8 text-cn-foreground-8',
@@ -92,12 +93,26 @@ type BadgeBaseProps = Omit<
   'color' | 'role' | 'aria-readonly' | 'tabIndex' | 'onClick'
 > & {
   size?: 'default' | 'sm'
+  pulse?: never
 }
 
 // AI theme props (variant not allowed)
 type BadgeAIThemeProps = BadgeBaseProps & {
   theme: 'ai'
   variant?: never
+}
+
+// Status theme props (variant is required)
+type BadgeStatusVariantProps = BadgeBaseProps & {
+  theme?: Exclude<VariantProps<typeof badgeVariants>['theme'], 'ai'>
+  variant: 'status'
+  pulse?: boolean
+}
+
+// Status theme props (variant is required)
+type BadgeCounterVariantProps = BadgeBaseProps & {
+  theme: Extract<VariantProps<typeof badgeVariants>['theme'], 'primary'>
+  variant: 'counter'
 }
 
 // Non-AI theme props (variant is required)
@@ -107,9 +122,9 @@ type BadgeOtherThemeProps = BadgeBaseProps & {
 }
 
 // Combined props using discriminated union
-export type BadgeProps = BadgeAIThemeProps | BadgeOtherThemeProps
+export type BadgeProps = BadgeAIThemeProps | BadgeOtherThemeProps | BadgeStatusVariantProps | BadgeCounterVariantProps
 
-function Badge({ className, variant, size, theme = 'muted', children, ...props }: BadgeProps) {
+function Badge({ className, variant, size, pulse, theme = 'muted', children, ...props }: BadgeProps) {
   // If theme is 'ai', we don't use variant
   const effectiveVariant = theme === 'ai' ? undefined : variant
 
@@ -130,7 +145,9 @@ function Badge({ className, variant, size, theme = 'muted', children, ...props }
       )}
       {...props}
     >
-      {isStatusVariant && <span className="badge-indicator size-1.5 rounded-full" aria-hidden="true" />}
+      {isStatusVariant && (
+        <span className={cn('badge-indicator rounded-full', { 'animate-pulse': pulse })} aria-hidden="true" />
+      )}
       {children}
     </div>
   )

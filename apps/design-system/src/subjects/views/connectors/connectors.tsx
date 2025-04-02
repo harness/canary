@@ -11,8 +11,8 @@ import {
   BooleanInput,
   ConnectorEntity,
   ConnectorEntityForm,
-  ConnectorEntityIntent,
   ConnectorsPalette,
+  EntityIntent,
   GroupInput,
   ListInput,
   NumberInput,
@@ -42,7 +42,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
   const [isEditConnectorDrawerOpen, setIsEditConnectorDrawerOpen] = useState(false)
   const [isConnectorSelected, setIsConnectorSelected] = useState(false)
   const [, setIsSecretDrawerOpen] = useState(false)
-  const [intent, setIntent] = useState<ConnectorEntityIntent>(ConnectorEntityIntent.CREATE)
+  const [intent, setIntent] = useState<EntityIntent>(EntityIntent.CREATE)
 
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
@@ -56,7 +56,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
                 variant="default"
                 onClick={() => {
                   setIsConnectorDrawerOpen(true)
-                  setIntent(ConnectorEntityIntent.CREATE)
+                  setIntent(EntityIntent.CREATE)
                 }}
               >
                 Create Connector
@@ -75,7 +75,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
                     }
                   })
                   setIsEditConnectorDrawerOpen(true)
-                  setIntent(ConnectorEntityIntent.EDIT)
+                  setIntent(EntityIntent.EDIT)
                 }}
               >
                 Edit Connector

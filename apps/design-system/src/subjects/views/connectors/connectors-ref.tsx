@@ -10,13 +10,13 @@ import {
   BooleanInput,
   ConnectorEntity,
   ConnectorEntityForm,
-  ConnectorEntityIntent,
   ConnectorHeader,
   ConnectorItem,
   ConnectorReference,
   ConnectorSelectionType,
   ConnectorsPalette,
   DirectionEnum,
+  EntityIntent,
   GroupInput,
   ListInput,
   NumberInput,
@@ -119,7 +119,7 @@ export const ConnectorsRefPage = ({
               <Drawer.Content>
                 {connectorEntity ? (
                   <ConnectorEntityForm
-                    intent={ConnectorEntityIntent.CREATE}
+                    intent={EntityIntent.CREATE}
                     useTranslationStore={useTranslationStore}
                     connector={connectorEntity}
                     onBack={() => setIsConnectorSelected(false)}

@@ -8,7 +8,7 @@ export type IInputConfigWithConfigInterface = IInputDefinition & InputConfigType
 export interface onSubmitConnectorProps {
   values: FieldValues
   connector: ConnectorEntity
-  intent: ConnectorEntityIntent
+  intent: EntityIntent
 }
 
 export type ConnectorEntity<T = any> = {
@@ -134,7 +134,7 @@ export enum ConnectorSelectionType {
   EXISTING = 'existing'
 }
 
-export enum ConnectorEntityIntent {
+export enum EntityIntent {
   CREATE = 'create',
   EDIT = 'edit'
 }

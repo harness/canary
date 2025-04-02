@@ -17,7 +17,7 @@ import {
   useZodValidationResolver
 } from '@harnessio/forms'
 
-import { AnyConnectorDefinition, ConnectorEntity, ConnectorEntityIntent, onSubmitConnectorProps } from './types'
+import { AnyConnectorDefinition, ConnectorEntity, EntityIntent, onSubmitConnectorProps } from './types'
 
 interface ConnectorEntityFormProps {
   connector: ConnectorEntity
@@ -30,7 +30,7 @@ interface ConnectorEntityFormProps {
   openSecretDrawer?: () => void
   apiError?: string | null
   selectedSecret?: SecretItem
-  intent: ConnectorEntityIntent
+  intent: EntityIntent
 }
 
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
@@ -90,7 +90,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
   })
 
   useEffect(() => {
-    if (intent === ConnectorEntityIntent.EDIT && connector?.spec) {
+    if (intent === EntityIntent.EDIT && connector?.spec) {
       const definition = getConnectorDefinition(connector.type)
       if (definition) {
         const transformers = getTransformers(definition?.formDefinition)
@@ -112,7 +112,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
   return (
     <RootForm
       autoFocusPath={formDefinition.inputs[0]?.path}
-      defaultValues={intent === ConnectorEntityIntent.CREATE ? defaultConnectorValues : connectorEditValues}
+      defaultValues={intent === EntityIntent.CREATE ? defaultConnectorValues : connectorEditValues}
       resolver={resolver}
       mode="onSubmit"
       onSubmit={values => {
@@ -125,8 +125,8 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           <EntityFormSectionLayout.Root>
             <EntityFormSectionLayout.Header>
               <EntityFormSectionLayout.Title className="!my-0">
-                {intent === ConnectorEntityIntent.CREATE ? 'Connect to ' : 'Edit '}
-                {intent === ConnectorEntityIntent.EDIT ? `${connector.type} connector` : connector.name}
+                {intent === EntityIntent.CREATE ? 'Connect to' : 'Edit '}
+                {intent === EntityIntent.EDIT ? `${connector.type} connector` : connector.name}
               </EntityFormSectionLayout.Title>
             </EntityFormSectionLayout.Header>
             <EntityFormSectionLayout.Form>

@@ -25,7 +25,7 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
         <div className="border-b border-cn-borders-2 px-3 pb-2.5">
           <div className="flex min-h-8 justify-between gap-x-1 rounded border border-cn-borders-2 px-1 py-[3px] outline-none transition-colors duration-200 focus-within:border focus-within:border-cn-borders-3">
             <div className="flex flex-1 flex-wrap items-center gap-1">
-              {!!filter.selectedValues.length &&
+              {!!filter?.selectedValues?.length &&
                 filter.selectedValues.map(value => {
                   const label = filterOption.options?.find(opt => opt.value === value)?.label
                   return (
@@ -47,7 +47,7 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
               <Input
                 className="h-6 flex-1 border-none outline-none hover:border-none focus:border-none focus-visible:ring-0"
                 type="text"
-                placeholder={filter.selectedValues.length ? '' : 'Select one or more options...'}
+                placeholder={filter?.selectedValues?.length ? '' : 'Select one or more options...'}
                 value={searchQueries.filters[filter.type] || ''}
                 onChange={e => handleSearchChange?.(filter.type, e.target.value, 'filters')}
                 onClick={e => {
@@ -56,7 +56,7 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
                 onKeyDown={e => e.stopPropagation()}
               />
             </div>
-            {(!!filter.selectedValues.length || searchQueries.filters[filter.type]) && (
+            {(!!filter?.selectedValues?.length || searchQueries.filters[filter.type]) && (
               <button
                 className="flex p-1.5 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
                 onClick={() => {

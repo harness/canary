@@ -9,7 +9,8 @@ type ToasterToast = ToastProps & {
   id: string
   title?: ReactNode
   description?: ReactNode
-  action?: ToastActionElement
+  action?: ToastActionElement | null
+  showIcon?: boolean
 }
 
 let count = 0

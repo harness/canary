@@ -91,6 +91,20 @@ export default {
           solidred: 'var(--cn-set-red-solid-border)',
           risk: 'var(--cn-icon-risk)'
         },
+        toast: {
+          background: {
+              danger: 'hsla(var(--canary-toast-background-danger))'
+          },
+          foreground: {
+              danger: 'hsla(var(--canary-toast-foreground-danger))'
+          },
+          icons: {
+              danger: {
+                  default: 'hsla(var(--canary-toast-icon-danger-default))',
+                  hover: 'hsla(var(--canary-toast-icon-danger-hover))'
+              }
+          }
+        },
         // Remove Tag Colors once Toast component is removed
         tag: {
           border: {
@@ -499,6 +513,9 @@ export default {
     { pattern: /^bg-tag-background-/ },
     { pattern: /^text-tag-foreground-/ },
     { pattern: /^border-tag-border-/ },
+    // toast classes
+    { pattern: /^bg-toast-/ },
+    { pattern: /^text-toast-/ },
     // label classes
     { pattern: /^bg-label-background-/ },
     { pattern: /^bg-label-foreground-/ }, // this is essential for the color select in the LabelFormColorAndNameGroup component
@@ -517,6 +534,7 @@ export default {
     { pattern: /^hover:bg-graph-/ },
     { pattern: /^hover:text-icons-/ },
     { pattern: /^hover:bg-icons-/ },
+    { pattern: /^hover:text-toast-/ },
     // tags classes
     { pattern: /^hover:bg-tag-background-/ },
     { pattern: /^hover:text-tag-foreground-/ },

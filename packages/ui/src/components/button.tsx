@@ -19,7 +19,7 @@ const buttonVariants = cva(
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         tertiary: 'bg-tertiary text-secondary-foreground hover:bg-tertiary/80',
         ghost: 'hover:bg-cn-background-12 hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+        link: 'text-cn-foreground-1 underline-offset-4 hover:underline',
         link_accent: 'text-cn-foreground-accent underline-offset-4 hover:underline',
         split: 'flex items-center gap-1.5 border p-0',
         'gradient-border': 'bg-cn-background-2 text-cn-foreground-1 hover:bg-cn-background-8',

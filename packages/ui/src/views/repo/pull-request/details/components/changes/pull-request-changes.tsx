@@ -156,7 +156,7 @@ const LineTitle: React.FC<LineTitleProps> = ({
               }}
               className="size-4"
             />
-            <Text size={2} className="text-primary/90">
+            <Text size={2} className="text-cn-foreground-1/90">
               {t('views:pullRequests.viewed')}
             </Text>
           </div>

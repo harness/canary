@@ -37,7 +37,7 @@ export const EditRepoDetails = ({
         </AlertDialog.Header>
         <Textarea
           label="Description"
-          className="h-24 text-primary"
+          className="h-24 text-cn-foreground-1"
           value={newDesc}
           defaultValue={description}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {

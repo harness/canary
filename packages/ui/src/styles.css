@@ -84,7 +84,7 @@
 /* Text utilities */
 .text-radial-gradient {
   /* remove hardcode colors */
-  @apply bg-gradient-radial text-primary/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
+  @apply bg-gradient-radial text-cn-foreground-1/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
 }
 
 /* Card utilities */
@@ -104,7 +104,7 @@
 }
 .form-input {
   @apply border-primary/10 bg-primary/5 mt-1 w-full rounded-[4px] text-sm font-light;
-  @apply placeholder:text-primary/50 !important;
+  @apply placeholder:text-cn-foreground-1/50 !important;
 }
 
 /* Temporary studio controls override */

@@ -32,7 +32,7 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
       </ToggleGroup.Item>
       <ToggleGroup.Item
         value={'yaml'}
-        className="h-7 rounded-md border border-transparent text-xs font-medium text-tertiary-background data-[state=on]:border-white/10 data-[state=on]:text-primary"
+        className="h-7 rounded-md border border-transparent text-xs font-medium text-tertiary-background data-[state=on]:border-white/10 data-[state=on]:text-cn-foreground-1"
       >
         YAML
       </ToggleGroup.Item>

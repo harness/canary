@@ -72,7 +72,9 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
             />
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default" onClick={onCreate}>{t('views:connectors.createNew', 'Create new connector')}</Button>
+            <Button variant="default" onClick={onCreate}>
+              {t('views:connectors.createNew', 'Create new connector')}
+            </Button>
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={4} />

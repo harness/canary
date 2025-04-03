@@ -12,7 +12,9 @@ const external = [
   'react-router',
   'react/jsx-runtime',
   'react-i18next',
-  'i18next'
+  'i18next',
+  'monaco-editor',
+  'monaco-yaml'
 ]
 
 export default defineConfig({

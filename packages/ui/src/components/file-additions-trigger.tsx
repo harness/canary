@@ -2,7 +2,7 @@ import { FC, useRef } from 'react'
 
 import { Button, DropdownMenu, Icon } from '@/components'
 import { useRouterContext } from '@/context'
-import { TranslationStore } from '@/views'
+import { TranslationStore } from '@/types'
 
 export interface FileAdditionsTriggerProps {
   useTranslationStore: () => TranslationStore

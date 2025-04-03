@@ -1,5 +1,7 @@
 import { TabNav } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { TranslationStore } from '@/types'
+// TODO Move sandbox layout to UI components
+import { SandboxLayout } from '@/views'
 
 export enum RepoTabsKeys {
   SUMMARY = 'summary',

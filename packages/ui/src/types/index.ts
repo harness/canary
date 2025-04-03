@@ -1,3 +1,4 @@
+import { i18n, TFunction } from 'i18next'
 import { z } from 'zod'
 
 export interface TypesUser {
@@ -9,6 +10,12 @@ export interface TypesUser {
   uid?: string
   updated?: number
   url?: string
+}
+
+export interface TranslationStore {
+  t: TFunction
+  i18n: i18n
+  changeLanguage: (lng: string) => void
 }
 
 export const formSchema = z.object({

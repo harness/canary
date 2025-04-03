@@ -1,7 +1,7 @@
 import { cn } from '@utils/cn'
-import { getNestedStepsCount } from '@views/unified-pipeline-studio/components/graph-implementation/utils/common-step-utils'
 
 import {
+  AnyNodeInternal,
   ParallelNodeInternalType,
   SerialNodeInternalType,
   type ParallelContainerConfigType,
@@ -9,6 +9,34 @@ import {
 } from '@harnessio/pipeline-graph'
 
 import { PipelineNodes } from '..'
+
+// Need to be consumed by views from UI
+enum YamlEntityType {
+  Step = 'Step',
+  Stage = 'Stage',
+  ParallelStageGroup = 'ParallelStageGroup',
+  SerialStageGroup = 'SerialStageGroup',
+  SerialStepGroup = 'SerialStepGroup',
+  ParallelStepGroup = 'ParallelStepGroup'
+}
+
+export const getNestedStepsCount = (children?: AnyNodeInternal[]): number => {
+  let count = 0
+
+  if (!children) return 0
+
+  for (const child of children) {
+    if (child.type === YamlEntityType.Step) {
+      count += 1
+    }
+
+    if ('children' in child && Array.isArray(child.children)) {
+      count += getNestedStepsCount(child.children)
+    }
+  }
+
+  return count
+}
 
 export function CollapsedGroupNode({
   node,

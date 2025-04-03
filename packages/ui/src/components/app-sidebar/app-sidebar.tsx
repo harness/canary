@@ -11,8 +11,7 @@ import {
   useSidebar
 } from '@/components'
 import { ContentStyleType, useRouterContext, useTheme } from '@/context'
-import { TypesUser } from '@/types'
-import { TranslationStore } from '@/views'
+import { TranslationStore, TypesUser } from '@/types'
 import { cn } from '@utils/cn'
 
 import { SidebarItem } from './sidebar-item'

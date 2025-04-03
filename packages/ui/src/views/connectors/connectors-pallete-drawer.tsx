@@ -45,7 +45,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
           }}
         />
       </ConnectorsPaletteLayout.Header>
-      <StepsPaletteContentLayout.Root>
+      <StepsPaletteContentLayout.Root className="!px-0">
         <ConnectorsPaletteSection
           connectors={connectorsFiltered}
           onSelect={connector => {

@@ -420,7 +420,7 @@ const PullRequestDiffViewer = ({
                   !!parent.payload?.resolved && (
                     <div className="flex items-center gap-x-1">
                       <span className="font-medium text-cn-foreground-1">{parent.payload?.resolver?.display_name}</span>
-                      <span className="text-cn-foreground-4">marked this conversation as resolved</span>
+                      <span className="text-cn-foreground-2">marked this conversation as resolved</span>
                     </div>
                   )
                 }
@@ -451,7 +451,7 @@ const PullRequestDiffViewer = ({
                         {
                           name: parent.author,
                           description: (
-                            <Layout.Horizontal className="text-cn-foreground-4">
+                            <Layout.Horizontal className="text-cn-foreground-2">
                               <span>{timeAgo(parent?.created as number)}</span>
                               {parent?.deleted ? (
                                 <>
@@ -532,7 +532,7 @@ const PullRequestDiffViewer = ({
                                 {
                                   name: reply.author,
                                   description: (
-                                    <Layout.Horizontal className="text-cn-foreground-4">
+                                    <Layout.Horizontal className="text-cn-foreground-2">
                                       <span>{timeAgo(reply?.created as number)}</span>
                                       {reply?.deleted ? (
                                         <>

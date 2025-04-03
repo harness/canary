@@ -131,7 +131,7 @@ const AlertDialogDescription = React.forwardRef<
   const variants = {
     variant: {
       secondary: 'text-cn-foreground-2',
-      quaternary: 'text-cn-foreground-4'
+      quaternary: 'text-cn-foreground-2'
     },
     size: {
       sm: 'text-sm'

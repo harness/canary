@@ -125,7 +125,7 @@ const FilterTrigger = ({
           {searchQueries.menu[type] && (
             <div className="absolute right-3">
               <button
-                className="flex p-1.5 text-cn-foreground-4 transition-colors duration-200 hover:text-cn-foreground-1"
+                className="flex p-1.5 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
                 onClick={e => {
                   e.preventDefault()
                   onSearchChange(type, '', 'menu')

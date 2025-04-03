@@ -56,8 +56,8 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
 
             return (
               <DropdownMenu.Item
-                className={cn('hover:bg-cn-background-4 cursor-pointer py-2 leading-none', {
-                  'bg-cn-background-4': isSelected,
+                className={cn('hover:bg-cn-background-hover cursor-pointer py-2 leading-none', {
+                  'bg-cn-background-hover': isSelected,
                   'pl-7': !isSelected
                 })}
                 onClick={() => {

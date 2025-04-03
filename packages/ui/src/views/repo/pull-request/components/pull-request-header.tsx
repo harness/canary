@@ -69,7 +69,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         <div className="flex w-full max-w-full items-center gap-x-3 text-24">
           <div className="flex items-center gap-x-2.5 leading-snug">
             <h1 className="flex max-w-[95%] items-center truncate font-medium text-cn-foreground-1">{title}</h1>
-            <span className="font-normal text-cn-foreground-4">#{number}</span>
+            <span className="font-normal text-cn-foreground-2">#{number}</span>
           </div>
 
           <Button
@@ -91,7 +91,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
             {stateObject.text}
           </Badge>
 
-          <div className="inline-flex flex-wrap items-center gap-1 text-cn-foreground-4">
+          <div className="inline-flex flex-wrap items-center gap-1 text-cn-foreground-2">
             <span className="font-medium text-cn-foreground-1">{author?.display_name || author?.email || ''}</span>
             <span>{merged ? 'merged' : ' wants to merge'}</span>
             <span className="font-medium text-cn-foreground-1">
@@ -118,7 +118,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               </Link>
             </Badge>
             <span className="bg-borders-2 mx-1.5 h-4 w-px" />
-            <span className="text-cn-foreground-4">{formattedTime}</span>
+            <span className="text-cn-foreground-2">{formattedTime}</span>
           </div>
         </div>
       </div>

@@ -175,7 +175,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     Commit directly to the
                     <span
                       className="
-                        relative mx-1.5 inline-flex gap-1 px-2.5 text-cn-foreground-8
+                        relative mx-1.5 inline-flex gap-1 px-2.5 text-cn-foreground-1
                         before:absolute before:-top-1 before:left-0 before:z-[-1] before:h-6 before:w-full before:rounded before:bg-cn-background-8
                       "
                     >

@@ -58,7 +58,7 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
           variant="outline"
           size={buttonSize}
         >
-          <Text className="w-full text-cn-foreground-8" truncate align="left">
+          <Text className="w-full text-cn-foreground-1" truncate align="left">
             {commitTitle}
           </Text>
           <Icon className="chevron-down text-icons-2" name="chevron-down" size={10} />

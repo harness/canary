@@ -52,7 +52,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
           {!branchPrefix && (
             <Icon className="shrink-0 fill-transparent text-icons-9" name={isTag ? 'tag' : 'branch'} size={14} />
           )}
-          <span className="w-full truncate text-left text-cn-foreground-8">
+          <span className="w-full truncate text-left text-cn-foreground-1">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}

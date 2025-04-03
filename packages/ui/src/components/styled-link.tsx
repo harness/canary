@@ -11,7 +11,7 @@ const linkVariants = cva(
     variants: {
       variant: {
         default: 'text-cn-foreground-1 hover:decoration-foreground-1',
-        secondary: 'text-cn-foreground-4 hover:decoration-foreground-4',
+        secondary: 'text-cn-foreground-2 hover:decoration-foreground-4',
         accent: 'text-cn-foreground-accent hover:decoration-foreground-accent'
       }
     }

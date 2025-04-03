@@ -9,7 +9,7 @@ const TabNavRoot: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ classN
     <nav
       {...props}
       className={cn(
-        'flex h-11 w-full items-center gap-6 border-b border-cn-borders-3 px-6 text-cn-foreground-4',
+        'flex h-11 w-full items-center gap-6 border-b border-cn-borders-3 px-6 text-cn-foreground-2',
         className
       )}
     />

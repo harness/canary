@@ -104,7 +104,7 @@ const ListItem = ({
         className,
         isLast ? 'border-none' : 'border-b',
         isHeader ? 'bg-cn-background-2' : '',
-        disableHover ? '' : 'hover:bg-cn-background-4 cursor-pointer duration-150 ease-in-out'
+        disableHover ? '' : 'hover:bg-cn-background-hover cursor-pointer duration-150 ease-in-out'
       )}
       {...props}
     >
@@ -125,7 +125,7 @@ const ListField = ({ className, title, description, label, primary, secondary, r
         className={cn(
           primary ? 'text-16 leading-snug' : secondary ? 'text-xs' : 'text-sm',
           'text-cn-foreground-1 [&>em]:text-cn-foreground-1 font-normal [&>em]:font-medium [&>em]:not-italic',
-          !!label && 'text-cn-foreground-4',
+          !!label && 'text-cn-foreground-2',
           className
         )}
       >
@@ -135,7 +135,7 @@ const ListField = ({ className, title, description, label, primary, secondary, r
     {description && (
       <div
         className={cn(
-          'text-cn-foreground-4 flex gap-2 text-ellipsis whitespace-nowrap',
+          'text-cn-foreground-2 flex gap-2 text-ellipsis whitespace-nowrap',
           primary ? 'text-sm' : 'text-xs',
           className
         )}

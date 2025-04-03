@@ -62,7 +62,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <Button
-            className="group/contribute gap-x-2 px-2.5 data-[state=open]:border-cn-borders-9 data-[state=open]:text-cn-foreground-8 [&_svg]:data-[state=open]:text-icons-9"
+            className="group/contribute gap-x-2 px-2.5 data-[state=open]:border-cn-borders-9 data-[state=open]:text-cn-foreground-1 [&_svg]:data-[state=open]:text-icons-9"
             variant="outline"
           >
             <Icon name="merged" size={14} />
@@ -88,7 +88,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                 <span>{defaultBranchName}</span>
               </Badge>
               .
-              <p className="mt-2.5 text-14 leading-tight text-cn-foreground-4">
+              <p className="mt-2.5 text-14 leading-tight text-cn-foreground-2">
                 Open a pull request to contribute your changes upstream.
               </p>
             </div>

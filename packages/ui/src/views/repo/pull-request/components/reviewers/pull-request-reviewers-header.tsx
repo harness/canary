@@ -94,7 +94,7 @@ const ReviewersHeader = ({
                         <Avatar.Root>
                           <Avatar.Fallback>{getInitials(display_name || '')}</Avatar.Fallback>
                         </Avatar.Root>
-                        <span className="truncate text-14 font-medium text-cn-foreground-8">{display_name}</span>
+                        <span className="truncate text-14 font-medium text-cn-foreground-1">{display_name}</span>
                       </div>
                     </DropdownMenu.Item>
                   )

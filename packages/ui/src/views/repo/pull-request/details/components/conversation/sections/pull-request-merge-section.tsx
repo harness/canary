@@ -55,9 +55,9 @@ const PullRequestMergeSection = ({
         <Layout.Horizontal className="gap-x-1">
           <h3 className="text-14 font-medium text-cn-foreground-1">{item.step}</h3>
           <Layout.Vertical className="w-[90%] max-w-full">
-            <p className="text-14 text-cn-foreground-4">{item.description}</p>
+            <p className="text-14 text-cn-foreground-2">{item.description}</p>
             <p
-              className={cn('text-14 text-cn-foreground-4 ', {
+              className={cn('text-14 text-cn-foreground-2 ', {
                 'border border-border rounded-md px-2 py-1 !my-2': item.code,
                 '!my-1': item.comment
               })}
@@ -115,7 +115,7 @@ const PullRequestMergeSection = ({
               ) : !mergeable ? (
                 <div className="ml-6 inline-flex items-center gap-2">
                   <Layout.Vertical>
-                    <p className="text-14 font-normal text-cn-foreground-4">
+                    <p className="text-14 font-normal text-cn-foreground-2">
                       Use the
                       {/* TODO: looks like below should be a Link component (<StyledLink variant="accent" />) */}
                       <span
@@ -158,7 +158,7 @@ const PullRequestMergeSection = ({
               {showCommandLineInfo && (
                 <div className="mb-2 rounded-md border border-border p-1 px-4 py-2">
                   <h3 className="text-14 text-cn-foreground-1">Resolve conflicts via command line</h3>
-                  <p className="pb-3 pt-1 text-14 text-cn-foreground-4">
+                  <p className="pb-3 pt-1 text-14 text-cn-foreground-2">
                     If the conflicts on this branch are too complex to resolve in the web editor, you can check it out
                     via command line to resolve the conflicts
                   </p>
@@ -170,7 +170,7 @@ const PullRequestMergeSection = ({
                 </div>
               )}
               <span className="text-14 text-cn-foreground-2">
-                Conflicting files <span className="text-cn-foreground-4">{`(${conflictingFiles?.length || 0})`}</span>
+                Conflicting files <span className="text-cn-foreground-2">{`(${conflictingFiles?.length || 0})`}</span>
               </span>
 
               {!isEmpty(conflictingFiles) && (

@@ -125,9 +125,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
             return (
               <DropdownMenu.Item
-                className={cn('hover:bg-cn-background-4 cursor-pointer py-1', {
+                className={cn('hover:bg-cn-background-hover cursor-pointer py-1', {
                   'justify-between gap-x-2': isDefault,
-                  'bg-cn-background-4': isSelected,
+                  'bg-cn-background-hover': isSelected,
                   'pl-7': !isSelected
                 })}
                 onClick={() => {

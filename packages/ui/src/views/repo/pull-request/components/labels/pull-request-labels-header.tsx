@@ -169,7 +169,7 @@ export const LabelsHeader = ({
                         />
 
                         {!!label?.description && (
-                          <span className="w-full truncate text-cn-foreground-4">{label.description}</span>
+                          <span className="w-full truncate text-cn-foreground-2">{label.description}</span>
                         )}
 
                         {label.isSelected && (
@@ -191,7 +191,7 @@ export const LabelsHeader = ({
 
               <div className="p-2">
                 {/* TODO: replace with StyledLink variant when its update is merged (https://github.com/harness/canary/pull/1134) */}
-                <StyledLink className="text-cn-foreground-8 hover:decoration-foreground-8" {...editLabelsProps}>
+                <StyledLink className="text-cn-foreground-1 hover:decoration-foreground-8" {...editLabelsProps}>
                   {t('views:pullRequests.editLabels', 'Edit labels')}
                 </StyledLink>
               </div>

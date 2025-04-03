@@ -4,7 +4,7 @@ import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const tabsListVariants = cva('inline-flex items-center text-cn-foreground-4', {
+const tabsListVariants = cva('inline-flex items-center text-cn-foreground-2', {
   variants: {
     variant: {
       default: 'h-9 justify-center rounded-lg bg-muted p-1',

@@ -70,7 +70,7 @@ const SelectRoot: FC<SelectRootProps> = ({
       </Message>
     )}
 
-    {caption && <Caption className={cn({ 'text-cn-foreground-9': disabled })}>{caption}</Caption>}
+    {caption && <Caption className={cn({ 'text-cn-foreground-disabled': disabled })}>{caption}</Caption>}
   </SelectPrimitive.Root>
 )
 SelectRoot.displayName = SelectPrimitive.Root.displayName

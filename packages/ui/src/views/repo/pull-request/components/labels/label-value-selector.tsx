@@ -147,7 +147,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({
         )}
 
         {!values.length && !label?.isCustom && (
-          <span className="block flex-none gap-x-5 px-2 py-[7px] text-cn-foreground-4">
+          <span className="block flex-none gap-x-5 px-2 py-[7px] text-cn-foreground-2">
             {t('views:pullRequests.labelNotFound', 'Label not found')}
           </span>
         )}

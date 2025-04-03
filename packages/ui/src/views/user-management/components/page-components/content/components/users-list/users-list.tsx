@@ -57,7 +57,7 @@ export const UsersList = () => {
                       {user.avatarUrl && <Avatar.Image src={user.avatarUrl} />}
                       <Avatar.Fallback>{getInitials(user.uid!, 2)}</Avatar.Fallback>
                     </Avatar.Root>
-                    <span className="truncate whitespace-nowrap text-sm font-medium text-cn-foreground-8">
+                    <span className="truncate whitespace-nowrap text-sm font-medium text-cn-foreground-1">
                       {user.uid}
                     </span>
                   </div>

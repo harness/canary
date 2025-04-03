@@ -69,8 +69,8 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
       <div className="inline-flex w-full items-center justify-between gap-1.5">
         <div className="inline-flex items-baseline gap-1.5">
           {!!avatar && <div className="mr-0.5">{avatar}</div>}
-          {!!name && <span className="text-14 font-medium text-cn-foreground-8">{name}</span>}
-          {!!description && <span className="text-14 text-cn-foreground-4">{description}</span>}
+          {!!name && <span className="text-14 font-medium text-cn-foreground-1">{name}</span>}
+          {!!description && <span className="text-14 text-cn-foreground-2">{description}</span>}
         </div>
         {!!selectStatus && <span className="justify-end text-14 text-cn-foreground-3">{selectStatus}</span>}
         {isComment && !isDeleted && (
@@ -227,7 +227,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               />
               {isResolved && !contentHeader && (
                 <Button
-                  className="h-auto gap-x-1.5 px-4 font-normal text-cn-foreground-2 hover:text-cn-foreground-8"
+                  className="h-auto gap-x-1.5 px-4 font-normal text-cn-foreground-2 hover:text-cn-foreground-1"
                   variant="custom"
                   onClick={() => setIsExpanded(prev => !prev)}
                 >
@@ -250,7 +250,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   {contentHeader}
                   {isResolved && (
                     <Button
-                      className="h-auto gap-x-1.5 px-2.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-8"
+                      className="h-auto gap-x-1.5 px-2.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1"
                       variant="custom"
                       onClick={() => setIsExpanded(prev => !prev)}
                     >
@@ -327,7 +327,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     </Button>
 
                     {isResolved && (
-                      <span className="text-14 text-cn-foreground-4">
+                      <span className="text-14 text-cn-foreground-2">
                         {/* TODO: need to identify the author who resolved the conversation */}
                         <span className="font-medium text-cn-foreground-1">{currentUser}</span> marked this conversation
                         as resolved.

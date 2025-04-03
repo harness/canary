@@ -135,7 +135,7 @@ const SidebarExample = () => {
           {/* Your logo and search component */}
           <SidebarSearch logo={<YourLogo />} />
         </Sidebar.Header>
-        
+
         <Sidebar.Content>
           {/* Main navigation items */}
           <Sidebar.Group>
@@ -143,24 +143,24 @@ const SidebarExample = () => {
               <Sidebar.Menu>
                 <Sidebar.MenuItem>
                   <Sidebar.MenuButton>
-                    <Sidebar.MenuItemText 
-                      text="Dashboard" 
-                      icon={<Icon name="dashboard" size={14} />} 
+                    <Sidebar.MenuItemText
+                      text="Dashboard"
+                      icon={<Icon name="dashboard" size={14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
                 <Sidebar.MenuItem>
                   <Sidebar.MenuButton>
-                    <Sidebar.MenuItemText 
-                      text="Projects" 
-                      icon={<Icon name="folder" size={14} />} 
+                    <Sidebar.MenuItemText
+                      text="Projects"
+                      icon={<Icon name="folder" size={14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
               </Sidebar.Menu>
             </Sidebar.GroupContent>
           </Sidebar.Group>
-          
+
           {/* Grouped navigation items */}
           <Sidebar.Group title="Recent">
             <Sidebar.GroupLabel>Recent</Sidebar.GroupLabel>
@@ -168,9 +168,9 @@ const SidebarExample = () => {
               <Sidebar.Menu>
                 <Sidebar.MenuItem>
                   <Sidebar.MenuButton>
-                    <Sidebar.MenuItemText 
-                      text="Project Alpha" 
-                      icon={<Icon name="folder" size={14} />} 
+                    <Sidebar.MenuItemText
+                      text="Project Alpha"
+                      icon={<Icon name="folder" size={14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -178,15 +178,15 @@ const SidebarExample = () => {
             </Sidebar.GroupContent>
           </Sidebar.Group>
         </Sidebar.Content>
-        
+
         <Sidebar.Footer>
           {/* User profile or other footer content */}
           <UserProfile />
         </Sidebar.Footer>
-        
+
         <Sidebar.Rail />
       </Sidebar.Root>
-      
+
       {/* Main content area */}
       <div className="flex-1">
         <div className="border-b flex items-center">
@@ -537,7 +537,8 @@ The Sidebar component is composed of several nested components that work togethe
     },
     {
       name: "tooltip",
-      description: "Tooltip content to show when hovering over the button in collapsed state",
+      description:
+        "Tooltip content to show when hovering over the button in collapsed state",
       required: false,
       value: "string | ComponentProps<typeof Tooltip.Content>",
     },

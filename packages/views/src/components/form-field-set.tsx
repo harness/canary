@@ -72,7 +72,7 @@ function Root({ children, box, shaded, className }: RootProps) {
     <fieldset
       className={cn(
         'mb-8 flex flex-col gap-6',
-        { 'rounded-md border px-5 py-3.5 pb-5': box, 'bg-primary/[0.02]': shaded },
+        { 'rounded-md border px-5 py-3.5 pb-5': box, 'bg-cn-background-accent/[0.02]': shaded },
         className
       )}
       role="group"

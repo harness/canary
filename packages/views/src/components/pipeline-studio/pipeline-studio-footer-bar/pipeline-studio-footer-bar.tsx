@@ -40,7 +40,7 @@ const PipelineStudioFooterBar: React.FC<PipelineStudioFooterBarProps> = (props: 
           onClick={() => {
             props.togglePane?.()
           }}
-          className="flex h-full cursor-pointer gap-2.5 rounded-md px-2 py-1.5 duration-150 ease-in-out hover:bg-primary/10"
+          className="flex h-full cursor-pointer gap-2.5 rounded-md px-2 py-1.5 duration-150 ease-in-out hover:bg-cn-background-accent/10"
         >
           <div className="flex items-center gap-1.5">
             <Icon

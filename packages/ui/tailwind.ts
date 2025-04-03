@@ -278,7 +278,7 @@ export default {
             lime: 'var(--canary-label-foreground-lime-01)'
           },
           background: {
-            black: 'var(--canary-label-background-black-01)',
+            cover: 'var(--canary-label-background-cover-01)',
             red: 'var(--canary-label-background-red-01)',
             green: 'var(--canary-label-background-green-01)',
             yellow: 'var(--canary-label-background-yellow-01)',
@@ -552,6 +552,7 @@ export default {
     { pattern: /^border-tag-border-/ },
     // label classes
     { pattern: /^bg-label-background-/ },
+    { pattern: /^bg-label-foreground-/ },
     { pattern: /^text-label-foreground-/ },
     // sidebar classes
     { pattern: /^bg-sidebar-background-/ },
@@ -579,6 +580,7 @@ export default {
     { pattern: /^hover:border-tag-border-/ },
     // label classes
     { pattern: /^hover:bg-label-background-/ },
+    { pattern: /^hover:bg-label-foreground-/ },
     { pattern: /^hover:text-label-foreground-/ },
     // sidebar classes
     { pattern: /^hover:bg-sidebar-background-/ },

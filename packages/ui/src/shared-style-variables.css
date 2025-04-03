@@ -409,7 +409,7 @@
     );
 
     /* Labels colors */
-    --canary-label-background-black-01: hsla(240, 13%, 3%, 0.47);
+    --canary-label-background-cover-01: hsla(240, 13%, 3%, 0.47);
     --canary-label-foreground-red-01: hsla(0, 100%, 65%, 1);
     --canary-label-background-red-01: hsla(0, 100%, 65%, 0.12);
     --canary-label-foreground-green-01: hsla(130, 75%, 65%, 1);
@@ -660,7 +660,7 @@
     --canary-tag-background-red-02: var(--canary-red-100);
 
     /* Labels */
-    --canary-label-background-black-01: hsla(var(--canary-pure-white) / 0.7);
+    --canary-label-background-cover-01: hsla(var(--canary-pure-white) / 0.7);
     --canary-label-background-blue-01: hsla(var(--canary-accent-100));
     --canary-label-background-brown-01: hsla(var(--canary-brown-100));
     --canary-label-background-cyan-01: hsla(var(--canary-cyan-100));
@@ -990,7 +990,7 @@
     --canary-tag-background-red-02: 0 93% 94%;
 
     /* Labels */
-    --canary-label-background-white-01: hsla(var(--canary-pure-white) / 0.7);
+    --canary-label-background-cover-01: hsla(var(--canary-pure-white) / 0.7);
     --canary-label-foreground-orange-01: hsla(18, 40%, 25%, 1);
     --canary-label-background-orange-01: hsla(35, 91%, 92%, 1);
     --canary-label-foreground-blue-01: hsla(227, 40%, 25%, 1);
@@ -1319,7 +1319,7 @@
     --canary-tag-background-red-02: 0 93% 94%;
 
     /* Labels */
-    --canary-label-background-white-01: hsla(var(--canary-pure-white) / 0.7);
+    --canary-label-background-cover-01: hsla(var(--canary-pure-white) / 0.7);
     --canary-label-foreground-orange-01: hsla(18, 40%, 25%, 1);
     --canary-label-background-orange-01: hsla(35, 91%, 92%, 1);
     --canary-label-foreground-blue-01: hsla(227, 40%, 25%, 1);
@@ -1648,7 +1648,7 @@
     --canary-tag-background-red-02: 0 93% 94%;
 
     /* Labels */
-    --canary-label-background-white-01: hsla(var(--canary-pure-white) / 0.7);
+    --canary-label-background-cover-01: hsla(var(--canary-pure-white) / 0.7);
     --canary-label-foreground-orange-01: hsla(18, 40%, 25%, 1);
     --canary-label-background-orange-01: hsla(35, 91%, 92%, 1);
     --canary-label-foreground-blue-01: hsla(227, 40%, 25%, 1);
@@ -2020,7 +2020,7 @@
     --canary-widget-number-bg-gradient-to: var(--canary-grey-40) / 0;
 
     /* Labels colors */
-    --canary-label-background-black-01: hsla(240, 13%, 3%, 0.47);
+    --canary-label-background-cover-01: hsla(240, 13%, 3%, 0.47);
     --canary-label-foreground-red-01: hsla(0, 100%, 65%, 1);
     --canary-label-background-red-01: hsla(0, 100%, 65%, 0.12);
     --canary-label-foreground-green-01: hsla(130, 75%, 65%, 1);
@@ -2316,7 +2316,7 @@
     --canary-tag-background-red-02: var(--canary-red-900);
 
     /* Labels */
-    --canary-label-background-black-01: hsla(var(--canary-base-chrome-1000) / 0.45);
+    --canary-label-background-cover-01: hsla(var(--canary-base-chrome-1000) / 0.45);
     --canary-label-background-blue-01: hsl(var(--canary-accent-900));
     --canary-label-background-brown-01: hsl(var(--canary-brown-900));
     --canary-label-background-cyan-01: hsl(var(--canary-cyan-900));
@@ -2673,7 +2673,7 @@
     --canary-tag-background-red-02: var(--canary-red-900);
 
     /* Labels */
-    --canary-label-background-black-01: hsla(var(--canary-base-chrome-1000) / 0.45);
+    --canary-label-background-cover-01: hsla(var(--canary-base-chrome-1000) / 0.45);
     --canary-label-background-blue-01: hsl(var(--canary-accent-900));
     --canary-label-background-brown-01: hsl(var(--canary-brown-900));
     --canary-label-background-cyan-01: hsl(var(--canary-cyan-900));
@@ -3026,7 +3026,7 @@
     --canary-tag-background-red-02: var(--canary-yellow-900);
 
     /* Labels */
-    --canary-label-background-black-01: hsla(var(--canary-base-chrome-1000) / 0.45);
+    --canary-label-background-cover-01: hsla(var(--canary-base-chrome-1000) / 0.45);
     --canary-label-background-blue-01: hsl(var(--canary-accent-900));
     --canary-label-background-brown-01: hsl(var(--canary-brown-900));
     --canary-label-background-cyan-01: hsl(var(--canary-cyan-900));

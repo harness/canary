@@ -38,8 +38,8 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
           {Object.values(ColorsEnum).map(color => (
             <Select.Item key={color} value={color}>
               <div className="flex max-w-full items-center gap-x-1.5">
-                <div className={`bg-label-foreground- size-2 min-h-2 min-w-2 rounded-full${color}`} />
-                <span className="truncate text-foreground-3">{color}</span>
+                <div className={`bg-label-foreground-${color} size-2 min-h-2 min-w-2 rounded-full`} />
+                <span className="text-foreground-3 truncate">{color}</span>
               </div>
             </Select.Item>
           ))}
@@ -58,7 +58,7 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
 
       {isWithDeleteButton && (
         <Button
-          className="size-4 flex-none self-center text-icons-1 hover:text-icons-2"
+          className="text-icons-1 hover:text-icons-2 size-4 flex-none self-center"
           variant="custom"
           size="icon"
           onClick={handleDeleteValue}

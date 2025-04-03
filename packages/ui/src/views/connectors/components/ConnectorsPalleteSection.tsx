@@ -34,7 +34,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                     {connector.name}
                   </StepsPaletteItemLayout.Title>
                 </StepsPaletteItemLayout.Header>
-                <StepsPaletteItemLayout.Description className="text-cn-foreground-4">
+                <StepsPaletteItemLayout.Description className="text-cn-foreground-2">
                   {connector.category}
                 </StepsPaletteItemLayout.Description>
               </StepsPaletteItemLayout.Right>

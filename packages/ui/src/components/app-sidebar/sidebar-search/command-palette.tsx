@@ -38,7 +38,7 @@ const Dropdown = ({ children, className, open, onOpenChange }: PropsWithChildren
   <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
     <Overlay
       className={cn(
-        'fixed inset-0 z-50 bg-cn-background-7/30 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+        'fixed inset-0 z-50 bg-cn-background-1/30 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         className
       )}
     />
@@ -59,7 +59,7 @@ const Input = React.forwardRef<
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        'flex h-10 w-full rounded-md bg-transparent py-3 text-base text-cn-foreground-1 outline-none placeholder:text-cn-foreground-5 disabled:cursor-not-allowed disabled:opacity-50 focus:ring-0 focus-visible:outline-none',
+        'flex h-10 w-full rounded-md bg-transparent py-3 text-base text-cn-foreground-1 outline-none placeholder:text-cn-foreground-3 disabled:cursor-not-allowed disabled:opacity-50 focus:ring-0 focus-visible:outline-none',
         className
       )}
       {...props}
@@ -96,7 +96,7 @@ const Group = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      'overflow-hidden mt-2.5 p-1 text-cn-foreground-5 text-sm [&_[cmdk-group-heading]]:px-2.5 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-sm [&_[cmdk-group-heading]]:font-normal [&_[cmdk-group-heading]]:text-cn-foreground-5',
+      'overflow-hidden mt-2.5 p-1 text-cn-foreground-3 text-sm [&_[cmdk-group-heading]]:px-2.5 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-sm [&_[cmdk-group-heading]]:font-normal [&_[cmdk-group-heading]]:text-cn-foreground-3',
       className
     )}
     {...props}
@@ -111,7 +111,7 @@ const Item = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default gap-0 select-none items-center font-normal rounded-[4px] px-5 py-0 text-sm text-cn-foreground-8 outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-foreground-4/10 data-[selected=true]:text-cn-foreground-8 data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+      'relative flex cursor-default gap-0 select-none items-center font-normal rounded-[4px] px-5 py-0 text-sm text-cn-foreground-1 outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-foreground-4/10 data-[selected=true]:text-cn-foreground-1 data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
       className
     )}
     {...props}

@@ -145,7 +145,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
             {patterns.map(pattern => (
               <Button
                 key={pattern.pattern}
-                className="group flex h-6 items-center gap-x-1.5 bg-cn-background-8 px-2.5 text-cn-foreground-8"
+                className="group flex h-6 items-center gap-x-1.5 bg-cn-background-8 px-2.5 text-cn-foreground-1"
                 type="button"
                 variant="custom"
                 onClick={() => handleRemovePattern(pattern.pattern)}

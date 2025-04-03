@@ -263,7 +263,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               name,
               avatar: undefined,
               description: (
-                <Layout.Horizontal className="text-cn-foreground-4">
+                <Layout.Horizontal className="text-cn-foreground-2">
                   <span>{timeAgo(commentItem?.created ? Number(commentItem.created) : undefined)}</span>
                   {!!commentItem?.deleted && (
                     <>

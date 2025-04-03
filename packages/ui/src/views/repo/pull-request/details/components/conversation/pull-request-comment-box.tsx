@@ -204,7 +204,7 @@ export const PullRequestCommentBox = ({
               {comment ? (
                 <MarkdownViewer markdownClassName="!bg-cn-background-2 w-full" source={comment} />
               ) : (
-                <span className="text-cn-foreground-8">Nothing to preview</span>
+                <span className="text-cn-foreground-1">Nothing to preview</span>
               )}
             </div>
           </Tabs.Content>

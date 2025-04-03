@@ -25,7 +25,7 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
                   const label = filterOption.options?.find(opt => opt.value === value)?.label
                   return (
                     <div className="flex h-6 items-center gap-x-1.5 rounded bg-cn-background-8 px-2" key={value}>
-                      <span className="text-14 text-cn-foreground-8">{label}</span>
+                      <span className="text-14 text-cn-foreground-1">{label}</span>
                       <button
                         className="text-icons-1 transition-colors duration-200 hover:text-cn-foreground-1"
                         onClick={() => {
@@ -53,7 +53,7 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
             </div>
             {(!!filter.selectedValues.length || searchQueries.filters[filter.type]) && (
               <button
-                className="flex p-1.5 text-cn-foreground-4 transition-colors duration-200 hover:text-cn-foreground-1"
+                className="flex p-1.5 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
                 onClick={() => {
                   onUpdateFilter(filter.type, [])
                   handleSearchChange?.(filter.type, '', 'filters')

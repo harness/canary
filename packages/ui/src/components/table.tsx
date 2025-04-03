@@ -47,7 +47,11 @@ const TableBody = forwardRef<
 >(({ className, hasHighlightOnHover, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn('[&_tr:last-child]:border-0', { '[&>tr:hover]:bg-cn-background-4': hasHighlightOnHover }, className)}
+    className={cn(
+      '[&_tr:last-child]:border-0',
+      { '[&>tr:hover]:bg-cn-background-hover': hasHighlightOnHover },
+      className
+    )}
     {...props}
   />
 ))
@@ -72,7 +76,7 @@ const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCel
     <th
       ref={ref}
       className={cn(
-        'text-cn-foreground-4 h-11 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        'text-cn-foreground-2 h-11 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
         className
       )}
       {...props}

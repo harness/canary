@@ -53,7 +53,7 @@ const FilterBoxWrapper = ({
               {filterLabel}
               {!!valueLabel && ': '}
             </span>
-            <span className="text-cn-foreground-4">{valueLabel}</span>
+            <span className="text-cn-foreground-2">{valueLabel}</span>
           </div>
           <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
         </Button>
@@ -61,7 +61,7 @@ const FilterBoxWrapper = ({
 
       <DropdownMenu.Content className={cn('w-[276px] p-0', contentClassName)} align="start">
         <div className="flex items-center justify-between px-3 py-2.5">
-          <div className="flex items-center gap-x-2 text-cn-foreground-4">{filterLabel}</div>
+          <div className="flex items-center gap-x-2 text-cn-foreground-2">{filterLabel}</div>
 
           <DropdownMenu.Root>
             <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">

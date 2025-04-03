@@ -116,13 +116,14 @@ export default {
           1: 'var(--cn-text-1)',
           2: 'var(--cn-text-2)',
           3: 'var(--cn-text-3)',
-          primary: 'var(--cn-set-brand-solid-text)',
           success: 'var(--cn-text-success)',
           danger: 'var(--cn-text-danger)',
           warning: 'var(--cn-text-warning)',
           accent: 'var(--cn-text-accent)',
 
           // Remove
+          primary: 'var(--cn-set-brand-solid-text)',
+          disabled: 'var(--cn-state-disabled-text)',
           4: 'var(--cn-text-3)',
           5: 'var(--cn-text-3)',
           8: 'var(--cn-text-3)',
@@ -154,14 +155,16 @@ export default {
           1: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
           2: 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
           3: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
-          primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
 
-          // 4 - 2
-          4: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
-          // surface - 2
-          // surface: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
-          // 9 - 2
-          9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)'
+          // Remove
+          hover: 'var(--cn-state-hover)',
+          primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
+          8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
+          9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
+          // avatar - remove once avatar component is completed
+          11: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
+          12: 'lch(from var(--cn-set-gray-surface-bg-hover) l c h / <alpha-value>)',
+          13: 'lch(from var(--cn-set-gray-solid-bg) l c h / <alpha-value>)'
         },
         borders: {
           1: 'hsl(var(--canary-border-01))',

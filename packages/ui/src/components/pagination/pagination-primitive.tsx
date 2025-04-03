@@ -82,7 +82,7 @@ const PaginationPrimitivePrevious = ({
     className={cn(
       'text-cn-foreground-2 cursor-pointer gap-1.5 bg-transparent text-sm font-normal',
       'hover:text-cn-foreground-1 hover:bg-transparent',
-      { 'text-cn-foreground-7 pointer-events-none cursor-default': disabled },
+      { 'text-cn-foreground-3 pointer-events-none cursor-default': disabled },
       className
     )}
     href={href}
@@ -108,7 +108,7 @@ const PaginationPrimitiveNext = ({
     className={cn(
       'text-cn-foreground-2 cursor-pointer gap-1.5 bg-transparent text-sm font-normal',
       'hover:text-cn-foreground-1 hover:bg-transparent',
-      { 'text-cn-foreground-7 pointer-events-none cursor-default': disabled },
+      { 'text-cn-foreground-3 pointer-events-none cursor-default': disabled },
       className
     )}
     href={href}

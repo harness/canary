@@ -1,8 +1,9 @@
+import { LogoNameMap } from '@components/logo'
+
 import { FieldValues, IFormDefinition, IInputDefinition } from '@harnessio/forms'
 
 import { BaseEntityProps } from '../../views/platform/types'
 import { InputConfigType } from '../../views/unified-pipeline-studio/components/form-inputs/types'
-import { LogoNameMap } from '@components/logo'
 
 export type IInputConfigWithConfigInterface = IInputDefinition & InputConfigType
 

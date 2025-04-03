@@ -15,7 +15,20 @@ import {
   type SimpleIcon
 } from 'simple-icons'
 
-export type LogoName = 'github' | 'gitlab' | 'bitbucket' | 'jira' | 'kubernetes' | 'awskms' | 'terraform' | 'docker' | 'aws' | 'gcp' | 'hashiCorpVault' | 'awsSecretsManager' | 'gcpSecretManager'
+export type LogoName =
+  | 'github'
+  | 'gitlab'
+  | 'bitbucket'
+  | 'jira'
+  | 'kubernetes'
+  | 'awskms'
+  | 'terraform'
+  | 'docker'
+  | 'aws'
+  | 'gcp'
+  | 'hashiCorpVault'
+  | 'awsSecretsManager'
+  | 'gcpSecretManager'
 
 const LogoNameMap: Record<LogoName, SimpleIcon> = {
   github: siGithub,

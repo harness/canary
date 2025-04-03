@@ -1,5 +1,5 @@
-import { TranslationStore } from '@/views'
 import { Icon, Logo } from '@/components'
+import { TranslationStore } from '@/views'
 import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-content-layout'
 import { StepsPaletteItemLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-item-layout'
 

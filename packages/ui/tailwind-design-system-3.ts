@@ -120,6 +120,7 @@ export default {
           danger: 'var(--cn-text-danger)',
           warning: 'var(--cn-text-warning)',
           accent: 'var(--cn-text-accent)',
+          solid: 'lch(from var(--cn-set-brand-solid-text) l c h / <alpha-value>)',
 
           // Remove
           primary: 'var(--cn-set-brand-solid-text)',

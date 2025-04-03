@@ -5,7 +5,7 @@ import { SandboxLayout } from '@/views'
 import { ConnectorDetailsHeader } from './connector-details-header'
 import { ConnectorDetailsPageProps } from './types'
 
-const ConnectorsListPage: FC<ConnectorDetailsPageProps> = ({ connectorDetails, useTranslationStore, onTest }) => {
+const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({ connectorDetails, useTranslationStore, onTest }) => {
   const { t } = useTranslationStore()
 
   return (
@@ -21,4 +21,4 @@ const ConnectorsListPage: FC<ConnectorDetailsPageProps> = ({ connectorDetails, u
   )
 }
 
-export { ConnectorsListPage }
+export { ConnectorDetailsPage }

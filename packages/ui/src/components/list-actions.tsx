@@ -35,7 +35,7 @@ function Dropdown({ title, items, onChange, selectedValue }: DropdownProps) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="flex cursor-pointer items-center gap-1.5 text-tertiary-background duration-100 ease-in-out hover:text-cn-foreground-1">
-        {selectedValue && <span className="size-[4px] rounded-full bg-primary"></span>}
+        {selectedValue && <span className="size-[4px] rounded-full bg-cn-background-1"></span>}
         <Text
           size={2}
           className={cn('text-cn-foreground-1/80', {

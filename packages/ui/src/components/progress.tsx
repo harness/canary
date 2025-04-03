@@ -7,7 +7,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 const progressVariants = cva('', {
   variants: {
     variant: {
-      default: 'relative w-full overflow-hidden bg-primary/20',
+      default: 'relative w-full overflow-hidden bg-cn-background-1/20',
       divergence: 'relative w-full overflow-hidden bg-transparent'
     },
     size: {
@@ -43,7 +43,7 @@ const progressVariants = cva('', {
 const indicatorVariants = cva('', {
   variants: {
     color: {
-      default: 'bg-primary',
+      default: 'bg-cn-background-1',
       accent: 'bg-primary-accent'
     },
     indicatorRounded: {

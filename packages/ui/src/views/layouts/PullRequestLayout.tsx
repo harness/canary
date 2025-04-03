@@ -64,13 +64,11 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
         <Tabs.Root variant="tabnav" className="mb-7" defaultValue={activeTab}>
           <Tabs.List
             className={cn(
-              'before:w-[calc(100vw-var(--sidebar-width))] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2',
-              {
-                'before:w-[calc(100vw-var(--sidebar-width)-6px*2)]': isInset
-              }
+              'before:w-[calc(100vw-var(--sidebar-width))] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2 before:bg-border',
+              { 'before:w-[calc(100vw-var(--sidebar-width)-6px*2)]': isInset }
             )}
           >
-            <Tabs.Trigger value={PullRequestTabsKeys.CONVERSATION} asChild>
+            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.CONVERSATION} asChild>
               <NavLink to={PullRequestTabsKeys.CONVERSATION}>
                 <TabTitleWithIcon
                   icon="comments"
@@ -80,14 +78,14 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
                 </TabTitleWithIcon>
               </NavLink>
             </Tabs.Trigger>
-            <Tabs.Trigger value={PullRequestTabsKeys.COMMITS} asChild>
+            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.COMMITS} asChild>
               <NavLink to={PullRequestTabsKeys.COMMITS}>
                 <TabTitleWithIcon icon="tube-sign" badgeContent={pullRequest?.stats?.commits}>
                   {t('views:pullRequests.commits', 'Commits')}
                 </TabTitleWithIcon>
               </NavLink>
             </Tabs.Trigger>
-            <Tabs.Trigger value={PullRequestTabsKeys.CHANGES} asChild>
+            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.CHANGES} asChild>
               <NavLink to={PullRequestTabsKeys.CHANGES}>
                 <TabTitleWithIcon icon="changes" badgeContent={pullRequest?.stats?.files_changed}>
                   {t('views:pullRequests.changes', 'Changes')}

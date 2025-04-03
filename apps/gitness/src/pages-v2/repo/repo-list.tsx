@@ -2,10 +2,9 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
-import { Badge, Toast, useToast } from '@harnessio/ui/components'
+import { Toast, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
-import BadgeShowcase from '../../badge-showcase'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
@@ -105,20 +104,17 @@ export default function ReposListPage() {
   }, [importRepoIdentifier, setImportRepoIdentifier])
 
   return (
-    <>
-      <BadgeShowcase />
-      <SandboxRepoListPage
-        useRepoStore={useRepoStore}
-        useTranslationStore={useTranslationStore}
-        isLoading={isFetching}
-        isError={isError}
-        errorMessage={error?.message}
-        searchQuery={query}
-        setSearchQuery={setQuery}
-        toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
-        toCreateRepo={() => routes.toCreateRepo({ spaceId })}
-        toImportRepo={() => routes.toImportRepo({ spaceId })}
-      />
-    </>
+    <SandboxRepoListPage
+      useRepoStore={useRepoStore}
+      useTranslationStore={useTranslationStore}
+      isLoading={isFetching}
+      isError={isError}
+      errorMessage={error?.message}
+      searchQuery={query}
+      setSearchQuery={setQuery}
+      toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
+      toCreateRepo={() => routes.toCreateRepo({ spaceId })}
+      toImportRepo={() => routes.toImportRepo({ spaceId })}
+    />
   )
 }

@@ -64,7 +64,7 @@ export const StepGroupNodeContextMenu = () => {
             onDeleteIntention(contextMenuData.nodeData)
           }}
         >
-          <Icon name="trash" size={12} className="text-primary" />
+          <Icon name="trash" size={12} className="text-cn-foreground-1" />
           <Text wrap="nowrap">Delete</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>

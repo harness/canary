@@ -47,7 +47,7 @@ export function StepNodeComponent({ node }: { node: LeafNodeInternalType<StepNod
   return (
     <div className={'bg-primary-foreground border-borders-2 box-border size-full rounded-xl border'}>
       <div>{icon}</div>
-      <Text title={name} className="text-primary m-2 line-clamp-2 cursor-default">
+      <Text title={name} className="text-cn-foreground-1 m-2 line-clamp-2 cursor-default">
         {name}
       </Text>
     </div>

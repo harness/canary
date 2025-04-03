@@ -357,7 +357,7 @@ const PullRequestPanel = ({
                           }
                         }}
                       />
-                      <span className="text-12 text-primary">Bypass and merge anyway</span>
+                      <span className="text-12 text-cn-foreground-1">Bypass and merge anyway</span>
                     </Layout.Horizontal>
                   )}
 

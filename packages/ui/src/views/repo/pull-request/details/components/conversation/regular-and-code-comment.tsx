@@ -237,9 +237,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               contentClassName: 'border-0 pb-0 rounded-none',
               icon: avatar,
               content: commentItem?.deleted ? (
-                <div className="rounded-md border bg-primary-background p-1">
-                  {t('views:pullRequests.deletedComment')}
-                </div>
+                <div className="rounded-md border bg-cn-background-1 p-1">{t('views:pullRequests.deletedComment')}</div>
               ) : editModes[componentId] ? (
                 <PullRequestCommentBox
                   handleUpload={handleUpload}

@@ -4,28 +4,52 @@ description: A responsive, collapsible sidebar navigation component
 ---
 
 import { DocsPage } from "@/components/docs-page";
-import { Sidebar } from "@harnessio/ui/components";
+import {
+  Sidebar,
+  User,
+  SidebarSearchLegacy,
+  HarnessLogo,
+  Breadcrumb,
+} from "@harnessio/ui/components";
 
 The `Sidebar` component provides a responsive, collapsible navigation interface that can be used for application navigation. It supports various states including expanded, collapsed, and mobile views with offcanvas functionality.
 
 <DocsPage.ComponentExample
   client:only
-  code={`
+  padding={false}
+  code={`() => {
+    const t = (key, fallback) => fallback || key
 
-  <Sidebar.Provider>
-    <Sidebar.Root className="-ml-[13px] h-[600px] mt-[20px]">
+    return (
+    <Sidebar.Provider className="flex justify-start">
+    <Sidebar.Root>
         <Sidebar.Header>
-          <div className="flex items-center px-4 py-3">
-            <Icon name="harness" size={18} className="text-sidebar-foreground-accent" />
-            <span className="ml-2 font-medium">Harness</span>
-          </div>
+            <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group>
             <Sidebar.GroupContent>
              <Sidebar.Menu>
-      <Sidebar.MenuItem>
-                  <Sidebar.MenuButton>
+              <Sidebar.MenuItem>
+                <Sidebar.MenuButton>
+                <Sidebar.MenuItemText
+                  className="pl-0"
+                  text='Repositories'
+                  icon={<Icon name="repositories" size={14} />}
+                />
+              </Sidebar.MenuButton>
+            </Sidebar.MenuItem>
+            <Sidebar.MenuItem>
+              <Sidebar.MenuButton>
+              <Sidebar.MenuItemText
+                className="pl-0"
+                text='Pipelines'
+                icon={<Icon name="pipelines" size={14} />}
+              />
+            </Sidebar.MenuButton>
+          </Sidebar.MenuItem>
+                <Sidebar.MenuItem>
+                    <Sidebar.MenuButton>
                     <Sidebar.MenuItemText
                       className="pl-0"
                       text='More'
@@ -33,23 +57,74 @@ The `Sidebar` component provides a responsive, collapsible navigation interface 
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
-
              </Sidebar.Menu>
             </Sidebar.GroupContent>
           </Sidebar.Group>
-        </Sidebar.Content>
-        <Sidebar.Footer>
-          <div className="px-4 py-3 text-sm text-sidebar-foreground-2">
-            <p> 2025 Harness Inc.</p>
-          </div>
-        </Sidebar.Footer>
-      </Sidebar.Root>
-      <div className="flex-1 p-4">
-        <Sidebar.Trigger className="mb-4" />
-        <h3 className="text-lg font-medium">Main Content</h3>
-        <p className="mt-2">This is where your main content would appear.</p>
-    </div>
-    </Sidebar.Provider>
 
-`}
+           <Sidebar.Group title="Recent" className="border-t">
+              <Sidebar.GroupLabel className="mb-0">Recent</Sidebar.GroupLabel>
+              <Sidebar.GroupContent>
+                <Sidebar.Menu>
+                  <Sidebar.MenuItem>
+                    <Sidebar.MenuButton>
+                    <Sidebar.MenuItemText
+                      className="pl-0"
+                      text='User Management'
+                      icon={<Icon name="user" size={14} />}
+                    />
+                  </Sidebar.MenuButton>
+                </Sidebar.MenuItem>
+                </Sidebar.Menu>
+              </Sidebar.GroupContent>
+            </Sidebar.Group>
+        </Sidebar.Content>
+        <Sidebar.Footer className="border-t border-sidebar-border-1 px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">
+        <User
+          user={{
+            display_name: 'John Doe',
+            email: 'johndoe@example.com',
+            url: 'https://ui.shadcn.com/avatars/shadcn.jpg',
+          }}
+          openThemeDialog={() => {}}
+          openLanguageDialog={() => {}}
+          handleLogOut={() => {}}
+          t={t}
+        />
+        </Sidebar.Footer>
+        <Sidebar.Rail />
+      </Sidebar.Root>
+      <div className="flex flex-col">
+
+<div className="flex items-center border-b w-[497px] border-sidebar-border-1">
+  <Sidebar.Trigger className="ml-2" />
+  <Sidebar.Separator
+    orientation="vertical"
+    className="h-4 w-[2px] bg-sidebar-border-1 mr-4"
+  />
+  <Breadcrumb.Root className="select-none">
+    <Breadcrumb.List>
+      <Breadcrumb.Item>
+        <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>
+      </Breadcrumb.Item>
+      <Breadcrumb.Separator />
+      <Breadcrumb.Ellipsis />
+      <Breadcrumb.Separator />
+      <Breadcrumb.Item>
+        <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>
+      </Breadcrumb.Item>
+      <Breadcrumb.Separator />
+      <Breadcrumb.Page>Dolor</Breadcrumb.Page>
+    </Breadcrumb.List>
+  </Breadcrumb.Root>
+</div>
+
+  <div className="flex-1 ml-3 mt-2">
+    <p className="text-foreground-1">Main Content</p>
+    <p className="mt-2">This is where your main content would appear.</p>
+  </div>
+</div>
+    </Sidebar.Provider>
+    )
+
+}`}
 />

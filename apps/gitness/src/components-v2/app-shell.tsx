@@ -178,7 +178,7 @@ export const AppShell = () => {
 
   return (
     <>
-      <Sidebar.Provider>
+      <Sidebar.Provider className="min-h-svh">
         <AppSidebar
           showMoreMenu={showMoreMenu}
           showSettingMenu={showSettingMenu}

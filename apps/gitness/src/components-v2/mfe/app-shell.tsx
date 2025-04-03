@@ -1,12 +1,12 @@
 import { memo } from 'react'
 import { Outlet } from 'react-router-dom'
 
+import { Toaster } from '@harnessio/ui/components'
 import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useRepoImportEvents } from '../../framework/hooks/useRepoImportEvent'
 import { Breadcrumbs } from '../breadcrumbs/breadcrumbs'
 import { useGetBreadcrumbs } from '../breadcrumbs/useGetBreadcrumbs'
-import { Toaster } from '../toaster'
 import { AppSidebar } from './side-bar'
 
 export const AppShellMFE = memo(() => {

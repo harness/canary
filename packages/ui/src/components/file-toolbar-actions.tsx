@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Button, ButtonGroup, CopyButton, Icon } from '@/components'
+import { cn } from '@utils/cn'
 
 export interface FileToolbarActionsProps {
   onDownloadClick: () => void

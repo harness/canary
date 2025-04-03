@@ -32,9 +32,9 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
         >
           <div
             className={cn(
-              'group-hover:bg-cn-background-4 absolute z-0 h-full w-full rounded-[10px] bg-transparent transition-colors',
+              'group-hover:bg-cn-background-hover absolute z-0 h-full w-full rounded-[10px] bg-transparent transition-colors',
               { 'group-hover:bg-sidebar-background-2': isMainNav },
-              { 'bg-cn-background-4': active },
+              { 'bg-cn-background-hover': active },
               { 'bg-sidebar-background-2': active && isMainNav }
             )}
           />
@@ -78,7 +78,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
             </Text>
             {!!description && (
               <Text
-                className={cn('z-10 w-full leading-4 text-cn-foreground-4 duration-0 ease-in-out', {
+                className={cn('z-10 w-full leading-4 text-cn-foreground-2 duration-0 ease-in-out', {
                   'text-sidebar-foreground-4': isMainNav
                 })}
                 size={1}

@@ -76,7 +76,7 @@ export const ChatDiffViewer = ({ data, mode = 4, lang = 'go', fileName }: ChatDi
         // @ts-ignore
         <DiffView
           style={{ '--diff-plain-lineNumber--': 'hsl(var(--canary-background-01))' } as CSSProperties}
-          className="w-full text-cn-foreground-8"
+          className="w-full text-cn-foreground-1"
           diffFile={diffFileInstance}
           diffViewFontSize={14}
           diffViewHighlight={true}

@@ -60,8 +60,8 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
               {selectedLanguage === lang.code && <Icon className="relative z-[1] text-icons-2" name="tick" size={12} />}
               <span
                 className={cn(
-                  'absolute -inset-x-2 -inset-y-1 rounded -z-[1] group-hover:bg-cn-background-4',
-                  selectedLanguage === lang.code && 'bg-cn-background-4'
+                  'absolute -inset-x-2 -inset-y-1 rounded -z-[1] group-hover:bg-cn-background-hover',
+                  selectedLanguage === lang.code && 'bg-cn-background-hover'
                 )}
                 aria-hidden
               />

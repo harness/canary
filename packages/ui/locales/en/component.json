@@ -1,13 +1,5 @@
 {
   "navbar": {
-    "more": "More",
-    "recent": "Recent",
-    "user-management": "User Management",
-    "settings": "Settings",
-    "sidebarToggle": {
-      "expand": "Expand",
-      "collapse": "Collapse"
-    },
     "pin": "Pin",
     "remove": "Remove",
     "reorder": "Reorder",
@@ -16,9 +8,17 @@
     "search": "Search",
     "command-palette": "Command Palette",
     "nothing-found": "Nothing found",
+    "settings": "Settings",
     "appearence": "Appearance",
     "language": "Language",
     "logout": "Log out",
+    "more": "More",
+    "recent": "Recent",
+    "user-management": "User Management",
+    "sidebarToggle": {
+      "expand": "Expand",
+      "collapse": "Collapse"
+    },
     "profile": "Profile",
     "theme": "Theme",
     "customNav": "Customize navigation",

@@ -2,7 +2,6 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import {
-  AppSidebar,
   ManageNavigation,
   MenuGroupType,
   MenuGroupTypes,
@@ -23,6 +22,7 @@ import { useRepoImportEvents } from '../framework/hooks/useRepoImportEvent'
 import { useSelectedSpaceId } from '../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
+import { AppSidebar } from './app-sidebar'
 import Breadcrumbs from './breadcrumbs/breadcrumbs'
 import BreadcrumbsMFE from './breadcrumbs/breadcrumbs-mfe'
 import { Toaster } from './toaster'
@@ -191,7 +191,6 @@ export const AppShell = () => {
           pinnedMenuItems={pinnedMenu}
           handleChangePinnedMenuItem={handleChangePinnedMenuItem}
           handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-          useTranslationStore={useTranslationStore}
         />
 
         <Sidebar.Inset>

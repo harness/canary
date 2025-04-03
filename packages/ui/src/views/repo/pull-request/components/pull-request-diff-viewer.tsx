@@ -465,7 +465,7 @@ const PullRequestDiffViewer = ({
                       ]}
                       content={
                         parent?.deleted ? (
-                          <div className="rounded-md border bg-primary-background p-1">
+                          <div className="rounded-md border bg-cn-background-1 p-1">
                             {t('views:pullRequests.deletedComment')}
                           </div>
                         ) : editModes[componentId] ? (
@@ -546,7 +546,7 @@ const PullRequestDiffViewer = ({
                               ]}
                               content={
                                 reply?.deleted ? (
-                                  <div className="rounded-md border bg-primary-background p-1">
+                                  <div className="rounded-md border bg-cn-background-1 p-1">
                                     {t('views:pullRequests.deletedComment')}
                                   </div>
                                 ) : editModes[replyComponentId] ? (

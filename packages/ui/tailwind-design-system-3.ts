@@ -155,6 +155,7 @@ export default {
           1: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
           2: 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
           3: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
+          accent: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
 
           // Remove
           hover: 'var(--cn-state-hover)',

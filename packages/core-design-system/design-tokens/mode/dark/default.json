@@ -1455,13 +1455,31 @@
         "$description": "Color for separators between navigation sections. Creates visual organization within the navigation structure."
       },
       "hover": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.15",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{state.hover}",
+        "$value": "{chrome.700}",
         "$description": "Hover state for navigation items."
       },
       "selected": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.2",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{state.selected}",
+        "$value": "{chrome.700}",
         "$description": "Selected state for navigation items."
       },
       "logo": {

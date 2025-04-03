@@ -3,8 +3,10 @@
     "id": "89bf9a3ab61c40d6291a24c452efc1591c4d41c0",
     "name": "source",
     "selectedTokenSets": {
-      "core/typography": "enabled",
-      "core/dimensions": "enabled"
+      "core/typography": "source",
+      "core/dimensions": "source",
+      "core/colors_lch": "source",
+      "core/colors_hex": "enabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -15661,9 +15663,19 @@
       "sidebar.item.size": "19f85b1a35176c6d96a77912c46f7c0e3f50fe00",
       "sidebar.item.gap": "bdf10a3534802adcdc42d6c87f51862de6a1fb6a",
       "sidebar.item.radius": "37538ca48b76355f563bf4e6ec808476042c15e5",
-      "sidebar.group.px": "e849318483f6fe65423b4f6559b553322d9d64e2",
       "sidebar.group.py": "fb3e2c489bb1e0343c6a88bd3307337870bfbd0e",
-      "sidebar.group.gap": "04c8a3eed8c27ed39f54900572868bb4d0406218"
+      "sidebar.group.gap": "04c8a3eed8c27ed39f54900572868bb4d0406218",
+      "sidebar.container.px": "080b08c538fb217f211335d3014199a839b0cdf8",
+      "sidebar.container.py": "76cd16de93857aeea9c2af81edf257fb140717b6",
+      "sidebar.container.width": "13ebbf5408e1580291fc02d41d8f389b419c8c39",
+      "sidebar.header.pt": "0d26104686657ae634bde1b03033e918c273c817",
+      "sidebar.header.pb": "28e06f9ebd6c8f4216f1a7ff104194d0ecce41ca",
+      "sidebar.header.gap": "4d33154218042cdd663c51abd45e5ab69c54dec8",
+      "sidebar.footer.pt": "af39368d30061898f0dd7de308121d4523143286",
+      "sidebar.footer.gap": "7acf5d0f13fc56c0a822358c0bca99e0f3e12bb3",
+      "sidebar.user-item.px": "f38377cdc697e2c19c1703ef4e664d61865eb932",
+      "sidebar.user-item.gap": "07e466f93355f125bbe792696cc27af9271037a7",
+      "sidebar.user-item.size": "61625bce7d9b9fd4ece03cf3b67fc3e7c0a6695a"
     },
     "group": "breakpoint"
   }

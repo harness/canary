@@ -60,7 +60,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - uses: pnpm/action-setup@v4
-      - run: |
-          pnpm deps
-          cd apps/gitness
-          pnpm run build:webpack
+      - run: pnpm deps
+      - run: cd apps/gitness
+      - run: pnpm install
+      - run: pnpm run build:webpack

@@ -11,7 +11,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-button-background-accent-1 text-button-foreground-accent-1 hover:bg-button-background-accent-2 disabled:bg-button-background-accent-3 disabled:text-button-foreground-accent-2',
+          'bg-cn-background-primary text-cn-foreground-primary hover:bg-button-background-accent-2 disabled:bg-button-background-accent-3 disabled:text-button-foreground-accent-2',
         destructive:
           'bg-button-background-danger-1 text-button-foreground-danger-1 hover:bg-button-background-danger-2',
         outline:
@@ -52,7 +52,7 @@ const buttonVariants = cva(
         success:
           'border-button-border-success-1 bg-button-background-success-1 text-button-foreground-success-1 hover:bg-button-background-success-2',
         muted: 'border-tertiary-background/20 bg-tertiary-background/10 text-tertiary-background',
-        primary: 'border-primary-foreground/20 bg-cn-background-5 text-cn-foreground-6',
+        primary: 'border-primary-foreground/20 bg-cn-background-primary text-cn-foreground-primary',
         disabled:
           'border-button-border-disabled-1 bg-button-background-disabled-1 text-button-foreground-disabled-1 disabled:bg-button-background-disabled-1 disabled:text-button-foreground-disabled-1'
       },

@@ -151,15 +151,13 @@ export function RepoWebhookList({
               </Table.Cell>
               <Table.Cell className="cursor-pointer content-center">
                 <Badge
-                  size="md"
-                  disableHover
-                  borderRadius="full"
+                  variant="status"
                   theme={
                     webhook.latest_execution_result === 'success'
                       ? 'success'
                       : webhook.latest_execution_result === 'fatal_error' ||
                           webhook.latest_execution_result === 'retriable_error'
-                        ? 'destructive'
+                        ? 'danger'
                         : 'muted'
                   }
                 >

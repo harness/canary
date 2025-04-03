@@ -130,7 +130,7 @@ export interface PullRequestDataState {
 }
 
 export interface TypesPullReqActivity {
-  author?: Partial<PrincipalType>
+  author?: TypesPrincipalInfo
   code_comment?: TypesCodeCommentFields
   created?: number
   deleted?: number | null
@@ -138,7 +138,7 @@ export interface TypesPullReqActivity {
   id?: number
   kind?: EnumPullReqActivityKind
   mentions?: {
-    [key: string]: Partial<PrincipalType>
+    [key: string]: TypesPrincipalInfo
   }
   metadata?: TypesPullReqActivityMetadata
   order?: number
@@ -147,13 +147,25 @@ export interface TypesPullReqActivity {
   pullreq_id?: number
   repo_id?: number
   resolved?: number | null
-  resolver?: Partial<PrincipalType>
+  resolver?: TypesPrincipalInfo
   sub_order?: number
   text?: string
   type?: EnumPullReqActivityType
   updated?: number
-  forced?: boolean
 }
+
+export type EnumPrincipalType = 'service' | 'serviceaccount' | 'user'
+
+export interface TypesPrincipalInfo {
+  created?: number
+  display_name?: string
+  email?: string
+  id?: number
+  type?: EnumPrincipalType
+  uid?: string
+  updated?: number
+}
+
 export declare type EnumPullReqReviewerType = 'assigned' | 'requested' | 'self_assigned'
 
 export declare type ReviewerListPullReqOkResponse = TypesPullReqReviewer[]

@@ -260,7 +260,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
             </ControlGroup>
           </FormWrapper>
 
-          <FormSeparator className="my-7 border-cn-borders-4" />
+          <FormSeparator className="border-cn-borders-4 my-7" />
 
           <FormWrapper onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
             <Legend

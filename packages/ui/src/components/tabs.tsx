@@ -20,7 +20,7 @@ const tabsListVariants = cva('inline-flex items-center text-cn-foreground-2', {
        */
       navigation: 'h-[44px] w-full justify-start gap-6 border-b border-cn-borders-3 px-5',
       tabnav:
-        'before:bg-cn-borders-3 relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full'
+        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-borders-3'
     },
     fontSize: {
       xs: 'text-12',
@@ -51,7 +51,7 @@ const tabsTriggerVariants = cva(
          * @deprecated Use TabNav component instead
          */
         navigation:
-          'm-0 -mb-px h-[44px] border-b-2 border-solid border-b-transparent px-0 font-normal text-cn-foreground-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-9',
+          'data-[state=active]:border-cn-borders-9 m-0 -mb-px h-[44px] border-b-2 border-solid border-b-transparent px-0 font-normal text-cn-foreground-2 duration-150 ease-in-out hover:text-cn-foreground-1',
         tabnav:
           'h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1'
       }

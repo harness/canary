@@ -111,7 +111,10 @@ export default {
           13: 'hsl(var(--canary-background-13))',
           // surface: 'hsl(var(--canary-background-surface))',
           danger: 'hsla(var(--canary-background-danger))',
-          success: 'hsla(var(--canary-background-success))'
+          success: 'hsla(var(--canary-background-success))',
+          toast: {
+            danger: 'hsla(var(--canary-toast-background-danger))'
+          }
         },
         'cn-background': {
           DEFAULT: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',

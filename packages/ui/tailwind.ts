@@ -126,7 +126,10 @@ export default {
           13: 'hsl(var(--canary-background-13))',
           surface: 'hsl(var(--canary-background-surface))',
           danger: 'hsla(var(--canary-background-danger))',
-          success: 'hsla(var(--canary-background-success))'
+          success: 'hsla(var(--canary-background-success))',
+          toast: {
+            danger: 'hsla(var(--canary-toast-background-danger))'
+          }
         },
         button: {
           foreground: {
@@ -368,7 +371,7 @@ export default {
             1: 'var(--canary-logs-foreground-01)',
             2: 'var(--canary-logs-foreground-02)'
           }
-        }
+        },
       },
       letterSpacing: {
         tight: '-0.02em'

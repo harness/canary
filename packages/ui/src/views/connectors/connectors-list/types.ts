@@ -1,4 +1,4 @@
-import { CheckboxOptions } from '@components/filters/filters-bar/actions/variants/checkbox'
+import { CheckboxOptions } from '@components/filters/types'
 import { PaginationProps } from '@components/index'
 import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
@@ -33,7 +33,8 @@ export interface ConnectorListProps extends Partial<RoutingProps> {
 }
 
 export type ConnectorListFilters = {
-  status?: CheckboxOptions
+  status?: CheckboxOptions[]
+  text?: string
 }
 
 export interface ConnectorListPageProps

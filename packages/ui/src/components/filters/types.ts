@@ -162,6 +162,11 @@ export enum FilterFieldTypes {
   Checkbox = 'checkbox'
 }
 
+export interface CheckboxOptions {
+  label: string
+  value: string
+}
+
 interface FilterField<T = string | number> {
   type: string
   value?: T
@@ -197,10 +202,10 @@ interface NumberFilterOptionConfig<T extends string = string> extends FilterOpti
   type: FilterFieldTypes.Number
 }
 
-interface CheckboxFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T> {
+interface CheckboxFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T, Array<CheckboxOptions>> {
   type: FilterFieldTypes.Checkbox
   filterFieldConfig?: {
-    options?: Array<{ label: string; value: string }>
+    options?: Array<CheckboxOptions>
   }
 }
 

@@ -105,7 +105,7 @@ const ListControlBar = <T extends Record<string, any>, V = T[keyof T]>({
   const isListControlVisible = selectedFiltersCnt > 0 || activeSorts.length > 0
 
   return (
-    <div className={cn('flex items-center gap-x-2', { 'mt-2': isListControlVisible })}>
+    <div className={cn('flex items-center gap-x-2', { 'mt-4': isListControlVisible })}>
       {!!activeSorts.length && (
         <Sorts
           activeSorts={activeSorts}

@@ -71,14 +71,14 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
                 </TabTitleWithIcon>
               </NavLink>
             </Tabs.Trigger>
-            <Tabs.Trigger value={PullRequestTabsKeys.COMMITS} asChild>
+            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.COMMITS} asChild>
               <NavLink to={PullRequestTabsKeys.COMMITS}>
                 <TabTitleWithIcon icon="tube-sign" badgeContent={pullRequest?.stats?.commits}>
                   {t('views:pullRequests.commits', 'Commits')}
                 </TabTitleWithIcon>
               </NavLink>
             </Tabs.Trigger>
-            <Tabs.Trigger value={PullRequestTabsKeys.CHANGES} asChild>
+            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.CHANGES} asChild>
               <NavLink to={PullRequestTabsKeys.CHANGES}>
                 <TabTitleWithIcon icon="changes" badgeContent={pullRequest?.stats?.files_changed}>
                   {t('views:pullRequests.changes', 'Changes')}

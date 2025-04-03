@@ -4,7 +4,7 @@ import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorConfigType } from '../types'
 
-export interface ConnectorItem {
+export interface ConnectorDetailsItem {
   identifier: string
   type?: ConnectorConfigType
   name?: string
@@ -26,13 +26,13 @@ export interface ConnectorItem {
 }
 
 export interface ConnectorDetailsPageProps {
-  connectorDetails: ConnectorItem
+  connectorDetails: ConnectorDetailsItem
   useTranslationStore: () => TranslationStore
   onTest: () => void
 }
 
 export interface ConnectorDetailsHeaderProps {
-  connectorDetails: ConnectorItem
+  connectorDetails: ConnectorDetailsItem
   onTest: () => void
   useTranslationStore: () => TranslationStore
 }

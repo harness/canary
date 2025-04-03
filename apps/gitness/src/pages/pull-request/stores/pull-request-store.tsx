@@ -2,9 +2,11 @@ import { produce } from 'immer'
 import { create } from 'zustand'
 
 import { commentStatusPullReq as apiCommentStatusPullReq, mergePullReqOp } from '@harnessio/code-service-client'
-import { PullRequestDataState } from '@harnessio/ui/views'
 
 import { CodeCommentState, PullRequestState } from '../types/types'
+// TODO
+// import { PullRequestDataState } from '@harnessio/ui/views'
+import { PullRequestDataState } from './temp-interface'
 
 export const codeOwnersNotFoundMessage = 'CODEOWNERS file not found'
 export const codeOwnersNotFoundMessage2 = `path "CODEOWNERS" not found`

@@ -1,0 +1,36 @@
+{
+  "sidebar": {
+    "item": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "size": {
+        "$type": "sizing",
+        "$value": "{size.8}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.2}"
+      }
+    },
+    "group": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.3-half}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.half}"
+      }
+    }
+  }
+}

@@ -1441,7 +1441,7 @@
     "sidebar": {
       "bg": {
         "$type": "color",
-        "$value": "{pure.black}",
+        "$value": "{chrome.900}",
         "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
       },
       "border": {
@@ -1463,32 +1463,6 @@
         "$type": "color",
         "$value": "{state.selected}",
         "$description": "Selected state for navigation items."
-      },
-      "item": {
-        "unselected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.2}",
-            "$description": "Text color for unselected navigation items. Provides readable but less emphasized styling for available options."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.3}",
-            "$description": "Icon color for unselected navigation items. Creates subtle visual indicators for navigation options."
-          }
-        },
-        "selected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Text color for selected navigation items. Increases contrast to highlight the current location."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Icon color for selected navigation items. Creates stronger visual indication of the current selection."
-          }
-        }
       },
       "logo": {
         "text": {

@@ -44,7 +44,7 @@ const indicatorVariants = cva('', {
   variants: {
     color: {
       default: 'bg-cn-background-1',
-      accent: 'bg-primary-accent'
+      accent: 'bg-cn-background-accent'
     },
     indicatorRounded: {
       default: '',

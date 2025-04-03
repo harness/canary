@@ -3,8 +3,8 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
-import { AppSidebar, MoreSubmenu, NavbarItemType, SettingsMenu, Sidebar } from '@harnessio/ui/components'
-import { MainContentLayout } from '@harnessio/ui/views'
+import { MoreSubmenu, NavbarItemType, SettingsMenu, Sidebar } from '@harnessio/ui/components'
+import { MainContentLayout, SidebarView } from '@harnessio/ui/views'
 
 import { useRootViewWrapperStore } from './root-view-wrapper-store'
 
@@ -88,7 +88,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
         path="*"
         element={
           <Sidebar.Provider>
-            <AppSidebar
+            <SidebarView
               showMoreMenu={showMoreMenu}
               showSettingMenu={showSettingsMenu}
               handleMoreMenu={onToggleMoreMenu}

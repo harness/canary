@@ -7,20 +7,19 @@ import {
   LanguageDialog,
   LanguageInterface,
   languages,
+  NavbarItemType,
+  SearchProvider,
   Sidebar,
+  SidebarItem,
+  SidebarSearch,
+  SidebarSearchLegacy,
   ThemeDialog,
+  User,
   useSidebar
 } from '@/components'
 import { ContentStyleType, useRouterContext, useTheme } from '@/context'
 import { TypesUser } from '@/types'
 import { TranslationStore } from '@/views'
-
-import { SidebarItem } from './sidebar-item'
-import { SidebarSearchLegacy } from './sidebar-search-legacy'
-import { SearchProvider } from './sidebar-search/search-context'
-import { SidebarSearch } from './sidebar-search/sidebar-search'
-import { User } from './sidebar-user'
-import { NavbarItemType } from './types'
 
 interface SidebarProps {
   recentMenuItems: NavbarItemType[]
@@ -39,7 +38,7 @@ interface SidebarProps {
   hasToggle?: boolean
 }
 
-export const AppSidebar = ({
+export const SidebarView = ({
   useTranslationStore,
   handleChangePinnedMenuItem,
   handleRemoveRecentMenuItem,

@@ -172,7 +172,7 @@ async function createCssFiles() {
   const darkFiles = cssFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK))
   const lightFiles = cssFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT))
 
-  console.log('\n=== Theme File Summary (OSS) ===')
+  console.log('\n=== Theme File Summary ===')
   console.table([
     { Type: 'Dark Theme Files', Count: darkFiles.length },
     { Type: 'Light Theme Files', Count: lightFiles.length }
@@ -188,7 +188,7 @@ async function createCssFiles() {
 ${coreFiles.map(file => `@import './${file}';`).join('\n')}`
 
   /**
-   * OSS themes imports
+   *  themes imports
    * */
   const themesContent = `${getExportFileHeader()}
 
@@ -199,7 +199,7 @@ ${darkFiles.map(file => `@import './${file}';`).join('\n')}
 ${lightFiles.map(file => `@import './${file}';`).join('\n')}`
 
   /**
-   * Enterprise themes imports
+   * MFE themes imports
    * */
   const mfeThemesContent = `${getExportFileHeader()}
 

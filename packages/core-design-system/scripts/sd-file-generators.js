@@ -51,9 +51,9 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
 
   let mfeSupportedClass = ''
 
-  // To support backward compatibility
+  // To support backward compatibility and testing. It will be removed in future.
   if (entityName === `light` || entityName === `dark`) {
-    mfeSupportedClass = `.${entityName}-std-std`
+    mfeSupportedClass = `.${entityName}-std-std, .${entityName}-test`
   }
 
   // theme-specific outputs

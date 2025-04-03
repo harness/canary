@@ -86,12 +86,12 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         <div className="inline-flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-2 font-medium">
             <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
-            <Badge variant="soft" theme="primary" size="sm">
+            <Badge variant="soft" theme="muted" size="sm">
               <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
               {props?.pullReqMetadata?.source_branch}
             </Badge>
             <span>into</span>
-            <Badge variant="soft" theme="primary" size="sm">
+            <Badge variant="soft" theme="muted" size="sm">
               <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
               {props?.pullReqMetadata?.target_branch}
             </Badge>

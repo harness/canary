@@ -111,7 +111,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
           <Spacer size={4} />
           <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
             Don’t have an account?{' '}
-            <Link className="text-primary" to="/signup">
+            <Link className="text-cn-foreground-1" to="/signup">
               Sign up
             </Link>
           </Text>

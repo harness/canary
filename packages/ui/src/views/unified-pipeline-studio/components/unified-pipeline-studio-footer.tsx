@@ -55,17 +55,17 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
               name="cross-circle"
               className={problemsCount.error > 0 ? 'text-destructive' : 'text-tertiary-background'}
             />
-            <span className={cn('text-[12px]', problemsCount.error > 0 ? 'text-destructive' : 'text-primary')}>
+            <span className={cn('text-[12px]', problemsCount.error > 0 ? 'text-destructive' : 'text-cn-foreground-1')}>
               {problemsCount.error}
             </span>
           </div>
           <div className="flex items-center gap-1.5">
             <Icon size={14} name="warning-triangle-outline" className="text-tertiary-background" />
-            <span className="text-[12px] text-primary">{problemsCount.warning}</span>
+            <span className="text-[12px] text-cn-foreground-1">{problemsCount.warning}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <Icon size={14} name="info-circle" className="text-tertiary-background" />
-            <span className="text-[12px] text-primary">{problemsCount.info}</span>
+            <span className="text-[12px] text-cn-foreground-1">{problemsCount.info}</span>
           </div>
         </div>
         {branchesLoading || branches || currentBranch ? (
@@ -90,8 +90,8 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
           <Popover.Trigger>
             <div className="flex text-[12px] text-tertiary-background">
               Last edited
-              <span className="text-primary">&nbsp;{committedTimeAgo}&nbsp;</span> by
-              <span className="text-primary">&nbsp;{authorName}&nbsp;</span>
+              <span className="text-cn-foreground-1">&nbsp;{committedTimeAgo}&nbsp;</span> by
+              <span className="text-cn-foreground-1">&nbsp;{authorName}&nbsp;</span>
             </div>
           </Popover.Trigger>
           <Popover.Content side={'top'} className="mb-4 mr-4 w-80 p-0">

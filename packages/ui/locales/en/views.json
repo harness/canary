@@ -262,20 +262,20 @@
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
+  "search": "Search",
   "notFound": {
     "button": "Reload page",
     "title": "Something went wrong…",
     "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
     "description": "The requested page is not found."
   },
-  "search": "Search",
   "connectors": {
     "createNew": "Create new connector",
     "filterOptions": {
       "statusOption": {
-        "label": "Status",
         "success": "Success",
-        "failure": "Failure"
+        "failure": "Failure",
+        "label": "Status"
       }
     },
     "updated": "Last updated",

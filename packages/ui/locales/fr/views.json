@@ -239,20 +239,20 @@
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
+  "search": "Rechercher",
   "notFound": {
     "button": "Recharger la page",
     "title": "Quelque chose s'est mal passé…",
     "descriptionWithType": "La page demandée est introuvable. Vous pouvez revenir pour voir tous les {{type}} et gérer vos paramètres.",
     "description": "La page demandée est introuvable."
   },
-  "search": "Rechercher",
   "connectors": {
     "createNew": "Créer un nouveau connecteur",
     "filterOptions": {
       "statusOption": {
-        "label": "Status",
         "success": "Success",
-        "failure": "Failure"
+        "failure": "Failure",
+        "label": "Status"
       }
     }
   },

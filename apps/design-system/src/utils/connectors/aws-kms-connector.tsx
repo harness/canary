@@ -3,7 +3,7 @@ import { IInputConfigWithConfigInterface, InputConfigType } from '@harnessio/ui/
 
 export const AWS_KMS_CONNECTOR_CATEGORY = 'Secrets Manager'
 
-export enum CredTypeValues {
+export enum AwsCredTypeValues {
   ManualConfig = 'ManualConfig',
   AssumeIAMRole = 'AssumeIAMRole',
   AssumeRoleSTS = 'AssumeSTSRole',
@@ -20,9 +20,9 @@ const inputs: IInputConfigWithConfigInterface[] = [
     label: 'Credential Type',
     inputConfig: {
       options: [
-        { label: 'AWS access key', value: CredTypeValues.ManualConfig },
-        { label: 'Assume Role on Delegate (IAM)', value: CredTypeValues.AssumeIAMRole },
-        { label: 'Assume Role on Delegate (STS)', value: CredTypeValues.AssumeRoleSTS },
+        { label: 'AWS access key', value: AwsCredTypeValues.ManualConfig },
+        { label: 'Assume Role on Delegate (IAM)', value: AwsCredTypeValues.AssumeIAMRole },
+        { label: 'Assume Role on Delegate (STS)', value: AwsCredTypeValues.AssumeRoleSTS },
         { label: 'OIDC', value: DelegateTypes.DELEGATE_OIDC }
       ]
     }
@@ -31,31 +31,31 @@ const inputs: IInputConfigWithConfigInterface[] = [
     inputType: 'text',
     path: `accessKey`,
     label: 'AWS - Access Key',
-    isVisible: values => values?.credential === CredTypeValues.ManualConfig
+    isVisible: values => values?.credential === AwsCredTypeValues.ManualConfig
   },
   {
     inputType: 'text',
     path: `secretKey`,
     label: 'AWS - Secret Key',
-    isVisible: values => values?.credential === CredTypeValues.ManualConfig
+    isVisible: values => values?.credential === AwsCredTypeValues.ManualConfig
   },
   {
     inputType: 'text',
     path: `roleArn`,
     label: 'Role ARN',
-    isVisible: values => values?.credential === CredTypeValues.AssumeRoleSTS
+    isVisible: values => values?.credential === AwsCredTypeValues.AssumeRoleSTS
   },
   {
     inputType: 'text',
     path: `externalName`,
     label: 'External Id',
-    isVisible: values => values?.credential === CredTypeValues.AssumeRoleSTS
+    isVisible: values => values?.credential === AwsCredTypeValues.AssumeRoleSTS
   },
   {
     inputType: 'number',
     path: `assumeStsRoleDuration`,
     label: 'Assumed Role duration',
-    isVisible: values => values?.credential === CredTypeValues.AssumeRoleSTS
+    isVisible: values => values?.credential === AwsCredTypeValues.AssumeRoleSTS
   },
   {
     inputType: 'text',

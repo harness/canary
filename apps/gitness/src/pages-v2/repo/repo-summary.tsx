@@ -24,9 +24,9 @@ import {
   CommitDivergenceType,
   RepoFile,
   RepoSummaryView,
+  SummaryItemType,
   TokenFormType
 } from '@harnessio/ui/views'
-import { SummaryItemType } from '@harnessio/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { useAppContext } from '../../framework/context/AppContext'

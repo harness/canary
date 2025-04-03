@@ -18,8 +18,6 @@ import { useTranslationStore } from './i18n/stores/i18n-store'
 import { CreateProject } from './pages-v2/create-project'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { Logout } from './pages-v2/logout'
-import PipelineEditPage from './pages-v2/pipeline/pipeline-edit/pipeline-edit'
-import ProjectPipelineListPage from './pages-v2/pipeline/project-pipeline-list-page'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
@@ -47,12 +45,10 @@ import RepoCommitDetailsPage from './pages-v2/repo/repo-commit-details'
 import { CommitDiffContainer } from './pages-v2/repo/repo-commit-details-diff'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
-import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
 import { ImportMultipleRepos } from './pages-v2/repo/repo-import-multiple-container'
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
-import RepoPipelineListPage from './pages-v2/repo/repo-pipeline-list'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
@@ -75,7 +71,6 @@ enum Page {
   Conversation = 'Conversation',
   Changes = 'Changes',
   Checks = 'Checks',
-  Pipelines = 'Pipelines',
   Executions = 'Executions',
   Settings = 'Settings',
   Branch_Rules = 'Branch Rules',
@@ -372,62 +367,7 @@ export const repoRoutes: CustomRouteObject[] = [
               }
             ]
           },
-          {
-            path: 'pipelines',
-            handle: {
-              breadcrumb: () => <span>{Page.Pipelines}</span>
-            },
-            children: [
-              {
-                index: true,
-                element: <RepoPipelineListPage />,
-                handle: {
-                  pageTitle: Page.Pipelines
-                }
-              },
-              {
-                path: ':pipelineId',
-                handle: {
-                  breadcrumb: ({ pipelineId }: { pipelineId: string }) => <span>{pipelineId}</span>
-                },
-                children: [
-                  {
-                    index: true,
-                    element: <RepoExecutionListPage />,
-                    handle: {
-                      breadcrumb: () => <span>{Page.Executions}</span>,
-                      pageTitle: Page.Executions
-                    }
-                  },
-                  {
-                    path: 'edit',
-                    element: <PipelineEditPage />,
-                    handle: {
-                      breadcrumb: () => <span>Edit</span>,
-                      routeName: RouteConstants.toPipelineEdit
-                    }
-                  },
-                  {
-                    path: 'executions',
-                    handle: {
-                      routeName: RouteConstants.toExecutions
-                    },
-                    children: [
-                      { index: true, element: <RepoExecutionListPage />, handle: { pageTitle: Page.Executions } },
-                      {
-                        path: ':executionId',
-                        element: <>Execution Details Page</>,
-                        handle: {
-                          breadcrumb: ({ executionId }: { executionId: string }) => <span>{executionId}</span>,
-                          routeName: RouteConstants.toExecution
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
+
           {
             path: 'settings',
             element: <RepoSettingsLayout useTranslationStore={useTranslationStore} />,
@@ -624,15 +564,6 @@ export const repoRoutes: CustomRouteObject[] = [
     ]
   },
   {
-    path: 'pipelines',
-    element: <ProjectPipelineListPage />,
-    handle: {
-      breadcrumb: () => <span>{Page.Pipelines}</span>,
-      pageTitle: Page.Pipelines
-    },
-    children: []
-  },
-  {
     path: 'search',
     element: <EmptyPage pathName="Search" comingSoon={true} />,
     handle: {
@@ -693,19 +624,6 @@ export const routes: CustomRouteObject[] = [
           breadcrumb: () => <span>{Page.Repositories}</span>,
           routeName: RouteConstants.toRepositories,
           pageTitle: Page.Repositories
-        }
-      },
-      {
-        path: 'pipelines',
-        element: (
-          <SandboxLayout.Main>
-            <h1>Pipelines</h1>
-          </SandboxLayout.Main>
-        ),
-        handle: {
-          breadcrumb: () => <span>{Page.Pipelines}</span>,
-          routeName: RouteConstants.toPipelines,
-          pageTitle: Page.Pipelines
         }
       },
       {

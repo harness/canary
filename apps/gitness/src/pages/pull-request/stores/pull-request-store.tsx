@@ -2,7 +2,7 @@ import { produce } from 'immer'
 import { create } from 'zustand'
 
 import { commentStatusPullReq as apiCommentStatusPullReq, mergePullReqOp } from '@harnessio/code-service-client'
-import { PullRequestDataState } from '@harnessio/views'
+import { PullRequestDataState } from '@harnessio/ui/views'
 
 import { CodeCommentState, PullRequestState } from '../types/types'
 

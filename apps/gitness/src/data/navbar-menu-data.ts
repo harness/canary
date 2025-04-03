@@ -27,20 +27,20 @@ export const getNavbarMenuData = ({
         description: 'Integrated & familiar git experience.',
         to: routes.toRepositories({ spaceId })
       },
-      {
-        id: 1,
-        iconName: 'pipelines-gradient',
-        title: t('component:navbar.pipelines'),
-        description: 'Up to 4X faster than other solutions.',
-        to: routes.toPipelines()
-      },
-      {
-        id: 2,
-        iconName: 'execution-gradient',
-        title: t('component:navbar.executions'),
-        description: 'Optimize feature rollout velocity.',
-        to: routes.toExecutions()
-      },
+      // {
+      //   id: 1,
+      //   iconName: 'pipelines-gradient',
+      //   title: t('component:navbar.pipelines'),
+      //   description: 'Up to 4X faster than other solutions.',
+      //   to: routes.toPipelines()
+      // },
+      // {
+      //   id: 2,
+      //   iconName: 'execution-gradient',
+      //   title: t('component:navbar.executions'),
+      //   description: 'Optimize feature rollout velocity.',
+      //   to: routes.toExecutions()
+      // },
       {
         id: 3,
         iconName: 'database-gradient',

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import copy from 'clipboard-copy'
-import { isEmpty } from 'lodash-es'
+import { isEmpty, noop } from 'lodash-es'
 
 import {
   EnumCheckStatus,
@@ -609,7 +609,7 @@ export default function PullRequestConversationPage() {
           headerMsg: errorMsg,
           commitSuggestionsBatchCount: suggestionsBatch?.length,
           onCommitSuggestions: onCommitSuggestionsBatch,
-          toPRCheck: ({ pipelineId, executionId }) => routes.toExecution({ spaceId, repoId, pipelineId, executionId }),
+          toPRCheck: noop, //({ pipelineId, executionId }) => routes.toExecution({ spaceId, repoId, pipelineId, executionId }),
           spaceId,
           repoId
         }}

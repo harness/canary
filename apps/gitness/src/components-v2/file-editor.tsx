@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput } from '@harnessio/code-service-client'
 import { EditViewTypeValue, FileEditorControlBar } from '@harnessio/ui/components'
-import { PathActionBar } from '@harnessio/ui/views'
+import { monacoThemes, PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
@@ -12,7 +12,6 @@ import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitConfirm } from '../framework/hooks/useExitConfirm'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
-import { themes } from '../pages-v2/pipeline/pipeline-edit/theme/monaco-theme'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
@@ -46,7 +45,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const themeConfig = useMemo(
     () => ({
       defaultTheme: monacoTheme,
-      themes
+      monacoThemes
     }),
     [monacoTheme]
   )

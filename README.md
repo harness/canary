@@ -10,7 +10,6 @@ Welcome to the Harness Canary monorepo! This repository contains multiple projec
 # Projects
 
 - [@harnessio/canary](./packages/canary/) - Harness Canary UI components library built on top of [Radix UI](https://www.radix-ui.com/) and [ShadCN UI](https://ui.shadcn.com/).
-- [@harnessio/views](./packages/views/) - Harness Unified UI View Fragments.
 
 # Getting Started
 

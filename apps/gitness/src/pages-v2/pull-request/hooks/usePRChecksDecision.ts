@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import pluralize from 'pluralize'
 
 import { TypesPullReq, TypesRepository, useChecksPullReqQuery } from '@harnessio/code-service-client'
-import { ExecutionState } from '@harnessio/views'
+import { ExecutionState } from '@harnessio/ui/views'
 
 import { determineStatusMessage, generateStatusSummary } from '../../../pages/pull-request/utils'
 

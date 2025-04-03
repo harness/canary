@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harnessio/code-service-client'
 import { FileViewerControlBar, MarkdownViewer, Pagination, SkeletonList, ViewTypeValue } from '@harnessio/ui/components'
-import { BranchSelectorTab, CommitsList } from '@harnessio/ui/views'
+import { BranchSelectorTab, CommitsList, monacoThemes } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
@@ -16,7 +16,6 @@ import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 import { useAPIPath } from '../hooks/useAPIPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
-import { themes } from '../pages-v2/pipeline/pipeline-edit/theme/monaco-theme'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { PageResponseHeader } from '../types'
@@ -107,7 +106,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const themeConfig = useMemo(
     () => ({
       defaultTheme: monacoTheme,
-      themes
+      monacoThemes
     }),
     [monacoTheme]
   )

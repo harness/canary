@@ -6,6 +6,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-settings-view-wrapper.tsx'
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
+import { ConnectorsDetailsPageWrapper } from '@subjects/views/connectors/connector-details'
 import { ConnectorsPage } from '@subjects/views/connectors/connectors'
 import { ConnectorInputExample } from '@subjects/views/connectors/connectors-input'
 import { ConnectorsListPageWrapper } from '@subjects/views/connectors/connectors-list'
@@ -505,6 +506,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'connectors-list-page': {
         label: 'Connectors List Page',
         element: <ConnectorsListPageWrapper />
+      },
+      'connectors-details-page': {
+        label: 'Connectors Details Page',
+        element: <ConnectorsDetailsPageWrapper />
       },
       'create-edit-connector': {
         label: 'Create or Edit Connector',

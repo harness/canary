@@ -1,0 +1,74 @@
+{
+    "connector": {
+      "name": "idp_automation_gitlab_repo_token_delegate_with_api_accessTqIO4qjN8S",
+      "identifier": "idp_automation_gitlab_repo_token_delegate_with_api_accessTqIO4qjN8S",
+      "description": "",
+      "accountIdentifier": "vpCkHKsDSxK9_KYfjCTMKA",
+      "orgIdentifier": null,
+      "projectIdentifier": null,
+      "tags": {},
+      "type": "Gitlab",
+      "spec": {
+        "url": "https://gitlab.com/sathish1293/sathish",
+        "validationRepo": null,
+        "authentication": {
+          "type": "Http",
+          "spec": {
+            "type": "UsernameToken",
+            "spec": {
+              "username": "sathish1293",
+              "usernameRef": null,
+              "tokenRef": "account.idp_integrations_git_gitlab_repo_tokenmKcPW7X8I4"
+            }
+          }
+        },
+        "apiAccess": {
+          "type": "Token",
+          "spec": {
+            "tokenRef": "account.idp_integrations_git_gitlab_repo_tokenmKcPW7X8I4",
+            "apiUrl": ""
+          }
+        },
+        "delegateSelectors": [],
+        "executeOnDelegate": true,
+        "proxy": false,
+        "ignoreTestConnection": false,
+        "type": "Repo"
+      }
+    },
+    "createdAt": 1733229200306,
+    "lastModifiedAt": 1733229200304,
+    "status": {
+      "status": "SUCCESS",
+      "errorSummary": null,
+      "errors": null,
+      "testedAt": 1733229203620,
+      "lastTestedAt": 1733229203620,
+      "lastConnectedAt": 1733229203620,
+      "lastAlertSent": null
+    },
+    "activityDetails": {
+      "lastActivityTime": 1733229200304
+    },
+    "harnessManaged": false,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null,
+      "commitId": null,
+      "fileUrl": null,
+      "repoUrl": null,
+      "parentEntityConnectorRef": null,
+      "parentEntityRepoName": null,
+      "isHarnessCodeRepo": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "governanceMetadata": null,
+    "isFavorite": false
+}

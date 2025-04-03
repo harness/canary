@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
-import { NavbarItemType, useSidebar } from '@harnessio/ui/components'
+import { NavbarItemType, Toaster, useSidebar } from '@harnessio/ui/components'
 import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useNav } from '../../components/stores/recent-pinned-nav-links.store'
@@ -15,7 +15,6 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { Breadcrumbs } from '../breadcrumbs/breadcrumbs'
 import { useGetBreadcrumbs } from '../breadcrumbs/useGetBreadcrumbs'
-import { Toaster } from '../toaster'
 import { AppSideBar } from './side-bar'
 
 interface NavLinkStorageInterface {

@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { RepoRepositoryOutput } from '@harnessio/code-service-client'
-import { Toast, useToast } from '@harnessio/ui/components'
+import { useToast } from '@harnessio/ui/components'
 
 import { useRepoStore } from '../../pages-v2/repo/stores/repo-list-store'
 import { transformRepoList } from '../../pages-v2/repo/transform-utils/repo-list-transform'
@@ -24,14 +24,17 @@ export const useRepoImportEvents = () => {
     (eventData: RepoRepositoryOutput) => {
       update({
         id: importToastId ?? '',
-        title: 'Repository imported',
-        description: importRepoIdentifier,
-        duration: 5000,
-        action: (
-          <Link to={routes.toRepoSummary({ spaceId, repoId: importRepoIdentifier ?? '' })}>
-            <Toast.Action altText="View repository">View</Toast.Action>
+        title: 'Successfully imported',
+        description: (
+          <Link
+            className="text-cn-foreground-accent hover:underline"
+            to={routes.toRepoSummary({ spaceId, repoId: importRepoIdentifier ?? '' })}
+          >
+            {importRepoIdentifier}
           </Link>
         ),
+        action: null,
+        duration: 5000,
         variant: 'success'
       })
       const transformedRepo = transformRepoList([eventData])
@@ -41,12 +44,21 @@ export const useRepoImportEvents = () => {
     },
     [importToastId]
   )
+  const onError = useCallback(() => {
+    update({
+      id: importToastId ?? '',
+      title: 'Import failed',
+      variant: 'failed',
+      action: null
+    })
+  }, [importToastId])
   const events = useMemo(() => [SSEEvent.REPO_IMPORTED], [])
 
   useSpaceSSE({
     space: spaceURL,
     events,
     onEvent,
+    onError,
     shouldRun: true
   })
 }

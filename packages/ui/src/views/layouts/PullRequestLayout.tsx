@@ -1,6 +1,6 @@
-import { FC, PropsWithChildren, useCallback } from 'react'
+import { FC, PropsWithChildren, ReactNode } from 'react'
 
-import { Badge, BadgeProps, Icon, IconProps, Tabs, TabsTriggerProps } from '@/components'
+import { Badge, Icon, IconProps, Tabs } from '@/components'
 import { useRouterContext, useTheme } from '@/context'
 import { cn } from '@/utils'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
@@ -8,19 +8,23 @@ import { TranslationStore } from '@views/repo'
 import { PullRequestHeader } from '@views/repo/pull-request/components/pull-request-header'
 import { IPullRequestStore } from '@views/repo/pull-request/pull-request.types'
 
-const TabTitleWithIcon = ({ icon, children }: PropsWithChildren<{ icon: IconProps['name'] }>) => (
-  <div className="flex items-center gap-x-1">
-    <Icon className="text-icons-1 group-data-[state=active]:text-icons-2" size={14} name={icon} />
-    {children}
-  </div>
+const TabTitleWithIcon = ({
+  icon,
+  children,
+  badgeContent
+}: PropsWithChildren<{ icon: IconProps['name']; badgeContent?: ReactNode }>) => (
+  <>
+    <div className="flex items-center gap-x-1">
+      <Icon className="text-icons-1 group-data-[state=active]:text-icons-2" size={14} name={icon} />
+      {children}
+    </div>
+    {!!badgeContent && (
+      <Badge className="text-foreground-2 font-normal" variant="quaternary" size="xs" borderRadius="base">
+        {badgeContent}
+      </Badge>
+    )}
+  </>
 )
-
-const badgeCommonProps: BadgeProps = {
-  className: 'font-normal text-foreground-2',
-  variant: 'quaternary',
-  size: 'xs',
-  borderRadius: 'base'
-}
 
 interface PullRequestLayoutProps {
   usePullRequestStore: () => IPullRequestStore
@@ -43,20 +47,12 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   repoId,
   updateTitle
 }) => {
-  const { Outlet, navigate } = useRouterContext()
+  const { Outlet, NavLink, location } = useRouterContext()
   const { pullRequest } = usePullRequestStore()
   const { t } = useTranslationStore()
   const { isInset } = useTheme()
 
-  const getTabProps = useCallback(
-    (tab: PullRequestTabsKeys): TabsTriggerProps => ({
-      value: tab,
-      onClick: () => navigate(`../${tab}`),
-      className: 'group gap-x-1.5',
-      role: 'link'
-    }),
-    [navigate]
-  )
+  const activeTab = (location.pathname.split('/').pop() as PullRequestTabsKeys) ?? PullRequestTabsKeys.CONVERSATION
 
   return (
     <SandboxLayout.Main fullWidth>
@@ -65,7 +61,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
           <PullRequestHeader className="mb-10" updateTitle={updateTitle} data={{ ...pullRequest, spaceId, repoId }} />
         )}
 
-        <Tabs.Root variant="tabnav" className="mb-7" defaultValue={PullRequestTabsKeys.CONVERSATION}>
+        <Tabs.Root variant="tabnav" className="mb-7" defaultValue={activeTab}>
           <Tabs.List
             className={cn(
               'before:w-[calc(100vw-var(--sidebar-width))] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2',
@@ -74,21 +70,29 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
               }
             )}
           >
-            <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CONVERSATION)}>
-              <TabTitleWithIcon icon="comments">
-                {t('views:pullRequests.conversation', 'Conversation')}
-              </TabTitleWithIcon>
-              {pullRequest?.stats?.conversations && (
-                <Badge {...badgeCommonProps}>{pullRequest.stats.conversations}</Badge>
-              )}
+            <Tabs.Trigger value={PullRequestTabsKeys.CONVERSATION} asChild>
+              <NavLink to={PullRequestTabsKeys.CONVERSATION}>
+                <TabTitleWithIcon
+                  icon="comments"
+                  badgeContent={!!pullRequest?.stats?.conversations && pullRequest?.stats?.conversations}
+                >
+                  {t('views:pullRequests.conversation', 'Conversation')}
+                </TabTitleWithIcon>
+              </NavLink>
             </Tabs.Trigger>
-            <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.COMMITS)}>
-              <TabTitleWithIcon icon="tube-sign">{t('views:pullRequests.commits', 'Commits')}</TabTitleWithIcon>
-              <Badge {...badgeCommonProps}>{pullRequest?.stats?.commits}</Badge>
+            <Tabs.Trigger value={PullRequestTabsKeys.COMMITS} asChild>
+              <NavLink to={PullRequestTabsKeys.COMMITS}>
+                <TabTitleWithIcon icon="tube-sign" badgeContent={pullRequest?.stats?.commits}>
+                  {t('views:pullRequests.commits', 'Commits')}
+                </TabTitleWithIcon>
+              </NavLink>
             </Tabs.Trigger>
-            <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CHANGES)}>
-              <TabTitleWithIcon icon="changes">{t('views:pullRequests.changes', 'Changes')}</TabTitleWithIcon>
-              <Badge {...badgeCommonProps}>{pullRequest?.stats?.files_changed}</Badge>
+            <Tabs.Trigger value={PullRequestTabsKeys.CHANGES} asChild>
+              <NavLink to={PullRequestTabsKeys.CHANGES}>
+                <TabTitleWithIcon icon="changes" badgeContent={pullRequest?.stats?.files_changed}>
+                  {t('views:pullRequests.changes', 'Changes')}
+                </TabTitleWithIcon>
+              </NavLink>
             </Tabs.Trigger>
           </Tabs.List>
         </Tabs.Root>

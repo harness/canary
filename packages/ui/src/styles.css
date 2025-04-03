@@ -1122,7 +1122,7 @@ mark {
   @apply h-[calc(100vh-100px)]; /* where 55px (Breadcrumbs height) + 45px (SubHeader height) = 100px */
 
   .inset-layout & {
-    @apply h-[calc(100vh-100px-8px)]; /* where 6px is the Inset layout bottom padding (=== INSET_THEME_PADDING) */
+    @apply h-[calc(100vh-100px-8px)]; /* where 8px is the Inset layout bottom padding + borders (=== INSET_THEME_PADDING) */
   }
 }
 

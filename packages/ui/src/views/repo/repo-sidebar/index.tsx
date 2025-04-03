@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, ButtonGroup, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
+import { Button, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelector, BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@views/repo'
 
@@ -45,17 +45,15 @@ export const RepoSidebar = ({
                     setSearchQuery={setSearchQuery}
                   />
                 )}
-                <ButtonGroup spacing="0" className="shadow-borders-2 h-full rounded shadow-as-border">
-                  <Button
-                    className="hover:border-borders-2 hover:bg-background-3"
-                    size="icon"
-                    variant="outline"
-                    aria-label="Create new file"
-                    onClick={navigateToNewFile}
-                  >
-                    <Icon size={16} name="plus" className="text-icons-3" />
-                  </Button>
-                </ButtonGroup>
+                <Button
+                  className="hover:border-borders-2 hover:bg-background-3"
+                  size="icon"
+                  variant="outline"
+                  aria-label="Create new file"
+                  onClick={navigateToNewFile}
+                >
+                  <Icon size={16} name="plus" className="text-icons-3" />
+                </Button>
               </div>
               <div className="px-5">
                 <SearchFiles
@@ -73,7 +71,7 @@ export const RepoSidebar = ({
         </SandboxLayout.LeftSubPanel>
       </div>
       {/* Sticky right border */}
-      <div className="sticky top-0 w-px border-r border-borders-4" />
+      <div className="border-borders-4 sticky top-0 w-px border-r" />
     </>
   )
 }

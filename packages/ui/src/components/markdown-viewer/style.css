@@ -150,7 +150,7 @@
     }
   }
 
-  @apply !bg-cn-background-2 !text-16 !text-cn-foreground-8 !max-w-full font-sans !leading-[1.625rem];
+  @apply !bg-cn-background-2 !text-16 !text-cn-foreground-1 !max-w-full font-sans !leading-[1.625rem];
 
   h1,
   h2,
@@ -183,7 +183,7 @@
   }
 
   li {
-    @apply marker:text-cn-foreground-8 my-1.5 ps-0;
+    @apply marker:text-cn-foreground-1 my-1.5 ps-0;
   }
 
   ol {
@@ -212,7 +212,7 @@
   }
 
   strong {
-    @apply text-cn-foreground-8;
+    @apply text-cn-foreground-1;
   }
 
   pre {
@@ -224,7 +224,7 @@
   }
 
   blockquote {
-    @apply text-cn-foreground-4 border-foreground-5 my-4 border-l-4 pl-4 pr-0 font-normal not-italic;
+    @apply text-cn-foreground-2 border-foreground-5 my-4 border-l-4 pl-4 pr-0 font-normal not-italic;
   }
 
   table {
@@ -233,7 +233,7 @@
     }
 
     td {
-      @apply text-15 text-cn-foreground-8 border-l-0 border-r-0 px-0 py-3 pr-10;
+      @apply text-15 text-cn-foreground-1 border-l-0 border-r-0 px-0 py-3 pr-10;
     }
 
     tr {

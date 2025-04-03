@@ -41,7 +41,7 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
                   {!!member.avatarUrl && <Avatar.Image src={member.avatarUrl} />}
                   <Avatar.Fallback>{getInitials(member.display_name)}</Avatar.Fallback>
                 </Avatar.Root>
-                <span className="font-medium text-cn-foreground-8">{member.display_name}</span>
+                <span className="font-medium text-cn-foreground-1">{member.display_name}</span>
               </div>
             </Table.Cell>
 
@@ -63,7 +63,7 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
                       onClick={() => onEdit({ ...member, role: role.uid })}
                     >
                       <span className="leading-none">{role.label}</span>
-                      <span className="leading-tight text-cn-foreground-4">{role.description}</span>
+                      <span className="leading-tight text-cn-foreground-2">{role.description}</span>
                     </DropdownMenu.Item>
                   ))}
                 </DropdownMenu.Content>

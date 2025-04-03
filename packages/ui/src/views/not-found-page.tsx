@@ -19,7 +19,7 @@ export const NotFoundPage: FC<NotFoundPageProps> = ({ useTranslationStore, pageT
   return (
     <SandboxLayout.Main className="peer flex" fullWidth>
       <div className="m-auto flex max-w-[332px] flex-col items-center pb-56 pt-28 text-center">
-        <span className="mb-5 text-8xl font-bold text-cn-foreground-10">404</span>
+        <span className="mb-5 text-8xl font-bold text-cn-foreground-3">404</span>
         <span className="mb-2.5 text-2xl font-medium text-cn-foreground-1">
           {t('views:notFound.title', 'Something went wrong…')}
         </span>

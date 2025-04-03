@@ -95,7 +95,7 @@ const Filters = ({
             {filterOption.label}
             {!!filter.selectedValues.length && ': '}
           </span>
-          <span className="text-cn-foreground-4">{getFilterDisplayValue(filterOption, filter)}</span>
+          <span className="text-cn-foreground-2">{getFilterDisplayValue(filterOption, filter)}</span>
         </div>
         <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
       </DropdownMenu.Trigger>
@@ -109,7 +109,7 @@ const Filters = ({
         <div className="flex items-center justify-between px-3 py-2.5">
           <div className="flex w-full items-center justify-between gap-x-2">
             <div className="flex items-center gap-x-2">
-              <span className="text-14 text-cn-foreground-4">{filterOption.label}</span>
+              <span className="text-14 text-cn-foreground-2">{filterOption.label}</span>
 
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger className="flex h-[18px] items-center gap-x-1 rounded bg-cn-background-3 pl-1.5 pr-1 text-14 text-cn-foreground-2">
@@ -139,7 +139,7 @@ const Filters = ({
               </DropdownMenu.Trigger>
               <DropdownMenu.Content align="start">
                 <DropdownMenu.Item
-                  className="text-cn-foreground-4 duration-200 hover:text-cn-foreground-danger data-[highlighted]:bg-transparent data-[highlighted]:text-cn-foreground-danger data-[highlighted]:outline-none"
+                  className="text-cn-foreground-2 duration-200 hover:text-cn-foreground-danger data-[highlighted]:bg-transparent data-[highlighted]:text-cn-foreground-danger data-[highlighted]:outline-none"
                   onSelect={() => handleRemoveFilter?.(filter.type)}
                 >
                   <button className="flex items-center gap-x-1.5 text-14">

@@ -117,7 +117,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
-                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-cn-background-8 px-2.5 text-14 text-cn-foreground-8">
+                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-cn-background-8 px-2.5 text-14 text-cn-foreground-1">
                       {defaultBranch === branch?.name && (
                         <Icon name="lock" size={14} className="-mt-px mr-1 inline-block text-icons-9" />
                       )}
@@ -185,7 +185,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="max-w-20 content-center">
                   {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                     <Button
-                      className="flex w-fit items-center gap-1 bg-cn-background-8 px-2.5 text-sm text-cn-foreground-8 hover:bg-cn-background-9 hover:text-cn-foreground-1"
+                      className="flex w-fit items-center gap-1 bg-cn-background-8 px-2.5 text-sm text-cn-foreground-1 hover:bg-cn-background-9 hover:text-cn-foreground-1"
                       variant="custom"
                       size="xs"
                       asChild

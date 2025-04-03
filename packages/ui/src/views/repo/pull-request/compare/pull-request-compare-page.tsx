@@ -210,7 +210,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       <Icon className="text-icons-success" name="tick" size={12} />
                       <p className="text-14 leading-none text-cn-foreground-success">
                         {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
-                        <span className="text-cn-foreground-4">
+                        <span className="text-cn-foreground-2">
                           {t(
                             'views:pullRequests.compareChangesAbleToMergeDescription',
                             'These branches can be automatically merged.'
@@ -223,7 +223,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       {apiError === "head branch doesn't contain any new commits." ? (
                         <>
                           <Icon name={'x-mark'} size={12} className="text-icons-1" />
-                          <p className="text-14 leading-none text-cn-foreground-4">
+                          <p className="text-14 leading-none text-cn-foreground-2">
                             {t(
                               'views:pullRequests.compareChangesApiError',
                               'Head branch doesn’t contain any new commits.'
@@ -235,7 +235,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                           <Icon className="text-icons-danger" name="x-mark" size={12} />
                           <p className="text-14 leading-none text-cn-foreground-danger">
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
-                            <span className="text-cn-foreground-4">
+                            <span className="text-cn-foreground-2">
                               {t(
                                 'views:pullRequests.compareChangesCantMergeDescription',
                                 'You can still create the pull request.'
@@ -290,7 +290,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   <div className="flex gap-x-1">
                     {/* TODO: add the name of the PR instead this placeholder */}
                     <p className="text-14 text-cn-foreground-1">{prBranchCombinationExists.title}</p>
-                    <span className="text-cn-foreground-4">{`#${prBranchCombinationExists.number}`}</span>
+                    <span className="text-cn-foreground-2">{`#${prBranchCombinationExists.number}`}</span>
                   </div>
                 </Layout.Horizontal>
 

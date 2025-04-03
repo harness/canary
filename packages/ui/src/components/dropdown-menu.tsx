@@ -80,7 +80,7 @@ const DropdownMenuContent = React.forwardRef<
 >(({ className, sideOffset = 4, ...props }, ref) => {
   const { portalContainer } = usePortal()
   return (
-    <DropdownMenuPrimitive.Portal container={portalContainer}>
+    <DropdownMenuPortal container={portalContainer}>
       <DropdownMenuPrimitive.Content
         ref={ref}
         sideOffset={sideOffset}
@@ -92,7 +92,7 @@ const DropdownMenuContent = React.forwardRef<
         onCloseAutoFocus={event => event.preventDefault()}
         {...props}
       />
-    </DropdownMenuPrimitive.Portal>
+    </DropdownMenuPortal>
   )
 })
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName
@@ -202,7 +202,6 @@ const DropdownMenu = {
   Separator: DropdownMenuSeparator,
   Shortcut: DropdownMenuShortcut,
   Group: DropdownMenuGroup,
-  Portal: DropdownMenuPortal,
   Sub: DropdownMenuSub,
   SubContent: DropdownMenuSubContent,
   SubTrigger: DropdownMenuSubTrigger,

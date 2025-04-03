@@ -53,7 +53,7 @@ export const LandingPageView: FC<LandingPageProps> = ({
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button variant="default" size="lg">
-                <span className="mr-5 text-sm font-normal text-cn-foreground-6">
+                <span className="mr-5 text-sm font-normal text-cn-foreground-primary">
                   {t('views:landingPage.projectSelector', 'Select Project')}
                 </span>
                 <Icon name="chevron-down" size={15} className="chevron-down" />

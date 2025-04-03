@@ -93,15 +93,12 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
               #{executionId}
             </Text>
             <Badge
-              size="md"
-              disableHover
-              borderRadius="full"
-              className="mt-1"
+              variant="status"
               theme={
                 execution?.result === 'success'
                   ? 'success'
                   : ['fatal_error', 'retriable_error'].includes(execution?.result ?? '')
-                    ? 'destructive'
+                    ? 'danger'
                     : 'muted'
               }
             >

@@ -54,7 +54,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           )}
         </span>
         {/* TODO: Design system: change it to tag */}
-        <Badge variant="soft" theme="primary" size="sm">
+        <Badge variant="soft" theme="muted" size="sm">
           <Icon name="branch" size={14} />
           <span>{defaultBranchName}</span>
         </Badge>
@@ -83,7 +83,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               <span className="text-14 leading-snug text-cn-foreground-1">
                 This branch is {ahead} commits ahead of{' '}
               </span>
-              <Badge className="mt-1" variant="soft" theme="primary" size="sm">
+              <Badge className="mt-1" variant="soft" theme="muted" size="sm">
                 <Icon name="branch" size={14} />
                 <span>{defaultBranchName}</span>
               </Badge>

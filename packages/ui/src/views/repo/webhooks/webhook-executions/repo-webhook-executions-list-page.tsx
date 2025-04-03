@@ -69,14 +69,12 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                     </Table.Cell>
                     <Table.Cell className="content-center">
                       <Badge
-                        size="md"
-                        disableHover
-                        borderRadius="full"
+                        variant="status"
                         theme={
                           execution.result === 'success'
                             ? 'success'
                             : ['fatal_error', 'retriable_error'].includes(execution.result ?? '')
-                              ? 'destructive'
+                              ? 'danger'
                               : 'muted'
                         }
                       >

@@ -57,7 +57,7 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
       <HoverCard.Content className="w-80 space-y-2 p-3 text-sm" avoidCollisions>
         {(['UTC', 'Local'] as const).map(zone => (
           <div key={zone} className="flex items-center gap-2">
-            <Badge variant="soft" size="sm" theme="primary">
+            <Badge variant="soft" size="sm" theme="muted">
               {zone === 'UTC' ? 'UTC' : getTimeZoneAbbreviation()}
             </Badge>
             <span>{zone === 'UTC' ? formattedDates.utcDate : formattedDates.localDate}</span>

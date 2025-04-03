@@ -98,7 +98,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
             </span>
             <span>into</span>
-            <Badge variant="soft" theme="primary">
+            <Badge variant="soft" theme="muted">
               <Link
                 className="flex items-center gap-x-1.5"
                 to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}
@@ -108,7 +108,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               </Link>
             </Badge>
             <span>from</span>
-            <Badge variant="soft" theme="primary">
+            <Badge variant="soft" theme="muted">
               <Link
                 className="flex items-center gap-x-1"
                 to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${source_branch}`}

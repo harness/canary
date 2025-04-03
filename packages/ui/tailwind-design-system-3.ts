@@ -116,6 +116,7 @@ export default {
           1: 'var(--cn-text-1)',
           2: 'var(--cn-text-2)',
           3: 'var(--cn-text-3)',
+          primary: 'var(--cn-set-brand-solid-text)',
           success: 'var(--cn-text-success)',
           danger: 'var(--cn-text-danger)',
           warning: 'var(--cn-text-warning)',
@@ -149,12 +150,11 @@ export default {
           success: 'hsla(var(--canary-background-success))'
         },
         'cn-background': {
-          // @deprecated Use 'cds-background-1' instead
-          // lch(from var(--cn-text-2) l c h / <alpha-value>)
           DEFAULT: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
           1: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
           2: 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
           3: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
+          primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
 
           // 4 - 2
           4: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
@@ -184,6 +184,7 @@ export default {
           1: 'var(--cn-border-1)',
           2: 'var(--cn-border-2)',
           3: 'var(--cn-border-3)',
+
           // remove
           // update to focus, disabled, success, danger, warning
           danger: 'var(--cn-border-danger)',

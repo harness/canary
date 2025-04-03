@@ -163,7 +163,7 @@ const LineTitle: React.FC<LineTitleProps> = ({
         ) : null}
 
         {/* <Button title="coming soon" variant="ghost" size="sm">
-        <Icon name="ellipsis" size={12} className="text-primary-muted/40" />
+        <Icon name="ellipsis" size={12} className="text-cn-foreground-3/40" />
       </Button> */}
       </div>
     </div>

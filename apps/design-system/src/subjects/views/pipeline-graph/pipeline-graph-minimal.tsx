@@ -73,7 +73,7 @@ export function SerialGroupNodeComponent({
     <>
       <div className="border-borders-2 absolute inset-0 -z-10 rounded-xl border" />
       <div className="absolute inset-x-0 top-0 h-0">
-        <div title={name} className="text-primary-muted h-9 cursor-default truncate px-9 pt-2.5">
+        <div title={name} className="text-cn-foreground-3 h-9 cursor-default truncate px-9 pt-2.5">
           {name}
         </div>
       </div>
@@ -102,7 +102,7 @@ export function ParallelGroupNodeComponent({
     <>
       <div className="border-borders-2 absolute inset-0 -z-10 rounded-xl border" />
       <div className="absolute inset-x-0 top-0 h-0">
-        <div title={name} className="text-primary-muted h-9 cursor-default truncate px-9 pt-2.5">
+        <div title={name} className="text-cn-foreground-3 h-9 cursor-default truncate px-9 pt-2.5">
           {name}
         </div>
       </div>

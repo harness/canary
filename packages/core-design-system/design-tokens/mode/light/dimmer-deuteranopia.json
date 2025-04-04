@@ -1,5 +1,10 @@
 {
   "bg": {
+    "0": {
+      "$type": "color",
+      "$value": "{chrome.1000}",
+      "$description": "Level 0. Foundational layer used for page navigation and as a container for insets."
+    },
     "1": {
       "$type": "color",
       "$value": "{pure.white}",

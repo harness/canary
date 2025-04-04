@@ -112,13 +112,13 @@ export function usePRChecksDecision({
         setMessage(`${_count.running}/${total} ${pluralize('check', _count.running)} running.`)
       } else if (_count.pending) {
         _status = ExecutionState.PENDING
-        setColor('text-tertiary-background')
-        setBackground('text-tertiary-background')
+        setColor('text-cn-foreground-3')
+        setBackground('text-cn-foreground-3')
         setMessage(`${_count.pending}/${total} ${pluralize('check', _count.pending)} pending.`)
       } else if (_count.skipped) {
         _status = ExecutionState.SKIPPED
-        setColor('text-tertiary-background')
-        setBackground('text-tertiary-background')
+        setColor('text-cn-foreground-3')
+        setBackground('text-cn-foreground-3')
         setMessage(`${_count.skipped}/${total} ${pluralize('check', _count.skipped)} skipped.`)
       } else if (_count.success) {
         _status = ExecutionState.SUCCESS

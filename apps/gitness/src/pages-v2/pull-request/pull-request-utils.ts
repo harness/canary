@@ -148,7 +148,7 @@ export function determineStatusMessage(
       title = 'All checks have succeeded'
       status = 'success'
       content = `${message}`
-      color = 'text-tertiary-background'
+      color = 'text-cn-foreground-3'
     } else {
       title = 'All required checks passed'
       content = `${message}`
@@ -162,7 +162,7 @@ export function determineStatusMessage(
       title = 'Some checks have failed'
       content = ` ${message}`
       status = 'failure'
-      color = 'text-tertiary-background'
+      color = 'text-cn-foreground-3'
     } else if (checks.some(check => check.check.status === ExecutionState.PENDING)) {
       title = 'Some checks haven’t been completed yet'
       status = 'pending'
@@ -176,7 +176,7 @@ export function determineStatusMessage(
     } else if (checks.every(check => check.check.status === ExecutionState.SUCCESS)) {
       title = 'All checks have succeeded'
       content = `${message}`
-      color = 'text-tertiary-background'
+      color = 'text-cn-foreground-3'
       status = 'success'
     }
   }
@@ -347,7 +347,7 @@ export const extractInfoForCodeOwnerContent = ({
     } else {
       title = 'No reviews required'
       statusMessage = 'Pull request can be merged without any reviews'
-      statusColor = 'text-tertiary-background'
+      statusColor = 'text-cn-foreground-3'
       statusIcon = 'success'
     }
   } else {

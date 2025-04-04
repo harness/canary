@@ -23,6 +23,7 @@
   --canary-white: 0 0% 100%;
 
   --canary-red-55: 0 80% 55%;
+  --canary-red-60: 0 80% 60%;
   --canary-red-65: 0 80% 65%;
   --canary-orange-55: 35 75% 55%;
   --canary-green-65: 150 75% 65%;
@@ -1850,6 +1851,7 @@
     --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
     --canary-background-accent: var(--canary-blue-70);
+    --canary-toast-background-danger: var(--canary-red-60);
 
     /* Button */
     --canary-button-background-danger-01: var(--canary-red-65) / 0.1; /* red65/10 */
@@ -2067,7 +2069,7 @@
     --canary-logs-background-04: hsl(var(--canary-orange-55));
     --canary-logs-background-05: hsl(var(--canary-red-65));
     --canary-logs-background-06: hsla(var(--canary-logs-background-04), 0.1);
-    --canary-logs-background-07: hsla(0 80% 60% / 0.1);
+    --canary-logs-background-07: hsla(var(--canary-red-60) / 0.1);
     --canary-logs-foreground-01: hsl(var(--canary-pure-white));
     --canary-logs-foreground-02: hsl(240, 6%, 60%);
 
@@ -2396,7 +2398,7 @@
     --canary-logs-background-04: hsl(var(--canary-orange-55));
     --canary-logs-background-05: hsl(var(--canary-red-65));
     --canary-logs-background-06: hsla(var(--canary-logs-background-04), 0.1);
-    --canary-logs-background-07: hsla(0 80% 60% / 0.1);
+    --canary-logs-background-07: hsla(var(--canary-red-60) / 0.1);
     --canary-logs-foreground-01: hsl(var(--canary-pure-white));
     --canary-logs-foreground-02: hsl(240, 6%, 60%);
 
@@ -2753,7 +2755,7 @@
     --canary-logs-background-04: hsl(var(--canary-orange-55));
     --canary-logs-background-05: hsl(var(--canary-red-65));
     --canary-logs-background-06: hsla(var(--canary-logs-background-04), 0.1);
-    --canary-logs-background-07: hsla(0 80% 60% / 0.1);
+    --canary-logs-background-07: hsla(var(--canary-red-60) / 0.1);
     --canary-logs-foreground-01: hsl(var(--canary-pure-white));
     --canary-logs-foreground-02: hsl(240, 6%, 60%);
 
@@ -3100,7 +3102,7 @@
     --canary-logs-background-04: hsl(var(--canary-orange-55));
     --canary-logs-background-05: hsl(var(--canary-red-65));
     --canary-logs-background-06: hsla(var(--canary-logs-background-04), 0.1);
-    --canary-logs-background-07: hsla(0 80% 60% / 0.1);
+    --canary-logs-background-07: hsla(var(--canary-red-60) / 0.1);
     --canary-logs-foreground-01: hsl(var(--canary-pure-white));
     --canary-logs-foreground-02: hsl(240, 6%, 60%);
 

@@ -47,4 +47,5 @@ export interface ThemeDialogProps {
   showSystemMode?: boolean
   showAccentColor?: boolean
   showGrayColor?: boolean
+  showAccessibilityThemeOptions?: boolean
 }

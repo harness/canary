@@ -18,7 +18,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
   children,
   showSystemMode,
   showAccentColor,
-  showGrayColor
+  showGrayColor,
+  showAccessibilityThemeOptions = false
 }) => {
   const [accentColor, setAccentColor] = useState<AccentColor>(AccentColor.Blue)
   const [grayColor, setGrayColor] = useState<GrayColor>(GrayColor.First)
@@ -38,6 +39,12 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
   }, [])
 
   const { mode, color: colorAdjustment, contrast } = getModeColorContrastFromFullTheme(theme)
+
+  /**
+   * Hiding accessibility theme options till we
+   * complete the new design system migration.
+   */
+  const isAccessibilityThemeEnabled = showAccessibilityThemeOptions
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -98,154 +105,159 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               })}
             </div>
           </div>
-
-          <Separator className="bg-borders-4 h-px" />
-
-          {/* Contrast */}
-          <div className="grid grid-cols-[246px_1fr] gap-x-8">
-            <div>
-              <span className="text-16 font-medium text-cn-foreground-1">Contrast</span>
-              <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
-                High contrast improves readability, Dimmer mode reduces glare.
-              </p>
-            </div>
-            <Select.Root
-              name="contrast"
-              value={contrast}
-              onValueChange={(value: ContrastType) => {
-                setTheme(`${mode}-${colorAdjustment}-${value}`)
-              }}
-              placeholder="Select"
-            >
-              <Select.Content>
-                {Object.entries(ContrastType).map(([key, value]) => (
-                  <Select.Item key={value} value={value}>
-                    {key}
-                  </Select.Item>
-                ))}
-              </Select.Content>
-            </Select.Root>
-          </div>
-
-          <Separator className="bg-borders-4 h-px" />
-
-          {/* Color Adjustment */}
-          <div className="grid grid-cols-[246px_1fr] gap-x-8">
-            <div>
-              <span className="text-16 font-medium text-cn-foreground-1">Color adjustment</span>
-              <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
-                Adjust colors for different types of color blindness.
-              </p>
-            </div>
-            <Select.Root
-              name="color-adjustment"
-              value={colorAdjustment}
-              onValueChange={(value: ColorType) => {
-                setTheme(`${mode}-${value}-${contrast}`)
-              }}
-              placeholder="Select"
-            >
-              <Select.Content>
-                {Object.entries(ColorType).map(([key, value]) => (
-                  <Select.Item key={value} value={value}>
-                    {key}
-                  </Select.Item>
-                ))}
-              </Select.Content>
-            </Select.Root>
-          </div>
-
-          <Separator className="bg-borders-4 h-px" />
-
-          {/* Inset Adjustment */}
-          <div className="grid grid-cols-[246px_1fr] gap-x-8">
-            <div>
-              <span className="text-16 font-medium text-cn-foreground-1">Content style</span>
-              <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">Choose the style of the content area.</p>
-            </div>
-            <Select.Root
-              name="color-adjustment"
-              value={isInset ? ContentStyleType.Inset : ContentStyleType.Default}
-              onValueChange={onInsetChange}
-              placeholder="Select"
-            >
-              <Select.Content>
-                {Object.values(ContentStyleType).map(value => (
-                  <Select.Item key={value} value={value}>
-                    {value === ContentStyleType.Inset ? 'Inset' : 'Default'}
-                  </Select.Item>
-                ))}
-              </Select.Content>
-            </Select.Root>
-          </div>
-
-          {/* Accent Color */}
-          {showAccentColor ? (
+          {isAccessibilityThemeEnabled && (
             <>
               <Separator className="bg-borders-4 h-px" />
-              <div className="grid grid-cols-[246px_1fr] gap-x-8">
-                <div>
-                  <span className="text-16 font-medium text-cn-foreground-1">Accent color</span>
-                  <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
-                    Select your application accent color.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {Object.values(AccentColor).map(item => (
-                    <button
-                      key={item}
-                      className={cn(
-                        'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
-                        accentColor === item && 'border border-cn-borders-8'
-                      )}
-                      onClick={() => {
-                        setAccentColor(item)
-                      }}
-                    >
-                      <span
-                        style={{
-                          backgroundColor:
-                            item === AccentColor.White && mode === ModeType.Light ? 'hsla(240, 6%, 40%, 1)' : item
-                        }}
-                        className="m-auto block size-[18px] rounded-full"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </>
-          ) : null}
 
-          {/* Gray Color */}
-          {showGrayColor ? (
-            <>
-              <Separator className="bg-borders-4 h-px" />
+              {/* Contrast */}
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
                 <div>
-                  <span className="text-16 font-medium text-cn-foreground-1">Gray color</span>
+                  <span className="text-16 font-medium text-cn-foreground-1">Contrast</span>
                   <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
-                    Select your application gray color.
+                    High contrast improves readability, Dimmer mode reduces glare.
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {Object.values(GrayColor).map(item => (
-                    <button
-                      key={item}
-                      className={cn(
-                        'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
-                        grayColor === item && 'border border-cn-borders-8'
-                      )}
-                      onClick={() => {
-                        setGrayColor(item)
-                      }}
-                    >
-                      <span style={{ backgroundColor: item }} className="m-auto block size-[18px] rounded-full" />
-                    </button>
-                  ))}
-                </div>
+                <Select.Root
+                  name="contrast"
+                  value={contrast}
+                  onValueChange={(value: ContrastType) => {
+                    setTheme(`${mode}-${colorAdjustment}-${value}`)
+                  }}
+                  placeholder="Select"
+                >
+                  <Select.Content>
+                    {Object.entries(ContrastType).map(([key, value]) => (
+                      <Select.Item key={value} value={value}>
+                        {key}
+                      </Select.Item>
+                    ))}
+                  </Select.Content>
+                </Select.Root>
               </div>
+
+              <Separator className="bg-borders-4 h-px" />
+
+              {/* Color Adjustment */}
+              <div className="grid grid-cols-[246px_1fr] gap-x-8">
+                <div>
+                  <span className="text-16 font-medium text-cn-foreground-1">Color adjustment</span>
+                  <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
+                    Adjust colors for different types of color blindness.
+                  </p>
+                </div>
+                <Select.Root
+                  name="color-adjustment"
+                  value={colorAdjustment}
+                  onValueChange={(value: ColorType) => {
+                    setTheme(`${mode}-${value}-${contrast}`)
+                  }}
+                  placeholder="Select"
+                >
+                  <Select.Content>
+                    {Object.entries(ColorType).map(([key, value]) => (
+                      <Select.Item key={value} value={value}>
+                        {key}
+                      </Select.Item>
+                    ))}
+                  </Select.Content>
+                </Select.Root>
+              </div>
+
+              <Separator className="bg-borders-4 h-px" />
+
+              {/* Inset Adjustment */}
+              <div className="grid grid-cols-[246px_1fr] gap-x-8">
+                <div>
+                  <span className="text-16 font-medium text-cn-foreground-1">Content style</span>
+                  <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
+                    Choose the style of the content area.
+                  </p>
+                </div>
+                <Select.Root
+                  name="color-adjustment"
+                  value={isInset ? ContentStyleType.Inset : ContentStyleType.Default}
+                  onValueChange={onInsetChange}
+                  placeholder="Select"
+                >
+                  <Select.Content>
+                    {Object.values(ContentStyleType).map(value => (
+                      <Select.Item key={value} value={value}>
+                        {value === ContentStyleType.Inset ? 'Inset' : 'Default'}
+                      </Select.Item>
+                    ))}
+                  </Select.Content>
+                </Select.Root>
+              </div>
+
+              {/* Accent Color */}
+              {showAccentColor ? (
+                <>
+                  <Separator className="bg-borders-4 h-px" />
+                  <div className="grid grid-cols-[246px_1fr] gap-x-8">
+                    <div>
+                      <span className="text-16 font-medium text-cn-foreground-1">Accent color</span>
+                      <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
+                        Select your application accent color.
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {Object.values(AccentColor).map(item => (
+                        <button
+                          key={item}
+                          className={cn(
+                            'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
+                            accentColor === item && 'border border-cn-borders-8'
+                          )}
+                          onClick={() => {
+                            setAccentColor(item)
+                          }}
+                        >
+                          <span
+                            style={{
+                              backgroundColor:
+                                item === AccentColor.White && mode === ModeType.Light ? 'hsla(240, 6%, 40%, 1)' : item
+                            }}
+                            className="m-auto block size-[18px] rounded-full"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : null}
+
+              {/* Gray Color */}
+              {showGrayColor ? (
+                <>
+                  <Separator className="bg-borders-4 h-px" />
+                  <div className="grid grid-cols-[246px_1fr] gap-x-8">
+                    <div>
+                      <span className="text-16 font-medium text-cn-foreground-1">Gray color</span>
+                      <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
+                        Select your application gray color.
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {Object.values(GrayColor).map(item => (
+                        <button
+                          key={item}
+                          className={cn(
+                            'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
+                            grayColor === item && 'border border-cn-borders-8'
+                          )}
+                          onClick={() => {
+                            setGrayColor(item)
+                          }}
+                        >
+                          <span style={{ backgroundColor: item }} className="m-auto block size-[18px] rounded-full" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : null}
             </>
-          ) : null}
+          )}
         </div>
       </Dialog.Content>
     </Dialog.Root>

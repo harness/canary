@@ -191,6 +191,7 @@ export default {
           1: 'var(--cn-border-1)',
           2: 'var(--cn-border-2)',
           3: 'var(--cn-border-3)',
+          solidred: 'var(--cn-set-red-solid-border)',
 
           // remove
           // update to focus, disabled, success, danger, warning

@@ -66,7 +66,7 @@ export default {
   '.badge': {
     height: 'var(--cn-badge-size-default)',
     padding: '0 var(--cn-badge-default-px)',
-    '@apply select-none pointer-events-none': '',
+    '@apply select-none': '',
 
     /** Size */
     '&:where(.badge-sm)': {

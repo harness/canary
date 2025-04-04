@@ -20,10 +20,14 @@ interface IMFEContext {
   customUtils: Partial<{
     navigateToUserProfile: Unknown
   }>
+  customPromises: Partial<{
+    getCurrentUser: Unknown
+  }>
 }
 export const MFEContext = createContext<IMFEContext>({
   scope: {},
   renderUrl: '',
   customHooks: {},
-  customUtils: {}
+  customUtils: {},
+  customPromises: {}
 })

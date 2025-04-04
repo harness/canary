@@ -70,8 +70,6 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
         if (input.inputType === 'secretSelect') {
           return {
             ...input
-            // ...(openSecretDrawer && { onSecretClick: openSecretDrawer }),
-            // ...(selectedSecret && { selectedSecretData: selectedSecret })
           }
         }
         return input
@@ -138,7 +136,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
               )}
             </EntityFormSectionLayout.Form>
           </EntityFormSectionLayout.Root>
-          <EntityFormLayout.Footer>
+          <EntityFormLayout.Footer className="border-none">
             <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-background-2 p-4 shadow-md">
               <Button variant="secondary" onClick={onBack}>
                 Back

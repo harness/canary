@@ -1,3 +1,5 @@
+import { cn } from '@utils/cn'
+
 const EntityFormLayout = {
   Root: function Root({ children }: { children: React.ReactNode }) {
     return <div className="flex h-full flex-col overflow-hidden">{children}</div>
@@ -19,8 +21,8 @@ const EntityFormLayout = {
     return <div className="my-3">{children}</div>
   },
 
-  Footer: function Footer({ children }: { children: React.ReactNode }) {
-    return <div className={`flex flex-row justify-between border-t p-4`}>{children}</div>
+  Footer: function Footer({ children, className }: { children: React.ReactNode; className?: string }) {
+    return <div className={cn('flex flex-row justify-between border-t p-4', className)}>{children}</div>
   }
 }
 

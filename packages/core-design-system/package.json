@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:styles",
+    "build:ci": "pnpm build",
     "build:styles": "node scripts/build.js",
     "clean": "rimraf dist"
   },

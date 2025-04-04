@@ -290,7 +290,6 @@ export default function RepoSummaryPage() {
 
   return (
     <>
-      <div className="bg-cn-background-accent">Some Text inside a bg-cn-background-accent div</div>
       <RepoSummaryView
         repoId={repoId ?? ''}
         spaceId={spaceId ?? ''}

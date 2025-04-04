@@ -72,7 +72,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
           description: (
             <span className="flex gap-x-1">
               created pull request
-              <span className="text-foreground-8">{prNum}</span>
+              <span className="text-cn-foreground-1">{prNum}</span>
               {formattedTime}
             </span>
           )

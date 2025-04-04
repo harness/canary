@@ -12,7 +12,7 @@ interface MessageProps extends HTMLAttributes<HTMLDivElement> {
 const themeClassMap: Record<MessageTheme, string> = {
   [MessageTheme.SUCCESS]: 'text-success',
   [MessageTheme.WARNING]: 'text-warning',
-  [MessageTheme.ERROR]: 'text-foreground-danger',
+  [MessageTheme.ERROR]: 'text-cn-foreground-danger',
   [MessageTheme.DEFAULT]: 'text-tertiary-background'
 }
 

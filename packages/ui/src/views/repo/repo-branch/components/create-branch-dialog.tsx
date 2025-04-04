@@ -76,7 +76,7 @@ export function CreateBranchDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content className="max-w-[460px] border-border bg-background-1" aria-describedby={undefined}>
+      <Dialog.Content className="max-w-[460px] border-border bg-cn-background-1" aria-describedby={undefined}>
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
         </Dialog.Header>

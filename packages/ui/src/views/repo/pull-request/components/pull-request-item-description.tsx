@@ -27,7 +27,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   const relativePath = fullPath.split('/pulls')[0] // Adjust the slice parameters as needed
 
   return (
-    <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-14 leading-none text-foreground-4">
+    <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-14 leading-none text-cn-foreground-2">
       <p>
         {`#${number}`} opened {timestamp} by{' '}
         <span className="inline-block max-w-[200px] truncate align-bottom">{author}</span>

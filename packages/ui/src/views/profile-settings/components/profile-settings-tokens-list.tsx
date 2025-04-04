@@ -43,23 +43,23 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({
             tokens.map(token => (
               <Table.Row key={token.uid}>
                 <Table.Cell className="content-center">
-                  <span className="block w-[200px] truncate font-medium text-foreground-1">{token.identifier}</span>
+                  <span className="block w-[200px] truncate font-medium text-cn-foreground-1">{token.identifier}</span>
                 </Table.Cell>
                 <Table.Cell className="content-center">
                   <div className="flex items-center gap-x-1.5">
-                    <Icon name="green-dot" size={8} className="text-foreground-success" />
-                    <span className="text-foreground-3">{t('views:profileSettings.active', 'Active')}</span>
+                    <Icon name="green-dot" size={8} className="text-cn-foreground-success" />
+                    <span className="text-cn-foreground-3">{t('views:profileSettings.active', 'Active')}</span>
                   </div>
                 </Table.Cell>
                 <Table.Cell className="content-center">
-                  <span className="text-foreground-1">
+                  <span className="text-cn-foreground-1">
                     {token.expires_at
                       ? new Date(token.expires_at).toLocaleString()
                       : t('views:profileSettings.noExpiration', 'No Expiration')}
                   </span>
                 </Table.Cell>
                 <Table.Cell className="content-center">
-                  <span className="text-foreground-3">{timeAgo(new Date(token.issued_at!).getTime())}</span>
+                  <span className="text-cn-foreground-3">{timeAgo(new Date(token.issued_at!).getTime())}</span>
                 </Table.Cell>
                 <Table.Cell className="content-center text-right">
                   <MoreActionsTooltip
@@ -80,7 +80,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({
           ) : (
             <Table.Row className="hover:bg-transparent">
               <Table.Cell className="content-center !p-4" colSpan={5}>
-                <p className="text-center text-14 text-foreground-4">
+                <p className="text-center text-14 text-cn-foreground-2">
                   {t(
                     'views:profileSettings.noTokenDescription',
                     'There are no personal access tokens associated with this account.'

@@ -102,7 +102,7 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                   <Layout.Vertical gap="space-y-0" className="flex w-full items-center py-5">
                     <Button
-                      className="text-foreground-accent"
+                      className="text-cn-foreground-accent"
                       variant="link_accent"
                       size="sm"
                       aria-label="show diff"
@@ -223,10 +223,10 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
       <ListActions.Root>
         <ListActions.Left>
           <DropdownMenu.Root>
-            <p className="text-14 leading-tight text-foreground-4">
+            <p className="text-14 leading-tight text-cn-foreground-2">
               {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
               <FilesChangedCount showAsDropdown={changedFilesCount !== 0}>
-                <span className="cursor-pointer text-foreground-accent ease-in-out">
+                <span className="cursor-pointer text-cn-foreground-accent ease-in-out">
                   {formatNumber(changedFilesCount)} {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
                 </span>
               </FilesChangedCount>{' '}
@@ -251,12 +251,12 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                     </Text>
                     <div className="ml-4 flex items-center space-x-2">
                       {diff.addedLines != null && diff.addedLines > 0 && (
-                        <Badge variant="outline" size="sm" theme="success">
+                        <Badge variant="surface" size="sm" theme="success">
                           +{diff.addedLines}
                         </Badge>
                       )}
                       {diff.removedLines != null && diff.removedLines > 0 && (
-                        <Badge variant="outline" size="sm" theme="destructive">
+                        <Badge variant="surface" size="sm" theme="danger">
                           -{diff.removedLines}
                         </Badge>
                       )}

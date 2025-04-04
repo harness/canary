@@ -11,7 +11,6 @@ import {
   DESIGN_SYSTEM_ROOT,
   DESIGN_SYSTEM_ROOT_ESM,
   getExportFileHeader,
-  OSS_STYLES_SOURCE_NAME,
   STYLE_BUILD_FORMATS,
   THEME_MODE_FILENAME_PREFIX
 } from './constants.js'
@@ -154,13 +153,13 @@ async function run() {
   console.log('\n\x1b[1m\x1b[32m%s\x1b[0m', '✔︎ Generated style tokens successfully!')
 
   // Create index.css that imports all generated files
-  await createIndexFile()
+  await createCssFiles()
   await createEsmIndexFile()
 
   harnessLog()
 }
 
-async function createIndexFile() {
+async function createCssFiles() {
   console.log(`\n\x1b[34mCreating import files in ${DESIGN_SYSTEM_ROOT}...\x1b[0m`)
 
   // Get list of all CSS files
@@ -170,17 +169,13 @@ async function createIndexFile() {
   const coreFiles = cssFiles.filter(
     file => !file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK) && !file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
   )
-  const ossDarkFiles = cssFiles.filter(
-    file => file.includes(OSS_STYLES_SOURCE_NAME) && file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK)
-  )
-  const ossLightFiles = cssFiles.filter(
-    file => file.includes(OSS_STYLES_SOURCE_NAME) && file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
-  )
+  const darkFiles = cssFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK))
+  const lightFiles = cssFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT))
 
-  console.log('\n=== Theme File Summary (OSS) ===')
+  console.log('\n=== Theme File Summary ===')
   console.table([
-    { Type: 'Dark Theme Files', Count: ossDarkFiles.length },
-    { Type: 'Light Theme Files', Count: ossLightFiles.length }
+    { Type: 'Dark Theme Files', Count: darkFiles.length },
+    { Type: 'Light Theme Files', Count: lightFiles.length }
   ])
   console.log('\n')
 
@@ -193,31 +188,31 @@ async function createIndexFile() {
 ${coreFiles.map(file => `@import './${file}';`).join('\n')}`
 
   /**
-   * OSS themes imports
+   *  themes imports
    * */
-  const ossContent = `${getExportFileHeader()}
+  const themesContent = `${getExportFileHeader()}
 
 /* Theme files - Dark */
-${ossDarkFiles.map(file => `@import './${file}';`).join('\n')}
+${darkFiles.map(file => `@import './${file}';`).join('\n')}
 
 /* Theme files - Light */
-${ossLightFiles.map(file => `@import './${file}';`).join('\n')}`
+${lightFiles.map(file => `@import './${file}';`).join('\n')}`
 
   /**
-   * Enterprise themes imports
+   * MFE themes imports
    * */
-  const enterpriseContent = `${getExportFileHeader()}
+  const mfeThemesContent = `${getExportFileHeader()}
 
 /* Theme files - Dark */
-@import './dark-harness.css';
+@import './dark.css';
 
 /* Theme files - Light */
-@import './light-harness.css';`
+@import './light.css';`
 
   // Write file
   await Promise.all([
-    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/oss.css`, ossContent),
-    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/enterprise.css`, enterpriseContent),
+    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/themes.css`, themesContent),
+    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/mfe-themes.css`, mfeThemesContent),
     fs.writeFile(`${DESIGN_SYSTEM_ROOT}/core-imports.css`, coreStyles)
   ])
 

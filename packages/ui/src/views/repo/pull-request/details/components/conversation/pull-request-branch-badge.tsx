@@ -1,4 +1,4 @@
-import { Badge, Icon } from '@/components'
+import { Badge, Button, Icon } from '@/components'
 
 interface BranchBadgeProps {
   branchName: string
@@ -6,11 +6,15 @@ interface BranchBadgeProps {
   className?: string
 }
 
+// TODO: CDS fix this
+
 const PullRequestBranchBadge: React.FC<BranchBadgeProps> = ({ branchName, onClick, className = '' }) => {
   return (
-    <Badge className={`cursor-pointer ${className}`} onClick={onClick} variant="tertiary" size="md" borderRadius="base">
-      <Icon name="branch" size={12} className="mr-1 text-icons-9" /> {branchName}
-    </Badge>
+    <Button asChild onClick={onClick} className={`cursor-pointer ${className}`}>
+      <Badge variant="soft" size="sm">
+        <Icon name="branch" size={12} className="mr-1 text-icons-9" /> {branchName}
+      </Badge>
+    </Button>
   )
 }
 

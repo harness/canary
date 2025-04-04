@@ -45,15 +45,15 @@ const FilterBoxWrapper = ({
         onOpenChange?.(open)
       }}
     >
-      {/* className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-background-3 pl-2.5 pr-2 transition-colors duration-200 hover:bg-background-8" */}
+      {/* className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-cn-background-3 pl-2.5 pr-2 transition-colors duration-200 hover:bg-cn-background-8" */}
       <DropdownMenu.Trigger asChild>
-        <Button className="gap-x-3 bg-background-3 pl-2.5 pr-2 hover:bg-background-8">
+        <Button className="gap-x-3 bg-cn-background-3 pl-2.5 pr-2 hover:bg-cn-background-8">
           <div className="flex items-center gap-x-1.5 text-13">
-            <span className="text-foreground-1">
+            <span className="text-cn-foreground-1">
               {filterLabel}
               {!!valueLabel && ': '}
             </span>
-            <span className="text-foreground-4">{valueLabel}</span>
+            <span className="text-cn-foreground-2">{valueLabel}</span>
           </div>
           <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
         </Button>
@@ -61,12 +61,12 @@ const FilterBoxWrapper = ({
 
       <DropdownMenu.Content className={cn('w-[276px] p-0', contentClassName)} align="start">
         <div className="flex items-center justify-between px-3 py-2.5">
-          <div className="flex items-center gap-x-2 text-foreground-4">{filterLabel}</div>
+          <div className="flex items-center gap-x-2 text-cn-foreground-2">{filterLabel}</div>
 
           <DropdownMenu.Root>
             <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">
               <Icon
-                className="text-icons-1 transition-colors duration-200 group-hover:text-foreground-1"
+                className="text-icons-1 transition-colors duration-200 group-hover:text-cn-foreground-1"
                 name="more-dots-fill"
                 size={12}
               />
@@ -76,7 +76,7 @@ const FilterBoxWrapper = ({
                 <Button
                   size="xs"
                   variant="custom"
-                  className="data-[highlighted]:bg-background-transparent gap-x-1.5 data-[highlighted]:text-foreground-danger"
+                  className="data-[highlighted]:bg-cn-background-transparent gap-x-1.5 data-[highlighted]:text-cn-foreground-danger"
                 >
                   <Icon name="trash" size={12} />
                   {t('component:filter.delete', 'Delete filter')}

@@ -15,7 +15,7 @@ const DropdownMenuComponent = <T extends { label: string; value: string }>({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="flex items-center gap-x-1.5">
-        <span className="text-foreground-2 transition-colors duration-200 group-hover:text-foreground-1">
+        <span className="text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
           {selectedItem.label}
         </span>
         <Icon name="chevron-fill-down" size={6} className="chevron-down text-icons-7" />
@@ -56,8 +56,8 @@ const PullRequestFilters = <T extends FilterOption>({
   className
 }: PullRequestFilterProps<T>) => {
   return (
-    <div className={cn('grid grid-cols-[1fr_auto] items-center border-b border-borders-1 pb-2', className)}>
-      <h3 className="text-18 font-medium leading-snug text-foreground-1">Overview</h3>
+    <div className={cn('grid grid-cols-[1fr_auto] items-center border-b border-cn-borders-2 pb-2', className)}>
+      <h3 className="text-18 font-medium leading-snug text-cn-foreground-1">Overview</h3>
 
       <div className="flex items-center gap-x-5">
         <DropdownMenuComponent items={activityFilters} selectedItem={activityFilter} onItemSelect={setActivityFilter} />

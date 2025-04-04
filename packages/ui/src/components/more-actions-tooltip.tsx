@@ -66,7 +66,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
                 }}
               >
                 <DropdownMenu.Item>
-                  <span className={cn('truncate text-sm', { 'text-foreground-danger': action.isDanger })}>
+                  <span className={cn('truncate text-sm', { 'text-cn-foreground-danger': action.isDanger })}>
                     {action.title}
                   </span>
                 </DropdownMenu.Item>
@@ -79,7 +79,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
                   action?.onClick?.()
                 }}
               >
-                <span className={cn('truncate text-sm', { 'text-foreground-danger': action.isDanger })}>
+                <span className={cn('truncate text-sm', { 'text-cn-foreground-danger': action.isDanger })}>
                   {action.title}
                 </span>
               </DropdownMenu.Item>

@@ -143,17 +143,17 @@ export const PullRequestCommentBox = ({
     <div className={cn('flex items-start gap-x-3 font-sans', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && avatar}
       <div
-        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-background-2 border-border-1 overflow-auto', {
+        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-cn-background-2 border-border-1 overflow-auto', {
           'border rounded-md': !inReplyMode || isEditMode,
           'border-t': inReplyMode
         })}
       >
         <Tabs.Root variant="tabnav" defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
           <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
-            <Tabs.Trigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.WRITE}>
+            <Tabs.Trigger className="data-[state=active]:bg-cn-background-2" value={TABS_KEYS.WRITE}>
               Write
             </Tabs.Trigger>
-            <Tabs.Trigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.PREVIEW}>
+            <Tabs.Trigger className="data-[state=active]:bg-cn-background-2" value={TABS_KEYS.PREVIEW}>
               Preview
             </Tabs.Trigger>
           </Tabs.List>
@@ -168,7 +168,7 @@ export const PullRequestCommentBox = ({
               ref={dropZoneRef}
             >
               <Textarea
-                className="min-h-24 bg-background-2 p-3 pb-10 text-foreground-1"
+                className="min-h-24 bg-cn-background-2 p-3 pb-10 text-cn-foreground-1"
                 autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}
@@ -181,15 +181,15 @@ export const PullRequestCommentBox = ({
                 resizable
               />
               {isDragging && (
-                <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-borders-2" />
+                <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
               )}
 
-              <div className="absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center bg-background-2 pb-2 pt-1">
+              <div className="absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center bg-cn-background-2 pb-2 pt-1">
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (
                     <Fragment key={`${comment}-${index}`}>
-                      <Button className="hover:bg-background-8" size="icon" variant="ghost" onClick={item?.onClick}>
+                      <Button className="hover:bg-cn-background-8" size="icon" variant="ghost" onClick={item?.onClick}>
                         <Icon className="text-icons-9" name={item.icon} />
                       </Button>
                       {isFirst && <div className="bg-borders-2 h-4 w-px" />}
@@ -202,9 +202,9 @@ export const PullRequestCommentBox = ({
           <Tabs.Content className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>
             <div className="min-h-24 w-full">
               {comment ? (
-                <MarkdownViewer markdownClassName="!bg-background-2 w-full" source={comment} />
+                <MarkdownViewer markdownClassName="!bg-cn-background-2 w-full" source={comment} />
               ) : (
-                <span className="text-foreground-8">Nothing to preview</span>
+                <span className="text-cn-foreground-1">Nothing to preview</span>
               )}
             </div>
           </Tabs.Content>
@@ -215,7 +215,7 @@ export const PullRequestCommentBox = ({
             <div>
               <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
               <Button
-                className="gap-x-2 px-2.5 font-normal text-foreground-3 hover:bg-background-8"
+                className="gap-x-2 px-2.5 font-normal text-cn-foreground-3 hover:bg-cn-background-8"
                 variant="custom"
                 onClick={handleFileSelect}
               >

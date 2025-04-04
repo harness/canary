@@ -16,7 +16,7 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
   copyContent,
   showEdit = false
 }) => {
-  const commonButtonClasses = 'border-borders-1 hover:bg-background-4'
+  const commonButtonClasses = 'border-borders-2 hover:bg-cds-background-4'
   return (
     <ButtonGroup spacing="0" className="h-full rounded">
       <CopyButton className={cn(commonButtonClasses, 'border rounded-r-none')} name={copyContent} />

@@ -37,7 +37,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullReques
       {!!comments && (
         <div className="ml-auto flex items-center gap-1">
           <Icon className="text-icons-7" size={16} name="comments" />
-          <span className="text-12 leading-none text-foreground-1">{comments}</span>
+          <span className="text-12 leading-none text-cn-foreground-1">{comments}</span>
         </div>
       )}
     </div>

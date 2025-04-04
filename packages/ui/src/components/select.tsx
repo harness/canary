@@ -54,7 +54,7 @@ const SelectRoot: FC<SelectRootProps> = ({
       </Label>
     )}
     <SelectTrigger
-      className={cn(props.value ? 'text-foreground-1' : 'text-foreground-2')}
+      className={cn(props.value ? 'text-cn-foreground-1' : 'text-cn-foreground-2')}
       id={name}
       disabled={disabled}
     >
@@ -70,7 +70,7 @@ const SelectRoot: FC<SelectRootProps> = ({
       </Message>
     )}
 
-    {caption && <Caption className={cn({ 'text-foreground-9': disabled })}>{caption}</Caption>}
+    {caption && <Caption className={cn({ 'text-cn-foreground-disabled': disabled })}>{caption}</Caption>}
   </SelectPrimitive.Root>
 )
 SelectRoot.displayName = SelectPrimitive.Root.displayName
@@ -89,7 +89,7 @@ const SelectTrigger = forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'border-borders-2 ring-offset-background flex h-9 w-full items-center justify-between whitespace-nowrap rounded border bg-input-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed disabled:border-borders-1 [&>span]:line-clamp-1',
+      'border-cn-borders-2 ring-offset-background flex h-9 w-full items-center justify-between whitespace-nowrap rounded border bg-cn-background-2 px-3 py-2 text-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed disabled:border-cn-borders-2 [&>span]:line-clamp-1',
       className
     )}
     {...props}
@@ -154,7 +154,7 @@ const SelectContent = forwardRef<
           )}
         >
           {!!withSearch && (
-            <div className="sticky -top-1 z-[1] -mx-1 -mt-1 mb-1 border-b bg-background-2 px-3 py-2.5">
+            <div className="sticky -top-1 z-[1] -mx-1 -mt-1 mb-1 border-b bg-cn-background-2 px-3 py-2.5">
               <SearchBox.Root
                 className="w-full"
                 placeholder={searchProps?.placeholder || ''}
@@ -168,7 +168,7 @@ const SelectContent = forwardRef<
             children
           ) : (
             <div className="px-5 py-4 text-center">
-              <span className="leading-tight text-foreground-2">Nothing to select</span>
+              <span className="leading-tight text-cn-foreground-2">Nothing to select</span>
             </div>
           )}
         </SelectPrimitive.Viewport>

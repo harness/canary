@@ -5,10 +5,10 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const toggleVariants = cva(
-  `inline-flex items-center justify-center text-xs font-medium text-foreground-4 
+  `inline-flex items-center justify-center text-xs font-medium text-cn-foreground-2 
   transition-colors 
-  hover:text-foreground-2 disabled:pointer-events-none 
-  disabled:opacity-50 data-[state=on]:text-foreground-1`,
+  hover:text-cn-foreground-2 disabled:pointer-events-none 
+  disabled:opacity-50 data-[state=on]:text-cn-foreground-1`,
   {
     variants: {
       variant: {

@@ -8,7 +8,10 @@ const TabNavRoot: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ classN
   return (
     <nav
       {...props}
-      className={cn('flex h-11 w-full items-center gap-6 border-b border-borders-5 px-6 text-foreground-4', className)}
+      className={cn(
+        'flex h-11 w-full items-center gap-6 border-b border-cn-borders-3 px-6 text-cn-foreground-2',
+        className
+      )}
     />
   )
 }
@@ -21,10 +24,10 @@ const TabNavItem: FC<NavLinkProps> = ({ className, ...props }) => {
       role="tab"
       className={({ isActive }) =>
         cn(
-          'block relative place-content-center whitespace-nowrap m-0 my-1 h-9 px-0 text-14 font-normal leading-none text-foreground-2 focus-visible:duration-0 duration-150 ease-in-out hover:text-foreground-1 disabled:pointer-events-none disabled:opacity-50 ',
+          'block relative place-content-center whitespace-nowrap m-0 my-1 h-9 px-0 text-14 font-normal leading-none text-cn-foreground-2 focus-visible:duration-0 duration-150 ease-in-out hover:text-cn-foreground-1 disabled:pointer-events-none disabled:opacity-50 ',
           // bottom border of active tab
           'after:pointer-events-none after:absolute after:inset-[-0.25rem_0] after:block after:border-b-2 after:border-solid after:border-b-transparent',
-          { 'text-foreground-1 after:border-borders-7': isActive },
+          { 'text-cn-foreground-1 after:border-cn-borders-accent': isActive },
           /*
            * TODO: Active tab Radial background is hidden until it's adjusted to the light theme
            */

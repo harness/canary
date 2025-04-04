@@ -27,10 +27,10 @@ const PrincipalOption = forwardRef<HTMLDivElement, PrincipalOptionProps>(({ prin
         <Avatar.Fallback>{getInitials(principal.display_name)}</Avatar.Fallback>
       </Avatar.Root>
       <span className="flex flex-col overflow-hidden leading-tight">
-        <span className={`truncate ${isShortView ? 'text-foreground-1' : 'text-foreground-8'}`}>
+        <span className={`truncate ${isShortView ? 'text-cn-foreground-1' : 'text-cn-foreground-1'}`}>
           {principal.display_name}
         </span>
-        {!isShortView && <span className="truncate text-12 text-foreground-4">{principal.email}</span>}
+        {!isShortView && <span className="truncate text-12 text-cn-foreground-2">{principal.email}</span>}
       </span>
     </div>
   )
@@ -147,15 +147,15 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
                 label={t('views:projectSettings.role', 'Role')}
                 error={errors.role?.message?.toString()}
                 selectValueChildren={
-                  !!selectedRoleFullModel && <span className="text-foreground-1">{selectedRoleFullModel.label}</span>
+                  !!selectedRoleFullModel && <span className="text-cn-foreground-1">{selectedRoleFullModel.label}</span>
                 }
               >
                 <Select.Content>
                   {roleOptions.map(option => (
                     <Select.Item key={option.uid} value={option.uid} isItemTextAsChild>
                       <div className="flex cursor-pointer flex-col gap-y-1.5">
-                        <span className="leading-none text-foreground-8">{option.label}</span>
-                        <span className="leading-tight text-foreground-4">{option.description}</span>
+                        <span className="leading-none text-cn-foreground-1">{option.label}</span>
+                        <span className="leading-tight text-cn-foreground-2">{option.description}</span>
                       </div>
                     </Select.Item>
                   ))}

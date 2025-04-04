@@ -73,8 +73,8 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(entity)}
-        className={cn({ 'bg-background-4': isSelected })}
-        thumbnail={<Icon name="file" size={16} className="text-foreground-5" />}
+        className={cn({ 'bg-cn-background-hover': isSelected })}
+        thumbnail={<Icon name="file" size={16} className="text-cn-foreground-3" />}
         actions={
           <Button
             variant="default"
@@ -96,7 +96,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(parentFolder)}
-        thumbnail={<Icon name="circle-arrow-top" size={16} className="text-foreground-5" />}
+        thumbnail={<Icon name="circle-arrow-top" size={16} className="text-cn-foreground-3" />}
       >
         <StackedList.Field title={<span className="capitalize">{String(parentFolder)}</span>} />
       </StackedList.Item>
@@ -107,7 +107,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(folder)}
-        thumbnail={<Icon name="folder" size={16} className="text-foreground-5" />}
+        thumbnail={<Icon name="folder" size={16} className="text-cn-foreground-3" />}
       >
         <StackedList.Field title={<span className="capitalize">{String(folder)}</span>} />
       </StackedList.Item>

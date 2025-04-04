@@ -41,17 +41,17 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
                   {!!member.avatarUrl && <Avatar.Image src={member.avatarUrl} />}
                   <Avatar.Fallback>{getInitials(member.display_name)}</Avatar.Fallback>
                 </Avatar.Root>
-                <span className="font-medium text-foreground-8">{member.display_name}</span>
+                <span className="font-medium text-cn-foreground-1">{member.display_name}</span>
               </div>
             </Table.Cell>
 
             {/* EMAIL */}
-            <Table.Cell className="content-center text-foreground-2">{member.email}</Table.Cell>
+            <Table.Cell className="content-center text-cn-foreground-2">{member.email}</Table.Cell>
 
             {/* ROLE */}
             <Table.Cell className="w-1/5 content-center">
               <DropdownMenu.Root>
-                <DropdownMenu.Trigger className="flex items-center gap-x-1.5 text-foreground-2 hover:text-foreground-1">
+                <DropdownMenu.Trigger className="flex items-center gap-x-1.5 text-cn-foreground-2 hover:text-cn-foreground-1">
                   {getRoleLabel(member.role)}
                   <Icon className="chevron-down text-icons-7" name="chevron-fill-down" size={6} />
                 </DropdownMenu.Trigger>
@@ -63,7 +63,7 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
                       onClick={() => onEdit({ ...member, role: role.uid })}
                     >
                       <span className="leading-none">{role.label}</span>
-                      <span className="leading-tight text-foreground-4">{role.description}</span>
+                      <span className="leading-tight text-cn-foreground-2">{role.description}</span>
                     </DropdownMenu.Item>
                   ))}
                 </DropdownMenu.Content>

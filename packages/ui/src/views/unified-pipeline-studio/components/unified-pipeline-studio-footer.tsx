@@ -37,7 +37,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
   return (
     <footer
       className={
-        'bg-grey-6 text-grey-60 flex h-10 shrink-0 items-center justify-between border-t border-borders-5 px-4 text-[12px] font-normal not-italic leading-[15px]'
+        'bg-grey-6 text-grey-60 flex h-10 shrink-0 items-center justify-between border-t border-cn-borders-3 px-4 text-[12px] font-normal not-italic leading-[15px]'
       }
     >
       <div className="flex items-center gap-2">

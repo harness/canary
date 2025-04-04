@@ -1,6 +1,10 @@
 import typography from '@tailwindcss/typography'
 import tailwindcssAnimate from 'tailwindcss-animate'
+import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
+
+import { badgeStyles, dialogStyles } from './tailwind-utils-config/components'
+import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
 export default {
   darkMode: ['class'],
@@ -20,10 +24,8 @@ export default {
         code: ['JetBrains Mono', 'monospace']
       },
       colors: {
-        border: 'hsl(var(--canary-border))',
-        'border-background': 'hsl(var(--canary-border-background))',
+        border: 'var(--cn-border-1)',
         input: 'hsl(var(--canary-input))',
-        'input-background': 'hsl(var(--canary-input-background))',
         ring: 'hsl(var(--canary-ring))',
         primary: {
           DEFAULT: 'hsl(var(--canary-primary))',
@@ -108,6 +110,24 @@ export default {
           success: 'hsl(var(--canary-foreground-success))',
           accent: 'hsl(var(--canary-foreground-accent))'
         },
+        'cn-foreground': {
+          1: 'var(--cn-text-1)',
+          2: 'var(--cn-text-2)',
+          3: 'var(--cn-text-3)',
+          success: 'var(--cn-text-success)',
+          danger: 'var(--cn-text-danger)',
+          warning: 'var(--cn-text-warning)',
+          accent: 'var(--cn-text-accent)',
+
+          // Remove
+          primary: 'var(--cn-set-brand-solid-text)',
+          disabled: 'var(--cn-state-disabled-text)',
+          4: 'var(--cn-text-3)',
+          5: 'var(--cn-text-3)',
+          8: 'var(--cn-text-3)',
+          // DEFAULT - 1
+          DEFAULT: 'var(--cn-text-1)'
+        },
         background: {
           // TODO: remove DEFAULT, cause use old color var
           DEFAULT: 'hsl(var(--canary-background))',
@@ -124,9 +144,55 @@ export default {
           11: 'hsl(var(--canary-background-11))',
           12: 'hsl(var(--canary-background-12))',
           13: 'hsl(var(--canary-background-13))',
-          surface: 'hsl(var(--canary-background-surface))',
+          // surface: 'hsl(var(--canary-background-surface))',
           danger: 'hsla(var(--canary-background-danger))',
           success: 'hsla(var(--canary-background-success))'
+        },
+        'cn-background': {
+          DEFAULT: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
+          1: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
+          2: 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
+          3: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
+
+          // Remove
+          hover: 'var(--cn-state-hover)',
+          primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
+          8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
+          9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
+          // avatar - remove once avatar component is completed
+          11: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
+          12: 'lch(from var(--cn-set-gray-surface-bg-hover) l c h / <alpha-value>)',
+          13: 'lch(from var(--cn-set-gray-solid-bg) l c h / <alpha-value>)'
+        },
+        borders: {
+          1: 'hsl(var(--canary-border-01))',
+          2: 'hsl(var(--canary-border-02))',
+          3: 'hsl(var(--canary-border-03))',
+          4: 'hsl(var(--canary-border-04))',
+          5: 'hsl(var(--canary-border-05))',
+          6: 'hsl(var(--canary-border-06))',
+          7: 'hsl(var(--canary-border-07))',
+          8: 'hsl(var(--canary-border-08))',
+          9: 'hsl(var(--canary-border-09))',
+          10: 'hsl(var(--canary-border-10))',
+          danger: 'hsl(var(--canary-border-danger))',
+          success: 'hsl(var(--canary-border-success))',
+          accent: 'hsl(var(--canary-border-accent))',
+          risk: 'hsl(var(--canary-icon-risk))',
+          alert: 'hsl(var(--canary-border-alert))'
+        },
+        'cn-borders': {
+          1: 'var(--cn-border-1)',
+          2: 'var(--cn-border-2)',
+          3: 'var(--cn-border-3)',
+
+          // remove
+          // update to focus, disabled, success, danger, warning
+          danger: 'var(--cn-border-danger)',
+          success: 'var(--cn-border-success)',
+          accent: 'var(--cn-border-accent)',
+          risk: 'var(--cn-icon-risk)',
+          alert: 'var(--cn-border-alert)'
         },
         button: {
           foreground: {
@@ -199,6 +265,16 @@ export default {
             },
             red: {
               1: 'hsl(var(--canary-tag-foreground-red-01))'
+            },
+            code: {
+              1: 'hsl(var(--canary-code-foreground-01))',
+              2: 'hsl(var(--canary-code-foreground-02))',
+              3: 'hsl(var(--canary-code-foreground-03))',
+              4: 'hsl(var(--canary-code-foreground-04))',
+              5: 'hsl(var(--canary-code-foreground-05))',
+              6: 'hsl(var(--canary-code-foreground-06))',
+              7: 'hsl(var(--canary-code-foreground-07))',
+              8: 'hsl(var(--canary-code-foreground-08))'
             }
           },
           background: {
@@ -303,16 +379,14 @@ export default {
             5: 'hsl(var(--canary-sidebar-background-05))',
             6: 'var(--canary-sidebar-background-06)',
             7: 'hsl(var(--canary-sidebar-background-07))',
-            8: 'hsl(var(--canary-sidebar-background-08))',
-            9: 'hsl(var(--canary-sidebar-background-09))'
+            8: 'hsl(var(--canary-sidebar-background-08))'
           },
           border: {
-            1: 'hsl(var(--canary-sidebar-border-01))',
+            1: 'var(--cn-border-3)',
             2: 'hsla(var(--canary-sidebar-border-02))',
             3: 'hsl(var(--canary-sidebar-border-03))',
             4: 'hsl(var(--canary-sidebar-border-04))',
-            5: 'hsl(var(--canary-sidebar-border-05))',
-            6: 'hsl(var(--canary-sidebar-border-06))'
+            5: 'hsl(var(--canary-sidebar-border-05))'
           },
           foreground: {
             1: 'hsl(var(--canary-sidebar-foreground-01))',
@@ -353,21 +427,6 @@ export default {
           border: {
             1: 'hsl(var(--canary-graph-border-1))'
           }
-        },
-        logs: {
-          background: {
-            1: 'var(--canary-logs-background-01)',
-            2: 'var(--canary-logs-background-02)',
-            3: 'var(--canary-logs-background-03)',
-            4: 'var(--canary-logs-background-04)',
-            5: 'var(--canary-logs-background-05)',
-            6: 'var(--canary-logs-background-06)',
-            7: 'var(--canary-logs-background-07)'
-          },
-          foreground: {
-            1: 'var(--canary-logs-foreground-01)',
-            2: 'var(--canary-logs-foreground-02)'
-          }
         }
       },
       letterSpacing: {
@@ -383,6 +442,7 @@ export default {
         auth: '0px 0px 20px var(--canary-box-shadow-2)'
       },
       borderColor: {
+        DEFAULT: 'var(--cn-border-3)',
         'borders-1': 'hsl(var(--canary-border-01))',
         'borders-2': 'hsl(var(--canary-border-02))',
         'borders-3': 'hsl(var(--canary-border-03))',
@@ -437,10 +497,8 @@ export default {
           'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-item-gradient-1)) 0%, hsla(var(--canary-nav-item-gradient-2)) 17.63%, hsla(var(--canary-nav-item-gradient-3)) 40.23%, hsla(var(--canary-nav-item-gradient-4)) 61.54%, hsla(var(--canary-nav-item-gradient-5)) 80%, hsla(var(--canary-nav-item-gradient-6)) 100%)',
         'widget-bg-gradient':
           'radial-gradient(80.82% 77.84% at 80.15% 11.99%, hsla(var(--canary-widget-bg-gradient-from)) 8.43%, hsla(var(--canary-widget-bg-gradient-to)) 100%)',
-        'widget-number-gradient-dark':
+        'widget-number-gradient':
           'linear-gradient(180deg, hsla(var(--canary-widget-number-gradient-from)) 35.9%, hsla(var(--canary-widget-number-gradient-to)) 100%)',
-        'widget-number-gradient-light':
-          'linear-gradient(180deg, hsla(var(--canary-foreground-04) / 0) 0%, hsl(var(--canary-foreground-04)) 64.1%)',
         'widget-number-bg-gradient':
           'linear-gradient(135deg, hsla(var(--canary-widget-number-bg-gradient-from)) 0%, hsla(var(--canary-widget-number-bg-gradient-to)) 67.67%)',
         'graph-gradient-1':
@@ -472,6 +530,20 @@ export default {
     }
   },
   plugins: [
+    /**
+     * Plugins has to be added in the order of dependency.
+     *
+     * Example: "badgeStyles" - Depends on "typographyStyles".
+     * Hence "typographyStyles" has to be added before "badgeStyles".
+     *
+     */
+    plugin(({ addUtilities }) => {
+      addUtilities(typographyStyles)
+    }),
+    plugin(({ addComponents }) => {
+      addComponents(badgeStyles)
+      addComponents(dialogStyles)
+    }),
     tailwindcssAnimate,
     typography,
     function ({ addUtilities }: PluginAPI) {
@@ -537,9 +609,18 @@ export default {
     'prose-a',
     'prose-img',
     'prose-code',
+    /** New design system Variants  */
+    { pattern: /^bg-cn-background-/ },
+    { pattern: /^border-cn-borders-/ },
+    { pattern: /^text-cn-foreground-/ },
+    { pattern: /^border-cn-borders-/ },
+    { pattern: /^hover:text-cn-foreground-/ },
+    { pattern: /^hover:border-cn-borders-/ },
+
+    /** Existing Variants  */
     { pattern: /^bg-graph-/ },
     { pattern: /^bg-background-/ },
-    { pattern: /^text-foreground-/ },
+
     { pattern: /^text-icons-/ },
     { pattern: /^bg-icons-/ },
     // button classes
@@ -552,7 +633,6 @@ export default {
     { pattern: /^border-tag-border-/ },
     // label classes
     { pattern: /^bg-label-background-/ },
-    { pattern: /^bg-label-foreground-/ },
     { pattern: /^text-label-foreground-/ },
     // sidebar classes
     { pattern: /^bg-sidebar-background-/ },
@@ -567,7 +647,6 @@ export default {
     // Hover classes
     { pattern: /^hover:bg-graph-/ },
     { pattern: /^hover:bg-background-/ },
-    { pattern: /^hover:text-foreground-/ },
     { pattern: /^hover:text-icons-/ },
     { pattern: /^hover:bg-icons-/ },
     // button classes
@@ -580,7 +659,6 @@ export default {
     { pattern: /^hover:border-tag-border-/ },
     // label classes
     { pattern: /^hover:bg-label-background-/ },
-    { pattern: /^hover:bg-label-foreground-/ },
     { pattern: /^hover:text-label-foreground-/ },
     // sidebar classes
     { pattern: /^hover:bg-sidebar-background-/ },

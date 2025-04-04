@@ -123,7 +123,7 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
         type="text"
         className={cn(
           {
-            'border-borders-danger focus:border-borders-danger': singleState.input.isError
+            'border-cn-borders-danger focus:border-cn-borders-danger': singleState.input.isError
           },
           'w-auto mx-3'
         )}

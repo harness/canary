@@ -24,9 +24,9 @@ export const Content = ({ totalPages, currentPage, setPage }: ContentProps) => {
   return (
     <SandboxLayout.Content>
       <Spacer size={7} />
-      <h1 className="text-2xl font-medium text-foreground-1">
+      <h1 className="text-2xl font-medium text-cn-foreground-1">
         {t('views:userManagement.usersHeader', 'Users')}{' '}
-        <span className="text-foreground-4">({users?.length || 0})</span>
+        <span className="text-cn-foreground-2">({users?.length || 0})</span>
       </h1>
       <Spacer size={6} />
       <Actions />

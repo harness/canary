@@ -187,11 +187,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="px-20">
-        <span className="mt-7 text-24 font-medium leading-snug tracking-tight text-foreground-1">
+        <span className="mt-7 text-24 font-medium leading-snug tracking-tight text-cn-foreground-1">
           {t('views:pullRequests.compareChanges', 'Comparing changes')}
         </span>
         <Layout.Vertical className="mt-2.5">
-          <p className="max-w-xl text-14 leading-snug text-foreground-2">
+          <p className="max-w-xl text-14 leading-snug text-cn-foreground-2">
             {t(
               'views:pullRequests.compareChangesDescription',
               'Choose two branches to see what’s changed or to start a new pull request.'
@@ -208,9 +208,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   {mergeability ? (
                     <>
                       <Icon className="text-icons-success" name="tick" size={12} />
-                      <p className="text-14 leading-none text-foreground-success">
+                      <p className="text-14 leading-none text-cn-foreground-success">
                         {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
-                        <span className="text-foreground-4">
+                        <span className="text-cn-foreground-2">
                           {t(
                             'views:pullRequests.compareChangesAbleToMergeDescription',
                             'These branches can be automatically merged.'
@@ -223,7 +223,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       {apiError === "head branch doesn't contain any new commits." ? (
                         <>
                           <Icon name={'x-mark'} size={12} className="text-icons-1" />
-                          <p className="text-14 leading-none text-foreground-4">
+                          <p className="text-14 leading-none text-cn-foreground-2">
                             {t(
                               'views:pullRequests.compareChangesApiError',
                               'Head branch doesn’t contain any new commits.'
@@ -233,9 +233,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       ) : (
                         <>
                           <Icon className="text-icons-danger" name="x-mark" size={12} />
-                          <p className="text-14 leading-none text-foreground-danger">
+                          <p className="text-14 leading-none text-cn-foreground-danger">
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
-                            <span className="text-foreground-4">
+                            <span className="text-cn-foreground-2">
                               {t(
                                 'views:pullRequests.compareChangesCantMergeDescription',
                                 'You can still create the pull request.'
@@ -251,7 +251,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         </Layout.Vertical>
         {!prBranchCombinationExists && (
-          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
+          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 p-4">
             <p className="text-14 leading-none">
               {isBranchSelected ? (
                 <>
@@ -282,19 +282,19 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         )}
         {prBranchCombinationExists && (
-          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
+          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 p-4">
             <div className="flex items-center gap-x-1.5">
               <div>
                 <Layout.Horizontal className="items-center">
                   <Icon name="compare" size={14} className="text-icons-success" />
                   <div className="flex gap-x-1">
                     {/* TODO: add the name of the PR instead this placeholder */}
-                    <p className="text-14 text-foreground-1">{prBranchCombinationExists.title}</p>
-                    <span className="text-foreground-4">{`#${prBranchCombinationExists.number}`}</span>
+                    <p className="text-14 text-cn-foreground-1">{prBranchCombinationExists.title}</p>
+                    <span className="text-cn-foreground-2">{`#${prBranchCombinationExists.number}`}</span>
                   </div>
                 </Layout.Horizontal>
 
-                <p className="text-14  text-foreground-2">{prBranchCombinationExists.description}</p>
+                <p className="text-14  text-cn-foreground-2">{prBranchCombinationExists.description}</p>
               </div>
             </div>
             <Button onClick={() => navigate(`../${prBranchCombinationExists.number}/conversation`)}>

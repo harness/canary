@@ -19,7 +19,7 @@ const TabTriggerItem: FC<TabTriggerItemProps> = ({ value, icon, label, badgeCoun
         <span>{label}</span>
       </div>
       {badgeCount !== undefined && (
-        <Badge variant="outline" size="xs" borderRadius="base">
+        <Badge variant="counter" size="sm">
           {badgeCount}
         </Badge>
       )}

@@ -327,7 +327,7 @@ const SidebarInput = forwardRef<ElementRef<typeof Input>, ComponentProps<typeof 
         ref={ref}
         data-sidebar="input"
         className={cn(
-          'h-8 w-full bg-background shadow-none focus-visible:ring-2 focus-visible:ring-sidebar-ring',
+          'h-8 w-full bg-cn-background shadow-none focus-visible:ring-2 focus-visible:ring-sidebar-ring',
           className
         )}
         {...props}
@@ -456,7 +456,7 @@ const sidebarMenuButtonVariants = cva(
       variant: {
         default: '',
         outline:
-          'bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]'
+          'bg-cn-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]'
       },
       size: {
         default: 'h-8 text-sm',

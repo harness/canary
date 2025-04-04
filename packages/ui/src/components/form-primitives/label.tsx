@@ -12,10 +12,10 @@ const labelVariants = cva('peer-disabled:cursor-not-allowed peer-disabled:opacit
       default: 'text-sm font-normal leading-none'
     },
     color: {
-      primary: 'text-foreground-1',
-      secondary: 'text-foreground-2',
-      disabled: 'text-foreground-5',
-      'disabled-dark': 'text-foreground-9'
+      primary: 'text-cn-foreground-1',
+      secondary: 'text-cn-foreground-2',
+      disabled: 'text-cn-foreground-3',
+      'disabled-dark': 'text-cn-foreground-disabled'
     }
   },
   defaultVariants: {
@@ -50,7 +50,7 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
   ({ htmlFor, optional, color, variant, children, className }: LabelProps, ref) => {
     return (
       <LabelRoot htmlFor={htmlFor} variant={variant} color={color} className={className} ref={ref}>
-        {children} {optional && <span className="align-top text-foreground-7">(optional)</span>}
+        {children} {optional && <span className="align-top text-cn-foreground-3">(optional)</span>}
       </LabelRoot>
     )
   }

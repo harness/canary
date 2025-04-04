@@ -65,7 +65,7 @@ const SortableItem = memo<SortableItemProps>(
       <div
         ref={setNodeRef}
         style={{ transform: CSS.Transform.toString(transform), transition }}
-        className="flex items-center gap-x-2 rounded p-2 hover:bg-background-4"
+        className="flex items-center gap-x-2 rounded p-2 hover:bg-cn-background-hover"
       >
         <div className="group cursor-move" {...attributes} {...listeners}>
           <Icon

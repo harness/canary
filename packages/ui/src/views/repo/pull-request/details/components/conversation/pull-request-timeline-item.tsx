@@ -69,10 +69,10 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
       <div className="inline-flex w-full items-center justify-between gap-1.5">
         <div className="inline-flex items-baseline gap-1.5">
           {!!avatar && <div className="mr-0.5">{avatar}</div>}
-          {!!name && <span className="text-14 font-medium text-foreground-8">{name}</span>}
-          {!!description && <span className="text-14 text-foreground-4">{description}</span>}
+          {!!name && <span className="text-14 font-medium text-cn-foreground-1">{name}</span>}
+          {!!description && <span className="text-14 text-cn-foreground-2">{description}</span>}
         </div>
-        {!!selectStatus && <span className="justify-end text-14 text-foreground-3">{selectStatus}</span>}
+        {!!selectStatus && <span className="justify-end text-14 text-cn-foreground-3">{selectStatus}</span>}
         {isComment && !isDeleted && (
           <MoreActionsTooltip
             className="w-[200px]"
@@ -227,7 +227,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               />
               {isResolved && !contentHeader && (
                 <Button
-                  className="h-auto gap-x-1.5 px-4 font-normal text-foreground-2 hover:text-foreground-8"
+                  className="h-auto gap-x-1.5 px-4 font-normal text-cn-foreground-2 hover:text-cn-foreground-1"
                   variant="custom"
                   onClick={() => setIsExpanded(prev => !prev)}
                 >
@@ -243,14 +243,14 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             <Card.Root className={cn('rounded-md bg-transparent overflow-hidden shadow-none', contentClassName)}>
               {!!contentHeader && (
                 <div
-                  className={cn('flex w-full items-center justify-between p-4 py-3.5 bg-background-2', {
+                  className={cn('flex w-full items-center justify-between p-4 py-3.5 bg-cn-background-2', {
                     'pr-1.5': isResolved
                   })}
                 >
                   {contentHeader}
                   {isResolved && (
                     <Button
-                      className="h-auto gap-x-1.5 px-2.5 font-normal text-foreground-2 hover:text-foreground-8"
+                      className="h-auto gap-x-1.5 px-2.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1"
                       variant="custom"
                       onClick={() => setIsExpanded(prev => !prev)}
                     >
@@ -297,14 +297,14 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                       setComment={setComment}
                     />
                   ) : (
-                    <div className={cn('flex items-center gap-3 border-t bg-background-2', replyBoxClassName)}>
+                    <div className={cn('flex items-center gap-3 border-t bg-cn-background-2', replyBoxClassName)}>
                       {!!currentUser && (
                         <Avatar.Root>
                           <Avatar.Fallback>{getInitials(currentUser)}</Avatar.Fallback>
                         </Avatar.Root>
                       )}
                       <Input
-                        className="bg-background-2"
+                        className="bg-cn-background-2"
                         placeholder="Reply here"
                         size="md"
                         onClick={() => {
@@ -327,10 +327,10 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     </Button>
 
                     {isResolved && (
-                      <span className="text-14 text-foreground-4">
+                      <span className="text-14 text-cn-foreground-2">
                         {/* TODO: need to identify the author who resolved the conversation */}
-                        <span className="font-medium text-foreground-1">{currentUser}</span> marked this conversation as
-                        resolved.
+                        <span className="font-medium text-cn-foreground-1">{currentUser}</span> marked this conversation
+                        as resolved.
                       </span>
                     )}
                   </div>

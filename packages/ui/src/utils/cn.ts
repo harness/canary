@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from 'clsx'
 import { createTailwindMerge, getDefaultConfig, mergeConfigs } from 'tailwind-merge'
 
-import tailwindConfig from '../../tailwind'
+import tailwindConfig from '../../tailwind-design-system'
 
 const customTwMerge = createTailwindMerge(getDefaultConfig, config =>
   mergeConfigs<'font-size' | 'box-shadow'>(config, {

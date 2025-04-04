@@ -25,7 +25,7 @@ const Description = ({
 }) => {
   return (
     <div className="inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px] text-14 leading-tight">
-      {description && <span className="w-full overflow-hidden break-words text-foreground-3">{description}</span>}
+      {description && <span className="w-full overflow-hidden break-words text-cn-foreground-3">{description}</span>}
       {version && (
         <div className="flex items-center gap-1">
           <Icon size={11} name={'signpost'} />
@@ -33,7 +33,7 @@ const Description = ({
         </div>
       )}
       {sha && (
-        <div className="flex h-4 items-center gap-1 rounded bg-background-8 px-1.5 text-12 text-foreground-8">
+        <div className="flex h-4 items-center gap-1 rounded bg-cn-background-8 px-1.5 text-12 text-cn-foreground-1">
           <Icon className="text-icons-9" size={12} name={'tube-sign'} />
           {sha?.slice(0, 7)}
         </div>

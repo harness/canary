@@ -53,11 +53,11 @@ const PullRequestMergeSection = ({
     return (
       <div key={index}>
         <Layout.Horizontal className="gap-x-1">
-          <h3 className="text-14 font-medium text-foreground-1">{item.step}</h3>
+          <h3 className="text-14 font-medium text-cn-foreground-1">{item.step}</h3>
           <Layout.Vertical className="w-[90%] max-w-full">
-            <p className="text-14 text-foreground-4">{item.description}</p>
+            <p className="text-14 text-cn-foreground-2">{item.description}</p>
             <p
-              className={cn('text-14 text-foreground-4 ', {
+              className={cn('text-14 text-cn-foreground-2 ', {
                 'border border-border rounded-md px-2 py-1 !my-2': item.code,
                 '!my-1': item.comment
               })}
@@ -100,7 +100,7 @@ const PullRequestMergeSection = ({
                   ) : (
                     <>
                       {mergeable ? (
-                        <Icon name="success" className="text-foreground-success" />
+                        <Icon name="success" className="text-cn-foreground-success" />
                       ) : (
                         <Icon name="triangle-warning" className="text-destructive" />
                       )}
@@ -115,7 +115,7 @@ const PullRequestMergeSection = ({
               ) : !mergeable ? (
                 <div className="ml-6 inline-flex items-center gap-2">
                   <Layout.Vertical>
-                    <p className="text-14 font-normal text-foreground-4">
+                    <p className="text-14 font-normal text-cn-foreground-2">
                       Use the
                       {/* TODO: looks like below should be a Link component (<StyledLink variant="accent" />) */}
                       <span
@@ -131,7 +131,7 @@ const PullRequestMergeSection = ({
                             e.stopPropagation()
                           }
                         }}
-                        className="px-1 text-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:decoration-foreground-accent"
+                        className="px-1 text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:decoration-foreground-accent"
                       >
                         {/* {getString('commandLine')} */}
                         command line
@@ -147,7 +147,7 @@ const PullRequestMergeSection = ({
             }
           />
           {!mergeable && !unchecked && (
-            <span className="px-2 py-1.5 text-14 text-foreground-2 transition-colors duration-200 group-hover:text-foreground-1">
+            <span className="px-2 py-1.5 text-14 text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
               Show more
             </span>
           )}
@@ -157,8 +157,8 @@ const PullRequestMergeSection = ({
             <div className="ml-6">
               {showCommandLineInfo && (
                 <div className="mb-2 rounded-md border border-border p-1 px-4 py-2">
-                  <h3 className="text-14 text-foreground-1">Resolve conflicts via command line</h3>
-                  <p className="pb-3 pt-1 text-14 text-foreground-4">
+                  <h3 className="text-14 text-cn-foreground-1">Resolve conflicts via command line</h3>
+                  <p className="pb-3 pt-1 text-14 text-cn-foreground-2">
                     If the conflicts on this branch are too complex to resolve in the web editor, you can check it out
                     via command line to resolve the conflicts
                   </p>
@@ -169,8 +169,8 @@ const PullRequestMergeSection = ({
                   </ol>
                 </div>
               )}
-              <span className="text-14 text-foreground-2">
-                Conflicting files <span className="text-foreground-4">{`(${conflictingFiles?.length || 0})`}</span>
+              <span className="text-14 text-cn-foreground-2">
+                Conflicting files <span className="text-cn-foreground-2">{`(${conflictingFiles?.length || 0})`}</span>
               </span>
 
               {!isEmpty(conflictingFiles) && (
@@ -178,7 +178,7 @@ const PullRequestMergeSection = ({
                   {conflictingFiles?.map((file, idx) => (
                     <div className="flex items-center gap-x-2 py-1.5" key={`${file}-${idx}`}>
                       <Icon className="text-icons-1" size={16} name="file" />
-                      <span className="text-14 text-foreground-1">{file}</span>
+                      <span className="text-14 text-cn-foreground-1">{file}</span>
                     </div>
                   ))}
                 </div>

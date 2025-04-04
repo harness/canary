@@ -66,7 +66,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
 
   return (
     <Floating1ColumnLayout
-      className="flex-col bg-background-7 pt-20 sm:pt-[186px]"
+      className="flex-col bg-cn-background-1 pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
@@ -124,7 +124,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
             />
             {serverError && (
               <>
-                <Text className="mt-1 leading-none tracking-tight text-foreground-danger" size={0}>
+                <Text className="mt-1 leading-none tracking-tight text-cn-foreground-danger" size={0}>
                   {serverError}
                 </Text>
               </>

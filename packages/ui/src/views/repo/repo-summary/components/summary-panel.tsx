@@ -46,8 +46,8 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   }
   return (
     <>
-      <div className="flex flex-col">
-        <div className="flex items-center justify-between">
+      <div className="flex flex-col items-start">
+        <div className="flex items-center justify-between w-full">
           <span className="truncate text-18 font-medium">{title}</span>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
@@ -65,23 +65,20 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!timestamp?.length && (
           <>
             <Spacer size={2} />
-            <span className="text-13 text-foreground-4">Created {timestamp}</span>
+            <span className="text-13 text-cn-foreground-2">Created {timestamp}</span>
           </>
         )}
         <Spacer size={3} />
-        <Badge
-          size="md"
-          disableHover
-          borderRadius="full"
-          theme={!is_public ? 'muted' : 'success'}
-          className="w-1/4 items-center justify-center"
-        >
+        {/* TODO: Design system: Replace with Tag */}
+        <Badge variant="surface" theme={!is_public ? 'muted' : 'success'}>
           {!is_public ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
         </Badge>
         {!!description?.length && (
           <>
             <Spacer size={3} />
-            <span className="line-clamp-6 border-y border-borders-4 py-1 text-14 text-foreground-2">{description}</span>
+            <span className="line-clamp-6 border-y border-cn-borders-4 py-1 text-14 text-cn-foreground-2 w-full">
+              {description}
+            </span>
           </>
         )}
         <Spacer size={5} />
@@ -92,7 +89,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
               <div key={item.id} className="flex items-center gap-1.5">
                 <Icon name={item.iconName} size={14} className="fill-none text-tertiary-background" />
                 <Text>{item.name}</Text>
-                <Badge className="hover:bg-tag-background-gray-1" theme="muted" size="sm">
+                <Badge variant="counter" size="sm">
                   {item.count}
                 </Badge>
               </div>

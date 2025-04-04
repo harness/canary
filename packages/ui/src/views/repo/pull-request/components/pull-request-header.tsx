@@ -9,7 +9,6 @@ import { IconType } from '../pull-request.types'
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
 
-type ThemeType = 'default' | 'destructive' | 'success' | 'emphasis' | 'muted' | null | undefined
 interface PullRequestTitleProps {
   className?: string
   data: {
@@ -69,12 +68,12 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
       <div className={cn('flex w-full flex-col gap-y-4', className)}>
         <div className="flex w-full max-w-full items-center gap-x-3 text-24">
           <div className="flex items-center gap-x-2.5 leading-snug">
-            <h1 className="flex max-w-[95%] items-center truncate font-medium text-foreground-1">{title}</h1>
-            <span className="font-normal text-foreground-4">#{number}</span>
+            <h1 className="flex max-w-[95%] items-center truncate font-medium text-cn-foreground-1">{title}</h1>
+            <span className="font-normal text-cn-foreground-2">#{number}</span>
           </div>
 
           <Button
-            className="group border border-borders-2"
+            className="group border border-cn-borders-2"
             size="xs_icon"
             variant="custom"
             aria-label="Edit"
@@ -87,25 +86,20 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         </div>
 
         <div className="flex items-center gap-x-3">
-          <Badge
-            className="gap-x-1 font-normal"
-            size="md"
-            disableHover
-            borderRadius="full"
-            theme={stateObject.theme as ThemeType}
-          >
+          <Badge variant="surface" theme={stateObject.theme}>
             <Icon name={stateObject.icon as IconType} size={13} />
             {stateObject.text}
           </Badge>
 
-          <div className="inline-flex flex-wrap items-center gap-1 text-foreground-4">
-            <span className="font-medium text-foreground-1">{author?.display_name || author?.email || ''}</span>
+          <div className="inline-flex flex-wrap items-center gap-1 text-cn-foreground-2">
+            <span className="font-medium text-cn-foreground-1">{author?.display_name || author?.email || ''}</span>
             <span>{merged ? 'merged' : ' wants to merge'}</span>
-            <span className="font-medium text-foreground-1">
+            <span className="font-medium text-cn-foreground-1">
               {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
             </span>
             <span>into</span>
-            <Badge variant="tertiary" size="md" borderRadius="base">
+            {/* TODO: Design system: Convert it as tag (or clickable element) */}
+            <Badge variant="soft" theme="muted">
               <Link
                 className="flex items-center gap-x-1.5"
                 to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}
@@ -115,7 +109,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               </Link>
             </Badge>
             <span>from</span>
-            <Badge variant="tertiary" size="md" borderRadius="base">
+            <Badge variant="soft" theme="muted">
               <Link
                 className="flex items-center gap-x-1"
                 to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${source_branch}`}
@@ -125,7 +119,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               </Link>
             </Badge>
             <span className="bg-borders-2 mx-1.5 h-4 w-px" />
-            <span className="text-foreground-4">{formattedTime}</span>
+            <span className="text-cn-foreground-2">{formattedTime}</span>
           </div>
         </div>
       </div>

@@ -45,14 +45,14 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <Button
-          className="flex items-center gap-1.5 overflow-hidden bg-input-background px-3 data-[state=open]:border-borders-9"
+          className="flex items-center gap-1.5 overflow-hidden bg-cn-background-2 px-3 data-[state=open]:border-cn-borders-9"
           variant="outline"
           size={buttonSize}
         >
           {!branchPrefix && (
             <Icon className="shrink-0 fill-transparent text-icons-9" name={isTag ? 'tag' : 'branch'} size={14} />
           )}
-          <span className="w-full truncate text-left text-foreground-8">
+          <span className="w-full truncate text-left text-cn-foreground-1">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}

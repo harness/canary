@@ -63,6 +63,7 @@
     "@harnessio/filters": "workspace:*",
     "@harnessio/forms": "workspace:*",
     "@harnessio/pipeline-graph": "workspace:*",
+    "@harnessio/core-design-system": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
     "@hookform/resolvers": "^3.6.0",
     "@radix-ui/react-accordion": "^1.2.2",

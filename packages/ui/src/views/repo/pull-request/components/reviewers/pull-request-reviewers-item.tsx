@@ -9,7 +9,7 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
       case PullReqReviewDecision.outdated:
         return <Icon name="comments" className="text-warning" />
       case PullReqReviewDecision.approved:
-        return <Icon name="success" className="text-foreground-success" />
+        return <Icon name="success" className="text-cn-foreground-success" />
       case PullReqReviewDecision.changeReq:
         return <Icon name="triangle-warning" className="text-destructive" />
       case PullReqReviewDecision.pending:
@@ -24,7 +24,7 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
         <Avatar.Root>
           <Avatar.Fallback>{getInitials(reviewer?.display_name || '')}</Avatar.Fallback>
         </Avatar.Root>
-        <div className="truncate text-14 font-medium text-foreground-8">{reviewer?.display_name}</div>
+        <div className="truncate text-14 font-medium text-cn-foreground-1">{reviewer?.display_name}</div>
       </div>
       <div className="px-1.5">
         {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}

@@ -32,8 +32,6 @@ export const getExportFileHeader = () => `/**
     */`
 
 export const THEME_MODE_FILENAME_PREFIX = {
-  DARK: 'dark-',
-  LIGHT: 'light-'
+  DARK: 'dark',
+  LIGHT: 'light'
 }
-
-export const OSS_STYLES_SOURCE_NAME = 'gitness'

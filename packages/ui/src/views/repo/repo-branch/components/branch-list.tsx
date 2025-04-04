@@ -117,7 +117,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
-                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-background-8 px-2.5 text-14 text-foreground-8">
+                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-cn-background-8 px-2.5 text-14 text-cn-foreground-1">
                       {defaultBranch === branch?.name && (
                         <Icon name="lock" size={14} className="-mt-px mr-1 inline-block text-icons-9" />
                       )}
@@ -135,7 +135,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                         {getInitials(branch?.user?.name ?? '')}
                       </Avatar.Fallback>
                     </Avatar.Root>
-                    <span className="truncate text-foreground-1">{branch?.timestamp}</span>
+                    <span className="truncate text-cn-foreground-1">{branch?.timestamp}</span>
                   </div>
                 </Table.Cell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
@@ -159,9 +159,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                           size={12}
                         />
                       )}
-                      <span className="truncate text-foreground-3">{branch?.checks?.done}</span>
+                      <span className="truncate text-cn-foreground-3">{branch?.checks?.done}</span>
                       <span className="mx-px">/</span>
-                      <span className="truncate text-foreground-3">{branch?.checks?.total}</span>
+                      <span className="truncate text-cn-foreground-3">{branch?.checks?.total}</span>
                     </div>
                   )}
                 </Table.Cell>
@@ -169,11 +169,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="content-center">
                   <div className="flex items-center justify-center gap-1.5 align-middle">
                     {branch?.behindAhead?.default ? (
-                      <Badge
-                        className="m-auto rounded-full bg-background-2 px-2 text-center font-medium text-foreground-3"
-                        variant="outline"
-                        size="sm"
-                      >
+                      <Badge variant="surface" size="sm">
                         {t('views:repos.default', 'Default')}
                       </Badge>
                     ) : (
@@ -189,7 +185,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="max-w-20 content-center">
                   {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                     <Button
-                      className="flex w-fit items-center gap-1 bg-background-8 px-2.5 text-sm text-foreground-8 hover:bg-background-9 hover:text-foreground-1"
+                      className="flex w-fit items-center gap-1 bg-cn-background-8 px-2.5 text-sm text-cn-foreground-1 hover:bg-cn-background-9 hover:text-cn-foreground-1"
                       variant="custom"
                       size="xs"
                       asChild

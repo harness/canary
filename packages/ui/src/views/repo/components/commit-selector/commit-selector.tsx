@@ -53,12 +53,12 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
       <DropdownMenu.Trigger asChild>
         <Button
           className={
-            'flex items-center gap-1.5 overflow-hidden px-3 data-[state=open]:border-borders-8 [&_svg]:data-[state=open]:text-foreground-1'
+            'flex items-center gap-1.5 overflow-hidden px-3 data-[state=open]:border-cn-borders-8 [&_svg]:data-[state=open]:text-cn-foreground-1'
           }
           variant="outline"
           size={buttonSize}
         >
-          <Text className="w-full text-foreground-8" truncate align="left">
+          <Text className="w-full text-cn-foreground-1" truncate align="left">
             {commitTitle}
           </Text>
           <Icon className="chevron-down text-icons-2" name="chevron-down" size={10} />

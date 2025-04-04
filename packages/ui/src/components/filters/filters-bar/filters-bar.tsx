@@ -138,7 +138,7 @@ const FiltersBar = ({
             <FilterTrigger
               type="filter"
               customLabel={
-                <div className="flex items-center gap-x-1.5 text-foreground-4 transition-colors duration-200 hover:text-foreground-1">
+                <div className="flex items-center gap-x-1.5 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1">
                   <Icon name="plus" size={10} />
                   <span>{t('component:filter.add-filter', 'Add filter')}</span>
                 </div>
@@ -153,7 +153,7 @@ const FiltersBar = ({
               t={t}
             />
             <button
-              className="flex items-center gap-x-1.5 text-14 text-foreground-4 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-foreground-danger focus:ring-2"
+              className="flex items-center gap-x-1.5 text-14 text-cn-foreground-2 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-cn-foreground-danger focus:ring-2"
               onClick={handleResetAll}
             >
               <Icon className="rotate-45" name="plus" size={12} />

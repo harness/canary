@@ -42,12 +42,12 @@ const LineTitle: FC<LineTitleProps> = ({ header, useTranslationStore }) => {
         <span className="text-16 font-medium">{text}</span>
         <CopyButton name={text} color="gray" />
         {!!numAdditions && (
-          <Badge variant="outline" size="sm" theme="success">
+          <Badge variant="surface" size="sm" theme="success">
             +{numAdditions}
           </Badge>
         )}
         {!!numDeletions && (
-          <Badge variant="outline" size="sm" theme="destructive">
+          <Badge variant="surface" size="sm" theme="danger">
             -{numDeletions}
           </Badge>
         )}
@@ -95,7 +95,7 @@ const CommitsAccordion: FC<{
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                   <Layout.Vertical gap="space-y-0" className="flex w-full items-center py-5">
                     <Button
-                      className="text-foreground-accent"
+                      className="text-cn-foreground-accent"
                       variant="link_accent"
                       size="sm"
                       aria-label="show diff"

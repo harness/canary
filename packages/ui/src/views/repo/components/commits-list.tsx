@@ -38,7 +38,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
       {entries.map(([date, commitData], node_idx) => (
         <NodeGroup.Root className="grid-cols-[4px_1fr] gap-x-[22px] gap-y-3.5 pb-6 last:pb-0" key={date}>
           <NodeGroup.Icon simpleNodeIcon />
-          <NodeGroup.Title>{date && <span className="text-foreground-4">Commits on {date}</span>}</NodeGroup.Title>
+          <NodeGroup.Title>{date && <span className="text-cn-foreground-2">Commits on {date}</span>}</NodeGroup.Title>
           <NodeGroup.Content>
             {!!commitData.length && (
               <StackedList.Root>
@@ -82,8 +82,8 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                                     <Avatar.Fallback className="text-10">{getInitials(authorName)}</Avatar.Fallback>
                                   </Avatar.Root>
                                 )}
-                                <span className="text-foreground-3">{authorName || ''}</span>
-                                <span className="text-foreground-4">committed on {date}</span>
+                                <span className="text-cn-foreground-3">{authorName || ''}</span>
+                                <span className="text-cn-foreground-2">committed on {date}</span>
                               </div>
                             </div>
                           }
@@ -95,7 +95,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                             <div className="flex gap-2.5">
                               <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
                               <Button
-                                className="border hover:bg-background-3"
+                                className="border hover:bg-cn-background-3"
                                 title="View repository at this point of history"
                                 variant="custom"
                                 size="sm_icon"

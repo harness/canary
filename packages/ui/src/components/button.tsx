@@ -11,18 +11,18 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-button-background-accent-1 text-button-foreground-accent-1 hover:bg-button-background-accent-2 disabled:bg-button-background-accent-3 disabled:text-button-foreground-accent-2',
+          'bg-cn-background-primary text-cn-foreground-primary hover:bg-button-background-accent-2 disabled:bg-button-background-accent-3 disabled:text-button-foreground-accent-2',
         destructive:
           'bg-button-background-danger-1 text-button-foreground-danger-1 hover:bg-button-background-danger-2',
         outline:
-          'border border-borders-2 bg-transparent text-foreground-2 hover:border-borders-6 hover:text-foreground-8',
+          'border border-cn-borders-2 bg-transparent text-cn-foreground-2 hover:border-cn-borders-6 hover:text-cn-foreground-1',
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         tertiary: 'bg-tertiary text-secondary-foreground hover:bg-tertiary/80',
-        ghost: 'hover:bg-background-12 hover:text-accent-foreground',
+        ghost: 'hover:bg-cn-background-12 hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
-        link_accent: 'text-foreground-accent underline-offset-4 hover:underline',
+        link_accent: 'text-cn-foreground-accent underline-offset-4 hover:underline',
         split: 'flex items-center gap-1.5 border p-0',
-        'gradient-border': 'bg-background-2 text-foreground-1 hover:bg-background-8',
+        'gradient-border': 'bg-cn-background-2 text-cn-foreground-1 hover:bg-cn-background-8',
         custom: ''
       },
       size: {
@@ -45,13 +45,14 @@ const buttonVariants = cva(
       },
       theme: {
         default: '',
-        error: 'border-borders-danger/30 bg-button-background-danger-1 text-error hover:bg-button-background-danger-2',
+        error:
+          'border-cn-borders-danger/30 bg-button-background-danger-1 text-error hover:bg-button-background-danger-2',
         warning:
-          'border-borders-danger/30 bg-button-background-danger-1 text-warning hover:bg-button-background-danger-2',
+          'border-cn-borders-danger/30 bg-button-background-danger-1 text-warning hover:bg-button-background-danger-2',
         success:
           'border-button-border-success-1 bg-button-background-success-1 text-button-foreground-success-1 hover:bg-button-background-success-2',
         muted: 'border-tertiary-background/20 bg-tertiary-background/10 text-tertiary-background',
-        primary: 'border-primary-foreground/20 bg-background-5 text-foreground-6',
+        primary: 'border-primary-foreground/20 bg-cn-background-primary text-cn-foreground-primary',
         disabled:
           'border-button-border-disabled-1 bg-button-background-disabled-1 text-button-foreground-disabled-1 disabled:bg-button-background-disabled-1 disabled:text-button-foreground-disabled-1'
       },

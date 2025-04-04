@@ -34,7 +34,7 @@ const ReviewersHeader = ({
 
   return (
     <div className="flex items-center justify-between">
-      <span className="text-14 font-medium text-foreground-1">{t('views:pullRequests.reviewers')}</span>
+      <span className="text-14 font-medium text-cn-foreground-1">{t('views:pullRequests.reviewers')}</span>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
           <Icon
@@ -45,7 +45,7 @@ const ReviewersHeader = ({
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-[280px] p-0" align="end">
           <div
-            className="relative flex items-center justify-between border-b border-borders-1 px-3 py-2.5"
+            className="relative flex items-center justify-between border-b border-cn-borders-2 px-3 py-2.5"
             role="presentation"
             onKeyDown={e => e.stopPropagation()}
           >
@@ -61,13 +61,15 @@ const ReviewersHeader = ({
           <div className="p-1">
             {usersList?.length === 0 && (
               <div className="px-5 py-4 text-center">
-                <span className="text-14 leading-tight text-foreground-2">{t('views:pullRequests.searchUsers')}</span>
+                <span className="text-14 leading-tight text-cn-foreground-2">
+                  {t('views:pullRequests.searchUsers')}
+                </span>
               </div>
             )}
             <div className="max-h-[360px] overflow-y-auto">
               {usersList?.length === 1 && usersList[0].uid === currentUserId ? (
                 <div className="px-5 py-4 text-center">
-                  <span className="text-14 leading-tight text-foreground-2">{t('views:pullRequests.noUsers')}</span>
+                  <span className="text-14 leading-tight text-cn-foreground-2">{t('views:pullRequests.noUsers')}</span>
                 </div>
               ) : (
                 usersList?.map(({ display_name, id, uid }) => {
@@ -92,7 +94,7 @@ const ReviewersHeader = ({
                         <Avatar.Root>
                           <Avatar.Fallback>{getInitials(display_name || '')}</Avatar.Fallback>
                         </Avatar.Root>
-                        <span className="truncate text-14 font-medium text-foreground-8">{display_name}</span>
+                        <span className="truncate text-14 font-medium text-cn-foreground-1">{display_name}</span>
                       </div>
                     </DropdownMenu.Item>
                   )

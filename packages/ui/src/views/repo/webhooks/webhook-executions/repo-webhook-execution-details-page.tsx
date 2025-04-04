@@ -89,19 +89,16 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
       <SandboxLayout.Content className="pl-0">
         <ListActions.Root>
           <ListActions.Left>
-            <Text size={6} className="text-foreground-1" weight="medium">
+            <Text size={6} className="text-cn-foreground-1" weight="medium">
               #{executionId}
             </Text>
             <Badge
-              size="md"
-              disableHover
-              borderRadius="full"
-              className="mt-1"
+              variant="status"
               theme={
                 execution?.result === 'success'
                   ? 'success'
                   : ['fatal_error', 'retriable_error'].includes(execution?.result ?? '')
-                    ? 'destructive'
+                    ? 'danger'
                     : 'muted'
               }
             >

@@ -37,7 +37,7 @@ const FilterSelect = <FilterKey extends string>({
         align={dropdownAlign}
         onCloseAutoFocus={e => e.preventDefault()}
       >
-        <div className="flex items-center border-b border-borders-4 px-3 py-2.5">
+        <div className="flex items-center border-b border-cn-borders-4 px-3 py-2.5">
           <Input
             type="text"
             placeholder={inputPlaceholder}
@@ -70,13 +70,13 @@ const FilterSelect = <FilterKey extends string>({
 
           {filteredBySearchOptions.length === 0 && (
             <div className="flex items-center justify-center p-4">
-              <span className="text-14 leading-none text-foreground-2">No results</span>
+              <span className="text-14 leading-none text-cn-foreground-2">No results</span>
             </div>
           )}
         </div>
 
         {onReset && (
-          <div className="border-t border-borders-4 p-1">
+          <div className="border-t border-cn-borders-4 p-1">
             <DropdownMenu.Item asChild>
               <button className="w-full font-medium" onClick={onReset}>
                 {buttonLabel}
@@ -102,7 +102,7 @@ const FilterSelectLabel = ({
 }) => {
   return (
     <>
-      <Button size="xs" variant="ghost" className="gap-x-1 px-0 hover:bg-transparent hover:text-foreground-1">
+      <Button size="xs" variant="ghost" className="gap-x-1 px-0 hover:bg-transparent hover:text-cn-foreground-1">
         {displayLabel}
         {selectedFilters > 0 && (
           <span className="flex h-[18px] min-w-[17px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 text-tag-foreground-blue-1">
@@ -117,7 +117,7 @@ const FilterSelectLabel = ({
 
 const FilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactNode }) => {
   return (
-    <Button size="xs" variant="ghost" className="gap-x-1.5 hover:bg-transparent hover:text-foreground-1">
+    <Button size="xs" variant="ghost" className="gap-x-1.5 hover:bg-transparent hover:text-cn-foreground-1">
       <Icon name="plus" size={10} />
       <span>{displayLabel}</span>
     </Button>

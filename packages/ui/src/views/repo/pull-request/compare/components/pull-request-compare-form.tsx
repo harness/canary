@@ -118,7 +118,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
           />
 
           <div
-            className={cn('pb-5 pt-1.5 px-4 flex-1 bg-background-surface border border-borders-2 rounded-md', {
+            className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md', {
               // 'border rounded-md': !inReplyMode || isEditMode,
               // 'border-t': inReplyMode
             })}
@@ -130,10 +130,10 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
               onValueChange={handleTabChange}
             >
               <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
-                <Tabs.Trigger className="data-[state=active]:bg-background-1" value={TABS_KEYS.WRITE}>
+                <Tabs.Trigger className="data-[state=active]:bg-cn-background-1" value={TABS_KEYS.WRITE}>
                   Write
                 </Tabs.Trigger>
-                <Tabs.Trigger className="data-[state=active]:bg-background-1" value={TABS_KEYS.PREVIEW}>
+                <Tabs.Trigger className="data-[state=active]:bg-cn-background-1" value={TABS_KEYS.PREVIEW}>
                   Preview
                 </Tabs.Trigger>
               </Tabs.List>
@@ -167,14 +167,14 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                     error={errors.description?.message?.toString()}
                   />
                   {isDragging && (
-                    <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-borders-2" />
+                    <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
                   )}
                 </div>
               </Tabs.Content>
               <Tabs.Content className="mt-4" value={TABS_KEYS.PREVIEW}>
                 <div className="min-h-24">
                   {desc ? (
-                    <MarkdownViewer markdownClassName="!bg-background-2" source={desc} />
+                    <MarkdownViewer markdownClassName="!bg-cn-background-2" source={desc} />
                   ) : (
                     <span>Nothing to preview</span>
                   )}
@@ -187,7 +187,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                 <div>
                   <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
                   <Button
-                    className="gap-x-2 px-2.5 font-normal text-foreground-3 hover:bg-background-8"
+                    className="gap-x-2 px-2.5 font-normal text-cn-foreground-3 hover:bg-cn-background-8"
                     variant="custom"
                     onClick={e => handleFileSelect(e)}
                   >

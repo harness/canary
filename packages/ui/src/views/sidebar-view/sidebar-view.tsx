@@ -83,7 +83,7 @@ export const SidebarView = ({
 
   return (
     <>
-      <Sidebar.Root className="fixed z-20 h-svh">
+      <Sidebar.Root className="h-svh">
         <Sidebar.Header className="pb-3">
           {showNewSearch ? (
             <SearchProvider t={t}>
@@ -199,7 +199,7 @@ export const SidebarView = ({
           </Sidebar.Group>
         )}
 
-        <Sidebar.Footer className="border-t border-sidebar-border-1 px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">
+        <Sidebar.Footer className="border-sidebar-border-1 border-t px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">
           <User
             user={currentUser}
             openThemeDialog={() => setOpenThemeDialog(true)}

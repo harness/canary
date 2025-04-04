@@ -22,8 +22,7 @@ import { useRepoImportEvents } from '../framework/hooks/useRepoImportEvent'
 import { useSelectedSpaceId } from '../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
-import Breadcrumbs, { useGetBreadcrumbs } from './breadcrumbs/breadcrumbs'
-import BreadcrumbsMFE from './breadcrumbs/breadcrumbs-mfe'
+import { useGetBreadcrumbs } from './breadcrumbs/useGetBreadcrumbs'
 import { Toaster } from './toaster'
 
 interface NavLinkStorageInterface {
@@ -196,7 +195,7 @@ export const AppShell = () => {
         />
 
         <Sidebar.Inset>
-          <MainContentLayout breadcrumbs={!!breadcrumbs.length && <Breadcrumbs />}>
+          <MainContentLayout breadcrumbs={breadcrumbs} withMobileSidebarToggle>
             <Outlet />
           </MainContentLayout>
 
@@ -225,11 +224,12 @@ export const AppShell = () => {
 
 export const AppShellMFE = memo(() => {
   useRepoImportEvents()
+  const { breadcrumbs } = useGetBreadcrumbs()
 
   return (
     <>
       <div className="text-cn-foreground-2 flex flex-col">
-        <MainContentLayout breadcrumbs={<BreadcrumbsMFE />}>
+        <MainContentLayout breadcrumbs={breadcrumbs}>
           <Outlet />
         </MainContentLayout>
       </div>

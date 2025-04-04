@@ -1,7 +1,9 @@
-import { PropsWithChildren, ReactNode } from 'react'
+import { PropsWithChildren } from 'react'
 
+import { useSidebar } from '@/components'
 import { useTheme } from '@/context'
 import { cn } from '@/utils'
+import { AppBreadcrumbs, AppBreadcrumbsProps } from '@components/app-breadcrumbs'
 
 const HalfArch = ({ className }: { className?: string }) => (
   <div className="relative size-1.5 overflow-hidden">
@@ -14,27 +16,23 @@ const HalfArch = ({ className }: { className?: string }) => (
   </div>
 )
 
-interface MainContentLayoutProps extends PropsWithChildren<unknown> {
-  breadcrumbs?: ReactNode
-}
+type MainContentLayoutProps = PropsWithChildren<AppBreadcrumbsProps>
 
-export function MainContentLayout({ children, breadcrumbs }: MainContentLayoutProps) {
+export function MainContentLayout({ children, ...breadcrumbsProps }: MainContentLayoutProps) {
   const { isInset } = useTheme()
-  const withBreadcrumbs = !!breadcrumbs
+  const { isMobile } = useSidebar()
+  const withBreadcrumbs = breadcrumbsProps.breadcrumbs?.length > 0
 
   return (
     <>
-      {withBreadcrumbs && (
-        <div className={cn('bg-cn-background-1 sticky top-0 z-20', { 'bg-sidebar-background-1': isInset })}>
-          {breadcrumbs}
-        </div>
-      )}
+      <AppBreadcrumbs {...breadcrumbsProps} />
       <div
         className={cn(
           'min-h-screen bg-cds-background-1',
           { 'min-h-[calc(100vh-55px)]': withBreadcrumbs },
           { 'min-h-[calc(100vh-6px*2)] my-1.5 mr-1.5 border rounded-md min-w-fit': isInset },
-          { 'min-h-[calc(100vh-55px-6px)] mb-1.5 mt-0': isInset && withBreadcrumbs }
+          { 'min-h-[calc(100vh-55px-6px)] mb-1.5 mt-0': isInset && withBreadcrumbs },
+          { 'ml-1.5': isMobile }
         )}
       >
         {isInset && (

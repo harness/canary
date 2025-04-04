@@ -3,7 +3,7 @@ import HoganJsUtils from 'diff2html/lib/hoganjs-utils'
 import { get, isEmpty } from 'lodash-es'
 
 import { TypesCodeOwnerEvaluationEntry } from '@harnessio/code-service-client'
-import { ExecutionState } from '@harnessio/views'
+import { ExecutionState } from '@harnessio/ui/views'
 
 import { extractInfoForCodeOwnerContentProps } from '../../types'
 import { EnumPullReqReviewDecisionExtended, PullReqReviewDecision, TypeCheckData } from './types/types'

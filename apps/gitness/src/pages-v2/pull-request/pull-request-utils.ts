@@ -8,7 +8,7 @@ import {
   TypesRuleViolations,
   TypesViolation
 } from '@harnessio/code-service-client'
-import { ExecutionState } from '@harnessio/views'
+import { ExecutionState } from '@harnessio/ui/views'
 
 import { PullReqReviewDecision, TypeCheckData } from '../../pages/pull-request/types/types'
 import { extractInfoForCodeOwnerContentProps } from '../../types'

@@ -21,9 +21,9 @@ interface ContentProps {
 }
 
 function Root({ ...props }: RootProps) {
-  const { children } = props
+  const { children, className } = props
 
-  return <div className="grid-col-[1fr_auto] grid grid-flow-col rounded border">{children}</div>
+  return <div className={cn('grid-col-[1fr_auto] grid grid-flow-col rounded border', className)}>{children}</div>
 }
 
 function Content({ children, className, asChild }: ContentProps) {

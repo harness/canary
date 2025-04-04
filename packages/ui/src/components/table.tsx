@@ -47,7 +47,7 @@ const TableBody = forwardRef<
 >(({ className, hasHighlightOnHover, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn('[&_tr:last-child]:border-0', { '[&>tr:hover]:bg-background-4': hasHighlightOnHover }, className)}
+    className={cn('[&_tr:last-child]:border-0', { '[&>tr:hover]:bg-background-2': hasHighlightOnHover }, className)}
     {...props}
   />
 ))

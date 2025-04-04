@@ -1,3 +1,5 @@
+import { TranslationStore } from '@views/index'
+
 import { TypesCommit } from '../repo.types'
 
 export interface TypeTagger {
@@ -25,4 +27,16 @@ export interface RepoTagsStore {
   setTags: (tags: CommitTagType[]) => void
   addTag: (tag: CommitTagType) => void
   removeTag: (tagName: string) => void
+}
+
+export interface RepoTagsListViewProps {
+  useTranslationStore: () => TranslationStore
+  isLoading: boolean
+  openCreateBranchDialog: () => void
+  openCreateTagDialog: () => void
+  searchQuery: string
+  setSearchQuery: (value: string | null) => void
+  onDeleteTag: (tagName: string) => void
+  useRepoTagsStore: () => RepoTagsStore
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }

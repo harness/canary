@@ -2149,10 +2149,6 @@
     }
   },
   "iconStrokeWidth": {
-    "xxs": {
-      "$type": "borderWidth",
-      "$value": "1.1"
-    },
     "xs": {
       "$type": "borderWidth",
       "$value": "1"

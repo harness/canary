@@ -369,10 +369,6 @@
     }
   },
   "iconSize": {
-    "xxs": {
-      "$type": "sizing",
-      "$value": "{size.2}"
-    },
     "xs": {
       "$type": "sizing",
       "$value": "{size.3}"

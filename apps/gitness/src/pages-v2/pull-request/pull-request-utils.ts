@@ -132,7 +132,7 @@ export function determineStatusMessage(
     ) {
       title = 'Some required checks have failed'
       content = `${message}`
-      color = 'text-destructive'
+      color = 'text-cn-foreground-danger'
       status = 'failure'
     } else if (checks.some(check => check.required && check.check.status === ExecutionState.PENDING)) {
       title = 'Some required checks are pending'
@@ -148,7 +148,7 @@ export function determineStatusMessage(
       title = 'All checks have succeeded'
       status = 'success'
       content = `${message}`
-      color = 'text-tertiary-background'
+      color = 'text-cn-foreground-3'
     } else {
       title = 'All required checks passed'
       content = `${message}`
@@ -162,7 +162,7 @@ export function determineStatusMessage(
       title = 'Some checks have failed'
       content = ` ${message}`
       status = 'failure'
-      color = 'text-tertiary-background'
+      color = 'text-cn-foreground-3'
     } else if (checks.some(check => check.check.status === ExecutionState.PENDING)) {
       title = 'Some checks haven’t been completed yet'
       status = 'pending'
@@ -176,7 +176,7 @@ export function determineStatusMessage(
     } else if (checks.every(check => check.check.status === ExecutionState.SUCCESS)) {
       title = 'All checks have succeeded'
       content = `${message}`
-      color = 'text-tertiary-background'
+      color = 'text-cn-foreground-3'
       status = 'success'
     }
   }
@@ -274,12 +274,12 @@ export const extractInfoForCodeOwnerContent = ({
     ) {
       title = 'Changes requested by code owner'
       statusMessage = 'Code owner requested changes'
-      statusColor = 'text-destructive'
+      statusColor = 'text-cn-foreground-danger'
       statusIcon = 'warning'
     } else if (changeReqEvaluations && changeReqEvaluations?.length > 0 && reqNoChangeReq) {
       title = 'Changes Requested'
       statusMessage = `${changeReqReviewer} requested changes to the pull request`
-      statusColor = 'text-destructive'
+      statusColor = 'text-cn-foreground-danger'
       statusIcon = 'error'
     } else if (
       (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerLatestApproval) ||
@@ -347,7 +347,7 @@ export const extractInfoForCodeOwnerContent = ({
     } else {
       title = 'No reviews required'
       statusMessage = 'Pull request can be merged without any reviews'
-      statusColor = 'text-tertiary-background'
+      statusColor = 'text-cn-foreground-3'
       statusIcon = 'success'
     }
   } else {

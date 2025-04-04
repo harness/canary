@@ -11,7 +11,7 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
       case PullReqReviewDecision.approved:
         return <Icon name="success" className="text-cn-foreground-success" />
       case PullReqReviewDecision.changeReq:
-        return <Icon name="triangle-warning" className="text-destructive" />
+        return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
       case PullReqReviewDecision.pending:
         return <Icon name="pending-clock" className="text-icons-alert" />
       default:

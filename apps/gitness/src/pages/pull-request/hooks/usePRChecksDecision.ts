@@ -90,18 +90,18 @@ export function usePRChecksDecision({
       // *******
       if (_count.error) {
         _status = ExecutionState.ERROR
-        setColor('text-destructive')
-        setBackground('text-destructive')
+        setColor('text-cn-foreground-danger')
+        setBackground('text-cn-foreground-danger')
         setMessage(`${_count.error}/${total} ${pluralize('check', _count.error)} errored out.`)
       } else if (_count.failure) {
         _status = ExecutionState.FAILURE
-        setColor('text-destructive')
-        setBackground('text-destructive')
+        setColor('text-cn-foreground-danger')
+        setBackground('text-cn-foreground-danger')
         setMessage(`${_count.failure}/${total} ${pluralize('check', _count.failure)} failed.`)
       } else if (_count.killed) {
         _status = ExecutionState.KILLED
-        setColor('text-destructive')
-        setBackground('text-destructive')
+        setColor('text-cn-foreground-danger')
+        setBackground('text-cn-foreground-danger')
         setMessage(`${_count.killed}/${total} ${pluralize('check', _count.killed)} killed.`)
       } else if (_count.running) {
         _status = ExecutionState.RUNNING
@@ -110,13 +110,13 @@ export function usePRChecksDecision({
         setMessage(`${_count.running}/${total} ${pluralize('check', _count.running)} running.`)
       } else if (_count.pending) {
         _status = ExecutionState.PENDING
-        setColor('text-tertiary-background')
-        setBackground('text-tertiary-background')
+        setColor('text-cn-foreground-3')
+        setBackground('text-cn-foreground-3')
         setMessage(`${_count.pending}/${total} ${pluralize('check', _count.pending)} pending.`)
       } else if (_count.skipped) {
         _status = ExecutionState.SKIPPED
-        setColor('text-tertiary-background')
-        setBackground('text-tertiary-background')
+        setColor('text-cn-foreground-3')
+        setBackground('text-cn-foreground-3')
         setMessage(`${_count.skipped}/${total} ${pluralize('check', _count.skipped)} skipped.`)
       } else if (_count.success) {
         _status = ExecutionState.SUCCESS

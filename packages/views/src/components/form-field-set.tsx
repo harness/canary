@@ -62,8 +62,8 @@ interface SpacerProps {
 const themeClassMap: Record<MessageTheme, string> = {
   [MessageTheme.SUCCESS]: 'text-success',
   [MessageTheme.WARNING]: 'text-warning',
-  [MessageTheme.ERROR]: 'text-destructive',
-  [MessageTheme.DEFAULT]: 'text-tertiary-background'
+  [MessageTheme.ERROR]: 'text-cn-foreground-danger',
+  [MessageTheme.DEFAULT]: 'text-cn-foreground-3'
 }
 
 /** @deprecated: Use Fieldset from @harnessio/ui/components instead */
@@ -72,7 +72,7 @@ function Root({ children, box, shaded, className }: RootProps) {
     <fieldset
       className={cn(
         'mb-8 flex flex-col gap-6',
-        { 'rounded-md border px-5 py-3.5 pb-5': box, 'bg-primary/[0.02]': shaded },
+        { 'rounded-md border px-5 py-3.5 pb-5': box, 'bg-cn-background-accent/[0.02]': shaded },
         className
       )}
       role="group"
@@ -97,7 +97,7 @@ function Label({ htmlFor, required, children, className }: LabelProps) {
   return (
     <UILabel htmlFor={htmlFor} className={cn('text-primary/80 font-normal', className)}>
       {children}
-      {required && <span className="pl-0.5 align-top text-destructive">*</span>}
+      {required && <span className="pl-0.5 align-top text-cn-foreground-danger">*</span>}
     </UILabel>
   )
 }

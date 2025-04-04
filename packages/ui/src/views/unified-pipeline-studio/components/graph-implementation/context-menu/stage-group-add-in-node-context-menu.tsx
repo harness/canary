@@ -30,7 +30,7 @@ export const StageGroupAddInNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.Stage)
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Stage</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
@@ -41,7 +41,7 @@ export const StageGroupAddInNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.SerialStageGroup)
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Serial group</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
@@ -51,7 +51,7 @@ export const StageGroupAddInNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.ParallelStageGroup)
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Parallel group</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>

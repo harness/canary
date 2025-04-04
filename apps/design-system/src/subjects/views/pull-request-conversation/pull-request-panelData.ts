@@ -127,7 +127,7 @@ export const pullReqChecksDecisionSucceeded = {
   checkInfo: {
     title: 'All checks have succeeded',
     content: '1 succeeded',
-    color: 'text-tertiary-background',
+    color: 'text-cn-foreground-3',
     status: 'success'
   },
   summaryText: '1 succeeded'

@@ -28,7 +28,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
         return <Icon name="comments" className="text-warning" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
-        return <Icon name="triangle-warning" className="text-destructive" />
+        return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
       default:
         return <Icon name="success" className="text-cn-foreground-success" />
     }
@@ -153,7 +153,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
           //       <div className="col-span-1 flex justify-end">
           //         {check.required ? (
           //           <div className="border rounded-full bg-transparent">
-          //             <Text className="text-xs text-tertiary-background px-2 py-1.5">required</Text>
+          //             <Text className="text-xs text-cn-foreground-3 px-2 py-1.5">required</Text>
           //           </div>
           //         ) : (
           //           <div className="min-w-[70px]"></div>

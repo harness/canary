@@ -221,7 +221,7 @@ export const RepoSettingsGeneralForm: FC<{
           </Fieldset>
 
           {!!apiError && errorTypes.has(apiError.type) && (
-            <Text size={1} className="text-destructive">
+            <Text size={1} className="text-cn-foreground-danger">
               {apiError.message}
             </Text>
           )}

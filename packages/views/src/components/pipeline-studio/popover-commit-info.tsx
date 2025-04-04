@@ -25,7 +25,7 @@ export const PopoverCommitInfo = {
           </Avatar.Root>
           <span>{authorName}</span>
         </div>
-        <div className="text-primary-muted">{commit}</div>
+        <div className="text-cn-foreground-3">{commit}</div>
       </div>
     )
   },

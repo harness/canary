@@ -215,7 +215,9 @@ export function CreateSecretPage({
                   )}
                 </div>
               </div>
-              {errors.file && <div className="mt-1 text-sm text-destructive">{errors.file.message?.toString()}</div>}
+              {errors.file && (
+                <div className="mt-1 text-sm text-cn-foreground-danger">{errors.file.message?.toString()}</div>
+              )}
             </div>
           )}
           <Accordion.Root type="single" collapsible>

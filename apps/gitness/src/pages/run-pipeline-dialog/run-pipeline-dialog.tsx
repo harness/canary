@@ -176,7 +176,7 @@ export default function RunPipelineForm({ pipelineId, branch, onClose, open }: R
             if (!open) onClose()
           }}
         >
-          <Dialog.Content className="max-w-[500px] border-border bg-primary-background">
+          <Dialog.Content className="max-w-[500px] border-border bg-cn-background-1">
             <Dialog.Header>
               <Dialog.Title>Run Pipeline</Dialog.Title>
             </Dialog.Header>
@@ -185,7 +185,7 @@ export default function RunPipelineForm({ pipelineId, branch, onClose, open }: R
               <RenderForm className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
             </Dialog.Description>
             <Dialog.Footer>
-              <Button onClick={onClose} className="text-primary" variant="outline">
+              <Button onClick={onClose} className="text-cn-foreground-1" variant="outline">
                 Cancel
               </Button>
               <Button loading={isLoadingCreateExecution} onClick={() => rootForm.submitForm()}>

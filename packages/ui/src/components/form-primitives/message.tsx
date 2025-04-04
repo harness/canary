@@ -13,7 +13,7 @@ const themeClassMap: Record<MessageTheme, string> = {
   [MessageTheme.SUCCESS]: 'text-success',
   [MessageTheme.WARNING]: 'text-warning',
   [MessageTheme.ERROR]: 'text-cn-foreground-danger',
-  [MessageTheme.DEFAULT]: 'text-tertiary-background'
+  [MessageTheme.DEFAULT]: 'text-cn-foreground-3'
 }
 
 /**

@@ -219,7 +219,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
             <>
               <Spacer size={2} />
-              <Text size={1} className="text-destructive">
+              <Text size={1} className="text-cn-foreground-danger">
                 {apiError.message}
               </Text>
             </>

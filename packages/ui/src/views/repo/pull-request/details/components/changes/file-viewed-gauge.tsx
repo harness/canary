@@ -22,7 +22,7 @@ function Content({ ...props }: RootProps) {
 
   return (
     <div className="flex justify-center leading-snug">
-      <Text truncate size={1} className="text-primary/70">
+      <Text truncate size={1} className="text-cn-foreground-1/70">
         {children}
       </Text>
     </div>

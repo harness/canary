@@ -30,7 +30,7 @@ export const StepGroupNodeContextMenu = () => {
             onEditIntention(contextMenuData.nodeData)
           }}
         >
-          <Icon name="edit-pen" size={12} className="text-tertiary-background" />
+          <Icon name="edit-pen" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Edit</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
@@ -41,7 +41,7 @@ export const StepGroupNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'before')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
@@ -51,7 +51,7 @@ export const StepGroupNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'after')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add after</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
@@ -64,7 +64,7 @@ export const StepGroupNodeContextMenu = () => {
             onDeleteIntention(contextMenuData.nodeData)
           }}
         >
-          <Icon name="trash" size={12} className="text-primary" />
+          <Icon name="trash" size={12} className="text-cn-foreground-1" />
           <Text wrap="nowrap">Delete</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>

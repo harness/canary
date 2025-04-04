@@ -18,7 +18,7 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
                 commentsInfo.status === 'success' ? (
                   <Icon name="success" className="text-cn-foreground-success" size={16} />
                 ) : (
-                  <Icon name="triangle-warning" className="text-destructive" />
+                  <Icon name="triangle-warning" className="text-cn-foreground-danger" />
                 )
               }
             />

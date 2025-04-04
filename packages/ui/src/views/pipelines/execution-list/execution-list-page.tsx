@@ -39,7 +39,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
         <SandboxLayout.Main>
           <SandboxLayout.Content>
             <Spacer size={2} />
-            <Text size={1} className="text-destructive">
+            <Text size={1} className="text-cn-foreground-danger">
               {errorMessage || 'Something went wrong'}
             </Text>
           </SandboxLayout.Content>

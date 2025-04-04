@@ -102,12 +102,12 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
       <Table.Header>
         <Table.Row>
           <Table.Head className="py-3">
-            <Text size={2} weight="semibold" className="text-primary">
+            <Text size={2} weight="semibold" className="text-cn-foreground-1">
               {tableTitleName}
             </Text>
           </Table.Head>
           <Table.Head className="py-3">
-            <Text size={2} weight="semibold" className="text-primary">
+            <Text size={2} weight="semibold" className="text-cn-foreground-1">
               {tableTitleVal}
             </Text>
           </Table.Head>

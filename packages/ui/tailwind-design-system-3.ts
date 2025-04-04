@@ -113,13 +113,15 @@ export default {
           accent: 'hsl(var(--canary-foreground-accent))'
         },
         'cn-foreground': {
-          1: 'var(--cn-text-1)',
-          2: 'var(--cn-text-2)',
-          3: 'var(--cn-text-3)',
+          1: 'lch(from var(--cn-text-1) l c h / <alpha-value>)',
+          2: 'lch(from var(--cn-text-2) l c h / <alpha-value>)',
+          3: 'lch(from var(--cn-text-3) l c h / <alpha-value>)',
           success: 'var(--cn-text-success)',
           danger: 'var(--cn-text-danger)',
           warning: 'var(--cn-text-warning)',
           accent: 'var(--cn-text-accent)',
+          solid: 'lch(from var(--cn-set-brand-solid-text) l c h / <alpha-value>)',
+          solidred: 'lch(from var(--cn-set-red-solid-text) l c h / <alpha-value>)',
 
           // Remove
           primary: 'var(--cn-set-brand-solid-text)',
@@ -128,7 +130,7 @@ export default {
           5: 'var(--cn-text-3)',
           8: 'var(--cn-text-3)',
           // DEFAULT - 1
-          DEFAULT: 'var(--cn-text-1)'
+          DEFAULT: 'lch(from var(--cn-text-1) l c h / <alpha-value>)'
         },
         background: {
           // TODO: remove DEFAULT, cause use old color var
@@ -155,6 +157,8 @@ export default {
           1: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
           2: 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
           3: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
+          accent: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
+          solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
 
           // Remove
           hover: 'var(--cn-state-hover)',
@@ -187,6 +191,7 @@ export default {
           1: 'var(--cn-border-1)',
           2: 'var(--cn-border-2)',
           3: 'var(--cn-border-3)',
+          solidred: 'var(--cn-set-red-solid-border)',
 
           // remove
           // update to focus, disabled, success, danger, warning

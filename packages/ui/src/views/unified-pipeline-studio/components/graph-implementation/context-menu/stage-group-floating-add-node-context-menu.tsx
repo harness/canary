@@ -30,7 +30,7 @@ export const StageGroupFloatingAddNodeContextMenu = ({ outsidePosition }: { outs
             onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.SerialStageGroup)
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Serial Stages Group</Text>
         </DropdownMenu.Item>
 
@@ -42,7 +42,7 @@ export const StageGroupFloatingAddNodeContextMenu = ({ outsidePosition }: { outs
             onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.ParallelStageGroup)
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Parallel Stages Group</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>

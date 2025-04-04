@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { createSearchParams } from 'react-router-dom'
 
 import { useRouterContext } from './router-context'
 
@@ -10,9 +9,11 @@ interface UseRouterReturnType {
   updateURL: (params: URLSearchParams, replace?: boolean) => void
 }
 
+const createSearchParams = (params?: Record<string, string> | string) => new URLSearchParams(params)
+
 export default function useRouter(): UseRouterReturnType {
   const { navigate, location } = useRouterContext()
-  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search])
+  const searchParams = useMemo(() => createSearchParams(location.search), [location.search])
 
   const push = (path: string, searchParamsObject?: Record<string, string>) => {
     const search = searchParamsObject ? `?${createSearchParams(searchParamsObject).toString()}` : ''

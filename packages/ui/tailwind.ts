@@ -551,7 +551,6 @@ export default {
     { pattern: /^text-tag-foreground-/ },
     { pattern: /^border-tag-border-/ },
     // label classes
-    { pattern: /^bg-label-foreground-/ },
     { pattern: /^bg-label-background-/ },
     { pattern: /^bg-label-foreground-/ },
     { pattern: /^text-label-foreground-/ },
@@ -580,7 +579,6 @@ export default {
     { pattern: /^hover:text-tag-foreground-/ },
     { pattern: /^hover:border-tag-border-/ },
     // label classes
-    { pattern: /^hover:bg-label-foreground-/ },
     { pattern: /^hover:bg-label-background-/ },
     { pattern: /^hover:bg-label-foreground-/ },
     { pattern: /^hover:text-label-foreground-/ },

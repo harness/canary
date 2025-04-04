@@ -98,7 +98,7 @@
 
 /* Form utilities */
 .text-form-error {
-  @apply text-destructive mt-2 text-xs font-light;
+  @apply text-cn-foreground-danger mt-2 text-xs font-light;
 }
 .form-input {
   @apply border-primary/10 bg-cn-background-accent/5 mt-1 w-full rounded-[4px] text-sm font-light;

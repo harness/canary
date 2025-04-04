@@ -59,7 +59,7 @@ export function RepoWebhookList({
     return (
       <>
         <Spacer size={2} />
-        <Text size={1} className="text-destructive">
+        <Text size={1} className="text-cn-foreground-danger">
           {error || 'Something went wrong'}
         </Text>
       </>

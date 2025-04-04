@@ -53,9 +53,14 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
             <Icon
               size={14}
               name="cross-circle"
-              className={problemsCount.error > 0 ? 'text-destructive' : 'text-cn-foreground-3'}
+              className={problemsCount.error > 0 ? 'text-cn-foreground-danger' : 'text-cn-foreground-3'}
             />
-            <span className={cn('text-[12px]', problemsCount.error > 0 ? 'text-destructive' : 'text-cn-foreground-1')}>
+            <span
+              className={cn(
+                'text-[12px]',
+                problemsCount.error > 0 ? 'text-cn-foreground-danger' : 'text-cn-foreground-1'
+              )}
+            >
               {problemsCount.error}
             </span>
           </div>

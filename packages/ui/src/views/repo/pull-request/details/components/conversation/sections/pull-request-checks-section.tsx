@@ -28,7 +28,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
         return <Icon name="comments" className="text-warning" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
-        return <Icon name="triangle-warning" className="text-destructive" />
+        return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
       default:
         return <Icon name="success" className="text-cn-foreground-success" />
     }

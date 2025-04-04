@@ -92,18 +92,18 @@ export function usePRChecksDecision({
       // *******
       if (_count.error) {
         _status = ExecutionState.ERROR
-        setColor('text-destructive')
-        setBackground('text-destructive')
+        setColor('text-cn-foreground-danger')
+        setBackground('text-cn-foreground-danger')
         setMessage(`${_count.error}/${total} ${pluralize('check', _count.error)} errored out.`)
       } else if (_count.failure) {
         _status = ExecutionState.FAILURE
-        setColor('text-destructive')
-        setBackground('text-destructive')
+        setColor('text-cn-foreground-danger')
+        setBackground('text-cn-foreground-danger')
         setMessage(`${_count.failure}/${total} ${pluralize('check', _count.failure)} failed.`)
       } else if (_count.killed) {
         _status = ExecutionState.KILLED
-        setColor('text-destructive')
-        setBackground('text-destructive')
+        setColor('text-cn-foreground-danger')
+        setBackground('text-cn-foreground-danger')
         setMessage(`${_count.killed}/${total} ${pluralize('check', _count.killed)} killed.`)
       } else if (_count.running) {
         _status = ExecutionState.RUNNING

@@ -116,7 +116,7 @@ const PullRequestChangesSection = ({
       case 'warning':
         return <Icon name="triangle-warning" className="text-cn-foreground-3" />
       case 'error':
-        return <Icon name="triangle-warning" className="text-destructive" />
+        return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
       default:
         return <Icon name="success" className="text-cn-foreground-success" />
     }

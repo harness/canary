@@ -644,7 +644,7 @@
   }
 
   body {
-    @apply bg-background-1 text-foreground-2 text-sm font-normal -tracking-[0.02em];
+    @apply bg-background-1 text-foreground-2 overscroll-y-none text-sm font-normal -tracking-[0.02em];
   }
 }
 

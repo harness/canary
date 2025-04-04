@@ -1,33 +1,43 @@
 import { FC, PropsWithChildren } from 'react'
 
-import { Breadcrumb, Topbar } from '@harnessio/ui/components'
-
 import { AppViewWrapper, AppViewWrapperProps } from './app-view-wrapper'
+
+export const mockedBreadcrumbs = [
+  {
+    data: undefined,
+    handle: {
+      asLink: true,
+      breadcrumb: () => <span>Lorem</span>
+    },
+    id: '1',
+    params: { spaceId: 'Lorem' },
+    pathname: '/Lorem'
+  },
+  {
+    data: undefined,
+    handle: {
+      asLink: true,
+      breadcrumb: () => <span>Ipsum</span>
+    },
+    id: '2',
+    params: { spaceId: 'Lorem' },
+    pathname: '/Ipsum'
+  },
+  {
+    data: undefined,
+    handle: {
+      asLink: false,
+      breadcrumb: () => <span>Dolor</span>
+    },
+    id: '3',
+    params: { spaceId: 'Lorem' },
+    pathname: '/Dolor'
+  }
+]
 
 const RootViewWrapper: FC<PropsWithChildren<Omit<AppViewWrapperProps, 'breadcrumbs'>>> = ({ children, asChild }) => {
   return (
-    <AppViewWrapper
-      asChild={asChild}
-      breadcrumbs={
-        <Topbar.Root>
-          <Topbar.Left>
-            <Breadcrumb.Root className="select-none">
-              <Breadcrumb.List>
-                <Breadcrumb.Item>
-                  <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Separator />
-                <Breadcrumb.Item>
-                  <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Separator />
-                <Breadcrumb.Item>Dolor</Breadcrumb.Item>
-              </Breadcrumb.List>
-            </Breadcrumb.Root>
-          </Topbar.Left>
-        </Topbar.Root>
-      }
-    >
+    <AppViewWrapper asChild={asChild} breadcrumbs={mockedBreadcrumbs}>
       {children}
     </AppViewWrapper>
   )

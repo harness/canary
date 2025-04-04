@@ -15,6 +15,7 @@ import { ProfileSettingsErrorType } from '@harnessio/ui/views'
 
 import { useIsMFE } from '../hooks/useIsMFE'
 import useLocalStorage from '../hooks/useLocalStorage'
+import { useMFEContext } from '../hooks/useMFEContext'
 import usePageTitle from '../hooks/usePageTitle'
 
 interface AppContextType {
@@ -49,11 +50,12 @@ const AppContext = createContext<AppContextType>({
 })
 
 export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
-  const isMFE = useIsMFE()
   usePageTitle()
+  const isMFE = useIsMFE()
+  const { customPromises, scope } = useMFEContext()
+  const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [isSpacesLoading, setSpacesIsLoading] = useState(false)
-  const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
   const [isLoadingUser, setIsLoadingUser] = useState(false)
   const [isUpdatingUser, setIsUpdatingUser] = useState(false)
   const [updateUserError, setUpdateUserError] = useState<{
@@ -65,8 +67,22 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
     setIsLoadingUser(true)
     setUpdateUserError(null)
     try {
-      const userResponse = await getUser({})
-      setCurrentUser(userResponse.body)
+      if (isMFE) {
+        const { data } = await customPromises.getCurrentUser?.({
+          queryParams: { accountIdentifier: scope.accountId }
+        })
+        setCurrentUser({
+          admin: data.admin,
+          created: data.createdAt,
+          display_name: data.name,
+          email: data.email,
+          uid: data.uuid,
+          updated: data.lastUpdatedAt
+        })
+      } else {
+        const userResponse = await getUser({})
+        setCurrentUser(userResponse.body)
+      }
     } catch (error) {
       const typedError = error as GetUserErrorResponse
       setUpdateUserError({
@@ -96,27 +112,33 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   }
 
   useEffect(() => {
-    if (isMFE) return
-    setSpacesIsLoading(true)
-    Promise.allSettled([
-      membershipSpaces({
-        queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
-      }),
-      fetchUser()
-    ])
-      .then(results => {
-        const [membershipResult] = results
+    const fetchSpacesAndUser = async () => {
+      setSpacesIsLoading(true)
 
-        if (membershipResult.status === 'fulfilled') {
-          setSpaces(membershipResult.value.body.filter(item => item?.space).map(item => item.space as TypesSpace))
+      try {
+        const fetchSpaces = () =>
+          membershipSpaces({
+            queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
+          })
+
+        const promises = isMFE ? [fetchUser()] : [fetchSpaces(), fetchUser()]
+        const [results] = await Promise.allSettled(promises)
+
+        if (!isMFE && results.status === 'fulfilled' && results.value?.body) {
+          const spaces = results.value.body
+            .filter((item: { space?: TypesSpace }) => item.space)
+            .map((item: { space?: TypesSpace }) => item.space as TypesSpace)
+
+          setSpaces(spaces)
         }
-      })
-      .catch(() => {
+      } catch (e) {
         // Optionally handle error or show toast
-      })
-      .finally(() => {
+      } finally {
         setSpacesIsLoading(false)
-      })
+      }
+    }
+
+    fetchSpacesAndUser()
   }, [isMFE])
 
   const addSpaces = (newSpaces: TypesSpace[]): void => {

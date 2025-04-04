@@ -4,8 +4,6 @@
     "core/colors_lch",
     "core/typography",
     "core/dimensions",
-    "brand/oss",
-    "brand/ent",
     "mode/dark/default",
     "mode/dark/dimmer",
     "mode/dark/high-contrast",
@@ -31,6 +29,7 @@
     "mode/light/dimmer-tritanopia",
     "mode/light/high-contrast-tritanopia",
     "breakpoint/desktop",
+    "components/desktop/base/avatar",
     "components/desktop/base/btn",
     "components/desktop/base/input",
     "components/desktop/base/badge",
@@ -42,6 +41,7 @@
     "components/desktop/base/diff",
     "components/desktop/base/navtab",
     "components/desktop/base/menubar",
+    "components/desktop/base/tabs",
     "components/desktop/base/tooltip"
   ]
 }

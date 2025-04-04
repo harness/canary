@@ -52,3 +52,14 @@ jobs:
       - run: pnpm deps
       - run: pnpm build
       - run: pnpm test
+
+  Build_Microfrontend:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install
+      - run: pnpm build
+      - run: pnpm -r -F ./apps/gitness build:webpack

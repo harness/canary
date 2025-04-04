@@ -7,9 +7,11 @@ import { createMemoryRouter, RouterProvider } from "react-router-dom";
 
 type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 
-export type ExampleProps = Pick<LiveProviderProps, "code" | "scope">;
+export type ExampleProps = Pick<LiveProviderProps, "code" | "scope"> & {
+  padding?: boolean;
+};
 
-const Example: FC<ExampleProps> = ({ code, scope }) => {
+const Example: FC<ExampleProps> = ({ code, scope, padding = true }) => {
   const scopeWithLayout = useMemo<ExampleProps["scope"]>(
     () => ({ ...scope, ExampleLayout }),
     [scope],
@@ -18,7 +20,9 @@ const Example: FC<ExampleProps> = ({ code, scope }) => {
     {
       path: "*",
       element: (
-        <LivePreview className="not-content border-borders-4 bg-background-4 dark-std-std mb-0 rounded-lg border p-6 shadow-md" />
+        <LivePreview
+          className={`not-content border-borders-4 bg-background-4 dark-std-std mb-0 rounded-lg border ${padding ? "p-6" : ""} shadow-md`}
+        />
       ),
     },
   ]);

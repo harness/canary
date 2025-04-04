@@ -1,15 +1,7 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@harnessio/canary'
 import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/forms'
+import { Select } from '@harnessio/ui/components'
 
+import { FormControl, FormField, FormItem } from '../form'
 import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'
 import InputWrapper from './common/InputWrapper'
@@ -28,7 +20,7 @@ export interface SelectInputConfig {
 }
 function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig>): JSX.Element {
   const { readonly, path, input } = props
-  const { label = '', required, placeholder, description, inputConfig } = input
+  const { label = '', required, description, inputConfig } = input
 
   return (
     <InputWrapper>
@@ -38,26 +30,23 @@ function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig
           <FormItem>
             <InputLabel label={label} description={description} required={required} />
             <FormControl>
-              <Select
+              <Select.Root
                 disabled={readonly}
                 value={field.value}
                 onValueChange={value => {
                   field.onChange(value)
                 }}
               >
-                <SelectTrigger ref={field.ref}>
-                  <SelectValue placeholder={placeholder} />
-                </SelectTrigger>
-                <SelectContent>
+                <Select.Content>
                   {inputConfig?.options.map(item => {
                     return (
-                      <SelectItem key={item.value} value={item.value}>
+                      <Select.Item key={item.value} value={item.value}>
                         {item.label}
-                      </SelectItem>
+                      </Select.Item>
                     )
                   })}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </FormControl>
             <InputError />
           </FormItem>

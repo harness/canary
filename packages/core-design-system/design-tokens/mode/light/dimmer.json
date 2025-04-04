@@ -34,7 +34,7 @@
     },
     "accent": {
       "$type": "color",
-      "$value": "{set.brand.surface.text}",
+      "$value": "{blue.600}",
       "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\n\nCommon uses: Links, buttons, interactive icons, highlighted elements."
     },
     "success": {
@@ -175,17 +175,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{brand.onColor.500}",
+          "$value": "{chrome.50}",
           "$description": "Text and icon color for primary brand elements with maximum contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{brand.color.500}",
+          "$value": "{chrome.950}",
           "$description": "Background color for primary brand items with strong emphasis."
         },
         "border": {
           "$type": "color",
-          "$value": "{brand.color.500}",
+          "$value": "{chrome.950}",
           "$description": "Border color for primary brand boundaries."
         },
         "separator": {
@@ -193,77 +193,77 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.5",
+                "value": "0.25",
                 "space": "lch"
               }
             }
           },
           "$type": "color",
-          "$value": "{brand.onColor.500}",
+          "$value": "{chrome.50}",
           "$description": "Separator color for dividing brand areas."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{brand.color.600}",
+          "$value": "{chrome.900}",
           "$description": "Hover state background color for interactive brand surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{brand.color.700}",
+          "$value": "{chrome.850}",
           "$description": "Selected state background color for active brand items."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{brand.color.900}",
+          "$value": "{chrome.900}",
           "$description": "Text and icon color for primary subtle brand elements with maximum contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{brand.color.200}",
+          "$value": "{chrome.200}",
           "$description": "Background color for primary subtle brand items with strong emphasis."
         },
         "border": {
           "$type": "color",
-          "$value": "{brand.color.200}",
+          "$value": "{chrome.200}",
           "$description": "Border color for primary subtle brand boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{brand.color.300}",
+          "$value": "{chrome.400}",
           "$description": "Hover state background color for interactive brand subtle surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{brand.color.300}",
+          "$value": "{chrome.500}",
           "$description": "Selected state background color for active brand subtle items."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{brand.color.700}",
+          "$value": "{chrome.800}",
           "$description": "Text and icon color for primary brand elements with minimum contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{brand.color.100}",
+          "$value": "{chrome.100}",
           "$description": "Background color for primary brand items with minimum emphasis."
         },
         "border": {
           "$type": "color",
-          "$value": "{brand.color.300}",
+          "$value": "{chrome.300}",
           "$description": "Border color for primary brand with minimum emphasis boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{brand.color.200}",
+          "$value": "{chrome.150}",
           "$description": "Hover state background color for interactive brand with minimum emphasis surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{brand.color.200}",
+          "$value": "{chrome.200}",
           "$description": "Selected state background color for active brand with minimum emphasis items."
         }
       }
@@ -306,49 +306,49 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.800}",
+          "$value": "{chrome.600}",
           "$description": "Background color for prominent gray surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{chrome.800}",
+          "$value": "{chrome.600}",
           "$description": "Border color for gray boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{chrome.700}",
           "$description": "Hover state background color for prominent gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.900}",
+          "$value": "{chrome.800}",
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{chrome.800}",
           "$description": "Text color for subtle gray surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.150}",
+          "$value": "{chrome.100}",
           "$description": "Background color for subdued gray surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{chrome.150}",
+          "$value": "{chrome.100}",
           "$description": "Border color for subtle gray boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.200}",
+          "$value": "{chrome.150}",
           "$description": "Hover state background color for interactive soft gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.300}",
+          "$value": "{chrome.200}",
           "$description": "Selected state background color for active soft gray items."
         }
       },
@@ -413,6 +413,16 @@
           "$type": "color",
           "$value": "{green.100}",
           "$description": "Border color for subtle green boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{green.200}",
+          "$description": "Background color for subdued green surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{green.200}",
+          "$description": "Background color for subdued green surfaces."
         }
       },
       "surface": {
@@ -709,17 +719,17 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{brown.600}",
           "$description": "Text color for subtle brown surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{brown.300}",
+          "$value": "{brown.100}",
           "$description": "Background color for subdued brown surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{brown.300}",
+          "$value": "{brown.100}",
           "$description": "Border color for subtle brown boundaries."
         }
       },
@@ -1040,20 +1050,19 @@
       }
     },
     "avatar": {
-      "text": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Text color for avatar initials or text. Ensures visibility against the avatar background."
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.3}",
-        "$description": "Background color for avatar components. Provides contrast for text or image content."
-      },
       "border": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.15",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Border color for avatars. Creates subtle definition around the avatar element."
+        "$value": "{chrome.500}",
+        "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
       }
     },
     "breadcrumb": {
@@ -1614,7 +1623,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{brand.color.400}",
+          "$value": "{set.brand.solid.bg}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         }
       },
@@ -1626,7 +1635,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{brand.color.600}",
+          "$value": "{set.brand.surface.bg}",
           "$description": "Color for segment markers on the filled track portion. Maintains visibility of markers within the selected range."
         }
       },
@@ -1904,6 +1913,21 @@
         "type": "innerShadow"
       },
       "$description": "Inner shadow. \nCommon uses: Pressed buttons, selected states, inset form fields."
+    },
+    "comp": {
+      "avatar": {
+        "inner": {
+          "$type": "boxShadow",
+          "$value": {
+            "x": "0",
+            "y": "0",
+            "blur": "0",
+            "spread": "1",
+            "color": "{comp.avatar.border}",
+            "type": "innerShadow"
+          }
+        }
+      }
     }
   },
   "shadow-color": {

@@ -17,3 +17,4 @@ export { PipelineStudioNodeContext } from './components/graph-implementation/con
 export { contentNodeBank } from './components/graph-implementation/factory/content-node-bank'
 
 export type { VisualYamlValue } from './components/visual-yaml-toggle'
+export { VisualYamlToggle } from './components/visual-yaml-toggle'

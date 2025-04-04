@@ -1,10 +1,12 @@
 {
-  "height": {
-    "$type": "sizing",
-    "$value": "{size.11}"
-  },
-  "gap": {
-    "$type": "spacing",
-    "$value": "{spacing.6}"
+  "menubar": {
+    "height": {
+      "$type": "sizing",
+      "$value": "{size.11}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.6}"
+    }
   }
 }

@@ -2,7 +2,6 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import {
-  AppSidebar,
   ManageNavigation,
   MenuGroupType,
   MenuGroupTypes,
@@ -11,7 +10,7 @@ import {
   SettingsMenu,
   Sidebar
 } from '@harnessio/ui/components'
-import { MainContentLayout } from '@harnessio/ui/views'
+import { MainContentLayout, SidebarView } from '@harnessio/ui/views'
 
 import { useNav } from '../components/stores/recent-pinned-nav-links.store'
 import { getNavbarMenuData } from '../data/navbar-menu-data'
@@ -178,8 +177,8 @@ export const AppShell = () => {
 
   return (
     <>
-      <Sidebar.Provider>
-        <AppSidebar
+      <Sidebar.Provider className="min-h-svh">
+        <SidebarView
           showMoreMenu={showMoreMenu}
           showSettingMenu={showSettingMenu}
           handleMoreMenu={handleMoreMenu}

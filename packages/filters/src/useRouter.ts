@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
-import { createSearchParams, useLocation, useNavigate } from 'react-router-dom'
+
+import { useRouterContext } from './router-context'
 
 interface UseRouterReturnType {
   searchParams: URLSearchParams
@@ -8,11 +9,11 @@ interface UseRouterReturnType {
   updateURL: (params: URLSearchParams, replace?: boolean) => void
 }
 
-export default function useRouter(): UseRouterReturnType {
-  const navigate = useNavigate() // v6
-  const location = useLocation() // Works for both v5 and v6
+const createSearchParams = (params?: Record<string, string> | string) => new URLSearchParams(params)
 
-  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search])
+export default function useRouter(): UseRouterReturnType {
+  const { navigate, location } = useRouterContext()
+  const searchParams = useMemo(() => createSearchParams(location.search), [location.search])
 
   const push = (path: string, searchParamsObject?: Record<string, string>) => {
     const search = searchParamsObject ? `?${createSearchParams(searchParamsObject).toString()}` : ''

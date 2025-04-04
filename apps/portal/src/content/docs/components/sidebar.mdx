@@ -1,0 +1,850 @@
+---
+title: Sidebar
+description: A responsive, collapsible sidebar navigation component
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `Sidebar` component provides a responsive, collapsible navigation interface that can be used for application navigation. It supports various states including expanded, collapsed, and mobile views with offcanvas functionality.
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`() => {
+    const t = (key, fallback) => fallback || key
+
+    return (
+      <Sidebar.Provider className="flex justify-start">
+        <Sidebar.Root className="h-[500px]">
+          <Sidebar.Header>
+            <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
+          </Sidebar.Header>
+          <Sidebar.Content>
+            <Sidebar.Group>
+              <Sidebar.GroupContent>
+                <Sidebar.Menu>
+                  <Sidebar.MenuItem>
+                    <Sidebar.MenuButton>
+                      <Sidebar.MenuItemText
+                        className="pl-0"
+                        text='Repositories'
+                        icon={<Icon name="repositories" size={14} />}
+                      />
+                    </Sidebar.MenuButton>
+                  </Sidebar.MenuItem>
+                  <Sidebar.MenuItem>
+                    <Sidebar.MenuButton>
+                      <Sidebar.MenuItemText
+                        className="pl-0"
+                        text='Pipelines'
+                        icon={<Icon name="pipelines" size={14} />}
+                      />
+                    </Sidebar.MenuButton>
+                  </Sidebar.MenuItem>
+                  <Sidebar.MenuItem>
+                    <Sidebar.MenuButton>
+                      <Sidebar.MenuItemText
+                        className="pl-0"
+                        text='More'
+                        icon={<Icon name="ellipsis" size={14} />}
+                      />
+                    </Sidebar.MenuButton>
+                  </Sidebar.MenuItem>
+                </Sidebar.Menu>
+              </Sidebar.GroupContent>
+            </Sidebar.Group>
+
+            <Sidebar.Group title="Recent" className="border-t">
+              <Sidebar.GroupLabel className="mb-0">Recent</Sidebar.GroupLabel>
+              <Sidebar.GroupContent>
+                <Sidebar.Menu>
+                  <Sidebar.MenuItem>
+                    <Sidebar.MenuButton>
+                      <Sidebar.MenuItemText
+                        className="pl-0"
+                        text='User Management'
+                        icon={<Icon name="user" size={14} />}
+                      />
+                    </Sidebar.MenuButton>
+                  </Sidebar.MenuItem>
+                </Sidebar.Menu>
+              </Sidebar.GroupContent>
+            </Sidebar.Group>
+          </Sidebar.Content>
+          <Sidebar.Footer className="border-t border-sidebar-border-1 px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">
+            <User
+              user={{
+                display_name: 'John Doe',
+                email: 'johndoe@example.com',
+                url: 'https://ui.shadcn.com/avatars/shadcn.jpg',
+              }}
+              openThemeDialog={() => {}}
+              openLanguageDialog={() => {}}
+              handleLogOut={() => {}}
+              t={t}
+            />
+          </Sidebar.Footer>
+          <Sidebar.Rail />
+        </Sidebar.Root>
+        <div className="flex flex-col w-full">
+          <div className="flex items-center border-b w-[full] border-sidebar-border-1">
+            <Sidebar.Trigger className="ml-2" />
+            <Sidebar.Separator
+              orientation="vertical"
+              className="h-4 w-[2px] bg-sidebar-border-1 mr-4"
+            />
+            <Breadcrumb.Root className="select-none">
+              <Breadcrumb.List>
+                <Breadcrumb.Item>
+                  <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Separator />
+                <Breadcrumb.Ellipsis />
+                <Breadcrumb.Separator />
+                <Breadcrumb.Item>
+                  <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Separator />
+                <Breadcrumb.Page>Dolor</Breadcrumb.Page>
+              </Breadcrumb.List>
+            </Breadcrumb.Root>
+          </div>
+
+          <div className="flex-1 ml-3 mt-2">
+            <p className="text-foreground-1">Main Content</p>
+            <p className="mt-2">This is where your main content would appear.</p>
+          </div>
+        </div>
+      </Sidebar.Provider>
+    )
+
+}`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Sidebar } from '@harnessio/ui/components'
+
+// Basic usage with all main components
+const SidebarExample = () => {
+  return (
+    <Sidebar.Provider>
+      <Sidebar.Root className="h-screen">
+        <Sidebar.Header>
+          {/* Your logo and search component */}
+          <SidebarSearch logo={<YourLogo />} />
+        </Sidebar.Header>
+
+        <Sidebar.Content>
+          {/* Main navigation items */}
+          <Sidebar.Group>
+            <Sidebar.GroupContent>
+              <Sidebar.Menu>
+                <Sidebar.MenuItem>
+                  <Sidebar.MenuButton>
+                    <Sidebar.MenuItemText
+                      text="Dashboard"
+                      icon={<Icon name="dashboard" size={14} />}
+                    />
+                  </Sidebar.MenuButton>
+                </Sidebar.MenuItem>
+                <Sidebar.MenuItem>
+                  <Sidebar.MenuButton>
+                    <Sidebar.MenuItemText
+                      text="Projects"
+                      icon={<Icon name="folder" size={14} />}
+                    />
+                  </Sidebar.MenuButton>
+                </Sidebar.MenuItem>
+              </Sidebar.Menu>
+            </Sidebar.GroupContent>
+          </Sidebar.Group>
+
+          {/* Grouped navigation items */}
+          <Sidebar.Group title="Recent">
+            <Sidebar.GroupLabel>Recent</Sidebar.GroupLabel>
+            <Sidebar.GroupContent>
+              <Sidebar.Menu>
+                <Sidebar.MenuItem>
+                  <Sidebar.MenuButton>
+                    <Sidebar.MenuItemText
+                      text="Project Alpha"
+                      icon={<Icon name="folder" size={14} />}
+                    />
+                  </Sidebar.MenuButton>
+                </Sidebar.MenuItem>
+              </Sidebar.Menu>
+            </Sidebar.GroupContent>
+          </Sidebar.Group>
+        </Sidebar.Content>
+
+        <Sidebar.Footer>
+          {/* User profile or other footer content */}
+          <UserProfile />
+        </Sidebar.Footer>
+
+        <Sidebar.Rail />
+      </Sidebar.Root>
+
+      {/* Main content area */}
+      <div className="flex-1">
+        <div className="border-b flex items-center">
+          <Sidebar.Trigger />
+          <Sidebar.Separator orientation="vertical" />
+          {/* Breadcrumb or other header content */}
+        </div>
+        <main>
+          {/* Your main application content */}
+        </main>
+      </div>
+    </Sidebar.Provider>
+  )
+}
+```
+
+## Anatomy
+
+The Sidebar component is composed of several nested components that work together to create a complete navigation interface:
+
+```jsx
+<Sidebar.Provider>
+  <Sidebar.Root>
+    <Sidebar.Header />
+    <Sidebar.Content>
+      <Sidebar.Group>
+        <Sidebar.GroupLabel />
+        <Sidebar.GroupContent>
+          <Sidebar.Menu>
+            <Sidebar.MenuItem>
+              <Sidebar.MenuButton>
+                <Sidebar.MenuItemText />
+              </Sidebar.MenuButton>
+            </Sidebar.MenuItem>
+          </Sidebar.Menu>
+        </Sidebar.GroupContent>
+      </Sidebar.Group>
+    </Sidebar.Content>
+    <Sidebar.Footer />
+    <Sidebar.Rail />
+  </Sidebar.Root>
+  <Sidebar.Trigger />
+  <Sidebar.Separator />
+</Sidebar.Provider>
+```
+
+## API Reference
+
+### Sidebar.Provider
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the provider",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the provider",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "defaultCollapsed",
+      description: "Whether the sidebar should be collapsed by default",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+    {
+      name: "defaultMobileOpen",
+      description: "Whether the sidebar should be open by default on mobile",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+    {
+      name: "open",
+      description: "Controlled state for sidebar open/closed status",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onOpenChange",
+      description: "Callback function when sidebar open state changes",
+      required: false,
+      value: "(open: boolean) => void",
+    },
+  ]}
+/>
+
+### Sidebar.Root
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the sidebar",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the root element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "side",
+      description: "Which side of the screen the sidebar should appear on",
+      required: false,
+      value: "'left' | 'right'",
+      default: "'left'",
+    },
+    {
+      name: "variant",
+      description: "Visual variant of the sidebar",
+      required: false,
+      value: "'sidebar' | 'floating' | 'inset'",
+      default: "'sidebar'",
+    },
+    {
+      name: "collapsible",
+      description: "How the sidebar should collapse",
+      required: false,
+      value: "'offcanvas' | 'icon' | 'none'",
+      default: "'offcanvas'",
+    },
+  ]}
+/>
+
+### Sidebar.Header
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the header",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the header",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.Content
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the content area",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the content area",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.Group
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the group",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the group",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "title",
+      description: "Title for the group, displayed in the group label",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.GroupLabel
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the group label",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the group label",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "asChild",
+      description: "Whether to merge props onto the immediate child",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+  ]}
+/>
+
+### Sidebar.GroupAction
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the group action",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the group action",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "asChild",
+      description: "Whether to merge props onto the immediate child",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+  ]}
+/>
+
+### Sidebar.GroupContent
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the group content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the group content",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.Menu
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The menu items to be rendered",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the menu",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.MenuItem
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the menu item",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the menu item",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.MenuButton
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the menu button",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the menu button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onClick",
+      description: "Function called when the button is clicked",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "active",
+      description: "Whether the button is in an active state",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+    {
+      name: "asChild",
+      description: "Whether to merge props onto the immediate child",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+    {
+      name: "isActive",
+      description: "Whether the button is in an active state",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+    {
+      name: "tooltip",
+      description:
+        "Tooltip content to show when hovering over the button in collapsed state",
+      required: false,
+      value: "string | ComponentProps<typeof Tooltip.Content>",
+    },
+    {
+      name: "variant",
+      description: "Visual variant of the button",
+      required: false,
+      value: "'default' | 'outline'",
+      default: "'default'",
+    },
+    {
+      name: "size",
+      description: "Size of the button",
+      required: false,
+      value: "'default' | 'sm' | 'lg'",
+      default: "'default'",
+    },
+  ]}
+/>
+
+### Sidebar.MenuItemText
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "text",
+      description: "The text to display in the menu item",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "icon",
+      description: "Icon to display alongside the text",
+      required: false,
+      value: "ReactElement<SVGSVGElement>",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "active",
+      description: "Whether the menu item is in an active state",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+  ]}
+/>
+
+### Sidebar.MenuAction
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the menu action",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "asChild",
+      description: "Whether to merge props onto the immediate child",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+    {
+      name: "showOnHover",
+      description: "Whether to show the action only on hover",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+  ]}
+/>
+
+### Sidebar.MenuBadge
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the badge",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the badge",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.MenuSkeleton
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the skeleton",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "showIcon",
+      description: "Whether to show an icon placeholder in the skeleton",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+  ]}
+/>
+
+### Sidebar.MenuSub
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the submenu",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the submenu",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.MenuSubItem
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the submenu item",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the submenu item",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.MenuSubButton
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the submenu button",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the submenu button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "asChild",
+      description: "Whether to merge props onto the immediate child",
+      required: false,
+      value: "boolean",
+      default: "false",
+    },
+    {
+      name: "size",
+      description: "Size of the submenu button",
+      required: false,
+      value: "'sm' | 'md'",
+      default: "'md'",
+    },
+    {
+      name: "isActive",
+      description: "Whether the submenu button is in an active state",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Sidebar.Footer
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the footer",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the footer",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.Rail
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the rail",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.Trigger
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the trigger",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onClick",
+      description: "Function called when the trigger is clicked",
+      required: false,
+      value: "() => void",
+    },
+  ]}
+/>
+
+### Sidebar.Separator
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "orientation",
+      description: "The orientation of the separator",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      default: "'horizontal'",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the separator",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.Input
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the input",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "placeholder",
+      description: "Placeholder text for the input",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Sidebar.Inset
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to be rendered within the inset container",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the inset container",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

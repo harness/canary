@@ -7,16 +7,16 @@ export type IInputConfigWithConfigInterface = IInputDefinition & InputConfigType
 
 export interface onSubmitConnectorProps {
   values: FieldValues
-  formEntity: ConnectorFormEntityType
+  connector: ConnectorEntity
+  intent: EntityIntent
 }
 
-export type ConnectorFormEntityType = {
-  type: 'connector'
-  data: {
-    type: string
-    name?: string
-    payload?: ConnectorPayloadConfig
-  }
+export type ConnectorEntity<T = any> = {
+  type: string
+  name?: string
+  spec: T
+  description?: string
+  tags?: string[]
 }
 
 export type AnyConnectorDefinition<T = string> = {
@@ -26,15 +26,6 @@ export type AnyConnectorDefinition<T = string> = {
   formDefinition: IFormDefinition<InputConfigType>
 }
 
-export enum CredTypeValues {
-  ManualConfig = 'ManualConfig',
-  AssumeIAMRole = 'AssumeIAMRole',
-  AssumeRoleSTS = 'AssumeSTSRole',
-  PermanentTokenConfig = 'PermanentTokenConfig'
-}
-export enum DelegateTypes {
-  DELEGATE_OIDC = 'DelegateOidc'
-}
 // Base interfaces
 export interface ConnectorSpec {
   auth?: AuthenticationSpec
@@ -141,4 +132,9 @@ export interface ConnectorItem extends BaseEntityProps {
 export enum ConnectorSelectionType {
   NEW = 'new',
   EXISTING = 'existing'
+}
+
+export enum EntityIntent {
+  CREATE = 'create',
+  EDIT = 'edit'
 }

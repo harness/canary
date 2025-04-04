@@ -8,14 +8,15 @@ import { Drawer, Separator, Spacer } from '@harnessio/ui/components'
 import {
   ArrayInput,
   BooleanInput,
+  ConnectorEntity,
   ConnectorEntityForm,
-  ConnectorFormEntityType,
   ConnectorHeader,
   ConnectorItem,
   ConnectorReference,
   ConnectorSelectionType,
   ConnectorsPalette,
   DirectionEnum,
+  EntityIntent,
   GroupInput,
   ListInput,
   NumberInput,
@@ -57,11 +58,11 @@ export const ConnectorsRefPage = ({
 }) => {
   const [selectedType, setSelectedType] = useState<ConnectorSelectionType>(ConnectorSelectionType.EXISTING)
   const [, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
+  const [connectorEntity, setConnectorEntity] = useState<ConnectorEntity | null>(null)
 
   // State for existing connectors
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
-  const [formEntity, setFormEntity] = useState<ConnectorFormEntityType | null>(null)
   const [isConnectorSelected, setIsConnectorSelected] = useState(false)
   // Handlers for existing connectors
   const handleSelectConnector = (connector: ConnectorItem) => {
@@ -108,22 +109,22 @@ export const ConnectorsRefPage = ({
               useTranslationStore={useTranslationStore}
               connectors={harnessConnectors}
               onSelectConnector={() => setIsConnectorSelected(true)}
-              setFormEntity={setFormEntity}
+              setConnectorEntity={setConnectorEntity}
               requestClose={() => {
-                setFormEntity(null)
-                setIsConnectorSelected(false)
+                setConnectorEntity(null)
                 handleCancel()
               }}
             />
             <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
               <Drawer.Content>
-                {formEntity ? (
+                {connectorEntity ? (
                   <ConnectorEntityForm
+                    intent={EntityIntent.CREATE}
                     useTranslationStore={useTranslationStore}
-                    formEntity={formEntity}
+                    connector={connectorEntity}
                     onBack={() => setIsConnectorSelected(false)}
                     requestClose={() => {
-                      setFormEntity(null)
+                      setConnectorEntity(null)
                       setIsConnectorSelected(false)
                     }}
                     // onFormSubmit={handleFormSubmit}

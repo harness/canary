@@ -8,7 +8,7 @@ import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-setting
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
 import { ConnectorsPage } from '@subjects/views/connectors/connectors'
 import { ConnectorInputExample } from '@subjects/views/connectors/connectors-input'
-import { ConnectorsListPage } from '@subjects/views/connectors/connectors-list'
+import { ConnectorsListPageWrapper } from '@subjects/views/connectors/connectors-list'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
@@ -43,6 +43,7 @@ import { RepoTagsList } from '@subjects/views/repo-tags/repo-tags-list'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
 import { SecretInputExample } from '@subjects/views/secrets/secret-input'
+import { SecretsListPage } from '@subjects/views/secrets/secrets-list'
 import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
@@ -497,9 +498,13 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         label: 'Secrets Page',
         element: <SecretInputExample />
       },
+      'secrets-list-page': {
+        label: 'Secrets List Page',
+        element: <SecretsListPage />
+      },
       'connectors-list-page': {
         label: 'Connectors List Page',
-        element: <ConnectorsListPage />
+        element: <ConnectorsListPageWrapper />
       },
       'create-edit-connector': {
         label: 'Create or Edit Connector',

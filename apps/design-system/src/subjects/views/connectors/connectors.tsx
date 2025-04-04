@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
+import { useTranslationStore } from '@utils/viewUtils'
 import noop from 'lodash-es/noop'
 
 import { InputFactory } from '@harnessio/forms'
@@ -8,9 +9,10 @@ import { Button, Drawer, ListActions, Spacer } from '@harnessio/ui/components'
 import {
   ArrayInput,
   BooleanInput,
+  ConnectorEntity,
   ConnectorEntityForm,
-  ConnectorFormEntityType,
   ConnectorsPalette,
+  EntityIntent,
   GroupInput,
   ListInput,
   NumberInput,
@@ -35,10 +37,12 @@ inputComponentFactory.registerComponent(new SeparatorInput())
 inputComponentFactory.registerComponent(new RadialInput())
 
 const ConnectorsListPageContent = (): JSX.Element => {
-  const [formEntity, setFormEntity] = useState<ConnectorFormEntityType | null>(null)
+  const [connectorEntity, setConnectorEntity] = useState<ConnectorEntity | null>(null)
   const [isConnectorDrawerOpen, setIsConnectorDrawerOpen] = useState(false)
+  const [isEditConnectorDrawerOpen, setIsEditConnectorDrawerOpen] = useState(false)
   const [isConnectorSelected, setIsConnectorSelected] = useState(false)
   const [, setIsSecretDrawerOpen] = useState(false)
+  const [intent, setIntent] = useState<EntityIntent>(EntityIntent.CREATE)
 
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
@@ -52,6 +56,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
                 variant="default"
                 onClick={() => {
                   setIsConnectorDrawerOpen(true)
+                  setIntent(EntityIntent.CREATE)
                 }}
               >
                 Create Connector
@@ -59,14 +64,18 @@ const ConnectorsListPageContent = (): JSX.Element => {
               <Button
                 variant="default"
                 onClick={() => {
-                  setFormEntity({
-                    type: 'connector',
-                    data: {
-                      type: 'AwsKms',
-                      name: 'AWS KMS'
+                  setConnectorEntity({
+                    type: 'AwsKms',
+                    name: 'AWS KMS test',
+                    spec: {
+                      name: 'AWS KMS test',
+                      credential: 'AssumeIAMRole',
+                      awsArn: 'sk-github',
+                      region: 'ap-south-2'
                     }
                   })
-                  setIsConnectorSelected(true)
+                  setIsEditConnectorDrawerOpen(true)
+                  setIntent(EntityIntent.EDIT)
                 }}
               >
                 Edit Connector
@@ -79,26 +88,18 @@ const ConnectorsListPageContent = (): JSX.Element => {
       <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
         <Drawer.Content>
           <ConnectorsPalette
-            useTranslationStore={() =>
-              ({
-                t: () => 'dummy',
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                i18n: {} as any,
-                changeLanguage: noop
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              }) as any
-            }
+            useTranslationStore={useTranslationStore}
             connectors={harnessConnectors}
             onSelectConnector={() => setIsConnectorSelected(true)}
-            setFormEntity={setFormEntity}
+            setConnectorEntity={setConnectorEntity}
             requestClose={() => {
-              setFormEntity(null)
+              setConnectorEntity(null)
               setIsConnectorDrawerOpen(false)
             }}
           />
           <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
             <Drawer.Content>
-              {formEntity ? (
+              {connectorEntity ? (
                 <ConnectorEntityForm
                   openSecretDrawer={() => setIsSecretDrawerOpen(true)}
                   useTranslationStore={() =>
@@ -110,19 +111,39 @@ const ConnectorsListPageContent = (): JSX.Element => {
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     }) as any
                   }
-                  formEntity={formEntity}
+                  connector={connectorEntity}
                   onBack={() => setIsConnectorSelected(false)}
                   requestClose={() => {
-                    setFormEntity(null)
+                    setConnectorEntity(null)
                     setIsConnectorSelected(false)
                   }}
                   // onFormSubmit={handleFormSubmit}
                   getConnectorDefinition={getHarnessConnectorDefinition}
                   inputComponentFactory={inputComponentFactory}
+                  intent={intent}
                 />
               ) : null}
             </Drawer.Content>
           </Drawer.Root>
+        </Drawer.Content>
+      </Drawer.Root>
+      <Drawer.Root open={isEditConnectorDrawerOpen} onOpenChange={setIsEditConnectorDrawerOpen} direction="right">
+        <Drawer.Content>
+          {connectorEntity ? (
+            <ConnectorEntityForm
+              openSecretDrawer={() => setIsSecretDrawerOpen(true)}
+              useTranslationStore={useTranslationStore}
+              connector={connectorEntity}
+              onBack={() => setIsConnectorSelected(false)}
+              requestClose={() => {
+                setConnectorEntity(null)
+                setIsConnectorSelected(false)
+              }}
+              getConnectorDefinition={getHarnessConnectorDefinition}
+              inputComponentFactory={inputComponentFactory}
+              intent={intent}
+            />
+          ) : null}
         </Drawer.Content>
       </Drawer.Root>
     </SandboxLayout.Main>

@@ -41,7 +41,7 @@ export const LabelMarker: FC<LabelMarkerProps> = ({
         {hasExtraContent && (
           <div
             className={cn(
-              `bg-label-background-black flex h-full items-center overflow-hidden rounded-r-[3px] pl-1.5 pr-[7px]`,
+              `bg-label-background-cover flex h-full items-center overflow-hidden rounded-r-[3px] pl-1.5 pr-[7px]`,
               { 'pr-6': hasExtraContent && hasDeleteButton }
             )}
           >
@@ -65,7 +65,7 @@ export const LabelMarker: FC<LabelMarkerProps> = ({
         </Button>
       )}
 
-      {isDynamic && <Icon name="circle-plus" size={12} className="min-w-3 text-icons-4" role="presentation" />}
+      {isDynamic && <Icon name="circle-plus" size={12} className="text-icons-4 min-w-3" role="presentation" />}
     </div>
   )
 }

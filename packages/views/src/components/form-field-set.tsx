@@ -1,4 +1,5 @@
-import { Checkbox, cn, RadioGroupItem, Label as ShadLabel, Text } from '@harnessio/canary'
+import { Checkbox, RadioButton, Text, Label as UILabel } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 interface CompProps {
   children: React.ReactNode
@@ -31,7 +32,7 @@ interface ControlProps {
   className?: string
 }
 
-type ControlType = React.ReactElement<typeof RadioGroupItem> | React.ReactElement<typeof Checkbox>
+type ControlType = React.ReactElement<typeof RadioButton> | React.ReactElement<typeof Checkbox>
 
 interface OptionProps {
   control: ControlType
@@ -82,24 +83,6 @@ function Root({ children, box, shaded, className }: RootProps) {
   )
 }
 
-/** @deprecated: Use FormLegend from @harnessio/ui/components instead */
-function Legend({ children, className }: CompProps) {
-  return (
-    <Text size={3} weight={'medium'} className={cn('mb-0', className)} as="p" role="heading">
-      {children}
-    </Text>
-  )
-}
-
-/** @deprecated: Use FormLegend from @harnessio/ui/components instead */
-function SubLegend({ children, className }: CompProps) {
-  return (
-    <Text size={2} weight={'normal'} className={cn('text-primary/70 mb-0', className)} as="p" id="fieldset-description">
-      {children}
-    </Text>
-  )
-}
-
 /** @deprecated */
 function Item({ children, className }: CompProps) {
   return (
@@ -112,10 +95,10 @@ function Item({ children, className }: CompProps) {
 /** @deprecated: Use Label from @harnessio/ui/components instead */
 function Label({ htmlFor, required, children, className }: LabelProps) {
   return (
-    <ShadLabel htmlFor={htmlFor} variant="sm" className={cn('text-primary/80 font-normal', className)}>
+    <UILabel htmlFor={htmlFor} className={cn('text-primary/80 font-normal', className)}>
       {children}
       {required && <span className="pl-0.5 align-top text-destructive">*</span>}
-    </ShadLabel>
+    </UILabel>
   )
 }
 
@@ -192,4 +175,4 @@ function Spacer({ className }: SpacerProps) {
   return <div className={cn('mt-1', className)} role="presentation" aria-hidden="true" />
 }
 
-export { Root, Legend, SubLegend, Item, Label, ControlGroup, Caption, Message, Option, Separator, Spacer, MessageTheme }
+export { Root, Item, Label, ControlGroup, Caption, Message, Option, Separator, Spacer, MessageTheme }

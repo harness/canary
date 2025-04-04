@@ -1,6 +1,8 @@
 import { ComponentType, createContext, ReactNode, useContext } from 'react'
 import type { LinkProps, Location, NavigateFunction, NavLinkProps, OutletProps, UIMatch } from 'react-router-dom'
 
+import { RouterContextProvider as FiltersRouterContextProvider } from '@harnessio/filters'
+
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
 
 const LinkDefault = ({ to, children, ...props }: LinkProps) => {
@@ -95,7 +97,9 @@ export const RouterContextProvider = ({
         useMatches
       }}
     >
-      {children}
+      <FiltersRouterContextProvider location={location} navigate={navigate}>
+        {children}
+      </FiltersRouterContextProvider>
     </RouterContext.Provider>
   )
 }

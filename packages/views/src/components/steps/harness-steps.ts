@@ -71,11 +71,6 @@ export const harnessSteps: (HarnessStep | HarnessStepGroup)[] = [
   }
 ]
 
-export interface StepQueue {
-  key: string
-  scope?: 'pipeline' | 'stage'
-}
-
 export const harnessStepGroups: HarnessStepGroup[] = [
   {
     identifier: GROUP_IDENTIFIER,
@@ -88,16 +83,6 @@ export const harnessStepGroups: HarnessStepGroup[] = [
     formDefinition: parallelFormDefinition
   }
 ]
-
-export function isHarnessStep(step: Record<string, unknown>): boolean {
-  const harnessStepsIds = harnessSteps.map(step => step.identifier)
-  return harnessStepsIds.some(stepId => stepId in step)
-}
-
-export function isHarnessGroup(step: { identifier: string }): boolean {
-  const harnessStepsIds = harnessStepGroups.map(step => step.identifier)
-  return harnessStepsIds.some(stepId => stepId in step)
-}
 
 export function getHarnessStepIdentifier(step: {
   identifier: string

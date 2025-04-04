@@ -61,5 +61,9 @@ export * from './secrets'
 
 // entity-reference
 export * from './platform'
+
 // connectors
 export * from './connectors'
+
+// sidebar-view
+export * from './sidebar-view/sidebar-view'

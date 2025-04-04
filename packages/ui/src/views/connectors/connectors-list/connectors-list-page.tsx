@@ -15,7 +15,7 @@ type ConnectorListFiltersKeys = keyof ConnectorListFilters
 
 // const ConnectorListFilterHandler = createFilters<ConnectorListFilters>()
 
-const ConnectorListPage: FC<ConnectorListPageProps> = ({
+const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   searchQuery,
   setSearchQuery,
   isError,
@@ -109,4 +109,4 @@ const ConnectorListPage: FC<ConnectorListPageProps> = ({
   )
 }
 
-export { ConnectorListPage }
+export { ConnectorsListPage }

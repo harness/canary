@@ -1,8 +1,14 @@
 {
   "tag": {
     "size": {
-      "$type": "sizing",
-      "$value": "{size.5}"
+      "sm": {
+        "$type": "sizing",
+        "$value": "{size.5}"
+      },
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.6}"
+      }
     },
     "gap": {
       "$type": "spacing",
@@ -16,10 +22,14 @@
       "$type": "spacing",
       "$value": "{spacing.2}"
     },
-    "default": {
-      "radius": {
+    "radius": {
+      "default": {
         "$type": "borderRadius",
         "$value": "{rounded.2}"
+      },
+      "full": {
+        "$type": "borderRadius",
+        "$value": "{rounded.full}"
       }
     },
     "split": {

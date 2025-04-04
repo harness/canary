@@ -3,12 +3,15 @@ import { PaginationProps } from '@components/index'
 import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 
+import { ConnectorConfigType } from '../types'
+
 interface RoutingProps {
   toConnectorDetails: (connector: ConnectorListItem) => string
 }
 
 export interface ConnectorListItem {
   identifier: string
+  type?: ConnectorConfigType
   name?: string
   description?: string
   status?: ExecutionState
@@ -30,6 +33,7 @@ export interface ConnectorListProps extends Partial<RoutingProps> {
   isLoading: boolean
   onEditConnector: (connector: ConnectorListItem) => void
   onTestConnection: (connector: ConnectorListItem) => void
+  onDeleteConnector: (connectorId: string) => void
 }
 
 export type ConnectorListFilters = {

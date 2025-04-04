@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { cn } from '@harnessio/canary'
+import { cn } from '@harnessio/ui/utils'
 
 const Container = {
   Root: function Root({
@@ -50,16 +50,6 @@ const Container = {
 
   Content: function Content({ children }: { children: React.ReactNode }) {
     return <div className="flex size-full overflow-y-auto">{children}</div>
-  },
-
-  CenteredContent: function CenteredContent({ children }: { children: React.ReactNode }) {
-    return (
-      <div className="row-start-2 flex size-full place-content-center items-center overflow-y-auto">{children}</div>
-    )
-  },
-
-  Bottombar: function Bottombar({ children }: { children: React.ReactNode }) {
-    return <div className="flex border-t">{children}</div>
   },
 
   Horizontal: function Horizontal({ children }: { children: React.ReactNode }) {

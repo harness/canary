@@ -4,17 +4,16 @@ import { MenuGroupType, MenuGroupTypes } from '@harnessio/ui/components'
 
 import { RouteFunctionMap } from '../framework/routing/types'
 
-export const getNavbarMenuData = ({
-  t,
-  spaceId,
-  repoId,
-  routes
-}: {
+export type GetNavbarMenuDataParams = {
   t: TFunction
   routes: RouteFunctionMap
   spaceId?: string
   repoId?: string
-}): MenuGroupType[] => [
+}
+
+export type GetNavbarMenuData = ({ t, spaceId, repoId, routes }: GetNavbarMenuDataParams) => MenuGroupType[]
+
+export const getNavbarMenuData: GetNavbarMenuData = ({ t, spaceId, repoId, routes }) => [
   {
     groupId: 0,
     title: t('component:navbar.devops'),

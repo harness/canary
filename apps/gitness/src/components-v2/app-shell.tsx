@@ -5,6 +5,7 @@ import { NavbarItemType } from '@harnessio/ui/components'
 import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useNav } from '../components/stores/recent-pinned-nav-links.store'
+import { getNavbarMenuData } from '../data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '../data/pinned-menu-items-data'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useLocationChange } from '../framework/hooks/useLocationChange'
@@ -65,7 +66,7 @@ export const AppShell: FC = () => {
 
   return (
     <>
-      <AppSideBar>
+      <AppSideBar getNavbarMenuData={getNavbarMenuData}>
         <MainContentLayout breadcrumbs={<Breadcrumbs />}>
           <Outlet />
         </MainContentLayout>
@@ -80,7 +81,7 @@ export const AppShellMFE = memo(() => {
 
   return (
     <>
-      <AppSideBar>
+      <AppSideBar getNavbarMenuData={() => []}>
         <MainContentLayout breadcrumbs={<BreadcrumbsMFE />} className="min-h-screen text-foreground-2">
           <Outlet />
         </MainContentLayout>

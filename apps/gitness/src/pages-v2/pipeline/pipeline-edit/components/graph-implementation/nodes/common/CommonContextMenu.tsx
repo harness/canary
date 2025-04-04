@@ -64,7 +64,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && editStep(contextMenuData.nodeData)
           }}
         >
-          <Icon name="edit-pen" size={12} className="text-tertiary-background" />
+          <Icon name="edit-pen" size={12} className="text-cn-foreground-3" />
           <Text>Edit</Text>
         </DropdownMenu.Item>
       ])
@@ -79,7 +79,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && addStep(contextMenuData.nodeData, 'before')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add step/group before</Text>
         </DropdownMenu.Item>,
         <DropdownMenu.Item
@@ -89,7 +89,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && addStep(contextMenuData.nodeData, 'after')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add step/group after</Text>
         </DropdownMenu.Item>
       ])
@@ -104,7 +104,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && addStage(contextMenuData.nodeData, 'before')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add stage before</Text>
         </DropdownMenu.Item>,
         <DropdownMenu.Item
@@ -114,7 +114,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && addStage(contextMenuData.nodeData, 'after')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add stage after</Text>
         </DropdownMenu.Item>
       ])
@@ -129,7 +129,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && addSerialGroup(contextMenuData.nodeData, 'before')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add serial group before</Text>
         </DropdownMenu.Item>,
         <DropdownMenu.Item
@@ -139,7 +139,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && addSerialGroup(contextMenuData.nodeData, 'after')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add serial group after</Text>
         </DropdownMenu.Item>
       ])
@@ -152,7 +152,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && addParallelGroup(contextMenuData.nodeData, 'before')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add parallel group before</Text>
         </DropdownMenu.Item>,
         <DropdownMenu.Item
@@ -162,7 +162,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && addParallelGroup(contextMenuData.nodeData, 'after')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add parallel group after</Text>
         </DropdownMenu.Item>
       ])
@@ -177,7 +177,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && addStage(contextMenuData.nodeData, 'in')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add stage</Text>
         </DropdownMenu.Item>
       ])
@@ -192,7 +192,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && addSerialGroup(contextMenuData.nodeData, 'in')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add serial group</Text>
         </DropdownMenu.Item>
       ])
@@ -205,7 +205,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && addParallelGroup(contextMenuData.nodeData, 'in')
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add parallel group</Text>
         </DropdownMenu.Item>
       ])
@@ -221,7 +221,7 @@ export const CommonNodeContextMenu = () => {
             contextMenuData && revealInYaml(contextMenuData.nodeData.yamlPath)
           }}
         >
-          <Icon name="circle" size={12} className="text-tertiary-background" />
+          <Icon name="circle" size={12} className="text-cn-foreground-3" />
           <Text>Reveal in Yaml</Text>
         </DropdownMenu.Item>
       ])

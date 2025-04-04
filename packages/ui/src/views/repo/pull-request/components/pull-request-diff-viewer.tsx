@@ -623,7 +623,7 @@ const PullRequestDiffViewer = ({
           {/* @ts-ignore */}
           <DiffView<Thread[]>
             ref={ref}
-            className="bg-tr w-full text-tertiary-background"
+            className="bg-tr w-full text-cn-foreground-3"
             renderWidgetLine={renderWidgetLine}
             renderExtendLine={renderExtendLine}
             diffFile={diffFileInstance}

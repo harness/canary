@@ -31,7 +31,7 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
             onEditIntention(contextMenuData.nodeData)
           }}
         >
-          <Icon name="edit-pen" size={12} className="text-tertiary-background" />
+          <Icon name="edit-pen" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Edit</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
@@ -42,7 +42,7 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
             onAddIntention(contextMenuData.nodeData, 'before', YamlEntityType.Stage)
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add stage before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
@@ -52,7 +52,7 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
             onAddIntention(contextMenuData.nodeData, 'after', YamlEntityType.Stage)
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add stage after</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />

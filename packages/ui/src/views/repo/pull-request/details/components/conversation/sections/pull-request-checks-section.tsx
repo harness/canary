@@ -153,7 +153,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
           //       <div className="col-span-1 flex justify-end">
           //         {check.required ? (
           //           <div className="border rounded-full bg-transparent">
-          //             <Text className="text-xs text-tertiary-background px-2 py-1.5">required</Text>
+          //             <Text className="text-xs text-cn-foreground-3 px-2 py-1.5">required</Text>
           //           </div>
           //         ) : (
           //           <div className="min-w-[70px]"></div>

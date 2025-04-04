@@ -63,7 +63,7 @@ const themeClassMap: Record<MessageTheme, string> = {
   [MessageTheme.SUCCESS]: 'text-success',
   [MessageTheme.WARNING]: 'text-warning',
   [MessageTheme.ERROR]: 'text-destructive',
-  [MessageTheme.DEFAULT]: 'text-tertiary-background'
+  [MessageTheme.DEFAULT]: 'text-cn-foreground-3'
 }
 
 /** @deprecated: Use Fieldset from @harnessio/ui/components instead */

@@ -25,9 +25,7 @@ export default {
       },
       colors: {
         border: 'var(--cn-border-1)',
-        'border-background': 'hsl(var(--canary-border-background))',
         input: 'hsl(var(--canary-input))',
-        'remove-input-background': 'hsl(var(--canary-input-background))',
         ring: 'hsl(var(--canary-ring))',
         primary: {
           DEFAULT: 'hsl(var(--canary-primary))',
@@ -332,6 +330,7 @@ export default {
           9: 'hsl(var(--canary-icon-09))',
           10: 'hsl(var(--canary-icon-10))',
           danger: 'hsl(var(--canary-icon-danger))',
+          warning: 'hsl(var(--canary-icon-warning))',
           alert: 'hsl(var(--canary-icon-alert))',
           success: 'hsl(var(--canary-icon-success))',
           accent: 'hsl(var(--canary-icon-accent))',
@@ -355,7 +354,7 @@ export default {
             lime: 'var(--canary-label-foreground-lime-01)'
           },
           background: {
-            black: 'var(--canary-label-background-black-01)',
+            cover: 'var(--canary-label-background-cover-01)',
             red: 'var(--canary-label-background-red-01)',
             green: 'var(--canary-label-background-green-01)',
             yellow: 'var(--canary-label-background-yellow-01)',
@@ -457,7 +456,7 @@ export default {
         'borders-danger': 'hsl(var(--canary-border-danger))',
         'borders-success': 'hsl(var(--canary-border-success))',
         'borders-accent': 'hsl(var(--canary-border-accent))',
-        'borders-risk': 'hsl(var(--canary-icon-risk))',
+        'borders-warning': 'hsl(var(--canary-border-warning))',
         'borders-alert': 'hsl(var(--canary-border-alert))'
       },
       borderRadius: {

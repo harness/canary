@@ -66,7 +66,7 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
         // ADD REFERENCE ONLY TO NON-ALPHA TOKENS, ALPHA TOKENS ARE TRANSFORMED AND REFERENCED MANUALLY
         return token?.$extensions?.['studio.tokens']?.modify?.type !== 'alpha'
       },
-      // To add .dark for dark-ent and .light for light-ent to support MFE
+      // To add .dark and .light to support MFE
       selector: `.${entityName}${mfeSupportedClass ? ', ' + mfeSupportedClass : ''}`
     }
   })

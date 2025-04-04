@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useMemo } from 'react'
+import { FC, useEffect, useMemo } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
 import { NavbarItemType } from '@harnessio/ui/components'
@@ -15,7 +15,6 @@ import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
 import { AppSideBar } from './app-side-bar'
 import Breadcrumbs from './breadcrumbs/breadcrumbs'
-import BreadcrumbsMFE from './breadcrumbs/breadcrumbs-mfe'
 import { Toaster } from './toaster'
 
 interface NavLinkStorageInterface {
@@ -75,20 +74,3 @@ export const AppShell: FC = () => {
     </>
   )
 }
-
-export const AppShellMFE = memo(() => {
-  useRepoImportEvents()
-
-  return (
-    <>
-      <AppSideBar getNavbarMenuData={() => []}>
-        <MainContentLayout breadcrumbs={<BreadcrumbsMFE />} className="min-h-screen text-foreground-2">
-          <Outlet />
-        </MainContentLayout>
-      </AppSideBar>
-      <Toaster />
-    </>
-  )
-})
-
-AppShellMFE.displayName = 'AppShellMFE'

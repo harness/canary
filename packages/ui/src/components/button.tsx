@@ -51,7 +51,7 @@ const buttonVariants = cva(
           'border-cn-borders-danger/30 bg-button-background-danger-1 text-warning hover:bg-button-background-danger-2',
         success:
           'border-button-border-success-1 bg-button-background-success-1 text-button-foreground-success-1 hover:bg-button-background-success-2',
-        muted: 'border-tertiary-background/20 bg-cn-background-1/10 text-cn-foreground-3',
+        muted: 'border-cn-borders-3/20 bg-cn-background-1/10 text-cn-foreground-3',
         primary: 'border-primary-foreground/20 bg-cn-background-primary text-cn-foreground-primary',
         disabled:
           'border-button-border-disabled-1 bg-button-background-disabled-1 text-button-foreground-disabled-1 disabled:bg-button-background-disabled-1 disabled:text-button-foreground-disabled-1'

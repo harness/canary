@@ -27,7 +27,7 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
         value={'visual'}
         className="h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100 data-[state=on]:border-primary/10"
       >
-        {!isYamlValid && <Icon name="fail" className="mr-1 text-destructive" />}
+        {!isYamlValid && <Icon name="fail" className="mr-1 text-cn-foreground-danger" />}
         Visual
       </ToggleGroup.Item>
       <ToggleGroup.Item

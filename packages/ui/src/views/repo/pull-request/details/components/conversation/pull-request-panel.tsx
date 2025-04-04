@@ -109,7 +109,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         </div>
         {props.headerMsg && (
           <div className="flex w-full justify-end">
-            <span className="text-12 text-destructive">{props.headerMsg}</span>
+            <span className="text-12 text-cn-foreground-danger">{props.headerMsg}</span>
           </div>
         )}
       </>

@@ -46,9 +46,11 @@ const PipelineStudioFooterBar: React.FC<PipelineStudioFooterBarProps> = (props: 
             <Icon
               size={14}
               name="cross-circle"
-              className={props.problems.error > 0 ? 'text-destructive' : 'text-cn-foreground-3'}
+              className={props.problems.error > 0 ? 'text-cn-foreground-danger' : 'text-cn-foreground-3'}
             />
-            <span className={cn('text-[12px]', props.problems.error > 0 ? 'text-destructive' : 'text-primary')}>
+            <span
+              className={cn('text-[12px]', props.problems.error > 0 ? 'text-cn-foreground-danger' : 'text-primary')}
+            >
               {props.problems.error}
             </span>
           </div>

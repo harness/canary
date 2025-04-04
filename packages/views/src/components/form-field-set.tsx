@@ -62,7 +62,7 @@ interface SpacerProps {
 const themeClassMap: Record<MessageTheme, string> = {
   [MessageTheme.SUCCESS]: 'text-success',
   [MessageTheme.WARNING]: 'text-warning',
-  [MessageTheme.ERROR]: 'text-destructive',
+  [MessageTheme.ERROR]: 'text-cn-foreground-danger',
   [MessageTheme.DEFAULT]: 'text-cn-foreground-3'
 }
 
@@ -97,7 +97,7 @@ function Label({ htmlFor, required, children, className }: LabelProps) {
   return (
     <UILabel htmlFor={htmlFor} className={cn('text-primary/80 font-normal', className)}>
       {children}
-      {required && <span className="pl-0.5 align-top text-destructive">*</span>}
+      {required && <span className="pl-0.5 align-top text-cn-foreground-danger">*</span>}
     </UILabel>
   )
 }

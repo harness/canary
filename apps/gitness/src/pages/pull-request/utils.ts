@@ -127,7 +127,7 @@ export function determineStatusMessage(
     ) {
       title = 'Some required checks have failed'
       content = `${message}`
-      color = 'text-destructive'
+      color = 'text-cn-foreground-danger'
       status = 'failure'
     } else if (checks.some(check => check.required && check.check.status === ExecutionState.PENDING)) {
       title = 'Some required checks are pending'
@@ -269,12 +269,12 @@ export const extractInfoForCodeOwnerContent = ({
     ) {
       title = 'Changes requested by code owner'
       statusMessage = 'Code owner requested changes'
-      statusColor = 'text-destructive'
+      statusColor = 'text-cn-foreground-danger'
       statusIcon = 'warning'
     } else if (changeReqEvaluations && changeReqEvaluations?.length > 0 && reqNoChangeReq) {
       title = 'Changes Requested'
       statusMessage = `${changeReqReviewer} requested changes to the pull request`
-      statusColor = 'text-destructive'
+      statusColor = 'text-cn-foreground-danger'
       statusIcon = 'error'
     } else if (
       (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerLatestApproval) ||

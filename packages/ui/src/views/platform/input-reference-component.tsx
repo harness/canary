@@ -151,7 +151,7 @@ export const InputReference = <T,>({
               <Icon name="edit-pen" />
             </Button>
             <Button onClick={handleClear} variant="ghost" size="icon">
-              <Icon name="cross" className="text-destructive" />
+              <Icon name="cross" className="text-cn-foreground-danger" />
             </Button>
           </div>
         )}

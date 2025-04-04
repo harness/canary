@@ -47,7 +47,7 @@ function GroupInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
         <Accordion.Trigger>
           <Layout.Horizontal className="items-center">
             <InputLabel label={label} required={required} description={description} />
-            {error && <Icon name="triangle-warning" className="text-destructive" />}
+            {error && <Icon name="triangle-warning" className="text-cn-foreground-danger" />}
           </Layout.Horizontal>
         </Accordion.Trigger>
         <Accordion.Content className="space-y-4" forceMount={forceMount}>

@@ -15,7 +15,7 @@ const InputError = forwardRef<HTMLParagraphElement, { path: string } & React.HTM
     }
 
     return (
-      <p ref={ref} className={cn('text-destructive text-sm font-medium', className)} {...props}>
+      <p ref={ref} className={cn('text-cn-foreground-danger text-sm font-medium', className)} {...props}>
         {error.message}
       </p>
     )

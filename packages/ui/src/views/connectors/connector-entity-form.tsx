@@ -123,8 +123,10 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           <EntityFormSectionLayout.Root>
             <EntityFormSectionLayout.Header className="!px-0">
               <EntityFormSectionLayout.Title className="!my-0">
-                {intent === EntityIntent.CREATE ? 'Connect to' : 'Edit '}
-                {intent === EntityIntent.EDIT ? `${connector.type} connector` : connector.name}
+                <div className="flex gap-x-1">
+                  <span>{intent === EntityIntent.CREATE ? 'Connect to' : 'Edit'}</span>
+                  <span>{intent === EntityIntent.EDIT ? `${connector.type} connector` : connector.name}</span>
+                </div>
               </EntityFormSectionLayout.Title>
             </EntityFormSectionLayout.Header>
             <EntityFormSectionLayout.Form className="!px-0">

@@ -81,7 +81,6 @@ function Badge({ className, variant, size, pulse, theme = 'muted', children, ...
 
   return (
     <div
-      // role="status"
       aria-readonly="true"
       tabIndex={-1}
       className={cn(

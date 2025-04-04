@@ -98,6 +98,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
             </span>
             <span>into</span>
+            {/* TODO: Design system: Convert it as tag (or clickable element) */}
             <Badge variant="soft" theme="muted">
               <Link
                 className="flex items-center gap-x-1.5"

@@ -13,12 +13,12 @@ import {
 import { SidebarView } from '@harnessio/ui/views'
 
 import { useNav } from '../components/stores/recent-pinned-nav-links.store'
-import { type GetNavbarMenuData } from '../data/navbar-menu-data'
 import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useSelectedSpaceId } from '../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
+import { type GetNavbarMenuData } from '../sidebar-data/navbar-menu-items'
 
 const AppSideBar: FC<{ children: React.ReactNode; getNavbarMenuData: GetNavbarMenuData }> = ({
   children,

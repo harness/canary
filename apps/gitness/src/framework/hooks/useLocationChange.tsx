@@ -5,7 +5,7 @@ import { TFunction } from 'i18next'
 
 import { MenuGroupType, NavbarItemType } from '@harnessio/ui/components'
 
-import { getNavbarMenuData } from '../../data/navbar-menu-data'
+import { getNavbarMenuData } from '../../sidebar-data/navbar-menu-items'
 import { useRoutes } from '../context/NavigationContext'
 
 const useLocationChange = ({ t, onRouteChange }: { t: TFunction; onRouteChange: (item: NavbarItemType) => void }) => {

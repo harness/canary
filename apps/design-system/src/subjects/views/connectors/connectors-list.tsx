@@ -34,6 +34,7 @@ const ConnectorsListPageWrapper = (): JSX.Element => (
     currentPage={1}
     totalPages={5}
     goToPage={noop}
+    onCreate={noop}
   />
 )
 

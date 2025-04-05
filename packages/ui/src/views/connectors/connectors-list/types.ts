@@ -42,4 +42,5 @@ export interface ConnectorListPageProps
   setSearchQuery: (query?: string) => void
   isError?: boolean
   errorMessage?: string
+  onCreate: () => void
 }

@@ -5,8 +5,6 @@
 @import url('@harnessio/core-design-system/themes');
 @import url('@harnessio/core-design-system/mfe-themes');
 
-@import url('./remove-old-theme-values.css');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

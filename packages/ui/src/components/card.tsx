@@ -61,9 +61,7 @@ const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
 CardTitle.displayName = 'CardTitle'
 
 const CardDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn('text-muted-foreground text-sm', className)} {...props} />
-  )
+  ({ className, ...props }, ref) => <p ref={ref} className={cn('text-cn-foreground-3 text-sm', className)} {...props} />
 )
 CardDescription.displayName = 'CardDescription'
 

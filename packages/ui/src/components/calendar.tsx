@@ -28,7 +28,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         nav_button_next: 'absolute right-1',
         table: 'w-full border-collapse space-y-1',
         head_row: 'flex',
-        head_cell: 'text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]',
+        head_cell: 'text-cn-foreground-3 rounded-md w-8 font-normal text-[0.8rem]',
         row: 'flex w-full mt-2',
         cell: cn(
           'relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md',
@@ -43,8 +43,8 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
           'bg-primary text-cn-foreground-primary hover:bg-primary hover:text-cn-foreground-primary focus:bg-primary focus:text-cn-foreground-primary',
         day_today: 'bg-accent text-accent-foreground',
         day_outside:
-          'day-outside text-muted-foreground opacity-50  aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30',
-        day_disabled: 'text-muted-foreground opacity-50',
+          'day-outside text-cn-foreground-3 opacity-50  aria-selected:bg-accent/50 aria-selected:text-cn-foreground-3 aria-selected:opacity-30',
+        day_disabled: 'text-cn-foreground-3 opacity-50',
         day_range_middle: 'aria-selected:bg-accent aria-selected:text-accent-foreground',
         day_hidden: 'invisible',
         ...classNames

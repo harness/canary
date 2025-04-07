@@ -14,7 +14,7 @@ const EntityFormSectionLayout = {
   },
 
   Description: function Description({ children }: { children: React.ReactNode }) {
-    return <div className="mt-3 text-muted-foreground">{children}</div>
+    return <div className="mt-3 text-cn-foreground-3">{children}</div>
   },
 
   Form: function Form({ children, className }: { children: React.ReactNode; className?: string }) {

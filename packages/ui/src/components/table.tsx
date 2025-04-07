@@ -98,7 +98,7 @@ TableCell.displayName = 'TableCell'
 
 const TableCaption = forwardRef<HTMLTableCaptionElement, HTMLAttributes<HTMLTableCaptionElement>>(
   ({ className, ...props }, ref) => (
-    <caption ref={ref} className={cn('text-muted-foreground mt-4 text-sm', className)} {...props} />
+    <caption ref={ref} className={cn('text-cn-foreground-3 mt-4 text-sm', className)} {...props} />
   )
 )
 TableCaption.displayName = 'TableCaption'

@@ -14,7 +14,7 @@ const StepFormLayout = {
   },
 
   Description: function Title({ children }: { children: React.ReactNode }) {
-    return <div className="my-3 text-muted-foreground">{children}</div>
+    return <div className="my-3 text-cn-foreground-3">{children}</div>
   },
 
   Actions: function Title({ children }: { children: React.ReactNode }) {

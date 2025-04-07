@@ -45,7 +45,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
           </StepsPaletteContentLayout.SectionItem>
         ))
       ) : (
-        <p className="text-muted-foreground">There is no connector for provided query.</p>
+        <p className="text-cn-foreground-3">There is no connector for provided query.</p>
       )}
     </StepsPaletteContentLayout.Section>
   )

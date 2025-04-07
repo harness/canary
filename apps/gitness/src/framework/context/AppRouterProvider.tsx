@@ -24,4 +24,4 @@ const AppRouterProvider: React.FC<AppRouterProviderProps> = ({ children }) => {
   )
 }
 
-export { AppRouterProvider }
+export default AppRouterProvider

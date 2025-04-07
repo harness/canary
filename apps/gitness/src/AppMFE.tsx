@@ -21,7 +21,7 @@ import { PortalProvider, RouterContextProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
-import { MFEContext, Unknown } from './framework/context/MFEContext'
+import { MFEContext, RouteDefinitions, Unknown } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
@@ -102,6 +102,7 @@ interface AppMFEProps {
   customPromises: Partial<{
     getCurrentUser: Promise<Unknown>
   }>
+  routes: RouteDefinitions
 }
 
 function decode<T = unknown>(arg: string): T {
@@ -117,7 +118,8 @@ export default function AppMFE({
   onRouteChange,
   customHooks,
   customUtils,
-  customPromises
+  customPromises,
+  routes
 }: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) =>
@@ -186,7 +188,8 @@ export default function AppMFE({
                   renderUrl,
                   customHooks,
                   customUtils,
-                  customPromises
+                  customPromises,
+                  routes
                 }}
               >
                 <I18nextProvider i18n={i18n}>

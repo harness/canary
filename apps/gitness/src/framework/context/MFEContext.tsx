@@ -1,9 +1,24 @@
 import { createContext } from 'react'
 
-interface Scope {
+export interface Scope {
   accountId?: string
   orgIdentifier?: string
   projectIdentifier?: string
+}
+
+export interface RouteDefinitions {
+  toRepositories: ({ space }: { space: string }) => string
+  toPipelines: ({
+    accountId,
+    orgIdentifier,
+    projectIdentifier,
+    mode
+  }: {
+    accountId: string
+    orgIdentifier?: string
+    projectIdentifier?: string
+    mode: 'all'
+  }) => string
 }
 
 export type Unknown = any
@@ -23,11 +38,14 @@ interface IMFEContext {
   customPromises: Partial<{
     getCurrentUser: Unknown
   }>
+  routes: Partial<RouteDefinitions>
 }
+
 export const MFEContext = createContext<IMFEContext>({
   scope: {},
   renderUrl: '',
   customHooks: {},
   customUtils: {},
-  customPromises: {}
+  customPromises: {},
+  routes: {}
 })

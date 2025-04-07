@@ -78,7 +78,7 @@ export function StepNodeComponent({
   return (
     <Drawer.Root direction="right">
       <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
-      <Drawer.Content className="bg-background-1 border-borders-5 size-full max-w-2xl rounded-none border-l p-0 ">
+      <Drawer.Content className="bg-cn-background-1 border-borders-5 size-full max-w-2xl rounded-none border-l p-0 ">
         <Drawer.Header>
           <ExecutionHeader
             commitName="8fbru3ix"

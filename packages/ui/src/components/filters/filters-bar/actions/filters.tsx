@@ -89,13 +89,13 @@ const Filters = ({
 
   return (
     <DropdownMenu.Root key={filter.type} open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-background-3 pl-2.5 pr-2 transition-colors duration-200 hover:bg-background-8">
+      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-cn-background-3 pl-2.5 pr-2 transition-colors duration-200 hover:bg-cn-background-8">
         <div className="flex items-center gap-x-1.5 text-13">
-          <span className="text-foreground-1">
+          <span className="text-cn-foreground-1">
             {filterOption.label}
             {!!filter.selectedValues.length && ': '}
           </span>
-          <span className="text-foreground-4">{getFilterDisplayValue(filterOption, filter)}</span>
+          <span className="text-cn-foreground-2">{getFilterDisplayValue(filterOption, filter)}</span>
         </div>
         <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
       </DropdownMenu.Trigger>
@@ -109,10 +109,10 @@ const Filters = ({
         <div className="flex items-center justify-between px-3 py-2.5">
           <div className="flex w-full items-center justify-between gap-x-2">
             <div className="flex items-center gap-x-2">
-              <span className="text-14 text-foreground-4">{filterOption.label}</span>
+              <span className="text-14 text-cn-foreground-2">{filterOption.label}</span>
 
               <DropdownMenu.Root>
-                <DropdownMenu.Trigger className="flex h-[18px] items-center gap-x-1 rounded bg-background-3 pl-1.5 pr-1 text-14 text-foreground-2">
+                <DropdownMenu.Trigger className="flex h-[18px] items-center gap-x-1 rounded bg-cn-background-3 pl-1.5 pr-1 text-14 text-cn-foreground-2">
                   {filterOption.conditions?.find(c => c.value === filter.condition)?.label}
                   <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
                 </DropdownMenu.Trigger>
@@ -132,14 +132,14 @@ const Filters = ({
             <DropdownMenu.Root>
               <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">
                 <Icon
-                  className="text-icons-1 transition-colors duration-200 group-hover:text-foreground-1"
+                  className="text-icons-1 transition-colors duration-200 group-hover:text-cn-foreground-1"
                   name="more-dots-fill"
                   size={12}
                 />
               </DropdownMenu.Trigger>
               <DropdownMenu.Content align="start">
                 <DropdownMenu.Item
-                  className="text-foreground-4 duration-200 hover:text-foreground-danger data-[highlighted]:bg-transparent data-[highlighted]:text-foreground-danger data-[highlighted]:outline-none"
+                  className="text-cn-foreground-2 duration-200 hover:text-cn-foreground-danger data-[highlighted]:bg-transparent data-[highlighted]:text-cn-foreground-danger data-[highlighted]:outline-none"
                   onSelect={() => handleRemoveFilter?.(filter.type)}
                 >
                   <button className="flex items-center gap-x-1.5 text-14">
@@ -158,7 +158,7 @@ const Filters = ({
 
           {filterOption.type === 'checkbox' && getFilteredOptions(filterOption, filter, searchQueries).length === 0 && (
             <div className="flex items-center justify-center p-4">
-              <span className="text-1 leading-none text-foreground-2">No results</span>
+              <span className="text-1 leading-none text-cn-foreground-2">No results</span>
             </div>
           )}
         </div>

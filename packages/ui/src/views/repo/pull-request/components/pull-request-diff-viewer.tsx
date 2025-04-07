@@ -354,7 +354,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="flex w-full flex-col border-l border-borders-1 bg-background-1 p-4">
+        <div className="flex w-full flex-col border-l border-cn-borders-2 bg-cn-background-1 p-4">
           <PullRequestCommentBox
             handleUpload={handleUpload}
             isEditMode
@@ -390,7 +390,7 @@ const PullRequestDiffViewer = ({
       if (!threads) return <></>
 
       return (
-        <div className="border-l border-borders-1 bg-background-1">
+        <div className="border-l border-cn-borders-2 bg-cn-background-1">
           {threads.map(thread => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`
@@ -419,8 +419,8 @@ const PullRequestDiffViewer = ({
                 contentHeader={
                   !!parent.payload?.resolved && (
                     <div className="flex items-center gap-x-1">
-                      <span className="font-medium text-foreground-1">{parent.payload?.resolver?.display_name}</span>
-                      <span className="text-foreground-4">marked this conversation as resolved</span>
+                      <span className="font-medium text-cn-foreground-1">{parent.payload?.resolver?.display_name}</span>
+                      <span className="text-cn-foreground-2">marked this conversation as resolved</span>
                     </div>
                   )
                 }
@@ -451,7 +451,7 @@ const PullRequestDiffViewer = ({
                         {
                           name: parent.author,
                           description: (
-                            <Layout.Horizontal className="text-foreground-4">
+                            <Layout.Horizontal className="text-cn-foreground-2">
                               <span>{timeAgo(parent?.created as number)}</span>
                               {parent?.deleted ? (
                                 <>
@@ -532,7 +532,7 @@ const PullRequestDiffViewer = ({
                                 {
                                   name: reply.author,
                                   description: (
-                                    <Layout.Horizontal className="text-foreground-4">
+                                    <Layout.Horizontal className="text-cn-foreground-2">
                                       <span>{timeAgo(reply?.created as number)}</span>
                                       {reply?.deleted ? (
                                         <>

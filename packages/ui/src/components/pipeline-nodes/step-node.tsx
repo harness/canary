@@ -54,7 +54,7 @@ export function StepNode(props: StepNodeProps) {
       <ExecutionStatus executionStatus={executionStatus} />
 
       <div
-        className={cn('bg-background-8 rounded-md', {
+        className={cn('bg-cn-background-8 rounded-md', {
           'unified-pipeline-studio_card-wrapper ': executionStatus === 'executing'
         })}
       >
@@ -65,10 +65,10 @@ export function StepNode(props: StepNodeProps) {
             'flex flex-col justify-end gap-y-2 box size-full rounded-md border bg-graph-gradient-1 cursor-pointer p-2.5 pt-2 shadow-1',
             {
               'border-graph-border-1': !selected,
-              'border-borders-3': selected,
-              'border-borders-success': executionStatus === 'success',
-              'border-borders-alert': executionStatus === 'warning',
-              'border-borders-danger': executionStatus === 'error',
+              'border-cn-borders-3': selected,
+              'border-cn-borders-success': executionStatus === 'success',
+              'border-cn-borders-alert': executionStatus === 'warning',
+              'border-cn-borders-danger': executionStatus === 'error',
               'border-transparent': executionStatus === 'executing'
             }
           )}
@@ -99,9 +99,9 @@ export function StepNode(props: StepNodeProps) {
             />
           )}
           {icon}
-          <span className="line-clamp-2 text-14 font-medium leading-snug text-foreground-1">
+          <span className="line-clamp-2 text-14 font-medium leading-snug text-cn-foreground-1">
             {name}
-            {!!counter && <span className="font-normal text-foreground-4"> ({counter})</span>}
+            {!!counter && <span className="font-normal text-cn-foreground-2"> ({counter})</span>}
           </span>
           {warningMessage && <WarningLabel>{warningMessage}</WarningLabel>}
         </div>

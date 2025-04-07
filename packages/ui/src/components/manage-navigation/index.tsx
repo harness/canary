@@ -129,11 +129,11 @@ export const ManageNavigation = ({
         </AlertDialog.Header>
         <ScrollArea className="-mx-5 -mb-5 mt-1">
           <div className="px-5">
-            <Text className="inline-block leading-none text-foreground-7" size={1}>
+            <Text className="inline-block leading-none text-cn-foreground-3" size={1}>
               Pinned
             </Text>
             {!currentPinnedItems.length ? (
-              <Text className="mt-3 block text-foreground-5" size={1}>
+              <Text className="mt-3 block text-cn-foreground-3" size={1}>
                 No pinned items
               </Text>
             ) : (
@@ -185,7 +185,7 @@ export const ManageNavigation = ({
             {currentFilteredRecentItems.length > 0 && (
               <>
                 <div className="mt-4 flex items-center justify-between">
-                  <Text className="inline-block leading-none text-foreground-7" size={1}>
+                  <Text className="inline-block leading-none text-cn-foreground-3" size={1}>
                     Recent
                   </Text>
                   <Button className="-mr-1.5" variant="link_accent" size="xs" onClick={handleClearRecent}>
@@ -197,7 +197,7 @@ export const ManageNavigation = ({
                     <li className="relative flex h-8 items-center" key={`recent-${item.id}-${index}`}>
                       <div className="flex w-full grow items-center gap-x-2.5">
                         <Icon className="text-icons-4" name="clock-icon" size={14} />
-                        <Text className="w-full text-left text-foreground-8">{item.title}</Text>
+                        <Text className="w-full text-left text-cn-foreground-1">{item.title}</Text>
                       </div>
                       <Button
                         className="absolute -right-2 top-0.5 text-icons-4 hover:text-icons-2"

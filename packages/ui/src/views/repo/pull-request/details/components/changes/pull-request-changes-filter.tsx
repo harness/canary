@@ -227,16 +227,16 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
       <div className="flex grow items-center gap-x-5">
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5">
-            <div className="flex items-center gap-x-0.5 text-14 text-foreground-2 group-hover:text-foreground-1">
+            <div className="flex items-center gap-x-0.5 text-14 text-cn-foreground-2 group-hover:text-cn-foreground-1">
               {selectedCommits[0].value === 'ALL' ? (
                 <>
                   <span>{defaultCommitFilter.name}</span>
-                  <span className="text-foreground-7">({defaultCommitFilter.count})</span>
+                  <span className="text-cn-foreground-3">({defaultCommitFilter.count})</span>
                 </>
               ) : (
                 <>
                   <span>Commits</span>
-                  <span className="text-foreground-7">({selectedCommits?.length})</span>
+                  <span className="text-cn-foreground-3">({selectedCommits?.length})</span>
                 </>
               )}
             </div>
@@ -249,7 +249,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
 
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5 text-14">
-            <span className="text-foreground-2 group-hover:text-foreground-1">
+            <span className="text-cn-foreground-2 group-hover:text-cn-foreground-1">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
             </span>
             <Icon name="chevron-fill-down" size={6} className="chevron-down text-icons-7" />
@@ -259,7 +259,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               {DiffModeOptions.map(item => (
                 <DropdownMenu.Item
                   className={cn({
-                    'bg-background-4': diffMode === (item.value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
+                    'bg-cn-background-hover':
+                      diffMode === (item.value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
                   })}
                   key={item.value}
                   onClick={() => handleDiffModeChange(item.value)}
@@ -272,10 +273,10 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <p className="text-14 leading-tight text-foreground-4">
+          <p className="text-14 leading-tight text-cn-foreground-2">
             {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
             <DropdownMenu.Trigger className="group">
-              <span className="text-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 group-hover:decoration-foreground-accent">
+              <span className="text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 group-hover:decoration-foreground-accent">
                 {formatNumber(pullReqStats?.files_changed || 0)}{' '}
                 {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
               </span>
@@ -295,20 +296,20 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               >
                 <div className="flex min-w-0 flex-1 items-center justify-start gap-x-1.5">
                   <Icon name="file" size={16} className="shrink-0 text-icons-1" />
-                  <span className="overflow-hidden truncate text-14 text-foreground-8 [direction:rtl]">
+                  <span className="overflow-hidden truncate text-14 text-cn-foreground-1 [direction:rtl]">
                     {diff.filePath}
                   </span>
                 </div>
                 <div className="flex shrink-0 items-center text-13">
                   {diff.addedLines != null && diff.addedLines > 0 && (
-                    <span className="text-foreground-success">+{diff.addedLines}</span>
+                    <span className="text-cn-foreground-success">+{diff.addedLines}</span>
                   )}
                   {diff.addedLines != null &&
                     diff.addedLines > 0 &&
                     diff.deletedLines != null &&
                     diff.deletedLines > 0 && <span className="bg-borders-2 mx-1.5 h-3 w-px" />}
                   {diff.deletedLines != null && diff.deletedLines > 0 && (
-                    <span className="text-foreground-danger">-{diff.deletedLines}</span>
+                    <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
                   )}
                 </div>
               </DropdownMenu.Item>
@@ -320,7 +321,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
       <div className="flex items-center gap-x-7">
         {selectedCommits[0].value === 'ALL' && (
           <FileViewGauge.Root>
-            <FileViewGauge.Content className="text-foreground-3">
+            <FileViewGauge.Content className="text-cn-foreground-3">
               {viewedFiles}/{pullReqStats?.files_changed} file{pullReqStats?.files_changed === 1 ? '' : 's'} viewed
             </FileViewGauge.Content>
             <FileViewGauge.Bar total={pullReqStats?.files_changed || 0} filled={viewedFiles} />

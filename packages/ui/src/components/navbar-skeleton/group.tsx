@@ -24,7 +24,7 @@ export function Group({
     <div
       className={cn(
         'flex w-full flex-col px-2',
-        { 'border-borders-5 border-t pt-2.5': topBorder },
+        { 'border-cn-borders-3 border-t pt-2.5': topBorder },
         { 'border-sidebar-border-1': topBorder && isMainNav },
         isSubMenu ? 'pb-2.5 gap-y-0.5' : 'gap-1 pb-3',
         className
@@ -33,7 +33,7 @@ export function Group({
       {title && (
         <div
           className={cn(
-            'text-foreground-7 mt-1.5',
+            'text-cn-foreground-3 mt-1.5',
             { 'text-sidebar-foreground-5': isMainNav },
             isSubMenu ? 'mb-3' : 'mb-1.5',
             titleClassName

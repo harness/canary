@@ -99,13 +99,13 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           <>
             <Spacer size={8} />
             <div className="flex items-end">
-              <h1 className="text-2xl font-medium text-foreground-1">
+              <h1 className="text-2xl font-medium text-cn-foreground-1">
                 {t('views:repos.repositories', 'Repositories')}
               </h1>
               {viewManagement.currentView && (
                 <>
                   <span className="bg-borders-1 mx-2.5 inline-flex h-[18px] w-px" />
-                  <span className="text-14 text-foreground-3">{viewManagement.currentView.name}</span>
+                  <span className="text-14 text-cn-foreground-3">{viewManagement.currentView.name}</span>
                 </>
               )}
             </div>

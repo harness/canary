@@ -1,3 +1,6 @@
+/* move to shared styles */
+/* @import url('@harnessio/core-design-system/mfe-themes'); */
+
 :root,
 :host {
   /* PP Figma shades */

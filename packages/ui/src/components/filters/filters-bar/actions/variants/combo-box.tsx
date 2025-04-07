@@ -35,7 +35,7 @@ export default function ComboBox({
 
   const renderContent = () => {
     if (isLoading) {
-      return <Command.Loading className="px-2 py-4 text-sm text-foreground-5">{loadingMessage}</Command.Loading>
+      return <Command.Loading className="px-2 py-4 text-sm text-cn-foreground-3">{loadingMessage}</Command.Loading>
     }
 
     if (options.length === 0) {
@@ -54,7 +54,7 @@ export default function ComboBox({
           }}
         >
           <div className="mx-2 flex size-4 items-center">
-            {value === selectedFilterValue && <Icon name="tick" size={12} className="text-foreground-8" />}
+            {value === selectedFilterValue && <Icon name="tick" size={12} className="text-cn-foreground-1" />}
           </div>
           {label}
         </Command.Item>

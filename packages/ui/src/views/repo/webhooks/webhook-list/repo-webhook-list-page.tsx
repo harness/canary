@@ -42,7 +42,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
 
   return (
     <SandboxLayout.Content className="px-0">
-      <h1 className="text-2xl font-medium text-foreground-1">Webhooks</h1>
+      <h1 className="text-2xl font-medium text-cn-foreground-1">Webhooks</h1>
       <Spacer size={6} />
 
       {error ? (

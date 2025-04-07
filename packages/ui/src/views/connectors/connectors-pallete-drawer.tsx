@@ -35,7 +35,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
     <ConnectorsPaletteLayout.Root>
       <ConnectorsPaletteLayout.Header className="!border-none !p-0">
         <ConnectorsPaletteLayout.Title className="!mt-0">Connector Setup</ConnectorsPaletteLayout.Title>
-        <ConnectorsPaletteLayout.Subtitle className="text-foreground-4">
+        <ConnectorsPaletteLayout.Subtitle className="text-cn-foreground-2">
           {'Select a Connector'}
         </ConnectorsPaletteLayout.Subtitle>
         <Input
@@ -61,7 +61,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
         <Spacer size={8} />
       </StepsPaletteContentLayout.Root>
       <StepFormLayout.Footer className="border-none">
-        <div className="absolute inset-x-0 bottom-0 bg-background-2 p-4 shadow-md">
+        <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
           <Button variant="secondary" onClick={requestClose}>
             Cancel
           </Button>

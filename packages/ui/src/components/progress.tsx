@@ -53,8 +53,8 @@ const indicatorVariants = cva('', {
     },
     indicatorColor: {
       default: '',
-      'dark-gray': 'bg-background-12',
-      'light-gray': 'bg-background-13'
+      'dark-gray': 'bg-cn-background-12',
+      'light-gray': 'bg-cn-background-13'
     }
   },
   defaultVariants: {

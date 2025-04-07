@@ -63,7 +63,7 @@ const List: React.FC<ListProps> = ({
 }) => (
   <div
     className={cn(
-      'w-full bg-background-surface',
+      'w-full bg-cn-background-2',
       'border [&>div:last-child]:border-0',
       '[&>*:first-child_>.stacked-list-item]:rounded-t-md [&>.stacked-list-item:first-child]:rounded-t-md',
       {
@@ -72,7 +72,7 @@ const List: React.FC<ListProps> = ({
       },
       onlyTopRounded ? 'rounded-t-md' : 'rounded-md',
       withoutBorder ? 'border-none' : '',
-      borderBackground ? 'border-borders-1' : '',
+      borderBackground ? 'border-cn-borders-2' : '',
       className
     )}
     {...props}
@@ -103,8 +103,8 @@ const ListItem = ({
         listItemVariants({}),
         className,
         isLast ? 'border-none' : 'border-b',
-        isHeader ? 'bg-background-2' : '',
-        disableHover ? '' : 'hover:bg-background-4 cursor-pointer duration-150 ease-in-out'
+        isHeader ? 'bg-cn-background-2' : '',
+        disableHover ? '' : 'hover:bg-cn-background-hover cursor-pointer duration-150 ease-in-out'
       )}
       {...props}
     >
@@ -124,8 +124,8 @@ const ListField = ({ className, title, description, label, primary, secondary, r
       <div
         className={cn(
           primary ? 'text-16 leading-snug' : secondary ? 'text-xs' : 'text-sm',
-          'text-foreground-1 [&>em]:text-foreground-1 font-normal [&>em]:font-medium [&>em]:not-italic',
-          !!label && 'text-foreground-4',
+          'text-cn-foreground-1 [&>em]:text-cn-foreground-1 font-normal [&>em]:font-medium [&>em]:not-italic',
+          !!label && 'text-cn-foreground-2',
           className
         )}
       >
@@ -135,7 +135,7 @@ const ListField = ({ className, title, description, label, primary, secondary, r
     {description && (
       <div
         className={cn(
-          'text-foreground-4 flex gap-2 text-ellipsis whitespace-nowrap',
+          'text-cn-foreground-2 flex gap-2 text-ellipsis whitespace-nowrap',
           primary ? 'text-sm' : 'text-xs',
           className
         )}

@@ -150,7 +150,7 @@
     }
   }
 
-  @apply !bg-background-surface !text-16 !text-foreground-8 !max-w-full font-sans !leading-[1.625rem];
+  @apply !bg-cn-background-2 !text-16 !text-cn-foreground-1 !max-w-full font-sans !leading-[1.625rem];
 
   h1,
   h2,
@@ -158,7 +158,7 @@
   h4,
   h5,
   h6 {
-    @apply text-foreground-1 border-none pb-0 font-medium;
+    @apply text-cn-foreground-1 border-none pb-0 font-medium;
   }
 
   h1 {
@@ -183,7 +183,7 @@
   }
 
   li {
-    @apply marker:text-foreground-8 my-1.5 ps-0;
+    @apply marker:text-cn-foreground-1 my-1.5 ps-0;
   }
 
   ol {
@@ -204,19 +204,19 @@
   }
 
   a {
-    @apply text-foreground-accent hover:text-foreground-1 hover:no-underline;
+    @apply text-cn-foreground-accent hover:text-cn-foreground-1 hover:no-underline;
   }
 
   code {
-    @apply bg-background-9 border-borders-2 font-code text-foreground-2 text-15 rounded border px-1 py-px font-normal tracking-normal before:hidden after:hidden;
+    @apply bg-cn-background-9 border-cn-borders-2 font-code text-cn-foreground-2 text-15 rounded border px-1 py-px font-normal tracking-normal before:hidden after:hidden;
   }
 
   strong {
-    @apply text-foreground-8;
+    @apply text-cn-foreground-1;
   }
 
   pre {
-    @apply bg-background-surface border-borders-1 rounded border px-4 py-[13px];
+    @apply bg-cn-background-2 border-cn-borders-2 rounded border px-4 py-[13px];
 
     code {
       @apply p-0 pr-14 text-sm;
@@ -224,16 +224,16 @@
   }
 
   blockquote {
-    @apply text-foreground-4 border-foreground-5 my-4 border-l-4 pl-4 pr-0 font-normal not-italic;
+    @apply text-cn-foreground-2 border-foreground-5 my-4 border-l-4 pl-4 pr-0 font-normal not-italic;
   }
 
   table {
     th {
-      @apply text-foreground-1 border-l-0 border-r-0 border-t-0 px-0 py-1.5 pr-10 text-sm font-medium;
+      @apply text-cn-foreground-1 border-l-0 border-r-0 border-t-0 px-0 py-1.5 pr-10 text-sm font-medium;
     }
 
     td {
-      @apply text-15 text-foreground-8 border-l-0 border-r-0 px-0 py-3 pr-10;
+      @apply text-15 text-cn-foreground-1 border-l-0 border-r-0 px-0 py-3 pr-10;
     }
 
     tr {
@@ -252,7 +252,7 @@
   }
 
   &.comment {
-    @apply !text-14 !text-foreground-2 !bg-transparent !leading-snug;
+    @apply !text-14 !text-cn-foreground-2 !bg-transparent !leading-snug;
 
     blockquote {
       @apply before:bg-background-12 relative border-0 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:rounded-sm;

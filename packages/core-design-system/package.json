@@ -5,12 +5,13 @@
   "type": "module",
   "exports": {
     "./core-styles": "./dist/styles/core-imports.css",
-    "./oss-themes": "./dist/styles/oss.css",
-    "./enterprise-themes": "./dist/styles/enterprise.css",
+    "./themes": "./dist/styles/themes.css",
+    "./mfe-themes": "./dist/styles/mfe-themes.css",
     "./styles-esm": "./dist/styles-esm/index.ts"
   },
   "scripts": {
-    "build:styles:2": "pnpm clean && pnpm build:styles",
+    "build": "pnpm clean && pnpm build:styles",
+    "build:ci": "pnpm build",
     "build:styles": "node scripts/build.js",
     "clean": "rimraf dist"
   },

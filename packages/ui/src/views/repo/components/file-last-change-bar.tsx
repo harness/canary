@@ -26,8 +26,8 @@ const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, toCommitDetails }) =>
   return (
     <div className="flex items-center gap-2">
       <CommitCopyActions toCommitDetails={toCommitDetails} sha={sha || ''} />
-      <span className="h-3 border-l border-borders-2" />
-      <span className="text-sm text-foreground-3">{timestamp}</span>
+      <span className="h-3 border-l border-cn-borders-2" />
+      <span className="text-sm text-cn-foreground-3">{timestamp}</span>
     </div>
   )
 }

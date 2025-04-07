@@ -12,7 +12,10 @@ const CommandRoot = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive
     ref={ref}
-    className={cn('bg-background-2 text-foreground-8 flex h-full w-full flex-col overflow-hidden rounded', className)}
+    className={cn(
+      'bg-cn-background-2 text-cn-foreground-1 flex h-full w-full flex-col overflow-hidden rounded',
+      className
+    )}
     {...props}
   />
 ))
@@ -66,7 +69,7 @@ CommandList.displayName = CommandPrimitive.List.displayName
 const CommandEmpty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->((props, ref) => <CommandPrimitive.Empty ref={ref} className="px-2 py-4 text-sm text-foreground-5" {...props} />)
+>((props, ref) => <CommandPrimitive.Empty ref={ref} className="px-2 py-4 text-sm text-cn-foreground-3" {...props} />)
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
 
@@ -77,7 +80,7 @@ const CommandGroup = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      'text-foreground-8 [&_[cmdk-group-heading]]:text-foreground-7 overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium',
+      'text-cn-foreground-1 [&_[cmdk-group-heading]]:text-cn-foreground-3 overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium',
       className
     )}
     {...props}
@@ -101,7 +104,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'data-[selected=true]:bg-background-4 data-[selected=true]:text-foreground-1 relative flex cursor-default select-none items-center rounded px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
+      'data-[selected=true]:bg-cn-background-hover data-[selected=true]:text-cn-foreground-1 relative flex cursor-default select-none items-center rounded px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
       className
     )}
     {...props}

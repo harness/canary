@@ -118,7 +118,10 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
               error={errors.identifier?.message?.toString()}
               rightElement={
                 createdTokenData && (
-                  <CopyButton className="absolute right-2.5 bg-background-1" name={createdTokenData.identifier || ''} />
+                  <CopyButton
+                    className="absolute right-2.5 bg-cn-background-1"
+                    name={createdTokenData.identifier || ''}
+                  />
                 )
               }
               readOnly={!!createdTokenData}
@@ -145,11 +148,14 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                   readOnly
                   label={t('views:profileSettings.token', 'Token')}
                   rightElement={
-                    <CopyButton className="absolute right-2.5 bg-background-1" name={createdTokenData?.token || ''} />
+                    <CopyButton
+                      className="absolute right-2.5 bg-cn-background-1"
+                      name={createdTokenData?.token || ''}
+                    />
                   }
                 />
               </Fieldset>
-              <span className="text-14 text-foreground-1">
+              <span className="text-14 text-cn-foreground-1">
                 {t(
                   'views:profileSettings.tokenSuccessDescription',
                   'Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t beable to see it again.'
@@ -170,14 +176,14 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                     {expirationOptions.map(expirationOption => {
                       return (
                         <Select.Item key={expirationOption.value} value={expirationOption.value}>
-                          <span className="text-foreground-1">{expirationOption.label}</span>
+                          <span className="text-cn-foreground-1">{expirationOption.label}</span>
                         </Select.Item>
                       )
                     })}
                   </Select.Content>
                 </Select.Root>
                 {isValid && (
-                  <span className="mt-1.5 text-14 text-foreground-3">
+                  <span className="mt-1.5 text-14 text-cn-foreground-3">
                     {watch('lifetime') === 'never' ? (
                       <span>{t('views:profileSettings.tokenExpiryNone', 'Token will never expire')}</span>
                     ) : (

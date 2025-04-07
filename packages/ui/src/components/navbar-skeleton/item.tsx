@@ -32,9 +32,9 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
         >
           <div
             className={cn(
-              'group-hover:bg-background-4 absolute z-0 h-full w-full rounded-[10px] bg-transparent transition-colors',
+              'group-hover:bg-cn-background-hover absolute z-0 h-full w-full rounded-[10px] bg-transparent transition-colors',
               { 'group-hover:bg-sidebar-background-2': isMainNav },
-              { 'bg-background-4': active },
+              { 'bg-cn-background-hover': active },
               { 'bg-sidebar-background-2': active && isMainNav }
             )}
           />
@@ -42,13 +42,13 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
             {icon ? (
               <div
                 className={cn(
-                  'sub-menu-icon-bg relative flex size-8 place-content-center place-items-center rounded border border-borders-1 bg-background-2',
+                  'sub-menu-icon-bg relative flex size-8 place-content-center place-items-center rounded border border-cn-borders-2 bg-cn-background-2',
                   { 'border-sidebar-border-3 bg-sidebar-background-7': isMainNav }
                   // { 'border-sidebar-border-6 bg-sidebar-background-8': active && isLightTheme }
                 )}
               >
                 <Icon
-                  className={cn('absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground-3', {
+                  className={cn('absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-foreground-3', {
                     'text-sidebar-icon-2': isMainNav
                   })}
                   name="sub-menu-ellipse"
@@ -66,11 +66,11 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
               truncate
               weight="medium"
               className={cn(
-                'text-foreground-2 group-hover:text-foreground-1 z-10 w-full duration-0 ease-in-out',
+                'text-cn-foreground-2 group-hover:text-cn-foreground-1 z-10 w-full duration-0 ease-in-out',
                 // { 'text-sidebar-foreground-2': isMainNav && (!isInset || isLightTheme) },
                 // { 'text-sidebar-foreground-3': isMainNav && isInset && !isLightTheme },
                 { 'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1': isMainNav },
-                { 'text-foreground-1': active },
+                { 'text-cn-foreground-1': active },
                 { 'text-sidebar-foreground-1': active && isMainNav }
               )}
             >
@@ -78,7 +78,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
             </Text>
             {!!description && (
               <Text
-                className={cn('z-10 w-full leading-4 text-foreground-4 duration-0 ease-in-out', {
+                className={cn('z-10 w-full leading-4 text-cn-foreground-2 duration-0 ease-in-out', {
                   'text-sidebar-foreground-4': isMainNav
                 })}
                 size={1}
@@ -129,9 +129,9 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
           size={2}
           weight="medium"
           className={cn(
-            'text-foreground-3 group-hover:text-foreground-1 relative z-10 text-left duration-100 ease-in-out',
+            'text-cn-foreground-3 group-hover:text-cn-foreground-1 relative z-10 text-left duration-100 ease-in-out',
             { 'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1': isMainNav },
-            { 'text-foreground-1': active },
+            { 'text-cn-foreground-1': active },
             { 'text-sidebar-foreground-1': active && isMainNav }
           )}
         >

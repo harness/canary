@@ -83,7 +83,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="flex items-center gap-x-1 text-14 text-foreground-4">
+              <span className="flex items-center gap-x-1 text-14 text-cn-foreground-2">
                 {merge_method === MergeStrategy.REBASE ? 'rebased changes from branch' : 'merged changes from'}
                 <PullRequestBranchBadge
                   branchName={pullReqMetadata?.source_branch as string}
@@ -111,7 +111,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
           },
           icon:
             decision === 'approved' ? (
-              <Icon name="success" size={18} className="text-foreground-success" />
+              <Icon name="success" size={18} className="text-cn-foreground-success" />
             ) : (
               <Icon name="triangle-warning" size={18} className="text-destructive" />
             )
@@ -145,7 +145,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="flex items-center gap-x-1 text-14 text-foreground-4">
+              <span className="flex items-center gap-x-1 text-14 text-cn-foreground-2">
                 {isSourceBranchDeleted ? 'deleted the' : 'restored the'}
                 {!!sourceBranch && (
                   <PullRequestBranchBadge
@@ -174,7 +174,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="text-sm text-foreground-3">
+              <span className="text-sm text-cn-foreground-3">
                 {!!changedToDraft && 'This pull request is now a draft'}
                 {!!openFromDraft && 'This pull request is no longer a draft'}
                 {!changedToDraft && !openFromDraft && `changed pull request state from ${old} to ${newData}`}
@@ -189,7 +189,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="text-sm text-foreground-3">
+              <span className="text-sm text-cn-foreground-3">
                 changed title from <span className="line-through">{String(old)}</span> to {String(newData)}
               </span>
             )
@@ -204,7 +204,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="text-sm text-foreground-3">
+              <span className="text-sm text-cn-foreground-3">
                 {author?.id === mentionId
                   ? 'removed their request for review'
                   : `removed the request for review from ${mentionDisplayName}`}
@@ -222,7 +222,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="text-sm text-foreground-3">
+              <span className="text-sm text-cn-foreground-3">
                 {reviewer_type === ReviewerAddActivity.SELF_ASSIGNED && 'self-requested a review'}
                 {reviewer_type === ReviewerAddActivity.ASSIGNED && `assigned ${mentionDisplayName} as a reviewer`}
                 {reviewer_type === ReviewerAddActivity.REQUESTED && `requested a review from ${mentionDisplayName}`}
@@ -239,7 +239,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="inline-flex items-center text-sm text-foreground-3">
+              <span className="inline-flex items-center text-sm text-cn-foreground-3">
                 {labelType ? labelActivityToTitleDict[labelType] : 'modified'}
                 <LabelMarker
                   className="mx-1.5"
@@ -261,7 +261,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
 
         return {
           header: {
-            description: <span className="text-sm text-foreground-3">{String(type)}</span>
+            description: <span className="text-sm text-cn-foreground-3">{String(type)}</span>
           }
         }
     }

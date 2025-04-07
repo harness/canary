@@ -88,7 +88,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
           <StackedList.Field
             title={
               <div
-                className={`flex h-32 items-center justify-center text-foreground-4 ${apiError ? 'text-foreground-danger' : ''}`}
+                className={`flex h-32 items-center justify-center text-cn-foreground-2 ${apiError ? 'text-cn-foreground-danger' : ''}`}
               >
                 {apiError ? apiError : 'No items available'}
               </div>

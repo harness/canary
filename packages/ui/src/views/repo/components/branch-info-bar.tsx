@@ -35,9 +35,9 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   const activeBranchTag = selectedBranchTag ?? selectedBranchTagFromStore
 
   return (
-    <div className="flex h-11 items-center justify-between rounded-md border border-borders-1 bg-background-2 pl-4 pr-1.5">
+    <div className="flex h-11 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 pl-4 pr-1.5">
       <div className="flex items-center gap-x-1.5">
-        <span className="text-14 leading-tight text-foreground-1">
+        <span className="text-14 leading-tight text-cn-foreground-1">
           This branch is{' '}
           {hasAhead && (
             <>
@@ -53,15 +53,16 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
             </StyledLink>
           )}
         </span>
-        <Badge className="gap-x-1" variant="tertiary" borderRadius="base" size="md">
-          <Icon className="text-icons-9" name="branch" size={14} />
-          <span className="text-foreground-8">{defaultBranchName}</span>
+        {/* TODO: Design system: change it to tag */}
+        <Badge variant="soft" theme="muted" size="sm">
+          <Icon name="branch" size={14} />
+          <span>{defaultBranchName}</span>
         </Badge>
       </div>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <Button
-            className="group/contribute gap-x-2 px-2.5 data-[state=open]:border-borders-9 data-[state=open]:text-foreground-8 [&_svg]:data-[state=open]:text-icons-9"
+            className="group/contribute gap-x-2 px-2.5 data-[state=open]:border-cn-borders-9 data-[state=open]:text-cn-foreground-1 [&_svg]:data-[state=open]:text-icons-9"
             variant="outline"
           >
             <Icon name="merged" size={14} />
@@ -75,17 +76,19 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-60 p-4" align="end">
           <div className="flex gap-x-2">
-            <div className="flex size-6 shrink-0 items-center justify-center rounded-full border border-borders-4">
+            <div className="flex size-6 shrink-0 items-center justify-center rounded-full border border-cn-borders-4">
               <Icon name="merged" size={12} />
             </div>
             <div>
-              <span className="text-14 leading-snug text-foreground-1">This branch is {ahead} commits ahead of </span>
-              <Badge className="gap-x-1" variant="tertiary" borderRadius="base" size="sm">
-                <Icon className="text-icons-9" name="branch" size={14} />
-                <span className="text-foreground-8">{defaultBranchName}</span>
+              <span className="text-14 leading-snug text-cn-foreground-1">
+                This branch is {ahead} commits ahead of{' '}
+              </span>
+              <Badge className="mt-1" variant="soft" theme="muted" size="sm">
+                <Icon name="branch" size={14} />
+                <span>{defaultBranchName}</span>
               </Badge>
               .
-              <p className="mt-2.5 text-14 leading-tight text-foreground-4">
+              <p className="mt-2.5 text-14 leading-tight text-cn-foreground-2">
                 Open a pull request to contribute your changes upstream.
               </p>
             </div>

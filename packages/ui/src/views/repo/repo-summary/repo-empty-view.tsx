@@ -91,7 +91,7 @@ git push -u origin main
               <span
                 role="button"
                 tabIndex={0}
-                className="text-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:decoration-foreground-accent"
+                className="text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:decoration-foreground-accent"
                 onClick={() => navigateToProfileKeys?.()}
                 onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -120,7 +120,7 @@ git push -u origin main
               <span
                 role="button"
                 tabIndex={0}
-                className="text-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:decoration-foreground-accent"
+                className="text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:decoration-foreground-accent"
                 onClick={() => navigateToProfileKeys?.()}
                 onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {

@@ -81,7 +81,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               }}
             >
               <Tabs.Trigger
-                className="data-[state=active]:bg-background-2"
+                className="data-[state=active]:bg-cn-background-2"
                 value="branches"
                 onClick={e => e.stopPropagation()}
               >
@@ -96,7 +96,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               }}
             >
               <Tabs.Trigger
-                className="data-[state=active]:bg-background-2"
+                className="data-[state=active]:bg-cn-background-2"
                 value="tags"
                 onClick={e => e.stopPropagation()}
               >
@@ -110,7 +110,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <span className="text-14 leading-tight text-foreground-2">
+            <span className="text-14 leading-tight text-cn-foreground-2">
               {t('views:noData.noResults', 'No search results')}
             </span>
           </div>
@@ -125,9 +125,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
             return (
               <DropdownMenu.Item
-                className={cn('hover:bg-background-4 cursor-pointer py-1', {
+                className={cn('hover:bg-cn-background-hover cursor-pointer py-1', {
                   'justify-between gap-x-2': isDefault,
-                  'bg-background-4': isSelected,
+                  'bg-cn-background-hover': isSelected,
                   'pl-7': !isSelected
                 })}
                 onClick={() => {
@@ -136,10 +136,10 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 key={item.name}
               >
                 <div className="flex w-full min-w-0 items-center gap-x-2">
-                  {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-foreground-1" />}
+                  {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-cn-foreground-1" />}
                   <span
-                    className={cn('text-foreground-2 truncate', {
-                      'text-foreground-1': isSelected
+                    className={cn('text-cn-foreground-2 truncate', {
+                      'text-cn-foreground-1': isSelected
                     })}
                   >
                     {item.name}
@@ -147,23 +147,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 </div>
 
                 {isDefault && (
-                  <Badge
-                    className="bg-transparent font-medium text-foreground-3"
-                    variant="outline"
-                    // TODO: Review and update 'muted' theme implementation
-                    // Current 'muted' theme styles don't fully match the design requirements
-                    // Steps before updating:
-                    // 1. Audit all instances of 'muted' theme usage
-                    // 2. Compare with design specs across different components
-                    // 3. Ensure changes won't break existing implementations
-                    // 4. Consider creating a new theme variant if changes affect existing usage
-                    // 5. After theme update, remove overriding classes (text-primary-muted, bg-transparent, -tracking, font-medium)
-                    //    as they should be part of the theme definition
-                    theme="muted"
-                    size="xl"
-                    borderRadius="full"
-                    disableHover
-                  >
+                  <Badge variant="surface" theme="muted" size="sm">
                     {t('views:repos.default', 'Default')}
                   </Badge>
                 )}
@@ -174,8 +158,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
         <DropdownMenu.Item className="p-0" asChild>
           <Link to={viewAllUrl}>
-            <div className="w-full border-t border-borders-1 px-3 py-2">
-              <span className="text-14 font-medium leading-none transition-colors duration-200 hover:text-foreground-1">
+            <div className="w-full border-t border-cn-borders-2 px-3 py-2">
+              <span className="text-14 font-medium leading-none transition-colors duration-200 hover:text-cn-foreground-1">
                 {t('views:repos.viewAll', `View all ${activeTab}`, {
                   type:
                     activeTab === BranchSelectorTab.BRANCHES

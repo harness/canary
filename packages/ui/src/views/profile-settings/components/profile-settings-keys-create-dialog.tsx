@@ -77,7 +77,7 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
           </Fieldset>
           <Fieldset className="gap-y-0">
             <Textarea
-              className="text-foreground-1"
+              className="text-cn-foreground-1"
               id="content"
               value={content}
               {...register('content')}

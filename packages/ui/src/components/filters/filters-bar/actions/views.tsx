@@ -132,7 +132,7 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
     <>
       {!currentView ? (
         <Button
-          className="flex items-center gap-x-1.5 px-0 text-14 text-foreground-4 transition-colors duration-200 hover:text-foreground-1"
+          className="flex items-center gap-x-1.5 px-0 text-14 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
           variant="custom"
           onClick={() => setIsNewViewDialogOpen(true)}
         >
@@ -143,7 +143,7 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Button
-              className="flex items-center gap-x-1.5 px-0 text-14 text-foreground-4 transition-colors duration-200 hover:text-foreground-1"
+              className="flex items-center gap-x-1.5 px-0 text-14 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
               variant="custom"
             >
               <Icon name="bookmark-icon" size={12} />
@@ -166,7 +166,7 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
               Rename
             </DropdownMenu.Item>
             <DropdownMenu.Item
-              className="text-foreground-danger"
+              className="text-cn-foreground-danger"
               onSelect={() => viewManagement.deleteView(currentView.id)}
             >
               Delete view
@@ -182,7 +182,7 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
           </AlertDialog.Header>
           <AlertDialog.Description variant="secondary">
             You can save current configuration of the view. Manage and switch them through the{' '}
-            <strong className="text-foreground-1">View</strong> dropdown.
+            <strong className="text-cn-foreground-1">View</strong> dropdown.
           </AlertDialog.Description>
 
           <div className="pb-4 pt-3">

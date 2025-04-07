@@ -43,7 +43,7 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
         />
       ))
     ) : (
-      <span className="text-14 font-medium text-foreground-5">No reviewers</span>
+      <span className="text-14 font-medium text-cn-foreground-3">No reviewers</span>
     )}
   </div>
 )

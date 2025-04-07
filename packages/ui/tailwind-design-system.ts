@@ -111,9 +111,9 @@ export default {
           accent: 'hsl(var(--canary-foreground-accent))'
         },
         'cn-foreground': {
-          1: 'var(--cn-text-1)',
-          2: 'var(--cn-text-2)',
-          3: 'var(--cn-text-3)',
+          1: 'lch(from var(--cn-text-1) l c h / <alpha-value>)',
+          2: 'lch(from var(--cn-text-2) l c h / <alpha-value>)',
+          3: 'lch(from var(--cn-text-3) l c h / <alpha-value>)',
           success: 'var(--cn-text-success)',
           danger: 'var(--cn-text-danger)',
           warning: 'var(--cn-text-warning)',

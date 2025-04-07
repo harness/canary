@@ -24,7 +24,7 @@ const toggleVariants = cva(
         icon: 'size-8'
       },
       theme: {
-        light: 'data-[state=on]:bg-background-1',
+        light: 'data-[state=on]:bg-cn-background-1',
         dark: 'data-[state=on]:bg-background-9'
       }
     },

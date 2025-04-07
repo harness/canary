@@ -47,7 +47,7 @@ export function SidebarSearch(props: SidebarSearchProps) {
           variant="custom"
           size="icon"
           type="button"
-          className="absolute right-1.5 top-1/2 z-[5px] h-5 -translate-y-1/2 select-none rounded-sm border border-sidebar-border-5 bg-background-3 p-0 px-1.5 text-sidebar-foreground-3 opacity-100 transition-opacity group-data-[state=collapsed]:opacity-0"
+          className="absolute right-1.5 top-1/2 z-[5px] h-5 -translate-y-1/2 select-none rounded-sm border border-sidebar-border-5 bg-cn-background-3 p-0 px-1.5 text-sidebar-foreground-3 opacity-100 transition-opacity group-data-[state=collapsed]:opacity-0"
           tabIndex={-1}
         >
           <span className="size-full text-12">⌘K</span>

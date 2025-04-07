@@ -8,7 +8,8 @@ import {
   MoreSubmenu,
   NavbarItemType,
   SettingsMenu,
-  Sidebar
+  Sidebar,
+  useSidebar
 } from '@harnessio/ui/components'
 import { MainContentLayout, SidebarView } from '@harnessio/ui/views'
 
@@ -195,7 +196,7 @@ export const AppShell = () => {
         />
 
         <Sidebar.Inset>
-          <MainContentLayout breadcrumbs={breadcrumbs} withMobileSidebarToggle>
+          <MainContentLayout breadcrumbs={breadcrumbs} useSidebar={useSidebar} withMobileSidebarToggle>
             <Outlet />
           </MainContentLayout>
 

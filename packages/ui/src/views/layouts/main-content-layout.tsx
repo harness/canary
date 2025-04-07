@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import { useSidebar } from '@/components'
+import { SidebarContext } from '@/components'
 import { useTheme } from '@/context'
 import { cn } from '@/utils'
 import { AppBreadcrumbs, AppBreadcrumbsProps } from '@components/app-breadcrumbs'
@@ -16,19 +16,20 @@ const HalfArch = ({ className }: { className?: string }) => (
   </div>
 )
 
-type MainContentLayoutProps = PropsWithChildren<AppBreadcrumbsProps>
+type MainContentLayoutProps = PropsWithChildren<AppBreadcrumbsProps & { useSidebar?: () => SidebarContext }>
 
-export function MainContentLayout({ children, ...breadcrumbsProps }: MainContentLayoutProps) {
+export function MainContentLayout({ children, useSidebar, ...breadcrumbsProps }: MainContentLayoutProps) {
   const { isInset } = useTheme()
-  const { isMobile } = useSidebar()
+  const sidebarData = useSidebar?.()
+  const isMobile = sidebarData?.isMobile
   const withBreadcrumbs = breadcrumbsProps.breadcrumbs?.length > 0
 
   return (
     <>
-      <AppBreadcrumbs {...breadcrumbsProps} />
+      <AppBreadcrumbs isMobile={isMobile} {...breadcrumbsProps} />
       <div
         className={cn(
-          'min-h-screen bg-cds-background-1',
+          'min-h-screen bg-cn-background-1',
           { 'min-h-[calc(100vh-55px)]': withBreadcrumbs },
           { 'min-h-[calc(100vh-6px*2)] my-1.5 mr-1.5 border rounded-md min-w-fit': isInset },
           { 'min-h-[calc(100vh-55px-6px)] mb-1.5 mt-0': isInset && withBreadcrumbs },

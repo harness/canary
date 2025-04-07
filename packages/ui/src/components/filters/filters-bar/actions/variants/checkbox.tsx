@@ -1,4 +1,4 @@
-import { DropdownMenu, Icon } from '@/components'
+import { DropdownMenu } from '@/components'
 import { CheckboxOptions } from '@components/filters/types'
 
 interface CheckboxFilterProps {

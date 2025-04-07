@@ -8,7 +8,7 @@ const StepsPaletteLayout = {
   },
 
   Title: function Title({ children }: { children: React.ReactNode }) {
-    return <div className="mb-3 text-lg text-accent-foreground">{children}</div>
+    return <div className="mb-3 text-lg text-cn-foreground-1">{children}</div>
   }
 }
 

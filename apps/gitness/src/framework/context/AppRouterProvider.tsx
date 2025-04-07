@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 import { Link, NavLink, Outlet, useMatches, useNavigate, useSearchParams } from 'react-router-dom'
 
 import { RouterContextProvider } from '@harnessio/ui/context'
@@ -24,4 +24,4 @@ const AppRouterProvider: React.FC<AppRouterProviderProps> = ({ children }) => {
   )
 }
 
-export default AppRouterProvider
+export { AppRouterProvider }

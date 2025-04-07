@@ -140,7 +140,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           <div
             className={cn(
               'flex items-center text-cn-foreground-3 rounded border',
-              rightElementVariant === 'filled' ? 'bg-muted border-l' : '',
+              rightElementVariant === 'filled' ? 'bg-cn-background-softgray border-l' : '',
               className
             )}
           >

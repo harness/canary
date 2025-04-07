@@ -17,11 +17,11 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
     case PipelineExecutionStatus.PENDING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-muted" />
+          <div className="size-2 rounded-full bg-cn-background-softgray" />
           <span className="text-cn-foreground-disabled">Pending</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-muted bg-muted/[0.1] px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md border border-solid border-muted bg-cn-background-softgray/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5">
             <CanaryIcon size={12} name="pending-clock" />
             <span className="text-cn-foreground-disabled">Pending</span>

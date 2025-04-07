@@ -7,7 +7,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 const tabsListVariants = cva('inline-flex items-center text-cn-foreground-2', {
   variants: {
     variant: {
-      default: 'h-9 justify-center rounded-lg bg-muted p-1',
+      default: 'h-9 justify-center rounded-lg bg-cn-background-softgray p-1',
       underline: 'h-11 justify-center gap-4',
       /**
        * TODO: Technical Debt - Navigation Variant Removal

@@ -1,19 +1,10 @@
 import { I18nextProvider } from 'react-i18next'
-import {
-  createBrowserRouter,
-  Link,
-  NavLink,
-  Outlet,
-  RouterProvider,
-  useMatches,
-  useSearchParams
-} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { Toast, Tooltip } from '@harnessio/ui/components'
-import { RouterContextProvider } from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
@@ -48,17 +39,7 @@ export default function App() {
             <Tooltip.Provider>
               <ExitConfirmProvider>
                 <NavigationProvider routes={routes}>
-                  <RouterContextProvider
-                    Link={Link}
-                    NavLink={NavLink}
-                    Outlet={Outlet}
-                    location={{ ...window.location, state: {}, key: '' }}
-                    navigate={router.navigate}
-                    useSearchParams={useSearchParams}
-                    useMatches={useMatches}
-                  >
-                    <RouterProvider router={router} />
-                  </RouterContextProvider>
+                  <RouterProvider router={router} />
                 </NavigationProvider>
               </ExitConfirmProvider>
             </Tooltip.Provider>

@@ -39,6 +39,10 @@ export const AppShellMFE = memo(() => {
   useLocationChange({ t, onRouteChange: setRecent, getNavbarMenuData: () => [] })
 
   useEffect(() => {
+    localStorage.setItem('nav-items', JSON.stringify({ state: { pinned: pinnedMenu, recent: [] } }))
+  }, [])
+
+  useEffect(() => {
     const linksFromStorage = localStorage.getItem('nav-items')
     let parsedLinksFromStorage: NavLinkStorageInterface | undefined
 

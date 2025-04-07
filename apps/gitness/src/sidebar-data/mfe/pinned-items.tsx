@@ -18,13 +18,5 @@ export const getPinnedMenuItemsData = ({
     description: 'Integrated & familiar git experience.',
     to: routes?.toRepositories?.() || '',
     permanentlyPinned: true
-  },
-  {
-    id: 1,
-    iconName: 'pipelines-gradient',
-    title: t('component:navbar.pipelines'),
-    description: 'Up to 4X faster than other solutions.',
-    to: routes?.toPipelines?.() || '',
-    permanentlyPinned: true
   }
 ]

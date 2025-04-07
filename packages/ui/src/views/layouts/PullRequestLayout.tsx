@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, ReactNode } from 'react'
-import { NavLinkProps } from 'react-router-dom'
+import { NavLink, NavLinkProps } from 'react-router-dom'
 
-import { Badge, Icon, IconProps } from '@/components'
+import { Badge, Icon, IconProps, Tabs } from '@/components'
 import { useRouterContext, useTheme } from '@/context'
 import { cn } from '@/utils'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
@@ -20,7 +20,7 @@ const TabTitleWithIcon = ({
       {children}
     </div>
     {!!badgeContent && (
-      <Badge className="text-foreground-2 font-normal" variant="quaternary" size="xs" borderRadius="base">
+      <Badge className="text-foreground-2 font-normal" variant="counter" size="sm">
         {badgeContent}
       </Badge>
     )}
@@ -76,7 +76,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
           <PullRequestHeader className="mb-10" updateTitle={updateTitle} data={{ ...pullRequest, spaceId, repoId }} />
         )}
 
-        <nav
+        {/* <nav
           className={cn(
             'relative before:bottom-0 before:absolute before:w-[calc(100vw-var(--sidebar-width))] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2 before:border-b before:border-borders-4',
             { 'before:w-[calc(100vw-var(--sidebar-width)-6px)]': isInset }
@@ -108,11 +108,23 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
               </PullRequestTabItem>
             </li>
           </ul>
-        </nav>
+        </nav> */}
 
-        {/* <Tabs.Root variant="tabnav" className="mb-7" defaultValue={activeTab}>
+        <Tabs.Root
+          activationMode="manual"
+          variant="tabnav"
+          className="mb-7"
+          defaultValue={PullRequestTabsKeys.CONVERSATION}
+          onKeyDown={e => {
+            console.log('🚀 ~ e.key:', e.key)
+            if (e.key === 'Space') {
+              console.log('🚀 ~ e.key pressed:', e.key)
+              e.preventDefault()
+            }
+          }}
+        >
           <Tabs.List className="before:bg-background-9 before:left-1/2 before:w-[calc(100vw-var(--cn-sidebar-width)-var(--cn-inset-layout-indent)*2)] before:min-w-[calc(100%+3rem)] before:-translate-x-1/2">
-            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.CONVERSATION} asChild>
+            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.CONVERSATION} asChild tabIndex={0}>
               <NavLink to={PullRequestTabsKeys.CONVERSATION}>
                 <TabTitleWithIcon
                   icon="comments"
@@ -122,14 +134,14 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
                 </TabTitleWithIcon>
               </NavLink>
             </Tabs.Trigger>
-            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.COMMITS} asChild>
+            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.COMMITS} asChild tabIndex={0}>
               <NavLink to={PullRequestTabsKeys.COMMITS}>
                 <TabTitleWithIcon icon="tube-sign" badgeContent={pullRequest?.stats?.commits}>
                   {t('views:pullRequests.commits', 'Commits')}
                 </TabTitleWithIcon>
               </NavLink>
             </Tabs.Trigger>
-            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.CHANGES} asChild>
+            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.CHANGES} asChild tabIndex={0}>
               <NavLink to={PullRequestTabsKeys.CHANGES}>
                 <TabTitleWithIcon icon="changes" badgeContent={pullRequest?.stats?.files_changed}>
                   {t('views:pullRequests.changes', 'Changes')}
@@ -137,7 +149,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
               </NavLink>
             </Tabs.Trigger>
           </Tabs.List>
-        </Tabs.Root> */}
+        </Tabs.Root>
 
         <Outlet />
       </SandboxLayout.Content>

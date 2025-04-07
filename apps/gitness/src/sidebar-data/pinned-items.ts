@@ -1,8 +1,8 @@
-import { type TFunction } from 'i18next'
+import { TFunction } from 'i18next'
 
-import { type NavbarItemType } from '@harnessio/ui/components'
+import { NavbarItemType } from '@harnessio/ui/components'
 
-import { type RouteFunctionMap } from '../framework/routing/types'
+import { RouteFunctionMap } from '../framework/routing/types'
 
 export const getPinnedMenuItemsData = ({
   t,

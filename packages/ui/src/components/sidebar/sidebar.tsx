@@ -32,7 +32,7 @@ const SIDEBAR_WIDTH_MOBILE = '18rem'
 const SIDEBAR_WIDTH_ICON = '3rem'
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b'
 
-type SidebarContext = {
+export type SidebarContext = {
   state: 'expanded' | 'collapsed'
   collapsed: boolean
   setOpen: (open: boolean) => void

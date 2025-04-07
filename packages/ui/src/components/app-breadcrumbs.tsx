@@ -1,6 +1,6 @@
 import { Params, UIMatch } from 'react-router-dom'
 
-import { Breadcrumb, Separator, Sidebar, Topbar, useSidebar } from '@/components'
+import { Breadcrumb, Separator, Sidebar, Topbar } from '@/components'
 import { useRouterContext, useTheme } from '@/context'
 import { cn } from '@/utils'
 
@@ -12,11 +12,11 @@ export interface BreadcrumbHandle {
 export interface AppBreadcrumbsProps {
   breadcrumbs: UIMatch<unknown, BreadcrumbHandle>[]
   withMobileSidebarToggle?: boolean
+  isMobile?: boolean
 }
 
-export const AppBreadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false }: AppBreadcrumbsProps) => {
+export const AppBreadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMobile }: AppBreadcrumbsProps) => {
   const { Link } = useRouterContext()
-  const { isMobile } = useSidebar()
   const { isInset } = useTheme()
 
   if (!breadcrumbs.length) return null

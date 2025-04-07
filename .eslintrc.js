@@ -1,28 +1,5 @@
-/**
- * Rules to adopt new design system
- *
- * class list will be updated once the
- * relevant class is completed removed from
- * tailwind-design-system.ts
- *
- */
-const getRules = () => {
-  const classVariants = ['foreground', 'background', 'borders']
-  return classVariants.flatMap(variant => [
-    {
-      selector: `JSXAttribute[name.name='className'][value.value=/(?<!cn)-${variant}-/]`,
-      message: `Use of '-${variant}-' class is not allowed. Use '-cn-${variant}-' instead`
-    },
-    {
-      selector: `CallExpression[callee.name='cva'] > Literal[value=/(?<!cn)-${variant}-/]`,
-      message: `Use of '-${variant}-' class is not allowed. Use '-cn-${variant}-' instead`
-    },
-    {
-      selector: `CallExpression[callee.name='cn'] > Literal[value=/(?<!cn)-${variant}-/]`,
-      message: `Use of '-${variant}-' class is not allowed. Use '-cn-${variant}-' instead`
-    }
-  ])
-}
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { classNameRules } = require('./eslint/rules.js')
 
 module.exports = {
   root: true,
@@ -73,7 +50,7 @@ module.exports = {
      * Soon it will be converted to "error"
      * once all the old variants are removed
      */
-    'no-restricted-syntax': ['warn', ...getRules()],
+    'no-restricted-syntax': ['warn', ...classNameRules],
 
     'jsx-a11y/click-events-have-key-events': 'warn',
     'jsx-a11y/no-autofocus': 'off',

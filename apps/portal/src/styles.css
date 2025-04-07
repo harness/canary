@@ -1,5 +1,5 @@
 body {
-  @apply text-cn-foreground-3 text-base overscroll-none !important;
+  @apply text-foreground-3 text-base overscroll-none !important;
 }
 
 main {
@@ -19,7 +19,7 @@ main {
 }
 
 code {
-  @apply bg-cn-background-3 !important;
+  @apply bg-background-3 !important;
 }
 
 .content-panel {
@@ -49,11 +49,11 @@ ul.top-level li {
 }
 
 ul.top-level li a {
-  @apply py-1 px-2 m-0 text-cn-foreground-2 hover:text-cn-foreground-1;
+  @apply py-1 px-2 m-0 text-foreground-4 hover:text-foreground-1;
 }
 
 ul.top-level li a[aria-current="page"] {
-  @apply font-normal bg-primary-background rounded-md text-cn-foreground-1;
+  @apply font-normal bg-primary-background rounded-md text-foreground-1;
 }
 
 ul.top-level li details summary {
@@ -65,11 +65,11 @@ ul.top-level li details summary .group-label {
 }
 
 ul.top-level summary .group-label span {
-  @apply font-normal text-sm text-cn-foreground-3;
+  @apply font-normal text-sm text-foreground-5;
 }
 
 ul.top-level summary svg {
-  @apply font-normal text-cn-foreground-3 text-lg;
+  @apply font-normal text-foreground-5 text-lg;
 }
 
 /* Right-hand page sidebar overrides */
@@ -87,7 +87,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel li a {
-  @apply m-0 p-0 text-cn-foreground-2;
+  @apply m-0 p-0 text-foreground-4;
 }
 
 .right-sidebar-panel li ul {
@@ -97,11 +97,11 @@ ul.top-level summary svg {
 /* Search override */
 
 [aria-label="Search"] {
-  @apply bg-cn-background-hover border border-borders-4 rounded-md h-[36px] !important;
+  @apply bg-background-4 border border-borders-4 rounded-md h-[36px] !important;
 }
 
 [aria-label="Search"] > kbd:first-of-type {
-  @apply bg-cn-background-2 border border-borders-2 !important;
+  @apply bg-background-2 border border-borders-2 !important;
 }
 
 /* Code/Preview override */
@@ -111,13 +111,13 @@ ul.top-level summary svg {
 }
 
 pre.prism-code {
-  @apply rounded-md overflow-hidden border border-borders-4 bg-cn-background-2 !important;
+  @apply rounded-md overflow-hidden border border-borders-4 bg-background-2 !important;
 }
 
 /* Pagination overrides */
 
 .pagination-links a {
-  @apply border border-borders-4 rounded-md text-xs text-cn-foreground-2;
+  @apply border border-borders-4 rounded-md text-xs text-foreground-4;
 }
 
 .pagination-links a .link-title {

@@ -115,6 +115,6 @@ https://tailwindcss.com/docs/adding-custom-styles#using-css-and-layer
     @apply border-border;
   }
   body {
-    @apply bg-cn-background text-cn-foreground;
+    @apply bg-background text-foreground;
   }
 }

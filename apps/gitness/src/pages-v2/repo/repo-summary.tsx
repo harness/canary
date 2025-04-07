@@ -290,7 +290,7 @@ export default function RepoSummaryPage() {
 
   return (
     <>
-      <div className="bg-muted">This is bg-muted</div>
+      <div className="border-cn-borders-1">This is border-cn-borders-1</div>
 
       <RepoSummaryView
         repoId={repoId ?? ''}

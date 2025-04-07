@@ -21,7 +21,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
           <span className="text-cn-foreground-disabled">Pending</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-muted bg-cn-background-softgray/[0.1] px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md border border-solid border-cn-borders-1 bg-cn-background-softgray/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5">
             <CanaryIcon size={12} name="pending-clock" />
             <span className="text-cn-foreground-disabled">Pending</span>

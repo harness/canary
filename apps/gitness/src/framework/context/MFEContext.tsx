@@ -7,18 +7,8 @@ export interface Scope {
 }
 
 export interface RouteDefinitions {
-  toRepositories: ({ space }: { space: string }) => string
-  toPipelines: ({
-    accountId,
-    orgIdentifier,
-    projectIdentifier,
-    mode
-  }: {
-    accountId: string
-    orgIdentifier?: string
-    projectIdentifier?: string
-    mode: 'all'
-  }) => string
+  toRepositories: () => string
+  toPipelines: () => string
 }
 
 export type Unknown = any

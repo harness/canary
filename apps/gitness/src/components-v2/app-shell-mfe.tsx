@@ -25,16 +25,16 @@ interface NavLinkStorageInterface {
 }
 
 export const AppShellMFE = memo(() => {
-  const { scope, routes } = useMFEContext()
+  const { routes } = useMFEContext()
   const { spaceId } = useParams<PathParams>()
   const { pinnedMenu, setRecent, setNavLinks } = useNav()
   const { t } = useTranslationStore()
   const selectedSpaceId = useSelectedSpaceId(spaceId)
   const spaceIdPathParam = spaceId ?? selectedSpaceId ?? ''
 
-  const pinnedMenuItemsData = useMemo(() => getPinnedMenuItemsData({ t, routes, scope }), [t, routes, scope])
+  const pinnedMenuItemsData = useMemo(() => getPinnedMenuItemsData({ t, routes }), [t, routes])
 
-  const navMenuItemsData = useMemo(() => getNavbarMenuData({ t, routes, scope }), [t, routes, scope])
+  const navMenuItemsData = useMemo(() => getNavbarMenuData({ t, routes }), [t, routes])
 
   useLocationChange({ t, onRouteChange: setRecent, getNavbarMenuData: () => [] })
 

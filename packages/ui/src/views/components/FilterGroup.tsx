@@ -28,6 +28,11 @@ const FilterGroup = <T extends Record<string, unknown>, V extends keyof T & stri
   const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
   const filterHandlers = useFilters()
 
+  // Create a wrapper function that matches the expected type
+  const handleSetOpenedFilter = (filter: keyof T) => {
+    setOpenedFilter(filter as V)
+  }
+
   return (
     <FilterHandler
       ref={filtersRef}
@@ -111,7 +116,7 @@ const FilterGroup = <T extends Record<string, unknown>, V extends keyof T & stri
             </FilterHandler.Dropdown>
           )}
           openedFilter={openedFilter}
-          setOpenedFilter={setOpenedFilter}
+          setOpenedFilter={handleSetOpenedFilter}
           filterOptions={filterOptions}
           sortOptions={[]}
           selectedFiltersCnt={selectedFiltersCnt}

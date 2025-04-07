@@ -23,6 +23,7 @@ export const getConnectorListFilterOptions = (t: TFunction): Array<FilterOptionC
             .split(',')
             .filter(Boolean)
             .map(val => options.find(option => option.value === val))
+            .filter((option): option is CheckboxOptions => option !== undefined)
           return valueArr
         },
         serialize: (value: CheckboxOptions[]) => value.reduce((acc, val) => (acc += `${val.value},`), '')

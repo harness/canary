@@ -7,7 +7,7 @@ interface AppRouterProviderProps {
   children: ReactNode
 }
 
-const AppRouterProvider: React.FC<AppRouterProviderProps> = ({ children }) => {
+const AppRouterProvider: FC<AppRouterProviderProps> = ({ children }) => {
   const navigate = useNavigate()
   return (
     <RouterContextProvider

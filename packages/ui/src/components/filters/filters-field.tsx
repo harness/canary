@@ -2,10 +2,10 @@ import { TFunction } from 'i18next'
 
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
-import Checkbox, { CheckboxOptions } from './filters-bar/actions/variants/checkbox'
+import Checkbox from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import Text from './filters-bar/actions/variants/text-field'
-import { FilterField, FilterFieldTypes, FilterOptionConfig, FilterValueTypes } from './types'
+import { CheckboxOptions, FilterField, FilterFieldTypes, FilterOptionConfig, FilterValueTypes } from './types'
 import { getFilterLabelValue } from './utils'
 
 export interface FiltersFieldProps<T extends FilterValueTypes> {
@@ -49,12 +49,8 @@ const renderFilterValues = <T extends FilterValueTypes>(
       const checkboxFilter = filter as FilterField<CheckboxOptions>
       return (
         <Checkbox
-          filter={{
-            type: '',
-            condition: '',
-            value: checkboxFilter.value
-          }}
-          filterOption={filterOption.filterFieldConfig?.options}
+          filter={checkboxFilter.value || []}
+          filterOption={filterOption.filterFieldConfig?.options || []}
           onUpdateFilter={values => onUpdateFilter(values as T)}
         />
       )

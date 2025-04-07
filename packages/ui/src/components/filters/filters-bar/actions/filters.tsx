@@ -3,44 +3,20 @@ import { useEffect, useState } from 'react'
 import { DropdownMenu, Icon } from '@/components'
 import { cn } from '@utils/cn'
 
-import type {
-  CheckboxFilterOption,
-  FilterAction,
-  FilterHandlers,
-  FilterOption,
-  FilterSearchQueries,
-  FilterValue
-} from '../../types'
+import type { FilterAction, FilterHandlers, FilterOption, FilterSearchQueries, FilterValue } from '../../types'
 import { getFilterDisplayValue, getFilteredOptions } from '../../utils'
 import Calendar from './variants/calendar'
-import Checkbox from './variants/checkbox'
 import Number from './variants/number'
 import Text from './variants/text'
 
 const renderFilterValues = (
   filter: FilterValue,
   filterOption: FilterOption,
-  onUpdateFilter: FilterHandlers['handleUpdateFilter'],
-  searchQueries: FilterSearchQueries,
-  handleSearchChange: FilterHandlers['handleSearchChange'],
-  filteredOptions?: CheckboxFilterOption['options']
+  onUpdateFilter: FilterHandlers['handleUpdateFilter']
 ) => {
   if (!onUpdateFilter) return null
 
   switch (filterOption.type) {
-    case 'checkbox':
-      return (
-        <Checkbox
-          filter={filter}
-          filterOption={{
-            ...filterOption,
-            options: filteredOptions || (filterOption as CheckboxFilterOption).options
-          }}
-          onUpdateFilter={onUpdateFilter}
-          searchQueries={searchQueries}
-          handleSearchChange={handleSearchChange}
-        />
-      )
     case 'calendar':
       return <Calendar filter={filter} onUpdateFilter={onUpdateFilter} />
     case 'text':
@@ -70,7 +46,6 @@ const Filters = ({
   handleUpdateFilter,
   handleUpdateCondition,
   handleRemoveFilter,
-  handleSearchChange,
   searchQueries,
   filterToOpen,
   onOpen
@@ -153,8 +128,7 @@ const Filters = ({
         </div>
 
         <div>
-          {filter.condition !== 'is_empty' &&
-            renderFilterValues(filter, filterOption, handleUpdateFilter, searchQueries, handleSearchChange)}
+          {filter.condition !== 'is_empty' && renderFilterValues(filter, filterOption, handleUpdateFilter)}
 
           {filterOption.type === 'checkbox' && getFilteredOptions(filterOption, filter, searchQueries).length === 0 && (
             <div className="flex items-center justify-center p-4">

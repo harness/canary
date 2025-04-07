@@ -1,16 +1,11 @@
-import { FC, ReactNode, useRef, useState } from 'react'
+import { FC, useState } from 'react'
 
-import { Button, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/components'
+import { Button, NoData, Pagination, Spacer } from '@/components'
 import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
-import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
-import FilterTrigger from '@components/filters/triggers/filter-trigger'
 import { cn } from '@utils/cn'
-import ListControlBar from '@views/repo/components/list-control-bar'
-import { useFilters } from '@views/repo/hooks'
-
-import { createFilters, FilterRefType } from '@harnessio/filters'
+import FilterGroup from '@views/components/FilterGroup'
 
 import { ConnectorsList } from './connectors-list'
 import { getConnectorListFilterOptions } from './filter-options'
@@ -18,7 +13,7 @@ import { ConnectorListFilters, ConnectorListPageProps } from './types'
 
 type ConnectorListFiltersKeys = keyof ConnectorListFilters
 
-const ConnectorListFilterHandler = createFilters<ConnectorListFilters>()
+// const ConnectorListFilterHandler = createFilters<ConnectorListFilters>()
 
 const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   searchQuery,
@@ -36,10 +31,10 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
 }) => {
   const { t } = useTranslationStore()
   const { navigate } = useRouterContext()
-  const filterHandlers = useFilters()
-  const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
-  const [openedFilter, setOpenedFilter] = useState<ConnectorListFiltersKeys>()
-  const filtersRef = useRef<FilterRefType<ConnectorListFilters> | null>(null)
+  // const filterHandlers = useFilters()
+  const [_selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
+  // const [openedFilter, setOpenedFilter] = useState<ConnectorListFiltersKeys>()
+  // const filtersRef = useRef<FilterRefType<ConnectorListFilters> | null>(null)
 
   const CONNECTOR_FILTER_OPTIONS = getConnectorListFilterOptions(t)
 
@@ -57,9 +52,9 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
     onFilterChange?.(filterValues)
   }
 
-  const handleFilterOpen = (filter: ConnectorListFiltersKeys, isOpen: boolean) => {
-    setOpenedFilter(isOpen ? filter : undefined)
-  }
+  // const handleFilterOpen = (filter: ConnectorListFiltersKeys, isOpen: boolean) => {
+  //   setOpenedFilter(isOpen ? filter : undefined)
+  // }
 
   if (isError) {
     return (
@@ -91,97 +86,15 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !connectors.length && !searchQuery })}>
         <h1 className="text-24 font-medium leading-snug tracking-tight text-cn-foreground-1">Connectors</h1>
         <Spacer size={6} />
-        <ConnectorListFilterHandler
-          ref={filtersRef}
+        <FilterGroup<ConnectorListFilters, keyof ConnectorListFilters>
           onFilterSelectionChange={onFilterSelectionChange}
-          onChange={onFilterValueChange}
-          view="dropdown"
-        >
-          <ListActions.Root>
-            <ListActions.Left>
-              <SearchBox.Root
-                width="full"
-                className="max-w-96"
-                value={searchInput}
-                handleChange={handleInputChange}
-                placeholder={t('views:search', 'Search')}
-              />
-            </ListActions.Left>
-            <ListActions.Right>
-              <ConnectorListFilterHandler.Dropdown>
-                {(addFilter, availableFilters, resetFilters) => {
-                  console.log(availableFilters)
-                  return (
-                    <FilterSelect<ConnectorListFiltersKeys>
-                      options={CONNECTOR_FILTER_OPTIONS.filter(option => availableFilters.includes(option.value))}
-                      onChange={option => {
-                        addFilter(option.value)
-                        setOpenedFilter(option.value)
-                      }}
-                      onReset={resetFilters}
-                      inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
-                      buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                      displayLabel={
-                        <FilterSelectLabel
-                          selectedFilters={CONNECTOR_FILTER_OPTIONS.length - availableFilters.length}
-                          displayLabel={t('component:filter.defaultLabel', 'Filter')}
-                        />
-                      }
-                    />
-                  )
-                }}
-              </ConnectorListFilterHandler.Dropdown>
-              <Button variant="default">{t('views:connectors.createNew', 'Create new connector')}</Button>
-            </ListActions.Right>
-          </ListActions.Root>
-          <>
-            <Spacer size={4} />
-            <ListControlBar<ConnectorListFilters>
-              renderSelectedFilters={filterFieldRenderer => (
-                <ConnectorListFilterHandler.Content className={'flex items-center gap-x-2'}>
-                  {CONNECTOR_FILTER_OPTIONS.map(filterOption => {
-                    return (
-                      <ConnectorListFilterHandler.Component
-                        parser={filterOption.parser as any}
-                        filterKey={filterOption.value}
-                        key={filterOption.value}
-                      >
-                        {({ onChange, removeFilter, value }) =>
-                          filterFieldRenderer({
-                            filterOption,
-                            onChange,
-                            removeFilter,
-                            value: value,
-                            onOpenChange: isOpen => {
-                              handleFilterOpen?.(filterOption.value, isOpen)
-                            }
-                          })
-                        }
-                      </ConnectorListFilterHandler.Component>
-                    )
-                  })}
-                </ConnectorListFilterHandler.Content>
-              )}
-              openedFilter={openedFilter}
-              setOpenedFilter={setOpenedFilter}
-              filterOptions={CONNECTOR_FILTER_OPTIONS}
-              sortOptions={[]}
-              selectedFiltersCnt={0}
-              renderFilterOptions={filterOptionsRenderer => (
-                <ConnectorListFilterHandler.Dropdown>
-                  {(addFilter, availableFilters, resetFilters) => (
-                    <div className="flex items-center gap-x-4">
-                      {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
-                    </div>
-                  )}
-                </ConnectorListFilterHandler.Dropdown>
-              )}
-              sortDirections={[]}
-              t={t}
-              filterHandlers={filterHandlers}
-            />
-          </>
-        </ConnectorListFilterHandler>
+          onFilterValueChange={onFilterValueChange}
+          searchInput={searchInput}
+          handleInputChange={handleInputChange}
+          headerAction={<Button variant="default">{t('views:connectors.createNew', 'Create new connector')}</Button>}
+          t={t}
+          filterOptions={CONNECTOR_FILTER_OPTIONS}
+        />
         <Spacer size={4} />
         <ConnectorsList
           connectors={connectors}

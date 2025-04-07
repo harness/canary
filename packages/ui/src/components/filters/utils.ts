@@ -13,6 +13,7 @@ import {
   type FilterOption,
   type FilterValue
 } from './types'
+import { CheckboxOptions } from './types'
 
 /**
  * Gets the label and icon for the sort trigger button
@@ -123,6 +124,12 @@ export const getFilterLabelValue = <T extends FilterValueTypes>(
 
     case FilterFieldTypes.ComboBox: {
       return (filter.value as ComboBoxOptions)?.label
+    }
+    case FilterFieldTypes.Checkbox: {
+      return (filter.value as CheckboxOptions[])?.map(option => option.label).join(', ')
+    }
+    case FilterFieldTypes.Text: {
+      return (filter.value as string)
     }
     default:
       return ''

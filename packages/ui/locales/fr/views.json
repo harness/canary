@@ -250,7 +250,14 @@
   "search": "Rechercher",
   "connectors": {
     "createNew": "Créer un nouveau connecteur",
-    "delete": "Supprimer le connecteur"
+    "delete": "Supprimer le connecteur",
+    "filterOptions": {
+      "statusOption": {
+        "label": "Status",
+        "success": "Success",
+        "failure": "Failure"
+      }
+    }
   },
   "execution": {
     "summary": "Résumé",

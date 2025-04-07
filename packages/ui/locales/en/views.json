@@ -277,6 +277,13 @@
   "connectors": {
     "createNew": "Create new connector",
     "delete": "Delete Connector",
+    "filterOptions": {
+      "statusOption": {
+        "label": "Status",
+        "success": "Success",
+        "failure": "Failure"
+      }
+    },
     "updated": "Last updated",
     "lastConnected": "Last connected"
   },

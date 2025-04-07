@@ -1,3 +1,4 @@
+import { CheckboxOptions } from '@components/filters/filters-bar/actions/variants/checkbox'
 import { PaginationProps } from '@components/index'
 import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
@@ -35,6 +36,10 @@ export interface ConnectorListProps extends Partial<RoutingProps> {
   onDeleteConnector: (connectorId: string) => void
 }
 
+export type ConnectorListFilters = {
+  status?: CheckboxOptions
+}
+
 export interface ConnectorListPageProps
   extends ConnectorListProps,
     Pick<PaginationProps, 'totalPages' | 'currentPage' | 'goToPage'> {
@@ -42,4 +47,5 @@ export interface ConnectorListPageProps
   setSearchQuery: (query?: string) => void
   isError?: boolean
   errorMessage?: string
+  onFilterChange?: (filterValues: ConnectorListFilters) => void
 }

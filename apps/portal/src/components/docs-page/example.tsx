@@ -21,7 +21,7 @@ const Example: FC<ExampleProps> = ({ code, scope, padding = true }) => {
       path: "*",
       element: (
         <LivePreview
-          className={`not-content border-borders-4 bg-cn-background-hover dark-std-std mb-0 rounded-lg border ${padding ? "p-6" : ""} shadow-md`}
+          className={`not-content border-borders-4 bg-background-4 dark-std-std mb-0 rounded-lg border ${padding ? "p-6" : ""} shadow-md`}
         />
       ),
     },

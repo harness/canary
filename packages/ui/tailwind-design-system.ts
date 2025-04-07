@@ -129,11 +129,6 @@ export default {
           DEFAULT: 'var(--cn-text-1)'
         },
         background: {
-          // TODO: remove DEFAULT, cause use old color var
-          DEFAULT: 'hsl(var(--canary-background))',
-          1: 'hsl(var(--canary-background-01))',
-          2: 'hsl(var(--canary-background-02))',
-          3: 'hsl(var(--canary-background-03))',
           4: 'hsla(var(--canary-background-04))',
           5: 'hsl(var(--canary-background-05))',
           6: 'hsl(var(--canary-background-06))',

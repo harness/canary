@@ -13,6 +13,7 @@ import { AppShell } from './components-v2/app-shell'
 import { AppShellMFE } from './components-v2/app-shell-mfe'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { AppProvider } from './framework/context/AppContext'
+import { AppRouterProvider } from './framework/context/AppRouterProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { useTranslationStore } from './i18n/stores/i18n-store'
@@ -660,9 +661,11 @@ export const routes: CustomRouteObject[] = [
   {
     path: '/',
     element: (
-      <AppProvider>
-        <AppShell />
-      </AppProvider>
+      <AppRouterProvider>
+        <AppProvider>
+          <AppShell />
+        </AppProvider>
+      </AppRouterProvider>
     ),
     handle: { routeName: 'toHome' },
     children: [

@@ -24,7 +24,6 @@
     "@harnessio/code-service-client": "3.5.0",
     "@harnessio/forms": "workspace:*",
     "@harnessio/pipeline-graph": "workspace:*",
-    "@harnessio/core-design-system": "workspace:*",
     "@harnessio/ui": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
     "@hookform/resolvers": "^3.6.0",

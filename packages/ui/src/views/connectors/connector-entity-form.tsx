@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { SecretItem, TranslationStore } from '@/views'
+import { TranslationStore } from '@/views'
 import { Alert } from '@components/alert'
 import { Button } from '@components/button'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'

@@ -19,7 +19,7 @@ main {
 }
 
 code {
-  @apply bg-background-3 !important;
+  @apply bg-cn-background-3 !important;
 }
 
 .content-panel {
@@ -97,11 +97,11 @@ ul.top-level summary svg {
 /* Search override */
 
 [aria-label="Search"] {
-  @apply bg-background-4 border border-borders-4 rounded-md h-[36px] !important;
+  @apply bg-cn-background-3 border border-borders-4 rounded-md h-[36px] !important;
 }
 
 [aria-label="Search"] > kbd:first-of-type {
-  @apply bg-background-2 border border-borders-2 !important;
+  @apply bg-cn-background-2 border border-borders-2 !important;
 }
 
 /* Code/Preview override */
@@ -111,7 +111,7 @@ ul.top-level summary svg {
 }
 
 pre.prism-code {
-  @apply rounded-md overflow-hidden border border-borders-4 bg-background-2 !important;
+  @apply rounded-md overflow-hidden border border-borders-4 bg-cn-background-2 !important;
 }
 
 /* Pagination overrides */

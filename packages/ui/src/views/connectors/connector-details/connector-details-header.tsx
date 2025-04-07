@@ -1,19 +1,26 @@
 import { FC } from 'react'
 
-import { Button } from '@/components'
+import { Button, MoreActionsTooltip } from '@/components'
 import { Logo } from '@components/logo'
 import { Spacer } from '@components/spacer'
 import { timeAgo } from '@utils/utils'
 
 import { ConnectorDetailsHeaderProps } from './types'
 
-const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({ connectorDetails, onTest, useTranslationStore }) => {
+const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
+  connectorDetails,
+  onTest,
+  onDelete,
+  useTranslationStore
+}) => {
   const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status } = connectorDetails
   const { t } = useTranslationStore()
   return (
     <div className="px-6 py-5">
-      <Logo name={connectorDetails.icon} />
-      <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">{connectorDetails.name}</h1>
+      <div className="flex size-full cursor-pointer flex-row gap-2 p-2">
+        <Logo name={connectorDetails.icon} />
+        <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">{connectorDetails.name}</h1>
+      </div>
       <h2 className="text-14 font-medium text-foreground-1">{connectorDetails.description}</h2>
       <Spacer size={4} />
       <div className="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-14 leading-none">
@@ -50,9 +57,17 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({ connectorDeta
           )}
         </div>
         <div className="flex h-full items-end gap-11">
-          <Button variant="default" onClick={onTest}>
+          <Button variant="default" onClick={() => onTest(connectorDetails.identifier)}>
             Test Connection
           </Button>
+          <MoreActionsTooltip
+            actions={[
+              {
+                title: t('views:connectors.delete', 'Delete connector'),
+                onClick: () => onDelete(connectorDetails.identifier)
+              }
+            ]}
+          />
         </div>
       </div>
     </div>

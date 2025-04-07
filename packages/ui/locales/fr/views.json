@@ -241,6 +241,19 @@
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
+  "common": {
+    "details": "Détails",
+    "lastActivity": "Dernière activité",
+    "created": "Créé",
+    "manager": "Gestionnaire"
+  },
+  "connectors": {
+    "delete": "Supprimer le connecteur",
+    "configuration": "Configuration",
+    "references": "References",
+    "activityHistory": "Activity history",
+    "createNew": "Créer un nouveau connecteur"
+  },
   "notFound": {
     "button": "Recharger la page",
     "title": "Quelque chose s'est mal passé…",
@@ -248,10 +261,6 @@
     "description": "La page demandée est introuvable."
   },
   "search": "Rechercher",
-  "connectors": {
-    "createNew": "Créer un nouveau connecteur",
-    "delete": "Supprimer le connecteur"
-  },
   "execution": {
     "summary": "Résumé",
     "logs": "Journaux",
@@ -552,12 +561,6 @@
   },
   "secret": {
     "title": "Secret"
-  },
-  "common": {
-    "details": "Détails",
-    "lastActivity": "Dernière activité",
-    "created": "Créé",
-    "manager": "Gestionnaire"
   },
   "userManagement": {
     "createUser": {

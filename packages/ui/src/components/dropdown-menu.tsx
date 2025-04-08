@@ -107,7 +107,7 @@ const DropdownMenuItem = React.forwardRef<
     ref={ref}
     className={cn(
       'text-cn-foreground-1 relative flex cursor-pointer select-none items-center rounded-sm px-2 py-[7px] text-sm outline-none transition-colors',
-      'data-[highlighted]:bg-cn-background-hover data-[highlighted]:text-primary data-[highlighted]:outline-none',
+      'data-[highlighted]:bg-cn-background-hover data-[highlighted]:text-cn-foreground-1 data-[highlighted]:outline-none',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       inset && 'pl-8',
       className
@@ -125,7 +125,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     ref={ref}
     className={cn(
       'group relative flex cursor-pointer select-none items-center rounded-sm py-2 pl-8 pr-2 text-sm outline-none transition-colors',
-      'data-[highlighted]:bg-cn-background-hover data-[highlighted]:text-primary data-[highlighted]:outline-none',
+      'data-[highlighted]:bg-cn-background-hover data-[highlighted]:text-cn-foreground-1 data-[highlighted]:outline-none',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className
     )}

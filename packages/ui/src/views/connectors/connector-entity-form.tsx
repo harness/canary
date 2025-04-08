@@ -28,6 +28,7 @@ interface ConnectorEntityFormProps {
   inputComponentFactory: InputFactory
   apiError?: string | null
   intent: EntityIntent
+  autoExpandGroup?: boolean
 }
 
 export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
@@ -39,7 +40,8 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     onBack,
     useTranslationStore,
     inputComponentFactory,
-    intent
+    intent,
+    autoExpandGroup
   } = props
   const { t: _t } = useTranslationStore()
   const [connectorEditValues, setConnectorEditValues] = useState({})
@@ -124,7 +126,12 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
               </EntityFormSectionLayout.Header>
             )}
             <EntityFormSectionLayout.Form className="!px-0">
-              <RenderForm className="space-y-4 max-w-xl" factory={inputComponentFactory} inputs={formDefinition} />
+              <RenderForm
+                className="space-y-4 max-w-xl"
+                factory={inputComponentFactory}
+                inputs={formDefinition}
+                autoExpandGroup={!!autoExpandGroup}
+              />
               {apiError && (
                 <Alert.Container variant="destructive" className="my-8">
                   <Alert.Description>{apiError.toString()}</Alert.Description>

@@ -8,15 +8,16 @@ export interface RenderFormProps {
   inputs: IFormDefinition
   factory: InputFactory
   className?: string
+  autoExpandGroup?: boolean
 }
 
 export const RenderForm = forwardRef<HTMLDivElement, RenderFormProps>((props, ref): React.ReactElement => {
-  const { inputs, className, factory } = props
+  const { inputs, className, factory, autoExpandGroup } = props
 
   return (
     <div className={className} ref={ref}>
       {inputs.hero}
-      <RenderInputs items={inputs.inputs} factory={factory} />
+      <RenderInputs items={inputs.inputs} factory={factory} autoExpandGroup={autoExpandGroup} />
     </div>
   )
 })

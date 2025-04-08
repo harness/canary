@@ -14,7 +14,7 @@ export interface GroupInputConfig {
 }
 
 function GroupInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
-  const { input, factory, path } = props
+  const { input, factory, path, autoExpandGroup } = props
   const { label = '', inputs = [], required, description } = input
 
   const { formState } = useFormContext()
@@ -29,12 +29,21 @@ function GroupInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
     setForceMount(undefined)
   }, [])
 
+  const [value, setValue] = useState<string>(autoExpandGroup ? 'group' : '')
+
+  const onValueChange = (value: string | string[]) => {
+    if (typeof value === 'string') {
+      setValue(value)
+    }
+  }
+
   return (
     <Accordion.Root
       type="single"
       collapsible
       className="w-full bg-muted/30 px-3"
-      // onValueChange={value => setIsOpen(!!value)}
+      onValueChange={onValueChange}
+      value={value}
     >
       <Accordion.Item value={'group'} className="border-b-0">
         <Accordion.Trigger>

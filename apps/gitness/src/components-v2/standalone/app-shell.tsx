@@ -65,7 +65,7 @@ export const AppShell: FC = () => {
 
   return (
     <>
-      <AppSideBar getNavbarMenuData={getNavbarMenuData}>
+      <AppSideBar>
         <MainContentLayout breadcrumbs={<Breadcrumbs />}>
           <Outlet />
         </MainContentLayout>

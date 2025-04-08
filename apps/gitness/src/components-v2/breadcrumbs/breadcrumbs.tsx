@@ -1,21 +1,18 @@
-import { Params, UIMatch } from 'react-router-dom'
+import { UIMatch } from 'react-router-dom'
 
-import { Breadcrumb, Separator, Sidebar, Topbar } from '@/components'
-import { useRouterContext, useTheme } from '@/context'
-import { cn } from '@/utils'
+import { Breadcrumb, Separator, Sidebar, Topbar } from '@harnessio/ui/components'
+import { useRouterContext, useTheme } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
-export interface BreadcrumbHandle {
-  breadcrumb: (params: Params<string>) => string | JSX.Element
-  asLink?: boolean
-}
+import { CustomHandle } from '../../framework/routing/types'
 
-export interface AppBreadcrumbsProps {
-  breadcrumbs: UIMatch<unknown, BreadcrumbHandle>[]
+export interface BreadcrumbsProps {
+  breadcrumbs: UIMatch<unknown, CustomHandle>[]
   withMobileSidebarToggle?: boolean
   isMobile?: boolean
 }
 
-export const AppBreadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMobile }: AppBreadcrumbsProps) => {
+export const Breadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMobile = false }: BreadcrumbsProps) => {
   const { Link } = useRouterContext()
   const { isInset } = useTheme()
 

@@ -510,6 +510,10 @@ mark {
   display: none !important;
 }
 
+.inset-layout {
+  @apply bg-sidebar-background-1;
+}
+
 .nested-sidebar-height {
   @apply h-[calc(100vh-100px)]; /* where 55px (Breadcrumbs height) + 45px (SubHeader height) = 100px */
 

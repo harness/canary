@@ -3,7 +3,6 @@ import { PropsWithChildren } from 'react'
 import { SidebarContext } from '@/components'
 import { useTheme } from '@/context'
 import { cn } from '@/utils'
-import { AppBreadcrumbs, AppBreadcrumbsProps } from '@components/app-breadcrumbs'
 
 const HalfArch = ({ className }: { className?: string }) => (
   <div className="relative size-1.5 overflow-hidden">
@@ -16,42 +15,40 @@ const HalfArch = ({ className }: { className?: string }) => (
   </div>
 )
 
-type MainContentLayoutProps = PropsWithChildren<AppBreadcrumbsProps & { useSidebar?: () => SidebarContext }>
+type MainContentLayoutProps = PropsWithChildren<{
+  useSidebar?: () => SidebarContext
+  withBreadcrumbs?: boolean
+}>
 
-export function MainContentLayout({ children, useSidebar, ...breadcrumbsProps }: MainContentLayoutProps) {
+export function MainContentLayout({ children, useSidebar, withBreadcrumbs }: MainContentLayoutProps) {
   const { isInset } = useTheme()
   const sidebarData = useSidebar?.()
   const isMobile = sidebarData?.isMobile
-  const withBreadcrumbs = breadcrumbsProps.breadcrumbs?.length > 0
 
   return (
-    <>
-      <AppBreadcrumbs isMobile={isMobile} {...breadcrumbsProps} />
-      <div
-        className={cn(
-          'min-h-screen bg-cn-background-1',
-          { 'min-h-[calc(100vh-55px)]': withBreadcrumbs },
-          { 'min-h-[calc(100vh-6px*2)] my-1.5 mr-1.5 border rounded-md min-w-fit': isInset },
-          { 'min-h-[calc(100vh-55px-6px)] mb-1.5 mt-0': isInset && withBreadcrumbs },
-          { 'ml-1.5': isMobile }
-        )}
-      >
-        {isInset && (
-          <div
-            aria-hidden
-            role="presentation"
-            className={cn(
-              'sticky w-[calc(100%+2px)] flex justify-between left-0 right-0 top-0 -mx-px -mt-px -mb-1.5 z-20',
-              { 'top-[55px]': withBreadcrumbs }
-            )}
-          >
-            <HalfArch className="left-0" />
-            <div className="w-full border-t" />
-            <HalfArch className="right-0" />
-          </div>
-        )}
-        {children}
-      </div>
-    </>
+    <div
+      className={cn('min-h-screen bg-cn-background-1', {
+        'ml-1.5': isMobile,
+        'min-h-[calc(100vh-55px)]': withBreadcrumbs,
+        'min-h-[calc(100vh-55px-6px)] mb-1.5 mt-0': isInset && withBreadcrumbs,
+        'min-h-[calc(100vh-6px*2)] my-1.5 mr-1.5 border rounded-md min-w-fit': isInset
+      })}
+    >
+      {isInset && (
+        <div
+          aria-hidden
+          role="presentation"
+          className={cn(
+            'sticky w-[calc(100%+2px)] flex justify-between left-0 right-0 top-0 -mx-px -mt-px -mb-1.5 z-20',
+            { 'top-[55px]': withBreadcrumbs }
+          )}
+        >
+          <HalfArch className="left-0" />
+          <div className="w-full border-t" />
+          <HalfArch className="right-0" />
+        </div>
+      )}
+      {children}
+    </div>
   )
 }

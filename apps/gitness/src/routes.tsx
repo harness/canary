@@ -10,8 +10,8 @@ import {
 } from '@harnessio/ui/views'
 
 import { AppShellMFE } from './components-v2/mfe/app-shell'
+import { ProjectDropdown } from './components-v2/project-dropdown'
 import { AppShell } from './components-v2/standalone/app-shell'
-import { ProjectDropdown } from './components-v2/standalone/breadcrumbs/project-dropdown'
 import { AppProvider } from './framework/context/AppContext'
 import { AppRouterProvider } from './framework/context/AppRouterProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'

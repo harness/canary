@@ -3,9 +3,9 @@ import { Link, useMatches } from 'react-router-dom'
 import { Breadcrumb, Separator, Sidebar, Topbar, useSidebar } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/utils'
 
-import { useThemeStore } from '../../../framework/context/ThemeContext'
-import { useIsMFE } from '../../../framework/hooks/useIsMFE'
-import { CustomHandle } from '../../../framework/routing/types'
+import { useThemeStore } from '../../framework/context/ThemeContext'
+import { useIsMFE } from '../../framework/hooks/useIsMFE'
+import { CustomHandle } from '../../framework/routing/types'
 
 function Breadcrumbs() {
   const matches = useMatches()

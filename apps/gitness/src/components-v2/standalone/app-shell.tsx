@@ -14,7 +14,7 @@ import { useSelectedSpaceId } from '../../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { Toaster } from '../toaster'
-import Breadcrumbs from './breadcrumbs/breadcrumbs'
+import Breadcrumbs from './breadcrumbs'
 import { AppSideBar } from './side-bar'
 
 interface NavLinkStorageInterface {

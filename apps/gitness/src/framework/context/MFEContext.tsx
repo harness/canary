@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-export interface Scope {
+interface Scope {
   accountId?: string
   orgIdentifier?: string
   projectIdentifier?: string

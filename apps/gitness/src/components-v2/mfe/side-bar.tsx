@@ -12,7 +12,7 @@ const SideBarToggleMenuItem: FC = () => {
   const { t } = useTranslationStore()
   const { collapsed, toggleSidebar } = useSidebar()
   return (
-    <Sidebar.MenuItem>
+    <Sidebar.MenuItem className="flex justify-center">
       <Sidebar.MenuButton onClick={toggleSidebar}>
         <Sidebar.MenuItemText
           className="pl-0"
@@ -87,7 +87,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
         </Sidebar.Content>
         <Sidebar.Group>
           <Sidebar.Menu>
-            <Sidebar.MenuItem>
+            <Sidebar.MenuItem className="flex justify-center">
               <Sidebar.MenuButton
                 onClick={() => {
                   const currentUrl = window.location.href

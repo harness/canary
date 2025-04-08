@@ -2,6 +2,7 @@ import starlight from "@astrojs/starlight";
 import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
+import { wrapCodeBlocks } from "./src/wrap-code-blocks.ts";
 
 // if static building, mock `document` to prevent a bug triggered by a 3rd party dependency
 if (!("document" in globalThis)) {
@@ -65,6 +66,9 @@ export default defineConfig({
     tailwind({ applyBaseStyles: false }),
     react(),
   ],
+  markdown: {
+    rehypePlugins: [wrapCodeBlocks],
+  },
   redirects: {
     "/": "/components/accordion",
   },

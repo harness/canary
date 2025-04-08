@@ -67,8 +67,8 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
     setIsLoadingUser(true)
     setUpdateUserError(null)
     try {
-      if (isMFE) {
-        const { data } = await customPromises.getCurrentUser?.({
+      if (isMFE && customPromises?.getCurrentUser) {
+        const { data } = await customPromises.getCurrentUser({
           queryParams: { accountIdentifier: scope.accountId }
         })
         setCurrentUser({

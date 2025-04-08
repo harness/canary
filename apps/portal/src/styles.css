@@ -45,7 +45,7 @@ ul.top-level ul {
 }
 
 ul.top-level li {
-  @apply font-normal text-secondary text-sm border-none p-0 m-0;
+  @apply font-normal text-cn-foreground-2 text-sm border-none p-0 m-0;
 }
 
 ul.top-level li a {

@@ -1133,10 +1133,12 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | nul
   {
     path: '/',
     element: (
-      <AppProvider>
-        {mfeRouteRenderer}
-        <AppShellMFE />
-      </AppProvider>
+      <AppRouterProvider>
+        <AppProvider>
+          {mfeRouteRenderer}
+          <AppShellMFE />
+        </AppProvider>
+      </AppRouterProvider>
     ),
     handle: { routeName: RouteConstants.toHome },
     children: [

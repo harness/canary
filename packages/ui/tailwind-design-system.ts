@@ -185,6 +185,7 @@ export default {
           1: 'var(--cn-border-1)',
           2: 'var(--cn-border-2)',
           3: 'var(--cn-border-3)',
+          brand: 'var(--cn-set-brand-solid-border)',
           solidred: 'var(--cn-set-red-solid-border)',
 
           // remove

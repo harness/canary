@@ -52,7 +52,7 @@ const buttonVariants = cva(
         success:
           'border-button-border-success-1 bg-button-background-success-1 text-button-foreground-success-1 hover:bg-button-background-success-2',
         muted: 'border-cn-borders-3/20 bg-cn-background-1/10 text-cn-foreground-3',
-        primary: 'border-primary-foreground/20 bg-cn-background-primary text-cn-foreground-primary',
+        primary: 'border-cn-borders-brand/20 bg-cn-background-primary text-cn-foreground-primary',
         disabled:
           'border-button-border-disabled-1 bg-button-background-disabled-1 text-button-foreground-disabled-1 disabled:bg-button-background-disabled-1 disabled:text-button-foreground-disabled-1'
       },

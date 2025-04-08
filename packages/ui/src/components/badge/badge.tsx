@@ -1,7 +1,7 @@
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const badgeVariants = cva('badge inline-flex items-center transition-colors', {
+const badgeVariants = cva('badge inline-flex w-fit items-center transition-colors', {
   variants: {
     variant: {
       solid: 'badge-solid',

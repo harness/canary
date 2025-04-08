@@ -54,18 +54,24 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
           {formattedDate}
         </Button>
       </HoverCard.Trigger>
-      <HoverCard.Content className="w-80 space-y-2 p-3 text-sm" avoidCollisions>
-        {(['UTC', 'Local'] as const).map(zone => (
-          <div key={zone} className="flex items-center gap-2">
-            <Badge variant="soft" size="sm" theme="muted">
-              {zone === 'UTC' ? 'UTC' : getTimeZoneAbbreviation()}
-            </Badge>
-            <span>{zone === 'UTC' ? formattedDates.utcDate : formattedDates.localDate}</span>
-            <span className="ml-auto text-cn-foreground-3">
-              {zone === 'UTC' ? formattedDates.utcTime : formattedDates.localTime}
-            </span>
-          </div>
-        ))}
+      <HoverCard.Content className="grid w-80 grid-cols-[auto_1fr_1fr] gap-x-3 gap-y-2 p-2.5 text-sm" avoidCollisions>
+        {(['UTC', 'Local'] as const).map(zone => {
+          const date = zone === 'UTC' ? formattedDates.utcDate : formattedDates.localDate
+          const time = zone === 'UTC' ? formattedDates.utcTime : formattedDates.localTime
+
+          return (
+            <>
+              <Badge variant="soft" size="sm">
+                {zone === 'UTC' ? 'UTC' : getTimeZoneAbbreviation()}
+              </Badge>
+              <time dateTime={date}>{date}</time>
+              <time dateTime={time} className="text-cn-foreground-3 ml-auto">
+                {time}
+              </time>
+            </>
+          )
+        })}
+        <HoverCard.Arrow />
       </HoverCard.Content>
     </HoverCard.Root>
   )

@@ -12,6 +12,7 @@ import {
   ConnectorEntity,
   ConnectorEntityForm,
   ConnectorsPalette,
+  ConnectorTestConnection,
   EntityIntent,
   GroupInput,
   ListInput,
@@ -43,7 +44,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
   const [isConnectorSelected, setIsConnectorSelected] = useState(false)
   const [, setIsSecretDrawerOpen] = useState(false)
   const [intent, setIntent] = useState<EntityIntent>(EntityIntent.CREATE)
-
+  const [testConnectionOpen, setTestConnectionOpen] = useState(false)
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
@@ -80,11 +81,16 @@ const ConnectorsListPageContent = (): JSX.Element => {
               >
                 Edit Connector
               </Button>
+              <Button variant="default" onClick={() => setTestConnectionOpen(true)}>
+                Test Connection
+              </Button>
             </ListActions.Right>
           </ListActions.Root>
           <Spacer size={5} />
         </>
       </SandboxLayout.Content>
+
+      <ConnectorTestConnection isOpen={testConnectionOpen} onClose={() => setTestConnectionOpen(false)} />
       <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
         <Drawer.Content>
           <ConnectorsPalette

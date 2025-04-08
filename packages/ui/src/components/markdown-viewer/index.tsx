@@ -8,6 +8,7 @@ import rehypeSanitize from 'rehype-sanitize'
 import rehypeVideo from 'rehype-video'
 
 import './style.css'
+import './line-numbers.css'
 
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
@@ -39,6 +40,7 @@ interface MarkdownViewerProps {
   suggestionCheckSum?: string
   isSuggestion?: boolean
   markdownClassName?: string
+  showLineNumbers?: boolean // New prop to control line number display
 }
 
 export function MarkdownViewer({
@@ -48,7 +50,8 @@ export function MarkdownViewer({
   suggestionBlock,
   suggestionCheckSum,
   isSuggestion,
-  markdownClassName
+  markdownClassName,
+  showLineNumbers = false // Default to false
 }: MarkdownViewerProps) {
   const { navigate } = useRouterContext()
   const [isOpen, setIsOpen] = useState(false)
@@ -185,6 +188,23 @@ export function MarkdownViewer({
             pre: ({ children, node }) => {
               const code = node && node.children ? getCodeString(node.children) : (children as string)
 
+              // Extract and process code content for line numbers
+              let codeContent = ''
+
+              // Find the code element and extract its content
+              if (typeof code === 'string') {
+                codeContent = code
+              }
+
+              // Clean code and trim lines and filter by lines
+              const trimmedCode = codeContent.trim()
+              // Then split by newlines
+              const codeLines = trimmedCode.split('\n')
+              // Filter out any empty lines at the end
+              const filteredLines =
+                codeLines.length > 0 && codeLines[codeLines.length - 1] === '' ? codeLines.slice(0, -1) : codeLines
+              const hasLineNumbers = showLineNumbers && filteredLines.length > 1
+
               return (
                 <div className="relative">
                   <CopyButton
@@ -193,7 +213,20 @@ export function MarkdownViewer({
                     name={code}
                     iconSize={13}
                   />
-                  <pre className="!bg-cn-background-1">{children}</pre>
+                  <pre className={cn('!bg-cn-background-1', { 'line-numbers': hasLineNumbers })}>
+                    {hasLineNumbers ? (
+                      <div className="code-with-line-numbers">
+                        <div className="line-numbers-rows">
+                          {filteredLines.map((_, i) => (
+                            <span key={i}>{i + 1}</span>
+                          ))}
+                        </div>
+                        <div className="code-content">{children}</div>
+                      </div>
+                    ) : (
+                      children
+                    )}
+                  </pre>
                 </div>
               )
             },

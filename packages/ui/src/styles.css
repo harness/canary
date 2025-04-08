@@ -99,7 +99,7 @@
   @apply text-cn-foreground-danger mt-2 text-xs font-light;
 }
 .form-input {
-  @apply border-primary/10 bg-cn-background-accent/5 mt-1 w-full rounded-[4px] text-sm font-light;
+  @apply border-cn-borders-1/10 bg-cn-background-accent/5 mt-1 w-full rounded-[4px] text-sm font-light;
   @apply placeholder:text-cn-foreground-1/50 !important;
 }
 

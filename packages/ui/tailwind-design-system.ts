@@ -182,10 +182,10 @@ export default {
           alert: 'hsl(var(--canary-border-alert))'
         },
         'cn-borders': {
-          1: 'var(--cn-border-1)',
-          2: 'var(--cn-border-2)',
-          3: 'var(--cn-border-3)',
-          brand: 'var(--cn-set-brand-solid-border)',
+          1: 'lch(from var(--cn-border-1) l c h / <alpha-value>)',
+          2: 'lch(from var(--cn-border-2) l c h / <alpha-value>)',
+          3: 'lch(from var(--cn-border-3) l c h / <alpha-value>)',
+          brand: 'lch(from var(--cn-set-brand-solid-border) l c h / <alpha-value>)',
           solidred: 'var(--cn-set-red-solid-border)',
 
           // remove

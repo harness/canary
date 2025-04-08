@@ -53,7 +53,7 @@ ul.top-level li a {
 }
 
 ul.top-level li a[aria-current="page"] {
-  @apply font-normal bg-primary-background rounded-md text-foreground-1;
+  @apply font-normal bg-cn-background-1 rounded-md text-cn-foreground-1;
 }
 
 ul.top-level li details summary {

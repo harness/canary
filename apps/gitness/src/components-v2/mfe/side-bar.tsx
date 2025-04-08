@@ -2,17 +2,37 @@ import { FC } from 'react'
 
 import { noop } from 'lodash-es'
 
-import { HarnessLogo, Icon, IconProps, Sidebar, User } from '@harnessio/ui/components'
+import { HarnessLogo, Icon, IconProps, Sidebar, User, useSidebar } from '@harnessio/ui/components'
 import { useRouterContext } from '@harnessio/ui/context'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
+const SideBarToggleMenuItem: FC = () => {
+  const { t } = useTranslationStore()
+  const { collapsed, toggleSidebar } = useSidebar()
+  return (
+    <Sidebar.MenuItem>
+      <Sidebar.MenuButton onClick={toggleSidebar}>
+        <Sidebar.MenuItemText
+          className="pl-0"
+          aria-label={
+            collapsed
+              ? t('component:navbar.sidebarToggle.expand', 'Expand')
+              : t('component:navbar.sidebarToggle.collapse', 'Collapse')
+          }
+          text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
+          icon={<Icon name={collapsed ? 'sidebar-right' : 'sidebar-left'} size={14} />}
+        />
+      </Sidebar.MenuButton>
+    </Sidebar.MenuItem>
+  )
+}
+
 const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currentUser } = useAppContext()
   const { t } = useTranslationStore()
   const { NavLink } = useRouterContext()
-  const collapsed = false
 
   const renderMenuItem = ({ to, text, iconName }: { to: string; text: string; iconName: IconProps['name'] }) => (
     <Sidebar.MenuItem>
@@ -68,19 +88,18 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
         <Sidebar.Group>
           <Sidebar.Menu>
             <Sidebar.MenuItem>
-              <Sidebar.MenuButton onClick={noop}>
-                <Sidebar.MenuItemText
-                  className="pl-0"
-                  aria-label={
-                    collapsed
-                      ? t('component:navbar.sidebarToggle.expand', 'Expand')
-                      : t('component:navbar.sidebarToggle.collapse', 'Collapse')
-                  }
-                  text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
-                  icon={<Icon name={collapsed ? 'sidebar-right' : 'sidebar-left'} size={14} />}
-                />
+              <Sidebar.MenuButton
+                onClick={() => {
+                  const currentUrl = window.location.href
+                  const updatedUrl = currentUrl.replace('/codev2', '/code')
+                  window.location.href = updatedUrl
+                }}
+                asChild
+              >
+                <Sidebar.MenuItemText text={t('component:navbar.sidebarToggle.switchToV1', 'Switch to V1')} />
               </Sidebar.MenuButton>
             </Sidebar.MenuItem>
+            <SideBarToggleMenuItem />
           </Sidebar.Menu>
         </Sidebar.Group>
         <Sidebar.Footer className="border-t border-sidebar-border-1 px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">

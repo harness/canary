@@ -13,8 +13,8 @@ import { useRepoImportEvents } from '../../framework/hooks/useRepoImportEvent'
 import { useSelectedSpaceId } from '../../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
-import Breadcrumbs from '../breadcrumbs/breadcrumbs'
 import { Toaster } from '../toaster'
+import Breadcrumbs from './breadcrumbs/breadcrumbs'
 import { AppSideBar } from './side-bar'
 
 interface NavLinkStorageInterface {
@@ -24,7 +24,7 @@ interface NavLinkStorageInterface {
   }
 }
 
-export const AppShell = () => {
+export const AppShell: FC = () => {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const { pinnedMenu, setRecent, setNavLinks } = useNav()

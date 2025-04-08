@@ -5,7 +5,7 @@ import { NavbarItemType } from '@harnessio/ui/components'
 import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useNav } from '../../components/stores/recent-pinned-nav-links.store'
-import { getNavbarMenuData } from '../../data/navbar-menu-items'
+import { getNavbarMenuData } from '../../data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '../../data/pinned-items'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useLocationChange } from '../../framework/hooks/useLocationChange'

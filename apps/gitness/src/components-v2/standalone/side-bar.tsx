@@ -13,7 +13,7 @@ import {
 import { SidebarView } from '@harnessio/ui/views'
 
 import { useNav } from '../../components/stores/recent-pinned-nav-links.store'
-import { getNavbarMenuData } from '../../data/navbar-menu-items'
+import { getNavbarMenuData } from '../../data/navbar-menu-data'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useSelectedSpaceId } from '../../framework/hooks/useSelectedSpaceId'

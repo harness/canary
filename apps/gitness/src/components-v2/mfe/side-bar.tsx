@@ -8,7 +8,7 @@ import { useRouterContext } from '@harnessio/ui/context'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
-const AppSidebar: FC = () => {
+const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currentUser } = useAppContext()
   const { t } = useTranslationStore()
   const { NavLink } = useRouterContext()
@@ -86,6 +86,7 @@ const AppSidebar: FC = () => {
         </Sidebar.Footer>
         <Sidebar.Rail />
       </Sidebar.Root>
+      <Sidebar.Inset>{children}</Sidebar.Inset>
     </Sidebar.Provider>
   )
 }

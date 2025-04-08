@@ -13,11 +13,12 @@ export const AppShellMFE = memo(() => {
 
   return (
     <>
-      <AppSidebar />
-      <MainContentLayout breadcrumbs={<BreadcrumbsMFE />} className="min-h-screen text-foreground-2">
-        <Outlet />
-      </MainContentLayout>
-      <Toaster />
+      <AppSidebar>
+        <MainContentLayout breadcrumbs={<BreadcrumbsMFE />} className="min-h-screen text-foreground-2">
+          <Outlet />
+        </MainContentLayout>
+        <Toaster />
+      </AppSidebar>
     </>
   )
 })

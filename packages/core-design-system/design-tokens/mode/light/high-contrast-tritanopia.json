@@ -2191,11 +2191,11 @@
   "iconStrokeWidth": {
     "xs": {
       "$type": "borderWidth",
-      "$value": "1.4"
+      "$value": "1"
     },
     "sm": {
       "$type": "borderWidth",
-      "$value": "1.1"
+      "$value": "1"
     },
     "default": {
       "$type": "borderWidth",
@@ -2203,7 +2203,7 @@
     },
     "md": {
       "$type": "borderWidth",
-      "$value": "1.4"
+      "$value": "1.2"
     },
     "lg": {
       "$type": "borderWidth",

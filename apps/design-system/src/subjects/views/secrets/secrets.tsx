@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { useTranslationStore } from '@utils/viewUtils'
 
-import { Drawer, Spacer } from '@harnessio/ui/components'
+import { Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
   CreateSecretFormFields,
   CreateSecretPage,
@@ -120,12 +120,17 @@ export const SecretsPage = ({
       <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
         <Drawer.Content>
           <Drawer.Header>
-            <Drawer.Title className="text-3xl">Secrets</Drawer.Title>
+            <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Secret</Drawer.Title>
+            <FormSeparator className="w-full" />
             <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
           </Drawer.Header>
-          <Spacer size={5} />
-
+          {/* <Spacer size={5} /> */}
+          <Text as="div" className="text-cn-foreground-2 my-4">
+            Choose type
+          </Text>
           <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
+          <Spacer size={5} />
+          <FormSeparator />
           <Spacer size={5} />
           {renderSecretContent()}
         </Drawer.Content>

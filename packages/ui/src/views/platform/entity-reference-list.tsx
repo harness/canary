@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { StackedList } from '@/components'
+import { Breadcrumb, StackedList } from '@/components'
 
 import {
   BaseEntityProps,
@@ -22,6 +22,8 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   parentFolderRenderer: (props: ParentFolderRendererProps<S>) => React.ReactNode
   childFolderRenderer: (props: ChildFolderRendererProps<F>) => React.ReactNode
   apiError?: string | null
+  /** Scope path for breadcrumbs (e.g. ["account", "org", "project"]) */
+  onBreadcrumbClick?: (index: number) => void
 }
 
 export function EntityReferenceList<T extends BaseEntityProps, S = string, F = string>({
@@ -32,14 +34,28 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   handleSelectEntity,
   handleScopeChange,
   renderEntity,
-
   defaultEntityRenderer,
   parentFolderRenderer,
   childFolderRenderer,
-  apiError
+  apiError,
+  onBreadcrumbClick
 }: EntityReferenceListProps<T, S, F>): JSX.Element {
   return (
     <StackedList.Root>
+      {/* Breadcrumb header */}
+      <StackedList.Item isHeader disableHover className="bg-cn-background-2">
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item>
+              <>
+                <Breadcrumb.Link className="cursor-pointer capitalize">{parentFolder}</Breadcrumb.Link>
+                <Breadcrumb.Separator />
+              </>
+            </Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      </StackedList.Item>
+
       {/* scopes */}
       {parentFolder ? (
         <>
@@ -72,28 +88,20 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                   ? renderEntity({
                       entity,
                       isSelected,
-                      onSelect: handleSelectEntity
+                      onSelect: () => handleSelectEntity(entity)
                     })
                   : defaultEntityRenderer({
                       entity,
                       isSelected,
-                      onSelect: handleSelectEntity
+                      onSelect: () => handleSelectEntity(entity)
                     })}
               </Fragment>
             )
           })}
         </>
       ) : (
-        <StackedList.Item disableHover>
-          <StackedList.Field
-            title={
-              <div
-                className={`flex h-32 items-center justify-center text-cn-foreground-2 ${apiError ? 'text-cn-foreground-danger' : ''}`}
-              >
-                {apiError ? apiError : 'No items available'}
-              </div>
-            }
-          />
+        <StackedList.Item>
+          <StackedList.Field title={apiError || 'No entities found'} />
         </StackedList.Item>
       )}
     </StackedList.Root>

@@ -10,10 +10,10 @@ import { useMFEContext } from '../framework/hooks/useMFEContext'
 import { useRepoImportEvents } from '../framework/hooks/useRepoImportEvent'
 import { useSelectedSpaceId } from '../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
+import { AppSidebar } from '../mfe/side-bar'
 import { PathParams } from '../RouteDefinitions'
 import { getNavbarMenuData } from '../sidebar-data/mfe/navbar-menu-items'
 import { getPinnedMenuItemsData } from '../sidebar-data/mfe/pinned-items'
-import { AppSideBar } from './app-side-bar'
 import BreadcrumbsMFE from './breadcrumbs/breadcrumbs-mfe'
 import { Toaster } from './toaster'
 
@@ -68,11 +68,10 @@ export const AppShellMFE = memo(() => {
 
   return (
     <>
-      <AppSideBar getNavbarMenuData={() => navMenuItemsData}>
-        <MainContentLayout breadcrumbs={<BreadcrumbsMFE />} className="min-h-screen text-foreground-2">
-          <Outlet />
-        </MainContentLayout>
-      </AppSideBar>
+      <AppSidebar />
+      <MainContentLayout breadcrumbs={<BreadcrumbsMFE />} className="min-h-screen text-foreground-2">
+        <Outlet />
+      </MainContentLayout>
       <Toaster />
     </>
   )

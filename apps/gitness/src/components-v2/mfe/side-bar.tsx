@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { noop } from 'lodash-es'
 
-import { HarnessLogo, Icon, Sidebar, User } from '@harnessio/ui/components'
+import { HarnessLogo, Icon, IconProps, Sidebar, User } from '@harnessio/ui/components'
 import { useRouterContext } from '@harnessio/ui/context'
 
 import { useAppContext } from '../../framework/context/AppContext'
@@ -14,16 +14,12 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { NavLink } = useRouterContext()
   const collapsed = false
 
-  const renderMenuItem = (to: string, text: string) => (
+  const renderMenuItem = ({ to, text, iconName }: { to: string; text: string; iconName: IconProps['name'] }) => (
     <Sidebar.MenuItem>
       <NavLink className="block" to={to} end>
         {({ isActive }) => (
           <Sidebar.MenuButton asChild isActive={isActive}>
-            <Sidebar.MenuItemText
-              text={text}
-              icon={<Icon name="repositories-gradient" size={14} />}
-              active={isActive}
-            />
+            <Sidebar.MenuItemText text={text} icon={<Icon name={iconName} size={14} />} active={isActive} />
           </Sidebar.MenuButton>
         )}
       </NavLink>
@@ -42,23 +38,29 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
           <Sidebar.Group>
             <Sidebar.GroupContent>
               <Sidebar.Menu>
-                {renderMenuItem('/repos', 'Repositories')}
-                {renderMenuItem('/search', 'Search')}
-                {renderMenuItem('/pull-requests', 'Pull Requests')}
-                {renderMenuItem('/manage-repos', 'Manage Repositories')}
+                {renderMenuItem({ to: '/repos', text: 'Repositories', iconName: 'repositories-gradient' })}
+                {renderMenuItem({ to: '/search', text: 'Search', iconName: 'search' })}
+                {renderMenuItem({ to: '/pull-requests', text: 'Pull Requests', iconName: 'pull' })}
+                {renderMenuItem({ to: '/manage-repos', text: 'Manage Repositories', iconName: 'repositories' })}
               </Sidebar.Menu>
             </Sidebar.GroupContent>
           </Sidebar.Group>
           <Sidebar.Group className="border-t">
             <Sidebar.GroupContent>
-              <Sidebar.Menu>{renderMenuItem('/project-settings', 'Project Settings')}</Sidebar.Menu>
+              <Sidebar.Menu>
+                {renderMenuItem({ to: '/project-settings', text: 'Project Settings', iconName: 'settings-1' })}
+              </Sidebar.Menu>
             </Sidebar.GroupContent>
           </Sidebar.Group>
           <Sidebar.Group className="border-t">
             <Sidebar.GroupContent>
               <Sidebar.Menu>
-                {renderMenuItem('/account-settings', 'Account Settings')}
-                {renderMenuItem('/organization-settings', 'Organization Settings')}
+                {renderMenuItem({ to: '/account-settings', text: 'Account Settings', iconName: 'settings-1' })}
+                {renderMenuItem({
+                  to: '/organization-settings',
+                  text: 'Organization Settings',
+                  iconName: 'settings-2'
+                })}
               </Sidebar.Menu>
             </Sidebar.GroupContent>
           </Sidebar.Group>

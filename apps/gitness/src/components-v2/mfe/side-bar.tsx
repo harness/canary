@@ -5,8 +5,8 @@ import { noop } from 'lodash-es'
 import { HarnessLogo, Icon, Sidebar, User } from '@harnessio/ui/components'
 import { useRouterContext } from '@harnessio/ui/context'
 
-import { useAppContext } from '../framework/context/AppContext'
-import { useTranslationStore } from '../i18n/stores/i18n-store'
+import { useAppContext } from '../../framework/context/AppContext'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 const AppSidebar: FC = () => {
   const { currentUser } = useAppContext()

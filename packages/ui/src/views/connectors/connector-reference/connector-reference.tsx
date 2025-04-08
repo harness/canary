@@ -8,11 +8,13 @@ export interface ConnectorReferenceProps {
   // Data
   connectorsData: ConnectorItem[]
   childFolder: string | null
+  currentFolder: string | null
   parentFolder: string | null
   apiError?: string | null
 
   // State
   selectedEntity: ConnectorItem | null
+  showBreadcrumbEllipsis?: boolean
 
   // Callbacks
   onSelectEntity: (entity: ConnectorItem) => void
@@ -27,10 +29,12 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
   connectorsData,
   childFolder,
   parentFolder,
+  currentFolder,
   apiError,
 
   // State
   selectedEntity,
+  showBreadcrumbEllipsis = false,
 
   // Callbacks
   onSelectEntity,
@@ -47,19 +51,8 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
     return (
       <StackedList.Item
         onClick={() => onSelect(entity)}
-        className={isSelected ? 'bg-cn-background-hover' : ''}
-        thumbnail={<Icon name="connectors" size={16} className="text-cn-foreground-3" />}
-        actions={
-          <Button
-            variant="default"
-            size="sm"
-            onClick={() => {
-              onSelect(entity)
-            }}
-          >
-            Select
-          </Button>
-        }
+        className={`h-12 p-2 ${isSelected ? 'bg-cn-background-hover' : ''}`}
+        thumbnail={<Icon name="connectors" size={14} className="text-cn-foreground-3 ml-2" />}
       >
         <StackedList.Field title={entity.connector.name} description={entity.connector.description} />
       </StackedList.Item>
@@ -75,8 +68,10 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
         onScopeChange={onScopeChange}
         renderEntity={renderEntity}
         parentFolder={parentFolder}
+        currentFolder={currentFolder}
         childFolder={childFolder}
         isLoading={isLoading}
+        showBreadcrumbEllipsis={showBreadcrumbEllipsis}
       />
       {apiError ? (
         <Alert.Container variant="destructive" className="mt-4">
@@ -84,7 +79,7 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
         </Alert.Container>
       ) : null}
 
-      <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
+      <div className="bg-cn-background-2 absolute inset-x-0 bottom-0 p-4 shadow-md">
         <ButtonGroup className="flex flex-row justify-between">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel

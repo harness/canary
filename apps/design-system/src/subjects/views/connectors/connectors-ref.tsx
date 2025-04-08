@@ -4,7 +4,7 @@ import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connect
 import { useTranslationStore } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
-import { Drawer, Separator, Spacer } from '@harnessio/ui/components'
+import { Drawer, FormSeparator, Separator, Spacer, Text } from '@harnessio/ui/components'
 import {
   ArrayInput,
   BooleanInput,
@@ -57,11 +57,14 @@ export const ConnectorsRefPage = ({
   setSelectedConnector: (connector: ConnectorItem | null) => void
 }) => {
   const [selectedType, setSelectedType] = useState<ConnectorSelectionType>(ConnectorSelectionType.EXISTING)
-  const [, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
+  const [activeScope, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
   const [connectorEntity, setConnectorEntity] = useState<ConnectorEntity | null>(null)
 
   // State for existing connectors
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
+  const [currentFolder, setCurrentFolder] = useState<string | null>(
+    mockOrgData[0].organizationResponse.organization.identifier
+  )
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
   const [isConnectorSelected, setIsConnectorSelected] = useState(false)
   // Handlers for existing connectors
@@ -78,14 +81,17 @@ export const ConnectorsRefPage = ({
       switch (newScope) {
         case ScopeEnum.ACCOUNT:
           setParentFolder(null)
+          setCurrentFolder(mockAccountsData[0].accountName)
           setChildFolder(mockOrgData[0].organizationResponse.organization.identifier)
           break
         case ScopeEnum.ORGANIZATION:
           setParentFolder(mockAccountsData[0].accountName)
+          setCurrentFolder(mockOrgData[0].organizationResponse.organization.identifier)
           setChildFolder(mockProjectsData[0].projectResponse.project.identifier)
           break
         case ScopeEnum.PROJECT:
           setParentFolder(mockOrgData[0].organizationResponse.organization.identifier)
+          setCurrentFolder(mockProjectsData[0].projectResponse.project.identifier)
           setChildFolder(null)
           break
       }
@@ -156,6 +162,8 @@ export const ConnectorsRefPage = ({
             onCancel={handleCancel}
             isLoading={false}
             apiError="Could not fetch connectors, unauthorized"
+            currentFolder={currentFolder}
+            showBreadcrumbEllipsis={activeScope === ScopeEnum.PROJECT}
           />
         )
       default:
@@ -167,13 +175,22 @@ export const ConnectorsRefPage = ({
     <Drawer.Root direction="right" open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <Drawer.Content>
         <Drawer.Header>
-          <Drawer.Title className="text-3xl">Connectors</Drawer.Title>
+          <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Connectors</Drawer.Title>
+          <FormSeparator className="w-full" />
+          <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
         </Drawer.Header>
+        <Spacer size={5} />
+        <Text as="div" className="text-cn-foreground-2 my-4">
+          Choose type
+        </Text>
         <Spacer size={5} />
 
         <ConnectorHeader onChange={setSelectedType} selectedType={selectedType} />
 
         <Spacer size={5} />
+        <FormSeparator />
+        <Spacer size={5} />
+
         {renderConnectorContent()}
       </Drawer.Content>
     </Drawer.Root>

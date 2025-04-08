@@ -127,23 +127,21 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       ) : (
         <div className="h-full">
           {showFilter && <Input type="text" placeholder="Search" className="mb-4" />}
-          <ScrollArea className="h-3/4">
-            <EntityReferenceList
-              entities={entities}
-              selectedEntity={selectedEntity}
-              parentFolder={parentFolder}
-              childFolder={childFolder}
-              currentFolder={currentFolder}
-              handleSelectEntity={handleSelectEntity}
-              handleScopeChange={handleScopeChange}
-              renderEntity={renderEntity}
-              defaultEntityRenderer={defaultEntityRenderer}
-              parentFolderRenderer={parentFolderRenderer}
-              childFolderRenderer={childFolderRenderer}
-              apiError={apiError}
-              showBreadcrumbEllipsis={showBreadcrumbEllipsis}
-            />
-          </ScrollArea>
+          <EntityReferenceList
+            entities={entities}
+            selectedEntity={selectedEntity}
+            parentFolder={parentFolder}
+            childFolder={childFolder}
+            currentFolder={currentFolder}
+            handleSelectEntity={handleSelectEntity}
+            handleScopeChange={handleScopeChange}
+            renderEntity={renderEntity}
+            defaultEntityRenderer={defaultEntityRenderer}
+            parentFolderRenderer={parentFolderRenderer}
+            childFolderRenderer={childFolderRenderer}
+            apiError={apiError}
+            showBreadcrumbEllipsis={showBreadcrumbEllipsis}
+          />
         </div>
       )}
     </>

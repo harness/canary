@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { Breadcrumb, Icon, StackedList } from '@/components'
+import { Breadcrumb, Icon, ScrollArea, StackedList } from '@/components'
 
 import {
   BaseEntityProps,
@@ -43,21 +43,21 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
 }: EntityReferenceListProps<T, S, F>): JSX.Element {
   console.log(showBreadcrumbEllipsis)
   return (
-    <StackedList.Root>
+    <StackedList.Root className="relative">
       {/* Breadcrumb header */}
       <StackedList.Item isHeader disableHover className="!bg-cn-background-3 sticky top-0 h-12 p-2">
         <Breadcrumb.Root>
           <Breadcrumb.List>
             {showBreadcrumbEllipsis ? (
               <Breadcrumb.Item>
-                <Breadcrumb.Ellipsis className="ml-2 w-4" />
+                <Breadcrumb.Ellipsis className="ml-2" />
                 <Breadcrumb.Separator>
-                  <Icon name="chevron-right" size={4} className="min-h-0 min-w-0" />
+                  <Icon name="chevron-right" size={10} className="min-h-0 min-w-0" />
                 </Breadcrumb.Separator>
               </Breadcrumb.Item>
             ) : null}
             {parentFolder ? (
-              <Breadcrumb.Item>
+              <Breadcrumb.Item className="items-center justify-center">
                 <Breadcrumb.Link
                   className="cursor-pointer text-xs"
                   onClick={() => handleScopeChange(DirectionEnum.PARENT)}
@@ -69,59 +69,63 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                 </Breadcrumb.Separator>
               </Breadcrumb.Item>
             ) : null}
-            <Breadcrumb.Item className="cursor-pointer text-xs">{currentFolder}</Breadcrumb.Item>
+            <Breadcrumb.Page className="cursor-pointer text-xs">{currentFolder}</Breadcrumb.Page>
           </Breadcrumb.List>
         </Breadcrumb.Root>
       </StackedList.Item>
 
-      {/* scopes */}
-      {parentFolder ? (
-        <>
-          {parentFolderRenderer({
-            parentFolder,
-            onSelect: () => handleScopeChange(DirectionEnum.PARENT)
-          })}
-        </>
-      ) : null}
+      <ScrollArea className="max-h-[calc(100vh-530px)] overflow-y-auto">
+        {/* <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[hsla(240,8%,6%,1)] via-[hsla(240,8%,6%,0.8)] to-[hsla(240,8%,6%,0)]"></div> */}
+        {/* scopes */}
+        {parentFolder ? (
+          <>
+            {parentFolderRenderer({
+              parentFolder,
+              onSelect: () => handleScopeChange(DirectionEnum.PARENT)
+            })}
+          </>
+        ) : null}
 
-      {/* folders */}
-      {childFolder ? (
-        <>
-          {childFolderRenderer({
-            folder: childFolder,
-            onSelect: () => handleScopeChange(DirectionEnum.CHILD)
-          })}
-        </>
-      ) : null}
+        {/* folders */}
+        {childFolder ? (
+          <>
+            {childFolderRenderer({
+              folder: childFolder,
+              onSelect: () => handleScopeChange(DirectionEnum.CHILD)
+            })}
+          </>
+        ) : null}
 
-      {/* entities */}
-      {entities.length > 0 ? (
-        <>
-          {entities.map(entity => {
-            const isSelected = entity.id === selectedEntity?.id
+        {/* entities */}
+        {entities.length > 0 ? (
+          <>
+            {entities.map(entity => {
+              const isSelected = entity.id === selectedEntity?.id
 
-            return (
-              <Fragment key={entity.id}>
-                {renderEntity
-                  ? renderEntity({
-                      entity,
-                      isSelected,
-                      onSelect: () => handleSelectEntity(entity)
-                    })
-                  : defaultEntityRenderer({
-                      entity,
-                      isSelected,
-                      onSelect: () => handleSelectEntity(entity)
-                    })}
-              </Fragment>
-            )
-          })}
-        </>
-      ) : (
-        <StackedList.Item>
-          <StackedList.Field title={apiError || 'No entities found'} />
-        </StackedList.Item>
-      )}
+              return (
+                <Fragment key={entity.id}>
+                  {renderEntity
+                    ? renderEntity({
+                        entity,
+                        isSelected,
+                        onSelect: () => handleSelectEntity(entity)
+                      })
+                    : defaultEntityRenderer({
+                        entity,
+                        isSelected,
+                        onSelect: () => handleSelectEntity(entity)
+                      })}
+                </Fragment>
+              )
+            })}
+          </>
+        ) : (
+          <StackedList.Item>
+            <StackedList.Field title={apiError || 'No entities found'} />
+          </StackedList.Item>
+        )}
+      </ScrollArea>
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[hsla(240,8%,6%,1)] via-[hsla(240,8%,6%,0.8)] to-[hsla(240,8%,6%,0)] z-10"></div>
     </StackedList.Root>
   )
 }

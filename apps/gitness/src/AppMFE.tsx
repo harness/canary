@@ -102,7 +102,6 @@ interface AppMFEProps {
   customPromises: Partial<{
     getCurrentUser: Promise<Unknown>
   }>
-  routes: RouteDefinitions
 }
 
 function decode<T = unknown>(arg: string): T {
@@ -118,8 +117,7 @@ export default function AppMFE({
   onRouteChange,
   customHooks,
   customUtils,
-  customPromises,
-  routes
+  customPromises
 }: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) =>
@@ -188,8 +186,7 @@ export default function AppMFE({
                   renderUrl,
                   customHooks,
                   customUtils,
-                  customPromises,
-                  routes
+                  customPromises
                 }}
               >
                 <I18nextProvider i18n={i18n}>

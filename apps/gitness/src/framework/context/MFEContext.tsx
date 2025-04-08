@@ -6,11 +6,6 @@ export interface Scope {
   projectIdentifier?: string
 }
 
-export interface RouteDefinitions {
-  toRepositories: () => string
-  toPipelines: () => string
-}
-
 export type Unknown = any
 
 interface IMFEContext {
@@ -28,7 +23,6 @@ interface IMFEContext {
   customPromises: Partial<{
     getCurrentUser: Unknown
   }>
-  routes: Partial<RouteDefinitions>
 }
 
 export const MFEContext = createContext<IMFEContext>({
@@ -36,6 +30,5 @@ export const MFEContext = createContext<IMFEContext>({
   renderUrl: '',
   customHooks: {},
   customUtils: {},
-  customPromises: {},
-  routes: {}
+  customPromises: {}
 })

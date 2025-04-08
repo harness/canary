@@ -79,7 +79,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel h2 {
-  @apply font-normal text-secondary-muted text-sm;
+  @apply font-normal text-cn-foreground-2 text-sm;
 }
 
 .right-sidebar-panel ul {

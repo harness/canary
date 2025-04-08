@@ -9,9 +9,9 @@ import {
   WebhookSettingsLayout
 } from '@harnessio/ui/views'
 
-import { AppShell } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { AppShellMFE } from './components-v2/mfe/app-shell.tsx'
+import { AppShell } from './components-v2/standalone/app-shell.tsx'
 import { AppProvider } from './framework/context/AppContext'
 import { AppRouterProvider } from './framework/context/AppRouterProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'

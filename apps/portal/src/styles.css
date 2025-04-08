@@ -7,15 +7,15 @@ main {
 }
 
 .sl-container h1 {
-  @apply text-4xl font-normal text-cn-foreground-solid;
+  @apply text-4xl font-normal text-cn-foreground-primary;
 }
 
 .sl-container h2 {
-  @apply text-3xl font-normal text-cn-foreground-solid;
+  @apply text-3xl font-normal text-cn-foreground-primary;
 }
 
 .sl-container h3 {
-  @apply text-2xl font-normal text-cn-foreground-solid;
+  @apply text-2xl font-normal text-cn-foreground-primary;
 }
 
 code {

@@ -89,9 +89,8 @@ export default {
           accent: 'var(--cn-text-accent)',
 
           // Remove
-          solid: 'lch(from var(--cn-set-brand-solid-text) l c h / <alpha-value>)',
           solidred: 'lch(from var(--cn-set-red-solid-text) l c h / <alpha-value>)',
-          primary: 'var(--cn-set-brand-solid-text)',
+          primary: 'lch(from var(--cn-set-brand-solid-text) l c h / <alpha-value>)',
           disabled: 'var(--cn-state-disabled-text)',
           4: 'var(--cn-text-3)',
           5: 'var(--cn-text-3)',

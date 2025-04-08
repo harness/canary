@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { Breadcrumb, StackedList } from '@/components'
+import { Breadcrumb, Icon, StackedList } from '@/components'
 
 import {
   BaseEntityProps,
@@ -15,6 +15,7 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   selectedEntity: T | null
   parentFolder: S | null
   childFolder: F | null
+  currentFolder: string | null
   handleSelectEntity: (entity: T) => void
   handleScopeChange: (direction: DirectionEnum) => void
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
@@ -22,8 +23,7 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   parentFolderRenderer: (props: ParentFolderRendererProps<S>) => React.ReactNode
   childFolderRenderer: (props: ChildFolderRendererProps<F>) => React.ReactNode
   apiError?: string | null
-  /** Scope path for breadcrumbs (e.g. ["account", "org", "project"]) */
-  onBreadcrumbClick?: (index: number) => void
+  showBreadcrumbEllipsis?: boolean
 }
 
 export function EntityReferenceList<T extends BaseEntityProps, S = string, F = string>({
@@ -31,6 +31,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   selectedEntity,
   parentFolder,
   childFolder,
+  currentFolder,
   handleSelectEntity,
   handleScopeChange,
   renderEntity,
@@ -38,20 +39,37 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   parentFolderRenderer,
   childFolderRenderer,
   apiError,
-  onBreadcrumbClick
+  showBreadcrumbEllipsis = false
 }: EntityReferenceListProps<T, S, F>): JSX.Element {
+  console.log(showBreadcrumbEllipsis)
   return (
     <StackedList.Root>
       {/* Breadcrumb header */}
-      <StackedList.Item isHeader disableHover className="bg-cn-background-2">
+      <StackedList.Item isHeader disableHover className="!bg-cn-background-3 sticky top-0 h-12 p-2">
         <Breadcrumb.Root>
           <Breadcrumb.List>
-            <Breadcrumb.Item>
-              <>
-                <Breadcrumb.Link className="cursor-pointer capitalize">{parentFolder}</Breadcrumb.Link>
-                <Breadcrumb.Separator />
-              </>
-            </Breadcrumb.Item>
+            {showBreadcrumbEllipsis ? (
+              <Breadcrumb.Item>
+                <Breadcrumb.Ellipsis className="ml-2 w-4" />
+                <Breadcrumb.Separator>
+                  <Icon name="chevron-right" size={4} className="min-h-0 min-w-0" />
+                </Breadcrumb.Separator>
+              </Breadcrumb.Item>
+            ) : null}
+            {parentFolder ? (
+              <Breadcrumb.Item>
+                <Breadcrumb.Link
+                  className="cursor-pointer text-xs"
+                  onClick={() => handleScopeChange(DirectionEnum.PARENT)}
+                >
+                  {parentFolder}
+                </Breadcrumb.Link>
+                <Breadcrumb.Separator>
+                  <Icon name="chevron-right" size={4} />
+                </Breadcrumb.Separator>
+              </Breadcrumb.Item>
+            ) : null}
+            <Breadcrumb.Item className="cursor-pointer text-xs">{currentFolder}</Breadcrumb.Item>
           </Breadcrumb.List>
         </Breadcrumb.Root>
       </StackedList.Item>

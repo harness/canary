@@ -9,10 +9,12 @@ export interface SecretReferenceProps {
   secretsData: SecretItem[]
   childFolder: string | null
   parentFolder: string | null
+  currentFolder: string | null
   apiError?: string | null
 
   // State
   selectedEntity: SecretItem | null
+  showBreadcrumbEllipsis?: boolean
 
   // Callbacks
   onSelectEntity: (entity: SecretItem) => void
@@ -27,10 +29,12 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   secretsData,
   childFolder,
   parentFolder,
+  currentFolder,
   apiError,
 
   // State
   selectedEntity,
+  showBreadcrumbEllipsis = false,
 
   // Callbacks
   onSelectEntity,
@@ -67,7 +71,9 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         parentFolder={parentFolder}
         childFolder={childFolder}
         isLoading={isLoading}
+        currentFolder={currentFolder}
         apiError={apiError}
+        showBreadcrumbEllipsis={showBreadcrumbEllipsis}
       />
 
       <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">

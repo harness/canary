@@ -118,10 +118,10 @@ export default {
           danger: 'var(--cn-text-danger)',
           warning: 'var(--cn-text-warning)',
           accent: 'var(--cn-text-accent)',
-          solid: 'lch(from var(--cn-set-brand-solid-text) l c h / <alpha-value>)',
-          solidred: 'lch(from var(--cn-set-red-solid-text) l c h / <alpha-value>)',
 
           // Remove
+          solid: 'lch(from var(--cn-set-brand-solid-text) l c h / <alpha-value>)',
+          solidred: 'lch(from var(--cn-set-red-solid-text) l c h / <alpha-value>)',
           primary: 'var(--cn-set-brand-solid-text)',
           disabled: 'var(--cn-state-disabled-text)',
           4: 'var(--cn-text-3)',
@@ -151,10 +151,10 @@ export default {
           2: 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
           3: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
           accent: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
-          solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
-          softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
 
           // Remove
+          solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
+          softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           hover: 'var(--cn-state-hover)',
           primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',

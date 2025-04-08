@@ -96,7 +96,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
                 }}
                 asChild
               >
-                <Sidebar.MenuItemText text={t('component:navbar.sidebarToggle.switchToV1', 'Switch to V1')} />
+                <Sidebar.MenuItemText text={t('component:navbar.sidebarToggle.switchToCodeV1', 'Switch to Code V1')} />
               </Sidebar.MenuButton>
             </Sidebar.MenuItem>
             <SideBarToggleMenuItem />

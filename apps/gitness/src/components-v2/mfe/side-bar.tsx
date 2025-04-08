@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { noop } from 'lodash-es'
 
-import { HarnessLogo, Icon, IconProps, Sidebar, User, useSidebar } from '@harnessio/ui/components'
+import { HarnessLogo, Icon, IconProps, Sidebar, SidebarSearchLegacy, User, useSidebar } from '@harnessio/ui/components'
 import { useRouterContext } from '@harnessio/ui/context'
 
 import { useAppContext } from '../../framework/context/AppContext'
@@ -50,16 +50,13 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
     <Sidebar.Provider className="min-h-svh">
       <Sidebar.Root className="fixed z-20 h-svh">
         <Sidebar.Header className="pb-3">
-          <div className="my-5 flex items-center pl-2">
-            <HarnessLogo />
-          </div>
+          <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group>
             <Sidebar.GroupContent>
               <Sidebar.Menu>
                 {renderMenuItem({ to: '/repos', text: 'Repositories', iconName: 'repositories-gradient' })}
-                {renderMenuItem({ to: '/search', text: 'Search', iconName: 'search' })}
                 {renderMenuItem({ to: '/pull-requests', text: 'Pull Requests', iconName: 'pull' })}
                 {renderMenuItem({ to: '/manage-repos', text: 'Manage Repositories', iconName: 'repositories' })}
               </Sidebar.Menu>
@@ -96,7 +93,10 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
                 }}
                 asChild
               >
-                <Sidebar.MenuItemText text={t('component:navbar.sidebarToggle.switchToCodeV1', 'Switch to Code V1')} />
+                <Sidebar.MenuItemText
+                  text={t('component:navbar.sidebarToggle.switchToCodeV1', 'Switch to Code V1')}
+                  icon={<Icon name="arrow-left" size={14} />}
+                />
               </Sidebar.MenuButton>
             </Sidebar.MenuItem>
             <SideBarToggleMenuItem />

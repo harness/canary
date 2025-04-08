@@ -1,8 +1,11 @@
 import * as React from 'react'
+import { NavLinkProps } from 'react-router-dom'
 
+import { NavLinkComponent, useRouterContext } from '@/context'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { omit } from 'lodash-es'
 
 const tabsListVariants = cva('text-cn-foreground-2 inline-flex items-center', {
   variants: {
@@ -97,22 +100,68 @@ const TabsList = React.forwardRef<React.ElementRef<typeof TabsPrimitive.List>, T
 )
 TabsList.displayName = TabsPrimitive.List.displayName
 
-export interface TabsTriggerProps
+export interface TabsTriggerBaseProps extends VariantProps<typeof tabsTriggerVariants> {
+  className?: string
+}
+
+export interface TabsTriggerDefaultProps
   extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>,
-    VariantProps<typeof tabsTriggerVariants> {}
+    VariantProps<typeof tabsTriggerVariants> {
+  asLink?: never
+}
+
+export interface TabsTriggerLinkProps extends Omit<NavLinkProps, 'className' | 'style'>, TabsTriggerBaseProps {
+  asLink: true
+  to: NavLinkProps['to']
+}
+
+export type TabsTriggerProps = TabsTriggerDefaultProps | TabsTriggerLinkProps
+
+const getIsTabsTriggerLink = (props: TabsTriggerProps): props is TabsTriggerLinkProps => {
+  return props.asLink === true
+}
+const getIsTabsTriggerDefault = (props: TabsTriggerProps): props is TabsTriggerDefaultProps => {
+  return props.asLink !== true
+}
 
 const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigger>, TabsTriggerProps>(
   ({ className, variant, children, ...props }, ref) => {
+    const { NavLink, location } = useRouterContext()
     const context = React.useContext(TabsContext)
-    return (
-      <TabsPrimitive.Trigger
-        ref={ref}
-        className={cn(tabsTriggerVariants({ variant: context.variant ?? variant, className }))}
-        {...props}
-      >
-        {children}
-      </TabsPrimitive.Trigger>
-    )
+
+    const isTabsTriggerLink = getIsTabsTriggerLink(props)
+    const isTabsTriggerDefault = getIsTabsTriggerDefault(props)
+
+    if (isTabsTriggerLink) {
+      const linkProps = omit(props, 'asLink')
+      const isActive = location.pathname.split('/').at(-1) === props.to
+      return (
+        <NavLink
+          {...linkProps}
+          role="tab"
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          className={cn(tabsTriggerVariants({ variant: context.variant ?? variant, className }))}
+          data-state={isActive ? 'active' : 'inactive'}
+          aria-selected={isActive}
+        >
+          {children}
+        </NavLink>
+      )
+    }
+
+    if (isTabsTriggerDefault) {
+      return (
+        <TabsPrimitive.Trigger
+          ref={ref}
+          className={cn(tabsTriggerVariants({ variant: context.variant ?? variant, className }))}
+          {...props}
+        >
+          {children}
+        </TabsPrimitive.Trigger>
+      )
+    }
+
+    return null
   }
 )
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName

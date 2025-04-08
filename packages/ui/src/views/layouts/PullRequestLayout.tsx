@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, ReactNode } from 'react'
-import { NavLink, NavLinkProps } from 'react-router-dom'
+import { NavLinkProps } from 'react-router-dom'
 
 import { Badge, Icon, IconProps, Tabs } from '@/components'
 import { useRouterContext, useTheme } from '@/context'
@@ -26,23 +26,6 @@ const TabTitleWithIcon = ({
     )}
   </>
 )
-
-const PullRequestTabItem: FC<NavLinkProps> = ({ className, ...props }) => {
-  const { NavLink } = useRouterContext()
-
-  return (
-    <NavLink
-      className={({ isActive }) =>
-        cn(
-          'group relative z-[1] text-foreground-2 hover:text-foreground-1 inline-flex h-9 items-center justify-center gap-x-1.5 whitespace-nowrap rounded-t-md border-x border-t border-transparent px-3.5 py-1 font-normal transition-all focus-visible:duration-0',
-          { 'border-borders-1 bg-background-1 text-foreground-1 is-active': isActive },
-          className
-        )
-      }
-      {...props}
-    />
-  )
-}
 
 interface PullRequestLayoutProps {
   usePullRequestStore: () => IPullRequestStore
@@ -77,82 +60,30 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
           <PullRequestHeader className="mb-10" updateTitle={updateTitle} data={{ ...pullRequest, spaceId, repoId }} />
         )}
 
-        {/* <nav
-          className={cn(
-            'relative before:bottom-0 before:absolute before:w-[calc(100vw-var(--sidebar-width))] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2 before:border-b before:border-borders-4',
-            { 'before:w-[calc(100vw-var(--sidebar-width)-6px)]': isInset }
-          )}
-        >
-          <ul className="mb-7 flex items-center">
-            <li>
-              <PullRequestTabItem to={PullRequestTabsKeys.CONVERSATION}>
-                <TabTitleWithIcon
-                  icon="comments"
-                  badgeContent={!!pullRequest?.stats?.conversations && pullRequest?.stats?.conversations}
-                >
-                  {t('views:pullRequests.conversation', 'Conversation')}
-                </TabTitleWithIcon>
-              </PullRequestTabItem>
-            </li>
-            <li>
-              <PullRequestTabItem to={PullRequestTabsKeys.COMMITS}>
-                <TabTitleWithIcon icon="tube-sign" badgeContent={pullRequest?.stats?.commits}>
-                  {t('views:pullRequests.commits', 'Commits')}
-                </TabTitleWithIcon>
-              </PullRequestTabItem>
-            </li>
-            <li>
-              <PullRequestTabItem to={PullRequestTabsKeys.CHANGES}>
-                <TabTitleWithIcon icon="changes" badgeContent={pullRequest?.stats?.files_changed}>
-                  {t('views:pullRequests.changes', 'Changes')}
-                </TabTitleWithIcon>
-              </PullRequestTabItem>
-            </li>
-          </ul>
-        </nav> */}
-
-        <Tabs.Root
-          activationMode="manual"
-          variant="tabnav"
-          className="mb-7"
-          defaultValue={PullRequestTabsKeys.CONVERSATION}
-          onKeyDown={e => {
-            console.log('🚀 ~ e.key:', e.key)
-            if (e.key === 'Space') {
-              console.log('🚀 ~ e.key pressed:', e.key)
-              e.preventDefault()
-            }
-          }}
-        >
+        <Tabs.Root variant="tabnav" className="mb-7">
           <Tabs.List
             className={cn(
               'before:w-[calc(100vw-var(--sidebar-width))] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2',
               { 'before:w-[calc(100vw-var(--sidebar-width)-6px*2)]': isInset }
             )}
           >
-            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.CONVERSATION} asChild tabIndex={0}>
-              <NavLink to={PullRequestTabsKeys.CONVERSATION}>
-                <TabTitleWithIcon
-                  icon="comments"
-                  badgeContent={!!pullRequest?.stats?.conversations && pullRequest?.stats?.conversations}
-                >
-                  {t('views:pullRequests.conversation', 'Conversation')}
-                </TabTitleWithIcon>
-              </NavLink>
+            <Tabs.Trigger className="gap-x-1.5" to={PullRequestTabsKeys.CONVERSATION} asLink>
+              <TabTitleWithIcon
+                icon="comments"
+                badgeContent={!!pullRequest?.stats?.conversations && pullRequest?.stats?.conversations}
+              >
+                {t('views:pullRequests.conversation', 'Conversation')}
+              </TabTitleWithIcon>
             </Tabs.Trigger>
-            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.COMMITS} asChild tabIndex={0}>
-              <NavLink to={PullRequestTabsKeys.COMMITS}>
-                <TabTitleWithIcon icon="tube-sign" badgeContent={pullRequest?.stats?.commits}>
-                  {t('views:pullRequests.commits', 'Commits')}
-                </TabTitleWithIcon>
-              </NavLink>
+            <Tabs.Trigger className="gap-x-1.5" to={PullRequestTabsKeys.COMMITS} asLink>
+              <TabTitleWithIcon icon="tube-sign" badgeContent={pullRequest?.stats?.commits}>
+                {t('views:pullRequests.commits', 'Commits')}
+              </TabTitleWithIcon>
             </Tabs.Trigger>
-            <Tabs.Trigger className="gap-x-1.5" value={PullRequestTabsKeys.CHANGES} asChild tabIndex={0}>
-              <NavLink to={PullRequestTabsKeys.CHANGES}>
-                <TabTitleWithIcon icon="changes" badgeContent={pullRequest?.stats?.files_changed}>
-                  {t('views:pullRequests.changes', 'Changes')}
-                </TabTitleWithIcon>
-              </NavLink>
+            <Tabs.Trigger className="gap-x-1.5" to={PullRequestTabsKeys.CHANGES} asLink>
+              <TabTitleWithIcon icon="changes" badgeContent={pullRequest?.stats?.files_changed}>
+                {t('views:pullRequests.changes', 'Changes')}
+              </TabTitleWithIcon>
             </Tabs.Trigger>
           </Tabs.List>
         </Tabs.Root>

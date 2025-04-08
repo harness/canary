@@ -5,14 +5,14 @@ import { NavbarItemType } from '@harnessio/ui/components'
 import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useNav } from '../components/stores/recent-pinned-nav-links.store'
+import { getNavbarMenuData } from '../data/navbar-menu-items'
+import { getPinnedMenuItemsData } from '../data/pinned-items'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useLocationChange } from '../framework/hooks/useLocationChange'
 import { useRepoImportEvents } from '../framework/hooks/useRepoImportEvent'
 import { useSelectedSpaceId } from '../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
-import { getNavbarMenuData } from '../sidebar-data/navbar-menu-items'
-import { getPinnedMenuItemsData } from '../sidebar-data/pinned-items'
 import { AppSideBar } from './app-side-bar'
 import Breadcrumbs from './breadcrumbs/breadcrumbs'
 import { Toaster } from './toaster'
@@ -24,7 +24,7 @@ interface NavLinkStorageInterface {
   }
 }
 
-export const AppShell: FC = () => {
+export const AppShell = () => {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const { pinnedMenu, setRecent, setNavLinks } = useNav()

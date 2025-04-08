@@ -61,7 +61,6 @@ const navStateCreator: StateCreator<NavState> = set => ({
     }))
 })
 
-/* This does npt work in MFE for the very first render */
 export const useNav = create(
   persist(navStateCreator, {
     // localStorage key

@@ -7,15 +7,15 @@ main {
 }
 
 .sl-container h1 {
-  @apply text-4xl font-normal text-cn-foreground-primary;
+  @apply text-4xl font-normal text-primary-foreground;
 }
 
 .sl-container h2 {
-  @apply text-3xl font-normal text-cn-foreground-primary;
+  @apply text-3xl font-normal text-primary-foreground;
 }
 
 .sl-container h3 {
-  @apply text-2xl font-normal text-cn-foreground-primary;
+  @apply text-2xl font-normal text-primary-foreground;
 }
 
 code {
@@ -45,7 +45,7 @@ ul.top-level ul {
 }
 
 ul.top-level li {
-  @apply font-normal text-cn-foreground-2 text-sm border-none p-0 m-0;
+  @apply font-normal text-secondary text-sm border-none p-0 m-0;
 }
 
 ul.top-level li a {
@@ -53,7 +53,7 @@ ul.top-level li a {
 }
 
 ul.top-level li a[aria-current="page"] {
-  @apply font-normal bg-cn-background-1 rounded-md text-cn-foreground-1;
+  @apply font-normal bg-primary-background rounded-md text-foreground-1;
 }
 
 ul.top-level li details summary {
@@ -79,7 +79,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel h2 {
-  @apply font-normal text-cn-foreground-2 text-sm;
+  @apply font-normal text-secondary-muted text-sm;
 }
 
 .right-sidebar-panel ul {

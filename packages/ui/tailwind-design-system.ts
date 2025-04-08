@@ -27,6 +27,37 @@ export default {
         border: 'var(--cn-border-1)',
         input: 'hsl(var(--canary-input))',
         ring: 'hsl(var(--canary-ring))',
+        primary: {
+          DEFAULT: 'hsl(var(--canary-primary))',
+          background: 'hsl(var(--canary-primary-background))',
+          foreground: 'hsl(var(--canary-primary-foreground))',
+          muted: 'hsl(var(--canary-primary-muted))',
+          accent: 'hsl(var(--canary-primary-accent))'
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--canary-secondary))',
+          background: 'hsl(var(--canary-secondary-background))',
+          foreground: 'hsl(var(--canary-secondary-foreground))',
+          muted: 'hsl(var(--canary-secondary-muted))'
+        },
+        tertiary: {
+          DEFAULT: 'hsl(var(--canary-tertiary))',
+          foreground: 'hsl(var(--canary-tertiary-foreground))',
+          background: 'hsl(var(--canary-tertiary-background))',
+          muted: 'hsl(var(--canary-tertiary-muted))'
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--canary-destructive))',
+          foreground: 'hsl(var(--canary-destructive-foreground))'
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--canary-muted))',
+          foreground: 'hsl(var(--canary-muted-foreground))'
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--canary-accent))',
+          foreground: 'hsl(var(--canary-accent-foreground))'
+        },
         popover: {
           DEFAULT: 'hsl(var(--canary-popover))',
           foreground: 'hsl(var(--canary-popover-foreground))'

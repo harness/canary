@@ -23,6 +23,8 @@ import { useRepoImportEvents } from '../framework/hooks/useRepoImportEvent'
 import { useSelectedSpaceId } from '../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
+import { AppBreadcrumbs } from './breadcrumbs/app-breadcrumbs'
+import { Breadcrumbs } from './breadcrumbs/breadcrumbs'
 import { useGetBreadcrumbs } from './breadcrumbs/useGetBreadcrumbs'
 import { Toaster } from './toaster'
 
@@ -196,7 +198,8 @@ export const AppShell = () => {
         />
 
         <Sidebar.Inset>
-          <MainContentLayout breadcrumbs={breadcrumbs} useSidebar={useSidebar} withMobileSidebarToggle>
+          <AppBreadcrumbs breadcrumbs={breadcrumbs} withMobileSidebarToggle />
+          <MainContentLayout useSidebar={useSidebar} withBreadcrumbs={breadcrumbs.length > 0}>
             <Outlet />
           </MainContentLayout>
 
@@ -229,8 +232,9 @@ export const AppShellMFE = memo(() => {
 
   return (
     <>
-      <div className="text-cn-foreground-2 flex flex-col">
-        <MainContentLayout breadcrumbs={breadcrumbs}>
+      <div className="text-cn-foreground-2">
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
+        <MainContentLayout withBreadcrumbs={breadcrumbs.length > 0}>
           <Outlet />
         </MainContentLayout>
       </div>

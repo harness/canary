@@ -62,11 +62,8 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     if (!isMFE) {
       root.classList.add(effectiveTheme) // Apply the computed theme class
 
-      document.body.classList.remove('bg-sidebar-background-1')
-
       if (isInset) {
         root.classList.add('inset-layout')
-        document.body.classList.add('bg-sidebar-background-1')
       }
     } else {
       root.classList.add(mode)

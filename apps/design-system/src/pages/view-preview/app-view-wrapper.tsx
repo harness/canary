@@ -6,7 +6,6 @@ import { noop, useTranslationStore } from '@utils/viewUtils'
 import { MoreSubmenu, NavbarItemType, SettingsMenu, Sidebar } from '@harnessio/ui/components'
 import { MainContentLayout, SidebarView } from '@harnessio/ui/views'
 
-import { mockedBreadcrumbs } from './root-view-wrapper'
 import { useRootViewWrapperStore } from './root-view-wrapper-store'
 
 export interface AppViewWrapperProps {
@@ -14,7 +13,11 @@ export interface AppViewWrapperProps {
   breadcrumbs?: ReactNode
 }
 
-export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({ children, asChild = false }) => {
+export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
+  children,
+  breadcrumbs,
+  asChild = false
+}) => {
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingsMenu, setShowSettingsMenu] = useState(false)
   const [pinnedMenu, setPinnedMenu] = useState<NavbarItemType[]>([
@@ -100,7 +103,8 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({ chi
               useTranslationStore={useTranslationStore}
             />
             <Sidebar.Inset>
-              <MainContentLayout breadcrumbs={mockedBreadcrumbs}>
+              {breadcrumbs}
+              <MainContentLayout>
                 <Outlet />
               </MainContentLayout>
               <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />

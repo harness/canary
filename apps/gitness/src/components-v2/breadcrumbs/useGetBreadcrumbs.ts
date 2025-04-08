@@ -1,12 +1,12 @@
 import { UIMatch, useMatches } from 'react-router-dom'
 
-import { BreadcrumbHandle } from '@harnessio/ui/components'
+import { CustomHandle } from '../../framework/routing/types'
 
 export const useGetBreadcrumbs = () => {
   const matches = useMatches()
-  const breadcrumbs = matches.filter(match => (match.handle as BreadcrumbHandle)?.breadcrumb) as UIMatch<
+  const breadcrumbs = matches.filter(match => (match.handle as CustomHandle)?.breadcrumb) as UIMatch<
     unknown,
-    BreadcrumbHandle
+    CustomHandle
   >[]
   return { breadcrumbs }
 }

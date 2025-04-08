@@ -52,7 +52,7 @@
     },
     "px": {
       "$type": "spacing",
-      "$value": "{spacing.1-half}"
+      "$value": "{spacing.1}"
     },
     "size": {
       "default": {

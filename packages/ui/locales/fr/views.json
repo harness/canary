@@ -249,7 +249,7 @@
   },
   "search": "Rechercher",
   "connectors": {
-    "createNew": "Créer un nouveau connecteur",
+    "create": "Créer un connecteur",
     "id": "ID du connecteur",
     "delete": "Supprimer le connecteur"
   },

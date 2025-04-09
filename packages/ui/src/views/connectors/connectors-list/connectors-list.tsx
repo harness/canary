@@ -57,8 +57,10 @@ export function ConnectorsList({
         <Table.Row>
           <Table.Head className="w-96">{t('views:connectors.id', 'Connector ID')}</Table.Head>
           <Table.Head className="w-96">Details</Table.Head>
-          <Table.Head className="w-48">Connectivity status</Table.Head>
+          <Table.Head className="w-44 whitespace-nowrap">Connectivity status</Table.Head>
           <Table.Head className="w-44">Last updated</Table.Head>
+          <Table.Head className="w-8" />
+          <Table.Head className="w-8" />
         </Table.Row>
       </Table.Header>
       {isLoading ? (
@@ -86,7 +88,7 @@ export function ConnectorsList({
                   {status && <ConnectivityStatus item={{ identifier, type, spec, status, lastModifiedAt }} />}
                 </Table.Cell>
                 <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
-                <Table.Cell className="content-center">
+                <Table.Cell className="min-w-8 content-center">
                   <Button
                     size="icon"
                     variant="ghost"
@@ -95,7 +97,7 @@ export function ConnectorsList({
                     <Icon name="star" size={20} className={cn(isFavorite ? 'fill-icons-alert' : '')} />
                   </Button>
                 </Table.Cell>
-                <Table.Cell className="text-right">
+                <Table.Cell className="min-w-8 text-right">
                   <MoreActionsTooltip
                     isInTable
                     actions={[

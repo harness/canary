@@ -275,7 +275,7 @@
   },
   "search": "Search",
   "connectors": {
-    "createNew": "Create new connector",
+    "create": "Create connector",
     "id": "Connector ID",
     "delete": "Delete Connector",
     "updated": "Last updated",

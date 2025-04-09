@@ -58,8 +58,6 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !connectors.length && !searchQuery })}>
-        <h1 className="text-24 font-medium leading-snug tracking-tight text-cn-foreground-1">Connectors</h1>
-        <Spacer size={6} />
         <ListActions.Root>
           <ListActions.Left>
             <SearchBox.Root
@@ -71,7 +69,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
             />
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default">{t('views:connectors.createNew', 'Create new connector')}</Button>
+            <Button variant="default">{t('views:connectors.create', 'Create connector')}</Button>
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={4} />

@@ -1,0 +1,18 @@
+---
+import ThemeSelector from "./ThemeSelector";
+---
+
+<div class="dark dark-std-std">
+  <ThemeSelector client:only />
+</div>
+
+<script is:inline>
+  (() => {
+    const theme = localStorage.getItem("canary-theme") || "dark-std-std";
+
+    document.body.classList.add(theme);
+    document.querySelector("html").dataset.theme = theme.startsWith("dark")
+      ? "dark"
+      : "light";
+  })();
+</script>

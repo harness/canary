@@ -1,5 +1,5 @@
 body {
-  @apply text-foreground-3 text-base overscroll-none !important;
+  @apply text-foreground-2 text-base overscroll-none !important;
 }
 
 main {
@@ -7,19 +7,19 @@ main {
 }
 
 .sl-container h1 {
-  @apply text-4xl font-normal text-cn-foreground-primary;
+  @apply text-4xl font-normal text-cn-foreground;
 }
 
 .sl-container h2 {
-  @apply text-3xl font-normal text-cn-foreground-primary;
+  @apply text-3xl font-normal text-cn-foreground;
 }
 
 .sl-container h3 {
-  @apply text-2xl font-normal text-cn-foreground-primary;
+  @apply text-2xl font-normal text-cn-foreground;
 }
 
 code {
-  @apply bg-cn-background-3 !important;
+  @apply bg-cn-background-11 !important;
 }
 
 .content-panel {
@@ -122,4 +122,10 @@ pre.prism-code {
 
 .pagination-links a .link-title {
   @apply text-lg leading-tight;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
 }

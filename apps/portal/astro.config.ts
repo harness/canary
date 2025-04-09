@@ -2,7 +2,6 @@ import starlight from "@astrojs/starlight";
 import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import { wrapCodeBlocks } from "./src/wrap-code-blocks.ts";
 
 // if static building, mock `document` to prevent a bug triggered by a 3rd party dependency
 if (!("document" in globalThis)) {
@@ -27,13 +26,19 @@ export default defineConfig({
     starlight({
       title: "Harness Design System",
       logo: {
-        src: "./src/assets/harness-design-system-logo.svg",
+        alt: "Harness Design System",
         replacesTitle: true,
+        light: "./src/assets/harness-design-system-logo-light.svg",
+        dark: "./src/assets/harness-design-system-logo.svg",
       },
       favicon: "./src/assets/favicon.png",
-      social: {
-        github: "https://github.com/harness/canary",
-      },
+      social: [
+        {
+          label: "github",
+          href: "https://github.com/harness/canary",
+          icon: "github",
+        },
+      ],
       sidebar: [
         {
           label: "Getting started",
@@ -61,14 +66,12 @@ export default defineConfig({
         PageFrame: "./src/components/layout/PageFrame.astro",
         TwoColumnContent: "./src/components/layout/TwoColumnContent.astro",
         PageTitle: "./src/components/layout/PageTitle.astro",
+        ThemeSelect: "./src/components/layout/ThemeSelect.astro",
       },
     }),
     tailwind({ applyBaseStyles: false }),
     react(),
   ],
-  markdown: {
-    rehypePlugins: [wrapCodeBlocks],
-  },
   redirects: {
     "/": "/components/accordion",
   },

@@ -153,7 +153,7 @@ export function determineStatusMessage(
       title = 'All required checks passed'
       content = `${message}`
       status = 'success'
-      color = 'text-success'
+      color = 'text-cn-foreground-success'
     }
   } else {
     if (
@@ -317,12 +317,12 @@ export const extractInfoForCodeOwnerContent = ({
     } else if (reqCodeOwnerLatestApproval && latestCodeOwnerApprovalArr && latestCodeOwnerApprovalArr?.length > 0) {
       title = 'Changes approved'
       statusMessage = 'Latest changes were approved by code owners'
-      statusColor = 'text-success'
+      statusColor = 'text-cn-foreground-success'
       statusIcon = 'success'
     } else if (reqCodeOwnerApproval && codeOwnerApprovalEntries && codeOwnerApprovalEntries?.length > 0) {
       title = 'Changes approved'
       statusMessage = 'Changes were approved by code owners'
-      statusColor = 'text-success'
+      statusColor = 'text-cn-foreground-success'
       statusIcon = 'success'
     } else if (
       minReqLatestApproval &&
@@ -332,17 +332,17 @@ export const extractInfoForCodeOwnerContent = ({
     ) {
       title = 'Changes approved'
       statusMessage = 'Latest changes were approved by required reviewers'
-      statusColor = 'text-success'
+      statusColor = 'text-cn-foreground-success'
       statusIcon = 'success'
     } else if (minApproval && minApproval > 0 && approvedEvaluations && approvedEvaluations?.length >= minApproval) {
       title = 'Changes approved'
       statusMessage = 'Changes were approved by required reviewers'
-      statusColor = 'text-success'
+      statusColor = 'text-cn-foreground-success'
       statusIcon = 'success'
     } else if (approvedEvaluations && approvedEvaluations?.length > 0) {
       title = 'Changes approved'
       statusMessage = 'Changes were approved by reviewers'
-      statusColor = 'text-success'
+      statusColor = 'text-cn-foreground-success'
       statusIcon = 'success'
     } else {
       title = 'No reviews required'

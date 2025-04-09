@@ -120,8 +120,8 @@ export function usePRChecksDecision({
         setMessage(`${_count.skipped}/${total} ${pluralize('check', _count.skipped)} skipped.`)
       } else if (_count.success) {
         _status = ExecutionState.SUCCESS
-        setColor('text-success')
-        setBackground('text-success')
+        setColor('text-cn-foreground-success')
+        setBackground('text-cn-foreground-success')
         setMessage(`${_count.success}/${total} ${pluralize('check', _count.success)} succeeded.`)
       }
 

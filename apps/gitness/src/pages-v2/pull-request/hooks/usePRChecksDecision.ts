@@ -35,8 +35,8 @@ export function usePRChecksDecision({
   })
 
   const [count, setCount] = useState(DEFAULT_COUNTS)
-  const [color, setColor] = useState<string>('text-success')
-  const [background, setBackground] = useState<string>('text-success')
+  const [color, setColor] = useState<string>('text-cn-foreground-success')
+  const [background, setBackground] = useState<string>('text-cn-foreground-success')
   const [message, setMessage] = useState('')
   const [complete, setComplete] = useState(true)
   const [summaryText, setSummaryText] = useState('')
@@ -122,8 +122,8 @@ export function usePRChecksDecision({
         setMessage(`${_count.skipped}/${total} ${pluralize('check', _count.skipped)} skipped.`)
       } else if (_count.success) {
         _status = ExecutionState.SUCCESS
-        setColor('text-success')
-        setBackground('text-success')
+        setColor('text-cn-foreground-success')
+        setBackground('text-cn-foreground-success')
         setMessage(`${_count.success}/${total} ${pluralize('check', _count.success)} succeeded.`)
       }
 

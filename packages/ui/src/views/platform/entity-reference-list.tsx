@@ -43,7 +43,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
 }: EntityReferenceListProps<T, S, F>): JSX.Element {
   console.log(showBreadcrumbEllipsis)
   return (
-    <StackedList.Root className="relative">
+    <StackedList.Root>
       {/* Breadcrumb header */}
       <StackedList.Item isHeader disableHover className="!bg-cn-background-3 sticky top-0 h-12 p-2">
         <Breadcrumb.Root>
@@ -75,7 +75,6 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
       </StackedList.Item>
 
       <ScrollArea className="max-h-[calc(100vh-530px)] overflow-y-auto">
-        {/* <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[hsla(240,8%,6%,1)] via-[hsla(240,8%,6%,0.8)] to-[hsla(240,8%,6%,0)]"></div> */}
         {/* scopes */}
         {parentFolder ? (
           <>
@@ -125,7 +124,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
           </StackedList.Item>
         )}
       </ScrollArea>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[hsla(240,8%,6%,1)] via-[hsla(240,8%,6%,0.8)] to-[hsla(240,8%,6%,0)] z-10"></div>
+      <div className="pointer-events-none absolute inset-x-0 bottom-20 z-10 h-32 bg-gradient-to-t from-[hsla(240,8%,6%,1)] via-[hsla(240,8%,6%,0.8)] to-[hsla(240,8%,6%,0)]"></div>
     </StackedList.Root>
   )
 }

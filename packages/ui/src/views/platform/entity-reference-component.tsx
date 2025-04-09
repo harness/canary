@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
 
-import { Button, Icon, Input, ScrollArea, SkeletonList, StackedList } from '@/components'
+import { Button, Icon, Input, ListActions, ScrollArea, SearchBox, SkeletonList, StackedList } from '@/components'
 import { cn } from '@utils/cn'
+import { SecretType, SecretTypeFilter } from '@views/secrets/components/secret-type-filter'
 
 import { EntityReferenceList } from './entity-reference-list'
 import {
@@ -101,7 +102,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       <StackedList.Item
         onClick={() => onSelect?.(parentFolder)}
         thumbnail={<Icon name="folder" size={14} className="text-cn-foreground-3 ml-2" />}
-        className="h-12 p-2"
+        className="h-12 p-3"
       >
         <StackedList.Field title={<span className="capitalize">..</span>} />
       </StackedList.Item>
@@ -113,7 +114,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       <StackedList.Item
         onClick={() => onSelect?.(folder)}
         thumbnail={<Icon name="folder" size={14} className="text-cn-foreground-3 ml-2" />}
-        className="h-12 p-2"
+        className="h-12 p-3"
       >
         <StackedList.Field title={<span className="capitalize">{String(folder)}</span>} />
       </StackedList.Item>
@@ -125,8 +126,23 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       {isLoading ? (
         <SkeletonList />
       ) : (
-        <div className="h-full">
-          {showFilter && <Input type="text" placeholder="Search" className="mb-4" />}
+        <div className="h-full flex flex-col gap-2">
+          {showFilter && (
+            <ListActions.Root>
+              <ListActions.Left>
+                <SearchBox.Root
+                  width="full"
+                  className="max-w-96"
+                  value={''}
+                  handleChange={() => {}}
+                  placeholder="Search"
+                />
+              </ListActions.Left>
+              <ListActions.Right>
+                <SecretTypeFilter onFilterChange={(type: string) => console.log('Filter by type:', type)} />
+              </ListActions.Right>
+            </ListActions.Root>
+          )}
           <EntityReferenceList
             entities={entities}
             selectedEntity={selectedEntity}

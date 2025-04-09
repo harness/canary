@@ -43,7 +43,7 @@ const StepPaletteSection = forwardRef<
           </StepsPaletteContentLayout.SectionItem>
         ))
       ) : (
-        <p className="text-muted-foreground">There is no steps for provided query.</p>
+        <p className="text-cn-foreground-3">There is no steps for provided query.</p>
       )}
     </StepsPaletteContentLayout.Section>
   )

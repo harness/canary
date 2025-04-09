@@ -10,11 +10,11 @@ const StepFormLayout = {
   },
 
   Title: function Title({ children }: { children: React.ReactNode }) {
-    return <div className="mb-3 text-lg capitalize text-accent-foreground">{children}</div>
+    return <div className="mb-3 text-lg capitalize text-cn-foreground-1">{children}</div>
   },
 
   Description: function Title({ children }: { children: React.ReactNode }) {
-    return <div className="my-3 text-muted-foreground">{children}</div>
+    return <div className="my-3 text-cn-foreground-3">{children}</div>
   },
 
   Actions: function Title({ children }: { children: React.ReactNode }) {

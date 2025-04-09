@@ -80,7 +80,7 @@
 /* Text utilities */
 .text-radial-gradient {
   /* remove hardcode colors */
-  @apply bg-gradient-radial text-primary/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
+  @apply bg-gradient-radial text-cn-foreground-1/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
 }
 
 /* Card utilities */
@@ -96,11 +96,11 @@
 
 /* Form utilities */
 .text-form-error {
-  @apply text-destructive mt-2 text-xs font-light;
+  @apply text-cn-foreground-danger mt-2 text-xs font-light;
 }
 .form-input {
-  @apply border-primary/10 bg-primary/5 mt-1 w-full rounded-[4px] text-sm font-light;
-  @apply placeholder:text-primary/50 !important;
+  @apply border-cn-borders-1/10 bg-cn-background-accent/5 mt-1 w-full rounded-[4px] text-sm font-light;
+  @apply placeholder:text-cn-foreground-1/50 !important;
 }
 
 /* Temporary studio controls override */

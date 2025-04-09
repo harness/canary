@@ -156,14 +156,14 @@ const LineTitle: React.FC<LineTitleProps> = ({
               }}
               className="size-4"
             />
-            <Text size={2} className="text-primary/90">
+            <Text size={2} className="text-cn-foreground-1/90">
               {t('views:pullRequests.viewed')}
             </Text>
           </div>
         ) : null}
 
         {/* <Button title="coming soon" variant="ghost" size="sm">
-        <Icon name="ellipsis" size={12} className="text-primary-muted/40" />
+        <Icon name="ellipsis" size={12} className="text-cn-foreground-3/40" />
       </Button> */}
       </div>
     </div>

@@ -45,9 +45,9 @@ export function StepNodeComponent({ node }: { node: LeafNodeInternalType<StepNod
   const { name, icon } = node.data
 
   return (
-    <div className={'bg-primary-foreground border-borders-2 box-border size-full rounded-xl border'}>
+    <div className={'bg-cn-background-2 border-borders-2 box-border size-full rounded-xl border'}>
       <div>{icon}</div>
-      <Text title={name} className="text-primary m-2 line-clamp-2 cursor-default">
+      <Text title={name} className="text-cn-foreground-1 m-2 line-clamp-2 cursor-default">
         {name}
       </Text>
     </div>
@@ -73,7 +73,7 @@ export function SerialGroupNodeComponent({
     <>
       <div className="border-borders-2 absolute inset-0 -z-10 rounded-xl border" />
       <div className="absolute inset-x-0 top-0 h-0">
-        <div title={name} className="text-primary-muted h-9 cursor-default truncate px-9 pt-2.5">
+        <div title={name} className="text-cn-foreground-3 h-9 cursor-default truncate px-9 pt-2.5">
           {name}
         </div>
       </div>
@@ -102,7 +102,7 @@ export function ParallelGroupNodeComponent({
     <>
       <div className="border-borders-2 absolute inset-0 -z-10 rounded-xl border" />
       <div className="absolute inset-x-0 top-0 h-0">
-        <div title={name} className="text-primary-muted h-9 cursor-default truncate px-9 pt-2.5">
+        <div title={name} className="text-cn-foreground-3 h-9 cursor-default truncate px-9 pt-2.5">
           {name}
         </div>
       </div>

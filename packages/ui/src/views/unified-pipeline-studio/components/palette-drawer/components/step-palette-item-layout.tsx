@@ -9,7 +9,7 @@ const StepsPaletteItemLayout = {
     )
   },
   Left: function Left({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('text-accent-foreground', className)}>{children}</div>
+    return <div className={cn('text-cn-foreground-1', className)}>{children}</div>
   },
   Right: function Right({ children }: { children: React.ReactNode }) {
     return <div className="flex grow flex-col">{children}</div>

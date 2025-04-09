@@ -4001,12 +4001,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 113
             },
             {
-              content: '-            <span className="text-destructive text-12">{props.headerMsg}</span>',
+              content: '-            <span className="text-cn-foreground-danger text-12">{props.headerMsg}</span>',
               type: 'delete',
               oldNumber: 114
             },
             {
-              content: '+            <span className="text-12 text-destructive">{props.headerMsg}</span>',
+              content: '+            <span className="text-12 text-cn-foreground-danger">{props.headerMsg}</span>',
               type: 'insert',
               newNumber: 114
             },
@@ -4055,12 +4055,14 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 233
             },
             {
-              content: '-                      <span className="text-primary text-12">Bypass and merge anyway</span>',
+              content:
+                '-                      <span className="text-cn-foreground-1 text-12">Bypass and merge anyway</span>',
               type: 'delete',
               oldNumber: 234
             },
             {
-              content: '+                      <span className="text-12 text-primary">Bypass and merge anyway</span>',
+              content:
+                '+                      <span className="text-12 text-cn-foreground-1">Bypass and merge anyway</span>',
               type: 'insert',
               newNumber: 234
             },
@@ -4174,7 +4176,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx::::packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx',
       filePath: 'packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\nindex 71db8359c70f7f01f8b9a71e0a9827a2d1537884..1229655a5a738429418d70498245284f33b197b7 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\n@@ -111,7 +111,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {\n         </div>\n         {props.headerMsg && (\n           <div className="flex w-full justify-end">\n-            <span className="text-destructive text-12">{props.headerMsg}</span>\n+            <span className="text-12 text-destructive">{props.headerMsg}</span>\n           </div>\n         )}\n       </>\n@@ -231,7 +231,7 @@ const PullRequestPanel = ({\n                           }\n                         }}\n                       />\n-                      <span className="text-primary text-12">Bypass and merge anyway</span>\n+                      <span className="text-12 text-primary">Bypass and merge anyway</span>\n                     </Layout.Horizontal>\n                   )}\n                   <Button\n@@ -264,8 +264,8 @@ const PullRequestPanel = ({\n                                     key={action_idx}\n                                   >\n                                     <div className="flex flex-col">\n-                                      <span className="text-foreground-8 leading-none">{action.title}</span>\n-                                      <span className="text-foreground-4 mt-1.5">{action.description}</span>\n+                                      <span className="leading-none text-foreground-8">{action.title}</span>\n+                                      <span className="mt-1.5 text-foreground-4">{action.description}</span>\n                                     </div>\n                                   </DropdownMenuRadioItem>\n                                 )\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\nindex 71db8359c70f7f01f8b9a71e0a9827a2d1537884..1229655a5a738429418d70498245284f33b197b7 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\n@@ -111,7 +111,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {\n         </div>\n         {props.headerMsg && (\n           <div className="flex w-full justify-end">\n-            <span className="text-cn-foreground-danger text-12">{props.headerMsg}</span>\n+            <span className="text-12 text-cn-foreground-danger">{props.headerMsg}</span>\n           </div>\n         )}\n       </>\n@@ -231,7 +231,7 @@ const PullRequestPanel = ({\n                           }\n                         }}\n                       />\n-                      <span className="text-cn-foreground-1 text-12">Bypass and merge anyway</span>\n+                      <span className="text-12 text-cn-foreground-1">Bypass and merge anyway</span>\n                     </Layout.Horizontal>\n                   )}\n                   <Button\n@@ -264,8 +264,8 @@ const PullRequestPanel = ({\n                                     key={action_idx}\n                                   >\n                                     <div className="flex flex-col">\n-                                      <span className="text-foreground-8 leading-none">{action.title}</span>\n-                                      <span className="text-foreground-4 mt-1.5">{action.description}</span>\n+                                      <span className="leading-none text-foreground-8">{action.title}</span>\n+                                      <span className="mt-1.5 text-foreground-4">{action.description}</span>\n                                     </div>\n                                   </DropdownMenuRadioItem>\n                                 )\n'
     },
     {
       blocks: [

@@ -10,11 +10,11 @@ const EntityFormSectionLayout = {
   },
 
   Title: function Title({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cx('my-3 text-lg text-accent-foreground', className)}>{children}</div>
+    return <div className={cx('my-3 text-lg text-cn-foreground-1', className)}>{children}</div>
   },
 
   Description: function Description({ children }: { children: React.ReactNode }) {
-    return <div className="mt-3 text-muted-foreground">{children}</div>
+    return <div className="mt-3 text-cn-foreground-3">{children}</div>
   },
 
   Form: function Form({ children, className }: { children: React.ReactNode; className?: string }) {

@@ -114,9 +114,9 @@ const PullRequestChangesSection = ({
       case 'pending':
         return <Icon name="pending-clock" className="text-icons-alert" />
       case 'warning':
-        return <Icon name="triangle-warning" className="text-tertiary-background" />
+        return <Icon name="triangle-warning" className="text-cn-foreground-3" />
       case 'error':
-        return <Icon name="triangle-warning" className="text-destructive" />
+        return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
       default:
         return <Icon name="success" className="text-cn-foreground-success" />
     }
@@ -150,7 +150,7 @@ const PullRequestChangesSection = ({
     ) {
       return (
         <div className="flex items-center gap-x-2">
-          <Icon name="circle" className="text-tertiary-background" />
+          <Icon name="circle" className="text-cn-foreground-3" />
           <span className="text-14 text-cn-foreground-1">Some changes were approved by code owners</span>
         </div>
       )
@@ -197,7 +197,7 @@ const PullRequestChangesSection = ({
 
     return (
       <div className="flex items-center gap-x-2">
-        <Icon name="circle" className="text-tertiary-background" />
+        <Icon name="circle" className="text-cn-foreground-3" />
         <span className="text-14 text-cn-foreground-1">No codeowner reviews</span>
       </div>
     )
@@ -320,7 +320,7 @@ const PullRequestChangesSection = ({
                 <StackedList.Item
                   isHeader
                   disableHover
-                  className="cursor-default !bg-transparent px-0 text-tertiary-background"
+                  className="cursor-default !bg-transparent px-0 text-cn-foreground-3"
                 >
                   <StackedList.Field title={<HeaderItem header="Code" />} />
                   <StackedList.Field title={<HeaderItem header="Owners" />} />

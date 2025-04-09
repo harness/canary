@@ -87,12 +87,12 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
           <div className="flex items-center gap-2 font-medium">
             <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
             <Badge variant="soft" theme="muted" size="sm">
-              <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
+              <Icon name="branch" size={12} className="mr-1 text-cn-foreground-3" />
               {props?.pullReqMetadata?.source_branch}
             </Badge>
             <span>into</span>
             <Badge variant="soft" theme="muted" size="sm">
-              <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
+              <Icon name="branch" size={12} className="mr-1 text-cn-foreground-3" />
               {props?.pullReqMetadata?.target_branch}
             </Badge>
             <span>{formattedTime}</span>
@@ -109,7 +109,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         </div>
         {props.headerMsg && (
           <div className="flex w-full justify-end">
-            <span className="text-12 text-destructive">{props.headerMsg}</span>
+            <span className="text-12 text-cn-foreground-danger">{props.headerMsg}</span>
           </div>
         )}
       </>
@@ -357,7 +357,7 @@ const PullRequestPanel = ({
                           }
                         }}
                       />
-                      <span className="text-12 text-primary">Bypass and merge anyway</span>
+                      <span className="text-12 text-cn-foreground-1">Bypass and merge anyway</span>
                     </Layout.Horizontal>
                   )}
 

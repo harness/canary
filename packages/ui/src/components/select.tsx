@@ -201,7 +201,7 @@ const SelectItem = forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'focus:bg-accent focus:text-accent-foreground relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[highlighted]:outline-none',
+      'focus:bg-cn-background-3 focus:text-cn-foreground-1 relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[highlighted]:outline-none',
       className
     )}
     {...props}
@@ -218,7 +218,11 @@ const SelectSeparator = forwardRef<
   ElementRef<typeof SelectPrimitive.Separator>,
   ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
 >(({ className, ...props }, ref) => (
-  <SelectPrimitive.Separator ref={ref} className={cn('bg-muted -mx-1 my-1 h-px', className)} {...props} />
+  <SelectPrimitive.Separator
+    ref={ref}
+    className={cn('bg-cn-background-softgray -mx-1 my-1 h-px', className)}
+    {...props}
+  />
 ))
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 

@@ -53,17 +53,6 @@
       },
       "$description": "Emphasized section headers."
     },
-    "dialog": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.500}",
-        "fontSize": "{fontSize.5}",
-        "lineHeight": "{lineHeight.5.tight}",
-        "letterSpacing": "{tracking.tight}"
-      },
-      "$description": "Dialog headers."
-    },
     "base": {
       "$type": "typography",
       "$value": {
@@ -106,7 +95,7 @@
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.2}",
         "lineHeight": "{lineHeight.2.snug}",
-        "letterSpacing": "{tracking.normal}"
+        "letterSpacing": "{tracking.tight}"
       },
       "$description": "Primary text style for UI and content."
     },
@@ -140,7 +129,7 @@
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.2}",
           "lineHeight": "{lineHeight.2.none}",
-          "letterSpacing": "{tracking.normal}"
+          "letterSpacing": "{tracking.tight}"
         }
       }
     },
@@ -163,7 +152,7 @@
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.2}",
           "lineHeight": "{lineHeight.2.tight}",
-          "letterSpacing": "{tracking.normal}"
+          "letterSpacing": "{tracking.tight}"
         }
       }
     }
@@ -216,7 +205,20 @@
       }
     }
   },
-  "component": {
+  "comp": {
+    "dialog": {
+      "title": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.500}",
+          "fontSize": "{fontSize.5}",
+          "lineHeight": "{lineHeight.5.tight}",
+          "letterSpacing": "{tracking.tight}"
+        },
+        "$description": "Dialog headers."
+      }
+    },
     "markdown-editor": {
       "title": {
         "h1": {

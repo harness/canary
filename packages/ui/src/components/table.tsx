@@ -59,14 +59,22 @@ TableBody.displayName = 'TableBody'
 
 const TableFooter = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
   ({ className, ...props }, ref) => (
-    <tfoot ref={ref} className={cn('bg-muted/50 border-t font-medium [&>tr]:last:border-b-0', className)} {...props} />
+    <tfoot
+      ref={ref}
+      className={cn('bg-cn-background-softgray/50 border-t font-medium [&>tr]:last:border-b-0', className)}
+      {...props}
+    />
   )
 )
 TableFooter.displayName = 'TableFooter'
 
 const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElement>>(
   ({ className, ...props }, ref) => (
-    <tr ref={ref} className={cn('data-[state=selected]:bg-muted border-b transition-colors', className)} {...props} />
+    <tr
+      ref={ref}
+      className={cn('data-[state=selected]:bg-cn-background-softgray border-b transition-colors', className)}
+      {...props}
+    />
   )
 )
 TableRow.displayName = 'TableRow'
@@ -98,7 +106,7 @@ TableCell.displayName = 'TableCell'
 
 const TableCaption = forwardRef<HTMLTableCaptionElement, HTMLAttributes<HTMLTableCaptionElement>>(
   ({ className, ...props }, ref) => (
-    <caption ref={ref} className={cn('text-muted-foreground mt-4 text-sm', className)} {...props} />
+    <caption ref={ref} className={cn('text-cn-foreground-3 mt-4 text-sm', className)} {...props} />
   )
 )
 TableCaption.displayName = 'TableCaption'

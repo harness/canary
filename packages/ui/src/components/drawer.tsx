@@ -16,6 +16,40 @@ const DrawerRoot = ({
   )
 DrawerRoot.displayName = 'DrawerRoot'
 
+const LazyDrawer = ({
+  children,
+  open,
+  onOpenChange,
+  unmountOnClose = false,
+  ...props
+}: React.ComponentProps<typeof DrawerPrimitive.Root> & { unmountOnClose?: boolean }) => {
+  const [hasRendered, setHasRendered] = React.useState(open || false)
+
+  const prevOpenState = React.useRef(false)
+
+  React.useEffect(() => {
+    if (prevOpenState.current === false && open) {
+      setHasRendered(true)
+      prevOpenState.current = true
+    }
+    // if unmountOnClose=true set hasRendered with delay
+    else if (unmountOnClose && prevOpenState.current === true && !open) {
+      const timer = setTimeout(() => {
+        setHasRendered(false)
+        prevOpenState.current = false
+      }, 250)
+
+      return () => clearTimeout(timer)
+    }
+  }, [open])
+
+  return (
+    <Drawer.Root open={open} onOpenChange={onOpenChange} {...props}>
+      {hasRendered ? children : null}
+    </Drawer.Root>
+  )
+}
+
 const DrawerTrigger = DrawerPrimitive.Trigger
 
 const DrawerPortal = DrawerPrimitive.Portal
@@ -77,12 +111,13 @@ const DrawerDescription = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>
 >(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Description ref={ref} className={cn('text-muted-foreground text-sm', className)} {...props} />
+  <DrawerPrimitive.Description ref={ref} className={cn('text-cn-foreground-3 text-sm', className)} {...props} />
 ))
 DrawerDescription.displayName = DrawerPrimitive.Description.displayName
 
 const Drawer = {
   Root: DrawerRoot,
+  Lazy: LazyDrawer,
   Portal: DrawerPortal,
   Overlay: DrawerOverlay,
   Trigger: DrawerTrigger,

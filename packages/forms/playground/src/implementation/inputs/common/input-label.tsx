@@ -10,7 +10,7 @@ function InputLabel(props: InputLabelProps): JSX.Element {
 
   return (
     <div className="flex">
-      <div className="text-muted-foreground">{labelText}</div>
+      <div className="text-cn-foreground-3">{labelText}</div>
     </div>
   )
 }

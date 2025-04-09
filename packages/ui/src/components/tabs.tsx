@@ -7,7 +7,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 const tabsListVariants = cva('inline-flex items-center text-cn-foreground-2', {
   variants: {
     variant: {
-      default: 'h-9 justify-center rounded-lg bg-muted p-1',
+      default: 'h-9 justify-center rounded-lg bg-cn-background-softgray p-1',
       underline: 'h-11 justify-center gap-4',
       /**
        * TODO: Technical Debt - Navigation Variant Removal
@@ -40,7 +40,7 @@ const tabsTriggerVariants = cva(
       variant: {
         default: 'rounded-md data-[state=active]:bg-cn-background data-[state=active]:shadow',
         underline:
-          'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-primary',
+          'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-cn-borders-1',
         /**
          * TODO: Technical Debt - Navigation Variant Removal
          * This variant needs to be removed after:

@@ -18,7 +18,7 @@ type BreadcrumbListProps = ComponentPropsWithoutRef<'ol'>
 const BreadcrumbList = forwardRef<HTMLOListElement, BreadcrumbListProps>(({ className, ...props }, ref) => (
   <ol
     ref={ref}
-    className={cn('text-muted-foreground flex flex-wrap items-center gap-1.5 break-words text-sm', className)}
+    className={cn('text-cn-foreground-3 flex flex-wrap items-center gap-1.5 break-words text-sm', className)}
     {...props}
   />
 ))

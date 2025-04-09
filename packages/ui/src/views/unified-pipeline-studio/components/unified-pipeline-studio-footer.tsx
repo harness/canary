@@ -47,31 +47,36 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
           onClick={() => {
             togglePane?.()
           }}
-          className="flex h-full cursor-pointer gap-2.5 rounded-md px-2 py-1.5 duration-150 ease-in-out hover:bg-primary/10"
+          className="flex h-full cursor-pointer gap-2.5 rounded-md px-2 py-1.5 duration-150 ease-in-out hover:bg-cn-background-accent/10"
         >
           <div className="flex items-center gap-1.5">
             <Icon
               size={14}
               name="cross-circle"
-              className={problemsCount.error > 0 ? 'text-destructive' : 'text-tertiary-background'}
+              className={problemsCount.error > 0 ? 'text-cn-foreground-danger' : 'text-cn-foreground-3'}
             />
-            <span className={cn('text-[12px]', problemsCount.error > 0 ? 'text-destructive' : 'text-primary')}>
+            <span
+              className={cn(
+                'text-[12px]',
+                problemsCount.error > 0 ? 'text-cn-foreground-danger' : 'text-cn-foreground-1'
+              )}
+            >
               {problemsCount.error}
             </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Icon size={14} name="warning-triangle-outline" className="text-tertiary-background" />
-            <span className="text-[12px] text-primary">{problemsCount.warning}</span>
+            <Icon size={14} name="warning-triangle-outline" className="text-cn-foreground-3" />
+            <span className="text-[12px] text-cn-foreground-1">{problemsCount.warning}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Icon size={14} name="info-circle" className="text-tertiary-background" />
-            <span className="text-[12px] text-primary">{problemsCount.info}</span>
+            <Icon size={14} name="info-circle" className="text-cn-foreground-3" />
+            <span className="text-[12px] text-cn-foreground-1">{problemsCount.info}</span>
           </div>
         </div>
         {branchesLoading || branches || currentBranch ? (
           <div className={'flex gap-2'}>
             <div className={'flex items-center'}>
-              <span className="text-[12px] text-tertiary-background">Branch:</span>
+              <span className="text-[12px] text-cn-foreground-3">Branch:</span>
               <Select.Root value={currentBranch} disabled={branchesLoading} onValueChange={onBranchChange}>
                 <Select.Content>
                   {branches?.map(branch => (
@@ -88,10 +93,10 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
       {committedTimeAgo && authorName && (
         <Popover.Root>
           <Popover.Trigger>
-            <div className="flex text-[12px] text-tertiary-background">
+            <div className="flex text-[12px] text-cn-foreground-3">
               Last edited
-              <span className="text-primary">&nbsp;{committedTimeAgo}&nbsp;</span> by
-              <span className="text-primary">&nbsp;{authorName}&nbsp;</span>
+              <span className="text-cn-foreground-1">&nbsp;{committedTimeAgo}&nbsp;</span> by
+              <span className="text-cn-foreground-1">&nbsp;{authorName}&nbsp;</span>
             </div>
           </Popover.Trigger>
           <Popover.Content side={'top'} className="mb-4 mr-4 w-80 p-0">

@@ -10,11 +10,11 @@ const ConnectorsPaletteLayout = {
   },
 
   Title: function Title({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cx('mb-3 text-lg text-accent-foreground', className)}>{children}</div>
+    return <div className={cx('mb-3 text-lg text-cn-foreground-1', className)}>{children}</div>
   },
 
   Subtitle: function Subtitle({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cx('mb-2 text-md text-accent-foreground', className)}>{children}</div>
+    return <div className={cx('mb-2 text-md text-cn-foreground-1', className)}>{children}</div>
   }
 }
 

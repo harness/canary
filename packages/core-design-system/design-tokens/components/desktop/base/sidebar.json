@@ -1,0 +1,84 @@
+{
+  "sidebar": {
+    "item": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "size": {
+        "$type": "sizing",
+        "$value": "{size.8}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.2}"
+      }
+    },
+    "group": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.half}"
+      }
+    },
+    "container": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "width": {
+        "$type": "sizing",
+        "$value": "{size.56}"
+      }
+    },
+    "header": {
+      "pt": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "pb": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.5}"
+      }
+    },
+    "footer": {
+      "pt": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      }
+    },
+    "user-item": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
+      "size": {
+        "$type": "sizing",
+        "$value": "{size.12}"
+      }
+    }
+  }
+}

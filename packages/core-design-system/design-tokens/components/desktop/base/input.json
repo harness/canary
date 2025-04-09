@@ -14,27 +14,26 @@
     },
     "radius": {
       "$type": "borderRadius",
-      "$value": "{rounded.3}",
+      "$value": "{rounded.2}",
       "$description": "6px"
     },
-    "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.1-half}"
-    },
-    "pl": {
-      "$type": "spacing",
-      "$value": "{spacing.3}",
-      "$description": "12px horizontal padding"
-    },
-    "pr": {
-      "$type": "spacing",
-      "$value": "{spacing.2}",
-      "$description": "12px horizontal padding"
-    },
-    "py": {
-      "$type": "spacing",
-      "$value": "{spacing.2}",
-      "$description": "8px vertical padding"
+    "default": {
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
+      },
+      "pl": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "pr": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      }
     },
     "border": {
       "$type": "borderWidth",
@@ -45,10 +44,28 @@
         "$type": "spacing",
         "$value": "{spacing.2}"
       }
+    },
+    "sm": {
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
+      "pl": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "pr": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      }
     }
   },
   "input-text-area": {
-    "min": {
+    "min-height": {
       "$type": "sizing",
       "$value": "{size.32}"
     }

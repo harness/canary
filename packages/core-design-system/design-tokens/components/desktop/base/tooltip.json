@@ -7,11 +7,11 @@
     "padding": {
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.3}"
+        "$value": "{spacing.2-half}"
       },
       "px": {
         "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "$value": "{spacing.1}"
       }
     }
   }

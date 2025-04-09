@@ -33,7 +33,7 @@ export const StageFloatingAddNodeContextMenu = ({
             onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.Stage)
           }}
         >
-          <Icon name="plus" size={12} className="text-tertiary-background" />
+          <Icon name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add stage</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>

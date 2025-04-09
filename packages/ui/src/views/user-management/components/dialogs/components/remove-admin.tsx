@@ -59,7 +59,7 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
             </ControlGroup>
           </Fieldset>
 
-          {updateUserAdminError && <span className="text-xs text-destructive">{updateUserAdminError}</span>}
+          {updateUserAdminError && <span className="text-xs text-cn-foreground-danger">{updateUserAdminError}</span>}
         </FormWrapper>
 
         <Dialog.Footer>

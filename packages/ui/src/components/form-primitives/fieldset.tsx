@@ -19,7 +19,7 @@ export function Fieldset({ children, box, shaded, className, ...props }: Fieldse
     <fieldset
       className={cn(
         'flex flex-col gap-y-7',
-        { 'rounded-md border px-5 py-3.5 pb-5': box, 'bg-primary/[0.02]': shaded },
+        { 'rounded-md border px-5 py-3.5 pb-5': box, 'bg-cn-background-accent/[0.02]': shaded },
         className
       )}
       role="group"

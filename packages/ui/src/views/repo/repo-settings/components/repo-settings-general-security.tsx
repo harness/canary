@@ -110,7 +110,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
       {!!apiError && (apiError.type === ErrorTypes.FETCH_SECURITY || apiError.type === ErrorTypes.UPDATE_SECURITY) && (
         <>
           <Spacer size={2} />
-          <Text size={1} className="text-destructive">
+          <Text size={1} className="text-cn-foreground-danger">
             {apiError.message}
           </Text>
         </>

@@ -123,22 +123,22 @@ const SidebarProvider = forwardRef<
   useEffect(() => {
     if (isMobile) return
 
-    document.body.style.setProperty('--sidebar-width-icon', SIDEBAR_WIDTH_ICON)
+    document.body.style.setProperty('--cn-sidebar-width-icon', SIDEBAR_WIDTH_ICON)
 
     if (!open) {
-      document.body.style.setProperty('--sidebar-width', SIDEBAR_COLLAPSED_WIDTH)
+      document.body.style.setProperty('--cn-sidebar-width', SIDEBAR_COLLAPSED_WIDTH)
     }
 
     if (isInset && open) {
-      document.body.style.setProperty('--sidebar-width', SIDEBAR_WIDTH_INSET)
+      document.body.style.setProperty('--cn-sidebar-width', SIDEBAR_WIDTH_INSET)
     }
 
     if (!isInset && open) {
-      document.body.style.setProperty('--sidebar-width', SIDEBAR_WIDTH)
+      document.body.style.setProperty('--cn-sidebar-width', SIDEBAR_WIDTH)
     }
 
     return () => {
-      document.body.style.removeProperty('--sidebar-width')
+      document.body.style.removeProperty('--cn-sidebar-width')
     }
   }, [isInset, open, isMobile])
 
@@ -176,7 +176,7 @@ const SidebarRoot = forwardRef<
     return (
       <div
         className={cn(
-          'flex h-full w-[--sidebar-width] flex-col bg-sidebar-background-1 transition-[width] ease-linear duration-200',
+          'flex h-full w-[--cn-sidebar-width] flex-col bg-sidebar-background-1 transition-[width] ease-linear duration-200',
           className
         )}
         ref={ref}
@@ -193,8 +193,8 @@ const SidebarRoot = forwardRef<
         <Sheet.Content
           data-sidebar="sidebar"
           data-mobile="true"
-          className="bg-sidebar-background-1 w-[--sidebar-width] p-0 [&>button]:hidden"
-          style={{ '--sidebar-width': SIDEBAR_WIDTH_MOBILE } as CSSProperties}
+          className="bg-sidebar-background-1 w-[--cn-sidebar-width] p-0 [&>button]:hidden"
+          style={{ '--cn-sidebar-width': SIDEBAR_WIDTH_MOBILE } as CSSProperties}
           side={side}
         >
           <div className="flex size-full flex-col">{children}</div>
@@ -214,11 +214,11 @@ const SidebarRoot = forwardRef<
     >
       <div
         className={cn(
-          'sticky top-0 bg-sidebar-background-1 border-sidebar-border-1 duration-200 hidden w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex',
+          'sticky top-0 bg-sidebar-background-1 border-sidebar-border-1 duration-200 hidden w-[--cn-sidebar-width] transition-[left,right,width] ease-linear md:flex',
           // Adjust the padding for floating and inset variants.
           variant === 'floating' || variant === 'inset'
-            ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]'
-            : 'group-data-[collapsible=icon]:w-[--sidebar-width-icon]',
+            ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--cn-sidebar-width-icon)_+_theme(spacing.4)_+2px)]'
+            : 'group-data-[collapsible=icon]:w-[--cn-sidebar-width-icon]',
           { 'group-data-[side=left]:border-r group-data-[side=right]:border-l': !isInset && !isLightTheme },
           className
         )}

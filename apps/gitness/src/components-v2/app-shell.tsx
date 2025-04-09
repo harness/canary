@@ -232,12 +232,10 @@ export const AppShellMFE = memo(() => {
 
   return (
     <>
-      <div className="text-cn-foreground-2">
-        <Breadcrumbs breadcrumbs={breadcrumbs} />
-        <MainContentLayout withBreadcrumbs={breadcrumbs.length > 0}>
-          <Outlet />
-        </MainContentLayout>
-      </div>
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
+      <MainContentLayout className="text-cn-foreground-2" withBreadcrumbs={breadcrumbs.length > 0}>
+        <Outlet />
+      </MainContentLayout>
       <Toaster />
     </>
   )

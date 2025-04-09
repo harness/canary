@@ -4,6 +4,10 @@ import { SidebarContext } from '@/components'
 import { useTheme } from '@/context'
 import { cn } from '@/utils'
 
+/**
+ * The component `HalfArch` creates a visual layer that is used to keep the top corners
+ * of the main content rounded when a page is scrolled to the top.
+ */
 const HalfArch = ({ className }: { className?: string }) => (
   <div className="relative size-1.5 overflow-hidden">
     <div
@@ -18,21 +22,26 @@ const HalfArch = ({ className }: { className?: string }) => (
 type MainContentLayoutProps = PropsWithChildren<{
   useSidebar?: () => SidebarContext
   withBreadcrumbs?: boolean
+  className?: string
 }>
 
-export function MainContentLayout({ children, useSidebar, withBreadcrumbs }: MainContentLayoutProps) {
+export function MainContentLayout({ children, useSidebar, className, withBreadcrumbs }: MainContentLayoutProps) {
   const { isInset } = useTheme()
   const sidebarData = useSidebar?.()
   const isMobile = sidebarData?.isMobile
 
   return (
     <div
-      className={cn('min-h-screen bg-cn-background-1', {
-        'ml-1.5': isMobile,
-        'min-h-[calc(100vh-55px)]': withBreadcrumbs,
-        'min-h-[calc(100vh-55px-6px)] mb-1.5 mt-0': isInset && withBreadcrumbs,
-        'min-h-[calc(100vh-6px*2)] my-1.5 mr-1.5 border rounded-md min-w-fit': isInset
-      })}
+      className={cn(
+        'min-h-screen bg-cn-background-1',
+        {
+          'ml-1.5': isMobile,
+          'min-h-[calc(100vh-55px)]': withBreadcrumbs,
+          'min-h-[calc(100vh-55px-6px)] mb-1.5 mt-0': isInset && withBreadcrumbs,
+          'min-h-[calc(100vh-6px*2)] my-1.5 mr-1.5 border rounded-md min-w-fit': isInset
+        },
+        className
+      )}
     >
       {isInset && (
         <div

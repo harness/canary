@@ -107,8 +107,8 @@ export function usePRChecksDecision({
         setMessage(`${_count.killed}/${total} ${pluralize('check', _count.killed)} killed.`)
       } else if (_count.running) {
         _status = ExecutionState.RUNNING
-        setColor('text-warning')
-        setBackground('text-warning')
+        setColor('text-cn-foreground-warning')
+        setBackground('text-cn-foreground-warning')
         setMessage(`${_count.running}/${total} ${pluralize('check', _count.running)} running.`)
       } else if (_count.pending) {
         _status = ExecutionState.PENDING

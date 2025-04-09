@@ -133,7 +133,7 @@ export function determineStatusMessage(
       title = 'Some required checks are pending'
       status = 'pending'
       content = `${message}`
-      color = 'text-warning'
+      color = 'text-cn-foreground-warning'
     } else if (checks.some(check => check.required && check.check.status === ExecutionState.RUNNING)) {
       title = 'Some required checks are running'
       status = 'running'
@@ -286,12 +286,12 @@ export const extractInfoForCodeOwnerContent = ({
     ) {
       title = 'Approvals pending from code owners'
       statusMessage = 'Latest changes are pending approval from code owners'
-      statusColor = 'text-warning'
+      statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
     } else if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerApproval) {
       title = 'Approvals pending from code owners'
       statusMessage = 'Changes are pending approval from code owners'
-      statusColor = 'text-warning'
+      statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
     } else if (
       minReqLatestApproval &&
@@ -301,13 +301,13 @@ export const extractInfoForCodeOwnerContent = ({
     ) {
       title = 'Approvals pending'
       statusMessage = 'Latest changes are pending approval from required reviewers'
-      statusColor = 'text-warning'
+      statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
     } else if (minApproval && approvedEvaluations && approvedEvaluations?.length < minApproval && minApproval > 0) {
       title = 'Approvals pending'
       statusMessage = 'Changes are pending approval from required reviewers'
 
-      statusColor = 'text-warning'
+      statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
     } else if (reqCodeOwnerLatestApproval && latestCodeOwnerApprovalArr && latestCodeOwnerApprovalArr?.length > 0) {
       title = 'Changes approved'

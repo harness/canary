@@ -85,7 +85,7 @@ export default {
           3: 'lch(from var(--cn-text-3) l c h / <alpha-value>)',
           success: 'var(--cn-text-cn-foreground-success)',
           danger: 'var(--cn-text-danger)',
-          warning: 'var(--cn-text-warning)',
+          warning: 'var(--cn-text-cn-foreground-warning)',
           accent: 'var(--cn-text-accent)',
 
           // Remove

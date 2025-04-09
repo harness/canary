@@ -67,7 +67,7 @@ export const changesInfoData = {
 export const pendingChangesInfoData = {
   title: 'Approvals pending',
   statusMessage: 'Changes are pending approval from required reviewers',
-  statusColor: 'text-warning',
+  statusColor: 'text-cn-foreground-warning',
   statusIcon: 'pending',
   isNotRequired: false
 }

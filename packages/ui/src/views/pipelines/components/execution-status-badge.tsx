@@ -38,7 +38,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
       ) : (
         <div className="border-studio-3/[0.12] bg-studio-3/10 flex items-center gap-1 rounded-md border border-solid px-1 py-0.5">
           <div className="flex items-center gap-1">
-            <CanaryIcon size={16} name="running" className="animate-spin text-warning" />
+            <CanaryIcon size={16} name="running" className="animate-spin text-cn-foreground-warning" />
             <span className="text-studio-3">Running</span>
           </div>
           {duration && <span className="text-studio-3">{duration}</span>}

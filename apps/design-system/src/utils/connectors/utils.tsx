@@ -37,14 +37,26 @@ export interface ConnectorDefinitionOptions {
 
 export function getHarnessConnectorDefinition(type: string, options?: ConnectorDefinitionOptions): any | undefined {
   const connector = harnessConnectors.find(harnessConnector => harnessConnector.type === type)
-  if (connector) {
-    connector?.formDefinition?.inputs?.map(input => {
-      if (input.inputType === 'group') {
-        input.inputConfig = { autoExpandGroups: options?.autoExpandGroups }
-      }
-    })
+  return {
+    ...connector,
+    formDefinition: {
+      ...connector?.formDefinition,
+      inputs: connector?.formDefinition?.inputs?.map(input => {
+        if (!input) return input
+
+        if (input.inputType === 'group') {
+          return {
+            ...input,
+            inputConfig: {
+              ...(input.inputConfig as Object),
+              autoExpandGroups: options?.autoExpandGroups
+            }
+          }
+        }
+        return input
+      })
+    }
   }
-  return connector
 }
 
 export const getExecuteOnDelegateValue = () => {

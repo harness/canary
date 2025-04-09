@@ -46,9 +46,9 @@ const buttonVariants = cva(
       theme: {
         default: '',
         error:
-          'border-cn-borders-danger/30 bg-button-background-danger-1 text-error hover:bg-button-background-danger-2',
+          'border-cn-borders-danger/30 bg-button-background-danger-1 text-cn-foreground-danger hover:bg-button-background-danger-2',
         warning:
-          'border-cn-borders-danger/30 bg-button-background-danger-1 text-warning hover:bg-button-background-danger-2',
+          'border-cn-borders-danger/30 bg-button-background-danger-1 text-cn-foreground-warning hover:bg-button-background-danger-2',
         success:
           'border-button-border-success-1 bg-button-background-success-1 text-button-foreground-success-1 hover:bg-button-background-success-2',
         muted: 'border-cn-borders-3/20 bg-cn-background-1/10 text-cn-foreground-3',

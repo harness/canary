@@ -58,7 +58,7 @@ const PullRequestMergeSection = ({
             <p className="text-14 text-cn-foreground-2">{item.description}</p>
             <p
               className={cn('text-14 text-cn-foreground-2 ', {
-                'border border-border rounded-md px-2 py-1 !my-2': item.code,
+                'border border-cn-borders-1 rounded-md px-2 py-1 !my-2': item.code,
                 '!my-1': item.comment
               })}
             >
@@ -96,7 +96,7 @@ const PullRequestMergeSection = ({
                 icon={
                   unchecked ? (
                     // TODO: update icon for unchecked status
-                    <Icon name="clock" className="text-warning" />
+                    <Icon name="clock" className="text-cn-foreground-warning" />
                   ) : (
                     <>
                       {mergeable ? (
@@ -156,7 +156,7 @@ const PullRequestMergeSection = ({
           <Accordion.Content>
             <div className="ml-6">
               {showCommandLineInfo && (
-                <div className="mb-2 rounded-md border border-border p-1 px-4 py-2">
+                <div className="mb-2 rounded-md border border-cn-borders-1 p-1 px-4 py-2">
                   <h3 className="text-14 text-cn-foreground-1">Resolve conflicts via command line</h3>
                   <p className="pb-3 pt-1 text-14 text-cn-foreground-2">
                     If the conflicts on this branch are too complex to resolve in the web editor, you can check it out

@@ -25,7 +25,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
       case ExecutionState.BLOCKED:
         return <Icon name="pending-clock" className="text-icons-alert" />
       case ExecutionState.RUNNING:
-        return <Icon name="comments" className="text-warning" />
+        return <Icon name="comments" className="text-cn-foreground-warning" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
         return <Icon name="triangle-warning" className="text-cn-foreground-danger" />

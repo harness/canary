@@ -4,7 +4,7 @@ This repository contains components and utilities for creating forms in the harn
 
 ## Intro
 
-The Library uses **form config** and **inputs** to generate form. For **schema** driven forms, we are using parsers to convert input data to **form config** data model. This means that for any kind of form we need to create **form config** either explicitly or by transforming input data.
+The library uses **form configuration schema** and **inputs** to generate form. For **json schema** driven forms, we are use parser to convert input data to **form configuration schema** data model. This means that for any kind of form we have to create **form configuration schema** either explicitly or implicitly by transforming input data.
 
 ## Principles
 
@@ -16,22 +16,59 @@ The Library uses **form config** and **inputs** to generate form. For **schema**
 
 ### Step by step guide
 
-#### 1. Create input types enum
+#### 1. Input type
 
-Each input has a unique type. Before start creating inputs create input type enum.
+Each input has a unique type.
 
 ```
 export enum InputType {
-  string = "string",
+  text = "text",
   number = "number",
+  checkbox = "checkbox",
+  connector = "connector"
   ...
 }
 ```
 
 #### 2. Create inputs
 
-Examples of input can be found in the `views` package:
-[Text input example](../views/src/components/form-inputs/TextInput.tsx)
+Examples of input can be found in the `playgorund`:
+[Text input example](./playground/src/implementation/inputs/text-input.tsx)
+
+Minimal implementation:
+
+```typescript
+import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
+
+export interface TextInputConfig {
+  inputType: InputType.text
+}
+
+function TextInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
+  const { readonly, path, input } = props
+  const { label = '', required, placeholder } = input
+
+  const { field, formState } = useController<{ [key: string]: boolean }>({
+    name: path
+  })
+
+  return (
+    <>
+      <label>{label}</label>
+      <input placeholder={placeholder} {...field} disabled={readonly} tabIndex={0} />
+    </>
+  )
+}
+
+export class TextInput extends InputComponent<AnyFormikValue> {
+  public internalType = InputType.text
+
+  renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
+    return <TextInputInternal {...props} />
+  }
+}
+
+```
 
 #### 3. Register inputs
 
@@ -64,12 +101,12 @@ export const formDefinition: IFormDefinition = {
         inputType: InputType.number,
         path: "age",
         label: "Age",
-    },
+    }
   ]
-};
+}
 ```
 
-NOTE: Input may contain configuration. In this case we have to provide a generic type to `IFormDefinition` in order to get intellisense for form definition inputs.
+NOTE: Input may contain configuration. In this case we have to provide a generic type to `IFormDefinition` in order to get intellisense for the form definition inputs.
 
 ```typescript
 // 1. Define input config type
@@ -102,7 +139,7 @@ For more info check [List input example](../views/src/components/form-inputs/Tex
 Use RootForm and RenderForm components.
 
 ```js
-<RootForm initialValues={{...}} onSubmit={handleOnSubmit}>
+<RootForm initialValues={{}} onSubmit={handleOnSubmit}>
   <RenderForm factory={inputComponentFactory} inputs={formDefinition} />
 </RootForm>
 ```

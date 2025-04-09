@@ -17,7 +17,7 @@ const Root = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive
     ref={ref}
-    className={cn('flex h-full w-full flex-col overflow-hidden rounded-[10px] text-popover-foreground', className)}
+    className={cn('flex h-full w-full flex-col overflow-hidden rounded-[10px] text-cn-foreground-1', className)}
     {...props}
   />
 ))
@@ -123,7 +123,7 @@ const Separator = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
 >(({ className, ...props }, ref) => (
-  <CommandPrimitive.Separator ref={ref} className={cn('-mx-1 h-px bg-border', className)} {...props} />
+  <CommandPrimitive.Separator ref={ref} className={cn('-mx-1 h-px bg-cn-borders-3', className)} {...props} />
 ))
 Separator.displayName = 'Separator'
 

@@ -17,9 +17,9 @@ interface IMeterProps {
 
 const stateToBgColor: { [key in MeterState]: string } = {
   [MeterState.Empty]: 'bg-cn-background-1/20',
-  [MeterState.Error]: 'bg-error',
-  [MeterState.Warning]: 'bg-warning',
-  [MeterState.Success]: 'bg-success'
+  [MeterState.Error]: 'bg-cn-background-solidred',
+  [MeterState.Warning]: 'bg-cn-background-warning',
+  [MeterState.Success]: 'bg-cn-background-success'
 }
 
 function Meter({ data = [], className }: IMeterProps) {

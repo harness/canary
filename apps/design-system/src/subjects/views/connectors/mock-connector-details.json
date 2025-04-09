@@ -1,0 +1,68 @@
+{
+  "connector": {
+    "name": "Github Connector",
+    "identifier": "connector3",
+    "description": "",
+    "accountIdentifier": "account123",
+    "orgIdentifier": "org1",
+    "projectIdentifier": "project1",
+    "tags": {},
+    "type": "Github",
+    "spec": {
+      "url": "https://github.com/organization/repository3",
+      "validationRepo": null,
+      "authentication": {
+        "type": "Http",
+        "spec": {
+          "type": "UsernameToken",
+          "spec": {
+            "username": "username3",
+            "usernameRef": null,
+            "tokenRef": "token3"
+          }
+        }
+      },
+      "apiAccess": null,
+      "delegateSelectors": ["delegate-1"],
+      "executeOnDelegate": true,
+      "proxy": false,
+      "ignoreTestConnection": false,
+      "type": "Repo"
+    }
+  },
+  "createdAt": 1733229200306,
+  "lastModifiedAt": 1733229200304,
+  "status": {
+    "status": "SUCCESS",
+    "errorSummary": null,
+    "errors": null,
+    "testedAt": 1733229203620,
+    "lastTestedAt": 1733229203620,
+    "lastConnectedAt": 1733229203620,
+    "lastAlertSent": null
+  },
+  "activityDetails": {
+    "lastActivityTime": 1733229200304
+  },
+  "harnessManaged": false,
+  "gitDetails": {
+    "objectId": null,
+    "branch": null,
+    "repoIdentifier": null,
+    "rootFolder": null,
+    "filePath": null,
+    "repoName": null,
+    "commitId": null,
+    "fileUrl": null,
+    "repoUrl": null,
+    "parentEntityConnectorRef": null,
+    "parentEntityRepoName": null,
+    "isHarnessCodeRepo": null
+  },
+  "entityValidityDetails": {
+    "valid": true,
+    "invalidYaml": null
+  },
+  "governanceMetadata": null,
+  "isFavorite": false
+}

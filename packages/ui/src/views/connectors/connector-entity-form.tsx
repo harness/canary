@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { SecretItem, TranslationStore } from '@/views'
+import { TranslationStore } from '@/views'
 import { Alert } from '@components/alert'
 import { Button } from '@components/button'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
@@ -21,15 +21,12 @@ import { AnyConnectorDefinition, ConnectorEntity, EntityIntent, onSubmitConnecto
 
 interface ConnectorEntityFormProps {
   connector: ConnectorEntity
-  requestClose: () => void
   onFormSubmit?: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
-  onBack: () => void
+  onBack?: () => void
   useTranslationStore: () => TranslationStore
   inputComponentFactory: InputFactory
-  openSecretDrawer?: () => void
   apiError?: string | null
-  selectedSecret?: SecretItem
   intent: EntityIntent
 }
 
@@ -41,8 +38,6 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     getConnectorDefinition,
     onBack,
     useTranslationStore,
-    openSecretDrawer,
-    selectedSecret,
     inputComponentFactory,
     intent
   } = props
@@ -78,7 +73,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       return formDef
     }
     return { inputs: [] }
-  }, [connector.type, getConnectorDefinition, openSecretDrawer, selectedSecret])
+  }, [connector.type, getConnectorDefinition])
 
   const resolver = useZodValidationResolver(formDefinition, {
     validationConfig: {
@@ -121,16 +116,15 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       {rootForm => (
         <EntityFormLayout.Root>
           <EntityFormSectionLayout.Root>
-            <EntityFormSectionLayout.Header className="!px-0">
-              <EntityFormSectionLayout.Title className="!my-0">
-                <div className="flex gap-x-1">
-                  <span>{intent === EntityIntent.CREATE ? 'Connect to' : 'Edit'}</span>
-                  <span>{intent === EntityIntent.EDIT ? `${connector.type} connector` : connector.name}</span>
-                </div>
-              </EntityFormSectionLayout.Title>
-            </EntityFormSectionLayout.Header>
-            <EntityFormSectionLayout.Form className="!px-0">
-              <RenderForm className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
+            {intent === EntityIntent.CREATE && (
+              <EntityFormSectionLayout.Header className="px-0">
+                <EntityFormSectionLayout.Title className="!my-0">
+                  Connect to {connector.name}
+                </EntityFormSectionLayout.Title>
+              </EntityFormSectionLayout.Header>
+            )}
+            <EntityFormSectionLayout.Form className="px-0">
+              <RenderForm className="space-y-4 max-w-xl" factory={inputComponentFactory} inputs={formDefinition} />
               {apiError && (
                 <Alert.Container variant="destructive" className="my-8">
                   <Alert.Description>{apiError.toString()}</Alert.Description>
@@ -138,14 +132,20 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
               )}
             </EntityFormSectionLayout.Form>
           </EntityFormSectionLayout.Root>
-          <EntityFormLayout.Footer className="border-none">
-            <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-cn-background-2 p-4 shadow-md">
-              <Button variant="secondary" onClick={onBack}>
-                Back
-              </Button>
-              <Button onClick={() => rootForm.submitForm()}>Submit</Button>
+          {intent === EntityIntent.CREATE ? (
+            <EntityFormLayout.Footer className="border-none">
+              <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-cn-background-2 p-4 shadow-md">
+                <Button variant="secondary" onClick={() => onBack?.()}>
+                  Back
+                </Button>
+                <Button onClick={() => rootForm.submitForm()}>Submit</Button>
+              </div>
+            </EntityFormLayout.Footer>
+          ) : (
+            <div className="flex flex-row justify-end border-t pt-2">
+              <Button onClick={() => rootForm.submitForm()}>Apply changes</Button>
             </div>
-          </EntityFormLayout.Footer>
+          )}
         </EntityFormLayout.Root>
       )}
     </RootForm>

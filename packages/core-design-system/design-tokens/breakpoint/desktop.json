@@ -291,5 +291,31 @@
         }
       }
     }
+  },
+  "layout": {
+    "xxs": {
+      "$type": "number",
+      "$value": "{spacing.1}"
+    },
+    "xs": {
+      "$type": "number",
+      "$value": "{spacing.1-half}"
+    },
+    "sm": {
+      "$type": "number",
+      "$value": "{spacing.3}"
+    },
+    "md": {
+      "$type": "number",
+      "$value": "{spacing.4}"
+    },
+    "lg": {
+      "$type": "number",
+      "$value": "{spacing.6}"
+    },
+    "xl": {
+      "$type": "number",
+      "$value": "{spacing.8}"
+    }
   }
 }

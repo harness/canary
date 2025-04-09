@@ -41,7 +41,6 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   apiError,
   showBreadcrumbEllipsis = false
 }: EntityReferenceListProps<T, S, F>): JSX.Element {
-  console.log(showBreadcrumbEllipsis)
   return (
     <StackedList.Root>
       {/* Breadcrumb header */}

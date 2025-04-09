@@ -199,6 +199,7 @@ import Sparks from '../../icons/sparks.svg'
 import SquareDashed from '../../icons/square-dashed.svg'
 import SshKey from '../../icons/ssh-key.svg'
 import Stack from '../../icons/stack-icon.svg'
+import StarFilled from '../../icons/star-filled.svg'
 import Star from '../../icons/star-icon.svg'
 import Stop from '../../icons/stop-icon.svg'
 import SubMenuEllipse from '../../icons/sub-menu-ellipse.svg'
@@ -249,6 +250,7 @@ export const IconNameMap = {
   secrets: Secrets,
   connectors: Connectors,
   star: Star,
+  'star-filled': StarFilled,
   pull: Pull,
   search: Search,
   'arrow-long': ArrowLong,

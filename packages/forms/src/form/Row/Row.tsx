@@ -7,21 +7,14 @@ import type { IInputDefinition } from '../../types/types'
 export interface InputRowProps {
   input: IInputDefinition
   factory: InputFactory
-  autoExpandGroup?: boolean
 }
 
-export function Row({ input, factory, autoExpandGroup }: InputRowProps): React.ReactElement {
+export function Row({ input, factory }: InputRowProps): React.ReactElement {
   const { prefix = '' } = {} //useRootFormikContext()
 
   return (
     <div>
-      <InputComponentRenderer
-        path={`${prefix}${input.path}`}
-        factory={factory}
-        readonly={false}
-        input={input}
-        autoExpandGroup={autoExpandGroup}
-      />
+      <InputComponentRenderer path={`${prefix}${input.path}`} factory={factory} readonly={false} input={input} />
     </div>
   )
 }

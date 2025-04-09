@@ -31,8 +31,20 @@ export const harnessConnectors: AnyConnectorDefinition[] = [
     icon: 'awskms'
   }
 ]
-export function getHarnessConnectorDefinition(type: string): AnyConnectorDefinition | undefined {
-  return harnessConnectors.find(harnessConnector => harnessConnector.type === type)
+export interface ConnectorDefinitionOptions {
+  autoExpandGroups?: boolean
+}
+
+export function getHarnessConnectorDefinition(type: string, options?: ConnectorDefinitionOptions): any | undefined {
+  const connector = harnessConnectors.find(harnessConnector => harnessConnector.type === type)
+  if (connector) {
+    connector?.formDefinition?.inputs?.map(input => {
+      if (input.inputType === 'group') {
+        input.inputConfig = { autoExpandGroups: options?.autoExpandGroups }
+      }
+    })
+  }
+  return connector
 }
 
 export const getExecuteOnDelegateValue = () => {

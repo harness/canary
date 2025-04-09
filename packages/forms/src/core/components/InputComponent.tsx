@@ -9,7 +9,6 @@ export interface InputProps<T, K extends { inputConfig?: unknown } = { inputConf
   path: string
   readonly?: boolean
   input: IInputDefinition<K['inputConfig']>
-  autoExpandGroup?: boolean
 }
 
 export abstract class InputComponent<T> {

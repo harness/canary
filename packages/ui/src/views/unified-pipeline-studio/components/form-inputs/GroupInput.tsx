@@ -11,11 +11,14 @@ import { Layout } from './common/Layout'
 
 export interface GroupInputConfig {
   inputType: 'group'
+  inputConfig?: {
+    autoExpandGroups?: boolean
+  }
 }
 
-function GroupInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
-  const { input, factory, path, autoExpandGroup } = props
-  const { label = '', inputs = [], required, description } = input
+function GroupInputInternal(props: InputProps<AnyFormikValue, GroupInputConfig>): JSX.Element {
+  const { input, factory, path } = props
+  const { label = '', inputs = [], required, description, inputConfig } = input
 
   const { formState } = useFormContext()
   const error = get(formState.errors, path)
@@ -29,7 +32,7 @@ function GroupInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
     setForceMount(undefined)
   }, [])
 
-  const [value, setValue] = useState<string>(autoExpandGroup ? 'group' : '')
+  const [value, setValue] = useState<string>(inputConfig?.autoExpandGroups ? 'group' : '')
 
   const onValueChange = (value: string | string[]) => {
     if (typeof value === 'string') {
@@ -67,7 +70,7 @@ export class GroupInput extends InputComponent<AnyFormikValue> {
     super()
   }
 
-  renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
+  renderComponent(props: InputProps<AnyFormikValue, GroupInputConfig>): JSX.Element {
     return <GroupInputInternal {...props} />
   }
 }

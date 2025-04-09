@@ -26,7 +26,6 @@ const ConnectorDetailsConfiguration: FC<ConnectorDetailsConfigurationProps> = ({
         onFormSubmit={onSave}
         inputComponentFactory={inputComponentFactory}
         getConnectorDefinition={getConnectorDefinition}
-        autoExpandGroup
       />
     </Layout.Vertical>
   )

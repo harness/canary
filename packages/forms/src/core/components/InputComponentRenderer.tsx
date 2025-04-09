@@ -17,8 +17,7 @@ export function InputComponentRenderer<T = unknown>({
   onChange,
   readonly,
   initialValues,
-  input,
-  autoExpandGroup
+  input
 }: InputComponentRendererProps<T>): JSX.Element | null {
   const { formState, watch } = useFormContext()
   const { metadata = {}, fixedValues = {} /*getValuesWithDependencies*/ } = {} as any // useRootFormikContext()
@@ -33,10 +32,9 @@ export function InputComponentRenderer<T = unknown>({
       onChange,
       factory,
       readonly,
-      input,
-      autoExpandGroup
+      input
     }),
-    [factory, initialValues, input, onChange, onUpdate, path, readonly, formState.errors, autoExpandGroup]
+    [factory, initialValues, input, onChange, onUpdate, path, readonly, formState.errors]
   )
 
   const values = watch()

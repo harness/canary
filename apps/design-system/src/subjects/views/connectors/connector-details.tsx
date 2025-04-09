@@ -60,7 +60,7 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => (
     onTest={noop}
     onDelete={noop}
     onSave={noop}
-    getConnectorDefinition={getHarnessConnectorDefinition}
+    getConnectorDefinition={type => getHarnessConnectorDefinition(type, { autoExpandGroups: true })}
     inputComponentFactory={inputComponentFactory}
   />
 )

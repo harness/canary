@@ -97,7 +97,7 @@ export function ConnectorsList({
                     {isFavorite ? (
                       <Icon name="star-filled" size={20} className="fill-icons-alert" />
                     ) : (
-                      <Icon name="star" size={20} className="text-icons-7" />
+                      <Icon name="star" size={20} className="text-icons-6" />
                     )}
                   </Button>
                 </Table.Cell>

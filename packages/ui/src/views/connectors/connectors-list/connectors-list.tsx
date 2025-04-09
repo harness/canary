@@ -60,7 +60,7 @@ export function ConnectorsList({
         <Table.Row>
           <Table.Head className="w-96">{t('views:connectors.id', 'Connector ID')}</Table.Head>
           <Table.Head className="w-96">Details</Table.Head>
-          <Table.Head className="w-44">Connectivity status</Table.Head>
+          <Table.Head className="w-48">Connectivity status</Table.Head>
           <Table.Head className="w-44">Last updated</Table.Head>
         </Table.Row>
       </Table.Header>

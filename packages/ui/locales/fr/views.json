@@ -250,6 +250,7 @@
   "search": "Rechercher",
   "connectors": {
     "createNew": "Créer un nouveau connecteur",
+    "id": "ID du connecteur",
     "delete": "Supprimer le connecteur"
   },
   "execution": {

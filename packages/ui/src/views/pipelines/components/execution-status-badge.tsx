@@ -64,11 +64,11 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
     case PipelineExecutionStatus.SUCCESS:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-success" />
+          <div className="size-2 rounded-full bg-cn-background-success" />
           <span className="text-cn-foreground-success">Success</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-success bg-success/[0.1] px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md border border-solid border-success bg-cn-background-success/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5 text-cn-foreground-success">
             <CanaryIcon size={12} name="success" />
             <span>Success</span>

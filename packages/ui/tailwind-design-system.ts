@@ -119,6 +119,7 @@ export default {
           2: 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
           3: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
           accent: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
+          success: 'lch(from var(--cn-set-green-solid-bg) l c h / <alpha-value>)',
 
           // Remove
           solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',

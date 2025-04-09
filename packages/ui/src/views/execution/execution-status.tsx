@@ -58,7 +58,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.SUCCESS:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-success" />
+          <div className="size-2 rounded-full bg-cn-background-success" />
           <span className="text-cn-foreground-success">Success</span>
         </div>
       ) : (

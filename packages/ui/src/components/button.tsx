@@ -46,7 +46,7 @@ const buttonVariants = cva(
       theme: {
         default: '',
         error:
-          'border-cn-borders-danger/30 bg-button-background-danger-1 text-error hover:bg-button-background-danger-2',
+          'border-cn-borders-danger/30 bg-button-background-danger-1 text-cn-foreground-danger hover:bg-button-background-danger-2',
         warning:
           'border-cn-borders-danger/30 bg-button-background-danger-1 text-warning hover:bg-button-background-danger-2',
         success:

@@ -127,26 +127,26 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
 
   return (
     <>
-      {isLoading ? (
-        <SkeletonList />
-      ) : (
-        <div className="h-full flex flex-col gap-2">
-          {showFilter && (
-            <ListActions.Root className="gap-2">
-              <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-96"
-                  value={''}
-                  handleChange={() => {}}
-                  placeholder="Search"
-                />
-              </ListActions.Left>
-              <ListActions.Right>
-                <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
-              </ListActions.Right>
-            </ListActions.Root>
-          )}
+      <div className="h-full flex flex-col gap-2">
+        {showFilter && (
+          <ListActions.Root className="gap-2">
+            <ListActions.Left>
+              <SearchBox.Root
+                width="full"
+                className="max-w-96"
+                value={''}
+                handleChange={() => {}}
+                placeholder="Search"
+              />
+            </ListActions.Left>
+            <ListActions.Right>
+              <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
+            </ListActions.Right>
+          </ListActions.Root>
+        )}
+        {isLoading ? (
+          <SkeletonList />
+        ) : (
           <EntityReferenceList
             entities={entities}
             selectedEntity={selectedEntity}
@@ -162,8 +162,8 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             apiError={apiError}
             showBreadcrumbEllipsis={showBreadcrumbEllipsis}
           />
-        </div>
-      )}
+        )}
+      </div>
     </>
   )
 }

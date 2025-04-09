@@ -43,9 +43,3 @@ export interface ConnectorListPageProps
   isError?: boolean
   errorMessage?: string
 }
-
-export const ConnectorListFilters = {
-  success: 'success',
-  failure: 'failure',
-  all: 'Show all connectors'
-}

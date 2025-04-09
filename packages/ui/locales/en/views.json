@@ -278,8 +278,9 @@
     "configuration": "Configuration",
     "references": "References",
     "activityHistory": "Activity history",
-    "create": "Create connector",
+    "new": "New connector",
     "id": "Connector ID",
+    "create": "Create connector",
     "createNew": "Create new connector",
     "updated": "Last updated",
     "lastConnected": "Last connected"

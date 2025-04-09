@@ -78,7 +78,7 @@ export function ConnectorsList({
                 <Table.Cell className="max-w-80 content-center truncate">
                   <div className="flex items-center gap-2.5">
                     <div className="min-w-[40px]">
-                      {connectorLogo ? <Logo name={connectorLogo} size={32} /> : <Icon name="connectors" size={32} />}
+                      {connectorLogo ? <Logo name={connectorLogo} size={20} /> : <Icon name="connectors" size={20} />}
                     </div>
                     <Title title={identifier} />
                   </div>
@@ -95,9 +95,9 @@ export function ConnectorsList({
                     onClick={() => onToggleFavoriteConnector(identifier, !isFavorite)}
                   >
                     {isFavorite ? (
-                      <Icon name="star-filled" size={20} className="fill-icons-alert" />
+                      <Icon name="star-filled" size={12} className="fill-icons-alert" />
                     ) : (
-                      <Icon name="star" size={20} className="text-icons-6" />
+                      <Icon name="star" size={12} className="text-icons-6" />
                     )}
                   </Button>
                 </Table.Cell>

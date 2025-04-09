@@ -216,12 +216,15 @@
     "clone": "Clone",
     "addFile": "Add file"
   },
+
   "noData": {
     "noResults": "No search results",
     "errorApiTitle": "Failed to load {{type}}",
     "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noConnectors": "No connectors yet",
     "createConnector": "Create new connector.",
+    "noEntities": "No Entities yet",
+    "noEntitiesDescription": "There are no entities yet. ",
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
     "clearSearch": "Clear search",
@@ -280,7 +283,11 @@
     "activityHistory": "Activity history",
     "createNew": "Create new connector",
     "updated": "Last updated",
-    "lastConnected": "Last connected"
+    "lastConnected": "Last connected",
+    "viewConnectorDetails": "View connector details",
+    "connector": "Connector:",
+    "status": "Status:",
+    "viewDoctumentation": "View documentation"
   },
   "notFound": {
     "button": "Reload page",

@@ -101,6 +101,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
         viewDocClick={() => {
           console.log('')
         }}
+        useTranslationStore={useTranslationStore}
         errorData={{ errors: [{ reason: 'Unexpected Error', message: 'Bad credentials' }] }}
       />
       <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">

@@ -8,6 +8,7 @@ import { MarkdownViewer } from '@components/markdown-viewer'
 import { Progress } from '@components/progress'
 import { cn } from '@utils/cn'
 import { ExecutionStatus } from '@views/execution/execution-status'
+import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorEntity } from '../types'
@@ -32,6 +33,7 @@ interface ConnectorTestConnectionDialogProps {
   percentageFilled?: number
   errorData?: { errors?: ErrorDetail[] }
   viewDocClick?: () => void
+  useTranslationStore: () => TranslationStore
 }
 
 export const ConnectorTestConnectionDialog = ({
@@ -45,8 +47,10 @@ export const ConnectorTestConnectionDialog = ({
   percentageFilled = 50,
   errorMessage,
   errorData,
-  viewDocClick
+  viewDocClick,
+  useTranslationStore
 }: ConnectorTestConnectionDialogProps): JSX.Element => {
+  const { t } = useTranslationStore()
   return (
     <Dialog.Root open={isOpen} onOpenChange={open => !open && onClose()}>
       <Dialog.Content className={cn('sm:max-w-[689px]', className)}>
@@ -57,17 +61,17 @@ export const ConnectorTestConnectionDialog = ({
           <div className="text-cn-foreground-4 text-sm font-normal">
             <Layout.Horizontal className="items-center justify-between gap-x-0 space-x-2">
               <div className="mb-2.5 flex flex-row items-start gap-x-0 space-x-2">
-                <span className="items-center">Connector:</span>
+                <span className="items-center">{t('views:connectors.connector', 'Connector:')}</span>
                 <span className="text-cn-foreground-1">{apiUrl}</span>
               </div>
               {status === 'error' && (
                 <Button type="button" variant="outline">
-                  View connector details
+                  {t('views:connectors.viewConnectorDetails', 'View Connector Details')}
                 </Button>
               )}
             </Layout.Horizontal>
             <Layout.Horizontal className="gap-x-0 space-x-2">
-              <span>Status:</span>
+              <span>{t('views:connectors.status', 'Status:')}</span>
 
               <div className="text-cn-foreground-1">
                 <ExecutionStatus.Badge minimal inConnector status={status as ExecutionState} />
@@ -106,7 +110,7 @@ export const ConnectorTestConnectionDialog = ({
                               onClick={viewDocClick}
                               className={cn('h-auto', 'p-0', 'font-inherit', 'text-cn-foreground-accent')}
                             >
-                              View Documentation
+                              {t('views:connectors.viewDocumentation', 'View Documentation')}
                               <Icon name="attachment-link" className="ml-1 text-cn-foreground-accent" size={12} />
                             </Button>
                           </span>

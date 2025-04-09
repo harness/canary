@@ -73,6 +73,7 @@ import DevInsights from '../../icons/dev-insights-icon.svg'
 import DevPortalGradient from '../../icons/dev-portal-gradient.svg'
 import DevPortal from '../../icons/dev-portal-icon.svg'
 import Docker from '../../icons/docker.svg'
+import Dot from '../../icons/dot.svg'
 import MoreDotsFill from '../../icons/dots-icon.svg'
 import DoubleTick from '../../icons/double-tick.svg'
 import Download from '../../icons/download-icon.svg'
@@ -96,7 +97,6 @@ import GitBranch from '../../icons/git-branch.svg'
 import GithubActions from '../../icons/github-actions.svg'
 import GitnessLogo from '../../icons/gitness-logo.svg'
 import GolangIcon from '../../icons/golang-icon.svg'
-import GreenCircle from '../../icons/green-circle.svg'
 import GridDots from '../../icons/grid-dots.svg'
 import HarnessLogoText from '../../icons/harness-logo-text.svg'
 import HarnessPlugin from '../../icons/harness-plugin.svg'
@@ -339,7 +339,7 @@ export const IconNameMap = {
   run: Run,
   'run-test': RunTest,
   'ssh-key': SshKey,
-  'green-dot': GreenCircle,
+  dot: Dot,
   'tick-circle': TickCircle,
   'cancel-grey': CancelGrey,
   'harness-logo-text': HarnessLogoText,

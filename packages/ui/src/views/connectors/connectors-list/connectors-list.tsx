@@ -1,7 +1,7 @@
-import { Button, Icon, Logo, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { Button, Icon, Logo, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
-import { ExecutionStatus } from '@views/execution/execution-status'
+import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorListItem, ConnectorListProps } from './types'
 import { ConnectorTypeToLogoNameMap } from './utils'
@@ -10,24 +10,21 @@ const Title = ({ title }: { title: string }): JSX.Element => (
   <span className="max-w-full truncate font-medium">{title}</span>
 )
 
-const ConnectivityStatus = ({
-  item,
-  onClick
-}: {
-  item: ConnectorListItem
-  onClick: ConnectorListProps['onTestConnection']
-}): JSX.Element => (
-  <div className="inline-flex items-center gap-3">
-    {item?.status ? <ExecutionStatus.Badge status={item.status} /> : null}
-  </div>
-)
+const ConnectivityStatus = ({ item }: { item: ConnectorListItem }): JSX.Element => {
+  const isSuccess = item?.status === ExecutionState.SUCCESS
+  return (
+    <div className="inline-flex items-center gap-2">
+      <Icon name="dot" size={8} className={cn(isSuccess ? 'text-icons-success' : 'text-icons-danger')} />
+      <Text>{isSuccess ? 'Success' : 'Failed'}</Text>
+    </div>
+  )
+}
 
 export function ConnectorsList({
   connectors,
   useTranslationStore,
   isLoading,
   toConnectorDetails,
-  onTestConnection,
   onDeleteConnector,
   onToggleFavoriteConnector
 }: ConnectorListProps): JSX.Element {
@@ -86,12 +83,7 @@ export function ConnectorsList({
                 </Table.Cell>
                 <Table.Cell className="max-w-80 content-center truncate">{spec?.url}</Table.Cell>
                 <Table.Cell className="content-center">
-                  {status && (
-                    <ConnectivityStatus
-                      item={{ identifier, type, spec, status, lastModifiedAt }}
-                      onClick={onTestConnection}
-                    />
-                  )}
+                  {status && <ConnectivityStatus item={{ identifier, type, spec, status, lastModifiedAt }} />}
                 </Table.Cell>
                 <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
                 <Table.Cell className="content-center">

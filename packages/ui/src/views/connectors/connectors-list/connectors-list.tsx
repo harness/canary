@@ -11,7 +11,7 @@ const Title = ({ title }: { title: string }): JSX.Element => (
 )
 
 const ConnectivityStatus = ({ item }: { item: ConnectorListItem }): JSX.Element => {
-  const isSuccess = item?.status === ExecutionState.SUCCESS
+  const isSuccess = item?.status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
   return (
     <div className="inline-flex items-center gap-2">
       <Icon name="dot" size={8} className={cn(isSuccess ? 'text-icons-success' : 'text-icons-danger')} />

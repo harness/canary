@@ -217,7 +217,6 @@ export const SidebarView = ({
         open={openThemeDialog}
         onOpenChange={() => setOpenThemeDialog(false)}
         onInsetChange={onInsetChange}
-        showAccessibilityThemeOptions
       />
       <LanguageDialog
         supportedLanguages={languages}

@@ -42,7 +42,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   }, [page, searchQuery])
 
   return (
-    <SandboxLayout.Main className="h-[calc(100%-45px)]">
+    <SandboxLayout.Main className="h-[calc(100%-var(--cn-tabs-nav-height))]">
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
         <Spacer size={2} />
         {(isLoading || !!branchList.length || isDirtyList) && (

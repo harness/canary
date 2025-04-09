@@ -90,7 +90,20 @@ const ConnectorsListPageContent = (): JSX.Element => {
         </>
       </SandboxLayout.Content>
 
-      <ConnectorTestConnectionDialog isOpen={testConnectionOpen} onClose={() => setTestConnectionOpen(false)} />
+      <ConnectorTestConnectionDialog
+        title="Test Connection"
+        apiUrl="https://docker.harness.io"
+        status="error"
+        percentageFilled={50}
+        errorMessage="Error Encountered (Update the username & password. Check if the provided credentials are correct. Invalid Docker Registry credentials)."
+        description="Validating connector authentication and permissions"
+        isOpen={testConnectionOpen}
+        onClose={() => setTestConnectionOpen(false)}
+        viewDocClick={() => {
+          console.log('')
+        }}
+        errorData={{ errors: [{ reason: 'Unexpected Error', message: 'Bad credentials' }] }}
+      />
       <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
         <Drawer.Content>
           <ConnectorsPalette

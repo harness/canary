@@ -30,45 +30,47 @@ interface ConnectorTestConnectionDialogProps {
   className?: string
   connector?: ConnectorEntity
   percentageFilled?: number
-  errorData?: ErrorDetail[]
+  errorData?: { errors?: ErrorDetail[] }
+  viewDocClick?: () => void
 }
 
 export const ConnectorTestConnectionDialog = ({
   isOpen,
   onClose,
-  status = 'error',
-  apiUrl = 'https://docker.harness.io',
+  status,
+  apiUrl,
   title = 'Test Connection',
   description = 'Validating connector authentication and permissions',
   className,
   percentageFilled = 50,
-  errorMessage = 'Error Encountered (Update the username & password. Check if the provided credentials are correct. Invalid Docker Registry credentials).',
-  errorData
+  errorMessage,
+  errorData,
+  viewDocClick
 }: ConnectorTestConnectionDialogProps): JSX.Element => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={open => !open && onClose()}>
       <Dialog.Content className={cn('sm:max-w-[689px]', className)}>
-        <Dialog.Header className="items-center justify-between ">
+        <Dialog.Header>
           <Dialog.Title className="letter-spacing-1 text-xl font-medium">{title}</Dialog.Title>
-          {status === 'error' && (
-            <Button type="button" variant="outline">
-              View connector details
-            </Button>
-          )}
         </Dialog.Header>
         <Dialog.Description className="gap-y-0.5">
-          <div className="text-sm font-normal text-foreground-4">
+          <div className="text-cn-foreground-4 text-sm font-normal">
             <Layout.Horizontal className="items-center justify-between gap-x-0 space-x-2">
               <div className="mb-2.5 flex flex-row items-start gap-x-0 space-x-2">
                 <span className="items-center">Connector:</span>
-                <span className="text-foreground-1">{apiUrl}</span>
+                <span className="text-cn-foreground-1">{apiUrl}</span>
               </div>
+              {status === 'error' && (
+                <Button type="button" variant="outline">
+                  View connector details
+                </Button>
+              )}
             </Layout.Horizontal>
             <Layout.Horizontal className="gap-x-0 space-x-2">
               <span>Status:</span>
 
-              <div className="text-foreground-1">
-                <ExecutionStatus.Badge minimal status={status as ExecutionState} />
+              <div className="text-cn-foreground-1">
+                <ExecutionStatus.Badge minimal inConnector status={status as ExecutionState} />
               </div>
             </Layout.Horizontal>
           </div>
@@ -77,12 +79,12 @@ export const ConnectorTestConnectionDialog = ({
             <Layout.Horizontal className="items-center gap-x-0 space-x-2 text-center">
               {(status === 'success' || status === 'error') && (
                 <Icon
-                  className={status === 'success' ? 'text-success' : 'text-destructive'}
+                  className={status === 'success' ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
                   name={status === 'success' ? 'success' : 'triangle-warning'}
                   size={14}
                 />
               )}
-              <div className="letter-spacing-1 text-base font-medium text-foreground-1">{description}</div>
+              <div className="letter-spacing-1 text-cn-foreground-1 text-base font-medium">{description}</div>
             </Layout.Horizontal>
 
             {status === 'running' && (
@@ -94,7 +96,23 @@ export const ConnectorTestConnectionDialog = ({
               <>
                 {errorMessage && (
                   <div className="mb-1 mt-2">
-                    <span className="text-sm font-normal text-foreground-4">{errorMessage}</span>
+                    <div className="gap-x-0 space-x-2">
+                      <span className="text-cn-foreground-4 text-sm font-normal">
+                        {errorMessage}
+                        {viewDocClick && (
+                          <span className="text-cn-foreground-accent ml-1">
+                            <Button
+                              variant="link"
+                              onClick={viewDocClick}
+                              className={cn('h-auto', 'p-0', 'font-inherit', 'text-cn-foreground-accent')}
+                            >
+                              View Documentation
+                              <Icon name="attachment-link" className="ml-1 text-cn-foreground-accent" size={12} />
+                            </Button>
+                          </span>
+                        )}
+                      </span>
+                    </div>
                   </div>
                 )}
                 {errorData && (
@@ -102,7 +120,7 @@ export const ConnectorTestConnectionDialog = ({
                     <MarkdownViewer
                       source={`
 \`\`\`text
-${errorData}
+${JSON.stringify(errorData, null, 2)}
 \`\`\`
 `}
                       showLineNumbers

@@ -90,6 +90,7 @@ export interface ExecutionStatusProps {
 export interface BadgeProps {
   duration?: string /* time formatted as string */
   minimal?: boolean
+  inConnector?: boolean
 }
 
 export interface Step {

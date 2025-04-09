@@ -12,6 +12,7 @@ import Arrow from '../../icons/arrow.svg'
 import ArtifactsGradient from '../../icons/artifacts-gradient.svg'
 import Artifacts from '../../icons/artifacts-icon.svg'
 import AttachmentImage from '../../icons/attachment-image.svg'
+import AttachmentLink from '../../icons/attachment-link.svg'
 import Attachment from '../../icons/attachment.svg'
 import BitrisePlugin from '../../icons/bitrise-plugin.svg'
 import BoldPlus from '../../icons/bold-plus.svg'
@@ -450,5 +451,6 @@ export const IconNameMap = {
   'square-dashed': SquareDashed,
   refresh: Refresh,
   'node-icon': NodeIcon,
-  'golang-icon': GolangIcon
+  'golang-icon': GolangIcon,
+  'attachment-link': AttachmentLink
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

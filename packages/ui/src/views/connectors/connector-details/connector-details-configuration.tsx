@@ -16,7 +16,9 @@ const ConnectorDetailsConfiguration: FC<ConnectorDetailsConfigurationProps> = ({
   const { t } = useTranslationStore()
   return (
     <Layout.Vertical className="mt-2.5">
-      <p className="max-w-xl text-14 leading-snug text-foreground-2">{t('views:common.details', 'Details')}</p>
+      <h1 className="text-20 font-medium leading-snug tracking-tight text-foreground-1">
+        {t('views:common.details', 'Details')}
+      </h1>
       <ConnectorEntityForm
         connector={connectorDetails}
         intent={EntityIntent.EDIT}

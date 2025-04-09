@@ -27,7 +27,7 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main>
+    <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="h-full">
         <ConnectorDetailsHeader
           connectorDetails={connectorDetails}
@@ -37,7 +37,7 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
         />
         <Tabs.Root
           variant="tabnav"
-          className="mb-7"
+          className="mb-7 px-8"
           defaultValue={ConnectorDetailsTabsKeys.CONFIGURATION}
           value={activeTab}
           onValueChange={handleTabChange}

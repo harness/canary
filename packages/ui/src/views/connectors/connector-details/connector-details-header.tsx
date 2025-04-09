@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, MoreActionsTooltip } from '@/components'
+import { Badge, Button, MoreActionsTooltip } from '@/components'
 import { Logo } from '@components/logo'
 import { Spacer } from '@components/spacer'
 import { timeAgo } from '@utils/utils'
@@ -16,7 +16,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status } = connectorDetails
   const { t } = useTranslationStore()
   return (
-    <div className="px-6 py-5">
+    <div className="px-8 py-5">
       <div className="flex size-full cursor-pointer flex-row gap-2 p-2">
         <div className="pt-1">
           <Logo name={connectorDetails.icon} />
@@ -27,26 +27,43 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
       <Spacer size={4} />
       <div className="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-14 leading-none">
         <div className="flex justify-between gap-11">
-          <div className="flex flex-col gap-1.5">
-            <span className="leading-tight text-foreground-4">Created</span>
-            <span className="text-foreground-1">{timeAgo(createdAt)}</span>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <span className="leading-tight text-foreground-4">Last updated</span>
-            <span className="text-foreground-1">{timeAgo(lastModifiedAt)}</span>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <span className="leading-tight text-foreground-4">Last status check</span>
-            <span className="text-foreground-1">{timeAgo(lastTestedAt)}</span>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <span className="leading-tight text-foreground-4">Last successful check</span>
-            <span className="text-foreground-1">{timeAgo(lastConnectedAt)}</span>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <span className="leading-tight text-foreground-4">Connection status</span>
-            <span className="text-foreground-1">{status}</span>
-          </div>
+          {createdAt ? (
+            <div className="flex flex-col gap-1.5">
+              <span className="leading-tight text-foreground-4">Created</span>
+              <span className="text-foreground-1">{timeAgo(createdAt)}</span>
+            </div>
+          ) : null}
+          {lastModifiedAt ? (
+            <div className="flex flex-col gap-1.5">
+              <span className="leading-tight text-foreground-4">Last updated</span>
+              <span className="text-foreground-1">{timeAgo(lastModifiedAt)}</span>
+            </div>
+          ) : null}
+          {lastTestedAt ? (
+            <div className="flex flex-col gap-1.5">
+              <span className="leading-tight text-foreground-4">Last status check</span>
+              <span className="text-foreground-1">{timeAgo(lastTestedAt)}</span>
+            </div>
+          ) : null}
+          {lastConnectedAt ? (
+            <div className="flex flex-col gap-1.5">
+              <span className="leading-tight text-foreground-4">Last successful check</span>
+              <span className="text-foreground-1">{timeAgo(lastConnectedAt)}</span>
+            </div>
+          ) : null}
+          {status ? (
+            <div className="flex flex-col gap-1.5">
+              <span className="leading-tight text-foreground-4">Connection status</span>
+              <Badge
+                className="leading-none"
+                size="sm"
+                variant="status"
+                theme={status.toLowerCase() === 'success' ? 'success' : 'danger'}
+              >
+                <span className="text-foreground-1">{status}</span>
+              </Badge>
+            </div>
+          ) : null}
         </div>
         <div className="flex h-full items-end gap-11">
           <Button variant="default" onClick={() => onTest(connectorDetails.identifier)}>

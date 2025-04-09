@@ -1,24 +1,18 @@
-import * as React from 'react'
+import { ComponentPropsWithoutRef, createContext, ElementRef, forwardRef, Ref, useContext } from 'react'
+import { NavLinkProps } from 'react-router-dom'
 
+import { useRouterContext } from '@/context'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { omit } from 'lodash-es'
 
-const tabsListVariants = cva('inline-flex items-center text-cn-foreground-2', {
+const tabsListVariants = cva('text-cn-foreground-2 inline-flex items-center', {
   variants: {
     variant: {
-      default: 'h-9 justify-center rounded-lg bg-cn-background-softgray p-1',
+      default: 'bg-cn-background-softgray h-9 justify-center rounded-lg p-1',
       underline: 'h-11 justify-center gap-4',
-      /**
-       * TODO: Technical Debt - Navigation Variant Removal
-       * This variant needs to be removed after:
-       * 1. Verifying all dependencies in packages/ui || packages/views
-       * 2. Migrating existing usages to TabNav component
-       * 3. Ensuring no breaking changes in the application
-       *
-       * @deprecated Use TabNav component instead
-       */
-      navigation: 'h-[44px] w-full justify-start gap-6 border-b border-cn-borders-3 px-5',
+      navigation: 'border-cn-borders-3 flex h-11 w-full gap-6 border-b px-6',
       tabnav:
         'before:bg-cn-borders-3 relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full'
     },
@@ -34,26 +28,17 @@ const tabsListVariants = cva('inline-flex items-center text-cn-foreground-2', {
 })
 
 const tabsTriggerVariants = cva(
-  'group relative inline-flex items-center justify-center whitespace-nowrap px-3 py-1 font-medium transition-all focus-visible:duration-0 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-cn-foreground-1',
+  'data-[state=active]:text-cn-foreground-1 group relative inline-flex items-center justify-center whitespace-nowrap px-3 py-1 font-medium transition-all focus-visible:duration-0 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: 'rounded-md data-[state=active]:bg-cn-background data-[state=active]:shadow',
+        default: 'data-[state=active]:bg-cn-background rounded-md data-[state=active]:shadow',
         underline:
-          'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-cn-borders-1',
-        /**
-         * TODO: Technical Debt - Navigation Variant Removal
-         * This variant needs to be removed after:
-         * 1. Verifying all dependencies in packages/views
-         * 2. Migrating existing usages to TabNav component
-         * 3. Ensuring no breaking changes in the application
-         *
-         * @deprecated Use TabNav component instead
-         */
+          'data-[state=active]:border-cn-borders-1 m-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal',
         navigation:
-          'm-0 -mb-px h-[44px] border-b-2 border-solid border-b-transparent px-0 font-normal text-cn-foreground-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-9',
+          'text-14 text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:text-cn-foreground-1 data-[state=active]:after:border-cn-borders-accent relative m-0 my-1 block h-9 place-content-center whitespace-nowrap px-0 font-normal leading-none duration-150 ease-in-out after:pointer-events-none after:absolute after:inset-[-0.25rem_0] after:block after:border-b-2 after:border-solid after:border-b-transparent focus-visible:duration-0 disabled:pointer-events-none disabled:opacity-50',
         tabnav:
-          'h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1'
+          'text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1 h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal'
       }
     },
     defaultVariants: {
@@ -63,21 +48,12 @@ const tabsTriggerVariants = cva(
 )
 
 const tabsContentVariants = cva(
-  'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+  'ring-offset-background focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
   {
     variants: {
       variant: {
         default: '',
         underline: '',
-        /**
-         * TODO: Technical Debt - Navigation Variant Removal
-         * This variant needs to be removed after:
-         * 1. Verifying all dependencies in packages/views
-         * 2. Migrating existing usages to TabNav component
-         * 3. Ensuring no breaking changes in the application
-         *
-         * @deprecated Use TabNav component instead
-         */
         navigation: '',
         tabnav: ''
       }
@@ -88,15 +64,15 @@ const tabsContentVariants = cva(
   }
 )
 
-const TabsContext = React.createContext<VariantProps<typeof tabsListVariants | typeof tabsTriggerVariants>>({
+const TabsContext = createContext<VariantProps<typeof tabsListVariants | typeof tabsTriggerVariants>>({
   variant: 'default'
 })
 
 interface TabsRootProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>,
+  extends ComponentPropsWithoutRef<typeof TabsPrimitive.Root>,
     VariantProps<typeof tabsListVariants | typeof tabsTriggerVariants> {}
 
-const TabsRoot = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Root>, TabsRootProps>(
+const TabsRoot = forwardRef<ElementRef<typeof TabsPrimitive.Root>, TabsRootProps>(
   ({ children, variant, ...props }, ref) => (
     <TabsPrimitive.Root ref={ref} {...props}>
       <TabsContext.Provider value={{ variant }}>{children}</TabsContext.Provider>
@@ -106,12 +82,12 @@ const TabsRoot = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Root>, T
 TabsRoot.displayName = 'TabsRoot'
 
 interface TabsListProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
+  extends ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
     VariantProps<typeof tabsListVariants> {}
 
-const TabsList = React.forwardRef<React.ElementRef<typeof TabsPrimitive.List>, TabsListProps>(
+const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps>(
   ({ className, variant, fontSize, ...props }, ref) => {
-    const context = React.useContext(TabsContext)
+    const context = useContext(TabsContext)
 
     return (
       <TabsPrimitive.List
@@ -124,33 +100,91 @@ const TabsList = React.forwardRef<React.ElementRef<typeof TabsPrimitive.List>, T
 )
 TabsList.displayName = TabsPrimitive.List.displayName
 
-export interface TabsTriggerProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>,
-    VariantProps<typeof tabsTriggerVariants> {}
+export interface TabsTriggerBaseProps extends VariantProps<typeof tabsTriggerVariants> {
+  className?: string
+}
 
-const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigger>, TabsTriggerProps>(
+export interface TabsTriggerDefaultProps
+  extends ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>,
+    VariantProps<typeof tabsTriggerVariants> {
+  asLink?: never
+}
+
+export interface TabsTriggerLinkProps extends Omit<NavLinkProps, 'className' | 'style'>, TabsTriggerBaseProps {
+  asLink: true
+  to: NavLinkProps['to']
+}
+
+export type TabsTriggerProps = TabsTriggerDefaultProps | TabsTriggerLinkProps
+
+const getIsTabsTriggerLink = (props: TabsTriggerProps): props is TabsTriggerLinkProps => {
+  return props.asLink === true
+}
+const getIsTabsTriggerDefault = (props: TabsTriggerProps): props is TabsTriggerDefaultProps => {
+  return props.asLink !== true
+}
+
+const TabsTrigger = forwardRef<ElementRef<typeof TabsPrimitive.Trigger>, TabsTriggerProps>(
   ({ className, variant, children, ...props }, ref) => {
-    const context = React.useContext(TabsContext)
-    return (
-      <TabsPrimitive.Trigger
-        ref={ref}
-        className={cn(tabsTriggerVariants({ variant: context.variant ?? variant, className }))}
-        {...props}
-      >
-        {children}
-      </TabsPrimitive.Trigger>
-    )
+    const { NavLink, location } = useRouterContext()
+    const context = useContext(TabsContext)
+
+    const isTabsTriggerLink = getIsTabsTriggerLink(props)
+    const isTabsTriggerDefault = getIsTabsTriggerDefault(props)
+
+    if (isTabsTriggerLink) {
+      const linkProps = omit(props, 'asLink')
+      const isActive = location.pathname.includes(props.to as string)
+
+      return (
+        <NavLink
+          {...linkProps}
+          role="tab"
+          ref={ref as Ref<HTMLAnchorElement>}
+          className={cn(
+            tabsTriggerVariants({ variant: context.variant ?? variant }),
+            {
+              /*
+               * TODO: Active tab Radial background is hidden until it's adjusted to the light theme
+               */
+              // radial gradient of active tab
+              // 'before:pointer-events-none before:absolute before:left-1/2 before:top-1/2 before:-z-10 before:h-[calc(100%+40px)] before:w-[calc(100%+60px)] before:-translate-x-1/2 before:-translate-y-1/2 before:bg-transparent data-[state=active]:before:[background-image:var(--canary-tab-background-gradient)]':
+              //   context.variant === 'navigation'
+            },
+            className
+          )}
+          data-state={isActive ? 'active' : 'inactive'}
+          aria-selected={isActive}
+        >
+          {children}
+        </NavLink>
+      )
+    }
+
+    if (isTabsTriggerDefault) {
+      return (
+        <TabsPrimitive.Trigger
+          ref={ref}
+          className={cn(tabsTriggerVariants({ variant: context.variant ?? variant, className }))}
+          {...props}
+        >
+          {children}
+        </TabsPrimitive.Trigger>
+      )
+    }
+
+    return null
   }
 )
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
 interface TabsContentProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>,
+  extends ComponentPropsWithoutRef<typeof TabsPrimitive.Content>,
     VariantProps<typeof tabsContentVariants> {}
 
-const TabsContent = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Content>, TabsContentProps>(
+const TabsContent = forwardRef<ElementRef<typeof TabsPrimitive.Content>, TabsContentProps>(
   ({ className, variant, ...props }, ref) => {
-    const context = React.useContext(TabsContext)
+    const context = useContext(TabsContext)
 
     return (
       <TabsPrimitive.Content

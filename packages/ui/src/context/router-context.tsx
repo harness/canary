@@ -1,4 +1,12 @@
-import { ComponentType, createContext, ReactNode, useContext } from 'react'
+import {
+  ComponentType,
+  createContext,
+  forwardRef,
+  ForwardRefExoticComponent,
+  ReactNode,
+  RefAttributes,
+  useContext
+} from 'react'
 import type { LinkProps, Location, NavigateFunction, NavLinkProps, OutletProps, UIMatch } from 'react-router-dom'
 
 import { RouterContextProvider as FiltersRouterContextProvider } from '@harnessio/filters'
@@ -14,21 +22,26 @@ const LinkDefault = ({ to, children, ...props }: LinkProps) => {
   )
 }
 
-const NavLinkDefault = ({ to, children, className, style, ...props }: NavLinkProps) => {
-  const href = resolveTo(to)
-  const isActive = new URL(href, window.location.origin).pathname === window.location.pathname
+const NavLinkDefault = forwardRef<HTMLAnchorElement, NavLinkProps>(
+  ({ to, children, className, style, ...props }, ref) => {
+    const href = resolveTo(to)
+    const isActive = new URL(href, window.location.origin).pathname === window.location.pathname
 
-  const finalClassName =
-    typeof className === 'function' ? className({ isActive, isPending: false, isTransitioning: false }) : className
+    const finalClassName =
+      typeof className === 'function' ? className({ isActive, isPending: false, isTransitioning: false }) : className
 
-  const finalStyle = typeof style === 'function' ? style({ isActive, isPending: false, isTransitioning: false }) : style
+    const finalStyle =
+      typeof style === 'function' ? style({ isActive, isPending: false, isTransitioning: false }) : style
 
-  return (
-    <a href={href} className={finalClassName} style={finalStyle} {...props}>
-      {children}
-    </a>
-  )
-}
+    return (
+      <a ref={ref} href={href} className={finalClassName} style={finalStyle} {...props}>
+        {children}
+      </a>
+    )
+  }
+)
+
+NavLinkDefault.displayName = 'NavLinkDefault'
 
 const OutletDefault: ComponentType<OutletProps> = ({ children }) => <>{children}</>
 
@@ -53,7 +66,7 @@ const defaultLocation: Location = { ...window.location, state: {}, key: '' }
 
 interface RouterContextType {
   Link: ComponentType<LinkProps>
-  NavLink: ComponentType<NavLinkProps>
+  NavLink: ForwardRefExoticComponent<NavLinkProps & RefAttributes<HTMLAnchorElement>>
   Outlet: ComponentType<OutletProps>
   location: Location
   navigate: NavigateFunction

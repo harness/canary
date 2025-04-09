@@ -70,7 +70,7 @@ const Typing: React.FC<TypingProps> = ({ avatar }) => {
   return (
     <div className="mt-3 flex items-center gap-3">
       {avatar}
-      <div className="flex gap-1 text-lg font-medium text-success" aria-live="polite">
+      <div className="flex gap-1 text-lg font-medium text-cn-foreground-success" aria-live="polite">
         <span className="dot animate-bounce">&middot;</span>
         <span className="dot animate-bounce" style={{ animationDelay: '0.15s' }}>
           &middot;

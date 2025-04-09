@@ -123,10 +123,6 @@ export const ConnectorsRefPage = ({
                     useTranslationStore={useTranslationStore}
                     connector={connectorEntity}
                     onBack={() => setIsConnectorSelected(false)}
-                    requestClose={() => {
-                      setConnectorEntity(null)
-                      setIsConnectorSelected(false)
-                    }}
                     // onFormSubmit={handleFormSubmit}
                     getConnectorDefinition={getHarnessConnectorDefinition}
                     inputComponentFactory={inputComponentFactory}

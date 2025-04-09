@@ -127,7 +127,7 @@ const PullRequestChangesSection = ({
     if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerLatestApproval) {
       return (
         <div className="flex items-center gap-x-2">
-          <Icon name="circle" className="text-warning" />
+          <Icon name="circle" className="text-cn-foreground-warning" />
           <span className="text-14 text-cn-foreground-1">Waiting on code owner reviews of latest changes</span>
         </div>
       )
@@ -136,7 +136,7 @@ const PullRequestChangesSection = ({
     if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerApproval) {
       return (
         <div className="flex items-center gap-x-2">
-          <Icon name="circle" className="text-warning" />
+          <Icon name="circle" className="text-cn-foreground-warning" />
           <span className="text-14 text-cn-foreground-1">Changes are pending approval from code owners</span>
         </div>
       )
@@ -189,7 +189,7 @@ const PullRequestChangesSection = ({
       }
       return (
         <div className="flex items-center gap-x-2">
-          <Icon name="circle" className="text-warning" />
+          <Icon name="circle" className="text-cn-foreground-warning" />
           <span className="text-14 text-cn-foreground-1">Changes were approved by code owners</span>
         </div>
       )

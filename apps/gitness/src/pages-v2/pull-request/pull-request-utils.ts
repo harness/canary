@@ -138,7 +138,7 @@ export function determineStatusMessage(
       title = 'Some required checks are pending'
       status = 'pending'
       content = `${message}`
-      color = 'text-warning'
+      color = 'text-cn-foreground-warning'
     } else if (checks.some(check => check.required && check.check.status === ExecutionState.RUNNING)) {
       title = 'Some required checks are running'
       status = 'running'
@@ -153,7 +153,7 @@ export function determineStatusMessage(
       title = 'All required checks passed'
       content = `${message}`
       status = 'success'
-      color = 'text-success'
+      color = 'text-cn-foreground-success'
     }
   } else {
     if (
@@ -291,12 +291,12 @@ export const extractInfoForCodeOwnerContent = ({
     ) {
       title = 'Approvals pending from code owners'
       statusMessage = 'Latest changes are pending approval from code owners'
-      statusColor = 'text-warning'
+      statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
     } else if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerApproval) {
       title = 'Approvals pending from code owners'
       statusMessage = 'Changes are pending approval from code owners'
-      statusColor = 'text-warning'
+      statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
     } else if (
       minReqLatestApproval &&
@@ -306,23 +306,23 @@ export const extractInfoForCodeOwnerContent = ({
     ) {
       title = 'Approvals pending'
       statusMessage = 'Latest changes are pending approval from required reviewers'
-      statusColor = 'text-warning'
+      statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
     } else if (minApproval && approvedEvaluations && approvedEvaluations?.length < minApproval && minApproval > 0) {
       title = 'Approvals pending'
       statusMessage = 'Changes are pending approval from required reviewers'
 
-      statusColor = 'text-warning'
+      statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
     } else if (reqCodeOwnerLatestApproval && latestCodeOwnerApprovalArr && latestCodeOwnerApprovalArr?.length > 0) {
       title = 'Changes approved'
       statusMessage = 'Latest changes were approved by code owners'
-      statusColor = 'text-success'
+      statusColor = 'text-cn-foreground-success'
       statusIcon = 'success'
     } else if (reqCodeOwnerApproval && codeOwnerApprovalEntries && codeOwnerApprovalEntries?.length > 0) {
       title = 'Changes approved'
       statusMessage = 'Changes were approved by code owners'
-      statusColor = 'text-success'
+      statusColor = 'text-cn-foreground-success'
       statusIcon = 'success'
     } else if (
       minReqLatestApproval &&
@@ -332,17 +332,17 @@ export const extractInfoForCodeOwnerContent = ({
     ) {
       title = 'Changes approved'
       statusMessage = 'Latest changes were approved by required reviewers'
-      statusColor = 'text-success'
+      statusColor = 'text-cn-foreground-success'
       statusIcon = 'success'
     } else if (minApproval && minApproval > 0 && approvedEvaluations && approvedEvaluations?.length >= minApproval) {
       title = 'Changes approved'
       statusMessage = 'Changes were approved by required reviewers'
-      statusColor = 'text-success'
+      statusColor = 'text-cn-foreground-success'
       statusIcon = 'success'
     } else if (approvedEvaluations && approvedEvaluations?.length > 0) {
       title = 'Changes approved'
       statusMessage = 'Changes were approved by reviewers'
-      statusColor = 'text-success'
+      statusColor = 'text-cn-foreground-success'
       statusIcon = 'success'
     } else {
       title = 'No reviews required'

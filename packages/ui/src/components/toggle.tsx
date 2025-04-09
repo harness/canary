@@ -14,7 +14,7 @@ const toggleVariants = cva(
       variant: {
         default: 'rounded bg-transparent',
         outline:
-          'rounded border border-input bg-transparent shadow-sm hover:bg-cn-background-3 hover:text-cn-foreground-1',
+          'rounded border border-cn-borders-2 bg-transparent shadow-sm hover:bg-cn-background-3 hover:text-cn-foreground-1',
         compact: ''
       },
       size: {

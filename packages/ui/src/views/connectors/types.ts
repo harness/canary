@@ -1,3 +1,5 @@
+import { LogoNameMap } from '@components/logo'
+
 import { FieldValues, IFormDefinition, IInputDefinition } from '@harnessio/forms'
 
 import { BaseEntityProps } from '../../views/platform/types'
@@ -24,6 +26,7 @@ export type AnyConnectorDefinition<T = string> = {
   name: string
   category: string
   formDefinition: IFormDefinition<InputConfigType>
+  icon: keyof typeof LogoNameMap
 }
 
 // Base interfaces

@@ -137,7 +137,7 @@ describe('determineStatusMessage', () => {
   it('should determine the status message based on the status summary', () => {
     const result = determineStatusMessage(mockChecksForStatusMessage as TypeCheckData[])
     expect(result).toEqual({
-      color: 'text-success',
+      color: 'text-cn-foreground-success',
       content: '1 failed, 1 succeeded',
       status: 'success',
       title: 'All required checks passed'
@@ -248,7 +248,7 @@ describe('extractInfoForCodeOwnerContent', () => {
     expect(result).toEqual({
       title: 'Changes approved',
       statusMessage: 'Changes were approved by code owners',
-      statusColor: 'text-success',
+      statusColor: 'text-cn-foreground-success',
       statusIcon: 'success',
       isNotRequired: false
     })

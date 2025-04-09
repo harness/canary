@@ -24,42 +24,6 @@ export default {
         code: ['JetBrains Mono', 'monospace']
       },
       colors: {
-        border: 'var(--cn-border-1)',
-        input: 'hsl(var(--canary-input))',
-        ring: 'hsl(var(--canary-ring))',
-        popover: {
-          DEFAULT: 'hsl(var(--canary-popover))',
-          foreground: 'hsl(var(--canary-popover-foreground))'
-        },
-        card: {
-          DEFAULT: 'hsl(var(--canary-card))',
-          foreground: 'hsl(var(--canary-card-foreground))'
-        },
-        white: {
-          DEFAULT: 'hsl(var(--canary-white))'
-        },
-        black: {
-          DEFAULT: 'hsl(var(--canary-black))'
-        },
-        success: {
-          DEFAULT: 'hsl(var(--canary-success))'
-        },
-        error: {
-          DEFAULT: 'hsl(var(--canary-error))'
-        },
-        warning: {
-          DEFAULT: 'hsl(var(--canary-warning))'
-        },
-        emphasis: {
-          DEFAULT: 'hsl(var(--canary-emphasis))'
-        },
-        ai: {
-          DEFAULT: 'hsl(var(--canary-ai))'
-        },
-        divergence: {
-          behind: 'hsl(var(--canary-grey-20))',
-          ahead: 'hsl(var(--canary-grey-30))'
-        },
         /* New colors design variables */
         foreground: {
           // TODO: remove DEFAULT, cause use old color var
@@ -119,6 +83,8 @@ export default {
           2: 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
           3: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
           accent: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
+          success: 'lch(from var(--cn-set-green-solid-bg) l c h / <alpha-value>)',
+          warning: 'lch(from var(--cn-set-yellow-solid-bg) l c h / <alpha-value>)',
 
           // Remove
           solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
@@ -153,16 +119,16 @@ export default {
           1: 'lch(from var(--cn-border-1) l c h / <alpha-value>)',
           2: 'lch(from var(--cn-border-2) l c h / <alpha-value>)',
           3: 'lch(from var(--cn-border-3) l c h / <alpha-value>)',
-          brand: 'lch(from var(--cn-set-brand-solid-border) l c h / <alpha-value>)',
-          solidred: 'var(--cn-set-red-solid-border)',
-
-          // remove
-          // update to focus, disabled, success, danger, warning
+          warning: 'var(--cn-border-warning)',
           danger: 'var(--cn-border-danger)',
           success: 'var(--cn-border-success)',
           accent: 'var(--cn-border-accent)',
-          risk: 'var(--cn-icon-risk)',
-          alert: 'var(--cn-border-alert)'
+
+          // remove
+          // update to focus, disabled, success, danger, warning
+          brand: 'lch(from var(--cn-set-brand-solid-border) l c h / <alpha-value>)',
+          solidred: 'var(--cn-set-red-solid-border)',
+          risk: 'var(--cn-icon-risk)'
         },
         button: {
           foreground: {

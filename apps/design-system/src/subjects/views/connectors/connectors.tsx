@@ -41,7 +41,6 @@ const ConnectorsListPageContent = (): JSX.Element => {
   const [isConnectorDrawerOpen, setIsConnectorDrawerOpen] = useState(false)
   const [isEditConnectorDrawerOpen, setIsEditConnectorDrawerOpen] = useState(false)
   const [isConnectorSelected, setIsConnectorSelected] = useState(false)
-  const [, setIsSecretDrawerOpen] = useState(false)
   const [intent, setIntent] = useState<EntityIntent>(EntityIntent.CREATE)
 
   return (
@@ -101,7 +100,6 @@ const ConnectorsListPageContent = (): JSX.Element => {
             <Drawer.Content>
               {connectorEntity ? (
                 <ConnectorEntityForm
-                  openSecretDrawer={() => setIsSecretDrawerOpen(true)}
                   useTranslationStore={() =>
                     ({
                       t: () => 'dummy',
@@ -113,10 +111,6 @@ const ConnectorsListPageContent = (): JSX.Element => {
                   }
                   connector={connectorEntity}
                   onBack={() => setIsConnectorSelected(false)}
-                  requestClose={() => {
-                    setConnectorEntity(null)
-                    setIsConnectorSelected(false)
-                  }}
                   // onFormSubmit={handleFormSubmit}
                   getConnectorDefinition={getHarnessConnectorDefinition}
                   inputComponentFactory={inputComponentFactory}
@@ -131,14 +125,9 @@ const ConnectorsListPageContent = (): JSX.Element => {
         <Drawer.Content>
           {connectorEntity ? (
             <ConnectorEntityForm
-              openSecretDrawer={() => setIsSecretDrawerOpen(true)}
               useTranslationStore={useTranslationStore}
               connector={connectorEntity}
               onBack={() => setIsConnectorSelected(false)}
-              requestClose={() => {
-                setConnectorEntity(null)
-                setIsConnectorSelected(false)
-              }}
               getConnectorDefinition={getHarnessConnectorDefinition}
               inputComponentFactory={inputComponentFactory}
               intent={intent}

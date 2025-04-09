@@ -20,6 +20,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   goToPage,
   isLoading,
   connectors,
+  onCreate,
   ...props
 }) => {
   const { t } = useTranslationStore()

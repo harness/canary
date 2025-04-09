@@ -48,7 +48,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
       style={{ width: '500px' }}
       className="flex flex-col"
       // style={{ maxHeight: '70vh', minHeight: '60vh' }}
-      // className="max-w-[700px] border-border bg-primary-background"
+      // className="max-w-[700px] border-cn-borders-1 bg-primary-background"
     >
       <Drawer.Header>
         <Drawer.Title>Run Pipeline</Drawer.Title>

@@ -94,7 +94,7 @@ function StackedNode({ state }: { state: string }) {
         tabIndex={0}
         className={cn('box size-full rounded-md border bg-cn-background-3 cursor-pointer shadow-1', {
           'border-cn-borders-success': state === 'success',
-          'border-cn-borders-alert': state === 'warning',
+          'border-cn-borders-warning': state === 'warning',
           'border-cn-borders-danger': state === 'error'
         })}
       ></div>

@@ -64,10 +64,9 @@ const useMatchesDefault = (): UIMatch[] => {
 
 const defaultLocation: Location = { ...window.location, state: {}, key: '' }
 
-export type NavLinkComponent = ForwardRefExoticComponent<NavLinkProps & RefAttributes<HTMLAnchorElement>>
 interface RouterContextType {
   Link: ComponentType<LinkProps>
-  NavLink: NavLinkComponent
+  NavLink: ForwardRefExoticComponent<NavLinkProps & RefAttributes<HTMLAnchorElement>>
   Outlet: ComponentType<OutletProps>
   location: Location
   navigate: NavigateFunction

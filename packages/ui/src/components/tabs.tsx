@@ -1,7 +1,7 @@
-import * as React from 'react'
+import { ComponentPropsWithoutRef, createContext, ElementRef, forwardRef, Ref, useContext } from 'react'
 import { NavLinkProps } from 'react-router-dom'
 
-import { NavLinkComponent, useRouterContext } from '@/context'
+import { useRouterContext } from '@/context'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -12,7 +12,7 @@ const tabsListVariants = cva('text-cn-foreground-2 inline-flex items-center', {
     variant: {
       default: 'bg-cn-background-softgray h-9 justify-center rounded-lg p-1',
       underline: 'h-11 justify-center gap-4',
-      navigation: 'border-cn-borders-3 h-[44px] w-full justify-start gap-6 border-b px-5',
+      navigation: 'border-cn-borders-3 flex h-11 w-full gap-6 border-b px-6',
       tabnav:
         'before:bg-cn-borders-3 relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full'
     },
@@ -36,7 +36,7 @@ const tabsTriggerVariants = cva(
         underline:
           'data-[state=active]:border-cn-borders-1 m-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal',
         navigation:
-          'text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-9 m-0 -mb-px h-[44px] border-b-2 border-solid border-b-transparent px-0 font-normal duration-150 ease-in-out',
+          'text-14 text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:text-cn-foreground-1 data-[state=active]:after:border-cn-borders-accent relative m-0 my-1 block h-9 place-content-center whitespace-nowrap px-0 font-normal leading-none duration-150 ease-in-out after:pointer-events-none after:absolute after:inset-[-0.25rem_0] after:block after:border-b-2 after:border-solid after:border-b-transparent focus-visible:duration-0 disabled:pointer-events-none disabled:opacity-50',
         tabnav:
           'text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1 h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal'
       }
@@ -64,15 +64,15 @@ const tabsContentVariants = cva(
   }
 )
 
-const TabsContext = React.createContext<VariantProps<typeof tabsListVariants | typeof tabsTriggerVariants>>({
+const TabsContext = createContext<VariantProps<typeof tabsListVariants | typeof tabsTriggerVariants>>({
   variant: 'default'
 })
 
 interface TabsRootProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>,
+  extends ComponentPropsWithoutRef<typeof TabsPrimitive.Root>,
     VariantProps<typeof tabsListVariants | typeof tabsTriggerVariants> {}
 
-const TabsRoot = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Root>, TabsRootProps>(
+const TabsRoot = forwardRef<ElementRef<typeof TabsPrimitive.Root>, TabsRootProps>(
   ({ children, variant, ...props }, ref) => (
     <TabsPrimitive.Root ref={ref} {...props}>
       <TabsContext.Provider value={{ variant }}>{children}</TabsContext.Provider>
@@ -82,12 +82,12 @@ const TabsRoot = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Root>, T
 TabsRoot.displayName = 'TabsRoot'
 
 interface TabsListProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
+  extends ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
     VariantProps<typeof tabsListVariants> {}
 
-const TabsList = React.forwardRef<React.ElementRef<typeof TabsPrimitive.List>, TabsListProps>(
+const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps>(
   ({ className, variant, fontSize, ...props }, ref) => {
-    const context = React.useContext(TabsContext)
+    const context = useContext(TabsContext)
 
     return (
       <TabsPrimitive.List
@@ -105,7 +105,7 @@ export interface TabsTriggerBaseProps extends VariantProps<typeof tabsTriggerVar
 }
 
 export interface TabsTriggerDefaultProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>,
+  extends ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>,
     VariantProps<typeof tabsTriggerVariants> {
   asLink?: never
 }
@@ -124,23 +124,35 @@ const getIsTabsTriggerDefault = (props: TabsTriggerProps): props is TabsTriggerD
   return props.asLink !== true
 }
 
-const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigger>, TabsTriggerProps>(
+const TabsTrigger = forwardRef<ElementRef<typeof TabsPrimitive.Trigger>, TabsTriggerProps>(
   ({ className, variant, children, ...props }, ref) => {
     const { NavLink, location } = useRouterContext()
-    const context = React.useContext(TabsContext)
+    const context = useContext(TabsContext)
 
     const isTabsTriggerLink = getIsTabsTriggerLink(props)
     const isTabsTriggerDefault = getIsTabsTriggerDefault(props)
 
     if (isTabsTriggerLink) {
       const linkProps = omit(props, 'asLink')
-      const isActive = location.pathname.split('/').at(-1) === props.to
+      const isActive = location.pathname.includes(props.to as string)
+
       return (
         <NavLink
           {...linkProps}
           role="tab"
-          ref={ref as React.Ref<HTMLAnchorElement>}
-          className={cn(tabsTriggerVariants({ variant: context.variant ?? variant, className }))}
+          ref={ref as Ref<HTMLAnchorElement>}
+          className={cn(
+            tabsTriggerVariants({ variant: context.variant ?? variant }),
+            {
+              /*
+               * TODO: Active tab Radial background is hidden until it's adjusted to the light theme
+               */
+              // radial gradient of active tab
+              // 'before:pointer-events-none before:absolute before:left-1/2 before:top-1/2 before:-z-10 before:h-[calc(100%+40px)] before:w-[calc(100%+60px)] before:-translate-x-1/2 before:-translate-y-1/2 before:bg-transparent data-[state=active]:before:[background-image:var(--canary-tab-background-gradient)]':
+              //   context.variant === 'navigation'
+            },
+            className
+          )}
           data-state={isActive ? 'active' : 'inactive'}
           aria-selected={isActive}
         >
@@ -167,12 +179,12 @@ const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigg
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
 interface TabsContentProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>,
+  extends ComponentPropsWithoutRef<typeof TabsPrimitive.Content>,
     VariantProps<typeof tabsContentVariants> {}
 
-const TabsContent = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Content>, TabsContentProps>(
+const TabsContent = forwardRef<ElementRef<typeof TabsPrimitive.Content>, TabsContentProps>(
   ({ className, variant, ...props }, ref) => {
-    const context = React.useContext(TabsContext)
+    const context = useContext(TabsContext)
 
     return (
       <TabsPrimitive.Content

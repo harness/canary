@@ -24,42 +24,6 @@ export default {
         code: ['JetBrains Mono', 'monospace']
       },
       colors: {
-        border: 'var(--cn-border-1)',
-        input: 'hsl(var(--canary-input))',
-        ring: 'hsl(var(--canary-ring))',
-        popover: {
-          DEFAULT: 'hsl(var(--canary-popover))',
-          foreground: 'hsl(var(--canary-popover-foreground))'
-        },
-        card: {
-          DEFAULT: 'hsl(var(--canary-card))',
-          foreground: 'hsl(var(--canary-card-foreground))'
-        },
-        white: {
-          DEFAULT: 'hsl(var(--canary-white))'
-        },
-        black: {
-          DEFAULT: 'hsl(var(--canary-black))'
-        },
-        success: {
-          DEFAULT: 'hsl(var(--canary-success))'
-        },
-        error: {
-          DEFAULT: 'hsl(var(--canary-error))'
-        },
-        warning: {
-          DEFAULT: 'hsl(var(--canary-warning))'
-        },
-        emphasis: {
-          DEFAULT: 'hsl(var(--canary-emphasis))'
-        },
-        ai: {
-          DEFAULT: 'hsl(var(--canary-ai))'
-        },
-        divergence: {
-          behind: 'hsl(var(--canary-grey-20))',
-          ahead: 'hsl(var(--canary-grey-30))'
-        },
         /* New colors design variables */
         foreground: {
           // TODO: remove DEFAULT, cause use old color var

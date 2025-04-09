@@ -85,7 +85,7 @@ export function ConnectorsList({
                 </Table.Cell>
                 <Table.Cell className="max-w-80 content-center truncate">{spec?.url}</Table.Cell>
                 <Table.Cell className="content-center">
-                  {status && <ConnectivityStatus item={{ identifier, type, spec, status, lastModifiedAt }} />}
+                  {status ? <ConnectivityStatus item={{ identifier, type, spec, status, lastModifiedAt }} /> : null}
                 </Table.Cell>
                 <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
                 <Table.Cell className="min-w-8 content-center">

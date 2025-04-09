@@ -63,20 +63,15 @@ All parts of the `AlertDialog` component can be imported and composed as require
 
 ```typescript jsx
 <AlertDialog.Root>
-  <AlertDialog.Trigger>
-    Open Alert Dialog
-  </AlertDialog.Trigger>
+  <AlertDialog.Trigger />
   <AlertDialog.Content>
     <AlertDialog.Header>
-      <AlertDialog.Title>Alert Dialog Title</AlertDialog.Title>
+      <AlertDialog.Title />
     </AlertDialog.Header>
-    <AlertDialog.Description variant="secondary">
-      This is the alert dialog description.
-      Alert dialog content goes here.
-    </AlertDialog.Description>
+    <AlertDialog.Description />
     <AlertDialog.Footer>
-      <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-      <AlertDialog.Action>Confirm</AlertDialog.Action>
+      <AlertDialog.Cancel />
+      <AlertDialog.Action />
     </AlertDialog.Footer>
   </AlertDialog.Content>
 </AlertDialog.Root>

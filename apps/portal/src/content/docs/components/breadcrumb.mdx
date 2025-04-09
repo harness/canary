@@ -55,22 +55,17 @@ return (
 
 ## Anatomy
 
-All parts of the breadcrumb can be imported and composed as required.
+All parts of the `Breadcrumb` can be imported and composed as required.
 
 ```typescript jsx
-<Breadcrumb.Root className="select-none">
+<Breadcrumb.Root>
   <Breadcrumb.List>
     <Breadcrumb.Item>
-      <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>
+      <Breadcrumb.Link />
     </Breadcrumb.Item>
     <Breadcrumb.Separator />
     <Breadcrumb.Ellipsis />
-    <Breadcrumb.Separator />
-    <Breadcrumb.Item>
-      <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>
-    </Breadcrumb.Item>
-    <Breadcrumb.Separator />
-    <Breadcrumb.Page>Dolor</Breadcrumb.Page>
+    <Breadcrumb.Page />
   </Breadcrumb.List>
 </Breadcrumb.Root>
 ```

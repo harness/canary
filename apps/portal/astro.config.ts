@@ -52,10 +52,6 @@ export default defineConfig({
           label: "Components",
           autogenerate: { directory: "components" },
         },
-        {
-          label: "Coming soon",
-          autogenerate: { directory: "soon" },
-        },
       ],
       customCss: [
         "./src/tailwind.css",

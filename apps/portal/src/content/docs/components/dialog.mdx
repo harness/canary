@@ -51,24 +51,17 @@ return (
 
 ## Anatomy
 
-All parts of the Dialog component can be imported and composed as required.
+All parts of the `Dialog` component can be imported and composed as required.
 
 ```typescript jsx
 <Dialog.Root>
-  <Dialog.Trigger>
-    <Button>Open Dialog</Button>
-  </Dialog.Trigger>
+  <Dialog.Trigger />
   <Dialog.Content>
     <Dialog.Header>
-      <Dialog.Title>Dialog Title</Dialog.Title>
-      <Dialog.Description>This is the dialog description.</Dialog.Description>
+      <Dialog.Title />
+      <Dialog.Description />
     </Dialog.Header>
-
-    <p>Dialog content goes here.</p>
-
-    <Dialog.Footer>
-      <Button>Footer Action</Button>
-    </Dialog.Footer>
+    <Dialog.Footer />
   </Dialog.Content>
 </Dialog.Root>
 ```

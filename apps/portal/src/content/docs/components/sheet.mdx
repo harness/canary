@@ -52,24 +52,17 @@ return (
 
 ## Anatomy
 
-All parts of the Sheet component can be imported and composed as required.
+All parts of the `Sheet` component can be imported and composed as required.
 
 ```typescript jsx
 <Sheet.Root>
-  <Sheet.Trigger>
-    <Button>Open Sheet</Button>
-  </Sheet.Trigger>
+  <Sheet.Trigger />
   <Sheet.Content>
     <Sheet.Header>
-      <Sheet.Title>Sheet Title</Sheet.Title>
-      <Sheet.Description>This is the sheet description.</Sheet.Description>
+      <Sheet.Title />
+      <Sheet.Description />
     </Sheet.Header>
-
-    <p>Sheet content goes here.</p>
-
-    <Sheet.Footer>
-      <Button>Footer Action</Button>
-    </Sheet.Footer>
+    <Sheet.Footer />
   </Sheet.Content>
 </Sheet.Root>
 ```

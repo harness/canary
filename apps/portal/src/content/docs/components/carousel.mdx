@@ -6,7 +6,6 @@ description: Carousel component documentation
 The `Carousel` component provides a flexible UI element for displaying a carousel of items. It is composed of several subcomponents such as `CarouselContent`, `CarouselItem`, `CarouselPrevious`, and `CarouselNext` to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
-import { Carousel } from "@harnessio/ui/components";
 
 <DocsPage.ComponentExample
   client:only
@@ -55,21 +54,13 @@ return (
 
 ## Anatomy
 
-All parts of the Carousel component can be imported and composed as required.
+All parts of the `Carousel` component can be imported and composed as required.
 
 ```typescript jsx
 <Carousel.Root>
   <Carousel.Previous />
   <Carousel.Content>
-    <Carousel.Item>
-      <div className="h-64 w-full bg-blue-800 text-cn-foreground-1 flex items-center justify-center">Slide 1</div>
-    </Carousel.Item>
-    <Carousel.Item>
-      <div className="h-64 w-full bg-green-800 text-cn-foreground-1 flex items-center justify-center">Slide 2</div>
-    </Carousel.Item>
-    <Carousel.Item>
-      <div className="h-64 w-full bg-red-800 text-cn-foreground-1 flex items-center justify-center">Slide 3</div>
-    </Carousel.Item>
+    <Carousel.Item />
   </Carousel.Content>
   <Carousel.Next />
 </Carousel.Root>

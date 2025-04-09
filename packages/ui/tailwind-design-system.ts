@@ -119,16 +119,16 @@ export default {
           1: 'lch(from var(--cn-border-1) l c h / <alpha-value>)',
           2: 'lch(from var(--cn-border-2) l c h / <alpha-value>)',
           3: 'lch(from var(--cn-border-3) l c h / <alpha-value>)',
-          brand: 'lch(from var(--cn-set-brand-solid-border) l c h / <alpha-value>)',
-          solidred: 'var(--cn-set-red-solid-border)',
-
-          // remove
-          // update to focus, disabled, success, danger, warning
+          warning: 'var(--cn-border-warning)',
           danger: 'var(--cn-border-danger)',
           success: 'var(--cn-border-success)',
           accent: 'var(--cn-border-accent)',
-          risk: 'var(--cn-icon-risk)',
-          alert: 'var(--cn-border-alert)'
+
+          // remove
+          // update to focus, disabled, success, danger, warning
+          brand: 'lch(from var(--cn-set-brand-solid-border) l c h / <alpha-value>)',
+          solidred: 'var(--cn-set-red-solid-border)',
+          risk: 'var(--cn-icon-risk)'
         },
         button: {
           foreground: {

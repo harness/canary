@@ -67,7 +67,7 @@ export function StepNode(props: StepNodeProps) {
               'border-graph-border-1': !selected,
               'border-cn-borders-3': selected,
               'border-cn-borders-success': executionStatus === 'success',
-              'border-cn-borders-alert': executionStatus === 'warning',
+              'border-cn-borders-warning': executionStatus === 'warning',
               'border-cn-borders-danger': executionStatus === 'error',
               'border-transparent': executionStatus === 'executing'
             }

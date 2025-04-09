@@ -2,7 +2,7 @@ import { Alert, Button, ButtonGroup, Icon, StackedList } from '@/components'
 import { EntityReference, EntityRendererProps } from '@views/platform'
 import { DirectionEnum } from '@views/platform/types'
 
-import { ConnectorItem } from '../types'
+import { ConnectorItem, connectorRefFilters } from '../types'
 
 export interface ConnectorReferenceProps {
   // Data
@@ -19,6 +19,7 @@ export interface ConnectorReferenceProps {
   // Callbacks
   onSelectEntity: (entity: ConnectorItem) => void
   onScopeChange: (direction: DirectionEnum) => void
+  onFilterChange: (type: string) => void
   onCancel?: () => void
   isLoading?: boolean
 }
@@ -39,6 +40,7 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
   // Callbacks
   onSelectEntity,
   onScopeChange,
+  onFilterChange,
   onCancel,
   isLoading
 }) => {
@@ -72,6 +74,8 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
         childFolder={childFolder}
         isLoading={isLoading}
         showBreadcrumbEllipsis={showBreadcrumbEllipsis}
+        filterTypes={connectorRefFilters}
+        onFilterChange={onFilterChange}
       />
       {apiError ? (
         <Alert.Container variant="destructive" className="mt-4">

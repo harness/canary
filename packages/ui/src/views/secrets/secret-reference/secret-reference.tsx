@@ -1,8 +1,8 @@
-import { Button, ButtonGroup, Icon, StackedList } from '@/components'
+import { Button, ButtonGroup, Icon, Spacer, StackedList, Text } from '@/components'
 import { EntityReference, EntityRendererProps } from '@views/platform'
 import { DirectionEnum } from '@views/platform/types'
 
-import { SecretItem } from '../types'
+import { SecretItem, secretsFilterTypes } from '../types'
 
 export interface SecretReferenceProps {
   // Data
@@ -19,6 +19,7 @@ export interface SecretReferenceProps {
   // Callbacks
   onSelectEntity: (entity: SecretItem) => void
   onScopeChange: (direction: DirectionEnum) => void
+  onFilterChange?: (filter: string) => void
   onCancel?: () => void
   isLoading?: boolean
 }
@@ -40,10 +41,9 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   onSelectEntity,
   onScopeChange,
   onCancel,
+  onFilterChange,
   isLoading
 }) => {
-  // Define available scopes
-
   // Custom entity renderer for secrets
   const renderEntity = (props: EntityRendererProps<SecretItem>) => {
     const { entity, isSelected, onSelect } = props
@@ -61,7 +61,8 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
 
   return (
     <div className="flex flex-col">
-      <span className="mb-4 font-medium">Select an existing Secret:</span>
+      <Text size={4}>Secrets list</Text>
+      <Spacer size={5} />
       <EntityReference<SecretItem>
         entities={secretsData}
         selectedEntity={selectedEntity}
@@ -74,6 +75,8 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         currentFolder={currentFolder}
         apiError={apiError}
         showBreadcrumbEllipsis={showBreadcrumbEllipsis}
+        filterTypes={secretsFilterTypes}
+        onFilterChange={onFilterChange}
       />
 
       <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">

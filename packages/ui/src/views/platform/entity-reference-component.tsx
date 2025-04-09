@@ -2,8 +2,8 @@ import { useCallback } from 'react'
 
 import { Button, Icon, Input, ListActions, ScrollArea, SearchBox, SkeletonList, StackedList } from '@/components'
 import { cn } from '@utils/cn'
-import { SecretType, SecretTypeFilter } from '@views/secrets/components/secret-type-filter'
 
+import { EntityReferenceFilter } from './components/entity-reference-filter'
 import { EntityReferenceList } from './entity-reference-list'
 import {
   BaseEntityProps,
@@ -24,10 +24,12 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   // Callbacks
   onSelectEntity: (entity: T) => void
   onScopeChange: (direction: DirectionEnum) => void
+  onFilterChange?: (filter: string) => void
 
   // UI Configuration
   showFilter?: boolean
   showBreadcrumbEllipsis?: boolean
+  filterTypes: Record<string, string>
 
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
@@ -48,10 +50,12 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   // Callbacks
   onSelectEntity,
   onScopeChange,
+  onFilterChange,
 
   // configs
   showFilter = true,
   showBreadcrumbEllipsis = false,
+  filterTypes = {},
 
   // Custom renderers
   renderEntity,
@@ -128,7 +132,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       ) : (
         <div className="h-full flex flex-col gap-2">
           {showFilter && (
-            <ListActions.Root>
+            <ListActions.Root className="gap-2">
               <ListActions.Left>
                 <SearchBox.Root
                   width="full"
@@ -139,7 +143,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <SecretTypeFilter onFilterChange={(type: string) => console.log('Filter by type:', type)} />
+                <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
               </ListActions.Right>
             </ListActions.Root>
           )}

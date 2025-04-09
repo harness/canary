@@ -71,7 +71,7 @@
       "invalidYaml": null
     },
     "governanceMetadata": null,
-    "isFavorite": false
+    "isFavorite": true
   },
   {
     "connector": {
@@ -219,7 +219,7 @@
       "invalidYaml": null
     },
     "governanceMetadata": null,
-    "isFavorite": false
+    "isFavorite": true
   },
   {
     "connector": {
@@ -440,7 +440,7 @@
       "invalidYaml": null
     },
     "governanceMetadata": null,
-    "isFavorite": false
+    "isFavorite": true
   },
   {
     "connector": {
@@ -586,7 +586,7 @@
       "invalidYaml": null
     },
     "governanceMetadata": null,
-    "isFavorite": false
+    "isFavorite": true
   },
   {
     "connector": {

@@ -1,4 +1,5 @@
 import { Button, Icon, Logo, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
 import { ExecutionStatus } from '@views/execution/execution-status'
 
@@ -18,9 +19,6 @@ const ConnectivityStatus = ({
 }): JSX.Element => (
   <div className="inline-flex items-center gap-3">
     {item?.status ? <ExecutionStatus.Badge status={item.status} /> : null}
-    <Button size="icon" variant="outline" onClick={() => onClick(item)}>
-      <Icon name="refresh" size={16} />
-    </Button>
   </div>
 )
 
@@ -30,7 +28,8 @@ export function ConnectorsList({
   isLoading,
   toConnectorDetails,
   onTestConnection,
-  onDeleteConnector
+  onDeleteConnector,
+  onToggleFavoriteConnector
 }: ConnectorListProps): JSX.Element {
   const { t } = useTranslationStore()
 
@@ -59,7 +58,7 @@ export function ConnectorsList({
     >
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-96">Connector</Table.Head>
+          <Table.Head className="w-96">{t('views:connectors.id', 'Connector ID')}</Table.Head>
           <Table.Head className="w-96">Details</Table.Head>
           <Table.Head className="w-44">Connectivity status</Table.Head>
           <Table.Head className="w-44">Last updated</Table.Head>
@@ -69,7 +68,7 @@ export function ConnectorsList({
         <SkeletonTable countRows={12} countColumns={5} />
       ) : (
         <Table.Body>
-          {connectors.map(({ identifier, type, spec, status, lastModifiedAt }) => {
+          {connectors.map(({ identifier, type, spec, status, lastModifiedAt, isFavorite }) => {
             const connectorLogo = type ? ConnectorTypeToLogoNameMap.get(type) : undefined
             return (
               <Table.Row
@@ -95,6 +94,15 @@ export function ConnectorsList({
                   )}
                 </Table.Cell>
                 <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
+                <Table.Cell className="content-center">
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => onToggleFavoriteConnector(identifier, !isFavorite)}
+                  >
+                    <Icon name="star" size={20} className={cn(isFavorite ? 'fill-icons-alert' : '')} />
+                  </Button>
+                </Table.Cell>
                 <Table.Cell className="text-right">
                   <MoreActionsTooltip
                     isInTable

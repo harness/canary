@@ -42,6 +42,6 @@ export interface SecretItem extends BaseEntityProps {
 
 export const secretsFilterTypes = {
   all: 'Show all secrets',
-  text: 'Text',
-  file: 'Encrypted file'
+  SecretText: 'Text',
+  SecretFile: 'Encrypted file'
 }

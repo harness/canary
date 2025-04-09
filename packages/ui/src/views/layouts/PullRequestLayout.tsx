@@ -67,7 +67,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
           <Tabs.List
             className={cn(
               'before:w-[calc(100vw-var(--cn-sidebar-width))] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2 before:bg-background-9',
-              { 'before:w-[calc(100vw-var(--cn-sidebar-width)-6px*2)]': isInset }
+              { 'before:w-[calc(100vw-var(--cn-sidebar-width)-var(--cn-inset-layout-indent)*2)]': isInset }
             )}
           >
             <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CONVERSATION)} asChild>

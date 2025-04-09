@@ -19,7 +19,7 @@ const diffData =
 
 export const ChatPreviewWrapper: FC = () => {
   return (
-    <div className="h-[calc(100vh-100px)] border-r border-cn-borders-4">
+    <div className="border-cn-borders-4 h-[calc(100vh-var(--cn-page-nav-height))] border-r">
       <Chat.Root>
         <Chat.Header onClose={() => {}} />
         <Chat.Body>
@@ -31,11 +31,11 @@ export const ChatPreviewWrapper: FC = () => {
           <Chat.Message
             actions={
               <Button
-                className="flex h-6 gap-x-1 rounded bg-cn-background-8 px-2.5 text-cn-foreground-1 hover:bg-cn-background-9 hover:text-cn-foreground-1"
+                className="bg-cn-background-8 text-cn-foreground-1 hover:bg-cn-background-9 hover:text-cn-foreground-1 flex h-6 gap-x-1 rounded px-2.5"
                 size="sm"
                 variant="custom"
               >
-                <Icon className="shrink-0 text-icons-9" name="repo-icon" size={12} />
+                <Icon className="text-icons-9 shrink-0" name="repo-icon" size={12} />
                 main
               </Button>
             }

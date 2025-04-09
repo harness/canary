@@ -18,7 +18,7 @@ const Topbar = {
     return (
       <div
         className={cx(
-          `grid w-full ${gridCols} font-regular h-[55px] topbar-bottom-border items-center gap-6 px-5 text-sm`,
+          `grid w-full ${gridCols} font-regular h-[var(--cn-breadcrumbs-height)] topbar-bottom-border items-center gap-6 px-5 text-sm`,
           className
         )}
       >

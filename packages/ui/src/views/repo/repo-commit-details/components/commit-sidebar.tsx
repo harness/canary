@@ -12,7 +12,7 @@ interface CommitsSidebarProps {
 
 export const CommitSidebar = ({ navigateToFile, filesList, children, useTranslationStore }: CommitsSidebarProps) => {
   return (
-    <div className="nested-sidebar-height sticky top-[100px]">
+    <div className="nested-sidebar-height sticky top-[var(--cn-page-nav-height)]">
       <SandboxLayout.LeftSubPanel className="w-[248px]">
         <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
           <div className="flex w-full flex-col gap-3 pt-5">

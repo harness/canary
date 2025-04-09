@@ -17,7 +17,7 @@ const Root = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive
     ref={ref}
-    className={cn('flex h-full w-full flex-col overflow-hidden rounded-[10px] text-popover-foreground', className)}
+    className={cn('flex h-full w-full flex-col overflow-hidden rounded-[10px] text-cn-foreground-1', className)}
     {...props}
   />
 ))

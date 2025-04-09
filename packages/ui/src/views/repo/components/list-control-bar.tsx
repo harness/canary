@@ -123,7 +123,7 @@ const ListControlBar = <T extends Record<string, any>, V = T[keyof T]>({
         />
       )}
 
-      {selectedFiltersCnt > 0 && activeSorts.length > 0 && <div className="bg-borders-1 h-7 w-px" />}
+      {selectedFiltersCnt > 0 && activeSorts.length > 0 && <div className="h-7 w-px bg-borders-1" />}
       {renderSelectedFilters(filtersFieldRenderer)}
 
       {selectedFiltersCnt > 0 && (

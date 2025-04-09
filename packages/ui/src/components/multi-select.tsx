@@ -60,7 +60,7 @@ export const MultiSelect = <T = unknown,>({
         </Label>
       )}
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger className="flex h-9 w-full items-center justify-between rounded border border-cn-borders-2 bg-cn-background-2 px-3 transition-colors data-[state=open]:border-cn-borders-8">
+        <DropdownMenu.Trigger className="data-[state=open]:border-cn-borders-8 flex h-9 w-full items-center justify-between rounded border border-cn-borders-2 bg-cn-background-2 px-3 transition-colors">
           {placeholder}
           <Icon name="chevron-down" className="chevron-down ml-auto" size={12} />
         </DropdownMenu.Trigger>

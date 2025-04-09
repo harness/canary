@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
-import { useTranslationStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
 import { Drawer, FormSeparator, Separator, Spacer, Text } from '@harnessio/ui/components'
@@ -164,6 +164,7 @@ export const ConnectorsRefPage = ({
             apiError="Could not fetch connectors, unauthorized"
             currentFolder={currentFolder}
             showBreadcrumbEllipsis={activeScope === ScopeEnum.PROJECT}
+            onFilterChange={noop}
           />
         )
       default:

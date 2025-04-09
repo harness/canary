@@ -12,7 +12,7 @@ import {
   ConnectorEntity,
   ConnectorEntityForm,
   ConnectorsPalette,
-  ConnectorTestConnection,
+  ConnectorTestConnectionDialog,
   EntityIntent,
   GroupInput,
   ListInput,
@@ -90,7 +90,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
         </>
       </SandboxLayout.Content>
 
-      <ConnectorTestConnection isOpen={testConnectionOpen} onClose={() => setTestConnectionOpen(false)} />
+      <ConnectorTestConnectionDialog isOpen={testConnectionOpen} onClose={() => setTestConnectionOpen(false)} />
       <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
         <Drawer.Content>
           <ConnectorsPalette

@@ -1,4 +1,5 @@
 import { Alert, Button, ButtonGroup, Icon, StackedList } from '@/components'
+import { cn } from '@utils/cn'
 import { EntityReference, EntityRendererProps } from '@views/platform'
 import { DirectionEnum } from '@views/platform/types'
 
@@ -53,7 +54,7 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
     return (
       <StackedList.Item
         onClick={() => onSelect(entity)}
-        className={`h-12 p-3 ${isSelected ? 'bg-cn-background-hover' : ''}`}
+        className={cn('h-12 p-3', { 'bg-cn-background-hover': isSelected })}
         thumbnail={<Icon name="connectors" size={14} className="text-cn-foreground-3 ml-2" />}
       >
         <StackedList.Field title={entity.connector.name} description={entity.connector.description} />

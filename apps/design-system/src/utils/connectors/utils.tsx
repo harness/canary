@@ -48,7 +48,7 @@ export function getHarnessConnectorDefinition(type: string, options?: ConnectorD
           return {
             ...input,
             inputConfig: {
-              ...(input.inputConfig as Object),
+              ...(input.inputConfig || {}),
               autoExpandGroups: options?.autoExpandGroups
             }
           }

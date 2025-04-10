@@ -45,6 +45,7 @@
     "components/desktop/base/tooltip",
     "components/desktop/base/sidebar",
     "components/desktop/base/alert",
+    "components/desktop/base/toast",
     "components/desktop/base/accordion"
   ]
 }

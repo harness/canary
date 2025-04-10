@@ -6,7 +6,7 @@
       "core/typography": "source",
       "core/dimensions": "source",
       "core/colors_lch": "source",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -468,7 +468,7 @@
     "name": "dark",
     "selectedTokenSets": {
       "mode/dark/default": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1673,7 +1673,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/dimmer": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:0",
@@ -2281,7 +2281,7 @@
     },
     "selectedTokenSets": {
       "mode/light/default": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:4",
@@ -2894,7 +2894,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:1",
@@ -3503,7 +3503,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/default-protanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:2",
@@ -4112,7 +4112,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/dimmer-protanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:3",
@@ -4721,7 +4721,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast-protanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:4",
@@ -5330,7 +5330,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/default-deuteranopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:5",
@@ -5939,7 +5939,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/dimmer-deuteranopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:6",
@@ -6548,7 +6548,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast-deuteranopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:7",
@@ -7157,7 +7157,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/default-tritanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:8",
@@ -7766,7 +7766,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/dimmer-tritanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:9",
@@ -8375,7 +8375,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast-tritanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:10",
@@ -8983,7 +8983,7 @@
     },
     "selectedTokenSets": {
       "mode/light/dimmer": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:11",
@@ -9595,7 +9595,7 @@
     },
     "selectedTokenSets": {
       "mode/light/high-contrast": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:12",
@@ -10207,7 +10207,7 @@
     },
     "selectedTokenSets": {
       "mode/light/default-protanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:13",
@@ -10819,7 +10819,7 @@
     },
     "selectedTokenSets": {
       "mode/light/dimmer-protanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:14",
@@ -11431,7 +11431,7 @@
     },
     "selectedTokenSets": {
       "mode/light/high-contrast-protanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:15",
@@ -12043,7 +12043,7 @@
     },
     "selectedTokenSets": {
       "mode/light/default-deuteranopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:16",
@@ -12679,7 +12679,7 @@
     },
     "selectedTokenSets": {
       "mode/light/dimmer-deuteranopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:17",
@@ -13291,7 +13291,7 @@
     },
     "selectedTokenSets": {
       "mode/light/high-contrast-deuteranopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:18",
@@ -13903,7 +13903,7 @@
     },
     "selectedTokenSets": {
       "mode/light/default-tritanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:19",
@@ -14515,7 +14515,7 @@
     },
     "selectedTokenSets": {
       "mode/light/dimmer-tritanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:20",
@@ -15127,7 +15127,7 @@
     },
     "selectedTokenSets": {
       "mode/light/high-contrast-tritanopia": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:21",
@@ -15538,7 +15538,7 @@
       "components/desktop/base/avatar": "enabled",
       "components/desktop/base/tabs": "enabled",
       "components/desktop/base/sidebar": "enabled",
-      "components/desktop/base/alert": "disabled"
+      "components/desktop/base/toast": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",

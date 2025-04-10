@@ -49,10 +49,9 @@ export function ColorPalette() {
                       <Tooltip.Root>
                         <Tooltip.Trigger asChild>
                           <div
-                            className="size-14 rounded-md"
+                            className="size-14 rounded-md border border-borders-1 border-cn-foreground-primary"
                             style={{
                               backgroundColor: colorValue,
-                              border: "1px solid rgba(255,255,255,0.1)",
                             }}
                           />
                         </Tooltip.Trigger>

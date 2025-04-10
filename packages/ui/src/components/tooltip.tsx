@@ -9,7 +9,7 @@ const TooltipContent = forwardRef<ElementRef<typeof Content>, ComponentPropsWith
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        'bg-cn-background-2 text-cn-foreground-1 animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 overflow-hidden rounded-md px-3 py-1.5 text-xs',
+        'bg-cn-background-3 text-cn-foreground-1 animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 overflow-hidden rounded-md px-3 py-1.5 text-xs',
         className
       )}
       {...props}
@@ -20,7 +20,7 @@ TooltipContent.displayName = Content.displayName
 
 const TooltipArrow = forwardRef<ElementRef<typeof Arrow>, ComponentPropsWithoutRef<typeof Arrow>>(
   ({ className, ...props }, ref) => (
-    <Arrow ref={ref} width={16} height={10} className={cn('fill-cn-background-2', className)} {...props} />
+    <Arrow ref={ref} width={14} height={8} className={cn('fill-cn-background-3', className)} {...props} />
   )
 )
 TooltipArrow.displayName = Arrow.displayName

@@ -1,11 +1,8 @@
 # Specify owners for all files in the repository
-
-- @abhinavrastogi-harness @knagurski
+* @abhinavrastogi-harness @knagurski
 
 # Specify owner for a specific directory
-
-/packages/\* @abhinavrastogi-harness @knagurski
+/packages/* @abhinavrastogi-harness @knagurski
 
 # Specify owner for a specific file or directory under apps/gitness
-
-/apps/gitness/\* @abhinavrastogi-harness @vardanbansal-harness
+/apps/gitness/* @abhinavrastogi-harness @vardanbansal-harness

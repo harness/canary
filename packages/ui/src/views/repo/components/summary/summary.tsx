@@ -70,7 +70,7 @@ export const Summary = ({
                       ? file.status === FileStatus.LOW_RISK
                         ? 'absolute left-0 border-l-2 border-cn-borders-warning'
                         : file.status === FileStatus.MEDIUM_RISK
-                          ? 'absolute left-0 border-l-2 border-borders-warning'
+                          ? 'absolute left-0 border-l-2 border-cn-borders-warning'
                           : 'absolute left-0 border-l-2 border-borders-danger'
                       : ''
                   }`}

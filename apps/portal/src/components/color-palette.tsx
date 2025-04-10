@@ -17,7 +17,7 @@ export function ColorPalette() {
     <div className="grid rounded-lg border border-borders-4 bg-background-4 px-6 pt-1 pb-6 mt-4 shadow-md h-fit w-[800px]">
       {/* Shades */}
       <div className="flex">
-        <div className="w-16"></div>
+        <div className="w-20"></div>
         {shades.map((shade) => (
           <div
             key={shade}
@@ -29,14 +29,14 @@ export function ColorPalette() {
       </div>
 
       {/* Colors */}
-      <div>
+      <div className="not-content flex flex-col gap-2">
         {colors.map((colorName) => {
           const colorGroup =
             styles.colors[colorName as keyof typeof styles.colors];
 
           return (
             <div key={colorName} className="flex items-center gap-1">
-              <div className="w-16 font-medium capitalize text-cn-background-primary">
+              <div className="text-right pr-4 w-20 font-medium capitalize text-cn-background-primary">
                 {colorName}
               </div>
               {shades.map((shade) => {
@@ -44,7 +44,7 @@ export function ColorPalette() {
                 const colorValue = (color as Color)?.$value || "";
 
                 return (
-                  <div key={shade} className="flex-1 pb-2 flex justify-center">
+                  <div key={shade} className="flex-1 flex justify-center">
                     <Tooltip.Provider>
                       <Tooltip.Root>
                         <Tooltip.Trigger asChild>

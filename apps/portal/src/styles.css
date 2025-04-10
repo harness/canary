@@ -101,7 +101,7 @@ ul.top-level summary svg {
 }
 
 [aria-label="Search"] > kbd:first-of-type {
-  @apply bg-cn-background-2 border border-borders-2 !important;
+  @apply bg-cn-background-2 border border-cn-borders-2 !important;
 }
 
 /* Code/Preview override */

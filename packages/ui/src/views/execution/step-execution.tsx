@@ -26,7 +26,7 @@ const StepExecutionToolbar: FC<
         handleChange={handleInputChange}
         value={query}
       >
-        <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-borders-2 bg-cn-background-3">
+        <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-cn-borders-2 bg-cn-background-3">
           <Icon className="text-icons-3" name="command-symbol" size={10} />
           <span className="text-12 leading-none">F</span>
         </div>
@@ -62,7 +62,7 @@ const TabsTrigger = ({ isLightTheme, ...props }: TabsTriggerProps & { isLightThe
       'h-6 w-[68px]',
       isLightTheme
         ? 'data-[state=active]:bg-cn-background-1 data-[state=active]:shadow-none'
-        : 'data-[state=active]:bg-cn-background-9 data-[state=active]:border-borders-2 data-[state=active]:border'
+        : 'data-[state=active]:bg-cn-background-9 data-[state=active]:border-cn-borders-2 data-[state=active]:border'
     )}
     {...props}
   />

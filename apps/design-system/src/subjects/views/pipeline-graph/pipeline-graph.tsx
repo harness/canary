@@ -70,7 +70,7 @@ export function ApprovalStepNodeComponent({ node }: { node: LeafNodeInternalType
   return (
     <div className="flex h-full items-center justify-center">
       <div
-        className="border-borders-2 bg-cn-background-2 absolute -z-10 rotate-45 border"
+        className="border-cn-borders-2 bg-cn-background-2 absolute -z-10 rotate-45 border"
         style={{ inset: '18px' }}
       ></div>
       <div>{name}</div>

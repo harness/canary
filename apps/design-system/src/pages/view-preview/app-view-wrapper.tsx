@@ -103,7 +103,8 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
               useTranslationStore={useTranslationStore}
             />
             <Sidebar.Inset>
-              <MainContentLayout breadcrumbs={breadcrumbs}>
+              {breadcrumbs}
+              <MainContentLayout>
                 <Outlet />
               </MainContentLayout>
               <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />

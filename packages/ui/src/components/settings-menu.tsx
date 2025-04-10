@@ -14,8 +14,9 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
   return (
     <Sheet.Root modal={false} open={showSettingMenu}>
       <Sheet.Content
-        className="inset-y-0 z-40 h-screen w-[364px] translate-x-[--sidebar-width] border-l p-0 shadow-none"
+        className="inset-y-0 z-30 h-screen w-[364px] translate-x-[--cn-sidebar-width] border-l p-0 shadow-none"
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
+        overlayClassName="!z-20 left-[--cn-sidebar-width]"
         onClick={() => handleSettingsMenu(false)}
         modal={false}
         side="left"

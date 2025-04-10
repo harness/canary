@@ -14,8 +14,9 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
   return (
     <Sheet.Root modal={false} open={showMoreMenu}>
       <Sheet.Content
-        className="inset-y-0 z-40 h-screen w-[328px] translate-x-[--sidebar-width] border-l p-0 shadow-none"
+        className="inset-y-0 z-30 h-screen w-[328px] translate-x-[--cn-sidebar-width] border-l p-0 shadow-none"
         closeClassName="text-sidebar-icon-3 hover:text-sidebar-icon-1"
+        overlayClassName="!z-20 left-[--cn-sidebar-width]"
         modal={false}
         onClick={() => handleMoreMenu(false)}
         side="left"

@@ -8,7 +8,8 @@ import {
   MoreSubmenu,
   NavbarItemType,
   SettingsMenu,
-  Sidebar
+  Sidebar,
+  useSidebar
 } from '@harnessio/ui/components'
 import { MainContentLayout, SidebarView } from '@harnessio/ui/views'
 
@@ -22,8 +23,9 @@ import { useRepoImportEvents } from '../framework/hooks/useRepoImportEvent'
 import { useSelectedSpaceId } from '../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
-import Breadcrumbs from './breadcrumbs/breadcrumbs'
-import BreadcrumbsMFE from './breadcrumbs/breadcrumbs-mfe'
+import { AppBreadcrumbs } from './breadcrumbs/app-breadcrumbs'
+import { Breadcrumbs } from './breadcrumbs/breadcrumbs'
+import { useGetBreadcrumbs } from './breadcrumbs/useGetBreadcrumbs'
 import { Toaster } from './toaster'
 
 interface NavLinkStorageInterface {
@@ -43,6 +45,8 @@ export const AppShell = () => {
   const { spaceId, repoId } = useParams<PathParams>()
   const selectedSpaceId = useSelectedSpaceId(spaceId)
   const spaceIdPathParam = spaceId ?? selectedSpaceId ?? ''
+
+  const { breadcrumbs } = useGetBreadcrumbs()
 
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
@@ -194,7 +198,8 @@ export const AppShell = () => {
         />
 
         <Sidebar.Inset>
-          <MainContentLayout breadcrumbs={<Breadcrumbs />}>
+          <AppBreadcrumbs breadcrumbs={breadcrumbs} withMobileSidebarToggle />
+          <MainContentLayout useSidebar={useSidebar} withBreadcrumbs={breadcrumbs.length > 0}>
             <Outlet />
           </MainContentLayout>
 
@@ -223,10 +228,12 @@ export const AppShell = () => {
 
 export const AppShellMFE = memo(() => {
   useRepoImportEvents()
+  const { breadcrumbs } = useGetBreadcrumbs()
 
   return (
     <>
-      <MainContentLayout breadcrumbs={<BreadcrumbsMFE />} className="min-h-screen text-cn-foreground-2">
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
+      <MainContentLayout className="text-cn-foreground-2" withBreadcrumbs={breadcrumbs.length > 0}>
         <Outlet />
       </MainContentLayout>
       <Toaster />

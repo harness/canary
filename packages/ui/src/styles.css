@@ -36,7 +36,7 @@
   }
 
   body {
-    @apply bg-cn-background-1 text-cn-foreground-2 text-sm font-normal -tracking-[0.02em];
+    @apply bg-cn-background-1 text-cn-foreground-2 overscroll-y-none text-sm font-normal -tracking-[0.02em];
   }
 }
 
@@ -63,6 +63,14 @@
       display: none;
     }
   }
+}
+
+:root,
+:host {
+  --cn-breadcrumbs-height: 55px;
+  --cn-tabs-nav-height: 45px;
+  --cn-page-nav-height: calc(var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height));
+  --cn-inset-layout-indent: 6px;
 }
 
 .border-linear {
@@ -510,11 +518,16 @@ mark {
   display: none !important;
 }
 
+.inset-layout {
+  @apply bg-sidebar-background-1;
+}
+
 .nested-sidebar-height {
-  @apply h-[calc(100vh-100px)]; /* where 55px (Breadcrumbs height) + 45px (SubHeader height) = 100px */
+  @apply h-[calc(100vh-var(--cn-page-nav-height))];
 
   .inset-layout & {
-    @apply h-[calc(100vh-100px-8px)]; /* where 8px is the Inset layout bottom padding + borders (=== INSET_THEME_PADDING) */
+    /* where 2px is the Inset layout borders */
+    @apply h-[calc(100vh-var(--cn-page-nav-height)-var(--cn-inset-layout-indent)-2px)];
   }
 }
 
@@ -535,5 +548,5 @@ mark {
 }
 
 .main-content-height {
-  @apply h-[calc(100%-55px)]; /* where 55px is for the Breadcrumbs height */
+  @apply h-[calc(100%-var(--cn-breadcrumbs-height))];
 }

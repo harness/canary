@@ -1,49 +1,65 @@
-import { CSSProperties, PropsWithChildren, ReactNode } from 'react'
+import { PropsWithChildren } from 'react'
 
+import { SidebarContext } from '@/components'
 import { useTheme } from '@/context'
-import { cn, wrapConditionalObjectElement } from '@/utils'
-import { ScrollArea, ScrollAreaProps } from '@components/scroll-area'
+import { cn } from '@/utils'
 
-interface MainContentLayoutProps extends PropsWithChildren<unknown> {
+/**
+ * The component `HalfArch` creates a visual layer that is used to keep the top corners
+ * of the main content rounded when a page is scrolled to the top.
+ */
+const HalfArch = ({ className }: { className?: string }) => (
+  <div className="relative size-[var(--cn-inset-layout-indent)] overflow-hidden">
+    <div
+      className={cn(
+        'absolute top-0 size-[calc(var(--cn-inset-layout-indent)*2)] rounded-full border shadow-[0_0_0_20px_hsl(var(--canary-sidebar-background-01))]',
+        className
+      )}
+    />
+  </div>
+)
+
+type MainContentLayoutProps = PropsWithChildren<{
+  useSidebar?: () => SidebarContext
+  withBreadcrumbs?: boolean
   className?: string
-  breadcrumbs?: ReactNode
-}
+}>
 
-export function MainContentLayout({ className, children, breadcrumbs }: MainContentLayoutProps) {
+export function MainContentLayout({ children, useSidebar, className, withBreadcrumbs }: MainContentLayoutProps) {
   const { isInset } = useTheme()
+  const sidebarData = useSidebar?.()
+  const isMobile = sidebarData?.isMobile
 
   return (
-    <div className={cn('h-screen', className)}>
-      {!!breadcrumbs && (
-        <div
-          className={cn('bg-cn-background-1 sticky top-0 focus-within:z-20', { 'bg-sidebar-background-1': isInset })}
-        >
-          {breadcrumbs}
-        </div>
+    <div
+      className={cn(
+        'min-h-screen bg-cn-background-1',
+        {
+          'ml-[var(--cn-inset-layout-indent)]': isMobile,
+          'min-h-[calc(100vh-var(--cn-breadcrumbs-height))]': withBreadcrumbs,
+          'min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] my-[var(--cn-inset-layout-indent)] mr-[var(--cn-inset-layout-indent)] border rounded-md min-w-fit':
+            isInset,
+          'min-h-[calc(100vh-var(--cn-breadcrumbs-height)-var(--cn-inset-layout-indent))] mb-[var(--cn-inset-layout-indent)] mt-0':
+            isInset && withBreadcrumbs
+        },
+        className
       )}
-      <div className={cn('main-content-height', { 'overflow-hidden bg-sidebar-background-1 pb-1.5': isInset })}>
-        <ScrollArea
-          type="always"
-          orientation="both"
-          className={cn('h-full', { 'rounded-md border': isInset })}
-          viewportClassName={cn('!overflow-scroll min-h-full [&>div]:!grid [&>div]:min-h-full', {
-            'min-h-[calc(100%-6px)]': isInset
-          })}
-          scrollBarProps={{ vertical: { className: 'z-20' } }}
-          {...wrapConditionalObjectElement<ScrollAreaProps>(
-            {
-              scrollBarProps: { vertical: { className: 'h-auto z-20' }, horizontal: { className: '!bottom-1.5 z-20' } },
-              style: {
-                '--radix-scroll-area-corner-height': '6px',
-                '--radix-scroll-area-corner-width': '14px'
-              } as CSSProperties
-            },
-            isInset
+    >
+      {isInset && (
+        <div
+          aria-hidden
+          role="presentation"
+          className={cn(
+            'sticky w-[calc(100%+2px)] flex justify-between left-0 right-0 top-0 -mx-px -mt-px -mb-[var(--cn-inset-layout-indent)] z-20',
+            { 'top-[var(--cn-breadcrumbs-height)]': withBreadcrumbs }
           )}
         >
-          <div className={cn({ 'rounded-md bg-cds-background-1 min-w-fit': isInset })}>{children}</div>
-        </ScrollArea>
-      </div>
+          <HalfArch className="left-0" />
+          <div className="w-full border-t" />
+          <HalfArch className="right-0" />
+        </div>
+      )}
+      {children}
     </div>
   )
 }

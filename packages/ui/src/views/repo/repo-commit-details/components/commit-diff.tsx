@@ -13,8 +13,8 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
   const { diffs, diffStats } = useCommitDetailsStore()
 
   return (
-    <div className="min-h-[calc(100vh-100px)] pt-5">
-      <p className="mb-3.5 text-14 leading-tight text-cn-foreground-2">
+    <div className="min-h-[calc(100vh-var(--cn-page-nav-height))] pt-5">
+      <p className="text-14 text-cn-foreground-2 mb-3.5 leading-tight">
         {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
         <span className="text-cn-foreground-accent">
           {formatNumber(diffStats?.files_changed || 0)}{' '}

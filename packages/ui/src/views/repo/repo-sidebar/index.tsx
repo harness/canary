@@ -31,7 +31,7 @@ export const RepoSidebar = ({
 
   return (
     <>
-      <div className="nested-sidebar-height sticky top-[45px]">
+      <div className="nested-sidebar-height sticky top-[var(--cn-page-nav-height)]">
         <SandboxLayout.LeftSubPanel className="w-[247px] border-none">
           <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
             <div className="flex w-full flex-col gap-3 pt-5">

@@ -1,34 +1,43 @@
-import { Link, useMatches } from 'react-router-dom'
+import { UIMatch } from 'react-router-dom'
 
-import { Breadcrumb, Separator, Sidebar, Topbar, useSidebar } from '@harnessio/ui/components'
+import { Breadcrumb, Separator, Sidebar, Topbar } from '@harnessio/ui/components'
+import { useRouterContext, useTheme } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
 
-import { useThemeStore } from '../../framework/context/ThemeContext'
-import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { CustomHandle } from '../../framework/routing/types'
 
-function Breadcrumbs() {
-  const matches = useMatches()
-  const { isMobile } = useSidebar()
-  const matchesWithBreadcrumb = matches.filter(match => (match.handle as CustomHandle)?.breadcrumb)
-  const isMFE = useIsMFE()
-  const { isInset } = useThemeStore()
+export interface BreadcrumbsProps {
+  breadcrumbs: UIMatch<unknown, CustomHandle>[]
+  withMobileSidebarToggle?: boolean
+  isMobile?: boolean
+}
+
+export const Breadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMobile = false }: BreadcrumbsProps) => {
+  const { Link } = useRouterContext()
+  const { isInset } = useTheme()
+
+  if (!breadcrumbs.length) return null
 
   return (
-    <Topbar.Root className={cn({ 'pl-0': isInset && !isMobile })}>
+    <Topbar.Root
+      className={cn('bg-cn-background-1 sticky top-0 z-20', {
+        'bg-sidebar-background-1': isInset,
+        'pl-0': isInset && !isMobile
+      })}
+    >
       <Topbar.Left>
-        {!isMFE && isMobile && (
+        {withMobileSidebarToggle && isMobile && (
           <>
-            <Sidebar.Trigger className="-ml-1 text-topbar-foreground-2 hover:bg-topbar-background-1 hover:text-topbar-foreground-1" />
-            <Separator orientation="vertical" className="ml-1 mr-2 h-4 bg-sidebar-background-1" />
+            <Sidebar.Trigger className="text-topbar-foreground-2 hover:bg-topbar-background-1 hover:text-topbar-foreground-1 -ml-1" />
+            <Separator orientation="vertical" className="bg-sidebar-background-1 ml-1 mr-2 h-4" />
           </>
         )}
         <Breadcrumb.Root className="select-none">
           <Breadcrumb.List>
-            {matchesWithBreadcrumb.map((match, index) => {
-              const { breadcrumb, asLink = true } = (match.handle || {}) as CustomHandle
+            {breadcrumbs.map((match, index) => {
+              const { breadcrumb, asLink = true } = match.handle ?? {}
               const isFirst = index === 0
-              const isLast = index === matchesWithBreadcrumb.length - 1
+              const isLast = index === breadcrumbs.length - 1
               const breadcrumbContent = breadcrumb!(match.params)
 
               return (
@@ -52,5 +61,3 @@ function Breadcrumbs() {
     </Topbar.Root>
   )
 }
-
-export default Breadcrumbs

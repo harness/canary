@@ -44,7 +44,7 @@ function Header({ children, className }: { children: ReactNode; className?: stri
   return (
     <header
       className={cn(
-        'bg-cn-background fixed translate-x-[--sidebar-width] transition-transform duration-200 ease-linear right-0 top-0 z-40 h-[55px]',
+        'bg-cn-background fixed translate-x-[--cn-sidebar-width] transition-transform duration-200 ease-linear right-0 top-0 z-40 h-[var(--cn-breadcrumbs-height)]',
         className
       )}
       role="banner"
@@ -55,7 +55,13 @@ function Header({ children, className }: { children: ReactNode; className?: stri
 }
 
 function SubHeader({ children, className }: { children: ReactNode; className?: string }) {
-  return <header className={cn('min-h-[45px] max-h-[45px] overflow-hidden', className)}>{children}</header>
+  return (
+    <header
+      className={cn('min-h-[var(--cn-tabs-nav-height)] max-h-[var(--cn-tabs-nav-height)] overflow-hidden', className)}
+    >
+      {children}
+    </header>
+  )
 }
 
 function Main({ children, fullWidth, className }: { children: ReactNode; fullWidth?: boolean; className?: string }) {

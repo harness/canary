@@ -32,7 +32,7 @@ const SIDEBAR_WIDTH_MOBILE = '18rem'
 const SIDEBAR_WIDTH_ICON = '3rem'
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b'
 
-type SidebarContext = {
+export type SidebarContext = {
   state: 'expanded' | 'collapsed'
   collapsed: boolean
   setOpen: (open: boolean) => void
@@ -60,7 +60,7 @@ const SidebarProvider = forwardRef<
     open?: boolean
     onOpenChange?: (open: boolean) => void
   }
->(({ defaultOpen = true, open: openProp, onOpenChange: setOpenProp, className, style, children, ...props }, ref) => {
+>(({ defaultOpen = true, open: openProp, onOpenChange: setOpenProp, className, children, ...props }, ref) => {
   const isMobile = useIsMobile()
   const [openMobile, setOpenMobile] = useState(false)
 
@@ -123,20 +123,22 @@ const SidebarProvider = forwardRef<
   useEffect(() => {
     if (isMobile) return
 
+    document.body.style.setProperty('--cn-sidebar-width-icon', SIDEBAR_WIDTH_ICON)
+
     if (!open) {
-      document.body.style.setProperty('--sidebar-width', SIDEBAR_COLLAPSED_WIDTH)
+      document.body.style.setProperty('--cn-sidebar-width', SIDEBAR_COLLAPSED_WIDTH)
     }
 
     if (isInset && open) {
-      document.body.style.setProperty('--sidebar-width', SIDEBAR_WIDTH_INSET)
+      document.body.style.setProperty('--cn-sidebar-width', SIDEBAR_WIDTH_INSET)
     }
 
     if (!isInset && open) {
-      document.body.style.setProperty('--sidebar-width', SIDEBAR_WIDTH)
+      document.body.style.setProperty('--cn-sidebar-width', SIDEBAR_WIDTH)
     }
 
     return () => {
-      document.body.style.removeProperty('--sidebar-width')
+      document.body.style.removeProperty('--cn-sidebar-width')
     }
   }, [isInset, open, isMobile])
 
@@ -144,7 +146,6 @@ const SidebarProvider = forwardRef<
     <SidebarContext.Provider value={contextValue}>
       <Tooltip.Provider delayDuration={0}>
         <div
-          style={{ '--sidebar-width-icon': SIDEBAR_WIDTH_ICON, ...style } as CSSProperties}
           className={cn(
             'group/sidebar-wrapper flex justify-between w-full has-[[data-variant=inset]]:bg-sidebar',
             className
@@ -175,7 +176,7 @@ const SidebarRoot = forwardRef<
     return (
       <div
         className={cn(
-          'flex h-full w-[--sidebar-width] flex-col bg-sidebar-background-1 transition-[width] ease-linear duration-200',
+          'flex h-full w-[--cn-sidebar-width] flex-col bg-sidebar-background-1 transition-[width] ease-linear duration-200',
           className
         )}
         ref={ref}
@@ -192,12 +193,8 @@ const SidebarRoot = forwardRef<
         <Sheet.Content
           data-sidebar="sidebar"
           data-mobile="true"
-          className="w-[--sidebar-width] bg-sidebar-background-1 p-0 [&>button]:hidden"
-          style={
-            {
-              '--sidebar-width': SIDEBAR_WIDTH_MOBILE
-            } as CSSProperties
-          }
+          className="bg-sidebar-background-1 w-[--cn-sidebar-width] p-0 [&>button]:hidden"
+          style={{ '--cn-sidebar-width': SIDEBAR_WIDTH_MOBILE } as CSSProperties}
           side={side}
         >
           <div className="flex size-full flex-col">{children}</div>
@@ -215,24 +212,14 @@ const SidebarRoot = forwardRef<
       data-variant={variant}
       data-side={side}
     >
-      {/* This is what handles the sidebar gap on desktop */}
       <div
         className={cn(
-          'duration-200 relative w-[--sidebar-width] bg-transparent transition-[width] ease-linear',
-          'group-data-[collapsible=offcanvas]:w-0',
-          'group-data-[side=right]:rotate-180',
-          variant === 'floating' || variant === 'inset'
-            ? 'group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]'
-            : 'group-data-[collapsible=icon]:w-[--sidebar-width-icon]'
-        )}
-      />
-      <div
-        className={cn(
-          'bg-sidebar-background-1 border-sidebar-border-1 duration-200 inset-y-0 z-10 hidden w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex',
+          'sticky top-0 bg-sidebar-background-1 border-sidebar-border-1 duration-200 hidden w-[--cn-sidebar-width] transition-[left,right,width] ease-linear md:flex',
           // Adjust the padding for floating and inset variants.
           variant === 'floating' || variant === 'inset'
-            ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]'
-            : `group-data-[collapsible=icon]:w-[--sidebar-width-icon] ${!isInset && !isLightTheme ? 'group-data-[side=left]:border-r group-data-[side=right]:border-l' : ''}`,
+            ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--cn-sidebar-width-icon)_+_theme(spacing.4)_+2px)]'
+            : 'group-data-[collapsible=icon]:w-[--cn-sidebar-width-icon]',
+          { 'group-data-[side=left]:border-r group-data-[side=right]:border-l': !isInset && !isLightTheme },
           className
         )}
         {...props}
@@ -301,19 +288,14 @@ const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'>>(({ c
 SidebarRail.displayName = 'SidebarRail'
 
 const SidebarInset = forwardRef<HTMLDivElement, ComponentProps<'main'>>(({ className, ...props }, ref) => {
-  const { isMobile } = useSidebar()
-  const { isInset } = useTheme()
-
   return (
     <main
       ref={ref}
       className={cn(
-        'relative flex min-h-screen flex-1 flex-col main-page-content-background',
+        'relative min-h-screen main-page-content-background w-full',
         'peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow transition-[max-width] ease-linear duration-200',
-        isInset && 'pr-1.5',
         className
       )}
-      style={{ maxWidth: `calc(100vw - ${isMobile ? '0px' : 'var(--sidebar-width)'})` }}
       {...props}
     />
   )
@@ -450,7 +432,7 @@ const SidebarMenuItem = forwardRef<HTMLLIElement, ComponentProps<'li'>>(({ class
 SidebarMenuItem.displayName = 'SidebarMenuItem'
 
 const sidebarMenuButtonVariants = cva(
-  'peer/menu-button flex w-full cursor-pointer items-center overflow-hidden rounded px-2.5 py-2 text-left text-sm outline-none transition-[width,height,padding] disabled:pointer-events-none disabled:opacity-50 group-hover/menu-item:bg-sidebar-background-3 group-has-[[data-sidebar=menu-action]]/menu-item:pr-7 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-background-3 data-[active=true]:font-medium data-[state=open]:hover:bg-sidebar-background-3 group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0',
+  'peer/menu-button group-hover/menu-item:bg-sidebar-background-3 data-[active=true]:bg-sidebar-background-3 data-[state=open]:hover:bg-sidebar-background-3 flex w-full cursor-pointer items-center overflow-hidden rounded px-2.5 py-2 text-left text-sm outline-none transition-[width,height,padding] disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-7 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-medium group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0',
   {
     variants: {
       variant: {
@@ -530,7 +512,7 @@ const SidebarMenuItemText = forwardRef<
           )}
         >
           {!!active && (
-            <span className="absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2 bg-navbar-item-gradient" />
+            <span className="bg-navbar-item-gradient absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2" />
           )}
           {icon}
         </div>

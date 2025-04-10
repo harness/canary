@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 
 import { ScrollArea, SearchFiles, Spacer } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
-import { cn } from '@utils/cn'
 
 interface CommitsSidebarProps {
   navigateToFile: (file: string) => void
@@ -13,7 +12,7 @@ interface CommitsSidebarProps {
 
 export const CommitSidebar = ({ navigateToFile, filesList, children, useTranslationStore }: CommitsSidebarProps) => {
   return (
-    <div className={cn('sticky top-[45px] nested-sidebar-height')}>
+    <div className="nested-sidebar-height sticky top-[var(--cn-page-nav-height)]">
       <SandboxLayout.LeftSubPanel className="w-[248px]">
         <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
           <div className="flex w-full flex-col gap-3 pt-5">

@@ -61,7 +61,6 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
 
     if (!isMFE) {
       root.classList.add(effectiveTheme) // Apply the computed theme class
-      root.classList.add('overflow-hidden')
 
       if (isInset) {
         root.classList.add('inset-layout')

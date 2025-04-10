@@ -24,7 +24,7 @@ const DialogOverlay = forwardRef<ElementRef<typeof DialogPrimitive.Overlay>, Dia
         ref={ref}
         className={cn(
           'fixed inset-0 z-50 dialog-backdrop data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-          { 'bg-background-10/60': isLightTheme },
+          { 'bg-cn-background-backdrop': isLightTheme },
           className
         )}
         {...props}

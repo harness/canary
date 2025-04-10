@@ -91,6 +91,7 @@ export default {
           softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           hover: 'var(--cn-state-hover)',
           selected: 'lch(from var(--cv-state-selected) l c h / <alpha-value>)',
+          backdrop: 'lch(from var(--cn-dialog-backdrop) l c h / <alpha-value>)',
           primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',

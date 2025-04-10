@@ -21,34 +21,36 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
         <div className="pt-1">
           <Logo name={connectorDetails.icon} />
         </div>
-        <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">{connectorDetails.name}</h1>
+        <h1 className="text-24 font-medium leading-snug tracking-tight text-cn-foreground-1">
+          {connectorDetails.name}
+        </h1>
       </div>
-      <h2 className="text-14 font-medium text-foreground-1">{connectorDetails.description}</h2>
+      <h2 className="text-14 font-medium text-cn-foreground-1">{connectorDetails.description}</h2>
       <Spacer size={4} />
       <div className="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-14 leading-none">
         <div className="flex justify-between gap-11">
           {createdAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-foreground-4">Created</span>
-              <span className="text-foreground-1">{timeAgo(createdAt)}</span>
+              <span className="text-cn-foreground-1">{timeAgo(createdAt)}</span>
             </div>
           ) : null}
           {lastModifiedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-foreground-4">Last updated</span>
-              <span className="text-foreground-1">{timeAgo(lastModifiedAt)}</span>
+              <span className="text-cn-foreground-1">{timeAgo(lastModifiedAt)}</span>
             </div>
           ) : null}
           {lastTestedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-foreground-4">Last status check</span>
-              <span className="text-foreground-1">{timeAgo(lastTestedAt)}</span>
+              <span className="text-cn-foreground-1">{timeAgo(lastTestedAt)}</span>
             </div>
           ) : null}
           {lastConnectedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-foreground-4">Last successful check</span>
-              <span className="text-foreground-1">{timeAgo(lastConnectedAt)}</span>
+              <span className="text-cn-foreground-1">{timeAgo(lastConnectedAt)}</span>
             </div>
           ) : null}
           {status ? (
@@ -60,7 +62,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
                 variant="status"
                 theme={status.toLowerCase() === 'success' ? 'success' : 'danger'}
               >
-                <span className="text-foreground-1">{status}</span>
+                <span className="text-cn-foreground-1">{status}</span>
               </Badge>
             </div>
           ) : null}

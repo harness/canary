@@ -49,7 +49,7 @@ ul.top-level li {
 }
 
 ul.top-level li a {
-  @apply py-1 px-2 m-0 text-foreground-4 hover:text-foreground-1;
+  @apply py-1 px-2 m-0 text-foreground-4 hover:text-cn-foreground-1;
 }
 
 ul.top-level li a[aria-current="page"] {

@@ -11,9 +11,12 @@ import { DocsPage } from "../../../components/docs-page";
   client:only
   code={`<Tooltip.Provider>
     <Tooltip.Root>
-        <Tooltip.Trigger>Hover me</Tooltip.Trigger>
-        <Tooltip.Content>
-            <p>This is a tooltip</p>
+        <Tooltip.Trigger><Button theme="default">New Connector</Button></Tooltip.Trigger>
+        <Tooltip.Content className="p-3">
+            <Text>You are not authorized to create / edit Connectors.</Text>
+            <br />
+            <Text className="text-cn-foreground-2">You are missing the following permission: <br />
+"Create / Edit Connectors" in Account scope</Text>
         </Tooltip.Content>
     </Tooltip.Root>
 </Tooltip.Provider>`}

@@ -11,14 +11,14 @@ import PageSidebar from "@astrojs/starlight/components/PageSidebar.astro";
 >
   <!-- Header: Site Title -->
   <div
-    class="flex col-start-2 row-start-1 h-full w-full border-l border-borders-4 sticky top-0 z-10 bg-cn-background place-items-center px-5"
+    class="flex col-start-2 row-start-1 h-full w-full border-l border-cn-borders-3 sticky top-0 z-10 bg-cn-background place-items-center px-5"
   >
     <SiteTitle />
   </div>
 
   <!-- Header: Search and Theme Selector -->
   <div
-    class="flex col-start-3 col-span-2 row-start-1 h-full w-full border-l border-borders-4 items-center justify-between px-6 sticky top-0 z-10 bg-cn-background"
+    class="flex col-start-3 col-span-2 row-start-1 h-full w-full border-l border-cn-borders-3 items-center justify-between px-6 sticky top-0 z-10 bg-cn-background"
   >
     <Search />
     <HeaderActions />
@@ -26,20 +26,20 @@ import PageSidebar from "@astrojs/starlight/components/PageSidebar.astro";
 
   <!-- Divider below header -->
   <div
-    class="border-b border-borders-4 h-[1px] row-start-2 col-span-full sticky top-[64px] z-10 bg-cn-background"
+    class="border-b border-cn-borders-3 h-[1px] row-start-2 col-span-full sticky top-[64px] z-10 bg-cn-background"
   >
   </div>
 
   <!-- Sidebar Navigation -->
   <nav
-    class="flex col-start-2 row-start-3 w-full border-l border-borders-4 sticky top-[65px] h-[calc(100vh-65px)] overflow-y-auto"
+    class="flex col-start-2 row-start-3 w-full border-l border-cn-borders-3 sticky top-[65px] h-[calc(100vh-65px)] overflow-y-auto"
   >
     <Sidebar />
   </nav>
 
   <!-- Main Content -->
   <div
-    class="flex col-start-3 row-start-3 h-full w-full border-l border-borders-4 justify-center px-12"
+    class="flex col-start-3 row-start-3 h-full w-full border-l border-cn-borders-3 justify-center px-12"
   >
     <slot />
   </div>

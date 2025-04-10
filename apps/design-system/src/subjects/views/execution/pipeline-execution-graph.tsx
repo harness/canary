@@ -91,7 +91,7 @@ export function StepNodeComponent({
             pipelineName="npm_build"
           />
         </Drawer.Header>
-        <div className="border-borders-4 mt-1 border-t pt-3">
+        <div className="border-cn-borders-3 mt-1 border-t pt-3">
           <ExecutionInfo
             isDrawer
             useLogsStore={() => ({ logs })}

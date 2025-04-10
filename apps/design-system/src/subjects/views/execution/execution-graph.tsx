@@ -9,7 +9,7 @@ export const ExecutionGraphView = () => {
     <div className="flex h-full flex-col">
       <ExecutionTabs useTranslationStore={useTranslationStore} />
       <ExecutionHeader
-        className="border-borders-4 border-b"
+        className="border-cn-borders-3 border-b"
         commitName="8fbru3ix"
         branchName="master"
         title={{ number: '311. ', title: 'Alerting docs: adds sns integration' }}

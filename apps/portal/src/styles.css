@@ -41,7 +41,7 @@ ul.top-level {
 }
 
 ul.top-level ul {
-  @apply border-b border-borders-4 px-3 py-6 flex flex-col gap-3 pt-5 justify-start;
+  @apply border-b border-cn-borders-3 px-3 py-6 flex flex-col gap-3 pt-5 justify-start;
 }
 
 ul.top-level li {
@@ -91,13 +91,13 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel li ul {
-  @apply pl-4 border-l border-borders-4;
+  @apply pl-4 border-l border-cn-borders-3;
 }
 
 /* Search override */
 
 [aria-label="Search"] {
-  @apply bg-cn-background-3 border border-borders-4 rounded-md h-[36px] !important;
+  @apply bg-cn-background-3 border border-cn-borders-3 rounded-md h-[36px] !important;
 }
 
 [aria-label="Search"] > kbd:first-of-type {
@@ -107,17 +107,17 @@ ul.top-level summary svg {
 /* Code/Preview override */
 
 .expressive-code pre {
-  @apply rounded-md overflow-hidden border border-borders-4 bg-cn-background-3 !important;
+  @apply rounded-md overflow-hidden border border-cn-borders-3 bg-cn-background-3 !important;
 }
 
 pre.prism-code {
-  @apply rounded-md overflow-hidden border border-borders-4 bg-cn-background-2 !important;
+  @apply rounded-md overflow-hidden border border-cn-borders-3 bg-cn-background-2 !important;
 }
 
 /* Pagination overrides */
 
 .pagination-links a {
-  @apply border border-borders-4 rounded-md text-xs text-cn-foreground-3;
+  @apply border border-cn-borders-3 rounded-md text-xs text-cn-foreground-3;
 }
 
 .pagination-links a .link-title {

@@ -126,9 +126,9 @@ export const ExecutionLogsView = () => {
         createdTime={createdTimeElapsed}
         pipelineName="build scan push test - k8s - Clone 2"
       />
-      <ExecutionTabs className="border-borders-4 border-t" useTranslationStore={useTranslationStore} />
+      <ExecutionTabs className="border-cn-borders-3 border-t" useTranslationStore={useTranslationStore} />
       <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
-        <div className="border-borders-4 flex h-[calc(100vh-226px)] flex-col gap-4 border-r">
+        <div className="border-cn-borders-3 flex h-[calc(100vh-226px)] flex-col gap-4 border-r">
           <ExecutionTree
             defaultSelectedId={currentNode?.id ?? selectedStep?.id ?? elements[0].id}
             elements={updatedElements}
@@ -137,7 +137,7 @@ export const ExecutionLogsView = () => {
             }}
           />
         </div>
-        <div className="border-borders-4 flex flex-col gap-4">
+        <div className="border-cn-borders-3 flex flex-col gap-4">
           <ExecutionInfo useLogsStore={useLogsStore} onCopy={() => {}} onDownload={() => {}} onEdit={() => {}} />
         </div>
       </div>

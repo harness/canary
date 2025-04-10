@@ -19,6 +19,7 @@
     "@astrojs/starlight-tailwind": "^3.0.1",
     "@astrojs/tailwind": "^6.0.2",
     "@harnessio/ui": "workspace:*",
+    "@harnessio/core-design-system": "workspace:*",
     "@radix-ui/react-navigation-menu": "^1.2.3",
     "astro": "^5.6.1",
     "class-variance-authority": "^0.7.0",

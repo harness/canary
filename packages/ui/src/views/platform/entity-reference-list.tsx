@@ -50,7 +50,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
             {showBreadcrumbEllipsis ? (
               <>
                 <Breadcrumb.Item>
-                  <Breadcrumb.Ellipsis className="ml-3 h-0 w-4" />
+                  <Breadcrumb.Ellipsis className="ml-1 h-0 w-4" />
                 </Breadcrumb.Item>
                 <Breadcrumb.Separator>
                   <Icon name="chevron-right" size={6} className="scale-75" />
@@ -59,7 +59,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
             ) : null}
             {parentFolder ? (
               <>
-                <Breadcrumb.Item className={`items-center justify-center ${showBreadcrumbEllipsis ? '' : 'ml-3'}`}>
+                <Breadcrumb.Item className={`items-center justify-center ${showBreadcrumbEllipsis ? '' : 'ml-1'}`}>
                   <Breadcrumb.Link
                     className="cursor-pointer text-xs"
                     onClick={() => handleScopeChange(DirectionEnum.PARENT)}
@@ -72,7 +72,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                 </Breadcrumb.Separator>
               </>
             ) : null}
-            <Breadcrumb.Page className={`cursor-pointer text-xs ${parentFolder ? '' : 'ml-3'}`}>
+            <Breadcrumb.Page className={`cursor-pointer text-xs ${parentFolder ? '' : 'ml-1'}`}>
               {currentFolder}
             </Breadcrumb.Page>
           </Breadcrumb.List>

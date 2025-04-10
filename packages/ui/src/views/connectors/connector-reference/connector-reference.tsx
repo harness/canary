@@ -1,8 +1,9 @@
-import { Alert, Button, ButtonGroup, Icon, StackedList } from '@/components'
+import { Alert, Button, ButtonGroup, Icon, Logo, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 import { EntityReference, EntityRendererProps } from '@views/platform'
 import { DirectionEnum } from '@views/platform/types'
 
+import { ConnectorTypeToLogoNameMap } from '../connectors-list/utils'
 import { ConnectorItem, connectorRefFilters } from '../types'
 
 export interface ConnectorReferenceProps {
@@ -50,12 +51,19 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
   // Custom entity renderer for connectors
   const renderEntity = (props: EntityRendererProps<any>) => {
     const { entity, isSelected, onSelect } = props
+    const connectorLogo = entity.connector.type ? ConnectorTypeToLogoNameMap.get(entity.connector.type) : undefined
 
     return (
       <StackedList.Item
         onClick={() => onSelect(entity)}
         className={cn('h-12 p-3', { 'bg-cn-background-hover': isSelected })}
-        thumbnail={<Icon name="connectors" size={14} className="text-cn-foreground-3 ml-2" />}
+        thumbnail={
+          connectorLogo ? (
+            <Logo name={connectorLogo} size={14} />
+          ) : (
+            <Icon name="connectors" size={14} className="text-cn-foreground-3 ml-2" />
+          )
+        }
       >
         <StackedList.Field title={entity.connector.name} description={entity.connector.description} />
       </StackedList.Item>

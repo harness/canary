@@ -144,6 +144,5 @@ export enum EntityIntent {
 
 export const connectorRefFilters = {
   success: 'Success',
-  failure: 'Failure',
   all: 'All connectors'
 }

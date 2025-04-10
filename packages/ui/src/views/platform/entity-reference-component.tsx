@@ -105,7 +105,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(parentFolder)}
-        thumbnail={<Icon name="folder" size={14} className="text-cn-foreground-3 ml-2" />}
+        thumbnail={<Icon name="folder" size={14} className="text-cn-foreground-3" />}
         className="h-12 p-3"
       >
         <StackedList.Field title={<span className="capitalize">..</span>} />
@@ -117,7 +117,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(folder)}
-        thumbnail={<Icon name="folder" size={14} className="text-cn-foreground-3 ml-2" />}
+        thumbnail={<Icon name="folder" size={14} className="text-cn-foreground-3" />}
         className="h-12 p-3"
       >
         <StackedList.Field title={<span className="capitalize">{String(folder)}</span>} />

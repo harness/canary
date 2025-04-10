@@ -15,6 +15,10 @@
         "$type": "spacing",
         "$value": "{spacing.1-half}"
       }
+    },
+    "borderRadius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.3}"
     }
   }
 }

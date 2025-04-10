@@ -57,7 +57,7 @@ export function ColorPalette() {
                           />
                         </Tooltip.Trigger>
                         <Tooltip.Content
-                          style={{ backgroundColor: "black" }}
+                          style={{ backgroundColor: "black", color: "white" }}
                           side="top"
                           align="center"
                         >

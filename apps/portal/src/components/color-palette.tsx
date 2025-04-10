@@ -14,7 +14,7 @@ export function ColorPalette() {
   ); /** Excluding "pure" colors intentionally */
 
   return (
-    <div className="grid rounded-lg border border-borders-4 bg-background-4 px-6 pt-1 pb-6 mt-4 shadow-md h-fit w-[800px]">
+    <div className="grid rounded-lg border border-borders-4 bg-background-4 px-6 pt-1 pb-6 mt-4 shadow-md h-fit w-fit">
       {/* Shades */}
       <div className="flex">
         <div className="w-20"></div>

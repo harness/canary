@@ -26,7 +26,7 @@ const toggleVariants = cva(
       },
       theme: {
         light: 'data-[state=on]:bg-cn-background-1',
-        dark: 'data-[state=on]:bg-background-9'
+        dark: 'data-[state=on]:bg-cn-background-hover'
       }
     },
     defaultVariants: {

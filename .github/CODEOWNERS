@@ -8,4 +8,4 @@
 
 # Specify owner for a specific file or directory under apps/gitness
 
-/apps/gitness/\* @vardanbansal-harness
+/apps/gitness/\* @abhinavrastogi-harness @vardanbansal-harness

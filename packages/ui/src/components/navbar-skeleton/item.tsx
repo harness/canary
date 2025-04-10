@@ -106,7 +106,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
           className={cn(
             'absolute z-0 h-full w-full rounded-[4px] bg-transparent transition-colors',
             { 'group-hover:bg-sidebar-background-2': isMainNav && (isLightTheme || isInset) },
-            { 'bg-background-4': active },
+            { 'bg-cn-background-hover': active },
             { 'bg-sidebar-background-3': active && isMainNav }
           )}
         />

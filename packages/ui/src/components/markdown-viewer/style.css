@@ -216,7 +216,7 @@
   }
 
   pre {
-    @apply bg-cn-background-2 border-cn-borders-2 rounded border px-4 py-[13px];
+    @apply bg-cn-background-2 border-cn-borders-2 mb-0 rounded border px-4 py-[13px];
 
     code {
       @apply p-0 pr-14 text-sm;

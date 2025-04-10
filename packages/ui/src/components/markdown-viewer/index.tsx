@@ -8,7 +8,6 @@ import rehypeSanitize from 'rehype-sanitize'
 import rehypeVideo from 'rehype-video'
 
 import './style.css'
-import './line-numbers.css'
 
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
@@ -28,7 +27,7 @@ interface MarkdownViewerWrapperProps {
 }
 
 const MarkdownViewerWrapper: FC<MarkdownViewerWrapperProps> = ({ children }) => {
-  return <div className="rounded-b-md border-x border-b bg-cn-background-2 p-6">{children}</div>
+  return <div className="bg-cn-background-2 rounded-b-md border-x border-b p-6">{children}</div>
 }
 
 interface MarkdownViewerProps {
@@ -160,7 +159,7 @@ export function MarkdownViewer({
     <Wrapper>
       <div ref={ref} style={styles}>
         {isSuggestion && (
-          <div className="rounded-t-md border-x border-t border-cn-borders-2 bg-cn-background-2 px-4 py-3">
+          <div className="border-cn-borders-2 bg-cn-background-2 rounded-t-md border-x border-t px-4 py-3">
             <span className="text-14 text-cn-foreground-1">
               {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
                 ? 'Suggestion applied'
@@ -208,20 +207,27 @@ export function MarkdownViewer({
               return (
                 <div className="relative">
                   <CopyButton
-                    className="absolute right-3 top-3 z-10 size-6 bg-cn-background-3"
+                    className="bg-cn-background-3 absolute right-3 top-3 z-10 size-6"
                     buttonVariant="outline"
                     name={code}
                     iconSize={13}
                   />
-                  <pre className={cn('!bg-cn-background-1', { 'line-numbers': hasLineNumbers })}>
+                  <pre
+                    className={cn(
+                      // Apply padding conditionally based on line numbers
+                      { 'p-4': !hasLineNumbers, 'mb-0': hasLineNumbers }
+                    )}
+                  >
                     {hasLineNumbers ? (
-                      <div className="code-with-line-numbers">
-                        <div className="line-numbers-rows">
+                      <div className="relative flex w-full bg-transparent">
+                        <div className="bg-cn-background-2 flex-none select-none text-right">
                           {filteredLines.map((_, i) => (
-                            <span key={i}>{i + 1}</span>
+                            <span key={i} className="text-cn-foreground-7 block pr-3 pt-[0.5px] text-sm">
+                              {i + 1}
+                            </span>
                           ))}
                         </div>
-                        <div className="code-content">{children}</div>
+                        <div className="relative flex-1 overflow-hidden bg-transparent">{children}</div>
                       </div>
                     ) : (
                       children
@@ -243,7 +249,7 @@ export function MarkdownViewer({
                 return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
               }
 
-              return <code className={String(_className)}>{children}</code>
+              return <code className={cn(String(_className), 'leading-6 text-sm p-0')}>{children}</code>
             }
           }}
         />

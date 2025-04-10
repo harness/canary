@@ -1,5 +1,22 @@
-* @abhinavrastogi-harness @knagurski
+/.eslintrc.js @abhinavrastogi-harness @knagurski
+/.prettierrc.yml @abhinavrastogi-harness @knagurski
 
-/packages/* @abhinavrastogi-harness @knagurski
+/packages/*/package.json @abhinavrastogi-harness @knagurski
+/apps/*/package.json @abhinavrastogi-harness @knagurski
+
+/packages/*/vite.config.ts @abhinavrastogi-harness @knagurski
+/apps/*/vite.config.ts @abhinavrastogi-harness @knagurski
+
+/packages/ui/* @abhinavrastogi-harness @knagurski @vardanbansal-harness
+
+/packages/forms/* @srdjan-harness
+/packages/unified-pipeline/* @srdjan-harness
+/packages/yaml-editor/* @srdjan-harness
+
+/packages/core-design-system/* @praneshg239
 
 /apps/gitness/* @abhinavrastogi-harness @vardanbansal-harness
+
+/apps/design-system/* @knagurski
+
+/apps/portal/* @knagurski

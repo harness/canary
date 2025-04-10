@@ -141,10 +141,10 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 </Table.Cell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
                 <Table.Cell className="content-center">
-                  <IconBrand name="docker" />
+                  {/* <IconBrand name="docker" /> */}
                   {/* <IconBrand name="docker" color={IconBrandColorType.BLACK} /> */}
                   {/* <IconBrand name="gitlab" color={IconBrandColorType.MULTICOLOR} /> */}
-                  {/* <IconBrand name="gitlab" color={IconBrandColorType.MULTICOLOR} size={16} /> */}
+                  <IconBrand name="gitlab" color={IconBrandColorType.MULTICOLOR} size={16} />
                   {branch?.checks && (
                     <div className="flex items-center">
                       {checkState === 'running' ? (

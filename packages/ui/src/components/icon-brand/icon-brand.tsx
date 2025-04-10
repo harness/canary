@@ -34,15 +34,7 @@ export interface IconBrandProps extends Omit<SVGProps<SVGSVGElement>, 'name'> {
  * - Black icons: Original SVG with white background
  * - Multicolor icons: Original SVG with white background
  */
-const IconBrand: FC<IconBrandProps> = ({
-  name,
-  size = 32,
-  height,
-  width,
-  className,
-  color = IconBrandColorType.WHITE,
-  ...props
-}) => {
+const IconBrand: FC<IconBrandProps> = ({ name, size = 32, className, color = IconBrandColorType.WHITE, ...props }) => {
   const { isLightTheme } = useTheme()
 
   const iconConfig = IconBrandMap[name] as IconBrandConfig
@@ -56,32 +48,38 @@ const IconBrand: FC<IconBrandProps> = ({
 
   const bgColor = color === IconBrandColorType.WHITE ? iconConfig.backgroundColor : '#FFFFFF' // White background for black or multicolor icons
 
-  const outlineColorClass = isLightTheme ? 'border-borders-4' : 'border-cn-borders-2'
+  // Calculate shadow thickness proportionally to size (1px for size=32px)
+  const shadowThickness = (size / 32).toFixed(2)
 
-  const logoSize = size ? size * 0.625 : 20
-  const logoWidth = width ? Number(width) * 0.625 : logoSize
-  const logoHeight = height ? Number(height) * 0.625 : logoSize
+  // Determine outline color based on theme
+  const shadowColor = isLightTheme ? 'hsl(var(--canary-border-04))' : 'var(--cn-border-2)'
+
+  // Box shadow for border effect
+  const boxShadow = `0 0 0 ${shadowThickness}px ${shadowColor}`
+
+  const logoSize = size * 0.625
 
   return (
     <div
-      className={cn('flex items-center justify-center border rounded-[4px]', outlineColorClass, className)}
+      className={cn('flex items-center justify-center rounded-[4px]', className)}
       style={{
         backgroundColor: bgColor,
-        width: `${width || size}px`,
-        height: `${height || size}px`,
-        minWidth: `${width || size}px`,
-        minHeight: `${height || size}px`
+        width: `${size}px`,
+        height: `${size}px`,
+        minWidth: `${size}px`,
+        minHeight: `${size}px`,
+        boxShadow
       }}
     >
       <IconComponent
         className={cn({
           invert: color === IconBrandColorType.WHITE
         })}
-        width={logoWidth}
-        height={logoHeight}
         style={{
-          minWidth: `${logoWidth}px`,
-          minHeight: `${logoHeight}px`
+          width: `${logoSize}px`,
+          height: `${logoSize}px`,
+          minWidth: `${logoSize}px`,
+          minHeight: `${logoSize}px`
         }}
         {...props}
       />

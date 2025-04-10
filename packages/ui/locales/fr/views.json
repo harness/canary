@@ -194,6 +194,8 @@
   },
   "noData": {
     "noResults": "Aucun résultat de recherche",
+    "noEntities": "No entities yet",
+    "noEntitiesDescription": "There are no entities yet.",
     "errorApiTitle": "Échec du chargement de {{type}}",
     "errorApiDescription": "Une erreur s'est produite lors du chargement des données. Veuillez réessayer et recharger la page.",
     "noConnectors": "Aucun connecteur pour le moment",

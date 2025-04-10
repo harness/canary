@@ -45,7 +45,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <Button
-          className="flex items-center gap-1.5 overflow-hidden bg-cn-background-2 px-3 data-[state=open]:border-cn-borders-9"
+          className="data-[state=open]:border-cn-borders-9 flex items-center gap-1.5 overflow-hidden bg-cn-background-2 px-3"
           variant="outline"
           size={buttonSize}
         >

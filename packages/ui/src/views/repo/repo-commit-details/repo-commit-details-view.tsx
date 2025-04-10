@@ -47,7 +47,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               </span>
               {isVerified && (
                 <>
-                  <span className="bg-borders-2 mx-2.5 h-4 w-px" />
+                  <span className="mx-2.5 h-4 w-px bg-borders-2" />
                   <Badge variant="surface" theme="success">
                     {t('views:commits.verified', 'Verified')}
                   </Badge>
@@ -73,7 +73,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
         {!showSidebar && <Outlet />}
       </SandboxLayout.Content>
       {showSidebar && (
-        <SandboxLayout.Content className="mt-5 grid grid-cols-[auto_1fr] border-t border-cn-borders-4 py-0 pl-0 pr-5">
+        <SandboxLayout.Content className="border-cn-borders-4 mt-5 grid grid-cols-[auto_1fr] border-t py-0 pl-0 pr-5">
           <Outlet />
         </SandboxLayout.Content>
       )}

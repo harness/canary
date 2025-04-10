@@ -19,7 +19,7 @@ const diffData =
 
 export const ChatPreviewWrapper: FC = () => {
   return (
-    <div className="h-[calc(100vh-100px)] border-r border-cn-borders-4">
+    <div className="border-cn-borders-4 h-[calc(100vh-100px)] border-r">
       <Chat.Root>
         <Chat.Header onClose={() => {}} />
         <Chat.Body>

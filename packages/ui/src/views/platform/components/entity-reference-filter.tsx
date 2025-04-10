@@ -25,8 +25,8 @@ export const EntityReferenceFilter: React.FC<EntityReferenceFilterProps> = ({
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="bg-cn-background-3 hover:bg-cn-background-hover flex h-8 w-36 items-center justify-between rounded-md px-3 py-2 text-sm">
-        <span className="text-cn-foreground-1 truncate">{filterTypes[selectedType]}</span>
+      <DropdownMenu.Trigger className="flex h-8 w-36 items-center justify-between rounded-md bg-cn-background-3 px-3 py-2 text-sm hover:bg-cn-background-hover">
+        <span className="truncate text-cn-foreground-1">{filterTypes[selectedType]}</span>
         <Icon name="chevron-down" size={8} className="chevron-down" />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" className="w-40">

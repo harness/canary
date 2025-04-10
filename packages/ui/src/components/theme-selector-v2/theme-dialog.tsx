@@ -107,7 +107,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
           </div>
           {isAccessibilityThemeEnabled && (
             <>
-              <Separator className="bg-borders-4 h-px" />
+              <Separator className="h-px bg-borders-4" />
 
               {/* Contrast */}
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
@@ -135,7 +135,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 </Select.Root>
               </div>
 
-              <Separator className="bg-borders-4 h-px" />
+              <Separator className="h-px bg-borders-4" />
 
               {/* Color Adjustment */}
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
@@ -163,7 +163,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 </Select.Root>
               </div>
 
-              <Separator className="bg-borders-4 h-px" />
+              <Separator className="h-px bg-borders-4" />
 
               {/* Inset Adjustment */}
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
@@ -192,7 +192,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               {/* Accent Color */}
               {showAccentColor ? (
                 <>
-                  <Separator className="bg-borders-4 h-px" />
+                  <Separator className="h-px bg-borders-4" />
                   <div className="grid grid-cols-[246px_1fr] gap-x-8">
                     <div>
                       <span className="text-16 font-medium text-cn-foreground-1">Accent color</span>
@@ -229,7 +229,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               {/* Gray Color */}
               {showGrayColor ? (
                 <>
-                  <Separator className="bg-borders-4 h-px" />
+                  <Separator className="h-px bg-borders-4" />
                   <div className="grid grid-cols-[246px_1fr] gap-x-8">
                     <div>
                       <span className="text-16 font-medium text-cn-foreground-1">Gray color</span>

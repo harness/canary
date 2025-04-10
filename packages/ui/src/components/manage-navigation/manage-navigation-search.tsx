@@ -108,11 +108,11 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
         <ScrollArea className={cn('relative max-h-[50vh]', countFilteredItems > 10 && 'h-[404px]')}>
           <div className="px-1 pb-2 pt-1">
             <span
-              className="pointer-events-none absolute inset-x-0 top-0 h-3 w-full bg-gradient-to-b from-background-2 to-transparent"
+              className="from-background-2 pointer-events-none absolute inset-x-0 top-0 h-3 w-full bg-gradient-to-b to-transparent"
               aria-hidden
             />
             <span
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-3 w-full bg-gradient-to-t from-background-2 to-transparent"
+              className="from-background-2 pointer-events-none absolute inset-x-0 bottom-0 h-3 w-full bg-gradient-to-t to-transparent"
               aria-hidden
             />
             {countFilteredItems === 0 ? (

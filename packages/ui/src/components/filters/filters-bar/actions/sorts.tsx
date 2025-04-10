@@ -201,7 +201,7 @@ const Sorts = ({
                 Add sort
               </DropdownMenu.Trigger>
               <DropdownMenu.Content className="min-w-[224px] p-0" align="start">
-                <div className="relative flex items-center justify-between border-b border-cn-borders-4 px-3 py-2.5">
+                <div className="border-cn-borders-4 relative flex items-center justify-between border-b px-3 py-2.5">
                   <DropdownMenu.Item className="hover:bg-transparent focus:bg-transparent" asChild>
                     <Input
                       type="text"

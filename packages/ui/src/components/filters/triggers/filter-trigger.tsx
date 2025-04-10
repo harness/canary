@@ -112,7 +112,7 @@ const FilterTrigger = ({
         {!customLabel && <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />}
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="min-w-[224px] p-0" align={dropdownAlign}>
-        <div className="relative flex items-center justify-between border-b border-cn-borders-4 px-3 py-2.5">
+        <div className="border-cn-borders-4 relative flex items-center justify-between border-b px-3 py-2.5">
           <Input
             type="text"
             placeholder={inputPlaceholder}
@@ -152,7 +152,7 @@ const FilterTrigger = ({
         </div>
 
         {onReset && (
-          <div className="border-t border-cn-borders-4 p-1">
+          <div className="border-cn-borders-4 border-t p-1">
             <DropdownMenu.Item asChild>
               <button className="w-full font-medium" onClick={onReset}>
                 {buttonLabel}

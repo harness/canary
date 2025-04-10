@@ -53,7 +53,7 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
       <DropdownMenu.Trigger asChild>
         <Button
           className={
-            'flex items-center gap-1.5 overflow-hidden px-3 data-[state=open]:border-cn-borders-8 [&_svg]:data-[state=open]:text-cn-foreground-1'
+            'data-[state=open]:border-cn-borders-8 flex items-center gap-1.5 overflow-hidden px-3 [&_svg]:data-[state=open]:text-cn-foreground-1'
           }
           variant="outline"
           size={buttonSize}

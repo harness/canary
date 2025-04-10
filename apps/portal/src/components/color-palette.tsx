@@ -16,8 +16,8 @@ export function ColorPalette() {
   return (
     <div className="grid rounded-lg border border-borders-4 bg-background-4 px-6 pt-1 pb-6 mt-4 shadow-md h-fit w-fit">
       {/* Shades */}
-      <div className="flex">
-        <div className="w-20"></div>
+      <div className="grid grid-flow-col gap-1">
+        <div className="w-16"></div>
         {shades.map((shade) => (
           <div
             key={shade}
@@ -29,7 +29,7 @@ export function ColorPalette() {
       </div>
 
       {/* Colors */}
-      <div className="not-content flex flex-col gap-2">
+      <div className="not-content grid grid-flow-row gap-1">
         {colors.map((colorName) => {
           const colorGroup =
             styles.colors[colorName as keyof typeof styles.colors];

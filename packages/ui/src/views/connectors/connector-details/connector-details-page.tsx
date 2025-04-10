@@ -51,19 +51,19 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
             )}
           >
             <Tabs.Trigger
-              className="px-4 data-[state=active]:bg-background-2"
+              className="px-4 data-[state=active]:bg-cn-background-2"
               value={ConnectorDetailsTabsKeys.CONFIGURATION}
             >
               {t('views:connectors.configuration', 'Configuration')}
             </Tabs.Trigger>
             <Tabs.Trigger
-              className="px-4 data-[state=active]:bg-background-2"
+              className="px-4 data-[state=active]:bg-cn-background-2"
               value={ConnectorDetailsTabsKeys.REFERENCES}
             >
               {t('views:connectors.references', 'References')}
             </Tabs.Trigger>
             <Tabs.Trigger
-              className="px-4 data-[state=active]:bg-background-2"
+              className="px-4 data-[state=active]:bg-cn-background-2"
               value={ConnectorDetailsTabsKeys.ACTIVITY}
             >
               {t('views:connectors.activityHistory', 'Activity history')}

@@ -1048,18 +1048,45 @@
         "$description": "Neutral base color for the diff interface that allows code and difference highlights to remain visually prominent."
       },
       "add-content": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.1",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{green.50}",
+        "$value": "{green.200}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.2",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{green.100}",
+        "$value": "{green.200}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.25",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{green.100}",
+        "$value": "{green.200}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1073,18 +1100,45 @@
         "$description": "Text/icon color for add-related interactive elements, ensuring readability."
       },
       "del-content": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.1",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{red.50}",
+        "$value": "{red.300}",
         "$description": "Red background highlighting removed code lines without causing eye strain."
       },
       "del-lineNumber": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.2",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{red.100}",
+        "$value": "{red.300}",
         "$description": "Background for line numbers of deleted code, connecting numbers to removed content."
       },
       "del-content-highlight": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.25",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{red.100}",
+        "$value": "{red.300}",
         "$description": "Stronger emphasis color for specific character changes within deleted lines."
       },
       "plain-content": {
@@ -1108,13 +1162,31 @@
         "$description": "Background for placeholder spaces and empty lines, maintaining visual continuity."
       },
       "hunk-content": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.15",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{blue.50}",
+        "$value": "{blue.300}",
         "$description": "Background for diff section headers ('hunks') that indicate which part of the file is displayed."
       },
       "hunk-lineNumber": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.22",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{blue.100}",
+        "$value": "{blue.300}",
         "$description": "Background for line numbers in section headers."
       },
       "hunk-content-color": {

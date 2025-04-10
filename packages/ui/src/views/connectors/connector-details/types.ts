@@ -35,6 +35,7 @@ export interface ConnectorDetailsPageProps {
   onSave: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   inputComponentFactory: InputFactory
+  apiError?: string
 }
 
 export interface ConnectorDetailsHeaderProps {
@@ -56,4 +57,5 @@ export interface ConnectorDetailsConfigurationProps {
   onSave: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   inputComponentFactory: InputFactory
+  apiError?: string
 }

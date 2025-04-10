@@ -16,7 +16,8 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
   onDelete,
   getConnectorDefinition,
   inputComponentFactory,
-  onSave
+  onSave,
+  apiError
 }) => {
   const { t } = useTranslationStore()
   const { isInset } = useTheme()
@@ -28,7 +29,7 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
 
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="h-full">
+      <SandboxLayout.Content className="h-full" paddingClassName='px-5 pt-7'>
         <ConnectorDetailsHeader
           connectorDetails={connectorDetails}
           onTest={onTest}
@@ -76,6 +77,7 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
               inputComponentFactory={inputComponentFactory}
               getConnectorDefinition={getConnectorDefinition}
               useTranslationStore={useTranslationStore}
+              apiError={apiError}
             />
           </Tabs.Content>
           <Tabs.Content className="pt-7" value={ConnectorDetailsTabsKeys.REFERENCES}>

@@ -15,6 +15,7 @@ import {
 
 import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
+import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
 
 export type UIInputWithConfigsForList<T = unknown> = Omit<IInputDefinition<T>, 'path'> & {
@@ -26,6 +27,7 @@ export interface ListInputConfig {
   inputConfig: {
     inputs: UIInputWithConfigsForList[]
     layout?: 'grid' | 'default'
+    tooltip?: string
   }
 }
 
@@ -114,6 +116,8 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
         )}
       />
       <InputError path={path} />
+
+      {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
     </InputWrapper>
   )
 }

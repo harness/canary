@@ -5,19 +5,21 @@ import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/form
 
 import { InputLabel, InputWrapper } from './common'
 import { InputError } from './common/InputError'
+import { InputTooltip } from './common/InputTooltip'
 import { RadioOption } from './types'
 
 export interface RadialInputConfig {
   inputConfig: {
     inputType: 'radio'
     options: RadioOption[]
+    tooltip?: string
   }
 }
 
 function RadialInputInternal(props: Readonly<InputProps<AnyFormikValue, RadialInputConfig>>): JSX.Element {
   const { path, input } = props
-  const { label = '', required, description } = input
-  const options = input.inputConfig?.options ?? []
+  const { label = '', required, description, inputConfig } = input
+  const options = inputConfig?.options ?? []
 
   return (
     <InputWrapper>
@@ -30,6 +32,8 @@ function RadialInputInternal(props: Readonly<InputProps<AnyFormikValue, RadialIn
               <RadioSelect options={options} value={field.value} onValueChange={field.onChange} id={field.value} />
             </FormControl>
             <InputError path={path} />
+
+            {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
           </FormItem>
         )}
       />

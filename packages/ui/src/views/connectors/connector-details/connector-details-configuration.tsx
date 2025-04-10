@@ -11,7 +11,8 @@ const ConnectorDetailsConfiguration: FC<ConnectorDetailsConfigurationProps> = ({
   onSave,
   inputComponentFactory,
   getConnectorDefinition,
-  useTranslationStore
+  useTranslationStore,
+  apiError
 }) => {
   const { t } = useTranslationStore()
   return (
@@ -26,6 +27,7 @@ const ConnectorDetailsConfiguration: FC<ConnectorDetailsConfigurationProps> = ({
         onFormSubmit={onSave}
         inputComponentFactory={inputComponentFactory}
         getConnectorDefinition={getConnectorDefinition}
+        apiError={apiError}
       />
     </Layout.Vertical>
   )

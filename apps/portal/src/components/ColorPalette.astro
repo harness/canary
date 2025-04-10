@@ -1,0 +1,46 @@
+---
+import * as styles from "@harnessio/core-design-system/styles-esm";
+interface Color {
+  name?: string;
+  $value?: string;
+  [key: string]: unknown;
+}
+const shades = Object.keys(styles.colors.blue);
+const colors = Object.keys(styles.colors).filter(
+  (color) => color !== "pure",
+); /** Excluding "pure" colors intentionally */
+---
+
+<div class="grid grid-cols-[auto_repeat(11,1fr)] gap-1.5 not-content">
+  <div></div>
+  {
+    shades.map((shade) => (
+      <div class="text-cn-background-primary text-center font-medium align-middle">
+        {shade}
+      </div>
+    ))
+  }
+  {
+    colors.map((colorName) => {
+      const colorGroup = styles.colors[colorName as keyof typeof styles.colors];
+      return (
+        <>
+          <div class="text-cn-background-primary text-right font-medium capitalize self-center pr-2">
+            {colorName}
+          </div>
+          {shades.map((shade) => {
+            const color = colorGroup[shade as keyof typeof colorGroup];
+            const colorValue = (color as Color)?.$value || "";
+            return (
+              <div
+                class="aspect-square rounded border border-borders-1 border-cn-foreground-primary"
+                style={{ backgroundColor: colorValue }}
+                title={`--${(color as Color)?.name}: ${colorValue}`}
+              />
+            );
+          })}
+        </>
+      );
+    })
+  }
+</div>

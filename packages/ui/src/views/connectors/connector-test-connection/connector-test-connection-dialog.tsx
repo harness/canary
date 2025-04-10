@@ -51,6 +51,27 @@ export const ConnectorTestConnectionDialog = ({
   useTranslationStore
 }: ConnectorTestConnectionDialogProps): JSX.Element => {
   const { t } = useTranslationStore()
+
+  const ConnectivityStatus = ({ status }: { status: string }): JSX.Element => {
+    const getStatus = (): { status: string; color: string } | undefined => {
+      switch (status) {
+        case ExecutionState.SUCCESS.toLowerCase():
+          return { status: 'Success', color: 'bg-cn-foreground-success' }
+        case ExecutionState.ERROR.toLowerCase():
+          return { status: 'Failed', color: 'bg-cn-foreground-danger' }
+        case ExecutionState.RUNNING.toLowerCase():
+          return { status: 'Running', color: 'bg-cn-foreground-warning' }
+      }
+    }
+    const currentStatus = getStatus()
+    return (
+      <div className="inline-flex items-center gap-2 ">
+        <div className={cn('size-2 rounded-full', currentStatus?.color)} />
+
+        <span className="text-cn-foreground-1">{currentStatus?.status}</span>
+      </div>
+    )
+  }
   return (
     <Dialog.Root open={isOpen} onOpenChange={open => !open && onClose()}>
       <Dialog.Content className={cn('sm:max-w-[689px]', className)}>
@@ -61,7 +82,7 @@ export const ConnectorTestConnectionDialog = ({
           <div className="text-cn-foreground-4 text-sm font-normal">
             <Layout.Horizontal className="items-center justify-between gap-x-0 space-x-2">
               <div className="mb-2.5 flex flex-row items-start gap-x-0 space-x-2">
-                <span className="items-center">{t('views:connectors.connector', 'Connector:')}</span>
+                <span className="items-center">{t('views:connectors.connector', 'Connector:') + ':'}</span>
                 <span className="text-cn-foreground-1">{apiUrl}</span>
               </div>
               {status === 'error' && (
@@ -71,10 +92,10 @@ export const ConnectorTestConnectionDialog = ({
               )}
             </Layout.Horizontal>
             <Layout.Horizontal className="gap-x-0 space-x-2">
-              <span>{t('views:connectors.status', 'Status:')}</span>
+              <span>{t('views:connectors.status', 'Status:') + ':'}</span>
 
               <div className="text-cn-foreground-1">
-                <ExecutionStatus.Badge minimal inConnector status={status as ExecutionState} />
+                <ConnectivityStatus status={status as ExecutionState} />
               </div>
             </Layout.Horizontal>
           </div>

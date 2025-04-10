@@ -285,8 +285,8 @@
     "updated": "Last updated",
     "lastConnected": "Last connected",
     "viewConnectorDetails": "View connector details",
-    "connector": "Connector:",
-    "status": "Status:",
+    "connector": "Connector",
+    "status": "Status",
     "viewDoctumentation": "View documentation"
   },
   "notFound": {

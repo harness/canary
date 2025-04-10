@@ -82,7 +82,7 @@ export const ConnectorTestConnectionDialog = ({
           <div className="text-cn-foreground-4 text-sm font-normal">
             <Layout.Horizontal className="items-center justify-between gap-x-0 space-x-2">
               <div className="mb-2.5 flex flex-row items-start gap-x-0 space-x-2">
-                <span className="items-center">{t('views:connectors.connector', 'Connector:') + ':'}</span>
+                <span className="items-center">{t('views:connectors.connector', 'Connector') + ':'}</span>
                 <span className="text-cn-foreground-1">{apiUrl}</span>
               </div>
               {status === 'error' && (
@@ -92,7 +92,7 @@ export const ConnectorTestConnectionDialog = ({
               )}
             </Layout.Horizontal>
             <Layout.Horizontal className="gap-x-0 space-x-2">
-              <span>{t('views:connectors.status', 'Status:') + ':'}</span>
+              <span>{t('views:connectors.status', 'Status') + ':'}</span>
 
               <div className="text-cn-foreground-1">
                 <ConnectivityStatus status={status as ExecutionState} />

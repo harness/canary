@@ -224,7 +224,7 @@
   }
 
   blockquote {
-    @apply text-cn-foreground-2 border-foreground-5 my-4 border-l-4 pl-4 pr-0 font-normal not-italic;
+    @apply text-cn-foreground-2 border-cn-borders-1 my-4 border-l-4 pl-4 pr-0 font-normal not-italic;
   }
 
   table {

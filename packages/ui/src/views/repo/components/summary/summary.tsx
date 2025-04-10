@@ -71,7 +71,7 @@ export const Summary = ({
                         ? 'absolute left-0 border-l-2 border-cn-borders-warning'
                         : file.status === FileStatus.MEDIUM_RISK
                           ? 'absolute left-0 border-l-2 border-cn-borders-warning'
-                          : 'absolute left-0 border-l-2 border-borders-danger'
+                          : 'absolute left-0 border-l-2 border-cn-borders-danger'
                       : ''
                   }`}
                 >

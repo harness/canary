@@ -996,50 +996,6 @@
     }
   },
   "comp": {
-    "accordion": {
-      "title": {
-        "$type": "color",
-        "$value": "{text.1}",
-        "$description": "Text color for accordion triggers/headers. Used for the clickable area that expands/collapses content."
-      },
-      "description": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Text color for accordion content. Applied to the expandable text within accordion panels."
-      },
-      "chevron": {
-        "$type": "color",
-        "$value": "{text.3}",
-        "$description": "Color for the accordion expansion indicator icon. Visually signals the collapsed/expanded state."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.2}",
-        "$description": "Border color for accordion items. Provides visual separation between accordion panels."
-      }
-    },
-    "alert": {
-      "title": {
-        "$type": "color",
-        "$value": "{text.1}",
-        "$description": "Title text color for informational alerts. Ensures high visibility for the alert heading."
-      },
-      "description": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Description text color for informational alerts. Provides readable contrast for alert content."
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.3}",
-        "$description": "Background color for informational alerts. Creates visual distinction from surrounding content."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Border color for informational alerts. Subtly defines the alert's boundaries."
-      }
-    },
     "avatar": {
       "border": {
         "$extensions": {
@@ -1056,56 +1012,7 @@
         "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
       }
     },
-    "breadcrumb": {
-      "item-inactive": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Text color for inactive breadcrumb items. Provides reduced emphasis for previous navigation steps."
-      },
-      "item-current": {
-        "$type": "color",
-        "$value": "{text.1}",
-        "$description": "Text color for current breadcrumb item. Emphasizes the user's current location in the navigation hierarchy."
-      },
-      "separator": {
-        "$type": "color",
-        "$value": "{state.disabled.text}",
-        "$description": "Color for breadcrumb separator characters. Creates visual distinction between breadcrumb items."
-      }
-    },
-    "card": {
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.2}",
-        "$description": "Background color for card components. Creates a distinct surface that appears elevated from the page background."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.2}",
-        "$description": "Border color for card components. Defines the card boundaries and enhances visual separation from surrounding content."
-      }
-    },
     "dialog": {
-      "title": {
-        "$type": "color",
-        "$value": "{text.1}",
-        "$description": "Text color for dialog titles. Ensures high visibility and emphasis for the modal heading."
-      },
-      "description": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Text color for dialog content. Provides readable contrast for the modal's primary text content."
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.3}",
-        "$description": "Background color for dialog components. Creates a distinct surface for modal content that appears above the main UI."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.2}",
-        "$description": "Border color for dialog components."
-      },
       "backdrop": {
         "$extensions": {
           "studio.tokens": {
@@ -1119,30 +1026,6 @@
         "$type": "color",
         "$value": "{chrome.950}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
-      }
-    },
-    "dropdown": {
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.2}",
-        "$description": "Background color for dropdown menus. Creates a distinct surface for selectable options."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.2}",
-        "$description": "Border color for dropdown menus container."
-      },
-      "item": {
-        "title": {
-          "$type": "color",
-          "$value": "{text.1}",
-          "$description": "Text color for dropdown menu items. Ensures readability of selectable options."
-        },
-        "description": {
-          "$type": "color",
-          "$value": "{text.2}",
-          "$description": "Text color for dropdown menu items. Ensures readability of selectable options."
-        }
       }
     },
     "diff": {
@@ -1316,37 +1199,6 @@
         "$description": "Visited state color for text links. Differentiates links the user has already activated."
       }
     },
-    "nav-tabs": {
-      "unselected": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.2}",
-          "$description": "Unselected tab item text."
-        }
-      },
-      "selected": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.1}",
-          "$description": "Selected tab item text."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.accent}",
-          "$description": "Selected tab item border."
-        }
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Navigation container border."
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.1}",
-        "$description": "Navigation tabs container background."
-      }
-    },
     "pipeline": {
       "arrow": {
         "border": {
@@ -1378,20 +1230,6 @@
             "$type": "color",
             "$value": "radial-gradient(604% 142% at 0% 0%, {gradient.pipeline.running.gradient-stop-1} 0%, {gradient.pipeline.running.gradient-stop-2} 30%, {gradient.pipeline.running.gradient-stop-3} 100%)",
             "$description": "Animated gradient border for running pipeline states. Provides visual indication of active processing."
-          }
-        },
-        "error": {
-          "border": {
-            "$type": "color",
-            "$value": "{red.300}",
-            "$description": "Border color for error pipeline states. Clearly indicates failed or problematic pipeline execution."
-          }
-        },
-        "completed": {
-          "border": {
-            "$type": "color",
-            "$value": "{green.300}",
-            "$description": "Border color for completed pipeline states. Indicates successful pipeline execution."
           }
         }
       },
@@ -1439,57 +1277,6 @@
       }
     },
     "sidebar": {
-      "bg": {
-        "$type": "color",
-        "$value": "{pure.black}",
-        "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Border color for navigation components. Creates visual boundaries and separation from adjacent content."
-      },
-      "separator": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Color for separators between navigation sections. Creates visual organization within the navigation structure."
-      },
-      "hover": {
-        "$type": "color",
-        "$value": "{state.hover}",
-        "$description": "Hover state for navigation items."
-      },
-      "selected": {
-        "$type": "color",
-        "$value": "{state.selected}",
-        "$description": "Selected state for navigation items."
-      },
-      "item": {
-        "unselected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.2}",
-            "$description": "Text color for unselected navigation items. Provides readable but less emphasized styling for available options."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.3}",
-            "$description": "Icon color for unselected navigation items. Creates subtle visual indicators for navigation options."
-          }
-        },
-        "selected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Text color for selected navigation items. Increases contrast to highlight the current location."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Icon color for selected navigation items. Creates stronger visual indication of the current selection."
-          }
-        }
-      },
       "logo": {
         "text": {
           "$type": "color",
@@ -1546,13 +1333,6 @@
         }
       }
     },
-    "separator": {
-      "bg": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Background color for separator elements. Creates visual division between content sections with a subtle line or space."
-      }
-    },
     "skeleton": {
       "bg": {
         "$type": "color",
@@ -1596,135 +1376,6 @@
           "$value": "{chrome.850}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
-      }
-    },
-    "table": {
-      "header": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.2}",
-          "$description": "Text color for table header cells. Ensures readability of column labels and titles."
-        },
-        "bg": {
-          "$type": "color",
-          "$value": "{bg.3}",
-          "$description": "Background color for table header rows. Creates visual distinction between headers and data rows."
-        }
-      },
-      "row": {
-        "alternate-bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{chrome.200}",
-          "$description": "Background color for alternate table rows. Improves readability by differentiating adjacent rows."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.3}",
-          "$description": "Border color for table rows. Provides subtle separation between data rows."
-        }
-      },
-      "cell": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.1}",
-          "$description": "Text color for table cell content. Ensures high readability of tabular data."
-        }
-      }
-    },
-    "tabs": {
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.1}",
-        "$description": "Background color for the tabs container. Creates a consistent foundation for tab elements."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Border color for tab containers and separators. Provides subtle definition for tab boundaries."
-      },
-      "item": {
-        "unselected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.3}",
-            "$description": "Text color for unselected tab items. Provides reduced emphasis for available but inactive tabs."
-          },
-          "bg": {
-            "$type": "color",
-            "$value": "{bg.1}",
-            "$description": "Background color for unselected tab items. Creates visual distinction from the active tab."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{comp.tabs.item.unselected.bg}",
-            "$description": "Border color for unselected tab items. Maintains consistent styling with the tab background."
-          }
-        },
-        "selected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Text color for the selected tab item. Increases contrast to highlight the active tab."
-          },
-          "bg": {
-            "$type": "color",
-            "$value": "{bg.3}",
-            "$description": "Background color for the selected tab item. Creates strong visual indication of the active tab."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{border.2}",
-            "$description": "Border color for the selected tab item. Reinforces the active state with defined boundaries."
-          }
-        }
-      }
-    },
-    "toast": {
-      "title": {
-        "$type": "color",
-        "$value": "{text.1}",
-        "$description": "Title text color for informational toast notifications. Ensures high visibility for the notification headline."
-      },
-      "description": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Description text color for informational toast notifications. Provides readable contrast for notification content."
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.3}",
-        "$description": "Background color for informational toast notifications. Creates visual distinction from UI content beneath."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Border color for informational toast notifications. Subtly defines the notification's boundaries."
-      }
-    },
-    "tooltip": {
-      "text": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Text color for tooltip content. Ensures readability of helpful contextual information."
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.3}",
-        "$description": "Background color for tooltips. Creates a distinct surface for contextual information that appears above UI elements."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Border color for tooltips. Creates a distinct surface for contextual information that appears above UI elements."
       }
     }
   },

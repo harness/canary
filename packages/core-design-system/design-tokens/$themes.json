@@ -8046,8 +8046,7 @@
       "comp.sidebar.item.unselected.text": "9609e0ad8d79127a3784876f0204d02964f09e43",
       "comp.sidebar.item.unselected.icon": "5afba128858cf7494fb8a326a435860faf00b0ee",
       "comp.sidebar.item.selected.text": "5f1daf88cebaea07bd4c2a57c862638340827496",
-      "comp.sidebar.item.selected.icon": "18325fda8139122c4a7cdf6debe2cd1f25d120b7",
-      "comp.pipeline.card.completed": "1b16c8ac796a5793db6ea74c3b805a49104d2d20"
+      "comp.sidebar.item.selected.icon": "18325fda8139122c4a7cdf6debe2cd1f25d120b7"
     },
     "group": "mode"
   },
@@ -15272,10 +15271,6 @@
       "comp.breadcrumb.separator": "1cd28c3ff97ab2f529a19c632d89dd44af0aad80",
       "comp.card.bg": "256878745d17a46b7159919d8e30a3e960f59575",
       "comp.card.border": "3688ffcc56c4fb44dc0e221b8e09a958fd9e509d",
-      "comp.dialog.title": "e6e0ff2bf1f3802eb21492e8b833c5f5e679cd82",
-      "comp.dialog.description": "301509fcf2faac8497b2136f7879b9b0b3c64433",
-      "comp.dialog.bg": "ff2918d712798a4b487b6f6e5befe7b3eef59883",
-      "comp.dialog.border": "4a6cb3732ad8b36bb9de0d15cbed575c87996088",
       "comp.dialog.backdrop": "893e60ed671f891241a3084707057185398446ed",
       "comp.dropdown.bg": "09b2dca27ba9efabfe838d713a14ca6e6ac46685",
       "comp.dropdown.border": "c8cdfff63f4e142d651070ff1056b69a638aaab7",

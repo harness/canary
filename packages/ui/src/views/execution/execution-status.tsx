@@ -12,7 +12,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       return minimal ? (
         <div className="flex items-center gap-1">
           <div className="size-2 rounded-full bg-cn-background-softgray" />
-          <span className={'text-cn-foreground-disabled'}>Pending</span>
+          <span className="text-cn-foreground-disabled">Pending</span>
         </div>
       ) : (
         <div className="flex items-center gap-1 rounded-md">
@@ -27,7 +27,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       return minimal ? (
         <div className="flex items-center gap-1">
           <div className="size-2 animate-pulse rounded-full bg-cn-background-warning duration-1000" />
-          <span className={'text-studio-3'}>Running</span>
+          <span className="text-studio-3">Running</span>
         </div>
       ) : (
         <div className="flex items-center gap-1 rounded-md">
@@ -44,7 +44,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       return minimal ? (
         <div className="flex items-center gap-1">
           <div className="size-2 rounded-full bg-[#ED5E5E]" />
-          <span className={'text-[#ED5E5E]'}>Failed</span>
+          <span className="text-[#ED5E5E]">Failed</span>
         </div>
       ) : (
         <div className="flex items-center gap-1 rounded-md">
@@ -59,7 +59,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       return minimal ? (
         <div className="flex items-center gap-1">
           <div className="size-2 rounded-full bg-cn-background-success" />
-          <span className={'text-cn-foreground-success'}>Success</span>
+          <span className="text-cn-foreground-success">Success</span>
         </div>
       ) : (
         <div className="flex items-center gap-1 rounded-md">

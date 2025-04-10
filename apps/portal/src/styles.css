@@ -1,5 +1,5 @@
 body {
-  @apply text-foreground-2 text-base overscroll-none !important;
+  @apply text-cn-foreground-2 text-base overscroll-none !important;
 }
 
 main {

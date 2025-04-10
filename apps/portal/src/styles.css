@@ -107,7 +107,7 @@ ul.top-level summary svg {
 /* Code/Preview override */
 
 .expressive-code pre {
-  @apply rounded-md overflow-hidden border border-borders-4 bg-foreground-2 !important;
+  @apply rounded-md overflow-hidden border border-borders-4 bg-cn-background-3 !important;
 }
 
 pre.prism-code {

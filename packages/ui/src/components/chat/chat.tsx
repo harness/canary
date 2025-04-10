@@ -96,7 +96,7 @@ const Typing: FC<TypingProps> = ({ avatar }) => {
   return (
     <div className="mt-3 flex items-center gap-x-3.5">
       {avatar || (isLightTheme ? <ChatAvatarIconLightTheme /> : <ChatAvatarIcon />)}
-      <span className="size-2.5 rounded-full bg-foreground-2" aria-hidden />
+      <span className="size-2.5 rounded-full bg-cn-background-3" aria-hidden />
     </div>
   )
 }

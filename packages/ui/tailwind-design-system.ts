@@ -25,24 +25,6 @@ export default {
       },
       colors: {
         /* New colors design variables */
-        foreground: {
-          // TODO: remove DEFAULT, cause use old color var
-          DEFAULT: 'hsl(var(--canary-foreground))',
-          1: 'hsl(var(--canary-foreground-01))',
-          2: 'hsl(var(--canary-foreground-02))',
-          3: 'hsl(var(--canary-foreground-03))',
-          4: 'hsl(var(--canary-foreground-04))',
-          5: 'hsl(var(--canary-foreground-05))',
-          6: 'hsl(var(--canary-foreground-06))',
-          7: 'hsl(var(--canary-foreground-07))',
-          8: 'hsl(var(--canary-foreground-08))',
-          9: 'hsl(var(--canary-foreground-09))',
-          10: 'hsl(var(--canary-foreground-10))',
-          danger: 'hsl(var(--canary-foreground-danger))',
-          alert: 'hsl(var(--canary-foreground-alert))',
-          success: 'hsl(var(--canary-foreground-success))',
-          accent: 'hsl(var(--canary-foreground-accent))'
-        },
         'cn-foreground': {
           1: 'lch(from var(--cn-text-1) l c h / <alpha-value>)',
           2: 'lch(from var(--cn-text-2) l c h / <alpha-value>)',
@@ -61,21 +43,6 @@ export default {
           8: 'var(--cn-text-3)',
           // DEFAULT - 1
           DEFAULT: 'lch(from var(--cn-text-1) l c h / <alpha-value>)'
-        },
-        background: {
-          4: 'hsla(var(--canary-background-04))',
-          5: 'hsl(var(--canary-background-05))',
-          6: 'hsl(var(--canary-background-06))',
-          7: 'hsl(var(--canary-background-07))',
-          8: 'hsl(var(--canary-background-08))',
-          9: 'hsl(var(--canary-background-09))',
-          10: 'hsl(var(--canary-background-10))',
-          11: 'hsl(var(--canary-background-11))',
-          12: 'hsl(var(--canary-background-12))',
-          13: 'hsl(var(--canary-background-13))',
-          // surface: 'hsl(var(--canary-background-surface))',
-          danger: 'hsla(var(--canary-background-danger))',
-          success: 'hsla(var(--canary-background-success))'
         },
         'cn-background': {
           DEFAULT: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
@@ -99,23 +66,6 @@ export default {
           11: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           12: 'lch(from var(--cn-set-gray-surface-bg-hover) l c h / <alpha-value>)',
           13: 'lch(from var(--cn-set-gray-solid-bg) l c h / <alpha-value>)'
-        },
-        borders: {
-          1: 'hsl(var(--canary-border-01))',
-          2: 'hsl(var(--canary-border-02))',
-          3: 'hsl(var(--canary-border-03))',
-          4: 'hsl(var(--canary-border-04))',
-          5: 'hsl(var(--canary-border-05))',
-          6: 'hsl(var(--canary-border-06))',
-          7: 'hsl(var(--canary-border-07))',
-          8: 'hsl(var(--canary-border-08))',
-          9: 'hsl(var(--canary-border-09))',
-          10: 'hsl(var(--canary-border-10))',
-          danger: 'hsl(var(--canary-border-danger))',
-          success: 'hsl(var(--canary-border-success))',
-          accent: 'hsl(var(--canary-border-accent))',
-          risk: 'hsl(var(--canary-icon-risk))',
-          alert: 'hsl(var(--canary-border-alert))'
         },
         'cn-borders': {
           1: 'lch(from var(--cn-border-1) l c h / <alpha-value>)',

@@ -1297,7 +1297,7 @@
     "scrollbar": {
       "thumb": {
         "$type": "color",
-        "$value": "{chrome.850}",
+        "$value": "{chrome.700}",
         "$description": "Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability."
       }
     },

@@ -1,0 +1,26 @@
+{
+  "alert": {
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.3}"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{layout.md}"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{layout.md}"
+    },
+    "wrapper": {
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
+      }
+    },
+    "borderRadius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.4}"
+    }
+  }
+}

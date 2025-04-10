@@ -65,11 +65,11 @@ ul.top-level li details summary .group-label {
 }
 
 ul.top-level summary .group-label span {
-  @apply font-normal text-sm text-foreground-5;
+  @apply font-normal text-sm text-cn-foreground-disabled;
 }
 
 ul.top-level summary svg {
-  @apply font-normal text-foreground-5 text-lg;
+  @apply font-normal text-cn-foreground-disabled text-lg;
 }
 
 /* Right-hand page sidebar overrides */

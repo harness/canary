@@ -1,24 +1,22 @@
-import { ChangeEvent, useEffect, useRef } from 'react'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { useEffect, useMemo } from 'react'
 
-import {
-  Accordion,
-  Alert,
-  Button,
-  ButtonGroup,
-  ControlGroup,
-  Fieldset,
-  FormWrapper,
-  Input,
-  Spacer,
-  Textarea
-} from '@/components'
+import { Accordion, Alert, Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper, Spacer } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import {
+  getDefaultValuesFromFormDefinition,
+  IFormDefinition,
+  InputFactory,
+  RenderForm,
+  RootForm,
+  useZodValidationResolver
+} from '@harnessio/forms'
+
 import { SecretCreationType, SecretDataType } from '../types'
 
+// Define the form schema
 const createSecretFormSchema = z
   .object({
     name: z.string().min(1, { message: 'Please provide a name' }),
@@ -57,6 +55,7 @@ interface CreateSecretProps {
   isLoading: boolean
   apiError: string | null
   connectorInput: React.ReactElement
+  inputComponentFactory: InputFactory
 }
 
 export function CreateSecretPage({
@@ -66,227 +65,132 @@ export function CreateSecretPage({
   isLoading = false,
   apiError = null,
   prefilledFormData,
-  connectorInput
+  connectorInput,
+  inputComponentFactory
 }: CreateSecretProps) {
   const { t: _t } = useTranslationStore()
-  const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    watch,
-    trigger,
-    formState: { errors }
-  } = useForm<CreateSecretFormFields>({
-    resolver: zodResolver(createSecretFormSchema),
-    mode: 'onChange',
-    defaultValues: {
-      name: prefilledFormData?.name ?? '',
-      description: prefilledFormData?.description ?? '',
-      tags: prefilledFormData?.tags ?? ''
-    }
-  })
+  // Create form definition for the forms framework
+  const formDefinition = useMemo<IFormDefinition>(() => {
+    const inputs = [
+      {
+        inputType: 'text',
+        path: 'name',
+        label: 'Secret Name',
+        placeholder: 'Enter secret name',
+        required: true
+      }
+    ]
 
-  useEffect(() => {
-    if (prefilledFormData) {
-      reset({
-        name: prefilledFormData.identifier,
-        description: prefilledFormData.description,
-        tags: prefilledFormData.tags
+    // Add value or file input based on prefilled data
+    if (!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_TEXT) {
+      inputs.push({
+        inputType: 'password',
+        path: 'value',
+        label: 'Secret Value',
+        placeholder: prefilledFormData ? 'Encrypted' : 'Add your secret value',
+        required: true
       })
+    }
+
+    if (!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_FILE) {
+      inputs.push({
+        inputType: 'file',
+        path: 'file',
+        label: 'Secret File',
+        placeholder: 'Add your secret file',
+        required: true
+      })
+    }
+
+    // Add metadata inputs
+    inputs.push({
+      inputType: 'textarea',
+      path: 'description',
+      label: 'Description',
+      placeholder: 'Enter a description of this secret',
+      required: false
+    })
+
+    inputs.push({
+      inputType: 'text',
+      path: 'tags',
+      label: 'Tags',
+      placeholder: 'Enter tags',
+      required: false
+    })
+
+    return {
+      inputs
     }
   }, [prefilledFormData])
 
-  const selectedFile = watch('file')
+  // Get default values
+  const defaultValues = useMemo(() => {
+    const values = getDefaultValuesFromFormDefinition(formDefinition)
 
-  const onSubmit: SubmitHandler<CreateSecretFormFields> = data => {
+    // Add prefilled data if available
+    if (prefilledFormData) {
+      return {
+        ...values,
+        name: prefilledFormData.identifier || '',
+        description: prefilledFormData.description || '',
+        tags: prefilledFormData.tags || ''
+      }
+    }
+
+    return values
+  }, [formDefinition, prefilledFormData])
+
+  // Create resolver for validation
+  const resolver = useZodValidationResolver(formDefinition, {
+    validationConfig: {
+      requiredMessage: 'This field is required',
+      requiredSchema: createSecretFormSchema
+    }
+  })
+
+  const handleSubmit = (data: CreateSecretFormFields) => {
     onFormSubmit(data)
-    reset()
-  }
-
-  const handleCancel = () => {
-    onFormCancel()
-  }
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setValue('file', e.target.files[0], { shouldValidate: true })
-      trigger()
-    }
-  }
-
-  const openFileInput = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click()
-    }
-  }
-
-  const removeFile = () => {
-    setValue('file', undefined, { shouldValidate: true })
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''
-    }
-    trigger()
-  }
-
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    e.stopPropagation()
-  }
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    e.stopPropagation()
-
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      setValue('file', e.dataTransfer.files[0], { shouldValidate: true })
-      trigger()
-    }
   }
 
   return (
     <SandboxLayout.Content className="h-full px-0 pt-0">
       <Spacer size={5} />
-      <FormWrapper className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
-        {/* NAME */}
-        <Fieldset className="mb-0">
-          <Input
-            id="name"
-            label="Secret Name"
-            {...register('name')}
-            placeholder="Enter secret name"
-            size="md"
-            error={errors.name?.message?.toString()}
-            autoFocus
-          />
-          {(!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_TEXT) && (
-            <Input
-              id="value"
-              {...register('value', {
-                onChange: () => {
-                  trigger()
-                }
-              })}
-              type="password"
-              label="Secret Value"
-              placeholder={prefilledFormData ? 'Encryped' : 'Add your secret value'}
-              size="md"
-              error={errors.value?.message?.toString()}
-            />
-          )}
-          {(!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_FILE) && (
-            <div>
-              <label htmlFor="secret-file-input" className="mb-2.5 block text-sm font-medium text-cn-foreground-2">
-                Secret File
-              </label>
-              <div
-                className="rounded-md border-2 border-dashed border-cn-borders-2 p-4"
-                onDragOver={handleDragOver}
-                onDrop={handleDrop}
-              >
-                <div className="flex flex-col items-center justify-center">
-                  {!selectedFile ? (
-                    <>
-                      <p className="mb-2 text-sm text-cn-foreground-2">
-                        Drag and drop your file here or click to browse
-                      </p>
-                      <Button type="button" variant="outline" onClick={openFileInput}>
-                        Browse Files
-                      </Button>
-                    </>
-                  ) : (
-                    <div className="flex w-full flex-col">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-cn-foreground-2">
-                          Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
-                        </span>
-                        <div className="flex gap-2">
-                          <Button type="button" variant="outline" size="sm" onClick={openFileInput}>
-                            Change
-                          </Button>
-                          <Button type="button" variant="destructive" size="sm" onClick={removeFile}>
-                            Remove
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-              {errors.file && (
-                <div className="mt-1 text-sm text-cn-foreground-danger">{errors.file.message?.toString()}</div>
-              )}
-            </div>
-          )}
-          <Accordion.Root type="single" collapsible>
-            <Accordion.Item value="secret-details">
-              <Accordion.Trigger>Metadata</Accordion.Trigger>
-              <Accordion.Content>
-                <Fieldset className="rounded-md border p-4">
-                  {/* DESCRIPTION */}
-                  <Textarea
-                    id="description"
-                    {...register('description')}
-                    placeholder="Enter a description of this secret"
-                    label="Description"
-                    error={errors.description?.message?.toString()}
-                    optional
-                  />
-                  {/* TAGS */}
-                  <Input
-                    id="tags"
-                    {...register('tags')}
-                    label="Tags"
-                    placeholder="Enter tags"
-                    size="md"
-                    error={errors.tags?.message?.toString()}
-                    optional
-                  />
-                </Fieldset>
-              </Accordion.Content>
-            </Accordion.Item>
-          </Accordion.Root>
 
-          <Accordion.Root type="single" collapsible>
+      <RootForm defaultValues={defaultValues} onSubmit={handleSubmit} resolver={resolver} mode="onChange">
+        <div className="flex h-full flex-col">
+          <RenderForm className="flex-1 px-4" factory={inputComponentFactory} inputs={formDefinition} />
+
+          <Accordion.Root type="single" collapsible className="px-4 mb-4">
             <Accordion.Item value="secret-manager">
               <Accordion.Trigger>Storage</Accordion.Trigger>
               <Accordion.Content>{connectorInput}</Accordion.Content>
             </Accordion.Item>
           </Accordion.Root>
-        </Fieldset>
 
-        {apiError && (
-          <Alert.Container variant="destructive" className="mb-8">
-            <Alert.Description>{apiError?.toString()}</Alert.Description>
-          </Alert.Container>
-        )}
+          {apiError && (
+            <Alert.Container variant="destructive" className="mb-8 mx-4">
+              <Alert.Description>{apiError?.toString()}</Alert.Description>
+            </Alert.Container>
+          )}
 
-        <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
-          <ControlGroup>
-            <ButtonGroup className="flex flex-row justify-between">
-              <Button type="button" variant="outline" onClick={handleCancel}>
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isLoading}>
-                {!isLoading ? 'Save' : 'Saving...'}
-              </Button>
-            </ButtonGroup>
-          </ControlGroup>
+          <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
+            <ControlGroup>
+              <ButtonGroup className="flex flex-row justify-between">
+                <Button type="button" variant="outline" onClick={onFormCancel}>
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={isLoading}>
+                  {!isLoading ? 'Save' : 'Saving...'}
+                </Button>
+              </ButtonGroup>
+            </ControlGroup>
+          </div>
+
+          <div className="pb-16"></div>
         </div>
-
-        <div className="pb-16"></div>
-      </FormWrapper>
-
-      {/* Hidden file input */}
-      <Input
-        id="secret-file-input"
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        style={{ display: 'none' }}
-      />
+      </RootForm>
     </SandboxLayout.Content>
   )
 }

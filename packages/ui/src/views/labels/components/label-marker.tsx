@@ -65,7 +65,7 @@ export const LabelMarker: FC<LabelMarkerProps> = ({
         </Button>
       )}
 
-      {isDynamic && <Icon name="circle-plus" size={12} className="text-icons-4 min-w-3" role="presentation" />}
+      {isDynamic && <Icon name="circle-plus" size={12} className="min-w-3 text-icons-4" role="presentation" />}
     </div>
   )
 }

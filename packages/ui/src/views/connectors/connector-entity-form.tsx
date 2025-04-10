@@ -124,7 +124,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
               </EntityFormSectionLayout.Header>
             )}
             <EntityFormSectionLayout.Form className="px-0">
-              <RenderForm className="space-y-4 max-w-xl" factory={inputComponentFactory} inputs={formDefinition} />
+              <RenderForm className="max-w-xl space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
               {apiError && (
                 <Alert.Container variant="destructive" className="my-8">
                   <Alert.Description>{apiError.toString()}</Alert.Description>

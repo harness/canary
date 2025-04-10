@@ -8,7 +8,7 @@ const SkeletonFormItem = () => {
   return (
     <div className="flex flex-col gap-y-2.5">
       <Skeleton className="h-2.5 w-[24%]" />
-      <div className="rounded border border-cn-borders-4 px-3 py-3.5">
+      <div className="border-cn-borders-4 rounded border px-3 py-3.5">
         <Skeleton className="h-2.5 w-[41%]" />
       </div>
     </div>
@@ -27,7 +27,7 @@ export const SkeletonForm = ({
       {listItems.slice(0, linesCount).map(item => (
         <SkeletonFormItem key={item} />
       ))}
-      <div className="absolute bottom-0 z-10 size-full bg-gradient-to-b from-transparent to-background" />
+      <div className="to-background absolute bottom-0 z-10 size-full bg-gradient-to-b from-transparent" />
     </div>
   )
 }

@@ -31,31 +31,31 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
         <div className="flex justify-between gap-11">
           {createdAt ? (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-foreground-4">Created</span>
+              <span className="leading-tight text-cn-foreground-3">Created</span>
               <span className="text-cn-foreground-1">{timeAgo(createdAt)}</span>
             </div>
           ) : null}
           {lastModifiedAt ? (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-foreground-4">Last updated</span>
+              <span className="leading-tight text-cn-foreground-3">Last updated</span>
               <span className="text-cn-foreground-1">{timeAgo(lastModifiedAt)}</span>
             </div>
           ) : null}
           {lastTestedAt ? (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-foreground-4">Last status check</span>
+              <span className="leading-tight text-cn-foreground-3">Last status check</span>
               <span className="text-cn-foreground-1">{timeAgo(lastTestedAt)}</span>
             </div>
           ) : null}
           {lastConnectedAt ? (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-foreground-4">Last successful check</span>
+              <span className="leading-tight text-cn-foreground-3">Last successful check</span>
               <span className="text-cn-foreground-1">{timeAgo(lastConnectedAt)}</span>
             </div>
           ) : null}
           {status ? (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-foreground-4">Connection status</span>
+              <span className="leading-tight text-cn-foreground-3">Connection status</span>
               <Badge
                 className="leading-none"
                 size="sm"

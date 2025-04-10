@@ -49,7 +49,7 @@ ul.top-level li {
 }
 
 ul.top-level li a {
-  @apply py-1 px-2 m-0 text-foreground-4 hover:text-cn-foreground-1;
+  @apply py-1 px-2 m-0 text-cn-foreground-3 hover:text-cn-foreground-1;
 }
 
 ul.top-level li a[aria-current="page"] {
@@ -87,7 +87,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel li a {
-  @apply m-0 p-0 text-foreground-4;
+  @apply m-0 p-0 text-cn-foreground-3;
 }
 
 .right-sidebar-panel li ul {
@@ -117,7 +117,7 @@ pre.prism-code {
 /* Pagination overrides */
 
 .pagination-links a {
-  @apply border border-borders-4 rounded-md text-xs text-foreground-4;
+  @apply border border-borders-4 rounded-md text-xs text-cn-foreground-3;
 }
 
 .pagination-links a .link-title {

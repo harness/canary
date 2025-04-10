@@ -68,7 +68,7 @@ export const Summary = ({
                   className={`flex cursor-pointer items-center gap-1.5 ${
                     file.status && file.status !== FileStatus.SAFE
                       ? file.status === FileStatus.LOW_RISK
-                        ? 'absolute left-0 border-l-2 border-borders-alert'
+                        ? 'absolute left-0 border-l-2 border-cn-borders-warning'
                         : file.status === FileStatus.MEDIUM_RISK
                           ? 'absolute left-0 border-l-2 border-borders-warning'
                           : 'absolute left-0 border-l-2 border-borders-danger'

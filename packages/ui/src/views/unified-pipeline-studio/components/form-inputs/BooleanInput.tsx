@@ -5,8 +5,8 @@ import { InputComponent, InputProps, useController, type AnyFormikValue, type Us
 
 import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
-import { InputWrapper } from './common/InputWrapper'
 import { InputTooltip } from './common/InputTooltip'
+import { InputWrapper } from './common/InputWrapper'
 
 export interface BooleanInputConfig {
   inputType: 'boolean'

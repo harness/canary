@@ -2,9 +2,9 @@ import { Textarea } from '@components/index'
 
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
-import { InputTooltip } from './common/InputTooltip'
 import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
+import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
 
 export interface TextAreaInputConfig {

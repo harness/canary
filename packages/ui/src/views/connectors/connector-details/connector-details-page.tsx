@@ -29,7 +29,7 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
 
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="h-full" paddingClassName='px-5 pt-7'>
+      <SandboxLayout.Content className="h-full" paddingClassName="px-5 pt-7">
         <ConnectorDetailsHeader
           connectorDetails={connectorDetails}
           onTest={onTest}

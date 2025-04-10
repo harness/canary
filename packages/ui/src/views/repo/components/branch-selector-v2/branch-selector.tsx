@@ -20,6 +20,7 @@ interface BranchSelectorProps {
   searchQuery?: string
   setSearchQuery: (query: string) => void
   dynamicWidth?: boolean
+  preSelectedTab?: BranchSelectorTab
 }
 export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   repoId,
@@ -35,7 +36,8 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   isBranchOnly = false,
   searchQuery = '',
   setSearchQuery,
-  dynamicWidth = false
+  dynamicWidth = false,
+  preSelectedTab
 }) => {
   const isTag = selectedBranchorTag
     ? tagList?.some(tag => tag.name === selectedBranchorTag.name && tag.sha === selectedBranchorTag.sha)
@@ -45,7 +47,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <Button
-          className="flex items-center gap-1.5 overflow-hidden bg-cn-background-2 px-3 data-[state=open]:border-cn-borders-9"
+          className="data-[state=open]:border-cn-borders-9 flex items-center gap-1.5 overflow-hidden bg-cn-background-2 px-3"
           variant="outline"
           size={buttonSize}
         >
@@ -72,6 +74,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         dynamicWidth={dynamicWidth}
+        preSelectedTab={preSelectedTab}
       />
     </DropdownMenu.Root>
   )

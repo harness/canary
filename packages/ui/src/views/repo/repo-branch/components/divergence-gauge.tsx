@@ -35,7 +35,7 @@ export const DivergenceGauge = ({ behindAhead, className, useTranslationStore }:
             {t('views:repos.behind', 'behind')}
           </span>
         </span>
-        <div className="bg-borders-2 h-3 w-px" aria-hidden />
+        <div className="h-3 w-px bg-borders-2" aria-hidden />
         <span className="truncate text-13 leading-none text-cn-foreground-3">
           {behindAhead.ahead ?? 0}
           <span className="sr-only">

@@ -77,7 +77,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
       </Drawer.Description>
       <Spacer size={6} />
       <Drawer.Footer>
-        {error?.message && <p className="text-xs text-destructive">{error.message}</p>}
+        {error?.message && <p className="text-destructive text-xs">{error.message}</p>}
         <div className="flex gap-4">
           <Button onClick={onCancel} className="text-primary" variant="outline" disabled={isExecutingPipeline}>
             Cancel

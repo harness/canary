@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 
 import type { ToastActionElement, ToastProps } from './toast'
 
@@ -150,3 +150,37 @@ function useToast() {
 }
 
 export { useToast, toast }
+
+interface UseToastNotificationProps {
+  title: string
+  description: string
+  duration?: number
+  action?: ToastActionElement
+}
+
+export function useToastNotification({ title, description, duration, action }: UseToastNotificationProps) {
+  const { toast } = useToast()
+
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    if (show) {
+      toast({
+        title,
+        description,
+        duration,
+        action
+      })
+
+      setShow(false)
+    }
+  }, [title, description, toast, show, duration, action])
+
+  const showToast = useCallback(() => {
+    setShow(true)
+  }, [setShow])
+
+  return {
+    showToast
+  }
+}

@@ -30,6 +30,7 @@ export interface BranchSelectorDropdownProps {
   searchQuery: string
   setSearchQuery: (query: string) => void
   dynamicWidth?: boolean
+  preSelectedTab?: BranchSelectorTab
 }
 
 export interface BranchSelectorProps extends BranchSelectorDropdownProps {

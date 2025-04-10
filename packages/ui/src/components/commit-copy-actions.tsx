@@ -6,10 +6,12 @@ import copy from 'clipboard-copy'
 
 export const CommitCopyActions = ({
   sha,
-  toCommitDetails
+  toCommitDetails,
+  className
 }: {
   sha: string
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  className?: string
 }) => {
   const [copied, setCopied] = useState(false)
   const { navigate } = useRouterContext()
@@ -30,10 +32,10 @@ export const CommitCopyActions = ({
   }
 
   return (
-    <ShaBadge.Root>
+    <ShaBadge.Root className={className}>
       <ShaBadge.Content className="p-0" asChild>
         <button
-          className="size-full px-2.5 text-13 text-cn-foreground-3"
+          className="size-full w-[67px] px-2 text-13 text-cn-foreground-3"
           onClick={() => handleNavigation()}
           onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') handleNavigation()

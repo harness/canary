@@ -33,7 +33,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
         <span className="inline-block max-w-[200px] truncate align-bottom">{author}</span>
       </p>
 
-      <span className="bg-borders-2 pointer-events-none h-3.5 w-px" aria-hidden />
+      <span className="pointer-events-none h-3.5 w-px bg-borders-2" aria-hidden />
 
       <p>{reviewRequired ? 'Review required' : 'Draft'}</p>
 
@@ -46,7 +46,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
           </p>
         </div>
       )}
-      <span className="bg-borders-2 pointer-events-none h-3.5 w-px" aria-hidden />
+      <span className="pointer-events-none h-3.5 w-px bg-borders-2" aria-hidden />
 
       {sourceBranch && (
         <>

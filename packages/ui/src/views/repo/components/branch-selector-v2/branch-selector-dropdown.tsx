@@ -17,10 +17,11 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   isBranchOnly = false,
   searchQuery,
   setSearchQuery,
-  dynamicWidth = false
+  dynamicWidth = false,
+  preSelectedTab = BranchSelectorTab.BRANCHES
 }) => {
   const { Link } = useRouterContext()
-  const [activeTab, setActiveTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
+  const [activeTab, setActiveTab] = useState<BranchSelectorTab>(preSelectedTab)
   const { t } = useTranslationStore()
   const BRANCH_SELECTOR_LABELS = getBranchSelectorLabels(t)
 

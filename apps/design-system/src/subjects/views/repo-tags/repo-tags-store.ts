@@ -4,23 +4,31 @@ export const tagsStore: RepoTagsStore = {
   tags: [
     {
       name: 'v2.4.0',
-      sha: '947bcbe92a5d40aacf861269b6605226adda0daf',
-      is_annotated: false
-    },
-    {
-      name: 'v2.3.1',
-      sha: '794bdb1c56d885ae02f799c6cce13942e8614516',
-      is_annotated: false
+      sha: 'dd6135add66c91c74b21aa7514a57fdc8d5dc320',
+      is_annotated: true,
+      title: 'v2.4.0',
+      message: 'v2.4.0',
+      tagger: {
+        identity: {
+          name: 'user',
+          email: 'user@gmail.com'
+        },
+        when: '2025-04-07T10:08:00Z'
+      }
     },
     {
       name: 'v2.3.0',
-      sha: '87f1c74cd8a14ea90635c56a627d5e99a4950c73',
-      is_annotated: false
-    },
-    {
-      name: 'v2.25.1-debug',
-      sha: '3e7ecf16153e88919951725c3ecc69ff076c00b9',
-      is_annotated: false
+      sha: 'f067dc95f956b2b195f30635e6d6e74e774d2108',
+      is_annotated: true,
+      title: 'v2.3.0',
+      message: 'v2.3.0',
+      tagger: {
+        identity: {
+          name: 'user',
+          email: 'user@gmail.com'
+        },
+        when: '2025-04-07T09:04:05Z'
+      }
     }
   ],
   page: 1,

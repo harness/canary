@@ -6,22 +6,16 @@ import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
 import { BranchesList } from './components/branch-list'
-import { CreateBranchDialog } from './components/create-branch-dialog'
 import { RepoBranchListViewProps } from './types'
 
 export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   isLoading,
   useRepoBranchesStore,
   useTranslationStore,
-  isCreateBranchDialogOpen,
   setCreateBranchDialogOpen,
-  onSubmit,
-  createBranchError,
-  isCreatingBranch,
   searchQuery,
   setSearchQuery,
   onDeleteBranch,
-  setCreateBranchSearchQuery,
   ...routingProps
 }) => {
   const { t } = useTranslationStore()
@@ -89,19 +83,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
           <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
         )}
       </SandboxLayout.Content>
-      <CreateBranchDialog
-        open={isCreateBranchDialogOpen}
-        onClose={() => {
-          setCreateBranchDialogOpen(false)
-        }}
-        useRepoBranchesStore={useRepoBranchesStore}
-        onSubmit={onSubmit}
-        isCreatingBranch={isCreatingBranch}
-        useTranslationStore={useTranslationStore}
-        error={createBranchError}
-        defaultBranch={defaultBranch}
-        handleChangeSearchValue={setCreateBranchSearchQuery}
-      />
     </SandboxLayout.Main>
   )
 }

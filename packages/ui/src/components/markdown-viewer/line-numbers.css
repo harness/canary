@@ -27,7 +27,7 @@
 .line-numbers-rows span {
   display: block;
   padding: 0 0.75em 0 0; /* More right padding */
-  color: var(--text-foreground-7);
+  color: var(--text-cn-foreground-3);
   font-size: 14px; /* Increased font size to 14px */
   line-height: 1.5em;
 }

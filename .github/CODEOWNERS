@@ -1,5 +1,7 @@
-/.eslintrc.js @abhinavrastogi-harness @knagurski
-/.prettierrc.yml @abhinavrastogi-harness @knagurski
+.github @abhinavrastogi-harness @knagurski
+
+.eslintrc.js @abhinavrastogi-harness @knagurski
+.prettierrc.yml @abhinavrastogi-harness @knagurski
 
 /packages/*/package.json @abhinavrastogi-harness @knagurski
 /apps/*/package.json @abhinavrastogi-harness @knagurski

@@ -4,8 +4,8 @@
 
 # Specify owner for a specific directory
 
-packages/\* @abhinavrastogi-harness @knagurski
+/packages/\* @abhinavrastogi-harness @knagurski
 
-# Specify owner for a specific file
+# Specify owner for a specific file or directory under apps/gitness
 
-apps/gitness/\* @vardanbansal-harness
+/apps/gitness/\* @vardanbansal-harness

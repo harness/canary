@@ -342,7 +342,7 @@ export default {
         'borders-9': 'hsl(var(--cn-border-1))',
         'borders-10': 'hsl(var(--cn-border-2))',
         'borders-danger': 'hsl(var(--cn-border-danger))',
-        'borders-success': 'hsl(var(--canary-border-success))',
+        'borders-success': 'hsl(var(--cn-border-success))',
         'borders-accent': 'hsl(var(--canary-border-accent))',
         'borders-warning': 'hsl(var(--canary-border-warning))',
         'borders-alert': 'hsl(var(--canary-border-alert))'

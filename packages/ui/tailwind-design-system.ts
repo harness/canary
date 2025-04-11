@@ -343,7 +343,7 @@ export default {
         'borders-10': 'hsl(var(--cn-border-2))',
         'borders-danger': 'hsl(var(--cn-border-danger))',
         'borders-success': 'hsl(var(--cn-border-success))',
-        'borders-accent': 'hsl(var(--canary-border-accent))',
+        'borders-accent': 'hsl(var(--cn-border-accent))',
         'borders-warning': 'hsl(var(--canary-border-warning))',
         'borders-alert': 'hsl(var(--canary-border-alert))'
       },

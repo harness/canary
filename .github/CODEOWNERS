@@ -4,10 +4,10 @@
 .prettierrc.yml @abhinavrastogi-harness @knagurski @vardanbansal-harness
 
 # Common ownership for shared config files
-/packages/*/package.json @abhinavrastogi-harness @knagurski
-/apps/*/package.json @abhinavrastogi-harness @knagurski
-/packages/*/vite.config.ts @abhinavrastogi-harness @knagurski
-/apps/*/vite.config.ts @abhinavrastogi-harness @knagurski
+/packages/*/package.json @abhinavrastogi-harness @knagurski @vardanbansal-harness
+/apps/*/package.json @abhinavrastogi-harness @knagurski @vardanbansal-harness
+/packages/*/vite.config.ts @abhinavrastogi-harness @knagurski @vardanbansal-harness
+/apps/*/vite.config.ts @abhinavrastogi-harness @knagurski @vardanbansal-harness
 
 # Apps
 /apps/gitness/* @abhinavrastogi-harness @vardanbansal-harness

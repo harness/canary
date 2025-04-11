@@ -464,7 +464,7 @@ mark {
 }
 
 [data-radix-select-viewport]::-webkit-scrollbar-thumb {
-  background-color: hsl(var(--canary-background-09));
+  background-color: hsl(var(--cn-bg-2));
   border: 4px solid transparent;
   border-radius: 7px;
   background-clip: content-box;

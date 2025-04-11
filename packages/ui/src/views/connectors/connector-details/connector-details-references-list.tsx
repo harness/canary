@@ -1,7 +1,7 @@
 import { NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { timeAgo } from '@utils/utils'
 
-import { ConnectorReferenceListProps } from './types'
+import { ConnectorReferenceItem, ConnectorReferenceListProps } from './types'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
   <span className="text-cn-foreground-1 max-w-full truncate text-sm font-medium leading-tight tracking-tight">
@@ -56,7 +56,7 @@ const ConnectorDetailsReferenceList = ({
         <SkeletonTable countRows={12} countColumns={5} />
       ) : (
         <Table.Body>
-          {content.map(({ referredByEntity, referredEntity, createdAt }) => {
+          {content.map(({ referredByEntity, createdAt }: ConnectorReferenceItem) => {
             const { name, type, entityRef } = referredByEntity
             const { scope } = entityRef
             const identifier = entityRef?.identifier || name
@@ -76,7 +76,7 @@ const ConnectorDetailsReferenceList = ({
                 </Table.Cell>
 
                 <Table.Cell
-                  onClick={() => toEntity?.(createdAt)}
+                  onClick={() => toEntity?.(identifier)}
                   className="text-cn-foreground-4 max-w-full content-center truncate text-right text-sm font-normal leading-tight tracking-tight"
                 >
                   {createdAt ? timeAgo(createdAt) : null}

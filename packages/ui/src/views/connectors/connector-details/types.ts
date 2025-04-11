@@ -6,12 +6,53 @@ import { InputFactory } from '@harnessio/forms'
 
 import { AnyConnectorDefinition, ConnectorConfigType, onSubmitConnectorProps } from '../types'
 
+export interface EntityRef {
+  scope: string
+  identifier: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string | null
+  parentUniqueId: string
+  metadata: Record<string, any>
+  repoIdentifier: string | null
+  branch: string | null
+  isDefault: boolean
+  default: boolean
+  fullyQualifiedScopeIdentifier: string
+}
+
+export interface ReferredEntity {
+  type: string
+  entityRef: EntityRef
+  name: string
+  scope: string
+  identifier: string
+}
+
+export interface EntityDetail {
+  type: string
+  identifier: string
+  referenceType: string
+}
+
+export interface ConnectorReferenceItem {
+  accountIdentifier: string
+  referredEntity: ReferredEntity
+  referredByEntity: ReferredEntity
+  detail: EntityDetail | null
+  createdAt: number
+}
+
+export interface ConnectorReferenceList {
+  content: ConnectorReferenceItem[]
+}
+
 export interface ConnectorReferenceListProps {
-  entities: any
+  entities: ConnectorReferenceList
   useTranslationStore: () => TranslationStore
   isLoading: boolean
-  toEntity: (entity: any) => void
-  toScope: (scope: any) => void
+  toEntity: (entity: string) => void
+  toScope: (scope: string) => void
 }
 
 export interface ConnectorDetailsReferenceListProps {}
@@ -51,9 +92,9 @@ export interface ConnectorDetailsPageProps {
   currentPage: number
   totalPages: number
   goToPage: (page: number) => void
-  entities: any
-  toEntity: (entity: any) => void
-  toScope: (scope: any) => void
+  entities: ConnectorReferenceList
+  toEntity: (entity: string) => void
+  toScope: (scope: string) => void
   searchQuery: string
   apiConnectorRefError?: string
 }
@@ -67,9 +108,9 @@ export interface ConnectorDetailsReferencePageProps {
   totalPages: number
   goToPage: (page: number) => void
   isLoading: boolean
-  entities: any[]
-  toEntity: (entity: any) => void
-  toScope: (scope: any) => void
+  entities: ConnectorReferenceList
+  toEntity: (entity: string) => void
+  toScope: (scope: string) => void
 }
 
 export interface ConnectorDetailsHeaderProps {

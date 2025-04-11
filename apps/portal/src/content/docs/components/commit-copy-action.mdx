@@ -38,8 +38,8 @@ The `CommitCopyActions` component provides action to copy commit sha to clipboar
 ```typescript jsx
 <div className="flex">
   <CommitCopyActions
-    sha="abc1234"
-    toCommitDetails={({ sha }) => `/commit/${sha}`}
+    sha="abc1234"                                   // SHA hash to copy to clipboard
+    toCommitDetails={({ sha }) => `/commit/${sha}`} // callback to get the unique URL to navigate to on click
   />
 </div>
 ```

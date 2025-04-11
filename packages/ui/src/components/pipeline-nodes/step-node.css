@@ -7,8 +7,8 @@
   background: conic-gradient(
     from var(--angle),
     var(--cn-gradient-pipeline-running-gradient-stop-1),
-    var(--canary-graph-gradient-executing-2),
-    var(--canary-graph-gradient-executing-2),
+    var(--cn-gradient-pipeline-running-gradient-stop-2),
+    var(--cn-gradient-pipeline-running-gradient-stop-2),
     var(--cn-gradient-pipeline-running-gradient-stop-1)
   );
   animation: rotate 3.5s linear infinite;

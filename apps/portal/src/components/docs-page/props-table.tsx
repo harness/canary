@@ -15,13 +15,13 @@ export interface PropsTableProps {
 }
 
 const PropsTable: FC<PropsTableProps> = ({ props }) => (
-  <Table.Root>
+  <Table.Root variant="asStackedList" className="not-content">
     <Table.Header>
       <Table.Row>
-        <Table.Head>Prop</Table.Head>
-        <Table.Head>Required</Table.Head>
-        <Table.Head>Default</Table.Head>
-        <Table.Head>Type</Table.Head>
+        <Table.Head className="font-black">Prop</Table.Head>
+        <Table.Head className="font-black">Required</Table.Head>
+        <Table.Head className="font-black">Default</Table.Head>
+        <Table.Head className="font-black">Type</Table.Head>
       </Table.Row>
     </Table.Header>
     <Table.Body>
@@ -29,8 +29,8 @@ const PropsTable: FC<PropsTableProps> = ({ props }) => (
         <Table.Row key={name}>
           <Table.Cell title={description}>{name}</Table.Cell>
           <Table.Cell>{required ? "true" : "false"}</Table.Cell>
-          <Table.Cell>{defaultValue}</Table.Cell>
-          <Table.Cell>{value}</Table.Cell>
+          <Table.Cell className="font-mono">{defaultValue}</Table.Cell>
+          <Table.Cell className="font-mono">{value}</Table.Cell>
         </Table.Row>
       ))}
     </Table.Body>

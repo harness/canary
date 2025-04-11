@@ -1,0 +1,107 @@
+---
+title: Logo
+description: Logo component
+---
+
+The `Logo` component renders brand icons from the `simple-icons` package.
+
+import { DocsPage } from "../../../components/docs-page";
+import { Logo, LogoNameMap, Table } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid place-items-center">
+    <Logo name="kubernetes" size={48} />
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import {  Logo } from '@harnessio/ui/components'
+
+//...
+
+return <Logo name="kuvernetes" size={48} />
+```
+
+## Available Logos
+
+The following logos are available:
+
+<Table.Root
+  variant="asStackedList"
+  className="not-content overflow-auto max-h-[50vh]"
+>
+  <Table.Header className="sticky top-[-1px]">
+    <Table.Row>
+      <Table.Head>Logo name</Table.Head>
+      <Table.Head className="text-center">Original colors</Table.Head>
+      <Table.Head className="text-center">Custom color</Table.Head>
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    {Object.keys(LogoNameMap).map((name) => {
+      return (
+        <Table.Row>
+          <Table.Cell className="font-mono">{name}</Table.Cell>
+          <Table.Cell className="text-center">
+            <Logo size={32} name={name} className="inline-block" />
+          </Table.Cell>
+          <Table.Cell className="text-center text-cn-foreground">
+            <Logo
+              size={32}
+              name={name}
+              original={false}
+              className="inline-block"
+            />
+          </Table.Cell>
+        </Table.Row>
+      );
+    })}
+  </Table.Body>
+</Table.Root>
+
+## API Reference
+
+```typescript jsx
+<Logo
+  name="logo-name"     // name of the logo
+  size={24}            // [OPTIONAL] size of the logo in pixels
+  className="my-class" // [OPTIONAL] custom class name
+  original             // [OPTIONAL] if false, the logo will use the current text color,
+                       // otherwise will use its brand-specific color
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the logo",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "size",
+      description: "Size of the logo in pixels",
+      required: false,
+      value: "number",
+      defaultValue: "24",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "original",
+      description:
+        "If true, the logo will use its brand-specific color, otherwise will use `currentColor`",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+  ]}
+/>

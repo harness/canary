@@ -1,0 +1,96 @@
+---
+title: Icon
+description: Icon component
+---
+
+The `Icon` component allows you to render various icons with customizable properties such as size, color theme, and name.
+
+import { DocsPage } from "../../../components/docs-page";
+import IconGrid from "../../../components/IconGrid.astro";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid place-items-center">
+    <Icon name="double-tick" size={48} />
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Icon } from '@harnessio/ui/components'
+
+//...
+
+return <Icon name="double-tick" size={48} />
+```
+
+## Available Icons
+
+The following icons are available:
+
+<div class="bg-cn-background-3 border p-3 max-h-[50vh] overflow-auto rounded">
+  <IconGrid />
+</div>
+
+## API Reference
+
+The `Icon` component can be sized either using the `size` prop or the `height` and `width` props.
+The `size` prop can be used as a shorthand to set both height and width. Some icons have specific alternatives
+that can be used in light and dark modes; setting the `themeDependent` prop will opt into switching between
+the light and dark versions of the icon.
+
+```typescript jsx
+<Icon
+  name="double-tick"   // name of the icon
+  size={16}            // [OPTIONAL] size of the icon in pixels
+  height={16}          // [OPTIONAL] height of the icon in pixels
+  width={16}           // [OPTIONAL] width of the icon in pixels
+  themeDependent       // [OPTIONAL] if true, a light version of the icon will be used if available
+  className="my-class" // [OPTIONAL] custom class name
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the icon",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "size",
+      description: "Size of the icon in pixels",
+      required: false,
+      value: "number",
+      defaultValue: "16",
+    },
+    {
+      name: "height",
+      description: "Height of the icon in pixels",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "width",
+      description: "Width of the icon in pixels",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "themeDependent",
+      description:
+        "If true, a light version of the icon will be used if available",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

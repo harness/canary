@@ -50,15 +50,23 @@ interface LogoProps {
   name: keyof typeof LogoNameMap
   size?: number
   original?: boolean // Uses brand color when true
+  className?: string
 }
 
-const Logo: FC<LogoProps> = ({ name, size = 24, original = true }) => {
+const Logo: FC<LogoProps> = ({ name, size = 24, original = true, className }) => {
   const icon = LogoNameMap[name]
 
   if (!icon) return <></>
 
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <path d={icon.path} fill={original ? `#${icon.hex}` : 'currentColor'} />
     </svg>
   )

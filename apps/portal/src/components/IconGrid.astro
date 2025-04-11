@@ -1,0 +1,28 @@
+---
+import { Card, CopyButton, Icon, IconNameMap } from "@harnessio/ui/components";
+---
+
+<div
+  class="not-content grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-2"
+>
+  {
+    Object.keys(IconNameMap).map((name) => {
+      return (
+        <Card.Root title={name}>
+          <Card.Content className="text-cn-foreground border-b">
+            <Icon
+              name={name as keyof typeof IconNameMap}
+              className="aspect-square h-full w-full p-[2em]"
+            />
+          </Card.Content>
+          <Card.Footer>
+            <div class="justify-self-center text-xs truncate font-mono">
+              {name}
+            </div>
+            <CopyButton name={name} client:only />
+          </Card.Footer>
+        </Card.Root>
+      );
+    })
+  }
+</div>

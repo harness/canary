@@ -1,43 +1,32 @@
 ---
-title: Icons
-description: Icon component
+title: Icons and Logos
+description: Icons and Logos foundations
 ---
 
-This component allows you to render various icons with customizable properties such as size, color theme, and name.
+The icons available can be devided into 2 categories: [Icons](#icons) and [Logos](#logos). Logos are rendered with the [`Logo` component](/components/logo), while icons are rendered with the [`Icon` component](/components/icon).
 
-## Further reading
+import { Aside } from "@astrojs/starlight/components";
+import CompactIconGrid from "@/components/CompactIconGrid.astro";
+import CompactLogoGrid from "@/components/CompactLogoGrid.astro";
 
-- Read [about how-to guides](https://diataxis.fr/how-to-guides/) in the Diátaxis framework
+## Icons
 
-import { DocsPage } from "@/components/docs-page";
-import { Icon, IconNameMap } from "@harnessio/ui/components";
+<Aside type="tip">
+  For more information, see the documentation for the [`Icon`
+  component](/components/icon)
+</Aside>
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <div className="flex flex-wrap gap-4 mt-4">
-      {Object.keys(IconNameMap).map(name => (
-        <div key={name} className="flex items-center gap-4">
-          <div className="group relative">
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-cn-background-3 text-cn-foreground-1 text-xs rounded py-1 px-2">
-              {name}
-            </div>
-            <div className="p-2 rounded-md border border-1">
-              <Icon name={name as keyof typeof IconNameMap} size={24} />
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  `}
-/>
+<div class="bg-cn-background-3 border p-3 rounded">
+  <CompactIconGrid />
+</div>
 
-## Usage
+## Logos
 
-```typescript
-import { Icon } from '@harnessio/ui/components'
+<Aside type="tip">
+  For more information, see the documentation for the [`Logo`
+  component](/components/logo)
+</Aside>
 
-//...
-
-return <Icon name="harness" size={48} />
-```
+<div class="bg-cn-background-3 border p-3 rounded">
+  <CompactLogoGrid />
+</div>

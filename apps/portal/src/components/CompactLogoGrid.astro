@@ -1,0 +1,21 @@
+---
+import { Logo, LogoNameMap } from "@harnessio/ui/components";
+---
+
+<div
+  class="not-content grid grid-cols-[repeat(auto-fill,minmax(75px,1fr))] gap-2"
+>
+  {
+    Object.keys(LogoNameMap).map((name) => (
+      <div
+        class="aspect-square grid place-items-center bg-cn-background-2 border p-3 rounded"
+        title={name}
+      >
+        <Logo
+          name={name as keyof typeof LogoNameMap}
+          className="w-full h-full"
+        />
+      </div>
+    ))
+  }
+</div>

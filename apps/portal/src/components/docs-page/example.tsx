@@ -4,6 +4,7 @@ import { LiveEditor, LivePreview, LiveProvider } from "react-live";
 import ExampleLayout from "./example-layout";
 import { themes } from "prism-react-renderer";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
+import { cn } from "@/lib/utils.ts";
 
 type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 
@@ -21,7 +22,10 @@ const Example: FC<ExampleProps> = ({ code, scope, padding = true }) => {
       path: "*",
       element: (
         <LivePreview
-          className={`not-content border-cn-borders-3 bg-cn-background-hover mb-0 rounded-lg border ${padding ? "p-6" : ""} shadow-md`}
+          className={cn(
+            "not-content border-cn-borders-3 bg-cn-background-hover mb-0 rounded-lg border shadow-md",
+            { "p-6": padding },
+          )}
         />
       ),
     },

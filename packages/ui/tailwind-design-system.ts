@@ -391,7 +391,7 @@ export default {
           'linear-gradient(135deg, hsla(var(--cn-gradient-pipeline-widget-blob-small-from)) 0%, hsla(var(--cn-gradient-pipeline-widget-blob-small-to)) 67.67%)',
         'graph-gradient-1':
           'radial-gradient(88.57% 100% at 14.29% 0%, var(--cn-gradient-pipeline-card-bg-gradient-from) 10.62%, var(--cn-gradient-pipeline-card-bg-gradient-to) 75.86%)',
-        'graph-bg-gradient': 'radial-gradient(circle, var(--canary-graph-viewport-bg) 1px, transparent 1px)'
+        'graph-bg-gradient': 'radial-gradient(circle, var(--cn-bg-1) 1px, transparent 1px)'
       },
       backgroundSize: {
         'graph-bg-size': '22px 22px'

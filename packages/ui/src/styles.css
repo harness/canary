@@ -419,7 +419,7 @@
     stop-color: hsl(var(--cn-text-2));
 
     & + stop {
-      stop-color: hsl(var(--canary-sub-menu-icon-02));
+      stop-color: hsl(var(--cn-text-3));
     }
   }
 }

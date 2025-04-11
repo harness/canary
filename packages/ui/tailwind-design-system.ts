@@ -331,7 +331,7 @@ export default {
       },
       borderColor: {
         DEFAULT: 'var(--cn-border-3)',
-        'borders-1': 'hsl(var(--canary-border-01))',
+        'borders-1': 'hsl(var(--cn-border-2))',
         'borders-2': 'hsl(var(--canary-border-02))',
         'borders-3': 'hsl(var(--canary-border-03))',
         'borders-4': 'hsl(var(--canary-border-04))',

@@ -543,18 +543,28 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{orange.600}",
+          "$value": "{orange.800}",
           "$description": "Text color for subtle yellow surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{orange.100}",
+          "$value": "{orange.50}",
           "$description": "Background color for subdued yellow surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{orange.100}",
+          "$value": "{orange.50}",
           "$description": "Border color for subtle yellow boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{orange.100}",
+          "$description": "Hover state for background color for subdued yellow surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{orange.100}",
+          "$description": "Selected state for background color for subdued yellow surfaces."
         }
       },
       "surface": {

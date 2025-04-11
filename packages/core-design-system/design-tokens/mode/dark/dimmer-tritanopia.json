@@ -546,6 +546,16 @@
           "$type": "color",
           "$value": "{orange.900}",
           "$description": "Border color for subtle yellow boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{yellow.900}",
+          "$description": "Hover state for background color for subdued yellow surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{yellow.900}",
+          "$description": "Selected state for background color for subdued yellow surfaces."
         }
       },
       "surface": {

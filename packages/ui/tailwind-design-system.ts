@@ -3,7 +3,7 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
-import { badgeStyles, dialogStyles } from './tailwind-utils-config/components'
+import { badgeStyles, buttonStyles, dialogStyles } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
 export default {
@@ -429,6 +429,7 @@ export default {
     }),
     plugin(({ addComponents }) => {
       addComponents(badgeStyles)
+      addComponents(buttonStyles)
       addComponents(dialogStyles)
     }),
     tailwindcssAnimate,

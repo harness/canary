@@ -8,6 +8,7 @@ import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
 import { CommentItem, TypesPullReqActivity } from '../../pull-request-details-types'
 
 export interface PRCommentViewProps {
+  parentItem?: CommentItem<TypesPullReqActivity>
   commentItem: CommentItem<TypesPullReqActivity>
   filenameToLanguage?: (fileName: string) => string | undefined
   suggestionsBatch?: CommitSuggestion[]
@@ -22,13 +23,14 @@ const PRCommentView: FC<PRCommentViewProps> = ({
   suggestionsBatch,
   onCommitSuggestion,
   addSuggestionToBatch,
-  removeSuggestionFromBatch
+  removeSuggestionFromBatch,
+  parentItem
 }) => {
   const pathSegments = commentItem?.payload?.code_comment?.path?.split('/') || []
   const fileLang = filenameToLanguage?.(pathSegments.pop() || '') || ''
 
-  const appliedCheckSum = commentItem.appliedCheckSum ?? ''
-  const checkSums = commentItem.checkSums ?? []
+  const appliedCheckSum = commentItem?.payload?.metadata?.suggestions?.applied_check_sum ?? ''
+  const checkSums = commentItem?.payload?.metadata?.suggestions?.check_sums ?? []
   const isSuggestion = !!checkSums?.length
   const isApplied = appliedCheckSum === checkSums?.[0]
   const isInBatch = suggestionsBatch?.some(suggestion => suggestion.comment_id === commentItem.id)
@@ -39,7 +41,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
         markdownClassName="comment"
         source={commentItem?.payload?.text || ''}
         suggestionBlock={{
-          source: commentItem.codeBlockContent || '',
+          source: parentItem && parentItem.payload?.code_comment?.path ? parentItem.payload.code_comment.path : '',
           lang: fileLang,
           commentId: commentItem.id,
           appliedCheckSum: appliedCheckSum,

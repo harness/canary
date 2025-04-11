@@ -132,13 +132,18 @@ export interface PullRequestRegularAndCodeCommentProps
     | 'handleUpdateComment'
   > {
   commentItems: CommentItem<TypesPullReqActivity>[]
+  parentItem?: CommentItem<TypesPullReqActivity>
   isLast: boolean
   useTranslationStore: () => TranslationStore
-  componentViewBase: FC<{ commentItem: PRCommentViewProps['commentItem'] }>
+  componentViewBase: FC<{
+    commentItem: PRCommentViewProps['commentItem']
+    parentItem?: CommentItem<TypesPullReqActivity>
+  }>
 }
 
 const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeCommentProps> = ({
   commentItems,
+  parentItem,
   handleUpload,
   currentUser,
   toggleConversationStatus,
@@ -254,7 +259,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                   setComment={text => setEditComments(prev => ({ ...prev, [componentId]: text }))}
                 />
               ) : (
-                <ComponentViewBase commentItem={commentItem} />
+                <ComponentViewBase parentItem={parentItem} commentItem={commentItem} />
               )
             }}
             customHeaderData={{

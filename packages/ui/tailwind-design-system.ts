@@ -372,7 +372,7 @@ export default {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--canary-tw-gradient-stops))',
         'ai-button':
-          'linear-gradient(to right, hsl(var(--cn-gradient-ai-gradient-stop-1)), hsl(var(--cn-gradient-ai-gradient-stop-2)), hsl(var(--cn-gradient-ai-gradient-stop-3)), hsl(var(--canary-ai-button-stop-4)))',
+          'linear-gradient(to right, hsl(var(--cn-gradient-ai-gradient-stop-1)), hsl(var(--cn-gradient-ai-gradient-stop-2)), hsl(var(--cn-gradient-ai-gradient-stop-3)), hsl(var(--cn-gradient-ai-gradient-stop-4)))',
         'navbar-gradient-1':
           'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-1-1)) 0%, hsla(var(--canary-nav-gradient-1-2)) 100%)',
         'navbar-gradient-2':

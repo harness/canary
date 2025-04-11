@@ -345,7 +345,7 @@ export default {
         'borders-success': 'hsl(var(--cn-border-success))',
         'borders-accent': 'hsl(var(--cn-border-accent))',
         'borders-warning': 'hsl(var(--cn-border-warning))',
-        'borders-alert': 'hsl(var(--canary-border-alert))'
+        'borders-alert': 'hsl(var(--cn-border-warning))'
       },
       borderRadius: {
         10: '0.625rem'

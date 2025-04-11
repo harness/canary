@@ -321,7 +321,7 @@ export default {
         tight: '-0.02em'
       },
       boxShadow: {
-        1: '0px 8px 16px var(--canary-box-shadow-1)',
+        1: '0px 8px 16px var(-cn-shadow-color-1)',
         2: '0px 8px 8px var(--canary-box-shadow-2)',
         'pagination-1': '0px 2px 4px var(--canary-box-shadow-pagination)',
         'as-border': 'inset 0 0 0 1px',

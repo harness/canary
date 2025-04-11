@@ -11,7 +11,7 @@
     border-radius: 0.25rem;
     padding: 1rem;
     width: 20rem;
-    background: hsl(var(--canary-background-01));
+    background: hsl(var(--cn-bg-1));
   }
 }
 

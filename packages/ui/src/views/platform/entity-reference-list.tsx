@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 
 import { Breadcrumb, Icon, ScrollArea, StackedList } from '@/components'
+import { cn } from '@utils/cn'
 
 import {
   BaseEntityProps,
@@ -59,7 +60,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
             ) : null}
             {parentFolder ? (
               <>
-                <Breadcrumb.Item className={`items-center justify-center ${showBreadcrumbEllipsis ? '' : 'ml-1'}`}>
+                <Breadcrumb.Item className={cn('items-center justify-center', { 'ml-1': !showBreadcrumbEllipsis })}>
                   <Breadcrumb.Link
                     className="cursor-pointer text-xs"
                     onClick={() => handleScopeChange(DirectionEnum.PARENT)}
@@ -72,7 +73,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                 </Breadcrumb.Separator>
               </>
             ) : null}
-            <Breadcrumb.Page className={`cursor-pointer text-xs ${parentFolder ? '' : 'ml-1'}`}>
+            <Breadcrumb.Page className={cn('cursor-pointer text-xs', { 'ml-1': !parentFolder })}>
               {currentFolder}
             </Breadcrumb.Page>
           </Breadcrumb.List>

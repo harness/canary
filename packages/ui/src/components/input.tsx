@@ -23,7 +23,7 @@ const inputVariants = cva(
       },
       theme: {
         default:
-          'border-cn-borders-2 focus-within:border-cn-borders-3 focus-visible:border-cn-borders-3 disabled:border-cn-borders-2 disabled:placeholder:text-cn-foreground-disabled',
+          'border-cn-borders-2 focus-within:border-cn-borders-1 focus-visible:border-cn-borders-1 disabled:border-cn-borders-disabled disabled:placeholder:text-cn-foreground-disabled',
         danger: 'border-cn-borders-danger',
         clean: 'bg-transparent outline-none focus:outline-none',
         sidebar:

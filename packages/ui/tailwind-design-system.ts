@@ -78,6 +78,7 @@ export default {
 
           // remove
           // update to focus, disabled, success, danger, warning
+          disabled: 'lch(from var(--cn-state-disabled-border) l c h / <alpha-value>)',
           brand: 'lch(from var(--cn-set-brand-solid-border) l c h / <alpha-value>)',
           solidred: 'var(--cn-set-red-solid-border)',
           risk: 'var(--cn-icon-risk)'

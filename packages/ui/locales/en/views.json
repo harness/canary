@@ -270,47 +270,36 @@
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
   "search": "Search",
-  "common": {
-    "details": "Details",
-    "lastActivity": "Last Activity",
-    "created": "Created",
-    "manager": "Manager"
-  },
-  "connectors": {
-    "delete": "Delete Connector",
-    "configuration": "Configuration",
-    "references": "References",
-    "activityHistory": "Activity history",
-    "connector": "Connector",
-    "viewConnectorDetails": "View connector details",
-    "status": "Status",
-    "viewDocumentation": "View Documentation",
-    "new": "New connector",
-    "id": "Connector ID",
-    "create": "Create connector",
-    "createNew": "Create new connector",
-    "updated": "Last updated",
-    "lastConnected": "Last connected",
-    "statusOption": {
-      "success": "Success",
-      "failure": "Failure",
-      "label": "Status"
-    },
-    "viewDoctumentation": "View documentation"
-  },
   "notFound": {
     "button": "Reload page",
     "title": "Something went wrong…",
     "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
     "description": "The requested page is not found."
   },
-  "summary": "Summary",
-  "graph": "Graph",
-  "inputs": "Inputs",
-  "opa": "Policy evaluations",
-  "artifacts": "Artifacts",
-  "tests": "Tests",
-  "sto": "Security tests",
+  "connectors": {
+    "createNew": "Create new connector",
+    "delete": "Delete Connector",
+    "filterOptions": {
+      "statusOption": {
+        "success": "Success",
+        "failure": "Failure",
+        "label": "Status"
+      }
+    },
+    "updated": "Last updated",
+    "lastConnected": "Last connected"
+  },
+  "execution": {
+    "summary": "Summary",
+    "logs": "Logs",
+    "graph": "Graph",
+    "inputs": "Inputs",
+    "opa": "Policy evaluations",
+    "artifacts": "Artifacts",
+    "tests": "Tests",
+    "sto": "Security tests",
+    "secrets": "Secrets"
+  },
   "labelData": {
     "form": {
       "colorValuePlaceholder": "Enter value name",

@@ -46,7 +46,7 @@ const renderFilterValues = <T extends FilterValueTypes>(
       )
     }
     case FilterFieldTypes.Checkbox: {
-      const checkboxFilter = filter as FilterField<CheckboxOptions>
+      const checkboxFilter = filter as FilterField<CheckboxOptions[]>
       return (
         <Checkbox
           filter={checkboxFilter.value || []}

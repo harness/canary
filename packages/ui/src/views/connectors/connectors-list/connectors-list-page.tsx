@@ -13,8 +13,6 @@ import { ConnectorListFilters, ConnectorListPageProps } from './types'
 
 type ConnectorListFiltersKeys = keyof ConnectorListFilters
 
-// const ConnectorListFilterHandler = createFilters<ConnectorListFilters>()
-
 const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   searchQuery,
   setSearchQuery,

@@ -34,6 +34,7 @@ export interface RepoWebhookListProps {
   setPage: (val: number) => void
   openDeleteWebhookDialog: (id: number) => void
   handleEnableWebhook: (id: number, enabled: boolean) => void
+  toRepoWebhookDetails?: ({ webhookId }: { webhookId: number }) => string
 }
 
 export function RepoWebhookList({
@@ -46,7 +47,8 @@ export function RepoWebhookList({
   page,
   setPage,
   openDeleteWebhookDialog,
-  handleEnableWebhook
+  handleEnableWebhook,
+  toRepoWebhookDetails
 }: RepoWebhookListProps) {
   const { t } = useTranslationStore()
   const { navigate } = useRouterContext()
@@ -118,7 +120,12 @@ export function RepoWebhookList({
         </Table.Header>
         <Table.Body>
           {webhooks.map(webhook => (
-            <Table.Row onClick={() => navigate(`${webhook.id}`)} key={webhook.id}>
+            <Table.Row
+              onClick={() =>
+                navigate(toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`)
+              }
+              key={webhook.id}
+            >
               <Table.Cell>
                 <StackedList.Item
                   key={webhook.id}
@@ -175,7 +182,10 @@ export function RepoWebhookList({
                   actions={[
                     {
                       title: t('views:webhookData.edit', 'Edit webhook'),
-                      onClick: () => navigate(`${webhook.id}`)
+                      onClick: () =>
+                        navigate(
+                          toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`
+                        )
                     },
                     {
                       isDanger: true,

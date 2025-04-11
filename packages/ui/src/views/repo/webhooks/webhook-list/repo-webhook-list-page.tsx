@@ -15,7 +15,8 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   searchQuery,
   setSearchQuery,
   webhookLoading,
-  handleEnableWebhook
+  handleEnableWebhook,
+  toRepoWebhookDetails
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
@@ -85,6 +86,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
               setPage={setPage}
               openDeleteWebhookDialog={openDeleteWebhookDialog}
               handleEnableWebhook={handleEnableWebhook}
+              toRepoWebhookDetails={toRepoWebhookDetails}
             />
           )}
         </>

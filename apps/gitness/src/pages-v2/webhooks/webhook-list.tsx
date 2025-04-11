@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -12,15 +13,18 @@ import {
 import { DeleteAlertDialog, DeleteAlertDialogProps } from '@harnessio/ui/components'
 import { ErrorTypes, RepoWebhookListPage } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { PathParams } from '../../RouteDefinitions'
 import { getErrorMessage } from '../../utils/error-utils'
 import { useWebhookStore } from './stores/webhook-store'
 
 export default function WebhookListPage() {
   const repoRef = useGetRepoRef() ?? ''
+  const { spaceId, repoId } = useParams<PathParams>()
   const { webhooks, setWebhooks, page, setPage, setError, setTotalPages } = useWebhookStore()
   const [query, setQuery] = useQueryState('query')
 
@@ -30,6 +34,8 @@ export default function WebhookListPage() {
   const [deleteWebhookId, setDeleteWebhookId] = useState<number | null>(null)
 
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+
+  const routes = useRoutes()
 
   /**
    * Fetching webhooks
@@ -119,6 +125,9 @@ export default function WebhookListPage() {
         setSearchQuery={setQuery}
         webhookLoading={isFetching}
         handleEnableWebhook={handleEnableWebhook}
+        toRepoWebhookDetails={({ webhookId }: { webhookId: number }) =>
+          routes.toRepoWebhookDetails({ spaceId, repoId, webhookId: webhookId.toString() })
+        }
       />
 
       <DeleteAlertDialog

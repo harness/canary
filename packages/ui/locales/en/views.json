@@ -270,15 +270,23 @@
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
   "search": "Search",
-  "notFound": {
-    "button": "Reload page",
-    "title": "Something went wrong…",
-    "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
-    "description": "The requested page is not found."
+  "common": {
+    "details": "Details",
+    "lastActivity": "Last Activity",
+    "created": "Created",
+    "manager": "Manager"
   },
   "connectors": {
-    "createNew": "Create new connector",
     "delete": "Delete Connector",
+    "configuration": "Configuration",
+    "references": "References",
+    "activityHistory": "Activity history",
+    "connector": "Connector",
+    "viewConnectorDetails": "View Connector Details",
+    "status": "Status",
+    "viewDocumentation": "View Documentation",
+    "createNew": "Create new connector",
+    "id": "Connector ID",
     "filterOptions": {
       "statusOption": {
         "success": "Success",
@@ -288,6 +296,12 @@
     },
     "updated": "Last updated",
     "lastConnected": "Last connected"
+  },
+  "notFound": {
+    "button": "Reload page",
+    "title": "Something went wrong…",
+    "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
+    "description": "The requested page is not found."
   },
   "execution": {
     "summary": "Summary",

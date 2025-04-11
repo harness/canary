@@ -102,4 +102,5 @@ export interface RepoWebhookListPageProps {
   setSearchQuery: (query: string | null) => void
   webhookLoading: boolean
   handleEnableWebhook: (id: number, enabled: boolean) => void
+  toRepoWebhookDetails?: ({ webhookId }: { webhookId: number }) => string
 }

@@ -7,11 +7,11 @@
   &[data-show='show'] {
     display: flex;
     flex-direction: column;
-    border: 1px solid hsl(var(--canary-border-01));
+    border: 1px solid hsl(var(--cn-border-2));
     border-radius: 0.25rem;
     padding: 1rem;
     width: 20rem;
-    background: hsl(var(--canary-background-01));
+    background: hsl(var(--cn-bg-1));
   }
 }
 

@@ -134,7 +134,7 @@
   white-space: nowrap;
   transform: translateY(-50%);
   left: calc(100% + 8px);
-  color: var(--canary-primary);
+  color: var(--cn-bg-1);
 }
 
 .diff-widget-tooltip::before {
@@ -408,23 +408,23 @@
 
 .sub-menu-icon-bg {
   stop {
-    stop-color: hsl(var(--canary-sub-menu-icon-01));
+    stop-color: hsl(var(--cn-text-2));
 
     & + stop {
-      stop-color: hsl(var(--canary-sub-menu-icon-02));
+      stop-color: hsl(var(--cn-text-3));
     }
   }
 }
 
 :focus-visible {
-  outline: 2px solid hsl(var(--canary-border-accent));
+  outline: 2px solid hsl(var(--cn-border-accent));
   outline-offset: 2px;
   border-radius: 2px;
 }
 
 mark {
-  background: hsl(var(--canary-background-05));
-  color: hsl(var(--canary-foreground-06));
+  background: hsl(var(--cn-set-brand-solid-bg));
+  color: hsl(var(--cn-set-brand-solid-text));
 }
 
 /* Hack for detecting scroll on select */
@@ -456,7 +456,7 @@ mark {
 }
 
 [data-radix-select-viewport]::-webkit-scrollbar-thumb {
-  background-color: hsl(var(--canary-background-09));
+  background-color: hsl(var(--cn-bg-2));
   border: 4px solid transparent;
   border-radius: 7px;
   background-clip: content-box;

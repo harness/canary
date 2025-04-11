@@ -75,7 +75,7 @@ export const ChatDiffViewer = ({ data, mode = 4, lang = 'go', fileName }: ChatDi
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         <DiffView
-          style={{ '--diff-plain-lineNumber--': 'hsl(var(--canary-background-01))' } as CSSProperties}
+          style={{ '--diff-plain-lineNumber--': 'hsl(var(--cn-bg-1))' } as CSSProperties}
           className="w-full text-cn-foreground-1"
           diffFile={diffFileInstance}
           diffViewFontSize={14}

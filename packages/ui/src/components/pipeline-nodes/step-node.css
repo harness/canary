@@ -6,10 +6,10 @@
   border-radius: 6px;
   background: conic-gradient(
     from var(--angle),
-    var(--canary-graph-gradient-executing-1),
-    var(--canary-graph-gradient-executing-2),
-    var(--canary-graph-gradient-executing-2),
-    var(--canary-graph-gradient-executing-1)
+    var(--cn-gradient-pipeline-running-gradient-stop-1),
+    var(--cn-gradient-pipeline-running-gradient-stop-2),
+    var(--cn-gradient-pipeline-running-gradient-stop-2),
+    var(--cn-gradient-pipeline-running-gradient-stop-1)
   );
   animation: rotate 3.5s linear infinite;
   mask:

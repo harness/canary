@@ -40,7 +40,7 @@ export function getMonacoEditorCss({
       
       .monaco-editor-${instanceId} .view-line .blame-editor-commit {
         display: inline-block;
-        color: var(--canary-foreground-01);
+        color: var(--cn-text-1);
       }`
 
   return css

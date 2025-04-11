@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { Badge, BadgeProps, Icon, IconProps, Tabs, TabsTriggerProps } from '@/components'
+import { Badge, BadgeProps, Icon, IconProps, TabNav, Tabs, TabsTriggerProps } from '@/components'
 import { useRouterContext, useTheme } from '@/context'
 import { cn } from '@/utils'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
@@ -72,28 +72,28 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
               }
             )}
           >
-            <NavLink to={PullRequestTabsKeys.CONVERSATION}>
-              <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CONVERSATION)}>
+            <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CONVERSATION)} asChild>
+              <NavLink to={PullRequestTabsKeys.CONVERSATION}>
                 <TabTitleWithIcon icon="comments">
                   {t('views:pullRequests.conversation', 'Conversation')}
                 </TabTitleWithIcon>
                 {pullRequest?.stats?.conversations && (
                   <Badge {...badgeCommonProps}>{pullRequest.stats.conversations}</Badge>
                 )}
-              </Tabs.Trigger>
-            </NavLink>
-            <NavLink to={PullRequestTabsKeys.COMMITS}>
-              <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.COMMITS)}>
+              </NavLink>
+            </Tabs.Trigger>
+            <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.COMMITS)} asChild>
+              <NavLink to={PullRequestTabsKeys.COMMITS}>
                 <TabTitleWithIcon icon="tube-sign">{t('views:pullRequests.commits', 'Commits')}</TabTitleWithIcon>
                 <Badge {...badgeCommonProps}>{pullRequest?.stats?.commits}</Badge>
-              </Tabs.Trigger>
-            </NavLink>
-            <NavLink to={PullRequestTabsKeys.CHANGES}>
-              <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CHANGES)}>
+              </NavLink>
+            </Tabs.Trigger>
+            <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CHANGES)} asChild>
+              <NavLink to={PullRequestTabsKeys.CHANGES}>
                 <TabTitleWithIcon icon="changes">{t('views:pullRequests.changes', 'Changes')}</TabTitleWithIcon>
                 <Badge {...badgeCommonProps}>{pullRequest?.stats?.files_changed}</Badge>
-              </Tabs.Trigger>
-            </NavLink>
+              </NavLink>
+            </Tabs.Trigger>
           </Tabs.List>
         </Tabs.Root>
 

@@ -7,6 +7,7 @@ import { cn } from '@utils/cn'
 
 import { ConnectorDetailsConfiguration } from './connector-details-configuration'
 import { ConnectorDetailsHeader } from './connector-details-header'
+import { ConnectorDetailsReferencePage } from './connector-details-references-page'
 import { ConnectorDetailsPageProps, ConnectorDetailsTabsKeys } from './types'
 
 const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
@@ -17,7 +18,17 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
   getConnectorDefinition,
   inputComponentFactory,
   onSave,
-  apiError
+  apiError,
+  apiConnectorRefError,
+  isConnectorReferencesLoading,
+  setIsConnectorRefSearchQuery,
+  currentPage,
+  totalPages,
+  goToPage,
+  entities,
+  toEntity,
+  toScope,
+  searchQuery
 }) => {
   const { t } = useTranslationStore()
   const { isInset } = useTheme()
@@ -81,7 +92,19 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
             />
           </Tabs.Content>
           <Tabs.Content className="pt-7" value={ConnectorDetailsTabsKeys.REFERENCES}>
-            <div>References</div>
+            <ConnectorDetailsReferencePage
+              toEntity={toEntity}
+              toScope={toScope}
+              entities={entities}
+              searchQuery={searchQuery}
+              apiConnectorRefError={apiConnectorRefError}
+              useTranslationStore={useTranslationStore}
+              isLoading={isConnectorReferencesLoading}
+              setSearchQuery={setIsConnectorRefSearchQuery}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              goToPage={goToPage}
+            />
           </Tabs.Content>
           <Tabs.Content className="pt-7" value={ConnectorDetailsTabsKeys.ACTIVITY}>
             <div>Activity History</div>

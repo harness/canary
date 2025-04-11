@@ -218,6 +218,8 @@
   },
   "noData": {
     "noResults": "No search results",
+    "noEntities": "No entities yet",
+    "noEntitiesDescription": "There are no entities yet. ",
     "errorApiTitle": "Failed to load {{type}}",
     "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noConnectors": "No connectors yet",
@@ -260,8 +262,6 @@
     "createSecret": "Create new secret.",
     "noUsers": "No Users Found",
     "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
-    "noEntities": "No entities yet",
-    "noEntitiesDescription": "There are no entities yet. ",
     "noConnectorsProject": "There are no connectors in this project yet.",
     "noSecretsProject": "There are no secrets in this project yet.",
     "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",

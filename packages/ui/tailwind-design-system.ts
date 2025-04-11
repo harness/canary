@@ -339,7 +339,7 @@ export default {
         'borders-6': 'hsl(var(--cn-border-1))',
         'borders-7': 'hsl(var(--cn-border-1))',
         'borders-8': 'hsl(var(--cn-border-2))',
-        'borders-9': 'hsl(var(--canary-border-09))',
+        'borders-9': 'hsl(var(--cn-border-1))',
         'borders-10': 'hsl(var(--canary-border-10))',
         'borders-danger': 'hsl(var(--canary-border-danger))',
         'borders-success': 'hsl(var(--canary-border-success))',

@@ -1,4 +1,5 @@
 import { FC, PropsWithChildren, useCallback } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import { Badge, BadgeProps, Icon, IconProps, Tabs, TabsTriggerProps } from '@/components'
 import { useRouterContext, useTheme } from '@/context'
@@ -49,11 +50,10 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   const getTabProps = useCallback(
     (tab: PullRequestTabsKeys): TabsTriggerProps => ({
       value: tab,
-      onClick: () => navigate(`../${tab}`),
       className: 'group gap-x-1.5',
       role: 'link'
     }),
-    [navigate]
+    []
   )
 
   return (
@@ -72,22 +72,28 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
               }
             )}
           >
-            <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CONVERSATION)}>
-              <TabTitleWithIcon icon="comments">
-                {t('views:pullRequests.conversation', 'Conversation')}
-              </TabTitleWithIcon>
-              {pullRequest?.stats?.conversations && (
-                <Badge {...badgeCommonProps}>{pullRequest.stats.conversations}</Badge>
-              )}
-            </Tabs.Trigger>
-            <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.COMMITS)}>
-              <TabTitleWithIcon icon="tube-sign">{t('views:pullRequests.commits', 'Commits')}</TabTitleWithIcon>
-              <Badge {...badgeCommonProps}>{pullRequest?.stats?.commits}</Badge>
-            </Tabs.Trigger>
-            <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CHANGES)}>
-              <TabTitleWithIcon icon="changes">{t('views:pullRequests.changes', 'Changes')}</TabTitleWithIcon>
-              <Badge {...badgeCommonProps}>{pullRequest?.stats?.files_changed}</Badge>
-            </Tabs.Trigger>
+            <NavLink to={PullRequestTabsKeys.CONVERSATION}>
+              <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CONVERSATION)}>
+                <TabTitleWithIcon icon="comments">
+                  {t('views:pullRequests.conversation', 'Conversation')}
+                </TabTitleWithIcon>
+                {pullRequest?.stats?.conversations && (
+                  <Badge {...badgeCommonProps}>{pullRequest.stats.conversations}</Badge>
+                )}
+              </Tabs.Trigger>
+            </NavLink>
+            <NavLink to={PullRequestTabsKeys.COMMITS}>
+              <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.COMMITS)}>
+                <TabTitleWithIcon icon="tube-sign">{t('views:pullRequests.commits', 'Commits')}</TabTitleWithIcon>
+                <Badge {...badgeCommonProps}>{pullRequest?.stats?.commits}</Badge>
+              </Tabs.Trigger>
+            </NavLink>
+            <NavLink to={PullRequestTabsKeys.CHANGES}>
+              <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CHANGES)}>
+                <TabTitleWithIcon icon="changes">{t('views:pullRequests.changes', 'Changes')}</TabTitleWithIcon>
+                <Badge {...badgeCommonProps}>{pullRequest?.stats?.files_changed}</Badge>
+              </Tabs.Trigger>
+            </NavLink>
           </Tabs.List>
         </Tabs.Root>
 

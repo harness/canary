@@ -119,27 +119,21 @@ return (
 All parts of the `Table` component can be imported and composed as required.
 
 ```typescript jsx
-<Table.Root variant="asStackedList">
-  <Table.Caption>List of users</Table.Caption>
+<Table.Root>
+  <Table.Caption />
   <Table.Header>
     <Table.Row>
-      <Table.Head>Name</Table.Head>
-      <Table.Head>Email</Table.Head>
-      <Table.Head>Display Name</Table.Head>
-      <Table.Head>Date added</Table.Head>
+      <Table.Head />
     </Table.Row>
   </Table.Header>
   <Table.Body>
     <Table.Row>
-      <Table.Cell>John Doe</Table.Cell>
-      <Table.Cell>john@example.com</Table.Cell>
-      <Table.Cell>John</Table.Cell>
-      <Table.Cell>2023-01-01</Table.Cell>
+      <Table.Cell />
     </Table.Row>
   </Table.Body>
   <Table.Footer>
     <Table.Row>
-      <Table.Cell colSpan={4}>Total users: 1</Table.Cell>
+      <Table.Cell />
     </Table.Row>
   </Table.Footer>
 </Table.Root>

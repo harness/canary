@@ -42,6 +42,7 @@ export interface YamlEditorProps<T> {
   }
   animateOnUpdate?: boolean
   onAnimateEnd?: () => void
+  instanceId?: string
 }
 
 export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
@@ -55,10 +56,11 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
     theme: themeFromProps,
     options: userOptions,
     animateOnUpdate = false,
-    onAnimateEnd
+    onAnimateEnd,
+    instanceId
   } = props
   const monaco = useMonaco()
-  const [instanceId] = useState('yaml')
+  const [instanceIdLocal] = useState(instanceId ?? `yaml-editor-${Math.random()}`)
   const { editor, setEditor } = useYamlEditorContext()
 
   const rootDivRef = useRef<HTMLDivElement | null>(null)
@@ -176,7 +178,7 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
         language="yaml"
         theme={theme}
         options={mergedOptions}
-        path={schemaIdToUrl(instanceId)}
+        path={schemaIdToUrl(instanceIdLocal)}
         onMount={handleEditorDidMount}
       />
     </div>

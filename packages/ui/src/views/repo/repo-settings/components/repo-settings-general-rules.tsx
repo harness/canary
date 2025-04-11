@@ -29,9 +29,9 @@ const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCo
   return (
     <div className="flex items-center gap-1.5 pl-6 text-sm">
       {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
-      <span className="bg-borders-2 pointer-events-none mx-1 h-3 w-px" aria-hidden />
+      <span className="bg-cn-background-3 pointer-events-none mx-1 h-3 w-px" aria-hidden />
       {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
-      <span className="bg-borders-2 pointer-events-none mx-1 h-3 w-px" aria-hidden />
+      <span className="bg-cn-background-3 pointer-events-none mx-1 h-3 w-px" aria-hidden />
       <span className="flex items-center gap-1">
         {bypassAllowed ? (
           <>
@@ -219,7 +219,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
             <>
               <Spacer size={2} />
-              <Text size={1} className="text-destructive">
+              <Text size={1} className="text-cn-foreground-danger">
                 {apiError.message}
               </Text>
             </>

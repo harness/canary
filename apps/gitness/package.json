@@ -25,7 +25,6 @@
     "@harnessio/forms": "workspace:*",
     "@harnessio/pipeline-graph": "workspace:*",
     "@harnessio/ui": "workspace:*",
-    "@harnessio/views": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
     "@hookform/resolvers": "^3.6.0",
     "@tanstack/react-query": "4.20.4",

@@ -25,6 +25,7 @@ export interface ConnectorListItem {
     branch?: string
     objectId?: string
   }
+  isFavorite?: boolean
 }
 
 export interface ConnectorListProps extends Partial<RoutingProps> {
@@ -34,6 +35,7 @@ export interface ConnectorListProps extends Partial<RoutingProps> {
   onEditConnector: (connector: ConnectorListItem) => void
   onTestConnection: (connector: ConnectorListItem) => void
   onDeleteConnector: (connectorId: string) => void
+  onToggleFavoriteConnector: (connectorId: string, isFavorite: boolean) => void
 }
 
 export type ConnectorListFilters = {
@@ -49,4 +51,5 @@ export interface ConnectorListPageProps
   isError?: boolean
   errorMessage?: string
   onFilterChange?: (filterValues: ConnectorListFilters) => void
+  onCreate: () => void
 }

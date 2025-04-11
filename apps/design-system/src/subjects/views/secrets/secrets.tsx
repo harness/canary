@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { useTranslationStore } from '@utils/viewUtils'
 
-import { Drawer, Spacer } from '@harnessio/ui/components'
+import { Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
   CreateSecretFormFields,
   CreateSecretPage,
@@ -33,10 +33,13 @@ export const SecretsPage = ({
 }) => {
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.NEW)
 
-  const [, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
+  const [activeScope, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
 
   const [parentFolder, setParentFolder] = useState<string | null>(mockAccountsData[0].accountName)
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
+  const [currentFolder, setCurrentFolder] = useState<string | null>(
+    mockOrgData[0].organizationResponse.organization.identifier
+  )
 
   const onSubmit = (data: CreateSecretFormFields) => {
     console.log('Submitted data:', data)
@@ -57,14 +60,17 @@ export const SecretsPage = ({
       switch (newScope) {
         case ScopeEnum.ACCOUNT:
           setParentFolder(null)
+          setCurrentFolder(mockAccountsData[0].accountName)
           setChildFolder(mockOrgData[0].organizationResponse.organization.identifier)
           break
         case ScopeEnum.ORGANIZATION:
           setParentFolder(mockAccountsData[0].accountName)
+          setCurrentFolder(mockOrgData[0].organizationResponse.organization.identifier)
           setChildFolder(mockProjectsData[0].projectResponse.project.identifier)
           break
         case ScopeEnum.PROJECT:
           setParentFolder(mockOrgData[0].organizationResponse.organization.identifier)
+          setCurrentFolder(mockProjectsData[0].projectResponse.project.identifier)
           setChildFolder(null)
           break
       }
@@ -101,11 +107,13 @@ export const SecretsPage = ({
               })) as SecretItem[]
             }
             parentFolder={parentFolder}
+            currentFolder={currentFolder}
             childFolder={childFolder}
             selectedEntity={selectedSecret}
             onSelectEntity={handleSelectSecret}
             onScopeChange={handleScopeChange}
             onCancel={handleCancel}
+            showBreadcrumbEllipsis={activeScope === ScopeEnum.PROJECT}
             isLoading={false}
             apiError="Could not fetch secrets, unauthorized"
           />
@@ -120,12 +128,17 @@ export const SecretsPage = ({
       <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
         <Drawer.Content>
           <Drawer.Header>
-            <Drawer.Title className="text-3xl">Secrets</Drawer.Title>
+            <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Secret</Drawer.Title>
+            <FormSeparator className="w-full" />
             <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
           </Drawer.Header>
-          <Spacer size={5} />
-
+          {/* <Spacer size={5} /> */}
+          <Text as="div" className="text-cn-foreground-2 my-4">
+            Choose type
+          </Text>
           <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
+          <Spacer size={5} />
+          <FormSeparator />
           <Spacer size={5} />
           {renderSecretContent()}
         </Drawer.Content>

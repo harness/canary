@@ -41,9 +41,9 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   const RightDetails = () => {
     return (
       <ButtonGroup verticalAlign="center" spacing="2">
-        <span className="text-sm text-foreground-4">{`${fileContent?.split('\n').length || 0} lines`}</span>
-        <span className="h-3 border-l border-borders-2" />
-        <span className="mr-5 text-sm text-foreground-4">{fileBytesSize}</span>
+        <span className="text-sm text-cn-foreground-2">{`${fileContent?.split('\n').length || 0} lines`}</span>
+        <span className="h-3 border-l border-cn-borders-2" />
+        <span className="mr-5 text-sm text-cn-foreground-2">{fileBytesSize}</span>
         <FileToolbarActions
           showEdit
           copyContent={fileContent}
@@ -65,7 +65,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
               <span className="truncate text-sm">View Raw</span>
             </DropdownMenu.Item>
             <DropdownMenu.Item onSelect={handleOpenDeleteDialog}>
-              <span className="truncate text-sm text-foreground-danger">Delete</span>
+              <span className="truncate text-sm text-cn-foreground-danger">Delete</span>
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Root>

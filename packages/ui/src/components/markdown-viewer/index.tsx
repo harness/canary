@@ -27,7 +27,7 @@ interface MarkdownViewerWrapperProps {
 }
 
 const MarkdownViewerWrapper: FC<MarkdownViewerWrapperProps> = ({ children }) => {
-  return <div className="rounded-b-md border-x border-b bg-background-surface p-6">{children}</div>
+  return <div className="bg-cn-background-2 rounded-b-md border-x border-b p-6">{children}</div>
 }
 
 interface MarkdownViewerProps {
@@ -39,6 +39,7 @@ interface MarkdownViewerProps {
   suggestionCheckSum?: string
   isSuggestion?: boolean
   markdownClassName?: string
+  showLineNumbers?: boolean // New prop to control line number display
 }
 
 export function MarkdownViewer({
@@ -48,7 +49,8 @@ export function MarkdownViewer({
   suggestionBlock,
   suggestionCheckSum,
   isSuggestion,
-  markdownClassName
+  markdownClassName,
+  showLineNumbers = false // Default to false
 }: MarkdownViewerProps) {
   const { navigate } = useRouterContext()
   const [isOpen, setIsOpen] = useState(false)
@@ -157,8 +159,8 @@ export function MarkdownViewer({
     <Wrapper>
       <div ref={ref} style={styles}>
         {isSuggestion && (
-          <div className="rounded-t-md border-x border-t border-borders-1 bg-background-2 px-4 py-3">
-            <span className="text-14 text-foreground-1">
+          <div className="border-cn-borders-2 bg-cn-background-2 rounded-t-md border-x border-t px-4 py-3">
+            <span className="text-14 text-cn-foreground-1">
               {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
                 ? 'Suggestion applied'
                 : 'Suggested change'}
@@ -185,15 +187,52 @@ export function MarkdownViewer({
             pre: ({ children, node }) => {
               const code = node && node.children ? getCodeString(node.children) : (children as string)
 
+              // Extract and process code content for line numbers
+              let codeContent = ''
+
+              // Find the code element and extract its content
+              if (typeof code === 'string') {
+                codeContent = code
+              }
+
+              // Clean code and trim lines and filter by lines
+              const trimmedCode = codeContent.trim()
+              // Then split by newlines
+              const codeLines = trimmedCode.split('\n')
+              // Filter out any empty lines at the end
+              const filteredLines =
+                codeLines.length > 0 && codeLines[codeLines.length - 1] === '' ? codeLines.slice(0, -1) : codeLines
+              const hasLineNumbers = showLineNumbers && filteredLines.length > 1
+
               return (
                 <div className="relative">
                   <CopyButton
-                    className="absolute right-3 top-3 z-10 size-6 bg-background-3"
+                    className="bg-cn-background-3 absolute right-3 top-3 z-10 size-6"
                     buttonVariant="outline"
                     name={code}
                     iconSize={13}
                   />
-                  <pre className="!bg-background-1">{children}</pre>
+                  <pre
+                    className={cn(
+                      // Apply padding conditionally based on line numbers
+                      { 'p-4': !hasLineNumbers, 'mb-0': hasLineNumbers }
+                    )}
+                  >
+                    {hasLineNumbers ? (
+                      <div className="relative flex w-full bg-transparent">
+                        <div className="bg-cn-background-2 flex-none select-none text-right">
+                          {filteredLines.map((_, i) => (
+                            <span key={i} className="text-cn-foreground-7 block pr-3 pt-[0.5px] text-sm">
+                              {i + 1}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="relative flex-1 overflow-hidden bg-transparent">{children}</div>
+                      </div>
+                    ) : (
+                      children
+                    )}
+                  </pre>
                 </div>
               )
             },
@@ -210,7 +249,7 @@ export function MarkdownViewer({
                 return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
               }
 
-              return <code className={String(_className)}>{children}</code>
+              return <code className={cn(String(_className), 'leading-6 text-sm p-0')}>{children}</code>
             }
           }}
         />

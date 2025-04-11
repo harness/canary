@@ -18,12 +18,13 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { Icon } from '../icon'
 
 const alertVariants = cva(
-  'relative w-full rounded-lg border px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7',
+  'relative w-full rounded-lg border px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-cn-foreground [&>svg~*]:pl-7',
   {
     variants: {
       variant: {
-        default: 'bg-background text-foreground',
-        destructive: 'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive'
+        default: 'bg-cn-background text-cn-foreground',
+        destructive:
+          'border-cn-borders-danger/50 text-cn-foreground-danger dark:border-cn-borders-danger [&>svg]:text-cn-foreground-danger'
       }
     },
     defaultVariants: {

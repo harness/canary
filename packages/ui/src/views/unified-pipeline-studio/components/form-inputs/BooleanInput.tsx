@@ -5,18 +5,20 @@ import { InputComponent, InputProps, useController, type AnyFormikValue, type Us
 
 import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
+import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
 
 export interface BooleanInputConfig {
   inputType: 'boolean'
   inputConfig?: {
     onChange: (value: AnyFormikValue, formik: UseFormReturn) => void
+    tooltip?: string
   }
 }
 
 function BooleanInputInternal(props: InputProps<AnyFormikValue, BooleanInputConfig>): JSX.Element {
   const { readonly, path, input } = props
-  const { label = '', required, description } = input
+  const { label = '', required, description, inputConfig } = input
 
   const { field } = useController({
     name: path
@@ -38,6 +40,8 @@ function BooleanInputInternal(props: InputProps<AnyFormikValue, BooleanInputConf
       </Layout.Horizontal>
 
       <InputError path={path} />
+
+      {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
     </InputWrapper>
   )
 }

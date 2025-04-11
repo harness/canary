@@ -91,7 +91,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
-      <h1 className="mb-10 text-2xl font-medium text-foreground-1">
+      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">
         {preSetWebhookData
           ? t('views:repos.editWebhookTitle', 'Webhook details')
           : t('views:repos.createWebhookTitle', 'Create a webhook')}
@@ -145,7 +145,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
           </ButtonGroup>
         </Fieldset>
 
-        {!!apiError && <span className="text-xs text-destructive">{apiError?.toString()}</span>}
+        {!!apiError && <span className="text-xs text-cn-foreground-danger">{apiError?.toString()}</span>}
       </FormWrapper>
     </SandboxLayout.Content>
   )

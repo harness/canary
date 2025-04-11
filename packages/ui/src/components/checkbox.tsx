@@ -17,7 +17,7 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, CheckboxP
     <div className={cn('flex gap-x-2.5', className)}>
       <CheckboxPrimitive.Root
         ref={ref}
-        className="peer flex size-4 shrink-0 items-center justify-center rounded-sm border border-icons-1 hover:border-icons-3 disabled:cursor-not-allowed disabled:border-icons-4 data-[state=checked]:border-icons-2 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+        className="peer flex size-4 shrink-0 items-center justify-center rounded-sm border border-icons-1 hover:border-icons-3 disabled:cursor-not-allowed disabled:border-icons-4 data-[state=checked]:border-icons-2 data-[state=checked]:bg-cn-background-accent data-[state=checked]:text-cn-foreground-primary"
         {...props}
       >
         <CheckboxPrimitive.Indicator className={cn('flex items-center justify-center text-current mt-[1px]')}>

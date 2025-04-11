@@ -139,8 +139,8 @@ export const ButtonWithOptions = <T extends string>({
                   onClick={() => handleOptionChange(option.value)}
                 >
                   <span className="flex flex-col gap-y-1.5">
-                    <span className="leading-none text-foreground-8">{option.label}</span>
-                    {option?.description && <span className="text-foreground-4">{option.description}</span>}
+                    <span className="leading-none text-cn-foreground-1">{option.label}</span>
+                    {option?.description && <span className="text-cn-foreground-2">{option.description}</span>}
                   </span>
                 </DropdownMenu.Item>
               ))}

@@ -29,7 +29,7 @@ export const RepoSettingsGeneralDelete: FC<{
       {apiError && apiError.type === ErrorTypes.DELETE_REPO && (
         <>
           <Spacer size={2} />
-          <Text size={1} className="text-destructive">
+          <Text size={1} className="text-cn-foreground-danger">
             {apiError.message}
           </Text>
         </>

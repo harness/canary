@@ -1,5 +1,5 @@
 @tailwind base;
-@tailwind components;
+/*@tailwind components;*/
 @tailwind utilities;
 
 /*
@@ -112,9 +112,9 @@ https://tailwindcss.com/docs/adding-custom-styles#using-css-and-layer
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-cn-borders-1;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-cn-background text-cn-foreground-2;
   }
 }

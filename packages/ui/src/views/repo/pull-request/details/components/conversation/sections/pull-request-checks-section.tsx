@@ -25,12 +25,12 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
       case ExecutionState.BLOCKED:
         return <Icon name="pending-clock" className="text-icons-alert" />
       case ExecutionState.RUNNING:
-        return <Icon name="comments" className="text-warning" />
+        return <Icon name="comments" className="text-cn-foreground-warning" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
-        return <Icon name="triangle-warning" className="text-destructive" />
+        return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
       default:
-        return <Icon name="success" className="text-foreground-success" />
+        return <Icon name="success" className="text-cn-foreground-success" />
     }
   }
 
@@ -42,7 +42,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
           title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}
           description={<LineDescription text={checksInfo.content} />}
         />
-        <span className="px-2 py-1.5 text-14 text-foreground-2 transition-colors duration-200 group-hover:text-foreground-1">
+        <span className="px-2 py-1.5 text-14 text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
           Show more
         </span>
       </Accordion.Trigger>
@@ -101,7 +101,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
                 </div>
                 <div className="col-span-1 flex justify-end">
                   {check?.check?.status === ExecutionState.PENDING ? (
-                    <Badge variant="outline" size="sm">
+                    <Badge variant="surface" size="sm">
                       <Text size={1} color="tertiaryBackground">
                         Required
                       </Text>
@@ -153,7 +153,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
           //       <div className="col-span-1 flex justify-end">
           //         {check.required ? (
           //           <div className="border rounded-full bg-transparent">
-          //             <Text className="text-xs text-tertiary-background px-2 py-1.5">required</Text>
+          //             <Text className="text-xs text-cn-foreground-3 px-2 py-1.5">required</Text>
           //           </div>
           //         ) : (
           //           <div className="min-w-[70px]"></div>

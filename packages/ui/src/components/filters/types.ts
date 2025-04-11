@@ -174,6 +174,7 @@ interface FilterField<T = string | number> {
 
 interface FilterOptionConfigBase<Key extends string, V = undefined> {
   label: string
+  // filter-key with which the filter is identified
   value: Key
   parser?: Parser<V>
 }
@@ -202,7 +203,8 @@ interface NumberFilterOptionConfig<T extends string = string> extends FilterOpti
   type: FilterFieldTypes.Number
 }
 
-interface CheckboxFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T, Array<CheckboxOptions>> {
+interface CheckboxFilterOptionConfig<T extends string = string>
+  extends FilterOptionConfigBase<T, Array<CheckboxOptions>> {
   type: FilterFieldTypes.Checkbox
   filterFieldConfig?: {
     options?: Array<CheckboxOptions>

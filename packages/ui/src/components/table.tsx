@@ -8,7 +8,7 @@ const tableVariants = cva('w-full text-sm', {
     variant: {
       default: 'caption-bottom',
       asStackedList:
-        'rounded-md border bg-background-surface [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-background-2'
+        'rounded-md border bg-cn-background-2 [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-cn-background-2'
     }
   },
   defaultVariants: {
@@ -36,7 +36,7 @@ TableRoot.displayName = 'TableRoot'
 
 const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
   ({ className, ...props }, ref) => (
-    <thead ref={ref} className={cn('[&_tr]:border-b border-borders-1', className)} {...props} />
+    <thead ref={ref} className={cn('[&_tr]:border-b border-cn-borders-2', className)} {...props} />
   )
 )
 TableHeader.displayName = 'TableHeader'
@@ -47,7 +47,11 @@ const TableBody = forwardRef<
 >(({ className, hasHighlightOnHover, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn('[&_tr:last-child]:border-0', { '[&>tr:hover]:bg-background-4': hasHighlightOnHover }, className)}
+    className={cn(
+      '[&_tr:last-child]:border-0',
+      { '[&>tr:hover]:bg-cn-background-hover': hasHighlightOnHover },
+      className
+    )}
     {...props}
   />
 ))
@@ -55,14 +59,22 @@ TableBody.displayName = 'TableBody'
 
 const TableFooter = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
   ({ className, ...props }, ref) => (
-    <tfoot ref={ref} className={cn('bg-muted/50 border-t font-medium [&>tr]:last:border-b-0', className)} {...props} />
+    <tfoot
+      ref={ref}
+      className={cn('bg-cn-background-softgray/50 border-t font-medium [&>tr]:last:border-b-0', className)}
+      {...props}
+    />
   )
 )
 TableFooter.displayName = 'TableFooter'
 
 const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElement>>(
   ({ className, ...props }, ref) => (
-    <tr ref={ref} className={cn('data-[state=selected]:bg-muted border-b transition-colors', className)} {...props} />
+    <tr
+      ref={ref}
+      className={cn('data-[state=selected]:bg-cn-background-softgray border-b transition-colors', className)}
+      {...props}
+    />
   )
 )
 TableRow.displayName = 'TableRow'
@@ -72,7 +84,7 @@ const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCel
     <th
       ref={ref}
       className={cn(
-        'text-foreground-4 h-11 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        'text-cn-foreground-2 h-11 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
         className
       )}
       {...props}
@@ -94,7 +106,7 @@ TableCell.displayName = 'TableCell'
 
 const TableCaption = forwardRef<HTMLTableCaptionElement, HTMLAttributes<HTMLTableCaptionElement>>(
   ({ className, ...props }, ref) => (
-    <caption ref={ref} className={cn('text-muted-foreground mt-4 text-sm', className)} {...props} />
+    <caption ref={ref} className={cn('text-cn-foreground-3 mt-4 text-sm', className)} {...props} />
   )
 )
 TableCaption.displayName = 'TableCaption'

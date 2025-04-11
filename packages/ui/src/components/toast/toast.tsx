@@ -27,10 +27,10 @@ const toastVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-borders-1 bg-background-3 text-foreground [&_svg]:text-icons-1',
-        destructive: 'border-borders-danger bg-foreground-danger text-foreground-1 [&_svg]:text-icons-2',
+        default: 'border-cn-borders-2 bg-cn-background-3 text-cn-foreground [&_svg]:text-icons-1',
+        destructive: 'border-cn-borders-danger bg-cn-background-solidred text-cn-foreground-1 [&_svg]:text-icons-2',
         success:
-          'border-borders-success border-tag-border-mint-1 bg-tag-background-mint-1 text-tag-foreground-mint-1 [&_svg]:text-icons-2'
+          'border-cn-borders-success border-tag-border-mint-1 bg-tag-background-mint-1 text-tag-foreground-mint-1 [&_svg]:text-icons-2'
       }
     },
     defaultVariants: {
@@ -54,7 +54,7 @@ const ToastAction = forwardRef<
   <ToastPrimitives.Action
     ref={ref}
     className={cn(
-      'hover:bg-secondary focus:ring-ring group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium transition-colors focus:outline-none focus:ring-1 disabled:pointer-events-none disabled:opacity-50',
+      'hover:bg-cn-background-3 focus:ring-cn-borders-accent group-[.destructive]:border-cn-borders-1/40 group-[.destructive]:hover:border-cn-borders-danger/30 group-[.destructive]:hover:bg-cn-background-solidred group-[.destructive]:hover:text-cn-foreground-solidred group-[.destructive]:focus:ring-cn-borders-solidred inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium transition-colors focus:outline-none focus:ring-1 disabled:pointer-events-none disabled:opacity-50',
       className
     )}
     {...props}

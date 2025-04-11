@@ -9,7 +9,7 @@ const StepsPaletteItemLayout = {
     )
   },
   Left: function Left({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('text-accent-foreground', className)}>{children}</div>
+    return <div className={cn('text-cn-foreground-1', className)}>{children}</div>
   },
   Right: function Right({ children }: { children: React.ReactNode }) {
     return <div className="flex grow flex-col">{children}</div>
@@ -26,7 +26,7 @@ const StepsPaletteItemLayout = {
   BadgeWrapper: function BadgeWrapper({ children }: { children: React.ReactNode }) {
     return (
       <div className="self-start rounded-full bg-gradient-to-r from-[#B1CBFF] via-[#6D6B75] to-[#B1CBFF] p-0.5">
-        <div className="rounded-full bg-background px-2 text-sm">{children}</div>
+        <div className="rounded-full bg-cn-background px-2 text-sm">{children}</div>
       </div>
     )
   },

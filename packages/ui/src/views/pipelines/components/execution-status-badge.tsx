@@ -17,16 +17,16 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
     case PipelineExecutionStatus.PENDING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-muted" />
-          <span className="text-muted">Pending</span>
+          <div className="size-2 rounded-full bg-cn-background-softgray" />
+          <span className="text-cn-foreground-disabled">Pending</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-muted bg-muted/[0.1] px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md border border-solid border-cn-borders-1 bg-cn-background-softgray/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5">
             <CanaryIcon size={12} name="pending-clock" />
-            <span className="text-muted">Pending</span>
+            <span className="text-cn-foreground-disabled">Pending</span>
           </div>
-          {duration && <span className="text-muted">{duration}</span>}
+          {duration && <span className="text-cn-foreground-disabled">{duration}</span>}
         </div>
       )
     case PipelineExecutionStatus.RUNNING:
@@ -38,7 +38,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
       ) : (
         <div className="border-studio-3/[0.12] bg-studio-3/10 flex items-center gap-1 rounded-md border border-solid px-1 py-0.5">
           <div className="flex items-center gap-1">
-            <CanaryIcon size={16} name="running" className="animate-spin text-warning" />
+            <CanaryIcon size={16} name="running" className="animate-spin text-cn-foreground-warning" />
             <span className="text-studio-3">Running</span>
           </div>
           {duration && <span className="text-studio-3">{duration}</span>}
@@ -64,16 +64,16 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
     case PipelineExecutionStatus.SUCCESS:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-success" />
-          <span className="text-foreground-success">Success</span>
+          <div className="size-2 rounded-full bg-cn-background-success" />
+          <span className="text-cn-foreground-success">Success</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-success bg-success/[0.1] px-1 py-0.5">
-          <div className="flex items-center gap-0.5 text-foreground-success">
+        <div className="flex items-center gap-1 rounded-md border border-solid border-cn-borders-success bg-cn-background-success/[0.1] px-1 py-0.5">
+          <div className="flex items-center gap-0.5 text-cn-foreground-success">
             <CanaryIcon size={12} name="success" />
             <span>Success</span>
           </div>
-          {duration && <span className="text-foreground-success">{duration}</span>}
+          {duration && <span className="text-cn-foreground-success">{duration}</span>}
         </div>
       )
     case PipelineExecutionStatus.SKIPPED:

@@ -27,6 +27,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   isLoading,
   connectors,
   onFilterChange,
+  onCreate,
   ...props
 }) => {
   const { t } = useTranslationStore()
@@ -84,14 +85,18 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !connectors.length && !searchQuery })}>
-        <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Connectors</h1>
+        <h1 className="text-24 text-cn-foreground-2 font-medium leading-snug tracking-tight">Connectors</h1>
         <Spacer size={6} />
         <FilterGroup<ConnectorListFilters, keyof ConnectorListFilters>
           onFilterSelectionChange={onFilterSelectionChange}
           onFilterValueChange={onFilterValueChange}
           searchInput={searchInput}
           handleInputChange={handleInputChange}
-          headerAction={<Button variant="default">{t('views:connectors.createNew', 'Create new connector')}</Button>}
+          headerAction={
+            <Button onClick={onCreate} variant="default">
+              {t('views:connectors.createNew', 'Create new connector')}
+            </Button>
+          }
           t={t}
           filterOptions={CONNECTOR_FILTER_OPTIONS}
         />

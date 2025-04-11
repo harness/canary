@@ -25,12 +25,12 @@ export const PopoverCommitInfo = {
           </Avatar.Root>
           <span>{authorName}</span>
         </div>
-        <div className="text-primary-muted">{commit}</div>
+        <div className="text-cn-foreground-3">{commit}</div>
       </div>
     )
   },
 
   CommitMessage: function Root({ children }: { children: string | React.ReactNode }) {
-    return <div className="bg-background p-3">{children}</div>
+    return <div className="bg-cn-background p-3">{children}</div>
   }
 }

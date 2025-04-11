@@ -2,10 +2,12 @@ import { useState } from 'react'
 
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
+import { Drawer } from '@harnessio/ui/components'
 import { UnifiedPipelineStudio, UnifiedPipelineStudioProps } from '@harnessio/ui/views'
 import { YamlRevision } from '@harnessio/yaml-editor/dist/components/YamlEditor'
 
 import { pipeline1 } from './mocks/pipeline'
+import RunPipelineDrawerContent from './run-pipeline-drawer-content'
 import { useTemplateListStore } from './template-list.store'
 
 const PipelineStudioViewWrapper = () => {
@@ -20,6 +22,8 @@ const PipelineStudioViewWrapper = () => {
   })
 
   const [view, setView] = useState<UnifiedPipelineStudioProps['view']>('visual')
+  const [isYamlDirty, setYamlDirty] = useState(true)
+  const [runPipelineOpen, setRunPipelineOpen] = useState(false)
 
   return (
     <div style={{ height: '600px', display: 'flex', flexDirection: 'column', left: '1.25em' }}>
@@ -29,8 +33,8 @@ const PipelineStudioViewWrapper = () => {
         yamlRevision={yamlRevision}
         onYamlRevisionChange={onYamlRevisionChange}
         onYamlDownload={noop}
-        isYamlDirty={true}
-        onSave={noop}
+        isYamlDirty={isYamlDirty}
+        onSave={() => setYamlDirty(false)}
         selectedPath={selectedPath}
         onSelectedPathChange={onSelectedPathChange}
         errors={errors}
@@ -39,8 +43,19 @@ const PipelineStudioViewWrapper = () => {
         onPanelOpenChange={onPanelOpenChange}
         setView={setView}
         view={view}
-        onRun={noop}
+        onRun={() => setRunPipelineOpen(true)}
       />
+      <Drawer.Lazy
+        unmountOnClose={true}
+        open={runPipelineOpen}
+        onOpenChange={isOpen => {
+          if (!isOpen) {
+            setRunPipelineOpen(false)
+          }
+        }}
+      >
+        <RunPipelineDrawerContent onClose={() => setRunPipelineOpen(false)} />
+      </Drawer.Lazy>
     </div>
   )
 }

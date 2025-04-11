@@ -2,7 +2,7 @@ import { produce } from 'immer'
 import { create } from 'zustand'
 
 import { commentStatusPullReq as apiCommentStatusPullReq, mergePullReqOp } from '@harnessio/code-service-client'
-import { PullRequestDataState } from '@harnessio/views'
+import { PullRequestDataState } from '@harnessio/ui/views'
 
 import { CodeCommentState, PullRequestState } from '../types/types'
 
@@ -208,7 +208,7 @@ export const usePullRequestDataStore = create<PullRequestDataState>((set, get) =
         body: payload
       })
       refetchActivities()
-      return data
+      return data.body
     } catch (error) {
       console.warn(error)
       return undefined
@@ -254,6 +254,13 @@ export const usePullRequestDataStore = create<PullRequestDataState>((set, get) =
     set(
       produce(draft => {
         Object.assign(draft, newState)
+      })
+    ),
+  diffs: [],
+  setDiffs: (info: { path?: string; raw?: string; fileViews?: Map<string, string> }) =>
+    set(
+      produce(draft => {
+        draft.diffs = info
       })
     )
 }))

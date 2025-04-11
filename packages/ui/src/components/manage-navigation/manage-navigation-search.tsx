@@ -88,7 +88,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
       <Popover.Trigger asChild>
         <SearchBox.Root
           className="w-full"
-          inputClassName="h-9 placeholder:text-foreground-5"
+          inputClassName="h-9 placeholder:text-cn-foreground-3"
           ref={inputRef}
           placeholder="Add menu element"
           value={searchQuery}
@@ -98,7 +98,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
         />
       </Popover.Trigger>
       <Popover.Content
-        className="w-[368px] overflow-hidden !rounded border-borders-1 bg-background-2 !p-0"
+        className="w-[368px] overflow-hidden !rounded border-cn-borders-2 bg-cn-background-2 !p-0"
         ref={popoverRef}
         align="start"
         onWheel={e => e.stopPropagation()}
@@ -116,14 +116,14 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
               aria-hidden
             />
             {countFilteredItems === 0 ? (
-              <Text className="block w-full px-2 py-4 text-foreground-5">No results found</Text>
+              <Text className="block w-full px-2 py-4 text-cn-foreground-3">No results found</Text>
             ) : (
               filteredItems.map((category, index) => (
                 <div
-                  className={cn(index > 0 ? 'border-borders-4 mt-0.5 border-t pt-2' : 'pt-1')}
+                  className={cn(index > 0 ? 'border-cn-borders-4 mt-0.5 border-t pt-2' : 'pt-1')}
                   key={`category-${category.groupId}-${index}`}
                 >
-                  <Text className="inline-block px-2 leading-none text-foreground-7" size={1}>
+                  <Text className="inline-block px-2 leading-none text-cn-foreground-3" size={1}>
                     {category.title}
                   </Text>
                   <div className="mt-2.5 flex flex-col">
@@ -135,7 +135,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
                         onClick={() => handleItemClick(item)}
                       >
                         <div className="flex w-full items-center gap-x-2">
-                          <Text className="truncate leading-tight text-foreground-8">{item.title}</Text>
+                          <Text className="truncate leading-tight text-cn-foreground-1">{item.title}</Text>
                         </div>
                       </Button>
                     ))}

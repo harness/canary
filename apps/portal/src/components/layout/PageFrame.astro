@@ -1,18 +1,18 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
+import type { StarlightRouteData } from "@astrojs/starlight/route-data";
 import DocTemplate from "./DocTemplate.astro";
 import SplashTemplate from "./SplashTemplate.astro";
 
-const { template } = Astro.props.entry.data;
+const { template } = Astro.locals.starlightRoute.entry.data;
 ---
 
 {
   template === "doc" ? (
-    <DocTemplate {...Astro.props}>
+    <DocTemplate>
       <slot />
     </DocTemplate>
   ) : (
-    <SplashTemplate {...Astro.props}>
+    <SplashTemplate>
       <slot />
     </SplashTemplate>
   )

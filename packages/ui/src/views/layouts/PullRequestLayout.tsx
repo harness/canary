@@ -16,10 +16,8 @@ const TabTitleWithIcon = ({ icon, children }: PropsWithChildren<{ icon: IconProp
 )
 
 const badgeCommonProps: BadgeProps = {
-  className: 'font-normal text-foreground-2',
-  variant: 'quaternary',
-  size: 'xs',
-  borderRadius: 'base'
+  variant: 'counter',
+  size: 'sm'
 }
 
 interface PullRequestLayoutProps {

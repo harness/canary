@@ -218,11 +218,11 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
           <div className="flex w-full justify-between gap-x-2">
             <div className="flex gap-x-2">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="mt-0.5 text-left leading-tight text-foreground-8">
-                {element}&nbsp;<span className="text-foreground-5">({React.Children.count(children)})</span>
+              <span className="mt-0.5 text-left leading-tight text-cn-foreground-1">
+                {element}&nbsp;<span className="text-cn-foreground-3">({React.Children.count(children)})</span>
               </span>
             </div>
-            <span className="flex-none text-foreground-4">{duration ?? '--'}</span>
+            <span className="flex-none text-cn-foreground-2">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
         <AccordionPrimitive.Content className="relative h-full overflow-visible px-5 text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
@@ -287,7 +287,7 @@ const File = forwardRef<
           className={cn(
             'flex relative w-full cursor-pointer items-center gap-1 rounded-md text-sm duration-200 ease-in-out rtl:pl-1 rtl:pr-0',
             {
-              ['after:absolute after:bg-background-4 after:-inset-x-1 after:-inset-y-1.5 after:-z-10 after:rounded']:
+              ['after:absolute after:bg-cn-background-hover after:-inset-x-1 after:-inset-y-1.5 after:-z-10 after:rounded']:
                 isSelected
             },
             isSelectable ? 'cursor-pointer' : 'cursor-not-allowed opacity-50',
@@ -303,9 +303,9 @@ const File = forwardRef<
           <div className="relative flex w-full justify-between gap-x-2 pl-4">
             <div className="flex gap-x-2">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="mt-0.5 text-left leading-tight text-foreground-8">{children}</span>
+              <span className="mt-0.5 text-left leading-tight text-cn-foreground-1">{children}</span>
             </div>
-            <span className="flex-none text-foreground-4">{duration ?? '--'}</span>
+            <span className="flex-none text-cn-foreground-2">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Item>

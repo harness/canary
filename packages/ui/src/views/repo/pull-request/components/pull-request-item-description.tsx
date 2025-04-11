@@ -27,13 +27,13 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   const relativePath = fullPath.split('/pulls')[0] // Adjust the slice parameters as needed
 
   return (
-    <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-14 leading-none text-foreground-4">
+    <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-14 leading-none text-cn-foreground-2">
       <p>
         {`#${number}`} opened {timestamp} by{' '}
         <span className="inline-block max-w-[200px] truncate align-bottom">{author}</span>
       </p>
 
-      <span className="bg-borders-2 pointer-events-none h-3.5 w-px" aria-hidden />
+      <span className="bg-cn-background-3 pointer-events-none h-3.5 w-px" aria-hidden />
 
       <p>{reviewRequired ? 'Review required' : 'Draft'}</p>
 
@@ -46,13 +46,13 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
           </p>
         </div>
       )}
-      <span className="bg-borders-2 pointer-events-none h-3.5 w-px" aria-hidden />
+      <span className="bg-cn-background-3 pointer-events-none h-3.5 w-px" aria-hidden />
 
       {sourceBranch && (
         <>
           <Button variant="secondary" size="xs" className="w-full min-w-[60px] max-w-fit justify-start" asChild>
             <Link to={`${relativePath}/code/${targetBranch}`}>
-              <Icon name="branch" size={11} className="mr-1 text-tertiary-background" />
+              <Icon name="branch" size={11} className="mr-1 text-cn-foreground-3" />
               <span className="max-w-[calc(100%-15px)] truncate p-0.5 text-xs hover:underline">{targetBranch}</span>
             </Link>
           </Button>

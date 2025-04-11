@@ -120,18 +120,18 @@ const LineTitle: React.FC<LineTitleProps> = ({
           >
             <Icon name={useFullDiff ? 'collapse-comment' : 'expand-comment'} size={16} />
           </Button>
-          <span className="font-medium leading-tight text-foreground-1">{text}</span>
+          <span className="font-medium leading-tight text-cn-foreground-1">{text}</span>
           <CopyButton name={text} className="size-6" color="gray" />
         </div>
 
         <div className="flex items-center gap-x-1">
           {addedLines != null && addedLines > 0 && (
-            <Badge variant="outline" size="sm" theme="success" disableHover>
+            <Badge variant="surface" size="sm" theme="success">
               +{addedLines}
             </Badge>
           )}
           {deletedLines != null && deletedLines > 0 && (
-            <Badge variant="outline" size="sm" theme="destructive" disableHover>
+            <Badge variant="surface" size="sm" theme="danger">
               -{deletedLines}
             </Badge>
           )}
@@ -156,14 +156,14 @@ const LineTitle: React.FC<LineTitleProps> = ({
               }}
               className="size-4"
             />
-            <Text size={2} className="text-primary/90">
+            <Text size={2} className="text-cn-foreground-1/90">
               {t('views:pullRequests.viewed')}
             </Text>
           </div>
         ) : null}
 
         {/* <Button title="coming soon" variant="ghost" size="sm">
-        <Icon name="ellipsis" size={12} className="text-primary-muted/40" />
+        <Icon name="ellipsis" size={12} className="text-cn-foreground-3/40" />
       </Button> */}
       </div>
     </div>
@@ -325,7 +325,7 @@ const PullRequestAccordion: React.FC<{
       <StackedList.Item className="overflow-hidden p-0" disableHover>
         <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle}>
           <Accordion.Item isLast value={header?.text ?? ''}>
-            <Accordion.Trigger leftChevron className="bg-background-2 px-4 py-3.5 text-left">
+            <Accordion.Trigger leftChevron className="bg-cn-background-2 px-4 py-3.5 text-left">
               <StackedList.Field
                 title={
                   <LineTitle
@@ -348,7 +348,7 @@ const PullRequestAccordion: React.FC<{
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                   <Layout.Vertical gap="space-y-0" className="items-center py-5">
                     <Button
-                      className="text-foreground-accent"
+                      className="text-cn-foreground-accent"
                       variant="link_accent"
                       size="sm"
                       aria-label="show diff"

@@ -15,10 +15,10 @@ import { Logo, LogoNameMap } from "@harnessio/ui/components";
       {Object.keys(LogoNameMap).map(name => (
         <div key={name} className="flex items-center gap-4">
           <div className="group relative">
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-xs rounded py-1 px-2">
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-cn-background-3 text-cn-foreground-1 text-xs rounded py-1 px-2">
               {name}
             </div>
-            <div className="p-2 rounded-md bg-foreground-1">
+            <div className="p-2 rounded-md bg-cn-background-primary">
               <Logo name={name as keyof typeof LogoNameMap} size={24} />
             </div>
           </div>
@@ -36,10 +36,10 @@ import { Logo, LogoNameMap } from "@harnessio/ui/components";
       {Object.keys(LogoNameMap).map(name => (
         <div key={name} className="flex items-center gap-4">
           <div className="group relative">
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-xs rounded py-1 px-2">
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-cn-background-3 text-cn-foreground-1 text-xs rounded py-1 px-2">
               {name}
             </div>
-            <div className="p-2 rounded-md bg-foreground-1">
+            <div className="p-2 rounded-md bg-cn-background-primary">
               <Logo name={name as keyof typeof LogoNameMap} size={24} original={false} />
             </div>
           </div>

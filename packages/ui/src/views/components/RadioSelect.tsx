@@ -1,4 +1,4 @@
-import { RadioButton, StackedList } from '@components/index'
+import { StackedList } from '@components/index'
 import { RadioGroup } from '@radix-ui/react-radio-group'
 import { cn } from '@utils/cn'
 
@@ -32,17 +32,25 @@ export const RadioSelect = <T extends string>({
             key={option.id}
             id={option.id}
             control={
-              <StackedList.Root className="overflow-hidden" borderBackground>
+              <StackedList.Root
+                className={cn('overflow-hidden border-cn-borders-2', {
+                  'border-cn-borders-2': value === option.value
+                })}
+              >
                 <StackedList.Item
                   className={cn('cursor-pointer !rounded px-5 py-3', {
-                    '!bg-background-4': value === option.value
+                    'bg-gradient-to-b from-white/[0.04] to-white/0': value === option.value
                   })}
                   isHeader
                   isLast
-                  actions={<RadioButton value={option.value} />}
+                  disableHover
                   onClick={() => onValueChange(option.value)}
                 >
-                  <StackedList.Field title={option.title} description={option.description} />
+                  <StackedList.Field
+                    title={option.title}
+                    description={option.description}
+                    className={`${value !== option.value && 'text-cn-foreground-4'}`}
+                  />
                 </StackedList.Item>
               </StackedList.Root>
             }

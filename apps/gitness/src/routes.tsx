@@ -12,14 +12,13 @@ import {
 import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { AppProvider } from './framework/context/AppContext'
+import { AppRouterProvider } from './framework/context/AppRouterProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { useTranslationStore } from './i18n/stores/i18n-store'
 import { CreateProject } from './pages-v2/create-project'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { Logout } from './pages-v2/logout'
-import PipelineEditPage from './pages-v2/pipeline/pipeline-edit/pipeline-edit'
-import ProjectPipelineListPage from './pages-v2/pipeline/project-pipeline-list-page'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
@@ -52,7 +51,6 @@ import { ImportMultipleRepos } from './pages-v2/repo/repo-import-multiple-contai
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
-import RepoPipelineListPage from './pages-v2/repo/repo-pipeline-list'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
@@ -380,7 +378,7 @@ export const repoRoutes: CustomRouteObject[] = [
             children: [
               {
                 index: true,
-                element: <RepoPipelineListPage />,
+                element: <>RepoPipelineListPage</>,
                 handle: {
                   pageTitle: Page.Pipelines
                 }
@@ -401,7 +399,7 @@ export const repoRoutes: CustomRouteObject[] = [
                   },
                   {
                     path: 'edit',
-                    element: <PipelineEditPage />,
+                    element: <>PipelineEditPage</>,
                     handle: {
                       breadcrumb: () => <span>Edit</span>,
                       routeName: RouteConstants.toPipelineEdit
@@ -625,7 +623,7 @@ export const repoRoutes: CustomRouteObject[] = [
   },
   {
     path: 'pipelines',
-    element: <ProjectPipelineListPage />,
+    element: <>ProjectPipelineListPage</>,
     handle: {
       breadcrumb: () => <span>{Page.Pipelines}</span>,
       pageTitle: Page.Pipelines
@@ -662,9 +660,11 @@ export const routes: CustomRouteObject[] = [
   {
     path: '/',
     element: (
-      <AppProvider>
-        <AppShell />
-      </AppProvider>
+      <AppRouterProvider>
+        <AppProvider>
+          <AppShell />
+        </AppProvider>
+      </AppRouterProvider>
     ),
     handle: { routeName: 'toHome' },
     children: [
@@ -1133,10 +1133,12 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | nul
   {
     path: '/',
     element: (
-      <AppProvider>
-        {mfeRouteRenderer}
-        <AppShellMFE />
-      </AppProvider>
+      <AppRouterProvider>
+        <AppProvider>
+          {mfeRouteRenderer}
+          <AppShellMFE />
+        </AppProvider>
+      </AppRouterProvider>
     ),
     handle: { routeName: RouteConstants.toHome },
     children: [

@@ -1468,7 +1468,7 @@
     "sidebar": {
       "bg": {
         "$type": "color",
-        "$value": "{chrome.900}",
+        "$value": "{chrome.100}",
         "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
       },
       "border": {
@@ -1486,7 +1486,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.15",
+              "value": "0.08",
               "space": "lch"
             }
           }
@@ -1500,7 +1500,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.2",
+              "value": "0.12",
               "space": "lch"
             }
           }
@@ -2189,10 +2189,6 @@
     }
   },
   "iconStrokeWidth": {
-    "xxs": {
-      "$type": "borderWidth",
-      "$value": "1.1"
-    },
     "xs": {
       "$type": "borderWidth",
       "$value": "1"

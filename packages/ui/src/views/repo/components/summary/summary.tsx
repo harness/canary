@@ -68,10 +68,10 @@ export const Summary = ({
                   className={`flex cursor-pointer items-center gap-1.5 ${
                     file.status && file.status !== FileStatus.SAFE
                       ? file.status === FileStatus.LOW_RISK
-                        ? 'absolute left-0 border-l-2 border-borders-alert'
+                        ? 'absolute left-0 border-l-2 border-cn-borders-warning'
                         : file.status === FileStatus.MEDIUM_RISK
-                          ? 'absolute left-0 border-l-2 border-borders-warning'
-                          : 'absolute left-0 border-l-2 border-borders-danger'
+                          ? 'absolute left-0 border-l-2 border-cn-borders-warning'
+                          : 'absolute left-0 border-l-2 border-cn-borders-danger'
                       : ''
                   }`}
                 >
@@ -100,7 +100,7 @@ export const Summary = ({
                     }
                     size={16}
                   />
-                  <span className="w-44 truncate text-foreground-1">{file.name}</span>
+                  <span className="w-44 truncate text-cn-foreground-1">{file.name}</span>
                 </div>
               </Table.Cell>
               <Table.Cell>

@@ -9,7 +9,7 @@ export function StartNode() {
     <div
       className={cn(
         'border-graph-border-1 shadow-1 flex size-full items-center justify-center rounded-full border',
-        isLightTheme ? 'bg-background-1' : 'bg-background-3'
+        isLightTheme ? 'bg-cn-background-1' : 'bg-cn-background-3'
       )}
     >
       <Icon size={18} name="play" className="text-icons-4" />

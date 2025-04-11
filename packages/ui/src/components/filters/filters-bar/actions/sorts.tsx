@@ -53,7 +53,7 @@ const SortableItem = ({
       <div className="flex items-center justify-between gap-x-2">
         <div className="flex items-center gap-x-2">
           <div
-            className="cursor-grab rounded p-1 hover:bg-background-3 active:cursor-grabbing"
+            className="cursor-grab rounded p-1 hover:bg-cn-background-3 active:cursor-grabbing"
             {...attributes}
             {...listeners}
           >
@@ -61,7 +61,7 @@ const SortableItem = ({
           </div>
 
           <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-borders-1 pl-2.5 pr-1.5 text-14 text-foreground-8">
+            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-cn-borders-2 pl-2.5 pr-1.5 text-14 text-cn-foreground-1">
               {sortOptions.find(opt => opt.value === sort.type)?.label}
               <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
             </DropdownMenu.Trigger>
@@ -78,7 +78,7 @@ const SortableItem = ({
           </DropdownMenu.Root>
 
           <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-borders-1 pl-2.5 pr-1.5 text-14 text-foreground-8">
+            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-cn-borders-2 pl-2.5 pr-1.5 text-14 text-cn-foreground-1">
               {sortDirections.find(dir => dir.value === sort.direction)?.label}
               <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
             </DropdownMenu.Trigger>
@@ -96,7 +96,7 @@ const SortableItem = ({
         </div>
 
         <button
-          className="p-1 text-foreground-4 transition-colors duration-200 hover:text-foreground-1 focus:bg-transparent"
+          className="p-1 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1 focus:bg-transparent"
           onClick={e => {
             e.preventDefault()
             onRemoveSort?.(index)
@@ -158,14 +158,14 @@ const Sorts = ({
 
   return (
     <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-background-3 px-2.5 transition-colors duration-200 hover:bg-background-8">
+      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-cn-background-3 px-2.5 transition-colors duration-200 hover:bg-cn-background-8">
         <div className="flex items-center gap-x-1">
           <Icon
             className={cn('text-icons-1', getSortTriggerLabel(activeSorts, sortOptions).isDescending && 'rotate-180')}
             name={getSortTriggerLabel(activeSorts, sortOptions).icon}
             size={10}
           />
-          <span className="text-13 text-foreground-1">{getSortTriggerLabel(activeSorts, sortOptions).label}</span>
+          <span className="text-13 text-cn-foreground-1">{getSortTriggerLabel(activeSorts, sortOptions).label}</span>
         </div>
         <Icon name="chevron-down" size={10} className="chevron-down" />
       </DropdownMenu.Trigger>
@@ -196,12 +196,12 @@ const Sorts = ({
         <div className="mt-3 flex flex-col gap-y-2.5">
           {sortOptions.some(option => !activeSorts.some(sort => sort.type === option.value)) && (
             <DropdownMenu.Root>
-              <DropdownMenu.Trigger className="flex w-full items-center gap-x-1.5 text-14 text-foreground-4 transition-colors duration-200 hover:text-foreground-1">
+              <DropdownMenu.Trigger className="flex w-full items-center gap-x-1.5 text-14 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1">
                 <Icon name="plus" size={12} />
                 Add sort
               </DropdownMenu.Trigger>
               <DropdownMenu.Content className="min-w-[224px] p-0" align="start">
-                <div className="relative flex items-center justify-between border-b border-borders-4 px-3 py-2.5">
+                <div className="relative flex items-center justify-between border-b border-cn-borders-4 px-3 py-2.5">
                   <DropdownMenu.Item className="hover:bg-transparent focus:bg-transparent" asChild>
                     <Input
                       type="text"
@@ -216,7 +216,7 @@ const Sorts = ({
                   {searchQueries.menu['sort'] && (
                     <DropdownMenu.Item className="absolute right-3 hover:bg-transparent focus:bg-transparent" asChild>
                       <button
-                        className="flex text-foreground-4 transition-colors duration-200 hover:text-foreground-1"
+                        className="flex text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
                         onClick={e => {
                           e.preventDefault()
                           handleSearchChange('sort', '', 'menu')
@@ -245,7 +245,7 @@ const Sorts = ({
 
                   {filteredBySearchSortOptions.length === 0 && (
                     <div className="flex items-center justify-center p-4">
-                      <span className="text-1 leading-none text-foreground-2">No results</span>
+                      <span className="text-1 leading-none text-cn-foreground-2">No results</span>
                     </div>
                   )}
                 </div>
@@ -254,7 +254,7 @@ const Sorts = ({
           )}
 
           <DropdownMenu.Item
-            className="p-0 text-foreground-4 transition-colors duration-200 focus:bg-transparent focus:text-foreground-danger focus:outline-none data-[highlighted]:bg-transparent data-[highlighted]:text-foreground-danger"
+            className="p-0 text-cn-foreground-2 transition-colors duration-200 focus:bg-transparent focus:text-cn-foreground-danger focus:outline-none data-[highlighted]:bg-transparent data-[highlighted]:text-cn-foreground-danger"
             asChild
           >
             <button className="flex items-center gap-x-1.5 text-14" onClick={handleResetSorts}>

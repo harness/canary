@@ -86,13 +86,13 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         <div className="inline-flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-2 font-medium">
             <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
-            <Badge variant="secondary" size="xs">
-              <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
+            <Badge variant="soft" theme="muted" size="sm">
+              <Icon name="branch" size={12} className="mr-1 text-cn-foreground-3" />
               {props?.pullReqMetadata?.source_branch}
             </Badge>
             <span>into</span>
-            <Badge variant="secondary" size="xs">
-              <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
+            <Badge variant="soft" theme="muted" size="sm">
+              <Icon name="branch" size={12} className="mr-1 text-cn-foreground-3" />
               {props?.pullReqMetadata?.target_branch}
             </Badge>
             <span>{formattedTime}</span>
@@ -109,7 +109,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         </div>
         {props.headerMsg && (
           <div className="flex w-full justify-end">
-            <span className="text-12 text-destructive">{props.headerMsg}</span>
+            <span className="text-12 text-cn-foreground-danger">{props.headerMsg}</span>
           </div>
         )}
       </>
@@ -117,7 +117,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
   }
   return (
     <div className="inline-flex items-center gap-2">
-      <h2 className="font-medium text-foreground-1">
+      <h2 className="font-medium text-cn-foreground-1">
         {props.isDraft
           ? 'This pull request is still a work in progress'
           : props.isClosed
@@ -357,7 +357,7 @@ const PullRequestPanel = ({
                           }
                         }}
                       />
-                      <span className="text-12 text-primary">Bypass and merge anyway</span>
+                      <span className="text-12 text-cn-foreground-1">Bypass and merge anyway</span>
                     </Layout.Horizontal>
                   )}
 
@@ -436,7 +436,8 @@ const PullRequestPanel = ({
         ) : (
           <Layout.Horizontal gap="space-x-2" className="flex w-full items-center justify-between py-4">
             <Layout.Horizontal className="flex w-full">
-              <Badge variant="tertiary" size="md" borderRadius="base">
+              {/* TODO: Design system: fix this */}
+              <Badge variant="soft" size="sm">
                 <Link
                   className="flex items-center gap-x-1.5"
                   to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${pullReqMetadata?.source_branch}`}
@@ -445,7 +446,7 @@ const PullRequestPanel = ({
                   {pullReqMetadata?.source_branch}
                 </Link>
               </Badge>{' '}
-              <span className="text-14 text-foreground-1"> branch has unmerged changes.</span>
+              <span className="text-14 text-cn-foreground-1"> branch has unmerged changes.</span>
             </Layout.Horizontal>
             {showDeleteBranchButton ? (
               <Button theme="primary" size="sm" onClick={onDeleteBranch}>

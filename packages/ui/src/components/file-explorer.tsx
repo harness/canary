@@ -22,7 +22,7 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
           `relative w-full p-0 pr-1.5
           before:absolute before:z-[-1] before:top-0 before:-left-1.5 before:right-0 before:h-full before:rounded`,
           {
-            'before:bg-background-4': isActive
+            'before:bg-cn-background-hover': isActive
           }
         )}
         leftChevron
@@ -33,11 +33,11 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
       >
         <div
           className={cn(
-            `flex w-full justify-start overflow-hidden transition-colors duration-200 text-foreground-2
-            group-hover:text-foreground-1
-            group-data-[state=open]:text-foreground-1`,
+            `flex w-full justify-start overflow-hidden transition-colors duration-200 text-cn-foreground-2
+            group-hover:text-cn-foreground-1
+            group-data-[state=open]:text-cn-foreground-1`,
             {
-              'text-foreground-1 ': isActive
+              'text-cn-foreground-1 ': isActive
             }
           )}
         >
@@ -76,11 +76,11 @@ function FileItem({ children, isActive, link }: FileItemProps) {
   const comp = (
     <div
       className={cn(
-        `relative group flex items-center justify-start gap-1.5 py-1.5 pr-1.5 pl-4 text-foreground-2
-        hover:text-foreground-1
+        `relative group flex items-center justify-start gap-1.5 py-1.5 pr-1.5 pl-4 text-cn-foreground-2
+        hover:text-cn-foreground-1
         before:absolute before:z-[-1] before:top-0 before:left-2.5 before:right-0 before:h-full before:rounded`,
         {
-          'text-foreground-1 before:bg-background-4': isActive
+          'text-cn-foreground-1 before:bg-cn-background-hover': isActive
         }
       )}
     >

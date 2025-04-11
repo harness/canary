@@ -78,7 +78,7 @@ export function StepNodeComponent({
   return (
     <Drawer.Root direction="right">
       <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
-      <Drawer.Content className="bg-background-1 border-borders-5 size-full max-w-2xl rounded-none border-l p-0 ">
+      <Drawer.Content className="bg-cn-background-1 border-cn-borders-2 size-full max-w-2xl rounded-none border-l p-0 ">
         <Drawer.Header>
           <ExecutionHeader
             commitName="8fbru3ix"
@@ -91,7 +91,7 @@ export function StepNodeComponent({
             pipelineName="npm_build"
           />
         </Drawer.Header>
-        <div className="border-borders-4 mt-1 border-t pt-3">
+        <div className="border-cn-borders-3 mt-1 border-t pt-3">
           <ExecutionInfo
             isDrawer
             useLogsStore={() => ({ logs })}
@@ -119,7 +119,7 @@ export function ApprovalStepNodeComponent({
   const approvalNode = (
     <div className="flex h-full items-center justify-center">
       <div
-        className="border-borders-2 bg-primary-foreground absolute -z-10 rotate-45 border"
+        className="border-cn-borders-2 bg-cn-background-2 absolute -z-10 rotate-45 border"
         style={{ inset: '18px' }}
       ></div>
       <div>{name}</div>

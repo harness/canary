@@ -5,15 +5,16 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const toggleVariants = cva(
-  `inline-flex items-center justify-center text-xs font-medium text-foreground-4 
+  `inline-flex items-center justify-center text-xs font-medium text-cn-foreground-2 
   transition-colors 
-  hover:text-foreground-2 disabled:pointer-events-none 
-  disabled:opacity-50 data-[state=on]:text-foreground-1`,
+  hover:text-cn-foreground-2 disabled:pointer-events-none 
+  disabled:opacity-50 data-[state=on]:text-cn-foreground-1`,
   {
     variants: {
       variant: {
         default: 'rounded bg-transparent',
-        outline: 'rounded border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground',
+        outline:
+          'rounded border border-cn-borders-2 bg-transparent shadow-sm hover:bg-cn-background-3 hover:text-cn-foreground-1',
         compact: ''
       },
       size: {
@@ -24,8 +25,8 @@ const toggleVariants = cva(
         icon: 'size-8'
       },
       theme: {
-        light: 'data-[state=on]:bg-background-1',
-        dark: 'data-[state=on]:bg-background-9'
+        light: 'data-[state=on]:bg-cn-background-1',
+        dark: 'data-[state=on]:bg-cn-background-hover'
       }
     },
     defaultVariants: {

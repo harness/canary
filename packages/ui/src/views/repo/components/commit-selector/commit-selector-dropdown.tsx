@@ -44,7 +44,7 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <span className="text-14 leading-tight text-foreground-2">Nothing to show</span>
+            <span className="text-14 leading-tight text-cn-foreground-2">Nothing to show</span>
           </div>
         )}
 
@@ -56,8 +56,8 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
 
             return (
               <DropdownMenu.Item
-                className={cn('hover:bg-background-4 cursor-pointer py-2 leading-none', {
-                  'bg-background-4': isSelected,
+                className={cn('hover:bg-cn-background-hover cursor-pointer py-2 leading-none', {
+                  'bg-cn-background-hover': isSelected,
                   'pl-7': !isSelected
                 })}
                 onClick={() => {
@@ -66,10 +66,10 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
                 key={item.title}
               >
                 <div className="flex w-full min-w-0 items-center gap-x-2">
-                  {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-foreground-1" />}
+                  {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-cn-foreground-1" />}
                   <span
-                    className={cn('text-foreground-2 truncate', {
-                      'text-foreground-1': isSelected
+                    className={cn('text-cn-foreground-2 truncate', {
+                      'text-cn-foreground-1': isSelected
                     })}
                   >
                     {item.title && idx === 0 ? `${item.title} (${commitList.length - 1})` : item.title}

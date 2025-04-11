@@ -13,5 +13,5 @@ interface CaptionProps extends PropsWithChildren<React.HTMLAttributes<HTMLElemen
  * <Caption>This is a caption</Caption>
  */
 export function Caption({ children, className }: CaptionProps) {
-  return <span className={cn('text-foreground-4 mt-1 leading-snug text-sm', className)}>{children}</span>
+  return <span className={cn('text-cn-foreground-2 mt-1 leading-snug text-sm', className)}>{children}</span>
 }

@@ -1,23 +1,12 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import {
-  createBrowserRouter,
-  Link,
-  matchPath,
-  NavLink,
-  Outlet,
-  RouterProvider,
-  useLocation,
-  useMatches,
-  useNavigate,
-  useSearchParams
-} from 'react-router-dom'
+import { createBrowserRouter, matchPath, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { Toast, Tooltip } from '@harnessio/ui/components'
-import { PortalProvider, RouterContextProvider } from '@harnessio/ui/context'
+import { PortalProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -191,17 +180,7 @@ export default function AppMFE({
                         <Tooltip.Provider>
                           <ExitConfirmProvider>
                             <NavigationProvider routes={routesToRender}>
-                              <RouterContextProvider
-                                Link={Link}
-                                NavLink={NavLink}
-                                Outlet={Outlet}
-                                location={{ ...window.location, state: {}, key: '' }}
-                                navigate={router.navigate}
-                                useSearchParams={useSearchParams}
-                                useMatches={useMatches}
-                              >
-                                <RouterProvider router={router} />
-                              </RouterContextProvider>
+                              <RouterProvider router={router} />
                             </NavigationProvider>
                           </ExitConfirmProvider>
                         </Tooltip.Provider>

@@ -1,8 +1,9 @@
 import { useCallback } from 'react'
 
-import { Button, Icon, Input, ScrollArea, SkeletonList, StackedList } from '@/components'
+import { Button, Icon, Input, ListActions, ScrollArea, SearchBox, SkeletonList, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 
+import { EntityReferenceFilter } from './components/entity-reference-filter'
 import { EntityReferenceList } from './entity-reference-list'
 import {
   BaseEntityProps,
@@ -18,13 +19,17 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   selectedEntity: T | null
   parentFolder: S | null
   childFolder: F | null
+  currentFolder: string | null
 
   // Callbacks
   onSelectEntity: (entity: T) => void
   onScopeChange: (direction: DirectionEnum) => void
+  onFilterChange?: (filter: string) => void
 
   // UI Configuration
   showFilter?: boolean
+  showBreadcrumbEllipsis?: boolean
+  filterTypes: Record<string, string>
 
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
@@ -40,13 +45,17 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   selectedEntity,
   parentFolder,
   childFolder,
+  currentFolder,
 
   // Callbacks
   onSelectEntity,
   onScopeChange,
+  onFilterChange,
 
   // configs
   showFilter = true,
+  showBreadcrumbEllipsis = false,
+  filterTypes = {},
 
   // Custom renderers
   renderEntity,
@@ -73,8 +82,8 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(entity)}
-        className={cn({ 'bg-background-4': isSelected })}
-        thumbnail={<Icon name="file" size={16} className="text-foreground-5" />}
+        className={cn({ 'bg-cn-background-hover': isSelected })}
+        thumbnail={<Icon name="file" size={16} className="text-cn-foreground-3" />}
         actions={
           <Button
             variant="default"
@@ -96,9 +105,10 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(parentFolder)}
-        thumbnail={<Icon name="circle-arrow-top" size={16} className="text-foreground-5" />}
+        thumbnail={<Icon name="folder" size={14} className="text-cn-foreground-3" />}
+        className="h-12 p-3"
       >
-        <StackedList.Field title={<span className="capitalize">{String(parentFolder)}</span>} />
+        <StackedList.Field title={<span className="capitalize">..</span>} />
       </StackedList.Item>
     )
   }
@@ -107,7 +117,8 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(folder)}
-        thumbnail={<Icon name="folder" size={16} className="text-foreground-5" />}
+        thumbnail={<Icon name="folder" size={14} className="text-cn-foreground-3" />}
+        className="h-12 p-3"
       >
         <StackedList.Field title={<span className="capitalize">{String(folder)}</span>} />
       </StackedList.Item>
@@ -116,28 +127,43 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
 
   return (
     <>
-      {isLoading ? (
-        <SkeletonList />
-      ) : (
-        <div className="h-full">
-          {showFilter && <Input type="text" placeholder="Search" className="mb-4" />}
-          <ScrollArea className="h-[69vh]">
-            <EntityReferenceList
-              entities={entities}
-              selectedEntity={selectedEntity}
-              parentFolder={parentFolder}
-              childFolder={childFolder}
-              handleSelectEntity={handleSelectEntity}
-              handleScopeChange={handleScopeChange}
-              renderEntity={renderEntity}
-              defaultEntityRenderer={defaultEntityRenderer}
-              parentFolderRenderer={parentFolderRenderer}
-              childFolderRenderer={childFolderRenderer}
-              apiError={apiError}
-            />
-          </ScrollArea>
-        </div>
-      )}
+      <div className="h-full flex flex-col gap-2">
+        {showFilter && (
+          <ListActions.Root className="gap-2">
+            <ListActions.Left>
+              <SearchBox.Root
+                width="full"
+                className="max-w-96"
+                value={''}
+                handleChange={() => {}}
+                placeholder="Search"
+              />
+            </ListActions.Left>
+            <ListActions.Right>
+              <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
+            </ListActions.Right>
+          </ListActions.Root>
+        )}
+        {isLoading ? (
+          <SkeletonList />
+        ) : (
+          <EntityReferenceList
+            entities={entities}
+            selectedEntity={selectedEntity}
+            parentFolder={parentFolder}
+            childFolder={childFolder}
+            currentFolder={currentFolder}
+            handleSelectEntity={handleSelectEntity}
+            handleScopeChange={handleScopeChange}
+            renderEntity={renderEntity}
+            defaultEntityRenderer={defaultEntityRenderer}
+            parentFolderRenderer={parentFolderRenderer}
+            childFolderRenderer={childFolderRenderer}
+            apiError={apiError}
+            showBreadcrumbEllipsis={showBreadcrumbEllipsis}
+          />
+        )}
+      </div>
     </>
   )
 }

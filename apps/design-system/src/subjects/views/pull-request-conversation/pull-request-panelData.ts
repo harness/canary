@@ -67,7 +67,7 @@ export const changesInfoData = {
 export const pendingChangesInfoData = {
   title: 'Approvals pending',
   statusMessage: 'Changes are pending approval from required reviewers',
-  statusColor: 'text-warning',
+  statusColor: 'text-cn-foreground-warning',
   statusIcon: 'pending',
   isNotRequired: false
 }
@@ -121,13 +121,13 @@ export const pullReqChecksDecisionSucceeded = {
       }
     ]
   },
-  color: 'text-success',
-  background: 'text-success',
+  color: 'text-cn-foreground-success',
+  background: 'text-cn-foreground-success',
   message: '1/1 check succeeded.',
   checkInfo: {
     title: 'All checks have succeeded',
     content: '1 succeeded',
-    color: 'text-tertiary-background',
+    color: 'text-cn-foreground-3',
     status: 'success'
   },
   summaryText: '1 succeeded'

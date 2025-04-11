@@ -15,6 +15,7 @@ import {
 
 import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
+import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
 
 export type UIInputWithConfigsForArray = Omit<IInputDefinition, 'path'>
@@ -23,6 +24,7 @@ export interface ArrayInputConfig {
   inputType: 'array'
   inputConfig: {
     input: IInputDefinition
+    tooltip?: string
   }
 }
 
@@ -84,6 +86,8 @@ function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>)
         )}
       />
       <InputError path={path} />
+
+      {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
     </InputWrapper>
   )
 }

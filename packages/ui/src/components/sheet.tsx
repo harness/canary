@@ -27,8 +27,8 @@ const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Ove
       return (
         <SheetPrimitive.Overlay
           className={cn(
-            'bg-background-7/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50',
-            { 'bg-background-10/60': isLightTheme },
+            'bg-cn-background-1/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50',
+            { 'bg-cn-background-backdrop': isLightTheme },
             className
           )}
           {...props}
@@ -41,8 +41,8 @@ const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Ove
       <div
         aria-hidden="true"
         className={cn(
-          'layer-high bg-background-7/80 fixed left-0 top-0 h-full w-full',
-          { 'bg-background-10/60': isLightTheme },
+          'layer-high bg-cn-background-1/50 fixed left-0 top-0 h-full w-full',
+          { 'bg-cn-background-backdrop': isLightTheme },
           className
         )}
         onClick={e => handleClose?.(e)}
@@ -52,7 +52,7 @@ const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Ove
 )
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
-const sheetVariants = cva('fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out', {
+const sheetVariants = cva('fixed z-50 gap-4 bg-cn-background p-6 shadow-lg transition ease-in-out', {
   variants: {
     side: {
       top: 'inset-x-0 top-0 border-b',
@@ -146,7 +146,7 @@ const SheetTitle = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <SheetPrimitive.Title ref={ref} className={cn('text-foreground text-lg font-semibold', className)} {...props} />
+  <SheetPrimitive.Title ref={ref} className={cn('text-cn-foreground text-lg font-semibold', className)} {...props} />
 ))
 SheetTitle.displayName = SheetPrimitive.Title.displayName
 
@@ -154,7 +154,7 @@ const SheetDescription = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
 >(({ className, ...props }, ref) => (
-  <SheetPrimitive.Description ref={ref} className={cn('text-muted-foreground text-sm', className)} {...props} />
+  <SheetPrimitive.Description ref={ref} className={cn('text-cn-foreground-3 text-sm', className)} {...props} />
 ))
 SheetDescription.displayName = SheetPrimitive.Description.displayName
 

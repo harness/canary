@@ -28,8 +28,8 @@ function Root({ ...props }: RootProps) {
 
 function Content({ children, className, asChild }: ContentProps) {
   return (
-    <div className={cn('flex items-center rounded-l px-2.5 py-[3px] hover:bg-background-3', className)}>
-      {asChild ? children : <span className="text-14 text-foreground-3">{children}</span>}
+    <div className={cn('flex items-center rounded-l px-2.5 py-[3px] hover:bg-cn-background-3', className)}>
+      {asChild ? children : <span className="text-14 text-cn-foreground-3">{children}</span>}
     </div>
   )
 }
@@ -43,7 +43,7 @@ function Icon({ ...props }: IconProps) {
 
   return (
     <Button
-      className="flex h-full items-center rounded-r border-l px-1.5 py-0.5 hover:bg-background-3"
+      className="flex h-full items-center rounded-r border-l px-1.5 py-0.5 hover:bg-cn-background-3"
       tabIndex={0}
       onClick={() => handleClick()}
       variant="custom"

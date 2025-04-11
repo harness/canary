@@ -1,15 +1,49 @@
 import { FC } from 'react'
 
-import { siBitbucket, siGithub, siGitlab, siJira, siKubernetes, type SimpleIcon } from 'simple-icons'
+import {
+  siAmazonwebservices,
+  siAwssecretsmanager,
+  siBitbucket,
+  siDocker,
+  siGithub,
+  siGitlab,
+  siGooglecloud,
+  siJira,
+  siKubernetes,
+  siTerraform,
+  siVault,
+  type SimpleIcon
+} from 'simple-icons'
 
-export type LogoName = 'github' | 'gitlab' | 'bitbucket' | 'jira' | 'kubernetes'
+export type LogoName =
+  | 'github'
+  | 'gitlab'
+  | 'bitbucket'
+  | 'jira'
+  | 'kubernetes'
+  | 'awskms'
+  | 'terraform'
+  | 'docker'
+  | 'aws'
+  | 'gcp'
+  | 'hashiCorpVault'
+  | 'awsSecretsManager'
+  | 'gcpSecretManager'
 
 const LogoNameMap: Record<LogoName, SimpleIcon> = {
   github: siGithub,
   gitlab: siGitlab,
   bitbucket: siBitbucket,
   jira: siJira,
-  kubernetes: siKubernetes
+  kubernetes: siKubernetes,
+  aws: siAmazonwebservices,
+  awskms: siAwssecretsmanager,
+  awsSecretsManager: siAwssecretsmanager,
+  terraform: siTerraform,
+  docker: siDocker,
+  hashiCorpVault: siVault,
+  gcp: siGooglecloud,
+  gcpSecretManager: siGooglecloud
 }
 
 interface LogoProps {

@@ -26,22 +26,27 @@ const StepExecutionToolbar: FC<
         handleChange={handleInputChange}
         value={query}
       >
-        <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-borders-2 bg-background-3">
+        <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-cn-borders-2 bg-cn-background-3">
           <Icon className="text-icons-3" name="command-symbol" size={10} />
           <span className="text-12 leading-none">F</span>
         </div>
       </SearchBox.Root>
       <div className="flex">
-        <Button variant="outline" size="icon" className="rounded-r-none border-r-0 border-borders-1" onClick={onCopy}>
+        <Button
+          variant="outline"
+          size="icon"
+          className="rounded-r-none border-r-0 border-cn-borders-2"
+          onClick={onCopy}
+        >
           <Icon name="clone" className="size-4 text-icons-3" />
         </Button>
-        <Button variant="outline" size="icon" className="rounded-none border-borders-1" onClick={onEdit}>
+        <Button variant="outline" size="icon" className="rounded-none border-cn-borders-2" onClick={onEdit}>
           <Icon name="edit-pen" className="size-4 text-icons-3" />
         </Button>
         <Button
           variant="outline"
           size="icon"
-          className="rounded-l-none border-l-0 border-borders-1"
+          className="rounded-l-none border-l-0 border-cn-borders-2"
           onClick={onDownload}
         >
           <Icon name="download" className="size-4 text-icons-3" />
@@ -56,8 +61,8 @@ const TabsTrigger = ({ isLightTheme, ...props }: TabsTriggerProps & { isLightThe
     className={cn(
       'h-6 w-[68px]',
       isLightTheme
-        ? 'data-[state=active]:bg-background-1 data-[state=active]:shadow-none'
-        : 'data-[state=active]:bg-background-9 data-[state=active]:border-borders-2 data-[state=active]:border'
+        ? 'data-[state=active]:bg-cn-background-1 data-[state=active]:shadow-none'
+        : 'data-[state=active]:bg-cn-background-9 data-[state=active]:border-cn-borders-2 data-[state=active]:border'
     )}
     {...props}
   />
@@ -77,7 +82,7 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
     <Tabs.Root defaultValue={StepExecutionTab.LOG} className="size-full">
       <Layout.Vertical className="space-y-0">
         <Layout.Horizontal className="flex justify-between py-2.5 pl-5 pr-3.5">
-          <Tabs.List className="h-8 w-fit gap-x-0.5 border border-borders-1 bg-background-3">
+          <Tabs.List className="h-8 w-fit gap-x-0.5 border border-cn-borders-2 bg-cn-background-3">
             <TabsTrigger isLightTheme={isLightTheme} value={StepExecutionTab.LOG}>
               Logs
             </TabsTrigger>

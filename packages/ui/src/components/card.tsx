@@ -3,7 +3,7 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const cardVariants = cva('rounded-lg border bg-card text-card-foreground shadow', {
+const cardVariants = cva('rounded-lg border bg-cn-background-2 text-cn-foreground-1 shadow', {
   variants: {
     variant: {
       default: '',
@@ -61,9 +61,7 @@ const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
 CardTitle.displayName = 'CardTitle'
 
 const CardDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn('text-muted-foreground text-sm', className)} {...props} />
-  )
+  ({ className, ...props }, ref) => <p ref={ref} className={cn('text-cn-foreground-3 text-sm', className)} {...props} />
 )
 CardDescription.displayName = 'CardDescription'
 

@@ -12,6 +12,7 @@ import Arrow from '../../icons/arrow.svg'
 import ArtifactsGradient from '../../icons/artifacts-gradient.svg'
 import Artifacts from '../../icons/artifacts-icon.svg'
 import AttachmentImage from '../../icons/attachment-image.svg'
+import AttachmentLink from '../../icons/attachment-link.svg'
 import Attachment from '../../icons/attachment.svg'
 import BitrisePlugin from '../../icons/bitrise-plugin.svg'
 import BoldPlus from '../../icons/bold-plus.svg'
@@ -73,6 +74,7 @@ import DevInsights from '../../icons/dev-insights-icon.svg'
 import DevPortalGradient from '../../icons/dev-portal-gradient.svg'
 import DevPortal from '../../icons/dev-portal-icon.svg'
 import Docker from '../../icons/docker.svg'
+import Dot from '../../icons/dot.svg'
 import MoreDotsFill from '../../icons/dots-icon.svg'
 import DoubleTick from '../../icons/double-tick.svg'
 import Download from '../../icons/download-icon.svg'
@@ -96,7 +98,6 @@ import GitBranch from '../../icons/git-branch.svg'
 import GithubActions from '../../icons/github-actions.svg'
 import GitnessLogo from '../../icons/gitness-logo.svg'
 import GolangIcon from '../../icons/golang-icon.svg'
-import GreenCircle from '../../icons/green-circle.svg'
 import GridDots from '../../icons/grid-dots.svg'
 import HarnessLogoText from '../../icons/harness-logo-text.svg'
 import HarnessPlugin from '../../icons/harness-plugin.svg'
@@ -199,6 +200,7 @@ import Sparks from '../../icons/sparks.svg'
 import SquareDashed from '../../icons/square-dashed.svg'
 import SshKey from '../../icons/ssh-key.svg'
 import Stack from '../../icons/stack-icon.svg'
+import StarFilled from '../../icons/star-filled.svg'
 import Star from '../../icons/star-icon.svg'
 import Stop from '../../icons/stop-icon.svg'
 import SubMenuEllipse from '../../icons/sub-menu-ellipse.svg'
@@ -249,6 +251,7 @@ export const IconNameMap = {
   secrets: Secrets,
   connectors: Connectors,
   star: Star,
+  'star-filled': StarFilled,
   pull: Pull,
   search: Search,
   'arrow-long': ArrowLong,
@@ -339,7 +342,7 @@ export const IconNameMap = {
   run: Run,
   'run-test': RunTest,
   'ssh-key': SshKey,
-  'green-dot': GreenCircle,
+  dot: Dot,
   'tick-circle': TickCircle,
   'cancel-grey': CancelGrey,
   'harness-logo-text': HarnessLogoText,
@@ -450,5 +453,6 @@ export const IconNameMap = {
   'square-dashed': SquareDashed,
   refresh: Refresh,
   'node-icon': NodeIcon,
-  'golang-icon': GolangIcon
+  'golang-icon': GolangIcon,
+  'attachment-link': AttachmentLink
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

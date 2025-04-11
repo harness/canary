@@ -26,13 +26,19 @@ export default defineConfig({
     starlight({
       title: "Harness Design System",
       logo: {
-        src: "./src/assets/harness-design-system-logo.svg",
+        alt: "Harness Design System",
         replacesTitle: true,
+        light: "./src/assets/harness-design-system-logo-light.svg",
+        dark: "./src/assets/harness-design-system-logo.svg",
       },
       favicon: "./src/assets/favicon.png",
-      social: {
-        github: "https://github.com/harness/canary",
-      },
+      social: [
+        {
+          label: "github",
+          href: "https://github.com/harness/canary",
+          icon: "github",
+        },
+      ],
       sidebar: [
         {
           label: "Getting started",
@@ -46,10 +52,6 @@ export default defineConfig({
           label: "Components",
           autogenerate: { directory: "components" },
         },
-        {
-          label: "Coming soon",
-          autogenerate: { directory: "soon" },
-        },
       ],
       customCss: [
         "./src/tailwind.css",
@@ -60,6 +62,7 @@ export default defineConfig({
         PageFrame: "./src/components/layout/PageFrame.astro",
         TwoColumnContent: "./src/components/layout/TwoColumnContent.astro",
         PageTitle: "./src/components/layout/PageTitle.astro",
+        ThemeSelect: "./src/components/layout/ThemeSelect.astro",
       },
     }),
     tailwind({ applyBaseStyles: false }),

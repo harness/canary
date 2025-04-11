@@ -260,6 +260,8 @@
     "createSecret": "Create new secret.",
     "noUsers": "No Users Found",
     "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
+    "noEntities": "No entities yet",
+    "noEntitiesDescription": "There are no entities yet. ",
     "noConnectorsProject": "There are no connectors in this project yet.",
     "noSecretsProject": "There are no secrets in this project yet.",
     "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
@@ -268,35 +270,47 @@
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
   "search": "Search",
+  "common": {
+    "details": "Details",
+    "lastActivity": "Last Activity",
+    "created": "Created",
+    "manager": "Manager"
+  },
+  "connectors": {
+    "delete": "Delete Connector",
+    "configuration": "Configuration",
+    "references": "References",
+    "activityHistory": "Activity history",
+    "connector": "Connector",
+    "viewConnectorDetails": "View connector details",
+    "status": "Status",
+    "viewDocumentation": "View Documentation",
+    "new": "New connector",
+    "id": "Connector ID",
+    "create": "Create connector",
+    "createNew": "Create new connector",
+    "updated": "Last updated",
+    "lastConnected": "Last connected",
+    "statusOption": {
+      "success": "Success",
+      "failure": "Failure",
+      "label": "Status"
+    },
+    "viewDoctumentation": "View documentation"
+  },
   "notFound": {
     "button": "Reload page",
     "title": "Something went wrong…",
     "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
     "description": "The requested page is not found."
   },
-  "connectors": {
-    "createNew": "Create new connector",
-    "filterOptions": {
-      "statusOption": {
-        "success": "Success",
-        "failure": "Failure",
-        "label": "Status"
-      }
-    },
-    "updated": "Last updated",
-    "lastConnected": "Last connected"
-  },
-  "execution": {
-    "summary": "Summary",
-    "logs": "Logs",
-    "graph": "Graph",
-    "inputs": "Inputs",
-    "opa": "Policy evaluations",
-    "artifacts": "Artifacts",
-    "tests": "Tests",
-    "sto": "Security tests",
-    "secrets": "Secrets"
-  },
+  "summary": "Summary",
+  "graph": "Graph",
+  "inputs": "Inputs",
+  "opa": "Policy evaluations",
+  "artifacts": "Artifacts",
+  "tests": "Tests",
+  "sto": "Security tests",
   "labelData": {
     "form": {
       "colorValuePlaceholder": "Enter value name",
@@ -594,12 +608,6 @@
   },
   "secret": {
     "title": "Secret"
-  },
-  "common": {
-    "details": "Details",
-    "lastActivity": "Last Activity",
-    "created": "Created",
-    "manager": "Manager"
   },
   "userManagement": {
     "createUser": {

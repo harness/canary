@@ -22,7 +22,8 @@ const ConnectorsListPageWrapper = (): JSX.Element => (
           repoIdentifier: connector.gitDetails.repoIdentifier || '',
           branch: connector.gitDetails.branch || '',
           objectId: connector.gitDetails.objectId || ''
-        }
+        },
+        isFavorite: connector.isFavorite
       })) as ConnectorListItem[]
     }
     useTranslationStore={useTranslationStore}
@@ -31,9 +32,11 @@ const ConnectorsListPageWrapper = (): JSX.Element => (
     onEditConnector={noop}
     onDeleteConnector={noop}
     onTestConnection={noop}
+    onToggleFavoriteConnector={noop}
     currentPage={1}
     totalPages={5}
     goToPage={noop}
+    onCreate={noop}
   />
 )
 

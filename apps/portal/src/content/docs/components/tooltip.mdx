@@ -11,9 +11,10 @@ import { DocsPage } from "../../../components/docs-page";
   client:only
   code={`<Tooltip.Provider>
     <Tooltip.Root>
-        <Tooltip.Trigger>Hover me</Tooltip.Trigger>
+        <Tooltip.Trigger><Button theme="default">New Connector</Button></Tooltip.Trigger>
         <Tooltip.Content>
-            <p>This is a tooltip</p>
+            <Text>Hello World!</Text>
+						<Tooltip.Arrow />
         </Tooltip.Content>
     </Tooltip.Root>
 </Tooltip.Provider>`}
@@ -40,6 +41,8 @@ return (
 ```
 
 ## Anatomy
+
+All parts of the `Tooltip` component can be imported and composed as required.
 
 ```typescript jsx
 <Tooltip.Provider>

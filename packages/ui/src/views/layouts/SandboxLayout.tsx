@@ -20,7 +20,7 @@ function LeftPanel({ children, className }: { children: ReactNode; className?: s
   return (
     <div className="sticky top-0 z-50 h-screen">
       <nav
-        className={cn('h-full w-[220px] border-borders-5 max-md:hidden', className)}
+        className={cn('h-full w-[220px] border-cn-borders-3 max-md:hidden', className)}
         aria-label="Left Navigation Panel"
       >
         {children}
@@ -32,7 +32,7 @@ function LeftPanel({ children, className }: { children: ReactNode; className?: s
 function LeftSubPanel({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <section
-      className={cn('border-borders-4 w-[300px] h-full overflow-y-auto border-r', className)}
+      className={cn('border-cn-borders-4 w-[300px] h-full overflow-y-auto border-r', className)}
       aria-label="Left Sub Navigation Panel"
     >
       {children}
@@ -44,7 +44,7 @@ function Header({ children, className }: { children: ReactNode; className?: stri
   return (
     <header
       className={cn(
-        'bg-background fixed translate-x-[--sidebar-width] transition-transform duration-200 ease-linear right-0 top-0 z-40 h-[55px]',
+        'bg-cn-background fixed translate-x-[--sidebar-width] transition-transform duration-200 ease-linear right-0 top-0 z-40 h-[55px]',
         className
       )}
       role="banner"
@@ -61,7 +61,7 @@ function SubHeader({ children, className }: { children: ReactNode; className?: s
 function Main({ children, fullWidth, className }: { children: ReactNode; fullWidth?: boolean; className?: string }) {
   return (
     <section
-      className={cn('w-full bg-background-1 rounded-[inherit]', { 'w-full flex-1': fullWidth }, className)}
+      className={cn('w-full bg-cn-background-1 rounded-[inherit]', { 'w-full flex-1': fullWidth }, className)}
       aria-label="Main Content"
     >
       {fullWidth ? children : <div className={cn('mx-auto h-full max-w-[1200px]', className)}>{children}</div>}

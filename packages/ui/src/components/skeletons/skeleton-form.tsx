@@ -8,7 +8,7 @@ const SkeletonFormItem = () => {
   return (
     <div className="flex flex-col gap-y-2.5">
       <Skeleton className="h-2.5 w-[24%]" />
-      <div className="rounded border border-borders-4 px-3 py-3.5">
+      <div className="rounded border border-cn-borders-4 px-3 py-3.5">
         <Skeleton className="h-2.5 w-[41%]" />
       </div>
     </div>

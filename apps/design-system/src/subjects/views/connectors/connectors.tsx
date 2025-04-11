@@ -12,6 +12,7 @@ import {
   ConnectorEntity,
   ConnectorEntityForm,
   ConnectorsPalette,
+  ConnectorTestConnectionDialog,
   EntityIntent,
   GroupInput,
   ListInput,
@@ -41,14 +42,13 @@ const ConnectorsListPageContent = (): JSX.Element => {
   const [isConnectorDrawerOpen, setIsConnectorDrawerOpen] = useState(false)
   const [isEditConnectorDrawerOpen, setIsEditConnectorDrawerOpen] = useState(false)
   const [isConnectorSelected, setIsConnectorSelected] = useState(false)
-  const [, setIsSecretDrawerOpen] = useState(false)
   const [intent, setIntent] = useState<EntityIntent>(EntityIntent.CREATE)
-
+  const [testConnectionOpen, setTestConnectionOpen] = useState(false)
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
         <>
-          <h1 className="text-24 text-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
+          <h1 className="text-24 text-cn-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
           <Spacer size={6} />
           <ListActions.Root>
             <ListActions.Right>
@@ -80,11 +80,30 @@ const ConnectorsListPageContent = (): JSX.Element => {
               >
                 Edit Connector
               </Button>
+              <Button variant="default" onClick={() => setTestConnectionOpen(true)}>
+                Test Connection
+              </Button>
             </ListActions.Right>
           </ListActions.Root>
           <Spacer size={5} />
         </>
       </SandboxLayout.Content>
+
+      <ConnectorTestConnectionDialog
+        title="Test Connection"
+        apiUrl="https://docker.harness.io"
+        status="error"
+        percentageFilled={50}
+        errorMessage="Error Encountered (Update the username & password. Check if the provided credentials are correct. Invalid Docker Registry credentials)."
+        description="Validating connector authentication and permissions"
+        isOpen={testConnectionOpen}
+        onClose={() => setTestConnectionOpen(false)}
+        viewDocClick={() => {
+          console.log('')
+        }}
+        useTranslationStore={useTranslationStore}
+        errorData={{ errors: [{ reason: 'Unexpected Error', message: 'Bad credentials' }] }}
+      />
       <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
         <Drawer.Content>
           <ConnectorsPalette
@@ -101,7 +120,6 @@ const ConnectorsListPageContent = (): JSX.Element => {
             <Drawer.Content>
               {connectorEntity ? (
                 <ConnectorEntityForm
-                  openSecretDrawer={() => setIsSecretDrawerOpen(true)}
                   useTranslationStore={() =>
                     ({
                       t: () => 'dummy',
@@ -113,10 +131,6 @@ const ConnectorsListPageContent = (): JSX.Element => {
                   }
                   connector={connectorEntity}
                   onBack={() => setIsConnectorSelected(false)}
-                  requestClose={() => {
-                    setConnectorEntity(null)
-                    setIsConnectorSelected(false)
-                  }}
                   // onFormSubmit={handleFormSubmit}
                   getConnectorDefinition={getHarnessConnectorDefinition}
                   inputComponentFactory={inputComponentFactory}
@@ -131,14 +145,9 @@ const ConnectorsListPageContent = (): JSX.Element => {
         <Drawer.Content>
           {connectorEntity ? (
             <ConnectorEntityForm
-              openSecretDrawer={() => setIsSecretDrawerOpen(true)}
               useTranslationStore={useTranslationStore}
               connector={connectorEntity}
               onBack={() => setIsConnectorSelected(false)}
-              requestClose={() => {
-                setConnectorEntity(null)
-                setIsConnectorSelected(false)
-              }}
               getConnectorDefinition={getHarnessConnectorDefinition}
               inputComponentFactory={inputComponentFactory}
               intent={intent}

@@ -12,6 +12,7 @@ import { createFilters, FilterRefType } from '@harnessio/filters'
 interface FilterGroupProps<T extends Record<string, unknown>, V extends keyof T & string> {
   onFilterSelectionChange?: (selectedFilters: (keyof T)[]) => void
   onFilterValueChange?: (filterType: T) => void
+  handleFilterOpen?: (filter: V, isOpen: boolean) => void
   searchInput: string
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   t: TFunction
@@ -20,7 +21,15 @@ interface FilterGroupProps<T extends Record<string, unknown>, V extends keyof T 
 }
 
 const FilterGroup = <T extends Record<string, unknown>, V extends keyof T & string>(props: FilterGroupProps<T, V>) => {
-  const { onFilterSelectionChange, onFilterValueChange, searchInput, handleInputChange, t, filterOptions } = props
+  const {
+    onFilterSelectionChange,
+    onFilterValueChange,
+    searchInput,
+    handleInputChange,
+    t,
+    filterOptions,
+    handleFilterOpen
+  } = props
 
   const FilterHandler = useMemo(() => createFilters<T>(), [])
   const filtersRef = useRef<FilterRefType<T> | null>(null)
@@ -91,8 +100,8 @@ const FilterGroup = <T extends Record<string, unknown>, V extends keyof T & stri
                         onChange,
                         removeFilter,
                         value: value,
-                        onOpenChange: _isOpen => {
-                          // handleFilterOpen?.(filterOption.value, isOpen)
+                        onOpenChange: isOpen => {
+                          handleFilterOpen?.(filterOption.value, isOpen)
                         }
                       })
                     }
@@ -111,7 +120,7 @@ const FilterGroup = <T extends Record<string, unknown>, V extends keyof T & stri
             </FilterHandler.Dropdown>
           )}
           openedFilter={openedFilter}
-          setOpenedFilter={setOpenedFilter}
+          setOpenedFilter={value => setOpenedFilter(value as V)}
           filterOptions={filterOptions}
           sortOptions={[]}
           selectedFiltersCnt={selectedFiltersCnt}

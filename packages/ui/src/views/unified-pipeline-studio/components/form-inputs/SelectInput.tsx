@@ -4,6 +4,7 @@ import { InputComponent, InputProps, useController, type AnyFormikValue } from '
 
 import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
+import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
 
 export interface SelectOption {
@@ -15,6 +16,7 @@ export interface SelectInputConfig {
   inputType: 'select'
   inputConfig: {
     options: SelectOption[]
+    tooltip?: string
   }
 }
 function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig>): JSX.Element {
@@ -46,6 +48,7 @@ function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig
         </Select.Content>
       </Select.Root>
       <InputError path={path} />
+      {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
     </InputWrapper>
   )
 }

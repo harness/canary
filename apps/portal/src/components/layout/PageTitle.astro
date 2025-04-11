@@ -1,5 +1,5 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
+
 ---
 
-<h1 id="_top">{Astro.props.entry.data.title}</h1>
+<h1 id="_top">{Astro.locals.starlightRoute.entry.data.title}</h1>

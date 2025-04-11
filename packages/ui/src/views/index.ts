@@ -42,6 +42,9 @@ export * from './pipelines'
 // unified-pipeline-studio
 export * from './unified-pipeline-studio'
 
+// run pipeline from
+export * from './run-pipeline'
+
 // user-management
 export * from './user-management'
 

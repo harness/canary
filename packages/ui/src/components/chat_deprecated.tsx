@@ -15,7 +15,7 @@ const Body: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 // Footer
 const Footer: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="sticky bottom-0 bg-background p-6 pt-0">{children}</div>
+  return <div className="sticky bottom-0 bg-cn-background p-6 pt-0">{children}</div>
 }
 
 // Message Component
@@ -42,8 +42,8 @@ const Message: React.FC<MessageProps> = ({ self, time, avatar, actions, children
         })}
       >
         <div
-          className={cn('text-foreground-3 leading-relaxed', {
-            'px-3 py-2 bg-background-8 rounded-lg': self
+          className={cn('text-cn-foreground-3 leading-relaxed', {
+            'px-3 py-2 bg-cn-background-8 rounded-lg': self
           })}
         >
           {children}
@@ -51,7 +51,7 @@ const Message: React.FC<MessageProps> = ({ self, time, avatar, actions, children
         <div className="mt-1 flex items-center justify-between gap-3">
           <div>{actions && <div className="flex items-center justify-start gap-1">{actions}</div>}</div>
           {time && (
-            <Text size={1} className="text-primary opacity-20">
+            <Text size={1} className="text-cn-foreground-1 opacity-20">
               {time}
             </Text>
           )}
@@ -70,7 +70,7 @@ const Typing: React.FC<TypingProps> = ({ avatar }) => {
   return (
     <div className="mt-3 flex items-center gap-3">
       {avatar}
-      <div className="flex gap-1 text-lg font-medium text-success" aria-live="polite">
+      <div className="flex gap-1 text-lg font-medium text-cn-foreground-success" aria-live="polite">
         <span className="dot animate-bounce">&middot;</span>
         <span className="dot animate-bounce" style={{ animationDelay: '0.15s' }}>
           &middot;
@@ -115,7 +115,7 @@ const InputField: React.FC<InputFieldProps> = ({
   sendIcon = <Icon name="chevron-up" size={16} />
 }) => {
   return (
-    <div className="sticky bottom-0 flex items-center gap-2 bg-background">
+    <div className="sticky bottom-0 flex items-center gap-2 bg-cn-background">
       <Input
         ref={inputRef}
         className="flex-1 rounded-lg px-4 pb-16 pt-6 focus:ring-0"

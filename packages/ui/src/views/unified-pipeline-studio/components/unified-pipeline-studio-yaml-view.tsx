@@ -141,7 +141,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
 
   return useMemo(() => {
     //   const selection = highlightInYamlPath
-    //     ? { path: highlightInYamlPath, className: 'bg-background-4', revealInCenter: true }
+    //     ? { path: highlightInYamlPath, className: 'bg-cn-background-4', revealInCenter: true }
     //     : undefined
 
     return (

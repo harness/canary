@@ -386,7 +386,7 @@ export default {
         'widget-bg-gradient':
           'radial-gradient(80.82% 77.84% at 80.15% 11.99%, hsla(var(--cn-gradient-pipeline-widget-blob-big-from)) 8.43%, hsla(var(--cn-gradient-pipeline-widget-blob-big-to)) 100%)',
         'widget-number-gradient':
-          'linear-gradient(180deg, hsla(var(--canary-widget-number-gradient-from)) 35.9%, hsla(var(--canary-widget-number-gradient-to)) 100%)',
+          'linear-gradient(180deg, hsla(var(--cn-gradient-pipeline-widget-number-from)) 35.9%, hsla(var(--canary-widget-number-gradient-to)) 100%)',
         'widget-number-bg-gradient':
           'linear-gradient(135deg, hsla(var(--canary-widget-number-bg-gradient-from)) 0%, hsla(var(--canary-widget-number-bg-gradient-to)) 67.67%)',
         'graph-gradient-1':

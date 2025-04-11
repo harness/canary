@@ -33,7 +33,7 @@ const TabNavItem: FC<NavLinkProps> = ({ className, ...props }) => {
            */
           // radial gradient of active tab
           // 'before:pointer-events-none before:absolute before:left-1/2 before:top-1/2 before:-z-10 before:h-[calc(100%+40px)] before:w-[calc(100%+60px)] before:-translate-x-1/2 before:-translate-y-1/2 before:bg-transparent',
-          // { 'before:[background-image:var(--canary-tab-background-gradient)]': isActive },
+          // { 'before:[background-image:var()]': isActive },
           className
         )
       }

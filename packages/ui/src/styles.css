@@ -142,7 +142,7 @@
   white-space: nowrap;
   transform: translateY(-50%);
   left: calc(100% + 8px);
-  color: var(--canary-primary);
+  color: var(--cn-bg-1);
 }
 
 .diff-widget-tooltip::before {

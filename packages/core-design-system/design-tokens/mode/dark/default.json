@@ -1166,7 +1166,7 @@
           }
         },
         "$type": "color",
-        "$value": "{chrome.950}",
+        "$value": "{chrome.900}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       }
     },

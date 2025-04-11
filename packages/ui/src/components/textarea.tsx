@@ -32,7 +32,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             className,
             error
               ? 'border-cn-borders-danger'
-              : 'border-cn-borders-2 focus-visible:border-cn-borders-3 disabled:placeholder:text-cn-foreground-disabled disabled:border-cn-borders-2'
+              : 'border-cn-borders-2 focus-visible:border-cn-borders-1 disabled:placeholder:text-cn-foreground-disabled disabled:border-cn-borders-disabled'
           )}
           id={id}
           disabled={disabled}

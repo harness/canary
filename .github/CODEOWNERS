@@ -1,7 +1,7 @@
 # Global configs
-.github/ @abhinavrastogi-harness @knagurski
-.eslintrc.js @abhinavrastogi-harness @knagurski
-.prettierrc.yml @abhinavrastogi-harness @knagurski
+.github/ @abhinavrastogi-harness @knagurski @vardanbansal-harness
+.eslintrc.js @abhinavrastogi-harness @knagurski @vardanbansal-harness
+.prettierrc.yml @abhinavrastogi-harness @knagurski @vardanbansal-harness
 
 # Common ownership for shared config files
 /packages/*/package.json @abhinavrastogi-harness @knagurski
@@ -11,7 +11,6 @@
 
 # Apps
 /apps/gitness/* @abhinavrastogi-harness @vardanbansal-harness
-/apps/design-system/* @knagurski
 /apps/portal/* @knagurski
 
 # Packages with shared ownership

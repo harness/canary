@@ -1450,17 +1450,17 @@
       "selected": {
         "item": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{chrome.25}",
           "$description": "Color for selected items in selection controls. Creates high contrast against selected background state."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.900}",
+          "$value": "{pure.black}",
           "$description": "Background color for selected state in selection controls. Creates strong visual indication of active selection."
         },
         "border": {
           "$type": "color",
-          "$value": "{chrome.900}",
+          "$value": "{pure.black}",
           "$description": "Border color for selected elements in selection controls. Reinforces the selected state with consistent styling."
         }
       }

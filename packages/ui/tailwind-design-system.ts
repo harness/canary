@@ -326,7 +326,7 @@ export default {
         'pagination-1': '0px 2px 4px var(-cn-shadow-color-2)',
         'as-border': 'inset 0 0 0 1px',
         'commit-list-bullet':
-          '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)',
+          '0px 0px 3px 0.5px hsla(var(--cn-set-brand-solid-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-solid-bg) / 0.3)',
         auth: '0px 0px 20px var(-cn-shadow-color-2)'
       },
       borderColor: {

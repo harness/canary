@@ -88,7 +88,7 @@
 /* Text utilities */
 .text-radial-gradient {
   /* remove hardcode colors */
-  @apply bg-gradient-radial text-cn-foreground-1/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
+  @apply text-cn-foreground-1/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
 }
 
 /* Card utilities */

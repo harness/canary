@@ -371,7 +371,6 @@ export default {
         24: '1.5rem'
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--canary-tw-gradient-stops))',
         'ai-button':
           'linear-gradient(to right, hsl(var(--cn-gradient-ai-gradient-stop-1)), hsl(var(--cn-gradient-ai-gradient-stop-2)), hsl(var(--cn-gradient-ai-gradient-stop-3)), hsl(var(--cn-gradient-ai-gradient-stop-4)))',
         'navbar-item-gradient':

@@ -432,7 +432,7 @@
 
 mark {
   background: hsl(var(--cn-set-brand-solid-bg));
-  color: hsl(var(--canary-foreground-06));
+  color: hsl(var(--cn-set-brand-solid-text));
 }
 
 /* Hack for detecting scroll on select */

@@ -1,5 +1,10 @@
 {
   "bg": {
+    "0": {
+      "$type": "color",
+      "$value": "{chrome.50}",
+      "$description": "Level 0. Foundational layer used for page navigation and as a container for insets."
+    },
     "1": {
       "$type": "color",
       "$value": "{pure.white}",
@@ -716,6 +721,23 @@
       }
     },
     "brown": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{purple.1000}",
+          "$description": "Text color for high-contrast purple surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Background color for prominent purple surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Border color for purple boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -752,6 +774,23 @@
       }
     },
     "cyan": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{purple.1000}",
+          "$description": "Text color for high-contrast purple surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Background color for prominent purple surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Border color for purple boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -788,6 +827,23 @@
       }
     },
     "indigo": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{purple.1000}",
+          "$description": "Text color for high-contrast purple surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Background color for prominent purple surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Border color for purple boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -824,6 +880,23 @@
       }
     },
     "lime": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{purple.1000}",
+          "$description": "Text color for high-contrast purple surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Background color for prominent purple surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Border color for purple boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -860,6 +933,23 @@
       }
     },
     "mint": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{purple.1000}",
+          "$description": "Text color for high-contrast purple surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Background color for prominent purple surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Border color for purple boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -896,6 +986,23 @@
       }
     },
     "orange": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{purple.1000}",
+          "$description": "Text color for high-contrast purple surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Background color for prominent purple surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Border color for purple boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -932,6 +1039,23 @@
       }
     },
     "pink": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{purple.1000}",
+          "$description": "Text color for high-contrast purple surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Background color for prominent purple surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Border color for purple boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -968,6 +1092,23 @@
       }
     },
     "violet": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{purple.1000}",
+          "$description": "Text color for high-contrast purple surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Background color for prominent purple surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{purple.200}",
+          "$description": "Border color for purple boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",

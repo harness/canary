@@ -1,5 +1,10 @@
 {
   "bg": {
+    "0": {
+      "$type": "color",
+      "$value": "{chrome.950}",
+      "$description": "Level 0. Foundational layer used for page navigation and as a container for insets."
+    },
     "1": {
       "$type": "color",
       "$value": "{pure.black}",
@@ -698,6 +703,23 @@
       }
     },
     "brown": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{brown.1000}",
+          "$description": "Text color for high-contrast brown surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{brown.200}",
+          "$description": "Background color for prominent brown surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{brown.200}",
+          "$description": "Border color for brown boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -734,6 +756,23 @@
       }
     },
     "cyan": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{cyan.1000}",
+          "$description": "Text color for high-contrast cyan surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{cyan.200}",
+          "$description": "Background color for prominent cyan surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{cyan.200}",
+          "$description": "Border color for cyan boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -770,6 +809,23 @@
       }
     },
     "indigo": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{indigo.1000}",
+          "$description": "Text color for high-contrast indigo surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{indigo.200}",
+          "$description": "Background color for prominent indigo surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{indigo.200}",
+          "$description": "Border color for indigo boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -806,6 +862,23 @@
       }
     },
     "lime": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{lime.1000}",
+          "$description": "Text color for high-contrast lime surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{lime.200}",
+          "$description": "Background color for prominent lime surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{lime.200}",
+          "$description": "Border color for lime boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -842,6 +915,23 @@
       }
     },
     "mint": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{mint.1000}",
+          "$description": "Text color for high-contrast mint surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{mint.200}",
+          "$description": "Background color for prominent mint surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{mint.200}",
+          "$description": "Border color for mint boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -878,6 +968,23 @@
       }
     },
     "orange": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{orange.1000}",
+          "$description": "Text color for high-contrast orange surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{orange.200}",
+          "$description": "Background color for prominent orange surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{orange.200}",
+          "$description": "Border color for orange boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -914,6 +1021,23 @@
       }
     },
     "pink": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{pink.1000}",
+          "$description": "Text color for high-contrast pink surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{pink.200}",
+          "$description": "Background color for prominent pink surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{pink.200}",
+          "$description": "Border color for pink boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",
@@ -950,6 +1074,23 @@
       }
     },
     "violet": {
+      "solid": {
+        "text": {
+          "$type": "color",
+          "$value": "{violet.1000}",
+          "$description": "Text color for high-contrast violet surfaces."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{violet.200}",
+          "$description": "Background color for prominent violet surfaces."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{violet.200}",
+          "$description": "Border color for violet boundaries."
+        }
+      },
       "soft": {
         "text": {
           "$type": "color",

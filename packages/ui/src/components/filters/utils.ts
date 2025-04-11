@@ -14,7 +14,6 @@ import {
   type FilterOption,
   type FilterValue
 } from './types'
-import { CheckboxOptions } from './types'
 
 /**
  * Gets the label and icon for the sort trigger button

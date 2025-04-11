@@ -416,7 +416,7 @@
 
 .sub-menu-icon-bg {
   stop {
-    stop-color: hsl(var(--canary-sub-menu-icon-01));
+    stop-color: hsl(var(--cn-text-2));
 
     & + stop {
       stop-color: hsl(var(--canary-sub-menu-icon-02));

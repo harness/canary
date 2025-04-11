@@ -173,8 +173,7 @@ export function MarkdownViewer({
           className={cn(
             'prose prose-invert',
             {
-              '[&>div>pre]:rounded-t-none': isSuggestion,
-              '[&>div>pre]:mb-2': isSuggestion
+              '[&>div>pre]:rounded-t-none [&>div>pre]:mb-2': isSuggestion
             },
             markdownClassName
           )}
@@ -250,7 +249,7 @@ export function MarkdownViewer({
                 return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
               }
 
-              return <code className={cn(String(_className), 'leading-6 text-sm p-0 ')}>{children}</code>
+              return <code className={cn(String(_className), 'leading-6 text-sm p-0')}>{children}</code>
             }
           }}
         />

@@ -61,7 +61,7 @@
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.400}",
       "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\n\nCommon uses: Focus states, hover states, active elements, primary containers."
     },
     "2": {

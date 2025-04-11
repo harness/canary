@@ -77,7 +77,7 @@ const ConnectorDetailsReferenceList = ({
 
                 <Table.Cell
                   onClick={() => toEntity?.(createdAt)}
-                  className="text-cn-foreground-4 max-w-full truncate text-right text-sm font-normal leading-tight tracking-tight"
+                  className="text-cn-foreground-4 max-w-full content-center truncate text-right text-sm font-normal leading-tight tracking-tight"
                 >
                   {createdAt ? timeAgo(createdAt) : null}
                 </Table.Cell>

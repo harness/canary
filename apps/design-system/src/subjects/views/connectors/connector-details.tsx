@@ -35,12 +35,17 @@ inputComponentFactory.registerComponent(new RadialInput())
 
 const ConnectorsDetailsPageWrapper = (): JSX.Element => (
   <ConnectorDetailsPage
+    searchQuery=""
+    toEntity={noop}
+    toScope={noop}
     entities={mockConnectorRefList}
     isConnectorReferencesLoading={false}
     setIsConnectorRefSearchQuery={noop}
     currentPage={1}
     totalPages={1}
     goToPage={noop}
+    apiError={''}
+    apiConnectorRefError={''}
     connectorDetails={
       {
         name: mockConnectorDetails.connector.name,

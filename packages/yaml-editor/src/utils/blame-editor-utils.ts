@@ -81,7 +81,7 @@ export function getMonacoEditorCommitCss({
             border-radius: 50%;
             padding: 4px;
             text-align: center;
-            background: hsl(var(--canary-background-11));
+            background: hsl(var(--cn-set-gray-soft-bg));
             line-height: 17px;
             left: ${dateWidth + 10}px;
             top: -4px;

@@ -40,7 +40,7 @@ interface RoutingProps {
 export interface PullRequestOverviewProps
   extends RoutingProps,
     Pick<TimelineItemProps, 'toggleConversationStatus' | 'onCopyClick' | 'handleSaveComment'>,
-    Required<Omit<PRCommentViewProps, 'commentItem'>> {
+    Required<Omit<PRCommentViewProps, 'commentItem' | 'parentItem'>> {
   handleUpdateDescription: (title: string, description: string) => void
   data?: TypesPullReqActivity[]
   currentUser?: { display_name?: string; uid?: string }
@@ -129,9 +129,16 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   }, [mappedData, activityFilter, currentUser?.uid])
 
   const PRCommentViewBase = useMemo(() => {
-    const Component = ({ commentItem }: { commentItem: PRCommentViewProps['commentItem'] }) => (
+    const Component = ({
+      commentItem,
+      parentItem
+    }: {
+      commentItem: PRCommentViewProps['commentItem']
+      parentItem?: CommentItem<TypesPullReqActivity>
+    }) => (
       <PRCommentView
         commentItem={commentItem}
+        parentItem={parentItem}
         filenameToLanguage={filenameToLanguage}
         suggestionsBatch={suggestionsBatch}
         onCommitSuggestion={onCommitSuggestion}
@@ -163,7 +170,6 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
 
         {activityBlocks?.map((commentItems, index) => {
           const isLast = activityBlocks.length - 1 === index
-
           if (isSystemComment(commentItems)) {
             return (
               <PullRequestSystemComments
@@ -176,11 +182,13 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
               />
             )
           }
+          const parentActivity = commentItems.length > 0 ? commentItems[0] : undefined
 
           return (
             <PullRequestRegularAndCodeComment
               key={commentItems[0].id}
               commentItems={commentItems}
+              parentItem={parentActivity}
               handleUpload={handleUpload}
               currentUser={currentUser}
               toggleConversationStatus={toggleConversationStatus}

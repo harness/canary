@@ -40,7 +40,7 @@ interface RoutingProps {
 export interface PullRequestOverviewProps
   extends RoutingProps,
     Pick<TimelineItemProps, 'toggleConversationStatus' | 'onCopyClick' | 'handleSaveComment'>,
-    Required<Omit<PRCommentViewProps, 'commentItem'>> {
+    Required<Omit<PRCommentViewProps, 'commentItem' | 'parentItem'>> {
   handleUpdateDescription: (title: string, description: string) => void
   data?: TypesPullReqActivity[]
   currentUser?: { display_name?: string; uid?: string }

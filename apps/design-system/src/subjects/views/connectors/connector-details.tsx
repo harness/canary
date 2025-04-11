@@ -44,8 +44,6 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => (
     currentPage={1}
     totalPages={1}
     goToPage={noop}
-    apiError={''}
-    apiConnectorRefError={''}
     connectorDetails={
       {
         name: mockConnectorDetails.connector.name,

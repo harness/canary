@@ -1,3 +1,5 @@
+import { ConnectorReferenceList } from '@harnessio/ui/views'
+
 export const mockConnectorRefList = {
   content: [
     {
@@ -334,4 +336,4 @@ export const mockConnectorRefList = {
       createdAt: 1600600000000
     }
   ]
-}
+} as ConnectorReferenceList

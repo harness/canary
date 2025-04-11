@@ -25,8 +25,9 @@ export interface ReferredEntity {
   type: string
   entityRef: EntityRef
   name: string
-  scope: string
-  identifier: string
+  scope?: string
+  identifier?: string
+  entityGitMetadata: Record<string, any> | null
 }
 
 export interface EntityDetail {

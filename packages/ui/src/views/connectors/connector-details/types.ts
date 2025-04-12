@@ -60,6 +60,7 @@ export interface ConnectorDetailsReferenceListProps {}
 
 export interface ConnectorDetailsItem {
   identifier: string
+  type: ConnectorConfigType
   name?: string
   description?: string
   status?: ExecutionState
@@ -73,7 +74,6 @@ export interface ConnectorDetailsItem {
     branch?: string
     objectId?: string
   }
-  icon: keyof typeof LogoNameMap
   createdAt: number
   lastConnectedAt: number
 }

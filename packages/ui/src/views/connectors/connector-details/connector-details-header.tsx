@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { Badge, Button, MoreActionsTooltip } from '@/components'
-import { Logo } from '@components/logo'
+import { Logo, LogoName } from '@components/logo'
 import { Spacer } from '@components/spacer'
 import { timeAgo } from '@utils/utils'
 
@@ -19,7 +19,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
     <div className="px-8 py-5">
       <div className="flex size-full cursor-pointer flex-row gap-2 p-2">
         <div className="pt-1">
-          <Logo name={connectorDetails.icon} />
+          <Logo name={connectorDetails.type.toLowerCase() as LogoName} />
         </div>
         <h1 className="text-24 font-medium leading-snug tracking-tight text-cn-foreground-1">
           {connectorDetails.name}

@@ -60,7 +60,6 @@ export interface ConnectorDetailsReferenceListProps {}
 
 export interface ConnectorDetailsItem {
   identifier: string
-  type: ConnectorConfigType
   name?: string
   description?: string
   status?: ExecutionState

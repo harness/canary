@@ -7,7 +7,6 @@ import { Layout } from '@components/layout'
 import { MarkdownViewer } from '@components/markdown-viewer'
 import { Progress } from '@components/progress'
 import { cn } from '@utils/cn'
-import { ExecutionStatus } from '@views/execution/execution-status'
 import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 

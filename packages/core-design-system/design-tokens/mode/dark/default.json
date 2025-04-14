@@ -39,7 +39,7 @@
     },
     "accent": {
       "$type": "color",
-      "$value": "{blue.300}",
+      "$value": "{blue.400}",
       "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\n\nCommon uses: Links, buttons, interactive icons, highlighted elements."
     },
     "success": {
@@ -449,19 +449,19 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{red.200}",
+          "$value": "{red.300}",
           "$description": "Background color for prominent red surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{red.200}",
+          "$value": "{red.300}",
           "$description": "Border color for red boundaries."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{red.200}",
+          "$value": "{red.300}",
           "$description": "Text color for subtle red surfaces with good contrast."
         },
         "bg": {
@@ -488,7 +488,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{red.200}",
+          "$value": "{red.300}",
           "$description": "Standard text color for red surfaces with balanced readability."
         },
         "bg": {
@@ -522,19 +522,19 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{yellow.150}",
+          "$value": "{yellow.200}",
           "$description": "Background color for prominent yellow surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{yellow.150}",
+          "$value": "{yellow.200}",
           "$description": "Border color for yellow boundaries."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{yellow.150}",
+          "$value": "{yellow.200}",
           "$description": "Text color for subtle yellow surfaces with good contrast."
         },
         "bg": {
@@ -561,7 +561,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{yellow.150}",
+          "$value": "{yellow.200}",
           "$description": "Standard text color for yellow surfaces with balanced readability."
         },
         "bg": {

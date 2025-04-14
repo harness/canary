@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
-import { NavbarItemType } from '@harnessio/ui/components'
+import { NavbarItemType, useSidebar } from '@harnessio/ui/components'
 import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useNav } from '../../components/stores/recent-pinned-nav-links.store'
@@ -13,8 +13,9 @@ import { useRepoImportEvents } from '../../framework/hooks/useRepoImportEvent'
 import { useSelectedSpaceId } from '../../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
+import { AppBreadcrumbs } from '../breadcrumbs/app-breadcrumbs'
+import { useGetBreadcrumbs } from '../breadcrumbs/useGetBreadcrumbs'
 import { Toaster } from '../toaster'
-import Breadcrumbs from './breadcrumbs'
 import { AppSideBar } from './side-bar'
 
 interface NavLinkStorageInterface {
@@ -31,6 +32,8 @@ export const AppShell: FC = () => {
   const { t } = useTranslationStore()
   const selectedSpaceId = useSelectedSpaceId(spaceId)
   const spaceIdPathParam = spaceId ?? selectedSpaceId ?? ''
+
+  const { breadcrumbs } = useGetBreadcrumbs()
 
   const pinnedMenuItemsData = useMemo(
     () => getPinnedMenuItemsData({ t, routes, spaceId: spaceIdPathParam }),
@@ -66,7 +69,8 @@ export const AppShell: FC = () => {
   return (
     <>
       <AppSideBar>
-        <MainContentLayout breadcrumbs={<Breadcrumbs />}>
+        <AppBreadcrumbs breadcrumbs={breadcrumbs} withMobileSidebarToggle />
+        <MainContentLayout useSidebar={useSidebar} withBreadcrumbs={breadcrumbs.length > 0}>
           <Outlet />
         </MainContentLayout>
       </AppSideBar>

@@ -110,6 +110,13 @@
     "viewRules": "View Rules",
     "browse": "Browse",
     "deleteBranch": "Delete Branch",
+    "createBranchDialog": {
+      "validation": {
+        "name": "Branch name is required",
+        "noSpaces": "Name cannot contain spaces",
+        "target": "Base branch is required"
+      }
+    },
     "createBranchTitle": "Create a branch",
     "createBranchButton": "Create branch",
     "newBranch": "New branch",
@@ -189,14 +196,6 @@
     "status": "Status",
     "tagger": "Tagger",
     "creationDate": "Creation date",
-    "createBranchDialog": {
-      "validation": {
-        "name": "Branch name is required",
-        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
-        "noSpaces": "Name cannot contain spaces",
-        "target": "Base branch is required"
-      }
-    },
     "createTagDialog": {
       "validation": {
         "name": "Tag name is required",
@@ -210,6 +209,8 @@
       "target": "Target",
       "message": "Message"
     },
+    "branchCreated": "Branch created",
+    "branchCreatedDescription": "Branch {{name}} created successfully",
     "renameBranch": "Rename Branch",
     "add": "Add",
     "users": "Users",
@@ -547,10 +548,10 @@
     "selectMember": "Select member",
     "selectRole": "Select role",
     "enterBranchName": "Enter branch name",
-    "createBranchError": "Branch name is required",
-    "enterTagName": "Enter a tag name here",
-    "tagName": "Name",
     "basedOn": "Based on",
+    "enterTagName": "Enter a tag name here",
+    "createBranchError": "Branch name is required",
+    "tagName": "Name",
     "select": "Select",
     "baseBranch": "Base branch",
     "selectBranchError": "Base branch is required",

@@ -1,17 +1,31 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input } from '@/components'
+import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Label } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { BranchSelector } from '@views/repo/components'
+import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
 import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'
 
-export const createBranchFormSchema = z.object({
-  name: z.string().min(1, { message: 'Branch name is required' }),
-  target: z.string().min(1, { message: 'Base branch is required' })
-})
+export const createBranchFormSchema = (t: TranslationStore['t']) =>
+  z.object({
+    name: z
+      .string()
+      .trim()
+      .min(1, { message: t('views:repos.createBranchDialog.validation.name', 'Branch name is required') })
+      .refine(data => !data.includes(' '), {
+        message: t('views:repos.createBranchDialog.validation.noSpaces', 'Name cannot contain spaces')
+      }),
+    target: z
+      .string()
+      .min(1, { message: t('views:repos.createBranchDialog.validation.target', 'Base branch is required') })
+  })
+
+const INITIAL_FORM_VALUES: CreateBranchFormFields = {
+  name: '',
+  target: ''
+}
 
 export function CreateBranchDialog({
   open,
@@ -20,11 +34,10 @@ export function CreateBranchDialog({
   isCreatingBranch,
   error,
   useTranslationStore,
-  useRepoBranchesStore,
-  handleChangeSearchValue
+  selectedBranchOrTag,
+  renderProp: BranchSelectorContainer
 }: CreateBranchDialogProps) {
   const { t } = useTranslationStore()
-  const { setSelectedBranchTag, defaultBranch } = useRepoBranchesStore()
 
   const {
     register,
@@ -32,84 +45,66 @@ export function CreateBranchDialog({
     setValue,
     reset,
     clearErrors,
-    formState: { errors, isValid, isSubmitSuccessful }
+    formState: { errors, isValid }
   } = useForm<CreateBranchFormFields>({
-    resolver: zodResolver(createBranchFormSchema),
+    resolver: zodResolver(createBranchFormSchema(t)),
     mode: 'onChange',
-    defaultValues: {
-      name: '',
-      target: ''
-    }
+    defaultValues: INITIAL_FORM_VALUES
   })
 
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      clearErrors()
-      reset()
-      setValue('name', '', { shouldValidate: false })
-      setValue('target', defaultBranch || '', { shouldValidate: false })
-      setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
-      onClose()
+  const resetForm = useCallback(() => {
+    clearErrors()
+    reset(INITIAL_FORM_VALUES)
+  }, [clearErrors, reset])
+
+  const handleFormSubmit = async (data: CreateBranchFormFields) => {
+    await onSubmit(data)
+
+    if (!error && !isCreatingBranch) {
+      handleClose()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSubmitSuccessful, open, onClose])
+  }
+
+  useEffect(() => {
+    if (open) {
+      resetForm()
+
+      if (selectedBranchOrTag) {
+        setValue('target', selectedBranchOrTag.name, { shouldValidate: true })
+      }
+    }
+  }, [selectedBranchOrTag, setValue, open, resetForm])
 
   const handleClose = () => {
-    clearErrors()
-    setValue('name', '', { shouldValidate: false })
-    setValue('target', defaultBranch || '', { shouldValidate: false })
-    setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
-    handleChangeSearchValue('')
+    resetForm()
     onClose()
   }
 
-  const handleSelectChange = (fieldName: keyof CreateBranchFormFields, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
-  }
-
-  useEffect(() => {
-    if (defaultBranch) {
-      setValue('target', defaultBranch, { shouldValidate: true })
-      setSelectedBranchTag({ name: defaultBranch, sha: '' })
-    }
-  }, [defaultBranch, setValue])
-
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content className="max-w-[460px] border-cn-borders-2 bg-cn-background-1" aria-describedby={undefined}>
+      <Dialog.Content className="border-cn-borders-2 bg-cn-background-1 max-w-[460px]" aria-describedby={undefined}>
         <Dialog.Header>
-          <Dialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
+          <Dialog.Title className="font-medium">{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
           <Fieldset>
             <Input
               id="name"
               label="Branch name"
               {...register('name')}
-              maxLength={50}
+              maxLength={250}
               placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
               size="md"
-              error={
-                errors.name?.message ? t('views:forms.createBranchError', errors.name?.message?.toString()) : undefined
-              }
+              error={errors.name?.message}
             />
           </Fieldset>
 
           <Fieldset>
             <ControlGroup>
-              {/* TODO: Currently the search within BranchSelector is not working, we need to review the current passed states for it to work */}
-              <BranchSelector
-                useRepoBranchesStore={useRepoBranchesStore}
-                useTranslationStore={useTranslationStore}
-                onSelectBranch={value => {
-                  handleSelectChange('target', value.name)
-                  setSelectedBranchTag(value)
-                }}
-                setSearchQuery={handleChangeSearchValue}
-                buttonSize="md"
-                isBranchOnly
-                dynamicWidth
-              />
+              <Label htmlFor="target" className="mb-2" color="secondary">
+                {t('views:forms.basedOn', 'Based on')}
+              </Label>
+              {BranchSelectorContainer()}
             </ControlGroup>
           </Fieldset>
 

@@ -1,13 +1,13 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, ReactNode, SetStateAction } from 'react'
 
 import { TranslationStore } from '@/views'
 import { z } from 'zod'
 
 import { PullRequestType } from '../pull-request/pull-request.types'
-import { IBranchSelectorStore } from '../repo.types'
+import { BranchSelectorListItem, IBranchSelectorStore } from '../repo.types'
 import { createBranchFormSchema } from './components/create-branch-dialog'
 
-export type CreateBranchFormFields = z.infer<typeof createBranchFormSchema>
+export type CreateBranchFormFields = z.infer<ReturnType<typeof createBranchFormSchema>>
 export interface BranchProps {
   id: number
   name: string
@@ -60,7 +60,7 @@ export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   useTranslationStore: () => TranslationStore
   isCreateBranchDialogOpen: boolean
   setCreateBranchDialogOpen: (isOpen: boolean) => void
-  onSubmit: (formValues: CreateBranchFormFields) => void
+  onSubmit: (formValues: CreateBranchFormFields) => Promise<void>
   isCreatingBranch: boolean
   createBranchError?: string
   searchQuery: string | null
@@ -77,11 +77,10 @@ interface Branch {
 export interface CreateBranchDialogProps {
   open: boolean
   onClose: () => void
-  onSubmit: (formValues: CreateBranchFormFields) => void
+  onSubmit: (formValues: CreateBranchFormFields) => Promise<void>
   error?: string
   isCreatingBranch?: boolean
   useTranslationStore: () => TranslationStore
-  defaultBranch?: string
-  handleChangeSearchValue: Dispatch<SetStateAction<string>>
-  useRepoBranchesStore: () => IBranchSelectorStore
+  selectedBranchOrTag: BranchSelectorListItem | null
+  renderProp: () => ReactNode
 }

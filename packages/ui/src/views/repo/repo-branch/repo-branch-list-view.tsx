@@ -3,24 +3,19 @@ import { FC, useMemo } from 'react'
 import { Button, ListActions, Pagination, SearchBox, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
+import { cn } from '@utils/cn'
 
 import { BranchesList } from './components/branch-list'
-import { CreateBranchDialog } from './components/create-branch-dialog'
 import { RepoBranchListViewProps } from './types'
 
 export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   isLoading,
   useRepoBranchesStore,
   useTranslationStore,
-  isCreateBranchDialogOpen,
   setCreateBranchDialogOpen,
-  onSubmit,
-  createBranchError,
-  isCreatingBranch,
   searchQuery,
   setSearchQuery,
   onDeleteBranch,
-  setCreateBranchSearchQuery,
   ...routingProps
 }) => {
   const { t } = useTranslationStore()
@@ -42,11 +37,12 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content>
+      <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
+        <Spacer size={2} />
         {(isLoading || !!branchList.length || isDirtyList) && (
           <>
-            <h1 className="text-cn-foreground-1 mb-6 text-2xl font-medium">{t('views:repos.branches', 'Branches')}</h1>
-
+            <span className="text-24 text-cn-foreground-1 font-medium">{t('views:repos.branches', 'Branches')}</span>
+            <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
                 <SearchBox.Root
@@ -87,19 +83,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
           <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
         )}
       </SandboxLayout.Content>
-      <CreateBranchDialog
-        open={isCreateBranchDialogOpen}
-        onClose={() => {
-          setCreateBranchDialogOpen(false)
-        }}
-        useRepoBranchesStore={useRepoBranchesStore}
-        onSubmit={onSubmit}
-        isCreatingBranch={isCreatingBranch}
-        useTranslationStore={useTranslationStore}
-        error={createBranchError}
-        defaultBranch={defaultBranch}
-        handleChangeSearchValue={setCreateBranchSearchQuery}
-      />
     </SandboxLayout.Main>
   )
 }

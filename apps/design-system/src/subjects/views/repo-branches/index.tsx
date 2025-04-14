@@ -14,7 +14,7 @@ export function RepoBranchesView() {
     <RepoBranchListView
       isLoading={false}
       isCreatingBranch={false}
-      onSubmit={noop}
+      onSubmit={async () => {}}
       useRepoBranchesStore={useRepoBranchesStore}
       useTranslationStore={useTranslationStore}
       isCreateBranchDialogOpen={isCreateBranchDialogOpen}

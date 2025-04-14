@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import {
-  useCreateBranchMutation,
   useCreateTagMutation,
   useDeleteTagMutation,
   useFindRepositoryQuery,
@@ -10,15 +9,9 @@ import {
   useListTagsQuery
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import {
-  CommitTagType,
-  CreateBranchDialog,
-  CreateBranchFormFields,
-  CreateTagDialog,
-  CreateTagFromFields,
-  RepoTagsListView
-} from '@harnessio/ui/views'
+import { CommitTagType, CreateTagDialog, CreateTagFromFields, RepoTagsListView } from '@harnessio/ui/views'
 
+import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
@@ -86,15 +79,6 @@ export const RepoTagsListContainer = () => {
     }
   )
 
-  const { mutate: createBranch, error: createBranchError } = useCreateBranchMutation(
-    {},
-    {
-      onSuccess: () => {
-        setOpenCreateBranchDialog(false)
-      }
-    }
-  )
-
   useEffect(() => {
     if (tagsList) {
       setTags(tagsList as CommitTagType[])
@@ -139,15 +123,6 @@ export const RepoTagsListContainer = () => {
     })
   }
 
-  const handleCreateBranch = (data: CreateBranchFormFields) => {
-    createBranch({
-      repo_ref,
-      body: {
-        ...data
-      }
-    })
-  }
-
   return (
     <>
       <RepoTagsListView
@@ -174,15 +149,7 @@ export const RepoTagsListContainer = () => {
         useRepoBranchesStore={useRepoBranchesStore}
         isLoading={isCreatingTag}
       />
-      <CreateBranchDialog
-        open={openCreateBranchDialog}
-        onClose={() => setOpenCreateBranchDialog(false)}
-        useRepoBranchesStore={useRepoBranchesStore}
-        onSubmit={handleCreateBranch}
-        useTranslationStore={useTranslationStore}
-        handleChangeSearchValue={setBranchQuery}
-        error={createBranchError?.message}
-      />
+      <CreateBranchDialog open={openCreateBranchDialog} onClose={() => setOpenCreateBranchDialog(false)} />
       <DeleteAlertDialog
         open={deleteTagDialog}
         onClose={() => setDeleteTagDialog(false)}

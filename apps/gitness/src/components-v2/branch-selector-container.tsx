@@ -15,12 +15,14 @@ interface BranchSelectorContainerProps {
   onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   isBranchOnly?: boolean
   dynamicWidth?: boolean
+  preSelectedTab?: BranchSelectorTab
 }
 export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = ({
   selectedBranch,
   onSelectBranchorTag,
   isBranchOnly = false,
-  dynamicWidth = false
+  dynamicWidth = false,
+  preSelectedTab
 }) => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -95,6 +97,7 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
       onSelectBranch={onSelectBranchorTag}
       isBranchOnly={isBranchOnly}
       dynamicWidth={dynamicWidth}
+      preSelectedTab={preSelectedTab}
     />
   )
 }

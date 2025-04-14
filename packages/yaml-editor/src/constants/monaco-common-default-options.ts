@@ -19,5 +19,6 @@ export const MonacoCommonDefaultOptions: monaco.editor.IStandaloneDiffEditorCons
   },
   overviewRulerBorder: false,
   overviewRulerLanes: 0,
-  renderLineHighlight: 'none'
+  renderLineHighlight: 'none',
+  automaticLayout: true
 }

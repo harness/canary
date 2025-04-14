@@ -25,7 +25,7 @@ type MainContentLayoutProps = PropsWithChildren<{
   className?: string
 }>
 
-export function MainContentLayout({ children, useSidebar, className, withBreadcrumbs }: MainContentLayoutProps) {
+export function MainContentLayout({ children, useSidebar, withBreadcrumbs, className }: MainContentLayoutProps) {
   const { isInset } = useTheme()
   const sidebarData = useSidebar?.()
   const isMobile = sidebarData?.isMobile

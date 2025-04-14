@@ -25,7 +25,15 @@ function NumberInputInternal(props: InputProps<AnyFormikValue, NumberInputConfig
   return (
     <InputWrapper>
       <InputLabel label={label} description={description} required={required} />
-      <Input placeholder={placeholder} {...field} disabled={readonly} type="number" />
+      <Input
+        placeholder={placeholder}
+        {...field}
+        disabled={readonly}
+        type="number"
+        onChange={evt => {
+          field.onChange(parseFloat(evt.currentTarget.value))
+        }}
+      />
       <InputError path={path} />
       {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
     </InputWrapper>

@@ -108,7 +108,6 @@ const PipelineStudioYamlView = (): JSX.Element => {
 
   const inlineActionCallback: InlineAction<InlineActionArgsType>['onClick'] = useCallback(
     props => {
-      console.log(props, 'props1')
       const { data, path } = props
       // TODO: move this to utils, refactor
       switch (data.entityType) {
@@ -139,6 +138,26 @@ const PipelineStudioYamlView = (): JSX.Element => {
     }
   }, [yamlRevision])
 
+  const yamlEditor = useMemo(() => {
+    return (
+      <YamlEditor
+        instanceId="pipeline-yaml"
+        onYamlRevisionChange={value => {
+          currentYamlRef.current = value?.yaml
+          onYamlRevisionChange(value ?? { yaml: '', revisionId: 0 })
+        }}
+        yamlRevision={newYamlRef.current}
+        themeConfig={themeConfig}
+        theme={theme}
+        schemaConfig={schemaConfig}
+        inlineActions={inlineActions}
+        // selection={selection}
+        animateOnUpdate={animateOnUpdate}
+        onAnimateEnd={onAnimateEnd}
+      />
+    )
+  }, [themeConfig, theme, schemaConfig, inlineActions, animateOnUpdate, onAnimateEnd])
+
   return useMemo(() => {
     //   const selection = highlightInYamlPath
     //     ? { path: highlightInYamlPath, className: 'bg-cn-background-4', revealInCenter: true }
@@ -146,20 +165,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
 
     return (
       <div className="flex size-full" style={{ paddingTop: `${HEADER_HEIGHT}px` }}>
-        <YamlEditor
-          onYamlRevisionChange={value => {
-            currentYamlRef.current = value?.yaml
-            onYamlRevisionChange(value ?? { yaml: '', revisionId: 0 })
-          }}
-          yamlRevision={newYamlRef.current}
-          themeConfig={themeConfig}
-          theme={theme}
-          schemaConfig={schemaConfig}
-          inlineActions={inlineActions}
-          // selection={selection}
-          animateOnUpdate={animateOnUpdate}
-          onAnimateEnd={onAnimateEnd}
-        />
+        {yamlEditor}
       </div>
     )
   }, [reRenderYamlEditor, themeConfig, schemaConfig, theme, animateOnUpdate, onAnimateEnd]) // inlineActions, highlightInYamlPath

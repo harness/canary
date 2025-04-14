@@ -57,10 +57,11 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
     options: userOptions,
     animateOnUpdate = false,
     onAnimateEnd,
-    instanceId
+    instanceId: instanceIdFromProps
   } = props
   const monaco = useMonaco()
-  const [instanceIdLocal] = useState(instanceId ?? `yaml-editor-${Math.random()}`)
+  const [instanceId] = useState(instanceIdFromProps ?? `yaml-editor-${Math.random()}`)
+
   const { editor, setEditor } = useYamlEditorContext()
 
   const rootDivRef = useRef<HTMLDivElement | null>(null)
@@ -156,9 +157,11 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
 
   const { theme } = useTheme({ monacoRef, themeConfig, editor, theme: themeFromProps })
 
-  useProblems({ monacoRef })
+  useProblems({ monacoRef, editorRef, instanceId })
 
   useDecoration({ editorRef, selection })
+
+  const path = useMemo(() => schemaIdToUrl(instanceId), [])
 
   const mergedOptions = useMemo(
     () => ({
@@ -178,7 +181,7 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
         language="yaml"
         theme={theme}
         options={mergedOptions}
-        path={schemaIdToUrl(instanceIdLocal)}
+        path={path}
         onMount={handleEditorDidMount}
       />
     </div>

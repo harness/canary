@@ -4,9 +4,13 @@ import * as monaco from 'monaco-editor'
 
 import { useYamlEditorContext } from '../components/YamlProvider'
 
-export type UseProblems = (arg: { monacoRef: RefObject<typeof monaco | undefined> }) => void
+export type UseProblems = (arg: {
+  instanceId?: string
+  monacoRef: RefObject<typeof monaco | undefined>
+  editorRef: RefObject<monaco.editor.IStandaloneCodeEditor | null | undefined>
+}) => void
 
-export const useProblems: UseProblems = ({ monacoRef }): void => {
+export const useProblems: UseProblems = ({ monacoRef, editorRef, instanceId }): void => {
   const { setMarkers } = useYamlEditorContext()
 
   useEffect(() => {
@@ -17,9 +21,18 @@ export const useProblems: UseProblems = ({ monacoRef }): void => {
 
       if (!editor) return
 
-      handle = editor.onDidChangeMarkers(([resource]) => {
-        const markers = editor.getModelMarkers({ resource })
-        setMarkers(markers)
+      // NOTE: Handler editor.onDidChangeMarkers triggers on any schema validation. Its a global event for all YamlEditor instances.
+      handle = editor.onDidChangeMarkers(uris => {
+        const model = editorRef.current?.getModel()
+        if (!model) return
+
+        const modelUri = model.uri.toString()
+
+        if (uris.some(uri => uri.toString() === modelUri)) {
+          // Marker change occurred for this editor's model
+          const markers = monaco.editor.getModelMarkers({ resource: model.uri })
+          setMarkers(markers)
+        }
       })
     }, 100)
 
@@ -27,5 +40,5 @@ export const useProblems: UseProblems = ({ monacoRef }): void => {
       clearTimeout(timeoutHandle)
       handle?.dispose()
     }
-  }, [monacoRef])
+  }, [monacoRef, instanceId, setMarkers])
 }

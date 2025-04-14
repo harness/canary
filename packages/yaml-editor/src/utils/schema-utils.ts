@@ -1,20 +1,38 @@
 import { Uri } from 'monaco-editor'
-import { yamlDefaults } from 'monaco-yaml'
+import { SchemasSettings, yamlDefaults } from 'monaco-yaml'
 
-let isYamlMonacoConfigured = false
+export function addUpdateSchema(schemaConfig: { fileMatch: string[]; schema: any; uri: string }) {
+  const schemas = yamlDefaults?.diagnosticsOptions?.schemas ?? []
 
-export function configureSchema(schemaConfig: any) {
-  if (isYamlMonacoConfigured) return
+  const exitingSchemaIndex = schemas.findIndex(schema => schema.fileMatch[0] === schemaConfig.fileMatch[0])
 
+  if (exitingSchemaIndex !== -1) {
+    schemas[exitingSchemaIndex] = schemaConfig
+  } else {
+    schemas.push(schemaConfig)
+  }
+
+  setDiagnostics(schemas)
+}
+
+export function removeSchema(schemaId: string) {
+  const existingSchemas = yamlDefaults?.diagnosticsOptions?.schemas ?? []
+
+  const schemas = existingSchemas.filter(schemaItem => {
+    return schemaItem.fileMatch[0] !== schemaIdToUrl(schemaId)
+  })
+
+  setDiagnostics(schemas)
+}
+
+function setDiagnostics(schemas: SchemasSettings[]) {
   const config = {
     hover: true,
     completion: true,
     enableSchemaRequest: false,
     validate: true,
-    schemas: [schemaConfig]
+    schemas
   }
-
-  isYamlMonacoConfigured = true
 
   // NOTE: this is for monaco-editor@0.50.0 version
   // return configureMonacoYaml(monaco, config)

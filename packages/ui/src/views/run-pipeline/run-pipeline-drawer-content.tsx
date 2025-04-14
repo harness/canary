@@ -1,3 +1,5 @@
+import { useRef, useState } from 'react'
+
 import { Button, Drawer, Spacer } from '@components/index'
 
 import { InputFactory } from '@harnessio/forms'
@@ -7,8 +9,8 @@ import { VisualYamlToggle, VisualYamlValue } from '..'
 import RunPipelineFormInputs from './run-pipeline-from-inputs'
 
 export interface RunPipelineDrawerProps {
-  isYamlValid: boolean
-  onYamlValidChange: (valid: boolean) => void
+  isValid: boolean
+  onValidationChange: (valid: boolean) => void
   view: VisualYamlValue
   onViewChange: (view: VisualYamlValue) => void
   isLoadingPipeline: boolean
@@ -26,8 +28,8 @@ export interface RunPipelineDrawerProps {
 
 export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
   const {
-    isYamlValid,
-    onYamlValidChange,
+    isValid,
+    onValidationChange,
     view,
     isLoadingPipeline: loading,
     onViewChange,
@@ -42,6 +44,13 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
     error
   } = props
 
+  const rootFormRef = useRef<{
+    submitForm: () => void
+  }>()
+
+  const [isYamlSyntaxValid, setIsYamlSyntaxValid] = useState(true)
+  const [allowDisableRun, setAllowDisableRun] = useState(false)
+
   return (
     <Drawer.Content
       //TODO: fix h/w. maxHeight, scrolling...
@@ -53,36 +62,67 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
       <Drawer.Header>
         <Drawer.Title>Run Pipeline</Drawer.Title>
       </Drawer.Header>
-      <Drawer.Description className="grow">
+      <Drawer.Description className="flex grow flex-col">
         <Spacer size={6} />
-        <VisualYamlToggle isYamlValid={isYamlValid} view={view} setView={onViewChange} />
+        <div>
+          <VisualYamlToggle
+            isYamlValid={isYamlSyntaxValid}
+            view={view}
+            setView={view => {
+              onViewChange(view)
+              setAllowDisableRun(false)
+            }}
+          />
+        </div>
         <Spacer size={6} />
         {loading ? (
           'Loading ...'
         ) : (
-          <RunPipelineFormInputs
-            onYamlSyntaxValidChange={isValid => {
-              onYamlValidChange(isValid)
-            }}
-            onYamlRevisionChange={revision => {
-              onYamlRevisionChange(revision)
-            }}
-            view={view}
-            pipelineInputs={pipelineInputs}
-            yamlRevision={yamlRevision}
-            inputComponentFactory={inputComponentFactory}
-            theme={theme}
-          />
+          <div className="flex grow flex-col">
+            <RunPipelineFormInputs
+              onValidationChange={formState => {
+                onValidationChange(formState.isValid)
+              }}
+              onYamlSyntaxValidationChange={isValid => {
+                setIsYamlSyntaxValid(isValid)
+                onValidationChange(isValid)
+              }}
+              rootFormRef={rootFormRef}
+              onFormSubmit={_values => {
+                // NOTE: latest values are passed with onYamlRevisionChange
+                onRun()
+              }}
+              onYamlRevisionChange={revision => {
+                onYamlRevisionChange(revision)
+              }}
+              view={view}
+              pipelineInputs={pipelineInputs}
+              yamlRevision={yamlRevision}
+              inputComponentFactory={inputComponentFactory}
+              theme={theme}
+            />
+          </div>
         )}
       </Drawer.Description>
       <Spacer size={6} />
       <Drawer.Footer>
-        {error?.message && <p className="text-xs text-destructive">{error.message}</p>}
+        {error?.message && <p className="text-destructive text-xs">{error.message}</p>}
         <div className="flex gap-4">
           <Button onClick={onCancel} className="text-primary" variant="outline" disabled={isExecutingPipeline}>
             Cancel
           </Button>
-          <Button loading={isExecutingPipeline} onClick={onRun}>
+          <Button
+            disabled={(allowDisableRun && !isValid) || !isYamlSyntaxValid}
+            loading={isExecutingPipeline}
+            onClick={() => {
+              if (view === 'visual') {
+                setAllowDisableRun(true)
+                rootFormRef.current?.submitForm()
+              } else {
+                onRun()
+              }
+            }}
+          >
             Run pipeline
           </Button>
         </div>

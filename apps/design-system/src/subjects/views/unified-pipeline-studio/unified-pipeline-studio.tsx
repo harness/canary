@@ -22,11 +22,11 @@ const PipelineStudioViewWrapper = () => {
   })
 
   const [view, setView] = useState<UnifiedPipelineStudioProps['view']>('visual')
-  const [isYamlDirty, setYamlDirty] = useState(true)
+  const [isYamlDirty, setYamlDirty] = useState(false)
   const [runPipelineOpen, setRunPipelineOpen] = useState(false)
 
   return (
-    <div style={{ height: '600px', display: 'flex', flexDirection: 'column', left: '1.25em' }}>
+    <>
       <UnifiedPipelineStudio
         useTranslationStore={useTranslationStore}
         useTemplateListStore={useTemplateListStore}
@@ -53,10 +53,11 @@ const PipelineStudioViewWrapper = () => {
             setRunPipelineOpen(false)
           }
         }}
+        direction="right"
       >
         <RunPipelineDrawerContent onClose={() => setRunPipelineOpen(false)} />
       </Drawer.Lazy>
-    </div>
+    </>
   )
 }
 

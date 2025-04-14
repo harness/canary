@@ -3,6 +3,8 @@ import * as zod from 'zod'
 
 import type { AnyFormikValue, IFormDefinition, IGlobalValidationConfig, IInputDefinition } from '../../types/types'
 
+const REQUIRED_MESSAGE = 'Required field'
+
 export function processValidationParseResponse(anyArray: string | Record<string, unknown>): string | undefined {
   const error = typeof anyArray === 'string' ? JSON.parse(anyArray) : anyArray
 
@@ -139,47 +141,56 @@ function getSchemaForPrimitive(
   values: any,
   options?: IGetValidationSchemaOptions
 ) {
-  return zod.any().superRefine(async (value, ctx) => {
-    // 1. Required validation
-    if (input.required) {
-      const requiredSchemaResponse = await getRequiredSchema(input, options).safeParseAsync(value)
-      if (!requiredSchemaResponse.success) {
-        ctx.addIssue({
-          code: zod.ZodIssueCode.custom,
-          message: `Required field`
-        })
-      }
-    }
-
-    // 2. Global validation
-    if (options?.validationConfig?.globalValidation) {
-      const validationRes = options?.validationConfig?.globalValidation(value, input!, options.metadata)
-
-      if (validationRes.error) {
-        ctx.addIssue({
-          code: zod.ZodIssueCode.custom,
-          message: validationRes.error
-        })
+  return zod
+    .any()
+    .optional()
+    .superRefine(async (value, ctx) => {
+      // 1. Required validation
+      if (input.required) {
+        const requiredSchemaResponse = await getRequiredSchema(input, options).safeParseAsync(value)
+        if (!requiredSchemaResponse.success) {
+          ctx.addIssue({
+            code: zod.ZodIssueCode.custom,
+            message: getRequiredMessage(input, options)
+          })
+          return zod.NEVER
+        }
       }
 
-      if (!validationRes.continue) {
-        return true
-      }
-    }
+      // 2. Global validation
+      if (options?.validationConfig?.globalValidation) {
+        const validationRes = options?.validationConfig?.globalValidation(value, input!, options.metadata)
 
-    //3. Input validation
-    const schemaInternal = getSchema(schema, values)
-    if (schemaInternal) {
-      const schemaResponse = await schemaInternal.safeParseAsync(value)
+        if (validationRes.error) {
+          ctx.addIssue({
+            code: zod.ZodIssueCode.custom,
+            message: validationRes.error
+          })
+          return zod.NEVER
+        }
 
-      if (!schemaResponse.success) {
-        ctx.addIssue({
-          code: zod.ZodIssueCode.custom,
-          message: processValidationParseResponse(schemaResponse?.error.message)
-        })
+        if (!validationRes.continue) {
+          return true
+        }
       }
-    }
-  })
+
+      //3. Input validation
+      const schemaInternal = getSchema(schema, values)
+      if (schemaInternal) {
+        const schemaResponse = await schemaInternal.safeParseAsync(value)
+
+        if (!schemaResponse.success) {
+          // NOTE: Override default zod's "Required" message
+          const originalMessage = processValidationParseResponse(schemaResponse?.error.message)
+          const message = originalMessage === 'Required' ? getRequiredMessage(input, options) : originalMessage
+
+          ctx.addIssue({
+            code: zod.ZodIssueCode.custom,
+            message
+          })
+        }
+      }
+    })
 }
 
 function getSchemaForArray(
@@ -191,6 +202,7 @@ function getSchemaForArray(
 ) {
   return zod
     .any()
+    .optional()
     .superRefine(async (value: any, ctx) => {
       // 1. Required validation
       const requiredSchema = getRequiredSchema(input, options)
@@ -332,6 +344,14 @@ function populateSchemaTreeRec<T = any>(
   })
 }
 
+function getRequiredMessage(input: IInputDefinition, options?: IGetValidationSchemaOptions): string {
+  return (
+    options?.validationConfig?.requiredMessagePerInput?.[input.inputType] ??
+    options?.validationConfig?.requiredMessage ??
+    REQUIRED_MESSAGE
+  )
+}
+
 function getRequiredSchema(input: IInputDefinition, options?: IGetValidationSchemaOptions): zod.Schema<unknown> {
   if (options?.validationConfig?.requiredSchemaPerInput?.[input.inputType]) {
     return options?.validationConfig?.requiredSchemaPerInput?.[input.inputType]
@@ -339,26 +359,26 @@ function getRequiredSchema(input: IInputDefinition, options?: IGetValidationSche
     return options?.validationConfig?.requiredSchema
   }
 
-  const requiredMessage =
-    options?.validationConfig?.requiredMessagePerInput?.[input.inputType] ??
-    options?.validationConfig?.requiredMessage ??
-    'Required fields'
+  const requiredMessage = getRequiredMessage(input, options)
 
   // Default "required value" validation
-  return zod.any().superRefine((value, ctx) => {
-    if (typeof value === 'object' && isEmpty(value)) {
-      ctx.addIssue({
-        code: zod.ZodIssueCode.custom,
-        message: requiredMessage
-      })
-    }
-    if (isUndefined(value) || value === '') {
-      ctx.addIssue({
-        code: zod.ZodIssueCode.custom,
-        message: requiredMessage
-      })
-    }
-  })
+  return zod
+    .any()
+    .optional()
+    .superRefine((value, ctx) => {
+      if (typeof value === 'object' && isEmpty(value)) {
+        ctx.addIssue({
+          code: zod.ZodIssueCode.custom,
+          message: requiredMessage
+        })
+      }
+      if (isUndefined(value) || value === '') {
+        ctx.addIssue({
+          code: zod.ZodIssueCode.custom,
+          message: requiredMessage
+        })
+      }
+    })
 }
 
 function getSchema<T>(schema: zod.ZodType<unknown> | ((values: any) => zod.ZodType<unknown>) | undefined, values: T) {

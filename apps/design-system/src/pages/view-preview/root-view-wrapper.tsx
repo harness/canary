@@ -4,10 +4,15 @@ import { Breadcrumb, Topbar } from '@harnessio/ui/components'
 
 import { AppViewWrapper, AppViewWrapperProps } from './app-view-wrapper'
 
-const RootViewWrapper: FC<PropsWithChildren<Omit<AppViewWrapperProps, 'breadcrumbs'>>> = ({ children, asChild }) => {
+const RootViewWrapper: FC<PropsWithChildren<Omit<AppViewWrapperProps, 'breadcrumbs'>>> = ({
+  children,
+  asChild,
+  childrenWrapperClassName
+}) => {
   return (
     <AppViewWrapper
       asChild={asChild}
+      childrenWrapperClassName={childrenWrapperClassName}
       breadcrumbs={
         <Topbar.Root className="bg-sidebar-background-1 sticky top-0 z-20">
           <Topbar.Left>

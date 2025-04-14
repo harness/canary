@@ -10,10 +10,11 @@ import {
   UseFormReturn
 } from 'react-hook-form'
 
-interface RootFormProps<TFieldValues extends FieldValues = FieldValues, TContext = any> {
+export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, TContext = any> {
   defaultValues?: DefaultValues<TFieldValues>
   resolver: Resolver<TFieldValues, TContext> | undefined
-  onValuesChange?: (values: DeepPartial<TFieldValues>, formState: { isValid?: boolean }) => void
+  onValuesChange?: (values: DeepPartial<TFieldValues>) => void
+  onValidationChange?: (props: { isValid: boolean; isSubmitted: boolean }) => void
   onSubmit?: (values: FieldValues) => void
   shouldFocusError?: boolean
   mode: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all' | undefined
@@ -55,6 +56,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
     shouldFocusError,
     // validateAfterFirstSubmit,
     onValuesChange,
+    onValidationChange,
     onSubmit,
     // validate,
     // validateDebounceInterval,
@@ -100,13 +102,30 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
   const values = getValues()
 
   // trigger validation on value change
+  const skipInitialValueChangeRef = useRef(true)
   useEffect(() => {
-    onValuesChange?.({ ...(values as any) }, { isValid: methods.formState.isValid })
+    if (skipInitialValueChangeRef.current) {
+      skipInitialValueChangeRef.current = false
+      return
+    }
 
+    onValuesChange?.({ ...(values as any) })
+
+    // NOTE: required for validating dependant fields
     if (submittedRef.current === true) {
       methods.trigger()
     }
   }, [JSON.stringify(values)])
+
+  const skipInitialValidationChangeRef = useRef(true)
+  useEffect(() => {
+    if (skipInitialValidationChangeRef.current) {
+      skipInitialValidationChangeRef.current = false
+      return
+    }
+
+    onValidationChange?.({ isValid: methods.formState.isValid, isSubmitted: methods.formState.isSubmitted })
+  }, [methods.formState.isValid, methods.formState.isSubmitted])
 
   // auto focus
   useEffect(() => {

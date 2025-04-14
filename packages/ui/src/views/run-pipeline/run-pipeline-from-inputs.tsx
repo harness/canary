@@ -1,13 +1,14 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
+import { noop } from 'lodash-es'
 import { stringify } from 'yaml'
 
-import { IFormDefinition, InputFactory } from '@harnessio/forms'
-import { YamlRevision } from '@harnessio/yaml-editor'
+import { AnyFormikValue, IFormDefinition, InputFactory, RootFormProps } from '@harnessio/forms'
+import { YamlEditorContextProvider, YamlRevision } from '@harnessio/yaml-editor'
 
 import { VisualYamlValue } from '..'
 import { collectDefaultValues } from './utils/form-utils'
-import { pipelineInputs2FormInputs } from './utils/inputs-utils'
+import { pipelineInputs2FormInputs, pipelineInputs2JsonSchema } from './utils/inputs-utils'
 import { parseYamlSafe } from './utils/yaml-utils'
 import VisualView from './visual-view'
 import YamlView from './yaml-view'
@@ -17,9 +18,17 @@ export interface RunPipelineFormInputsProps {
   pipelineInputs: Record<string, unknown>
   yamlRevision: YamlRevision
   onYamlRevisionChange: (yamlRevision: YamlRevision) => void
-  onYamlSyntaxValidChange: (valid: boolean) => void
+  onValidationChange: (formState: { isValid: boolean; isSubmitted?: boolean }) => void
+  onYamlSyntaxValidationChange: (valid: boolean) => void
   inputComponentFactory: InputFactory
   theme: 'light' | 'dark'
+  rootFormRef: React.MutableRefObject<
+    | {
+        submitForm: () => void
+      }
+    | undefined
+  >
+  onFormSubmit: (values: AnyFormikValue) => void
 }
 
 export default function RunPipelineFormInputs(props: RunPipelineFormInputsProps) {
@@ -28,22 +37,43 @@ export default function RunPipelineFormInputs(props: RunPipelineFormInputsProps)
     view,
     yamlRevision,
     onYamlRevisionChange,
-    onYamlSyntaxValidChange,
+    /** Validation common to both yaml and form */
+    onValidationChange,
+    /**
+     * Validation specific to yaml syntax.
+     * Use case: When yaml syntax is broken, user cannot navigate to visual view.
+     */
+    onYamlSyntaxValidationChange,
     inputComponentFactory,
-    theme
+    theme,
+    rootFormRef,
+    onFormSubmit
   } = props
 
   const formDefinition: IFormDefinition = useMemo(() => {
     return { inputs: pipelineInputs2FormInputs(pipelineInputs, { prefix: 'inputs.' }) }
   }, [pipelineInputs])
 
-  const [formValues, setFormValues] = useState<Record<string, unknown> | undefined>(
-    collectDefaultValues(formDefinition)
-  )
+  const [formValues, setFormValues] = useState<Record<string, unknown> | undefined>()
 
-  const handleFormValuesChange = (values: any) => {
+  useEffect(() => {
+    // NOTE: form may contain default values. Call onYamlRevisionChange to update parent.
+    const initialValues = collectDefaultValues(formDefinition)
+    setFormValues(initialValues)
+    onYamlRevisionChange({ yaml: stringify(initialValues) })
+  }, [pipelineInputs])
+
+  const yamlSchema = useMemo(() => {
+    return pipelineInputs2JsonSchema(pipelineInputs)
+  }, [pipelineInputs])
+
+  const handleFormValuesChange = (values: AnyFormikValue) => {
     onYamlRevisionChange({ yaml: stringify(values) })
     setFormValues(values)
+  }
+
+  const handleFormValidationChange: RootFormProps['onValidationChange'] = formState => {
+    onValidationChange(formState)
   }
 
   const handleYamlRevisionChange = (revision: YamlRevision) => {
@@ -51,22 +81,33 @@ export default function RunPipelineFormInputs(props: RunPipelineFormInputsProps)
     if (output.isYamlSyntaxValid) {
       setFormValues(output.yamlObject)
     }
-    onYamlSyntaxValidChange(output.isYamlSyntaxValid)
+    onYamlSyntaxValidationChange(output.isYamlSyntaxValid)
+
+    // TODO: schema validation missing
+    onValidationChange({ isValid: output.isYamlSyntaxValid, isSubmitted: true })
+
     onYamlRevisionChange(revision)
   }
 
-  return (
-    <>
-      {view === 'yaml' ? (
-        <YamlView onYamlRevisionChange={handleYamlRevisionChange} yamlRevision={yamlRevision} theme={theme} />
-      ) : (
-        <VisualView
-          formValues={formValues}
-          onFormValuesChange={handleFormValuesChange}
-          formDefinition={formDefinition}
-          inputComponentFactory={inputComponentFactory}
-        />
-      )}
-    </>
+  return view === 'yaml' ? (
+    <YamlEditorContextProvider>
+      <YamlView
+        yamlSchema={yamlSchema}
+        onYamlRevisionChange={handleYamlRevisionChange}
+        yamlRevision={yamlRevision}
+        theme={theme}
+        onYamlEditorErrorsChange={noop}
+      />
+    </YamlEditorContextProvider>
+  ) : (
+    <VisualView
+      formValues={formValues}
+      onFormValuesChange={handleFormValuesChange}
+      onFormValidationChange={handleFormValidationChange}
+      onFormSubmit={onFormSubmit}
+      rootFormRef={rootFormRef}
+      formDefinition={formDefinition}
+      inputComponentFactory={inputComponentFactory}
+    />
   )
 }

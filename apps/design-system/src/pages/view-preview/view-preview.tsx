@@ -288,7 +288,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'unified-pipeline-studio': {
         label: 'Unified Pipeline Studio',
         element: (
-          <RepoViewWrapper>
+          <RepoViewWrapper childrenWrapperClassName="flex flex-col">
             <UnifiedPipelineStudioWrapper />
           </RepoViewWrapper>
         )

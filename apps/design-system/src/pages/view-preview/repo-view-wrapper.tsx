@@ -8,8 +8,10 @@ import { SubHeaderWrapper } from '@harnessio/ui/views'
 
 import RootViewWrapper from './root-view-wrapper'
 
-const RepoViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => (
-  <RootViewWrapper asChild>
+const RepoViewWrapper: FC<
+  PropsWithChildren<React.HTMLAttributes<HTMLElement> & { childrenWrapperClassName?: string }>
+> = ({ children, childrenWrapperClassName }) => (
+  <RootViewWrapper asChild childrenWrapperClassName={childrenWrapperClassName}>
     <Route
       path="*"
       element={

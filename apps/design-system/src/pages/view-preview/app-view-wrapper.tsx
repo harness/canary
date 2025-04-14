@@ -11,11 +11,13 @@ import { useRootViewWrapperStore } from './root-view-wrapper-store'
 export interface AppViewWrapperProps {
   asChild?: boolean
   breadcrumbs?: ReactNode
+  childrenWrapperClassName?: string
 }
 
 export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
   children,
   breadcrumbs,
+  childrenWrapperClassName,
   asChild = false
 }) => {
   const [showMoreMenu, setShowMoreMenu] = useState(false)
@@ -104,7 +106,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
             />
             <Sidebar.Inset>
               {breadcrumbs}
-              <MainContentLayout>
+              <MainContentLayout className={childrenWrapperClassName}>
                 <Outlet />
               </MainContentLayout>
               <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />

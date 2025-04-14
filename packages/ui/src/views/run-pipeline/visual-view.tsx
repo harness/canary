@@ -1,30 +1,56 @@
-import { IFormDefinition, InputFactory, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
+import {
+  IFormDefinition,
+  InputFactory,
+  RenderForm,
+  RootForm,
+  RootFormProps,
+  useZodValidationResolver
+} from '@harnessio/forms'
 
 export interface VisualViewProps {
   formDefinition: IFormDefinition
-  formValues: any | undefined
-  onFormValuesChange: (yamlRevision: any) => void
+  formValues: RootFormProps['defaultValues']
+  onFormValuesChange: RootFormProps['onValuesChange']
+  onFormValidationChange: RootFormProps['onValidationChange']
   inputComponentFactory: InputFactory
+  onFormSubmit: RootFormProps['onSubmit']
+  rootFormRef: React.MutableRefObject<
+    | {
+        submitForm: () => void
+      }
+    | undefined
+  >
 }
 
 export default function VisualView(props: VisualViewProps) {
-  const { formDefinition, formValues, onFormValuesChange, inputComponentFactory } = props
+  const {
+    formDefinition,
+    formValues,
+    onFormValuesChange,
+    inputComponentFactory,
+    rootFormRef,
+    onFormSubmit,
+    onFormValidationChange
+  } = props
 
   const resolver = useZodValidationResolver(formDefinition)
 
   return (
     <RootForm
       defaultValues={formValues}
-      onValuesChange={values => {
-        onFormValuesChange(values)
-      }}
-      onSubmit={values => {
-        console.log(values)
-      }}
+      onValuesChange={onFormValuesChange}
+      onValidationChange={onFormValidationChange}
+      onSubmit={onFormSubmit}
       resolver={resolver}
-      mode="onChange"
+      mode="onSubmit"
     >
-      <RenderForm className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
+      {rootForm => {
+        if (rootFormRef) {
+          rootFormRef.current = rootForm
+        }
+
+        return <RenderForm className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
+      }}
     </RootForm>
   )
 }

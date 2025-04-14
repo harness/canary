@@ -4,12 +4,17 @@ import './playground.css'
 import './implementation/style.css'
 
 import ConditionalExample from './examples/conditional-example/conditional-example'
+import DebugExample from './examples/debug-example/debug-example'
 import InputsExample from './examples/inputs-example/inputs-example'
 import ListPerformanceExample from './examples/list-performance-example/list-performance-example'
 import PerformanceExample from './examples/performance-example/performance-example'
 import ValidationExample from './examples/validation-example/validation-example'
 
 const demoArr = [
+  {
+    name: 'Debug',
+    component: DebugExample
+  },
   {
     name: 'Basic',
     component: InputsExample

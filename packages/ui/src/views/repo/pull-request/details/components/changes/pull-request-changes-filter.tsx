@@ -358,7 +358,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               title={isActiveUserPROwner ? 'Self-approval of pull requests is not permitted.' : undefined}
               variant="split"
               size="md_split"
-              theme={getApprovalStateTheme(approveState) as ButtonEnum}
+              theme={getApprovalStateTheme(approveState)}
               dropdown={
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger insideSplitButton>

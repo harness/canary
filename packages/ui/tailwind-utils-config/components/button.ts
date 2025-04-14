@@ -3,13 +3,14 @@ import { CSSRuleObject } from 'tailwindcss/types/config'
 /** Variants */
 const variants = ['solid', 'soft', 'surface'] as const
 
-const themes = ['success', 'danger', 'muted', 'primary', 'ai'] as const
+const themes = ['success', 'danger', 'muted', 'primary', 'warning', 'ai'] as const
 
 const themeStyleMapper: Record<Exclude<(typeof themes)[number], 'ai'>, string> = {
   success: 'green',
   danger: 'red',
   muted: 'gray',
-  primary: 'brand'
+  primary: 'brand',
+  warning: 'yellow'
 }
 
 function createButtonVariantStyles() {
@@ -20,11 +21,12 @@ function createButtonVariantStyles() {
   // const counterFilteredVariants = variants.filter(variant => variant !== 'counter')
 
   const combinationStyles: CSSRuleObject = {}
+  const separatorStyles: CSSRuleObject = {}
 
   variants.forEach(variant => {
     aiFilteredThemes.forEach(theme => {
       // Skip solid variant for success and danger themes
-      if (variant === 'solid' && (theme === 'success' || theme === 'danger')) {
+      if (variant === 'solid' && (theme === 'success' || theme === 'danger' || theme === 'warning')) {
         return
       }
 
@@ -38,20 +40,30 @@ function createButtonVariantStyles() {
       style[`borderColor`] = `var(--cn-set-${themeStyle}-${variant}-border)`
 
       // Hover styles
-      style[`&:hover:not([disabled])`] = {
+      style[`&:hover:not([disabled], .button-disabled)`] = {
         backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-hover, var(--cn-set-${themeStyle}-${variant}-bg))`
       }
 
       // Active styles
-      style[`&:active:not([disabled])`] = {
+      style[`&:active:not([disabled], .button-disabled), &:where(.button-active)`] = {
         backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`
+      }
+
+      separatorStyles[`&:where(.button-split-dropdown.button-${variant}.button-${theme})`] = {
+        '&::before': {
+          /**
+           * Some variants don't have separator
+           * Hence adding border color
+           *  */
+          backgroundColor: `var(--cn-set-${themeStyle}-${variant}-separator, var(--cn-set-${themeStyle}-${variant}-border))`
+        }
       }
 
       combinationStyles[`&:where(.button-${variant}.button-${theme})`] = style
     })
   })
 
-  return { ...combinationStyles }
+  return { ...combinationStyles, ...separatorStyles }
 }
 
 console.log('createButtonVariantStyles: ', createButtonVariantStyles())
@@ -65,22 +77,20 @@ export default {
     border: 'var(--cn-btn-border) solid black',
     '@apply font-body-none-strong': '',
 
-    /**
-     * Disabled state is common for all variants.
-     * So it is not added with :where
-     */
-    '&:disabled': {
-      color: 'var(--cn-state-disabled-text)',
-      borderColor: 'var(--cn-state-disabled-border)',
+    // flex-shrink-0 rounded-l-none before:absolute before:left-0 before:h-[calc(100%-8px)] before:w-px
+    '&:where(.button-split-dropdown)': {
+      height: 'var(--cn-btn-size-icon)',
+      width: 'var(--cn-btn-size-icon)',
+      position: 'relative',
+      '@apply rounded-l-none border-l-0': '',
 
-      '&:not(.button-ghost)': {
-        backgroundColor: 'var(--cn-state-disabled-bg)'
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        left: '0',
+        height: 'calc(100% - 8px)',
+        width: 'var(--cn-btn-border)'
       }
-    },
-
-    // Rounded
-    '&:where(.button-rounded)': {
-      borderRadius: 'var(--cn-btn-rounded-radius)'
     },
 
     // sizes
@@ -104,10 +114,10 @@ export default {
       backgroundClip: 'padding-box, border-box',
       border: 'var(--cn-badge-border) solid transparent',
 
-      '&:hover:not([disabled])': {
+      '&:hover:not([disabled], .button-disabled)': {
         backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg-hover), var(--cn-set-ai-surface-bg-hover)), var(--cn-set-ai-surface-border)`
       },
-      '&:active:not([disabled])': {
+      '&:active:not([disabled], .button-disabled), &:where(.button-active)': {
         backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg-selected), var(--cn-set-ai-surface-bg-selected)), var(--cn-set-ai-surface-border)`
       }
     },
@@ -117,14 +127,62 @@ export default {
       border: 'none',
       color: 'var(--cn-set-gray-surface-text)',
 
-      '&:hover:not([disabled])': {
+      '&:hover:not([disabled], .button-disabled)': {
         backgroundColor: 'var(--cn-set-gray-surface-bg-hover)'
       },
-      '&:active:not([disabled])': {
+      '&:active:not([disabled], .button-disabled)': {
         backgroundColor: 'var(--cn-set-gray-surface-bg-selected)'
       }
     },
 
-    ...createButtonVariantStyles()
+    ...createButtonVariantStyles(),
+
+    // Rounded
+    '&:where(.button-rounded)': {
+      borderRadius: 'var(--cn-btn-rounded-radius)'
+    },
+
+    // Icon Only
+    '&:where(.button-icon-only)': {
+      width: 'var(--cn-btn-size-icon)',
+      height: 'var(--cn-btn-size-icon)'
+    },
+
+    // Icon Only sizing
+    '&:where(.button-icon-only.button-sm)': {
+      width: 'var(--cn-btn-size-sm)',
+      height: 'var(--cn-btn-size-sm)'
+    },
+
+    // Focus
+    '&:where(:focus-visible)': {
+      boxShadow: 'var(--cn-ring-focus)',
+      outline: 'none',
+
+      // This is to prevent focus outline from being hidden by dropdown
+      position: 'relative',
+      zIndex: 1
+    },
+
+    /**
+     * Disabled state is common for all variants.
+     * So it is not added with :where
+     */
+    '&:where(:disabled), &:where(.button-disabled)': {
+      color: 'var(--cn-state-disabled-text)',
+      borderColor: 'var(--cn-state-disabled-border)',
+      cursor: 'not-allowed',
+
+      '&:not(.button-ghost)': {
+        backgroundColor: 'var(--cn-state-disabled-bg)'
+      },
+
+      // Disabled split dropdown
+      '&:where(.button-split-dropdown)': {
+        '&::before': {
+          backgroundColor: 'var(--cn-state-disabled-border)'
+        }
+      }
+    }
   }
 }

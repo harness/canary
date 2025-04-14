@@ -1,4 +1,6 @@
-import { Button } from '@harnessio/ui/components'
+import { useState } from 'react'
+
+import { Button, ButtonWithOptions, Icon } from '@harnessio/ui/components'
 
 export default function ButtonDisplay() {
   const variants = ['solid', 'soft', 'surface'] as const
@@ -168,6 +170,250 @@ export default function ButtonDisplay() {
           {/* Disabled AI button */}
           <Button disabled theme="ai">
             Disabled AI
+          </Button>
+        </div>
+      </div>
+
+      {/* ButtonWithOptions Showcase */}
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-4">Button With Options</h2>
+        <div className="flex flex-col gap-4">
+          <ButtonWithOptionsSection />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Separate component for ButtonWithOptions to manage its state
+function ButtonWithOptionsSection() {
+  // Define options for the dropdown
+  const options = [
+    {
+      value: 'option1',
+      label: 'Option 1',
+      description: 'Description for option 1'
+    },
+    {
+      value: 'option2',
+      label: 'Option 2',
+      description: 'Description for option 2'
+    },
+    {
+      value: 'option3',
+      label: 'Option 3',
+      description: 'Description for option 3'
+    }
+  ]
+
+  // State to track selected option for radio variant
+  const [selectedOption, setSelectedOption] = useState('option1')
+
+  // State to track which option was clicked for regular variant
+  const [clickedOption, setClickedOption] = useState('')
+
+  // Track button clicks
+  const [buttonClicked, setButtonClicked] = useState<string | null>(null)
+
+  return (
+    <div className="space-y-6">
+      {/* Basic ButtonWithOptions with different themes */}
+      <div>
+        <h3 className="text-lg font-medium mb-2">Different Themes</h3>
+        <div className="flex flex-wrap gap-4 items-center">
+          <ButtonWithOptions
+            id="basic-primary"
+            handleButtonClick={() => setButtonClicked('primary')}
+            options={options}
+            handleOptionChange={val => setClickedOption(val)}
+            theme="primary"
+            variant="solid"
+          >
+            Primary
+          </ButtonWithOptions>
+
+          {/* Success and danger themes (using soft variant since solid doesn't support these themes) */}
+          <ButtonWithOptions
+            id="basic-success"
+            handleButtonClick={() => setButtonClicked('success')}
+            options={options}
+            handleOptionChange={val => setClickedOption(val)}
+            theme="success"
+            variant="surface"
+          >
+            Success
+          </ButtonWithOptions>
+
+          <ButtonWithOptions
+            id="basic-danger"
+            handleButtonClick={() => setButtonClicked('danger')}
+            options={options}
+            handleOptionChange={val => setClickedOption(val)}
+            theme="danger"
+            variant="surface"
+          >
+            Danger
+          </ButtonWithOptions>
+        </div>
+      </div>
+
+      {/* With Radio Selection */}
+      <div>
+        <h3 className="text-lg font-medium mb-2">With Radio Selection</h3>
+        <div className="flex flex-wrap gap-4 items-center">
+          <ButtonWithOptions
+            id="radio-selection"
+            handleButtonClick={() => setButtonClicked('radio')}
+            options={options}
+            selectedValue={selectedOption}
+            handleOptionChange={val => setSelectedOption(val)}
+            theme="primary"
+            variant="solid"
+          >
+            {options.find(opt => opt.value === selectedOption)?.label || 'Select an option'}
+          </ButtonWithOptions>
+        </div>
+      </div>
+
+      {/* Disabled state */}
+      <div>
+        <h3 className="text-lg font-medium mb-2">Disabled</h3>
+        <div className="flex flex-wrap gap-4 items-center">
+          <ButtonWithOptions
+            id="disabled"
+            handleButtonClick={() => setButtonClicked('disabled')}
+            options={options}
+            handleOptionChange={val => setClickedOption(val)}
+            theme="primary"
+            variant="solid"
+            disabled={true}
+          >
+            Disabled
+          </ButtonWithOptions>
+        </div>
+      </div>
+
+      {/* Loading state */}
+      <div>
+        <h3 className="text-lg font-medium mb-2">Loading</h3>
+        <div className="flex flex-wrap gap-4 items-center">
+          <ButtonWithOptions
+            id="loading"
+            handleButtonClick={() => setButtonClicked('loading')}
+            options={options}
+            handleOptionChange={val => setClickedOption(val)}
+            theme="primary"
+            variant="solid"
+            loading={true}
+          >
+            Loading
+          </ButtonWithOptions>
+        </div>
+      </div>
+
+      {/* Interaction feedback display */}
+      {(buttonClicked || clickedOption) && (
+        <div className="p-4 rounded bg-gray-100 dark:bg-gray-800">
+          <p>
+            <strong>Last interaction:</strong>
+          </p>
+          {buttonClicked && <p>Button clicked: {buttonClicked}</p>}
+          {clickedOption && <p>Option selected: {clickedOption}</p>}
+        </div>
+      )}
+
+      {/* Buttons with icons */}
+      <div className="mb-8">
+        <h3 className="text-lg font-medium mb-2">Buttons with Icons</h3>
+        <div className="flex flex-wrap gap-4 items-center">
+          <Button variant="surface" theme="success">
+            <Icon name="plus" /> Create
+          </Button>
+          <Button variant="surface" theme="danger">
+            <Icon name="trash" /> Delete
+          </Button>
+          <Button variant="surface" theme="primary">
+            <Icon name="git-branch" /> Branch
+          </Button>
+        </div>
+      </div>
+
+      {/* Icon-only buttons */}
+      <div className="mb-8">
+        <h3 className="text-lg font-medium mb-2">Icon-only Buttons</h3>
+        <div className="flex flex-wrap gap-4 items-center">
+          {/* Basic icon-only buttons with different variants */}
+          <Button variant="solid" iconOnly>
+            <Icon name="plus" />
+          </Button>
+          <Button variant="soft" iconOnly>
+            <Icon name="search" />
+          </Button>
+          <Button variant="surface" iconOnly>
+            <Icon name="git-branch" />
+          </Button>
+          <Button variant="ghost" iconOnly>
+            <Icon name="circle" />
+          </Button>
+
+          {/* With themes */}
+          <Button variant="surface" theme="primary" iconOnly>
+            <Icon name="chevron-right" />
+          </Button>
+          <Button variant="surface" theme="success" iconOnly>
+            <Icon name="success" />
+          </Button>
+          <Button variant="surface" theme="danger" iconOnly>
+            <Icon name="stop" />
+          </Button>
+
+          {/* Icon-only buttons with different icon sizes */}
+          <Button variant="solid" iconOnly>
+            <Icon name="plus" />
+          </Button>
+          <Button variant="solid" iconOnly>
+            <Icon name="plus" />
+          </Button>
+          <Button variant="solid" iconOnly>
+            <Icon name="plus" />
+          </Button>
+
+          {/* Icon buttons with different variants */}
+          <div className="flex gap-2 p-3 border border-dashed border-gray-300 rounded dark:border-gray-600 w-full mt-2">
+            <Button size="sm" variant="solid" iconOnly>
+              <Icon size={12} name="plus" />
+            </Button>
+            <Button size="sm" variant="soft" iconOnly>
+              <Icon size={12} name="search" />
+            </Button>
+            <Button size="sm" variant="surface" iconOnly>
+              <Icon size={12} name="git-branch" />
+            </Button>
+            <Button size="sm" variant="ghost" iconOnly>
+              <Icon size={12} name="circle" />
+            </Button>
+            <Button size="sm" variant="surface" theme="primary" iconOnly>
+              <Icon size={12} name="chevron-right" />
+            </Button>
+            <Button size="sm" variant="surface" theme="success" iconOnly>
+              <Icon size={12} name="success" />
+            </Button>
+            <Button size="sm" variant="surface" theme="danger" iconOnly>
+              <Icon size={12} name="stop" />
+            </Button>
+            <Button size="sm" variant="surface" theme="primary" rounded iconOnly>
+              <Icon size={12} name="chevron-right" />
+            </Button>
+          </div>
+
+          {/* With rounded */}
+          <Button variant="surface" theme="primary" rounded iconOnly>
+            <Icon name="chevron-right" />
+          </Button>
+
+          {/* Disabled */}
+          <Button variant="surface" theme="primary" disabled iconOnly>
+            <Icon name="plus" />
           </Button>
         </div>
       </div>

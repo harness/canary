@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
-import { Toast, useToast } from '@harnessio/ui/components'
+import { Button, Toast, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -12,6 +12,7 @@ import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-s
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
+import ButtonDisplay from './button-display'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
@@ -104,17 +105,20 @@ export default function ReposListPage() {
   }, [importRepoIdentifier, setImportRepoIdentifier])
 
   return (
-    <SandboxRepoListPage
-      useRepoStore={useRepoStore}
-      useTranslationStore={useTranslationStore}
-      isLoading={isFetching}
-      isError={isError}
-      errorMessage={error?.message}
-      searchQuery={query}
-      setSearchQuery={setQuery}
-      toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
-      toCreateRepo={() => routes.toCreateRepo({ spaceId })}
-      toImportRepo={() => routes.toImportRepo({ spaceId })}
-    />
+    <>
+      <ButtonDisplay />
+      <SandboxRepoListPage
+        useRepoStore={useRepoStore}
+        useTranslationStore={useTranslationStore}
+        isLoading={isFetching}
+        isError={isError}
+        errorMessage={error?.message}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+        toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
+        toCreateRepo={() => routes.toCreateRepo({ spaceId })}
+        toImportRepo={() => routes.toImportRepo({ spaceId })}
+      />
+    </>
   )
 }

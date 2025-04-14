@@ -1154,6 +1154,12 @@
         "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
       }
     },
+    "card": {
+      "gradient": {
+        "$type": "color",
+        "$value": "linear-gradient(180deg, {gradient.card.from} 0%, {gradient.card.to} 100%);"
+      }
+    },
     "dialog": {
       "backdrop": {
         "$extensions": {
@@ -1686,7 +1692,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.200}",
       "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
     "1": {
@@ -1700,7 +1706,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.100}",
       "$description": "Light shadow color with 60% opacity. Creates subtle depth for small UI elements."
     },
     "2": {
@@ -1714,7 +1720,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.100}",
       "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
     },
     "3": {
@@ -1728,7 +1734,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.100}",
       "$description": "Medium shadow color with 50% opacity. Creates moderate depth for elevated components."
     },
     "4": {
@@ -1742,7 +1748,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.100}",
       "$description": "Deep shadow color with 50% opacity. Provides significant depth for floating elements."
     },
     "5": {
@@ -1756,7 +1762,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.100}",
       "$description": "Very deep shadow color with 50% opacity. Creates dramatic elevation for modal content."
     },
     "6": {
@@ -1770,7 +1776,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.100}",
       "$description": "Extremely deep shadow color with 60% opacity. Provides maximum depth for highly elevated elements."
     },
     "inner": {
@@ -1938,6 +1944,16 @@
             }
           }
         }
+      }
+    },
+    "card": {
+      "from": {
+        "$type": "color",
+        "$value": "{pure.white}"
+      },
+      "to": {
+        "$type": "color",
+        "$value": "{chrome.25}"
       }
     }
   },

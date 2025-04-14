@@ -1158,6 +1158,12 @@
         "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
       }
     },
+    "card": {
+      "gradient": {
+        "$type": "color",
+        "$value": "linear-gradient(180deg, {gradient.card.from} 0%, {gradient.card.to} 100%);"
+      }
+    },
     "dialog": {
       "backdrop": {
         "$extensions": {
@@ -1942,6 +1948,16 @@
             }
           }
         }
+      }
+    },
+    "card": {
+      "from": {
+        "$type": "color",
+        "$value": "{chrome.850}"
+      },
+      "to": {
+        "$type": "color",
+        "$value": "{chrome.950}"
       }
     }
   },

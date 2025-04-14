@@ -5,20 +5,15 @@ import Example, { type ExampleProps } from "./example";
 
 export type ComponentExampleProps = Omit<ExampleProps, "scope"> & {
   scope?: ExampleProps["scope"];
-  padding?: boolean;
 };
 
-const ComponentExample: FC<ComponentExampleProps> = ({
-  code,
-  scope,
-  padding = true,
-}) => {
+const ComponentExample: FC<ComponentExampleProps> = ({ code, scope }) => {
   const combinedScope = useMemo<ExampleProps["scope"]>(
     () => ({ ...components, ...scope }),
     [scope],
   );
 
-  return <Example code={code} scope={combinedScope} padding={padding} />;
+  return <Example code={code} scope={combinedScope} />;
 };
 
 export default ComponentExample;

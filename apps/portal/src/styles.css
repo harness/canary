@@ -110,8 +110,12 @@ ul.top-level summary svg {
   @apply rounded-md overflow-hidden border border-cn-borders-3 bg-cn-background-3 !important;
 }
 
+.expressive-code .frame {
+  box-shadow: none !important;
+}
+
 pre.prism-code {
-  @apply rounded-md overflow-hidden border border-cn-borders-3 bg-cn-background-2 !important;
+  @apply overflow-hidden bg-cn-background-2 !important;
 }
 
 /* Pagination overrides */
@@ -127,5 +131,27 @@ pre.prism-code {
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {
     navigation: auto;
+  }
+}
+
+.example-expand {
+  .disclosure-icon {
+    display: none;
+  }
+
+  &[open] .disclosure-icon {
+    transform: rotate(90deg);
+  }
+
+  @supports selector(summary::marker) {
+    summary::-webkit-details-marker,
+    summary::marker {
+      content: "";
+      display: none;
+    }
+
+    .disclosure-icon {
+      display: block;
+    }
   }
 }

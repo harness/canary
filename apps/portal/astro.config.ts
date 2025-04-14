@@ -64,6 +64,9 @@ export default defineConfig({
         PageTitle: "./src/components/layout/PageTitle.astro",
         ThemeSelect: "./src/components/layout/ThemeSelect.astro",
       },
+      expressiveCode: {
+        themes: ["github-light", "github-dark"],
+      },
     }),
     tailwind({ applyBaseStyles: false }),
     react(),

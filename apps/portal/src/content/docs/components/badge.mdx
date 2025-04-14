@@ -1,41 +1,122 @@
 ---
 title: Badge
-description: Badge component
+description: Display small pieces of information or status indicators
 ---
 
-The `Badge` component allows you to display a small tag to show the status of an item.
+The `Badge` component is used to highlight and display small pieces of information, such as status indicators, counts, or labels.
 
-import { DocsPage } from "@/components/docs-page";
-import { Badge } from "@harnessio/ui/components";
+import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<>
-  <div className="flex flex-wrap gap-2 items-baseline">
-    <Badge>Default variant</Badge>
-    <Badge variant="secondary">Secondary variant</Badge>
-    <Badge variant="tertiary">Tertiary variant</Badge>
-    <Badge variant="quaternary">Quaternary variant</Badge>
-    <Badge variant="destructive">Destructive variant</Badge>
-    <Badge variant="outline">Outline variant</Badge>
-  </div>
-  <div className="flex flex-wrap gap-2 items-baseline">
-    <Badge>Default size</Badge>
-    <Badge size="xl">XL size</Badge>
-    <Badge size="lg">LG size</Badge>
-    <Badge size="md">MD size</Badge>
-    <Badge size="sm">SM size</Badge>
-    <Badge size="xs">XS size</Badge>
-  </div>
-  <div className="flex flex-wrap gap-2 items-baseline">
-    <Badge>Default theme</Badge>
-    <Badge theme="destructive">Destructive theme</Badge>
-    <Badge theme="warning">Warning theme</Badge>
-    <Badge theme="success">Success theme</Badge>
-    <Badge theme="emphasis">Emphasis theme</Badge>
-    <Badge theme="muted">Muted theme</Badge>
-  </div>
-</>`}
+  code={`<div className="flex flex-col gap-8">
+    <div className="grid grid-cols-[repeat(7,auto)] gap-5 place-items-center">
+        <Badge>Default</Badge>
+        <Badge theme="success">Success</Badge>
+        <Badge theme="warning">Warning</Badge>
+        <Badge theme="danger">Danger</Badge>
+        <Badge theme="info">Info</Badge>
+        <Badge theme="primary">Primary</Badge>
+        <Badge theme="merged">Merged</Badge>
+
+        <Badge variant="soft">Default</Badge>
+        <Badge theme="success" variant="soft">Success</Badge>
+        <Badge theme="warning" variant="soft">Warning</Badge>
+        <Badge theme="danger" variant="soft">Danger</Badge>
+        <Badge theme="info" variant="soft">Info</Badge>
+        <Badge theme="primary" variant="soft">Primary</Badge>
+        <Badge theme="merged" variant="soft">Merged</Badge>
+
+        <Badge variant="solid">Default</Badge>
+        <Badge theme="success" variant="solid">Success</Badge>
+        <Badge theme="warning" variant="solid">Warning</Badge>
+        <Badge theme="danger" variant="solid">Danger</Badge>
+        <Badge theme="info" variant="solid">Info</Badge>
+        <Badge theme="primary" variant="solid">Primary</Badge>
+        <Badge theme="merged" variant="solid">Merged</Badge>
+
+        <Badge variant="status">Default</Badge>
+        <Badge theme="success" variant="status">Success</Badge>
+        <Badge theme="warning" variant="status">Warning</Badge>
+        <Badge theme="danger" variant="status">Danger</Badge>
+        <Badge theme="info" variant="status">Info</Badge>
+        <Badge theme="primary" variant="status">Primary</Badge>
+        <Badge theme="merged" variant="status">Merged</Badge>
+
+        <Badge variant="status" pulse>Default</Badge>
+        <Badge theme="success" variant="status" pulse>Success</Badge>
+        <Badge theme="warning" variant="status" pulse>Warning</Badge>
+        <Badge theme="danger" variant="status" pulse>Danger</Badge>
+        <Badge theme="info" variant="status" pulse>Info</Badge>
+        <Badge theme="primary" variant="status" pulse>Primary</Badge>
+        <Badge theme="merged" variant="status" pulse>Merged</Badge>
+
+        <Badge variant="counter">123</Badge>
+        <Badge theme="success" variant="counter">123</Badge>
+        <Badge theme="warning" variant="counter">123</Badge>
+        <Badge theme="danger" variant="counter">123</Badge>
+        <Badge theme="info" variant="counter">123</Badge>
+        <Badge theme="primary" variant="counter">123</Badge>
+        <Badge theme="merged" variant="counter">123</Badge>
+
+        <Badge theme="ai" className="col-span-full mt-6">AI Badge</Badge>
+    </div>
+
+    <hr />
+
+    <div className="grid grid-cols-[repeat(7,auto)] gap-5 place-items-center self-center">
+        <Badge size="sm">Default</Badge>
+        <Badge size="sm" theme="success">Success</Badge>
+        <Badge size="sm" theme="warning">Warning</Badge>
+        <Badge size="sm" theme="danger">Danger</Badge>
+        <Badge size="sm" theme="info">Info</Badge>
+        <Badge size="sm" theme="primary">Primary</Badge>
+        <Badge size="sm" theme="merged">Merged</Badge>
+
+        <Badge size="sm" variant="soft">Default</Badge>
+        <Badge size="sm" theme="success" variant="soft">Success</Badge>
+        <Badge size="sm" theme="warning" variant="soft">Warning</Badge>
+        <Badge size="sm" theme="danger" variant="soft">Danger</Badge>
+        <Badge size="sm" theme="info" variant="soft">Info</Badge>
+        <Badge size="sm" theme="primary" variant="soft">Primary</Badge>
+        <Badge size="sm" theme="merged" variant="soft">Merged</Badge>
+
+        <Badge size="sm" variant="solid">Default</Badge>
+        <Badge size="sm" theme="success" variant="solid">Success</Badge>
+        <Badge size="sm" theme="warning" variant="solid">Warning</Badge>
+        <Badge size="sm" theme="danger" variant="solid">Danger</Badge>
+        <Badge size="sm" theme="info" variant="solid">Info</Badge>
+        <Badge size="sm" theme="primary" variant="solid">Primary</Badge>
+        <Badge size="sm" theme="merged" variant="solid">Merged</Badge>
+
+        <Badge size="sm" variant="status">Default</Badge>
+        <Badge size="sm" theme="success" variant="status">Success</Badge>
+        <Badge size="sm" theme="warning" variant="status">Warning</Badge>
+        <Badge size="sm" theme="danger" variant="status">Danger</Badge>
+        <Badge size="sm" theme="info" variant="status">Info</Badge>
+        <Badge size="sm" theme="primary" variant="status">Primary</Badge>
+        <Badge size="sm" theme="merged" variant="status">Merged</Badge>
+
+        <Badge size="sm" variant="status" pulse>Default</Badge>
+        <Badge size="sm" theme="success" variant="status" pulse>Success</Badge>
+        <Badge size="sm" theme="warning" variant="status" pulse>Warning</Badge>
+        <Badge size="sm" theme="danger" variant="status" pulse>Danger</Badge>
+        <Badge size="sm" theme="info" variant="status" pulse>Info</Badge>
+        <Badge size="sm" theme="primary" variant="status" pulse>Primary</Badge>
+        <Badge size="sm" theme="merged" variant="status" pulse>Merged</Badge>
+
+        <Badge size="sm" variant="counter">123</Badge>
+        <Badge size="sm" theme="success" variant="counter">123</Badge>
+        <Badge size="sm" theme="warning" variant="counter">123</Badge>
+        <Badge size="sm" theme="danger" variant="counter">123</Badge>
+        <Badge size="sm" theme="info" variant="counter">123</Badge>
+        <Badge size="sm" theme="primary" variant="counter">123</Badge>
+        <Badge size="sm" theme="merged" variant="counter">123</Badge>
+
+        <Badge size="sm" theme="ai" className="col-span-full mt-6">AI Badge</Badge>
+    </div>
+
+</div>`}
 />
 
 ## Usage
@@ -43,15 +124,138 @@ import { Badge } from "@harnessio/ui/components";
 ```typescript jsx
 import { Badge } from '@harnessio/ui/components'
 
-//...
+// ...
 
-return (
-  <Badge variant="secondary" size="lg" theme="success">
-    Secondary large success badge
-  </Badge>
-)
+return <Badge theme="theme" variant="surface">My badge</Badge>
 ```
+
+## Themes
+
+The `Badge` component supports different color themes, including `default`, `success`, `warning`, `danger`, `info`, `primary`, `merged`, and `ai`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-wrap gap-2">
+    <Badge>Default</Badge>
+    <Badge theme="success">Success</Badge>
+    <Badge theme="warning">Warning</Badge>
+    <Badge theme="danger">Danger</Badge>
+    <Badge theme="info">Info</Badge>
+    <Badge theme="primary">Primary</Badge>
+    <Badge theme="merged">Merged</Badge>
+    <Badge theme="ai">AI</Badge>
+</div>`}
+/>
+
+## Variants
+
+The `Badge` component supports different visual variants, including `surface`, `soft`, `solid`, `status`, and `counter`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-wrap gap-3">
+    <Badge variant="surface" theme="primary">Surface</Badge>
+    <Badge variant="soft" theme="primary">Soft</Badge>
+    <Badge variant="solid" theme="primary">Solid</Badge>
+    <Badge variant="status" theme="success">Status</Badge>
+    <Badge variant="counter" theme="primary">12</Badge>
+</div>`}
+/>
+
+## Sizes
+
+Badge come in two sizes: `default` and `sm`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-2">
+    <Badge>Default size</Badge>
+    <Badge size="sm">Small size</Badge>
+</div>`}
+/>
+
+## Status Badges
+
+Status badges can optionally include a pulsing indicator to indicate activity using the `pulse` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-wrap gap-3">
+    <Badge variant="status" theme="success">Online</Badge>
+    <Badge variant="status" theme="warning">Warning</Badge>
+    <Badge variant="status" theme="danger">Error</Badge>
+    <Badge variant="status" theme="success" pulse>Live</Badge>
+</div>`}
+/>
+
+## AI Badge
+
+The AI `theme` badge has a special appearance and doesn't require a `variant`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Badge theme="ai">AI Badge</Badge>`}
+/>
 
 ## API Reference
 
-<Badge theme="emphasis">Coming soon</Badge>
+The `Badge` component has several props to control its appearance:
+
+```typescript jsx
+<Badge
+  variant="surface"    // [OPTIONAL] Visual style of the badge, can be 'surface' | 'soft' | 'solid' | 'status' | 'counter'
+  theme="muted"        // [OPTIONAL] Color theme of the badge, can be 'muted' | 'success' | 'warning' | 'danger' | 'info' | 'merged' | 'ai' | 'primary'
+  size="default"       // [OPTIONAL] Size of the badge, can be 'default' | 'sm'
+  pulse                // [OPTIONAL] Whether the status indicator should pulse (only for status variant)
+  className="my-class" // [OPTIONAL] Additional CSS class names
+>
+  Badge content
+</Badge>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "Visual style of the badge",
+      required: false,
+      value: "'surface' | 'soft' | 'solid' | 'status' | 'counter'",
+      defaultValue: "'surface'",
+    },
+    {
+      name: "theme",
+      description: "Color theme of the badge",
+      required: false,
+      value:
+        "'muted' | 'success' | 'warning' | 'danger' | 'info' | 'merged' | 'ai' | 'primary'",
+      defaultValue: "'muted'",
+    },
+    {
+      name: "size",
+      description: "Size of the badge",
+      required: false,
+      value: "'default' | 'sm'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "pulse",
+      description:
+        "Whether the status indicator should pulse (only for status variant)",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Additional CSS class names",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Content to display inside the badge",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

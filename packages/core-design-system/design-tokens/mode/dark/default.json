@@ -17,7 +17,7 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{chrome.1000}",
+      "$value": "{chrome.950}",
       "$description": "Level 3. Represents elements that sit on top of the middle layer. Creates strong visual emphasis through maximum elevation.\n\nCommon uses: Popovers, tooltips, highlighted containers."
     }
   },
@@ -1160,13 +1160,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.5",
+              "value": "0.8",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{chrome.900}",
+        "$value": "{pure.black}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       }
     },

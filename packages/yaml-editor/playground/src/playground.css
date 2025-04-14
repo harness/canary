@@ -28,6 +28,7 @@ body {
 }
 
 .editor-holder {
+  display: flex;
   flex-grow: 1;
 }
 

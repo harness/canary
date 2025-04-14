@@ -381,17 +381,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{green.200}",
+          "$value": "{green.600}",
           "$description": "Background color for prominent green surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{green.200}",
+          "$value": "{green.600}",
           "$description": "Border color for green boundaries."
         }
       },
@@ -454,17 +454,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast red surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{red.300}",
+          "$value": "{red.700}",
           "$description": "Background color for prominent red surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{red.300}",
+          "$value": "{red.700}",
           "$description": "Border color for red boundaries."
         }
       },
@@ -532,12 +532,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{yellow.200}",
+          "$value": "{yellow.300}",
           "$description": "Background color for prominent yellow surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{yellow.200}",
+          "$value": "{yellow.300}",
           "$description": "Border color for yellow boundaries."
         }
       },

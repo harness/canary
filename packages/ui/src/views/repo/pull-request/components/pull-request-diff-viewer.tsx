@@ -570,6 +570,7 @@ const PullRequestDiffViewer = ({
                                   />
                                 ) : (
                                   <PRCommentView
+                                    parentItem={parent?.payload as CommentItem<TypesPullReqActivity>}
                                     commentItem={reply}
                                     filenameToLanguage={filenameToLanguage}
                                     suggestionsBatch={suggestionsBatch}

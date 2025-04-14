@@ -8,7 +8,7 @@ import { stageApproval } from '../common/content/pipeline-stage-approval'
 import { getInlineActionExample } from '../common/inline-actions/inline-actions-def'
 import unifiedSchema from '../common/schema/unified.json'
 import { harnessDarkTheme, harnessLightTheme } from '../common/theme/theme'
-import { CanaryWrapper } from './canary-wrapper'
+import ShadowRootWrapper from './shadow-root-wrapper'
 
 const themes: ThemeDefinition[] = [
   { themeName: 'dark', themeData: harnessDarkTheme },
@@ -51,7 +51,7 @@ export const DemoShadowDom: React.FC<React.PropsWithChildren<React.HTMLAttribute
         </button>
       </div>
       <div className="editor-holder">
-        <CanaryWrapper>
+        <ShadowRootWrapper>
           {showYamlEditor && (
             <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, height: '500px' }}>
               <style>{styleCss}</style>
@@ -68,7 +68,7 @@ export const DemoShadowDom: React.FC<React.PropsWithChildren<React.HTMLAttribute
               />
             </div>
           )}
-        </CanaryWrapper>
+        </ShadowRootWrapper>
       </div>
     </div>
   )

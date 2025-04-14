@@ -1544,6 +1544,12 @@
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
       }
+    },
+    "tab": {
+      "selection-item": {
+        "$type": "color",
+        "$value": "{pure.white}"
+      }
     }
   },
   "shadow": {

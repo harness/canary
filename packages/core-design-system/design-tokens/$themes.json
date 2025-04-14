@@ -1521,6 +1521,7 @@
       "comp.slider.track-segments.progress": "a7943fda0e4646e7018046354a9be54cf7d03075",
       "comp.slider.handle.bg": "5c423cc3b672079f1e7dc0d1c8170dade368711a",
       "comp.slider.handle.border": "94347a2ed2900445946d18c653fb179b8602c533",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f",
       "shadow-color.0": "c0c282f63e107374a732d74c1742cf60d52e6e5c",
       "shadow-color.1": "1ec33a9c84353664d23cd23d6c033d1c330c149a",
       "shadow-color.2": "6200a000044d8dbee421ed4afb0c3ff42febb6ef",
@@ -2141,7 +2142,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -2721,7 +2723,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -3301,7 +3304,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -3882,7 +3886,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -4463,7 +4468,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -5044,7 +5050,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -5625,7 +5632,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -6206,7 +6214,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -6787,7 +6796,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -7368,7 +7378,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -7949,7 +7960,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -8530,7 +8542,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -9110,7 +9123,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -9690,7 +9704,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -10270,7 +10285,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -10850,7 +10866,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -11430,7 +11447,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -12010,7 +12028,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -12614,7 +12633,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -13194,7 +13214,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -13774,7 +13795,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -14354,7 +14376,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },
@@ -14934,7 +14957,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "comp.tab.selection-item": "be94625defd6f6603d7f4683c0ffdc82cae8c83f"
     },
     "group": "mode"
   },

@@ -17,7 +17,7 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{chrome.950}",
+      "$value": "{chrome.1000}",
       "$description": "Level 3. Represents elements that sit on top of the middle layer. Creates strong visual emphasis through maximum elevation.\n\nCommon uses: Popovers, tooltips, highlighted containers."
     }
   },
@@ -1525,6 +1525,12 @@
           "$value": "{chrome.850}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
+      }
+    },
+    "tab": {
+      "selection-item": {
+        "$type": "color",
+        "$value": "{chrome.900}"
       }
     }
   },

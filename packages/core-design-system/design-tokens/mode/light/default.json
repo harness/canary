@@ -34,7 +34,7 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{chrome.600}",
+      "$value": "{chrome.700}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "accent": {
@@ -591,7 +591,7 @@
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{yellow.50}",
+          "$value": "{yellow.100}",
           "$description": "Selected state background color for active yellow items."
         }
       }
@@ -1176,13 +1176,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.4",
+              "value": "0.55",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{chrome.400}",
+        "$value": "{chrome.900}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       }
     },
@@ -1535,6 +1535,12 @@
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
       }
+    },
+    "tab": {
+      "selection-item": {
+        "$type": "color",
+        "$value": "{pure.white}"
+      }
     }
   },
   "shadow": {
@@ -1766,13 +1772,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.5",
+            "value": "0.1",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{chrome.100}",
+      "$value": "{chrome.900}",
       "$description": "Very deep shadow color with 50% opacity. Creates dramatic elevation for modal content."
     },
     "6": {

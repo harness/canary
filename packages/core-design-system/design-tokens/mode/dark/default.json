@@ -198,6 +198,16 @@
           "$type": "color",
           "$value": "{chrome.150}",
           "$description": "Selected state background color for active brand items."
+        },
+        "bg-disabled": {
+          "$type": "color",
+          "$value": "{chrome.800}",
+          "$description": "Disabled state background color for brand items."
+        },
+        "border-disabled": {
+          "$type": "color",
+          "$value": "{chrome.800}",
+          "$description": "Selected state border color for brand items."
         }
       },
       "soft": {
@@ -1450,7 +1460,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.1}",
+          "$value": "{chrome.500}",
           "$description": "Border color for unselected elements in selection controls. Defines the clickable area with a visible boundary."
         }
       },

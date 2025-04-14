@@ -216,6 +216,16 @@
           "$type": "color",
           "$value": "{chrome.850}",
           "$description": "Selected state background color for active brand items."
+        },
+        "bg-disabled": {
+          "$type": "color",
+          "$value": "{chrome.400}",
+          "$description": "Disabled state background color for brand items."
+        },
+        "border-disabled": {
+          "$type": "color",
+          "$value": "{chrome.400}",
+          "$description": "Selected state border color for brand items."
         }
       },
       "soft": {

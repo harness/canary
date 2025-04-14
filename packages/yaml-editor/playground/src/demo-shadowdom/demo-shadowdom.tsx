@@ -53,7 +53,7 @@ export const DemoShadowDom: React.FC<React.PropsWithChildren<React.HTMLAttribute
       <div className="editor-holder">
         <ShadowDomWrapper>
           {showYamlEditor && (
-            <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, height: '500px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
               <style>{styleCss}</style>
 
               <YamlEditor

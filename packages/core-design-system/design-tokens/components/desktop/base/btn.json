@@ -15,7 +15,7 @@
       },
       "lg": {
         "$type": "sizing",
-        "$value": "{size.10}"
+        "$value": "{size.9}"
       }
     },
     "gap": {

@@ -459,12 +459,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{red.700}",
+          "$value": "{red.600}",
           "$description": "Background color for prominent red surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{red.700}",
+          "$value": "{red.600}",
           "$description": "Border color for red boundaries."
         }
       },
@@ -600,17 +600,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast blue surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.200}",
+          "$value": "{blue.600}",
           "$description": "Background color for prominent blue surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{blue.200}",
+          "$value": "{blue.600}",
           "$description": "Border color for blue boundaries."
         }
       },
@@ -663,17 +663,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast purple surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{purple.300}",
+          "$value": "{purple.700}",
           "$description": "Background color for prominent purple surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{purple.300}",
+          "$value": "{purple.700}",
           "$description": "Border color for purple boundaries."
         }
       },
@@ -726,17 +726,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast brown surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{brown.300}",
+          "$value": "{brown.600}",
           "$description": "Background color for prominent brown surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{brown.300}",
+          "$value": "{brown.600}",
           "$description": "Border color for brown boundaries."
         }
       },
@@ -779,17 +779,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast cyan surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{cyan.300}",
+          "$value": "{cyan.600}",
           "$description": "Background color for prominent cyan surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{cyan.300}",
+          "$value": "{cyan.600}",
           "$description": "Border color for cyan boundaries."
         }
       },
@@ -832,17 +832,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast indigo surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{indigo.300}",
+          "$value": "{indigo.600}",
           "$description": "Background color for prominent indigo surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{indigo.300}",
+          "$value": "{indigo.600}",
           "$description": "Border color for indigo boundaries."
         }
       },
@@ -885,17 +885,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast lime surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.300}",
+          "$value": "{lime.600}",
           "$description": "Background color for prominent lime surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{lime.300}",
+          "$value": "{lime.600}",
           "$description": "Border color for lime boundaries."
         }
       },
@@ -938,17 +938,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast mint surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{mint.300}",
+          "$value": "{mint.600}",
           "$description": "Background color for prominent mint surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{mint.300}",
+          "$value": "{mint.600}",
           "$description": "Border color for mint boundaries."
         }
       },
@@ -1044,17 +1044,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast pink surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{pink.300}",
+          "$value": "{pink.700}",
           "$description": "Background color for prominent pink surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{pink.300}",
+          "$value": "{pink.700}",
           "$description": "Border color for pink boundaries."
         }
       },
@@ -1097,17 +1097,17 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast violet surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{violet.300}",
+          "$value": "{violet.700}",
           "$description": "Background color for prominent violet surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "{violet.300}",
+          "$value": "{violet.700}",
           "$description": "Border color for violet boundaries."
         }
       },
@@ -1451,7 +1451,7 @@
     "scrollbar": {
       "thumb": {
         "$type": "color",
-        "$value": "{chrome.400}",
+        "$value": "{chrome.200}",
         "$description": "Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability."
       }
     },

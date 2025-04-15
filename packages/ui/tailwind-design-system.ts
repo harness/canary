@@ -352,7 +352,6 @@ export default {
       },
       fontSize: {
         xs: 'var(--cn-font-size-2)',
-        // By px
         10: 'var(--cn-font-size-0)',
         11: 'var(--cn-font-size-0)',
         12: 'var(--cn-font-size-1)',

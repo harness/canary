@@ -52,11 +52,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
         />
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="-mr-2" asChild>
-            <Button
-              className="text-icons-3 hover:text-icons-2 data-[state=open]:text-icons-2"
-              variant="custom"
-              size="icon"
-            >
+            <Button variant="ghost" iconOnly>
               <Icon name="more-dots-fill" size={16} />
             </Button>
           </DropdownMenu.Trigger>

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, Icon } from '@/components'
+import { Button, DropdownMenu, Icon, type ButtonSizes } from '@/components'
 import { BranchData, BranchSelectorListItem, BranchSelectorTab, TranslationStore } from '@/views'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
@@ -13,7 +13,7 @@ interface BranchSelectorProps {
   spaceId: string
   useTranslationStore: () => TranslationStore
   branchPrefix?: string
-  buttonSize?: 'default' | 'sm' | 'md'
+  buttonSize?: ButtonSizes
   selectedBranch?: BranchSelectorListItem
   onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   isBranchOnly?: boolean
@@ -29,7 +29,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   selectedBranchorTag,
   useTranslationStore,
   branchPrefix,
-  buttonSize = 'default',
+  buttonSize,
   selectedBranch,
   onSelectBranch,
   isBranchOnly = false,
@@ -44,15 +44,10 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button
-          className="flex items-center gap-1.5 overflow-hidden bg-cn-background-2 px-3 data-[state=open]:border-cn-borders-9"
-          variant="outline"
-          size={buttonSize}
-        >
-          {!branchPrefix && (
-            <Icon className="shrink-0 fill-transparent text-icons-9" name={isTag ? 'tag' : 'branch'} size={14} />
-          )}
-          <span className="w-full truncate text-left text-cn-foreground-1">
+        {/* TODO: Design system: Add max-width from tailwind config and add .truncate to span */}
+        <Button className="max-w-48" variant="surface" theme="muted" size={buttonSize}>
+          {!branchPrefix && <Icon className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'branch'} size={14} />}
+          <span className="overflow-x-hidden text-ellipsis whitespace-nowrap">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}

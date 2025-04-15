@@ -17,8 +17,6 @@ interface DialogOverlayProps extends ComponentPropsWithoutRef<typeof DialogPrimi
 
 const DialogOverlay = forwardRef<ElementRef<typeof DialogPrimitive.Overlay>, DialogOverlayProps>(
   ({ className, onClick, ...props }, ref) => {
-    const { isLightTheme } = useTheme()
-
     return (
       <DialogPrimitive.Overlay
         ref={ref}
@@ -74,7 +72,7 @@ const DialogContent = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dia
           {footer}
           {isShowCloseIcon && (
             <DialogPrimitive.Close className="absolute right-3 top-3.5 disabled:pointer-events-none" asChild>
-              <Button size="icon" variant="custom" className="text-icons-4 hover:text-icons-2">
+              <Button size="sm" variant="ghost" iconOnly>
                 <Icon name="close" size={16} />
                 <span className="sr-only">Close</span>
               </Button>

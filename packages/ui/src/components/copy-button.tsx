@@ -28,7 +28,7 @@ const copyIconVariants = cva('transition-colors duration-200', {
 export const CopyButton: FC<CopyButtonProps> = ({
   name,
   className,
-  buttonVariant = 'custom',
+  buttonVariant = 'surface',
   iconSize = 16,
   onClick,
   color
@@ -62,7 +62,9 @@ export const CopyButton: FC<CopyButtonProps> = ({
       className={className}
       type="button"
       variant={buttonVariant}
-      size="icon"
+      theme="muted"
+      size="sm"
+      iconOnly
       aria-label="Copy"
       onClick={handleClick}
     >

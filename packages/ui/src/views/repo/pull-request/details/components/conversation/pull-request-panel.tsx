@@ -5,13 +5,13 @@ import {
   Badge,
   Button,
   ButtonWithOptions,
-  ButtonWithOptionsTheme,
-  ButtonWithOptionsVariant,
   Checkbox,
   DropdownMenu,
   Icon,
   Layout,
-  StackedList
+  StackedList,
+  type ButtonThemes,
+  type ButtonVariants
 } from '@/components'
 import { useRouterContext } from '@/context'
 import {
@@ -98,11 +98,11 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             <span>{formattedTime}</span>
           </div>
           {props.showDeleteBranchButton ? (
-            <Button variant="secondary" size="sm" onClick={props.onDeleteBranch}>
+            <Button variant="soft" theme="muted" size="sm" onClick={props.onDeleteBranch}>
               Delete Branch
             </Button>
           ) : props.showRestoreBranchButton ? (
-            <Button variant="secondary" size="sm" onClick={props.onRestoreBranch}>
+            <Button variant="soft" theme="muted" size="sm" onClick={props.onRestoreBranch}>
               Restore Branch
             </Button>
           ) : null}
@@ -159,8 +159,7 @@ const getButtonState = ({
   if (['pending', 'running', 'failure'].includes(checksInfo.status)) {
     return {
       disabled: true,
-      theme: checksInfo.status === 'failure' ? 'disabled' : 'error',
-      variant: checksInfo.status === 'failure' ? 'default' : 'destractive'
+      theme: checksInfo.status === 'failure' ? null : 'danger'
     }
   }
 
@@ -168,8 +167,7 @@ const getButtonState = ({
     if (canBypass) {
       return {
         disabled: !checkboxBypass,
-        theme: checkboxBypass ? 'error' : 'disabled',
-        variant: checkboxBypass ? 'destractive' : 'default'
+        theme: checkboxBypass ? 'danger' : null
       }
     }
   }
@@ -183,7 +181,7 @@ const getButtonState = ({
 
   return {
     disabled: true,
-    theme: 'disabled'
+    theme: null
   }
 }
 
@@ -254,12 +252,10 @@ const PullRequestPanel = ({
   const moreTooltip = () => {
     return (
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
-          <Icon
-            className="text-icons-1 transition-colors duration-200 group-hover:text-icons-2"
-            name="vertical-ellipsis"
-            size={12}
-          />
+        <DropdownMenu.Trigger asChild>
+          <Button iconOnly variant="ghost" size="sm">
+            <Icon name="vertical-ellipsis" size={12} />
+          </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-[200px]" align="end">
           <DropdownMenu.Group>
@@ -338,7 +334,7 @@ const PullRequestPanel = ({
               !pullReqMetadata?.merged && (
                 <Layout.Horizontal className="items-center justify-center space-x-2.5">
                   {commitSuggestionsBatchCount > 0 ? (
-                    <Button className="gap-x-2" variant="outline" onClick={() => onCommitSuggestions()}>
+                    <Button className="gap-x-2" variant="surface" theme="muted" onClick={() => onCommitSuggestions()}>
                       Commit suggestion
                       <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-0 text-tag-foreground-blue-1">
                         {commitSuggestionsBatchCount}
@@ -364,9 +360,9 @@ const PullRequestPanel = ({
                   {actions && !pullReqMetadata?.closed ? (
                     <ButtonWithOptions
                       id="pr-type"
-                      theme={buttonState.theme as ButtonWithOptionsTheme}
+                      theme={buttonState.theme as ButtonThemes}
                       disabled={buttonState.disabled}
-                      variant={buttonState?.variant as ButtonWithOptionsVariant}
+                      variant="surface"
                       selectedValue={mergeButtonValue}
                       handleOptionChange={value => setMergeButtonValue(value)}
                       options={actions.map(action => ({

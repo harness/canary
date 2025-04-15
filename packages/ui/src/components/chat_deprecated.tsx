@@ -127,8 +127,9 @@ const InputField: React.FC<InputFieldProps> = ({
       />
       <Button
         onClick={onSend}
-        variant="outline"
-        size="icon"
+        variant="surface"
+        theme="muted"
+        size="sm"
         disabled={disabled}
         className="absolute bottom-3.5 right-3.5 z-10 size-6"
       >

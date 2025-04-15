@@ -43,8 +43,9 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
           className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2', {
             '-mr-2.5 -my-0.5': isInTable
           })}
-          variant="custom"
-          size="icon"
+          variant="ghost"
+          iconOnly
+          size="sm"
         >
           <Icon name={iconName} size={12} />
         </Button>

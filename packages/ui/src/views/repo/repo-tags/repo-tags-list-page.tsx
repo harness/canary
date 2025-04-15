@@ -115,9 +115,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <Button variant="default" onClick={openCreateTagDialog}>
-                  {t('views:repos.newTag', 'New tag')}
-                </Button>
+                <Button onClick={openCreateTagDialog}>{t('views:repos.newTag', 'New tag')}</Button>
               </ListActions.Right>
             </ListActions.Root>
 

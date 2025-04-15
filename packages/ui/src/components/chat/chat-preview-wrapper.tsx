@@ -30,12 +30,8 @@ export const ChatPreviewWrapper: FC = () => {
           <Chat.Message self>Awesome! Thanks, I&#39;ll take a look at this today.</Chat.Message>
           <Chat.Message
             actions={
-              <Button
-                className="bg-cn-background-8 text-cn-foreground-1 hover:bg-cn-background-9 hover:text-cn-foreground-1 flex h-6 gap-x-1 rounded px-2.5"
-                size="sm"
-                variant="custom"
-              >
-                <Icon className="text-icons-9 shrink-0" name="repo-icon" size={12} />
+              <Button variant="soft" theme="muted" size="sm">
+                <Icon name="repo-icon" size={12} />
                 main
               </Button>
             }

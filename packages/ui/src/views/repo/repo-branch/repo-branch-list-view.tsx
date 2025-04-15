@@ -59,7 +59,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
               </ListActions.Left>
               <ListActions.Right>
                 <Button
-                  variant="default"
                   onClick={() => {
                     setCreateBranchDialogOpen(true)
                   }}

@@ -62,7 +62,7 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
                 'Personal access tokens allow you to authenticate with the API.'
               )}
             />
-            <Button type="button" variant="outline" onClick={openTokenDialog}>
+            <Button type="button" variant="surface" theme="muted" onClick={openTokenDialog}>
               {t('views:profileSettings.addToken', 'Add new token')}
             </Button>
           </div>
@@ -90,7 +90,7 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
                 'SSH keys allow you to establish a secure connection to your code repository.'
               )}
             />
-            <Button variant="outline" type="button" onClick={openSshKeyDialog}>
+            <Button variant="surface" theme="muted" type="button" onClick={openSshKeyDialog}>
               {t('views:profileSettings.addSshKey', 'Add new SSH key')}
             </Button>
           </div>

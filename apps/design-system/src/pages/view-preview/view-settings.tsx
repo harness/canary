@@ -43,8 +43,8 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
   return (
     <aside className={clsx(css.viewSettings, 'shadow-4')} data-show={showSettings ? 'show' : 'hide'}>
       <Button
-        variant="link_accent"
-        size="icon"
+        size="sm"
+        iconOnly
         onClick={() => setShowSettings(current => !current)}
         className={css.showHideButton}
         title={showSettings ? 'Hide view settings' : 'Show view settings'}

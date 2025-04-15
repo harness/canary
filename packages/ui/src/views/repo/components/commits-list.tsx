@@ -92,18 +92,17 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                       {!!commit?.sha && (
                         <StackedList.Field
                           title={
-                            <div className="flex gap-2.5">
+                            <div className="flex items-center gap-2.5">
                               <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
                               <Button
-                                className="border hover:bg-cn-background-3"
                                 title="View repository at this point of history"
-                                variant="custom"
-                                size="sm_icon"
+                                variant="ghost"
+                                iconOnly
                                 onClick={() => {
                                   navigate(toCode?.({ sha: commit?.sha || '' }) || '')
                                 }}
                               >
-                                <Icon name="code-brackets" className="text-icons-3" />
+                                <Icon name="code-brackets" />
                               </Button>
                             </div>
                           }

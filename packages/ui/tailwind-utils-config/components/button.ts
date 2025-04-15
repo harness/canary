@@ -3,14 +3,13 @@ import { CSSRuleObject } from 'tailwindcss/types/config'
 /** Variants */
 const variants = ['solid', 'soft', 'surface'] as const
 
-const themes = ['success', 'danger', 'muted', 'primary', 'warning', 'ai'] as const
+const themes = ['success', 'danger', 'muted', 'primary', 'ai'] as const
 
 const themeStyleMapper: Record<Exclude<(typeof themes)[number], 'ai'>, string> = {
   success: 'green',
   danger: 'red',
   muted: 'gray',
-  primary: 'brand',
-  warning: 'yellow'
+  primary: 'brand'
 }
 
 function createButtonVariantStyles() {
@@ -26,7 +25,7 @@ function createButtonVariantStyles() {
   variants.forEach(variant => {
     aiFilteredThemes.forEach(theme => {
       // Skip solid variant for success and danger themes
-      if (variant === 'solid' && (theme === 'success' || theme === 'danger' || theme === 'warning')) {
+      if (variant === 'solid' && (theme === 'success' || theme === 'danger')) {
         return
       }
 
@@ -70,6 +69,13 @@ console.log('createButtonVariantStyles: ', createButtonVariantStyles())
 
 export default {
   '.button': {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    whiteSpace: 'nowrap',
+    transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
+    transitionDuration: '0.15s',
+    transitionTimingFunction: 'ease-in-out',
     borderRadius: 'var(--cn-btn-default-radius)',
     padding: 'var(--cn-btn-py-default) var(--cn-btn-px-default)',
     height: 'var(--cn-btn-size-default)',
@@ -77,7 +83,6 @@ export default {
     border: 'var(--cn-btn-border) solid black',
     '@apply font-body-none-strong': '',
 
-    // flex-shrink-0 rounded-l-none before:absolute before:left-0 before:h-[calc(100%-8px)] before:w-px
     '&:where(.button-split-dropdown)': {
       height: 'var(--cn-btn-size-icon)',
       width: 'var(--cn-btn-size-icon)',
@@ -161,7 +166,7 @@ export default {
 
       // This is to prevent focus outline from being hidden by dropdown
       position: 'relative',
-      zIndex: 1
+      zIndex: '1'
     },
 
     /**

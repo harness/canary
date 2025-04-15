@@ -16,15 +16,16 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
   copyContent,
   showEdit = false
 }) => {
-  const commonButtonClasses = 'border-cn-borders-2 hover:bg-cds-background-4'
   return (
     <ButtonGroup spacing="0" className="h-full rounded">
-      <CopyButton className={cn(commonButtonClasses, 'border rounded-r-none')} name={copyContent} />
+      <CopyButton className="rounded-r-none" name={copyContent} />
       {showEdit && (
         <Button
-          className={cn(commonButtonClasses, 'border-y rounded-none')}
-          size="icon"
-          variant="custom"
+          className={cn('border-y rounded-none')}
+          size="sm"
+          variant="surface"
+          theme="muted"
+          iconOnly
           aria-label="Edit"
           onClick={onEditClick}
         >
@@ -32,9 +33,11 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
         </Button>
       )}
       <Button
-        className={cn(commonButtonClasses, 'rounded-l-none', showEdit ? 'border' : 'border-l-0 border-y border-r')}
-        size="icon"
-        variant="custom"
+        className={cn('rounded-l-none', showEdit ? 'border' : 'border-l-0 border-y border-r')}
+        size="sm"
+        iconOnly
+        variant="surface"
+        theme="muted"
         aria-label="Download"
         onClick={onDownloadClick}
       >

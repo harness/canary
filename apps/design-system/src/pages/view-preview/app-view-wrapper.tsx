@@ -106,7 +106,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
             />
             <Sidebar.Inset>
               {breadcrumbs}
-              <MainContentLayout className={childrenWrapperClassName}>
+              <MainContentLayout className={childrenWrapperClassName} withBreadcrumbs>
                 <Outlet />
               </MainContentLayout>
               <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />

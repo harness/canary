@@ -33,8 +33,8 @@ export const RepoSidebar = ({
     <>
       <div className="nested-sidebar-height sticky top-[var(--cn-page-nav-height)]">
         <SandboxLayout.LeftSubPanel className="w-[247px] border-none">
-          <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
-            <div className="flex w-full flex-col gap-3 pt-5">
+          <SandboxLayout.Content className="h-full overflow-hidden p-0">
+            <div className="flex size-full flex-col gap-3 pt-5">
               <div className="grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-2 px-5">
                 {branchList && (
                   <BranchSelector

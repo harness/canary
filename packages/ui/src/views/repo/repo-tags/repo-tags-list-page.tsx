@@ -53,7 +53,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
       return <SkeletonTable countRows={10} countColumns={4} />
     } else if (noData) {
       return searchQuery ? (
-        <StackedList.Root>
+        <StackedList.Root className="m-auto">
           <div className="flex items-center justify-center">
             <NoData
               iconName="no-search-magnifying-glass"
@@ -70,7 +70,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
           </div>
         </StackedList.Root>
       ) : (
-        <div className="flex items-center justify-center ">
+        <div className="m-auto flex items-center justify-center">
           <NoData
             iconName="no-data-tags"
             title="No tags yet"
@@ -99,7 +99,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   }
 
   return (
-    <SandboxLayout.Main className="m-auto">
+    <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !tagsList.length && !searchQuery })}>
         <Spacer size={2} />
         {(isLoading || !!tagsList.length || isDirtyList) && (

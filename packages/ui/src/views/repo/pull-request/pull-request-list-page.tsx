@@ -112,7 +112,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
     if (noData) {
       return selectedFiltersCnt > 0 || searchQuery ? (
-        <StackedList.Root>
+        <StackedList.Root className="m-auto">
           <div className="flex items-center justify-center">
             <NoData
               iconName="no-search-magnifying-glass"
@@ -136,7 +136,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           </div>
         </StackedList.Root>
       ) : (
-        <div className="flex items-center justify-center">
+        <div className="m-auto flex items-center justify-center">
           <NoData
             iconName="no-data-folder"
             title="No pull requests yet"
@@ -191,7 +191,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main className="m-auto">
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
         {showTopBar && (
           <PRListFilterHandler

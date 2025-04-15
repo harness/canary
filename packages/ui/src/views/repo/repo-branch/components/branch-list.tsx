@@ -40,6 +40,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   if (!branches?.length && !isLoading) {
     return (
       <NoData
+        className="m-auto"
         iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-branches'}
         withBorder={isDirtyList}
         title={
@@ -117,9 +118,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
-                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-cn-background-8 px-2.5 text-14 text-cn-foreground-1">
+                    <div className="bg-cn-background-8 text-14 text-cn-foreground-1 inline-flex h-6 max-w-80 items-center truncate rounded px-2.5">
                       {defaultBranch === branch?.name && (
-                        <Icon name="lock" size={14} className="-mt-px mr-1 inline-block text-icons-9" />
+                        <Icon name="lock" size={14} className="text-icons-9 -mt-px mr-1 inline-block" />
                       )}
                       {branch?.name}
                     </div>
@@ -131,11 +132,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   <div className="flex items-center gap-2">
                     <Avatar.Root size="4.5">
                       {!!branch?.user?.avatarUrl && <Avatar.Image src={branch?.user?.avatarUrl} />}
-                      <Avatar.Fallback className="text-center text-10">
+                      <Avatar.Fallback className="text-10 text-center">
                         {getInitials(branch?.user?.name ?? '')}
                       </Avatar.Fallback>
                     </Avatar.Root>
-                    <span className="truncate text-cn-foreground-1">{branch?.timestamp}</span>
+                    <span className="text-cn-foreground-1 truncate">{branch?.timestamp}</span>
                   </div>
                 </Table.Cell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
@@ -143,7 +144,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   {branch?.checks && (
                     <div className="flex items-center">
                       {checkState === 'running' ? (
-                        <span className="mr-1.5 size-2 rounded-full bg-icons-alert" />
+                        <span className="bg-icons-alert mr-1.5 size-2 rounded-full" />
                       ) : (
                         <Icon
                           className={cn('mr-1.5', {
@@ -159,9 +160,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                           size={12}
                         />
                       )}
-                      <span className="truncate text-cn-foreground-3">{branch?.checks?.done}</span>
+                      <span className="text-cn-foreground-3 truncate">{branch?.checks?.done}</span>
                       <span className="mx-px">/</span>
-                      <span className="truncate text-cn-foreground-3">{branch?.checks?.total}</span>
+                      <span className="text-cn-foreground-3 truncate">{branch?.checks?.total}</span>
                     </div>
                   )}
                 </Table.Cell>
@@ -185,7 +186,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="max-w-20 content-center">
                   {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                     <Button
-                      className="flex w-fit items-center gap-1 bg-cn-background-8 px-2.5 text-sm text-cn-foreground-1 hover:bg-cn-background-9 hover:text-cn-foreground-1"
+                      className="bg-cn-background-8 text-cn-foreground-1 hover:bg-cn-background-9 hover:text-cn-foreground-1 flex w-fit items-center gap-1 px-2.5 text-sm"
                       variant="custom"
                       size="xs"
                       asChild

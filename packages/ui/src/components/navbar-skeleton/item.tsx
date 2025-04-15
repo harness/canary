@@ -44,7 +44,6 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
                 className={cn(
                   'sub-menu-icon-bg relative flex size-8 place-content-center place-items-center rounded border border-cn-borders-2 bg-cn-background-2',
                   { 'border-sidebar-border-3 bg-sidebar-background-7': isMainNav }
-                  // { 'border-sidebar-border-6 bg-sidebar-background-8': active && isLightTheme }
                 )}
               >
                 <Icon
@@ -67,8 +66,6 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
               weight="medium"
               className={cn(
                 'text-cn-foreground-2 group-hover:text-cn-foreground-1 z-10 w-full duration-0 ease-in-out',
-                // { 'text-sidebar-foreground-2': isMainNav && (!isInset || isLightTheme) },
-                // { 'text-sidebar-foreground-3': isMainNav && isInset && !isLightTheme },
                 { 'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1': isMainNav },
                 { 'text-cn-foreground-1': active },
                 { 'text-sidebar-foreground-1': active && isMainNav }

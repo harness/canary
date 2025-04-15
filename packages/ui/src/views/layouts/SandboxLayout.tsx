@@ -67,10 +67,14 @@ function SubHeader({ children, className }: { children: ReactNode; className?: s
 function Main({ children, fullWidth, className }: { children: ReactNode; fullWidth?: boolean; className?: string }) {
   return (
     <section
-      className={cn('w-full bg-cn-background-1 rounded-[inherit]', { 'w-full flex-1': fullWidth }, className)}
+      className={cn(
+        'flex flex-col grow w-full bg-cn-background-1 rounded-[inherit] mx-auto max-w-[1200px]',
+        { 'flex-1': fullWidth },
+        className
+      )}
       aria-label="Main Content"
     >
-      {fullWidth ? children : <div className={cn('mx-auto h-full max-w-[1200px]', className)}>{children}</div>}
+      {children}
     </section>
   )
 }
@@ -82,7 +86,12 @@ interface ContentProps {
   paddingClassName?: string
 }
 
-function Content({ children, maxWidth, className, paddingClassName = 'px-5 pt-7 pb-11' }: ContentProps) {
+function Content({
+  children,
+  maxWidth,
+  className,
+  paddingClassName = 'px-5 pt-7 pb-11 flex flex-col grow'
+}: ContentProps) {
   const widthClass = maxWidth ? `max-w-${maxWidth} mx-auto` : ''
 
   return <div className={cn(paddingClassName, widthClass, className)}>{children}</div>

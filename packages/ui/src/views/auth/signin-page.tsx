@@ -21,7 +21,7 @@ export interface SignInData {
 }
 
 const signInSchema = z.object({
-  email: z.string(),
+  email: z.string().min(1, { message: 'The field can’t be blank' }),
   password: z.string().min(1, { message: 'The field can’t be blank' })
 })
 
@@ -71,7 +71,7 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
 
   return (
     <Floating1ColumnLayout
-      className="flex-col bg-cn-background-1 pt-20 sm:pt-[186px]"
+      className="bg-cn-background-1 flex-col pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
@@ -113,7 +113,6 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
               type="submit"
               size="md"
               loading={isLoading}
-              disabled={hasError}
             >
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>

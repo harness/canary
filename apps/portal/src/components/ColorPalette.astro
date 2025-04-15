@@ -33,7 +33,7 @@ const colors = Object.keys(styles.colors).filter(
             const colorValue = (color as Color)?.$value || "";
             return (
               <div
-                class="aspect-square rounded border border-borders-1 border-cn-foreground-1"
+                class="aspect-square rounded border border-cn-borders-3"
                 style={{ backgroundColor: colorValue }}
                 title={`--${(color as Color)?.name}: ${colorValue}`}
               />

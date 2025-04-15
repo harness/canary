@@ -46,6 +46,7 @@ export default {
         },
         'cn-background': {
           DEFAULT: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
+          0: 'lch(from var(--cn-bg-0) l c h / <alpha-value>)',
           1: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
           2: 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
           3: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
@@ -58,7 +59,7 @@ export default {
           softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           hover: 'var(--cn-state-hover)',
           selected: 'lch(from var(--cn-state-selected) l c h / <alpha-value>)',
-          backdrop: 'lch(from var(--cn-dialog-backdrop) l c h / <alpha-value>)',
+          backdrop: 'lch(from var(--cn-comp-dialog-backdrop) l c h / <alpha-value>)',
           primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
@@ -324,6 +325,7 @@ export default {
       boxShadow: {
         1: 'var(--cn-shadow-4)',
         2: 'var(--cn-shadow-2)',
+        5: 'var(--cn-shadow-5)',
         'pagination-1': 'var(--cn-shadow-1)',
         'commit-list-bullet':
           '0px 0px 3px 0.5px hsla(var(--cn-set-brand-solid-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-solid-bg) / 0.3)',

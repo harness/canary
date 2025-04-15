@@ -67,7 +67,7 @@ export const RepoSettingsGeneralForm: FC<{
     setValue,
     watch,
     reset,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<RepoUpdateData>({
     resolver: zodResolver(generalSettingsFormSchema),
     mode: 'onChange',
@@ -203,7 +203,7 @@ export const RepoSettingsGeneralForm: FC<{
             <ControlGroup>
               <ButtonGroup>
                 {!isSubmitted || !isRepoUpdateSuccess ? (
-                  <Button type="submit" disabled={!isValid || isUpdatingRepoData}>
+                  <Button type="submit" disabled={isUpdatingRepoData}>
                     {!isUpdatingRepoData ? t('views:repos.save', 'Save') : t('views:repos.saving', 'Saving...')}
                   </Button>
                 ) : (

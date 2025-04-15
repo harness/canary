@@ -94,9 +94,7 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
             <Button type="button" variant="outline" onClick={onClose}>
               {t('views:profileSettings.cancel', 'Cancel')}
             </Button>
-            <Button type="submit" disabled={!isValid}>
-              {t('views:profileSettings.save', 'Save')}
-            </Button>
+            <Button type="submit">{t('views:profileSettings.save', 'Save')}</Button>
           </Dialog.Footer>
         </FormWrapper>
       </Dialog.Content>

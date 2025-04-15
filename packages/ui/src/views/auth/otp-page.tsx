@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
 
-import { Button, Card, InputOTP, Spacer, Text } from '@/components'
+import { Alert, Button, Card, InputOTP, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -83,7 +83,7 @@ export function OTPPage({
 
   return (
     <Floating1ColumnLayout
-      className="flex-col bg-cn-background-1 pt-20 sm:pt-[186px]"
+      className="bg-cn-background-1 flex-col pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
@@ -98,6 +98,11 @@ export function OTPPage({
             <span className="text-cn-foreground-1">{email}</span>
           </Text>
         </Card.Header>
+        {serverError && (
+          <Alert.Container variant="destructive">
+            <Alert.Title>{serverError}</Alert.Title>
+          </Alert.Container>
+        )}
         <Card.Content className="mt-10">
           <form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
             <div className="relative">
@@ -118,7 +123,7 @@ export function OTPPage({
               />
               {(errors.otp || serverError) && (
                 <Text
-                  className="absolute top-full w-full translate-y-2 leading-none tracking-tight text-cn-foreground-danger"
+                  className="text-cn-foreground-danger absolute top-full w-full translate-y-2 leading-none tracking-tight"
                   align="center"
                   size={1}
                   as="p"
@@ -127,7 +132,7 @@ export function OTPPage({
                 </Text>
               )}
             </div>
-            <Button className="mt-10 w-full max-w-[212px]" type="submit" loading={isLoading} disabled={hasError}>
+            <Button className="mt-10 w-full max-w-[212px]" type="submit" loading={isLoading}>
               {isLoading ? 'Verifying...' : 'Verify'}
             </Button>
           </form>

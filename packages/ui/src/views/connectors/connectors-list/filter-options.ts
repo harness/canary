@@ -6,11 +6,11 @@ import { ConnectorListFilters } from './types'
 export const getConnectorListFilterOptions = (t: TFunction): Array<FilterOptionConfig<keyof ConnectorListFilters>> => {
   const options = [
     { label: t('views:connectors.filterOptions.statusOption.success', 'Success'), value: 'success' },
-    { label: t('views:connectors.filterOptions.statusOption.failure', 'Failure'), value: 'failure' }
+    { label: t('views:connectors.filterOptions.statusOption.failure', 'Failed'), value: 'failure' }
   ]
   return [
     {
-      label: t('views:connectors.filterOptions.statusOption.label', 'Status'),
+      label: t('views:connectors.filterOptions.statusOption.label', 'Connectivity Status'),
       value: 'status',
       type: FilterFieldTypes.Checkbox,
       filterFieldConfig: {

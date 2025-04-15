@@ -80,8 +80,8 @@ export interface UnifiedPipelineStudioContextProps {
     deleteInArray: (props: { path: string }) => void
   }
   clearRightDrawerData: () => void
-  formEntity: FormEntityType | null
-  setFormEntity: (formEntity: FormEntityType) => void
+  // formEntity: FormEntityType | null
+  setFormEntity?: (formEntity: FormEntityType) => void
   useTemplateListStore: () => ITemplateListStore
   inputComponentFactory: InputFactory
   stepsDefinitions?: AnyStepDefinition[]
@@ -126,7 +126,7 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
     deleteInArray: (_props: { path: string }) => undefined
   },
   clearRightDrawerData: () => undefined,
-  formEntity: null,
+  // formEntity: null,
   setFormEntity: (_formEntity: FormEntityType) => undefined,
   useTemplateListStore: () => ({}) as ITemplateListStore,
   inputComponentFactory: new InputFactory(),
@@ -167,6 +167,7 @@ export interface UnifiedPipelineStudioProviderProps {
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
   lastCommitInfo?: lastCommitInfoType
+  setFormEntity?: (formEntity: FormEntityType | null) => void
 }
 
 export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProviderProps> = props => {
@@ -177,6 +178,7 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
     inputComponentFactory: inputComponentFactoryFromProps,
     onSelectedPathChange: onSelectedPathChangeFromProps,
     lastCommitInfo,
+    setFormEntity,
     ...rest
   } = props
 
@@ -185,7 +187,7 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
   const [addStepIntention, setAddStepIntention] = useState<AddStepIntentionType>(null)
   const [editStepIntention, setEditStepIntention] = useState<EditStepIntentionType>(null)
 
-  const [formEntity, setFormEntity] = useState<FormEntityType | null>(null)
+  // const [formEntity, setFormEntity] = useState<FormEntityType | null>(null)
 
   const clearEditStepIntention = useCallback(() => {
     setEditStepIntention(null)
@@ -223,7 +225,7 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
   const clearRightDrawerData = useCallback(() => {
     clearAddStepIntention()
     clearEditStepIntention()
-    setFormEntity(null)
+    setFormEntity?.(null)
   }, [clearAddStepIntention, clearEditStepIntention, setFormEntity])
 
   const requestYamlModifications = useMemo(
@@ -257,7 +259,7 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
         yamlRevision,
         onYamlRevisionChange,
         requestYamlModifications,
-        formEntity,
+        // formEntity,
         setFormEntity,
         clearRightDrawerData,
         inputComponentFactory: inputComponentFactoryFromProps ?? inputComponentFactory,

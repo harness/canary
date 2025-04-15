@@ -330,7 +330,7 @@ export default {
         auth: 'var(--cn-shadow-3)'
       },
       borderRadius: {
-        10: '0.625rem'
+        10: 'var(--cn-rounded-4)'
       },
       fontSize: {
         tiny: '0.75rem',

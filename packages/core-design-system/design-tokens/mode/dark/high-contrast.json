@@ -1836,6 +1836,50 @@
         }
       ],
       "$description": "Focus ring effect with background offset and accent border."
+    },
+    "error": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.red.soft.border}",
+        "type": "dropShadow"
+      }
+    },
+    "selected": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.gray.soft.border}",
+        "type": "dropShadow"
+      }
+    },
+    "success": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.green.soft.border}",
+        "type": "dropShadow"
+      }
+    },
+    "warning": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.yellow.soft.border}",
+        "type": "dropShadow"
+      }
     }
   },
   "gradient": {

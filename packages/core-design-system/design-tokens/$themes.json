@@ -3,9 +3,9 @@
     "id": "89bf9a3ab61c40d6291a24c452efc1591c4d41c0",
     "name": "source",
     "selectedTokenSets": {
-      "core/typography": "enabled",
-      "core/dimensions": "enabled",
-      "core/colors_hex": "enabled"
+      "core/typography": "source",
+      "core/dimensions": "source",
+      "core/colors_lch": "source"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -1277,7 +1277,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "$figmaVariableReferences": {
       "bg.0": "33d211d40bf9cb2b44b39504224ce89c82ce1a04",
@@ -1856,7 +1860,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/dark/dimmer": "enabled"
@@ -2437,7 +2445,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/default": "enabled"
@@ -3019,7 +3031,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast": "enabled"
@@ -3600,7 +3616,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/dark/default-protanopia": "enabled"
@@ -4182,7 +4202,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/dark/dimmer-protanopia": "enabled"
@@ -4764,7 +4788,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast-protanopia": "enabled"
@@ -5346,7 +5374,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/dark/default-deuteranopia": "enabled"
@@ -5928,7 +5960,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/dark/dimmer-deuteranopia": "enabled"
@@ -6510,7 +6546,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast-deuteranopia": "enabled"
@@ -7092,7 +7132,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/dark/default-tritanopia": "enabled"
@@ -7674,7 +7718,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/dark/dimmer-tritanopia": "enabled"
@@ -8256,7 +8304,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast-tritanopia": "enabled"
@@ -8837,7 +8889,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/dimmer": "enabled"
@@ -9418,7 +9474,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/high-contrast": "enabled"
@@ -9999,7 +10059,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/default-protanopia": "enabled"
@@ -10580,7 +10644,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/dimmer-protanopia": "enabled"
@@ -11161,7 +11229,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/high-contrast-protanopia": "enabled"
@@ -11742,7 +11814,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/default-deuteranopia": "enabled"
@@ -12347,7 +12423,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/dimmer-deuteranopia": "enabled"
@@ -12928,7 +13008,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/high-contrast-deuteranopia": "enabled"
@@ -13509,7 +13593,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/default-tritanopia": "enabled"
@@ -14090,7 +14178,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/dimmer-tritanopia": "enabled"
@@ -14671,7 +14763,11 @@
       "comp.pipeline.card.running.border": "S:2d9b5d178d217ac1bf0f5e9728d7fe6f00dd4ad5,",
       "comp.skeleton.bg": "S:c073785c767f161ba380b465f747f8bc49e090f1,",
       "comp.pipeline.card.bg": "S:e2c672f4c10940ae847c04e5c693ba2bdc91120a,",
-      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,"
+      "shadow.comp.avatar.inner": "S:db6a4ecbe77645930f943904f4f4eee31426c187,",
+      "ring.error": "S:16cf0aa0afc7f47451b6d7be0631363cb06b33f5,",
+      "ring.selected": "S:a5155919e6842e3f82c4a72231014b32c44bc52a,",
+      "ring.success": "S:16a6ba590dceac8b1dc9f12e35ad1a06d93e7f33,",
+      "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
       "mode/light/high-contrast-tritanopia": "enabled"

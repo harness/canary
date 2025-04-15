@@ -26,7 +26,7 @@ const AlertDialogOverlay = React.forwardRef<
     <AlertDialogPrimitive.Overlay
       className={cn(
         'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 dialog-backdrop fixed inset-0 z-50',
-        { 'bg-cn-background-backdrop': isLightTheme },
+        // { 'bg-cn-background-backdrop': isLightTheme },
         className
       )}
       {...props}
@@ -72,8 +72,9 @@ const AlertDialogContent = React.forwardRef<
         <Button
           className="absolute right-3 top-[18px] z-10 text-icons-4 transition-colors duration-200 hover:text-icons-2 disabled:pointer-events-none"
           type="button"
-          variant="custom"
-          size="icon"
+          variant="ghost"
+          size="sm"
+          iconOnly
           aria-label="Close"
           onClick={onClose}
         >
@@ -162,7 +163,7 @@ const AlertDialogCancel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Cancel
     ref={ref}
-    className={cn(buttonVariants({ variant: 'outline' }), 'mt-2 sm:mt-0', className)}
+    className={cn(buttonVariants({ variant: 'surface', theme: 'muted' }), 'mt-2 sm:mt-0', className)}
     {...props}
   />
 ))

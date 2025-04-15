@@ -56,7 +56,8 @@ const PRCommentView: FC<PRCommentViewProps> = ({
         <div className="flex justify-end gap-x-2.5">
           <Button
             className="gap-x-2"
-            variant="outline"
+            variant="surface"
+            theme="muted"
             onClick={() => {
               onCommitSuggestion?.({
                 check_sum: checkSums?.[0] || '',
@@ -72,12 +73,13 @@ const PRCommentView: FC<PRCommentViewProps> = ({
             )}
           </Button>
           {isInBatch ? (
-            <Button variant="destructive" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>
+            <Button variant="surface" theme="danger" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>
               Remove suggestion from batch
             </Button>
           ) : (
             <Button
-              variant="outline"
+              variant="surface"
+              theme="muted"
               onClick={() =>
                 addSuggestionToBatch?.({
                   check_sum: checkSums?.[0] || '',

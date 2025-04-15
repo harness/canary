@@ -119,11 +119,7 @@ export const LabelsHeader = ({
 
       <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>
-          <Button
-            className="text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2"
-            size="icon"
-            variant="custom"
-          >
+          <Button iconOnly variant="ghost" size="sm">
             <Icon name="vertical-ellipsis" size={12} />
           </Button>
         </DropdownMenu.Trigger>

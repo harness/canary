@@ -88,11 +88,11 @@ export const NoData: FC<NoDataProps> = ({
               ))}
             {secondaryButton &&
               (secondaryButton.to ? (
-                <Button variant="outline" asChild onClick={() => secondaryButton?.onClick?.()}>
+                <Button variant="surface" theme="muted" asChild onClick={() => secondaryButton?.onClick?.()}>
                   <NavLink to={secondaryButton.to}>{secondaryButton.label}</NavLink>
                 </Button>
               ) : (
-                <Button variant="outline" onClick={() => secondaryButton?.onClick?.()}>
+                <Button variant="surface" theme="muted" onClick={() => secondaryButton?.onClick?.()}>
                   {secondaryButton.label}
                 </Button>
               ))}

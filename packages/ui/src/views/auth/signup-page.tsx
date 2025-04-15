@@ -129,15 +129,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
                 </Text>
               </>
             )}
-            <Button
-              className="mt-10 w-full"
-              variant="default"
-              borderRadius="full"
-              type="submit"
-              size="md"
-              loading={isLoading}
-              disabled={hasError}
-            >
+            <Button className="mt-10 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
               {isLoading ? 'Signing up...' : 'Sign up'}
             </Button>
           </form>

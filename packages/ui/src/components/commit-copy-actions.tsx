@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Icon, ShaBadge } from '@/components'
+import { Button, Icon, ShaBadge } from '@/components'
 import { useRouterContext } from '@/context'
 import copy from 'clipboard-copy'
 
@@ -31,23 +31,24 @@ export const CommitCopyActions = ({
 
   return (
     <ShaBadge.Root>
-      <ShaBadge.Content className="p-0" asChild>
-        <button
-          className="size-full px-2.5 text-2 text-cn-foreground-3"
+      <ShaBadge.Content className="border-r" asChild>
+        <Button
+          size="sm"
           onClick={() => handleNavigation()}
           onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') handleNavigation()
           }}
+          variant="ghost"
         >
           {sha.substring(0, 6)}
-        </button>
+        </Button>
       </ShaBadge.Content>
       <ShaBadge.Icon
         handleClick={() => {
           setCopied(true)
         }}
       >
-        <Icon size={16} name={copied ? 'tick' : 'clone'} className="text-icons-3" />
+        <Icon size={16} name={copied ? 'tick' : 'clone'} />
       </ShaBadge.Icon>
     </ShaBadge.Root>
   )

@@ -101,11 +101,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
             className="absolute right-1 top-2 flex items-center justify-center transition-colors disabled:pointer-events-none"
             asChild
           >
-            <Button
-              className={cn('text-icons-4 hover:text-icons-2 focus:ring-0 focus-visible:outline-none', closeClassName)}
-              variant="custom"
-              size="icon"
-            >
+            <Button className={closeClassName} variant="ghost" size="sm" iconOnly>
               <Icon name="close" size={16} />
               <span className="sr-only">Close</span>
             </Button>

@@ -31,7 +31,7 @@ export function ThemeSelector() {
       setTheme={setTheme}
       theme={theme}
     >
-      <Button variant="default" size="icon" onClick={() => setOpen(true)}>
+      <Button size="icon" onClick={() => setOpen(true)}>
         <Icon name="paint" />
       </Button>
     </ThemeDialog>
@@ -44,7 +44,7 @@ export default function ThemeSelectorWrapper() {
   }
 
   return (
-    <Button variant="default" size="icon">
+    <Button size="icon">
       <Icon name="paint" />
     </Button>
   );

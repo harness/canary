@@ -35,7 +35,7 @@ export const ExitConfirmDialog: FC<ExitConfirmDialogProps> = ({
         </Dialog.Header>
         <Dialog.Description>{subtitle}</Dialog.Description>
         <Dialog.Footer>
-          <Button variant="outline" onClick={() => onCancel?.()}>
+          <Button variant="surface" theme="muted" onClick={() => onCancel?.()}>
             {cancelText}
           </Button>
           <Button onClick={onConfirm}>{confirmText}</Button>

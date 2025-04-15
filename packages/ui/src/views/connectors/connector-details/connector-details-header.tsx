@@ -20,7 +20,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   return (
     <div className="px-8">
       {toConnectorsList ? (
-        <Button variant="link_accent" size="sm" className="mb-3 px-0">
+        <Button variant="link" size="sm" className="mb-3 px-0">
           <Icon name="chevron-up" className="-rotate-90" />
           <Link to={toConnectorsList()}>Back to Connectors</Link>
         </Button>
@@ -85,10 +85,8 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
             </div>
           ) : null}
         </div>
-        <div className="flex h-full items-end gap-3">
-          <Button variant="default" onClick={() => onTest(connectorDetails.identifier)}>
-            Test Connection
-          </Button>
+        <div className="flex h-full items-end gap-11">
+          <Button onClick={() => onTest(connectorDetails.identifier)}>Test Connection</Button>
           <MoreActionsTooltip
             actions={[
               {

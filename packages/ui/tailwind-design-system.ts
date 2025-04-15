@@ -53,13 +53,13 @@ export default {
           accent: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           success: 'lch(from var(--cn-set-green-solid-bg) l c h / <alpha-value>)',
           warning: 'lch(from var(--cn-set-yellow-solid-bg) l c h / <alpha-value>)',
+          backdrop: 'var(--cn-comp-dialog-backdrop)',
 
           // Remove
           solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
           softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           hover: 'var(--cn-state-hover)',
           selected: 'lch(from var(--cn-state-selected) l c h / <alpha-value>)',
-          backdrop: 'lch(from var(--cn-comp-dialog-backdrop) l c h / <alpha-value>)',
           primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',

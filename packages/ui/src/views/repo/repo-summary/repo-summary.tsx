@@ -181,7 +181,7 @@ export function RepoSummaryView({
               </ListActions.Left>
               <ListActions.Right>
                 <ButtonGroup className="gap-2.5">
-                  <Button variant="outline">
+                  <Button variant="surface" theme="muted">
                     <Link
                       className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
                       to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}

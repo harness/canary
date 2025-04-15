@@ -106,15 +106,7 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
               size="md"
               error={errors.password?.message?.toString()}
             />
-            <Button
-              className="mt-10 w-full"
-              variant="default"
-              borderRadius="full"
-              type="submit"
-              size="md"
-              loading={isLoading}
-              disabled={hasError}
-            >
+            <Button className="mt-10 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
           </form>

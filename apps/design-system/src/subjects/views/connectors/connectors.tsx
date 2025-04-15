@@ -53,7 +53,6 @@ const ConnectorsListPageContent = (): JSX.Element => {
           <ListActions.Root>
             <ListActions.Right>
               <Button
-                variant="default"
                 onClick={() => {
                   setIsConnectorDrawerOpen(true)
                   setIntent(EntityIntent.CREATE)
@@ -62,7 +61,6 @@ const ConnectorsListPageContent = (): JSX.Element => {
                 Create Connector
               </Button>
               <Button
-                variant="default"
                 onClick={() => {
                   setConnectorEntity({
                     type: 'AwsKms',
@@ -80,9 +78,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
               >
                 Edit Connector
               </Button>
-              <Button variant="default" onClick={() => setTestConnectionOpen(true)}>
-                Test Connection
-              </Button>
+              <Button onClick={() => setTestConnectionOpen(true)}>Test Connection</Button>
             </ListActions.Right>
           </ListActions.Root>
           <Spacer size={5} />

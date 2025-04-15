@@ -322,13 +322,12 @@ export default {
         tight: 'var(--cn-tracking-tight)'
       },
       boxShadow: {
-        1: '0px 8px 16px var(--cn-shadow-color-1)',
-        2: '0px 8px 8px var(--cn-shadow-color-2)',
-        'pagination-1': '0px 2px 4px var(--cn-shadow-color-2)',
-        'as-border': 'inset 0 0 0 1px',
+        1: 'var(--cn-shadow-4)',
+        2: 'var(--cn-shadow-2)',
+        'pagination-1': 'var(--cn-shadow-1)',
         'commit-list-bullet':
           '0px 0px 3px 0.5px hsla(var(--cn-set-brand-solid-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-solid-bg) / 0.3)',
-        auth: '0px 0px 20px var(--cn-shadow-color-2)'
+        auth: 'var(--cn-shadow-3)'
       },
       borderColor: {
         DEFAULT: 'var(--cn-border-3)',

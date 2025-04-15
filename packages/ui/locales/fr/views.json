@@ -167,11 +167,20 @@
     "repoTagDescriptionPlaceholder": "Enter a description of this tag...",
     "creatingTagButton": "Creating tag...",
     "createTagButton": "Create tag",
-    "tag": "Tag",
-    "commit": "Commit",
+    "createTagDialog": {
+      "validation": {
+        "name": "Tag name is required",
+        "noSpaces": "Name cannot contain spaces",
+        "target": "Base branch is required"
+      }
+    },
     "createBranch": "Create branch",
     "viewFiles": "View Files",
     "deleteTag": "Delete tag",
+    "tag": "Tag",
+    "commit": "Commit",
+    "tagger": "Tagger",
+    "creationDate": "Creation date",
     "newTag": "New tag",
     "enableWebhookToggle": "Activer le webhook",
     "toggleDescription": "Nous enverrons les détails lorsque ce webhook sera déclenché",
@@ -194,7 +203,6 @@
     "branchCreated": "Branche créée",
     "branchCreatedDescription": "La branche {{name}} a été créée avec succès",
     "status": "Statut",
-    "tagger": "Tagger",
     "renameBranch": "Renommer la branche",
     "add": "Ajouter",
     "users": "Utilisateurs",
@@ -238,6 +246,7 @@
     "noReposProject": "Il n'y a pas encore de dépôts dans ce projet.",
     "createOrImportRepos": "Créer un nouveau dépôt ou importer un dépôt existant.",
     "noTags": "There are no tags in this project yet.",
+    "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
     "createNewTag": "Create a new Tag.",
     "noWebhookExecution": "No webhook executions yet",
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
@@ -524,8 +533,9 @@
     "selectMember": "",
     "selectRole": "",
     "enterBranchName": "Entrez le nom de la branche",
-    "basedOn": "Basé sur",
-    "enterTagName": "Entrez le nom de l'étiquette",
+    "basedOn": "Based on",
+    "tagName": "Name",
+    "enterTagName": "Enter tag name",
     "createBranchError": "Le nom de la branche est requis",
     "select": "Sélectionner",
     "baseBranch": "Branche de base",
@@ -559,6 +569,11 @@
   "rules": {
     "edit": "Edit rule",
     "delete": "Delete rule"
+  },
+  "createTagDialog": {
+    "validation": {
+      "message": "Description is required"
+    }
   },
   "webhookData": {
     "branchCreated": "Branche créée",

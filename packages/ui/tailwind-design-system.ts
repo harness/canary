@@ -329,6 +329,24 @@ export default {
           '0px 0px 3px 0.5px hsla(var(--cn-set-brand-solid-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-solid-bg) / 0.3)',
         auth: 'var(--cn-shadow-3)'
       },
+      borderColor: {
+        DEFAULT: 'var(--cn-border-3)',
+        'borders-1': 'hsl(var(--cn-border-2))',
+        'borders-2': 'hsl(var(--cn-border-2))',
+        'borders-3': 'hsl(var(--cn-border-1))',
+        'borders-4': 'hsl(var(--cn-state-disabled-border))',
+        'borders-5': 'hsl(var(--cn-border-2))',
+        'borders-6': 'hsl(var(--cn-border-1))',
+        'borders-7': 'hsl(var(--cn-border-1))',
+        'borders-8': 'hsl(var(--cn-border-2))',
+        'borders-9': 'hsl(var(--cn-border-1))',
+        'borders-10': 'hsl(var(--cn-border-2))',
+        'borders-danger': 'hsl(var(--cn-border-danger))',
+        'borders-success': 'hsl(var(--cn-border-success))',
+        'borders-accent': 'hsl(var(--cn-border-accent))',
+        'borders-warning': 'hsl(var(--cn-border-warning))',
+        'borders-alert': 'hsl(var(--cn-border-warning))'
+      },
       borderRadius: {
         10: 'var(--cn-rounded-4)'
       },

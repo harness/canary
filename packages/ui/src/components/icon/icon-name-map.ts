@@ -136,7 +136,8 @@ import NoDataPRLight from '../../icons/lists-data-icons/no-data-pr-light.svg'
 import NoDataPR from '../../icons/lists-data-icons/no-data-pr.svg'
 import NoRepositoryLight from '../../icons/lists-data-icons/no-data-repository-light.svg'
 import NoRepository from '../../icons/lists-data-icons/no-data-repository.svg'
-import noDataTags from '../../icons/lists-data-icons/no-data-tags.svg'
+import NoDataTagsLight from '../../icons/lists-data-icons/no-data-tags-light.svg'
+import NoDataTags from '../../icons/lists-data-icons/no-data-tags.svg'
 import NoDataWebhooksLight from '../../icons/lists-data-icons/no-data-webhooks-light.svg'
 import NoDataWebhooks from '../../icons/lists-data-icons/no-data-webhooks.svg'
 import NoSearchMagnifyingGlassLight from '../../icons/lists-data-icons/no-search-magnifying-glass-light.svg'
@@ -285,7 +286,8 @@ export const IconNameMap = {
   'no-data-error-light': NoDataErrorLight,
   'no-data-pr': NoDataPR,
   'no-data-pr-light': NoDataPRLight,
-  'no-data-tags': noDataTags,
+  'no-data-tags': NoDataTags,
+  'no-data-tags-light': NoDataTagsLight,
   changes: Changes,
   checks: Checks,
   'vertical-ellipsis': VerticalEllipsis,

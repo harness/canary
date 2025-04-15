@@ -173,11 +173,26 @@
     "repoTagDescriptionPlaceholder": "Enter tag description here",
     "creatingTagButton": "Creating tag...",
     "createTagButton": "Create tag",
-    "tag": "Tag",
-    "commit": "Commit",
+    "createTagDialog": {
+      "validation": {
+        "name": "Tag name is required",
+        "noSpaces": "Name cannot contain spaces",
+        "target": "Base branch is required",
+        "nameMax": "Name must be no longer than 40 characters",
+        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
+        "message": "Description is required"
+      },
+      "name": "Name",
+      "target": "Target",
+      "message": "Message"
+    },
     "createBranch": "Create branch",
     "viewFiles": "View Files",
     "deleteTag": "Delete tag",
+    "tag": "Tag",
+    "commit": "Commit",
+    "tagger": "Tagger",
+    "creationDate": "Creation date",
     "newTag": "New tag",
     "enableWebhookToggle": "Enable the webhook",
     "toggleDescription": "We will deliver event details when this hook is triggered",
@@ -200,21 +215,6 @@
     "deleteConnector": "Delete Connector",
     "deleteSecret": "Delete Secret",
     "status": "Status",
-    "tagger": "Tagger",
-    "creationDate": "Creation date",
-    "createTagDialog": {
-      "validation": {
-        "name": "Tag name is required",
-        "nameMax": "Name must be no longer than 40 characters",
-        "nameRegex": "Name must contain only letters, numbers, and the characters: - _ .",
-        "noSpaces": "Name cannot contain spaces",
-        "target": "Base branch is required",
-        "message": "Description is required"
-      },
-      "name": "Name",
-      "target": "Target",
-      "message": "Message"
-    },
     "branchCreated": "Branch created",
     "branchCreatedDescription": "Branch {{name}} created successfully",
     "renameBranch": "Rename Branch",
@@ -263,6 +263,7 @@
     "noReposProject": "There are no repositories in this project yet.",
     "createOrImportRepos": "Create new or import an existing repository.",
     "noTags": "No tags yet",
+    "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
     "createNewTag": "Create new tag",
     "noWebhookExecution": "No webhook executions yet",
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
@@ -274,7 +275,6 @@
     "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
     "noConnectorsProject": "There are no connectors in this project yet.",
     "noSecretsProject": "There are no secrets in this project yet.",
-    "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
     "commit": "Commit",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
@@ -567,9 +567,9 @@
     "selectRole": "Select role",
     "enterBranchName": "Enter branch name",
     "basedOn": "Based on",
+    "tagName": "Name",
     "enterTagName": "Enter a tag name here",
     "createBranchError": "Branch name is required",
-    "tagName": "Name",
     "select": "Select",
     "baseBranch": "Base branch",
     "selectBranchError": "Base branch is required",
@@ -604,6 +604,11 @@
     "delete": "Delete rule",
     "exclude": "Exclude",
     "include": "Include"
+  },
+  "createTagDialog": {
+    "validation": {
+      "message": "Description is required"
+    }
   },
   "webhookData": {
     "branchCreated": "Branch created",

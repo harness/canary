@@ -319,7 +319,7 @@ export default {
         }
       },
       letterSpacing: {
-        tight: '-0.02em'
+        tight: 'var(--cn-tracking-tight)'
       },
       boxShadow: {
         1: '0px 8px 16px var(--cn-shadow-color-1)',

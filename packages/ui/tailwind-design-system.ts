@@ -430,10 +430,10 @@ export default {
       addUtilities({
         '.tabnav-active': {
           boxShadow:
-            'inset 0 1px 0 0 hsl(var(--canary-border-background)), inset 1px 0 0 0 hsl(var(--canary-border-background)), inset -1px 0 0 0 hsl(var(--canary-border-background))'
+            'inset 0 1px 0 0 var(--cn-border-3), inset 1px 0 0 0 var(--cn-border-3), inset -1px 0 0 0 var(--cn-border-3)'
         },
         '.tabnav-inactive': {
-          boxShadow: 'inset 0 -1px 0 0 hsl(var(--canary-border-background))'
+          boxShadow: 'inset 0 -1px 0 0 var(--cn-border-3)'
         }
       })
     },

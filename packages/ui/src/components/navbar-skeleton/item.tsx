@@ -17,7 +17,7 @@ export interface ItemProps {
 
 export const Item = forwardRef<HTMLDivElement, ItemProps>(
   ({ icon, text, description, active, submenuItem = false, className, isMainNav, ...props }, ref) => {
-    const { isInset, isLightTheme } = useTheme()
+    const { isLightTheme } = useTheme()
 
     if (submenuItem) {
       return (
@@ -105,7 +105,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
         <div
           className={cn(
             'absolute z-0 h-full w-full rounded-[4px] bg-transparent transition-colors',
-            { 'group-hover:bg-sidebar-background-2': isMainNav && (isLightTheme || isInset) },
+            { 'group-hover:bg-sidebar-background-2': isMainNav && isLightTheme },
             { 'bg-cn-background-hover': active },
             { 'bg-sidebar-background-3': active && isMainNav }
           )}
@@ -120,7 +120,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
             )}
           >
             {active && (
-              <span className="absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2 bg-navbar-item-gradient" />
+              <span className="bg-navbar-item-gradient absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2" />
             )}
             {icon}
           </div>

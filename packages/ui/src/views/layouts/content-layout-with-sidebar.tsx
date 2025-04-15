@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 
 import { NavbarSkeleton, ScrollArea } from '@/components'
-import { INSET_THEME_PADDING, useRouterContext, useTheme } from '@/context'
+import { INSET_LAYOUT_INDENT, useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
 const BREADCRUMBS_HEIGHT = 55
@@ -36,7 +36,6 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   sidebarViewportClassName
 }) => {
   const { NavLink } = useRouterContext()
-  const { isInset } = useTheme()
 
   return (
     <div className="relative mx-auto flex w-full max-w-[1088px] items-start gap-x-20 pr-4">
@@ -44,7 +43,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
         className="sticky w-[220px]"
         style={{
           top: `${sidebarOffsetTop}px`,
-          height: `calc(100svh - ${sidebarOffsetTop + BREADCRUMBS_HEIGHT}px - ${isInset ? INSET_THEME_PADDING : 0}px)`
+          height: `calc(100svh - ${sidebarOffsetTop + BREADCRUMBS_HEIGHT}px - ${INSET_LAYOUT_INDENT}px)`
         }}
       >
         <ScrollArea className="h-full" viewportClassName={cn('pb-11 !px-4', sidebarViewportClassName)}>

@@ -12,9 +12,7 @@ export const useThemeStore = create<IThemeStore>()(
   persist(
     set => ({
       theme: undefined,
-      isInset: false,
       setTheme: (newTheme: FullTheme) => set({ theme: newTheme }),
-      setInset: (isInset: boolean) => set({ isInset }),
       isLightTheme: false
     }),
     {
@@ -28,7 +26,7 @@ interface ThemeProviderProps {
   defaultTheme: FullTheme
 }
 export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
-  const { theme, setTheme, setInset, isLightTheme, isInset } = useThemeStore()
+  const { theme, setTheme, isLightTheme } = useThemeStore()
   const isMFE = useIsMFE()
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -61,10 +59,6 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
 
     if (!isMFE) {
       root.classList.add(effectiveTheme) // Apply the computed theme class
-
-      if (isInset) {
-        root.classList.add('inset-layout')
-      }
     } else {
       root.classList.add(mode)
     }
@@ -77,7 +71,7 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     if (!colorSchemeMeta.parentNode) {
       document.head.appendChild(colorSchemeMeta)
     }
-  }, [theme, setTheme, systemMode, isInset])
+  }, [theme, setTheme, systemMode])
 
-  return <UIThemeProvider {...{ theme, setTheme, setInset, isLightTheme, isInset }}>{children}</UIThemeProvider>
+  return <UIThemeProvider {...{ theme, setTheme, isLightTheme }}>{children}</UIThemeProvider>
 }

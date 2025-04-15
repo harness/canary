@@ -42,10 +42,9 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   repoId,
   updateTitle
 }) => {
-  const { Outlet, navigate } = useRouterContext()
+  const { Outlet } = useRouterContext()
   const { pullRequest } = usePullRequestStore()
   const { t } = useTranslationStore()
-  const { isInset } = useTheme()
 
   const getTabProps = useCallback(
     (tab: PullRequestTabsKeys): TabsTriggerProps => ({
@@ -66,8 +65,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
         <Tabs.Root variant="tabnav" className="mb-7" defaultValue={PullRequestTabsKeys.CONVERSATION}>
           <Tabs.List
             className={cn(
-              'before:w-[calc(100vw-var(--cn-sidebar-width))] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2 before:bg-background-9',
-              { 'before:w-[calc(100vw-var(--cn-sidebar-width)-var(--cn-inset-layout-indent)*2)]': isInset }
+              'before:w-[calc(100vw-var(--cn-sidebar-width)-var(--cn-inset-layout-indent)*2)] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2 before:bg-background-9'
             )}
           >
             <Tabs.Trigger {...getTabProps(PullRequestTabsKeys.CONVERSATION)} asChild>

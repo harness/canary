@@ -1,7 +1,7 @@
 import { UIMatch } from 'react-router-dom'
 
 import { Breadcrumb, Separator, Sidebar, Topbar } from '@harnessio/ui/components'
-import { useRouterContext, useTheme } from '@harnessio/ui/context'
+import { useRouterContext } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
 
 import { CustomHandle } from '../../framework/routing/types'
@@ -14,17 +14,11 @@ export interface BreadcrumbsProps {
 
 export const Breadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMobile = false }: BreadcrumbsProps) => {
   const { Link } = useRouterContext()
-  const { isInset } = useTheme()
 
   if (!breadcrumbs.length) return null
 
   return (
-    <Topbar.Root
-      className={cn('bg-cn-background-1 sticky top-0 z-20', {
-        'bg-sidebar-background-1': isInset,
-        'pl-0': isInset && !isMobile
-      })}
-    >
+    <Topbar.Root className={cn('bg-sidebar-background-1 sticky top-0 z-20', { 'pl-0': !isMobile })}>
       <Topbar.Left>
         {withMobileSidebarToggle && isMobile && (
           <>

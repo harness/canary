@@ -17,7 +17,7 @@ import {
   User,
   useSidebar
 } from '@/components'
-import { ContentStyleType, useRouterContext, useTheme } from '@/context'
+import { useRouterContext, useTheme } from '@/context'
 import { TypesUser } from '@/types'
 import { TranslationStore } from '@/views'
 
@@ -53,7 +53,7 @@ export const SidebarView = ({
   showNewSearch
 }: SidebarProps) => {
   const { t, i18n, changeLanguage } = useTranslationStore()
-  const { theme, setTheme, setInset, isInset } = useTheme()
+  const { theme, setTheme } = useTheme()
   const { navigate } = useRouterContext()
   const { collapsed, toggleSidebar } = useSidebar()
 
@@ -78,8 +78,6 @@ export const SidebarView = ({
     handleMoreMenu(false)
     handleSettingsMenu(false)
   }
-
-  const onInsetChange = (style: ContentStyleType) => setInset(style === ContentStyleType.Inset)
 
   return (
     <>
@@ -212,11 +210,9 @@ export const SidebarView = ({
       </Sidebar.Root>
       <ThemeDialog
         theme={theme}
-        isInset={isInset}
         setTheme={setTheme}
         open={openThemeDialog}
         onOpenChange={() => setOpenThemeDialog(false)}
-        onInsetChange={onInsetChange}
       />
       <LanguageDialog
         supportedLanguages={languages}

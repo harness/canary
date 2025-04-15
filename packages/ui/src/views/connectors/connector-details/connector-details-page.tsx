@@ -31,7 +31,6 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
   searchQuery
 }) => {
   const { t } = useTranslationStore()
-  const { isInset } = useTheme()
   const [activeTab, setActiveTab] = useState<ConnectorDetailsTabsKeys>(ConnectorDetailsTabsKeys.CONFIGURATION)
 
   const handleTabChange = (tab: string) => {
@@ -56,26 +55,23 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
         >
           <Tabs.List
             className={cn(
-              'before:w-[calc(100vw-var(--sidebar-width))] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2',
-              {
-                'before:w-[calc(100vw-var(--sidebar-width)-6px*2)]': isInset
-              }
+              'before:w-[calc(100vw-var(--sidebar-width)-6px*2)] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2'
             )}
           >
             <Tabs.Trigger
-              className="px-4 data-[state=active]:bg-cn-background-2"
+              className="data-[state=active]:bg-cn-background-2 px-4"
               value={ConnectorDetailsTabsKeys.CONFIGURATION}
             >
               {t('views:connectors.configuration', 'Configuration')}
             </Tabs.Trigger>
             <Tabs.Trigger
-              className="px-4 data-[state=active]:bg-cn-background-2"
+              className="data-[state=active]:bg-cn-background-2 px-4"
               value={ConnectorDetailsTabsKeys.REFERENCES}
             >
               {t('views:connectors.references', 'References')}
             </Tabs.Trigger>
             <Tabs.Trigger
-              className="px-4 data-[state=active]:bg-cn-background-2"
+              className="data-[state=active]:bg-cn-background-2 px-4"
               value={ConnectorDetailsTabsKeys.ACTIVITY}
             >
               {t('views:connectors.activityHistory', 'Activity history')}

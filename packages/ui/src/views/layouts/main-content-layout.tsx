@@ -1,7 +1,6 @@
 import { PropsWithChildren } from 'react'
 
 import { SidebarContext } from '@/components'
-import { useTheme } from '@/context'
 import { cn } from '@/utils'
 
 /**
@@ -25,40 +24,35 @@ type MainContentLayoutProps = PropsWithChildren<{
   className?: string
 }>
 
-export function MainContentLayout({ children, useSidebar, withBreadcrumbs, className }: MainContentLayoutProps) {
-  const { isInset } = useTheme()
+export function MainContentLayout({ children, useSidebar, className, withBreadcrumbs }: MainContentLayoutProps) {
   const sidebarData = useSidebar?.()
   const isMobile = sidebarData?.isMobile
 
   return (
     <div
       className={cn(
-        'min-h-screen bg-cn-background-1',
+        'flex flex-col min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] my-[var(--cn-inset-layout-indent)] mr-[var(--cn-inset-layout-indent)] border rounded-md min-w-fit bg-cn-background-1',
         {
           'ml-[var(--cn-inset-layout-indent)]': isMobile,
           'min-h-[calc(100vh-var(--cn-breadcrumbs-height))]': withBreadcrumbs,
-          'min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] my-[var(--cn-inset-layout-indent)] mr-[var(--cn-inset-layout-indent)] border rounded-md min-w-fit':
-            isInset,
           'min-h-[calc(100vh-var(--cn-breadcrumbs-height)-var(--cn-inset-layout-indent))] mb-[var(--cn-inset-layout-indent)] mt-0':
-            isInset && withBreadcrumbs
+            withBreadcrumbs
         },
         className
       )}
     >
-      {isInset && (
-        <div
-          aria-hidden
-          role="presentation"
-          className={cn(
-            'sticky w-[calc(100%+2px)] flex justify-between left-0 right-0 top-0 -mx-px -mt-px -mb-[var(--cn-inset-layout-indent)] z-20',
-            { 'top-[var(--cn-breadcrumbs-height)]': withBreadcrumbs }
-          )}
-        >
-          <HalfArch className="left-0" />
-          <div className="w-full border-t" />
-          <HalfArch className="right-0" />
-        </div>
-      )}
+      <div
+        aria-hidden
+        role="presentation"
+        className={cn(
+          'sticky w-[calc(100%+2px)] flex justify-between left-0 right-0 top-0 -mx-px -mt-px -mb-[var(--cn-inset-layout-indent)] z-20',
+          { 'top-[var(--cn-breadcrumbs-height)]': withBreadcrumbs }
+        )}
+      >
+        <HalfArch className="left-0" />
+        <div className="w-full border-t" />
+        <HalfArch className="right-0" />
+      </div>
       {children}
     </div>
   )

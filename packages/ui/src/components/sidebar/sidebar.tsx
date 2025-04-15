@@ -14,7 +14,6 @@ import {
 } from 'react'
 
 import { Button, Icon, Input, ScrollArea, Sheet, Tooltip } from '@/components'
-import { useTheme } from '@/context/theme'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -25,8 +24,7 @@ import { useIsMobile } from './use-is-mobile'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-const SIDEBAR_WIDTH = '220px'
-const SIDEBAR_WIDTH_INSET = '228px'
+const SIDEBAR_WIDTH = '228px'
 const SIDEBAR_COLLAPSED_WIDTH = '62px'
 const SIDEBAR_WIDTH_MOBILE = '18rem'
 const SIDEBAR_WIDTH_ICON = '3rem'
@@ -118,8 +116,6 @@ const SidebarProvider = forwardRef<
     [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
   )
 
-  const { isInset } = useTheme()
-
   useEffect(() => {
     if (isMobile) return
 
@@ -129,18 +125,14 @@ const SidebarProvider = forwardRef<
       document.body.style.setProperty('--cn-sidebar-width', SIDEBAR_COLLAPSED_WIDTH)
     }
 
-    if (isInset && open) {
-      document.body.style.setProperty('--cn-sidebar-width', SIDEBAR_WIDTH_INSET)
-    }
-
-    if (!isInset && open) {
+    if (open) {
       document.body.style.setProperty('--cn-sidebar-width', SIDEBAR_WIDTH)
     }
 
     return () => {
       document.body.style.removeProperty('--cn-sidebar-width')
     }
-  }, [isInset, open, isMobile])
+  }, [open, isMobile])
 
   return (
     <SidebarContext.Provider value={contextValue}>
@@ -170,7 +162,6 @@ const SidebarRoot = forwardRef<
   }
 >(({ side = 'left', variant = 'sidebar', collapsible = 'offcanvas', className, children, ...props }, ref) => {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
-  const { isLightTheme, isInset } = useTheme()
 
   if (collapsible === 'none') {
     return (
@@ -219,7 +210,6 @@ const SidebarRoot = forwardRef<
           variant === 'floating' || variant === 'inset'
             ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--cn-sidebar-width-icon)_+_theme(spacing.4)_+2px)]'
             : 'group-data-[collapsible=icon]:w-[--cn-sidebar-width-icon]',
-          { 'group-data-[side=left]:border-r group-data-[side=right]:border-l': !isInset && !isLightTheme },
           className
         )}
         {...props}
@@ -292,7 +282,7 @@ const SidebarInset = forwardRef<HTMLDivElement, ComponentProps<'main'>>(({ class
     <main
       ref={ref}
       className={cn(
-        'relative min-h-screen main-page-content-background w-full',
+        'relative min-h-screen bg-sidebar-background-1 w-full',
         'peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow transition-[max-width] ease-linear duration-200',
         className
       )}

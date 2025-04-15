@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 
 import { Dialog, getModeColorContrastFromFullTheme, Icon, Select, Separator } from '@/components'
-import { ColorType, ContentStyleType, ContrastType, ModeType } from '@/context/theme'
+import { ColorType, ContrastType, ModeType } from '@/context/theme'
 import darkModeImage from '@/svgs/theme-dark.png'
 import lightModeImage from '@/svgs/theme-light.png'
 import { cn } from '@/utils/cn'
@@ -10,11 +10,9 @@ import { AccentColor, GrayColor, ThemeDialogProps } from './types'
 
 const ThemeDialog: FC<ThemeDialogProps> = ({
   theme,
-  isInset,
   setTheme,
   open,
   onOpenChange,
-  onInsetChange,
   children,
   showSystemMode,
   showAccentColor,
@@ -54,8 +52,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
         {/* Mode */}
         <div className="mt-1 flex flex-col gap-y-5">
           <div className="flex flex-col">
-            <span className="text-16 font-medium text-cn-foreground-1">Mode</span>
-            <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
+            <span className="text-16 text-cn-foreground-1 font-medium">Mode</span>
+            <p className="text-14 text-cn-foreground-3 mt-1.5 leading-snug">
               Choose Dark mode for low light or Light mode for bright spaces.
             </p>
             <div className="mt-[18px] grid grid-cols-2 gap-4">
@@ -81,7 +79,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                       />
                       {mode === value && (
                         <Icon
-                          className="absolute bottom-2 left-2 text-cn-foreground-1"
+                          className="text-cn-foreground-1 absolute bottom-2 left-2"
                           name="checkbox-circle"
                           size={16}
                         />
@@ -99,7 +97,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         aria-hidden
                       />
                     </div>
-                    <span className="text-14 leading-tight text-cn-foreground-1">{key}</span>
+                    <span className="text-14 text-cn-foreground-1 leading-tight">{key}</span>
                   </button>
                 )
               })}
@@ -112,8 +110,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               {/* Contrast */}
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
                 <div>
-                  <span className="text-16 font-medium text-cn-foreground-1">Contrast</span>
-                  <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
+                  <span className="text-16 text-cn-foreground-1 font-medium">Contrast</span>
+                  <p className="text-14 text-cn-foreground-3 mt-1.5 leading-snug">
                     High contrast improves readability, Dimmer mode reduces glare.
                   </p>
                 </div>
@@ -140,8 +138,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               {/* Color Adjustment */}
               <div className="grid grid-cols-[246px_1fr] gap-x-8">
                 <div>
-                  <span className="text-16 font-medium text-cn-foreground-1">Color adjustment</span>
-                  <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
+                  <span className="text-16 text-cn-foreground-1 font-medium">Color adjustment</span>
+                  <p className="text-14 text-cn-foreground-3 mt-1.5 leading-snug">
                     Adjust colors for different types of color blindness.
                   </p>
                 </div>
@@ -165,38 +163,14 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
 
               <Separator className="bg-cn-background-2 h-px" />
 
-              {/* Inset Adjustment */}
-              <div className="grid grid-cols-[246px_1fr] gap-x-8">
-                <div>
-                  <span className="text-16 font-medium text-cn-foreground-1">Content style</span>
-                  <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
-                    Choose the style of the content area.
-                  </p>
-                </div>
-                <Select.Root
-                  name="color-adjustment"
-                  value={isInset ? ContentStyleType.Inset : ContentStyleType.Default}
-                  onValueChange={onInsetChange}
-                  placeholder="Select"
-                >
-                  <Select.Content>
-                    {Object.values(ContentStyleType).map(value => (
-                      <Select.Item key={value} value={value}>
-                        {value === ContentStyleType.Inset ? 'Inset' : 'Default'}
-                      </Select.Item>
-                    ))}
-                  </Select.Content>
-                </Select.Root>
-              </div>
-
               {/* Accent Color */}
               {showAccentColor ? (
                 <>
                   <Separator className="bg-cn-background-2 h-px" />
                   <div className="grid grid-cols-[246px_1fr] gap-x-8">
                     <div>
-                      <span className="text-16 font-medium text-cn-foreground-1">Accent color</span>
-                      <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
+                      <span className="text-16 text-cn-foreground-1 font-medium">Accent color</span>
+                      <p className="text-14 text-cn-foreground-3 mt-1.5 leading-snug">
                         Select your application accent color.
                       </p>
                     </div>
@@ -232,8 +206,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                   <Separator className="bg-cn-background-2 h-px" />
                   <div className="grid grid-cols-[246px_1fr] gap-x-8">
                     <div>
-                      <span className="text-16 font-medium text-cn-foreground-1">Gray color</span>
-                      <p className="mt-1.5 text-14 leading-snug text-cn-foreground-3">
+                      <span className="text-16 text-cn-foreground-1 font-medium">Gray color</span>
+                      <p className="text-14 text-cn-foreground-3 mt-1.5 leading-snug">
                         Select your application gray color.
                       </p>
                     </div>

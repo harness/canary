@@ -618,12 +618,12 @@
     --canary-sidebar-icon-03: 240 4% 40%; /* menu item icon */
 
     /* Topbar */
-    --canary-topbar-background-01: var(--canary-base-chrome-150);
+    --canary-topbar-background-01: var(--canary-pure-white);
     --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
-    --canary-topbar-foreground-02: var(--canary-base-chrome-800);
+    --canary-topbar-foreground-02: 240 5% 15%;
     --canary-topbar-foreground-03: 240 4% 40%;
-    --canary-topbar-foreground-04: 240 4% 40%;
-    --canary-topbar-icon-01: var(--canary-base-chrome-600);
+    --canary-topbar-foreground-04: 240 5% 25%;
+    --canary-topbar-icon-01: 240 4% 40%;
 
     /* Tags */
     /* --gray */
@@ -774,15 +774,6 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
-    &.inset-layout {
-      /* Topbar */
-      --canary-topbar-background-01: var(--canary-pure-white);
-      --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
-      --canary-topbar-foreground-02: 240 5% 15%;
-      --canary-topbar-foreground-03: 240 4% 40%;
-      --canary-topbar-foreground-04: 240 5% 25%;
-      --canary-topbar-icon-01: 240 4% 40%;
-    }
   }
 
   .light-std-std {
@@ -952,7 +943,7 @@
     --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
     --canary-topbar-foreground-02: 240 5% 15%;
     --canary-topbar-foreground-03: 240 4% 40%;
-    --canary-topbar-foreground-04: 240 4% 40%;
+    --canary-topbar-foreground-04: 240 5% 25%;
     --canary-topbar-icon-01: 240 4% 40%;
 
     /* Tags */
@@ -1103,15 +1094,6 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
-    &.inset-layout {
-      /* Topbar */
-      --canary-topbar-background-01: var(--canary-pure-white);
-      --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
-      --canary-topbar-foreground-02: 240 5% 15%;
-      --canary-topbar-foreground-03: 240 4% 40%;
-      --canary-topbar-foreground-04: 240 5% 25%;
-      --canary-topbar-icon-01: 240 4% 40%;
-    }
   }
 
   .light-std-high {
@@ -1281,7 +1263,7 @@
     --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
     --canary-topbar-foreground-02: 240 5% 15%;
     --canary-topbar-foreground-03: 240 4% 40%;
-    --canary-topbar-foreground-04: 240 4% 40%;
+    --canary-topbar-foreground-04: 240 5% 25%;
     --canary-topbar-icon-01: 240 4% 40%;
 
     /* Tags */
@@ -1432,15 +1414,6 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
-    &.inset-layout {
-      /* Topbar */
-      --canary-topbar-background-01: var(--canary-pure-white);
-      --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
-      --canary-topbar-foreground-02: 240 5% 15%;
-      --canary-topbar-foreground-03: 240 4% 40%;
-      --canary-topbar-foreground-04: 240 5% 25%;
-      --canary-topbar-icon-01: 240 4% 40%;
-    }
   }
 
   .light-prot-std {
@@ -1610,7 +1583,7 @@
     --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
     --canary-topbar-foreground-02: 240 5% 15%;
     --canary-topbar-foreground-03: 240 4% 40%;
-    --canary-topbar-foreground-04: 240 4% 40%;
+    --canary-topbar-foreground-04: 240 5% 25%;
     --canary-topbar-icon-01: 240 4% 40%;
 
     /* Tags */
@@ -1761,15 +1734,6 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
-    &.inset-layout {
-      /* Topbar */
-      --canary-topbar-background-01: var(--canary-pure-white);
-      --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
-      --canary-topbar-foreground-02: 240 5% 15%;
-      --canary-topbar-foreground-03: 240 4% 40%;
-      --canary-topbar-foreground-04: 240 5% 25%;
-      --canary-topbar-icon-01: 240 4% 40%;
-    }
   }
 
   .dark,
@@ -1909,39 +1873,39 @@
     --canary-sub-menu-icon-02: 0 0% 61%;
 
     /* Sidebar */
-    --canary-sidebar-background-01: var(--canary-black);
-    --canary-sidebar-background-02: hsla(var(--canary-grey-50) / 0.1);
-    --canary-sidebar-background-03: hsla(var(--canary-grey-50) / 0);
-    --canary-sidebar-background-04: var(--canary-grey-6);
-    --canary-sidebar-background-05: var(--canary-grey-40);
-    --canary-sidebar-background-06: hsla(var(--canary-black) / 0.7);
-    --canary-sidebar-background-07: var(--canary-grey-8);
-    --canary-sidebar-background-08: var(--canary-grey-15);
-    --canary-sidebar-background-09: var(--canary-grey-10);
-    --canary-sidebar-border-01: var(--canary-grey-10);
-    --canary-sidebar-border-02: var(--canary-grey-20);
-    --canary-sidebar-border-03: var(--canary-grey-15);
-    --canary-sidebar-border-04: var(--canary-grey-70);
-    --canary-sidebar-border-05: var(--canary-grey-20);
+    --canary-sidebar-background-01: 240 6% 10%; /* main background */
+    --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
+    --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
+    --canary-sidebar-background-04: 240 7% 8%; /* menu background */
+    --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
+    --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
+    --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
+    --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
+    --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
+    --canary-sidebar-border-01: 240 6% 20%; /* menu items divider */
+    --canary-sidebar-border-02: 240 6% 20%; /* search border */
+    --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
+    --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
+    --canary-sidebar-border-05: 240 6% 20%;
     --canary-sidebar-border-06: var(--canary-grey-15);
-    --canary-sidebar-foreground-01: var(--canary-white);
-    --canary-sidebar-foreground-02: var(--canary-grey-70);
-    --canary-sidebar-foreground-03: var(--canary-grey-80);
-    --canary-sidebar-foreground-04: var(--canary-grey-60);
-    --canary-sidebar-foreground-05: var(--canary-grey-40);
-    --canary-sidebar-foreground-06: var(--canary-grey-90);
-    --canary-sidebar-foreground-accent: var(--canary-white);
-    --canary-sidebar-icon-01: var(--canary-white);
-    --canary-sidebar-icon-02: var(--canary-grey-70);
-    --canary-sidebar-icon-03: var(--canary-grey-50);
+    --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
+    --canary-sidebar-foreground-02: 240 6% 70%;
+    --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
+    --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
+    --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
+    --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
+    --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
+    --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
+    --canary-sidebar-icon-02: 240 6% 70%;
+    --canary-sidebar-icon-03: 240 6% 50%;
 
     /* Topbar */
     --canary-topbar-background-01: 240 6% 6%;
-    --canary-topbar-foreground-01: var(--canary-white);
+    --canary-topbar-foreground-01: 240 6% 90%;
     --canary-topbar-foreground-02: var(--canary-grey-80);
-    --canary-topbar-foreground-03: var(--canary-grey-60);
+    --canary-topbar-foreground-03: 240 6% 60%;
     --canary-topbar-foreground-04: var(--canary-grey-94);
-    --canary-topbar-icon-01: var(--canary-grey-60);
+    --canary-topbar-icon-01: 240 6% 60%;
 
     /* Tags */
     /* --canary-gray */
@@ -2073,42 +2037,6 @@
     --canary-logs-background-07: hsla(0 80% 60% / 0.1);
     --canary-logs-foreground-01: hsl(var(--canary-pure-white));
     --canary-logs-foreground-02: hsl(240, 6%, 60%);
-
-    &.inset-layout {
-      /* Sidebar */
-      --canary-sidebar-background-01: 240 6% 10%; /* main background */
-      --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
-      --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
-      --canary-sidebar-background-04: 240 7% 8%; /* menu background */
-      --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
-      --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
-      --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
-      --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
-      --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
-      --canary-sidebar-border-01: 240 6% 20%; /* menu items divider */
-      --canary-sidebar-border-02: 240 6% 20%; /* search border */
-      --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
-      --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
-      --canary-sidebar-border-05: 240 6% 20%;
-      --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
-      --canary-sidebar-foreground-02: 240 6% 70%;
-      --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
-      --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
-      --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
-      --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
-      --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
-      --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
-      --canary-sidebar-icon-02: 240 6% 70%;
-      --canary-sidebar-icon-03: 240 6% 50%;
-
-      /* Topbar */
-      --canary-topbar-background-01: 240 6% 6%;
-      --canary-topbar-foreground-01: 240 6% 90%;
-      --canary-topbar-foreground-02: var(--canary-grey-80);
-      --canary-topbar-foreground-03: 240 6% 60%;
-      --canary-topbar-foreground-04: var(--canary-grey-94);
-      --canary-topbar-icon-01: 240 6% 60%;
-    }
   }
 
   .dark-std-std {
@@ -2247,39 +2175,39 @@
     --canary-sub-menu-icon-02: 0 0% 61%;
 
     /* Sidebar */
-    --canary-sidebar-background-01: var(--canary-base-chrome-1000);
-    --canary-sidebar-background-02: hsla(var(--canary-base-chrome-850) / 0.5);
-    --canary-sidebar-background-03: hsla(var(--canary-base-chrome-850) / 0);
-    --canary-sidebar-background-04: var(--canary-base-chrome-1000);
-    --canary-sidebar-background-05: var(--canary-base-chrome-800);
-    --canary-sidebar-background-06: hsla(var(--canary-base-chrome-1000) / 0.7);
-    --canary-sidebar-background-07: var(--canary-base-chrome-950);
-    --canary-sidebar-background-08: var(--canary-base-chrome-850);
-    --canary-sidebar-background-09: var(--canary-base-chrome-900);
-    --canary-sidebar-border-01: var(--canary-base-chrome-850);
-    --canary-sidebar-border-02: var(--canary-base-chrome-850);
-    --canary-sidebar-border-03: var(--canary-base-chrome-850);
-    --canary-sidebar-border-04: var(--canary-base-chrome-400);
-    --canary-sidebar-border-05: var(--canary-base-chrome-850);
+    --canary-sidebar-background-01: 240 6% 10%; /* main background */
+    --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
+    --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
+    --canary-sidebar-background-04: 240 7% 8%; /* menu background */
+    --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
+    --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
+    --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
+    --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
+    --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
+    --canary-sidebar-border-01: 240 6% 15%; /* menu items divider */
+    --canary-sidebar-border-02: 240 6% 20%; /* search border */
+    --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
+    --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
+    --canary-sidebar-border-05: 240 6% 20%;
     --canary-sidebar-border-06: var(--canary-base-chrome-850);
-    --canary-sidebar-foreground-01: var(--canary-pure-white);
-    --canary-sidebar-foreground-02: var(--canary-base-chrome-400);
-    --canary-sidebar-foreground-03: var(--canary-base-chrome-200);
-    --canary-sidebar-foreground-04: var(--canary-base-chrome-500);
-    --canary-sidebar-foreground-05: var(--canary-base-chrome-500);
-    --canary-sidebar-foreground-06: var(--canary-base-chrome-200);
-    --canary-sidebar-foreground-accent: var(--canary-pure-white);
-    --canary-sidebar-icon-01: var(--canary-pure-white);
-    --canary-sidebar-icon-02: var(--canary-base-chrome-400);
-    --canary-sidebar-icon-03: var(--canary-base-chrome-500);
+    --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
+    --canary-sidebar-foreground-02: 240 6% 70%;
+    --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
+    --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
+    --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
+    --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
+    --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
+    --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
+    --canary-sidebar-icon-02: 240 6% 70%;
+    --canary-sidebar-icon-03: 240 6% 50%;
 
     /* Topbar */
     --canary-topbar-background-01: 240 6% 6%;
-    --canary-topbar-foreground-01: var(--canary-white);
-    --canary-topbar-foreground-02: var(--canary-base-chrome-200);
-    --canary-topbar-foreground-03: var(--canary-base-chrome-500);
-    --canary-topbar-foreground-04: var(--canary-pure-white);
-    --canary-topbar-icon-01: var(--canary-base-chrome-500);
+    --canary-topbar-foreground-01: 240 6% 90%;
+    --canary-topbar-foreground-02: var(--canary-grey-80);
+    --canary-topbar-foreground-03: 240 6% 60%;
+    --canary-topbar-foreground-04: var(--canary-grey-94);
+    --canary-topbar-icon-01: 240 6% 60%;
 
     /* Tags */
     /* --gray */
@@ -2430,42 +2358,6 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
-
-    &.inset-layout {
-      /* Sidebar */
-      --canary-sidebar-background-01: 240 6% 10%; /* main background */
-      --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
-      --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
-      --canary-sidebar-background-04: 240 7% 8%; /* menu background */
-      --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
-      --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
-      --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
-      --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
-      --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
-      --canary-sidebar-border-01: 240 6% 15%; /* menu items divider */
-      --canary-sidebar-border-02: 240 6% 20%; /* search border */
-      --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
-      --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
-      --canary-sidebar-border-05: 240 6% 20%;
-      --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
-      --canary-sidebar-foreground-02: 240 6% 70%;
-      --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
-      --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
-      --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
-      --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
-      --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
-      --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
-      --canary-sidebar-icon-02: 240 6% 70%;
-      --canary-sidebar-icon-03: 240 6% 50%;
-
-      /* Topbar */
-      --canary-topbar-background-01: 240 6% 6%;
-      --canary-topbar-foreground-01: 240 6% 90%;
-      --canary-topbar-foreground-02: var(--canary-grey-80);
-      --canary-topbar-foreground-03: 240 6% 60%;
-      --canary-topbar-foreground-04: var(--canary-grey-94);
-      --canary-topbar-icon-01: 240 6% 60%;
-    }
   }
 
   .dark-std-high {
@@ -2604,39 +2496,39 @@
     --canary-sub-menu-icon-02: 0 0% 61%;
 
     /* Sidebar */
-    --canary-sidebar-background-01: var(--canary-black);
-    --canary-sidebar-background-02: hsla(var(--canary-base-chrome-400) / 0.1);
-    --canary-sidebar-background-03: hsla(var(--canary-base-chrome-400) / 0);
-    --canary-sidebar-background-04: var(--canary-base-chrome-1000);
-    --canary-sidebar-background-05: var(--canary-base-chrome-800);
-    --canary-sidebar-background-06: hsla(var(--canary-black) / 0.7);
-    --canary-sidebar-background-07: var(--canary-base-chrome-950);
-    --canary-sidebar-background-08: var(--canary-base-chrome-850);
-    --canary-sidebar-background-09: var(--canary-base-chrome-900);
-    --canary-sidebar-border-01: var(--canary-base-chrome-700);
-    --canary-sidebar-border-02: var(--canary-base-chrome-700);
-    --canary-sidebar-border-03: var(--canary-base-chrome-700);
-    --canary-sidebar-border-04: var(--canary-base-chrome-200);
-    --canary-sidebar-border-05: var(--canary-base-chrome-700);
+    --canary-sidebar-background-01: 240 6% 10%; /* main background */
+    --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
+    --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
+    --canary-sidebar-background-04: 240 7% 8%; /* menu background */
+    --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
+    --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
+    --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
+    --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
+    --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
+    --canary-sidebar-border-01: 240 6% 15%; /* menu items divider */
+    --canary-sidebar-border-02: 240 6% 20%; /* search border */
+    --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
+    --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
+    --canary-sidebar-border-05: 240 6% 20%;
     --canary-sidebar-border-06: var(--canary-base-chrome-700);
-    --canary-sidebar-foreground-01: var(--canary-pure-white);
-    --canary-sidebar-foreground-02: var(--canary-base-chrome-200);
-    --canary-sidebar-foreground-03: var(--canary-base-chrome-100);
-    --canary-sidebar-foreground-04: var(--canary-base-chrome-300);
-    --canary-sidebar-foreground-05: var(--canary-base-chrome-400);
-    --canary-sidebar-foreground-06: var(--canary-base-chrome-150);
-    --canary-sidebar-foreground-accent: var(--canary-pure-white);
-    --canary-sidebar-icon-01: var(--canary-pure-white);
-    --canary-sidebar-icon-02: var(--canary-base-chrome-200);
-    --canary-sidebar-icon-03: var(--canary-base-chrome-200);
+    --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
+    --canary-sidebar-foreground-02: 240 6% 70%;
+    --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
+    --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
+    --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
+    --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
+    --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
+    --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
+    --canary-sidebar-icon-02: 240 6% 70%;
+    --canary-sidebar-icon-03: 240 6% 50%;
 
     /* Topbar */
     --canary-topbar-background-01: 240 6% 6%;
-    --canary-topbar-foreground-01: var(--canary-pure-white);
-    --canary-topbar-foreground-02: var(--canary-base-chrome-100);
-    --canary-topbar-foreground-03: var(--canary-base-chrome-400);
-    --canary-topbar-foreground-04: var(--canary-pure-white);
-    --canary-topbar-icon-01: var(--canary-base-chrome-400);
+    --canary-topbar-foreground-01: 240 6% 90%;
+    --canary-topbar-foreground-02: var(--canary-grey-80);
+    --canary-topbar-foreground-03: 240 6% 60%;
+    --canary-topbar-foreground-04: var(--canary-grey-94);
+    --canary-topbar-icon-01: 240 6% 60%;
 
     /* Tags */
     /* --gray */
@@ -2787,42 +2679,6 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
-
-    &.inset-layout {
-      /* Sidebar */
-      --canary-sidebar-background-01: 240 6% 10%; /* main background */
-      --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
-      --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
-      --canary-sidebar-background-04: 240 7% 8%; /* menu background */
-      --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
-      --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
-      --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
-      --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
-      --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
-      --canary-sidebar-border-01: 240 6% 15%; /* menu items divider */
-      --canary-sidebar-border-02: 240 6% 20%; /* search border */
-      --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
-      --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
-      --canary-sidebar-border-05: 240 6% 20%;
-      --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
-      --canary-sidebar-foreground-02: 240 6% 70%;
-      --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
-      --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
-      --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
-      --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
-      --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
-      --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
-      --canary-sidebar-icon-02: 240 6% 70%;
-      --canary-sidebar-icon-03: 240 6% 50%;
-
-      /* Topbar */
-      --canary-topbar-background-01: 240 6% 6%;
-      --canary-topbar-foreground-01: 240 6% 90%;
-      --canary-topbar-foreground-02: var(--canary-grey-80);
-      --canary-topbar-foreground-03: 240 6% 60%;
-      --canary-topbar-foreground-04: var(--canary-grey-94);
-      --canary-topbar-icon-01: 240 6% 60%;
-    }
   }
 
   .dark-prot-std {
@@ -2958,38 +2814,39 @@
     --canary-sub-menu-icon-02: 0 0% 61%;
 
     /* Sidebar */
-    --canary-sidebar-background-01: var(--canary-base-chrome-1000);
-    --canary-sidebar-background-02: hsla(var(--canary-base-chrome-850) / 0.5);
-    --canary-sidebar-background-03: hsla(var(--canary-base-chrome-850) / 0);
-    --canary-sidebar-background-04: var(--canary-base-chrome-1000);
-    --canary-sidebar-background-05: var(--canary-base-chrome-800);
-    --canary-sidebar-background-06: hsla(var(--canary-base-chrome-1000) / 0.7);
-    --canary-sidebar-background-07: var(--canary-base-chrome-950);
-    --canary-sidebar-background-08: var(--canary-base-chrome-850);
-    --canary-sidebar-background-09: var(--canary-base-chrome-900);
-    --canary-sidebar-border-01: var(--canary-base-chrome-850);
-    --canary-sidebar-border-02: var(--canary-base-chrome-850);
-    --canary-sidebar-border-03: var(--canary-base-chrome-850);
-    --canary-sidebar-border-04: var(--canary-base-chrome-400);
-    --canary-sidebar-border-05: var(--canary-base-chrome-850);
+    --canary-sidebar-background-01: 240 6% 10%; /* main background */
+    --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
+    --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
+    --canary-sidebar-background-04: 240 7% 8%; /* menu background */
+    --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
+    --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
+    --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
+    --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
+    --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
+    --canary-sidebar-border-01: 240 6% 15%; /* menu items divider */
+    --canary-sidebar-border-02: 240 6% 20%; /* search border */
+    --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
+    --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
+    --canary-sidebar-border-05: 240 6% 20%;
     --canary-sidebar-border-06: var(--canary-base-chrome-850);
-    --canary-sidebar-foreground-01: var(--canary-pure-white);
-    --canary-sidebar-foreground-02: var(--canary-base-chrome-400);
-    --canary-sidebar-foreground-03: var(--canary-base-chrome-200);
-    --canary-sidebar-foreground-04: var(--canary-base-chrome-500);
-    --canary-sidebar-foreground-05: var(--canary-base-chrome-500);
-    --canary-sidebar-foreground-accent: var(--canary-pure-white);
-    --canary-sidebar-icon-01: var(--canary-pure-white);
-    --canary-sidebar-icon-02: var(--canary-base-chrome-400);
-    --canary-sidebar-icon-03: var(--canary-base-chrome-500);
+    --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
+    --canary-sidebar-foreground-02: 240 6% 70%;
+    --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
+    --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
+    --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
+    --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
+    --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
+    --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
+    --canary-sidebar-icon-02: 240 6% 70%;
+    --canary-sidebar-icon-03: 240 6% 50%;
 
     /* Topbar */
     --canary-topbar-background-01: 240 6% 6%;
-    --canary-topbar-foreground-01: var(--canary-pure-white);
-    --canary-topbar-foreground-02: var(--canary-base-chrome-200);
-    --canary-topbar-foreground-03: var(--canary-base-chrome-500);
-    --canary-topbar-foreground-04: var(--canary-pure-white);
-    --canary-topbar-icon-01: var(--canary-base-chrome-500);
+    --canary-topbar-foreground-01: 240 6% 90%;
+    --canary-topbar-foreground-02: var(--canary-grey-80);
+    --canary-topbar-foreground-03: 240 6% 60%;
+    --canary-topbar-foreground-04: var(--canary-grey-94);
+    --canary-topbar-icon-01: 240 6% 60%;
 
     /* Tags */
     /* --gray */
@@ -3106,41 +2963,5 @@
     --canary-logs-background-07: hsla(0 80% 60% / 0.1);
     --canary-logs-foreground-01: hsl(var(--canary-pure-white));
     --canary-logs-foreground-02: hsl(240, 6%, 60%);
-
-    &.inset-layout {
-      /* Sidebar */
-      --canary-sidebar-background-01: 240 6% 10%; /* main background */
-      --canary-sidebar-background-02: hsla(240 6% 50% / 0.1); /* background for open state user panel */
-      --canary-sidebar-background-03: hsla(240 6% 50% / 0.1); /* menu hover background */
-      --canary-sidebar-background-04: 240 7% 8%; /* menu background */
-      --canary-sidebar-background-05: 240 6% 40%; /* avatar background */
-      --canary-sidebar-background-06: hsla(240 7% 8% / 1); /* more menu background */
-      --canary-sidebar-background-07: 240 7% 8%; /* icons background inside menu */
-      --canary-sidebar-background-08: 240 6% 15%; /* scrollbar */
-      --canary-sidebar-background-09: 240 6% 10%; /* letter K in search background */
-      --canary-sidebar-border-01: 240 6% 15%; /* menu items divider */
-      --canary-sidebar-border-02: 240 6% 20%; /* search border */
-      --canary-sidebar-border-03: 240 6% 15%; /* menu items group hover */
-      --canary-sidebar-border-04: 240 6% 20%; /* searchbar border */
-      --canary-sidebar-border-05: 240 6% 20%;
-      --canary-sidebar-foreground-01: var(--canary-pure-white); /* logo text */
-      --canary-sidebar-foreground-02: 240 6% 70%;
-      --canary-sidebar-foreground-03: 240 6% 80%; /* letter K in search */
-      --canary-sidebar-foreground-04: 240 6% 60% /* search placeholder */;
-      --canary-sidebar-foreground-05: 240 6% 40%; /* search results */
-      --canary-sidebar-foreground-06: 240 6% 90%; /* menu item text */
-      --canary-sidebar-foreground-accent: var(--canary-pure-white); /* logo icon */
-      --canary-sidebar-icon-01: var(--canary-pure-white); /* menu item icon */
-      --canary-sidebar-icon-02: 240 6% 70%;
-      --canary-sidebar-icon-03: 240 6% 50%;
-
-      /* Topbar */
-      --canary-topbar-background-01: 240 6% 6%;
-      --canary-topbar-foreground-01: 240 6% 90%;
-      --canary-topbar-foreground-02: var(--canary-grey-80);
-      --canary-topbar-foreground-03: 240 6% 60%;
-      --canary-topbar-foreground-04: var(--canary-grey-94);
-      --canary-topbar-icon-01: 240 6% 60%;
-    }
   }
 }

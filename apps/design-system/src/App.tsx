@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import ComponentPage from '@/pages/component-page'
@@ -22,26 +22,10 @@ const router = createBrowserRouter([
 ])
 
 const App: FC = () => {
-  const [isInset, setIsInset] = useState<boolean>(false)
   const themeStore = useThemeStore()
 
-  /**
-   * Set inset on mount and listen for changes in ViewSettings
-   */
-  useEffect(() => {
-    const setInset = () => {
-      const inset = sessionStorage.getItem('view-preview-is-inset')
-      setIsInset(inset === 'true')
-    }
-
-    setInset()
-    window.addEventListener('storageChange', setInset)
-
-    return () => window.removeEventListener('storageChange', setInset)
-  }, [])
-
   return (
-    <ThemeProvider {...{ ...themeStore, isInset }}>
+    <ThemeProvider {...{ ...themeStore }}>
       <RouterProvider router={router} />
     </ThemeProvider>
   )

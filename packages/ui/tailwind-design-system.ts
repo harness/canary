@@ -57,7 +57,7 @@ export default {
           solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
           softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           hover: 'var(--cn-state-hover)',
-          selected: 'lch(from var(--cv-state-selected) l c h / <alpha-value>)',
+          selected: 'lch(from var(--cn-state-selected) l c h / <alpha-value>)',
           backdrop: 'lch(from var(--cn-dialog-backdrop) l c h / <alpha-value>)',
           primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
@@ -322,13 +322,13 @@ export default {
         tight: '-0.02em'
       },
       boxShadow: {
-        1: '0px 8px 16px var(-cn-shadow-color-1)',
-        2: '0px 8px 8px var(-cn-shadow-color-2)',
-        'pagination-1': '0px 2px 4px var(-cn-shadow-color-2)',
+        1: '0px 8px 16px var(--cn-shadow-color-1)',
+        2: '0px 8px 8px var(--cn-shadow-color-2)',
+        'pagination-1': '0px 2px 4px var(--cn-shadow-color-2)',
         'as-border': 'inset 0 0 0 1px',
         'commit-list-bullet':
           '0px 0px 3px 0.5px hsla(var(--cn-set-brand-solid-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-solid-bg) / 0.3)',
-        auth: '0px 0px 20px var(-cn-shadow-color-2)'
+        auth: '0px 0px 20px var(--cn-shadow-color-2)'
       },
       borderColor: {
         DEFAULT: 'var(--cn-border-3)',

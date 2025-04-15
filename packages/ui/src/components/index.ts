@@ -78,6 +78,7 @@ export * from './hover-card'
 export * from './logo'
 export * from './resizable'
 export * from './harness-logo'
+export * from './time-ago-hover-card'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

@@ -54,7 +54,11 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
           {formattedDate}
         </Button>
       </HoverCard.Trigger>
-      <HoverCard.Content className="grid w-80 grid-cols-[auto_1fr_1fr] gap-x-3 gap-y-2 p-2.5 text-sm" avoidCollisions>
+      <HoverCard.Content
+        className="grid w-80 grid-cols-[auto_1fr_1fr] gap-x-3 gap-y-2 p-2.5 text-sm"
+        avoidCollisions
+        side="top"
+      >
         {(['UTC', 'Local'] as const).map(zone => {
           const date = zone === 'UTC' ? formattedDates.utcDate : formattedDates.localDate
           const time = zone === 'UTC' ? formattedDates.utcTime : formattedDates.localTime

@@ -1,6 +1,6 @@
 import { createElement, ReactNode } from 'react'
 
-import { TimeAgoHoverCard } from '@views/repo/components/time-ago-hover-card'
+import { TimeAgoHoverCard } from '@/components'
 import { formatDistance, formatDistanceToNow } from 'date-fns'
 
 export const INITIAL_ZOOM_LEVEL = 1

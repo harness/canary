@@ -333,23 +333,18 @@ export default {
         10: 'var(--cn-rounded-4)'
       },
       fontSize: {
-        tiny: '0.75rem',
-        xs: '0.8125rem',
+        xs: 'var(--cn-font-size-2)',
         // By px
-        8: '0.5rem',
-        9: '0.5625rem',
-        10: '0.625rem',
-        11: '0.6875rem',
-        12: '0.75rem',
-        13: '0.8125rem',
-        14: '0.875rem',
-        15: '0.9375rem',
-        16: '1rem',
-        17: '1.0625rem',
-        18: '1.125rem',
-        19: '1.1875rem',
-        20: '1.25rem',
-        24: '1.5rem'
+        10: 'var(--cn-font-size-0)',
+        11: 'var(--cn-font-size-0)',
+        12: 'var(--cn-font-size-1)',
+        13: 'var(--cn-font-size-2)',
+        14: 'var(--cn-font-size-2)',
+        15: 'var(--cn-font-size-2)',
+        16: 'var(--cn-font-size-3)',
+        18: 'var(--cn-font-size-4)',
+        20: 'var(--cn-font-size-5)',
+        24: 'var(--cn-font-size-6)'
       },
       backgroundImage: {
         'ai-button':

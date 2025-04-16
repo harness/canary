@@ -1,0 +1,267 @@
+[
+  {
+    "groupId": "1pKC9w5uTYWNBBZ1SCNMAw",
+    "delegateGroupIdentifier": "_viaksdcoker",
+    "delegateType": "DOCKER",
+    "groupName": "viaksdcoker",
+    "groupImplicitSelectors": { "viaksdcoker": "GROUP_NAME" },
+    "groupCustomSelectors": ["linux-amd64", "testing", "local"],
+    "lastHeartBeat": 0,
+    "connectivityStatus": "disconnected",
+    "activelyConnected": false,
+    "grpcActive": false,
+    "delegateInstanceDetails": [],
+    "tokenActive": true,
+    "autoUpgrade": "OFF",
+    "delegateGroupExpirationTime": 0,
+    "upgraderLastUpdated": 0,
+    "immutable": false
+  },
+  {
+    "groupId": "4A2iuygdSXKq08Ml8mSseA",
+    "delegateGroupIdentifier": "_eightfivetwoold",
+    "delegateType": "KUBERNETES",
+    "groupName": "eightfivetwoold",
+    "groupImplicitSelectors": { "eightfivetwoold": "GROUP_NAME" },
+    "lastHeartBeat": 1744646981427,
+    "connectivityStatus": "connected",
+    "activelyConnected": true,
+    "grpcActive": false,
+    "delegateInstanceDetails": [
+      {
+        "uuid": "QKXGf323QTK9urDK0T_Prw",
+        "lastHeartbeat": 1744646981427,
+        "activelyConnected": true,
+        "hostName": "eightfivetwoold-7f4b7bbd47-hgxv4",
+        "tokenActive": true,
+        "version": "25.04.85601",
+        "delegateExpirationTime": 1758557385064,
+        "polllingModeEnabled": false
+      }
+    ],
+    "tokenActive": true,
+    "autoUpgrade": "ON",
+    "delegateGroupExpirationTime": 1758557385064,
+    "upgraderLastUpdated": 1744646404670,
+    "immutable": true,
+    "groupVersion": "25.04.85601"
+  },
+  {
+    "groupId": "GbwfgC4cRwiHnMa3IX8SMA",
+    "delegateGroupIdentifier": "_pzerosanity",
+    "delegateType": "KUBERNETES",
+    "groupName": "pzerosanity",
+    "groupImplicitSelectors": { "pzerosanity": "GROUP_NAME" },
+    "lastHeartBeat": 1744646989404,
+    "connectivityStatus": "connected",
+    "activelyConnected": true,
+    "grpcActive": false,
+    "delegateInstanceDetails": [
+      {
+        "uuid": "qNs5n8h4Tn-xgHpWPQyJPA",
+        "lastHeartbeat": 1744646989404,
+        "activelyConnected": true,
+        "hostName": "pzerosanity-8b579d6fc-gr9fm",
+        "tokenActive": true,
+        "version": "25.04.85601",
+        "delegateExpirationTime": 1758557385217,
+        "polllingModeEnabled": false
+      }
+    ],
+    "tokenActive": true,
+    "autoUpgrade": "OFF",
+    "delegateGroupExpirationTime": 1758557385217,
+    "upgraderLastUpdated": 0,
+    "immutable": true,
+    "groupVersion": "25.04.85601"
+  },
+  {
+    "groupId": "Ou-m_DTXRPuvzZwCgFtUZQ",
+    "delegateGroupIdentifier": "_west1_delegate_qa",
+    "delegateType": "KUBERNETES",
+    "groupName": "west1-delegate-qa",
+    "groupImplicitSelectors": { "west1-delegate-qa": "GROUP_NAME" },
+    "lastHeartBeat": 0,
+    "connectivityStatus": "disconnected",
+    "activelyConnected": false,
+    "grpcActive": false,
+    "delegateInstanceDetails": [],
+    "tokenActive": true,
+    "autoUpgrade": "ON",
+    "delegateGroupExpirationTime": 0,
+    "upgraderLastUpdated": 0,
+    "immutable": false
+  },
+  {
+    "groupId": "RibdiWyCS1eOctsQzCiWEQ",
+    "delegateGroupIdentifier": "_qa_automation",
+    "delegateType": "KUBERNETES",
+    "groupName": "qa-automation",
+    "groupImplicitSelectors": { "qa-automation": "GROUP_NAME" },
+    "lastHeartBeat": 1744646977479,
+    "connectivityStatus": "connected",
+    "activelyConnected": true,
+    "grpcActive": false,
+    "delegateInstanceDetails": [
+      {
+        "uuid": "EZbHXutlRK29uK7RlrHM-w",
+        "lastHeartbeat": 1744646977479,
+        "activelyConnected": true,
+        "hostName": "qa-automation-b74cb6776-d8gt8",
+        "tokenActive": true,
+        "version": "25.03.85504",
+        "delegateExpirationTime": 1755533385358,
+        "polllingModeEnabled": false
+      }
+    ],
+    "tokenActive": true,
+    "autoUpgrade": "ON",
+    "delegateGroupExpirationTime": 1755533385359,
+    "upgraderLastUpdated": 1744646403144,
+    "immutable": true,
+    "groupVersion": "25.03.85504"
+  },
+  {
+    "groupId": "ZKVpaoqaSsartYOMYpMC-g",
+    "delegateGroupIdentifier": "_pzerosanity_windows",
+    "delegateType": "KUBERNETES",
+    "groupName": "pzerosanity-windows",
+    "groupImplicitSelectors": { "pzerosanity-windows": "GROUP_NAME" },
+    "lastHeartBeat": 1744646974708,
+    "connectivityStatus": "connected",
+    "activelyConnected": true,
+    "grpcActive": false,
+    "delegateInstanceDetails": [
+      {
+        "uuid": "h7NHZN9HRkC5ri1H7zGfVA",
+        "lastHeartbeat": 1744646943982,
+        "activelyConnected": true,
+        "hostName": "pzerosanity-windows-687c7cd8c5-tpmqd",
+        "tokenActive": true,
+        "version": "25.04.85601",
+        "delegateExpirationTime": 1758557385512,
+        "polllingModeEnabled": false
+      },
+      {
+        "uuid": "_YKkwZbGRS6a4j3w4Sse5A",
+        "lastHeartbeat": 1744646974708,
+        "activelyConnected": true,
+        "hostName": "pzerosanity-windows-687c7cd8c5-fb2v7",
+        "tokenActive": true,
+        "version": "25.04.85601",
+        "delegateExpirationTime": 1758557385512,
+        "polllingModeEnabled": false
+      }
+    ],
+    "tokenActive": true,
+    "autoUpgrade": "ON",
+    "delegateGroupExpirationTime": 1758557385512,
+    "upgraderLastUpdated": 1744646403993,
+    "immutable": true,
+    "groupVersion": "25.04.85601"
+  },
+  {
+    "groupId": "rraEwRROTaa9bPVWJTaX0Q",
+    "delegateGroupIdentifier": "_myRunner_ivan",
+    "delegateType": "DOCKER",
+    "groupName": "myRunner-ivan",
+    "groupImplicitSelectors": { "myrunner-ivan": "GROUP_NAME" },
+    "groupCustomSelectors": ["macos-arm64", "local", "fast-pace"],
+    "lastHeartBeat": 1744639645019,
+    "connectivityStatus": "disconnected",
+    "activelyConnected": false,
+    "grpcActive": false,
+    "delegateInstanceDetails": [
+      {
+        "uuid": "JmnNGefCTSe8ntmuy4IyTA",
+        "lastHeartbeat": 1744639645019,
+        "activelyConnected": false,
+        "hostName": "runner-Shobhit-Singh",
+        "tokenActive": true,
+        "version": "v0.1",
+        "delegateExpirationTime": 1759162185514,
+        "polllingModeEnabled": true
+      }
+    ],
+    "tokenActive": true,
+    "autoUpgrade": "OFF",
+    "delegateGroupExpirationTime": 0,
+    "upgraderLastUpdated": 0,
+    "immutable": false
+  },
+  {
+    "groupId": "sIf83Ta4R_-quZuzQ3zWDQ",
+    "delegateGroupIdentifier": "_eightfivetwo",
+    "delegateType": "KUBERNETES",
+    "groupName": "eightfivetwo",
+    "groupImplicitSelectors": { "eightfivetwo": "GROUP_NAME" },
+    "lastHeartBeat": 1744646949409,
+    "connectivityStatus": "connected",
+    "activelyConnected": true,
+    "grpcActive": false,
+    "delegateInstanceDetails": [
+      {
+        "uuid": "S0BdENJaRA2AwUSpW2f67w",
+        "lastHeartbeat": 1744646949409,
+        "activelyConnected": true,
+        "hostName": "eightfivetwo-78bb67b9cb-sbs77",
+        "tokenActive": true,
+        "version": "25.04.85601",
+        "delegateExpirationTime": 1758557385665,
+        "polllingModeEnabled": false
+      }
+    ],
+    "tokenActive": true,
+    "autoUpgrade": "ON",
+    "delegateGroupExpirationTime": 1758557385665,
+    "upgraderLastUpdated": 1744646403840,
+    "immutable": true,
+    "groupVersion": "25.04.85601"
+  },
+  {
+    "groupId": "vT_WH3mQQba32x7PAFjY7A",
+    "delegateGroupIdentifier": "_self_hosted_vpc_delegate",
+    "delegateType": "DOCKER",
+    "groupName": "self-hosted-vpc-delegate",
+    "groupImplicitSelectors": { "self-hosted-vpc-delegate": "GROUP_NAME" },
+    "lastHeartBeat": 0,
+    "connectivityStatus": "disconnected",
+    "activelyConnected": false,
+    "grpcActive": false,
+    "delegateInstanceDetails": [],
+    "tokenActive": true,
+    "autoUpgrade": "OFF",
+    "delegateGroupExpirationTime": 0,
+    "upgraderLastUpdated": 0,
+    "immutable": false
+  },
+  {
+    "groupId": "zyopX7EZRWyEFy1183_MiQ",
+    "delegateGroupIdentifier": "_automation_eks_delegate",
+    "delegateType": "KUBERNETES",
+    "groupName": "automation-eks-delegate",
+    "groupImplicitSelectors": { "automation-eks-delegate": "GROUP_NAME" },
+    "lastHeartBeat": 1744646945706,
+    "connectivityStatus": "connected",
+    "activelyConnected": true,
+    "grpcActive": false,
+    "delegateInstanceDetails": [
+      {
+        "uuid": "EO0XslI2TDSEmG0IBAFTNA",
+        "lastHeartbeat": 1744646945706,
+        "activelyConnected": true,
+        "hostName": "automation-eks-delegate-8665557bdf-wxt26",
+        "tokenActive": true,
+        "version": "25.03.85405",
+        "delegateExpirationTime": 1755533385868,
+        "polllingModeEnabled": false
+      }
+    ],
+    "tokenActive": true,
+    "autoUpgrade": "OFF",
+    "delegateGroupExpirationTime": 1755533385868,
+    "upgraderLastUpdated": 0,
+    "immutable": true,
+    "groupVersion": "25.03.85405"
+  }
+]

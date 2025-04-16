@@ -353,7 +353,15 @@ export default {
         DEFAULT: 'var(--cn-border-3)'
       },
       borderRadius: {
-        10: 'var(--cn-rounded-4)'
+        1: 'var(--cn-rounded-1)',
+        2: 'var(--cn-rounded-2)',
+        3: 'var(--cn-rounded-3)',
+        4: 'var(--cn-rounded-4)',
+        5: 'var(--cn-rounded-5)',
+        6: 'var(--cn-rounded-6)',
+        7: 'var(--cn-rounded-7)',
+        none: 'var(--cn-rounded-none)',
+        full: 'var(--cn-rounded-full)'
       },
       fontSize: {
         xs: 'var(--cn-font-size-2)',

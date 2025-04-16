@@ -31,7 +31,7 @@ export const LabelMarker: FC<LabelMarkerProps> = ({
     <div className={cn('flex max-w-full items-center gap-2 opa relative', className)}>
       <div
         className={cn(
-          `grid text-12 leading-4 h-5 py-px px-2 items-center font-medium rounded overflow-hidden w-fit bg-label-background-${color} text-label-foreground-${color}`,
+          `grid text-1 leading-4 h-5 py-px px-2 items-center font-medium rounded overflow-hidden w-fit bg-label-background-${color} text-label-foreground-${color}`,
           { 'pr-px grid-cols-[auto,auto]': hasExtraContent },
           { 'pr-6': !hasExtraContent && hasDeleteButton }
         )}

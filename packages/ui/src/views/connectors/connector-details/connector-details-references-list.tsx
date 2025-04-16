@@ -9,7 +9,7 @@ const Title = ({ title }: { title: string }): JSX.Element => (
   </span>
 )
 const Description = ({ description }: { description: string }): JSX.Element => (
-  <span className="text-12 text-cn-foreground-4 max-w-full truncate font-normal leading-none tracking-tight">
+  <span className="text-1 text-cn-foreground-4 max-w-full truncate font-normal leading-none tracking-tight">
     {description}
   </span>
 )

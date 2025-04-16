@@ -49,7 +49,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({
                       <span className="block w-[200px] truncate font-medium text-cn-foreground-1">
                         {key.identifier}
                       </span>
-                      <span className="w-[200px] truncate text-12 text-cn-foreground-3">{key.fingerprint}</span>
+                      <span className="w-[200px] truncate text-1 text-cn-foreground-3">{key.fingerprint}</span>
                     </div>
                   </div>
                 </Table.Cell>

@@ -12,7 +12,7 @@ const textVariants = cva('text-base', {
       right: 'text-right'
     },
     size: {
-      0: 'text-12',
+      0: 'text-1',
       1: 'text-2',
       2: 'text-sm',
       3: 'text-base',

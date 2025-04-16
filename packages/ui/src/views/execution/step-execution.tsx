@@ -28,7 +28,7 @@ const StepExecutionToolbar: FC<
       >
         <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-cn-borders-2 bg-cn-background-3">
           <Icon className="text-icons-3" name="command-symbol" size={10} />
-          <span className="text-12 leading-none">F</span>
+          <span className="text-1 leading-none">F</span>
         </div>
       </SearchBox.Root>
       <div className="flex">

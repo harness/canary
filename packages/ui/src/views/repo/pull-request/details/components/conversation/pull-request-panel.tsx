@@ -109,7 +109,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         </div>
         {props.headerMsg && (
           <div className="flex w-full justify-end">
-            <span className="text-12 text-cn-foreground-danger">{props.headerMsg}</span>
+            <span className="text-1 text-cn-foreground-danger">{props.headerMsg}</span>
           </div>
         )}
       </>
@@ -357,7 +357,7 @@ const PullRequestPanel = ({
                           }
                         }}
                       />
-                      <span className="text-12 text-cn-foreground-1">Bypass and merge anyway</span>
+                      <span className="text-1 text-cn-foreground-1">Bypass and merge anyway</span>
                     </Layout.Horizontal>
                   )}
 

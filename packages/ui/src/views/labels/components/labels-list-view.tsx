@@ -88,7 +88,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
               <LabelCellContent label={label} values={values?.[label.key]} />
             </Table.Cell>
             <Table.Cell className="w-1/4 !py-3.5 leading-none">
-              <span className="inline-flex h-4 max-w-full items-center gap-x-1 rounded bg-cn-background-8 px-1.5 text-12 leading-4 text-cn-foreground-1">
+              <span className="inline-flex h-4 max-w-full items-center gap-x-1 rounded bg-cn-background-8 px-1.5 text-1 leading-4 text-cn-foreground-1">
                 <Icon
                   className="flex-none text-icons-9"
                   name={label.scope === 0 ? 'repo-icon' : 'folder-icon'}

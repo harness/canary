@@ -58,7 +58,7 @@ interface HeaderItemProps {
   header: string
 }
 const HeaderItem: React.FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {
-  return <span className="text-12 text-cn-foreground-1">{header}</span>
+  return <span className="text-1 text-cn-foreground-1">{header}</span>
 }
 
 const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {
@@ -78,7 +78,7 @@ const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps)
               }
               if (idx === 2 && evaluations.length && evaluations.length > 2) {
                 // TODO: do popover with all the names
-                return <span key={owner?.id} className="text-12">{`+${evaluations.length - 2}`}</span>
+                return <span key={owner?.id} className="text-1">{`+${evaluations.length - 2}`}</span>
               }
               return null
             })}

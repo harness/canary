@@ -30,7 +30,7 @@ const PrincipalOption = forwardRef<HTMLDivElement, PrincipalOptionProps>(({ prin
         <span className={`truncate ${isShortView ? 'text-cn-foreground-1' : 'text-cn-foreground-1'}`}>
           {principal.display_name}
         </span>
-        {!isShortView && <span className="truncate text-12 text-cn-foreground-2">{principal.email}</span>}
+        {!isShortView && <span className="truncate text-1 text-cn-foreground-2">{principal.email}</span>}
       </span>
     </div>
   )

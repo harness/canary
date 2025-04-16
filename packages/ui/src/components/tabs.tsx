@@ -23,7 +23,7 @@ const tabsListVariants = cva('inline-flex items-center text-cn-foreground-2', {
         'before:bg-cn-borders-3 relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full'
     },
     fontSize: {
-      xs: 'text-12',
+      xs: 'text-1',
       sm: 'text-14'
     }
   },

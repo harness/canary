@@ -55,7 +55,7 @@ const PaginationPrimitiveLink = ({
         size: size ? size : 'sm_icon',
         borderRadius: isFullRounded ? 'full' : 'default'
       }),
-      'text-12 bg-cn-background-2 text-cn-foreground-1 hover:bg-cn-background-3 w-auto min-w-7 px-1.5 font-normal',
+      'text-1 bg-cn-background-2 text-cn-foreground-1 hover:bg-cn-background-3 w-auto min-w-7 px-1.5 font-normal',
       {
         'bg-cn-background-8 shadow-1 hover:bg-cn-background-8 cursor-default': isActive
       },
@@ -124,7 +124,7 @@ const PaginationPrimitiveEllipsis = ({ className, ...props }: React.ComponentPro
   <span
     aria-hidden
     className={cn(
-      'text-12 bg-cn-background-2 flex h-7 w-7 items-center justify-center rounded-full font-normal',
+      'text-1 bg-cn-background-2 flex h-7 w-7 items-center justify-center rounded-full font-normal',
       className
     )}
     {...props}

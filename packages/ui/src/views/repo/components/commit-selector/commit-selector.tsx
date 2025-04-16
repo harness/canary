@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Button, DropdownMenu, Icon, Text } from '@/components'
+import { Button, ButtonSizes, DropdownMenu, Icon, Text } from '@/components'
 import { CommitSelectorListItem, TranslationStore } from '@/views'
 
 import { CommitSelectorDropdown } from './commit-selector-dropdown'
@@ -8,7 +8,7 @@ import { ICommitSelectorStore } from './types'
 
 interface CommitSelectorProps {
   useTranslationStore: () => TranslationStore
-  buttonSize?: 'default' | 'sm'
+  buttonSize?: ButtonSizes
   onSelectCommit?: (commit: CommitSelectorListItem) => void
   repoId?: string
   spaceId?: string
@@ -19,7 +19,7 @@ interface CommitSelectorProps {
 export const CommitSelector: FC<CommitSelectorProps> = ({
   useTranslationStore,
   useRepoCommitStore,
-  buttonSize = 'default',
+  buttonSize,
   onSelectCommit,
   repoId,
   spaceId,
@@ -51,13 +51,7 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button
-          className={
-            'flex items-center gap-1.5 overflow-hidden px-3 data-[state=open]:border-cn-borders-8 [&_svg]:data-[state=open]:text-cn-foreground-1'
-          }
-          variant="outline"
-          size={buttonSize}
-        >
+        <Button variant="surface" theme="muted" size={buttonSize}>
           <Text className="w-full text-cn-foreground-1" truncate align="left">
             {commitTitle}
           </Text>

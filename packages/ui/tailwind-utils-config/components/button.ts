@@ -65,13 +65,12 @@ function createButtonVariantStyles() {
   return { ...combinationStyles, ...separatorStyles }
 }
 
-console.log('createButtonVariantStyles: ', createButtonVariantStyles())
-
 export default {
   '.button': {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
     whiteSpace: 'nowrap',
     transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
     transitionDuration: '0.15s',
@@ -81,7 +80,7 @@ export default {
     height: 'var(--cn-btn-size-default)',
     gap: 'var(--cn-btn-gap-default)',
     border: 'var(--cn-btn-border) solid black',
-    '@apply font-body-none-strong': '',
+    '@apply font-body-tight-strong': '',
 
     '&:where(.button-split-dropdown)': {
       height: 'var(--cn-btn-size-icon)',
@@ -187,6 +186,33 @@ export default {
         '&::before': {
           backgroundColor: 'var(--cn-state-disabled-border)'
         }
+      }
+    },
+
+    // link variant
+    '&:where(.button-link)': {
+      color: 'var(--cn-comp-link-default)',
+      border: 'none',
+      height: 'auto',
+      gap: 'var(--cn-btn-gap-default)',
+      padding: 'var(--cn-btn-link-py-default) 0',
+      '@apply underline-offset-2 font-body-tight-normal': '',
+      '&:hover': {
+        '@apply underline': ''
+      },
+
+      // sm size
+      '&:where(.button-sm)': {
+        height: 'auto',
+        gap: 'var(--cn-btn-gap-sm)',
+        padding: 'var(--cn-btn-link-py-sm) 0',
+        '@apply font-caption-tight-soft': ''
+      },
+
+      // disabled
+      '&:where(:disabled), &:where(.button-disabled)': {
+        color: 'var(--cn-state-disabled-text)',
+        cursor: 'not-allowed'
       }
     }
   }

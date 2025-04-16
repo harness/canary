@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, Icon } from '@/components'
+import { Button, ButtonSizes, DropdownMenu, Icon } from '@/components'
 import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore, TranslationStore } from '@/views'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
@@ -9,7 +9,7 @@ interface BranchSelectorProps {
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
   branchPrefix?: string
-  buttonSize?: 'default' | 'sm' | 'md'
+  buttonSize?: ButtonSizes
   selectedBranch?: BranchSelectorListItem
   onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   isBranchOnly?: boolean
@@ -21,7 +21,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   useRepoBranchesStore,
   useTranslationStore,
   branchPrefix,
-  buttonSize = 'default',
+  buttonSize,
   selectedBranch,
   onSelectBranch,
   isBranchOnly = false,
@@ -40,20 +40,14 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button
-          className="data-[state=open]:border-cn-borders-9 bg-cn-background-2 flex items-center gap-1.5 overflow-hidden pl-3 pr-2"
-          variant="outline"
-          size={buttonSize}
-        >
-          {!branchPrefix && (
-            <Icon className="text-icons-9 shrink-0 fill-transparent" name={isTag ? 'tag' : 'branch'} size={14} />
-          )}
+        <Button variant="surface" theme="muted" size={buttonSize}>
+          {!branchPrefix && <Icon className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'branch'} size={14} />}
 
-          <span className="text-cn-foreground-1 w-full truncate text-left">
+          <span className="w-full truncate text-left">
             {branchPrefix ? `${branchPrefix}: ${branchName}` : branchName}
           </span>
 
-          <Icon name="chevron-down" className="chevron-down text-icons-2" size={12} />
+          <Icon name="chevron-down" className="chevron-down" size={12} />
         </Button>
       </DropdownMenu.Trigger>
 

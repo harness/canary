@@ -1,14 +1,127 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-import { Button, ButtonWithOptions, Icon } from '@harnessio/ui/components'
+import { t } from 'i18next'
+
+import {
+  Badge,
+  Button,
+  ButtonWithOptions,
+  ChatEmptyPreviewWrapper,
+  ChatPreviewWrapper,
+  DropdownMenu,
+  Icon
+} from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
+import { InputReference, LabelMarker } from '@harnessio/ui/views'
+
+import { LinkComponent } from '../../components/LinkComponent'
 
 export default function ButtonDisplay() {
   const variants = ['solid', 'soft', 'surface'] as const
   const themes = ['success', 'danger', 'muted', 'primary', 'ai'] as const
   const sizes = [null, 'sm', 'lg'] as const
 
+  const { Link } = useRouterContext()
+
   return (
     <div className="p-4">
+      {/* <div className="flex">
+        <LabelMarker color="green" label="Label" onDelete={() => {}} />
+        <LabelMarker counter={10} color="green" label="Label" onDelete={() => {}} />
+        <LabelMarker value="10" color="green" label="Label" onDelete={() => {}} />
+      </div> */}
+
+      <Button
+        variant="ghost"
+        className="flex items-center gap-x-1.5 px-0 text-14 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
+      >
+        <Icon name="bookmark-icon" size={12} />
+        <span>Manage view</span>
+      </Button>
+      <div>
+        {/* <Button variant="ghost" onClick={() => {}}>
+          <Icon name="star-filled" size={12} className="fill-icons-alert" />
+        </Button> */}
+
+        {/* <Button
+          className={cn(
+            `right-1 top-0.5 max-h-4 min-h-4 min-w-4 max-w-4 px-0 text-label-foreground-green hover:opacity-60`
+          )}
+          variant="ghost"
+          onClick={() => {}}
+        >
+          <Icon name="cross" size={10} />
+        </Button> */}
+
+        {/* <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
+            <Button className="gap-x-3 bg-cn-background-3 pl-2.5 pr-2 hover:bg-cn-background-8">
+              <div className="flex items-center gap-x-1.5 text-13">
+                <span className="text-cn-foreground-1">test:</span>
+                <span className="text-cn-foreground-2">2</span>
+              </div>
+              <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
+            </Button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content align="end">
+            <DropdownMenu.Item onSelect={() => {}}>
+              <span className="truncate text-sm">View Raw</span>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item onSelect={() => {}}>
+              <span className="truncate text-sm text-cn-foreground-danger">Delete</span>
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root> */}
+      </div>
+
+      {/* <ChatPreviewWrapper />
+      <ChatEmptyPreviewWrapper /> */}
+
+      {/* <Button variant="surface" theme="danger" size="md">
+        Destructive
+      </Button>
+      <Button variant="surface" theme="danger" size="lg">
+        Destructive
+      </Button>
+      <Button variant="surface" theme="danger">
+        Destructive
+      </Button>
+      <Button variant="surface" theme="danger" size="sm">
+        Destructive
+      </Button> */}
+
+      {/* <Button variant="soft" size="sm" theme="muted">
+        <Icon name="repo-icon" size={12} />
+        main
+      </Button> */}
+
+      {/* <Button asChild>
+        <Link onClick={() => console.log('test')} to={''}>
+          Link
+        </Link>
+      </Button> */}
+      {/* <Button loading spinner={<Icon name="settings-1" />}>
+        test
+      </Button> */}
+
+      {/* <Button size="icon" variant="surface" theme="muted">
+        <Icon name="play" />
+      </Button>
+      <Button iconOnly variant="surface" theme="muted">
+        <Icon name="play" />
+      </Button>
+
+      <Button
+        className="flex h-6 gap-x-1 rounded bg-cn-background-8 px-2.5 text-cn-foreground-1 hover:bg-cn-background-9 hover:text-cn-foreground-1"
+        size="sm"
+        variant="custom"
+      >
+        <Icon className="shrink-0 text-icons-9" name="repo-icon" size={12} />
+        main
+      </Button> */}
+
       <h1 className="text-2xl font-bold mb-6">Button Variant Showcase</h1>
 
       {/* Special case for AI theme which doesn't allow variant prop */}

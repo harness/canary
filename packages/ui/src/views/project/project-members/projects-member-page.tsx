@@ -84,7 +84,6 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
                   </ListActions.Left>
                   <ListActions.Right>
                     <Button
-                      variant="default"
                       onClick={() => {
                         setIsInviteMemberDialogOpen(true)
                       }}

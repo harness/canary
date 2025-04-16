@@ -58,7 +58,7 @@ export const LabelMarker: FC<LabelMarkerProps> = ({
           className={cn(
             `absolute right-1 top-0.5 max-h-4 min-h-4 min-w-4 max-w-4 px-0 text-label-foreground-${color} hover:opacity-60`
           )}
-          variant="custom"
+          variant="ghost"
           onClick={onDelete}
         >
           <Icon name="cross" size={10} />

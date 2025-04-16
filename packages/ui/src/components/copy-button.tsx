@@ -1,13 +1,13 @@
 import { FC, MouseEvent, useEffect, useState } from 'react'
 
-import { Button, ButtonProps, Icon } from '@/components'
+import { Button, Icon, type ButtonVariants } from '@/components'
 import { cva, type VariantProps } from 'class-variance-authority'
 import copy from 'clipboard-copy'
 
 export interface CopyButtonProps extends VariantProps<typeof copyIconVariants> {
   name: string
   className?: string
-  buttonVariant?: ButtonProps['variant']
+  buttonVariant?: ButtonVariants
   iconSize?: number
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 }

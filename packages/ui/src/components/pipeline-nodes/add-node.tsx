@@ -11,9 +11,11 @@ export function AddNode(props: AddNodeProp) {
   return (
     <div className="border-border-2 flex size-full items-center justify-center rounded-full border">
       <Button
-        className="self-center rounded-full p-3"
+        className="self-center p-3"
+        rounded
         style={{ alignSelf: 'center' }}
-        variant="outline"
+        variant="surface"
+        theme="muted"
         size="lg"
         onMouseDown={e => e.stopPropagation()}
         onClick={onClick}

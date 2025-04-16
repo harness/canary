@@ -17,7 +17,8 @@ export const NodeMenuTrigger: FC<NodeMenuTriggerProps> = ({ onEllipsisClick }) =
       style={{ top: '10px' }}
       className="absolute right-2.5 z-10"
       variant="ghost"
-      size="sm_icon"
+      size="sm"
+      iconOnly
       onMouseDown={e => e.stopPropagation()}
       onClick={onEllipsisClick}
     >

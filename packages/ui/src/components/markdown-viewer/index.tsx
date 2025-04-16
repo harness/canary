@@ -208,7 +208,7 @@ export function MarkdownViewer({
                 <div className="relative">
                   <CopyButton
                     className="bg-cn-background-3 absolute right-3 top-3 z-10 size-6"
-                    buttonVariant="outline"
+                    buttonVariant="surface"
                     name={code}
                     iconSize={13}
                   />

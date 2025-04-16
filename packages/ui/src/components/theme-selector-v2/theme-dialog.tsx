@@ -60,6 +60,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               {Object.entries(ModeType).map(([key, value]) => {
                 if (!showSystemMode && value === ModeType.System) return null
                 const valueMode = value === ModeType.System ? systemMode : value
+                // TODO: Design system: Update buttons here.
                 return (
                   <button
                     className="flex flex-col gap-y-2 focus-visible:outline-none"

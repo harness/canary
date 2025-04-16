@@ -37,7 +37,8 @@ export function pipelineInput2FormInput(
       ? {
           validation: {
             schema: z
-              .string()
+              .any()
+              .optional()
               .refine(
                 value => new RegExp(inputProps.pattern as string).test(value ?? ''),
                 `Value does not match ${inputProps.pattern} pattern`

@@ -6,7 +6,7 @@ const EntityFormLayout = {
   },
 
   Header: function Header({ children }: { children: React.ReactNode }) {
-    return <div className={`border-b p-4`}>{children}</div>
+    return <div className={`border-b px-5 pt-4`}>{children}</div>
   },
 
   Title: function Title({ children }: { children: React.ReactNode }) {
@@ -22,7 +22,7 @@ const EntityFormLayout = {
   },
 
   Footer: function Footer({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('flex flex-row justify-between border-t p-4', className)}>{children}</div>
+    return <div className={cn('flex flex-row justify-between border-t p-5', className)}>{children}</div>
   }
 }
 

@@ -44,6 +44,8 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
 
   const [defaultStepValues, setDefaultStepValues] = useState({})
 
+  const [externalLoading, setExternalLoading] = useState(false)
+
   useEffect(() => {
     if (editStepIntention) {
       const yamlJson = parse(yamlRevision.yaml)
@@ -91,9 +93,18 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         })
       }
     } else if (formEntity?.source === 'external') {
-      getTemplateFormDefinition(formEntity.data.identifier).then(templateFormDefinition => {
-        return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
-      })
+      setExternalLoading(true)
+
+      getTemplateFormDefinition(formEntity.data.identifier)
+        .then(templateFormDefinition => {
+          return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
+        })
+        .catch(_ex => {
+          // TODO: error handling
+        })
+        .finally(() => {
+          setExternalLoading(false)
+        })
     } else {
       setFormDefinition({ inputs: [] })
     }
@@ -106,8 +117,8 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
     }
   })
 
-  // TODO: add loading flag and skeleton
-  if (!formDefinition) return null
+  // TODO: add  skeleton
+  if (!formDefinition || externalLoading) return <p>Loading...</p>
 
   return (
     <RootForm
@@ -162,7 +173,9 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
       {rootForm => (
         <EntityFormLayout.Root>
           <EntityFormLayout.Header>
-            <EntityFormLayout.Title>{editStepIntention ? 'Edit' : 'Add'} Step</EntityFormLayout.Title>
+            <EntityFormLayout.Title>
+              {editStepIntention ? 'Edit' : 'Add'} Step : {formEntity?.data.identifier}
+            </EntityFormLayout.Title>
             <EntityFormLayout.Description>{formEntity?.data.description}</EntityFormLayout.Description>
             {/* <EntityFormLayout.Actions>
               <AIButton label="AI Autofill" />
@@ -174,19 +187,19 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
             {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
             {/* </StepFormSection.Header> */}
             <EntityFormSectionLayout.Form>
-              <RenderForm className="space-y-7" factory={inputComponentFactory} inputs={formDefinition} />
+              <RenderForm className="space-y-5 p-5" factory={inputComponentFactory} inputs={formDefinition} />
             </EntityFormSectionLayout.Form>
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer>
             <div className="flex gap-x-3">
               <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-              <Button variant="secondary" onClick={requestClose}>
+              <Button variant="outline" onClick={requestClose}>
                 Cancel
               </Button>
             </div>
             {editStepIntention && (
               <Button
-                variant="secondary"
+                variant="outline"
                 onClick={() => {
                   requestYamlModifications.deleteInArray({ path: editStepIntention.path })
                   requestClose()

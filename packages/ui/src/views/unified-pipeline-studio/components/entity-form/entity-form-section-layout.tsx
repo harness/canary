@@ -6,7 +6,7 @@ const EntityFormSectionLayout = {
   },
 
   Header: function Header({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('p-4', className)}>{children}</div>
+    return <div className={cn('p-5', className)}>{children}</div>
   },
 
   Title: function Title({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -18,7 +18,7 @@ const EntityFormSectionLayout = {
   },
 
   Form: function Form({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('mb-5 p-5', className)}>{children}</div>
+    return <div className={cn('flex flex-col grow', className)}>{children}</div>
   }
 }
 

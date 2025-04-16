@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button, Card, Fieldset, FormWrapper, Icon, Input, StyledLink, StyledLinkProps } from '@/components'
 import { useTheme } from '@/context'
@@ -104,7 +105,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
   return (
     <Floating1ColumnLayout
-      className="flex-col justify-start bg-cn-background-1 pt-20 sm:pt-[8.75rem]"
+      className="bg-cn-background-1 flex-col justify-start pt-20 sm:pt-[8.75rem]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
@@ -126,11 +127,11 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}
 
-          <Card.Title className="mt-3 text-center text-cn-foreground-1" as="h1">
+          <Card.Title className="text-cn-foreground-1 mt-3 text-center" as="h1">
             {t('views:createProject.title', 'Create your new project')}
           </Card.Title>
 
-          <p className="mt-0.5 text-center text-sm leading-snug text-cn-foreground-2">
+          <p className="text-cn-foreground-2 mt-0.5 text-center text-sm leading-snug">
             {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}
           </p>
         </div>
@@ -157,22 +158,36 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             />
           </Fieldset>
 
-          <Button
-            className="mt-3 w-full"
-            borderRadius="full"
-            type="submit"
-            size="md"
-            loading={isLoading}
-            disabled={hasError}
-          >
-            {isLoading
-              ? t('views:createProject.create.projectCreation', 'Creating project...')
-              : t('views:createProject.create.createProject', 'Create project')}
-          </Button>
+          <div>
+            <Button
+              className="mt-3 w-full"
+              borderRadius="full"
+              type="submit"
+              size="md"
+              loading={isLoading}
+              disabled={hasError}
+            >
+              {isLoading
+                ? t('views:createProject.create.projectCreation', 'Creating project...')
+                : t('views:createProject.create.createProject', 'Create project')}
+            </Button>
+
+            <div className="mt-3 flex items-center justify-center gap-4">
+              <div className="bg-cn-borders-2 h-px w-24 shrink" />
+              <span className="text-cn-foreground-3 text-sm">{t('views:createProject.or', 'or')}</span>
+              <div className="bg-cn-borders-2 h-px w-24 shrink" />
+            </div>
+
+            <Link to="/import" className="inline-block w-full">
+              <Button className="mt-3 w-full" borderRadius="full" type="button" variant="outline" size="md">
+                {t('views:createProject.importProject', 'Import project')}
+              </Button>
+            </Link>
+          </div>
         </FormWrapper>
 
         {isFirst && (
-          <p className="foreground-5 mt-4 text-center text-sm text-cn-foreground-3">
+          <p className="foreground-5 text-cn-foreground-3 mt-4 text-center text-sm">
             {t('views:createProject.logout.question', 'Want to use a different account?')}{' '}
             <StyledLink {...props.logoutLinkProps} variant="accent">
               {t('views:createProject.logout.link', 'Log out')}

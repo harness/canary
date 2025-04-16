@@ -16,7 +16,7 @@ export const UnifiedPipelineStudioPanel = ({
           <Tabs.Trigger value="problems">
             Problems
             {/* {problemsCount.all > 0 && (
-              <Badge className="ml-2 h-5 rounded-full bg-red-950 p-2 text-xs font-normal text-red-400">
+              <Badge className="ml-2 h-5 rounded-full bg-red-950 p-2 text-2 font-normal text-red-400">
                 {problemsCount.all}
               </Badge>
             )} */}

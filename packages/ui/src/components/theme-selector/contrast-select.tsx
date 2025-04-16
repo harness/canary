@@ -14,7 +14,7 @@ export function ContrastSelect({
 }) {
   return (
     <div>
-      <Label className="text-xs">Contrast</Label>
+      <Label className="text-2">Contrast</Label>
       <Select.Root
         name="contrast"
         placeholder="Select a theme contrast"

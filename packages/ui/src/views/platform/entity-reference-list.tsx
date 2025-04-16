@@ -62,7 +62,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
               <>
                 <Breadcrumb.Item className={cn('items-center justify-center', { 'ml-1': !showBreadcrumbEllipsis })}>
                   <Breadcrumb.Link
-                    className="cursor-pointer text-xs"
+                    className="cursor-pointer text-2"
                     onClick={() => handleScopeChange(DirectionEnum.PARENT)}
                   >
                     {parentFolder}
@@ -73,7 +73,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                 </Breadcrumb.Separator>
               </>
             ) : null}
-            <Breadcrumb.Page className={cn('cursor-pointer text-xs', { 'ml-1': !parentFolder })}>
+            <Breadcrumb.Page className={cn('cursor-pointer text-2', { 'ml-1': !parentFolder })}>
               {currentFolder}
             </Breadcrumb.Page>
           </Breadcrumb.List>

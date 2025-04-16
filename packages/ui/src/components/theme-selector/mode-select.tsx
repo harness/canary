@@ -14,7 +14,7 @@ export function ModeSelect({
 }) {
   return (
     <div>
-      <Label className="text-xs">Mode</Label>
+      <Label className="text-2">Mode</Label>
       <Select.Root
         name="mode"
         placeholder="Select a theme mode"

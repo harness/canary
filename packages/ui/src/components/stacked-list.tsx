@@ -123,7 +123,7 @@ const ListField = ({ className, title, description, label, primary, secondary, r
     {title && (
       <div
         className={cn(
-          primary ? 'text-16 leading-snug' : secondary ? 'text-xs' : 'text-sm',
+          primary ? 'text-16 leading-snug' : secondary ? 'text-2' : 'text-sm',
           'text-cn-foreground-1 [&>em]:text-cn-foreground-1 font-normal [&>em]:font-medium [&>em]:not-italic',
           !!label && 'text-cn-foreground-2',
           className
@@ -136,7 +136,7 @@ const ListField = ({ className, title, description, label, primary, secondary, r
       <div
         className={cn(
           'text-cn-foreground-2 flex gap-2 text-ellipsis whitespace-nowrap',
-          primary ? 'text-sm' : 'text-xs',
+          primary ? 'text-sm' : 'text-2',
           className
         )}
       >

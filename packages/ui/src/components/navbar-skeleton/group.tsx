@@ -39,7 +39,7 @@ export function Group({
             titleClassName
           )}
         >
-          <p className="px-2.5 text-xs font-normal">{title}</p>
+          <p className="px-2.5 text-2 font-normal">{title}</p>
         </div>
       )}
       {children}

@@ -53,14 +53,14 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
           <Button variant="secondary" size="xs" className="w-full min-w-[60px] max-w-fit justify-start" asChild>
             <Link to={`${relativePath}/code/${targetBranch}`}>
               <Icon name="branch" size={11} className="mr-1 text-cn-foreground-3" />
-              <span className="max-w-[calc(100%-15px)] truncate p-0.5 text-xs hover:underline">{targetBranch}</span>
+              <span className="max-w-[calc(100%-15px)] truncate p-0.5 text-2 hover:underline">{targetBranch}</span>
             </Link>
           </Button>
 
           <span>&larr;</span>
           <Button variant="secondary" size="xs" className="w-full min-w-[60px] max-w-fit justify-start" asChild>
             <Link to={`${relativePath}/code/${sourceBranch}`}>
-              <span className="max-w-full truncate p-0.5 text-xs hover:underline">{sourceBranch}</span>
+              <span className="max-w-full truncate p-0.5 text-2 hover:underline">{sourceBranch}</span>
             </Link>
           </Button>
         </>

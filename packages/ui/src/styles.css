@@ -105,7 +105,7 @@
 
 /* Form utilities */
 .text-form-error {
-  @apply text-cn-foreground-danger mt-2 text-xs font-light;
+  @apply text-cn-foreground-danger text-2 mt-2 font-light;
 }
 .form-input {
   @apply border-cn-borders-1/10 bg-cn-background-accent/5 mt-1 w-full rounded-[4px] text-sm font-light;

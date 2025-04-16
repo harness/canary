@@ -18,7 +18,7 @@ const Stats = ({ pulls }: { pulls: number }) => (
   <div className="flex select-none items-center justify-end gap-3 font-medium">
     <span className="flex items-center gap-1">
       <Icon size={16} name="pull" className="text-icons-7" />
-      <span className="text-xs font-normal text-cn-foreground-1">{pulls || 0}</span>
+      <span className="text-2 font-normal text-cn-foreground-1">{pulls || 0}</span>
     </span>
   </div>
 )

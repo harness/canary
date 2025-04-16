@@ -28,13 +28,13 @@ const buttonVariants = cva(
       size: {
         default: 'h-8 px-6',
         sm: 'h-7 px-3 text-sm font-normal',
-        xs: 'h-auto px-1.5 py-0.5 text-xs font-normal',
+        xs: 'h-auto px-1.5 py-0.5 text-2 font-normal',
         md: 'h-9 px-7',
         lg: 'h-10 px-8',
         icon: 'size-8',
         xs_icon: 'size-6',
         sm_icon: 'size-7',
-        xs_split: 'h-auto p-0 text-xs font-medium',
+        xs_split: 'h-auto p-0 text-2 font-medium',
         md_split: 'h-8 text-14 font-medium',
         lg_split: 'h-10 p-0 font-medium'
       },

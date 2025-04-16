@@ -121,7 +121,7 @@ pre.prism-code {
 /* Pagination overrides */
 
 .pagination-links a {
-  @apply border border-cn-borders-3 rounded-md text-xs text-cn-foreground-3;
+  @apply border border-cn-borders-3 rounded-md text-2 text-cn-foreground-3;
 }
 
 .pagination-links a .link-title {

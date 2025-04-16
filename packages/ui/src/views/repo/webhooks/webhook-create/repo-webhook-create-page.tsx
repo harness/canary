@@ -145,7 +145,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
           </ButtonGroup>
         </Fieldset>
 
-        {!!apiError && <span className="text-xs text-cn-foreground-danger">{apiError?.toString()}</span>}
+        {!!apiError && <span className="text-2 text-cn-foreground-danger">{apiError?.toString()}</span>}
       </FormWrapper>
     </SandboxLayout.Content>
   )

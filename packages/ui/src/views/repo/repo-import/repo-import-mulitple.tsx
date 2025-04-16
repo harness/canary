@@ -326,7 +326,7 @@ export function RepoImportMultiplePage({
             </ControlGroup>
           </Fieldset>
 
-          {!!apiErrorsValue && <span className="text-cn-foreground-danger text-xs">{apiErrorsValue}</span>}
+          {!!apiErrorsValue && <span className="text-2 text-cn-foreground-danger">{apiErrorsValue}</span>}
           {/* SUBMIT BUTTONS */}
           <Fieldset>
             <ControlGroup>

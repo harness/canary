@@ -74,7 +74,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
           </Fieldset>
         )}
 
-        {!!error && error.message && <p className="text-xs text-cn-foreground-danger">{error.message}</p>}
+        {!!error && error.message && <p className="text-2 text-cn-foreground-danger">{error.message}</p>}
 
         <AlertDialog.Footer>
           <Button variant="outline" onClick={onClose} disabled={isLoading}>

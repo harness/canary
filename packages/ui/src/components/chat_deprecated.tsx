@@ -89,7 +89,7 @@ interface SeparatorProps {
 }
 
 const Separator: React.FC<SeparatorProps> = ({ title }) => {
-  return <div className="text-center text-xs font-medium opacity-50">{title}</div>
+  return <div className="text-center text-2 font-medium opacity-50">{title}</div>
 }
 
 // Input Field

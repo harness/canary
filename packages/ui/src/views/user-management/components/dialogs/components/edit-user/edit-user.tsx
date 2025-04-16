@@ -99,7 +99,7 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
             />
           </Fieldset>
 
-          {updateUserError && <span className="text-xs text-cn-foreground-danger">{updateUserError}</span>}
+          {updateUserError && <span className="text-2 text-cn-foreground-danger">{updateUserError}</span>}
         </FormWrapper>
         <Dialog.Footer>
           <ButtonGroup className="justify-end">

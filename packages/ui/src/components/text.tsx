@@ -13,7 +13,7 @@ const textVariants = cva('text-base', {
     },
     size: {
       0: 'text-12',
-      1: 'text-xs',
+      1: 'text-2',
       2: 'text-sm',
       3: 'text-base',
       4: 'text-xl',

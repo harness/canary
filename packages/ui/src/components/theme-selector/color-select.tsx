@@ -14,7 +14,7 @@ export function ColorSelect({
 }) {
   return (
     <div>
-      <Label className="text-xs">Color</Label>
+      <Label className="text-2">Color</Label>
       <Select.Root
         name="color"
         placeholder="Select a color theme"

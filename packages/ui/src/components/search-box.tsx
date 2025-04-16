@@ -6,7 +6,7 @@ import { noop } from 'lodash-es'
 
 enum TextSize {
   'text-[12px]' = 0,
-  'text-xs' = 1,
+  'text-2' = 1,
   'text-sm' = 2,
   'text-base' = 3,
   'text-xl' = 4,

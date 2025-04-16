@@ -373,7 +373,7 @@ const SidebarGroupLabel = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'d
         ref={ref}
         data-sidebar="group-label"
         className={cn(
-          'flex h-8 shrink-0 items-center rounded-md px-2 mb-2 text-xs text-sidebar-foreground-5 outline-none ring-sidebar-ring opacity-1 transition-[height,opacity,margin-bottom] duration-150 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
+          'flex h-8 shrink-0 items-center rounded-md px-2 mb-2 text-2 text-sidebar-foreground-5 outline-none ring-sidebar-ring opacity-1 transition-[height,opacity,margin-bottom] duration-150 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
           'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 group-data-[state=collapsed]:opacity-0 group-data-[state=collapsed]:mb-0 group-data-[state=collapsed]:h-0',
           className
         )}
@@ -432,7 +432,7 @@ const sidebarMenuButtonVariants = cva(
       },
       size: {
         default: 'h-8 text-sm',
-        sm: 'h-7 text-xs',
+        sm: 'h-7 text-2',
         lg: 'h-12 text-sm group-data-[collapsible=icon]:!p-0'
       }
     },
@@ -558,7 +558,7 @@ const SidebarMenuBadge = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ cl
     ref={ref}
     data-sidebar="menu-badge"
     className={cn(
-      'absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums text-sidebar-foreground select-none pointer-events-none',
+      'absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-2 font-medium tabular-nums text-sidebar-foreground select-none pointer-events-none',
       'peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[active=true]/menu-button:text-sidebar-accent-foreground',
       'peer-data-[size=sm]/menu-button:top-1',
       'peer-data-[size=default]/menu-button:top-1.5',
@@ -638,7 +638,7 @@ const SidebarMenuSubButton = forwardRef<
       className={cn(
         'flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground',
         'data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground',
-        size === 'sm' && 'text-xs',
+        size === 'sm' && 'text-2',
         size === 'md' && 'text-sm',
         'group-data-[collapsible=icon]:hidden',
         className

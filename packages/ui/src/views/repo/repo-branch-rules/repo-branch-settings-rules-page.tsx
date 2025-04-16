@@ -184,7 +184,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
           </ControlGroup>
         </Fieldset>
 
-        {!!apiErrorsValue && <span className="text-xs text-cn-foreground-danger">{apiErrorsValue}</span>}
+        {!!apiErrorsValue && <span className="text-2 text-cn-foreground-danger">{apiErrorsValue}</span>}
       </FormWrapper>
     </SandboxLayout.Content>
   )

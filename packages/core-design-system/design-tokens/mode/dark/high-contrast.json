@@ -776,6 +776,11 @@
           "$type": "color",
           "$value": "{brown.500}",
           "$description": "Border color for standard brown boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{brown.950}",
+          "$description": "Hover background color for brown surfaces."
         }
       }
     },
@@ -829,6 +834,11 @@
           "$type": "color",
           "$value": "{cyan.500}",
           "$description": "Border color for standard cyan boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{cyan.950}",
+          "$description": "Hover background color for cyan surfaces."
         }
       }
     },
@@ -882,6 +892,11 @@
           "$type": "color",
           "$value": "{indigo.500}",
           "$description": "Border color for standard indigo boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{indigo.950}",
+          "$description": "Hover background color for indigo surfaces."
         }
       }
     },
@@ -935,6 +950,11 @@
           "$type": "color",
           "$value": "{lime.500}",
           "$description": "Border color for standard lime boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{lime.950}",
+          "$description": "Hover background color for lime surfaces."
         }
       }
     },
@@ -988,6 +1008,11 @@
           "$type": "color",
           "$value": "{mint.500}",
           "$description": "Border color for standard mint boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{mint.950}",
+          "$description": "Hover background color for mint surfaces."
         }
       }
     },
@@ -1041,6 +1066,11 @@
           "$type": "color",
           "$value": "{orange.500}",
           "$description": "Border color for standard orange boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{orange.950}",
+          "$description": "Hover background color for orange surfaces."
         }
       }
     },
@@ -1094,6 +1124,11 @@
           "$type": "color",
           "$value": "{pink.500}",
           "$description": "Border color for standard pink boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{pink.950}",
+          "$description": "Hover background color for pink surfaces."
         }
       }
     },
@@ -1147,6 +1182,11 @@
           "$type": "color",
           "$value": "{violet.500}",
           "$description": "Border color for standard violet boundaries."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{violet.950}",
+          "$description": "Hover background color for violet surfaces."
         }
       }
     }

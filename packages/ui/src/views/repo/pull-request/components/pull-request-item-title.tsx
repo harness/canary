@@ -29,7 +29,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullReques
           name={getPrState(isDraft, merged, state).icon}
         />
 
-        <p className="ml-0.5 mr-1 truncate text-16 font-medium leading-snug">{name}</p>
+        <p className="ml-0.5 mr-1 truncate text-3 font-medium leading-snug">{name}</p>
 
         {!!labels.length && <LabelsList labels={labels} className="max-h-5 w-[max(400px,60%)] overflow-hidden" />}
       </div>

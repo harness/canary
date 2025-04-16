@@ -156,7 +156,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                             ) : (
                               <Icon className="text-icons-9" name="cancel-grey" />
                             )}
-                            <span className="text-16 font-medium leading-snug">{rule.identifier}</span>
+                            <span className="text-3 font-medium leading-snug">{rule.identifier}</span>
                           </div>
                         }
                         description={

@@ -39,7 +39,7 @@ const LineTitle: FC<LineTitleProps> = ({ header, useTranslationStore }) => {
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="inline-flex items-center gap-2">
-        <span className="text-16 font-medium">{text}</span>
+        <span className="text-3 font-medium">{text}</span>
         <CopyButton name={text} color="gray" />
         {!!numAdditions && (
           <Badge variant="surface" size="sm" theme="success">

@@ -380,7 +380,6 @@ export default {
         13: 'var(--cn-font-size-13)'
 
         // Remove
-        // 16: 'var(--cn-font-size-3)',
         // 18: 'var(--cn-font-size-4)',
         // 20: 'var(--cn-font-size-5)',
         // 24: 'var(--cn-font-size-6)'

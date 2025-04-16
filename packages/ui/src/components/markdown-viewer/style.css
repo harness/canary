@@ -150,7 +150,7 @@
     }
   }
 
-  @apply !bg-cn-background-2 !text-16 !text-cn-foreground-1 !max-w-full font-sans !leading-[1.625rem];
+  @apply !bg-cn-background-2 !text-3 !text-cn-foreground-1 !max-w-full font-sans !leading-[1.625rem];
 
   h1,
   h2,

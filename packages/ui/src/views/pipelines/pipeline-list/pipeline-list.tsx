@@ -8,7 +8,7 @@ const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: str
   return (
     <div className="flex items-center gap-1.5">
       <ExecutionStatusIcon status={status} />
-      <span className="text-16 truncate font-medium leading-snug">{title}</span>
+      <span className="truncate text-3 font-medium leading-snug">{title}</span>
     </div>
   )
 }

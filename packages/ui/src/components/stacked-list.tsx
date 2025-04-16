@@ -123,7 +123,7 @@ const ListField = ({ className, title, description, label, primary, secondary, r
     {title && (
       <div
         className={cn(
-          primary ? 'text-16 leading-snug' : secondary ? 'text-2' : 'text-sm',
+          primary ? 'text-3 leading-snug' : secondary ? 'text-2' : 'text-sm',
           'text-cn-foreground-1 [&>em]:text-cn-foreground-1 font-normal [&>em]:font-medium [&>em]:not-italic',
           !!label && 'text-cn-foreground-2',
           className

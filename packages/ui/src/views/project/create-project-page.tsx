@@ -1,8 +1,18 @@
 import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Fieldset, FormWrapper, Icon, Input, StyledLink, StyledLinkProps } from '@/components'
-import { useTheme } from '@/context'
+import {
+  Button,
+  Card,
+  ControlGroup,
+  Fieldset,
+  FormWrapper,
+  Icon,
+  Input,
+  StyledLink,
+  StyledLinkProps
+} from '@/components'
+import { useRouterContext, useTheme } from '@/context'
 import { Floating1ColumnLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
@@ -61,6 +71,7 @@ export type CreateProjectFields = z.infer<ReturnType<typeof createProjectSchema>
 export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
   const { error, isLoading, backLinkProps, onFormSubmit, useTranslationStore } = props
   const { isLightTheme } = useTheme()
+  const { Link } = useRouterContext()
 
   const isAdditional = getIsAdditionalProjectPage(props)
   const isFirst = getIsFirstProjectPage(props)
@@ -104,7 +115,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
   return (
     <Floating1ColumnLayout
-      className="flex-col justify-start bg-cn-background-1 pt-20 sm:pt-[8.75rem]"
+      className="bg-cn-background-1 flex-col justify-start pt-20 sm:pt-[8.75rem]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
@@ -118,7 +129,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
         </StyledLink>
       )}
 
-      <div className="relative z-10 w-80 max-w-full">
+      <ControlGroup className="relative z-10 w-80 max-w-full">
         <div className="mb-10 grid justify-items-center">
           {isLightTheme ? (
             <Icon size={112} name="create-workspace-light" />
@@ -126,11 +137,11 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}
 
-          <Card.Title className="mt-3 text-center text-cn-foreground-1" as="h1">
+          <Card.Title className="text-cn-foreground-1 mt-3 text-center" as="h1">
             {t('views:createProject.title', 'Create your new project')}
           </Card.Title>
 
-          <p className="mt-0.5 text-center text-sm leading-snug text-cn-foreground-2">
+          <p className="text-cn-foreground-2 mt-0.5 text-center text-sm leading-snug">
             {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}
           </p>
         </div>
@@ -157,15 +168,27 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             />
           </Fieldset>
 
-          <Button className="mt-3 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
-            {isLoading
-              ? t('views:createProject.create.projectCreation', 'Creating project...')
-              : t('views:createProject.create.createProject', 'Create project')}
-          </Button>
+            <ControlGroup type="button">
+              <Button className="mt-3 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
+                {isLoading
+                  ? t('views:createProject.create.projectCreation', 'Creating project...')
+                  : t('views:createProject.create.createProject', 'Create project')}
+              </Button>
+
+                <div className="mt-3 flex items-center justify-center gap-2">
+                    <div className="border-cn-borders-3 w-[145px] shrink border-t" />
+                    <span className="text-cn-foreground-3 text-sm">{t('views:createProject.or', 'or')}</span>
+                    <div className="border-cn-borders-3 w-[145px] shrink border-t" />
+                </div>
+
+                <Button asChild className="mt-3 w-full" borderRadius="full" type="button" variant="outline" size="md">
+                    <Link to="/import">{t('views:createProject.importProject', 'Import project')}</Link>
+                </Button>
+          </ControlGroup>
         </FormWrapper>
 
         {isFirst && (
-          <p className="foreground-5 mt-4 text-center text-sm text-cn-foreground-3">
+          <p className="foreground-5 text-cn-foreground-3 mt-4 text-center text-sm">
             {t('views:createProject.logout.question', 'Want to use a different account?')}{' '}
             <StyledLink {...props.logoutLinkProps} variant="accent">
               {t('views:createProject.logout.link', 'Log out')}

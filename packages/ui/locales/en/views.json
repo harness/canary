@@ -555,6 +555,8 @@
       "projectCreation": "Creating project...",
       "createProject": "Create project"
     },
+    "or": "or",
+    "importProject": "Import project",
     "logout": {
       "question": "Want to use a different account?",
       "link": "Log out"

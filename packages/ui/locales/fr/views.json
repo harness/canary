@@ -533,6 +533,8 @@
       "projectCreation": "Création du projet...",
       "createProject": "Créer le projet"
     },
+    "or": "ou",
+    "importProject": "Importer un projet",
     "logout": {
       "question": "Voulez-vous utiliser un autre compte ?",
       "link": "Se déconnecter"

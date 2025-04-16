@@ -20,6 +20,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
   goToPage,
   isLoading,
   secrets,
+  onCreate,
   ...props
 }) => {
   const { t } = useTranslationStore()
@@ -71,7 +72,9 @@ const SecretListPage: FC<SecretListPageProps> = ({
             />
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default">{t('views:secrets.createNew', 'Create new secret')}</Button>
+            <Button variant="default" onClick={onCreate}>
+              {t('views:secrets.createNew', 'Create new secret')}
+            </Button>
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={4} />

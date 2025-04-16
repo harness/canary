@@ -30,4 +30,5 @@ export interface SecretListPageProps
   setSearchQuery: (query?: string) => void
   isError?: boolean
   errorMessage?: string
+  onCreate: () => void
 }

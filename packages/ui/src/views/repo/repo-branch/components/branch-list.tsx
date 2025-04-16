@@ -136,7 +136,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                         {getInitials(branch?.user?.name ?? '')}
                       </Avatar.Fallback>
                     </Avatar.Root>
-                    <span className="text-cn-foreground-1 truncate">{branch?.timestamp}</span>
+                    <time className="text-cn-foreground-1 truncate">{branch?.timestamp}</time>
                   </div>
                 </Table.Cell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}

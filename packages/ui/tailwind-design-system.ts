@@ -547,6 +547,8 @@ export default {
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
     'stroke-borders-2',
     // NOTE: temporary - used in design-system
-    { pattern: /bg-primary-./ }
+    { pattern: /bg-primary-./ },
+    // Important: used for generating max-width of SandboxLayout.Content
+    { pattern: /max-w-./ }
   ]
 } satisfies TailwindConfig

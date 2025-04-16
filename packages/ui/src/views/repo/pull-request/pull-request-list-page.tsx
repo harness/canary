@@ -112,7 +112,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
     if (noData) {
       return selectedFiltersCnt > 0 || searchQuery ? (
-        <StackedList.Root className="m-auto">
+        <StackedList.Root className="grow place-content-center">
           <div className="flex items-center justify-center">
             <NoData
               iconName="no-search-magnifying-glass"

@@ -73,5 +73,9 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     }
   }, [theme, setTheme, systemMode])
 
-  return <UIThemeProvider {...{ theme, setTheme, isLightTheme }}>{children}</UIThemeProvider>
+  return (
+    <UIThemeProvider theme={theme} setTheme={setTheme} isLightTheme={isLightTheme}>
+      {children}
+    </UIThemeProvider>
+  )
 }

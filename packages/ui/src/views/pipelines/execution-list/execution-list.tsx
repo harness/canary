@@ -9,7 +9,7 @@ const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: str
   return (
     <div className="flex items-center gap-1.5">
       {status && <ExecutionStatusIcon status={status} />}
-      <span className="truncate text-16 font-medium leading-snug">{title}</span>
+      <span className="text-16 truncate font-medium leading-snug">{title}</span>
     </div>
   )
 }
@@ -24,8 +24,8 @@ const Description = ({
   version?: string
 }) => {
   return (
-    <div className="inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px] text-14 leading-tight">
-      {description && <span className="w-full overflow-hidden break-words text-cn-foreground-3">{description}</span>}
+    <div className="text-14 inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px] leading-tight">
+      {description && <span className="text-cn-foreground-3 w-full overflow-hidden break-words">{description}</span>}
       {version && (
         <div className="flex items-center gap-1">
           <Icon size={11} name={'signpost'} />
@@ -33,7 +33,7 @@ const Description = ({
         </div>
       )}
       {sha && (
-        <div className="flex h-4 items-center gap-1 rounded bg-cn-background-8 px-1.5 text-12 text-cn-foreground-1">
+        <div className="bg-cn-background-8 text-12 text-cn-foreground-1 flex h-4 items-center gap-1 rounded px-1.5">
           <Icon className="text-icons-9" size={12} name={'tube-sign'} />
           {sha?.slice(0, 7)}
         </div>
@@ -61,8 +61,8 @@ export const ExecutionList = ({
 
   if (noData) {
     return query ? (
-      <StackedList.Root>
-        <div className="flex min-h-[50vh] items-center justify-center py-20">
+      <StackedList.Root className="grow place-content-center">
+        <div className="flex items-center justify-center">
           <NoData
             iconName="no-search-magnifying-glass"
             title="No search results"
@@ -78,7 +78,7 @@ export const ExecutionList = ({
         </div>
       </StackedList.Root>
     ) : (
-      <div className="flex min-h-[70vh] items-center justify-center py-20">
+      <div className="m-auto flex items-center justify-center">
         <NoData
           iconName="no-data-folder"
           title="No executions yet"

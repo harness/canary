@@ -71,6 +71,7 @@
   --cn-tabs-nav-height: 45px;
   --cn-page-nav-height: calc(var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height));
   --cn-inset-layout-indent: 6px;
+  --cn-inset-layout-indent-with-borders: calc(var(--cn-inset-layout-indent) + 2px);
 }
 
 .border-linear {
@@ -516,6 +517,5 @@ mark {
 }
 
 .nested-sidebar-height {
-  /* where 2px is the Inset layout borders */
-  @apply h-[calc(100vh-var(--cn-page-nav-height)-var(--cn-inset-layout-indent)-2px)];
+  height: calc(100vh - var(--cn-page-nav-height) - var(--cn-inset-layout-indent-with-borders));
 }

@@ -25,7 +25,7 @@ const App: FC = () => {
   const themeStore = useThemeStore()
 
   return (
-    <ThemeProvider {...{ ...themeStore }}>
+    <ThemeProvider {...themeStore}>
       <RouterProvider router={router} />
     </ThemeProvider>
   )

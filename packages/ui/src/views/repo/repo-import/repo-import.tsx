@@ -151,7 +151,7 @@ export function RepoImportPage({
   }
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
+      <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
         <Spacer size={5} />
         <Text className="tracking-tight" size={5} weight="medium">
           {t('views:repos.importRepo', 'Import a repository')}
@@ -348,7 +348,7 @@ export function RepoImportPage({
             </ControlGroup>
           </Fieldset>
 
-          {!!apiErrorsValue && <span className="text-xs text-cn-foreground-danger">{apiErrorsValue}</span>}
+          {!!apiErrorsValue && <span className="text-cn-foreground-danger text-xs">{apiErrorsValue}</span>}
 
           {/* SUBMIT BUTTONS */}
           <Fieldset className="mt-6">

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { cx } from 'class-variance-authority'
+import { cn } from '@/utils'
 
 function isElement(node: React.ReactNode): node is React.ReactElement {
   return (node as React.ReactElement).type !== undefined
@@ -12,13 +12,11 @@ const Topbar = {
       (child: React.ReactNode) => isElement(child) && child?.type === Topbar.Center
     )
 
-    // Determine the grid layout based on the presence of Center
-    const gridCols = hasCenter ? 'grid-cols-[auto_1fr_auto]' : 'grid-cols-[1fr_auto]'
-
     return (
       <div
-        className={cx(
-          `grid w-full ${gridCols} font-regular h-[var(--cn-breadcrumbs-height)] items-center gap-6 px-5 text-sm`,
+        className={cn(
+          `grid w-full grid-cols-[1fr_auto] font-regular h-[var(--cn-breadcrumbs-height)] items-center gap-6 px-5 text-sm`,
+          { 'grid-cols-[auto_1fr_auto]': hasCenter },
           className
         )}
       >

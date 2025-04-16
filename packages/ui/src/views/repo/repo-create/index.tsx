@@ -113,13 +113,13 @@ export function RepoCreatePage({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
+      <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
         <Spacer size={5} />
         <Text className="tracking-tight" size={5} weight="medium">
           {t('views:repos.createNewRepo', 'Create a new repository')}
         </Text>
         <Spacer size={2.5} />
-        <Text className="max-w-[476px] text-cn-foreground-2" size={2} as="p">
+        <Text className="text-cn-foreground-2 max-w-[476px]" size={2} as="p">
           {t(
             'views:repos.repoContains',
             'A repository contains all project files, including the revision history. Already have a project repository elsewhere?'
@@ -201,7 +201,7 @@ export function RepoCreatePage({
           {/* ACCESS */}
           <Fieldset className="mt-4">
             <ControlGroup>
-              <Text className="leading-none text-cn-foreground-2" size={2}>
+              <Text className="text-cn-foreground-2 leading-none" size={2}>
                 Who has access
               </Text>
               <RadioGroup className="mt-6" value={accessValue} onValueChange={handleAccessChange} id="access">
@@ -231,7 +231,7 @@ export function RepoCreatePage({
           {/* README */}
           <Fieldset className="mt-4">
             <ControlGroup>
-              <Text className="leading-none text-cn-foreground-2" size={2}>
+              <Text className="text-cn-foreground-2 leading-none" size={2}>
                 Initialize this repository with
               </Text>
               <Option

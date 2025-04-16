@@ -83,18 +83,20 @@ interface ContentProps {
   children: ReactNode
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl'
   className?: string
-  paddingClassName?: string
 }
 
-function Content({
-  children,
-  maxWidth,
-  className,
-  paddingClassName = 'px-5 pt-7 pb-11 flex flex-col grow'
-}: ContentProps) {
-  const widthClass = maxWidth ? `max-w-${maxWidth} mx-auto` : ''
-
-  return <div className={cn(paddingClassName, widthClass, className)}>{children}</div>
+function Content({ children, maxWidth, className }: ContentProps) {
+  return (
+    <div
+      className={cn(
+        'px-5 pt-7 pb-11 flex flex-col grow w-full',
+        { [`max-w-${maxWidth} mx-auto`]: !!maxWidth },
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
 }
 
 function Columns({ children, className, columnWidths = 'repeat(2, 1fr)' }: ColumnsProps) {

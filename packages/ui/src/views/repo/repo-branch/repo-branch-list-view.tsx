@@ -3,7 +3,6 @@ import { FC, useMemo } from 'react'
 import { Button, ListActions, Pagination, SearchBox, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
-import { cn } from '@utils/cn'
 
 import { BranchesList } from './components/branch-list'
 import { CreateBranchDialog } from './components/create-branch-dialog'
@@ -43,12 +42,11 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
-        <Spacer size={2} />
+      <SandboxLayout.Content>
         {(isLoading || !!branchList.length || isDirtyList) && (
           <>
-            <span className="text-24 text-cn-foreground-1 font-medium">{t('views:repos.branches', 'Branches')}</span>
-            <Spacer size={6} />
+            <h1 className="text-cn-foreground-1 mb-6 text-2xl font-medium">{t('views:repos.branches', 'Branches')}</h1>
+
             <ListActions.Root>
               <ListActions.Left>
                 <SearchBox.Root

@@ -3,7 +3,6 @@ import { FC, useMemo } from 'react'
 import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonTable, Spacer, StackedList } from '@/components'
 import { RepoTagsStore, SandboxLayout, TranslationStore } from '@/views'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
-import { cn } from '@utils/cn'
 
 import { RepoTagsList } from './components/repo-tags-list'
 
@@ -53,7 +52,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
       return <SkeletonTable countRows={10} countColumns={4} />
     } else if (noData) {
       return searchQuery ? (
-        <StackedList.Root className="m-auto">
+        <StackedList.Root className="grow place-content-center">
           <div className="flex items-center justify-center">
             <NoData
               iconName="no-search-magnifying-glass"
@@ -100,12 +99,11 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !tagsList.length && !searchQuery })}>
-        <Spacer size={2} />
+      <SandboxLayout.Content>
         {(isLoading || !!tagsList.length || isDirtyList) && (
           <>
-            <span className="text-24 text-cn-foreground-1 font-medium">{t('views:repos.tags', 'Tags')}</span>
-            <Spacer size={6} />
+            <h1 className="text-cn-foreground-1 mb-6 text-2xl font-medium">{t('views:repos.tags', 'Tags')}</h1>
+
             <ListActions.Root>
               <ListActions.Left>
                 <SearchBox.Root

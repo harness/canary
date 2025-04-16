@@ -34,7 +34,6 @@ export function MainContentLayout({ children, useSidebar, className, withBreadcr
         'flex flex-col min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] my-[var(--cn-inset-layout-indent)] mr-[var(--cn-inset-layout-indent)] border rounded-md min-w-fit bg-cn-background-1',
         {
           'ml-[var(--cn-inset-layout-indent)]': isMobile,
-          'min-h-[calc(100vh-var(--cn-breadcrumbs-height))]': withBreadcrumbs,
           'min-h-[calc(100vh-var(--cn-breadcrumbs-height)-var(--cn-inset-layout-indent))] mb-[var(--cn-inset-layout-indent)] mt-0':
             withBreadcrumbs
         },

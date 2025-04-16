@@ -1,6 +1,5 @@
 import { DropdownMenu, Icon, IconProps, Sidebar, Text, useSidebar } from '@/components'
 import { useRouterContext } from '@/context'
-import { cn } from '@/utils'
 import { TFunction } from 'i18next'
 
 const dropdownItemClassNames =
@@ -93,7 +92,7 @@ export const SidebarItem = ({
       {!collapsed && (
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
-            <Sidebar.MenuAction className={cn('text-sidebar-icon-3 hover:text-sidebar-icon-1 right-[3px]')} showOnHover>
+            <Sidebar.MenuAction className="text-sidebar-icon-3 hover:text-sidebar-icon-1 right-[3px]" showOnHover>
               <Icon name="menu-dots" size={12} />
             </Sidebar.MenuAction>
           </DropdownMenu.Trigger>

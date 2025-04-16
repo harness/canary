@@ -39,7 +39,7 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
 
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="h-full" paddingClassName="px-5 pt-7">
+      <SandboxLayout.Content>
         <ConnectorDetailsHeader
           connectorDetails={connectorDetails}
           onTest={onTest}
@@ -53,11 +53,7 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
           value={activeTab}
           onValueChange={handleTabChange}
         >
-          <Tabs.List
-            className={cn(
-              'before:w-[calc(100vw-var(--sidebar-width)-6px*2)] before:min-w-[calc(100%+3rem)] before:left-1/2 before:-translate-x-1/2'
-            )}
-          >
+          <Tabs.List className="before:left-1/2 before:w-[calc(100vw-var(--sidebar-width)-6px*2)] before:min-w-[calc(100%+3rem)] before:-translate-x-1/2">
             <Tabs.Trigger
               className="data-[state=active]:bg-cn-background-2 px-4"
               value={ConnectorDetailsTabsKeys.CONFIGURATION}

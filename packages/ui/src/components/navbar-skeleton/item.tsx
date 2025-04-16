@@ -116,9 +116,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
               { 'text-sidebar-icon-1': active && isMainNav }
             )}
           >
-            {active && (
-              <span className="bg-navbar-item-gradient absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2" />
-            )}
+            {active && <span className="absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2" />}
             {icon}
           </div>
         )}

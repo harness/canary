@@ -321,17 +321,19 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           )}
           {!shouldHideReviewButton && currentUser && (
             <ButtonWithOptions
-              id="pr-type"
+              id="pr-status"
               theme={getApprovalStateTheme(approveState)}
               disabled={isActiveUserPROwner}
               variant="surface"
               handleOptionChange={selectedMethod => {
                 submitReview?.(selectedMethod as PullReqReviewDecision)
               }}
-              options={itemsToRender.map(item => ({
-                value: item.method,
-                label: item.title
-              }))}
+              options={
+                itemsToRender?.map(item => ({
+                  value: item?.method,
+                  label: item?.title
+                })) || []
+              }
               handleButtonClick={() => {
                 if (
                   approveState === PullReqReviewDecision.approve ||

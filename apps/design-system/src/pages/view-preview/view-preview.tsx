@@ -10,6 +10,8 @@ import { ConnectorsDetailsPageWrapper } from '@subjects/views/connectors/connect
 import { ConnectorsPage } from '@subjects/views/connectors/connectors'
 import { ConnectorInputExample } from '@subjects/views/connectors/connectors-input'
 import { ConnectorsListPageWrapper } from '@subjects/views/connectors/connectors-list'
+import { DelegateConnectivityWrapper } from '@subjects/views/delegates/delegate-connectivity'
+import { DelegateSelector } from '@subjects/views/delegates/delegate-selector'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
@@ -65,8 +67,6 @@ import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
 import RepoViewWrapper from './repo-view-wrapper'
 import RootViewWrapper from './root-view-wrapper'
 import ViewSettings from './view-settings'
-import { DelegateConnectivityWrapper } from '@subjects/views/delegates/delegate-connectivity'
-import { DelegateSelector } from '@subjects/views/delegates/delegate-selector'
 
 export interface ViewPreviewGroup {
   label: string
@@ -536,7 +536,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'delegate-connectivity': {
         label: 'Delegate Connectivity',
         element: <DelegateConnectivityWrapper />
-      },
+      }
     }
   },
 

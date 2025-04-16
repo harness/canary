@@ -119,7 +119,7 @@ export const RepoCode = () => {
                   timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
                   user: { name: item?.last_commit?.author?.identity?.name || '' },
                   sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                  path: `${fullGitRef || selectedBranch}/~/${item?.path}`
+                  path: `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranch}/~/${item?.path}`
                 }))
               )
             )

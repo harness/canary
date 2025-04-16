@@ -50,7 +50,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
-        <h1 className="text-24 font-medium leading-snug tracking-tight text-cn-foreground-1">Executions</h1>
+        <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Executions</h1>
         <Spacer size={6} />
         <ListActions.Root>
           <ListActions.Left>

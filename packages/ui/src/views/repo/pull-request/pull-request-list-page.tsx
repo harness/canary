@@ -200,7 +200,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             onChange={onFilterValueChange}
             view="dropdown"
           >
-            <h1 className="text-24 text-cn-foreground-1 mb-6 font-medium leading-snug tracking-tight">Pull Requests</h1>
+            <h1 className="mb-6 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Pull Requests</h1>
 
             <ListActions.Root>
               <ListActions.Left>

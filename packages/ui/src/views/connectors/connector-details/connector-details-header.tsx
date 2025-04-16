@@ -21,9 +21,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
         <div className="pt-1">
           <Logo name={connectorDetails.type.toLowerCase() as LogoName} />
         </div>
-        <h1 className="text-24 font-medium leading-snug tracking-tight text-cn-foreground-1">
-          {connectorDetails.name}
-        </h1>
+        <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">{connectorDetails.name}</h1>
       </div>
       <h2 className="text-2 font-medium text-cn-foreground-1">{connectorDetails.description}</h2>
       <Spacer size={4} />

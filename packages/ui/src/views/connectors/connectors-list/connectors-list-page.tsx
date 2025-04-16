@@ -83,7 +83,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !connectors.length && !searchQuery })}>
-        <h1 className="text-24 text-cn-foreground-2 font-medium leading-snug tracking-tight">Connectors</h1>
+        <h1 className="text-6 text-cn-foreground-2 font-medium leading-snug tracking-tight">Connectors</h1>
         <Spacer size={6} />
         <FilterGroup<ConnectorListFilters, keyof ConnectorListFilters>
           onFilterSelectionChange={onFilterSelectionChange}

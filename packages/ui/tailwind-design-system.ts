@@ -378,9 +378,6 @@ export default {
         11: 'var(--cn-font-size-11)',
         12: 'var(--cn-font-size-12)',
         13: 'var(--cn-font-size-13)'
-
-        // Remove
-        // 24: 'var(--cn-font-size-6)'
       },
       backgroundImage: {
         'ai-button':

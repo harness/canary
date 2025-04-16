@@ -44,7 +44,7 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
 
   return (
     <SandboxLayout.Content className="px-0">
-      <h1 className="text-24 font-medium text-cn-foreground-1">
+      <h1 className="text-6 font-medium text-cn-foreground-1">
         {t('views:profileSettings.keysAndTokens', 'Keys and Tokens')}
       </h1>
       <Spacer size={10} />

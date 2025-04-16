@@ -53,7 +53,7 @@ interface CardTitleProps extends HTMLAttributes<HTMLHeadingElement> {
 
 const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
   ({ className, children, as: Tag = 'h3', ...props }, ref) => (
-    <Tag ref={ref} className={cn('font-medium text-24 leading-snug', className)} {...props}>
+    <Tag ref={ref} className={cn('font-medium text-6 leading-snug', className)} {...props}>
       {children}
     </Tag>
   )

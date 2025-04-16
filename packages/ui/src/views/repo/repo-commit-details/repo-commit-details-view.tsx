@@ -28,7 +28,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   return (
     <SandboxLayout.Main className="overflow-visible" fullWidth>
       <SandboxLayout.Content className="px-5 pb-0 pt-7">
-        <span className="mt-7 text-24 font-medium leading-snug tracking-tight text-cn-foreground-1">
+        <span className="mt-7 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">
           {t('views:commits.commitDetailsTitle', 'Commit')}
           <span className="ml-1.5 font-normal text-cn-foreground-2">{commitData?.sha?.substring(0, 7)}</span>
         </span>

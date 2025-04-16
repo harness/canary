@@ -66,7 +66,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   return (
     <>
       <div className={cn('flex w-full flex-col gap-y-4', className)}>
-        <div className="flex w-full max-w-full items-center gap-x-3 text-24">
+        <div className="flex w-full max-w-full items-center gap-x-3 text-6">
           <div className="flex items-center gap-x-2.5 leading-snug">
             <h1 className="flex max-w-[95%] items-center truncate font-medium text-cn-foreground-1">{title}</h1>
             <span className="font-normal text-cn-foreground-2">#{number}</span>

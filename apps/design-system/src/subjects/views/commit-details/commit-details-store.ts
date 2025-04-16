@@ -3871,12 +3871,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 52
             },
             {
-              content: '-        <h1 className="text-cn-foreground-1 font-medium text-24 flex gap-x-2.5">',
+              content: '-        <h1 className="text-cn-foreground-1 font-medium text-6 flex gap-x-2.5">',
               type: 'delete',
               oldNumber: 53
             },
             {
-              content: '+        <h1 className="flex gap-x-2.5 text-24 font-medium text-cn-foreground-1">',
+              content: '+        <h1 className="flex gap-x-2.5 text-6 font-medium text-cn-foreground-1">',
               type: 'insert',
               newNumber: 53
             },
@@ -3976,7 +3976,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx::::packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx',
       filePath: 'packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\nindex 0e0a22511ef8f94379e3d1aa907cf82ef0d385ff..8cfd0819eb80a4a70596c94ef0a37f7f9b55c747 100644\n--- a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n+++ b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n@@ -50,7 +50,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n   return (\n     <div className="flex flex-col gap-y-4">\n       <div className="flex items-center">\n-        <h1 className="text-cn-foreground-1 font-medium text-24 flex gap-x-2.5">\n+        <h1 className="flex gap-x-2.5 text-24 font-medium text-cn-foreground-1">\n           {original}\n           <span className="font-normal text-cn-foreground-3">#{number}</span>\n         </h1>\n@@ -82,7 +82,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n               {source_branch}\n             </Link>\n           </Badge>\n-          <span className="w-px h-4 mx-1.5 bg-cn-background-3" />\n+          <span className="mx-1.5 h-4 w-px bg-cn-background-3" />\n           <span className="text-cn-foreground-3">{formattedTime}</span>\n         </div>\n       </div>\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\nindex 0e0a22511ef8f94379e3d1aa907cf82ef0d385ff..8cfd0819eb80a4a70596c94ef0a37f7f9b55c747 100644\n--- a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n+++ b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n@@ -50,7 +50,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n   return (\n     <div className="flex flex-col gap-y-4">\n       <div className="flex items-center">\n-        <h1 className="text-cn-foreground-1 font-medium text-6 flex gap-x-2.5">\n+        <h1 className="flex gap-x-2.5 text-6 font-medium text-cn-foreground-1">\n           {original}\n           <span className="font-normal text-cn-foreground-3">#{number}</span>\n         </h1>\n@@ -82,7 +82,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n               {source_branch}\n             </Link>\n           </Badge>\n-          <span className="w-px h-4 mx-1.5 bg-cn-background-3" />\n+          <span className="mx-1.5 h-4 w-px bg-cn-background-3" />\n           <span className="text-cn-foreground-3">{formattedTime}</span>\n         </div>\n       </div>\n'
     },
     {
       blocks: [

@@ -48,7 +48,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
     <>
       <div className="flex flex-col items-start">
         <div className="flex items-center justify-between w-full">
-          <span className="truncate text-18 font-medium">{title}</span>
+          <span className="truncate text-4 font-medium">{title}</span>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button variant="ghost" size="sm_icon" aria-label="More options">

@@ -57,7 +57,7 @@ const PullRequestFilters = <T extends FilterOption>({
 }: PullRequestFilterProps<T>) => {
   return (
     <div className={cn('grid grid-cols-[1fr_auto] items-center border-b border-cn-borders-2 pb-2', className)}>
-      <h3 className="text-18 font-medium leading-snug text-cn-foreground-1">Overview</h3>
+      <h3 className="text-4 font-medium leading-snug text-cn-foreground-1">Overview</h3>
 
       <div className="flex items-center gap-x-5">
         <DropdownMenuComponent items={activityFilters} selectedItem={activityFilter} onItemSelect={setActivityFilter} />

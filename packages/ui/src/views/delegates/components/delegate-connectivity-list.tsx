@@ -70,7 +70,7 @@ export function DelegateConnectivityList({
                 </Table.Cell>
                 <Table.Cell className="max-w-80 content-center truncate">
                   {groupCustomSelectors.map((selector: string) => (
-                    <Badge variant="soft" theme="merged" key={selector} className='mr-2'>
+                    <Badge variant="soft" theme="merged" key={selector} className="mr-2">
                       {selector}
                     </Badge>
                   ))}

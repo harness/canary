@@ -83,13 +83,14 @@ const SortableItem = memo<SortableItemProps>(
           onChange={handleChange}
         />
 
-        <button
-          className="text-icons-4 hover:text-icons-danger"
+        <Button
+          variant="ghost"
+          className="hover:text-cn-foreground-danger"
           onClick={() => onDelete(view.id)}
           aria-label="Delete view"
         >
           <Icon className="rotate-45" name="plus" size={14} />
-        </button>
+        </Button>
       </div>
     )
   }
@@ -204,7 +205,8 @@ const ManageViews: FC<ManageViewsProps> = memo(({ open, onOpenChange, views, vie
 
         <AlertDialog.Footer>
           <Button
-            variant="outline"
+            variant="surface"
+            theme="muted"
             onClick={() => {
               setLocalViews(views)
               onOpenChange(false)

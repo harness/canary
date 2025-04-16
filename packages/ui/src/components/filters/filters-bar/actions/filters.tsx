@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { DropdownMenu, Icon } from '@/components'
+import { Button, DropdownMenu, Icon } from '@/components'
 import { cn } from '@utils/cn'
 
 import type { FilterAction, FilterHandlers, FilterOption, FilterSearchQueries, FilterValue } from '../../types'
@@ -117,10 +117,10 @@ const Filters = ({
                   className="text-cn-foreground-2 duration-200 hover:text-cn-foreground-danger data-[highlighted]:bg-transparent data-[highlighted]:text-cn-foreground-danger data-[highlighted]:outline-none"
                   onSelect={() => handleRemoveFilter?.(filter.type)}
                 >
-                  <button className="flex items-center gap-x-1.5 text-2">
+                  <Button variant="ghost">
                     <Icon name="trash" size={12} />
                     Delete filter
-                  </button>
+                  </Button>
                 </DropdownMenu.Item>
               </DropdownMenu.Content>
             </DropdownMenu.Root>

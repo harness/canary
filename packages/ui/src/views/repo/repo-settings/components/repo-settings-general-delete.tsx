@@ -22,7 +22,7 @@ export const RepoSettingsGeneralDelete: FC<{
         )}
       </span>
       <ButtonGroup className="mt-7">
-        <Button type="button" variant="destructive" onClick={openRepoAlertDeleteDialog}>
+        <Button type="button" variant="soft" theme="danger" onClick={openRepoAlertDeleteDialog}>
           {t('views:repos.deleteRepoButton', 'Delete repository')}
         </Button>
       </ButtonGroup>

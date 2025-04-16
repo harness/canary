@@ -1,4 +1,4 @@
-import { Icon } from '@/components'
+import { Button, Icon } from '@/components'
 import { TFunction } from 'i18next'
 
 import FilterTrigger from '../triggers/filter-trigger'
@@ -152,13 +152,10 @@ const FiltersBar = ({
               options={filterOptions}
               t={t}
             />
-            <button
-              className="flex items-center gap-x-1.5 text-2 text-cn-foreground-2 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-cn-foreground-danger focus:ring-2"
-              onClick={handleResetAll}
-            >
+            <Button variant="ghost" className="hover:text-cn-foreground-danger" onClick={handleResetAll}>
               <Icon className="rotate-45" name="plus" size={12} />
               {t('component:filter.reset', 'Reset')}
-            </button>
+            </Button>
           </div>
 
           {viewManagement && (

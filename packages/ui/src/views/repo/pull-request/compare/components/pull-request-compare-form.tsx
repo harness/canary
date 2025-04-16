@@ -181,11 +181,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
               {activeTab === TABS_KEYS.WRITE && (
                 <div>
                   <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-                  <Button
-                    className="gap-x-2 px-2.5 font-normal text-cn-foreground-3 hover:bg-cn-background-8"
-                    variant="custom"
-                    onClick={e => handleFileSelect(e)}
-                  >
+                  <Button variant="ghost" onClick={e => handleFileSelect(e)}>
                     <Icon size={16} name="attachment-image" />
                     <span>Drag & drop, select, or paste to attach files</span>
                   </Button>

@@ -95,6 +95,7 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
                       <RenderInputs items={getChildInputs(inputConfig?.inputs, path, idx)} factory={factory} />
                     )}
                     <div className="flex items-center">
+                      {/* TODO: Design system: Find alternate */}
                       <button
                         className="mt-2"
                         onClick={() => {

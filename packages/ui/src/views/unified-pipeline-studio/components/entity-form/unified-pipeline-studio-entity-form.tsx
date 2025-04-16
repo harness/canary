@@ -193,13 +193,15 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
           <EntityFormLayout.Footer>
             <div className="flex gap-x-3">
               <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-              <Button variant="outline" onClick={requestClose}>
+              <Button variant="soft" theme="muted" onClick={requestClose}>
                 Cancel
               </Button>
             </div>
             {editStepIntention && (
               <Button
-                variant="outline"
+                variant="soft"
+                theme="muted"
+                iconOnly
                 onClick={() => {
                   requestYamlModifications.deleteInArray({ path: editStepIntention.path })
                   requestClose()

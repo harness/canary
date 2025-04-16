@@ -49,8 +49,8 @@ const FilterSelect = <FilterKey extends string>({
             onChange={e => setSearchQuery(e.target.value)}
             rightElement={
               <Button
-                size="sm_icon"
-                variant="custom"
+                variant="ghost"
+                iconOnly
                 onClick={() => {
                   setSearchQuery('')
                 }}
@@ -102,7 +102,7 @@ const FilterSelectLabel = ({
 }) => {
   return (
     <>
-      <Button size="xs" variant="ghost" className="gap-x-1 px-0 hover:bg-transparent hover:text-cn-foreground-1">
+      <Button size="sm" variant="ghost" className="gap-x-1 px-0">
         {displayLabel}
         {selectedFilters > 0 && (
           <span className="flex h-[18px] min-w-[17px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-0 text-tag-foreground-blue-1">
@@ -117,7 +117,7 @@ const FilterSelectLabel = ({
 
 const FilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactNode }) => {
   return (
-    <Button size="xs" variant="ghost" className="gap-x-1.5 hover:bg-transparent hover:text-cn-foreground-1">
+    <Button size="sm" variant="ghost" className="gap-x-1.5">
       <Icon name="plus" size={10} />
       <span>{displayLabel}</span>
     </Button>

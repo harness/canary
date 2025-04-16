@@ -103,7 +103,7 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
         </FormWrapper>
         <Dialog.Footer>
           <ButtonGroup className="justify-end">
-            <Button type="button" variant="outline" onClick={onClose} disabled={isUpdatingUser}>
+            <Button type="button" variant="surface" theme="muted" onClick={onClose} disabled={isUpdatingUser}>
               {t('views:userManagement.cancel', 'Cancel')}
             </Button>
             <Button type="submit" disabled={isUpdatingUser} form="edit-user-form">

@@ -237,12 +237,7 @@ export function RepoSummaryView({
                 <StackedList.Field
                   right
                   title={
-                    <Button
-                      className="flex border border-cn-borders-2 hover:bg-cn-background-3"
-                      variant="ghost"
-                      size="icon"
-                      asChild
-                    >
+                    <Button variant="surface" theme="muted" iconOnly asChild>
                       <Link to={`${toRepoFiles?.()}/edit/${gitRef || selectedBranchOrTag?.name}/~/README.md`}>
                         <Icon name="edit-pen" size={16} className="text-icons-3" />
                         <span className="sr-only">{t('views:repos.editReadme', 'Edit README.md')}</span>

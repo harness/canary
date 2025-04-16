@@ -335,7 +335,7 @@ export function RepoImportMultiplePage({
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Import repositories' : 'Importing repositories...'}
                 </Button>
-                <Button type="button" variant="outline" onClick={handleCancel}>
+                <Button type="button" variant="surface" theme="muted" onClick={handleCancel}>
                   Cancel
                 </Button>
               </ButtonGroup>

@@ -95,6 +95,7 @@ const SortableItem = ({
           </DropdownMenu.Root>
         </div>
 
+        {/* TODO: Design system: Find alternate */}
         <button
           className="p-1 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1 focus:bg-transparent"
           onClick={e => {

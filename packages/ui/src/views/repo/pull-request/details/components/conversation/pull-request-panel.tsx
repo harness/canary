@@ -334,11 +334,12 @@ const PullRequestPanel = ({
               !pullReqMetadata?.merged && (
                 <Layout.Horizontal className="items-center justify-center space-x-2.5">
                   {commitSuggestionsBatchCount > 0 ? (
-                    <Button className="gap-x-2" variant="surface" theme="muted" onClick={() => onCommitSuggestions()}>
+                    <Button variant="surface" theme="muted" onClick={() => onCommitSuggestions()}>
                       Commit suggestion
-                      <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-0 text-tag-foreground-blue-1">
+                      {/* TODO: Design system: Add Badge counter icon theme once it is ready */}
+                      <Badge variant="counter" size="sm">
                         {commitSuggestionsBatchCount}
-                      </span>
+                      </Badge>
                     </Button>
                   ) : (
                     <></>
@@ -378,7 +379,6 @@ const PullRequestPanel = ({
                     </ButtonWithOptions>
                   ) : (
                     <Button
-                      theme="primary"
                       disabled={!checkboxBypass && prPanelData.ruleViolation && !isClosed}
                       onClick={actions[0].action}
                     >
@@ -445,11 +445,11 @@ const PullRequestPanel = ({
               <span className="text-2 text-cn-foreground-1"> branch has unmerged changes.</span>
             </Layout.Horizontal>
             {showDeleteBranchButton ? (
-              <Button theme="primary" size="sm" onClick={onDeleteBranch}>
+              <Button size="sm" onClick={onDeleteBranch}>
                 Delete Branch
               </Button>
             ) : showRestoreBranchButton ? (
-              <Button theme="primary" size="sm" onClick={onRestoreBranch}>
+              <Button size="sm" onClick={onRestoreBranch}>
                 Restore Branch
               </Button>
             ) : null}

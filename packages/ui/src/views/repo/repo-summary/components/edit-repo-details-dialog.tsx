@@ -51,7 +51,7 @@ export const EditRepoDetails = ({
             <Button variant="surface" theme="muted" onClick={handleClose}>
               Cancel
             </Button>
-            <Button type="button" theme="primary" onClick={() => onSave(newDesc)}>
+            <Button type="button" onClick={() => onSave(newDesc)}>
               Save
             </Button>
           </ButtonGroup>

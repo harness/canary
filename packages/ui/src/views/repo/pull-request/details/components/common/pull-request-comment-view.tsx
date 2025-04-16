@@ -2,7 +2,7 @@
 
 import { FC } from 'react'
 
-import { Button, MarkdownViewer } from '@/components'
+import { Badge, Button, MarkdownViewer } from '@/components'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
 
 import { CommentItem, TypesPullReqActivity } from '../../pull-request-details-types'
@@ -67,9 +67,10 @@ const PRCommentView: FC<PRCommentViewProps> = ({
           >
             Commit suggestion
             {!!suggestionsBatch?.length && (
-              <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-0 leading-normal text-tag-foreground-blue-1">
+              // TODO: Design system: Add Badge counter info theme once it is ready
+              <Badge variant="counter" size="sm">
                 {suggestionsBatch.length}
-              </span>
+              </Badge>
             )}
           </Button>
           {isInBatch ? (

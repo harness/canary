@@ -348,23 +348,9 @@ export default {
         'commit-list-bullet':
           '0px 0px 3px 0.5px hsla(var(--cn-set-brand-solid-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-solid-bg) / 0.3)'
       },
+      // Remove borderColor - removing the Default is causing border issues in dark mode
       borderColor: {
-        DEFAULT: 'var(--cn-border-3)',
-        'borders-1': 'var(--cn-border-2)',
-        'borders-2': 'var(--cn-border-2)',
-        'borders-3': 'var(--cn-border-1)',
-        'borders-4': 'var(--cn-state-disabled-border)',
-        'borders-5': 'var(--cn-border-2)',
-        'borders-6': 'var(--cn-border-1)',
-        'borders-7': 'var(--cn-border-1)',
-        'borders-8': 'var(--cn-border-2)',
-        'borders-9': 'var(--cn-border-1)',
-        'borders-10': 'var(--cn-border-2)',
-        'borders-danger': 'var(--cn-border-danger)',
-        'borders-success': 'var(--cn-border-success)',
-        'borders-accent': 'var(--cn-border-accent)',
-        'borders-warning': 'var(--cn-border-warning)',
-        'borders-alert': 'var(--cn-border-warning)'
+        DEFAULT: 'var(--cn-border-3)'
       },
       borderRadius: {
         10: 'var(--cn-rounded-4)'

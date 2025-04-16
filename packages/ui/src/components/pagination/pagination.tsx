@@ -18,7 +18,7 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
   // Always show the first page
   items.push(
     <PaginationPrimitive.Item key={1}>
-      <PaginationPrimitive.Link size="sm_icon" href="#" onClick={goToPage(1)} isActive={currentPage === 1}>
+      <PaginationPrimitive.Link isFullRounded size="sm" href="#" onClick={goToPage(1)} isActive={currentPage === 1}>
         1
       </PaginationPrimitive.Link>
     </PaginationPrimitive.Item>
@@ -37,7 +37,7 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
   for (let i = Math.max(2, currentPage - siblings); i <= Math.min(totalPages - 1, currentPage + siblings); i++) {
     items.push(
       <PaginationPrimitive.Item key={i}>
-        <PaginationPrimitive.Link isActive={currentPage === i} size="sm_icon" href="#" onClick={goToPage(i)}>
+        <PaginationPrimitive.Link isFullRounded isActive={currentPage === i} size="sm" href="#" onClick={goToPage(i)}>
           {i}
         </PaginationPrimitive.Link>
       </PaginationPrimitive.Item>
@@ -56,7 +56,7 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
   // Always show the last page
   items.push(
     <PaginationPrimitive.Item key={totalPages}>
-      <PaginationPrimitive.Link size="sm_icon" onClick={goToPage(totalPages)} isActive={currentPage === totalPages}>
+      <PaginationPrimitive.Link isFullRounded onClick={goToPage(totalPages)} isActive={currentPage === totalPages}>
         {totalPages}
       </PaginationPrimitive.Link>
     </PaginationPrimitive.Item>

@@ -222,7 +222,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
                 />
               ))}
 
-              <Button className="mt-3.5 h-auto gap-x-1 self-start p-0" variant="link_accent" onClick={handleAddValue}>
+              <Button className="mt-3.5 h-auto gap-x-1 self-start" variant="link" onClick={handleAddValue}>
                 <Icon name="bold-plus" size={10} />
                 {t('views:labelData.form.addValue', 'Add a value')}
               </Button>

@@ -96,7 +96,7 @@ const CommitsAccordion: FC<{
                   <Layout.Vertical gap="space-y-0" className="flex w-full items-center py-5">
                     <Button
                       className="text-cn-foreground-accent"
-                      variant="link_accent"
+                      variant="link"
                       size="sm"
                       aria-label="show diff"
                       onClick={() => setShowHiddenDiff(true)}

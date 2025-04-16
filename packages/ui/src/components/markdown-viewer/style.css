@@ -208,7 +208,7 @@
   }
 
   code {
-    @apply bg-cn-background-9 border-cn-borders-2 font-code text-cn-foreground-2 text-15 rounded border px-1 py-px font-normal tracking-normal before:hidden after:hidden;
+    @apply bg-cn-background-9 border-cn-borders-2 font-code text-cn-foreground-2 text-2 rounded border px-1 py-px font-normal tracking-normal before:hidden after:hidden;
   }
 
   strong {
@@ -233,7 +233,7 @@
     }
 
     td {
-      @apply text-15 text-cn-foreground-1 border-l-0 border-r-0 px-0 py-3 pr-10;
+      @apply text-2 text-cn-foreground-1 border-l-0 border-r-0 px-0 py-3 pr-10;
     }
 
     tr {

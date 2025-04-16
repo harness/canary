@@ -132,7 +132,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   <div className="flex items-center gap-2">
                     <Avatar.Root size="4.5">
                       {!!branch?.user?.avatarUrl && <Avatar.Image src={branch?.user?.avatarUrl} />}
-                      <Avatar.Fallback className="text-10 text-center">
+                      <Avatar.Fallback className="text-center text-0">
                         {getInitials(branch?.user?.name ?? '')}
                       </Avatar.Fallback>
                     </Avatar.Root>

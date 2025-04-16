@@ -79,7 +79,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                                 {authorName && (
                                   <Avatar.Root size="4.5">
                                     {!!avatarUrl && <Avatar.Image src={avatarUrl} alt={`${authorName} avatar`} />}
-                                    <Avatar.Fallback className="text-10">{getInitials(authorName)}</Avatar.Fallback>
+                                    <Avatar.Fallback className="text-0">{getInitials(authorName)}</Avatar.Fallback>
                                   </Avatar.Root>
                                 )}
                                 <span className="text-cn-foreground-3">{authorName || ''}</span>

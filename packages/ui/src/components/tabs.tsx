@@ -24,7 +24,7 @@ const tabsListVariants = cva('inline-flex items-center text-cn-foreground-2', {
     },
     fontSize: {
       xs: 'text-1',
-      sm: 'text-14'
+      sm: 'text-2'
     }
   },
   defaultVariants: {

@@ -44,7 +44,7 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <span className="text-14 leading-tight text-cn-foreground-2">Nothing to show</span>
+            <span className="text-2 leading-tight text-cn-foreground-2">Nothing to show</span>
           </div>
         )}
 

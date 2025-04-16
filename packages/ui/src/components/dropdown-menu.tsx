@@ -137,7 +137,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
         <Icon className="h-[7px] text-icons-5" name="checkbox" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
-    <span className="text-14 text-cn-foreground-1">{children}</span>
+    <span className="text-2 text-cn-foreground-1">{children}</span>
   </DropdownMenuPrimitive.CheckboxItem>
 ))
 DropdownMenuCheckboxItem.displayName = DropdownMenuPrimitive.CheckboxItem.displayName

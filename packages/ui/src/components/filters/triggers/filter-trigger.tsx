@@ -101,7 +101,7 @@ const FilterTrigger = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="flex items-center gap-x-1.5">
-        <span className="flex items-center gap-x-1 text-14 text-cn-foreground-2 hover:text-cn-foreground-1">
+        <span className="flex items-center gap-x-1 text-2 text-cn-foreground-2 hover:text-cn-foreground-1">
           {displayLabel}
           {!hideCount && activeFilters.length > 0 && (
             <span className="flex h-[18px] min-w-[17px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-0 text-tag-foreground-blue-1">
@@ -146,7 +146,7 @@ const FilterTrigger = ({
 
           {filteredBySearchOptions.length === 0 && (
             <div className="flex items-center justify-center p-4">
-              <span className="text-14 leading-none text-cn-foreground-2">No results</span>
+              <span className="text-2 leading-none text-cn-foreground-2">No results</span>
             </div>
           )}
         </div>

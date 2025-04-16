@@ -47,9 +47,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
     >
       <div className="px-3 pt-2">
         {isBranchOnly ? (
-          <span className="text-14 font-medium leading-none">Switch branches</span>
+          <span className="text-2 font-medium leading-none">Switch branches</span>
         ) : (
-          <span className="text-14 font-medium leading-none">Switch branches/tags</span>
+          <span className="text-2 font-medium leading-none">Switch branches/tags</span>
         )}
         <div role="presentation" onKeyDown={e => e.stopPropagation()}>
           <SearchBox.Root
@@ -110,7 +110,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <span className="text-14 leading-tight text-cn-foreground-2">
+            <span className="text-2 leading-tight text-cn-foreground-2">
               {t('views:noData.noResults', 'No search results')}
             </span>
           </div>
@@ -159,7 +159,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         <DropdownMenu.Item className="p-0" asChild>
           <Link to={viewAllUrl}>
             <div className="w-full border-t border-cn-borders-2 px-3 py-2">
-              <span className="text-14 font-medium leading-none transition-colors duration-200 hover:text-cn-foreground-1">
+              <span className="text-2 font-medium leading-none transition-colors duration-200 hover:text-cn-foreground-1">
                 {t('views:repos.viewAll', `View all ${activeTab}`, {
                   type:
                     activeTab === BranchSelectorTab.BRANCHES

@@ -34,7 +34,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-[328px] p-0 shadow-2" align="end">
         <div className="px-4 pt-4 leading-none">
-          <span className="inline-block text-14 font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
+          <span className="inline-block text-2 font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
         </div>
         <Tabs.Root
           className="mt-4"

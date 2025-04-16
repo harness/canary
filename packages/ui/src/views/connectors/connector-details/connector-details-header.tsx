@@ -25,9 +25,9 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           {connectorDetails.name}
         </h1>
       </div>
-      <h2 className="text-14 font-medium text-cn-foreground-1">{connectorDetails.description}</h2>
+      <h2 className="text-2 font-medium text-cn-foreground-1">{connectorDetails.description}</h2>
       <Spacer size={4} />
-      <div className="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-14 leading-none">
+      <div className="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-2 leading-none">
         <div className="flex justify-between gap-11">
           {createdAt ? (
             <div className="flex flex-col gap-1.5">

@@ -12,7 +12,7 @@ interface LabelsListProps {
 
 export const LabelsList: FC<LabelsListProps> = ({ labels, className }) => {
   if (!labels.length) {
-    return <span className="text-14 font-medium text-cn-foreground-3">No labels</span>
+    return <span className="text-2 font-medium text-cn-foreground-3">No labels</span>
   }
 
   return (

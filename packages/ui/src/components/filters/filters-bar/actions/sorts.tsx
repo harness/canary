@@ -61,7 +61,7 @@ const SortableItem = ({
           </div>
 
           <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-cn-borders-2 pl-2.5 pr-1.5 text-14 text-cn-foreground-1">
+            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-cn-borders-2 pl-2.5 pr-1.5 text-2 text-cn-foreground-1">
               {sortOptions.find(opt => opt.value === sort.type)?.label}
               <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
             </DropdownMenu.Trigger>
@@ -78,7 +78,7 @@ const SortableItem = ({
           </DropdownMenu.Root>
 
           <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-cn-borders-2 pl-2.5 pr-1.5 text-14 text-cn-foreground-1">
+            <DropdownMenu.Trigger className="flex h-6 items-center gap-x-1.5 rounded border border-cn-borders-2 pl-2.5 pr-1.5 text-2 text-cn-foreground-1">
               {sortDirections.find(dir => dir.value === sort.direction)?.label}
               <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
             </DropdownMenu.Trigger>
@@ -196,7 +196,7 @@ const Sorts = ({
         <div className="mt-3 flex flex-col gap-y-2.5">
           {sortOptions.some(option => !activeSorts.some(sort => sort.type === option.value)) && (
             <DropdownMenu.Root>
-              <DropdownMenu.Trigger className="flex w-full items-center gap-x-1.5 text-14 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1">
+              <DropdownMenu.Trigger className="flex w-full items-center gap-x-1.5 text-2 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1">
                 <Icon name="plus" size={12} />
                 Add sort
               </DropdownMenu.Trigger>
@@ -257,7 +257,7 @@ const Sorts = ({
             className="p-0 text-cn-foreground-2 transition-colors duration-200 focus:bg-transparent focus:text-cn-foreground-danger focus:outline-none data-[highlighted]:bg-transparent data-[highlighted]:text-cn-foreground-danger"
             asChild
           >
-            <button className="flex items-center gap-x-1.5 text-14" onClick={handleResetSorts}>
+            <button className="flex items-center gap-x-1.5 text-2" onClick={handleResetSorts}>
               <Icon name="trash" size={12} />
               Delete sort
             </button>

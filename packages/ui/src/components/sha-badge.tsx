@@ -29,7 +29,7 @@ function Root({ ...props }: RootProps) {
 function Content({ children, className, asChild }: ContentProps) {
   return (
     <div className={cn('flex items-center rounded-l px-2.5 py-[3px] hover:bg-cn-background-3', className)}>
-      {asChild ? children : <span className="text-14 text-cn-foreground-3">{children}</span>}
+      {asChild ? children : <span className="text-2 text-cn-foreground-3">{children}</span>}
     </div>
   )
 }

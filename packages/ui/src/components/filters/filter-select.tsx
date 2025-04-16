@@ -70,7 +70,7 @@ const FilterSelect = <FilterKey extends string>({
 
           {filteredBySearchOptions.length === 0 && (
             <div className="flex items-center justify-center p-4">
-              <span className="text-14 leading-none text-cn-foreground-2">No results</span>
+              <span className="text-2 leading-none text-cn-foreground-2">No results</span>
             </div>
           )}
         </div>

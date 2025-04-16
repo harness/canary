@@ -33,7 +33,7 @@ const ViewTrigger: FC<ViewTriggerProps> = ({
   return (
     <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenu.Trigger className="flex items-center gap-x-1.5">
-        <span className="flex items-center gap-x-1 text-14 text-cn-foreground-2 hover:text-cn-foreground-1">
+        <span className="flex items-center gap-x-1 text-2 text-cn-foreground-2 hover:text-cn-foreground-1">
           View
           <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
         </span>

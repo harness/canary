@@ -84,10 +84,10 @@ const Filters = ({
         <div className="flex items-center justify-between px-3 py-2.5">
           <div className="flex w-full items-center justify-between gap-x-2">
             <div className="flex items-center gap-x-2">
-              <span className="text-14 text-cn-foreground-2">{filterOption.label}</span>
+              <span className="text-2 text-cn-foreground-2">{filterOption.label}</span>
 
               <DropdownMenu.Root>
-                <DropdownMenu.Trigger className="flex h-[18px] items-center gap-x-1 rounded bg-cn-background-3 pl-1.5 pr-1 text-14 text-cn-foreground-2">
+                <DropdownMenu.Trigger className="flex h-[18px] items-center gap-x-1 rounded bg-cn-background-3 pl-1.5 pr-1 text-2 text-cn-foreground-2">
                   {filterOption.conditions?.find(c => c.value === filter.condition)?.label}
                   <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
                 </DropdownMenu.Trigger>
@@ -117,7 +117,7 @@ const Filters = ({
                   className="text-cn-foreground-2 duration-200 hover:text-cn-foreground-danger data-[highlighted]:bg-transparent data-[highlighted]:text-cn-foreground-danger data-[highlighted]:outline-none"
                   onSelect={() => handleRemoveFilter?.(filter.type)}
                 >
-                  <button className="flex items-center gap-x-1.5 text-14">
+                  <button className="flex items-center gap-x-1.5 text-2">
                     <Icon name="trash" size={12} />
                     Delete filter
                   </button>

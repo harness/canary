@@ -6,7 +6,7 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded text-14 font-medium transition-colors disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center whitespace-nowrap rounded text-2 font-medium transition-colors disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
@@ -35,7 +35,7 @@ const buttonVariants = cva(
         xs_icon: 'size-6',
         sm_icon: 'size-7',
         xs_split: 'h-auto p-0 text-2 font-medium',
-        md_split: 'h-8 text-14 font-medium',
+        md_split: 'h-8 text-2 font-medium',
         lg_split: 'h-10 p-0 font-medium'
       },
       borderRadius: {

@@ -42,7 +42,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
           title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}
           description={<LineDescription text={checksInfo.content} />}
         />
-        <span className="px-2 py-1.5 text-14 text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
+        <span className="px-2 py-1.5 text-2 text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
           Show more
         </span>
       </Accordion.Trigger>

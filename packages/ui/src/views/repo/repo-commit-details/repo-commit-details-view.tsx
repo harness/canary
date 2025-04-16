@@ -38,10 +38,10 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               <Avatar.Root>
                 <Avatar.Fallback className="text-0">{getInitials(commitData.author.identity.name)}</Avatar.Fallback>
               </Avatar.Root>
-              <span className="ml-2 text-14 font-medium leading-none text-cn-foreground-1">
+              <span className="ml-2 text-2 font-medium leading-none text-cn-foreground-1">
                 {commitData.author.identity.name}
               </span>
-              <span className="ml-1.5 text-14 font-normal leading-none text-cn-foreground-2">
+              <span className="ml-1.5 text-2 font-normal leading-none text-cn-foreground-2">
                 {t('views:commits.commitDetailsAuthored', 'authored')}{' '}
                 {timeAgo(new Date(commitData.author.when).getTime())}
               </span>
@@ -58,14 +58,14 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
         </div>
         <div className="mt-5 rounded-md border border-cn-borders-2">
           <div className="flex items-center justify-between rounded-t-md border-b border-cn-borders-2 bg-cn-background-2 px-4 py-3">
-            <span className="font-mono text-14 font-medium leading-snug text-cn-foreground-1">{commitData?.title}</span>
+            <span className="font-mono text-2 font-medium leading-snug text-cn-foreground-1">{commitData?.title}</span>
             <Button variant="outline">{t('views:commits.browseFiles', 'Browse files')}</Button>
           </div>
           <div className="flex items-center justify-between px-4 py-3">
             <div className="flex h-6 items-center gap-x-1 rounded-md bg-cn-background-8 px-2.5">
               <Icon name="branch" size={14} className="text-icons-9" />
               {/* TODO: get branch name from commitData */}
-              <span className="text-14 font-medium leading-snug text-cn-foreground-1">main</span>
+              <span className="text-2 font-medium leading-snug text-cn-foreground-1">main</span>
             </div>
             <CommitCopyActions toCommitDetails={toCommitDetails} sha={commitData?.sha || ''} />
           </div>

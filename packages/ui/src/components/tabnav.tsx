@@ -24,7 +24,7 @@ const TabNavItem: FC<NavLinkProps> = ({ className, ...props }) => {
       role="tab"
       className={({ isActive }) =>
         cn(
-          'block relative place-content-center whitespace-nowrap m-0 my-1 h-9 px-0 text-14 font-normal leading-none text-cn-foreground-2 focus-visible:duration-0 duration-150 ease-in-out hover:text-cn-foreground-1 disabled:pointer-events-none disabled:opacity-50 ',
+          'block relative place-content-center whitespace-nowrap m-0 my-1 h-9 px-0 text-2 font-normal leading-none text-cn-foreground-2 focus-visible:duration-0 duration-150 ease-in-out hover:text-cn-foreground-1 disabled:pointer-events-none disabled:opacity-50 ',
           // bottom border of active tab
           'after:pointer-events-none after:absolute after:inset-[-0.25rem_0] after:block after:border-b-2 after:border-solid after:border-b-transparent',
           { 'text-cn-foreground-1 after:border-cn-borders-accent': isActive },

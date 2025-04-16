@@ -105,7 +105,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
               {viewManagement.currentView && (
                 <>
                   <span className="bg-cn-background-2 mx-2.5 inline-flex h-[18px] w-px" />
-                  <span className="text-14 text-cn-foreground-3">{viewManagement.currentView.name}</span>
+                  <span className="text-2 text-cn-foreground-3">{viewManagement.currentView.name}</span>
                 </>
               )}
             </div>

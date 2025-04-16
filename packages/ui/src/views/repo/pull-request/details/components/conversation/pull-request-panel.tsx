@@ -446,7 +446,7 @@ const PullRequestPanel = ({
                   {pullReqMetadata?.source_branch}
                 </Link>
               </Badge>{' '}
-              <span className="text-14 text-cn-foreground-1"> branch has unmerged changes.</span>
+              <span className="text-2 text-cn-foreground-1"> branch has unmerged changes.</span>
             </Layout.Horizontal>
             {showDeleteBranchButton ? (
               <Button theme="primary" size="sm" onClick={onDeleteBranch}>

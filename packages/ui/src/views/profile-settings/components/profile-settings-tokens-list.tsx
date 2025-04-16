@@ -80,7 +80,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({
           ) : (
             <Table.Row className="hover:bg-transparent">
               <Table.Cell className="content-center !p-4" colSpan={5}>
-                <p className="text-center text-14 text-cn-foreground-2">
+                <p className="text-center text-2 text-cn-foreground-2">
                   {t(
                     'views:profileSettings.noTokenDescription',
                     'There are no personal access tokens associated with this account.'

@@ -37,7 +37,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   return (
     <div className="flex h-11 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 pl-4 pr-1.5">
       <div className="flex items-center gap-x-1.5">
-        <span className="text-14 leading-tight text-cn-foreground-1">
+        <span className="text-2 leading-tight text-cn-foreground-1">
           This branch is{' '}
           {hasAhead && (
             <>
@@ -80,15 +80,13 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               <Icon name="merged" size={12} />
             </div>
             <div>
-              <span className="text-14 leading-snug text-cn-foreground-1">
-                This branch is {ahead} commits ahead of{' '}
-              </span>
+              <span className="text-2 leading-snug text-cn-foreground-1">This branch is {ahead} commits ahead of </span>
               <Badge className="mt-1" variant="soft" theme="muted" size="sm">
                 <Icon name="branch" size={14} />
                 <span>{defaultBranchName}</span>
               </Badge>
               .
-              <p className="mt-2.5 text-14 leading-tight text-cn-foreground-2">
+              <p className="mt-2.5 text-2 leading-tight text-cn-foreground-2">
                 Open a pull request to contribute your changes upstream.
               </p>
             </div>

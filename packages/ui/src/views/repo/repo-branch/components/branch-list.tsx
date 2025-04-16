@@ -118,7 +118,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
-                    <div className="bg-cn-background-8 text-14 text-cn-foreground-1 inline-flex h-6 max-w-80 items-center truncate rounded px-2.5">
+                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-cn-background-8 px-2.5 text-2 text-cn-foreground-1">
                       {defaultBranch === branch?.name && (
                         <Icon name="lock" size={14} className="text-icons-9 -mt-px mr-1 inline-block" />
                       )}

@@ -61,7 +61,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
         })}
       >
         <div
-          className={cn('text-14 text-cn-foreground-1 leading-relaxed', {
+          className={cn('text-2 text-cn-foreground-1 leading-relaxed', {
             'px-3.5 py-2 bg-cn-background-8 rounded-[8px_8px_2px_8px]': self
           })}
         >
@@ -132,7 +132,7 @@ const EmptyState: FC = () => {
         <span className="mt-[3px] block text-20 font-semibold leading-none text-cn-foreground-1">how can I help?</span>
       </div>
       <div>
-        <span className="text-14 leading-relaxed text-cn-foreground-2">
+        <span className="text-2 leading-relaxed text-cn-foreground-2">
           Here are some suggestions to enhance your CI/CD pipeline:
         </span>
         <ul className="mt-3 flex flex-col gap-y-1.5">

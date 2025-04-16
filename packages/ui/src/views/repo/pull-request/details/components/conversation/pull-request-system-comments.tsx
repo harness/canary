@@ -83,7 +83,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="flex items-center gap-x-1 text-14 text-cn-foreground-2">
+              <span className="flex items-center gap-x-1 text-2 text-cn-foreground-2">
                 {merge_method === MergeStrategy.REBASE ? 'rebased changes from branch' : 'merged changes from'}
                 <PullRequestBranchBadge
                   branchName={pullReqMetadata?.source_branch as string}
@@ -145,7 +145,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="flex items-center gap-x-1 text-14 text-cn-foreground-2">
+              <span className="flex items-center gap-x-1 text-2 text-cn-foreground-2">
                 {isSourceBranchDeleted ? 'deleted the' : 'restored the'}
                 {!!sourceBranch && (
                   <PullRequestBranchBadge

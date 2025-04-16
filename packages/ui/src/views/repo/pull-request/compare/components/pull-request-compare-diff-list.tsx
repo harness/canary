@@ -223,7 +223,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
       <ListActions.Root>
         <ListActions.Left>
           <DropdownMenu.Root>
-            <p className="text-14 leading-tight text-cn-foreground-2">
+            <p className="text-2 leading-tight text-cn-foreground-2">
               {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
               <FilesChangedCount showAsDropdown={changedFilesCount !== 0}>
                 <span className="cursor-pointer text-cn-foreground-accent ease-in-out">

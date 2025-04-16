@@ -24,7 +24,7 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
         <Avatar.Root>
           <Avatar.Fallback>{getInitials(reviewer?.display_name || '')}</Avatar.Fallback>
         </Avatar.Root>
-        <div className="truncate text-14 font-medium text-cn-foreground-1">{reviewer?.display_name}</div>
+        <div className="truncate text-2 font-medium text-cn-foreground-1">{reviewer?.display_name}</div>
       </div>
       <div className="px-1.5">
         {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}

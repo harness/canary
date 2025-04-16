@@ -160,7 +160,7 @@ export function MarkdownViewer({
       <div ref={ref} style={styles}>
         {isSuggestion && (
           <div className="border-cn-borders-2 bg-cn-background-2 rounded-t-md border-x border-t px-4 py-3">
-            <span className="text-14 text-cn-foreground-1">
+            <span className="text-2 text-cn-foreground-1">
               {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
                 ? 'Suggestion applied'
                 : 'Suggested change'}

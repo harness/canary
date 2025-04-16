@@ -24,8 +24,8 @@ const Description = ({
   version?: string
 }) => {
   return (
-    <div className="text-14 inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px] leading-tight">
-      {description && <span className="text-cn-foreground-3 w-full overflow-hidden break-words">{description}</span>}
+    <div className="inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px] text-2 leading-tight">
+      {description && <span className="w-full overflow-hidden break-words text-cn-foreground-3">{description}</span>}
       {version && (
         <div className="flex items-center gap-1">
           <Icon size={11} name={'signpost'} />

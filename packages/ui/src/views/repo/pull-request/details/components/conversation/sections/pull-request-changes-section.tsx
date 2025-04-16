@@ -128,7 +128,7 @@ const PullRequestChangesSection = ({
       return (
         <div className="flex items-center gap-x-2">
           <Icon name="circle" className="text-cn-foreground-warning" />
-          <span className="text-14 text-cn-foreground-1">Waiting on code owner reviews of latest changes</span>
+          <span className="text-2 text-cn-foreground-1">Waiting on code owner reviews of latest changes</span>
         </div>
       )
     }
@@ -137,7 +137,7 @@ const PullRequestChangesSection = ({
       return (
         <div className="flex items-center gap-x-2">
           <Icon name="circle" className="text-cn-foreground-warning" />
-          <span className="text-14 text-cn-foreground-1">Changes are pending approval from code owners</span>
+          <span className="text-2 text-cn-foreground-1">Changes are pending approval from code owners</span>
         </div>
       )
     }
@@ -151,7 +151,7 @@ const PullRequestChangesSection = ({
       return (
         <div className="flex items-center gap-x-2">
           <Icon name="circle" className="text-cn-foreground-3" />
-          <span className="text-14 text-cn-foreground-1">Some changes were approved by code owners</span>
+          <span className="text-2 text-cn-foreground-1">Some changes were approved by code owners</span>
         </div>
       )
     }
@@ -159,7 +159,7 @@ const PullRequestChangesSection = ({
       return (
         <div className="flex items-center gap-x-2">
           <Icon name="success" className="text-cn-foreground-success" />
-          <span className="text-14 text-cn-foreground-1">Latest changes were approved by code owners</span>
+          <span className="text-2 text-cn-foreground-1">Latest changes were approved by code owners</span>
         </div>
       )
     }
@@ -167,7 +167,7 @@ const PullRequestChangesSection = ({
       return (
         <div className="flex items-center gap-x-2">
           <Icon name="success" className="text-cn-foreground-success" />
-          <span className="text-14 text-cn-foreground-1">Changes were approved by code owners</span>
+          <span className="text-2 text-cn-foreground-1">Changes were approved by code owners</span>
         </div>
       )
     }
@@ -181,7 +181,7 @@ const PullRequestChangesSection = ({
         return (
           <div className="flex items-center gap-x-2">
             <Icon name="pending-clock" className="text-icons-alert" />
-            <span className="text-14 text-cn-foreground-1">
+            <span className="text-2 text-cn-foreground-1">
               Latest changes are pending approval from required reviewers
             </span>
           </div>
@@ -190,7 +190,7 @@ const PullRequestChangesSection = ({
       return (
         <div className="flex items-center gap-x-2">
           <Icon name="circle" className="text-cn-foreground-warning" />
-          <span className="text-14 text-cn-foreground-1">Changes were approved by code owners</span>
+          <span className="text-2 text-cn-foreground-1">Changes were approved by code owners</span>
         </div>
       )
     }
@@ -198,7 +198,7 @@ const PullRequestChangesSection = ({
     return (
       <div className="flex items-center gap-x-2">
         <Icon name="circle" className="text-cn-foreground-3" />
-        <span className="text-14 text-cn-foreground-1">No codeowner reviews</span>
+        <span className="text-2 text-cn-foreground-1">No codeowner reviews</span>
       </div>
     )
   }
@@ -224,7 +224,7 @@ const PullRequestChangesSection = ({
           description={<LineDescription text={changesInfo.content} />}
         />
         {viewBtn && (
-          <span className="px-2 py-1.5 text-14 text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
+          <span className="px-2 py-1.5 text-2 text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
             Show more
           </span>
         )}
@@ -239,14 +239,14 @@ const PullRequestChangesSection = ({
               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
                 <div className="flex items-center gap-x-2">
                   <Icon name="success" className="text-cn-foreground-success" />
-                  <span className="text-14 text-cn-foreground-1">
+                  <span className="text-2 text-cn-foreground-1">
                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
                   </span>
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
                   <Icon name="circle" className="fill-transparent text-icons-7" />
-                  <span className="text-14 text-cn-foreground-1">
+                  <span className="text-2 text-cn-foreground-1">
                     {`${(approvedEvaluations && approvedEvaluations.length) || '0'}/${minApproval} approvals completed`}
                   </span>
                 </div>
@@ -262,12 +262,12 @@ const PullRequestChangesSection = ({
               minReqLatestApproval <= latestApprovalArr?.length ? (
                 <div className="flex items-center gap-x-2">
                   <Icon name="success" className="text-cn-foreground-success" />
-                  <span className="text-14 text-cn-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
+                  <span className="text-2 text-cn-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
                   <Icon name="circle" className="fill-transparent text-icons-7" />
-                  <span className="text-14 text-cn-foreground-1">
+                  <span className="text-2 text-cn-foreground-1">
                     {`${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, 'approval', 'approvals')} pending on latest changes`}
                   </span>
                 </div>
@@ -286,7 +286,7 @@ const PullRequestChangesSection = ({
                     'text-icons-alert': !reqNoChangeReq
                   })}
                 />
-                <span className="text-14 text-cn-foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
+                <span className="text-2 text-cn-foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
               </div>
               {reqNoChangeReq && <Badge variant="soft">Required</Badge>}
             </div>
@@ -303,7 +303,7 @@ const PullRequestChangesSection = ({
                       'text-icons-alert': !reqCodeOwnerApproval || !reqCodeOwnerLatestApproval
                     })}
                   />
-                  <span className="text-14 text-cn-foreground-1">
+                  <span className="text-2 text-cn-foreground-1">
                     {'Code owners requested changes to the pull request'}
                   </span>
                 </div>

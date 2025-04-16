@@ -153,7 +153,7 @@ const FiltersBar = ({
               t={t}
             />
             <button
-              className="flex items-center gap-x-1.5 text-14 text-cn-foreground-2 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-cn-foreground-danger focus:ring-2"
+              className="flex items-center gap-x-1.5 text-2 text-cn-foreground-2 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-cn-foreground-danger focus:ring-2"
               onClick={handleResetAll}
             >
               <Icon className="rotate-45" name="plus" size={12} />

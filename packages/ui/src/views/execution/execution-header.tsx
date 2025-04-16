@@ -51,7 +51,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
         </h1>
       </div>
 
-      <div className="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-14 leading-none">
+      <div className="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-2 leading-none">
         <PipelineStatus
           branch={branch}
           commit={commit}

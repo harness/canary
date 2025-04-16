@@ -76,7 +76,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!description?.length && (
           <>
             <Spacer size={3} />
-            <span className="line-clamp-6 border-y border-cn-borders-4 py-1 text-14 text-cn-foreground-2 w-full">
+            <span className="line-clamp-6 border-y border-cn-borders-4 py-1 text-2 text-cn-foreground-2 w-full">
               {description}
             </span>
           </>

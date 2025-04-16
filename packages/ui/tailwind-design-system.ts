@@ -364,17 +364,33 @@ export default {
         full: 'var(--cn-rounded-full)'
       },
       fontSize: {
-        xs: 'var(--cn-font-size-2)',
-        10: 'var(--cn-font-size-0)',
-        11: 'var(--cn-font-size-0)',
-        12: 'var(--cn-font-size-1)',
-        13: 'var(--cn-font-size-2)',
-        14: 'var(--cn-font-size-2)',
-        15: 'var(--cn-font-size-2)',
-        16: 'var(--cn-font-size-3)',
-        18: 'var(--cn-font-size-4)',
-        20: 'var(--cn-font-size-5)',
-        24: 'var(--cn-font-size-6)'
+        0: 'var(--cn-font-size-0)',
+        1: 'var(--cn-font-size-1)',
+        2: 'var(--cn-font-size-2)',
+        3: 'var(--cn-font-size-3)',
+        4: 'var(--cn-font-size-4)',
+        5: 'var(--cn-font-size-5)',
+        6: 'var(--cn-font-size-6)',
+        7: 'var(--cn-font-size-7)',
+        8: 'var(--cn-font-size-8)',
+        9: 'var(--cn-font-size-9)',
+        10: 'var(--cn-font-size-10)',
+        11: 'var(--cn-font-size-11)',
+        12: 'var(--cn-font-size-12)',
+        13: 'var(--cn-font-size-13)'
+
+        // Remove
+        // xs: 'var(--cn-font-size-2)',
+        // 10: 'var(--cn-font-size-0)',
+        // 11: 'var(--cn-font-size-0)',
+        // 12: 'var(--cn-font-size-1)',
+        // 13: 'var(--cn-font-size-2)',
+        // 14: 'var(--cn-font-size-2)',
+        // 15: 'var(--cn-font-size-2)',
+        // 16: 'var(--cn-font-size-3)',
+        // 18: 'var(--cn-font-size-4)',
+        // 20: 'var(--cn-font-size-5)',
+        // 24: 'var(--cn-font-size-6)'
       },
       backgroundImage: {
         'ai-button':

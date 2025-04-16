@@ -65,6 +65,8 @@ import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
 import RepoViewWrapper from './repo-view-wrapper'
 import RootViewWrapper from './root-view-wrapper'
 import ViewSettings from './view-settings'
+import { DelegateConnectivityWrapper } from '@subjects/views/delegates/delegate-connectivity'
+import { DelegateSelector } from '@subjects/views/delegates/delegate-selector'
 
 export interface ViewPreviewGroup {
   label: string
@@ -526,7 +528,15 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'connector-reference': {
         label: 'Connector Reference',
         element: <ConnectorInputExample />
-      }
+      },
+      'delegate-selector': {
+        label: 'Delegate Selector',
+        element: <DelegateSelector />
+      },
+      'delegate-connectivity': {
+        label: 'Delegate Connectivity',
+        element: <DelegateConnectivityWrapper />
+      },
     }
   },
 

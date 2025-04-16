@@ -333,21 +333,21 @@ export default {
       },
       borderColor: {
         DEFAULT: 'var(--cn-border-3)',
-        'borders-1': 'hsl(var(--cn-border-2))',
-        'borders-2': 'hsl(var(--cn-border-2))',
-        'borders-3': 'hsl(var(--cn-border-1))',
-        'borders-4': 'hsl(var(--cn-state-disabled-border))',
-        'borders-5': 'hsl(var(--cn-border-2))',
-        'borders-6': 'hsl(var(--cn-border-1))',
-        'borders-7': 'hsl(var(--cn-border-1))',
-        'borders-8': 'hsl(var(--cn-border-2))',
-        'borders-9': 'hsl(var(--cn-border-1))',
-        'borders-10': 'hsl(var(--cn-border-2))',
-        'borders-danger': 'hsl(var(--cn-border-danger))',
-        'borders-success': 'hsl(var(--cn-border-success))',
-        'borders-accent': 'hsl(var(--cn-border-accent))',
-        'borders-warning': 'hsl(var(--cn-border-warning))',
-        'borders-alert': 'hsl(var(--cn-border-warning))'
+        'borders-1': 'var(--cn-border-2)',
+        'borders-2': 'var(--cn-border-2)',
+        'borders-3': 'var(--cn-border-1)',
+        'borders-4': 'var(--cn-state-disabled-border)',
+        'borders-5': 'var(--cn-border-2)',
+        'borders-6': 'var(--cn-border-1)',
+        'borders-7': 'var(--cn-border-1)',
+        'borders-8': 'var(--cn-border-2)',
+        'borders-9': 'var(--cn-border-1)',
+        'borders-10': 'var(--cn-border-2)',
+        'borders-danger': 'var(--cn-border-danger)',
+        'borders-success': 'var(--cn-border-success)',
+        'borders-accent': 'var(--cn-border-accent)',
+        'borders-warning': 'var(--cn-border-warning)',
+        'borders-alert': 'var(--cn-border-warning)'
       },
       borderRadius: {
         10: 'var(--cn-rounded-4)'
@@ -367,7 +367,7 @@ export default {
       },
       backgroundImage: {
         'ai-button':
-          'linear-gradient(to right, hsl(var(--cn-gradient-ai-gradient-stop-1)), hsl(var(--cn-gradient-ai-gradient-stop-2)), hsl(var(--cn-gradient-ai-gradient-stop-3)), hsl(var(--cn-gradient-ai-gradient-stop-4)))',
+          'linear-gradient(to right, var(--cn-gradient-ai-gradient-stop-1), var(--cn-gradient-ai-gradient-stop-2), var(--cn-gradient-ai-gradient-stop-3), var(--cn-gradient-ai-gradient-stop-4))',
         'widget-bg-gradient':
           'radial-gradient(80.82% 77.84% at 80.15% 11.99%, hsla(var(--cn-gradient-pipeline-widget-blob-big-from)) 8.43%, hsla(var(--cn-gradient-pipeline-widget-blob-big-to)) 100%)',
         'widget-number-gradient':

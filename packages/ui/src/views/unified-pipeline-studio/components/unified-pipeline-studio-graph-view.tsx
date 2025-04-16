@@ -83,7 +83,7 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
         <PipelineGraph
           customCreateSVGPath={props => {
             const { id, path } = props
-            const pathStyle = ` stroke="hsl(var(--cn-border-1))"`
+            const pathStyle = ` stroke="var(--cn-border-1)"`
             const staticPath = `<path d="${path}" id="${id}" fill="none" ${pathStyle} />`
             return { level1: staticPath, level2: '' }
           }}

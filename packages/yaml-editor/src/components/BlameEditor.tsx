@@ -86,7 +86,7 @@ export function BlameEditor({
         blameDataRef.current.forEach((blameItem, index) => {
           if (index !== blameDataRef.current.length - 1) {
             const domNode = document.createElement('div')
-            domNode.style.borderTop = '1px solid hsl(var(--cn-border-2))'
+            domNode.style.borderTop = '1px solid var(--cn-border-2)'
             domNode.style.marginTop = '9px'
             domNode.className = 'blame-editor-separator'
 

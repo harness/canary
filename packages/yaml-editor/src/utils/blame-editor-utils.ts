@@ -72,7 +72,7 @@ export function getMonacoEditorCommitCss({
             position: absolute;
             left: 10px;
             top: 0px;
-            color: hsl(var(--cn-text-3));
+            color: var(--cn-text-3);
           }
 
           .monaco-editor-${instanceId} .view-line .blame-editor-commit-${lineNo}:after {
@@ -81,11 +81,11 @@ export function getMonacoEditorCommitCss({
             border-radius: 50%;
             padding: 4px;
             text-align: center;
-            background: hsl(var(--cn-set-gray-soft-bg));
+            background: var(--cn-set-gray-soft-bg);
             line-height: 17px;
             left: ${dateWidth + 10}px;
             top: -4px;
-            color: hsl(var(--cn-text-3));
+            color: var(--cn-text-3);
             width: ${avatarSize}px;
             height: ${avatarSize}px;
             ${avatarBackgroundCss}

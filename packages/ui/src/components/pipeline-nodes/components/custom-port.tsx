@@ -13,8 +13,8 @@ export default function Port(props: { side: 'left' | 'right'; id?: string; adjus
         top: `calc( 50% - ${r / 2}px + ${adjustment}px)`,
         width: `${r}px`,
         height: `${r}px`,
-        background: 'hsl(var(--cn-bg-2))',
-        border: `${lineWeight}px solid hsl(var(--cn-border-1))`,
+        background: 'var(--cn-bg-2)',
+        border: `${lineWeight}px solid var(--cn-border-1)`,
         borderRadius: '50%',
         boxSizing: 'border-box',
         zIndex: 1

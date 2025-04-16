@@ -290,6 +290,7 @@ export default function RepoSummaryPage() {
 
   return (
     <>
+      <div className="shadow-commit-list-bullet">This is a div with shadow-commit-list-bullet</div>
       <RepoSummaryView
         repoId={repoId ?? ''}
         spaceId={spaceId ?? ''}

@@ -57,7 +57,7 @@ const PaginationPrimitiveLink = ({
       }),
       'text-12 bg-cn-background-2 text-cn-foreground-1 hover:bg-cn-background-3 w-auto min-w-7 px-1.5 font-normal',
       {
-        'bg-cn-background-8 shadow-pagination-1 hover:bg-cn-background-8 cursor-default': isActive
+        'bg-cn-background-8 shadow-1 hover:bg-cn-background-8 cursor-default': isActive
       },
       className
     )}

@@ -328,13 +328,25 @@ export default {
         widest: 'var(--cn-tracking-widest)'
       },
       boxShadow: {
-        1: 'var(--cn-shadow-4)',
+        1: 'var(--cn-shadow-1)',
         2: 'var(--cn-shadow-2)',
+        3: 'var(--cn-shadow-3)',
+        4: 'var(--cn-shadow-4)',
         5: 'var(--cn-shadow-5)',
-        'pagination-1': 'var(--cn-shadow-1)',
+        6: 'var(--cn-shadow-6)',
+
+        inner: 'var(--cn-shadow-inner)',
+        'comp-avatar-inner': 'var(--cn-shadow-comp-avatar-inner)',
+
+        'ring-focus': 'var(--cn-ring-focus)',
+        'ring-error': 'var(--cn-ring-error)',
+        'ring-selected': 'var(--cn-ring-selected)',
+        'ring-success': 'var(--cn-ring-success)',
+        'ring-warning': 'var(--cn-ring-warning)',
+
+        // Remove
         'commit-list-bullet':
-          '0px 0px 3px 0.5px hsla(var(--cn-set-brand-solid-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-solid-bg) / 0.3)',
-        auth: 'var(--cn-shadow-3)'
+          '0px 0px 3px 0.5px hsla(var(--cn-set-brand-solid-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-solid-bg) / 0.3)'
       },
       borderColor: {
         DEFAULT: 'var(--cn-border-3)',

@@ -36,7 +36,7 @@ export function AnimatedHarnessLogo({ theme }: AnimatedHarnessLogoProps) {
             shadowBackground
           )}
         />
-        <div className="relative flex size-16 overflow-hidden rounded-full bg-cn-background-3 shadow-auth">
+        <div className="relative flex size-16 overflow-hidden rounded-full bg-cn-background-3 shadow-3">
           <span className="border-linear absolute inset-0 mix-blend-overlay [background:linear-gradient(180deg,#fff,transparent)_border-box]" />
           <span className="absolute -right-0.5 bottom-px size-7 translate-y-1/2 rounded-full bg-[#D9D9D9] opacity-5 blur-[10px]" />
           <span

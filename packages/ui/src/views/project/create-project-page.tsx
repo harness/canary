@@ -157,14 +157,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             />
           </Fieldset>
 
-          <Button
-            className="mt-3 w-full"
-            borderRadius="full"
-            type="submit"
-            size="md"
-            loading={isLoading}
-            disabled={hasError}
-          >
+          <Button className="mt-3 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
             {isLoading
               ? t('views:createProject.create.projectCreation', 'Creating project...')
               : t('views:createProject.create.createProject', 'Create project')}

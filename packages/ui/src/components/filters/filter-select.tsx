@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, DropdownMenu, Icon, Input } from '@/components'
+import { Badge, Button, DropdownMenu, Icon, Input } from '@/components'
 
 import { FilterOptionConfig } from './types'
 
@@ -102,14 +102,16 @@ const FilterSelectLabel = ({
 }) => {
   return (
     <>
-      <Button size="sm" variant="ghost" className="gap-x-1 px-0">
+      {/* TODO: Design system: Update with proper button */}
+      <span className="flex items-center gap-x-1 text-14 text-cn-foreground-2 hover:text-cn-foreground-1">
         {displayLabel}
         {selectedFilters > 0 && (
-          <span className="flex h-[18px] min-w-[17px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-0 text-tag-foreground-blue-1">
+          // TODO: Design system: Update badge info variant once it is available
+          <Badge variant="surface" size="sm">
             {selectedFilters}
-          </span>
+          </Badge>
         )}
-      </Button>
+      </span>
       <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
     </>
   )

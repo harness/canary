@@ -127,13 +127,7 @@ export function OTPPage({
                 </Text>
               )}
             </div>
-            <Button
-              className="mt-10 w-full max-w-[212px]"
-              iconOnly
-              type="submit"
-              loading={isLoading}
-              disabled={hasError}
-            >
+            <Button className="mt-10 w-full max-w-[212px]" type="submit" loading={isLoading} disabled={hasError}>
               {isLoading ? 'Verifying...' : 'Verify'}
             </Button>
           </form>

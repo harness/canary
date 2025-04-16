@@ -62,7 +62,6 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
           id="pr-type"
           handleButtonClick={handleButtonClick}
           loading={isLoading}
-          size="md"
           selectedValue={prType}
           handleOptionChange={handlePrTypeChange}
           options={[

@@ -146,11 +146,11 @@ export const InputReference = <T,>({
         {icon && <Icon className="mr-2.5" name={icon} />}
         <div className="flex-1 truncate">{displayContent}</div>
         {hasValue && !disabled && (
-          <div className="ml-2 flex items-center gap-2">
-            <Button onClick={handleEdit} variant="ghost" size="icon">
+          <div className="ml-3 flex items-center">
+            <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly>
               <Icon name="edit-pen" />
             </Button>
-            <Button onClick={handleClear} variant="ghost" size="icon">
+            <Button onClick={handleClear} size="sm" variant="ghost" iconOnly>
               <Icon name="cross" className="text-cn-foreground-danger" />
             </Button>
           </div>

@@ -233,7 +233,7 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Import project' : 'Importing project...'}
                 </Button>
-                <Button type="button" variant="outline" onClick={handleCancel}>
+                <Button type="button" variant="surface" theme="muted" onClick={handleCancel}>
                   Cancel
                 </Button>
               </ButtonGroup>

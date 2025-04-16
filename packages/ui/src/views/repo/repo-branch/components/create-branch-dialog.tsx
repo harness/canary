@@ -106,7 +106,6 @@ export function CreateBranchDialog({
                   setSelectedBranchTag(value)
                 }}
                 setSearchQuery={handleChangeSearchValue}
-                buttonSize="md"
                 isBranchOnly
                 dynamicWidth
               />

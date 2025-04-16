@@ -1,4 +1,4 @@
-import { Icon, Input } from '@/components'
+import { Badge, Button, Icon, Input } from '@/components'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { TFunction } from 'i18next'
 
@@ -104,9 +104,9 @@ const FilterTrigger = ({
         <span className="flex items-center gap-x-1 text-2 text-cn-foreground-2 hover:text-cn-foreground-1">
           {displayLabel}
           {!hideCount && activeFilters.length > 0 && (
-            <span className="flex h-[18px] min-w-[17px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-0 text-tag-foreground-blue-1">
+            <Badge variant="surface" size="sm">
               {activeFilters.length}
-            </span>
+            </Badge>
           )}
         </span>
         {!customLabel && <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />}
@@ -124,15 +124,17 @@ const FilterTrigger = ({
 
           {searchQueries.menu[type] && (
             <div className="absolute right-3">
-              <button
-                className="flex p-1.5 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
+              <Button
+                variant="ghost"
+                size="sm"
+                iconOnly
                 onClick={e => {
                   e.preventDefault()
                   onSearchChange(type, '', 'menu')
                 }}
               >
                 <Icon className="rotate-45" name="plus" size={12} />
-              </button>
+              </Button>
             </div>
           )}
         </div>

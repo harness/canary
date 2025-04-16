@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Icon } from '@/components'
+import { Icon } from '@/components'
 import { cn } from '@utils/cn'
 
 import { PULL_REQUEST_LIST_HEADER_FILTER_STATES } from '../pull-request.types'
@@ -21,12 +21,15 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
   openPRs
 }) => {
   return (
-    <div className="flex items-center gap-2">
-      <Button onClick={onOpenClick} variant="ghost" theme="muted">
+    <div className="flex items-center gap-4">
+      {/* 
+        TODO: Design system: Currently we dont have exact button replacement for this.
+        sm ghost variant button is adding more space between buttons because of the px padding.
+        Have to check with design team.
+       */}
+      <button onClick={onOpenClick} className="flex items-center gap-1.5">
         <Icon
-          className={cn({
-            'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
-          })}
+          className={cn({ 'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN })}
           size={14}
           name="pr-open"
         />
@@ -40,8 +43,8 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
         >
           {openPRs} Open
         </p>
-      </Button>
-      <Button onClick={onCloseClick} variant="ghost" theme="muted">
+      </button>
+      <button onClick={onCloseClick} className="flex items-center gap-1.5">
         <Icon
           className={cn({
             'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED
@@ -59,7 +62,7 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
         >
           {closedPRs} Closed
         </p>
-      </Button>
+      </button>
     </div>
   )
 }

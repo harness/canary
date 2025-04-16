@@ -91,7 +91,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
           searchInput={searchInput}
           handleInputChange={handleInputChange}
           headerAction={
-            <Button onClick={onCreate} variant="default">
+            <Button onClick={onCreate} variant="surface" theme="muted">
               {t('views:connectors.createNew', 'Create new connector')}
             </Button>
           }

@@ -132,8 +132,8 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
     <>
       {!currentView ? (
         <Button
-          className="flex items-center gap-x-1.5 px-0 text-2 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
-          variant="custom"
+          className="flex items-center gap-x-1.5 px-0 text-14 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
+          variant="ghost"
           onClick={() => setIsNewViewDialogOpen(true)}
         >
           <Icon name="bookmark-add" size={12} />
@@ -143,8 +143,8 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Button
-              className="flex items-center gap-x-1.5 px-0 text-2 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
-              variant="custom"
+              className="flex items-center gap-x-1.5 px-0 text-14 text-cn-foreground-2 transition-colors duration-200 hover:text-cn-foreground-1"
+              variant="ghost"
             >
               <Icon name="bookmark-icon" size={12} />
               <span>Manage view</span>
@@ -199,7 +199,8 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
           </div>
           <AlertDialog.Footer>
             <Button
-              variant="outline"
+              variant="surface"
+              theme="muted"
               onClick={() => {
                 setIsNewViewDialogOpen(false)
                 setNameError('')
@@ -236,7 +237,8 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
 
           <AlertDialog.Footer>
             <Button
-              variant="outline"
+              variant="surface"
+              theme="muted"
               onClick={() => {
                 setIsRenameDialogOpen(false)
                 setNameError('')

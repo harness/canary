@@ -24,7 +24,8 @@ const buttonVariants = cva('button', {
       solid: 'button-solid',
       surface: 'button-surface',
       soft: 'button-soft',
-      ghost: 'button-ghost'
+      ghost: 'button-ghost',
+      link: 'button-link'
     },
     size: {
       // default: 'h-8 px-6',
@@ -91,7 +92,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantPr
   asChild?: boolean
   loading?: boolean
   spinner?: ReactNode
-  dropdown?: ReactNode
   rounded?: boolean
   iconOnly?: boolean
 }
@@ -99,6 +99,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantPr
 export type ButtonThemes = Exclude<NonNullable<VariantProps<typeof buttonVariants>['theme']>, null | undefined>
 export type ButtonVariants = Exclude<NonNullable<VariantProps<typeof buttonVariants>['variant']>, null | undefined>
 export type ButtonSizes = VariantProps<typeof buttonVariants>['size']
+
+// add icon only aria attr if iconOnly is true
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -113,7 +115,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       loading,
       disabled,
       spinner,
-      dropdown,
       children,
       ...props
     },
@@ -170,14 +171,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         {...props}
       >
-        {variant === 'split' && dropdown ? (
-          <>
-            <div className="flex items-center py-0.5 pl-2.5 pr-1">{_children}</div>
-            {dropdown}
-          </>
-        ) : (
-          _children
-        )}
+        {_children}
       </Comp>
     )
   }

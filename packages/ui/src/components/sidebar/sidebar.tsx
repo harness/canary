@@ -235,7 +235,6 @@ const SidebarTrigger = forwardRef<ElementRef<typeof Button>, ComponentProps<type
         ref={ref}
         data-sidebar="trigger"
         variant="ghost"
-        size="icon"
         className={cn('h-7 w-7 focus:ring-0 focus-visible:outline-none', className)}
         onClick={event => {
           onClick?.(event)

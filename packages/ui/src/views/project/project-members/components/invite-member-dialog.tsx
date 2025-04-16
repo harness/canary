@@ -174,7 +174,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
         </FormWrapper>
 
         <Dialog.Footer>
-          <Button type="button" variant="outline" onClick={onClose} loading={isInvitingMember}>
+          <Button type="button" variant="surface" theme="muted" onClick={onClose} loading={isInvitingMember}>
             {t('views:repos.cancel', 'Cancel')}
           </Button>
           <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isInvitingMember || !isValid}>

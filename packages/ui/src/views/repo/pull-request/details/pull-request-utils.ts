@@ -60,9 +60,8 @@ export const getApprovalStateTheme = (state: PullReqReviewDecision) => {
     case PullReqReviewDecision.approve:
       return 'success'
     case PullReqReviewDecision.changeReq:
-      return 'warning'
     default:
-      return 'default'
+      return 'muted'
   }
 }
 export const approvalItems = [

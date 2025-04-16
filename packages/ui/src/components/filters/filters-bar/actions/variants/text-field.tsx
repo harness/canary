@@ -23,7 +23,7 @@ const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {
         placeholder="Type a value..."
         onChange={handleInputChange}
         rightElement={
-          <Button size="sm_icon" variant="custom" onClick={handleClear}>
+          <Button iconOnly size="sm" variant="ghost" onClick={handleClear}>
             <Icon className="rotate-45" name="plus" size={12} />
           </Button>
         }

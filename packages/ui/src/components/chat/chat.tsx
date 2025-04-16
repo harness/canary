@@ -128,8 +128,8 @@ const EmptyState: FC = () => {
   return (
     <div className="mt-auto flex flex-col gap-5">
       <div>
-        <span className="block text-20 font-semibold leading-none text-cn-foreground-2">Hello Steven,</span>
-        <span className="mt-[3px] block text-20 font-semibold leading-none text-cn-foreground-1">how can I help?</span>
+        <span className="block text-5 font-semibold leading-none text-cn-foreground-2">Hello Steven,</span>
+        <span className="mt-[3px] block text-5 font-semibold leading-none text-cn-foreground-1">how can I help?</span>
       </div>
       <div>
         <span className="text-2 leading-relaxed text-cn-foreground-2">

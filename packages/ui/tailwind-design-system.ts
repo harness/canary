@@ -380,7 +380,6 @@ export default {
         13: 'var(--cn-font-size-13)'
 
         // Remove
-        // 20: 'var(--cn-font-size-5)',
         // 24: 'var(--cn-font-size-6)'
       },
       backgroundImage: {

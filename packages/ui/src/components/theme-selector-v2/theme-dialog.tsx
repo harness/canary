@@ -48,7 +48,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       {!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
       <Dialog.Content className="max-w-[538px]">
-        <Dialog.Title className="text-20 font-medium">Appearance settings</Dialog.Title>
+        <Dialog.Title className="text-5 font-medium">Appearance settings</Dialog.Title>
         {/* Mode */}
         <div className="mt-1 flex flex-col gap-y-5">
           <div className="flex flex-col">

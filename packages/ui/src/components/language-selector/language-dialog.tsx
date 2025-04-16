@@ -33,7 +33,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       {!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
       <Dialog.Content className="max-w-[400px]">
-        <Dialog.Title className="text-20 font-medium">Language</Dialog.Title>
+        <Dialog.Title className="text-5 font-medium">Language</Dialog.Title>
         <div className="mt-1 flex flex-col gap-3">
           {supportedLanguages.map(lang => (
             <button

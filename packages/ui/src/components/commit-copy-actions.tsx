@@ -33,7 +33,7 @@ export const CommitCopyActions = ({
     <ShaBadge.Root>
       <ShaBadge.Content className="p-0" asChild>
         <button
-          className="size-full px-2.5 text-13 text-cn-foreground-3"
+          className="size-full px-2.5 text-2 text-cn-foreground-3"
           onClick={() => handleNavigation()}
           onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') handleNavigation()

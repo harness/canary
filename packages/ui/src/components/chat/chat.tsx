@@ -77,7 +77,7 @@ const CodeBlock: FC<PropsWithChildren<{ className?: string }>> = ({ children, cl
   return (
     <code
       className={cn(
-        'inline-block rounded-[3px] border border-cn-borders-2 bg-cn-background-8 px-1.5 text-13 leading-[18px]',
+        'inline-block rounded-[3px] border border-cn-borders-2 bg-cn-background-8 px-1.5 text-2 leading-[18px]',
         className
       )}
     >

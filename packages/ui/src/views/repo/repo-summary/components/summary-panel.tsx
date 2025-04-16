@@ -65,7 +65,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!timestamp?.length && (
           <>
             <Spacer size={2} />
-            <span className="text-13 text-cn-foreground-2">Created {timestamp}</span>
+            <span className="text-2 text-cn-foreground-2">Created {timestamp}</span>
           </>
         )}
         <Spacer size={3} />

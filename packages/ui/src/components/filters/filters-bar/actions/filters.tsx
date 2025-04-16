@@ -65,7 +65,7 @@ const Filters = ({
   return (
     <DropdownMenu.Root key={filter.type} open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-cn-background-3 pl-2.5 pr-2 transition-colors duration-200 hover:bg-cn-background-8">
-        <div className="flex items-center gap-x-1.5 text-13">
+        <div className="flex items-center gap-x-1.5 text-2">
           <span className="text-cn-foreground-1">
             {filterOption.label}
             {!!filter.selectedValues.length && ': '}

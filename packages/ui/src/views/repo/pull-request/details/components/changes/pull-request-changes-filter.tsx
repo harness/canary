@@ -300,7 +300,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                     {diff.filePath}
                   </span>
                 </div>
-                <div className="flex shrink-0 items-center text-13">
+                <div className="flex shrink-0 items-center text-2">
                   {diff.addedLines != null && diff.addedLines > 0 && (
                     <span className="text-cn-foreground-success">+{diff.addedLines}</span>
                   )}

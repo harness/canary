@@ -165,7 +165,7 @@ const Sorts = ({
             name={getSortTriggerLabel(activeSorts, sortOptions).icon}
             size={10}
           />
-          <span className="text-13 text-cn-foreground-1">{getSortTriggerLabel(activeSorts, sortOptions).label}</span>
+          <span className="text-2 text-cn-foreground-1">{getSortTriggerLabel(activeSorts, sortOptions).label}</span>
         </div>
         <Icon name="chevron-down" size={10} className="chevron-down" />
       </DropdownMenu.Trigger>

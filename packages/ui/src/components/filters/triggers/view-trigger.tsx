@@ -42,7 +42,7 @@ const ViewTrigger: FC<ViewTriggerProps> = ({
         {!!layoutOptions?.length && (
           <>
             <div className="px-2 py-2.5">
-              <span className="text-13 leading-none text-cn-foreground-3">Layout</span>
+              <span className="text-2 leading-none text-cn-foreground-3">Layout</span>
             </div>
             {layoutOptions.map(option => (
               <DropdownMenu.Item key={option.value} onSelect={() => onLayoutChange?.(option.value)} className="gap-x-2">
@@ -60,9 +60,9 @@ const ViewTrigger: FC<ViewTriggerProps> = ({
             {!!layoutOptions?.length && <DropdownMenu.Separator />}
             <div className="px-2 py-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-13 leading-none text-cn-foreground-3">Saved views</span>
+                <span className="text-2 leading-none text-cn-foreground-3">Saved views</span>
                 <button
-                  className="text-13 text-cn-foreground-accent transition-colors duration-200 hover:text-cn-foreground-1"
+                  className="text-2 text-cn-foreground-accent transition-colors duration-200 hover:text-cn-foreground-1"
                   onClick={handleManageClick}
                 >
                   Manage

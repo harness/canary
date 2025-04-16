@@ -4,8 +4,6 @@ const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 const { ModuleFederationPlugin } = container
 
 module.exports = {
-  mode: 'development',
-  // mode: 'production',
   devtool: 'cheap-module-source-map',
   entry: './src/mfe-entry.ts',
   devServer: {

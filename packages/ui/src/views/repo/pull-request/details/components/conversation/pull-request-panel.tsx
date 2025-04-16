@@ -340,7 +340,7 @@ const PullRequestPanel = ({
                   {commitSuggestionsBatchCount > 0 ? (
                     <Button className="gap-x-2" variant="outline" onClick={() => onCommitSuggestions()}>
                       Commit suggestion
-                      <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 text-tag-foreground-blue-1">
+                      <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-0 text-tag-foreground-blue-1">
                         {commitSuggestionsBatchCount}
                       </span>
                     </Button>

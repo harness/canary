@@ -66,7 +66,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
           >
             Commit suggestion
             {!!suggestionsBatch?.length && (
-              <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 leading-normal text-tag-foreground-blue-1">
+              <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-0 leading-normal text-tag-foreground-blue-1">
                 {suggestionsBatch.length}
               </span>
             )}

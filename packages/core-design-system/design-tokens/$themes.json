@@ -15114,8 +15114,6 @@
       "body.none.strong": "S:fa12753ccbfe001cb9725f18b44fb6eaa04a79d9,",
       "body.tight.normal": "S:7ffac82ed013f06bdac90112d1fffbb7648c298a,",
       "body.tight.strong": "S:b7f935ed23aca4e8491105acd8ae843520e0f727,",
-      "caption.none.normal": "S:2e4c2a1fe87adbe0c2e3238f5646fc1849554fd1,",
-      "caption.none.soft": "S:6bc7dfd59f33f680a6ad0e78ca35a3c15f0d8b61,",
       "heading.base": "S:269c03fdcac19cbeb8253cf3fcdff55f4d31ac32,",
       "heading.hero": "S:09b94fb5f78a99affb38d37dca53070a25fc14a4,",
       "heading.section": "S:692eff1447f3fb718a771f84d3d6dbb1fc170211,",
@@ -15132,7 +15130,9 @@
       "comp.markdown-editor.content.lead": "S:594b906739ae96b94950934ff732ef0c56c8f77f,",
       "comp.markdown-editor.content.emphasized": "S:061aad96d53bf2820b1e5e6041f8e6084698c7ee,",
       "comp.markdown-editor.content.paragraph": "S:6c5c7b213514a90340c62995f71422ea492b063a,",
-      "comp.dialog.title": "S:e322c6b501907f19d24264c95d5938de89a66308,"
+      "comp.dialog.title": "S:e322c6b501907f19d24264c95d5938de89a66308,",
+      "caption.tight.normal": "S:2e4c2a1fe87adbe0c2e3238f5646fc1849554fd1,",
+      "caption.tight.soft": "S:6bc7dfd59f33f680a6ad0e78ca35a3c15f0d8b61,"
     },
     "selectedTokenSets": {
       "breakpoint/desktop": "enabled",

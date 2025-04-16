@@ -110,29 +110,6 @@
       },
       "$description": "Code blocks and larger code snippets."
     },
-    "none": {
-      "normal": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.400}",
-          "fontSize": "{fontSize.2}",
-          "lineHeight": "{lineHeight.2.none}",
-          "letterSpacing": "{tracking.tight}"
-        },
-        "$description": "Primary text style for UI and content."
-      },
-      "strong": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.500}",
-          "fontSize": "{fontSize.2}",
-          "lineHeight": "{lineHeight.2.none}",
-          "letterSpacing": "{tracking.tight}"
-        }
-      }
-    },
     "tight": {
       "normal": {
         "$type": "typography",
@@ -180,14 +157,14 @@
       },
       "$description": "Helper text, meta information."
     },
-    "none": {
+    "tight": {
       "normal": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.1}",
-          "lineHeight": "{lineHeight.1.none}",
+          "lineHeight": "{lineHeight.1.tight}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Primary caption style, small but important text."
@@ -198,7 +175,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.1}",
-          "lineHeight": "{lineHeight.1.none}",
+          "lineHeight": "{lineHeight.1.tight}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Helper text, meta information."

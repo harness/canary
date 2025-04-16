@@ -7,11 +7,9 @@ import { cva, type VariantProps } from 'class-variance-authority'
 const tabsListVariants = cva('text-cn-foreground-2 inline-flex items-center', {
   variants: {
     variant: {
-      default: 'bg-cn-background-softgray h-9 justify-center rounded-lg p-1',
+      pills: 'bg-cn-background-softgray h-9 justify-center rounded-lg p-1',
       underline: 'h-11 justify-center gap-4',
-      navigation: 'border-cn-borders-3 h-[44px] w-full justify-start gap-6 border-b px-5',
-      tabnav:
-        'before:bg-cn-borders-3 relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full'
+      tabs: 'before:bg-cn-borders-3 relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full'
     },
     fontSize: {
       xs: 'text-1',
@@ -19,7 +17,7 @@ const tabsListVariants = cva('text-cn-foreground-2 inline-flex items-center', {
     }
   },
   defaultVariants: {
-    variant: 'default',
+    variant: 'tabs',
     fontSize: 'sm'
   }
 })
@@ -29,17 +27,14 @@ const tabsTriggerVariants = cva(
   {
     variants: {
       variant: {
-        default: 'data-[state=active]:bg-cn-background rounded-md data-[state=active]:shadow',
+        pills: 'data-[state=active]:bg-cn-background rounded-md data-[state=active]:shadow',
         underline:
           'data-[state=active]:border-cn-borders-1 m-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal',
-        navigation:
-          'text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-9 m-0 -mb-px h-[44px] border-b-2 border-solid border-b-transparent px-0 font-normal duration-150 ease-in-out',
-        tabnav:
-          'text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1 h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal'
+        tabs: 'text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1 h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal'
       }
     },
     defaultVariants: {
-      variant: 'default'
+      variant: 'tabs'
     }
   }
 )
@@ -49,20 +44,19 @@ const tabsContentVariants = cva(
   {
     variants: {
       variant: {
-        default: '',
+        pills: '',
         underline: '',
-        navigation: '',
-        tabnav: ''
+        tabs: ''
       }
     },
     defaultVariants: {
-      variant: 'default'
+      variant: 'tabs'
     }
   }
 )
 
 const TabsContext = React.createContext<VariantProps<typeof tabsListVariants | typeof tabsTriggerVariants>>({
-  variant: 'default'
+  variant: 'tabs'
 })
 
 interface TabsRootProps

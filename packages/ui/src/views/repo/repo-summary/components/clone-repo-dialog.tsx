@@ -36,12 +36,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
         <div className="px-4 pt-4 leading-none">
           <span className="inline-block text-2 font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
         </div>
-        <Tabs.Root
-          className="mt-4"
-          variant="tabnav"
-          value={currentTab}
-          onValueChange={val => setCurrentTab(val as CloneRepoTabs)}
-        >
+        <Tabs.Root className="mt-4" value={currentTab} onValueChange={val => setCurrentTab(val as CloneRepoTabs)}>
           <Tabs.List className="px-4">
             <DropdownMenu.Item
               className="rounded-t-md p-0"

@@ -65,7 +65,6 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       {!isBranchOnly && (
         <Tabs.Root
           className="mt-2"
-          variant="tabnav"
           value={activeTab}
           onValueChange={value => {
             setActiveTab(value as BranchSelectorTab)

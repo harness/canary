@@ -123,12 +123,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
               // 'border-t': inReplyMode
             })}
           >
-            <Tabs.Root
-              variant="tabnav"
-              defaultValue={TABS_KEYS.WRITE}
-              value={activeTab}
-              onValueChange={handleTabChange}
-            >
+            <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
               <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
                 <Tabs.Trigger className="data-[state=active]:bg-cn-background-1" value={TABS_KEYS.WRITE}>
                   Write

@@ -26,7 +26,7 @@ const StepExecutionToolbar: FC<
         handleChange={handleInputChange}
         value={query}
       >
-        <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-cn-borders-2 bg-cn-background-3">
+        <div className="border-cn-borders-2 bg-cn-background-3 absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border">
           <Icon className="text-icons-3" name="command-symbol" size={10} />
           <span className="text-1 leading-none">F</span>
         </div>
@@ -35,21 +35,21 @@ const StepExecutionToolbar: FC<
         <Button
           variant="outline"
           size="icon"
-          className="rounded-r-none border-r-0 border-cn-borders-2"
+          className="border-cn-borders-2 rounded-r-none border-r-0"
           onClick={onCopy}
         >
-          <Icon name="clone" className="size-4 text-icons-3" />
+          <Icon name="clone" className="text-icons-3 size-4" />
         </Button>
-        <Button variant="outline" size="icon" className="rounded-none border-cn-borders-2" onClick={onEdit}>
-          <Icon name="edit-pen" className="size-4 text-icons-3" />
+        <Button variant="outline" size="icon" className="border-cn-borders-2 rounded-none" onClick={onEdit}>
+          <Icon name="edit-pen" className="text-icons-3 size-4" />
         </Button>
         <Button
           variant="outline"
           size="icon"
-          className="rounded-l-none border-l-0 border-cn-borders-2"
+          className="border-cn-borders-2 rounded-l-none border-l-0"
           onClick={onDownload}
         >
-          <Icon name="download" className="size-4 text-icons-3" />
+          <Icon name="download" className="text-icons-3 size-4" />
         </Button>
       </div>
     </Layout.Horizontal>
@@ -79,10 +79,10 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
   const { isLightTheme } = useTheme()
 
   return (
-    <Tabs.Root defaultValue={StepExecutionTab.LOG} className="size-full">
+    <Tabs.Root variant="pills" defaultValue={StepExecutionTab.LOG} className="size-full">
       <Layout.Vertical className="space-y-0">
         <Layout.Horizontal className="flex justify-between py-2.5 pl-5 pr-3.5">
-          <Tabs.List className="h-8 w-fit gap-x-0.5 border border-cn-borders-2 bg-cn-background-3">
+          <Tabs.List className="border-cn-borders-2 bg-cn-background-3 h-8 w-fit gap-x-0.5 border">
             <TabsTrigger isLightTheme={isLightTheme} value={StepExecutionTab.LOG}>
               Logs
             </TabsTrigger>

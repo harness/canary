@@ -47,7 +47,6 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
           useTranslationStore={useTranslationStore}
         />
         <Tabs.Root
-          variant="tabnav"
           className="mb-7 px-8"
           defaultValue={ConnectorDetailsTabsKeys.CONFIGURATION}
           value={activeTab}

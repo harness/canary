@@ -320,7 +320,12 @@ export default {
         }
       },
       letterSpacing: {
-        tight: 'var(--cn-tracking-tight)'
+        tighter: 'var(--cn-tracking-tighter)',
+        tight: 'var(--cn-tracking-tight)',
+        normal: 'var(--cn-tracking-normal)',
+        wide: 'var(--cn-tracking-wide)',
+        wider: 'var(--cn-tracking-wider)',
+        widest: 'var(--cn-tracking-widest)'
       },
       boxShadow: {
         1: 'var(--cn-shadow-4)',

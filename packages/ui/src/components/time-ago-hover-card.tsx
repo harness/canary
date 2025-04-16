@@ -75,7 +75,6 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
             </>
           )
         })}
-        <HoverCard.Arrow />
       </HoverCard.Content>
     </HoverCard.Root>
   )

@@ -1,9 +1,18 @@
 import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 
-import { Button, Card, Fieldset, FormWrapper, Icon, Input, StyledLink, StyledLinkProps } from '@/components'
-import { useTheme } from '@/context'
+import {
+  Button,
+  Card,
+  ControlGroup,
+  Fieldset,
+  FormWrapper,
+  Icon,
+  Input,
+  StyledLink,
+  StyledLinkProps
+} from '@/components'
+import { useRouterContext, useTheme } from '@/context'
 import { Floating1ColumnLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
@@ -62,6 +71,7 @@ export type CreateProjectFields = z.infer<ReturnType<typeof createProjectSchema>
 export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
   const { error, isLoading, backLinkProps, onFormSubmit, useTranslationStore } = props
   const { isLightTheme } = useTheme()
+  const { Link } = useRouterContext()
 
   const isAdditional = getIsAdditionalProjectPage(props)
   const isFirst = getIsFirstProjectPage(props)
@@ -158,7 +168,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             />
           </Fieldset>
 
-          <div>
+          <ControlGroup type="button">
             <Button
               className="mt-3 w-full"
               borderRadius="full"
@@ -172,18 +182,16 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
                 : t('views:createProject.create.createProject', 'Create project')}
             </Button>
 
-            <div className="mt-3 flex items-center justify-center gap-4">
-              <div className="bg-cn-borders-2 h-px w-24 shrink" />
+            <div className="mt-3 flex items-center justify-center gap-2">
+              <div className="border-cn-borders-3 w-[145px] shrink border-t" />
               <span className="text-cn-foreground-3 text-sm">{t('views:createProject.or', 'or')}</span>
-              <div className="bg-cn-borders-2 h-px w-24 shrink" />
+              <div className="border-cn-borders-3 w-[145px] shrink border-t" />
             </div>
 
-            <Link to="/import" className="inline-block w-full">
-              <Button className="mt-3 w-full" borderRadius="full" type="button" variant="outline" size="md">
-                {t('views:createProject.importProject', 'Import project')}
-              </Button>
-            </Link>
-          </div>
+            <Button asChild className="mt-3 w-full" borderRadius="full" type="button" variant="outline" size="md">
+              <Link to="/import">{t('views:createProject.importProject', 'Import project')}</Link>
+            </Button>
+          </ControlGroup>
         </FormWrapper>
 
         {isFirst && (

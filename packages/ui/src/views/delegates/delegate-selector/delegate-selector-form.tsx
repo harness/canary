@@ -1,3 +1,4 @@
+import { useCallback, useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
@@ -8,7 +9,8 @@ import {
   Fieldset,
   FormSeparator,
   FormWrapper,
-  Input,
+  MultiSelect,
+  MultiSelectOptionType,
   Spacer,
   Text
 } from '@/components'
@@ -28,7 +30,12 @@ export enum DelegateTypes {
 const delegateSelectorFormSchema = z
   .object({
     type: z.string(),
-    tags: z.string().optional()
+    tags: z.array(
+      z.object({
+        id: z.string(),
+        label: z.string()
+      })
+    )
   })
   .superRefine((data, ctx) => {
     if (data.type === DelegateTypes.TAGS && data.tags?.length === 0) {
@@ -44,16 +51,28 @@ export type DelegateSelectorFormFields = z.infer<typeof delegateSelectorFormSche
 
 export interface DelegateSelectorFormProps {
   delegates: DelegateItem[]
+  tagsList: string[]
   useTranslationStore: () => TranslationStore
   onFormSubmit: (data: DelegateSelectorFormFields) => void
   onBack: () => void
   apiError?: string
   isLoading: boolean
+  isDelegateSelected: (selectors: string[], tags: string[]) => boolean
 }
 
 export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Element => {
-  const { delegates, useTranslationStore, onFormSubmit, onBack, apiError = null, isLoading } = props
-  const { t: _t } = useTranslationStore()
+  const {
+    delegates,
+    tagsList,
+    useTranslationStore,
+    onFormSubmit,
+    onBack,
+    apiError = null,
+    isLoading,
+    isDelegateSelected
+  } = props
+  const { t } = useTranslationStore()
+  const [searchTag, setSearchTag] = useState('')
   const {
     register,
     handleSubmit,
@@ -66,7 +85,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
     mode: 'onChange',
     defaultValues: {
       type: DelegateTypes.ANY,
-      tags: ''
+      tags: []
     }
   })
 
@@ -93,6 +112,27 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
     }
   ]
 
+  const handleTagChange = useCallback(
+    (option: MultiSelectOptionType) => {
+      const selectedTagIds = selectedTags.map(tag => tag.id)
+
+      setValue!(
+        'tags',
+        selectedTagIds.includes(option.id as string)
+          ? selectedTags.filter(tag => tag.id !== option.id)
+          : [
+              ...selectedTags,
+              {
+                id: option.id as string,
+                label: option.label
+              }
+            ],
+        { shouldValidate: true }
+      )
+    },
+    [selectedTags, setValue]
+  )
+
   return (
     <SandboxLayout.Content className="h-full px-0 pt-0">
       <Spacer size={5} />
@@ -117,13 +157,17 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
         {delegateType === DelegateTypes.TAGS && (
           <Fieldset className="py-2">
             {/* TAGS */}
-            <Input
-              id="tags"
+            <MultiSelect
               {...register('tags')}
-              label="Tags"
-              caption="Seperate tags with commas or press Enter. Use key:value for objects."
+              selectedItems={selectedTags}
+              t={t}
               placeholder="Enter tags"
-              size="md"
+              handleChange={handleTagChange}
+              options={tagsList.map(tag => {
+                return { id: tag, label: tag }
+              })}
+              searchValue={searchTag}
+              handleChangeSearchValue={setSearchTag}
               error={errors.tags?.message?.toString()}
             />
           </Fieldset>
@@ -134,7 +178,8 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
           delegates={delegates}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
-          selectedTags={selectedTags?.split(',') || []}
+          selectedTags={selectedTags.map(tag => tag.id)}
+          isDelegateSelected={isDelegateSelected}
         />
 
         <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">

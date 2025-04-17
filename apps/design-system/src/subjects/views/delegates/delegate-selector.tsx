@@ -1,12 +1,13 @@
 import { useState } from 'react'
 
 import { useTranslationStore } from '@utils/viewUtils'
-import { noop } from 'lodash-es'
+import { defaultTo, noop } from 'lodash-es'
 
 import { Drawer, FormSeparator, StyledLink } from '@harnessio/ui/components'
 import { DelegateSelectorForm, DelegateSelectorInput } from '@harnessio/ui/views'
 
 import mockDelegatesList from './mock-delegates-list.json'
+import { isDelegateSelected } from './utils'
 
 export const DelegateSelector = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -41,8 +42,25 @@ export const DelegateSelector = () => {
               groupName: delegate.groupName,
               lastHeartBeat: delegate.lastHeartBeat,
               activelyConnected: delegate.activelyConnected,
-              groupCustomSelectors: delegate.groupCustomSelectors || []
+              groupCustomSelectors: delegate.groupCustomSelectors || [],
+              groupImplicitSelectors: [...Object.keys(defaultTo(delegate.groupImplicitSelectors, {}))]
             }))}
+            tagsList={[
+              'pzerosanity-windows',
+              'eightfivetwoold',
+              'qa-automation',
+              'pzerosanity',
+              'self-hosted-vpc-delegate',
+              'local',
+              'viaksdcoker',
+              'myrunner-ivan',
+              'macos-arm64',
+              'west1-delegate-qa',
+              'linux-amd64',
+              'eightfivetwo',
+              'automation-eks-delegate'
+            ]}
+            isDelegateSelected={isDelegateSelected}
             useTranslationStore={useTranslationStore}
             isLoading={false}
             onFormSubmit={noop}

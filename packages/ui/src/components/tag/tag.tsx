@@ -37,7 +37,7 @@ const tagVariants = cva('tag inline-flex w-fit items-center transition-colors', 
 
 // Base props without theme-specific requirements
 type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex' | 'aria-readonly'> & {
-  size?: 'default' | 'sm'
+  size?: VariantProps<typeof tagVariants>['size']
   theme: VariantProps<typeof tagVariants>['theme']
 }
 

@@ -170,11 +170,6 @@
           "$value": "{chrome.50}",
           "$description": "Background color for primary brand items with strong emphasis."
         },
-        "border": {
-          "$type": "color",
-          "$value": "{chrome.50}",
-          "$description": "Border color for primary brand boundaries."
-        },
         "separator": {
           "$extensions": {
             "studio.tokens": {
@@ -198,16 +193,6 @@
           "$type": "color",
           "$value": "{chrome.150}",
           "$description": "Selected state background color for active brand items."
-        },
-        "bg-disabled": {
-          "$type": "color",
-          "$value": "{chrome.800}",
-          "$description": "Disabled state background color for brand items."
-        },
-        "border-disabled": {
-          "$type": "color",
-          "$value": "{chrome.800}",
-          "$description": "Selected state border color for brand items."
         }
       },
       "soft": {
@@ -220,11 +205,6 @@
           "$type": "color",
           "$value": "{chrome.800}",
           "$description": "Background color for primary subtle brand items with strong emphasis."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{chrome.800}",
-          "$description": "Border color for primary subtle brand boundaries."
         },
         "bg-hover": {
           "$type": "color",
@@ -306,11 +286,6 @@
           "$value": "{chrome.500}",
           "$description": "Background color for prominent gray surfaces."
         },
-        "border": {
-          "$type": "color",
-          "$value": "{chrome.500}",
-          "$description": "Border color for gray boundaries."
-        },
         "bg-hover": {
           "$type": "color",
           "$value": "{chrome.400}",
@@ -332,11 +307,6 @@
           "$type": "color",
           "$value": "{chrome.900}",
           "$description": "Background color for subdued gray surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{chrome.900}",
-          "$description": "Border color for subtle gray boundaries."
         },
         "bg-hover": {
           "$type": "color",
@@ -388,11 +358,6 @@
           "$type": "color",
           "$value": "{green.300}",
           "$description": "Background color for prominent green surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{green.300}",
-          "$description": "Border color for green boundaries."
         }
       },
       "soft": {
@@ -405,11 +370,6 @@
           "$type": "color",
           "$value": "{green.900}",
           "$description": "Background color for subdued green surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{green.900}",
-          "$description": "Border color for subtle green boundaries."
         },
         "bg-hover": {
           "$type": "color",
@@ -461,11 +421,6 @@
           "$type": "color",
           "$value": "{red.300}",
           "$description": "Background color for prominent red surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{red.300}",
-          "$description": "Border color for red boundaries."
         }
       },
       "soft": {
@@ -478,11 +433,6 @@
           "$type": "color",
           "$value": "{red.900}",
           "$description": "Background color for subdued red surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{red.900}",
-          "$description": "Border color for subtle red boundaries."
         },
         "bg-hover": {
           "$type": "color",
@@ -534,11 +484,6 @@
           "$type": "color",
           "$value": "{yellow.300}",
           "$description": "Background color for prominent yellow surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{yellow.300}",
-          "$description": "Border color for yellow boundaries."
         }
       },
       "soft": {
@@ -551,11 +496,6 @@
           "$type": "color",
           "$value": "{yellow.900}",
           "$description": "Background color for subdued yellow surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{yellow.900}",
-          "$description": "Border color for subtle yellow boundaries."
         },
         "bg-hover": {
           "$type": "color",
@@ -607,11 +547,6 @@
           "$type": "color",
           "$value": "{blue.300}",
           "$description": "Background color for prominent blue surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{blue.300}",
-          "$description": "Border color for blue boundaries."
         }
       },
       "soft": {
@@ -624,11 +559,6 @@
           "$type": "color",
           "$value": "{blue.900}",
           "$description": "Background color for subdued blue surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{blue.900}",
-          "$description": "Border color for subtle blue boundaries."
         }
       },
       "surface": {
@@ -670,11 +600,6 @@
           "$type": "color",
           "$value": "{purple.300}",
           "$description": "Background color for prominent purple surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{purple.300}",
-          "$description": "Border color for purple boundaries."
         }
       },
       "soft": {
@@ -687,11 +612,6 @@
           "$type": "color",
           "$value": "{purple.900}",
           "$description": "Background color for subdued purple surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{purple.900}",
-          "$description": "Border color for subtle purple boundaries."
         }
       },
       "surface": {
@@ -733,11 +653,6 @@
           "$type": "color",
           "$value": "{brown.200}",
           "$description": "Background color for prominent brown surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{brown.200}",
-          "$description": "Border color for brown boundaries."
         }
       },
       "soft": {
@@ -750,11 +665,6 @@
           "$type": "color",
           "$value": "{brown.900}",
           "$description": "Background color for subdued brown surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{brown.900}",
-          "$description": "Border color for subtle brown boundaries."
         }
       },
       "surface": {
@@ -791,11 +701,6 @@
           "$type": "color",
           "$value": "{cyan.200}",
           "$description": "Background color for prominent cyan surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{cyan.200}",
-          "$description": "Border color for cyan boundaries."
         }
       },
       "soft": {
@@ -808,11 +713,6 @@
           "$type": "color",
           "$value": "{cyan.900}",
           "$description": "Background color for subdued cyan surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{cyan.900}",
-          "$description": "Border color for subtle cyan boundaries."
         }
       },
       "surface": {
@@ -849,11 +749,6 @@
           "$type": "color",
           "$value": "{indigo.200}",
           "$description": "Background color for prominent indigo surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{indigo.200}",
-          "$description": "Border color for indigo boundaries."
         }
       },
       "soft": {
@@ -866,11 +761,6 @@
           "$type": "color",
           "$value": "{indigo.900}",
           "$description": "Background color for subdued indigo surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{indigo.900}",
-          "$description": "Border color for subtle indigo boundaries."
         }
       },
       "surface": {
@@ -907,11 +797,6 @@
           "$type": "color",
           "$value": "{lime.200}",
           "$description": "Background color for prominent lime surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{lime.200}",
-          "$description": "Border color for lime boundaries."
         }
       },
       "soft": {
@@ -924,11 +809,6 @@
           "$type": "color",
           "$value": "{lime.900}",
           "$description": "Background color for subdued lime surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{lime.900}",
-          "$description": "Border color for subtle lime boundaries."
         }
       },
       "surface": {
@@ -965,11 +845,6 @@
           "$type": "color",
           "$value": "{mint.200}",
           "$description": "Background color for prominent mint surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{mint.200}",
-          "$description": "Border color for mint boundaries."
         }
       },
       "soft": {
@@ -982,11 +857,6 @@
           "$type": "color",
           "$value": "{mint.900}",
           "$description": "Background color for subdued mint surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{mint.900}",
-          "$description": "Border color for subtle mint boundaries."
         }
       },
       "surface": {
@@ -1023,11 +893,6 @@
           "$type": "color",
           "$value": "{orange.200}",
           "$description": "Background color for prominent orange surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{orange.200}",
-          "$description": "Border color for orange boundaries."
         }
       },
       "soft": {
@@ -1040,11 +905,6 @@
           "$type": "color",
           "$value": "{orange.900}",
           "$description": "Background color for subdued orange surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{orange.900}",
-          "$description": "Border color for subtle orange boundaries."
         }
       },
       "surface": {
@@ -1081,11 +941,6 @@
           "$type": "color",
           "$value": "{pink.200}",
           "$description": "Background color for prominent pink surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{pink.200}",
-          "$description": "Border color for pink boundaries."
         }
       },
       "soft": {
@@ -1098,11 +953,6 @@
           "$type": "color",
           "$value": "{pink.900}",
           "$description": "Background color for subdued pink surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{pink.900}",
-          "$description": "Border color for subtle pink boundaries."
         }
       },
       "surface": {
@@ -1139,11 +989,6 @@
           "$type": "color",
           "$value": "{violet.200}",
           "$description": "Background color for prominent violet surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{violet.200}",
-          "$description": "Border color for violet boundaries."
         }
       },
       "soft": {
@@ -1156,11 +1001,6 @@
           "$type": "color",
           "$value": "{violet.900}",
           "$description": "Background color for subdued violet surfaces."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{violet.900}",
-          "$description": "Border color for subtle violet boundaries."
         }
       },
       "surface": {

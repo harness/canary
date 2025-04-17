@@ -69,7 +69,7 @@
     "size": {
       "default": {
         "$type": "sizing",
-        "$value": "{size.2-half}"
+        "$value": "{size.2}"
       }
     }
   }

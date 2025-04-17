@@ -140,6 +140,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         // If a non-markdown file somehow has 'preview', we could fallback to 'code'
         return (
           <CodeEditor
+            className="overflow-hidden rounded-b-md border-x border-b"
             height="100%"
             language={language}
             codeRevision={{ code: fileContent }}
@@ -154,6 +155,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       case 'code':
         return (
           <CodeEditor
+            className="overflow-hidden rounded-b-md border-x border-b"
             height="100%"
             language={language}
             codeRevision={{ code: fileContent }}

@@ -3,7 +3,14 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
-import { badgeStyles, buttonStyles, dialogStyles, labelStyles, switchStyles } from './tailwind-utils-config/components'
+import {
+  badgeStyles,
+  buttonStyles,
+  dialogStyles,
+  labelStyles,
+  switchStyles,
+  tagStyles
+} from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
 export default {
@@ -407,6 +414,7 @@ export default {
       addComponents(dialogStyles)
       addComponents(switchStyles)
       addComponents(labelStyles)
+      addComponents(tagStyles)
     }),
     tailwindcssAnimate,
     typography,

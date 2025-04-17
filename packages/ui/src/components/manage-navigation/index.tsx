@@ -152,26 +152,25 @@ export const ManageNavigation = ({
                       )
                     })}
                     {draggablePinnedItems.map((item, index) => (
-                      <DraggableItem
-                        className="flex w-full grow items-center"
-                        id={getItemId(index + permanentlyPinnedItems.length)}
-                        tag="li"
-                        key={item.title}
-                      >
+                      <DraggableItem id={getItemId(index + permanentlyPinnedItems.length)} tag="li" key={item.title}>
                         {({ attributes, listeners }) => {
                           return (
                             <>
                               <Button
-                                className="grow cursor-grab active:cursor-grabbing"
+                                className={'w-full grow cursor-grab gap-x-2.5 rounded p-1 px-3 active:cursor-grabbing'}
                                 variant="ghost"
-                                size="sm"
                                 {...attributes}
                                 {...listeners}
                               >
                                 <Icon className="w-3.5" name="grid-dots" size={14} />
                                 <Text className="w-full text-left text-[inherit]">{item.title}</Text>
                               </Button>
-                              <Button size="sm" variant="ghost" iconOnly onClick={() => removeFromPinnedItems(item)}>
+                              <Button
+                                className="absolute right-1 top-0.5 z-20"
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => removeFromPinnedItems(item)}
+                              >
                                 <Icon className="w-3.5" name="x-mark" size={14} />
                               </Button>
                             </>
@@ -189,7 +188,7 @@ export const ManageNavigation = ({
                   <Text className="inline-block leading-none text-cn-foreground-3" size={1}>
                     Recent
                   </Text>
-                  <Button className="-mr-1.5" variant="ghost" size="sm" onClick={handleClearRecent}>
+                  <Button variant="link" size="sm" onClick={handleClearRecent}>
                     Clear all
                   </Button>
                 </div>
@@ -201,10 +200,9 @@ export const ManageNavigation = ({
                         <Text className="w-full text-left text-cn-foreground-1">{item.title}</Text>
                       </div>
                       <Button
-                        // className="absolute -right-2 top-0.5 text-icons-4 hover:text-icons-2"
+                        className="absolute -right-2 top-0.5 text-icons-4"
                         size="sm"
                         variant="ghost"
-                        iconOnly
                         onClick={() => addToPinnedItems(item)}
                       >
                         <Icon name="pin" size={14} />
@@ -223,7 +221,7 @@ export const ManageNavigation = ({
                 <Button variant="surface" theme="muted" onClick={handleCancel} disabled={isSubmitting}>
                   Cancel
                 </Button>
-                <Button type="button" onClick={onSubmit} disabled={isSubmitting}>
+                <Button type="button" theme="primary" onClick={onSubmit} disabled={isSubmitting}>
                   {isSubmitting ? 'Saving...' : 'Save'}
                 </Button>
               </>

@@ -118,13 +118,13 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
-                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-cn-background-8 px-2.5 text-2 text-cn-foreground-1">
+                    <Badge variant="soft" size="sm">
                       {defaultBranch === branch?.name && (
                         <Icon name="lock" size={14} className="text-icons-9 -mt-px mr-1 inline-block" />
                       )}
                       {branch?.name}
-                    </div>
-                    <CopyButton color="gray" name={branch?.name} />
+                    </Badge>
+                    <CopyButton buttonVariant="ghost" color="gray" name={branch?.name} />
                   </div>
                 </Table.Cell>
                 {/* user avatar and timestamp */}

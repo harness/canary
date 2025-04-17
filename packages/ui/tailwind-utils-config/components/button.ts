@@ -36,7 +36,7 @@ function createButtonVariantStyles() {
       // Default styles
       style[`backgroundColor`] = `var(--cn-set-${themeStyle}-${variant}-bg)`
       style[`color`] = `var(--cn-set-${themeStyle}-${variant}-text)`
-      style[`borderColor`] = `var(--cn-set-${themeStyle}-${variant}-border)`
+      style[`borderColor`] = `var(--cn-set-${themeStyle}-${variant}-border, var(--cn-set-${themeStyle}-${variant}-bg))`
 
       // Hover styles
       style[`&:hover:not([disabled], .button-disabled)`] = {

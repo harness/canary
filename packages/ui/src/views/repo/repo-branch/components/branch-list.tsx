@@ -118,13 +118,13 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
-                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-cn-background-8 px-2.5 text-2 text-cn-foreground-1">
+                    <Badge variant="soft" size="sm">
                       {defaultBranch === branch?.name && (
                         <Icon name="lock" size={14} className="text-icons-9 -mt-px mr-1 inline-block" />
                       )}
                       {branch?.name}
-                    </div>
-                    <CopyButton color="gray" name={branch?.name} />
+                    </Badge>
+                    <CopyButton buttonVariant="ghost" color="gray" name={branch?.name} />
                   </div>
                 </Table.Cell>
                 {/* user avatar and timestamp */}
@@ -185,12 +185,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* PR link */}
                 <Table.Cell className="max-w-20 content-center">
                   {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
-                    <Button
-                      className="bg-cn-background-8 text-cn-foreground-1 hover:bg-cn-background-9 hover:text-cn-foreground-1 flex w-fit items-center gap-1 px-2.5 text-sm"
-                      variant="custom"
-                      size="xs"
-                      asChild
-                    >
+                    <Button variant="soft" theme="muted" size="sm" asChild>
                       <Link to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}>
                         <Icon
                           name={

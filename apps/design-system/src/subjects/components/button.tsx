@@ -36,9 +36,9 @@ const ButtonComponent: FC = () => (
       <DocsPage.ComponentExample
         scope={scope}
         code={`
-    <Button variant="default" onClick={onClick}>Default variant</Button>
-    <Button variant="destructive" onClick={onClick}>Destructive variant</Button>
-    <Button variant="outline" onClick={onClick}>Outline variant</Button>
+    <Button onClick={onClick}>Default variant</Button>
+    <Button variant="surface" theme="danger" onClick={onClick}>Destructive variant</Button>
+    <Button variant="surface" onClick={onClick}>Outline variant</Button>
     <Button variant="secondary" onClick={onClick}>Secondary variant</Button>
     <Button variant="tertiary" onClick={onClick}>Tertiary variant</Button>
     <Button variant="ghost" onClick={onClick}>Ghost variant</Button>

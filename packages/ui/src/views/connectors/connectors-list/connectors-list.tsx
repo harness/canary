@@ -89,11 +89,7 @@ export function ConnectorsList({
                 </Table.Cell>
                 <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
                 <Table.Cell className="min-w-8 content-center">
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={() => onToggleFavoriteConnector(identifier, !isFavorite)}
-                  >
+                  <Button variant="ghost" onClick={() => onToggleFavoriteConnector(identifier, !isFavorite)}>
                     {isFavorite ? (
                       <Icon name="star-filled" size={12} className="fill-icons-alert" />
                     ) : (

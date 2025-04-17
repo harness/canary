@@ -226,11 +226,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                 hideEditDelete={hideEditDelete}
               />
               {isResolved && !contentHeader && (
-                <Button
-                  className="h-auto gap-x-1.5 px-4 font-normal text-cn-foreground-2 hover:text-cn-foreground-1"
-                  variant="custom"
-                  onClick={() => setIsExpanded(prev => !prev)}
-                >
+                <Button variant="ghost" onClick={() => setIsExpanded(prev => !prev)}>
                   <Icon name={isExpanded ? 'collapse-comment' : 'expand-comment'} size={14} />
                   {isExpanded ? 'Hide resolved' : 'Show resolved'}
                 </Button>
@@ -249,11 +245,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                 >
                   {contentHeader}
                   {isResolved && (
-                    <Button
-                      className="h-auto gap-x-1.5 px-2.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1"
-                      variant="custom"
-                      onClick={() => setIsExpanded(prev => !prev)}
-                    >
+                    <Button variant="ghost" onClick={() => setIsExpanded(prev => !prev)}>
                       <Icon name={isExpanded ? 'collapse-comment' : 'expand-comment'} size={14} />
                       {isExpanded ? 'Hide resolved' : 'Show resolved'}
                     </Button>
@@ -318,7 +310,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   )}
                   <div className={cn('flex items-center gap-x-4 border-t', replyBoxClassName)}>
                     <Button
-                      variant="outline"
+                      variant="surface"
+                      theme="muted"
                       onClick={() => {
                         toggleConversationStatus?.(isResolved ? 'active' : 'resolved', parentCommentId)
                       }}

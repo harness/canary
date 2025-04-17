@@ -64,6 +64,7 @@ function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>)
                     <RenderInputs items={getChildInputs(inputConfig?.input, path, idx)} factory={factory} />
                   )}
                   <div>
+                    {/* TODO: Design system: Find alternate */}
                     <button
                       className="mt-2"
                       onClick={() => {

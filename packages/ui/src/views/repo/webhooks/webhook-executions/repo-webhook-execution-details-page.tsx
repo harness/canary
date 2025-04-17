@@ -110,7 +110,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
             </Badge>
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default" size="md" onClick={handleRetriggerExecution} disabled={isLoading}>
+            <Button onClick={handleRetriggerExecution} disabled={isLoading}>
               {isLoading ? 'Re-triggering Execution' : 'Re-trigger Execution'}
             </Button>
           </ListActions.Right>

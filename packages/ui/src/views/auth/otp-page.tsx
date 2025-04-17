@@ -127,22 +127,14 @@ export function OTPPage({
                 </Text>
               )}
             </div>
-            <Button
-              className="mt-10 w-full max-w-[212px]"
-              variant="default"
-              borderRadius="full"
-              type="submit"
-              size="md"
-              loading={isLoading}
-              disabled={hasError}
-            >
+            <Button className="mt-10 w-full max-w-[212px]" type="submit" loading={isLoading} disabled={hasError}>
               {isLoading ? 'Verifying...' : 'Verify'}
             </Button>
           </form>
           <Spacer size={4} />
           <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
             Didn&apos;t receive the code?{' '}
-            <Button className="h-5 p-0 leading-none" variant="link" onClick={handleResend}>
+            <Button className="h-5 p-0 leading-none" variant="ghost" onClick={handleResend}>
               Resend
             </Button>
           </Text>

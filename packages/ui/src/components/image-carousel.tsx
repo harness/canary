@@ -45,8 +45,10 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
         </Carousel.Root>
         <Dialog.Footer className="!justify-center">
           <Button
-            variant="outline"
-            size="icon"
+            variant="surface"
+            theme="muted"
+            size="sm"
+            iconOnly
             data-testid="zoomOutButton"
             onClick={() => {
               if (Number(zoomLevel.toFixed(1)) > 0.3) {
@@ -58,8 +60,10 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
             <Icon name="minus" size={16} />
           </Button>
           <Button
-            variant="outline"
-            size="icon"
+            variant="surface"
+            theme="muted"
+            size="sm"
+            iconOnly
             data-testid="zoomInButton"
             onClick={() => {
               if (Number(zoomLevel.toFixed(1)) < 2) {

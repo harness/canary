@@ -108,9 +108,8 @@ const LineTitle: React.FC<LineTitleProps> = ({
       <div className="inline-flex items-center gap-x-4">
         <div className="flex items-center gap-x-2">
           <Button
-            className="text-icons-1 hover:text-icons-2"
-            variant="custom"
-            size="xs_icon"
+            variant="ghost"
+            size="sm"
             aria-label="expand diff"
             onClick={e => {
               e.preventDefault()
@@ -349,7 +348,7 @@ const PullRequestAccordion: React.FC<{
                   <Layout.Vertical gap="space-y-0" className="items-center py-5">
                     <Button
                       className="text-cn-foreground-accent"
-                      variant="link_accent"
+                      variant="link"
                       size="sm"
                       aria-label="show diff"
                       onClick={() => setShowHiddenDiff(true)}

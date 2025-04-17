@@ -13,8 +13,8 @@ const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) 
 const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className="sticky top-0 flex items-center justify-between bg-cn-background-1 px-6 py-4">
-      <p className="text-3 font-medium text-cn-foreground-1">Harness AI</p>
-      <Button size="icon" variant="custom" className="-mr-2 text-icons-4 hover:text-icons-2" onClick={onClose}>
+      <p className="text-16 font-medium text-cn-foreground-1">Harness AI</p>
+      <Button size="sm" iconOnly variant="ghost" onClick={onClose}>
         <Icon name="close" size={16} />
         <span className="sr-only">Close</span>
       </Button>
@@ -138,10 +138,7 @@ const EmptyState: FC = () => {
         <ul className="mt-3 flex flex-col gap-y-1.5">
           {emptyStateButtons.map(({ text }, index) => (
             <li key={index}>
-              <Button
-                className="w-full justify-start rounded-lg bg-cn-background-3 px-3.5 text-cn-foreground-1 hover:bg-cn-background-12"
-                size="lg"
-              >
+              <Button className="w-full justify-start" variant="soft" theme="muted" size="lg">
                 {text}
               </Button>
             </li>
@@ -191,9 +188,9 @@ const InputField: FC<InputFieldProps> = ({
         aria-label="Chat input"
       />
       <Button
-        className="absolute bottom-2 right-2 z-10 size-7 rounded-full"
+        className="absolute bottom-2 right-2 z-10 size-7"
+        rounded
         onClick={onSend}
-        size="icon"
         disabled={disabled}
         aria-label="Send message"
       >

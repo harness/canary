@@ -59,8 +59,8 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
       {isWithDeleteButton && (
         <Button
           className="text-icons-1 hover:text-icons-2 size-4 flex-none self-center"
-          variant="custom"
-          size="icon"
+          variant="ghost"
+          iconOnly
           onClick={handleDeleteValue}
         >
           <Icon name="close" size={14} />

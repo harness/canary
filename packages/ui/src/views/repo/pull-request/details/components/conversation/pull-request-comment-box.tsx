@@ -189,7 +189,7 @@ export const PullRequestCommentBox = ({
                   const isFirst = index === 0
                   return (
                     <Fragment key={`${comment}-${index}`}>
-                      <Button className="hover:bg-cn-background-8" size="icon" variant="ghost" onClick={item?.onClick}>
+                      <Button size="sm" variant="ghost" iconOnly onClick={item?.onClick}>
                         <Icon className="text-icons-9" name={item.icon} />
                       </Button>
                       {isFirst && <div className="bg-cn-background-3 h-4 w-px" />}
@@ -214,11 +214,7 @@ export const PullRequestCommentBox = ({
           {activeTab === TABS_KEYS.WRITE && (
             <div>
               <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-              <Button
-                className="gap-x-2 px-2.5 font-normal text-cn-foreground-3 hover:bg-cn-background-8"
-                variant="custom"
-                onClick={handleFileSelect}
-              >
+              <Button size="sm" variant="ghost" onClick={handleFileSelect}>
                 <Icon size={16} name="attachment-image" />
                 <span>Drag & drop, select, or paste to attach files</span>
               </Button>
@@ -227,7 +223,7 @@ export const PullRequestCommentBox = ({
 
           <div className="ml-auto flex gap-x-3">
             {(inReplyMode || isEditMode) && (
-              <Button variant="outline" onClick={onCancelClick}>
+              <Button variant="surface" theme="muted" onClick={onCancelClick}>
                 Cancel
               </Button>
             )}

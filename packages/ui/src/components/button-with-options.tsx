@@ -1,6 +1,6 @@
 import { MouseEvent, ReactNode } from 'react'
 
-import { Button, buttonVariants } from '@/components/button'
+import { Button, buttonVariants, type ButtonThemes, type ButtonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { Option } from '@components/option'
@@ -9,30 +9,6 @@ import { cn } from '@utils/cn'
 import { type VariantProps } from 'class-variance-authority'
 
 type ButtonWithOptionsSizes = Extract<VariantProps<typeof buttonVariants>['size'], 'default' | 'md'>
-export type ButtonWithOptionsTheme = Exclude<
-  NonNullable<VariantProps<typeof buttonVariants>['theme']>,
-  null | undefined
->
-export type ButtonWithOptionsVariant = Exclude<
-  NonNullable<VariantProps<typeof buttonVariants>['variant']>,
-  null | undefined
->
-
-const buttonPaddings: Record<ButtonWithOptionsSizes, string> = {
-  default: 'pl-4 pr-2.5',
-  md: 'pl-5 pr-2.5'
-}
-
-const separatorThemes: Record<ButtonWithOptionsTheme, string> = {
-  default: 'before:bg-inherit',
-  primary: 'before:bg-button-border-accent-1',
-  error: 'before:bg-button-border-danger-1',
-  success: 'before:bg-button-border-success-1',
-  disabled: 'before:bg-button-border-disabled-1',
-  // TODO: Add warning and muted themes
-  warning: '',
-  muted: ''
-}
 
 export interface ButtonWithOptionsOptionType<T extends string> {
   value: T
@@ -50,8 +26,8 @@ export interface ButtonWithOptionsProps<T extends string> {
   className?: string
   buttonClassName?: string
   size?: ButtonWithOptionsSizes
-  theme?: ButtonWithOptionsTheme
-  variant?: ButtonWithOptionsVariant
+  theme?: ButtonThemes
+  variant?: ButtonVariants
   disabled?: boolean
   children: ReactNode
   dropdownContentClassName?: string
@@ -71,9 +47,9 @@ export const ButtonWithOptions = <T extends string>({
   handleOptionChange,
   className,
   buttonClassName,
-  size = 'default',
+  size,
   theme = 'primary',
-  variant = 'default',
+  variant = 'solid',
   disabled = false,
   children,
   dropdownContentClassName
@@ -81,12 +57,7 @@ export const ButtonWithOptions = <T extends string>({
   return (
     <div className={cn('flex', className)}>
       <Button
-        className={cn(
-          'rounded-r-none',
-          theme !== 'primary' && 'border-y border-l',
-          buttonPaddings[size],
-          buttonClassName
-        )}
+        className={cn('rounded-r-none border-r-0', buttonClassName)}
         theme={theme}
         variant={variant}
         size={size}
@@ -99,12 +70,7 @@ export const ButtonWithOptions = <T extends string>({
       </Button>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger
-          className={cn(
-            buttonVariants({ theme, variant }),
-            'relative h-[inherit] w-8 p-0 flex-shrink-0 rounded-l-none before:absolute before:left-0 before:h-[calc(100%-8px)] before:w-px',
-            theme !== 'primary' && 'border-y border-r',
-            separatorThemes[disabled ? 'disabled' : theme || 'default']
-          )}
+          className={cn(buttonVariants({ theme, variant }), 'button-split-dropdown')}
           disabled={disabled || loading}
         >
           <Icon name="chevron-down" size={12} className="chevron-down" />
@@ -117,7 +83,7 @@ export const ButtonWithOptions = <T extends string>({
                   <DropdownMenu.Item
                     key={String(option.value)}
                     onClick={() => handleOptionChange(option.value)}
-                    disabled={!!loading}
+                    disabled={loading}
                   >
                     <Option
                       control={<RadioButton className="mt-px" value={String(option.value)} id={String(option.value)} />}

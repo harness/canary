@@ -107,12 +107,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({
           <LabelMarker color={label.color} label={label.key} className="max-w-20 pr-2" />
         </SearchBox.Root>
 
-        <Button
-          className="absolute right-2 top-1.5 z-20 text-icons-1 hover:text-icons-2"
-          size="icon"
-          variant="custom"
-          onClick={onSearchClean}
-        >
+        <Button iconOnly size="sm" className="absolute right-2.5 top-2 z-20" variant="ghost" onClick={onSearchClean}>
           <Icon name="cross" size={12} />
         </Button>
       </div>

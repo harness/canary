@@ -46,9 +46,9 @@ export const RepoSidebar = ({
                   />
                 )}
                 <Button
-                  className="hover:border-cn-borders-2 hover:bg-cn-background-3"
-                  size="icon"
-                  variant="outline"
+                  iconOnly
+                  theme="muted"
+                  variant="surface"
                   aria-label="Create new file"
                   onClick={navigateToNewFile}
                 >

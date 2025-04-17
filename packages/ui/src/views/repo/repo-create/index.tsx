@@ -269,7 +269,7 @@ export function RepoCreatePage({
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Create repository' : 'Creating repository...'}
                 </Button>
-                <Button type="button" variant="outline" onClick={handleCancel}>
+                <Button type="button" variant="surface" theme="muted" onClick={handleCancel}>
                   Cancel
                 </Button>
               </ButtonGroup>

@@ -3,7 +3,7 @@ import * as React from 'react'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
-import { ButtonProps, buttonVariants } from '../button'
+import { ButtonProps, ButtonThemes, buttonVariants, type ButtonVariants } from '../button'
 import { Icon } from '../icon'
 
 const PaginationPrimitiveRoot = ({ className, ...props }: React.ComponentProps<'nav'>) => (
@@ -37,27 +37,34 @@ type PaginationPrimitiveLinkGeneralProps = {
 
 interface PaginationPrimitiveLinkProps extends Omit<PaginationPrimitiveLinkGeneralProps, 't'> {
   isFullRounded?: boolean
+  disabled?: boolean
+  variant?: ButtonVariants
+  theme?: ButtonThemes
 }
 
 const PaginationPrimitiveLink = ({
   className,
   isActive,
-  size,
-  isFullRounded = true,
+  size = 'sm',
+  isFullRounded: rounded,
   children,
+  disabled = false,
+  variant = 'soft',
+  theme = 'muted',
   ...props
 }: PaginationPrimitiveLinkProps) => (
   <a
     aria-current={isActive ? 'page' : undefined}
     className={cn(
       buttonVariants({
-        variant: 'custom',
-        size: size ? size : 'sm_icon',
-        borderRadius: isFullRounded ? 'full' : 'default'
+        variant,
+        size,
+        rounded,
+        theme
       }),
-      'text-1 bg-cn-background-2 text-cn-foreground-1 hover:bg-cn-background-3 w-auto min-w-7 px-1.5 font-normal',
       {
-        'bg-cn-background-8 shadow-1 hover:bg-cn-background-8 cursor-default': isActive
+        'button-active': isActive,
+        'button-disabled': disabled
       },
       className
     )}
@@ -77,14 +84,10 @@ const PaginationPrimitivePrevious = ({
 }: PaginationPrimitiveLinkGeneralProps) => (
   <PaginationPrimitiveLink
     aria-label="Go to previous page"
-    size="default"
     isFullRounded={false}
-    className={cn(
-      'text-cn-foreground-2 cursor-pointer gap-1.5 bg-transparent text-sm font-normal',
-      'hover:text-cn-foreground-1 hover:bg-transparent',
-      { 'text-cn-foreground-3 pointer-events-none cursor-default': disabled },
-      className
-    )}
+    disabled={disabled}
+    variant="ghost"
+    className={className}
     href={href}
     {...props}
   >
@@ -103,14 +106,10 @@ const PaginationPrimitiveNext = ({
 }: PaginationPrimitiveLinkGeneralProps) => (
   <PaginationPrimitiveLink
     aria-label="Go to next page"
-    size="default"
     isFullRounded={false}
-    className={cn(
-      'text-cn-foreground-2 cursor-pointer gap-1.5 bg-transparent text-sm font-normal',
-      'hover:text-cn-foreground-1 hover:bg-transparent',
-      { 'text-cn-foreground-3 pointer-events-none cursor-default': disabled },
-      className
-    )}
+    disabled={disabled}
+    variant="ghost"
+    className={className}
     href={href}
     {...props}
   >

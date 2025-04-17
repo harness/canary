@@ -50,7 +50,7 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
   return (
     <HoverCard.Root>
       <HoverCard.Trigger asChild>
-        <Button className="h-auto px-0 font-normal hover:bg-transparent" variant="ghost">
+        <Button className="mx-1 h-auto p-0" variant="ghost">
           {formattedDate}
         </Button>
       </HoverCard.Trigger>

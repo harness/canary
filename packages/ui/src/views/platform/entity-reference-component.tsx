@@ -86,7 +86,6 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
         thumbnail={<Icon name="file" size={16} className="text-cn-foreground-3" />}
         actions={
           <Button
-            variant="default"
             size="sm"
             onClick={() => {
               onSelect?.(entity)

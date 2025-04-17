@@ -72,9 +72,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
             />
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default" onClick={onCreate}>
-              {t('views:secrets.createNew', 'Create new secret')}
-            </Button>
+            <Button onClick={onCreate}>{t('views:secrets.createNew', 'Create new secret')}</Button>
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={4} />

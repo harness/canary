@@ -73,9 +73,10 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           </div>
 
           <Button
-            className="group border border-cn-borders-2"
-            size="xs_icon"
-            variant="custom"
+            className="group"
+            variant="surface"
+            theme="muted"
+            iconOnly
             aria-label="Edit"
             onClick={() => {
               setIsEditing(true)

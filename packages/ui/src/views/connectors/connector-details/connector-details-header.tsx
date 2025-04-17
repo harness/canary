@@ -66,9 +66,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           ) : null}
         </div>
         <div className="flex h-full items-end gap-11">
-          <Button variant="default" onClick={() => onTest(connectorDetails.identifier)}>
-            Test Connection
-          </Button>
+          <Button onClick={() => onTest(connectorDetails.identifier)}>Test Connection</Button>
           <MoreActionsTooltip
             actions={[
               {

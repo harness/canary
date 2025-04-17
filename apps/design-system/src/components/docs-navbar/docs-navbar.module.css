@@ -1,9 +1,0 @@
-.content {
-  overflow: hidden;
-}
-
-.viewLink {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-}

@@ -9,7 +9,7 @@
       --color-fg-muted: #969896;
       --color-fg-subtle: #7aa6da;
 
-      --color-canvas-default: #0f0f11;
+      --color-canvas-default: var(--cn-bg-1);
       --color-canvas-subtle: #2a2a2a;
       --color-border-default: #424242;
       --color-border-muted: #343434;
@@ -75,7 +75,7 @@
       --color-fg-muted: #10a567;
       --color-fg-subtle: #386ac3;
 
-      --color-canvas-default: #f8f8f8;
+      --color-canvas-default: var(--cn-bg-1);
       --color-canvas-subtle: #f8f8f8;
       --color-border-default: #eaeaea;
       --color-border-muted: #eaeaea;
@@ -150,7 +150,7 @@
     }
   }
 
-  @apply !bg-cn-background-2 !text-3 !text-cn-foreground-1 !max-w-full font-sans !leading-[1.625rem];
+  @apply !text-3 !text-cn-foreground-1 !max-w-full font-sans !leading-[1.625rem];
 
   h1,
   h2,

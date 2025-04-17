@@ -33,7 +33,7 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
           variant="ghost"
           tabIndex={collapsed ? 0 : -1}
           className={cn(
-            'absolute opacity-0 -z-10 left-0 top-0 px-2.5 py-2 text-sidebar-foreground-4 hover:text-sidebar-icon-1 bg-sidebar-background-1 hover:bg-sidebar-background-3 rounded border border-sidebar-border-2 pointer-events-none transition-[opacity,z-index] duration-75 delay-0 ease-linear group-data-[state=collapsed]:opacity-100 group-data-[state=collapsed]:pointer-events-auto group-data-[state=collapsed]:z-10 group-data-[state=collapsed]:delay-150'
+            'absolute opacity-0 -z-10 left-0 top-0 px-2.5 py-2 text-sidebar-foreground-4 hover:text-sidebar-icon-1 bg-cn-background-0 hover:bg-sidebar-background-3 rounded border border-sidebar-border-2 pointer-events-none transition-[opacity,z-index] duration-75 delay-0 ease-linear group-data-[state=collapsed]:opacity-100 group-data-[state=collapsed]:pointer-events-auto group-data-[state=collapsed]:z-10 group-data-[state=collapsed]:delay-150'
           )}
           onClick={openSearchDialog}
         >

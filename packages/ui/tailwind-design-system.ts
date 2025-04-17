@@ -350,7 +350,7 @@ export default {
       },
       // Remove borderColor - removing the Default is causing border issues in dark mode
       borderColor: {
-        DEFAULT: 'var(--cn-border-3)'
+        DEFAULT: 'var(--cn-border-2)'
       },
       borderRadius: {
         1: 'var(--cn-rounded-1)',

@@ -167,7 +167,7 @@ const SidebarRoot = forwardRef<
     return (
       <div
         className={cn(
-          'flex h-full w-[--cn-sidebar-width] flex-col bg-sidebar-background-1 transition-[width] ease-linear duration-200',
+          'flex h-full w-[--cn-sidebar-width] flex-col bg-cn-background-0 transition-[width] ease-linear duration-200',
           className
         )}
         ref={ref}
@@ -184,7 +184,7 @@ const SidebarRoot = forwardRef<
         <Sheet.Content
           data-sidebar="sidebar"
           data-mobile="true"
-          className="bg-sidebar-background-1 w-[--cn-sidebar-width] p-0 [&>button]:hidden"
+          className="bg-cn-background-0 w-[--cn-sidebar-width] p-0 [&>button]:hidden"
           style={{ '--cn-sidebar-width': SIDEBAR_WIDTH_MOBILE } as CSSProperties}
           side={side}
         >
@@ -205,7 +205,7 @@ const SidebarRoot = forwardRef<
     >
       <div
         className={cn(
-          'sticky top-0 bg-sidebar-background-1 border-sidebar-border-1 duration-200 hidden w-[--cn-sidebar-width] transition-[left,right,width] ease-linear md:flex',
+          'sticky top-0 bg-cn-background-0 border-sidebar-border-1 duration-200 hidden w-[--cn-sidebar-width] transition-[left,right,width] ease-linear md:flex',
           // Adjust the padding for floating and inset variants.
           variant === 'floating' || variant === 'inset'
             ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--cn-sidebar-width-icon)_+_theme(spacing.4)_+2px)]'
@@ -282,7 +282,7 @@ const SidebarInset = forwardRef<HTMLDivElement, ComponentProps<'main'>>(({ class
     <main
       ref={ref}
       className={cn(
-        'relative min-h-screen bg-sidebar-background-1 w-full',
+        'relative min-h-screen bg-cn-background-0 w-full',
         'peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow transition-[max-width] ease-linear duration-200',
         className
       )}

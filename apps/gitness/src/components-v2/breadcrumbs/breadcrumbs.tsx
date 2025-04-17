@@ -18,12 +18,12 @@ export const Breadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMo
   if (!breadcrumbs.length) return null
 
   return (
-    <Topbar.Root className={cn('bg-sidebar-background-1 sticky top-0 z-20', { 'pl-0': !isMobile })}>
+    <Topbar.Root className={cn('bg-cn-background-0 sticky top-0 z-20', { 'pl-0': !isMobile })}>
       <Topbar.Left>
         {withMobileSidebarToggle && isMobile && (
           <>
             <Sidebar.Trigger className="text-topbar-foreground-2 hover:bg-topbar-background-1 hover:text-topbar-foreground-1 -ml-1" />
-            <Separator orientation="vertical" className="bg-sidebar-background-1 ml-1 mr-2 h-4" />
+            <Separator orientation="vertical" className="bg-cn-background-0 ml-1 mr-2 h-4" />
           </>
         )}
         <Breadcrumb.Root className="select-none">

@@ -40,7 +40,7 @@ export function SidebarSearch(props: SidebarSearchProps) {
           tabIndex={-1}
           readOnly
         />
-        <div className="absolute left-px top-px z-10 flex h-[calc(100%-2px)] w-[30px] items-center justify-center rounded bg-sidebar-background-1 text-sidebar-foreground-4 hover:text-sidebar-icon-1">
+        <div className="absolute left-px top-px z-10 flex h-[calc(100%-2px)] w-[30px] items-center justify-center rounded bg-cn-background-0 text-sidebar-foreground-4 hover:text-sidebar-icon-1">
           <Icon name="search" size={12} className="ml-0.5" />
         </div>
         <Button

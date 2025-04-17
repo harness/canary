@@ -27,7 +27,7 @@ interface MarkdownViewerWrapperProps {
 }
 
 const MarkdownViewerWrapper: FC<MarkdownViewerWrapperProps> = ({ children }) => {
-  return <div className="bg-cn-background-2 rounded-b-md border-x border-b p-6">{children}</div>
+  return <div className="rounded-b-md border-x border-b p-6">{children}</div>
 }
 
 interface MarkdownViewerProps {

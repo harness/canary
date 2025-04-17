@@ -107,7 +107,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
           <div
             className={cn(
               'absolute left-px top-px z-10 rounded text-icons-1 h-[calc(100%-2px)] w-7 flex items-center justify-center',
-              { 'text-sidebar-foreground-4 bg-sidebar-background-1': restInputProps?.theme === 'sidebar' }
+              { 'text-sidebar-foreground-4 bg-cn-background-0': restInputProps?.theme === 'sidebar' }
             )}
           >
             <Icon name="search" size={12} className="ml-0.5" />
@@ -119,7 +119,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
             className={cn(
               'absolute z-[5] right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-cn-background-3 px-1 text-cn-foreground-2 duration-100 ease-in-out',
               {
-                'border-sidebar-border-5 bg-sidebar-background-1 text-sidebar-foreground-3':
+                'border-sidebar-border-5 bg-cn-background-0 text-sidebar-foreground-3':
                   restInputProps?.theme === 'sidebar'
               }
             )}

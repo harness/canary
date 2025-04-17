@@ -29,6 +29,7 @@
     "mode/light/dimmer-tritanopia",
     "mode/light/high-contrast-tritanopia",
     "breakpoint/desktop",
+    "components/desktop/base/alert",
     "components/desktop/base/accordion",
     "components/desktop/base/avatar",
     "components/desktop/base/btn",
@@ -44,8 +45,7 @@
     "components/desktop/base/tabs",
     "components/desktop/base/tag",
     "components/desktop/base/tooltip",
-    "components/desktop/base/sidebar",
-    "components/desktop/base/alert",
-    "components/desktop/base/toast"
+    "components/desktop/base/toast",
+    "components/desktop/base/sidebar"
   ]
 }

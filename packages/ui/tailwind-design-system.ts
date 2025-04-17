@@ -110,6 +110,20 @@ export default {
             'accent-1': 'hsl(var(--canary-button-border-accent-1))'
           }
         },
+        toast: {
+          background: {
+            danger: 'hsla(var(--canary-toast-background-danger))'
+          },
+          foreground: {
+            danger: 'hsla(var(--canary-toast-foreground-danger))'
+          },
+          icons: {
+            danger: {
+              default: 'hsla(var(--canary-toast-icon-danger-default))',
+              hover: 'hsla(var(--canary-toast-icon-danger-hover))'
+            }
+          }
+        },
         tag: {
           border: {
             gray: {
@@ -518,6 +532,9 @@ export default {
     { pattern: /^bg-tag-background-/ },
     { pattern: /^text-tag-foreground-/ },
     { pattern: /^border-tag-border-/ },
+    // toast classes
+    { pattern: /^bg-toast-/ },
+    { pattern: /^text-toast-/ },
     // label classes
     { pattern: /^bg-label-background-/ },
     { pattern: /^text-label-foreground-/ },
@@ -536,6 +553,7 @@ export default {
     { pattern: /^hover:bg-background-/ },
     { pattern: /^hover:text-icons-/ },
     { pattern: /^hover:bg-icons-/ },
+    { pattern: /^hover:text-toast-/ },
     // button classes
     { pattern: /^hover:bg-button-background-/ },
     { pattern: /^hover:text-button-foreground-/ },

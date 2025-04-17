@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { Badge, Icon, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
+import { defaultTo } from 'lodash-es'
 
 import { DelegateConnectivityListProps } from '../types'
 
@@ -14,7 +15,8 @@ export function DelegateConnectivityList({
   delegates,
   useTranslationStore,
   isLoading,
-  selectedTags
+  selectedTags,
+  isDelegateSelected
 }: DelegateConnectivityListProps): JSX.Element {
   const { t } = useTranslationStore()
 
@@ -50,39 +52,49 @@ export function DelegateConnectivityList({
         <SkeletonTable countRows={12} countColumns={5} />
       ) : (
         <Table.Body>
-          {delegates.map(({ groupId, groupName, activelyConnected, lastHeartBeat, groupCustomSelectors }) => {
-            return (
-              <Table.Row key={groupId}>
-                <Table.Cell className="max-w-80 content-center truncate">
-                  <div className="flex items-center gap-2.5">
-                    <Title title={groupName} />
-                  </div>
-                </Table.Cell>
-                <Table.Cell className="content-center">
-                  <div className="inline-flex items-center gap-2">
-                    <Icon
-                      name="dot"
-                      size={8}
-                      className={cn(activelyConnected ? 'text-icons-success' : 'text-icons-danger')}
-                    />
-                    {lastHeartBeat ? timeAgo(lastHeartBeat) : null}
-                  </div>
-                </Table.Cell>
-                <Table.Cell className="max-w-80 content-center truncate">
-                  {groupCustomSelectors.map((selector: string) => (
-                    <Badge variant="soft" theme="merged" key={selector} className="mr-2">
-                      {selector}
-                    </Badge>
-                  ))}
-                </Table.Cell>
-                <Table.Cell className="min-w-8 text-right">
-                  {selectedTags?.some(tag => groupCustomSelectors.includes(tag)) && (
-                    <Icon name="tick" size={12} className="text-icons-success" />
-                  )}
-                </Table.Cell>
-              </Table.Row>
-            )
-          })}
+          {delegates.map(
+            ({
+              groupId,
+              groupName,
+              activelyConnected,
+              lastHeartBeat,
+              groupCustomSelectors,
+              groupImplicitSelectors
+            }) => {
+              return (
+                <Table.Row key={groupId}>
+                  <Table.Cell className="max-w-80 content-center truncate">
+                    <div className="flex items-center gap-2.5">
+                      <Title title={groupName} />
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell className="content-center">
+                    <div className="inline-flex items-center gap-2">
+                      <Icon
+                        name="dot"
+                        size={8}
+                        className={cn(activelyConnected ? 'text-icons-success' : 'text-icons-danger')}
+                      />
+                      {lastHeartBeat ? timeAgo(lastHeartBeat) : null}
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell className="max-w-80 content-center truncate">
+                    {groupCustomSelectors.map((selector: string) => (
+                      <Badge variant="soft" theme="merged" key={selector} className="mr-2">
+                        {selector}
+                      </Badge>
+                    ))}
+                  </Table.Cell>
+                  <Table.Cell className="min-w-8 text-right">
+                    {isDelegateSelected(
+                      [...defaultTo(groupImplicitSelectors, []), ...defaultTo(groupCustomSelectors, [])],
+                      selectedTags || []
+                    ) && <Icon name="tick" size={12} className="text-icons-success" />}
+                  </Table.Cell>
+                </Table.Row>
+              )
+            }
+          )}
         </Table.Body>
       )}
     </Table.Root>

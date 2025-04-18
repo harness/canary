@@ -114,7 +114,7 @@ export interface Violation {
 /**
  * Helps to construct conditional objects like this: {a: b, ...(some ? c : {}), z: x}
  */
-export const wrapConditionalObjectElement = <T extends Record<string, unknown>>(element: T, isPassing: boolean) => {
+export const wrapConditionalObjectElement = <T>(element: T, isPassing: boolean) => {
   if (!element || !isPassing) {
     return {} as T
   }

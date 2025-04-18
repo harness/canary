@@ -21,9 +21,9 @@ interface ContentProps {
 }
 
 function Root({ ...props }: RootProps) {
-  const { children } = props
+  const { children, className } = props
 
-  return <div className="grid-col-[1fr_auto] grid grid-flow-col rounded border">{children}</div>
+  return <div className={cn('grid-col-[1fr_auto] grid grid-flow-col rounded border', className)}>{children}</div>
 }
 
 function Content({ children, className, asChild }: ContentProps) {
@@ -43,7 +43,7 @@ function Icon({ ...props }: IconProps) {
 
   return (
     <Button
-      className="flex h-full items-center rounded-r border-l px-1.5 py-0.5 hover:bg-cn-background-3"
+      className="hover:bg-cn-background-3 flex h-full items-center rounded-r border-l px-1.5 py-0.5"
       tabIndex={0}
       onClick={() => handleClick()}
       variant="custom"

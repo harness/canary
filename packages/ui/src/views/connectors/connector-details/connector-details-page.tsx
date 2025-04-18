@@ -28,6 +28,7 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
   entities,
   toEntity,
   toScope,
+  toConnectorsList,
   searchQuery
 }) => {
   const { t } = useTranslationStore()
@@ -45,9 +46,10 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
           onTest={onTest}
           onDelete={onDelete}
           useTranslationStore={useTranslationStore}
+          toConnectorsList={toConnectorsList}
         />
         <Tabs.Root
-          className="mb-7 px-8"
+          className="mb-7 mt-9 px-8"
           defaultValue={ConnectorDetailsTabsKeys.CONFIGURATION}
           value={activeTab}
           onValueChange={handleTabChange}

@@ -38,6 +38,7 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => (
     searchQuery=""
     toEntity={noop}
     toScope={noop}
+    toConnectorsList={() => '/connectors'}
     entities={mockConnectorRefList}
     isConnectorReferencesLoading={false}
     setIsConnectorRefSearchQuery={noop}

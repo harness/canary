@@ -11,7 +11,8 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   connectorDetails,
   onTest,
   onDelete,
-  useTranslationStore
+  useTranslationStore,
+  toConnectorsList
 }) => {
   const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status } = connectorDetails
   const { t } = useTranslationStore()
@@ -20,9 +21,9 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
     <div className="px-8">
       <Button variant="link_accent" size="sm" className="px-0">
         <Icon name="chevron-up" className="-rotate-90" />
-        <Link to="/connectors">Back to Connectors</Link>
+        <Link to={toConnectorsList()}>Back to Connectors</Link>
       </Button>
-      <Layout.Horizontal gap="space-x-2" className="mt-3">
+      <Layout.Horizontal gap="space-x-2" className="mt-3 items-center">
         <Logo name={connectorDetails.type.toLowerCase() as LogoName} />
         <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">{connectorDetails.name}</h1>
       </Layout.Horizontal>

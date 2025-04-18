@@ -1,9 +1,7 @@
 import { FC, useState } from 'react'
 
-import { Spacer, Tabs } from '@/components'
-import { useTheme } from '@/context'
+import { Tabs } from '@/components'
 import { SandboxLayout } from '@/views'
-import { cn } from '@utils/cn'
 
 import { ConnectorDetailsConfiguration } from './connector-details-configuration'
 import { ConnectorDetailsHeader } from './connector-details-header'

@@ -98,7 +98,7 @@ export interface ConnectorDetailsPageProps {
   toScope: (scope: string) => void
   searchQuery: string
   apiConnectorRefError?: string
-  toConnectorsList: () => string
+  toConnectorsList?: () => string
 }
 
 export interface ConnectorDetailsReferencePageProps {

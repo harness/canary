@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Tabs } from '@/components'
+import { Spacer, Tabs } from '@/components'
 import { useTheme } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -54,25 +54,25 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
         >
           <Tabs.List className="before:left-1/2 before:w-[calc(100vw-var(--sidebar-width)-6px*2)] before:min-w-[calc(100%+3rem)] before:-translate-x-1/2">
             <Tabs.Trigger
-              className="data-[state=active]:bg-cn-background-2 px-4"
+              className="px-4 data-[state=active]:bg-cn-background-2"
               value={ConnectorDetailsTabsKeys.CONFIGURATION}
             >
               {t('views:connectors.configuration', 'Configuration')}
             </Tabs.Trigger>
             <Tabs.Trigger
-              className="data-[state=active]:bg-cn-background-2 px-4"
+              className="px-4 data-[state=active]:bg-cn-background-2"
               value={ConnectorDetailsTabsKeys.REFERENCES}
             >
               {t('views:connectors.references', 'References')}
             </Tabs.Trigger>
             <Tabs.Trigger
-              className="data-[state=active]:bg-cn-background-2 px-4"
+              className="px-4 data-[state=active]:bg-cn-background-2"
               value={ConnectorDetailsTabsKeys.ACTIVITY}
             >
               {t('views:connectors.activityHistory', 'Activity history')}
             </Tabs.Trigger>
           </Tabs.List>
-          <Tabs.Content className="pt-7" value={ConnectorDetailsTabsKeys.CONFIGURATION}>
+          <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.CONFIGURATION}>
             <ConnectorDetailsConfiguration
               connectorDetails={connectorDetails}
               onSave={onSave}
@@ -82,7 +82,7 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
               apiError={apiError}
             />
           </Tabs.Content>
-          <Tabs.Content className="pt-7" value={ConnectorDetailsTabsKeys.REFERENCES}>
+          <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.REFERENCES}>
             <ConnectorDetailsReferencePage
               toEntity={toEntity}
               toScope={toScope}
@@ -97,7 +97,7 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
               goToPage={goToPage}
             />
           </Tabs.Content>
-          <Tabs.Content className="pt-7" value={ConnectorDetailsTabsKeys.ACTIVITY}>
+          <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.ACTIVITY}>
             <div>Activity History</div>
           </Tabs.Content>
         </Tabs.Root>

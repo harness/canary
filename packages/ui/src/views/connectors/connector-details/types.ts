@@ -63,6 +63,7 @@ export interface ConnectorDetailsItem {
   type: ConnectorConfigType
   name?: string
   description?: string
+  tags?: Record<string, string>
   status?: ExecutionState
   lastModifiedAt?: number
   lastTestedAt?: number

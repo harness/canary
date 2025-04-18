@@ -16,7 +16,7 @@ const ConnectorDetailsConfiguration: FC<ConnectorDetailsConfigurationProps> = ({
 }) => {
   const { t } = useTranslationStore()
   return (
-    <Layout.Vertical className="mt-2.5">
+    <Layout.Vertical gap="space-y-8">
       <h1 className="text-5 font-medium leading-snug tracking-tight text-cn-foreground-1">
         {t('views:common.details', 'Details')}
       </h1>

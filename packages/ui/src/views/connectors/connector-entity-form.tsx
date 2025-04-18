@@ -100,7 +100,15 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
         setConnectorEditValues(connectorValues)
       }
     }
-  }, [intent, connector.name, connector.spec, connector.type, getConnectorDefinition])
+  }, [
+    intent,
+    connector.name,
+    connector?.spec,
+    connector.type,
+    getConnectorDefinition,
+    connector?.description,
+    connector?.tags
+  ])
 
   return (
     <RootForm
@@ -134,7 +142,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           </EntityFormSectionLayout.Root>
           {intent === EntityIntent.CREATE ? (
             <EntityFormLayout.Footer className="border-none">
-              <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-cn-background-2 p-4 shadow-md">
+              <div className="bg-cn-background-2 absolute inset-x-0 bottom-0 flex justify-between gap-x-3 p-4 shadow-md">
                 <Button variant="secondary" onClick={() => onBack?.()}>
                   Back
                 </Button>
@@ -142,7 +150,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
               </div>
             </EntityFormLayout.Footer>
           ) : (
-            <div className="flex flex-row justify-end border-t pt-2">
+            <div className="border-cn-borders-3 mt-5 flex flex-row justify-end border-t pt-5">
               <Button onClick={() => rootForm.submitForm()}>Apply changes</Button>
             </div>
           )}

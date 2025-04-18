@@ -55,22 +55,13 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
           onValueChange={handleTabChange}
         >
           <Tabs.List className="before:left-1/2 before:w-[calc(100vw-var(--sidebar-width)-6px*2)] before:min-w-[calc(100%+3rem)] before:-translate-x-1/2">
-            <Tabs.Trigger
-              className="px-4 data-[state=active]:bg-cn-background-2"
-              value={ConnectorDetailsTabsKeys.CONFIGURATION}
-            >
+            <Tabs.Trigger value={ConnectorDetailsTabsKeys.CONFIGURATION}>
               {t('views:connectors.configuration', 'Configuration')}
             </Tabs.Trigger>
-            <Tabs.Trigger
-              className="px-4 data-[state=active]:bg-cn-background-2"
-              value={ConnectorDetailsTabsKeys.REFERENCES}
-            >
+            <Tabs.Trigger value={ConnectorDetailsTabsKeys.REFERENCES}>
               {t('views:connectors.references', 'References')}
             </Tabs.Trigger>
-            <Tabs.Trigger
-              className="px-4 data-[state=active]:bg-cn-background-2"
-              value={ConnectorDetailsTabsKeys.ACTIVITY}
-            >
+            <Tabs.Trigger value={ConnectorDetailsTabsKeys.ACTIVITY}>
               {t('views:connectors.activityHistory', 'Activity history')}
             </Tabs.Trigger>
           </Tabs.List>

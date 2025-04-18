@@ -1,5 +1,4 @@
 import { TranslationStore } from '@/views'
-import { LogoNameMap } from '@components/logo'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { InputFactory } from '@harnessio/forms'
@@ -46,6 +45,17 @@ export interface ConnectorReferenceItem {
 
 export interface ConnectorReferenceList {
   content: ConnectorReferenceItem[]
+}
+
+export interface ConnectorActivityList {
+  content: ConnectorActivityItem[]
+}
+
+export interface ConnectorActivityItem {
+  description: string
+  activityTime: number
+  activityStatus: ExecutionState
+  referredEntity: ReferredEntity
 }
 
 export interface ConnectorReferenceListProps {
@@ -109,7 +119,7 @@ export interface ConnectorDetailsLayoutProps {
   children: React.ReactNode
 }
 
-export interface ConnectorDetailsReferencePageProps {
+export interface ConnectorDetailsReferenceProps {
   searchQuery: string
   setSearchQuery: (query?: string) => void
   apiConnectorRefError?: string
@@ -144,4 +154,20 @@ export interface ConnectorDetailsConfigurationProps {
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   inputComponentFactory: InputFactory
   apiError?: string
+}
+
+export interface ConnectorDetailsActivitiesListProps {
+  activities: ConnectorActivityList
+  useTranslationStore: () => TranslationStore
+  isLoading: boolean
+}
+
+export interface ConnectorDetailsActivityProps {
+  apiConnectorActivityError?: string
+  useTranslationStore: () => TranslationStore
+  currentPage: number
+  totalPages: number
+  goToPage: (page: number) => void
+  isLoading: boolean
+  activities: any
 }

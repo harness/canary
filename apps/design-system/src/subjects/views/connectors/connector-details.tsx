@@ -7,6 +7,7 @@ import { Tabs } from '@harnessio/ui/components'
 import {
   ArrayInput,
   BooleanInput,
+  ConnectorDetailsActivities,
   ConnectorDetailsConfiguration,
   ConnectorDetailsItem,
   ConnectorDetailsLayout,
@@ -22,6 +23,7 @@ import {
   TextInput
 } from '@harnessio/ui/views'
 
+import { mockConnectorActivityList } from './mock-connector-activity-list'
 import mockConnectorDetails from './mock-connector-details.json'
 import { mockConnectorRefList } from './mock-connector-ref-list'
 
@@ -93,7 +95,14 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
         />
       </Tabs.Content>
       <Tabs.Content className="pt-7" value={ConnectorDetailsTabsKeys.ACTIVITY}>
-        <div>Activity History</div>
+        <ConnectorDetailsActivities
+          useTranslationStore={useTranslationStore}
+          isLoading={false}
+          activities={mockConnectorActivityList}
+          currentPage={1}
+          totalPages={1}
+          goToPage={noop}
+        />
       </Tabs.Content>
     </ConnectorDetailsLayout>
   )

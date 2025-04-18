@@ -52,15 +52,16 @@ export function ConnectorsList({
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
       variant="asStackedList"
+      tableClassName="table-fixed"
     >
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-96">{t('views:connectors.id', 'Connector ID')}</Table.Head>
-          <Table.Head className="w-96">Details</Table.Head>
-          <Table.Head className="w-44 whitespace-nowrap">Connectivity status</Table.Head>
-          <Table.Head className="w-44">Last updated</Table.Head>
-          <Table.Head className="w-8" />
-          <Table.Head className="w-8" />
+          <Table.Head className="w-[282px]">{t('views:connectors.id', 'Connector ID')}</Table.Head>
+          <Table.Head className="w-72">Details</Table.Head>
+          <Table.Head className="w-50 whitespace-nowrap">Connectivity status</Table.Head>
+          <Table.Head className="w-40">Last updated</Table.Head>
+          <Table.Head className="w-2" />
+          <Table.Head className="w-2" />
         </Table.Row>
       </Table.Header>
       {isLoading ? (
@@ -72,27 +73,28 @@ export function ConnectorsList({
             return (
               <Table.Row
                 key={identifier}
-                className="cursor-pointer"
+                className="cursor-pointer py-4"
                 onClick={() => toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt })}
               >
-                <Table.Cell className="max-w-80 content-center truncate">
+                <Table.Cell className="max-w-[282px] content-center truncate">
                   <div className="flex items-center gap-2.5">
-                    <div className="min-w-[40px]">
-                      {connectorLogo ? <Logo name={connectorLogo} size={20} /> : <Icon name="connectors" size={20} />}
+                    <div className="min-w-[24px]">
+                      {connectorLogo ? <Logo name={connectorLogo} size={20} /> : <Icon name="connectors" size={30} />}
                     </div>
                     <Title title={identifier} />
                   </div>
                 </Table.Cell>
-                <Table.Cell className="max-w-80 content-center truncate">{spec?.url}</Table.Cell>
-                <Table.Cell className="content-center">
+                <Table.Cell className="max-w-72 content-center truncate">{spec?.url}</Table.Cell>
+                <Table.Cell className="w-50 content-center whitespace-nowrap">
                   {status ? <ConnectivityStatus item={{ identifier, type, spec, status, lastModifiedAt }} /> : null}
                 </Table.Cell>
                 <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
-                <Table.Cell className="min-w-8 content-center">
+                <Table.Cell className="min-w-2 content-center !p-0">
                   <Button
-                    size="icon"
+                    size="xs"
                     variant="ghost"
                     onClick={() => onToggleFavoriteConnector(identifier, !isFavorite)}
+                    className="p-0"
                   >
                     {isFavorite ? (
                       <Icon name="star-filled" size={12} className="fill-icons-alert" />
@@ -101,9 +103,8 @@ export function ConnectorsList({
                     )}
                   </Button>
                 </Table.Cell>
-                <Table.Cell className="min-w-8 text-right">
+                <Table.Cell className="min-w-2 content-center !p-0 text-right">
                   <MoreActionsTooltip
-                    isInTable
                     actions={[
                       {
                         isDanger: true,

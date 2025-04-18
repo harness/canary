@@ -120,7 +120,7 @@ export interface ConnectorDetailsHeaderProps {
   onTest: (connectorId: string) => void
   onDelete: (connectorId: string) => void
   useTranslationStore: () => TranslationStore
-  toConnectorsList: () => string
+  toConnectorsList?: () => string
 }
 
 export enum ConnectorDetailsTabsKeys {

@@ -225,6 +225,7 @@
     "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noConnectors": "No connectors yet",
     "createConnector": "Create new connector.",
+    "noDelegates": "There are no delegates in this project yet.",
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
     "clearSearch": "Clear search",

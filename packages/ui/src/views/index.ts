@@ -70,3 +70,6 @@ export * from './connectors'
 
 // sidebar-view
 export * from './sidebar-view/sidebar-view'
+
+// delegates
+export * from './delegates'

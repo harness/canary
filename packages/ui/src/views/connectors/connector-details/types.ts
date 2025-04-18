@@ -101,6 +101,14 @@ export interface ConnectorDetailsPageProps {
   toConnectorsList?: () => string
 }
 
+export interface ConnectorDetailsLayoutProps {
+  connectorDetails: ConnectorDetailsItem
+  onTest: (connectorId: string) => void
+  onDelete: (connectorId: string) => void
+  useTranslationStore: () => TranslationStore
+  children: React.ReactNode
+}
+
 export interface ConnectorDetailsReferencePageProps {
   searchQuery: string
   setSearchQuery: (query?: string) => void

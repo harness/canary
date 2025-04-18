@@ -20,7 +20,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   return (
     <div className="px-8">
       {toConnectorsList ? (
-        <Button variant="link_accent" size="sm" className="px-0 mb-3">
+        <Button variant="link_accent" size="sm" className="mb-3 px-0">
           <Icon name="chevron-up" className="-rotate-90" />
           <Link to={toConnectorsList()}>Back to Connectors</Link>
         </Button>

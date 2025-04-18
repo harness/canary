@@ -89,34 +89,13 @@ export interface ConnectorDetailsItem {
   lastConnectedAt: number
 }
 
-export interface ConnectorDetailsPageProps {
-  connectorDetails: ConnectorDetailsItem
-  onTest: (connectorId: string) => void
-  onDelete: (connectorId: string) => void
-  useTranslationStore: () => TranslationStore
-  onSave: (values: onSubmitConnectorProps) => void
-  getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
-  inputComponentFactory: InputFactory
-  apiError?: string
-  isConnectorReferencesLoading: boolean
-  setIsConnectorRefSearchQuery: (query?: string) => void
-  currentPage: number
-  totalPages: number
-  goToPage: (page: number) => void
-  entities: ConnectorReferenceList
-  toEntity: (entity: string) => void
-  toScope: (scope: string) => void
-  searchQuery: string
-  apiConnectorRefError?: string
-  toConnectorsList?: () => string
-}
-
 export interface ConnectorDetailsLayoutProps {
   connectorDetails: ConnectorDetailsItem
   onTest: (connectorId: string) => void
   onDelete: (connectorId: string) => void
   useTranslationStore: () => TranslationStore
   children: React.ReactNode
+  toConnectorsList?: () => string
 }
 
 export interface ConnectorDetailsReferenceProps {
@@ -131,6 +110,7 @@ export interface ConnectorDetailsReferenceProps {
   entities: ConnectorReferenceList
   toEntity: (entity: string) => void
   toScope: (scope: string) => void
+  toConnectorsList?: () => string
 }
 
 export interface ConnectorDetailsHeaderProps {
@@ -169,5 +149,5 @@ export interface ConnectorDetailsActivityProps {
   totalPages: number
   goToPage: (page: number) => void
   isLoading: boolean
-  activities: any
+  activities: ConnectorActivityList
 }

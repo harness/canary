@@ -11,7 +11,8 @@ const ConnectorDetailsLayout = ({
   onTest,
   onDelete,
   useTranslationStore,
-  children
+  children,
+  toConnectorsList
 }: ConnectorDetailsLayoutProps) => {
   const { t } = useTranslationStore()
   const [activeTab, setActiveTab] = useState<ConnectorDetailsTabsKeys>(ConnectorDetailsTabsKeys.CONFIGURATION)
@@ -21,37 +22,29 @@ const ConnectorDetailsLayout = ({
   }
   return (
     <div>
-      <SandboxLayout.Main fullWidth>
+      <SandboxLayout.Main>
         <SandboxLayout.Content>
           <ConnectorDetailsHeader
             connectorDetails={connectorDetails}
             onTest={onTest}
             onDelete={onDelete}
             useTranslationStore={useTranslationStore}
+            toConnectorsList={toConnectorsList}
           />
           <Tabs.Root
-            className="mb-7 px-8"
+            className="mb-7 mt-9 px-8"
             defaultValue={ConnectorDetailsTabsKeys.CONFIGURATION}
             value={activeTab}
             onValueChange={handleTabChange}
           >
             <Tabs.List className="before:left-1/2 before:w-[calc(100vw-var(--sidebar-width)-6px*2)] before:min-w-[calc(100%+3rem)] before:-translate-x-1/2">
-              <Tabs.Trigger
-                className="data-[state=active]:bg-cn-background-2 px-4"
-                value={ConnectorDetailsTabsKeys.CONFIGURATION}
-              >
+              <Tabs.Trigger value={ConnectorDetailsTabsKeys.CONFIGURATION}>
                 {t('views:connectors.configuration', 'Configuration')}
               </Tabs.Trigger>
-              <Tabs.Trigger
-                className="data-[state=active]:bg-cn-background-2 px-4"
-                value={ConnectorDetailsTabsKeys.REFERENCES}
-              >
+              <Tabs.Trigger value={ConnectorDetailsTabsKeys.REFERENCES}>
                 {t('views:connectors.references', 'References')}
               </Tabs.Trigger>
-              <Tabs.Trigger
-                className="data-[state=active]:bg-cn-background-2 px-4"
-                value={ConnectorDetailsTabsKeys.ACTIVITY}
-              >
+              <Tabs.Trigger value={ConnectorDetailsTabsKeys.ACTIVITY}>
                 {t('views:connectors.activityHistory', 'Activity history')}
               </Tabs.Trigger>
             </Tabs.List>

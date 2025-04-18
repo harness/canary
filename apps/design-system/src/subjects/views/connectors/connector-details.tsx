@@ -68,7 +68,7 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
       onDelete={noop}
       useTranslationStore={useTranslationStore}
     >
-      <Tabs.Content className="pt-7" value={ConnectorDetailsTabsKeys.CONFIGURATION}>
+      <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.CONFIGURATION}>
         <ConnectorDetailsConfiguration
           connectorDetails={connectorDetails}
           onSave={noop}
@@ -76,10 +76,9 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
           getConnectorDefinition={getHarnessConnectorDefinition}
           useTranslationStore={useTranslationStore}
           apiError={''}
-          toConnectorsList={() => '/connectors'}
         />
       </Tabs.Content>
-      <Tabs.Content className="pt-7" value={ConnectorDetailsTabsKeys.REFERENCES}>
+      <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.REFERENCES}>
         <ConnectorDetailsReference
           toEntity={noop}
           toScope={noop}
@@ -94,7 +93,7 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
           goToPage={noop}
         />
       </Tabs.Content>
-      <Tabs.Content className="pt-7" value={ConnectorDetailsTabsKeys.ACTIVITY}>
+      <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.ACTIVITY}>
         <ConnectorDetailsActivities
           useTranslationStore={useTranslationStore}
           isLoading={false}

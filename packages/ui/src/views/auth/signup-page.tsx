@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Input, Spacer, StyledLink, Text } from '@/components'
+import { Alert, Button, Card, Input, Spacer, StyledLink, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -66,7 +66,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
 
   return (
     <Floating1ColumnLayout
-      className="flex-col bg-cn-background-1 pt-20 sm:pt-[186px]"
+      className="bg-cn-background-1 flex-col pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
@@ -123,11 +123,9 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               error={errors.confirmPassword?.message?.toString()}
             />
             {serverError && (
-              <>
-                <Text className="mt-1 leading-none tracking-tight text-cn-foreground-danger" size={0}>
-                  {serverError}
-                </Text>
-              </>
+              <Alert.Container variant="destructive">
+                <Alert.Title>{serverError}</Alert.Title>
+              </Alert.Container>
             )}
             <Button
               className="mt-10 w-full"
@@ -136,7 +134,6 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               type="submit"
               size="md"
               loading={isLoading}
-              disabled={hasError}
             >
               {isLoading ? 'Signing up...' : 'Sign up'}
             </Button>

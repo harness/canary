@@ -520,6 +520,7 @@ export default {
     { pattern: /^border-tag-border-/ },
     // label classes
     { pattern: /^bg-label-background-/ },
+    { pattern: /^bg-label-foreground-/ },
     { pattern: /^text-label-foreground-/ },
     // sidebar classes
     { pattern: /^bg-sidebar-background-/ },

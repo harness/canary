@@ -352,7 +352,7 @@
       "mainTitle": "General settings",
       "projectNamePlaceholder": "Enter project name",
       "projectNameLabel": "Project name",
-      "projectDescriptionPlaceholder": "Enter description (optional)",
+      "projectDescriptionPlaceholder": "Enter description",
       "projectDescriptionLabel": "Description",
       "formSubmitButton": {
         "savingState": "Saving...",

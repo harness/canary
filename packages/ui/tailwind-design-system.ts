@@ -3,7 +3,7 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
-import { badgeStyles, buttonStyles, dialogStyles, switchStyles } from './tailwind-utils-config/components'
+import { badgeStyles, buttonStyles, dialogStyles, labelStyles, switchStyles } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
 export default {
@@ -406,6 +406,7 @@ export default {
       addComponents(buttonStyles)
       addComponents(dialogStyles)
       addComponents(switchStyles)
+      addComponents(labelStyles)
     }),
     tailwindcssAnimate,
     typography,
@@ -491,6 +492,7 @@ export default {
     { pattern: /^border-tag-border-/ },
     // label classes
     { pattern: /^bg-label-background-/ },
+    { pattern: /^bg-label-foreground-/ }, // this is essential for the color select in the LabelFormColorAndNameGroup component
     { pattern: /^text-label-foreground-/ },
     // sidebar classes
     { pattern: /^bg-sidebar-background-/ },

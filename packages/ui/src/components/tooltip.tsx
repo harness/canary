@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { Arrow, Content, Provider, Root, Trigger } from '@radix-ui/react-tooltip'
+import { Arrow, Content, Provider, Root, Trigger, type TooltipProps } from '@radix-ui/react-tooltip'
 import { cn } from '@utils/cn'
 
 const TooltipContent = forwardRef<ElementRef<typeof Content>, ComponentPropsWithoutRef<typeof Content>>(
@@ -33,4 +33,4 @@ const Tooltip = {
   Arrow: TooltipArrow
 }
 
-export { Tooltip }
+export { Tooltip, type TooltipProps }

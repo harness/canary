@@ -89,7 +89,7 @@ export function CreateTagDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content className="max-w-[460px] border-cn-borders-2 bg-cn-background-1" aria-describedby={undefined}>
+      <Dialog.Content className="border-cn-borders-2 bg-cn-background-1 max-w-[460px]" aria-describedby={undefined}>
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createTagTitle', 'Create a tag')}</Dialog.Title>
         </Dialog.Header>
@@ -109,7 +109,7 @@ export function CreateTagDialog({
 
           <Fieldset>
             <ControlGroup>
-              <Label htmlFor="target" className="mb-2.5">
+              <Label htmlFor="target" className="mb-2">
                 Based on
               </Label>
               <BranchSelector

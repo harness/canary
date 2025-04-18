@@ -106,7 +106,7 @@ export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ watch, 
 
   return (
     <ControlGroup className="mt-4">
-      <Label htmlFor="insecure" className="mb-6" color="secondary">
+      <Label htmlFor="insecure" className="mb-6">
         {t('views:repos.sslVerification', 'SSL Verification')}
       </Label>
       <RadioGroup value={sslVerificationValue} onValueChange={handleAccessChange} id="insecure">
@@ -137,7 +137,7 @@ export const WebhookTriggerField: FC<WebhookFormFieldProps> = ({ watch, setValue
 
   return (
     <ControlGroup className="mt-4">
-      <Label htmlFor="trigger" className="mb-6" color="secondary">
+      <Label htmlFor="trigger" className="mb-6">
         {t('views:repos.evenTriggerLabel', 'Which events would you like to use to trigger this webhook?')}
       </Label>
       <RadioGroup value={sslVerificationValue} onValueChange={handleTriggerChange} id="trigger">

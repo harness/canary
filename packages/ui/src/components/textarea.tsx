@@ -21,7 +21,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <ControlGroup>
         {label && (
-          <Label className="mb-2.5" color={disabled ? 'disabled-dark' : 'secondary'} optional={optional} htmlFor={id}>
+          <Label className="mb-2" disabled={disabled} optional={optional} htmlFor={id}>
             {label}
           </Label>
         )}

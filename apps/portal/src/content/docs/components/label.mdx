@@ -28,7 +28,7 @@ import { DocsPage } from "../../../components/docs-page";
 
     <div className="flex flex-col gap-4">
         <h5>With color</h5>
-        <Label htmlFor="password" color="disabled">Password</Label>
+        <Label htmlFor="password">Password</Label>
         <input id="password" type="password" />
     </div>
 
@@ -82,7 +82,7 @@ The `Label` component provides a styled label for form elements with customizabl
       name: "color",
       description: "The color variant of the label",
       required: false,
-      value: "'primary' | 'secondary' | 'disabled' | 'disabled-dark'",
+      value: "'default' | 'primary'",
     },
     {
       name: "className",

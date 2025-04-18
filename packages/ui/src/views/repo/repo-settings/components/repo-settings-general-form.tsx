@@ -154,9 +154,7 @@ export const RepoSettingsGeneralForm: FC<{
           {/* BRANCH */}
           <Fieldset className="w-[298px]">
             <ControlGroup>
-              <Label className="mb-2.5" color="secondary">
-                {t('views:repos.defaultBranch', 'Default Branch')}
-              </Label>
+              <Label className="mb-2">{t('views:repos.defaultBranch', 'Default Branch')}</Label>
               <BranchSelector
                 useTranslationStore={useTranslationStore}
                 useRepoBranchesStore={useRepoBranchesStore}
@@ -173,9 +171,7 @@ export const RepoSettingsGeneralForm: FC<{
 
           <Fieldset className="mt-4">
             <ControlGroup>
-              <Label className="mb-6" color="secondary">
-                {t('views:repos.visibility', 'Visibility')}
-              </Label>
+              <Label className="mb-6">{t('views:repos.visibility', 'Visibility')}</Label>
               <RadioGroup value={accessValue} onValueChange={handleAccessChange} id="visibility">
                 <Option
                   control={<RadioButton value="1" id="access-public" />}

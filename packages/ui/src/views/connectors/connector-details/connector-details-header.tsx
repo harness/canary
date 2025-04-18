@@ -19,11 +19,13 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   const { Link } = useRouterContext()
   return (
     <div className="px-8">
-      <Button variant="link_accent" size="sm" className="px-0">
-        <Icon name="chevron-up" className="-rotate-90" />
-        <Link to={toConnectorsList()}>Back to Connectors</Link>
-      </Button>
-      <Layout.Horizontal gap="space-x-2" className="mt-3 items-center">
+      {toConnectorsList ? (
+        <Button variant="link_accent" size="sm" className="px-0 mb-3">
+          <Icon name="chevron-up" className="-rotate-90" />
+          <Link to={toConnectorsList()}>Back to Connectors</Link>
+        </Button>
+      ) : null}
+      <Layout.Horizontal gap="space-x-2" className="items-center">
         <Logo name={connectorDetails.type.toLowerCase() as LogoName} />
         <h1 className="text-6 text-cn-foreground-1 font-medium leading-snug tracking-tight">{connectorDetails.name}</h1>
       </Layout.Horizontal>

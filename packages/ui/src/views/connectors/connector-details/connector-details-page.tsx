@@ -37,7 +37,7 @@ const ConnectorDetailsPage: FC<ConnectorDetailsPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main fullWidth>
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
         <ConnectorDetailsHeader
           connectorDetails={connectorDetails}

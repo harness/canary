@@ -4,12 +4,12 @@ import { timeAgo } from '@utils/utils'
 import { ConnectorReferenceItem, ConnectorReferenceListProps } from './types'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="text-cn-foreground-1 max-w-full truncate text-sm font-medium leading-tight tracking-tight">
+  <span className="max-w-full truncate text-sm font-medium leading-tight tracking-tight text-cn-foreground-1">
     {title}
   </span>
 )
 const Description = ({ description }: { description: string }): JSX.Element => (
-  <span className="text-1 text-cn-foreground-4 max-w-full truncate font-normal leading-none tracking-tight">
+  <span className="max-w-full truncate text-1 font-normal leading-none tracking-tight text-cn-foreground-4">
     {description}
   </span>
 )
@@ -47,9 +47,9 @@ const ConnectorDetailsReferenceList = ({
     >
       <Table.Header>
         <Table.Row>
-          <Table.Head className="text-cn-foreground-4 w-96">Entity</Table.Head>
-          <Table.Head className="text-cn-foreground-4 w-96">Scope</Table.Head>
-          <Table.Head className="text-cn-foreground-4 w-44 text-right">Created</Table.Head>
+          <Table.Head className="w-96 text-cn-foreground-4">Entity</Table.Head>
+          <Table.Head className="w-96 text-cn-foreground-4">Scope</Table.Head>
+          <Table.Head className="w-44 text-right text-cn-foreground-4">Created</Table.Head>
         </Table.Row>
       </Table.Header>
       {isLoading ? (
@@ -70,14 +70,14 @@ const ConnectorDetailsReferenceList = ({
                 </Table.Cell>
                 <Table.Cell
                   onClick={() => toScope?.(scope)}
-                  className="text-cn-foreground-accent max-w-80 content-center truncate font-medium"
+                  className="max-w-80 content-center truncate font-medium text-cn-foreground-accent"
                 >
                   {scope}
                 </Table.Cell>
 
                 <Table.Cell
                   onClick={() => toEntity?.(identifier)}
-                  className="text-cn-foreground-4 max-w-full content-center truncate text-right text-sm font-normal leading-tight tracking-tight"
+                  className="max-w-full content-center truncate text-right text-sm font-normal leading-tight tracking-tight text-cn-foreground-4"
                 >
                   {createdAt ? timeAgo(createdAt) : null}
                 </Table.Cell>

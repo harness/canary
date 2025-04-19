@@ -253,20 +253,16 @@
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
   "search": "Rechercher",
-  "common": {
-    "details": "Details",
-    "lastActivity": "Last Activity",
-    "created": "Created",
-    "manager": "Manager"
-  },
   "connectors": {
+    "activity": "Activité",
+    "time": "Temps",
+    "status": "Status",
     "delete": "Supprimer le connecteur",
     "configuration": "Configuration",
     "references": "References",
     "activityHistory": "Activity history",
     "connector": "Connector",
     "viewConnectorDetails": "View Connector Details",
-    "status": "Status",
     "viewDocumentation": "View Documentation",
     "createNew": "Créer un nouveau connecteur",
     "id": "Connector ID",
@@ -276,13 +272,20 @@
         "failure": "Failure",
         "label": "Status"
       }
-    }
+    },
+    "created": "Créé"
   },
   "notFound": {
     "button": "Recharger la page",
     "title": "Quelque chose s'est mal passé…",
     "descriptionWithType": "La page demandée est introuvable. Vous pouvez revenir pour voir tous les {{type}} et gérer vos paramètres.",
     "description": "La page demandée est introuvable."
+  },
+  "common": {
+    "details": "Details",
+    "lastActivity": "Last Activity",
+    "created": "Created",
+    "manager": "Manager"
   },
   "execution": {
     "summary": "Résumé",

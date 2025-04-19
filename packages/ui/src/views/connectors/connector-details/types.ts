@@ -1,5 +1,4 @@
 import { TranslationStore } from '@/views'
-import { LogoNameMap } from '@components/logo'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { InputFactory } from '@harnessio/forms'
@@ -48,6 +47,19 @@ export interface ConnectorReferenceList {
   content: ConnectorReferenceItem[]
 }
 
+export interface ConnectorActivityList {
+  content: ConnectorActivityItem[]
+}
+
+export interface ConnectorActivityItem {
+  description: string
+  activityTime: number
+  activityStatus: string
+  referredEntity: ReferredEntity
+  accountIdentifier?: string
+  type?: string
+}
+
 export interface ConnectorReferenceListProps {
   entities: ConnectorReferenceList
   useTranslationStore: () => TranslationStore
@@ -79,29 +91,16 @@ export interface ConnectorDetailsItem {
   lastConnectedAt: number
 }
 
-export interface ConnectorDetailsPageProps {
+export interface ConnectorDetailsLayoutProps {
   connectorDetails: ConnectorDetailsItem
   onTest: (connectorId: string) => void
   onDelete: (connectorId: string) => void
   useTranslationStore: () => TranslationStore
-  onSave: (values: onSubmitConnectorProps) => void
-  getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
-  inputComponentFactory: InputFactory
-  apiError?: string
-  isConnectorReferencesLoading: boolean
-  setIsConnectorRefSearchQuery: (query?: string) => void
-  currentPage: number
-  totalPages: number
-  goToPage: (page: number) => void
-  entities: ConnectorReferenceList
-  toEntity: (entity: string) => void
-  toScope: (scope: string) => void
-  searchQuery: string
-  apiConnectorRefError?: string
+  children: React.ReactNode
   toConnectorsList?: () => string
 }
 
-export interface ConnectorDetailsReferencePageProps {
+export interface ConnectorDetailsReferenceProps {
   searchQuery: string
   setSearchQuery: (query?: string) => void
   apiConnectorRefError?: string
@@ -113,6 +112,7 @@ export interface ConnectorDetailsReferencePageProps {
   entities: ConnectorReferenceList
   toEntity: (entity: string) => void
   toScope: (scope: string) => void
+  toConnectorsList?: () => string
 }
 
 export interface ConnectorDetailsHeaderProps {
@@ -136,4 +136,20 @@ export interface ConnectorDetailsConfigurationProps {
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   inputComponentFactory: InputFactory
   apiError?: string
+}
+
+export interface ConnectorDetailsActivitiesListProps {
+  activities: ConnectorActivityList
+  useTranslationStore: () => TranslationStore
+  isLoading: boolean
+}
+
+export interface ConnectorDetailsActivityProps {
+  apiConnectorActivityError?: string
+  useTranslationStore: () => TranslationStore
+  currentPage: number
+  totalPages: number
+  goToPage: (page: number) => void
+  isLoading: boolean
+  activities: ConnectorActivityList
 }

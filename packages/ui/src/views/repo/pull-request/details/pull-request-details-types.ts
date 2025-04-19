@@ -502,6 +502,10 @@ export interface PullRequestRoutingProps {
   toPRCheck: ({ pipelineId, executionId }: { pipelineId: string; executionId: string }) => string
 }
 
+export type LatestCodeOwnerApprovalArrType = {
+  entryEvaluation: TypesOwnerEvaluation[]
+}
+
 export interface PullRequestChangesSectionProps {
   changesInfo: { header: string; content: string; status: string }
   minApproval?: number
@@ -533,12 +537,7 @@ export interface PullRequestChangesSectionProps {
       }
     | undefined
   )[]
-  latestCodeOwnerApprovalArr?: (
-    | {
-        entryEvaluation: TypesOwnerEvaluation[]
-      }
-    | undefined
-  )[]
+  latestCodeOwnerApprovalArr?: LatestCodeOwnerApprovalArrType[]
 }
 
 export const PullRequestFilterOption = {

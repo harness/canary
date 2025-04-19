@@ -1,6 +1,6 @@
 import { FC, ReactElement, ReactNode } from 'react'
 
-import { Checkbox, Label, RadioButton, Text } from '@/components'
+import { Checkbox, Label, LabelProps, RadioButton, Text } from '@/components'
 import { cn } from '@utils/cn'
 
 type ControlType = ReactElement<typeof RadioButton> | ReactElement<typeof Checkbox>
@@ -12,6 +12,7 @@ interface OptionProps {
   description?: string | ReactNode
   className?: string
   ariaSelected?: boolean
+  labelProps?: Partial<LabelProps>
 }
 
 /**
@@ -24,7 +25,15 @@ interface OptionProps {
  *   description="Description for Option 1"
  * />
  */
-export const Option: FC<OptionProps> = ({ control, id, label, description, ariaSelected, className }) => {
+export const Option: FC<OptionProps> = ({
+  control,
+  id,
+  label,
+  description,
+  ariaSelected,
+  className,
+  labelProps = {}
+}) => {
   return (
     <div
       className={cn('flex items-start', className)}
@@ -34,10 +43,12 @@ export const Option: FC<OptionProps> = ({ control, id, label, description, ariaS
     >
       {control}
       <div className="flex flex-col gap-0">
-        <Label htmlFor={id} className="cursor-pointer pl-2.5 leading-tight">
-          {label}
-        </Label>
-        {description && (
+        {!!label && (
+          <Label {...labelProps} className="cursor-pointer pl-2.5 leading-tight" htmlFor={id}>
+            {label}
+          </Label>
+        )}
+        {!!description && (
           <Text
             className="ml-2.5 mt-1.5 leading-snug tracking-tight"
             as="p"

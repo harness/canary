@@ -75,10 +75,10 @@ const ConnectorDetailsActivitiesList = ({
             const identifier = entityRef?.identifier || name
             return (
               <Table.Row key={identifier} className="cursor-pointer">
-                <Table.Cell className="max-w-80 content-center truncate">
+                <Table.Cell className="max-w-80 content-center items-center truncate">
                   <Activity activity={description} />
                 </Table.Cell>
-                <Table.Cell className="max-w-80 content-center truncate font-medium text-cn-foreground-3">
+                <Table.Cell className="max-w-80 content-center items-center truncate font-medium text-cn-foreground-3">
                   {activityTime ? timeAgo(activityTime) : null}
                 </Table.Cell>
 

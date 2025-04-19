@@ -67,13 +67,14 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
       onTest={noop}
       onDelete={noop}
       useTranslationStore={useTranslationStore}
+      toConnectorsList={() => '/connectors'}
     >
       <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.CONFIGURATION}>
         <ConnectorDetailsConfiguration
           connectorDetails={connectorDetails}
           onSave={noop}
           inputComponentFactory={inputComponentFactory}
-          getConnectorDefinition={getHarnessConnectorDefinition}
+          getConnectorDefinition={type => getHarnessConnectorDefinition(type, { autoExpandGroups: true })}
           useTranslationStore={useTranslationStore}
           apiError={''}
         />

@@ -17,8 +17,8 @@ export const mockConnectorActivityList = {
           },
           repoIdentifier: null,
           branch: null,
-          isDefault: null,
-          default: null,
+          isDefault: false,
+          default: false,
           fullyQualifiedScopeIdentifier: 'px7xd_BFRCi-pfWPYXVjvw/default/abhinavtest3'
         },
         name: 'bittest1',

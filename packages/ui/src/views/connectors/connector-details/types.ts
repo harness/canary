@@ -54,8 +54,10 @@ export interface ConnectorActivityList {
 export interface ConnectorActivityItem {
   description: string
   activityTime: number
-  activityStatus: ExecutionState
+  activityStatus: string
   referredEntity: ReferredEntity
+  accountIdentifier?: string
+  type?: string
 }
 
 export interface ConnectorReferenceListProps {

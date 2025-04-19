@@ -1,7 +1,8 @@
+import { ConnectorActivityList } from '@harnessio/ui/views'
+
 export const mockConnectorActivityList = {
   content: [
     {
-      accountIdentifier: 'px7xd_BFRCi-pfWPYXVjvw',
       referredEntity: {
         type: 'Connectors',
         entityRef: {
@@ -23,11 +24,9 @@ export const mockConnectorActivityList = {
         name: 'bittest1',
         entityGitMetadata: null
       },
-      type: 'ENTITY_CREATION',
       activityStatus: 'SUCCESS',
-      detail: null,
       activityTime: 1744997551429,
       description: 'Connector Created'
     }
   ]
-}
+} as ConnectorActivityList

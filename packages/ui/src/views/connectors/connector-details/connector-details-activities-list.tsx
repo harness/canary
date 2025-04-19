@@ -6,7 +6,7 @@ import { ExecutionState } from '@views/index'
 import { ConnectorActivityItem, ConnectorDetailsActivitiesListProps } from './types'
 
 const Activity = ({ activity }: { activity: React.ReactNode }): JSX.Element => (
-  <span className="max-w-full truncate text-sm font-medium leading-tight tracking-tight text-cn-foreground-1">
+  <span className="max-w-full truncate text-sm font-medium leading-tight tracking-tight text-cn-foreground-1 p-2.5">
     {activity}
   </span>
 )
@@ -78,11 +78,11 @@ const ConnectorDetailsActivitiesList = ({
                 <Table.Cell className="max-w-80 content-center items-center truncate">
                   <Activity activity={description} />
                 </Table.Cell>
-                <Table.Cell className="max-w-80 content-center items-center truncate font-medium text-cn-foreground-3">
+                <Table.Cell className="max-w-80 content-center items-center truncate font-medium text-cn-foreground-3 p-2.5">
                   {activityTime ? timeAgo(activityTime) : null}
                 </Table.Cell>
 
-                <Table.Cell className="max-w-full content-center truncate text-left text-sm font-normal leading-tight tracking-tight text-cn-foreground-4">
+                <Table.Cell className="max-w-full content-center truncate text-left text-sm font-normal leading-tight tracking-tight text-cn-foreground-4 p-2.5">
                   <ConnectivityStatus status={activityStatus.toLowerCase()} />
                 </Table.Cell>
               </Table.Row>

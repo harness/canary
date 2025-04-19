@@ -26,7 +26,7 @@ const ConnectivityStatus = ({ status }: { status: string }): JSX.Element => {
   return (
     <div className="inline-flex items-center gap-2 p-2.5">
       <div className={cn('size-2 rounded-full', currentStatus?.color)} />
-      <span className="text-cn-foreground-2">{currentStatus?.status}</span>
+      <span className="text-cn-foreground-2 ">{currentStatus?.status}</span>
     </div>
   )
 }
@@ -74,15 +74,15 @@ const ConnectorDetailsActivitiesList = ({
             const { name, entityRef } = referredEntity
             const identifier = entityRef?.identifier || name
             return (
-              <Table.Row key={identifier} className="cursor-pointer">
+              <Table.Row key={identifier} className="cursor-pointer p">
                 <Table.Cell className="max-w-80 content-center items-center truncate">
                   <Activity activity={description} />
                 </Table.Cell>
-                <Table.Cell className="max-w-80 content-center items-center truncate font-medium text-cn-foreground-3 p-2.5">
+                <Table.Cell className="text-cn-foreground-3 max-w-80 content-center items-center truncate p-2.5 font-medium">
                   {activityTime ? timeAgo(activityTime) : null}
                 </Table.Cell>
 
-                <Table.Cell className="max-w-full content-center truncate text-left text-sm font-normal leading-tight tracking-tight text-cn-foreground-4 p-2.5">
+                <Table.Cell className="text-cn-foreground-4 max-w-full content-center truncate p-2.5 text-left text-sm font-normal leading-tight tracking-tight">
                   <ConnectivityStatus status={activityStatus.toLowerCase()} />
                 </Table.Cell>
               </Table.Row>

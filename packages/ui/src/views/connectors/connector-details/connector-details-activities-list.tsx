@@ -6,7 +6,7 @@ import { ExecutionState } from '@views/index'
 import { ConnectorActivityItem, ConnectorDetailsActivitiesListProps } from './types'
 
 const Activity = ({ activity }: { activity: React.ReactNode }): JSX.Element => (
-  <span className="max-w-full truncate text-sm font-medium leading-tight tracking-tight text-cn-foreground-1 p-2.5">
+  <span className="text-cn-foreground-1 block max-w-full truncate py-2.5 text-sm font-medium leading-tight tracking-tight">
     {activity}
   </span>
 )
@@ -24,7 +24,7 @@ const ConnectivityStatus = ({ status }: { status: string }): JSX.Element => {
   }
   const currentStatus = getStatus()
   return (
-    <div className="inline-flex items-center gap-2 p-2.5">
+    <div className="inline-flex items-center gap-2 py-2.5">
       <div className={cn('size-2 rounded-full', currentStatus?.color)} />
       <span className="text-cn-foreground-2 ">{currentStatus?.status}</span>
     </div>
@@ -61,9 +61,9 @@ const ConnectorDetailsActivitiesList = ({
     >
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-96 text-cn-foreground-4">{t('views:connectors.activity', 'Activity')}</Table.Head>
-          <Table.Head className="w-96 text-cn-foreground-4">{t('views:connectors.time', 'Time')}</Table.Head>
-          <Table.Head className="w-44 text-cn-foreground-4">{t('views:connectors.status', 'Status')}</Table.Head>
+          <Table.Head className="text-cn-foreground-4 w-96">{t('views:connectors.activity', 'Activity')}</Table.Head>
+          <Table.Head className="text-cn-foreground-4 w-96">{t('views:connectors.time', 'Time')}</Table.Head>
+          <Table.Head className="text-cn-foreground-4 w-44">{t('views:connectors.status', 'Status')}</Table.Head>
         </Table.Row>
       </Table.Header>
       {isLoading ? (
@@ -74,11 +74,11 @@ const ConnectorDetailsActivitiesList = ({
             const { name, entityRef } = referredEntity
             const identifier = entityRef?.identifier || name
             return (
-              <Table.Row key={identifier} className="cursor-pointer p">
+              <Table.Row key={identifier} className="cursor-pointer">
                 <Table.Cell className="max-w-80 content-center items-center truncate">
                   <Activity activity={description} />
                 </Table.Cell>
-                <Table.Cell className="text-cn-foreground-3 max-w-80 content-center items-center truncate p-2.5 font-medium">
+                <Table.Cell className="text-cn-foreground-3 block max-w-80 content-center items-center truncate p-2.5 my-2 font-medium">
                   {activityTime ? timeAgo(activityTime) : null}
                 </Table.Cell>
 

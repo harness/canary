@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
@@ -58,6 +58,7 @@ export interface DelegateSelectorFormProps {
   apiError?: string
   isLoading: boolean
   isDelegateSelected: (selectors: string[], tags: string[]) => boolean
+  getMatchedDelegatesCount: (delegates: DelegateItem[], tags: string[]) => number
 }
 
 export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Element => {
@@ -69,10 +70,12 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
     onBack,
     apiError = null,
     isLoading,
-    isDelegateSelected
+    isDelegateSelected,
+    getMatchedDelegatesCount
   } = props
   const { t } = useTranslationStore()
   const [searchTag, setSearchTag] = useState('')
+  const [matchedDelegates, setMatchedDelegates] = useState(0)
   const {
     register,
     handleSubmit,
@@ -96,6 +99,15 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
 
   const delegateType = watch('type')
   const selectedTags = watch('tags')
+
+  useEffect(() => {
+    setMatchedDelegates(
+      getMatchedDelegatesCount(
+        delegates,
+        selectedTags.map(tag => tag.id)
+      )
+    )
+  }, [getMatchedDelegatesCount, delegates, selectedTags])
 
   const options: Array<RadioOption<DelegateTypes>> = [
     {
@@ -155,32 +167,35 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
         <FormSeparator />
 
         {delegateType === DelegateTypes.TAGS && (
-          <Fieldset className="py-2">
-            {/* TAGS */}
-            <MultiSelect
-              {...register('tags')}
-              selectedItems={selectedTags}
-              t={t}
-              placeholder="Enter tags"
-              handleChange={handleTagChange}
-              options={tagsList.map(tag => {
-                return { id: tag, label: tag }
-              })}
-              searchValue={searchTag}
-              handleChangeSearchValue={setSearchTag}
-              error={errors.tags?.message?.toString()}
+          <>
+            <Fieldset className="py-2">
+              {/* TAGS */}
+              <MultiSelect
+                {...register('tags')}
+                selectedItems={selectedTags}
+                t={t}
+                label="Tags"
+                placeholder="Enter tags"
+                handleChange={handleTagChange}
+                options={tagsList.map(tag => {
+                  return { id: tag, label: tag }
+                })}
+                searchValue={searchTag}
+                handleChangeSearchValue={setSearchTag}
+                error={errors.tags?.message?.toString()}
+              />
+            </Fieldset>
+            <Text size={4}>Test Delegate connectivity</Text>
+            <p>Matches: {matchedDelegates}</p>
+            <DelegateConnectivityList
+              delegates={delegates}
+              useTranslationStore={useTranslationStore}
+              isLoading={isLoading}
+              selectedTags={selectedTags.map(tag => tag.id)}
+              isDelegateSelected={isDelegateSelected}
             />
-          </Fieldset>
+          </>
         )}
-
-        <Text size={4}>Test Delegate connectivity</Text>
-        <DelegateConnectivityList
-          delegates={delegates}
-          useTranslationStore={useTranslationStore}
-          isLoading={isLoading}
-          selectedTags={selectedTags.map(tag => tag.id)}
-          isDelegateSelected={isDelegateSelected}
-        />
 
         <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
           <ControlGroup>
@@ -188,7 +203,11 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
               <Button type="button" variant="outline" onClick={onBack}>
                 Back
               </Button>
-              <Button type="submit">Connect delegates</Button>
+              <Button type="submit">
+                Connect&nbsp;
+                {delegateType === DelegateTypes.TAGS ? matchedDelegates : 'any'}&nbsp;
+                {delegateType === DelegateTypes.TAGS && matchedDelegates > 1 ? 'delegates' : 'delegate'}
+              </Button>
             </ButtonGroup>
           </ControlGroup>
         </div>

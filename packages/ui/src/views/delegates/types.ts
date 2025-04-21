@@ -16,7 +16,3 @@ export interface DelegateItem {
   groupCustomSelectors: string[]
   groupImplicitSelectors: string[]
 }
-
-export interface DelegateSelectorItem {
-  tags: string[]
-}

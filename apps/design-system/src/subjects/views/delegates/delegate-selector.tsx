@@ -1,23 +1,37 @@
 import { useState } from 'react'
 
 import { useTranslationStore } from '@utils/viewUtils'
-import { defaultTo, noop } from 'lodash-es'
+import { defaultTo } from 'lodash-es'
 
-import { Drawer, FormSeparator, StyledLink } from '@harnessio/ui/components'
-import { DelegateSelectorForm, DelegateSelectorInput } from '@harnessio/ui/views'
+import { Drawer, FormSeparator, Icon, StyledLink } from '@harnessio/ui/components'
+import {
+  DelegateSelectorForm,
+  DelegateSelectorFormFields,
+  DelegateSelectorInput,
+  DelegateTypes
+} from '@harnessio/ui/views'
 
 import mockDelegatesList from './mock-delegates-list.json'
-import { isDelegateSelected } from './utils'
+import { getMatchedDelegatesCount, isDelegateSelected } from './utils'
 
 export const DelegateSelector = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [selectedDelegateType, setSelectedDelegateType] = useState(null)
+  const [selectedTags, setSelectedTags] = useState<string>('')
+
+  const onSubmit = (data: DelegateSelectorFormFields) => {
+    if (data.type === DelegateTypes.ANY) {
+      setSelectedTags('any')
+    } else {
+      setSelectedTags(data.tags.map(tag => tag.id).join(', '))
+    }
+    setIsDrawerOpen(false)
+  }
 
   return (
     <>
       <DelegateSelectorInput
         placeholder={<StyledLink to="#"> select a delegate</StyledLink>}
-        value={selectedDelegateType}
+        value={selectedTags}
         label="Delegate selector"
         onClick={() => {
           setIsDrawerOpen(true)
@@ -25,8 +39,8 @@ export const DelegateSelector = () => {
         onEdit={() => {
           setIsDrawerOpen(true)
         }}
-        onClear={() => setSelectedDelegateType(null)}
-        renderValue={delegate => delegate.tags.join(', ')}
+        onClear={() => setSelectedTags('')}
+        renderValue={(tag: string) => tag}
         className="max-w-xs mb-8"
       />
       <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
@@ -34,6 +48,12 @@ export const DelegateSelector = () => {
           <Drawer.Header>
             <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Delegate selector</Drawer.Title>
             <FormSeparator className="w-full" />
+            <div className="flex">
+              Haven't installed a delegate yet?&nbsp;
+              <StyledLink className="flex flex-row items-center" variant="accent" to="#">
+                Install delegate<Icon name="attachment-link" className="ml-1" size={12}></Icon>
+              </StyledLink>
+            </div>
             <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
           </Drawer.Header>
           <DelegateSelectorForm
@@ -60,11 +80,12 @@ export const DelegateSelector = () => {
               'eightfivetwo',
               'automation-eks-delegate'
             ]}
-            isDelegateSelected={isDelegateSelected}
             useTranslationStore={useTranslationStore}
             isLoading={false}
-            onFormSubmit={noop}
+            onFormSubmit={onSubmit}
             onBack={() => setIsDrawerOpen(false)}
+            isDelegateSelected={isDelegateSelected}
+            getMatchedDelegatesCount={getMatchedDelegatesCount}
           />
         </Drawer.Content>
       </Drawer.Root>

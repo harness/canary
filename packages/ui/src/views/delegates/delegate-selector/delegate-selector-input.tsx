@@ -1,8 +1,6 @@
 import { InputReference } from '@views/platform'
 import { InputReferenceProps } from '@views/platform/input-reference-component'
 
-import { DelegateSelectorItem } from '../types'
-
 export const DelegateSelectorInput = ({
   value,
   onClick,
@@ -12,9 +10,9 @@ export const DelegateSelectorInput = ({
   placeholder,
   label,
   ...props
-}: InputReferenceProps<DelegateSelectorItem>) => {
+}: InputReferenceProps<string>) => {
   return (
-    <InputReference<DelegateSelectorItem>
+    <InputReference<string>
       placeholder={placeholder}
       value={value}
       label={label}

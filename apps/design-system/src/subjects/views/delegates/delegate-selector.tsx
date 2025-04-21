@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { useTranslationStore } from '@utils/viewUtils'
-import { defaultTo, set } from 'lodash-es'
+import { defaultTo } from 'lodash-es'
 
 import { Drawer, FormSeparator, Icon, StyledLink } from '@harnessio/ui/components'
 import {

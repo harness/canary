@@ -1,4 +1,16 @@
-import { Button, Icon, Logo, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table, Text } from '@/components'
+import {
+  Button,
+  HoverCard,
+  Icon,
+  Logo,
+  MoreActionsTooltip,
+  NoData,
+  SkeletonList,
+  SkeletonTable,
+  StyledLink,
+  Table,
+  Text
+} from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
@@ -16,10 +28,27 @@ const Title = ({ title }: { title: string }): JSX.Element => (
 const ConnectivityStatus = ({ item }: { item: ConnectorListItem }): JSX.Element => {
   const isSuccess = item?.status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
   return (
-    <div className="inline-flex items-center gap-2">
-      <Icon name="dot" size={8} className={cn(isSuccess ? 'text-icons-success' : 'text-icons-danger')} />
-      <Text className="text-cn-foreground-2">{isSuccess ? 'Success' : 'Failed'}</Text>
-    </div>
+    <HoverCard.Root>
+      <HoverCard.Trigger asChild>
+        <Button className="group h-auto gap-2 px-0 font-normal hover:bg-transparent" variant="ghost">
+          <Icon name="dot" size={8} className={cn(isSuccess ? 'text-icons-success' : 'text-icons-danger')} />
+          <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200" color="secondary">
+            {isSuccess ? 'Success' : 'Failed'}
+          </Text>
+        </Button>
+      </HoverCard.Trigger>
+      <HoverCard.Content className="w-72 whitespace-normal">
+        {/* TODO: need to provide real data */}
+        <h3 className="text-cn-foreground-1 font-medium">{isSuccess ? 'Success' : 'Error Encountered'}</h3>
+        <p className="text-cn-foreground-3 mt-1.5">
+          Update the username & password. Check if the provided credentials are correct. Invalid Docker Registry
+          credentials.
+        </p>
+        <StyledLink to="#" className="mt-2.5 block" variant="accent">
+          View details
+        </StyledLink>
+      </HoverCard.Content>
+    </HoverCard.Root>
   )
 }
 
@@ -61,11 +90,11 @@ export function ConnectorsList({
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[282px]">{t('views:connectors.id', 'Connector ID')}</Table.Head>
-          <Table.Head className="w-72">Details</Table.Head>
-          <Table.Head className="w-50 whitespace-nowrap">Connectivity status</Table.Head>
-          <Table.Head className="w-40">Last updated</Table.Head>
-          <Table.Head className="w-2" />
-          <Table.Head className="w-2" />
+          <Table.Head className="w-70">Details</Table.Head>
+          <Table.Head className="w-44 whitespace-nowrap">Connectivity status</Table.Head>
+          <Table.Head className="w-44">Last updated</Table.Head>
+          <Table.Head className="w-10" />
+          <Table.Head className="w-10" />
         </Table.Row>
       </Table.Header>
       {isLoading ? (
@@ -75,29 +104,23 @@ export function ConnectorsList({
           {connectors.map(({ identifier, type, spec, status, lastModifiedAt, isFavorite }) => {
             const connectorLogo = type ? ConnectorTypeToLogoNameMap.get(type) : undefined
             return (
-              <Table.Row
-                key={identifier}
-                className="cursor-pointer py-4"
-                onClick={() => navigate(`${toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt })}`)}
-              >
-                <Table.Cell className="max-w-[282px] content-center truncate !py-5">
+              <Table.Row className="[&_td]:py-5" key={identifier}>
+                <Table.Cell className="content-center truncate">
                   <div className="flex items-center gap-2.5">
-                    <div className="min-w-[24px]">
+                    <div className="flex w-full max-w-8 items-center justify-center">
                       {connectorLogo ? <Logo name={connectorLogo} size={20} /> : <Icon name="connectors" size={30} />}
                     </div>
                     <Title title={identifier} />
                   </div>
                 </Table.Cell>
-                <Table.Cell className="max-w-72 content-center truncate !py-5" title={spec?.url}>
+                <Table.Cell className="content-center truncate" title={spec?.url}>
                   {spec?.url}
                 </Table.Cell>
-                <Table.Cell className="w-50 content-center whitespace-nowrap !py-5">
+                <Table.Cell className="content-center whitespace-nowrap">
                   {status ? <ConnectivityStatus item={{ identifier, type, spec, status, lastModifiedAt }} /> : null}
                 </Table.Cell>
-                <Table.Cell className="content-center !py-5">
-                  {lastModifiedAt ? timeAgo(lastModifiedAt) : null}
-                </Table.Cell>
-                <Table.Cell className="min-w-2 content-center !p-0">
+                <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
+                <Table.Cell className="content-center">
                   <Button
                     size="sm"
                     iconOnly
@@ -111,12 +134,17 @@ export function ConnectorsList({
                     )}
                   </Button>
                 </Table.Cell>
-                <Table.Cell className="min-w-2 content-center !p-0 text-right">
+                <Table.Cell className="content-center !p-0">
                   <MoreActionsTooltip
                     actions={[
                       {
+                        title: t('views:connectors.viewDetails', 'View Details'),
+                        onClick: () =>
+                          navigate(`${toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt })}`)
+                      },
+                      {
                         isDanger: true,
-                        title: t('views:connectors.delete', 'Delete Connector'),
+                        title: t('views:connectors.delete', 'Delete'),
                         onClick: () => onDeleteConnector(identifier)
                       }
                     ]}

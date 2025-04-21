@@ -35,9 +35,7 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootProps>(
 TableRoot.displayName = 'TableRoot'
 
 const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
-  ({ className, ...props }, ref) => (
-    <thead ref={ref} className={cn('[&_tr]:border-b border-cn-borders-2', className)} {...props} />
-  )
+  ({ className, ...props }, ref) => <thead ref={ref} className={cn('[&_tr]:border-b', className)} {...props} />
 )
 TableHeader.displayName = 'TableHeader'
 

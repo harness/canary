@@ -22,7 +22,7 @@ import { z } from 'zod'
 import { DelegateConnectivityList } from '../components/delegate-connectivity-list'
 import { DelegateItem } from '../types'
 
-export enum DelegateTypes {
+export enum DelegateSelectionTypes {
   ANY = 'any',
   TAGS = 'tags'
 }
@@ -38,7 +38,7 @@ const delegateSelectorFormSchema = z
     )
   })
   .superRefine((data, ctx) => {
-    if (data.type === DelegateTypes.TAGS && data.tags?.length === 0) {
+    if (data.type === DelegateSelectionTypes.TAGS && data.tags?.length === 0) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: 'Please provide a Tag',
@@ -89,7 +89,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
     resolver: zodResolver(delegateSelectorFormSchema),
     mode: 'onChange',
     defaultValues: {
-      type: preSelectedTags?.length ? DelegateTypes.TAGS : DelegateTypes.ANY,
+      type: preSelectedTags?.length ? DelegateSelectionTypes.TAGS : DelegateSelectionTypes.ANY,
       tags: preSelectedTags?.length ? preSelectedTags.map(tag => ({ id: tag, label: tag })) : []
     }
   })
@@ -111,18 +111,18 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
     )
   }, [getMatchedDelegatesCount, delegates, selectedTags])
 
-  const options: Array<RadioOption<DelegateTypes>> = [
+  const options: Array<RadioOption<DelegateSelectionTypes>> = [
     {
       id: 'any',
       title: 'Any delegate',
       description: 'Use any available delegate',
-      value: DelegateTypes.ANY
+      value: DelegateSelectionTypes.ANY
     },
     {
       id: 'tags',
       title: 'Delegate with tags',
       description: 'Use delegate with following tags',
-      value: DelegateTypes.TAGS
+      value: DelegateSelectionTypes.TAGS
     }
   ]
 
@@ -168,7 +168,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
         )}
         <FormSeparator />
 
-        {delegateType === DelegateTypes.TAGS && (
+        {delegateType === DelegateSelectionTypes.TAGS && (
           <>
             <Fieldset className="py-2">
               {/* TAGS */}
@@ -207,8 +207,8 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
               </Button>
               <Button type="submit">
                 Connect&nbsp;
-                {delegateType === DelegateTypes.TAGS ? matchedDelegates : 'any'}&nbsp;
-                {delegateType === DelegateTypes.TAGS && matchedDelegates > 1 ? 'delegates' : 'delegate'}
+                {delegateType === DelegateSelectionTypes.TAGS ? matchedDelegates : 'any'}&nbsp;
+                {delegateType === DelegateSelectionTypes.TAGS && matchedDelegates > 1 ? 'delegates' : 'delegate'}
               </Button>
             </ButtonGroup>
           </ControlGroup>

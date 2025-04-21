@@ -5,10 +5,10 @@ import { defaultTo } from 'lodash-es'
 
 import { Drawer, FormSeparator, Icon, StyledLink } from '@harnessio/ui/components'
 import {
+  DelegateSelectionTypes,
   DelegateSelectorForm,
   DelegateSelectorFormFields,
-  DelegateSelectorInput,
-  DelegateTypes
+  DelegateSelectorInput
 } from '@harnessio/ui/views'
 
 import mockDelegatesList from './mock-delegates-list.json'
@@ -16,15 +16,15 @@ import { getMatchedDelegatesCount, isDelegateSelected } from './utils'
 
 export const DelegateSelector = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [selectedDelegateType, setSelectedDelegateType] = useState<DelegateTypes | null>(null)
+  const [selectedDelegateType, setSelectedDelegateType] = useState<DelegateSelectionTypes | null>(null)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
 
   const onSubmit = (data: DelegateSelectorFormFields) => {
-    if (data.type === DelegateTypes.ANY) {
-      setSelectedDelegateType(DelegateTypes.ANY)
+    if (data.type === DelegateSelectionTypes.ANY) {
+      setSelectedDelegateType(DelegateSelectionTypes.ANY)
       setSelectedTags([])
     } else {
-      setSelectedDelegateType(DelegateTypes.TAGS)
+      setSelectedDelegateType(DelegateSelectionTypes.TAGS)
       setSelectedTags(data.tags.map(tag => tag.id))
     }
     setIsDrawerOpen(false)
@@ -35,9 +35,9 @@ export const DelegateSelector = () => {
       <DelegateSelectorInput
         placeholder={<StyledLink to="#"> select a delegate</StyledLink>}
         value={
-          selectedDelegateType === DelegateTypes.TAGS
+          selectedDelegateType === DelegateSelectionTypes.TAGS
             ? selectedTags?.join(', ')
-            : selectedDelegateType === DelegateTypes.ANY
+            : selectedDelegateType === DelegateSelectionTypes.ANY
               ? 'any delegate'
               : null
         }

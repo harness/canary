@@ -66,14 +66,14 @@ export default {
   '.badge': {
     height: 'var(--cn-badge-size-default)',
     padding: '0 var(--cn-badge-default-px)',
-    '@apply select-none': '',
+    '@apply select-none font-body-tight-normal': '',
 
     /** Size */
     '&:where(.badge-sm)': {
       height: 'var(--cn-badge-size-sm)',
       gap: 'var(--cn-badge-sm-gap)',
       padding: 'var(--cn-badge-sm-px)',
-      '@apply font-caption-soft': ''
+      '@apply font-caption-tight-normal': ''
     },
 
     '&:where(:not(.badge-status))': {
@@ -89,6 +89,7 @@ export default {
       backgroundColor: 'var(--cn-set-gray-surface-bg)',
       height: 'var(--cn-badge-counter-size-default)',
       padding: 'var(--cn-badge-counter-py) var(--cn-badge-counter-px)',
+      '@apply font-caption-tight-normal': '',
 
       '&.badge-primary': {
         backgroundColor: 'var(--cn-set-brand-solid-bg)',

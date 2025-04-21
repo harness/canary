@@ -4,7 +4,7 @@ import { timeAgo } from '@utils/utils'
 import { SecretListProps } from './types'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="max-w-full truncate font-medium">{title}</span>
+  <span className="text-cn-foreground-1 max-w-full truncate font-medium">{title}</span>
 )
 
 export function SecretList({
@@ -38,13 +38,14 @@ export function SecretList({
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
       variant="asStackedList"
+      tableClassName="table-fixed"
     >
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-96">{t('views:secret.title', 'Secret')}</Table.Head>
-          <Table.Head className="w-96">{t('views:common.details', 'Details')}</Table.Head>
+          <Table.Head className="w-[361px]">{t('views:secret.title', 'Name')}</Table.Head>
+          <Table.Head className="w-[350px]">{t('views:common.manager', 'Secrets Manager')}</Table.Head>
           <Table.Head className="w-44">{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
-          <Table.Head className="w-44">{t('views:common.created', 'Created')}</Table.Head>
+          <Table.Head></Table.Head>
         </Table.Row>
       </Table.Header>
       {isLoading ? (
@@ -53,18 +54,19 @@ export function SecretList({
         <Table.Body>
           {secrets.map(secret => (
             <Table.Row key={secret.identifier} className="cursor-pointer" onClick={() => toSecretDetails?.(secret)}>
-              <Table.Cell className="max-w-80 content-center truncate">
-                <div className="flex items-center gap-2.5">
+              <Table.Cell className="w-[361px] content-center truncate">
+                <div className="flex items-center gap-2.5 !py-2.5">
                   <Icon name="ssh-key" size={24} />
                   <Title title={secret.identifier} />
                 </div>
               </Table.Cell>
-              <Table.Cell className="max-w-80 content-center truncate">
-                {t('views:common.manager', 'Manager')}: {secret.spec?.secretManagerIdentifier}
+              <Table.Cell className="w-[350px] content-center truncate !py-2.5">
+                {secret.spec?.secretManagerIdentifier}
               </Table.Cell>
-              <Table.Cell className="content-center">{secret?.updatedAt ? timeAgo(secret.updatedAt) : null}</Table.Cell>
-              <Table.Cell className="content-center">{secret?.createdAt ? timeAgo(secret.createdAt) : null}</Table.Cell>
-              <Table.Cell className="text-right">
+              <Table.Cell className="content-center !py-2.5">
+                {secret?.updatedAt ? timeAgo(secret.updatedAt) : null}
+              </Table.Cell>
+              <Table.Cell className="content-center !py-2.5 text-right">
                 <MoreActionsTooltip
                   isInTable
                   actions={[

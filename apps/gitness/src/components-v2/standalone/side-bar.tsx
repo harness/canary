@@ -132,7 +132,7 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
   )
 
   return (
-    <Sidebar.Provider className="min-h-svh">
+    <>
       <SidebarView
         showMoreMenu={showMoreMenu}
         showSettingMenu={showSettingMenu}
@@ -163,7 +163,7 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
           onClose={handleCustomNav}
         />
       </Sidebar.Inset>
-    </Sidebar.Provider>
+    </>
   )
 }
 

@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import { Breadcrumb, Text } from '@harnessio/ui/components'
+import { Breadcrumb, Sidebar, Text } from '@harnessio/ui/components'
 import {
   EmptyPage,
   ProfileSettingsLayout,
@@ -663,7 +663,9 @@ export const routes: CustomRouteObject[] = [
     element: (
       <AppRouterProvider>
         <AppProvider>
-          <AppShell />
+          <Sidebar.Provider className="min-h-svh">
+            <AppShell />
+          </Sidebar.Provider>
         </AppProvider>
       </AppRouterProvider>
     ),

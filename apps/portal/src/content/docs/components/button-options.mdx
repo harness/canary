@@ -1,93 +1,163 @@
 ---
 title: ButtonWithOptions
-description: ButtonWithOptions component documentation
+description: Interactive split button with dropdown options
 ---
 
-The `ButtonWithOptions` component provides a flexible UI element for displaying a button with a dropdown of options. It can behave as a radio button group if a `selectedValue` is provided, or as a regular dropdown otherwise.
+The `ButtonWithOptions` component provides a flexible UI element combining a button with a dropdown menu of options. It can be used in two different modes:
+
+- Regular dropdown menu (default behavior)
+- Radio button selection group (when `selectedValue` is provided)
+
+> **Note:** Unlike the standard Button component, ButtonWithOptions does not support different sizes. It automatically inherits the default size from the underlying Button component.
 
 import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="space-y-4">
-    <div className="mb-4">
-      <p className="text-lg font-bold">Default Button (Default Size)</p>
+  code={`<div className="flex flex-col gap-8">
+  {/* Different variants */}
+  <div>
+    <h5 className="text-lg font-semibold mb-3">Allowed Combinations</h5>
+    <div className="flex flex-wrap items-end gap-4">
+      {/* Solid variant with Primary theme (default) */}
       <ButtonWithOptions
-        id="primary-button-default"
-        handleButtonClick={Function}
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={Function}
-        theme="default"
-      >
-        Primary Button
-      </ButtonWithOptions>
-    </div>
-    <div className="mb-4">
-      <p className="text-lg font-bold">Primary Button (Medium Size)</p>
-      <ButtonWithOptions
-        id="primary-button-md"
-        handleButtonClick={Function}
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={Function}
+        id="solid-primary"
+        variant="solid"
         theme="primary"
-        size="md"
-      >
-        Primary Button
-      </ButtonWithOptions>
-    </div>
-    <div className="mb-4">
-      <p className="text-lg font-bold">primary Button (Loading)</p>
-      <ButtonWithOptions
-        id="primary-button-loading"
-        handleButtonClick={Function}
+        handleButtonClick={() => {}}
         options={[
           { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
           { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
         ]}
-        handleOptionChange={Function}
-        theme="primary"
-        loading={true}
+        handleOptionChange={() => {}}
       >
-        Loading....
+        Solid + Primary (Default)
       </ButtonWithOptions>
-    </div>
-    <div className="mb-4">
-      <p className="text-lg font-bold">Error Button (Default Size)</p>
+
+      {/* Surface variant with Success theme */}
       <ButtonWithOptions
-        id="error-button-default"
-        handleButtonClick={Function}
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={Function}
-        theme="error"
-      >
-        Error Button
-      </ButtonWithOptions>
-    </div>
-    <div className="mb-4">
-      <p className="text-lg font-bold">Success Button (Default Size)</p>
-      <ButtonWithOptions
-        id="success-button-default"
-        handleButtonClick={Function}
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={Function}
+        id="surface-success"
+        variant="surface"
         theme="success"
+        handleButtonClick={() => {}}
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={() => {}}
       >
-        Success Button
+        Surface + Success
+      </ButtonWithOptions>
+
+      {/* Surface variant with Danger theme */}
+      <ButtonWithOptions
+        id="surface-danger"
+        variant="surface"
+        theme="danger"
+        handleButtonClick={() => {}}
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={() => {}}
+      >
+        Surface + Danger
+      </ButtonWithOptions>
+
+      {/* Surface variant with Muted theme */}
+      <ButtonWithOptions
+        id="surface-muted"
+        variant="surface"
+        theme="muted"
+        handleButtonClick={() => {}}
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={() => {}}
+      >
+        Surface + Muted
       </ButtonWithOptions>
     </div>
-  </div>`}
+
+  </div>
+
+{/* Radio button behavior (with selectedValue) */}
+
+<div>
+  <h5 className="text-lg font-semibold mb-3">Radio Button Selection</h5>
+  <div className="flex flex-wrap items-end gap-4">
+    <ButtonWithOptions
+      id="radio-button"
+      handleButtonClick={() => {}}
+      selectedValue="option1"
+      options={[
+        {
+          value: "option1",
+          label: "Option 1",
+          description: "Description for option 1",
+        },
+        {
+          value: "option2",
+          label: "Option 2",
+          description: "Description for option 2",
+        },
+      ]}
+      handleOptionChange={() => {}}
+    >
+      With Selected Value
+    </ButtonWithOptions>
+  </div>
+</div>
+
+{/* Loading state */}
+
+<div>
+  <h5 className="text-lg font-semibold mb-3">Loading State</h5>
+  <div className="flex flex-wrap items-end gap-4">
+    <ButtonWithOptions
+      id="loading-state"
+      handleButtonClick={() => {}}
+      loading={true}
+      options={[
+        {
+          value: "option1",
+          label: "Option 1",
+          description: "Description for option 1",
+        },
+        {
+          value: "option2",
+          label: "Option 2",
+          description: "Description for option 2",
+        },
+      ]}
+      handleOptionChange={() => {}}
+    >
+      Loading...
+    </ButtonWithOptions>
+  </div>
+</div>
+
+{/* Disabled state */}
+
+  <div>
+    <h5 className="text-lg font-semibold mb-3">Disabled State</h5>
+    <div className="flex flex-wrap items-end gap-4">
+      <ButtonWithOptions
+        id="disabled-state"
+        handleButtonClick={() => {}}
+        disabled={true}
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={() => {}}
+      >
+        Disabled
+      </ButtonWithOptions>
+    </div>
+  </div>
+</div>`}
 />
 
 ## Usage
@@ -95,21 +165,173 @@ import { DocsPage } from "@/components/docs-page";
 ```typescript jsx
 import { ButtonWithOptions } from '@harnessio/ui/components'
 
-return (
-  <ButtonWithOptions
-    id="my-button"
-    handleButtonClick={handleClick}
-    options={[
-      { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-      { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-    ]}
-    handleOptionChange={handChangeOption}
-    theme="primary"
-  >
-    Primary Button
-  </ButtonWithOptions>
-)
+// Basic usage with default solid+primary combination
+const options = [
+  { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+  { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+]
+
+// Default combination (solid variant with primary theme)
+<ButtonWithOptions
+  id="my-button"
+  handleButtonClick={() => console.log('Button clicked')}
+  options={options}
+  handleOptionChange={(value) => console.log('Selected:', value)}
+>
+  Default Button
+</ButtonWithOptions>
+
+// Surface variant with success theme
+<ButtonWithOptions
+  id="success-button"
+  variant="surface"
+  theme="success"
+  handleButtonClick={() => console.log('Button clicked')}
+  options={options}
+  handleOptionChange={(value) => console.log('Selected:', value)}
+>
+  Success Button
+</ButtonWithOptions>
+
+// As a radio button group
+<ButtonWithOptions
+  id="radio-button"
+  handleButtonClick={() => console.log('Button clicked')}
+  selectedValue="option1"
+  options={options}
+  handleOptionChange={(value) => console.log('Selected:', value)}
+>
+  With Selected Value
+</ButtonWithOptions>
 ```
+
+## Allowed Combinations
+
+The `ButtonWithOptions` component has specific rules for variant and theme combinations.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-4">
+  <div>
+    <h6 className="font-medium mb-2">Default Combination: Solid + Primary</h6>
+    <ButtonWithOptions
+      id="solid-primary-example"
+      variant="solid"
+      theme="primary"
+      handleButtonClick={() => {}}
+      options={[
+        { value: 'option1', label: 'Option 1' },
+        { value: 'option2', label: 'Option 2' },
+      ]}
+      handleOptionChange={() => {}}
+    >
+      Solid + Primary
+    </ButtonWithOptions>
+  </div>
+  
+  <div>
+    <h6 className="font-medium mb-2">Surface Variant Combinations</h6>
+    <div className="flex flex-wrap items-end gap-3">
+      <ButtonWithOptions
+        id="surface-success-example"
+        variant="surface"
+        theme="success"
+        handleButtonClick={() => {}}
+        options={[
+          { value: 'option1', label: 'Option 1' },
+          { value: 'option2', label: 'Option 2' },
+        ]}
+        handleOptionChange={() => {}}
+      >
+        Surface + Success
+      </ButtonWithOptions>
+      
+      <ButtonWithOptions
+        id="surface-danger-example"
+        variant="surface"
+        theme="danger"
+        handleButtonClick={() => {}}
+        options={[
+          { value: 'option1', label: 'Option 1' },
+          { value: 'option2', label: 'Option 2' },
+        ]}
+        handleOptionChange={() => {}}
+      >
+        Surface + Danger
+      </ButtonWithOptions>
+      
+      <ButtonWithOptions
+        id="surface-muted-example"
+        variant="surface"
+        theme="muted"
+        handleButtonClick={() => {}}
+        options={[
+          { value: 'option1', label: 'Option 1' },
+          { value: 'option2', label: 'Option 2' },
+        ]}
+        handleOptionChange={() => {}}
+      >
+        Surface + Muted
+      </ButtonWithOptions>
+    </div>
+  </div>
+</div>`}
+/>
+
+## Radio Button Selection
+
+When providing a `selectedValue`, the dropdown behaves as a radio button group.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<ButtonWithOptions
+  id="radio-example"
+  handleButtonClick={() => {}}
+  selectedValue="option1"
+  options={[
+    { value: 'option1', label: 'Option 1', description: 'Currently selected' },
+    { value: 'option2', label: 'Option 2', description: 'Click to select' },
+  ]}
+  handleOptionChange={() => {}}
+>
+  With Selected Value
+</ButtonWithOptions>`}
+/>
+
+## States
+
+The component supports various states like loading and disabled.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-wrap items-end gap-3">
+  <ButtonWithOptions
+    id="loading-example"
+    handleButtonClick={() => {}}
+    loading={true}
+    options={[
+      { value: 'option1', label: 'Option 1' },
+      { value: 'option2', label: 'Option 2' },
+    ]}
+    handleOptionChange={() => {}}
+  >
+    Loading
+  </ButtonWithOptions>
+  
+  <ButtonWithOptions
+    id="disabled-example"
+    handleButtonClick={() => {}}
+    disabled={true}
+    options={[
+      { value: 'option1', label: 'Option 1' },
+      { value: 'option2', label: 'Option 2' },
+    ]}
+    handleOptionChange={() => {}}
+  >
+    Disabled
+  </ButtonWithOptions>
+</div>`}
+/>
 
 ## API Reference
 
@@ -125,6 +347,26 @@ return (
       name: "handleButtonClick",
       description: "Function to handle button click",
       required: true,
+      value: "(e: MouseEvent) => void",
+    },
+    {
+      name: "options",
+      description: "Array of options to display in the dropdown",
+      required: true,
+      value: "{ value: string; label: string; description?: string }[]",
+    },
+    {
+      name: "handleOptionChange",
+      description: "Function to handle option selection",
+      required: true,
+      value: "(val: string) => void",
+    },
+    {
+      name: "selectedValue",
+      description:
+        "Selected value for radio button behavior. When provided, the dropdown displays radio buttons.",
+      required: false,
+      value: "string",
     },
     {
       name: "loading",
@@ -134,54 +376,27 @@ return (
       defaultValue: "false",
     },
     {
-      name: "selectedValue",
-      description: "Selected value for the radio button group",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "options",
-      description: "Array of options to display in the dropdown",
-      required: true,
-    },
-    {
-      name: "handleOptionChange",
-      description: "Function to handle option change",
-      required: true,
-    },
-    {
-      name: "className",
-      description: "Additional class names to apply to the component",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "buttonClassName",
-      description: "Additional class names to apply to the button",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "size",
-      description: "Size of the button",
-      required: false,
-      value: "'default' | 'md'",
-      defaultValue: "'default'",
-    },
-    {
-      name: "theme",
-      description: "Theme of the button",
-      required: false,
-      value:
-        "'default' | 'primary' | 'error' | 'success' | 'disabled' | 'warning' | 'muted'",
-      defaultValue: "'primary'",
-    },
-    {
       name: "disabled",
-      description: "Indicates if the button is disabled",
+      description: "Disables the button and dropdown",
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "variant",
+      description:
+        "Visual style of the button. The only allowed combinations are: solid+primary, or surface+(success|danger|muted)",
+      required: false,
+      value: "'solid' | 'surface'",
+      defaultValue: "'solid'",
+    },
+    {
+      name: "theme",
+      description:
+        "Color theme of the button. The only allowed combinations are: solid+primary, or surface+(success|danger|muted)",
+      required: false,
+      value: "'primary' | 'success' | 'danger' | 'muted'",
+      defaultValue: "'primary'",
     },
     {
       name: "children",
@@ -190,8 +405,20 @@ return (
       value: "ReactNode",
     },
     {
+      name: "className",
+      description: "Additional class name for the container",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "buttonClassName",
+      description: "Additional class name for the button element",
+      required: false,
+      value: "string",
+    },
+    {
       name: "dropdownContentClassName",
-      description: "Additional class names to apply to the dropdown content",
+      description: "Additional class name for the dropdown content",
       required: false,
       value: "string",
     },

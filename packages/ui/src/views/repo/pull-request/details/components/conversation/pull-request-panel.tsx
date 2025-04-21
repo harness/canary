@@ -361,7 +361,7 @@ const PullRequestPanel = ({
                   {actions && !pullReqMetadata?.closed ? (
                     <ButtonWithOptions
                       id="pr-type"
-                      theme={buttonState.theme as ButtonThemes}
+                      theme={buttonState.theme as Extract<ButtonThemes, 'success' | 'danger' | 'muted'>}
                       disabled={buttonState.disabled}
                       variant="surface"
                       selectedValue={mergeButtonValue}

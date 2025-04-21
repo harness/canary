@@ -134,7 +134,12 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
           ref={ref}
           placeholder={placeholder}
           defaultValue={defaultValue}
-          className={cn(inputClassName, { 'pr-10': hasShortcut, 'pl-7': hasSearchIcon }, textSizeClass)}
+          className={cn(
+            inputClassName,
+            'bg-cn-background-1',
+            { 'pr-10': hasShortcut, 'pl-7': hasSearchIcon },
+            textSizeClass
+          )}
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
           onInput={handleChange}

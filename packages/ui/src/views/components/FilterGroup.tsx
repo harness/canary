@@ -56,10 +56,11 @@ const FilterGroup = <T extends Record<string, unknown>, V extends keyof T & stri
         <ListActions.Left>
           <SearchBox.Root
             width="full"
-            className="max-w-96"
+            className="max-w-80"
             value={searchInput}
             handleChange={handleInputChange}
             placeholder={t('views:search', 'Search')}
+            // inputClassName="bg-cn-background-1"
           />
         </ListActions.Left>
         <ListActions.Right>

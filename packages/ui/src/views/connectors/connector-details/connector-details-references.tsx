@@ -6,9 +6,9 @@ import { Spacer } from '@components/spacer'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 
 import ConnectorDetailsReferenceList from './connector-details-references-list'
-import { ConnectorDetailsReferencePageProps } from './types'
+import { ConnectorDetailsReferenceProps } from './types'
 
-const ConnectorDetailsReferencePage: FC<ConnectorDetailsReferencePageProps> = ({
+const ConnectorDetailsReference: FC<ConnectorDetailsReferenceProps> = ({
   searchQuery,
   setSearchQuery,
   apiConnectorRefError,
@@ -84,4 +84,4 @@ const ConnectorDetailsReferencePage: FC<ConnectorDetailsReferencePageProps> = ({
   )
 }
 
-export { ConnectorDetailsReferencePage }
+export { ConnectorDetailsReference }

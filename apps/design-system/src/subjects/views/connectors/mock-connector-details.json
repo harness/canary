@@ -2,11 +2,15 @@
   "connector": {
     "name": "Github Connector",
     "identifier": "connector3",
-    "description": "",
+    "description": "Preconfigured Docker connector for use in Harness",
     "accountIdentifier": "account123",
     "orgIdentifier": "org1",
     "projectIdentifier": "project1",
-    "tags": {},
+    "tags": {
+      "connector": "",
+      "new": "",
+      "main": ""
+    },
     "type": "Github",
     "spec": {
       "url": "https://github.com/organization/repository3",

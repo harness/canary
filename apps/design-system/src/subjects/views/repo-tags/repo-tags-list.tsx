@@ -63,7 +63,7 @@ export const RepoTagsList = () => {
         isLoading={false}
         error={''}
         selectedBranchOrTag={null}
-        renderProp={() => (
+        branchSelectorRenderer={() => (
           <BranchSelectorV2
             useTranslationStore={useTranslationStore}
             branchList={branches}

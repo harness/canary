@@ -158,7 +158,7 @@ export const RepoTagsListContainer = () => {
         isLoading={isCreatingTag}
         error={createTagError?.message}
         selectedBranchOrTag={selectedBranchOrTag}
-        renderProp={() => (
+        branchSelectorRenderer={() => (
           <BranchSelectorContainer onSelectBranchorTag={selectBranchOrTag} selectedBranch={selectedBranchOrTag} />
         )}
       />

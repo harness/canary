@@ -48,13 +48,15 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
       <DropdownMenu.Trigger asChild>
         {/* TODO: Design system: Add max-width from tailwind config and add .truncate to span */}
         <Button className="max-w-48" variant="outline" size={buttonSize}>
-          {!branchPrefix && <Icon className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'branch'} size={14} />}
-          <span className="overflow-x-hidden text-ellipsis whitespace-nowrap">
+          {!branchPrefix && (
+            <Icon className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'branch'} size={14} />
+          )}
+            <span className="overflow-x-hidden text-ellipsis whitespace-nowrap">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}
           </span>
-          <Icon name="chevron-down" className="chevron-down shrink-0" size={12} />
+          <Icon name="chevron-down" className="chevron-down shrink-0 text-icons-2" size={12} />
         </Button>
       </DropdownMenu.Trigger>
       <BranchSelectorDropdown

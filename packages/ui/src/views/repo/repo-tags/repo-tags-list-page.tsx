@@ -46,7 +46,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
         {(isLoading || !!tagsList.length || isDirtyList) && (
           <>
             <Spacer size={2} />
-            <h1 className="text-cn-foreground-1 text-2xl font-medium">{t('views:repos.tags', 'Tags')}</h1>
+            <h1 className="text-2xl font-medium text-cn-foreground-1">{t('views:repos.tags', 'Tags')}</h1>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>

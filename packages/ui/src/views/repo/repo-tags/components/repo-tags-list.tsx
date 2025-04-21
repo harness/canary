@@ -1,12 +1,8 @@
-import { useMemo } from 'react'
+import { FC, useMemo } from 'react'
 
-import { Avatar, CommitCopyActions, MoreActionsTooltip, NoData, SkeletonTable, Table } from '@/components'
-import { BranchSelectorListItem } from '@/views'
-import { cn } from '@utils/cn'
-import { getInitials } from '@utils/stringUtils'
-import { timeAgo } from '@utils/utils'
-import { TranslationStore } from '@views/repo/repo-list/types'
-import { CommitTagType, RepoTagsStore } from '@views/repo/repo-tags/types'
+import { Avatar, CommitCopyActions, MoreActionsTooltip, NoData, SkeletonTable, Table, Text } from '@/components'
+import { getInitials, timeAgo } from '@/utils'
+import { BranchSelectorListItem, CommitTagType, RepoTagsStore, TranslationStore } from '@/views'
 
 interface RepoTagsListProps {
   useTranslationStore: () => TranslationStore
@@ -20,7 +16,7 @@ interface RepoTagsListProps {
   openCreateTagDialog: () => void
 }
 
-export const RepoTagsList: React.FC<RepoTagsListProps> = ({
+export const RepoTagsList: FC<RepoTagsListProps> = ({
   useTranslationStore,
   onDeleteTag,
   useRepoTagsStore,
@@ -61,45 +57,41 @@ export const RepoTagsList: React.FC<RepoTagsListProps> = ({
 
   if (!isLoading && !tagsList?.length) {
     return (
-      <div className={cn(!isDirtyList && 'flex items-center justify-center py-[204px]')}>
-        <NoData
-          iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-tags'}
-          withBorder={isDirtyList}
-          title={
-            isDirtyList ? t('views:noData.noResults', 'No search results') : t('views:noData.noTags', 'No tags yet')
-          }
-          description={
-            isDirtyList
-              ? [
-                  t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
-                  t('views:noData.changeSearch', 'or search for a different keyword.')
-                ]
-              : [
-                  t(
-                    'views:noData.noTagsDescription',
-                    "Your tags will appear here once they're created. Start creating tags to see your work organized."
-                  )
-                ]
-          }
-          textWrapperClassName={isDirtyList ? '' : 'max-w-[360px]'}
-          primaryButton={
-            isDirtyList
-              ? {
-                  label: t('views:noData.clearSearch', 'Clear search'),
-                  onClick: handleResetFiltersAndPages
-                }
-              : {
-                  label: t('views:noData.createNewTag', 'Create new tag.'),
-                  onClick: openCreateTagDialog
-                }
-          }
-        />
-      </div>
+      <NoData
+        iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-tags'}
+        withBorder={isDirtyList}
+        title={isDirtyList ? t('views:noData.noResults', 'No search results') : t('views:noData.noTags', 'No tags yet')}
+        description={
+          isDirtyList
+            ? [
+                t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+                t('views:noData.changeSearch', 'or search for a different keyword.')
+              ]
+            : [
+                t(
+                  'views:noData.noTagsDescription',
+                  "Your tags will appear here once they're created. Start creating tags to see your work organized."
+                )
+              ]
+        }
+        textWrapperClassName={isDirtyList ? '' : 'max-w-[360px]'}
+        primaryButton={
+          isDirtyList
+            ? {
+                label: t('views:noData.clearSearch', 'Clear search'),
+                onClick: handleResetFiltersAndPages
+              }
+            : {
+                label: t('views:noData.createNewTag', 'Create new tag.'),
+                onClick: openCreateTagDialog
+              }
+        }
+      />
     )
   }
 
   return (
-    <Table.Root variant="asStackedList">
+    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" variant="asStackedList">
       <Table.Header>
         <Table.Row className="pointer-events-none select-none">
           <Table.Head className="w-[108px]">{t('views:repos.tag', 'Tag')}</Table.Head>
@@ -107,7 +99,7 @@ export const RepoTagsList: React.FC<RepoTagsListProps> = ({
           <Table.Head className="w-[140px]">{t('views:repos.commit', 'Commit')}</Table.Head>
           <Table.Head className="w-[146px]">{t('views:repos.tagger', 'Tagger')}</Table.Head>
           <Table.Head className="w-[170px]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
-          <Table.Head className="w-[46px]" />
+          <Table.Head className="w-16" />
         </Table.Row>
       </Table.Header>
 
@@ -116,35 +108,41 @@ export const RepoTagsList: React.FC<RepoTagsListProps> = ({
       ) : (
         <Table.Body hasHighlightOnHover>
           {tagsList.map(tag => (
-            <Table.Row key={tag.sha} className="min-h-[48px]">
-              <Table.Cell className="text-foreground-1 w-[108px] !pb-3 !pt-4">
-                <div className="h-4 w-[76px] overflow-hidden truncate">{tag.name}</div>
+            <Table.Row key={tag.sha}>
+              <Table.Cell>
+                <Text className="block leading-snug" truncate>
+                  {tag.name}
+                </Text>
               </Table.Cell>
-              <Table.Cell className="text-foreground-3 w-[330px] !py-4">
-                <div className="line-clamp-3 w-[296px] overflow-hidden break-all leading-4">{tag.message}</div>
+              <Table.Cell>
+                <Text color="tertiary" className="line-clamp-3 break-all leading-snug">
+                  {tag?.message}
+                </Text>
               </Table.Cell>
-              <Table.Cell className="text-foreground-3 !py-2.5">
-                <div className="flex">
-                  <CommitCopyActions sha={tag.sha} toCommitDetails={toCommitDetails} className="h-7" />
-                </div>
+              <Table.Cell className="!py-2.5">
+                <CommitCopyActions sha={tag.sha} toCommitDetails={toCommitDetails} />
               </Table.Cell>
-              <Table.Cell className="text-foreground-3 !pb-3 !pt-4">
-                <div className="flex w-[114px] items-center gap-2">
+              <Table.Cell>
+                <div className="flex items-center gap-2">
                   <Avatar.Root size="4.5" className="rounded-full text-white">
                     <Avatar.Fallback>{getInitials(tag.tagger?.identity.name || '')}</Avatar.Fallback>
                   </Avatar.Root>
-                  <span className="truncate">{tag.tagger?.identity.name}</span>
+                  <Text color="tertiary" className="block leading-none" truncate>
+                    {tag.tagger?.identity.name}
+                  </Text>
                 </div>
               </Table.Cell>
-              <Table.Cell className="text-foreground-3 !pb-3 !pt-4">
-                <div className="w-[130px]">{getCreationDate(tag)}</div>
+              <Table.Cell>
+                <Text color="tertiary" className="leading-snug">
+                  {getCreationDate(tag)}
+                </Text>
               </Table.Cell>
-              <Table.Cell className="w-[46px] !pb-1.5 !pt-2.5 text-right">
+              <Table.Cell className="w-[46px] !py-2.5 text-right">
                 <MoreActionsTooltip
                   isInTable
                   actions={getTableActions(tag).map(action => ({
                     ...action,
-                    to: action.to?.replace('${tag.name}', tag.name)
+                    to: action?.to?.replace('${tag.name}', tag.name)
                   }))}
                 />
               </Table.Cell>

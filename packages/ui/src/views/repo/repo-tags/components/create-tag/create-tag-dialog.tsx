@@ -20,7 +20,7 @@ interface CreateTagDialogProps {
   useTranslationStore: () => TranslationStore
   isLoading?: boolean
   selectedBranchOrTag: BranchSelectorListItem | null
-  renderProp: () => ReactNode
+  branchSelectorRenderer: () => ReactNode
 }
 
 export const CreateTagDialog: FC<CreateTagDialogProps> = ({
@@ -31,7 +31,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
   useTranslationStore,
   isLoading,
   selectedBranchOrTag,
-  renderProp: BranchSelectorContainer
+  branchSelectorRenderer: BranchSelectorContainer
 }) => {
   const { t } = useTranslationStore()
 
@@ -70,7 +70,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content className="max-w-xl border-border bg-cn-background-1" aria-describedby={undefined}>
+      <Dialog.Content className="border-border max-w-xl bg-cn-background-1" aria-describedby={undefined}>
         <Dialog.Header>
           <Dialog.Title className="font-medium">{t('views:repos.createTagTitle', 'Create a tag')}</Dialog.Title>
         </Dialog.Header>
@@ -91,7 +91,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
 
           <Fieldset>
             <ControlGroup>
-              <Label htmlFor="target" className="mb-2.5" color="secondary">
+              <Label htmlFor="target" className="mb-2">
                 {t('views:forms.basedOn', 'Based on')}
               </Label>
               {BranchSelectorContainer()}
@@ -118,7 +118,14 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
           )}
 
           <Dialog.Footer className="-mx-5 -mb-5">
-            <Button type="button" variant="outline" onClick={handleClose} disabled={isLoading}>
+            <Button
+              type="button"
+              variant="surface"
+              theme="muted"
+              onClick={handleClose}
+              loading={isLoading}
+              disabled={isLoading}
+            >
               {t('views:repos.cancel', 'Cancel')}
             </Button>
             <Button type="submit" disabled={isLoading} loading={isLoading}>

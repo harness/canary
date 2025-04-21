@@ -44,9 +44,6 @@ export function SidebarSearch(props: SidebarSearchProps) {
         <Button variant="ghost" iconOnly size="sm" type="button">
           <Icon name="search" size={12} />
         </Button>
-        {/* <div className="absolute left-px top-px z-10 flex h-[calc(100%-2px)] w-[30px] items-center justify-center rounded bg-sidebar-background-1 text-sidebar-foreground-4 hover:text-sidebar-icon-1">
-          <Icon name="search" size={12} className="ml-0.5" />
-        </div> */}
         <Button
           variant="ghost"
           size="sm"

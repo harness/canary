@@ -11,7 +11,6 @@ const badgeVariants = cva('badge inline-flex w-fit items-center transition-color
       counter: 'badge-counter'
     },
     size: {
-      // remove
       default: '',
       sm: 'badge-sm'
     },

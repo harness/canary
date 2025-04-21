@@ -25,8 +25,6 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
     setSearchDialogOpen(false)
   }
 
-  // 'absolute opacity-0 -z-10 left-0 top-0 px-2.5 py-2 text-sidebar-foreground-4 hover:text-sidebar-icon-1 bg-sidebar-background-1 hover:bg-sidebar-background-3 rounded border border-sidebar-border-2 pointer-events-none transition-[opacity,z-index] '
-
   return (
     <div className="flex w-full flex-col place-items-start">
       <div className="my-5 flex items-center pl-2">{logo}</div>

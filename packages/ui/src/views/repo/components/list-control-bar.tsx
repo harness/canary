@@ -8,17 +8,19 @@ import { FilterHandlers, FilterOptionConfig, SortDirection, SortOption } from '@
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
-interface FiltersBarProps<T, V> {
+interface FiltersBarProps<T, V = T[keyof T], CustomValue = Record<string, unknown>> {
   openedFilter: string | undefined
   setOpenedFilter: (filter: keyof T) => void
-  filterOptions: FilterOptionConfig[]
+  filterOptions: FilterOptionConfig<Extract<keyof T, string>, CustomValue>[]
   sortOptions: SortOption[]
   selectedFiltersCnt: number
   renderSelectedFilters: (
-    filterFieldRenderer: (filterFieldConfig: Omit<FiltersFieldProps<V>, 'shouldOpenFilter' | 't'>) => ReactNode
+    filterFieldRenderer: (
+      filterFieldConfig: Omit<FiltersFieldProps<Extract<keyof T, string>, V, CustomValue>, 'shouldOpenFilter' | 't'>
+    ) => ReactNode
   ) => ReactNode
   renderFilterOptions: (
-    filterOptionsRenderer: (filterFieldConfig: FilterOptionsRendererProps<keyof T>) => ReactNode
+    filterOptionsRenderer: (filterFieldConfig: FilterOptionsRendererProps<Extract<keyof T, string>>) => ReactNode
   ) => ReactNode
   sortDirections: SortDirection[]
   t: TFunction
@@ -44,7 +46,7 @@ interface FilterOptionsRendererProps<T> {
   resetFilters: () => void
 }
 
-const ListControlBar = <T extends Record<string, any>, V = T[keyof T]>({
+const ListControlBar = <T extends Record<string, any>, CustomValue = Record<string, unknown>, V = T[keyof T]>({
   filterOptions,
   sortOptions,
   selectedFiltersCnt,
@@ -55,7 +57,7 @@ const ListControlBar = <T extends Record<string, any>, V = T[keyof T]>({
   renderSelectedFilters,
   renderFilterOptions,
   filterHandlers
-}: FiltersBarProps<T, V>) => {
+}: FiltersBarProps<T, V, CustomValue>) => {
   const {
     activeSorts,
     handleUpdateSort,
@@ -69,15 +71,21 @@ const ListControlBar = <T extends Record<string, any>, V = T[keyof T]>({
     clearFilterToOpen
   } = filterHandlers
 
-  const filtersFieldRenderer = (props: Omit<FiltersFieldProps<V>, 'shouldOpenFilter' | 't'>) => (
-    <FiltersField {...props} shouldOpenFilter={props.filterOption.value === openedFilter} t={t} />
+  const filtersFieldRenderer = (
+    props: Omit<FiltersFieldProps<Extract<keyof T, string>, V, CustomValue>, 'shouldOpenFilter' | 't'>
+  ) => (
+    <FiltersField<Extract<keyof T, string>, V, CustomValue>
+      {...props}
+      shouldOpenFilter={props.filterOption.value === openedFilter}
+      t={t}
+    />
   )
 
   const filterOptionsRenderer = ({
     addFilter,
     resetFilters,
     availableFilters
-  }: FilterOptionsRendererProps<keyof T>) => (
+  }: FilterOptionsRendererProps<Extract<keyof T, string>>) => (
     <>
       <FilterSelect
         options={filterOptions.filter(option => availableFilters.includes(option.value))}

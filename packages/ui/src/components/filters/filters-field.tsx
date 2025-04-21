@@ -8,32 +8,36 @@ import Text from './filters-bar/actions/variants/text-field'
 import { CheckboxOptions, FilterField, FilterFieldTypes, FilterOptionConfig, FilterValueTypes } from './types'
 import { getFilterLabelValue } from './utils'
 
-export interface FiltersFieldProps<T extends FilterValueTypes> {
-  filterOption: FilterOptionConfig
+export interface FiltersFieldProps<
+  T extends string,
+  V extends FilterValueTypes,
+  CustomValue = Record<string, unknown>
+> {
+  filterOption: FilterOptionConfig<T, CustomValue>
   removeFilter: () => void
   t: TFunction
   valueLabel?: string
   shouldOpenFilter: boolean
   onOpenChange?: (open: boolean) => void
-  onChange: (selectedValues: T) => void
-  value?: T
+  onChange: (selectedValues: V) => void
+  value?: V
 }
 
-const renderFilterValues = <T extends FilterValueTypes>(
-  filter: FilterField<T>,
-  filterOption: FilterOptionConfig,
-  onUpdateFilter: (selectedValues: T) => void
+const renderFilterValues = <T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>>(
+  filter: FilterField<V>,
+  filterOption: FilterOptionConfig<T, CustomValue>,
+  onUpdateFilter: (selectedValues: V) => void
 ) => {
   if (!onUpdateFilter) return null
 
   switch (filterOption.type) {
     case FilterFieldTypes.Calendar: {
       const calendarFilter = filter as FilterField<Date>
-      return <Calendar filter={calendarFilter} onUpdateFilter={values => onUpdateFilter(values as T)} />
+      return <Calendar filter={calendarFilter} onUpdateFilter={values => onUpdateFilter(values as V)} />
     }
     case FilterFieldTypes.Text: {
       const textFilter = filter as FilterField<string>
-      return <Text filter={textFilter} onUpdateFilter={values => onUpdateFilter(values as T)} />
+      return <Text filter={textFilter} onUpdateFilter={values => onUpdateFilter(values as V)} />
     }
     case FilterFieldTypes.ComboBox: {
       const comboBoxFilter = filter as FilterField<ComboBoxOptions>
@@ -41,7 +45,7 @@ const renderFilterValues = <T extends FilterValueTypes>(
         <Combobox
           filterValue={comboBoxFilter.value}
           {...filterOption.filterFieldConfig}
-          onUpdateFilter={values => onUpdateFilter(values as T)}
+          onUpdateFilter={values => onUpdateFilter(values as V)}
         />
       )
     }
@@ -51,16 +55,23 @@ const renderFilterValues = <T extends FilterValueTypes>(
         <Checkbox
           filter={checkboxFilter.value || []}
           filterOption={filterOption.filterFieldConfig?.options || []}
-          onUpdateFilter={values => onUpdateFilter(values as T)}
+          onUpdateFilter={values => onUpdateFilter(values as V)}
         />
       )
+    }
+    case FilterFieldTypes.Custom: {
+      const customFilter = filter as unknown as FilterField<CustomValue>
+      return filterOption.filterFieldConfig.renderCustomComponent({
+        value: customFilter.value,
+        onChange: (values: unknown) => onUpdateFilter(values as V)
+      })
     }
     default:
       return null
   }
 }
 
-const FiltersField = <T extends FilterValueTypes>({
+const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>>({
   filterOption,
   removeFilter,
   shouldOpenFilter,
@@ -68,13 +79,13 @@ const FiltersField = <T extends FilterValueTypes>({
   t,
   onChange,
   value
-}: FiltersFieldProps<T>) => {
+}: FiltersFieldProps<T, V, CustomValue>) => {
   const activeFilterOption = {
     type: filterOption.value,
     value
   }
 
-  const onFilterValueChange = (selectedValues: T) => {
+  const onFilterValueChange = (selectedValues: V) => {
     onChange(selectedValues)
   }
 
@@ -88,7 +99,7 @@ const FiltersField = <T extends FilterValueTypes>({
       filterLabel={filterOption.label}
       valueLabel={getFilterLabelValue(filterOption, activeFilterOption)}
     >
-      {renderFilterValues<T>(activeFilterOption, filterOption, onFilterValueChange)}
+      {renderFilterValues<T, V, CustomValue>(activeFilterOption, filterOption, onFilterValueChange)}
     </FilterBoxWrapper>
   )
 }

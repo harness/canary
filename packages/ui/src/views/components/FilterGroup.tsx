@@ -9,18 +9,28 @@ import { TFunction } from 'i18next'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
 
-interface FilterGroupProps<T extends Record<string, unknown>, V extends keyof T & string> {
+interface FilterGroupProps<
+  T extends Record<string, unknown>,
+  V extends keyof T & string,
+  CustomValue = Record<string, unknown>
+> {
   onFilterSelectionChange?: (selectedFilters: (keyof T)[]) => void
   onFilterValueChange?: (filterType: T) => void
   handleFilterOpen?: (filter: V, isOpen: boolean) => void
   searchInput: string
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   t: TFunction
-  filterOptions: FilterOptionConfig<V>[]
+  filterOptions: FilterOptionConfig<V, CustomValue>[]
   headerAction?: ReactNode
 }
 
-const FilterGroup = <T extends Record<string, unknown>, V extends keyof T & string>(props: FilterGroupProps<T, V>) => {
+const FilterGroup = <
+  T extends Record<string, unknown>,
+  V extends Extract<keyof T, string>,
+  CustomValue = Record<string, unknown>
+>(
+  props: FilterGroupProps<T, V, CustomValue>
+) => {
   const {
     onFilterSelectionChange,
     onFilterValueChange,
@@ -67,7 +77,7 @@ const FilterGroup = <T extends Record<string, unknown>, V extends keyof T & stri
           <FilterHandler.Dropdown>
             {(addFilter, availableFilters, resetFilters) => {
               return (
-                <FilterSelect<V>
+                <FilterSelect<V, CustomValue>
                   options={filterOptions.filter(option => availableFilters.includes(option.value))}
                   onChange={option => {
                     addFilter(option.value)
@@ -90,7 +100,7 @@ const FilterGroup = <T extends Record<string, unknown>, V extends keyof T & stri
         </ListActions.Right>
       </ListActions.Root>
       <>
-        <ListControlBar<T>
+        <ListControlBar<T, CustomValue, T[keyof T]>
           renderSelectedFilters={filterFieldRenderer => (
             <FilterHandler.Content className={'flex items-center gap-x-2'}>
               {filterOptions.map(filterOption => {
@@ -118,7 +128,7 @@ const FilterGroup = <T extends Record<string, unknown>, V extends keyof T & stri
           )}
           renderFilterOptions={filterOptionsRenderer => (
             <FilterHandler.Dropdown>
-              {(addFilter, availableFilters, resetFilters) => (
+              {(addFilter, availableFilters: Extract<keyof T, string>[], resetFilters) => (
                 <div className="flex items-center gap-x-4">
                   {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
                 </div>

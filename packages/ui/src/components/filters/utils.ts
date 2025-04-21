@@ -102,9 +102,13 @@ export const getFilterDisplayValue = (filterOption: FilterOption, filter: Filter
   }
 }
 
-export const getFilterLabelValue = <T extends FilterValueTypes>(
-  filterOption: FilterOptionConfig,
-  filter: FilterField<T>
+export const getFilterLabelValue = <
+  T extends string,
+  V extends FilterValueTypes,
+  CustomValue = Record<string, unknown>
+>(
+  filterOption: FilterOptionConfig<T, CustomValue>,
+  filter: FilterField<V>
 ): string => {
   switch (filterOption.type) {
     case FilterFieldTypes.Calendar: {

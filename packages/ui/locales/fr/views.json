@@ -50,6 +50,12 @@
       },
       "afterOption": {
         "label": "Créé après"
+      },
+      "labels": {
+        "label": "Label"
+      },
+      "labelByOption": {
+        "label": "Label by"
       }
     },
     "RequestApprovalRule": "Demander l'approbation des nouvelles modifications",

@@ -6,11 +6,18 @@ import {
   type ViewLayoutOption
 } from '@components/filters'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
-import { FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
+import {
+  CalendarFilterOptionConfig,
+  ComboBoxFilterOptionConfig,
+  CustomFilterOptionConfig,
+  FilterFieldTypes,
+  FilterOptionConfig
+} from '@components/filters/types'
 import { TFunction } from 'i18next'
 
 import { Parser } from '@harnessio/filters'
 
+import { LabelsValue } from '../pull-request/components/labels'
 import { PRListFilters } from '../pull-request/pull-request.types'
 
 export const getBasicConditions = (t: TFunction): FilterCondition[] => [
@@ -106,19 +113,28 @@ const dateParser: Parser<Date> = {
   serialize: (value: Date): string => value?.getTime().toString() || ''
 }
 
+type PRListFilterOptionConfig = Array<
+  Extract<
+    FilterOptionConfig<keyof PRListFilters, LabelsValue>,
+    CalendarFilterOptionConfig | ComboBoxFilterOptionConfig | CustomFilterOptionConfig<keyof PRListFilters, LabelsValue>
+  >
+>
+
 interface PRListFilterOptions {
   t: TFunction
   onAuthorSearch: (name: string) => void
   isPrincipalsLoading?: boolean
   principalData: { label: string; value: string }[]
+  customFilterOptions?: PRListFilterOptionConfig
 }
 
 export const getPRListFilterOptions = ({
   t,
   onAuthorSearch,
   isPrincipalsLoading,
-  principalData
-}: PRListFilterOptions): Array<FilterOptionConfig<keyof PRListFilters>> => [
+  principalData,
+  customFilterOptions = []
+}: PRListFilterOptions): PRListFilterOptionConfig => [
   {
     label: t('views:repos.prListFilterOptions.authorOption.label', 'Author'),
     value: 'created_by',
@@ -148,5 +164,6 @@ export const getPRListFilterOptions = ({
     value: 'created_gt',
     type: FilterFieldTypes.Calendar,
     parser: dateParser
-  }
+  },
+  ...customFilterOptions
 ]

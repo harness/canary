@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Spacer, StackedList } from '@/components'
 import { useRouterContext } from '@/context'
@@ -6,6 +6,7 @@ import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
 import FilterTrigger from '@components/filters/triggers/filter-trigger'
+import { CustomFilterOptionConfig, FilterFieldTypes } from '@components/filters/types'
 import { noop } from 'lodash-es'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
@@ -15,6 +16,7 @@ import { getPRListFilterOptions, getSortDirections, getSortOptions } from '../co
 import { useFilters } from '../hooks'
 import { filterPullRequests } from '../utils/filtering/pulls'
 import { sortPullRequests } from '../utils/sorting/pulls'
+import { LabelsFilter, LabelsValue } from './components/labels'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
 import type { PRListFilters, PullRequestPageProps } from './pull-request.types'
 
@@ -24,6 +26,7 @@ const PRListFilterHandler = createFilters<PRListFilters>()
 
 const PullRequestListPage: FC<PullRequestPageProps> = ({
   usePullRequestListStore,
+  useLabelsStore,
   spaceId,
   repoId,
   onFilterChange,
@@ -39,9 +42,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   setSearchQuery
 }) => {
   const { Link, useSearchParams } = useRouterContext()
-  const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestListStore()
+  const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
+    usePullRequestListStore()
+
   const { t } = useTranslationStore()
   const [searchParams] = useSearchParams()
+  const { labels, values: labelValueOptions, isLoading: isLabelsLoading } = useLabelsStore()
 
   const computedPrincipalData = useMemo(() => {
     return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
@@ -49,12 +55,61 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   const [isAllFilterDataPresent, setisAllFilterDataPresent] = useState<boolean>(true)
 
+  const labelsFilterConfig: CustomFilterOptionConfig<keyof PRListFilters, LabelsValue> = {
+    label: t('views:repos.prListFilterOptions.labels.label', 'Label'),
+    value: 'label_by',
+    type: FilterFieldTypes.Custom,
+    parser: {
+      parse: (value: string): LabelsValue => {
+        const result: LabelsValue = {}
+
+        value.split(';').forEach(entry => {
+          const [key, isSelectedStr, valueStr = ''] = entry.split(':')
+          if (!key) return
+          result[key] = {
+            isSelected: isSelectedStr === 'true',
+            value: valueStr
+          }
+        })
+
+        return result
+      },
+      serialize: (value: LabelsValue): string => {
+        const parts = Object.entries(value)
+          .map(([key, obj]) => {
+            if (!obj) return ''
+            const isSelected = obj.isSelected.toString()
+            const value = obj.value ?? '' // 👈 empty string instead of 'null'
+            return `${key}:${isSelected}:${value}`
+          })
+          .filter(Boolean)
+
+        return `${parts.join(';')}`
+      }
+    },
+    filterFieldConfig: {
+      renderCustomComponent: function ({ value, onChange }): ReactNode {
+        return (
+          <LabelsFilter
+            isLabelsLoading={isLabelsLoading}
+            onInputChange={setLabelsQuery}
+            valueOptions={labelValueOptions}
+            labelOptions={labels}
+            onChange={onChange}
+            value={value}
+          />
+        )
+      }
+    }
+  }
+
   const PR_FILTER_OPTIONS = getPRListFilterOptions({
     t,
     onAuthorSearch: searchText => {
       setPrincipalsSearchQuery?.(searchText)
     },
     isPrincipalsLoading: isPrincipalsLoading,
+    customFilterOptions: [labelsFilterConfig],
     principalData:
       computedPrincipalData?.map(userInfo => ({
         label: userInfo?.display_name || '',
@@ -215,7 +270,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               <ListActions.Right>
                 <PRListFilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => (
-                    <FilterSelect<PRListFiltersKeys>
+                    <FilterSelect<PRListFiltersKeys, LabelsValue>
                       options={PR_FILTER_OPTIONS.filter(option => availableFilters.includes(option.value))}
                       onChange={option => {
                         addFilter(option.value)
@@ -248,15 +303,14 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                 </Button>
               </ListActions.Right>
             </ListActions.Root>
-            <ListControlBar<PRListFilters>
+            <ListControlBar<PRListFilters, LabelsValue, PRListFilters[PRListFiltersKeys]>
               renderSelectedFilters={filterFieldRenderer =>
                 isAllFilterDataPresent && (
                   <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
                     {PR_FILTER_OPTIONS.map(filterOption => {
                       return (
                         <PRListFilterHandler.Component
-                          /* TODO: fix any */
-                          parser={filterOption.parser as any}
+                          parser={filterOption.parser}
                           filterKey={filterOption.value}
                           key={filterOption.value}
                         >

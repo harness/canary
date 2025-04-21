@@ -49,7 +49,7 @@ export const DelegateSelector = () => {
             <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Delegate selector</Drawer.Title>
             <FormSeparator className="w-full" />
             <div className="flex">
-              Haven't installed a delegate yet?&nbsp;
+              Haven't installed a delegate yet?
               <StyledLink className="flex flex-row items-center ml-1" variant="accent" to="#">
                 Install delegate<Icon name="attachment-link" className="ml-1" size={12}></Icon>
               </StyledLink>

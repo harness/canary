@@ -7,6 +7,7 @@ import {
   CreateSecretFormFields,
   CreateSecretPage,
   DirectionEnum,
+  SecretEntityForm,
   SecretItem,
   SecretReference,
   SecretsHeader,
@@ -87,14 +88,15 @@ export const SecretsPage = ({
     switch (selectedType) {
       case SecretType.NEW:
         return (
-          <CreateSecretPage
-            onFormSubmit={onSubmit}
-            onFormCancel={handleCancel}
-            useTranslationStore={useTranslationStore}
-            isLoading={false}
-            apiError={null}
-            connectorInput={<ConnectorInputExample />}
-          />
+          // <CreateSecretPage
+          //   onFormSubmit={onSubmit}
+          //   onFormCancel={handleCancel}
+          //   useTranslationStore={useTranslationStore}
+          //   isLoading={false}
+          //   apiError={null}
+          //   connectorInput={<ConnectorInputExample />}
+          // />
+          <SecretEntityForm />
         )
       case SecretType.EXISTING:
         return (

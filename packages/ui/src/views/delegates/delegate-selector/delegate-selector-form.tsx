@@ -59,6 +59,7 @@ export interface DelegateSelectorFormProps {
   isLoading: boolean
   isDelegateSelected: (selectors: string[], tags: string[]) => boolean
   getMatchedDelegatesCount: (delegates: DelegateItem[], tags: string[]) => number
+  preSelectedTags?: string[]
 }
 
 export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Element => {
@@ -71,7 +72,8 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
     apiError = null,
     isLoading,
     isDelegateSelected,
-    getMatchedDelegatesCount
+    getMatchedDelegatesCount,
+    preSelectedTags
   } = props
   const { t } = useTranslationStore()
   const [searchTag, setSearchTag] = useState('')
@@ -87,8 +89,8 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
     resolver: zodResolver(delegateSelectorFormSchema),
     mode: 'onChange',
     defaultValues: {
-      type: DelegateTypes.ANY,
-      tags: []
+      type: preSelectedTags?.length ? DelegateTypes.TAGS : DelegateTypes.ANY,
+      tags: preSelectedTags?.length ? preSelectedTags.map(tag => ({ id: tag, label: tag })) : []
     }
   })
 

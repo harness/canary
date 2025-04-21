@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { useTranslationStore } from '@utils/viewUtils'
-import { defaultTo } from 'lodash-es'
+import { defaultTo, set } from 'lodash-es'
 
 import { Drawer, FormSeparator, Icon, StyledLink } from '@harnessio/ui/components'
 import {
@@ -16,13 +16,16 @@ import { getMatchedDelegatesCount, isDelegateSelected } from './utils'
 
 export const DelegateSelector = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [selectedTags, setSelectedTags] = useState<string>('')
+  const [selectedDelegateType, setSelectedDelegateType] = useState<DelegateTypes | null>(null)
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
 
   const onSubmit = (data: DelegateSelectorFormFields) => {
     if (data.type === DelegateTypes.ANY) {
-      setSelectedTags('any')
+      setSelectedDelegateType(DelegateTypes.ANY)
+      setSelectedTags([])
     } else {
-      setSelectedTags(data.tags.map(tag => tag.id).join(', '))
+      setSelectedDelegateType(DelegateTypes.TAGS)
+      setSelectedTags(data.tags.map(tag => tag.id))
     }
     setIsDrawerOpen(false)
   }
@@ -31,7 +34,13 @@ export const DelegateSelector = () => {
     <>
       <DelegateSelectorInput
         placeholder={<StyledLink to="#"> select a delegate</StyledLink>}
-        value={selectedTags}
+        value={
+          selectedDelegateType === DelegateTypes.TAGS
+            ? selectedTags?.join(', ')
+            : selectedDelegateType === DelegateTypes.ANY
+              ? 'any delegate'
+              : null
+        }
         label="Delegate selector"
         onClick={() => {
           setIsDrawerOpen(true)
@@ -39,7 +48,7 @@ export const DelegateSelector = () => {
         onEdit={() => {
           setIsDrawerOpen(true)
         }}
-        onClear={() => setSelectedTags('')}
+        onClear={() => setSelectedTags([])}
         renderValue={(tag: string) => tag}
         className="max-w-xs mb-8"
       />
@@ -86,6 +95,7 @@ export const DelegateSelector = () => {
             onBack={() => setIsDrawerOpen(false)}
             isDelegateSelected={isDelegateSelected}
             getMatchedDelegatesCount={getMatchedDelegatesCount}
+            preSelectedTags={selectedTags}
           />
         </Drawer.Content>
       </Drawer.Root>

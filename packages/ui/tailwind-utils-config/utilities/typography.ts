@@ -1,29 +1,43 @@
 export default {
   '.font': {
+    '&-heading-hero': {
+      font: 'var(--cn-heading-hero)'
+    },
+    '&-heading-section': {
+      font: 'var(--cn-heading-section)'
+    },
+    '&-heading-subsection': {
+      font: 'var(--cn-heading-subsection)'
+    },
+    '&-heading-base': {
+      font: 'var(--cn-heading-base)'
+    },
+    '&-heading-small': {
+      font: 'var(--cn-heading-small)'
+    },
+    '&-body-normal': {
+      font: 'var(--cn-body-normal)'
+    },
     '&-body-strong': {
       font: 'var(--cn-body-strong)'
     },
-    '&-body-tight-strong': {
-      font: 'var(--cn-body-tight-strong)'
+    '&-body-code': {
+      font: 'var(--cn-body-code)'
     },
     '&-body-tight-normal': {
       font: 'var(--cn-body-tight-normal)'
     },
-    '&-body-none-strong': {
-      font: 'var(--cn-body-none-strong)'
-    },
-    '&-caption-soft': {
-      font: 'var(--cn-caption-soft)'
+    '&-body-tight-strong': {
+      font: 'var(--cn-body-tight-strong)'
     },
     '&-caption-normal': {
       font: 'var(--cn-caption-normal)'
     },
-    // Update caption-none-normal name
-    '&-caption-none-normal': {
-      font: 'var(--cn-caption-none-normal)'
+    '&-caption-soft': {
+      font: 'var(--cn-caption-soft)'
     },
-    '&-caption-none-soft': {
-      font: 'var(--cn-caption-none-soft)'
+    '&-caption-tight-normal': {
+      font: 'var(--cn-caption-tight-normal)'
     },
     '&-caption-tight-soft': {
       font: 'var(--cn-caption-tight-soft)'

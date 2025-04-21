@@ -16,9 +16,6 @@ function createButtonVariantStyles() {
   // Exclude "ai" theme from themes
   const aiFilteredThemes = themes.filter(theme => theme !== 'ai')
 
-  // Exclude "counter" variant from variants
-  // const counterFilteredVariants = variants.filter(variant => variant !== 'counter')
-
   const combinationStyles: CSSRuleObject = {}
   const separatorStyles: CSSRuleObject = {}
 
@@ -52,7 +49,7 @@ function createButtonVariantStyles() {
         '&::before': {
           /**
            * Some variants don't have separator
-           * Hence adding border color
+           * Hence adding border color for separator
            *  */
           backgroundColor: `var(--cn-set-${themeStyle}-${variant}-separator, var(--cn-set-${themeStyle}-${variant}-border))`
         }
@@ -102,7 +99,7 @@ export default {
       height: 'var(--cn-btn-size-sm)',
       padding: 'var(--cn-btn-py-sm) var(--cn-btn-px-sm)',
       gap: 'var(--cn-btn-gap-sm)',
-      '@apply font-caption-none-normal': ''
+      '@apply font-caption-tight-normal': ''
     },
     '&:where(.button-lg)': {
       height: 'var(--cn-btn-size-lg)',

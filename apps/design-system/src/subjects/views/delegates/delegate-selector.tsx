@@ -50,7 +50,7 @@ export const DelegateSelector = () => {
             <FormSeparator className="w-full" />
             <div className="flex">
               Haven't installed a delegate yet?&nbsp;
-              <StyledLink className="flex flex-row items-center" variant="accent" to="#">
+              <StyledLink className="flex flex-row items-center ml-1" variant="accent" to="#">
                 Install delegate<Icon name="attachment-link" className="ml-1" size={12}></Icon>
               </StyledLink>
             </div>

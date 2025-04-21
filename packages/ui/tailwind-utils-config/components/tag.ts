@@ -37,6 +37,8 @@ function createTagVariantStyles() {
       style[`backgroundColor`] = `var(--cn-set-${theme}-${variant}-bg)`
       style[`color`] = `var(--cn-set-${theme}-${variant}-text)`
       style[`borderColor`] = `var(--cn-set-${theme}-${variant}-border)`
+
+      styles[`&:where(.tag-${variant}.tag-${theme})`] = style
     })
   })
 

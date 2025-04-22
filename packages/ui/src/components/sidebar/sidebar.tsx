@@ -508,7 +508,7 @@ const SidebarMenuItemText = forwardRef<
         className={cn(
           // 14px - icon size, 8px - gap. This makes truncate work well
           'max-w-[calc(100%-14px-8px)] w-full truncate',
-          'font-medium text-sidebar-foreground-2 whitespace-nowrap group-hover/menu-item:text-sidebar-foreground-1 z-10 text-left transition-[opacity,max-width,margin] duration-100 ease-in-out group-data-[state=collapsed]:duration-150 group-data-[state=collapsed]:ease-linear group-data-[state=collapsed]:opacity-0 group-data-[state=collapsed]:max-w-0 group-data-[state=collapsed]:ml-0',
+          'font-normal text-sidebar-foreground-2 whitespace-nowrap group-hover/menu-item:text-sidebar-foreground-1 z-10 text-left transition-[opacity,max-width,margin] duration-100 ease-in-out group-data-[state=collapsed]:duration-150 group-data-[state=collapsed]:ease-linear group-data-[state=collapsed]:opacity-0 group-data-[state=collapsed]:max-w-0 group-data-[state=collapsed]:ml-0',
           { 'text-sidebar-foreground-1': active }
         )}
       >

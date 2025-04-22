@@ -1,28 +1,18 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import { EntityIntent, TranslationStore } from '@/views'
 import { Alert } from '@components/alert'
 import { Button } from '@components/button'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
 import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
-import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 
-import {
-  getDefaultValuesFromFormDefinition,
-  getTransformers,
-  InputFactory,
-  inputTransformValues,
-  RenderForm,
-  RootForm,
-  useZodValidationResolver
-} from '@harnessio/forms'
+import { InputFactory, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
 
-import { AnySecretDefinition, onSubmitSecretProps, SecretEntity } from './types'
+import { AnySecretDefinition, onSubmitSecretProps } from './types'
 
 interface SecretEntityFormProps {
-  secret: SecretEntity
   onFormSubmit?: (values: onSubmitSecretProps) => void
-  getSecretDefinition?: (type: string) => AnySecretDefinition | undefined
+  getSecretDefinition?: () => AnySecretDefinition | undefined
   onBack?: () => void
   useTranslationStore: () => TranslationStore
   inputComponentFactory: InputFactory
@@ -32,7 +22,6 @@ interface SecretEntityFormProps {
 
 export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
   const {
-    secret,
     apiError = null,
     onFormSubmit,
     getSecretDefinition,
@@ -46,18 +35,12 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
   const onSubmit = (data: onSubmitSecretProps) => {
     onFormSubmit?.(data)
   }
-  const defaultSecretValues = useMemo(() => {
-    const secretDefinition = getSecretDefinition?.(secret.type)
-    if (!secretDefinition) return {}
-    return getDefaultValuesFromFormDefinition(secretDefinition.formDefinition)
-  }, [secret.type, getSecretDefinition])
 
   const formDefinition = useMemo(() => {
-    const secretDefinition = getSecretDefinition?.(secret.type)
+    const secretDefinition = getSecretDefinition?.()
     if (secretDefinition) {
       const formDef = {
         ...secretDefinition.formDefinition
-        // inputs: addNameInput(secretDefinition.formDefinition.inputs, 'name')
       }
 
       formDef.inputs = formDef.inputs.map(input => {
@@ -72,7 +55,7 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
       return formDef
     }
     return { inputs: [] }
-  }, [secret.type, getSecretDefinition])
+  }, [getSecretDefinition])
 
   const resolver = useZodValidationResolver(formDefinition, {
     validationConfig: {
@@ -81,42 +64,13 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
     }
   })
 
-  //   useEffect(() => {
-  //     if (intent === EntityIntent.EDIT && connector?.spec) {
-  //       const definition = getConnectorDefinition(connector.type)
-  //       if (definition) {
-  //         const transformers = getTransformers(definition?.formDefinition)
-  //         const connectorValues = inputTransformValues(
-  //           {
-  //             ...connector?.spec,
-  //             name: connector.name,
-  //             type: connector.type,
-  //             ...(connector?.description && { description: connector?.description }),
-  //             ...(connector?.tags && { tags: connector?.tags })
-  //           },
-  //           transformers
-  //         )
-  //         setConnectorEditValues(connectorValues)
-  //       }
-  //     }
-  //   }, [
-  //     intent,
-  //     connector.name,
-  //     connector?.spec,
-  //     connector.type,
-  //     getConnectorDefinition,
-  //     connector?.description,
-  //     connector?.tags
-  //   ])
-
   return (
     <RootForm
       autoFocusPath={formDefinition.inputs[0]?.path}
-      defaultValues={defaultSecretValues}
       resolver={resolver}
       mode="onSubmit"
       onSubmit={values => {
-        onSubmit({ values, secret, intent })
+        onSubmit({ values, intent })
       }}
       validateAfterFirstSubmit={true}
     >
@@ -125,9 +79,7 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
           <EntityFormSectionLayout.Root>
             {intent === EntityIntent.CREATE && (
               <EntityFormSectionLayout.Header className="px-0">
-                <EntityFormSectionLayout.Title className="!my-0">
-                  Connect to {secret.name}
-                </EntityFormSectionLayout.Title>
+                <EntityFormSectionLayout.Title className="!my-0">Create a Secret</EntityFormSectionLayout.Title>
               </EntityFormSectionLayout.Header>
             )}
             <EntityFormSectionLayout.Form className="px-0">

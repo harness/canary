@@ -61,14 +61,5 @@ export type AnySecretDefinition<T = string> = {
 
 export interface onSubmitSecretProps {
   values: FieldValues
-  secret: SecretEntity
   intent: EntityIntent
-}
-
-export type SecretEntity = {
-  type: string
-  name?: string
-  value?: string
-  description?: string
-  tags?: Record<string, string>
 }

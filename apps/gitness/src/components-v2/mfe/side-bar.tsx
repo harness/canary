@@ -6,6 +6,7 @@ import { HarnessLogo, Icon, IconProps, Sidebar, SidebarSearchLegacy, User, useSi
 import { useRouterContext } from '@harnessio/ui/context'
 
 import { useAppContext } from '../../framework/context/AppContext'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 const SideBarToggleMenuItem: FC = () => {
@@ -33,6 +34,9 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currentUser } = useAppContext()
   const { t } = useTranslationStore()
   const { NavLink } = useRouterContext()
+  const { routes } = useMFEContext()
+  // needs baseUrl as prefix
+  const projectSettingsUrl = `/${routes?.toProjectSettings?.() || ''}`
 
   const renderMenuItem = ({ to, text, iconName }: { to: string; text: string; iconName: IconProps['name'] }) => (
     <Sidebar.MenuItem>
@@ -64,7 +68,11 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
           <Sidebar.Group className="border-t">
             <Sidebar.GroupContent>
               <Sidebar.Menu>
-                {renderMenuItem({ to: '/project-settings', text: 'Project Settings', iconName: 'settings-1' })}
+                {renderMenuItem({
+                  to: projectSettingsUrl,
+                  text: 'Project Settings',
+                  iconName: 'settings-1'
+                })}
               </Sidebar.Menu>
             </Sidebar.GroupContent>
           </Sidebar.Group>

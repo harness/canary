@@ -12,7 +12,10 @@ const metadataInputs: IInputConfigWithConfigInterface[] = [
   {
     inputType: 'text',
     path: `secret.tags`,
-    label: 'Tags'
+    label: 'Tags',
+    inputConfig: {
+      tooltip: 'Separate labels with commas or press Enter. Use key:value for objects.'
+    }
   }
 ]
 
@@ -25,12 +28,20 @@ const inputs: IInputConfigWithConfigInterface[] = [
   {
     inputType: 'text',
     path: `secret.name`,
-    label: 'Secret Name'
+    label: 'Name'
+  },
+  {
+    inputType: 'text',
+    label: 'ID',
+    path: `secret.identifier`,
+    inputConfig: {
+      tooltip: 'When you create an entity, Harness assigns a unique ID. You can change it until the entity is saved.'
+    }
   },
   {
     inputType: 'text',
     path: `secret.spec.value`,
-    label: 'Secret Value'
+    label: 'Enter the Secret Text'
   },
   {
     inputType: 'group',

@@ -77,11 +77,6 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
       {rootForm => (
         <EntityFormLayout.Root>
           <EntityFormSectionLayout.Root>
-            {intent === EntityIntent.CREATE && (
-              <EntityFormSectionLayout.Header className="px-0">
-                <EntityFormSectionLayout.Title className="!my-0">Create a Secret</EntityFormSectionLayout.Title>
-              </EntityFormSectionLayout.Header>
-            )}
             <EntityFormSectionLayout.Form className="px-0">
               <RenderForm className="space-y-4 max-w-xl" factory={inputComponentFactory} inputs={formDefinition} />
               {apiError && (

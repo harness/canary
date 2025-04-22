@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { getHarnessSecretDefinition } from '@utils/secrets/utils'
+import { secretsFormDefinition } from '@utils/secrets/secrets-form-schema'
 import { useTranslationStore } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
@@ -115,7 +115,7 @@ export const SecretsPage = ({
             useTranslationStore={useTranslationStore}
             inputComponentFactory={inputComponentFactory}
             intent={EntityIntent.CREATE}
-            getSecretDefinition={getHarnessSecretDefinition}
+            secretsFormDefinition={secretsFormDefinition}
             onFormSubmit={onSubmit}
             onBack={handleCancel}
           />

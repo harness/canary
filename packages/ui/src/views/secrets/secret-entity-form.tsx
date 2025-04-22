@@ -1,18 +1,16 @@
-import { useMemo } from 'react'
-
-import { EntityIntent, TranslationStore } from '@/views'
+import { EntityIntent, InputConfigType, TranslationStore } from '@/views'
 import { Alert } from '@components/alert'
 import { Button } from '@components/button'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
 import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
 
-import { InputFactory, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
+import { IFormDefinition, InputFactory, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
 
-import { AnySecretDefinition, onSubmitSecretProps } from './types'
+import { onSubmitSecretProps } from './types'
 
 interface SecretEntityFormProps {
   onFormSubmit?: (values: onSubmitSecretProps) => void
-  getSecretDefinition?: () => AnySecretDefinition
+  secretsFormDefinition?: IFormDefinition<InputConfigType>
   onBack?: () => void
   useTranslationStore: () => TranslationStore
   inputComponentFactory: InputFactory
@@ -24,7 +22,7 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
   const {
     apiError = null,
     onFormSubmit,
-    getSecretDefinition,
+    secretsFormDefinition,
     onBack,
     useTranslationStore,
     inputComponentFactory,
@@ -36,18 +34,7 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
     onFormSubmit?.(data)
   }
 
-  const formDefinition = useMemo(() => {
-    const secretDefinition = getSecretDefinition?.()
-    if (secretDefinition) {
-      const formDef = {
-        ...secretDefinition.formDefinition
-      }
-      return formDef
-    }
-    return { inputs: [] }
-  }, [getSecretDefinition])
-
-  const resolver = useZodValidationResolver(formDefinition, {
+  const resolver = useZodValidationResolver(secretsFormDefinition ?? { inputs: [] }, {
     validationConfig: {
       requiredMessage: 'Required input',
       requiredMessagePerInput: { ['select']: 'Selection is required' }
@@ -56,7 +43,7 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
 
   return (
     <RootForm
-      autoFocusPath={formDefinition.inputs[0]?.path}
+      autoFocusPath={secretsFormDefinition?.inputs[0]?.path}
       resolver={resolver}
       mode="onSubmit"
       onSubmit={values => {
@@ -68,7 +55,11 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
         <EntityFormLayout.Root>
           <EntityFormSectionLayout.Root>
             <EntityFormSectionLayout.Form className="px-0">
-              <RenderForm className="space-y-4 max-w-xl" factory={inputComponentFactory} inputs={formDefinition} />
+              <RenderForm
+                className="space-y-4 max-w-xl"
+                factory={inputComponentFactory}
+                inputs={secretsFormDefinition ?? { inputs: [] }}
+              />
               {apiError && (
                 <Alert.Container variant="destructive" className="my-8">
                   <Alert.Description>{apiError.toString()}</Alert.Description>

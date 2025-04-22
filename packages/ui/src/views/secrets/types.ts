@@ -51,11 +51,6 @@ export const secretsFilterTypes = {
   SecretText: 'Text',
   SecretFile: 'Encrypted file'
 }
-
-export type AnySecretDefinition = {
-  formDefinition: IFormDefinition<InputConfigType>
-}
-
 export interface onSubmitSecretProps {
   values: FieldValues
   intent: EntityIntent

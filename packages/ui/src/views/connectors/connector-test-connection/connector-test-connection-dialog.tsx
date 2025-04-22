@@ -85,7 +85,7 @@ export const ConnectorTestConnectionDialog = ({
                 <span className="text-cn-foreground-1">{apiUrl}</span>
               </div>
               {status === 'error' && (
-                <Button type="button" variant="outline">
+                <Button type="button" variant="surface" theme="muted">
                   {t('views:connectors.viewConnectorDetails', 'View Connector Details')}
                 </Button>
               )}

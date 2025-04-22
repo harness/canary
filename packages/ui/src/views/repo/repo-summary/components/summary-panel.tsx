@@ -51,7 +51,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
           <span className="truncate text-4 font-medium">{title}</span>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
-              <Button variant="ghost" size="sm_icon" aria-label="More options">
+              <Button variant="ghost" aria-label="More options">
                 <Icon name="more-dots-fill" size={12} className="text-icons-3" />
               </Button>
             </DropdownMenu.Trigger>

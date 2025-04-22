@@ -97,10 +97,10 @@ export function ConnectorsList({
                 </Table.Cell>
                 <Table.Cell className="min-w-2 content-center !p-0">
                   <Button
-                    size="xs"
+                    size="sm"
+                    iconOnly
                     variant="ghost"
                     onClick={() => onToggleFavoriteConnector(identifier, !isFavorite)}
-                    className="p-0"
                   >
                     {isFavorite ? (
                       <Icon name="star-filled" size={12} className="fill-icons-alert" />

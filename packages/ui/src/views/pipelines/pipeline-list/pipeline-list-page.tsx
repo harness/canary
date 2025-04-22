@@ -64,9 +64,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <Button variant="default" onClick={handleCreatePipeline}>
-                  Create pipeline
-                </Button>
+                <Button onClick={handleCreatePipeline}>Create pipeline</Button>
               </ListActions.Right>
             </ListActions.Root>
             <Spacer size={5} />

@@ -33,20 +33,23 @@ const StepExecutionToolbar: FC<
       </SearchBox.Root>
       <div className="flex">
         <Button
-          variant="outline"
-          size="icon"
-          className="border-cn-borders-2 rounded-r-none border-r-0"
+          variant="surface"
+          theme="muted"
+          size="sm"
+          iconOnly
+          className="rounded-r-none border-r-0 border-cn-borders-2"
           onClick={onCopy}
         >
           <Icon name="clone" className="text-icons-3 size-4" />
         </Button>
-        <Button variant="outline" size="icon" className="border-cn-borders-2 rounded-none" onClick={onEdit}>
-          <Icon name="edit-pen" className="text-icons-3 size-4" />
+        <Button variant="surface" theme="muted" size="sm" className="rounded-none border-cn-borders-2" onClick={onEdit}>
+          <Icon name="edit-pen" className="size-4 text-icons-3" />
         </Button>
         <Button
-          variant="outline"
-          size="icon"
-          className="border-cn-borders-2 rounded-l-none border-l-0"
+          variant="surface"
+          theme="muted"
+          size="sm"
+          className="rounded-l-none border-l-0 border-cn-borders-2"
           onClick={onDownload}
         >
           <Icon name="download" className="text-icons-3 size-4" />

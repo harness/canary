@@ -57,24 +57,22 @@ const SecretListPage: FC<SecretListPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main>
+    <SandboxLayout.Main className="max-w-[1042px]">
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !secrets.length && !searchQuery })}>
         <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Secrets</h1>
         <Spacer size={6} />
-        <ListActions.Root>
+        <ListActions.Root className="mb-1">
           <ListActions.Left>
             <SearchBox.Root
               width="full"
-              className="max-w-96"
+              className="max-w-80"
               value={searchInput}
               handleChange={handleInputChange}
               placeholder={t('views:search', 'Search')}
             />
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default" onClick={onCreate}>
-              {t('views:secrets.createNew', 'Create new secret')}
-            </Button>
+            <Button onClick={onCreate}>{t('views:secrets.createNew', 'New secret')}</Button>
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={4} />

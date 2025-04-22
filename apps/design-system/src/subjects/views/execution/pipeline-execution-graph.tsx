@@ -141,12 +141,16 @@ export function ApprovalStepNodeComponent({
           </Drawer.Header>
           <div className="flex justify-center gap-2">
             <Button type="submit">Approve</Button>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="soft" theme="muted">
+              Cancel
+            </Button>
           </div>
         </div>
         <Drawer.Footer>
           <Drawer.Close>
-            <Button variant="outline">Close</Button>
+            <Button variant="surface" theme="muted">
+              Close
+            </Button>
           </Drawer.Close>
         </Drawer.Footer>
       </Drawer.Content>

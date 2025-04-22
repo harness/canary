@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, Checkbox, DropdownMenu, Icon, RadioGroup, Text } from '@/components'
+import { Badge, Button, ButtonWithOptions, Checkbox, DropdownMenu, Icon, RadioGroup, Text } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
@@ -195,29 +195,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     })
   }
 
-  function renderDropdownMenuItems(items: ApprovalItem[]): JSX.Element[] {
-    return items.map(itm => (
-      <DropdownMenu.Item
-        key={itm.id}
-        disabled={isActiveUserPROwner}
-        onClick={() => {
-          submitReview?.(itm.method as PullReqReviewDecision)
-        }}
-      >
-        <RadioGroup className="flex items-start gap-2">
-          <div className="flex flex-col">
-            <Text truncate size={1} color="primary">
-              {itm.title}
-            </Text>
-          </div>
-        </RadioGroup>
-      </DropdownMenu.Item>
-    ))
-  }
-
   const commitDropdownItems = renderCommitDropdownItems(commitFilterOptions)
   const itemsToRender = getApprovalItems(approveState, approvalItems)
-  const dropdownMenuItems = renderDropdownMenuItems(itemsToRender)
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
   }
@@ -330,19 +309,32 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
 
         <div className="flex items-center gap-x-2.5">
           {commitSuggestionsBatchCount > 0 ? (
-            <Button className="gap-x-2" variant="outline" onClick={() => onCommitSuggestionsBatch()}>
+            <Button variant="surface" theme="muted" onClick={() => onCommitSuggestionsBatch()}>
               Commit suggestion
-              <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-0 text-tag-foreground-blue-1">
+              {/* TODO: Design system: Update it with info Badge component once ready */}
+              <Badge variant="counter" size="sm">
                 {commitSuggestionsBatchCount}
-              </span>
+              </Badge>
             </Button>
           ) : (
             <></>
           )}
           {!shouldHideReviewButton && currentUser && (
-            <Button
-              hidden={loading}
-              onClick={() => {
+            <ButtonWithOptions
+              id="pr-status"
+              theme={getApprovalStateTheme(approveState)}
+              disabled={isActiveUserPROwner}
+              variant="surface"
+              handleOptionChange={selectedMethod => {
+                submitReview?.(selectedMethod as PullReqReviewDecision)
+              }}
+              options={
+                itemsToRender?.map(item => ({
+                  value: item?.method,
+                  label: item?.title
+                })) || []
+              }
+              handleButtonClick={() => {
                 if (
                   approveState === PullReqReviewDecision.approve ||
                   processReviewDecision(
@@ -354,24 +346,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   submitReview?.('approved' as PullReqReviewDecision)
                 }
               }}
-              disabled={isActiveUserPROwner}
-              title={isActiveUserPROwner ? 'Self-approval of pull requests is not permitted.' : undefined}
-              variant="split"
-              size="md_split"
-              theme={getApprovalStateTheme(approveState) as ButtonEnum}
-              dropdown={
-                <DropdownMenu.Root>
-                  <DropdownMenu.Trigger insideSplitButton>
-                    <Icon name="chevron-down" size={11} className="chevron-down" />
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Content align="end" className="mt-1">
-                    <DropdownMenu.Group>{dropdownMenuItems}</DropdownMenu.Group>
-                  </DropdownMenu.Content>
-                </DropdownMenu.Root>
-              }
             >
               {approveState === PullReqReviewDecision.approve ? approvalItems[0].title : getApprovalState(approveState)}
-            </Button>
+            </ButtonWithOptions>
           )}
         </div>
       </div>

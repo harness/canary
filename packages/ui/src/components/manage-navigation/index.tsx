@@ -166,9 +166,9 @@ export const ManageNavigation = ({
                                 <Text className="w-full text-left text-[inherit]">{item.title}</Text>
                               </Button>
                               <Button
-                                className="absolute right-1 top-0.5 z-20 text-icons-4 hover:text-icons-2"
-                                size="sm_icon"
-                                variant="custom"
+                                className="absolute right-1 top-0.5 z-20"
+                                size="sm"
+                                variant="ghost"
                                 onClick={() => removeFromPinnedItems(item)}
                               >
                                 <Icon className="w-3.5" name="x-mark" size={14} />
@@ -188,7 +188,7 @@ export const ManageNavigation = ({
                   <Text className="inline-block leading-none text-cn-foreground-3" size={1}>
                     Recent
                   </Text>
-                  <Button className="-mr-1.5" variant="link_accent" size="xs" onClick={handleClearRecent}>
+                  <Button variant="link" size="sm" onClick={handleClearRecent}>
                     Clear all
                   </Button>
                 </div>
@@ -200,9 +200,9 @@ export const ManageNavigation = ({
                         <Text className="w-full text-left text-cn-foreground-1">{item.title}</Text>
                       </div>
                       <Button
-                        className="absolute -right-2 top-0.5 text-icons-4 hover:text-icons-2"
-                        size="sm_icon"
-                        variant="custom"
+                        className="absolute -right-2 top-0.5 text-icons-4"
+                        size="sm"
+                        variant="ghost"
                         onClick={() => addToPinnedItems(item)}
                       >
                         <Icon name="pin" size={14} />
@@ -218,7 +218,7 @@ export const ManageNavigation = ({
           <ButtonGroup>
             {!submitted ? (
               <>
-                <Button variant="outline" onClick={handleCancel} disabled={isSubmitting}>
+                <Button variant="surface" theme="muted" onClick={handleCancel} disabled={isSubmitting}>
                   Cancel
                 </Button>
                 <Button type="button" theme="primary" onClick={onSubmit} disabled={isSubmitting}>

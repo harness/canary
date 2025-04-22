@@ -6,14 +6,10 @@ interface BranchBadgeProps {
   className?: string
 }
 
-// TODO: CDS fix this
-
 const PullRequestBranchBadge: React.FC<BranchBadgeProps> = ({ branchName, onClick, className = '' }) => {
   return (
-    <Button asChild onClick={onClick} className={`cursor-pointer ${className}`}>
-      <Badge variant="soft" size="sm">
-        <Icon name="branch" size={12} className="mr-1 text-icons-9" /> {branchName}
-      </Badge>
+    <Button variant="soft" size="sm" theme="muted" onClick={onClick} className={`cursor-pointer ${className}`}>
+      <Icon name="branch" size={12} className="mr-1" /> {branchName}
     </Button>
   )
 }

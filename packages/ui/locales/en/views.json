@@ -303,9 +303,9 @@
   },
   "common": {
     "details": "Details",
+    "manager": "Manager",
     "lastActivity": "Last Activity",
-    "created": "Created",
-    "manager": "Manager"
+    "created": "Created"
   },
   "execution": {
     "summary": "Summary",

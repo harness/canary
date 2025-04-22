@@ -198,6 +198,7 @@ import SparksGradientDark from '../../icons/sparks-gradient-dark.svg'
 import SparksGradientLight from '../../icons/sparks-gradient-light.svg'
 import SparksGradient from '../../icons/sparks-gradient.svg'
 import Sparks from '../../icons/sparks.svg'
+import Spinner from '../../icons/spinner.svg'
 import SquareDashed from '../../icons/square-dashed.svg'
 import SshKey from '../../icons/ssh-key.svg'
 import Stack from '../../icons/stack-icon.svg'
@@ -456,5 +457,6 @@ export const IconNameMap = {
   refresh: Refresh,
   'node-icon': NodeIcon,
   'golang-icon': GolangIcon,
-  'attachment-link': AttachmentLink
+  'attachment-link': AttachmentLink,
+  spinner: Spinner
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

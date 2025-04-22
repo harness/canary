@@ -105,7 +105,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             </span>
             {!isLoading && !isShowRulesContent && (
               <NavLink className="ml-auto" to="../rules/create">
-                <Button variant="outline">{t('views:repos.createRuleButton', 'Create rule')}</Button>
+                <Button variant="surface" theme="muted">
+                  {t('views:repos.createRuleButton', 'Create rule')}
+                </Button>
               </NavLink>
             )}
           </div>
@@ -127,7 +129,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               </ListActions.Left>
               <ListActions.Right>
                 <NavLink to="../rules/create">
-                  <Button variant={projectScope ? 'default' : 'outline'}>
+                  <Button variant={projectScope ? 'solid' : 'surface'} theme={projectScope ? 'primary' : 'muted'}>
                     {t('views:repos.newRule', 'New branch rule')}
                   </Button>
                 </NavLink>

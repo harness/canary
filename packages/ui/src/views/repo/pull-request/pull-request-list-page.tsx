@@ -243,7 +243,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                   options={SORT_OPTIONS}
                   t={t}
                 />
-                <Button variant="default" asChild>
+                <Button asChild>
                   <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
                 </Button>
               </ListActions.Right>

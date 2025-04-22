@@ -36,6 +36,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
         <Dialog.Title className="text-5 font-medium">Language</Dialog.Title>
         <div className="mt-1 flex flex-col gap-3">
           {supportedLanguages.map(lang => (
+            // TODO: Design system: Update language selector to Button component
             <button
               key={lang.code}
               className="group relative flex cursor-pointer items-center justify-between rounded-md px-0 focus:ring-0 focus-visible:outline-none"

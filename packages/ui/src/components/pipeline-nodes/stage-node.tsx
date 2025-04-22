@@ -68,8 +68,10 @@ export function StageNode(props: StageNodeProps) {
 
       {!collapsed && isEmpty && (
         <Button
-          className="self-center rounded-full p-3"
-          variant="outline"
+          rounded
+          className="self-center p-3"
+          variant="surface"
+          theme="muted"
           size="lg"
           onMouseDown={e => e.stopPropagation()}
           onClick={onAddInClick}

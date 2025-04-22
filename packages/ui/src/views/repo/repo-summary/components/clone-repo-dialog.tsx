@@ -89,7 +89,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 </span>
               </div>
               <div className="mt-4 flex items-center">
-                <Button variant="default" type="button" onClick={handleCreateToken} className="w-full px-2">
+                <Button onClick={handleCreateToken} className="w-full px-2">
                   {t('views:repos.cloneCredential', 'Generate Clone Credential')}
                 </Button>
               </div>

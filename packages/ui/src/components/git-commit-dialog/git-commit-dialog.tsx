@@ -245,7 +245,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
         <Dialog.Footer>
           <ButtonGroup>
             <>
-              <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
+              <Button variant="surface" theme="muted" onClick={onClose} disabled={isSubmitting}>
                 Cancel
               </Button>
               {!bypassable ? (
@@ -253,7 +253,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                   {isSubmitting ? 'Committing...' : 'Commit changes'}
                 </Button>
               ) : (
-                <Button onClick={handleSubmit(onSubmit)} variant="destructive" type="submit">
+                <Button onClick={handleSubmit(onSubmit)} variant="surface" theme="danger" type="submit">
                   {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH
                     ? 'Bypass rules and commit via new branch'
                     : 'Bypass rules and commit directly'}

@@ -62,7 +62,7 @@ const ViewTrigger: FC<ViewTriggerProps> = ({
               <div className="flex items-center justify-between">
                 <span className="text-2 leading-none text-cn-foreground-3">Saved views</span>
                 <button
-                  className="text-2 text-cn-foreground-accent transition-colors duration-200 hover:text-cn-foreground-1"
+                  className="text-13 text-cn-foreground-accent transition-colors duration-200 hover:text-cn-foreground-1"
                   onClick={handleManageClick}
                 >
                   Manage

@@ -40,14 +40,15 @@ export function SidebarSearch(props: SidebarSearchProps) {
           tabIndex={-1}
           readOnly
         />
-        <div className="absolute left-px top-px z-10 flex h-[calc(100%-2px)] w-[30px] items-center justify-center rounded bg-cn-background-0 text-sidebar-foreground-4 hover:text-sidebar-icon-1">
-          <Icon name="search" size={12} className="ml-0.5" />
-        </div>
+
+        <Button variant="ghost" iconOnly size="sm" type="button">
+          <Icon name="search" size={12} />
+        </Button>
         <Button
-          variant="custom"
-          size="icon"
+          variant="ghost"
+          size="sm"
           type="button"
-          className="absolute right-1.5 top-1/2 z-[5px] h-5 -translate-y-1/2 select-none rounded-sm border border-sidebar-border-5 bg-cn-background-3 p-0 px-1.5 text-sidebar-foreground-3 opacity-100 transition-opacity group-data-[state=collapsed]:opacity-0"
+          className="absolute right-1.5 top-1/2 z-[5px] h-5 -translate-y-1/2 select-none rounded-sm border p-0 px-1.5 opacity-100 transition-opacity group-data-[state=collapsed]:opacity-0"
           tabIndex={-1}
         >
           <span className="size-full text-1">⌘K</span>

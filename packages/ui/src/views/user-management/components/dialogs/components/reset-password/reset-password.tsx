@@ -68,7 +68,7 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
 
         <Dialog.Footer>
           <ButtonGroup className="justify-end">
-            <Button type="button" variant="outline" onClick={onClose} disabled={isUpdatingUser}>
+            <Button type="button" variant="surface" theme="muted" onClick={onClose} disabled={isUpdatingUser}>
               {generatePassword ? t('views:userManagement.close', 'Close') : t('views:userManagement.cancel', 'Cancel')}
             </Button>
             {!generatePassword && (

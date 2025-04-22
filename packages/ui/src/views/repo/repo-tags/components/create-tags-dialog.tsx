@@ -121,7 +121,6 @@ export function CreateTagDialog({
                 }}
                 searchQuery={branchQuery}
                 setSearchQuery={setBranchQuery}
-                buttonSize="md"
                 dynamicWidth
               />
             </ControlGroup>
@@ -148,7 +147,8 @@ export function CreateTagDialog({
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button
               type="button"
-              variant="outline"
+              variant="surface"
+              theme="muted"
               onClick={() => {
                 clearErrors()
                 reset({

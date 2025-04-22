@@ -3,7 +3,7 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
-import { badgeStyles, dialogStyles } from './tailwind-utils-config/components'
+import { badgeStyles, buttonStyles, dialogStyles } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
 export default {
@@ -53,13 +53,13 @@ export default {
           accent: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           success: 'lch(from var(--cn-set-green-solid-bg) l c h / <alpha-value>)',
           warning: 'lch(from var(--cn-set-yellow-solid-bg) l c h / <alpha-value>)',
+          backdrop: 'var(--cn-comp-dialog-backdrop)',
 
           // Remove
           solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
           softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           hover: 'var(--cn-state-hover)',
           selected: 'lch(from var(--cn-state-selected) l c h / <alpha-value>)',
-          backdrop: 'lch(from var(--cn-comp-dialog-backdrop) l c h / <alpha-value>)',
           primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
@@ -83,32 +83,6 @@ export default {
           brand: 'lch(from var(--cn-set-brand-solid-border) l c h / <alpha-value>)',
           solidred: 'var(--cn-set-red-solid-border)',
           risk: 'var(--cn-icon-risk)'
-        },
-        button: {
-          foreground: {
-            'disabled-1': 'hsl(var(--canary-button-foreground-disabled-01))',
-            'danger-1': 'hsl(var(--canary-button-foreground-danger-01))',
-            'success-1': 'hsl(var(--canary-button-foreground-success-01))',
-            'accent-1': 'hsl(var(--canary-button-foreground-accent-1))',
-            'accent-2': 'hsl(var(--canary-button-foreground-accent-2))'
-          },
-          background: {
-            'disabled-1': 'hsla(var(--canary-button-background-disabled-01))',
-            'danger-1': 'hsla(var(--canary-button-background-danger-01))',
-            'danger-2': 'hsla(var(--canary-button-background-danger-02))',
-            'danger-3': 'hsla(var(--canary-button-background-danger-03))',
-            'success-1': 'hsla(var(--canary-button-background-success-01))',
-            'success-2': 'hsla(var(--canary-button-background-success-02))',
-            'accent-1': 'hsl(var(--canary-button-background-accent-1))',
-            'accent-2': 'hsl(var(--canary-button-background-accent-2))',
-            'accent-3': 'hsl(var(--canary-button-background-accent-3))'
-          },
-          border: {
-            'disabled-1': 'hsla(var(--canary-button-border-disabled-01))',
-            'danger-1': 'hsla(var(--canary-button-border-danger-01))',
-            'success-1': 'hsla(var(--canary-button-border-success-01))',
-            'accent-1': 'hsl(var(--canary-button-border-accent-1))'
-          }
         },
         tag: {
           border: {
@@ -429,6 +403,7 @@ export default {
     }),
     plugin(({ addComponents }) => {
       addComponents(badgeStyles)
+      addComponents(buttonStyles)
       addComponents(dialogStyles)
     }),
     tailwindcssAnimate,
@@ -510,10 +485,6 @@ export default {
 
     { pattern: /^text-icons-/ },
     { pattern: /^bg-icons-/ },
-    // button classes
-    { pattern: /^bg-button-background-/ },
-    { pattern: /^text-button-foreground-/ },
-    { pattern: /^border-button-border-/ },
     // tags classes
     { pattern: /^bg-tag-background-/ },
     { pattern: /^text-tag-foreground-/ },
@@ -536,10 +507,6 @@ export default {
     { pattern: /^hover:bg-background-/ },
     { pattern: /^hover:text-icons-/ },
     { pattern: /^hover:bg-icons-/ },
-    // button classes
-    { pattern: /^hover:bg-button-background-/ },
-    { pattern: /^hover:text-button-foreground-/ },
-    { pattern: /^hover:border-button-border-/ },
     // tags classes
     { pattern: /^hover:bg-tag-background-/ },
     { pattern: /^hover:text-tag-foreground-/ },

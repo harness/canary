@@ -222,12 +222,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
                 />
               ))}
 
-              <Button
-                className="mt-3.5 h-auto gap-x-1 self-start p-0"
-                variant="link_accent"
-                size="md_split"
-                onClick={handleAddValue}
-              >
+              <Button className="mt-3.5 h-auto gap-x-1 self-start" variant="link" onClick={handleAddValue}>
                 <Icon name="bold-plus" size={10} />
                 {t('views:labelData.form.addValue', 'Add a value')}
               </Button>
@@ -275,7 +270,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               <Button type="submit" disabled={!isValid || isSaving}>
                 {isSaving ? t('views:repos.saving', 'Saving…') : t('views:repos.save', 'Save')}
               </Button>
-              <Button type="reset" variant="outline" onClick={onFormCancel}>
+              <Button type="reset" variant="surface" theme="muted" onClick={onFormCancel}>
                 {t('views:repos.cancel', 'Cancel')}
               </Button>
             </ButtonGroup>

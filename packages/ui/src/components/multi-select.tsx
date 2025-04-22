@@ -120,17 +120,14 @@ export const MultiSelect = <T = unknown,>({
           {selectedItems.map(it => (
             <Button
               key={it.id}
-              className="group flex h-6 items-center gap-x-1.5 bg-cn-background-8 px-2.5 text-cn-foreground-1"
+              size="sm"
               type="button"
-              variant="custom"
+              variant="surface"
+              theme="muted"
               onClick={() => handleChange(it)}
             >
               {it.label}
-              <Icon
-                className="rotate-45 text-icons-1 transition-colors group-hover:text-cn-foreground-1"
-                name="plus"
-                size={10}
-              />
+              <Icon name="close" size={10} />
             </Button>
           ))}
         </div>

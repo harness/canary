@@ -1,4 +1,4 @@
-import { Avatar, DropdownMenu, Icon, SearchBox } from '@/components'
+import { Avatar, Button, DropdownMenu, Icon, SearchBox } from '@/components'
 import { PrincipalType } from '@/types'
 import { TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
@@ -36,12 +36,10 @@ const ReviewersHeader = ({
     <div className="flex items-center justify-between">
       <span className="text-2 font-medium text-cn-foreground-1">{t('views:pullRequests.reviewers')}</span>
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
-          <Icon
-            className="text-icons-1 transition-colors duration-200 group-hover:text-icons-2"
-            name="vertical-ellipsis"
-            size={12}
-          />
+        <DropdownMenu.Trigger asChild>
+          <Button iconOnly variant="ghost" size="sm">
+            <Icon name="vertical-ellipsis" size={12} />
+          </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-[280px] p-0" align="end">
           <div

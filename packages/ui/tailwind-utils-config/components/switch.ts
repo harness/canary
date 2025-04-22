@@ -75,10 +75,7 @@ export default {
     '&:where([disabled])': {
       color: 'var(--cn-state-disabled-text)'
     },
-    // truncate
-    overflow: 'hidden',
-    'text-overflow': 'ellipsis',
-    'white-space': 'nowrap'
+    '@apply truncate': ''
   },
 
   '.switch-description': {
@@ -87,9 +84,6 @@ export default {
     '&:where([disabled])': {
       color: 'var(--cn-state-disabled-text)'
     },
-    // truncate
-    overflow: 'hidden',
-    'text-overflow': 'ellipsis',
-    'white-space': 'nowrap'
+    '@apply truncate': ''
   }
 }

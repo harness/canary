@@ -92,6 +92,8 @@ interface AppMFEProps {
     getCurrentUser: Promise<Unknown>
   }>
   routes: Partial<{
+    toAccountSettings: Unknown
+    toOrgSettings: Unknown
     toProjectSettings: Unknown
   }>
 }

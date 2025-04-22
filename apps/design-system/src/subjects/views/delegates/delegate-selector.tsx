@@ -108,7 +108,6 @@ export const DelegateSelector = () => {
 
   return (
     <div className="p-5">
-      {/* ----------  INPUT A (any allowed)  ---------- */}
       <DelegateSelectorInput
         placeholder={<StyledLink to="#"> select a delegate</StyledLink>}
         value={renderSelectedValue(typeA, tagsA)}
@@ -122,7 +121,6 @@ export const DelegateSelector = () => {
 
       <DelegateSelectorDrawer open={openA} setOpen={setOpenA} preSelectedTags={tagsA} onSubmit={handleSubmitA} />
 
-      {/* ----------  INPUT B (any disabled) ---------- */}
       <div className="pt-10">
         <DelegateSelectorInput
           placeholder={<StyledLink to="#">select a delegate (any disabled)</StyledLink>}

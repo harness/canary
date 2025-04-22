@@ -14,7 +14,7 @@ const ToastViewport = forwardRef<
   <ToastPrimitives.Viewport
     ref={ref}
     className={cn(
-      'fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 gap-y-2 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[427px]',
+      'fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse gap-y-2 sm:bottom-14 sm:right-14 sm:top-auto sm:flex-col md:max-w-[420px]',
       className
     )}
     {...props}
@@ -23,7 +23,7 @@ const ToastViewport = forwardRef<
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName
 
 const toastVariants = cva(
-  'pointer-events-auto relative flex h-12 w-full items-center justify-between overflow-hidden rounded border py-2 pl-3.5 pr-2 shadow-lg transition-all',
+  'pointer-events-auto relative flex min-h-11 w-full items-center justify-between overflow-hidden rounded border py-3 pl-3.5 pr-11 shadow-lg transition-all',
   {
     variants: {
       variant: {
@@ -84,7 +84,11 @@ const ToastTitle = forwardRef<
   ElementRef<typeof ToastPrimitives.Title>,
   ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Title ref={ref} className={cn('text-sm leading-tight text-cn-foreground-1', className)} {...props} />
+  <ToastPrimitives.Title
+    ref={ref}
+    className={cn('text-sm leading-snug text-cn-foreground-1 font-medium', className)}
+    {...props}
+  />
 ))
 ToastTitle.displayName = ToastPrimitives.Title.displayName
 
@@ -94,7 +98,7 @@ const ToastDescription = forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Description
     ref={ref}
-    className={cn('text-sm leading-tight text-cn-foreground-1', className)}
+    className={cn('text-sm leading-snug text-cn-foreground-1', className)}
     {...props}
   />
 ))

@@ -79,6 +79,14 @@ export default function ReposListPage() {
   // }, [repoData])
 
   useEffect(() => {
+    toast({
+      title: `Unable to create feature flag because of an OPA policy violation`,
+      description:
+        'We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies '
+    })
+  }, [])
+
+  useEffect(() => {
     if (importRepoIdentifier && !importToastId) {
       const { id } = toast({
         title: `Import in progress`,

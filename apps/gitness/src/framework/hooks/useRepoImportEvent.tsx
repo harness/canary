@@ -33,7 +33,7 @@ export const useRepoImportEvents = () => {
             {importRepoIdentifier}
           </Link>
         ),
-        action: null,
+        action: undefined,
         duration: 5000,
         variant: 'success'
       })
@@ -49,7 +49,7 @@ export const useRepoImportEvents = () => {
       id: importToastId ?? '',
       title: 'Import failed',
       variant: 'failed',
-      action: null
+      action: undefined
     })
   }, [importToastId])
   const events = useMemo(() => [SSEEvent.REPO_IMPORTED], [])

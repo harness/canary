@@ -84,32 +84,6 @@ export default {
           solidred: 'var(--cn-set-red-solid-border)',
           risk: 'var(--cn-icon-risk)'
         },
-        button: {
-          foreground: {
-            'disabled-1': 'hsl(var(--canary-button-foreground-disabled-01))',
-            'danger-1': 'hsl(var(--canary-button-foreground-danger-01))',
-            'success-1': 'hsl(var(--canary-button-foreground-success-01))',
-            'accent-1': 'hsl(var(--canary-button-foreground-accent-1))',
-            'accent-2': 'hsl(var(--canary-button-foreground-accent-2))'
-          },
-          background: {
-            'disabled-1': 'hsla(var(--canary-button-background-disabled-01))',
-            'danger-1': 'hsla(var(--canary-button-background-danger-01))',
-            'danger-2': 'hsla(var(--canary-button-background-danger-02))',
-            'danger-3': 'hsla(var(--canary-button-background-danger-03))',
-            'success-1': 'hsla(var(--canary-button-background-success-01))',
-            'success-2': 'hsla(var(--canary-button-background-success-02))',
-            'accent-1': 'hsl(var(--canary-button-background-accent-1))',
-            'accent-2': 'hsl(var(--canary-button-background-accent-2))',
-            'accent-3': 'hsl(var(--canary-button-background-accent-3))'
-          },
-          border: {
-            'disabled-1': 'hsla(var(--canary-button-border-disabled-01))',
-            'danger-1': 'hsla(var(--canary-button-border-danger-01))',
-            'success-1': 'hsla(var(--canary-button-border-success-01))',
-            'accent-1': 'hsl(var(--canary-button-border-accent-1))'
-          }
-        },
         tag: {
           border: {
             gray: {
@@ -511,10 +485,6 @@ export default {
 
     { pattern: /^text-icons-/ },
     { pattern: /^bg-icons-/ },
-    // button classes
-    { pattern: /^bg-button-background-/ },
-    { pattern: /^text-button-foreground-/ },
-    { pattern: /^border-button-border-/ },
     // tags classes
     { pattern: /^bg-tag-background-/ },
     { pattern: /^text-tag-foreground-/ },
@@ -537,10 +507,6 @@ export default {
     { pattern: /^hover:bg-background-/ },
     { pattern: /^hover:text-icons-/ },
     { pattern: /^hover:bg-icons-/ },
-    // button classes
-    { pattern: /^hover:bg-button-background-/ },
-    { pattern: /^hover:text-button-foreground-/ },
-    { pattern: /^hover:border-button-border-/ },
     // tags classes
     { pattern: /^hover:bg-tag-background-/ },
     { pattern: /^hover:text-tag-foreground-/ },

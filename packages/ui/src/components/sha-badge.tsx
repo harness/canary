@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 
 import { Button, ButtonSizes } from '@/components'
-import { cn } from '@utils/cn'
 
 interface RootProps {
   children: ReactNode

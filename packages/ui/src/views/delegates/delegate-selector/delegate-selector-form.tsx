@@ -60,6 +60,7 @@ export interface DelegateSelectorFormProps {
   isDelegateSelected: (selectors: string[], tags: string[]) => boolean
   getMatchedDelegatesCount: (delegates: DelegateItem[], tags: string[]) => number
   preSelectedTags?: string[]
+  disableAnyDelegate?: boolean
 }
 
 export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Element => {
@@ -73,7 +74,8 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
     isLoading,
     isDelegateSelected,
     getMatchedDelegatesCount,
-    preSelectedTags
+    preSelectedTags,
+    disableAnyDelegate
   } = props
   const { t } = useTranslationStore()
   const [searchTag, setSearchTag] = useState('')
@@ -89,7 +91,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
     resolver: zodResolver(delegateSelectorFormSchema),
     mode: 'onChange',
     defaultValues: {
-      type: preSelectedTags?.length ? DelegateSelectionTypes.TAGS : DelegateSelectionTypes.ANY,
+      type: preSelectedTags?.length || disableAnyDelegate ? DelegateSelectionTypes.TAGS : DelegateSelectionTypes.ANY,
       tags: preSelectedTags?.length ? preSelectedTags.map(tag => ({ id: tag, label: tag })) : []
     }
   })
@@ -116,7 +118,8 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
       id: 'any',
       title: 'Any delegate',
       description: 'Use any available delegate',
-      value: DelegateSelectionTypes.ANY
+      value: DelegateSelectionTypes.ANY,
+      disabled: disableAnyDelegate
     },
     {
       id: 'tags',

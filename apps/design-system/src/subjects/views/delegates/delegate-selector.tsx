@@ -14,91 +14,135 @@ import {
 import mockDelegatesList from './mock-delegates-list.json'
 import { getMatchedDelegatesCount, isDelegateSelected } from './utils'
 
-export const DelegateSelector = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [selectedDelegateType, setSelectedDelegateType] = useState<DelegateSelectionTypes | null>(null)
-  const [selectedTags, setSelectedTags] = useState<string[]>([])
+const delegatesData = mockDelegatesList.map(delegate => ({
+  groupId: delegate.groupId,
+  groupName: delegate.groupName,
+  lastHeartBeat: delegate.lastHeartBeat,
+  activelyConnected: delegate.activelyConnected,
+  groupCustomSelectors: delegate.groupCustomSelectors || [],
+  groupImplicitSelectors: [...Object.keys(defaultTo(delegate.groupImplicitSelectors, {}))]
+}))
 
-  const onSubmit = (data: DelegateSelectorFormFields) => {
-    if (data.type === DelegateSelectionTypes.ANY) {
-      setSelectedDelegateType(DelegateSelectionTypes.ANY)
-      setSelectedTags([])
-    } else {
-      setSelectedDelegateType(DelegateSelectionTypes.TAGS)
-      setSelectedTags(data.tags.map(tag => tag.id))
-    }
-    setIsDrawerOpen(false)
+const mockTagsList = [
+  'pzerosanity-windows',
+  'eightfivetwoold',
+  'qa-automation',
+  'pzerosanity',
+  'self-hosted-vpc-delegate',
+  'local',
+  'viaksdcoker',
+  'myrunner-ivan',
+  'macos-arm64',
+  'west1-delegate-qa',
+  'linux-amd64',
+  'eightfivetwo',
+  'automation-eks-delegate'
+]
+
+const renderSelectedValue = (type: DelegateSelectionTypes | null, tags: string[]) =>
+  type === DelegateSelectionTypes.TAGS ? tags.join(', ') : type === DelegateSelectionTypes.ANY ? 'any delegate' : null
+
+/* ----------  DRAWER COMPONENT  -------------- */
+interface DrawerProps {
+  open: boolean
+  setOpen: (open: boolean) => void
+  preSelectedTags: string[]
+  onSubmit: (data: DelegateSelectorFormFields) => void
+  disableAnyDelegate?: boolean
+}
+
+const DelegateSelectorDrawer = ({ open, setOpen, preSelectedTags, onSubmit, disableAnyDelegate }: DrawerProps) => (
+  <Drawer.Root open={open} onOpenChange={setOpen} direction="right">
+    <Drawer.Content className="w-1/2">
+      <Drawer.Header>
+        <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Delegate selector</Drawer.Title>
+        <FormSeparator className="w-full" />
+        <div className="flex">
+          Haven&apos;t installed a delegate yet?
+          <StyledLink className="flex flex-row items-center ml-1" variant="accent" to="#">
+            Install delegate <Icon name="attachment-link" className="ml-1" size={12} />
+          </StyledLink>
+        </div>
+        <Drawer.Close onClick={() => setOpen(false)} />
+      </Drawer.Header>
+
+      <DelegateSelectorForm
+        delegates={delegatesData}
+        tagsList={mockTagsList}
+        useTranslationStore={useTranslationStore}
+        isLoading={false}
+        onFormSubmit={onSubmit}
+        onBack={() => setOpen(false)}
+        isDelegateSelected={isDelegateSelected}
+        getMatchedDelegatesCount={getMatchedDelegatesCount}
+        preSelectedTags={preSelectedTags}
+        disableAnyDelegate={disableAnyDelegate}
+      />
+    </Drawer.Content>
+  </Drawer.Root>
+)
+
+/* ----------  MAIN COMPONENT  -------------------------- */
+export const DelegateSelector = () => {
+  /* ---- FIRST (ANY allowed) ---- */
+  const [openA, setOpenA] = useState(false)
+  const [typeA, setTypeA] = useState<DelegateSelectionTypes | null>(null)
+  const [tagsA, setTagsA] = useState<string[]>([])
+
+  /* ---- SECOND (ANY disabled) --- */
+  const [openB, setOpenB] = useState(false)
+  const [typeB, setTypeB] = useState<DelegateSelectionTypes | null>(null)
+  const [tagsB, setTagsB] = useState<string[]>([])
+
+  const handleSubmitA = ({ type, tags }: DelegateSelectorFormFields) => {
+    setTypeA(type === DelegateSelectionTypes.ANY ? DelegateSelectionTypes.ANY : DelegateSelectionTypes.TAGS)
+    setTagsA(type === DelegateSelectionTypes.TAGS ? tags.map(t => t.id) : [])
+    setOpenA(false)
+  }
+
+  const handleSubmitB = ({ tags }: DelegateSelectorFormFields) => {
+    setTypeB(DelegateSelectionTypes.TAGS)
+    setTagsB(tags.map(t => t.id))
+    setOpenB(false)
   }
 
   return (
-    <>
+    <div className="p-5">
+      {/* ----------  INPUT A (any allowed)  ---------- */}
       <DelegateSelectorInput
         placeholder={<StyledLink to="#"> select a delegate</StyledLink>}
-        value={
-          selectedDelegateType === DelegateSelectionTypes.TAGS
-            ? selectedTags?.join(', ')
-            : selectedDelegateType === DelegateSelectionTypes.ANY
-              ? 'any delegate'
-              : null
-        }
+        value={renderSelectedValue(typeA, tagsA)}
         label="Delegate selector"
-        onClick={() => {
-          setIsDrawerOpen(true)
-        }}
-        onEdit={() => {
-          setIsDrawerOpen(true)
-        }}
-        onClear={() => setSelectedTags([])}
-        renderValue={(tag: string) => tag}
+        onClick={() => setOpenA(true)}
+        onEdit={() => setOpenA(true)}
+        onClear={() => setTagsA([])}
+        renderValue={tag => tag}
         className="max-w-xs mb-8"
       />
-      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
-        <Drawer.Content className="w-1/2">
-          <Drawer.Header>
-            <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Delegate selector</Drawer.Title>
-            <FormSeparator className="w-full" />
-            <div className="flex">
-              Haven&apos;t installed a delegate yet?
-              <StyledLink className="flex flex-row items-center ml-1" variant="accent" to="#">
-                Install delegate<Icon name="attachment-link" className="ml-1" size={12}></Icon>
-              </StyledLink>
-            </div>
-            <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
-          </Drawer.Header>
-          <DelegateSelectorForm
-            delegates={mockDelegatesList.map(delegate => ({
-              groupId: delegate.groupId,
-              groupName: delegate.groupName,
-              lastHeartBeat: delegate.lastHeartBeat,
-              activelyConnected: delegate.activelyConnected,
-              groupCustomSelectors: delegate.groupCustomSelectors || [],
-              groupImplicitSelectors: [...Object.keys(defaultTo(delegate.groupImplicitSelectors, {}))]
-            }))}
-            tagsList={[
-              'pzerosanity-windows',
-              'eightfivetwoold',
-              'qa-automation',
-              'pzerosanity',
-              'self-hosted-vpc-delegate',
-              'local',
-              'viaksdcoker',
-              'myrunner-ivan',
-              'macos-arm64',
-              'west1-delegate-qa',
-              'linux-amd64',
-              'eightfivetwo',
-              'automation-eks-delegate'
-            ]}
-            useTranslationStore={useTranslationStore}
-            isLoading={false}
-            onFormSubmit={onSubmit}
-            onBack={() => setIsDrawerOpen(false)}
-            isDelegateSelected={isDelegateSelected}
-            getMatchedDelegatesCount={getMatchedDelegatesCount}
-            preSelectedTags={selectedTags}
-          />
-        </Drawer.Content>
-      </Drawer.Root>
-    </>
+
+      <DelegateSelectorDrawer open={openA} setOpen={setOpenA} preSelectedTags={tagsA} onSubmit={handleSubmitA} />
+
+      {/* ----------  INPUT B (any disabled) ---------- */}
+      <div className="pt-10">
+        <DelegateSelectorInput
+          placeholder={<StyledLink to="#">select a delegate (any disabled)</StyledLink>}
+          value={renderSelectedValue(typeB, tagsB)}
+          label="Delegate selector"
+          onClick={() => setOpenB(true)}
+          onEdit={() => setOpenB(true)}
+          onClear={() => setTagsB([])}
+          renderValue={tag => tag}
+          className="max-w-xs mb-8"
+        />
+
+        <DelegateSelectorDrawer
+          open={openB}
+          setOpen={setOpenB}
+          preSelectedTags={tagsB}
+          onSubmit={handleSubmitB}
+          disableAnyDelegate
+        />
+      </div>
+    </div>
   )
 }

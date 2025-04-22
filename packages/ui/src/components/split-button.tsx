@@ -129,3 +129,5 @@ export const SplitButton = <T extends string>({
     </div>
   )
 }
+
+SplitButton.displayName = 'SplitButton'

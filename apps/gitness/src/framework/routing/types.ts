@@ -78,7 +78,8 @@ export enum RouteConstants {
   toRepoWebhookDetails = 'toRepoWebhookDetails',
   toRepoWebhookExecutions = 'toRepoWebhookExecutions',
   toRepoWebhookExecutionDetails = 'toRepoWebhookExecutionDetails',
-  toRepoWebhookCreate = 'toRepoWebhookCreate'
+  toRepoWebhookCreate = 'toRepoWebhookCreate',
+  toImportProject = 'toImportProject'
 }
 
 export interface RouteEntry {

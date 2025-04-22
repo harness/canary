@@ -36,8 +36,21 @@ export const CreateProject = () => {
   const commonProps = { isLoading, error: error?.message, onFormSubmit: handleFormSubmit, useTranslationStore }
 
   if (isAdditional) {
-    return <CreateProjectPage {...commonProps} isAdditional backLinkProps={{ to: routes.toHome() }} />
+    return (
+      <CreateProjectPage
+        {...commonProps}
+        isAdditional
+        backLinkProps={{ to: routes.toHome() }}
+        importProjectLinkProps={{ to: routes.toImportProject() }}
+      />
+    )
   }
 
-  return <CreateProjectPage {...commonProps} logoutLinkProps={{ to: routes.toLogout() }} />
+  return (
+    <CreateProjectPage
+      {...commonProps}
+      logoutLinkProps={{ to: routes.toLogout() }}
+      importProjectLinkProps={{ to: routes.toImportProject() }}
+    />
+  )
 }

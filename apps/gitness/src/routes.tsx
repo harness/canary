@@ -682,7 +682,8 @@ export const routes: CustomRouteObject[] = [
         path: 'import',
         element: <ImportProjectContainer />,
         handle: {
-          breadcrumb: () => <span>Import project</span>
+          breadcrumb: () => <span>Import project</span>,
+          routeName: RouteConstants.toImportProject
         }
       },
       {

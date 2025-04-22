@@ -11,8 +11,15 @@ export const CreateProjectView = ({ isAdditional = false }: { isAdditional?: boo
   }
 
   if (isAdditional) {
-    return <CreateProjectPage {...commonProps} isAdditional={isAdditional} backLinkProps={{ to: '/' }} />
+    return (
+      <CreateProjectPage
+        {...commonProps}
+        isAdditional={isAdditional}
+        backLinkProps={{ to: '/' }}
+        importProjectLinkProps={{ to: '/' }}
+      />
+    )
   }
 
-  return <CreateProjectPage {...commonProps} logoutLinkProps={{ to: '/' }} />
+  return <CreateProjectPage {...commonProps} logoutLinkProps={{ to: '/' }} importProjectLinkProps={{ to: '/' }} />
 }

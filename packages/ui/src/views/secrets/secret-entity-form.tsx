@@ -12,7 +12,7 @@ import { AnySecretDefinition, onSubmitSecretProps } from './types'
 
 interface SecretEntityFormProps {
   onFormSubmit?: (values: onSubmitSecretProps) => void
-  getSecretDefinition?: () => AnySecretDefinition | undefined
+  getSecretDefinition?: () => AnySecretDefinition
   onBack?: () => void
   useTranslationStore: () => TranslationStore
   inputComponentFactory: InputFactory

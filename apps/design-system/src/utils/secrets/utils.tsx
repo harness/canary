@@ -1,6 +1,8 @@
+import { AnySecretDefinition } from '@harnessio/ui/views'
+
 import { secretsFormDefinition } from './secrets-form-schema'
 
-export function getHarnessSecretDefinition(): any {
+export function getHarnessSecretDefinition(): AnySecretDefinition {
   return {
     formDefinition: {
       ...secretsFormDefinition,

@@ -52,11 +52,8 @@ export const secretsFilterTypes = {
   SecretFile: 'Encrypted file'
 }
 
-export type AnySecretDefinition<T = string> = {
-  type: T
-  name: string
+export type AnySecretDefinition = {
   formDefinition: IFormDefinition<InputConfigType>
-  icon: keyof typeof LogoNameMap
 }
 
 export interface onSubmitSecretProps {

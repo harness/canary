@@ -8,8 +8,6 @@ import { Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
   ArrayInput,
   BooleanInput,
-  CreateSecretFormFields,
-  CreateSecretPage,
   DirectionEnum,
   EntityIntent,
   GroupInput,
@@ -28,7 +26,6 @@ import {
   TextInput
 } from '@harnessio/ui/views'
 
-import { ConnectorInputExample } from '../connectors/connectors-input'
 import mockAccountsData from './mock-account-data.json'
 import mockOrgData from './mock-org-data.json'
 import mockProjectsData from './mock-project-data.json'

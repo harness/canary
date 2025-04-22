@@ -90,6 +90,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
               type: 'step',
               data: {
                 identifier: step.identifier,
+                version: step.version,
                 description: step.description
               }
             })

@@ -95,7 +95,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
     } else if (formEntity?.source === 'external') {
       setExternalLoading(true)
 
-      getTemplateFormDefinition(formEntity.data.identifier)
+      getTemplateFormDefinition(`${formEntity.data.identifier}@${formEntity.data.version}`)
         .then(templateFormDefinition => {
           return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
         })
@@ -136,7 +136,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
           stepValue = {
             ...omit(stepValue, 'template'),
             template: {
-              uses: formEntity.data.identifier,
+              uses: `${formEntity.data.identifier}@${formEntity.data.version}`,
               with: stepValue.template.with
             }
           }

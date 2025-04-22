@@ -20,6 +20,7 @@ export type FormEntityType = {
   type: 'step'
   data: {
     identifier: string
+    version?: string
     description?: string
   }
 }

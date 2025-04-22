@@ -2,7 +2,10 @@ import { FC } from 'react'
 
 import { cn } from '@/utils'
 
-export const SubHeaderWrapper: FC<{ className?: string }> = ({ children, className }) => {
+export const SubHeaderWrapper: FC<{ children?: React.ReactChildren; className?: string }> = ({
+  children,
+  className
+}) => {
   return (
     <div
       className={cn(

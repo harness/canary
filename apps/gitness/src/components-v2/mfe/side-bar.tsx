@@ -59,7 +59,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
             <Sidebar.GroupContent>
               <Sidebar.Menu>
                 {renderMenuItem({ to: '/repos', text: 'Repositories', iconName: 'repositories-gradient' })}
-                {renderMenuItem({ to: '/manage-repos', text: 'Manage Repositories', iconName: 'repositories' })}
+                {renderMenuItem({ to: '/manage-repositories', text: 'Manage Repositories', iconName: 'repositories' })}
               </Sidebar.Menu>
             </Sidebar.GroupContent>
           </Sidebar.Group>

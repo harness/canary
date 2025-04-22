@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { ButtonWithOptions, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/components'
+import { ListActions, NoData, Pagination, SearchBox, Spacer, SplitButton } from '@/components'
 import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
@@ -121,7 +121,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <ButtonWithOptions<string>
+                <SplitButton<string>
                   id="repository"
                   dropdownContentClassName="mt-0 min-w-[170px]"
                   handleButtonClick={() => navigate(toCreateRepo?.() || '')}
@@ -144,7 +144,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   ]}
                 >
                   {t('views:repos.create-repository', 'Create repository')}
-                </ButtonWithOptions>
+                </SplitButton>
               </ListActions.Right>
             </ListActions.Root>
           </>

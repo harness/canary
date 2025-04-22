@@ -7,19 +7,19 @@ import { Option } from '@components/option'
 import { RadioButton, RadioGroup } from '@components/radio'
 import { cn } from '@utils/cn'
 
-export interface ButtonWithOptionsOptionType<T extends string> {
+export interface SplitButtonOptionType<T extends string> {
   value: T
   label: string
   description?: string
 }
 
 // Base props shared by all variants
-interface ButtonWithOptionsBaseProps<T extends string> {
+interface SplitButtonBaseProps<T extends string> {
   id: string
   handleButtonClick: (e: MouseEvent) => void
   loading?: boolean
   selectedValue?: T
-  options: ButtonWithOptionsOptionType<T>[]
+  options: SplitButtonOptionType<T>[]
   handleOptionChange: (val: T) => void
   className?: string
   buttonClassName?: string
@@ -29,19 +29,19 @@ interface ButtonWithOptionsBaseProps<T extends string> {
 }
 
 // For solid variant with primary theme
-interface ButtonWithOptionsSolidProps<T extends string> extends ButtonWithOptionsBaseProps<T> {
+interface SplitButtonSolidProps<T extends string> extends SplitButtonBaseProps<T> {
   variant?: 'solid'
   theme?: 'primary'
 }
 
 // For surface variant with success or danger theme
-interface ButtonWithOptionsSurfaceProps<T extends string> extends ButtonWithOptionsBaseProps<T> {
+interface SplitButtonSurfaceProps<T extends string> extends SplitButtonBaseProps<T> {
   variant?: 'surface'
   theme?: 'success' | 'danger' | 'muted'
 }
 
 // Combined discriminated union
-export type ButtonWithOptionsProps<T extends string> = ButtonWithOptionsSolidProps<T> | ButtonWithOptionsSurfaceProps<T>
+export type SplitButtonProps<T extends string> = SplitButtonSolidProps<T> | SplitButtonSurfaceProps<T>
 
 /**
  * Button with options
@@ -52,7 +52,7 @@ export type ButtonWithOptionsProps<T extends string> = ButtonWithOptionsSolidPro
  * - variant=solid with theme=primary (default)
  * - variant=surface with theme=success|danger|muted
  */
-export const ButtonWithOptions = <T extends string>({
+export const SplitButton = <T extends string>({
   id,
   handleButtonClick,
   loading = false,
@@ -66,7 +66,7 @@ export const ButtonWithOptions = <T extends string>({
   disabled = false,
   children,
   dropdownContentClassName
-}: ButtonWithOptionsProps<T>) => {
+}: SplitButtonProps<T>) => {
   return (
     <div className={cn('flex', className)}>
       <Button

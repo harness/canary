@@ -4,14 +4,13 @@ import {
   Accordion,
   Badge,
   Button,
-  ButtonWithOptions,
   Checkbox,
   DropdownMenu,
   Icon,
   Layout,
+  SplitButton,
   StackedList,
-  type ButtonThemes,
-  type ButtonVariants
+  type ButtonThemes
 } from '@/components'
 import { useRouterContext } from '@/context'
 import {
@@ -359,7 +358,7 @@ const PullRequestPanel = ({
                   )}
 
                   {actions && !pullReqMetadata?.closed ? (
-                    <ButtonWithOptions
+                    <SplitButton
                       id="pr-type"
                       theme={buttonState.theme as Extract<ButtonThemes, 'success' | 'danger' | 'muted'>}
                       disabled={buttonState.disabled}
@@ -376,7 +375,7 @@ const PullRequestPanel = ({
                       }}
                     >
                       {actions[parseInt(mergeButtonValue)].title}
-                    </ButtonWithOptions>
+                    </SplitButton>
                   ) : (
                     <Button
                       disabled={!checkboxBypass && prPanelData.ruleViolation && !isClosed}

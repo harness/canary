@@ -1,14 +1,14 @@
 ---
-title: ButtonWithOptions
+title: SplitButton
 description: Interactive split button with dropdown options
 ---
 
-The `ButtonWithOptions` component provides a flexible UI element combining a button with a dropdown menu of options. It can be used in two different modes:
+The `SplitButton` component provides a flexible UI element combining a button with a dropdown menu of options. It can be used in two different modes:
 
 - Regular dropdown menu (default behavior)
 - Radio button selection group (when `selectedValue` is provided)
 
-> **Note:** Unlike the standard Button component, ButtonWithOptions does not support different sizes. It automatically inherits the default size from the underlying Button component.
+> **Note:** Unlike the standard Button component, SplitButton does not support different sizes. It automatically inherits the default size from the underlying Button component.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -20,7 +20,7 @@ import { DocsPage } from "@/components/docs-page";
     <h5 className="text-lg font-semibold mb-3">Allowed Combinations</h5>
     <div className="flex flex-wrap items-end gap-4">
       {/* Solid variant with Primary theme (default) */}
-      <ButtonWithOptions
+      <SplitButton
         id="solid-primary"
         variant="solid"
         theme="primary"
@@ -32,10 +32,10 @@ import { DocsPage } from "@/components/docs-page";
         handleOptionChange={() => {}}
       >
         Solid + Primary (Default)
-      </ButtonWithOptions>
+      </SplitButton>
 
       {/* Surface variant with Success theme */}
-      <ButtonWithOptions
+      <SplitButton
         id="surface-success"
         variant="surface"
         theme="success"
@@ -47,10 +47,10 @@ import { DocsPage } from "@/components/docs-page";
         handleOptionChange={() => {}}
       >
         Surface + Success
-      </ButtonWithOptions>
+      </SplitButton>
 
       {/* Surface variant with Danger theme */}
-      <ButtonWithOptions
+      <SplitButton
         id="surface-danger"
         variant="surface"
         theme="danger"
@@ -62,10 +62,10 @@ import { DocsPage } from "@/components/docs-page";
         handleOptionChange={() => {}}
       >
         Surface + Danger
-      </ButtonWithOptions>
+      </SplitButton>
 
       {/* Surface variant with Muted theme */}
-      <ButtonWithOptions
+      <SplitButton
         id="surface-muted"
         variant="surface"
         theme="muted"
@@ -77,7 +77,7 @@ import { DocsPage } from "@/components/docs-page";
         handleOptionChange={() => {}}
       >
         Surface + Muted
-      </ButtonWithOptions>
+      </SplitButton>
     </div>
 
   </div>
@@ -87,7 +87,7 @@ import { DocsPage } from "@/components/docs-page";
 <div>
   <h5 className="text-lg font-semibold mb-3">Radio Button Selection</h5>
   <div className="flex flex-wrap items-end gap-4">
-    <ButtonWithOptions
+    <SplitButton
       id="radio-button"
       handleButtonClick={() => {}}
       selectedValue="option1"
@@ -106,7 +106,7 @@ import { DocsPage } from "@/components/docs-page";
       handleOptionChange={() => {}}
     >
       With Selected Value
-    </ButtonWithOptions>
+    </SplitButton>
   </div>
 </div>
 
@@ -115,7 +115,7 @@ import { DocsPage } from "@/components/docs-page";
 <div>
   <h5 className="text-lg font-semibold mb-3">Loading State</h5>
   <div className="flex flex-wrap items-end gap-4">
-    <ButtonWithOptions
+    <SplitButton
       id="loading-state"
       handleButtonClick={() => {}}
       loading={true}
@@ -134,7 +134,7 @@ import { DocsPage } from "@/components/docs-page";
       handleOptionChange={() => {}}
     >
       Loading...
-    </ButtonWithOptions>
+    </SplitButton>
   </div>
 </div>
 
@@ -143,7 +143,7 @@ import { DocsPage } from "@/components/docs-page";
   <div>
     <h5 className="text-lg font-semibold mb-3">Disabled State</h5>
     <div className="flex flex-wrap items-end gap-4">
-      <ButtonWithOptions
+      <SplitButton
         id="disabled-state"
         handleButtonClick={() => {}}
         disabled={true}
@@ -154,7 +154,7 @@ import { DocsPage } from "@/components/docs-page";
         handleOptionChange={() => {}}
       >
         Disabled
-      </ButtonWithOptions>
+      </SplitButton>
     </div>
   </div>
 </div>`}
@@ -163,7 +163,7 @@ import { DocsPage } from "@/components/docs-page";
 ## Usage
 
 ```typescript jsx
-import { ButtonWithOptions } from '@harnessio/ui/components'
+import { SplitButton } from '@harnessio/ui/components'
 
 // Basic usage with default solid+primary combination
 const options = [
@@ -172,17 +172,17 @@ const options = [
 ]
 
 // Default combination (solid variant with primary theme)
-<ButtonWithOptions
+<SplitButton
   id="my-button"
   handleButtonClick={() => console.log('Button clicked')}
   options={options}
   handleOptionChange={(value) => console.log('Selected:', value)}
 >
   Default Button
-</ButtonWithOptions>
+</SplitButton>
 
 // Surface variant with success theme
-<ButtonWithOptions
+<SplitButton
   id="success-button"
   variant="surface"
   theme="success"
@@ -191,10 +191,10 @@ const options = [
   handleOptionChange={(value) => console.log('Selected:', value)}
 >
   Success Button
-</ButtonWithOptions>
+</SplitButton>
 
 // As a radio button group
-<ButtonWithOptions
+<SplitButton
   id="radio-button"
   handleButtonClick={() => console.log('Button clicked')}
   selectedValue="option1"
@@ -202,19 +202,19 @@ const options = [
   handleOptionChange={(value) => console.log('Selected:', value)}
 >
   With Selected Value
-</ButtonWithOptions>
+</SplitButton>
 ```
 
 ## Allowed Combinations
 
-The `ButtonWithOptions` component has specific rules for variant and theme combinations.
+The `SplitButton` component has specific rules for variant and theme combinations.
 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col gap-4">
   <div>
     <h6 className="font-medium mb-2">Default Combination: Solid + Primary</h6>
-    <ButtonWithOptions
+    <SplitButton
       id="solid-primary-example"
       variant="solid"
       theme="primary"
@@ -226,13 +226,13 @@ The `ButtonWithOptions` component has specific rules for variant and theme combi
       handleOptionChange={() => {}}
     >
       Solid + Primary
-    </ButtonWithOptions>
+    </SplitButton>
   </div>
   
   <div>
     <h6 className="font-medium mb-2">Surface Variant Combinations</h6>
     <div className="flex flex-wrap items-end gap-3">
-      <ButtonWithOptions
+      <SplitButton
         id="surface-success-example"
         variant="surface"
         theme="success"
@@ -244,9 +244,9 @@ The `ButtonWithOptions` component has specific rules for variant and theme combi
         handleOptionChange={() => {}}
       >
         Surface + Success
-      </ButtonWithOptions>
+      </SplitButton>
       
-      <ButtonWithOptions
+      <SplitButton
         id="surface-danger-example"
         variant="surface"
         theme="danger"
@@ -258,9 +258,9 @@ The `ButtonWithOptions` component has specific rules for variant and theme combi
         handleOptionChange={() => {}}
       >
         Surface + Danger
-      </ButtonWithOptions>
+      </SplitButton>
       
-      <ButtonWithOptions
+      <SplitButton
         id="surface-muted-example"
         variant="surface"
         theme="muted"
@@ -272,7 +272,7 @@ The `ButtonWithOptions` component has specific rules for variant and theme combi
         handleOptionChange={() => {}}
       >
         Surface + Muted
-      </ButtonWithOptions>
+      </SplitButton>
     </div>
   </div>
 </div>`}
@@ -284,7 +284,7 @@ When providing a `selectedValue`, the dropdown behaves as a radio button group.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<ButtonWithOptions
+  code={`<SplitButton
   id="radio-example"
   handleButtonClick={() => {}}
   selectedValue="option1"
@@ -295,7 +295,7 @@ When providing a `selectedValue`, the dropdown behaves as a radio button group.
   handleOptionChange={() => {}}
 >
   With Selected Value
-</ButtonWithOptions>`}
+</SplitButton>`}
 />
 
 ## States
@@ -305,7 +305,7 @@ The component supports various states like loading and disabled.
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-wrap items-end gap-3">
-  <ButtonWithOptions
+  <SplitButton
     id="loading-example"
     handleButtonClick={() => {}}
     loading={true}
@@ -316,9 +316,9 @@ The component supports various states like loading and disabled.
     handleOptionChange={() => {}}
   >
     Loading
-  </ButtonWithOptions>
+  </SplitButton>
   
-  <ButtonWithOptions
+  <SplitButton
     id="disabled-example"
     handleButtonClick={() => {}}
     disabled={true}
@@ -329,7 +329,7 @@ The component supports various states like loading and disabled.
     handleOptionChange={() => {}}
   >
     Disabled
-  </ButtonWithOptions>
+  </SplitButton>
 </div>`}
 />
 

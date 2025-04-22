@@ -3,7 +3,6 @@ import { FC, useCallback, useMemo, useState } from 'react'
 import {
   Avatar,
   Button,
-  ButtonWithOptions,
   Checkbox,
   ControlGroup,
   Fieldset,
@@ -15,6 +14,7 @@ import {
   MultiSelect,
   MultiSelectOptionType,
   Option,
+  SplitButton,
   StackedList,
   Switch,
   Textarea
@@ -119,7 +119,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
             placeholder={t('views:repos.rulePatternPlaceholder', 'Enter the target patterns')}
             error={errors?.pattern?.message?.toString()}
           />
-          <ButtonWithOptions<PatternsButtonType>
+          <SplitButton<PatternsButtonType>
             buttonClassName="px-0 w-full"
             id="patterns-type"
             handleButtonClick={handleAddPattern}
@@ -137,7 +137,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
             ]}
           >
             {t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
-          </ButtonWithOptions>
+          </SplitButton>
         </div>
         {!!patterns.length && (
           <div className="mt-2 flex flex-wrap gap-1.5">

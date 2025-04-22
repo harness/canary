@@ -1,6 +1,6 @@
 import { FC, MouseEvent, RefObject, useCallback, useState } from 'react'
 
-import { Button, ButtonWithOptions, Icon } from '@/components'
+import { Button, Icon, SplitButton } from '@/components'
 import { CompareFormFields, TranslationStore } from '@/views'
 
 interface PullRequestCompareButtonProps {
@@ -58,7 +58,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   return (
     <>
       {!isSubmitted ? (
-        <ButtonWithOptions<PR_TYPE>
+        <SplitButton<PR_TYPE>
           id="pr-type"
           handleButtonClick={handleButtonClick}
           loading={isLoading}
@@ -87,7 +87,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
             `views:pullRequests.compareChanges${prType}Button${isLoading ? 'Loading' : ''}`,
             `${prType}${isLoading ? 'ing' : ''} pull request${isLoading ? '...' : ''}`
           )}
-        </ButtonWithOptions>
+        </SplitButton>
       ) : (
         <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
           {t(`views:pullRequests.compareChangesCreatedButton`)}&nbsp;&nbsp;

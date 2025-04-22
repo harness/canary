@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Badge, Button, ButtonWithOptions, Checkbox, DropdownMenu, Icon, RadioGroup, Text } from '@/components'
+import { Badge, Button, Checkbox, DropdownMenu, Icon, SplitButton, Text } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
@@ -13,7 +13,7 @@ import {
   TypesPullReq,
   TypesPullReqStats
 } from '../../../pull-request.types'
-import { ApprovalItem, ButtonEnum, ReviewerListPullReqOkResponse } from '../../pull-request-details-types'
+import { ReviewerListPullReqOkResponse } from '../../pull-request-details-types'
 import {
   approvalItems,
   determineOverallDecision,
@@ -320,7 +320,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             <></>
           )}
           {!shouldHideReviewButton && currentUser && (
-            <ButtonWithOptions
+            <SplitButton
               id="pr-status"
               theme={getApprovalStateTheme(approveState)}
               disabled={isActiveUserPROwner}
@@ -348,7 +348,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               }}
             >
               {approveState === PullReqReviewDecision.approve ? approvalItems[0].title : getApprovalState(approveState)}
-            </ButtonWithOptions>
+            </SplitButton>
           )}
         </div>
       </div>

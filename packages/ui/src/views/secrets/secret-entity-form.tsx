@@ -42,16 +42,6 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
       const formDef = {
         ...secretDefinition.formDefinition
       }
-
-      formDef.inputs = formDef.inputs.map(input => {
-        if (input.inputType === 'secretSelect') {
-          return {
-            ...input
-          }
-        }
-        return input
-      })
-
       return formDef
     }
     return { inputs: [] }
@@ -86,20 +76,14 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
               )}
             </EntityFormSectionLayout.Form>
           </EntityFormSectionLayout.Root>
-          {intent === EntityIntent.CREATE ? (
-            <EntityFormLayout.Footer className="border-none">
-              <div className="bg-cn-background-2 absolute inset-x-0 bottom-0 flex justify-between gap-x-3 p-4 shadow-md">
-                <Button variant="secondary" onClick={() => onBack?.()}>
-                  Back
-                </Button>
-                <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-              </div>
-            </EntityFormLayout.Footer>
-          ) : (
-            <div className="border-cn-borders-3 mt-5 flex flex-row justify-end border-t pt-5">
-              <Button onClick={() => rootForm.submitForm()}>Apply changes</Button>
+          <EntityFormLayout.Footer className="border-none">
+            <div className="bg-cn-background-2 absolute inset-x-0 bottom-0 flex justify-between gap-x-3 p-4 shadow-md">
+              <Button variant="secondary" onClick={() => onBack?.()}>
+                Back
+              </Button>
+              <Button onClick={() => rootForm.submitForm()}>Submit</Button>
             </div>
-          )}
+          </EntityFormLayout.Footer>
         </EntityFormLayout.Root>
       )}
     </RootForm>

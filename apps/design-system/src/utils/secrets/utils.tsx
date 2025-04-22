@@ -18,6 +18,11 @@ export function getHarnessSecretDefinition(): AnySecretDefinition {
             }
           }
         }
+        if (input.inputType === 'secretSelect') {
+          return {
+            ...input
+          }
+        }
         return input
       })
     }

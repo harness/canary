@@ -1,9 +1,9 @@
 [
   {
-    "groupId": "1pKC9w5uTYWNBBZ1SCNMAw",
-    "delegateGroupIdentifier": "_viaksdcoker",
+    "groupId": "randomId1",
+    "delegateGroupIdentifier": "_testDocker",
     "delegateType": "DOCKER",
-    "groupName": "viaksdcoker",
+    "groupName": "_testDocker",
     "groupImplicitSelectors": { "viaksdcoker": "GROUP_NAME" },
     "groupCustomSelectors": ["linux-amd64", "testing", "local"],
     "lastHeartBeat": 0,
@@ -18,7 +18,7 @@
     "immutable": false
   },
   {
-    "groupId": "4A2iuygdSXKq08Ml8mSseA",
+    "groupId": "randomId2",
     "delegateGroupIdentifier": "_eightfivetwoold",
     "delegateType": "KUBERNETES",
     "groupName": "eightfivetwoold",
@@ -47,11 +47,11 @@
     "groupVersion": "25.04.85601"
   },
   {
-    "groupId": "GbwfgC4cRwiHnMa3IX8SMA",
-    "delegateGroupIdentifier": "_pzerosanity",
+    "groupId": "randomId3",
+    "delegateGroupIdentifier": "_sanity",
     "delegateType": "KUBERNETES",
-    "groupName": "pzerosanity",
-    "groupImplicitSelectors": { "pzerosanity": "GROUP_NAME" },
+    "groupName": "sanity",
+    "groupImplicitSelectors": { "sanity": "GROUP_NAME" },
     "lastHeartBeat": 1744646989404,
     "connectivityStatus": "connected",
     "activelyConnected": true,
@@ -61,7 +61,7 @@
         "uuid": "qNs5n8h4Tn-xgHpWPQyJPA",
         "lastHeartbeat": 1744646989404,
         "activelyConnected": true,
-        "hostName": "pzerosanity-8b579d6fc-gr9fm",
+        "hostName": "sanity-8b579d6fc-gr9fm",
         "tokenActive": true,
         "version": "25.04.85601",
         "delegateExpirationTime": 1758557385217,
@@ -76,7 +76,7 @@
     "groupVersion": "25.04.85601"
   },
   {
-    "groupId": "Ou-m_DTXRPuvzZwCgFtUZQ",
+    "groupId": "Ou-randomId4",
     "delegateGroupIdentifier": "_west1_delegate_qa",
     "delegateType": "KUBERNETES",
     "groupName": "west1-delegate-qa",
@@ -93,7 +93,7 @@
     "immutable": false
   },
   {
-    "groupId": "RibdiWyCS1eOctsQzCiWEQ",
+    "groupId": "randomId5",
     "delegateGroupIdentifier": "_qa_automation",
     "delegateType": "KUBERNETES",
     "groupName": "qa-automation",
@@ -122,11 +122,11 @@
     "groupVersion": "25.03.85504"
   },
   {
-    "groupId": "ZKVpaoqaSsartYOMYpMC-g",
-    "delegateGroupIdentifier": "_pzerosanity_windows",
+    "groupId": "randomId6-g",
+    "delegateGroupIdentifier": "_sanity_windows",
     "delegateType": "KUBERNETES",
-    "groupName": "pzerosanity-windows",
-    "groupImplicitSelectors": { "pzerosanity-windows": "GROUP_NAME" },
+    "groupName": "sanity-windows",
+    "groupImplicitSelectors": { "sanity-windows": "GROUP_NAME" },
     "lastHeartBeat": 1744646974708,
     "connectivityStatus": "connected",
     "activelyConnected": true,
@@ -136,7 +136,7 @@
         "uuid": "h7NHZN9HRkC5ri1H7zGfVA",
         "lastHeartbeat": 1744646943982,
         "activelyConnected": true,
-        "hostName": "pzerosanity-windows-687c7cd8c5-tpmqd",
+        "hostName": "sanity-windows-687c7cd8c5-tpmqd",
         "tokenActive": true,
         "version": "25.04.85601",
         "delegateExpirationTime": 1758557385512,
@@ -146,7 +146,7 @@
         "uuid": "_YKkwZbGRS6a4j3w4Sse5A",
         "lastHeartbeat": 1744646974708,
         "activelyConnected": true,
-        "hostName": "pzerosanity-windows-687c7cd8c5-fb2v7",
+        "hostName": "sanity-windows-687c7cd8c5-fb2v7",
         "tokenActive": true,
         "version": "25.04.85601",
         "delegateExpirationTime": 1758557385512,
@@ -161,10 +161,10 @@
     "groupVersion": "25.04.85601"
   },
   {
-    "groupId": "rraEwRROTaa9bPVWJTaX0Q",
-    "delegateGroupIdentifier": "_myRunner_ivan",
+    "groupId": "randomId7",
+    "delegateGroupIdentifier": "_myRunner",
     "delegateType": "DOCKER",
-    "groupName": "myRunner-ivan",
+    "groupName": "myRunner",
     "groupImplicitSelectors": { "myrunner-ivan": "GROUP_NAME" },
     "groupCustomSelectors": ["macos-arm64", "local", "fast-pace"],
     "lastHeartBeat": 1744639645019,
@@ -190,7 +190,7 @@
     "immutable": false
   },
   {
-    "groupId": "sIf83Ta4R_-quZuzQ3zWDQ",
+    "groupId": "randomId8",
     "delegateGroupIdentifier": "_eightfivetwo",
     "delegateType": "KUBERNETES",
     "groupName": "eightfivetwo",
@@ -219,7 +219,7 @@
     "groupVersion": "25.04.85601"
   },
   {
-    "groupId": "vT_WH3mQQba32x7PAFjY7A",
+    "groupId": "randomId9",
     "delegateGroupIdentifier": "_self_hosted_vpc_delegate",
     "delegateType": "DOCKER",
     "groupName": "self-hosted-vpc-delegate",
@@ -236,7 +236,7 @@
     "immutable": false
   },
   {
-    "groupId": "zyopX7EZRWyEFy1183_MiQ",
+    "groupId": "randomId10",
     "delegateGroupIdentifier": "_automation_eks_delegate",
     "delegateType": "KUBERNETES",
     "groupName": "automation-eks-delegate",

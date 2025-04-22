@@ -24,14 +24,14 @@ const delegatesData = mockDelegatesList.map(delegate => ({
 }))
 
 const mockTagsList = [
-  'pzerosanity-windows',
+  'sanity-windows',
   'eightfivetwoold',
   'qa-automation',
-  'pzerosanity',
+  'sanity',
   'self-hosted-vpc-delegate',
   'local',
-  'viaksdcoker',
-  'myrunner-ivan',
+  '_testDocker',
+  'myrunner',
   'macos-arm64',
   'west1-delegate-qa',
   'linux-amd64',

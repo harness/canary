@@ -22,7 +22,6 @@ import { LandingPage } from './pages-v2/landing-page-container'
 import { Logout } from './pages-v2/logout'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
-import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
 import { ProjectLabelFormContainer } from './pages-v2/project/labels/project-label-form-container'
 import { ProjectLabelsList } from './pages-v2/project/labels/project-labels-list-container'
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
@@ -735,14 +734,6 @@ export const routes: CustomRouteObject[] = [
           breadcrumb: () => <span>Databases</span>,
           routeName: RouteConstants.toDatabases,
           pageTitle: 'Databases'
-        }
-      },
-      {
-        path: 'theme',
-        element: <ProfileSettingsThemePage />,
-        handle: {
-          routeName: RouteConstants.toTheme,
-          pageTitle: Page.Theme
         }
       },
       {

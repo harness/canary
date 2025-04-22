@@ -24,6 +24,8 @@ interface IMFEContext {
     getCurrentUser: Unknown
   }>
   routes: Partial<{
+    toAccountSettings: Unknown
+    toOrgSettings: Unknown
     toProjectSettings: Unknown
   }>
 }

@@ -1,8 +1,6 @@
 import { IFormDefinition } from '@harnessio/forms'
 import { IInputConfigWithConfigInterface, InputConfigType } from '@harnessio/ui/views'
 
-// export const GITHUB_CONNECTOR_CATEOGRY = 'Code Repository'
-
 const metadataInputs: IInputConfigWithConfigInterface[] = [
   {
     inputType: 'text',

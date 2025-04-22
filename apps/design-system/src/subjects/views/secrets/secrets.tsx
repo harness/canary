@@ -114,14 +114,6 @@ export const SecretsPage = ({
     switch (selectedType) {
       case SecretType.NEW:
         return (
-          // <CreateSecretPage
-          //   onFormSubmit={onSubmit}
-          //   onFormCancel={handleCancel}
-          //   useTranslationStore={useTranslationStore}
-          //   isLoading={false}
-          //   apiError={null}
-          //   connectorInput={<ConnectorInputExample />}
-          // />
           <SecretEntityForm
             useTranslationStore={useTranslationStore}
             inputComponentFactory={inputComponentFactory}

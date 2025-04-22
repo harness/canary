@@ -28,16 +28,16 @@ function BooleanInputInternal(props: InputProps<AnyFormikValue, BooleanInputConf
     <InputWrapper>
       {/* TODO: check styling we have on FormItem/}
       {/* <FormItem className="flex space-x-2 space-y-0">  */}
-      <Layout.Horizontal>
-        <Switch
-          disabled={readonly}
-          checked={field.value}
-          onCheckedChange={value => {
-            field.onChange(value)
-          }}
-        />
-        <InputLabel label={label} required={required} description={description} />
-      </Layout.Horizontal>
+      <Switch
+        disabled={readonly}
+        checked={field.value}
+        onCheckedChange={value => {
+          field.onChange(value)
+        }}
+        label={label}
+        description={description}
+        required={required}
+      />
 
       <InputError path={path} />
 

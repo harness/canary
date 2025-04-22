@@ -202,6 +202,8 @@
     "addFile": "Ajouter un fichier"
   },
   "noData": {
+    "noActivities": "Aucune activité disponible",
+    "noActivitiesDescription": "Il n'y a pas d'activités disponibles.",
     "noResults": "Aucun résultat de recherche",
     "noEntities": "Aucune entité disponible",
     "noEntitiesDescription": "Il n'y a pas d'entités disponibles.",

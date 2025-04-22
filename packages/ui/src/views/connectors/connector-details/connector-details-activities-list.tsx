@@ -6,7 +6,7 @@ import { ExecutionState } from '@views/index'
 import { ConnectorActivityItem, ConnectorDetailsActivitiesListProps } from './types'
 
 const Activity = ({ activity }: { activity: React.ReactNode }): JSX.Element => (
-  <span className="text-cn-foreground-1 block max-w-full truncate py-2.5 text-sm font-medium leading-tight tracking-tight">
+  <span className="block max-w-full truncate py-2.5 text-sm font-medium leading-tight tracking-tight text-cn-foreground-1">
     {activity}
   </span>
 )
@@ -48,8 +48,8 @@ const ConnectorDetailsActivitiesList = ({
         className="min-h-[65vh]"
         textWrapperClassName="max-w-[350px]"
         iconName="no-data-cog"
-        title={t('views:noData.noEntities', 'No entities yet')}
-        description={[t('views:noData.noEntitiesDescription', 'There are no entities yet.')]}
+        title={t('views:noData.noActivities', 'No activities yet')}
+        description={[t('views:noData.noActivitiesDescription', 'There are no activities yet.')]}
       />
     )
   }
@@ -61,9 +61,9 @@ const ConnectorDetailsActivitiesList = ({
     >
       <Table.Header>
         <Table.Row>
-          <Table.Head className="text-cn-foreground-4 w-96">{t('views:connectors.activity', 'Activity')}</Table.Head>
-          <Table.Head className="text-cn-foreground-4 w-96">{t('views:connectors.time', 'Time')}</Table.Head>
-          <Table.Head className="text-cn-foreground-4 w-44">{t('views:connectors.status', 'Status')}</Table.Head>
+          <Table.Head className="w-96 text-cn-foreground-4">{t('views:connectors.activity', 'Activity')}</Table.Head>
+          <Table.Head className="w-96 text-cn-foreground-4">{t('views:connectors.time', 'Time')}</Table.Head>
+          <Table.Head className="w-44 text-cn-foreground-4">{t('views:connectors.status', 'Status')}</Table.Head>
         </Table.Row>
       </Table.Header>
       {isLoading ? (
@@ -78,11 +78,11 @@ const ConnectorDetailsActivitiesList = ({
                 <Table.Cell className="max-w-80 content-center items-center truncate">
                   <Activity activity={description} />
                 </Table.Cell>
-                <Table.Cell className="text-cn-foreground-3 block max-w-80 content-center items-center truncate p-2.5 my-2 font-medium">
+                <Table.Cell className="my-2 block max-w-80 content-center items-center truncate p-2.5 font-medium text-cn-foreground-3">
                   {activityTime ? timeAgo(activityTime) : null}
                 </Table.Cell>
 
-                <Table.Cell className="text-cn-foreground-4 max-w-full content-center truncate p-2.5 text-left text-sm font-normal leading-tight tracking-tight">
+                <Table.Cell className="max-w-full content-center truncate p-2.5 text-left text-sm font-normal leading-tight tracking-tight text-cn-foreground-4">
                   <ConnectivityStatus status={activityStatus.toLowerCase()} />
                 </Table.Cell>
               </Table.Row>

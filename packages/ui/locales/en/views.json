@@ -218,6 +218,8 @@
     "addFile": "Add file"
   },
   "noData": {
+    "noActivities": "No activities yet",
+    "noActivitiesDescription": "There are no activities yet. ",
     "noResults": "No search results",
     "noEntities": "No entities yet",
     "noEntitiesDescription": "There are no entities yet. ",

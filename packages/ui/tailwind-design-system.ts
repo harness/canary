@@ -481,7 +481,6 @@ export default {
 
     /** Existing Variants  */
     { pattern: /^bg-graph-/ },
-    { pattern: /^bg-background-/ },
 
     { pattern: /^text-icons-/ },
     { pattern: /^bg-icons-/ },
@@ -504,7 +503,6 @@ export default {
 
     // Hover classes
     { pattern: /^hover:bg-graph-/ },
-    { pattern: /^hover:bg-background-/ },
     { pattern: /^hover:text-icons-/ },
     { pattern: /^hover:bg-icons-/ },
     // tags classes
@@ -525,8 +523,6 @@ export default {
     { pattern: /^hover:text-topbar-icon-/ },
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
     'stroke-borders-2',
-    // NOTE: temporary - used in design-system
-    { pattern: /bg-primary-./ },
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /max-w-./ }
   ]

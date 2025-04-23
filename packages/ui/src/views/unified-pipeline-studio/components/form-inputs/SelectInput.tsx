@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react'
+
 import { Select } from '@components/select'
 
-import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
+import { InputComponent, InputProps, useController, useFormContext, type AnyFormikValue } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
@@ -17,11 +19,22 @@ export interface SelectInputConfig {
   inputConfig: {
     options: SelectOption[]
     tooltip?: string
+    isDisabled?: (values: AnyFormikValue) => boolean
+    disabledValue?: string
   }
 }
 function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig>): JSX.Element {
-  const { readonly, path, input } = props
-  const { label = '', required, description, inputConfig } = input
+  const { path, input } = props
+  const { label = '', required, description, inputConfig, readonly } = input
+
+  const methods = useFormContext()
+  const values = methods.watch()
+
+  const [isDisabled, setIsDisabled] = useState<boolean>(!!readonly)
+
+  useEffect(() => {
+    setIsDisabled(!!inputConfig?.isDisabled?.(values) || !!readonly)
+  }, [values, inputConfig?.isDisabled, readonly])
 
   const { field } = useController({
     name: path
@@ -31,8 +44,8 @@ function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig
     <InputWrapper>
       <InputLabel label={label} description={description} required={required} />
       <Select.Root
-        disabled={readonly}
-        value={field.value}
+        disabled={isDisabled}
+        value={isDisabled ? inputConfig?.disabledValue : field.value}
         onValueChange={value => {
           field.onChange(value)
         }}

@@ -28,6 +28,22 @@ const inputs: IInputConfigWithConfigInterface[] = [
     }
   },
   {
+    inputType: 'select',
+    path: `test`,
+    label: 'test Type',
+    readonly: true,
+    default: AwsCredTypeValues.ManualConfig,
+    inputConfig: {
+      options: [
+        { label: 'AWS access key', value: AwsCredTypeValues.ManualConfig },
+        { label: 'Assume Role on Delegate (IAM)', value: AwsCredTypeValues.AssumeIAMRole },
+        { label: 'Assume Role on Delegate (STS)', value: AwsCredTypeValues.AssumeRoleSTS },
+        { label: 'OIDC', value: DelegateTypes.DELEGATE_OIDC }
+      ],
+      disabledValue: AwsCredTypeValues.AssumeIAMRole
+    }
+  },
+  {
     inputType: 'text',
     path: `accessKey`,
     label: 'AWS - Access Key',
@@ -74,9 +90,25 @@ const inputs: IInputConfigWithConfigInterface[] = [
     isVisible: values => values?.credential === DelegateTypes.DELEGATE_OIDC
   },
   {
-    inputType: 'boolean',
-    path: `default`,
-    label: 'Use as Default'
+    inputType: 'group',
+    path: `connection`,
+    label: 'Connection',
+    inputs: [
+      {
+        inputType: 'select',
+        path: `delegate`,
+        label: 'Delegate',
+        default: false,
+        inputConfig: {
+          options: [
+            { label: 'off', value: false },
+            { label: 'on', value: true }
+          ],
+          isDisabled: (values: any) => values?.credential === DelegateTypes.DELEGATE_OIDC,
+          disabledValue: true
+        }
+      }
+    ]
   }
 ]
 

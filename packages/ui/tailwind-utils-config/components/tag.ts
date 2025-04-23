@@ -28,7 +28,7 @@ const themes = [
   'yellow'
 ] as const
 
-function createTagVariantStyles(variant: (typeof variants)[number], size: (typeof sizes)[number] = 'default') {
+function createTagVariantStyles(variant: (typeof variants)[number]) {
   const styles: CSSRuleObject = {}
 
   themes.forEach(theme => {
@@ -41,14 +41,6 @@ function createTagVariantStyles(variant: (typeof variants)[number], size: (typeo
         style[`&:hover`] = {
           backgroundColor: `var(--cn-set-${theme}-surface-bg-hover)`,
           borderColor: `var(--cn-set-${theme}-surface-border)`
-        }
-        switch (size) {
-          case 'default':
-            style[`font`] = `var(--cn-body-tight-normal)`
-            break
-          case 'sm':
-            style[`font`] = `var(--cn-caption-tight-normal)`
-            break
         }
         break
       case 'label':
@@ -80,7 +72,7 @@ function createTagVariantStyles(variant: (typeof variants)[number], size: (typeo
         break
     }
 
-    styles[`&:where(.tag-${variant}.tag-${theme})`] = style
+    styles[`&:where(tag-${theme})`] = style
   })
 
   return styles
@@ -93,9 +85,12 @@ export default {
     padding: 'var(--cn-tag-py) var(--cn-tag-px)',
     gap: 'var(--cn-tag-gap)',
     borderRadius: `var(--cn-tag-radius-full)`,
+    font: `var(--cn-body-tight-normal)`,
+    '&.tag-sm': {
+      font: `var(--cn-caption-tight-normal)`
+    },
 
-    ...createTagVariantStyles('default'),
-    ...createTagVariantStyles('default', 'sm')
+    ...createTagVariantStyles('default')
   },
   '.tag-label': {
     font: `var(--cn-caption-tight-normal)`,

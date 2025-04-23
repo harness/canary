@@ -1,10 +1,15 @@
+import { Button } from '@components/button'
+import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const tagVariants = cva('tag inline-flex w-fit items-center transition-colors', {
+const tagVariants = cva('w-fit transition-colors', {
   variants: {
     variant: {
-      surface: 'tag-surface'
+      default: 'tag-default',
+      label: 'tag-label',
+      labelLeft: 'tag-label-left',
+      labelRight: 'tag-label-right'
     },
     size: {
       default: '',
@@ -29,7 +34,7 @@ const tagVariants = cva('tag inline-flex w-fit items-center transition-colors', 
   },
 
   defaultVariants: {
-    variant: 'surface',
+    variant: 'default',
     size: 'default',
     theme: 'gray'
   }
@@ -37,17 +42,19 @@ const tagVariants = cva('tag inline-flex w-fit items-center transition-colors', 
 
 // Base props without theme-specific requirements
 type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex' | 'aria-readonly'> & {
+  variant?: VariantProps<typeof tagVariants>['variant']
   size?: VariantProps<typeof tagVariants>['size']
-  theme: VariantProps<typeof tagVariants>['theme']
+  theme?: VariantProps<typeof tagVariants>['theme']
 }
 
-function Tag({ className, size, theme, children, ...props }: TagProps) {
+function Tag({ className, size, theme, variant, children, ...props }: TagProps) {
   return (
     <div
       aria-readonly="true"
       tabIndex={-1}
       className={cn(
         tagVariants({
+          variant,
           size,
           theme
         }),
@@ -55,7 +62,11 @@ function Tag({ className, size, theme, children, ...props }: TagProps) {
       )}
       {...props}
     >
+      <Icon name="tag" />
       {children}
+      <Button>
+        <Icon name="close" className="font-xs" />
+      </Button>
     </div>
   )
 }

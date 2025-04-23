@@ -13,8 +13,11 @@ export interface StepPaletteSectionProps<T> {
 
 const StepPaletteSection = forwardRef<
   HTMLDivElement,
-  StepPaletteSectionProps<{ identifier: string; description?: string }>
->(function StepPaletteSection(props: StepPaletteSectionProps<{ identifier: string; description?: string }>, ref) {
+  StepPaletteSectionProps<{ identifier: string; version?: string; description?: string }>
+>(function StepPaletteSection(
+  props: StepPaletteSectionProps<{ identifier: string; version?: string; description?: string }>,
+  ref
+) {
   const { steps, onSelect, title } = props
 
   return (

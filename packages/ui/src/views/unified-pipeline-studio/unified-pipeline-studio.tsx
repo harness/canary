@@ -1,4 +1,4 @@
-import { InputFactory } from '@harnessio/forms'
+import { IFormDefinition, InputFactory } from '@harnessio/forms'
 
 import { TranslationStore } from '..'
 import { UnifiedPipelineStudioNodeContextProvider } from './components/graph-implementation/context/UnifiedPipelineStudioNodeContext'
@@ -13,18 +13,20 @@ import { PipelineStudioInternal } from './unified-pipeline-studio-internal'
 
 export interface ITemplateListItem {
   identifier: string
+  version: string
   description?: string
 }
 
 export interface ITemplateListStore {
   templates: ITemplateListItem[] | null
+  templatesError?: Error
   setTemplatesData: (data: ITemplateListItem[] | null, totalPages: number) => void
   totalPages: number
   page: number
   xNextPage: number
   xPrevPage: number
   setPage: (page: number, query: string) => void
-  getTemplateFormDefinition: (identifier: string) => Promise<any> // << TODO
+  getTemplateFormDefinition: (identifierWithVersion: string) => Promise<IFormDefinition>
 }
 
 export interface UnifiedPipelineStudioProps {

@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 
 import { Button } from '@components/button'
 import { Icon } from '@components/icon'
+import { SkeletonList } from '@components/index'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
-import { get, omit } from 'lodash-es'
+import { get, isEmpty, isUndefined, omit, omitBy } from 'lodash-es'
 import { parse } from 'yaml'
 
 import {
@@ -42,9 +43,10 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
 
   const { getTemplateFormDefinition } = useTemplateListStore()
 
-  const [defaultStepValues, setDefaultStepValues] = useState({})
+  const [defaultStepValues, setDefaultStepValues] = useState<Record<string, any>>({})
 
   const [externalLoading, setExternalLoading] = useState(false)
+  const [error, setError] = useState<Error | undefined>()
 
   useEffect(() => {
     if (editStepIntention) {
@@ -74,9 +76,17 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
       // process templates step
       else if (step[TEMPLATE_STEP_IDENTIFIER]) {
         setDefaultStepValues(step)
-        getTemplateFormDefinition(step.template.uses).then(templateFormDefinition => {
-          return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
-        })
+        setExternalLoading(true)
+        getTemplateFormDefinition(step.template.uses)
+          .then(templateFormDefinition => {
+            return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
+          })
+          .catch(err => {
+            setError(err)
+          })
+          .finally(() => {
+            setExternalLoading(false)
+          })
       }
     }
   }, [editStepIntention])
@@ -95,12 +105,12 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
     } else if (formEntity?.source === 'external') {
       setExternalLoading(true)
 
-      getTemplateFormDefinition(formEntity.data.identifier)
+      getTemplateFormDefinition(`${formEntity.data.identifier}@${formEntity.data.version}`)
         .then(templateFormDefinition => {
           return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
         })
-        .catch(_ex => {
-          // TODO: error handling
+        .catch(err => {
+          setError(err)
         })
         .finally(() => {
           setExternalLoading(false)
@@ -117,27 +127,31 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
     }
   })
 
-  // TODO: add  skeleton
-  if (!formDefinition || externalLoading) return <p>Loading...</p>
+  const loading = !formDefinition || externalLoading
 
   return (
     <RootForm
-      autoFocusPath={formDefinition.inputs[0]?.path}
+      autoFocusPath={formDefinition?.inputs?.[0]?.path}
       defaultValues={defaultStepValues}
       resolver={resolver}
       mode="onSubmit"
       onSubmit={values => {
+        if (!formDefinition) return
+
         const transformers = getTransformers(formDefinition)
         let stepValue = outputTransformValues(values, transformers)
 
         // TODO:move transform logic outside for "external"
         if (formEntity?.source === 'external') {
-          // NOTE: add 'uses' for template step
+          // remove "with" if its a empty object
+          const cleanWith = omitBy(stepValue.template.with, isUndefined)
+
+          // add 'uses' for template step
           stepValue = {
             ...omit(stepValue, 'template'),
             template: {
-              uses: formEntity.data.identifier,
-              with: stepValue.template.with
+              uses: `${formEntity.data.identifier}@${formEntity.data.version}`,
+              ...(isEmpty(cleanWith) ? {} : { with: cleanWith })
             }
           }
         }
@@ -160,6 +174,13 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
             })
           }
         } else if (editStepIntention) {
+          const cleanWith = omitBy(stepValue.template.with, isUndefined)
+
+          // remove "with" if its a empty object
+          if (stepValue.template && isEmpty(cleanWith)) {
+            delete stepValue.template.with
+          }
+
           requestYamlModifications.updateInArray({
             path: editStepIntention.path,
             item: stepValue
@@ -174,7 +195,8 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         <EntityFormLayout.Root>
           <EntityFormLayout.Header>
             <EntityFormLayout.Title>
-              {editStepIntention ? 'Edit' : 'Add'} Step : {formEntity?.data.identifier}
+              {editStepIntention ? 'Edit' : 'Add'} Step :{' '}
+              {formEntity?.data?.identifier ?? defaultStepValues.template?.uses}
             </EntityFormLayout.Title>
             <EntityFormLayout.Description>{formEntity?.data.description}</EntityFormLayout.Description>
             {/* <EntityFormLayout.Actions>
@@ -187,12 +209,22 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
             {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
             {/* </StepFormSection.Header> */}
             <EntityFormSectionLayout.Form>
-              <RenderForm className="space-y-5 p-5" factory={inputComponentFactory} inputs={formDefinition} />
+              {error?.message ? (
+                <p className="text-sm text-cn-foreground-danger">{error.message}</p>
+              ) : loading ? (
+                <SkeletonList className="p-5" />
+              ) : (
+                <>
+                  <RenderForm className="space-y-5 p-5" factory={inputComponentFactory} inputs={formDefinition} />
+                </>
+              )}
             </EntityFormSectionLayout.Form>
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer>
             <div className="flex gap-x-3">
-              <Button onClick={() => rootForm.submitForm()}>Submit</Button>
+              <Button disabled={loading || !!error?.message} onClick={() => rootForm.submitForm()}>
+                Submit
+              </Button>
               <Button variant="soft" theme="muted" onClick={requestClose}>
                 Cancel
               </Button>

@@ -1,24 +1,34 @@
 {
   "toast": {
-    "wrapper": {
-      "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.3}"
-      }
-    },
-    "padding": {
-      "$type": "spacing",
-      "$value": "{spacing.4}"
-    },
     "textwrapper": {
       "gap": {
         "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "$value": "{spacing.2}"
+      },
+      "subgap": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
       }
     },
     "borderRadius": {
       "$type": "borderRadius",
       "$value": "{rounded.3}"
+    },
+    "pr": {
+      "$type": "spacing",
+      "$value": "{spacing.7}"
+    },
+    "pl": {
+      "$type": "spacing",
+      "$value": "{spacing.5}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.3}"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.3}"
     }
   }
 }

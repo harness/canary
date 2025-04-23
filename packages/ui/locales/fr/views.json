@@ -211,6 +211,7 @@
     "noEntitiesDescription": "Il n'y a pas d'entités disponibles.",
     "noConnectors": "Aucun connecteur pour le moment",
     "createConnector": "Créez un nouveau connecteur.",
+    "noDelegates": "There are no delegates in this project yet.",
     "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
     "changeSearch": "ou recherchez un autre mot-clé.",
     "clearSearch": "Effacer la recherche",

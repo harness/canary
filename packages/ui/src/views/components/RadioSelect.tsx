@@ -7,6 +7,7 @@ export interface RadioOption<T extends string> {
   title: string
   description: string
   value: T
+  disabled?: boolean
 }
 
 interface RadioSelectProps<T extends string> {
@@ -39,12 +40,14 @@ export const RadioSelect = <T extends string>({
               >
                 <StackedList.Item
                   className={cn('cursor-pointer !rounded px-5 py-3', {
-                    'bg-gradient-to-b from-white/[0.04] to-white/0': value === option.value
+                    'bg-gradient-to-b from-white/[0.04] to-white/0': value === option.value,
+                    'cursor-not-allowed': option.disabled
                   })}
+                  aria-disabled={option.disabled}
                   isHeader
                   isLast
                   disableHover
-                  onClick={() => onValueChange(option.value)}
+                  onClick={() => !option.disabled && onValueChange(option.value)}
                 >
                   <StackedList.Field
                     title={option.title}

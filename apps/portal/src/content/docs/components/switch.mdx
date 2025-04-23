@@ -11,17 +11,28 @@ import { DocsPage } from "../../../components/docs-page";
   client:only
   code={`<div className="flex flex-col gap-4">
     <h5>Standard usage</h5>
-    <div className="flex gap-4 align-middle">
-        <Label htmlFor="airplane-mode">Airplane mode</Label>
-        <Switch id="airplane-mode" />
-    </div>
+    <Switch 
+      id="airplane-mode"
+      label="Airplane mode"
+      description="Enable or disable airplane mode to control all wireless communication."
+    />
 
     <hr className="my-4" />
 
     <h5>Disabled</h5>
-    <div className="flex gap-4 align-middle">
-        <Label htmlFor="god-mode">God mode</Label>
-        <Switch id="god-mode" disabled />
+    <Switch
+      id="god-mode"
+      label="God mode"
+      description="Toggle to enable or disable God mode, which grants unrestricted access and control."
+      disabled
+    />
+
+    <hr className="my-4" />
+
+    <h5>Without Label and Description</h5>
+    <div className="flex gap-4">
+      <Switch id="no-label-description" />
+      <Switch id="no-label-description-disabled" disabled />
     </div>
 
 </div>`}
@@ -39,6 +50,8 @@ return (
     id="airplane-mode"
     checked={airplaneModeEnabled}
     onCheckedChange={setAirplaneModeEnabled}
+    label="Toggle Airplane mode"
+    description="Enable or disable airplane mode to control all wireless communication."
   />
 )
 ```
@@ -56,6 +69,8 @@ When used uncontrolled, the `defaultChecked` prop can be used to set the initial
   required                       // [OPTIONAL] whether the switch is required
   onCheckedChange={handleChange} // [OPTIONAL] callback called when the checked state changes
   disabled                       // [OPTIONAL] whether the switch is disabled
+  label                          // [OPTIONAL] a label for the switch
+  description                    // [OPTIONAL] a description for the switch
 />
 ```
 

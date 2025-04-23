@@ -2,27 +2,6 @@ import { Badge, MoreActionsTooltip, NoData, Pagination, Spacer, StackedList, Swi
 import { useRouterContext } from '@/context'
 import { TranslationStore, WebhookType } from '@/views'
 
-const Title = ({
-  title,
-  isEnabled,
-  handleEnableWebhook,
-  id
-}: {
-  id: number
-  title: string
-  isEnabled: boolean
-  handleEnableWebhook: (id: number, enabled: boolean) => void
-}) => (
-  <div className="inline-flex items-center gap-2.5">
-    <Switch
-      checked={isEnabled}
-      onClick={e => e.stopPropagation()}
-      onCheckedChange={() => handleEnableWebhook(id, !isEnabled)}
-    />
-    <span className="font-medium">{title}</span>
-  </div>
-)
-
 export interface RepoWebhookListProps {
   webhooks: WebhookType[]
   error?: string
@@ -126,35 +105,20 @@ export function RepoWebhookList({
               }
               key={webhook.id}
             >
-              <Table.Cell>
-                <StackedList.Item
-                  key={webhook.id}
-                  className="max-w-full cursor-pointer !p-0 py-3 pr-1.5"
-                  isLast
-                  disableHover
-                >
-                  <StackedList.Field
-                    primary
-                    description={
-                      <Text className="ml-10 max-w-[500px]" truncate color="secondary">
-                        {webhook?.triggers?.length
-                          ? webhook.triggers
-                              .map(trigger => trigger.replace(/_/g, ' ').replace(/\b\w/g, match => match.toUpperCase()))
-                              .join(', ')
-                          : 'All Events'}
-                      </Text>
-                    }
-                    title={
-                      <Title
-                        title={webhook.display_name}
-                        isEnabled={webhook.enabled}
-                        id={webhook.id}
-                        handleEnableWebhook={handleEnableWebhook}
-                      />
-                    }
-                    className="max-w-full gap-1.5"
-                  />
-                </StackedList.Item>
+              <Table.Cell className="cursor-pointer">
+                <Switch
+                  checked={webhook.enabled}
+                  onClick={e => e.stopPropagation()}
+                  onCheckedChange={() => handleEnableWebhook(webhook.id, !webhook.enabled)}
+                  label={webhook.display_name}
+                  description={
+                    webhook?.triggers?.length
+                      ? webhook.triggers
+                          .map(trigger => trigger.replace(/_/g, ' ').replace(/\b\w/g, match => match.toUpperCase()))
+                          .join(', ')
+                      : 'All Events'
+                  }
+                />
               </Table.Cell>
               <Table.Cell className="cursor-pointer content-center">
                 <Badge

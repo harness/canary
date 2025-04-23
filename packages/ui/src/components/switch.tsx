@@ -5,28 +5,30 @@ import * as SwitchPrimitives from '@radix-ui/react-switch'
 
 const Switch = forwardRef<
   ElementRef<typeof SwitchPrimitives.Root>,
-  ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
->(({ className, ...props }, ref) => (
-  <SwitchPrimitives.Root
-    className={cn(
-      `  
-      data-[state=checked]:bg-icons-success data-[state=unchecked]:bg-icons-6 
-      peer inline-flex h-[18px] w-8 shrink-0 cursor-pointer items-center !rounded-full 
-      border-2 border-transparent transition-colors      
-      disabled:cursor-not-allowed disabled:opacity-50
-      `,
-      className
-    )}
-    {...props}
-    ref={ref}
-  >
-    <SwitchPrimitives.Thumb
-      className={cn(
-        'bg-icons-10 pointer-events-none block h-3.5 w-3.5 rounded-full shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-3.5 data-[state=unchecked]:translate-x-0'
+  ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> & {
+    label?: string
+    description?: string
+  }
+>(({ className, label, description, ...props }, ref) => {
+  const switchId = `switch-${Math.random().toString(36).slice(2, 11)}`
+  return (
+    <div className="switch-wrapper">
+      <SwitchPrimitives.Root id={props.id || switchId} className={cn('switch-root', className)} {...props} ref={ref}>
+        <SwitchPrimitives.Thumb className="switch-thumb" />
+      </SwitchPrimitives.Root>
+      {(label || description) && (
+        <div className="switch-label-wrapper">
+          {/* TODO: Design system: update to Label component once available */}
+          <label htmlFor={props.id || switchId} className="switch-label">
+            {(props.required ? `${label} *` : label) || ''}
+          </label>
+          {/* TODO: Design system: update to Text component once available */}
+          <p className="switch-description">{description || ''}</p>
+        </div>
       )}
-    />
-  </SwitchPrimitives.Root>
-))
+    </div>
+  )
+})
 Switch.displayName = SwitchPrimitives.Root.displayName
 
 export { Switch }

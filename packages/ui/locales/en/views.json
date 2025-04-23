@@ -227,6 +227,7 @@
     "noEntitiesDescription": "There are no entities yet. ",
     "noConnectors": "No connectors yet",
     "createConnector": "Create new connector.",
+    "noDelegates": "There are no delegates in this project yet.",
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
     "clearSearch": "Clear search",

@@ -559,6 +559,11 @@
           "$type": "color",
           "$value": "{blue.50}",
           "$description": "Background color for subdued blue surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{blue.100}",
+          "$description": "Hover background color for subdued blue surfaces."
         }
       },
       "surface": {
@@ -612,6 +617,11 @@
           "$type": "color",
           "$value": "{purple.50}",
           "$description": "Background color for subdued purple surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{purple.100}",
+          "$description": "Hover background color for subdued purple surfaces."
         }
       },
       "surface": {
@@ -665,6 +675,11 @@
           "$type": "color",
           "$value": "{brown.50}",
           "$description": "Background color for subdued brown surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{brown.100}",
+          "$description": "Hover background color for subdued brown surfaces."
         }
       },
       "surface": {
@@ -713,6 +728,11 @@
           "$type": "color",
           "$value": "{cyan.50}",
           "$description": "Background color for subdued cyan surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{cyan.100}",
+          "$description": "Hover background color for subdued cyan surfaces."
         }
       },
       "surface": {
@@ -761,6 +781,11 @@
           "$type": "color",
           "$value": "{indigo.50}",
           "$description": "Background color for subdued indigo surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{indigo.100}",
+          "$description": "Hover background color for subdued indigo surfaces."
         }
       },
       "surface": {
@@ -809,6 +834,11 @@
           "$type": "color",
           "$value": "{lime.50}",
           "$description": "Background color for subdued lime surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{lime.100}",
+          "$description": "Hover background color for subdued lime surfaces."
         }
       },
       "surface": {
@@ -857,6 +887,11 @@
           "$type": "color",
           "$value": "{mint.50}",
           "$description": "Background color for subdued mint surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{mint.100}",
+          "$description": "Hover background color for subdued mint surfaces."
         }
       },
       "surface": {
@@ -905,6 +940,11 @@
           "$type": "color",
           "$value": "{orange.50}",
           "$description": "Background color for subdued orange surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{orange.100}",
+          "$description": "Hover background color for subdued orange surfaces."
         }
       },
       "surface": {
@@ -953,6 +993,11 @@
           "$type": "color",
           "$value": "{pink.50}",
           "$description": "Background color for subdued pink surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{pink.100}",
+          "$description": "Hover background color for subdued pink surfaces."
         }
       },
       "surface": {
@@ -1001,6 +1046,11 @@
           "$type": "color",
           "$value": "{violet.50}",
           "$description": "Background color for subdued violet surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{violet.100}",
+          "$description": "Hover background color for subdued violet surfaces."
         }
       },
       "surface": {
@@ -1917,6 +1967,12 @@
     "lg": {
       "$type": "borderWidth",
       "$value": "2"
+    }
+  },
+  "disabled": {
+    "opacity": {
+      "$type": "opacity",
+      "$value": "{opacity.50}"
     }
   }
 }

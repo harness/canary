@@ -10,6 +10,8 @@ import { ConnectorsDetailsPageWrapper } from '@subjects/views/connectors/connect
 import { ConnectorsPage } from '@subjects/views/connectors/connectors'
 import { ConnectorInputExample } from '@subjects/views/connectors/connectors-input'
 import { ConnectorsListPageWrapper } from '@subjects/views/connectors/connectors-list'
+import { DelegateConnectivityWrapper } from '@subjects/views/delegates/delegate-connectivity'
+import { DelegateSelector } from '@subjects/views/delegates/delegate-selector'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
@@ -526,6 +528,14 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'connector-reference': {
         label: 'Connector Reference',
         element: <ConnectorInputExample />
+      },
+      'delegate-selector': {
+        label: 'Delegate Selector',
+        element: <DelegateSelector />
+      },
+      'delegate-connectivity': {
+        label: 'Delegate Connectivity',
+        element: <DelegateConnectivityWrapper />
       }
     }
   },

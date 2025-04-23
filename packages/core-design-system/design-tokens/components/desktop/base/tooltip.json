@@ -2,7 +2,7 @@
   "tooltip": {
     "radius": {
       "$type": "borderRadius",
-      "$value": "{rounded.3}"
+      "$value": "{rounded.2}"
     },
     "padding": {
       "py": {

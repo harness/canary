@@ -1972,5 +1972,11 @@
       "$type": "borderWidth",
       "$value": "2"
     }
+  },
+  "disabled": {
+    "opacity": {
+      "$type": "opacity",
+      "$value": "{opacity.50}"
+    }
   }
 }

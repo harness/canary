@@ -85,7 +85,7 @@
       },
       "default": {
         "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "$value": "{spacing.1}"
       }
     },
     "py": {
@@ -95,7 +95,7 @@
       },
       "default": {
         "$type": "spacing",
-        "$value": "{spacing.half}"
+        "$value": "{spacing.0}"
       }
     }
   }

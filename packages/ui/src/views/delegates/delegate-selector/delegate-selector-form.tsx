@@ -205,7 +205,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
         <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
           <ControlGroup>
             <ButtonGroup className="flex flex-row justify-between">
-              <Button type="button" variant="outline" onClick={onBack}>
+              <Button type="button" variant="ghost" onClick={onBack}>
                 Back
               </Button>
               <Button type="submit">

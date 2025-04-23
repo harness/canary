@@ -13,20 +13,20 @@ import { PipelineStudioInternal } from './unified-pipeline-studio-internal'
 
 export interface ITemplateListItem {
   identifier: string
-  version?: string
+  version: string
   description?: string
 }
 
 export interface ITemplateListStore {
   templates: ITemplateListItem[] | null
-  templatesError: { message: string }
+  templatesError?: Error
   setTemplatesData: (data: ITemplateListItem[] | null, totalPages: number) => void
   totalPages: number
   page: number
   xNextPage: number
   xPrevPage: number
   setPage: (page: number, query: string) => void
-  getTemplateFormDefinition: (identifier: string) => Promise<IFormDefinition>
+  getTemplateFormDefinition: (identifierWithVersion: string) => Promise<IFormDefinition>
 }
 
 export interface UnifiedPipelineStudioProps {

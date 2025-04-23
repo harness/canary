@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 
-import { Button, Drawer, Spacer } from '@components/index'
+import { Button, Drawer, SkeletonList } from '@components/index'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
 import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
 
@@ -77,7 +77,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
         <EntityFormSectionLayout.Root>
           <EntityFormSectionLayout.Form>
             {loading ? (
-              'Loading ...'
+              <SkeletonList className="p-5" />
             ) : (
               <div className="flex grow flex-col">
                 <RunPipelineFormInputs
@@ -108,7 +108,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
         </EntityFormSectionLayout.Root>
 
         <EntityFormLayout.Footer className="flex-col gap-4">
-          {error?.message && <p className="text-destructive text-xs">{error.message}</p>}
+          {error?.message && <p className="text-sm text-cn-foreground-danger">{error.message}</p>}
           <div className="flex gap-4">
             <Button
               disabled={(allowDisableRun && !isValid) || !isYamlSyntaxValid}

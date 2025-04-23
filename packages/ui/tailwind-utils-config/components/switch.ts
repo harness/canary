@@ -25,7 +25,8 @@ export default {
 
     '&:where([disabled])': {
       backgroundColor: `var(--cn-state-disabled-bg)`,
-      borderColor: `var(--cn-state-disabled-border)`
+      borderColor: `var(--cn-state-disabled-border)`,
+      cursor: 'not-allowed'
     },
 
     '&:where([data-state=checked])': {

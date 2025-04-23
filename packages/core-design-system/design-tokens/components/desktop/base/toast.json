@@ -19,7 +19,11 @@
     "textwrapper": {
       "gap": {
         "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "$value": "{spacing.2}"
+      },
+      "subgap": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
       }
     },
     "borderRadius": {

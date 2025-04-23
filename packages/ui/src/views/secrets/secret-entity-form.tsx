@@ -69,7 +69,7 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer className="border-none">
             <div className="bg-cn-background-2 absolute inset-x-0 bottom-0 flex justify-between gap-x-3 p-4 shadow-md">
-              <Button variant="secondary" onClick={() => onBack?.()}>
+              <Button variant="ghost" onClick={() => onBack?.()}>
                 Back
               </Button>
               <Button onClick={() => rootForm.submitForm()}>Submit</Button>

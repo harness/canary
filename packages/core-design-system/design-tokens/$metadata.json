@@ -29,7 +29,7 @@
     "mode/light/dimmer-tritanopia",
     "mode/light/high-contrast-tritanopia",
     "breakpoint/desktop",
-    "components/desktop/base/callout",
+    "components/desktop/base/alert",
     "components/desktop/base/accordion",
     "components/desktop/base/avatar",
     "components/desktop/base/btn",

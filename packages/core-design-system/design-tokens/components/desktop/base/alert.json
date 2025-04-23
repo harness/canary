@@ -10,12 +10,12 @@
     },
     "px": {
       "$type": "spacing",
-      "$value": "{layout.md}"
+      "$value": "{spacing.4}"
     },
     "wrapper": {
       "gap": {
         "$type": "spacing",
-        "$value": "{layout.xxs}"
+        "$value": "{spacing.1}"
       }
     },
     "borderRadius": {

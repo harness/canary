@@ -22,6 +22,7 @@ const Switch = forwardRef<
           <label htmlFor={props.id || switchId} className="switch-label">
             {(props.required ? `${label} *` : label) || ''}
           </label>
+          {/* TODO: Design system: update to Text component once available */}
           <p className="switch-description">{description || ''}</p>
         </div>
       )}

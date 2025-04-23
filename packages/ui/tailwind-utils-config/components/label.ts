@@ -20,8 +20,8 @@ export default {
     },
 
     '> .label-optional': {
-      color: 'var(--cn-text-3)',
-      verticalAlign: 'baseline'
+      font: 'var(--cn-body-normal)',
+      color: 'var(--cn-text-3)'
     }
   }
 }

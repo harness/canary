@@ -1,11 +1,10 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactNode } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { Informer, InformerProps } from '@/components'
+import { NonEmptyReactNode } from '@/types'
 import * as LabelPrimitive from '@radix-ui/react-label'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
-
-type NonEmptyReactNode = Exclude<ReactNode, boolean | null | undefined>
 
 const labelVariants = cva('label', {
   variants: {

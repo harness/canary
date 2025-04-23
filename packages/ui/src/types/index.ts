@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import { z } from 'zod'
 
 export interface TypesUser {
@@ -52,3 +54,5 @@ export interface PrincipalType {
   // TODO: need to add avatar
   avatar_url?: string
 }
+
+export type NonEmptyReactNode = Exclude<ReactNode, boolean | null | undefined>

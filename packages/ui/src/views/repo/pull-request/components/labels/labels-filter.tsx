@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+import { Badge } from '@components/badge/badge'
 import { Checkbox } from '@components/checkbox'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Input } from '@components/input'
@@ -100,5 +101,62 @@ export function LabelsFilter({
 
       {description && <div className="text-cn-foreground-3 mx-2 my-4 text-sm">{description}</div>}
     </>
+  )
+}
+
+export function getParserConfig() {
+  return {
+    parse: (value: string): LabelsValue => {
+      const result: LabelsValue = {}
+
+      value.split(';').forEach(entry => {
+        const [key, valueStr = ''] = entry.split(':')
+        if (!key) return
+        result[key] = valueStr === 'true' ? true : valueStr
+      })
+
+      return result
+    },
+    serialize: (value: LabelsValue): string => {
+      const parts = Object.entries(value)
+        .map(([key, val]) => {
+          if (!val) return ''
+          return `${key}:${val}`
+        })
+        .filter(Boolean)
+
+      return `${parts.join(';')}`
+    }
+  }
+}
+
+export interface FilterLabelRendererProps {
+  selectedValue?: LabelsValue
+  labelOptions: ILabelType[]
+  valueOptions: Record<string, LabelValueType[]>
+}
+
+export function filterLabelRenderer({ selectedValue, labelOptions, valueOptions }: FilterLabelRendererProps) {
+  const labelValuesArr = Object.entries(selectedValue ?? {})
+  const [firstKey, firstValue] = labelValuesArr[0] || []
+  if (!firstValue) return ''
+
+  const labelDetails = labelOptions.find(label => String(label.id) === firstKey)
+  const valueDetails = valueOptions[labelDetails?.key ?? '']?.find(value => String(value.id) === firstValue)
+
+  const remainingLabelValues = labelValuesArr.length - 1
+  return (
+    <div className="flex w-max items-center gap-1">
+      {labelDetails && (
+        <LabelMarker
+          key={firstKey}
+          color={labelDetails.color}
+          label={labelDetails.key}
+          value={valueDetails?.value || ''}
+        />
+      )}
+
+      {remainingLabelValues > 0 && <Badge size="sm" variant="counter">{`+ ${remainingLabelValues}`}</Badge>}
+    </div>
   )
 }

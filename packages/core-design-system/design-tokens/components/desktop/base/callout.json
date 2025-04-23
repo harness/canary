@@ -2,11 +2,11 @@
   "alert": {
     "gap": {
       "$type": "spacing",
-      "$value": "{spacing.3}"
+      "$value": "{spacing.2}"
     },
     "py": {
       "$type": "spacing",
-      "$value": "{layout.md}"
+      "$value": "{spacing.3}"
     },
     "px": {
       "$type": "spacing",
@@ -15,12 +15,12 @@
     "wrapper": {
       "gap": {
         "$type": "spacing",
-        "$value": "{spacing.1}"
+        "$value": "{layout.xxs}"
       }
     },
     "borderRadius": {
       "$type": "borderRadius",
-      "$value": "{rounded.4}"
+      "$value": "{rounded.2}"
     }
   }
 }

@@ -1,14 +1,20 @@
 {
   "toast": {
-    "wrapper": {
-      "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.3}"
-      }
-    },
-    "padding": {
+    "pr": {
       "$type": "spacing",
-      "$value": "{spacing.4}"
+      "$value": "{spacing.7}"
+    },
+    "pl": {
+      "$type": "spacing",
+      "$value": "{spacing.5}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.3}"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.3}"
     },
     "textwrapper": {
       "gap": {

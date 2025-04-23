@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 
-import { ITemplateListStore } from '@harnessio/ui/views'
+import { ITemplateListItem, ITemplateListStore } from '@harnessio/ui/views'
 
 import { templateStepForm } from './mocks/template-step-form'
 
 export const useTemplateListStore = (): ITemplateListStore => {
-  const [templates, setTemplates] = useState<{ identifier: string; description?: string }[] | null>([])
+  const [templates, setTemplates] = useState<ITemplateListItem[] | null>([])
   const [totalPages, setTotalPages] = useState(1)
 
-  const setTemplatesData = (templates: { identifier: string; description?: string }[] | null, pagesCount: number) => {
+  const setTemplatesData = (templates: ITemplateListItem[] | null, pagesCount: number) => {
     setTemplates(templates)
     setTotalPages(pagesCount)
   }
@@ -22,6 +22,7 @@ export const useTemplateListStore = (): ITemplateListStore => {
         const itemIdx = index + 10 * (page - 1)
         return {
           identifier: `template-${itemIdx}`,
+          version: '1.0.0',
           description: `Description for template ${itemIdx}`
         }
       })

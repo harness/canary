@@ -1,4 +1,5 @@
 import { Button, Icon, Logo, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
 import { ExecutionState } from '@views/repo/pull-request'
@@ -30,6 +31,7 @@ export function ConnectorsList({
   onDeleteConnector,
   onToggleFavoriteConnector
 }: ConnectorListProps): JSX.Element {
+  const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
 
   if (isLoading) {
@@ -76,7 +78,7 @@ export function ConnectorsList({
               <Table.Row
                 key={identifier}
                 className="cursor-pointer py-4"
-                onClick={() => toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt })}
+                onClick={() => navigate(`${toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt })}`)}
               >
                 <Table.Cell className="max-w-[282px] content-center truncate !py-5">
                   <div className="flex items-center gap-2.5">

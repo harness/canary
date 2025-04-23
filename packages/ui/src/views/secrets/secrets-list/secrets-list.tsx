@@ -1,4 +1,5 @@
 import { Icon, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { useRouterContext } from '@/context'
 import { timeAgo } from '@utils/utils'
 
 import { SecretListProps } from './types'
@@ -14,6 +15,7 @@ export function SecretList({
   toSecretDetails,
   onDeleteSecret
 }: SecretListProps): JSX.Element {
+  const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
 
   if (isLoading) {
@@ -53,7 +55,11 @@ export function SecretList({
       ) : (
         <Table.Body>
           {secrets.map(secret => (
-            <Table.Row key={secret.identifier} className="cursor-pointer" onClick={() => toSecretDetails?.(secret)}>
+            <Table.Row
+              key={secret.identifier}
+              className="cursor-pointer"
+              onClick={() => navigate(`${toSecretDetails?.(secret)}`)}
+            >
               <Table.Cell className="w-[361px] content-center truncate">
                 <div className="flex items-center gap-2.5 !py-2.5">
                   <Icon name="ssh-key" size={24} />

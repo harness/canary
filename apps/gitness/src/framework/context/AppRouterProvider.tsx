@@ -1,5 +1,14 @@
 import { FC, ReactNode } from 'react'
-import { Link, NavLink, Outlet, useLocation, useMatches, useNavigate, useSearchParams } from 'react-router-dom'
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useMatches,
+  useNavigate,
+  useParams,
+  useSearchParams
+} from 'react-router-dom'
 
 import { RouterContextProvider } from '@harnessio/ui/context'
 
@@ -20,6 +29,7 @@ const AppRouterProvider: FC<AppRouterProviderProps> = ({ children }) => {
       navigate={navigate}
       useSearchParams={useSearchParams}
       useMatches={useMatches}
+      useParams={useParams}
     >
       {children}
     </RouterContextProvider>

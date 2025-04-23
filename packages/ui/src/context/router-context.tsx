@@ -1,5 +1,13 @@
 import { ComponentType, createContext, ReactNode, useContext } from 'react'
-import type { LinkProps, Location, NavigateFunction, NavLinkProps, OutletProps, UIMatch } from 'react-router-dom'
+import type {
+  LinkProps,
+  Location,
+  NavigateFunction,
+  NavLinkProps,
+  OutletProps,
+  Params,
+  UIMatch
+} from 'react-router-dom'
 
 import { RouterContextProvider as FiltersRouterContextProvider } from '@harnessio/filters'
 
@@ -49,6 +57,10 @@ const useMatchesDefault = (): UIMatch[] => {
   return []
 }
 
+const useParamsDefault = (): Params => {
+  return {}
+}
+
 const defaultLocation: Location = { ...window.location, state: {}, key: '' }
 
 interface RouterContextType {
@@ -59,6 +71,7 @@ interface RouterContextType {
   navigate: NavigateFunction
   useSearchParams: typeof useSearchParamsDefault
   useMatches: typeof useMatchesDefault
+  useParams: typeof useParamsDefault
 }
 
 const RouterContext = createContext<RouterContextType>({
@@ -68,7 +81,8 @@ const RouterContext = createContext<RouterContextType>({
   location: defaultLocation,
   navigate: navigateFnDefault,
   useSearchParams: useSearchParamsDefault,
-  useMatches: useMatchesDefault
+  useMatches: useMatchesDefault,
+  useParams: useParamsDefault
 })
 
 export const useRouterContext = () => useContext(RouterContext)
@@ -81,7 +95,8 @@ export const RouterContextProvider = ({
   location = defaultLocation,
   navigate = navigateFnDefault,
   useSearchParams = useSearchParamsDefault,
-  useMatches = useMatchesDefault
+  useMatches = useMatchesDefault,
+  useParams = useParamsDefault
 }: {
   children: ReactNode
 } & Partial<RouterContextType>) => {
@@ -94,7 +109,8 @@ export const RouterContextProvider = ({
         location,
         navigate,
         useSearchParams,
-        useMatches
+        useMatches,
+        useParams
       }}
     >
       <FiltersRouterContextProvider location={location} navigate={navigate}>

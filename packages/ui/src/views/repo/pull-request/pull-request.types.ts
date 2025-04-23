@@ -229,6 +229,7 @@ export interface PRListLabelType {
 export interface PullRequestPageProps {
   usePullRequestListStore: () => PullRequestListStore
   useLabelsStore: () => ILabelsStore
+  onFilterOpen?: (filter: keyof PRListFilters) => void
   repoId?: string
   spaceId?: string
   defaultSelectedAuthorError?: UsererrorError | null

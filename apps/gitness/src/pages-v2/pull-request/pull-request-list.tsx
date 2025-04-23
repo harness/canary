@@ -28,10 +28,11 @@ export default function PullRequestListPage() {
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
+  const [populateLabelStore, setPopulateLabelStore] = useState(false)
   const [searchParams] = useSearchParams()
   const defaultAuthorId = searchParams.get('created_by')
   const mfeContext = useMFEContext()
-  usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: true, inherited: true })
+  usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
@@ -81,6 +82,12 @@ export default function PullRequestListPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, queryPage, setPage])
 
+  useEffect(() => {
+    if (searchParams.get('label_by')) {
+      setPopulateLabelStore(true)
+    }
+  }, [searchParams])
+
   return (
     <SandboxPullRequestListPage
       repoId={repoId}
@@ -95,33 +102,38 @@ export default function PullRequestListPage() {
       useLabelsStore={useLabelsStore}
       usePullRequestListStore={usePullRequestListStore}
       useTranslationStore={useTranslationStore}
+      onFilterOpen={(filterValues: keyof PRListFilters) => {
+        if (filterValues === 'label_by') {
+          setPopulateLabelStore(true)
+        }
+      }}
       onFilterChange={(filterData: PRListFilters) => {
         setFilterValues(
-          Object.entries(filterData).reduce(
-            (acc: Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>, [key, value]) => {
-              if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
-                acc[key] = value.getTime().toString()
-              }
-              if (key === 'created_by' && 'value' in value && !(value.value instanceof Object)) {
-                acc[key] = value.value
-              }
-              if (key === 'label_by') {
-                const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
-                const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
-                  if (value.isSelected) {
-                    labelAcc.labelId.push(labelKey)
-                  }
-                  value.value && labelAcc.valueId.push(value.value)
-                  return labelAcc
-                }, defaultLabel)
+          Object.entries(filterData).reduce<
+            Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>
+          >((acc, [key, value]) => {
+            if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
+              acc[key] = value.getTime().toString()
+            }
+            if (key === 'created_by' && 'value' in value) {
+              acc[key] = value.value
+            }
+            if (key === 'label_by') {
+              const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
+              const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
+                if (value === true) {
+                  labelAcc.labelId.push(labelKey)
+                } else if (value) {
+                  labelAcc.valueId.push(value)
+                }
+                return labelAcc
+              }, defaultLabel)
 
-                acc['label_id'] = labelId.map(Number)
-                acc['value_id'] = valueId.map(Number)
-              }
-              return acc
-            },
-            {}
-          )
+              acc['label_id'] = labelId.map(Number)
+              acc['value_id'] = valueId.map(Number)
+            }
+            return acc
+          }, {})
         )
       }}
       searchQuery={query}

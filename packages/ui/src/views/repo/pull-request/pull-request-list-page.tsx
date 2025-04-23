@@ -1,9 +1,19 @@
 import { FC, ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Spacer, StackedList } from '@/components'
+import {
+  Badge,
+  Button,
+  ListActions,
+  NoData,
+  Pagination,
+  SearchBox,
+  SkeletonList,
+  Spacer,
+  StackedList
+} from '@/components'
 import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
-import { SandboxLayout } from '@/views'
+import { LabelMarker, SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
 import FilterTrigger from '@components/filters/triggers/filter-trigger'
 import { CustomFilterOptionConfig, FilterFieldTypes } from '@components/filters/types'
@@ -30,6 +40,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   spaceId,
   repoId,
   onFilterChange,
+  onFilterOpen,
   defaultSelectedAuthorError,
   setPrincipalsSearchQuery,
   principalsSearchQuery,
@@ -64,23 +75,18 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         const result: LabelsValue = {}
 
         value.split(';').forEach(entry => {
-          const [key, isSelectedStr, valueStr = ''] = entry.split(':')
+          const [key, valueStr = ''] = entry.split(':')
           if (!key) return
-          result[key] = {
-            isSelected: isSelectedStr === 'true',
-            value: valueStr
-          }
+          result[key] = valueStr === 'true' ? true : valueStr
         })
 
         return result
       },
       serialize: (value: LabelsValue): string => {
         const parts = Object.entries(value)
-          .map(([key, obj]) => {
-            if (!obj) return ''
-            const isSelected = obj.isSelected.toString()
-            const value = obj.value ?? '' // 👈 empty string instead of 'null'
-            return `${key}:${isSelected}:${value}`
+          .map(([key, val]) => {
+            if (!val) return ''
+            return `${key}:${val}`
           })
           .filter(Boolean)
 
@@ -98,6 +104,37 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             onChange={onChange}
             value={value}
           />
+        )
+      },
+      renderFilterLabel: (value?: LabelsValue) => {
+        const labelValuesArr = Object.entries(value ?? {}).filter(([_, val]) => val === true || val)
+        const [firstKey, firstValue] = labelValuesArr[0] || []
+        if (!firstValue) return ''
+
+        const labelDetails = labels.find(label => String(label.id) === firstKey)
+        const valueDetails = labelValueOptions[labelDetails?.key ?? '']?.find(value => String(value.id) === firstValue)
+
+        const remainingLabelValues = labelValuesArr.length - 1
+        return (
+          <div className="flex w-max gap-1">
+            {labelDetails && (
+              <LabelMarker
+                key={firstKey}
+                color={labelDetails.color}
+                label={labelDetails.key}
+                value={valueDetails?.value || ''}
+              />
+            )}
+
+            {remainingLabelValues > 0 && (
+              <Badge
+                size="sm"
+                className="text-xs"
+                variant="counter"
+                theme="primary"
+              >{`+ ${remainingLabelValues}`}</Badge>
+            )}
+          </div>
         )
       }
     }
@@ -228,6 +265,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       // Reset search query so that new principal data set would be fetched
       // when the filter is opened
       setPrincipalsSearchQuery?.('')
+    }
+
+    if (isOpen) {
+      onFilterOpen?.(filterValues)
     }
   }
 

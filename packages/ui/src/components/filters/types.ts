@@ -211,6 +211,7 @@ export interface CustomFilterOptionConfig<T extends string = string, V = Record<
   type: FilterFieldTypes.Custom
   filterFieldConfig: {
     renderCustomComponent: ({ value, onChange }: { value?: V; onChange: (value: V) => void }) => ReactNode
+    renderFilterLabel?: (value?: V) => ReactNode
   }
 }
 

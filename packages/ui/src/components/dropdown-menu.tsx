@@ -5,7 +5,7 @@ import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { ChevronRightIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
 
-import { Icon } from './icon'
+import { Checkbox } from './checkbox'
 
 const DropdownMenuRoot = DropdownMenuPrimitive.Root
 
@@ -47,7 +47,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      'focus:bg-cn-background-3 data-[state=open]:bg-cn-background-3 flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
+      'focus:bg-cn-background-3 focus:outline-none data-[state=open]:bg-cn-background-3 flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
       inset && 'pl-8',
       className
     )}
@@ -124,20 +124,19 @@ const DropdownMenuCheckboxItem = React.forwardRef<
   <DropdownMenuPrimitive.CheckboxItem
     ref={ref}
     className={cn(
-      'group relative flex cursor-pointer select-none items-center rounded-sm py-2 pl-8 pr-2 text-sm outline-none transition-colors',
+      'group relative flex cursor-pointer select-none items-center rounded-sm py-2 pl-2 pr-2 text-sm outline-none transition-colors',
       'data-[highlighted]:bg-cn-background-hover data-[highlighted]:text-cn-foreground-1 data-[highlighted]:outline-none',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className
     )}
     checked={checked}
     {...props}
+    asChild
   >
-    <span className="absolute left-2 flex size-4 items-center justify-center rounded-sm border border-cn-borders-9 group-data-[state=checked]:border-icons-2">
-      <DropdownMenuPrimitive.ItemIndicator className="flex size-full items-center justify-center bg-icons-2">
-        <Icon className="h-[7px] text-icons-5" name="checkbox" />
-      </DropdownMenuPrimitive.ItemIndicator>
-    </span>
-    <span className="text-2 text-cn-foreground-1">{children}</span>
+    <div className="flex items-center gap-x-2.5">
+      <Checkbox checked={checked} />
+      <span className="text-2 text-cn-foreground-1">{children}</span>
+    </div>
   </DropdownMenuPrimitive.CheckboxItem>
 ))
 DropdownMenuCheckboxItem.displayName = DropdownMenuPrimitive.CheckboxItem.displayName
@@ -149,7 +148,8 @@ const DropdownMenuRadioItem = React.forwardRef<
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
     className={cn(
-      'focus:bg-cn-background-3 focus:text-cn-foreground-1 relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'focus:bg-cn-background-3 focus:outline-none focus:text-cn-foreground-1 relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'data-[highlighted]:bg-cn-background-hover data-[highlighted]:text-cn-foreground-1 data-[highlighted]:outline-none',
       className
     )}
     {...props}

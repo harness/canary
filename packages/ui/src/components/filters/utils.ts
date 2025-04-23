@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import { format } from 'date-fns'
 
 import { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
@@ -109,7 +111,7 @@ export const getFilterLabelValue = <
 >(
   filterOption: FilterOptionConfig<T, CustomValue>,
   filter: FilterField<V>
-): string => {
+): ReactNode => {
   switch (filterOption.type) {
     case FilterFieldTypes.Calendar: {
       const filterValue = filter.value as Date
@@ -134,6 +136,9 @@ export const getFilterLabelValue = <
     }
     case FilterFieldTypes.Text: {
       return filter.value as string
+    }
+    case FilterFieldTypes.Custom: {
+      return filterOption.filterFieldConfig.renderFilterLabel?.(filter.value as CustomValue)
     }
     default:
       return ''

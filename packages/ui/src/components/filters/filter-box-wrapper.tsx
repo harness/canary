@@ -12,7 +12,7 @@ interface FiltersProps {
   filterLabel: string
   t: TFunction
   onOpenChange?: (open: boolean) => void
-  valueLabel?: string
+  valueLabel?: ReactNode
   contentClassName?: string
   children?: ReactNode
 }

@@ -1,7 +1,7 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-/** Variants */
-const variants = ['surface'] as const
+const variants = ['default', 'label', 'label-left', 'label-right'] as const
+const sizes = ['default', 'sm'] as const
 
 /**
  *  Themes
@@ -28,32 +28,103 @@ const themes = [
   'yellow'
 ] as const
 
-function createTagVariantStyles() {
+function createTagVariantStyles(variant: (typeof variants)[number], size: (typeof sizes)[number] = 'default') {
   const styles: CSSRuleObject = {}
 
-  variants.forEach(variant => {
-    themes.forEach(theme => {
-      const style: CSSRuleObject = {}
-      style[`backgroundColor`] = `var(--cn-set-${theme}-${variant}-bg)`
-      style[`color`] = `var(--cn-set-${theme}-${variant}-text)`
-      style[`borderColor`] = `var(--cn-set-${theme}-${variant}-border)`
+  themes.forEach(theme => {
+    const style: CSSRuleObject = {}
+    switch (variant) {
+      case 'default':
+        style[`color`] = `var(--cn-set-${theme}-surface-text)`
+        style[`backgroundColor`] = `var(--cn-set-${theme}-surface-bg)`
+        style[`borderColor`] = `var(--cn-set-${theme}-surface-border)`
+        style[`&:hover`] = {
+          backgroundColor: `var(--cn-set-${theme}-surface-bg-hover)`,
+          borderColor: `var(--cn-set-${theme}-surface-border)`
+        }
+        switch (size) {
+          case 'default':
+            style[`font`] = `var(--cn-body-tight-normal)`
+            break
+          case 'sm':
+            style[`font`] = `var(--cn-caption-tight-normal)`
+            break
+        }
+        break
+      case 'label':
+        style[`color`] = `var(--cn-set-${theme}-soft-text)`
+        style[`backgroundColor`] = `var(--cn-set-${theme}-soft-bg)`
+        style[`borderColor`] = `var(--cn-set-${theme}-soft-bg)`
+        style[`&:hover`] = {
+          backgroundColor: `var(--cn-set-${theme}-soft-bg-hover)`,
+          borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
+        }
+        break
+      case 'label-left':
+        style[`color`] = `var(--cn-set-${theme}-soft-text)`
+        style[`backgroundColor`] = `var(--cn-set-${theme}-soft-bg)`
+        style[`borderColor`] = `var(--cn-set-${theme}-soft-bg)`
+        style[`&:hover`] = {
+          backgroundColor: `var(--cn-set-${theme}-soft-bg-hover)`,
+          borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
+        }
+        break
+      case 'label-right':
+        style[`color`] = `var(--cn-set-${theme}-soft-text)`
+        style[`backgroundColor`] = `var(--cn-set-${theme}-surface-bg)`
+        style[`borderColor`] = `var(--cn-set-${theme}-soft-bg)`
+        style[`&:hover`] = {
+          backgroundColor: `var(--cn-set-${theme}-surface-bg)`,
+          borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
+        }
+        break
+    }
 
-      styles[`&:where(.tag-${variant}.tag-${theme})`] = style
-    })
+    styles[`&:where(.tag-${variant}.tag-${theme})`] = style
   })
 
   return styles
 }
 
 export default {
-  '.tag': {
-    border: 'var(--cn-tag-border) solid var(--cn-set-gray-surface-bg)',
+  '.tag-default': {
     display: 'inline-flex',
+    alignItems: 'center',
     padding: 'var(--cn-tag-py) var(--cn-tag-px)',
     gap: 'var(--cn-tag-gap)',
-    alignItems: 'center',
+    borderRadius: `var(--cn-tag-radius-full)`,
 
-    /** Variants */
-    ...createTagVariantStyles()
+    ...createTagVariantStyles('default'),
+    ...createTagVariantStyles('default', 'sm')
+  },
+  '.tag-label': {
+    font: `var(--cn-caption-tight-normal)`,
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: 'var(--cn-tag-py) var(--cn-tag-px)',
+    gap: 'var(--cn-tag-gap)',
+    borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`,
+
+    ...createTagVariantStyles('label')
+  },
+  '.tag-label-left': {
+    font: `var(--cn-caption-tight-normal)`,
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: 'var(--cn-tag-py) var(--cn-tag-px)',
+    gap: 'var(--cn-tag-gap)',
+    borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`,
+
+    ...createTagVariantStyles('label-left')
+  },
+  '.tag-label-right': {
+    font: `var(--cn-caption-tight-normal)`,
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: 'var(--cn-tag-py) var(--cn-tag-px)',
+    gap: 'var(--cn-tag-gap)',
+    borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
+
+    ...createTagVariantStyles('label-right')
   }
 }

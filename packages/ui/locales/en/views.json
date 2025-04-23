@@ -218,13 +218,13 @@
     "addFile": "Add file"
   },
   "noData": {
+    "noResults": "No search results",
     "noActivities": "No activities yet",
     "noActivitiesDescription": "There are no activities yet. ",
-    "noResults": "No search results",
-    "noEntities": "No entities yet",
-    "noEntitiesDescription": "There are no entities yet. ",
     "errorApiTitle": "Failed to load {{type}}",
     "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
+    "noEntities": "No entities yet",
+    "noEntitiesDescription": "There are no entities yet. ",
     "noConnectors": "No connectors yet",
     "createConnector": "Create new connector.",
     "checkSpelling": "Check your spelling and filter options,",

@@ -202,13 +202,13 @@
     "addFile": "Ajouter un fichier"
   },
   "noData": {
+    "noResults": "Aucun résultat de recherche",
     "noActivities": "Aucune activité disponible",
     "noActivitiesDescription": "Il n'y a pas d'activités disponibles.",
-    "noResults": "Aucun résultat de recherche",
-    "noEntities": "Aucune entité disponible",
-    "noEntitiesDescription": "Il n'y a pas d'entités disponibles.",
     "errorApiTitle": "Échec du chargement de {{type}}",
     "errorApiDescription": "Une erreur s'est produite lors du chargement des données. Veuillez réessayer et recharger la page.",
+    "noEntities": "Aucune entité disponible",
+    "noEntitiesDescription": "Il n'y a pas d'entités disponibles.",
     "noConnectors": "Aucun connecteur pour le moment",
     "createConnector": "Créez un nouveau connecteur.",
     "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",

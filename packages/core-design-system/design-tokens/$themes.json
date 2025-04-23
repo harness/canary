@@ -945,7 +945,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -1140,6 +1139,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -1520,7 +1520,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -1715,6 +1714,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -1778,7 +1778,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -2091,7 +2092,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -2286,6 +2286,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -2349,7 +2350,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -2662,7 +2664,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -2857,6 +2858,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -2920,7 +2922,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -3234,7 +3237,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -3429,6 +3431,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -3492,7 +3495,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -3806,7 +3810,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -4001,6 +4004,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -4064,7 +4068,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -4378,7 +4383,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -4573,6 +4577,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -4636,7 +4641,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -4950,7 +4956,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -5145,6 +5150,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -5208,7 +5214,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -5522,7 +5529,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -5717,6 +5723,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -5780,7 +5787,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -6094,7 +6102,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -6289,6 +6296,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -6352,7 +6360,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -6666,7 +6675,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -6861,6 +6869,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -6924,7 +6933,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -7238,7 +7248,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -7433,6 +7442,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -7496,7 +7506,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -7810,7 +7821,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -8005,6 +8015,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -8068,7 +8079,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -8381,7 +8393,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -8576,6 +8587,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -8639,7 +8651,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -8952,7 +8965,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -9147,6 +9159,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -9210,7 +9223,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -9523,7 +9537,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -9718,6 +9731,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -9781,7 +9795,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -10094,7 +10109,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -10289,6 +10303,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -10352,7 +10367,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -10665,7 +10681,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -10860,6 +10875,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -10923,7 +10939,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -11236,7 +11253,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -11431,6 +11447,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -11494,7 +11511,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -11831,7 +11849,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -12026,6 +12043,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -12089,7 +12107,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -12402,7 +12421,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -12597,6 +12615,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -12660,7 +12679,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -12973,7 +12993,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -13168,6 +13187,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -13231,7 +13251,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -13544,7 +13565,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -13739,6 +13759,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -13802,7 +13823,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -14115,7 +14137,6 @@
       "text.1": "38382b9984a98f9d26692a7f2882dfb5c5d51825",
       "text.2": "115f62efd02491e85a63dfd601b03725d3711f23",
       "text.3": "1c7327f01cf759b17fd0523cb540afa8700c1dc7",
-      "text.accent": "0b3cd5357659e6542cca163ccfd96c0cac059203",
       "text.success": "ee56057b81e6d0872a84ca6b29affc8911fe333e",
       "text.danger": "c7e38d7c7afc899f4d40392dbd6bc5ed6580264d",
       "text.warning": "b03334e4c9db4b76269e4be886df6c1abf74d0ca",
@@ -14310,6 +14331,7 @@
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.default": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
       "comp.link.visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
@@ -14373,7 +14395,8 @@
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
-      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a"
+      "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },

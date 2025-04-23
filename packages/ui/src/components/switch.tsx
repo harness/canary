@@ -9,19 +9,25 @@ const Switch = forwardRef<
     label?: string
     description?: string
   }
->(({ className, label, description, ...props }, ref) => (
-  <div className="switch-wrapper">
-    <SwitchPrimitives.Root className={cn('switch-root', className)} {...props} ref={ref}>
-      <SwitchPrimitives.Thumb className="switch-thumb" />
-    </SwitchPrimitives.Root>
-    {(label || description) && (
-      <div className="switch-label-wrapper">
-        <label className="switch-label">{(props.required ? `${label} *` : label) || ''}</label>
-        <label className="switch-description">{description || ''}</label>
-      </div>
-    )}
-  </div>
-))
+>(({ className, label, description, ...props }, ref) => {
+  const switchId = `switch-${Math.random().toString(36).slice(2, 11)}`
+  return (
+    <div className="switch-wrapper">
+      <SwitchPrimitives.Root id={props.id || switchId} className={cn('switch-root', className)} {...props} ref={ref}>
+        <SwitchPrimitives.Thumb className="switch-thumb" />
+      </SwitchPrimitives.Root>
+      {(label || description) && (
+        <div className="switch-label-wrapper">
+          {/* TODO: Design system: update to Label component once available */}
+          <label htmlFor={props.id || switchId} className="switch-label">
+            {(props.required ? `${label} *` : label) || ''}
+          </label>
+          <p className="switch-description">{description || ''}</p>
+        </div>
+      )}
+    </div>
+  )
+})
 Switch.displayName = SwitchPrimitives.Root.displayName
 
 export { Switch }

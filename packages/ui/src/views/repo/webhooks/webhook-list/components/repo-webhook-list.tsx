@@ -105,7 +105,7 @@ export function RepoWebhookList({
               }
               key={webhook.id}
             >
-              <Table.Cell>
+              <Table.Cell className="cursor-pointer">
                 <Switch
                   checked={webhook.enabled}
                   onClick={e => e.stopPropagation()}

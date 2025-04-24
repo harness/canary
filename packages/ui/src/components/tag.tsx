@@ -1,4 +1,3 @@
-import { Button } from '@components/button'
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 import { getCSSVarValue } from '@utils/utils'

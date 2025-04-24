@@ -121,7 +121,7 @@ function Tag({
 
 function TagSplit(props: TagProps) {
   return (
-    <div className="w-fit flex items-center justify-center cursor-pointer">
+    <div className="w-fit flex items-center justify-center cursor-pointer tag-split">
       <Tag
         variant={props.variant}
         size={props.size}
@@ -131,7 +131,7 @@ function TagSplit(props: TagProps) {
         showIcon={props.showIcon}
         showReset={false}
         value={props.keyName || ''}
-        className="tag-split-left"
+        className={`tag-split-left pointer-events-none`}
       />
       <Tag
         variant={props.variant}
@@ -143,7 +143,7 @@ function TagSplit(props: TagProps) {
         onReset={props.onReset}
         value={props.value}
         showIcon={false}
-        className="tag-split-right"
+        className={`tag-split-right pointer-events-none`}
       />
     </div>
   )

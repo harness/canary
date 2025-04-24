@@ -31,7 +31,6 @@ const tagVariants = cva('w-fit transition-colors', {
       yellow: 'tag-yellow'
     }
   },
-
   defaultVariants: {
     variant: 'outline',
     size: 'default',
@@ -39,7 +38,6 @@ const tagVariants = cva('w-fit transition-colors', {
   }
 })
 
-// Base props without theme-specific requirements
 type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> & {
   variant?: VariantProps<typeof tagVariants>['variant']
   size?: VariantProps<typeof tagVariants>['size']
@@ -67,83 +65,60 @@ function Tag({
   className,
   ...props
 }: TagProps) {
-  return keyName ? (
-    <TagSplit
-      variant={variant}
-      size={size}
-      theme={theme}
-      rounded={rounded}
-      icon={icon}
-      showIcon={showIcon}
-      showReset={showReset}
-      onReset={onReset}
-      keyName={keyName}
-      value={value}
-    />
-  ) : (
+  if (keyName) {
+    return <TagSplit {...{ variant, size, theme, rounded, icon, showIcon, showReset, onReset, keyName, value }} />
+  }
+
+  const fillColor = getCSSVarValue(`--cn-set-${theme || 'gray'}-surface-text`)
+  const baseIconProps = {
+    fill: fillColor,
+    width: getCSSVarValue('--icon-size-default') || '16px',
+    height: getCSSVarValue('--icon-size-default') || '16px'
+  }
+  const resetIconProps = {
+    fill: fillColor,
+    width: getCSSVarValue('--icon-size-xs') || '12px',
+    height: getCSSVarValue('--icon-size-xs') || '12px'
+  }
+
+  return (
     <div
       tabIndex={-1}
-      className={cn(
-        tagVariants({
-          variant,
-          size,
-          theme
-        }),
-        keyName ? 'tag-split-right' : '',
-        rounded ? 'tag-rounded' : '',
-        'cursor-pointer',
-        className
-      )}
+      className={cn(tagVariants({ variant, size, theme }), rounded && 'tag-rounded', 'cursor-pointer', className)}
       {...props}
     >
-      {!keyName && showIcon ? (
-        <Icon
-          name={icon || 'tag-new'}
-          fill={getCSSVarValue(`--cn-set-${theme || 'gray'}-surface-text`)}
-          width={getCSSVarValue('--icon-size-default') || '16px'}
-          height={getCSSVarValue('--icon-size-default') || '16px'}
-        />
-      ) : null}
+      {showIcon && <Icon name={icon || 'tag-new'} {...baseIconProps} />}
       {value}
-      {showReset ? (
-        <Icon
-          name="close-new"
-          fill={getCSSVarValue(`--cn-set-${theme || 'gray'}-surface-text`)}
-          width={getCSSVarValue('--icon-size-xs') || '12px'}
-          height={getCSSVarValue('--icon-size-xs') || '12px'}
-          role="button"
-          onClick={onReset}
-        />
-      ) : null}
+      {showReset && <Icon name="close-new" {...resetIconProps} role="button" onClick={onReset} />}
     </div>
   )
 }
 
 function TagSplit(props: TagProps) {
+  const sharedProps = {
+    variant: props.variant,
+    size: props.size,
+    theme: props.theme,
+    rounded: props.rounded,
+    icon: props.icon
+  }
+
   return (
     <div className="w-fit flex items-center justify-center cursor-pointer tag-split">
       <Tag
-        variant={props.variant}
-        size={props.size}
-        theme={props.theme}
-        rounded={props.rounded}
-        icon={props.icon}
-        showIcon={props.showIcon}
+        {...sharedProps}
         showReset={false}
+        showIcon={props.showIcon}
         value={props.keyName || ''}
-        className={`tag-split-left pointer-events-none`}
+        className="tag-split-left pointer-events-none"
       />
       <Tag
-        variant={props.variant}
-        size={props.size}
-        theme={props.theme}
-        rounded={props.rounded}
-        icon={props.icon}
+        {...sharedProps}
+        showIcon={false}
         showReset={props.showReset}
         onReset={props.onReset}
         value={props.value}
-        showIcon={false}
-        className={`tag-split-right pointer-events-none`}
+        className="tag-split-right pointer-events-none"
       />
     </div>
   )

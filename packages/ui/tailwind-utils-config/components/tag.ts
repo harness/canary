@@ -42,7 +42,7 @@ function createTagVariantStyles(variant: (typeof variants)[number]) {
           backgroundColor: `var(--cn-set-${theme}-surface-bg-hover)`,
           borderColor: `var(--cn-set-${theme}-surface-border)`
         }
-        style[`&:.tag-split-right`] = {
+        style[`&.tag-split-right`] = {
           borderColor: `var(--cn-set-${theme}-soft-bg)`,
           '&:hover': {
             borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
@@ -57,7 +57,7 @@ function createTagVariantStyles(variant: (typeof variants)[number]) {
           backgroundColor: `var(--cn-set-${theme}-soft-bg-hover)`,
           borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
         }
-        style[`&:.tag-split-right`] = {
+        style[`&.tag-split-right`] = {
           backgroundColor: `var(--cn-set-${theme}-surface-bg)`,
           '&:hover': {
             backgroundColor: `var(--cn-set-${theme}-surface-bg-hover)`
@@ -67,6 +67,8 @@ function createTagVariantStyles(variant: (typeof variants)[number]) {
     }
 
     styles[`&:where(.tag-${theme})`] = style
+    styles[`&:where(.tag-split-left)`] = style
+    styles[`&:where(.tag-split-right)`] = style
   })
 
   return styles

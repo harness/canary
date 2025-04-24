@@ -67,20 +67,58 @@ function Tag({
   ...props
 }: TagProps) {
   return (
-    <div className="w-fit flex items-center justify-center">
-      {keyName ? (
-        <Tag
-          variant={variant}
-          size={size}
-          theme={theme}
-          rounded={rounded}
-          icon={icon}
-          showIcon={showIcon}
-          showReset={false}
-          value={keyName}
-          className="tag-split-left"
-        />
-      ) : null}
+    // <div className="w-fit flex items-center justify-center hover:tag-hover">
+    //   {keyName ? (
+    //     <Tag
+    //       variant={variant}
+    //       size={size}
+    //       theme={theme}
+    //       rounded={rounded}
+    //       icon={icon}
+    //       showIcon={showIcon}
+    //       showReset={false}
+    //       value={keyName}
+    //       className="tag-split-left"
+    //     />
+    //   ) : null}
+    //   <div
+    //     tabIndex={-1}
+    //     className={cn(
+    //       tagVariants({
+    //         variant,
+    //         size,
+    //         theme
+    //       }),
+    //       keyName ? 'tag-split-right' : '',
+    //       rounded ? 'tag-rounded' : '',
+    //       className
+    //     )}
+    //     {...props}
+    //   >
+    //     {!keyName && showIcon ? <Icon name={icon || 'tag'} /> : null}
+    //     {value}
+    //     {showReset ? (
+    //       <Button onClick={onReset} variant="ghost">
+    //         <Icon name="close" className="font-xs" />
+    //       </Button>
+    //     ) : null}
+    //   </div>
+    // </div>
+
+    keyName ? (
+      <TagSplit
+        variant={variant}
+        size={size}
+        theme={theme}
+        rounded={rounded}
+        icon={icon}
+        showIcon={showIcon}
+        showReset={showReset}
+        onReset={onReset}
+        keyName={keyName}
+        value={value}
+      />
+    ) : (
       <div
         tabIndex={-1}
         className={cn(
@@ -95,14 +133,40 @@ function Tag({
         )}
         {...props}
       >
-        {!keyName && showIcon ? <Icon name={icon || 'tag'} /> : null}
+        {!keyName && showIcon ? <Icon name={icon || 'tag-new'} size={size === 'sm' ? 14 : 16} /> : null}
         {value}
-        {showReset ? (
-          <Button onClick={onReset} variant="ghost">
-            <Icon name="close" className="font-xs" />
-          </Button>
-        ) : null}
+        {showReset ? <Icon name="close-new" size={size === 'sm' ? 14 : 16} role="button" onClick={onReset} /> : null}
       </div>
+    )
+  )
+}
+
+function TagSplit(props: TagProps) {
+  return (
+    <div className="w-fit flex items-center justify-center">
+      <Tag
+        variant={props.variant}
+        size={props.size}
+        theme={props.theme}
+        rounded={props.rounded}
+        icon={props.icon}
+        showIcon={props.showIcon}
+        showReset={false}
+        value={props.keyName || ''}
+        className="tag-split-left"
+      />
+      <Tag
+        variant={props.variant}
+        size={props.size}
+        theme={props.theme}
+        rounded={props.rounded}
+        icon={props.icon}
+        showReset={props.showReset}
+        onReset={props.onReset}
+        value={props.value}
+        showIcon={false}
+        className="tag-split-right"
+      />
     </div>
   )
 }

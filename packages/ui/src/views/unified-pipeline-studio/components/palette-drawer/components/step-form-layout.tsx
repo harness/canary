@@ -6,7 +6,7 @@ const StepFormLayout = {
   },
 
   Header: function Header({ children }: { children: React.ReactNode }) {
-    return <div className={`border-b p-4`}>{children}</div>
+    return <div className="border-b px-6 py-5">{children}</div>
   },
 
   Title: function Title({ children }: { children: React.ReactNode }) {
@@ -21,8 +21,26 @@ const StepFormLayout = {
     return <div className="my-3">{children}</div>
   },
 
-  Footer: function Footer({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('flex flex-row justify-between border-t p-4', className)}>{children}</div>
+  Footer: function Footer({
+    children,
+    className,
+    withBorder = false
+  }: {
+    children: React.ReactNode
+    className?: string
+    withBorder?: boolean
+  }) {
+    return (
+      <div
+        className={cn(
+          'flex flex-row justify-between px-6 py-5',
+          withBorder && 'border-t border-cn-borders-3',
+          className
+        )}
+      >
+        {children}
+      </div>
+    )
   }
 }
 

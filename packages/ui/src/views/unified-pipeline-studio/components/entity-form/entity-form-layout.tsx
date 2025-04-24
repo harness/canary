@@ -5,8 +5,8 @@ const EntityFormLayout = {
     return <div className="flex h-full flex-col overflow-hidden">{children}</div>
   },
 
-  Header: function Header({ children }: { children: React.ReactNode }) {
-    return <div className={`border-b px-5 pt-4`}>{children}</div>
+  Header: function Header({ children, withBorder = false }: { children: React.ReactNode; withBorder?: boolean }) {
+    return <div className={cn('border-b px-6 py-5', withBorder && 'border-b border-cn-borders-3')}>{children}</div>
   },
 
   Title: function Title({ children }: { children: React.ReactNode }) {
@@ -21,8 +21,26 @@ const EntityFormLayout = {
     return <div className="my-3 flex gap-x-3">{children}</div>
   },
 
-  Footer: function Footer({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('flex flex-row justify-between border-t p-5', className)}>{children}</div>
+  Footer: function Footer({
+    children,
+    className,
+    withBorder = false
+  }: {
+    children: React.ReactNode
+    className?: string
+    withBorder?: boolean
+  }) {
+    return (
+      <div
+        className={cn(
+          'flex flex-row justify-between px-6 py-5',
+          withBorder && 'border-t border-cn-borders-3',
+          className
+        )}
+      >
+        {children}
+      </div>
+    )
   }
 }
 

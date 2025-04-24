@@ -43,8 +43,8 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
 
   return (
     <ConnectorsPaletteLayout.Root>
-      <ConnectorsPaletteLayout.Header className="!border-none !p-0">
-        <ConnectorsPaletteLayout.Title className="!mt-0">{title}</ConnectorsPaletteLayout.Title>
+      <ConnectorsPaletteLayout.Header withBorder>
+        <ConnectorsPaletteLayout.Title>{title}</ConnectorsPaletteLayout.Title>
         <ConnectorsPaletteLayout.Subtitle className="text-cn-foreground-2">{subtitle}</ConnectorsPaletteLayout.Subtitle>
         <Input
           placeholder={'Search'}
@@ -53,7 +53,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
           }}
         />
       </ConnectorsPaletteLayout.Header>
-      <StepsPaletteContentLayout.Root className="px-0">
+      <StepsPaletteContentLayout.Root>
         <ConnectorsPaletteSection
           connectors={connectorsFiltered}
           onSelect={connector => {
@@ -68,12 +68,10 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
         />
         <Spacer size={8} />
       </StepsPaletteContentLayout.Root>
-      <StepFormLayout.Footer className="border-none">
-        <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
-          <Button variant="outline" onClick={requestClose}>
-            Cancel
-          </Button>
-        </div>
+      <StepFormLayout.Footer withBorder>
+        <Button variant="outline" onClick={requestClose}>
+          Cancel
+        </Button>
       </StepFormLayout.Footer>
     </ConnectorsPaletteLayout.Root>
   )

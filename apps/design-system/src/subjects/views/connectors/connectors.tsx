@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
 import { useTranslationStore } from '@utils/viewUtils'
-import noop from 'lodash-es/noop'
 
 import { InputFactory } from '@harnessio/forms'
 import { Button, Drawer, ListActions, Spacer } from '@harnessio/ui/components'
@@ -37,13 +36,32 @@ inputComponentFactory.registerComponent(new SelectInput())
 inputComponentFactory.registerComponent(new SeparatorInput())
 inputComponentFactory.registerComponent(new RadialInput())
 
+const CONNECTOR_VIEWS = {
+  PALETTE: 'palette',
+  FORM: 'form'
+} as const
+
+type ConnectorView = (typeof CONNECTOR_VIEWS)[keyof typeof CONNECTOR_VIEWS]
+
 const ConnectorsListPageContent = (): JSX.Element => {
   const [connectorEntity, setConnectorEntity] = useState<ConnectorEntity | null>(null)
-  const [isConnectorDrawerOpen, setIsConnectorDrawerOpen] = useState(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [currentView, setCurrentView] = useState<ConnectorView>(CONNECTOR_VIEWS.PALETTE)
   const [isEditConnectorDrawerOpen, setIsEditConnectorDrawerOpen] = useState(false)
-  const [isConnectorSelected, setIsConnectorSelected] = useState(false)
   const [intent, setIntent] = useState<EntityIntent>(EntityIntent.CREATE)
   const [testConnectionOpen, setTestConnectionOpen] = useState(false)
+
+  const handleClose = () => {
+    setIsDrawerOpen(false)
+    setCurrentView(CONNECTOR_VIEWS.PALETTE)
+    setConnectorEntity(null)
+  }
+
+  const handleBack = () => {
+    setCurrentView(CONNECTOR_VIEWS.PALETTE)
+    setConnectorEntity(null)
+  }
+
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
@@ -54,7 +72,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
             <ListActions.Right>
               <Button
                 onClick={() => {
-                  setIsConnectorDrawerOpen(true)
+                  setIsDrawerOpen(true)
                   setIntent(EntityIntent.CREATE)
                 }}
               >
@@ -100,41 +118,27 @@ const ConnectorsListPageContent = (): JSX.Element => {
         useTranslationStore={useTranslationStore}
         errorData={{ errors: [{ reason: 'Unexpected Error', message: 'Bad credentials' }] }}
       />
-      <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
-        <Drawer.Content>
-          <ConnectorsPalette
-            useTranslationStore={useTranslationStore}
-            connectors={harnessConnectors}
-            onSelectConnector={() => setIsConnectorSelected(true)}
-            setConnectorEntity={setConnectorEntity}
-            requestClose={() => {
-              setConnectorEntity(null)
-              setIsConnectorDrawerOpen(false)
-            }}
-          />
-          <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
-            <Drawer.Content>
-              {connectorEntity ? (
-                <ConnectorEntityForm
-                  useTranslationStore={() =>
-                    ({
-                      t: () => 'dummy',
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      i18n: {} as any,
-                      changeLanguage: noop
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    }) as any
-                  }
-                  connector={connectorEntity}
-                  onBack={() => setIsConnectorSelected(false)}
-                  // onFormSubmit={handleFormSubmit}
-                  getConnectorDefinition={getHarnessConnectorDefinition}
-                  inputComponentFactory={inputComponentFactory}
-                  intent={intent}
-                />
-              ) : null}
-            </Drawer.Content>
-          </Drawer.Root>
+      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
+        <Drawer.Content className="p-0">
+          {currentView === CONNECTOR_VIEWS.PALETTE ? (
+            <ConnectorsPalette
+              useTranslationStore={useTranslationStore}
+              connectors={harnessConnectors}
+              onSelectConnector={() => setCurrentView(CONNECTOR_VIEWS.FORM)}
+              setConnectorEntity={setConnectorEntity}
+              requestClose={handleClose}
+            />
+          ) : connectorEntity ? (
+            <ConnectorEntityForm
+              useTranslationStore={useTranslationStore}
+              connector={connectorEntity}
+              onBack={handleBack}
+              // onFormSubmit={handleFormSubmit}
+              getConnectorDefinition={getHarnessConnectorDefinition}
+              inputComponentFactory={inputComponentFactory}
+              intent={intent}
+            />
+          ) : null}
         </Drawer.Content>
       </Drawer.Root>
       <Drawer.Root open={isEditConnectorDrawerOpen} onOpenChange={setIsEditConnectorDrawerOpen} direction="right">
@@ -143,7 +147,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
             <ConnectorEntityForm
               useTranslationStore={useTranslationStore}
               connector={connectorEntity}
-              onBack={() => setIsConnectorSelected(false)}
+              onBack={() => setIsEditConnectorDrawerOpen(false)}
               getConnectorDefinition={getHarnessConnectorDefinition}
               inputComponentFactory={inputComponentFactory}
               intent={intent}

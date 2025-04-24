@@ -120,13 +120,11 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
         <EntityFormLayout.Root>
           <EntityFormSectionLayout.Root>
             {intent === EntityIntent.CREATE && (
-              <EntityFormSectionLayout.Header className="px-0">
-                <EntityFormSectionLayout.Title className="!my-0">
-                  Connect to {connector.name}
-                </EntityFormSectionLayout.Title>
+              <EntityFormSectionLayout.Header withBorder>
+                <EntityFormSectionLayout.Title>Connect to {connector.name}</EntityFormSectionLayout.Title>
               </EntityFormSectionLayout.Header>
             )}
-            <EntityFormSectionLayout.Form className="px-0">
+            <EntityFormSectionLayout.Form>
               <RenderForm className="max-w-xl space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
               {apiError && (
                 <Alert.Container variant="destructive" className="my-8">
@@ -136,16 +134,14 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
             </EntityFormSectionLayout.Form>
           </EntityFormSectionLayout.Root>
           {intent === EntityIntent.CREATE ? (
-            <EntityFormLayout.Footer className="border-none">
-              <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-cn-background-2 p-4 shadow-md">
-                <Button variant="secondary" onClick={() => onBack?.()}>
-                  Back
-                </Button>
-                <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-              </div>
+            <EntityFormLayout.Footer className="justify-between" withBorder>
+              <Button variant="secondary" onClick={() => onBack?.()}>
+                Back
+              </Button>
+              <Button onClick={() => rootForm.submitForm()}>Submit</Button>
             </EntityFormLayout.Footer>
           ) : (
-            <div className="mt-5 flex flex-row justify-end border-t border-cn-borders-3 pt-5">
+            <div className="border-cn-borders-3 mt-5 flex flex-row justify-end border-t px-6 py-5">
               <Button onClick={() => rootForm.submitForm()}>Apply changes</Button>
             </div>
           )}

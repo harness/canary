@@ -347,7 +347,6 @@ function RenderTags() {
               <div className="grid grid-cols-2 gap-4">
                 {Object.entries({ '': '', sm: 'sm' } as Record<string, string>).map(([sizeKey, sizeValue]) => (
                   <div key={sizeKey} className="flex flex-col space-y-1">
-                    {/* <div className="font-semibold capitalize">{sizeKey === '' ? 'default' : sizeKey}</div> */}
                     {[
                       'gray',
                       'blue',
@@ -364,9 +363,9 @@ function RenderTags() {
                       'violet',
                       'yellow'
                     ].map(theme => (
-                      <div className="p-5 flex items-center justify-center space-x-2">
+                      <div className="p-5 flex items-center space-x-2">
                         <Tag
-                          value={variantKey.charAt(0).toUpperCase() + variantKey.slice(1)}
+                          value={theme.charAt(0).toUpperCase() + theme.slice(1)}
                           showIcon={true}
                           showReset={true}
                           size={sizeValue as 'default' | 'sm'}
@@ -392,7 +391,7 @@ function RenderTags() {
                         />
 
                         <Tag
-                          value={variantKey.charAt(0).toUpperCase() + variantKey.slice(1)}
+                          value={theme.charAt(0).toUpperCase() + theme.slice(1)}
                           showIcon={true}
                           showReset={true}
                           size={sizeValue as 'default' | 'sm'}

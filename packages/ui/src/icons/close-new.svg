@@ -3,6 +3,6 @@
 <path d="M2.5 13.5L8.00002 8.00003M8.00002 8.00003L13.5 2.5M8.00002 8.00003L2.5 2.5M8.00002 8.00003L13.5 13.5" stroke="white" stroke-width="1.00833" stroke-linecap="round" stroke-linejoin="round"/>
 </mask>
 <g mask="url(#mask0_12_2466)">
-<rect width="16" height="16" fill="#B5B5BB"/>
+<rect width="16" height="16" fill="currentColor"/>
 </g>
 </svg>

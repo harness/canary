@@ -1,6 +1,7 @@
 import { Button } from '@components/button'
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
+import { getCSSVarValue } from '@utils/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const tagVariants = cva('w-fit transition-colors', {
@@ -66,84 +67,61 @@ function Tag({
   className,
   ...props
 }: TagProps) {
-  return (
-    // <div className="w-fit flex items-center justify-center hover:tag-hover">
-    //   {keyName ? (
-    //     <Tag
-    //       variant={variant}
-    //       size={size}
-    //       theme={theme}
-    //       rounded={rounded}
-    //       icon={icon}
-    //       showIcon={showIcon}
-    //       showReset={false}
-    //       value={keyName}
-    //       className="tag-split-left"
-    //     />
-    //   ) : null}
-    //   <div
-    //     tabIndex={-1}
-    //     className={cn(
-    //       tagVariants({
-    //         variant,
-    //         size,
-    //         theme
-    //       }),
-    //       keyName ? 'tag-split-right' : '',
-    //       rounded ? 'tag-rounded' : '',
-    //       className
-    //     )}
-    //     {...props}
-    //   >
-    //     {!keyName && showIcon ? <Icon name={icon || 'tag'} /> : null}
-    //     {value}
-    //     {showReset ? (
-    //       <Button onClick={onReset} variant="ghost">
-    //         <Icon name="close" className="font-xs" />
-    //       </Button>
-    //     ) : null}
-    //   </div>
-    // </div>
-
-    keyName ? (
-      <TagSplit
-        variant={variant}
-        size={size}
-        theme={theme}
-        rounded={rounded}
-        icon={icon}
-        showIcon={showIcon}
-        showReset={showReset}
-        onReset={onReset}
-        keyName={keyName}
-        value={value}
-      />
-    ) : (
-      <div
-        tabIndex={-1}
-        className={cn(
-          tagVariants({
-            variant,
-            size,
-            theme
-          }),
-          keyName ? 'tag-split-right' : '',
-          rounded ? 'tag-rounded' : '',
-          className
-        )}
-        {...props}
-      >
-        {!keyName && showIcon ? <Icon name={icon || 'tag-new'} size={size === 'sm' ? 14 : 16} /> : null}
-        {value}
-        {showReset ? <Icon name="close-new" size={size === 'sm' ? 14 : 16} role="button" onClick={onReset} /> : null}
-      </div>
-    )
+  return keyName ? (
+    <TagSplit
+      variant={variant}
+      size={size}
+      theme={theme}
+      rounded={rounded}
+      icon={icon}
+      showIcon={showIcon}
+      showReset={showReset}
+      onReset={onReset}
+      keyName={keyName}
+      value={value}
+    />
+  ) : (
+    <div
+      tabIndex={-1}
+      className={cn(
+        tagVariants({
+          variant,
+          size,
+          theme
+        }),
+        keyName ? 'tag-split-right' : '',
+        rounded ? 'tag-rounded' : '',
+        'cursor-pointer',
+        className
+      )}
+      {...props}
+    >
+      {!keyName && showIcon ? (
+        <Icon
+          name={icon || 'tag-new'}
+          fill={getCSSVarValue(`--cn-set-${theme || 'gray'}-surface-text`)}
+          width={getCSSVarValue('--icon-size-default') || '16px'}
+          height={getCSSVarValue('--icon-size-default') || '16px'}
+        />
+      ) : null}
+      {value}
+      {showReset ? (
+        <Icon
+          name="close-new"
+          fill={getCSSVarValue(`--cn-set-${theme || 'gray'}-surface-text`)}
+          width={getCSSVarValue('--icon-size-xs') || '12px'}
+          height={getCSSVarValue('--icon-size-xs') || '12px'}
+          role="button"
+          onClick={onReset}
+        />
+      ) : null}
+    </div>
   )
 }
 
 function TagSplit(props: TagProps) {
   return (
-    <div className="w-fit flex items-center justify-center">
+    <div className="w-fit flex items-center justify-center cursor-pointer">
       <Tag
         variant={props.variant}
         size={props.size}

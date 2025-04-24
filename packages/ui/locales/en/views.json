@@ -290,10 +290,11 @@
     "activityHistory": "Activity history",
     "connector": "Connector",
     "viewConnectorDetails": "View Connector Details",
-    "viewDetails": "View Details",
     "viewDocumentation": "View Documentation",
+    "connectivityStatus": "Connectivity status",
     "createNew": "Create new connector",
     "id": "Connector ID",
+    "viewDetails": "View Details",
     "filterOptions": {
       "statusOption": {
         "success": "Success",
@@ -303,7 +304,8 @@
     },
     "created": "Created",
     "updated": "Last updated",
-    "lastConnected": "Last connected"
+    "success": "Success",
+    "failure": "Failed"
   },
   "notFound": {
     "button": "Reload page",

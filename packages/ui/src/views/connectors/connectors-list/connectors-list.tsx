@@ -15,6 +15,7 @@ import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
 import { ExecutionState } from '@views/repo/pull-request'
+import { TFunction } from 'i18next'
 
 import { ConnectorListItem, ConnectorListProps } from './types'
 import { ConnectorTypeToLogoNameMap } from './utils'
@@ -25,27 +26,31 @@ const Title = ({ title }: { title: string }): JSX.Element => (
   </span>
 )
 
-const ConnectivityStatus = ({ item }: { item: ConnectorListItem }): JSX.Element => {
+const ConnectivityStatus = ({ item, t }: { item: ConnectorListItem; t: TFunction }): JSX.Element => {
   const isSuccess = item?.status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
   return (
     <HoverCard.Root>
       <HoverCard.Trigger asChild>
-        <Button className="group h-auto gap-2 px-0 font-normal hover:bg-transparent" variant="ghost">
+        <Button className="group h-auto gap-2 p-0 font-normal hover:bg-transparent" variant="ghost">
           <Icon name="dot" size={8} className={cn(isSuccess ? 'text-icons-success' : 'text-icons-danger')} />
           <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200" color="secondary">
-            {isSuccess ? 'Success' : 'Failed'}
+            {isSuccess
+              ? t('views:connectors.status.success', 'Success')
+              : t('views:connectors.status.failure', 'Failed')}
           </Text>
         </Button>
       </HoverCard.Trigger>
       <HoverCard.Content className="w-72 whitespace-normal">
         {/* TODO: need to provide real data */}
-        <h3 className="text-cn-foreground-1 font-medium">{isSuccess ? 'Success' : 'Error Encountered'}</h3>
+        <h3 className="text-cn-foreground-1 font-medium">
+          {isSuccess ? t('views:connectors.status.success', 'Success') : t('views:connectors.status.failure', 'Failed')}
+        </h3>
         <p className="text-cn-foreground-3 mt-1.5">
           Update the username & password. Check if the provided credentials are correct. Invalid Docker Registry
           credentials.
         </p>
         <StyledLink to="#" className="mt-2.5 block" variant="accent">
-          View details
+          {t('views:connectors.viewDetails', 'View details')}
         </StyledLink>
       </HoverCard.Content>
     </HoverCard.Root>
@@ -90,9 +95,11 @@ export function ConnectorsList({
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[282px]">{t('views:connectors.id', 'Connector ID')}</Table.Head>
-          <Table.Head className="w-70">Details</Table.Head>
-          <Table.Head className="w-44 whitespace-nowrap">Connectivity status</Table.Head>
-          <Table.Head className="w-44">Last updated</Table.Head>
+          <Table.Head className="w-70">{t('views:common.details', 'Details')}</Table.Head>
+          <Table.Head className="w-44 whitespace-nowrap">
+            {t('views:connectors.connectivityStatus', 'Connectivity status')}
+          </Table.Head>
+          <Table.Head className="w-44">{t('views:connectors.updated', 'Last updated')}</Table.Head>
           <Table.Head className="w-10" />
           <Table.Head className="w-10" />
         </Table.Row>
@@ -117,10 +124,12 @@ export function ConnectorsList({
                   {spec?.url}
                 </Table.Cell>
                 <Table.Cell className="content-center whitespace-nowrap">
-                  {status ? <ConnectivityStatus item={{ identifier, type, spec, status, lastModifiedAt }} /> : null}
+                  {status ? (
+                    <ConnectivityStatus item={{ identifier, type, spec, status, lastModifiedAt }} t={t} />
+                  ) : null}
                 </Table.Cell>
                 <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
-                <Table.Cell className="content-center">
+                <Table.Cell className="content-center !p-1.5">
                   <Button
                     size="sm"
                     iconOnly

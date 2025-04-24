@@ -18,28 +18,23 @@ const labelVariants = cva('label', {
   }
 })
 
-type BaseLabelProps = Omit<ComponentPropsWithoutRef<typeof LabelPrimitive.Root>, 'color'> &
+export type LabelProps = Omit<ComponentPropsWithoutRef<typeof LabelPrimitive.Root>, 'color'> &
   VariantProps<typeof labelVariants> & {
     disabled?: boolean
     optional?: boolean
     informerProps?: InformerProps
+    informerContent?: NonEmptyReactNode
   }
 
-export type LabelProps = BaseLabelProps &
-  (
-    | { withInformer: true; informerContent: NonEmptyReactNode }
-    | { withInformer?: false | undefined; informerContent?: never }
-  )
-
 const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
-  ({ className, children, variant = 'default', optional, disabled, withInformer, informerContent, ...props }, ref) => {
+  ({ className, children, variant = 'default', optional, disabled, informerContent, ...props }, ref) => {
     const LabelComponent = ({ className }: { className?: string }) => (
       <LabelPrimitive.Root ref={ref} className={cn(labelVariants({ variant }), className)} {...props}>
         {children} {optional && <span className="label-optional">(optional)</span>}
       </LabelPrimitive.Root>
     )
 
-    if (withInformer) {
+    if (informerContent) {
       return (
         <span className={cn('flex items-center gap-1', className)}>
           <LabelComponent />

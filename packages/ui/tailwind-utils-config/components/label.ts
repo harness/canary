@@ -1,7 +1,6 @@
 export default {
   '.label': {
-    font: 'var(--cn-body-strong)',
-    letterSpacing: 'var(--cn-tracking-tight)',
+    '@apply font-body-tight-strong': '',
 
     '&:where(.label-default)': {
       color: 'var(--cn-text-2)',
@@ -20,7 +19,7 @@ export default {
     },
 
     '> .label-optional': {
-      font: 'var(--cn-body-normal)',
+      '@apply font-body-normal': '',
       color: 'var(--cn-text-3)'
     }
   }

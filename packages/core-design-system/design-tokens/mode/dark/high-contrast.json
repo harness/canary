@@ -1475,6 +1475,38 @@
         "$type": "color",
         "$value": "{chrome.900}"
       }
+    },
+    "toast": {
+      "destructive": {
+        "bg": {
+          "$type": "color",
+          "$value": "{red.600}"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{red.700}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{border.danger}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{text.1}"
+        }
+      },
+      "bg": {
+        "$type": "color",
+        "$value": "{bg.2}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{border.2}"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{text.1}"
+      }
     }
   },
   "shadow": {

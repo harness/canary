@@ -56,11 +56,19 @@
             "$value": "{rounded.2}"
           }
         }
+      },
+      "max-width": {
+        "$type": "sizing",
+        "$value": "{size.28}"
       }
     },
     "border": {
       "$type": "borderWidth",
       "$value": "{borderWidth.1}"
+    },
+    "max-width": {
+      "$type": "sizing",
+      "$value": "{size.56}"
     }
   }
 }

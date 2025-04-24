@@ -31,6 +31,7 @@ export default function PullRequestListPage() {
   const [populateLabelStore, setPopulateLabelStore] = useState(false)
   const [searchParams] = useSearchParams()
   const defaultAuthorId = searchParams.get('created_by')
+  const labelBy = searchParams.get('label_by')
   const mfeContext = useMFEContext()
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
 
@@ -83,10 +84,10 @@ export default function PullRequestListPage() {
   }, [page, queryPage, setPage])
 
   useEffect(() => {
-    if (searchParams.get('label_by')) {
+    if (labelBy) {
       setPopulateLabelStore(true)
     }
-  }, [searchParams])
+  }, [labelBy])
 
   return (
     <SandboxPullRequestListPage
@@ -115,7 +116,7 @@ export default function PullRequestListPage() {
             if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
               acc[key] = value.getTime().toString()
             }
-            if (key === 'created_by' && 'value' in value) {
+            if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
               acc[key] = value.value
             }
             if (key === 'label_by') {

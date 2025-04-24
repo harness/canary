@@ -67,8 +67,6 @@ function createTagVariantStyles(variant: (typeof variants)[number]) {
     }
 
     styles[`&:where(.tag-${theme})`] = style
-    styles[`&:where(.tag-split-left)`] = style
-    styles[`&:where(.tag-split-right)`] = style
   })
 
   return styles

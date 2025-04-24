@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { Arrow, Content, Provider, Root, Trigger } from '@radix-ui/react-tooltip'
 import { cn } from '@utils/cn'
@@ -9,7 +9,7 @@ const TooltipContent = forwardRef<ElementRef<typeof Content>, ComponentPropsWith
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        'bg-cn-background-3 border-cn-borders-2 border text-cn-foreground-1 animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 overflow-hidden rounded-md px-3 py-1.5 text-2',
+        'bg-cn-background-3 border-cn-borders-2 border text-cn-foreground-1 animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 rounded-md px-3 py-1.5 text-2 [&>span[style]]:bg-cn-background-3 [&>span[style]]:size-1.5 [&>span[style]]:border-t [&>span[style]]:border-l [&>span[style]]:!translate-y-[calc(100%-3px)] [&>span[style]]:!scale-100 [&>span[style]]:!rotate-[225deg] [&>span[style]]:rounded-[1px]',
         className
       )}
       {...props}
@@ -18,19 +18,9 @@ const TooltipContent = forwardRef<ElementRef<typeof Content>, ComponentPropsWith
 )
 TooltipContent.displayName = Content.displayName
 
-const TooltipArrow = forwardRef<ElementRef<typeof Arrow>, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <Arrow ref={ref} asChild>
-      <div
-        className={cn(
-          'bg-cn-background-3 size-1.5 border-t border-l rotate-[225deg] -m-[55%] rounded-[1px]',
-          className
-        )}
-        {...props}
-      />
-    </Arrow>
-  )
-)
+const TooltipArrow = forwardRef<ElementRef<typeof Arrow>, ComponentPropsWithoutRef<typeof Arrow>>((props, ref) => (
+  <Arrow ref={ref} {...props} asChild />
+))
 TooltipArrow.displayName = Arrow.displayName
 
 const Tooltip = {

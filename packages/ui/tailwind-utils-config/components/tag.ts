@@ -1,6 +1,6 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-const variants = ['default', 'label', 'label-left', 'label-right'] as const
+const variants = ['outline', 'secondary', 'label-left', 'label-right'] as const
 const sizes = ['default', 'sm'] as const
 
 /**
@@ -34,7 +34,7 @@ function createTagVariantStyles(variant: (typeof variants)[number]) {
   themes.forEach(theme => {
     const style: CSSRuleObject = {}
     switch (variant) {
-      case 'default':
+      case 'outline':
         style[`color`] = `var(--cn-set-${theme}-surface-text)`
         style[`backgroundColor`] = `var(--cn-set-${theme}-surface-bg)`
         style[`borderColor`] = `var(--cn-set-${theme}-surface-border)`
@@ -42,8 +42,14 @@ function createTagVariantStyles(variant: (typeof variants)[number]) {
           backgroundColor: `var(--cn-set-${theme}-surface-bg-hover)`,
           borderColor: `var(--cn-set-${theme}-surface-border)`
         }
+        style[`&:.tag-split-right`] = {
+          borderColor: `var(--cn-set-${theme}-soft-bg)`,
+          '&:hover': {
+            borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
+          }
+        }
         break
-      case 'label':
+      case 'secondary':
         style[`color`] = `var(--cn-set-${theme}-soft-text)`
         style[`backgroundColor`] = `var(--cn-set-${theme}-soft-bg)`
         style[`borderColor`] = `var(--cn-set-${theme}-soft-bg)`
@@ -51,23 +57,11 @@ function createTagVariantStyles(variant: (typeof variants)[number]) {
           backgroundColor: `var(--cn-set-${theme}-soft-bg-hover)`,
           borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
         }
-        break
-      case 'label-left':
-        style[`color`] = `var(--cn-set-${theme}-soft-text)`
-        style[`backgroundColor`] = `var(--cn-set-${theme}-soft-bg)`
-        style[`borderColor`] = `var(--cn-set-${theme}-soft-bg)`
-        style[`&:hover`] = {
-          backgroundColor: `var(--cn-set-${theme}-soft-bg-hover)`,
-          borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
-        }
-        break
-      case 'label-right':
-        style[`color`] = `var(--cn-set-${theme}-soft-text)`
-        style[`backgroundColor`] = `var(--cn-set-${theme}-surface-bg)`
-        style[`borderColor`] = `var(--cn-set-${theme}-soft-bg)`
-        style[`&:hover`] = {
+        style[`&:.tag-split-right`] = {
           backgroundColor: `var(--cn-set-${theme}-surface-bg)`,
-          borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
+          '&:hover': {
+            backgroundColor: `var(--cn-set-${theme}-surface-bg-hover)`
+          }
         }
         break
     }
@@ -79,47 +73,50 @@ function createTagVariantStyles(variant: (typeof variants)[number]) {
 }
 
 export default {
-  '.tag-default': {
+  '.tag-outline': {
     display: 'inline-flex',
     alignItems: 'center',
     padding: 'var(--cn-tag-py) var(--cn-tag-px)',
     gap: 'var(--cn-tag-gap)',
+    borderWidth: `var(--cn-tag-border)`,
     borderRadius: `var(--cn-tag-radius-full)`,
     font: `var(--cn-body-tight-normal)`,
+    height: `var(--cn-tag-size-default)`,
     '&.tag-sm': {
-      font: `var(--cn-caption-tight-normal)`
+      font: `var(--cn-caption-tight-normal)`,
+      height: `var(--cn-tag-size-sm)`
+    },
+    '&.tag-split-left': {
+      borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`
+    },
+    '&.tag-split-right': {
+      borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
+      borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`
     },
 
-    ...createTagVariantStyles('default')
+    ...createTagVariantStyles('outline')
   },
-  '.tag-label': {
-    font: `var(--cn-caption-tight-normal)`,
+  '.tag-secondary': {
     display: 'inline-flex',
     alignItems: 'center',
     padding: 'var(--cn-tag-py) var(--cn-tag-px)',
     gap: 'var(--cn-tag-gap)',
-    borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`,
+    borderWidth: `var(--cn-tag-border)`,
+    borderRadius: `var(--cn-tag-radius-default)`,
+    font: `var(--cn-body-tight-normal)`,
+    height: `var(--cn-tag-size-default)`,
+    '&.tag-sm': {
+      font: `var(--cn-caption-tight-normal)`,
+      height: `var(--cn-tag-size-sm)`
+    },
+    '&.tag-split-left': {
+      borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`
+    },
+    '&.tag-split-right': {
+      borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
+      borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`
+    },
 
-    ...createTagVariantStyles('label')
-  },
-  '.tag-label-left': {
-    font: `var(--cn-caption-tight-normal)`,
-    display: 'inline-flex',
-    alignItems: 'center',
-    padding: 'var(--cn-tag-py) var(--cn-tag-px)',
-    gap: 'var(--cn-tag-gap)',
-    borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`,
-
-    ...createTagVariantStyles('label-left')
-  },
-  '.tag-label-right': {
-    font: `var(--cn-caption-tight-normal)`,
-    display: 'inline-flex',
-    alignItems: 'center',
-    padding: 'var(--cn-tag-py) var(--cn-tag-px)',
-    gap: 'var(--cn-tag-gap)',
-    borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
-
-    ...createTagVariantStyles('label-right')
+    ...createTagVariantStyles('secondary')
   }
 }

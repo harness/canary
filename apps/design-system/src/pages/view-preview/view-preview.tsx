@@ -54,7 +54,7 @@ import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studi
 import { useTranslationStore } from '@utils/viewUtils'
 
 import { ChatEmptyPreviewWrapper, ChatPreviewWrapper } from '@harnessio/ui/components'
-import { NotFoundPage, SubHeaderWrapper } from '@harnessio/ui/views'
+import { NotFoundPage } from '@harnessio/ui/views'
 
 import { AppViewWrapper } from './app-view-wrapper'
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
@@ -503,19 +503,11 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       },
       'secrets-list-page': {
         label: 'Secrets List Page',
-        element: (
-          <SubHeaderWrapper>
-            <SecretsListPage />
-          </SubHeaderWrapper>
-        )
+        element: <SecretsListPage />
       },
       'connectors-list-page': {
         label: 'Connectors List Page',
-        element: (
-          <SubHeaderWrapper>
-            <ConnectorsListPageWrapper />
-          </SubHeaderWrapper>
-        )
+        element: <ConnectorsListPageWrapper />
       },
       'connectors-details-page': {
         label: 'Connectors Details Page',

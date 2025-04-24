@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { Select } from '@components/select'
 
@@ -30,22 +30,26 @@ function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig
   const methods = useFormContext()
   const values = methods.watch()
 
-  const [isDisabled, setIsDisabled] = useState<boolean>(!!readonly)
-
-  useEffect(() => {
-    setIsDisabled(!!inputConfig?.isDisabled?.(values) || !!readonly)
-  }, [values, inputConfig?.isDisabled, readonly])
+  const disabled = useMemo(() => {
+    return readonly || !!inputConfig?.isDisabled?.(values)
+  }, [readonly, inputConfig?.isDisabled, values])
 
   const { field } = useController({
     name: path
   })
 
+  useEffect(() => {
+    if (disabled) {
+      field.onChange(inputConfig?.disabledValue ?? '')
+    }
+  }, [disabled])
+
   return (
     <InputWrapper>
       <InputLabel label={label} description={description} required={required} />
       <Select.Root
-        disabled={isDisabled}
-        value={isDisabled ? inputConfig?.disabledValue : field.value}
+        disabled={disabled}
+        value={field.value}
         onValueChange={value => {
           field.onChange(value)
         }}

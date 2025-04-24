@@ -391,11 +391,13 @@ function RenderTags() {
                         />
 
                         <Tag
-                          value={theme.charAt(0).toUpperCase() + theme.slice(1)}
+                          keyName={theme.charAt(0).toUpperCase() + theme.slice(1)}
+                          value={variantKey.charAt(0).toUpperCase() + variantKey.slice(1)}
                           showIcon={true}
                           showReset={true}
                           size={sizeValue as 'default' | 'sm'}
                           variant={variantValue as 'outline' | 'secondary'}
+                          rounded={true}
                           theme={
                             theme as
                               | 'gray'
@@ -416,13 +418,11 @@ function RenderTags() {
                         />
 
                         <Tag
-                          keyName={theme.charAt(0).toUpperCase() + theme.slice(1)}
-                          value={variantKey.charAt(0).toUpperCase() + variantKey.slice(1)}
+                          value={theme.charAt(0).toUpperCase() + theme.slice(1)}
                           showIcon={true}
                           showReset={true}
                           size={sizeValue as 'default' | 'sm'}
                           variant={variantValue as 'outline' | 'secondary'}
-                          rounded={true}
                           theme={
                             theme as
                               | 'gray'

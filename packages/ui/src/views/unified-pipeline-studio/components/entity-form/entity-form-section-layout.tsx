@@ -5,12 +5,20 @@ const EntityFormSectionLayout = {
     return <div className="flex grow flex-col overflow-auto">{children}</div>
   },
 
-  Header: function Header({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('p-5', className)}>{children}</div>
+  Header: function Header({
+    children,
+    className,
+    withBorder = false
+  }: {
+    children: React.ReactNode
+    className?: string
+    withBorder?: boolean
+  }) {
+    return <div className={cn('px-6 py-5', withBorder && 'border-b border-cn-borders-3', className)}>{children}</div>
   },
 
   Title: function Title({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('my-3 text-lg text-cn-foreground-1', className)}>{children}</div>
+    return <div className={cn('text-xl text-cn-foreground-1 font-medium', className)}>{children}</div>
   },
 
   Description: function Description({ children }: { children: React.ReactNode }) {
@@ -18,7 +26,7 @@ const EntityFormSectionLayout = {
   },
 
   Form: function Form({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('flex flex-col grow', className)}>{children}</div>
+    return <div className={cn('flex flex-col grow px-6 py-5', className)}>{children}</div>
   }
 }
 

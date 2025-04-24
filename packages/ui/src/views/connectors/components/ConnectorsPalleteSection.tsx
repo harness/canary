@@ -26,7 +26,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
               }}
             >
               <StepsPaletteItemLayout.Left className="flex items-center">
-                <Logo name={connector.icon} size={36} />
+                <Logo name={connector.icon} size={32} />
               </StepsPaletteItemLayout.Left>
               <StepsPaletteItemLayout.Right>
                 <StepsPaletteItemLayout.Header>
@@ -34,7 +34,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                     {connector.name}
                   </StepsPaletteItemLayout.Title>
                 </StepsPaletteItemLayout.Header>
-                <StepsPaletteItemLayout.Description className="text-cn-foreground-2">
+                <StepsPaletteItemLayout.Description className="text-cn-foreground-4">
                   {connector.category}
                 </StepsPaletteItemLayout.Description>
               </StepsPaletteItemLayout.Right>

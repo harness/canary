@@ -1482,7 +1482,7 @@
       }
     },
     "toast": {
-      "destructive": {
+      "danger": {
         "bg": {
           "$type": "color",
           "$value": "{red.600}"
@@ -1499,18 +1499,6 @@
           "$type": "color",
           "$value": "{chrome.25}"
         }
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.2}"
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.2}"
-      },
-      "text": {
-        "$type": "color",
-        "$value": "{text.1}"
       }
     }
   },

@@ -1464,7 +1464,7 @@
       }
     },
     "toast": {
-      "destructive": {
+      "danger": {
         "bg": {
           "$type": "color",
           "$value": "{red.600}"
@@ -1475,24 +1475,12 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.danger}"
+          "$value": "{red.300}"
         },
         "text": {
           "$type": "color",
-          "$value": "{text.1}"
+          "$value": "{chrome.25}"
         }
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.2}"
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.2}"
-      },
-      "text": {
-        "$type": "color",
-        "$value": "{text.1}"
       }
     }
   },

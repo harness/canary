@@ -1,10 +1,20 @@
 {
   "accordion": {
-    "py": {
-      "$type": "spacing",
-      "$value": "{spacing.4}"
+    "default": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
+      }
     },
-    "spacing": {
+    "md": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.2}"

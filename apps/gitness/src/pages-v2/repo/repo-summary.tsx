@@ -363,7 +363,7 @@ function RenderTags() {
                       'violet',
                       'yellow'
                     ].map(theme => (
-                      <div className="p-5 flex items-center space-x-2">
+                      <div key={theme} className="p-5 flex items-center space-x-2">
                         <Tag
                           value={theme.charAt(0).toUpperCase() + theme.slice(1)}
                           showIcon={true}

@@ -79,19 +79,28 @@ export default {
     padding: 'var(--cn-tag-py) var(--cn-tag-px)',
     gap: 'var(--cn-tag-gap)',
     borderWidth: `var(--cn-tag-border)`,
-    borderRadius: `var(--cn-tag-radius-full)`,
+    borderRadius: `var(--cn-tag-radius-default)`,
     font: `var(--cn-body-tight-normal)`,
     height: `var(--cn-tag-size-default)`,
     '&.tag-sm': {
       font: `var(--cn-caption-tight-normal)`,
       height: `var(--cn-tag-size-sm)`
     },
+    '&.tag-rounded': {
+      borderRadius: `var(--cn-tag-radius-full)`
+    },
     '&.tag-split-left': {
-      borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`
+      borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`,
+      '&.tag-rounded': {
+        borderRadius: `var(--cn-tag-radius-full) 0 0 var(--cn-tag-radius-full)`
+      }
     },
     '&.tag-split-right': {
       borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
-      borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`
+      borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`,
+      '&.tag-rounded': {
+        borderRadius: `0 var(--cn-tag-radius-full) var(--cn-tag-radius-full) 0`
+      }
     },
 
     ...createTagVariantStyles('outline')
@@ -109,12 +118,21 @@ export default {
       font: `var(--cn-caption-tight-normal)`,
       height: `var(--cn-tag-size-sm)`
     },
+    '&.tag-rounded': {
+      borderRadius: `var(--cn-tag-radius-full)`
+    },
     '&.tag-split-left': {
-      borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`
+      borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`,
+      '&.tag-rounded': {
+        borderRadius: `var(--cn-tag-radius-full) 0 0 var(--cn-tag-radius-full)`
+      }
     },
     '&.tag-split-right': {
       borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
-      borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`
+      borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`,
+      '&.tag-rounded': {
+        borderRadius: `0 var(--cn-tag-radius-full) var(--cn-tag-radius-full) 0`
+      }
     },
 
     ...createTagVariantStyles('secondary')

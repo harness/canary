@@ -43,18 +43,44 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   variant?: VariantProps<typeof tagVariants>['variant']
   size?: VariantProps<typeof tagVariants>['size']
   theme?: VariantProps<typeof tagVariants>['theme']
+  rounded?: boolean
   icon?: React.ComponentProps<typeof Icon>['name']
   showIcon?: boolean
   showReset?: boolean
   onReset?: () => void
-  key?: string
+  keyName?: string
   value: string
 }
 
-function Tag({ variant, size, theme, icon, showIcon, showReset, onReset, key, value, className, ...props }: TagProps) {
+function Tag({
+  variant,
+  size,
+  theme,
+  rounded,
+  icon,
+  showIcon,
+  showReset,
+  onReset,
+  keyName,
+  value,
+  className,
+  ...props
+}: TagProps) {
   return (
-    <div className="flex items-center justify-center">
-      {key ? <Tag className="tag-split-left" showReset={false} value={key} {...props} /> : null}
+    <div className="w-fit flex items-center justify-center">
+      {keyName ? (
+        <Tag
+          variant={variant}
+          size={size}
+          theme={theme}
+          rounded={rounded}
+          icon={icon}
+          showIcon={showIcon}
+          showReset={false}
+          value={keyName}
+          className="tag-split-left"
+        />
+      ) : null}
       <div
         tabIndex={-1}
         className={cn(
@@ -63,15 +89,16 @@ function Tag({ variant, size, theme, icon, showIcon, showReset, onReset, key, va
             size,
             theme
           }),
-          key ? 'tag-split-right' : '',
+          keyName ? 'tag-split-right' : '',
+          rounded ? 'tag-rounded' : '',
           className
         )}
         {...props}
       >
-        {!key && showIcon ? <Icon name={icon || 'tag'} /> : null}
+        {!keyName && showIcon ? <Icon name={icon || 'tag'} /> : null}
         {value}
         {showReset ? (
-          <Button onClick={onReset}>
+          <Button onClick={onReset} variant="ghost">
             <Icon name="close" className="font-xs" />
           </Button>
         ) : null}

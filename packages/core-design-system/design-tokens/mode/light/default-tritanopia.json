@@ -1806,7 +1806,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.900}",
       "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
     "1": {
@@ -1814,13 +1814,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.6",
+            "value": "0.05",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.900}",
       "$description": "Light shadow color with 60% opacity. Creates subtle depth for small UI elements."
     },
     "2": {
@@ -1828,13 +1828,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.6",
+            "value": "0.05",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.900}",
       "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
     },
     "3": {
@@ -1842,13 +1842,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.5",
+            "value": "0.05",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.900}",
       "$description": "Medium shadow color with 50% opacity. Creates moderate depth for elevated components."
     },
     "4": {
@@ -1856,13 +1856,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.5",
+            "value": "0.06",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.900}",
       "$description": "Deep shadow color with 50% opacity. Provides significant depth for floating elements."
     },
     "5": {
@@ -1870,13 +1870,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.5",
+            "value": "0.1",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.900}",
       "$description": "Very deep shadow color with 50% opacity. Creates dramatic elevation for modal content."
     },
     "6": {
@@ -1884,13 +1884,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.6",
+            "value": "0.05",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.900}",
       "$description": "Extremely deep shadow color with 60% opacity. Provides maximum depth for highly elevated elements."
     },
     "inner": {

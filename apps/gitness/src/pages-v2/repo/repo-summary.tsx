@@ -16,6 +16,7 @@ import {
   useSummaryQuery,
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
+import { Tag } from '@harnessio/ui/components'
 import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 import {
   BranchSelectorListItem,
@@ -290,6 +291,7 @@ export default function RepoSummaryPage() {
 
   return (
     <>
+      <RenderTags />
       <RepoSummaryView
         repoId={repoId ?? ''}
         spaceId={spaceId ?? ''}
@@ -330,6 +332,124 @@ export default function RepoSummaryPage() {
           useTranslationStore={useTranslationStore}
         />
       )}
+    </>
+  )
+}
+
+function RenderTags() {
+  return (
+    <>
+      <div className="grid grid-cols-3 gap-4 p-5">
+        {Object.entries({ outline: 'outline', secondary: 'secondary' } as Record<string, string>).map(
+          ([variantKey, variantValue]) => (
+            <div key={variantKey} className="flex flex-col space-y-2">
+              <div className="text-xl font-bold capitalize">{variantKey}</div>
+              <div className="grid grid-cols-2 gap-4">
+                {Object.entries({ '': '', sm: 'sm' } as Record<string, string>).map(([sizeKey, sizeValue]) => (
+                  <div key={sizeKey} className="flex flex-col space-y-1">
+                    {/* <div className="font-semibold capitalize">{sizeKey === '' ? 'default' : sizeKey}</div> */}
+                    {[
+                      'gray',
+                      'blue',
+                      'brown',
+                      'cyan',
+                      'green',
+                      'indigo',
+                      'lime',
+                      'mint',
+                      'orange',
+                      'pink',
+                      'purple',
+                      'red',
+                      'violet',
+                      'yellow'
+                    ].map(theme => (
+                      <div className="p-5 flex items-center justify-center space-x-2">
+                        <Tag
+                          value={variantKey.charAt(0).toUpperCase() + variantKey.slice(1)}
+                          showIcon={true}
+                          showReset={true}
+                          size={sizeValue as 'default' | 'sm'}
+                          variant={variantValue as 'outline' | 'secondary'}
+                          rounded={true}
+                          theme={
+                            theme as
+                              | 'gray'
+                              | 'blue'
+                              | 'brown'
+                              | 'cyan'
+                              | 'green'
+                              | 'indigo'
+                              | 'lime'
+                              | 'mint'
+                              | 'orange'
+                              | 'pink'
+                              | 'purple'
+                              | 'red'
+                              | 'violet'
+                              | 'yellow'
+                          }
+                        />
+
+                        <Tag
+                          value={variantKey.charAt(0).toUpperCase() + variantKey.slice(1)}
+                          showIcon={true}
+                          showReset={true}
+                          size={sizeValue as 'default' | 'sm'}
+                          variant={variantValue as 'outline' | 'secondary'}
+                          theme={
+                            theme as
+                              | 'gray'
+                              | 'blue'
+                              | 'brown'
+                              | 'cyan'
+                              | 'green'
+                              | 'indigo'
+                              | 'lime'
+                              | 'mint'
+                              | 'orange'
+                              | 'pink'
+                              | 'purple'
+                              | 'red'
+                              | 'violet'
+                              | 'yellow'
+                          }
+                        />
+
+                        <Tag
+                          keyName={theme.charAt(0).toUpperCase() + theme.slice(1)}
+                          value={variantKey.charAt(0).toUpperCase() + variantKey.slice(1)}
+                          showIcon={true}
+                          showReset={true}
+                          size={sizeValue as 'default' | 'sm'}
+                          variant={variantValue as 'outline' | 'secondary'}
+                          theme={
+                            theme as
+                              | 'gray'
+                              | 'blue'
+                              | 'brown'
+                              | 'cyan'
+                              | 'green'
+                              | 'indigo'
+                              | 'lime'
+                              | 'mint'
+                              | 'orange'
+                              | 'pink'
+                              | 'purple'
+                              | 'red'
+                              | 'violet'
+                              | 'yellow'
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        )}
+      </div>
     </>
   )
 }

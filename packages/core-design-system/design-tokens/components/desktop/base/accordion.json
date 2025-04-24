@@ -1,10 +1,10 @@
 {
   "accordion": {
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.4}"
+    },
     "spacing": {
-      "py": {
-        "$type": "spacing",
-        "$value": "{spacing.4}"
-      },
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.2}"

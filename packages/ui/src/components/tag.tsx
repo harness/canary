@@ -63,8 +63,8 @@ function Tag({ variant, size, theme, icon, showIcon, showReset, onReset, key, va
             size,
             theme
           }),
-          className,
-          key ? 'tag-split-right' : ''
+          key ? 'tag-split-right' : '',
+          className
         )}
         {...props}
       >
@@ -80,4 +80,4 @@ function Tag({ variant, size, theme, icon, showIcon, showReset, onReset, key, va
   )
 }
 
-export { Tag, tagVariants }
+export { Tag }

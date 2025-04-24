@@ -66,7 +66,7 @@ function createTagVariantStyles(variant: (typeof variants)[number]) {
         break
     }
 
-    styles[`&:where(tag-${theme})`] = style
+    styles[`&:where(.tag-${theme})`] = style
   })
 
   return styles

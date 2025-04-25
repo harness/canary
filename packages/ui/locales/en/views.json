@@ -293,10 +293,12 @@
     "activityHistory": "Activity history",
     "createNew": "Create new connector",
     "success": "Success",
+    "failure": "Failed",
+    "errorEncountered": "Error Encountered",
+    "viewDetails": "View Details",
     "id": "Connector ID",
     "connectivityStatus": "Connectivity status",
     "updated": "Last updated",
-    "viewDetails": "View Details",
     "filterOptions": {
       "statusOption": {
         "success": "Success",
@@ -304,9 +306,7 @@
         "label": "Status"
       }
     },
-    "created": "Created",
-    "failure": "Failed",
-    "errorEncountered": "Error Encountered"
+    "created": "Created"
   },
   "notFound": {
     "button": "Reload page",

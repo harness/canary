@@ -275,10 +275,12 @@
     "activityHistory": "Historique des activités",
     "createNew": "Créer un nouveau connecteur",
     "success": "Succès",
+    "failure": "Échec",
+    "errorEncountered": "Erreur rencontrée",
+    "viewDetails": "Voir les détails",
     "id": "ID du connecteur",
     "connectivityStatus": "État de la connexion",
     "updated": "Dernière mise à jour",
-    "viewDetails": "Voir les détails",
     "filterOptions": {
       "statusOption": {
         "success": "Succès",
@@ -286,9 +288,7 @@
         "label": "Statut"
       }
     },
-    "created": "Créé",
-    "failure": "Échec",
-    "errorEncountered": "Erreur rencontrée"
+    "created": "Créé"
   },
   "notFound": {
     "button": "Recharger la page",

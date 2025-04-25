@@ -82,11 +82,11 @@
   },
   "filter": {
     "delete": "Delete filter",
-    "add-filter": "Ajouter un filtre",
-    "reset": "Réinitialiser",
-    "defaultLabel": "Filtrer",
     "inputPlaceholder": "Filtrer par...",
     "buttonLabel": "Réinitialiser les filtres",
+    "defaultLabel": "Filtrer",
+    "reset": "Réinitialiser",
+    "add-filter": "Ajouter un filtre",
     "is": "est",
     "isNot": "n'est pas",
     "isEmpty": "est vide",
@@ -111,6 +111,14 @@
     "createdBefore": "Created Before",
     "createdAfter": "Created After"
   },
+  "pagination": {
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "searchFile": {
+    "input": "Rechercher des fichiers...",
+    "noFile": "Aucun fichier trouvé."
+  },
   "sort": {
     "defaultLabel": "Trier",
     "inputPlaceholder": "Trier par...",
@@ -120,14 +128,6 @@
     "forks": "Bifurcations",
     "pullRequests": "Demandes de fusion",
     "title": "Titre"
-  },
-  "pagination": {
-    "previous": "Précédent",
-    "next": "Suivant"
-  },
-  "searchFile": {
-    "input": "Rechercher des fichiers...",
-    "noFile": "Aucun fichier trouvé."
   },
   "layout": {
     "table": "Table",

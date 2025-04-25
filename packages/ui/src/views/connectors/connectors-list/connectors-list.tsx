@@ -21,7 +21,7 @@ import { ConnectorListItem, ConnectorListProps } from './types'
 import { ConnectorTypeToLogoNameMap } from './utils'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="text-cn-foreground-1 max-w-full truncate font-medium" title={title}>
+  <span className="max-w-full truncate font-medium text-cn-foreground-1" title={title}>
     {title}
   </span>
 )
@@ -41,7 +41,7 @@ const ConnectivityStatus = ({
   return isSuccess ? (
     <div className="flex items-center gap-2">
       <Icon name="dot" size={8} className="text-icons-success" />
-      <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200" color="secondary">
+      <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
         {t('views:connectors.status.success', 'Success')}
       </Text>
     </div>
@@ -51,16 +51,16 @@ const ConnectivityStatus = ({
         <HoverCard.Trigger asChild>
           <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
             <Icon name="dot" size={8} className="text-icons-danger" />
-            <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200" color="secondary">
+            <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
               {t('views:connectors.status.failure', 'Failed')}
             </Text>
           </Button>
         </HoverCard.Trigger>
         <HoverCard.Content className="w-72 whitespace-normal">
-          <h3 className="text-cn-foreground-1 font-medium">
+          <h3 className="font-medium text-cn-foreground-1">
             {t('views:connectors.errorEncountered', 'Error Encountered')}
           </h3>
-          <p className="text-cn-foreground-3 mt-1.5">{item?.status?.errorSummary}</p>
+          <p className="mt-1.5 text-cn-foreground-3">{item?.status?.errorSummary}</p>
           <Button className="mt-2.5" variant="link" onClick={() => setErrorConnectionOpen(true)}>
             {t('views:connectors.viewDetails', 'View details')}
           </Button>

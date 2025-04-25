@@ -78,7 +78,7 @@ export const ConnectorTestConnectionDialog = ({
           <Dialog.Title className="letter-spacing-1 w-11/12 truncate text-xl font-medium">{title}</Dialog.Title>
         </Dialog.Header>
         <Dialog.Description className="gap-y-0.5">
-          <div className="text-cn-foreground-4 text-sm font-normal">
+          <div className="text-sm font-normal text-cn-foreground-4">
             <Layout.Horizontal className="items-center justify-between space-x-2">
               <div className="mb-2.5 flex flex-row items-start space-x-2">
                 <span className="items-center">{t('views:connectors.connector', 'Connector') + ':'}</span>
@@ -108,7 +108,7 @@ export const ConnectorTestConnectionDialog = ({
                   size={14}
                 />
               )}
-              <div className="letter-spacing-1 text-cn-foreground-1 text-base font-medium">{description}</div>
+              <div className="letter-spacing-1 text-base font-medium text-cn-foreground-1">{description}</div>
             </Layout.Horizontal>
 
             {status === 'running' && (
@@ -121,17 +121,17 @@ export const ConnectorTestConnectionDialog = ({
                 {errorMessage && (
                   <div className="mb-1 mt-2">
                     <div className="gap-x-0 space-x-2">
-                      <span className="text-cn-foreground-4 text-sm font-normal">
+                      <span className="text-sm font-normal text-cn-foreground-4">
                         {errorMessage}
                         {viewDocClick && (
-                          <span className="text-cn-foreground-accent ml-1">
+                          <span className="ml-1 text-cn-foreground-accent">
                             <Button
                               variant="link"
                               onClick={viewDocClick}
                               className={cn('h-auto', 'p-0', 'font-inherit', 'text-cn-foreground-accent')}
                             >
                               {t('views:connectors.viewDocumentation', 'View Documentation')}
-                              <Icon name="attachment-link" className="text-cn-foreground-accent ml-1" size={12} />
+                              <Icon name="attachment-link" className="ml-1 text-cn-foreground-accent" size={12} />
                             </Button>
                           </span>
                         )}

@@ -1,6 +1,6 @@
 export default {
   // Directory where the parser will look for files
-  input: ['src/**/*.{js,jsx,ts,tsx}'],
+  input: ['src/views/connectors/connectors-list/connectors-list.tsx'],
 
   // Output directory for extracted translations
   output: './locales/$LOCALE/$NAMESPACE.json',

@@ -34,12 +34,25 @@ const inputs: IInputConfigWithConfigInterface[] = [
     path: `secret.identifier`,
     inputConfig: {
       tooltip: 'When you create an entity, Harness assigns a unique ID. You can change it until the entity is saved.'
-    }
+    },
+    default: 'hello'
   },
   {
     inputType: 'text',
     path: `secret.spec.value`,
     label: 'Enter the Secret Text'
+  },
+  {
+    inputType: 'radio',
+    path: `secret.spec.valueType`,
+    inputConfig: {
+      inputType: 'radio',
+      options: [
+        { label: 'Inline Secret Value', value: 'inline', description: '', id: 'inline', title: 'Inline Secret Value' },
+        { label: 'Reference Secret', value: 'reference', description: '', id: 'reference', title: 'Reference Secret' }
+      ]
+    },
+    default: 'inline'
   },
   {
     inputType: 'group',

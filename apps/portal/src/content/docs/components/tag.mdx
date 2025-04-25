@@ -72,10 +72,17 @@ import { Tag } from "@harnessio/ui/components";
 <div>
   <h5 className="text-lg font-semibold mb-3">Split Tags</h5>
   <div className="flex flex-wrap items-end gap-3">
-    <Tag label="Label" value="Value" variant="outline" theme="cyan" />
-    <Tag label="Label" value="Value" variant="secondary" theme="lime" />
-    <Tag label="Label" value="Value" variant="outline" rounded theme="purple" />
-    <Tag label="Label" value="Value" variant="secondary" rounded theme="red" />
+    <Tag label="Split" value="Lime" variant="secondary" theme="lime" />
+    <Tag label="Split" value="Pink" variant="secondary" theme="pink" />
+    <Tag label="Split" value="Blue" variant="secondary" theme="blue" />
+    <Tag
+      label="Split"
+      value="Reset"
+      variant="secondary"
+      theme="orange"
+      showReset
+      onReset={() => alert("Reset clicked")}
+    />
   </div>
 </div>
 
@@ -249,41 +256,65 @@ import { Tag } from '@harnessio/ui/components'
 // Basic usage
 <Tag value="Default Tag" />
 
-// Themes
+// Theme
 <Tag value="Blue Tag" theme="blue" />
-<Tag value="Green Tag" theme="green" />
 
-// Variants
+// Variant
 <Tag value="Outline Tag" variant="outline" theme="blue" />
-<Tag value="Secondary Tag" variant="secondary" theme="green" />
 
-// Rounded tags
-<Tag value="Rounded Outline Tag" variant="outline" rounded theme="pink" />
-<Tag value="Rounded Secondary Tag" variant="secondary" rounded theme="orange" />
+// Rounded tag
+<Tag
+  value="Rounded Outline Tag"
+  variant="outline"
+  rounded
+  theme="pink"
+/>
 
-// Split tags
-<Tag label="Label" value="Value" variant="outline" theme="cyan" />
-<Tag label="Label" value="Value" variant="secondary" theme="lime" />
-<Tag label="Label" value="Value" variant="outline" rounded theme="purple" />
-<Tag label="Label" value="Value" variant="secondary" rounded theme="red" />
+// Split tag
+<Tag
+  label="Split"
+  value="Lime"
+  variant="secondary"
+  theme="lime"
+/>
 
-// Tags with icon
-<Tag value="Outline Icon" variant="outline" showIcon icon="tag-new" theme="yellow" />
-<Tag value="Secondary Icon" variant="secondary" showIcon icon="tag-new" theme="violet" />
+// Tag with icon
+<Tag
+  value="Outline Icon"
+  variant="outline"
+  showIcon
+  icon="tag-new"
+  theme="yellow"
+/>
 
-// Tags with custom icon
-<Tag value="Custom Icon" variant="outline" showIcon icon="plus" theme="mint" />
-<Tag value="Custom Icon Secondary" variant="secondary" showIcon icon="plus" theme="cyan" />
-<Tag value="Rounded Custom Icon" variant="outline" rounded showIcon icon="plus" theme="orange" />
-<Tag value="Rounded Custom Icon Secondary" variant="secondary" rounded showIcon icon="plus" theme="pink" />
+// Tag with custom icon
+<Tag
+  value="Custom Icon"
+  variant="outline"
+  showIcon
+  icon="plus"
+  theme="mint"
+/>
 
-// Tags with reset
-<Tag value="Outline Reset" variant="outline" showReset onReset={() => alert('Reset clicked')} theme="blue" />
-<Tag value="Secondary Reset" variant="secondary" showReset onReset={() => alert('Reset clicked')} theme="green" />
+// Tag with reset
+<Tag
+  value="Outline Reset"
+  variant="outline"
+  showReset
+  onReset={() => alert('Reset clicked')}
+  theme="blue"
+/>
 
-// Tags with icon and reset
-<Tag value="Outline Icon Reset" variant="outline" showIcon icon="tag-new" showReset onReset={() => alert('Reset clicked')} theme="yellow" />
-<Tag value="Secondary Icon Reset" variant="secondary" showIcon icon="tag-new" showReset onReset={() => alert('Reset clicked')} theme="violet" />
+// Tag with icon and reset
+<Tag
+  value="Outline Icon Reset"
+  variant="outline"
+  showIcon
+  icon="tag-new"
+  showReset
+  onReset={() => alert('Reset clicked')}
+  theme="yellow"
+/>
 ```
 
 ## Props

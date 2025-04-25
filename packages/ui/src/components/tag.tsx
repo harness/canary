@@ -90,7 +90,11 @@ function Tag({
       <span className="truncate" title={value}>
         {value}
       </span>
-      {showReset && <Icon name="close-new" {...resetIconProps} role="button" onClick={onReset} />}
+      {showReset && (
+        <button onClick={onReset}>
+          <Icon name="close-new" {...resetIconProps} />
+        </button>
+      )}
     </div>
   )
 }
@@ -111,7 +115,7 @@ function TagSplit(props: TagProps) {
         showReset={false}
         showIcon={props.showIcon}
         value={props.label || ''}
-        className="tag-split-left pointer-events-none"
+        className="tag-split-left"
       />
       <Tag
         {...sharedProps}
@@ -119,7 +123,7 @@ function TagSplit(props: TagProps) {
         showReset={props.showReset}
         onReset={props.onReset}
         value={props.value}
-        className="tag-split-right pointer-events-none"
+        className="tag-split-right"
       />
     </div>
   )

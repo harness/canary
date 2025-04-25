@@ -5,12 +5,12 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const inputReferenceVariants = cva(
-  'flex h-9 min-h-9 cursor-pointer items-center justify-between rounded bg-cn-background-2 px-3 py-2 text-cn-foreground-1 transition-colors',
+  'bg-cn-background-2 text-cn-foreground-1 flex h-9 min-h-9 cursor-pointer items-center justify-between rounded px-3 py-2 transition-colors',
   {
     variants: {
       state: {
-        default: 'border border-cn-borders-2',
-        disabled: 'cursor-not-allowed border border-cn-borders-1 bg-cn-background-3 text-cn-foreground-3'
+        default: 'border-cn-borders-2 border',
+        disabled: 'border-cn-borders-1 bg-cn-background-3 text-cn-foreground-3 cursor-not-allowed border'
       }
     },
     defaultVariants: {
@@ -124,7 +124,7 @@ export const InputReference = <T,>({
   return (
     <ControlGroup>
       {!!label && (
-        <Label className="mb-2.5" color={disabled ? 'disabled-dark' : 'secondary'} optional={optional}>
+        <Label className="mb-2" disabled={disabled} optional={optional}>
           {label}
         </Label>
       )}

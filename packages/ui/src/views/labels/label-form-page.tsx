@@ -151,7 +151,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
 
   return (
     <SandboxLayout.Content className={cn('!flex-none w-[610px]', className)}>
-      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">
+      <h1 className="text-cn-foreground-1 mb-10 text-2xl font-medium">
         {labelId
           ? t('views:labelData.form.editTitle', 'Label details')
           : t('views:labelData.form.createTitle', 'Create a label')}
@@ -163,7 +163,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
         <FormWrapper className="gap-y-10" onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
             <ControlGroup>
-              <Label className="mb-2.5" color="secondary" htmlFor="label-name">
+              <Label className="mb-2" htmlFor="label-name">
                 {t('views:labelData.form.labelName', 'Label name')}
               </Label>
 
@@ -196,16 +196,13 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
             />
 
             <ControlGroup>
-              <Label className="mb-2.5" color="secondary" optional>
+              <Label className="mb-2" optional>
                 {t('views:labelData.form.valueName', 'Label value')}
               </Label>
               {values.map((value, idx) => (
                 <LabelFormColorAndNameGroup
                   isValue
                   key={idx}
-                  /**
-                   * It is important to keep the margin-top 20px to allow room for error messages.
-                   */
                   className="mt-5 first-of-type:mt-0"
                   useTranslationStore={useTranslationStore}
                   handleDeleteValue={() => handleDeleteValue(idx)}
@@ -236,7 +233,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
           </Fieldset>
 
           <section className="mt-1 flex flex-col gap-y-5">
-            <h3 className="text-sm leading-none text-cn-foreground-2">
+            <h3 className="text-cn-foreground-2 text-sm leading-none">
               {t('views:labelData.form.previewLabel', 'Label preview')}
             </h3>
 

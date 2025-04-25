@@ -107,7 +107,7 @@ export const ProjectSettingsGeneralPage = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto max-w-[38.125rem] pt-[3.25rem]">
-        <h2 className="mb-10 text-2xl font-medium text-cn-foreground-1">
+        <h2 className="text-cn-foreground-1 mb-10 text-2xl font-medium">
           {t('views:projectSettings.general.mainTitle', 'Project Settings')}
         </h2>
 
@@ -135,10 +135,8 @@ export const ProjectSettingsGeneralPage = ({
                   <Textarea
                     id="description"
                     {...register('description')}
-                    placeholder={t(
-                      'views:projectSettings.general.projectDescriptionPlaceholder',
-                      'Enter description (optional)'
-                    )}
+                    placeholder={t('views:projectSettings.general.projectDescriptionPlaceholder', 'Enter description')}
+                    optional
                     label={t('views:projectSettings.general.projectDescriptionLabel', 'Description')}
                     error={errors?.description?.message?.toString()}
                   />

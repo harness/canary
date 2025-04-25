@@ -68,7 +68,7 @@ function Main({ children, fullWidth, className }: { children: ReactNode; fullWid
   return (
     <section
       className={cn(
-        'flex flex-col grow w-full bg-cn-background-1 rounded-[inherit] mx-auto max-w-[1200px]',
+        'flex flex-col grow w-full bg-cn-background-1 rounded-[inherit]',
         { 'flex-1': fullWidth },
         className
       )}

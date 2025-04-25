@@ -284,15 +284,17 @@
     "activity": "Activity",
     "time": "Time",
     "status": "Status",
-    "delete": "Delete Connector",
+    "delete": "Delete",
     "configuration": "Configuration",
     "references": "References",
     "activityHistory": "Activity history",
     "connector": "Connector",
     "viewConnectorDetails": "View Connector Details",
     "viewDocumentation": "View Documentation",
+    "connectivityStatus": "Connectivity status",
     "createNew": "Create new connector",
     "id": "Connector ID",
+    "viewDetails": "View Details",
     "filterOptions": {
       "statusOption": {
         "success": "Success",
@@ -302,7 +304,9 @@
     },
     "created": "Created",
     "updated": "Last updated",
-    "lastConnected": "Last connected"
+    "success": "Success",
+    "failure": "Failed",
+    "errorEncountered": "Error Encountered"
   },
   "notFound": {
     "button": "Reload page",
@@ -358,7 +362,7 @@
       "mainTitle": "General settings",
       "projectNamePlaceholder": "Enter project name",
       "projectNameLabel": "Project name",
-      "projectDescriptionPlaceholder": "Enter description (optional)",
+      "projectDescriptionPlaceholder": "Enter description",
       "projectDescriptionLabel": "Description",
       "formSubmitButton": {
         "savingState": "Saving...",

@@ -38,7 +38,7 @@
       }
     },
     "createdAt": 1733229200306,
-    "lastModifiedAt": 1733229200304,
+    "lastModifiedAt": 1745418900000,
     "status": {
       "status": "SUCCESS",
       "errorSummary": null,
@@ -114,9 +114,15 @@
     "createdAt": 1733229191871,
     "lastModifiedAt": 1733229191867,
     "status": {
-      "status": "SUCCESS",
-      "errorSummary": null,
-      "errors": null,
+      "status": "FAILURE",
+      "errorSummary": "Error Encountered (Please ensure that the api access credentials are correct.)",
+      "errors": [
+        {
+          "reason": "Unexpected Error",
+          "message": "Please ensure that the api access credentials are correct.",
+          "code": 450
+        }
+      ],
       "testedAt": 1733229196534,
       "lastTestedAt": 0,
       "lastConnectedAt": 1733229196534,
@@ -260,7 +266,7 @@
       }
     },
     "createdAt": 1733229183940,
-    "lastModifiedAt": 1733229183938,
+    "lastModifiedAt": 1745280000000,
     "status": {
       "status": "SUCCESS",
       "errorSummary": null,
@@ -334,7 +340,7 @@
       }
     },
     "createdAt": 1733229176811,
-    "lastModifiedAt": 1733229176807,
+    "lastModifiedAt": 1744934400000,
     "status": {
       "status": "SUCCESS",
       "errorSummary": null,
@@ -407,7 +413,7 @@
       }
     },
     "createdAt": 1733229174390,
-    "lastModifiedAt": 1733229174387,
+    "lastModifiedAt": 1745193600000,
     "status": {
       "status": "SUCCESS",
       "errorSummary": null,

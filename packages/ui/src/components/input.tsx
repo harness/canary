@@ -9,12 +9,12 @@ export interface BaseInputProps
     VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
-  'bg-cn-background-2 px-3 py-1 text-cn-foreground-1 disabled:cursor-not-allowed disabled:bg-cn-background-3 disabled:text-cn-foreground-3',
+  'bg-cn-background-2 text-cn-foreground-1 disabled:bg-cn-background-3 disabled:text-cn-foreground-3 px-3 py-1 disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
         default:
-          'flex w-full rounded border text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-cn-foreground-3 focus-visible:rounded focus-visible:outline-none',
+          'placeholder:text-cn-foreground-3 flex w-full rounded border text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:rounded focus-visible:outline-none',
         extended: 'grow border-none focus-visible:outline-none'
       },
       size: {
@@ -27,7 +27,7 @@ const inputVariants = cva(
         danger: 'border-cn-borders-danger',
         clean: 'bg-transparent outline-none focus:outline-none',
         sidebar:
-          'border-cn-borders-2 bg-transparent text-sidebar-foreground-1 placeholder:text-sidebar-foreground-4 focus-within:border-sidebar-border-4 focus-visible:border-sidebar-border-4'
+          'border-cn-borders-2 text-sidebar-foreground-1 placeholder:text-sidebar-foreground-4 focus-within:border-sidebar-border-4 focus-visible:border-sidebar-border-4 bg-transparent'
       }
     },
     defaultVariants: {
@@ -152,7 +152,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
       return inputIconName ? (
         <span className="relative">
-          <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size={14} />
+          <Icon className="text-icons-9 absolute left-3 top-1/2 -translate-y-1/2" name={inputIconName} size={14} />
           {baseInputComp}
         </span>
       ) : (
@@ -163,7 +163,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <ControlGroup className={wrapperClassName}>
         {!!label && (
-          <Label className="mb-2.5" color={disabled ? 'disabled-dark' : 'secondary'} optional={optional} htmlFor={id}>
+          <Label className="mb-2" disabled={disabled} optional={optional} htmlFor={id}>
             {label}
           </Label>
         )}

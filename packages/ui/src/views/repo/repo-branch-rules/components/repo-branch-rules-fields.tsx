@@ -104,7 +104,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
   return (
     <Fieldset className="gap-y-4">
       <ControlGroup>
-        <Label htmlFor="target-patterns" className="mb-2.5" color="secondary">
+        <Label htmlFor="target-patterns" className="mb-2">
           {t('views:repos.targetPatterns', 'Target patterns')}
         </Label>
         <div className="grid grid-cols-[1fr_112px] items-start gap-x-3.5">
@@ -247,7 +247,7 @@ export const BranchSettingsRuleBypassListField: FC<
   return (
     <Fieldset className="gap-y-4">
       <ControlGroup>
-        <Label className="mb-2.5" htmlFor="bypassValue" color="secondary">
+        <Label className="mb-2" htmlFor="bypassValue">
           {t('views:repos.bypassList', 'Bypass list')}
         </Label>
 
@@ -308,9 +308,7 @@ export const BranchSettingsRuleListField: FC<{
 
   return (
     <ControlGroup className="max-w-[476px]">
-      <Label className="mb-6" color="secondary">
-        {t('views:repos.rulesTitle', 'Rules: select all that apply')}
-      </Label>
+      <Label className="mb-6">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
       <Fieldset className="gap-y-5">
         {branchRules.map((rule, index) => {
           const isChecked = rules[index]?.checked ?? false

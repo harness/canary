@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Badge, Button, HoverCard } from '@/components'
+import { Badge, Tooltip } from '@/components'
 
 const utcFormatter = new Intl.DateTimeFormat(undefined, {
   day: '2-digit',
@@ -48,14 +48,12 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
   )
 
   return (
-    <HoverCard.Root>
-      <HoverCard.Trigger asChild>
-        <Button className="mx-1 h-auto p-0" variant="ghost">
-          {formattedDate}
-        </Button>
-      </HoverCard.Trigger>
-      <HoverCard.Content
-        className="grid w-80 grid-cols-[auto_1fr_1fr] gap-x-3 gap-y-2 p-2.5 text-sm"
+    <Tooltip.Root>
+      <Tooltip.Trigger className="text-cn-foreground-2 data-[state=delayed-open]:text-cn-foreground-1">
+        <time className="mx-1 h-auto p-0">{formattedDate}</time>
+      </Tooltip.Trigger>
+      <Tooltip.Content
+        className="grid min-w-80 grid-cols-[auto_1fr_auto] gap-x-3 gap-y-2 whitespace-nowrap p-2.5 text-sm"
         avoidCollisions
         side="top"
       >
@@ -75,7 +73,8 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
             </>
           )
         })}
-      </HoverCard.Content>
-    </HoverCard.Root>
+        <Tooltip.Arrow />
+      </Tooltip.Content>
+    </Tooltip.Root>
   )
 }

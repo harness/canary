@@ -74,31 +74,30 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main className="max-w-[1042px]">
+    <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !connectors.length && !searchQuery })}>
-        <h1 className="text-6 text-cn-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
-        <Spacer size={6} />
+        <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Connectors</h1>
+        <Spacer size={7} />
         <FilterGroup<ConnectorListFilters, keyof ConnectorListFilters>
           onFilterSelectionChange={onFilterSelectionChange}
           onFilterValueChange={onFilterValueChange}
           searchInput={searchInput}
           handleInputChange={handleInputChange}
           headerAction={
-            <Button variant="surface" theme="muted" onClick={onCreate}>
+            <Button variant="solid" onClick={onCreate}>
               {t('views:connectors.createNew', 'New connector')}
             </Button>
           }
           t={t}
           filterOptions={CONNECTOR_FILTER_OPTIONS}
         />
-        <Spacer size={4} />
+        <Spacer size={4.5} />
         <ConnectorsList
           connectors={connectors}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           {...props}
         />
-        <Spacer size={8} />
         <Pagination totalPages={totalPages} currentPage={currentPage} goToPage={goToPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

@@ -32,14 +32,14 @@ export const Option: FC<OptionProps> = ({ control, id, label, description, ariaS
       aria-labelledby={`${id}-label`}
       aria-selected={ariaSelected}
     >
-      {control}
+      <div className="mt-0.5">{control}</div>
       <div className="flex flex-col gap-0">
-        <Label htmlFor={id} className="cursor-pointer pl-2.5 leading-tight">
+        <Label htmlFor={id} className="mb-1 cursor-pointer pl-2.5" variant="primary">
           {label}
         </Label>
         {description && (
           <Text
-            className="ml-2.5 mt-1.5 leading-snug tracking-tight"
+            className="ml-2.5 leading-snug tracking-tight"
             as="p"
             size={2}
             color="foreground-4"

@@ -101,7 +101,7 @@ export function CreateBranchDialog({
 
           <Fieldset>
             <ControlGroup>
-              <Label htmlFor="target" className="mb-2" color="secondary">
+              <Label htmlFor="target" className="mb-2">
                 {t('views:forms.basedOn', 'Based on')}
               </Label>
               {BranchSelectorContainer()}

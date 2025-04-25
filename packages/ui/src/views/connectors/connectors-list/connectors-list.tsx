@@ -1,25 +1,83 @@
-import { Button, Icon, Logo, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table, Text } from '@/components'
-import { useRouterContext } from '@/context'
-import { cn } from '@utils/cn'
+import { useState } from 'react'
+
+import {
+  Button,
+  Icon,
+  Logo,
+  MoreActionsTooltip,
+  NoData,
+  SkeletonList,
+  SkeletonTable,
+  Table,
+  Text,
+  Tooltip
+} from '@/components'
 import { timeAgo } from '@utils/utils'
+import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 
+import { ConnectorTestConnectionDialog } from '../components/connector-test-connection-dialog'
 import { ConnectorListItem, ConnectorListProps } from './types'
 import { ConnectorTypeToLogoNameMap } from './utils'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="text-cn-foreground-1 max-w-full truncate font-medium" title={title}>
+  <span className="max-w-full truncate font-medium text-cn-foreground-1" title={title}>
     {title}
   </span>
 )
 
-const ConnectivityStatus = ({ item }: { item: ConnectorListItem }): JSX.Element => {
-  const isSuccess = item?.status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
-  return (
-    <div className="inline-flex items-center gap-2">
-      <Icon name="dot" size={8} className={cn(isSuccess ? 'text-icons-success' : 'text-icons-danger')} />
-      <Text className="text-cn-foreground-2">{isSuccess ? 'Success' : 'Failed'}</Text>
+const ConnectivityStatus = ({
+  item,
+  useTranslationStore
+}: {
+  item: ConnectorListItem
+  connectorDetailUrl: string
+  useTranslationStore: () => TranslationStore
+}): JSX.Element => {
+  const { t } = useTranslationStore()
+  const isSuccess = item?.status?.status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
+  const [errorConnectionOpen, setErrorConnectionOpen] = useState(false)
+
+  return isSuccess ? (
+    <div className="flex items-center gap-2">
+      <Icon name="dot" size={8} className="text-icons-success" />
+      <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
+        {t('views:connectors.status.success', 'Success')}
+      </Text>
     </div>
+  ) : (
+    <>
+      <Tooltip.Root>
+        <Tooltip.Trigger asChild>
+          <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
+            <Icon name="dot" size={8} className="text-icons-danger" />
+            <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
+              {t('views:connectors.status.failure', 'Failed')}
+            </Text>
+          </Button>
+        </Tooltip.Trigger>
+        <Tooltip.Content className="w-72 whitespace-normal" side="bottom">
+          <h3 className="font-medium text-cn-foreground-1">
+            {t('views:connectors.errorEncountered', 'Error Encountered')}
+          </h3>
+          <p className="mt-1.5 text-cn-foreground-3">{item?.status?.errorSummary}</p>
+          <Button className="mt-2.5" variant="link" onClick={() => setErrorConnectionOpen(true)}>
+            {t('views:connectors.viewDetails', 'View details')}
+          </Button>
+        </Tooltip.Content>
+      </Tooltip.Root>
+
+      <ConnectorTestConnectionDialog
+        title={item?.name}
+        apiUrl={item?.spec?.url}
+        status="error"
+        errorMessage={item?.status?.errorSummary}
+        isOpen={errorConnectionOpen}
+        onClose={() => setErrorConnectionOpen(false)}
+        useTranslationStore={useTranslationStore}
+        errorData={item.status?.errors ? { errors: item.status?.errors } : undefined}
+      />
+    </>
   )
 }
 
@@ -31,7 +89,6 @@ export function ConnectorsList({
   onDeleteConnector,
   onToggleFavoriteConnector
 }: ConnectorListProps): JSX.Element {
-  const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
 
   if (isLoading) {
@@ -61,43 +118,47 @@ export function ConnectorsList({
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[282px]">{t('views:connectors.id', 'Connector ID')}</Table.Head>
-          <Table.Head className="w-72">Details</Table.Head>
-          <Table.Head className="w-50 whitespace-nowrap">Connectivity status</Table.Head>
-          <Table.Head className="w-40">Last updated</Table.Head>
-          <Table.Head className="w-2" />
-          <Table.Head className="w-2" />
+          <Table.Head className="w-70">{t('views:common.details', 'Details')}</Table.Head>
+          <Table.Head className="w-44 whitespace-nowrap">
+            {t('views:connectors.connectivityStatus', 'Connectivity status')}
+          </Table.Head>
+          <Table.Head className="w-44">{t('views:connectors.updated', 'Last updated')}</Table.Head>
+          <Table.Head className="w-10" />
+          <Table.Head className="w-10" />
         </Table.Row>
       </Table.Header>
       {isLoading ? (
         <SkeletonTable countRows={12} countColumns={5} />
       ) : (
         <Table.Body>
-          {connectors.map(({ identifier, type, spec, status, lastModifiedAt, isFavorite }) => {
+          {connectors.map(({ name, identifier, type, spec, status, lastModifiedAt, isFavorite }) => {
             const connectorLogo = type ? ConnectorTypeToLogoNameMap.get(type) : undefined
+            const connectorDetailUrl = toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt }) || ''
+
             return (
-              <Table.Row
-                key={identifier}
-                className="cursor-pointer py-4"
-                onClick={() => navigate(`${toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt })}`)}
-              >
-                <Table.Cell className="max-w-[282px] content-center truncate !py-5">
+              <Table.Row className="[&_td]:py-5" key={identifier}>
+                <Table.Cell className="content-center truncate">
                   <div className="flex items-center gap-2.5">
-                    <div className="min-w-[24px]">
+                    <div className="flex w-full max-w-8 items-center justify-center">
                       {connectorLogo ? <Logo name={connectorLogo} size={20} /> : <Icon name="connectors" size={30} />}
                     </div>
                     <Title title={identifier} />
                   </div>
                 </Table.Cell>
-                <Table.Cell className="max-w-72 content-center truncate !py-5" title={spec?.url}>
+                <Table.Cell className="content-center truncate" title={spec?.url}>
                   {spec?.url}
                 </Table.Cell>
-                <Table.Cell className="w-50 content-center whitespace-nowrap !py-5">
-                  {status ? <ConnectivityStatus item={{ identifier, type, spec, status, lastModifiedAt }} /> : null}
+                <Table.Cell className="content-center whitespace-nowrap">
+                  {status ? (
+                    <ConnectivityStatus
+                      item={{ name, identifier, type, spec, status, lastModifiedAt }}
+                      connectorDetailUrl={connectorDetailUrl}
+                      useTranslationStore={useTranslationStore}
+                    />
+                  ) : null}
                 </Table.Cell>
-                <Table.Cell className="content-center !py-5">
-                  {lastModifiedAt ? timeAgo(lastModifiedAt) : null}
-                </Table.Cell>
-                <Table.Cell className="min-w-2 content-center !p-0">
+                <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
+                <Table.Cell className="content-center !p-1.5">
                   <Button
                     size="sm"
                     iconOnly
@@ -111,12 +172,16 @@ export function ConnectorsList({
                     )}
                   </Button>
                 </Table.Cell>
-                <Table.Cell className="min-w-2 content-center !p-0 text-right">
+                <Table.Cell className="content-center !p-0">
                   <MoreActionsTooltip
                     actions={[
                       {
+                        title: t('views:connectors.viewDetails', 'View Details'),
+                        to: connectorDetailUrl
+                      },
+                      {
                         isDanger: true,
-                        title: t('views:connectors.delete', 'Delete Connector'),
+                        title: t('views:connectors.delete', 'Delete'),
                         onClick: () => onDeleteConnector(identifier)
                       }
                     ]}

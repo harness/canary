@@ -1,60 +1,54 @@
-// ToDo: Need to be reviewed by the XD team
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, PropsWithChildren } from 'react'
-
+import { Informer, InformerProps } from '@/components'
+import { NonEmptyReactNode } from '@/types'
 import * as LabelPrimitive from '@radix-ui/react-label'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const labelVariants = cva('peer-disabled:cursor-not-allowed peer-disabled:opacity-70', {
+const labelVariants = cva('label', {
   variants: {
     variant: {
-      default: 'text-sm font-normal leading-none'
-    },
-    color: {
-      primary: 'text-cn-foreground-1',
-      secondary: 'text-cn-foreground-2',
-      disabled: 'text-cn-foreground-3',
-      'disabled-dark': 'text-cn-foreground-disabled'
+      default: 'label-default',
+      primary: 'label-primary'
     }
   },
   defaultVariants: {
-    variant: 'default',
-    color: 'primary'
+    variant: 'default'
   }
 })
 
-const LabelRoot = forwardRef<
-  ElementRef<typeof LabelPrimitive.Root>,
-  Omit<ComponentPropsWithoutRef<typeof LabelPrimitive.Root>, 'color'> & VariantProps<typeof labelVariants>
->(({ className, variant, color, ...props }, ref) => (
-  <LabelPrimitive.Root ref={ref} className={cn(labelVariants({ variant, color }), className)} {...props} />
-))
-LabelRoot.displayName = LabelPrimitive.Root.displayName
+export type LabelProps = Omit<ComponentPropsWithoutRef<typeof LabelPrimitive.Root>, 'color'> &
+  VariantProps<typeof labelVariants> & {
+    disabled?: boolean
+    optional?: boolean
+    informerProps?: InformerProps
+    informerContent?: NonEmptyReactNode
+  }
 
-interface LabelProps
-  extends VariantProps<typeof labelVariants>,
-    PropsWithChildren<Omit<HTMLAttributes<HTMLLabelElement>, 'color'>> {
-  htmlFor?: string
-  optional?: boolean
-  className?: string
-}
-
-/**
- * A Label component that wraps the Radix UI LabelPrimitive.Root component.
- * It supports variant and color styling through class-variance-authority.
- * @example
- * <Label htmlFor="label" optional>Label</Label>
- */
 const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
-  ({ htmlFor, optional, color, variant, children, className }: LabelProps, ref) => {
-    return (
-      <LabelRoot htmlFor={htmlFor} variant={variant} color={color} className={className} ref={ref}>
-        {children} {optional && <span className="align-top text-cn-foreground-3">(optional)</span>}
-      </LabelRoot>
+  ({ className, children, variant = 'default', optional, disabled, informerContent, ...props }, ref) => {
+    const LabelComponent = ({ className }: { className?: string }) => (
+      <LabelPrimitive.Root ref={ref} className={cn(labelVariants({ variant }), className)} {...props}>
+        {children} {optional && <span className="label-optional">(optional)</span>}
+      </LabelPrimitive.Root>
     )
+
+    if (informerContent) {
+      return (
+        <span className={cn('flex items-center gap-1', className)}>
+          <LabelComponent />
+
+          <Informer className="label-informer" disabled={disabled}>
+            {informerContent}
+          </Informer>
+        </span>
+      )
+    }
+
+    return <LabelComponent className={className} />
   }
 )
-Label.displayName = 'Label'
+Label.displayName = LabelPrimitive.Root.displayName
 
 export { Label }

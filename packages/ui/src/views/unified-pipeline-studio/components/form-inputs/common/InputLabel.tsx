@@ -15,7 +15,7 @@ function InputLabel(props: InputLabelProps): JSX.Element | null {
 
   const labelText = required && label ? `${label} *` : label
 
-  return <Label className={cn('mb-2.5 block', className)}>{labelText}</Label>
+  return <Label className={cn('mb-2', className)}>{labelText}</Label>
 }
 
 export { InputLabel }

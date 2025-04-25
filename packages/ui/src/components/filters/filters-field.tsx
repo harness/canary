@@ -5,7 +5,13 @@ import Calendar from './filters-bar/actions/variants/calendar-field'
 import Checkbox from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import Text from './filters-bar/actions/variants/text-field'
-import { CheckboxOptions, FilterField, FilterFieldTypes, FilterOptionConfig, FilterValueTypes } from './types'
+import {
+  CheckboxOptions,
+  FilterFieldConfig as FilterField,
+  FilterFieldTypes,
+  FilterOptionConfig,
+  FilterValueTypes
+} from './types'
 import { getFilterLabelValue } from './utils'
 
 export interface FiltersFieldProps<

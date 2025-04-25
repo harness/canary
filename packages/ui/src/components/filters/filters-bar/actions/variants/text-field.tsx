@@ -1,9 +1,9 @@
 import { Button, Icon, Input } from '@/components'
 
-import { FilterField } from '../../../types'
+import { FilterFieldConfig } from '../../../types'
 
 interface TextFilterProps {
-  filter: FilterField<string>
+  filter: FilterFieldConfig<string>
   onUpdateFilter: (filterValue: string) => void
 }
 

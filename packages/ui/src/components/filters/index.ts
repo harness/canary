@@ -1,15 +1,7 @@
-import Filters from './filters'
-import FiltersBar from './filters-bar/filters-bar'
-import {
-  FilterCondition,
-  FilterOption,
-  FilterValue,
-  SortDirection,
-  SortOption,
-  SortValue,
-  ViewLayoutOption
-} from './types'
+import FilterBoxWrapper from './filter-box-wrapper'
+import FilterSelect from './filter-select'
+import FilterField from './filters-field'
 
-export { Filters, FiltersBar }
+export { FilterSelect, FilterField, FilterBoxWrapper }
 
-export type { FilterOption, FilterCondition, SortOption, SortDirection, FilterValue, SortValue, ViewLayoutOption }
+export type * from './types'

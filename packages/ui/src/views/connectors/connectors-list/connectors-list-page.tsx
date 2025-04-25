@@ -30,10 +30,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
 }) => {
   const { t } = useTranslationStore()
   const { navigate } = useRouterContext()
-  // const filterHandlers = useFilters()
   const [_selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
-  // const [openedFilter, setOpenedFilter] = useState<ConnectorListFiltersKeys>()
-  // const filtersRef = useRef<FilterRefType<ConnectorListFilters> | null>(null)
 
   const CONNECTOR_FILTER_OPTIONS = getConnectorListFilterOptions(t)
 
@@ -50,10 +47,6 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
     // Pass filter values to parent component if onFilterChange is provided
     onFilterChange?.(filterValues)
   }
-
-  // const handleFilterOpen = (filter: ConnectorListFiltersKeys, isOpen: boolean) => {
-  //   setOpenedFilter(isOpen ? filter : undefined)
-  // }
 
   if (isError) {
     return (

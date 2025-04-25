@@ -4,10 +4,10 @@ import { Input, Calendar as UICalendar } from '@/components'
 import { cn } from '@utils/cn'
 import { format, isValid, parse } from 'date-fns'
 
-import { FilterField } from '../../../types'
+import { FilterFieldConfig } from '../../../types'
 
 interface CalendarProps {
-  filter: FilterField<Date>
+  filter: FilterFieldConfig<Date>
   onUpdateFilter: (filterValue?: Date) => void
 }
 

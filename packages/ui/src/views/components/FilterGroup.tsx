@@ -4,7 +4,6 @@ import { ListActions, SearchBox } from '@/components'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
 import { FilterOptionConfig } from '@components/filters/types'
 import ListControlBar from '@views/repo/components/list-control-bar'
-import { useFilters } from '@views/repo/hooks'
 import { TFunction } from 'i18next'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
@@ -45,7 +44,6 @@ const FilterGroup = <
   const filtersRef = useRef<FilterRefType<T> | null>(null)
   const [openedFilter, setOpenedFilter] = useState<V>()
   const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
-  const filterHandlers = useFilters()
 
   // Create a wrapper function that matches the expected type
   const handleSetOpenedFilter = (filter: keyof T) => {
@@ -138,11 +136,8 @@ const FilterGroup = <
           openedFilter={openedFilter}
           setOpenedFilter={handleSetOpenedFilter}
           filterOptions={filterOptions}
-          sortOptions={[]}
           selectedFiltersCnt={selectedFiltersCnt}
-          sortDirections={[]}
           t={t}
-          filterHandlers={filterHandlers}
         />
       </>
     </FilterHandler>

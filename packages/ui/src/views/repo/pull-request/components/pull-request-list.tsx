@@ -13,7 +13,6 @@ export interface PullRequestListProps {
   handleResetFilters?: () => void
   hasActiveFilters?: boolean
   query?: string
-  handleResetQuery: () => void
   openPRs?: number
   handleOpenClick?: () => void
   closedPRs?: number

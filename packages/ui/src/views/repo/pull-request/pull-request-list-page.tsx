@@ -1,31 +1,16 @@
 import { FC, ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 
-import {
-  Badge,
-  Button,
-  ListActions,
-  NoData,
-  Pagination,
-  SearchBox,
-  SkeletonList,
-  Spacer,
-  StackedList
-} from '@/components'
+import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Spacer, StackedList } from '@/components'
 import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
-import { LabelMarker, SandboxLayout } from '@/views'
+import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
-import FilterTrigger from '@components/filters/triggers/filter-trigger'
 import { CustomFilterOptionConfig, FilterFieldTypes } from '@components/filters/types'
-import { noop } from 'lodash-es'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
 
 import ListControlBar from '../components/list-control-bar'
-import { getPRListFilterOptions, getSortDirections, getSortOptions } from '../constants/filter-options'
-import { useFilters } from '../hooks'
-import { filterPullRequests } from '../utils/filtering/pulls'
-import { sortPullRequests } from '../utils/sorting/pulls'
+import { getPRListFilterOptions } from '../constants/filter-options'
 import { filterLabelRenderer, getParserConfig, LabelsFilter, LabelsValue } from './components/labels'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
 import type { PRListFilters, PullRequestPageProps } from './pull-request.types'
@@ -106,8 +91,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         value: String(userInfo?.id)
       })) ?? []
   })
-  const SORT_OPTIONS = getSortOptions(t)
-  const SORT_DIRECTIONS = getSortDirections(t)
 
   const {
     search: searchInput,
@@ -121,22 +104,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   /**
    * Initialize filters hook with handlers for managing filter state
    */
-  const filterHandlers = useFilters()
   const [openedFilter, setOpenedFilter] = useState<PRListFiltersKeys>()
   const filtersRef = useRef<FilterRefType<PRListFilters> | null>(null)
 
-  const filteredPullReqs = filterPullRequests(pullRequests, filterHandlers.activeFilters)
-  const sortedPullReqs = sortPullRequests(filteredPullReqs, filterHandlers.activeSorts)
   const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
-  const noData = !(sortedPullReqs && sortedPullReqs.length > 0)
-  const handleCloseClick = () => {
-    filterHandlers.handleResetFilters()
-  }
-
-  const handleOpenClick = () => {
-    filterHandlers.handleResetFilters()
-  }
+  const noData = !(pullRequests && pullRequests.length > 0)
 
   const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
@@ -148,7 +121,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     )
   }, [defaultSelectedAuthor, defaultSelectedAuthorError])
 
-  const showTopBar = !noData || selectedFiltersCnt > 0 || filterHandlers.activeSorts.length > 0 || !!searchQuery?.length
+  const showTopBar = !noData || selectedFiltersCnt > 0 || !!searchQuery?.length
 
   const renderListContent = () => {
     if (isLoading) {
@@ -173,7 +146,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               secondaryButton={{
                 label: t('views:noData.clearFilters', 'Clear filters'),
                 onClick: () => {
-                  filterHandlers.handleResetFilters()
                   filtersRef.current?.reset()
                 }
               }}
@@ -203,12 +175,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         useTranslationStore={useTranslationStore}
         repoId={repoId}
         spaceId={spaceId}
-        handleResetQuery={noop}
-        pullRequests={sortedPullReqs}
+        pullRequests={pullRequests}
         closedPRs={closedPullReqs}
-        handleOpenClick={handleOpenClick}
         openPRs={openPullReqs}
-        handleCloseClick={handleCloseClick}
       />
     )
   }
@@ -282,16 +251,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                     />
                   )}
                 </PRListFilterHandler.Dropdown>
-                <FilterTrigger
-                  type="sort"
-                  activeFilters={filterHandlers.activeSorts}
-                  onChange={filterHandlers.handleSortChange}
-                  onReset={filterHandlers.handleResetSorts}
-                  searchQueries={filterHandlers.searchQueries}
-                  onSearchChange={filterHandlers.handleSearchChange}
-                  options={SORT_OPTIONS}
-                  t={t}
-                />
                 <Button asChild>
                   <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
                 </Button>
@@ -338,9 +297,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               setOpenedFilter={setOpenedFilter}
               selectedFiltersCnt={selectedFiltersCnt}
               filterOptions={PR_FILTER_OPTIONS}
-              sortOptions={SORT_OPTIONS}
-              sortDirections={SORT_DIRECTIONS}
-              filterHandlers={filterHandlers}
               t={t}
             />
             <Spacer size={5} />

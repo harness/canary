@@ -8,10 +8,6 @@
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.1-half}"
-      },
-      "min-width": {
-        "$type": "spacing",
-        "$value": "{size.56}"
       }
     },
     "md": {
@@ -24,8 +20,14 @@
         "$value": "{spacing.2}"
       },
       "min-width": {
-        "$type": "spacing",
+        "$type": "sizing",
         "$value": "{size.64}"
+      }
+    },
+    "defailt": {
+      "min-width": {
+        "$type": "sizing",
+        "$value": "{size.56}"
       }
     }
   }

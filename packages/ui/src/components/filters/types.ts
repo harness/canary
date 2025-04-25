@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { Parser } from '@harnessio/filters'
@@ -159,6 +161,7 @@ export enum FilterFieldTypes {
   Text = 'text',
   Number = 'number',
   ComboBox = 'combobox',
+  Custom = 'custom',
   Checkbox = 'checkbox'
 }
 
@@ -179,7 +182,7 @@ interface FilterOptionConfigBase<Key extends string, V = undefined> {
   parser?: Parser<V>
 }
 
-interface ComboBoxFilterOptionConfig<Key extends string> extends FilterOptionConfigBase<Key, ComboBoxOptions> {
+interface ComboBoxFilterOptionConfig<Key extends string = string> extends FilterOptionConfigBase<Key, ComboBoxOptions> {
   type: FilterFieldTypes.ComboBox
   filterFieldConfig: {
     options: Array<{ label: string; value: string }>
@@ -203,6 +206,15 @@ interface NumberFilterOptionConfig<T extends string = string> extends FilterOpti
   type: FilterFieldTypes.Number
 }
 
+export interface CustomFilterOptionConfig<T extends string = string, V = Record<string, unknown>>
+  extends FilterOptionConfigBase<T, V> {
+  type: FilterFieldTypes.Custom
+  filterFieldConfig: {
+    renderCustomComponent: ({ value, onChange }: { value?: V; onChange: (value: V) => void }) => ReactNode
+    renderFilterLabel?: (value?: V) => ReactNode
+  }
+}
+
 interface CheckboxFilterOptionConfig<T extends string = string>
   extends FilterOptionConfigBase<T, Array<CheckboxOptions>> {
   type: FilterFieldTypes.Checkbox
@@ -211,12 +223,13 @@ interface CheckboxFilterOptionConfig<T extends string = string>
   }
 }
 
-type FilterOptionConfig<T extends string = string> =
+type FilterOptionConfig<T extends string = string, V = Record<string, unknown>> =
   | ComboBoxFilterOptionConfig<T>
   | CalendarFilterOptionConfig<T>
   | TextFilterOptionConfig<T>
   | NumberFilterOptionConfig<T>
   | CheckboxFilterOptionConfig<T>
+  | CustomFilterOptionConfig<T, V>
 type FilterValueTypes = string | number | unknown
 
 export type {
@@ -227,6 +240,10 @@ export type {
   FilterOption,
   CalendarFilterOption,
   CheckboxFilterOption,
+  ComboBoxFilterOptionConfig,
+  TextFilterOptionConfig,
+  NumberFilterOptionConfig,
+  CalendarFilterOptionConfig,
   FilterCondition,
   FilterValue,
   SortOption,

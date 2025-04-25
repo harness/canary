@@ -1,10 +1,19 @@
+import { useMemo } from 'react'
+
 import { EntityIntent, InputConfigType, TranslationStore } from '@/views'
 import { Alert } from '@components/alert'
 import { Button } from '@components/button'
 import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
 import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
 
-import { IFormDefinition, InputFactory, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
+import {
+  getDefaultValuesFromFormDefinition,
+  IFormDefinition,
+  InputFactory,
+  RenderForm,
+  RootForm,
+  useZodValidationResolver
+} from '@harnessio/forms'
 
 import { onSubmitSecretProps } from './types'
 
@@ -41,8 +50,13 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
     }
   })
 
+  const defaultSecretValues = useMemo(() => {
+    return getDefaultValuesFromFormDefinition(secretsFormDefinition ?? { inputs: [] })
+  }, [secretsFormDefinition])
+
   return (
     <RootForm
+      defaultValues={defaultSecretValues}
       autoFocusPath={secretsFormDefinition?.inputs[0]?.path}
       resolver={resolver}
       mode="onSubmit"

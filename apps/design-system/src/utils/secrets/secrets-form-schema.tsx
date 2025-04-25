@@ -42,6 +42,18 @@ const inputs: IInputConfigWithConfigInterface[] = [
     label: 'Enter the Secret Text'
   },
   {
+    inputType: 'radio',
+    path: `secret.spec.valueType`,
+    inputConfig: {
+      inputType: 'radio',
+      options: [
+        { label: 'Inline Secret Value', value: 'inline', description: '', id: 'inline', title: 'Inline Secret Value' },
+        { label: 'Reference Secret', value: 'reference', description: '', id: 'reference', title: 'Reference Secret' }
+      ]
+    },
+    default: 'inline'
+  },
+  {
     inputType: 'group',
     path: `secret.metadata`,
     label: 'Metadata',

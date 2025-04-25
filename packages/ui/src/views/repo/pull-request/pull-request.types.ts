@@ -1,8 +1,9 @@
 import { PrincipalType, UsererrorError } from '@/types'
-import { ColorsEnum, LabelType } from '@/views'
+import { ColorsEnum, ILabelsStore, LabelType } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { TranslationStore } from '../repo-list/types'
+import { LabelsValue } from './components/labels'
 
 export interface CommitSelectorListItem {
   title: string
@@ -50,6 +51,7 @@ export interface PullRequestListStore {
   totalPages: number
   page: number
   setPage: (page: number) => void
+  setLabelsQuery: (query: string) => void
   openPullReqs: number
   closedPullReqs: number
 }
@@ -226,6 +228,8 @@ export interface PRListLabelType {
 
 export interface PullRequestPageProps {
   usePullRequestListStore: () => PullRequestListStore
+  useLabelsStore: () => ILabelsStore
+  onFilterOpen?: (filter: keyof PRListFilters) => void
   repoId?: string
   spaceId?: string
   defaultSelectedAuthorError?: UsererrorError | null
@@ -245,6 +249,7 @@ export type PRListFilters = {
   created_by?: ComboBoxOptions
   created_lt?: Date
   created_gt?: Date
+  label_by?: LabelsValue
 }
 
 export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void) => void

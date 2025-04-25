@@ -37,11 +37,6 @@
       "$value": "{chrome.600}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
-    "accent": {
-      "$type": "color",
-      "$value": "{blue.300}",
-      "$description": "Contrasting color for text and icons in interactive elements or design focus. Creates visual distinction for actionable items.\n\nCommon uses: Links, buttons, interactive icons, highlighted elements."
-    },
     "success": {
       "$type": "color",
       "$value": "{set.green.soft.text}",
@@ -1278,8 +1273,13 @@
     "link": {
       "default": {
         "$type": "color",
-        "$value": "{text.accent}",
+        "$value": "{blue.400}",
         "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{blue.200}",
+        "$description": "Hover color for text links."
       },
       "visited": {
         "$type": "color",
@@ -1470,6 +1470,26 @@
       "selection-item": {
         "$type": "color",
         "$value": "{chrome.900}"
+      }
+    },
+    "toast": {
+      "danger": {
+        "bg": {
+          "$type": "color",
+          "$value": "{red.600}"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{red.700}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{red.300}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{chrome.25}"
+        }
       }
     }
   },

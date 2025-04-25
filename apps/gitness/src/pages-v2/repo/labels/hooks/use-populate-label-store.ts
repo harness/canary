@@ -8,9 +8,10 @@ export interface UsePopulateLabelStoreProps {
   queryPage?: number
   query?: string
   enabled?: boolean
+  inherited?: boolean
 }
 
-export const usePopulateLabelStore = ({ queryPage, query, enabled = true }: UsePopulateLabelStoreProps) => {
+export const usePopulateLabelStore = ({ queryPage, query, enabled = true, inherited }: UsePopulateLabelStoreProps) => {
   const repoId = useGetRepoId()
 
   const { setLabels, setValues, setRepoSpaceRef, resetLabelsAndValues, setIsLoading, getParentScopeLabels } =
@@ -22,7 +23,7 @@ export const usePopulateLabelStore = ({ queryPage, query, enabled = true }: UseP
     repo_ref,
     labels,
     values
-  } = useGetRepoLabelAndValuesData({ queryPage, query, enabled, inherited: getParentScopeLabels })
+  } = useGetRepoLabelAndValuesData({ queryPage, query, enabled, inherited: inherited || getParentScopeLabels })
 
   /**
    * Resetting the store state for labels and values

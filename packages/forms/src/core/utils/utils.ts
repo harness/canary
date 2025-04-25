@@ -5,9 +5,16 @@ import type { AnyFormikValue, IFormDefinition, IInputDefinition } from '../../ty
 export const getDefaultValuesFromFormDefinition = (inputs: IFormDefinition): AnyFormikValue => {
   const defaultValues: AnyFormikValue = {}
 
-  // TODO: add default for nested (group),
   // TODO: this implementation is wrong
   inputs.inputs.forEach(input => {
+    // add default for nested (group),
+    if (input.inputType === 'group') {
+      input?.inputs?.forEach(input => {
+        if (typeof get(defaultValues, input.path) === 'undefined') {
+          set(defaultValues, input.path, input.default)
+        }
+      })
+    }
     if (typeof get(defaultValues, input.path) === 'undefined') {
       set(defaultValues, input.path, input.default)
     }

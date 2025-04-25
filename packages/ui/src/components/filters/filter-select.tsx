@@ -4,17 +4,17 @@ import { Badge, Button, DropdownMenu, Icon, Input } from '@/components'
 
 import { FilterOptionConfig } from './types'
 
-interface FilterTriggerProps<FilterKey extends string> {
-  options: FilterOptionConfig<FilterKey>[]
+interface FilterTriggerProps<FilterKey extends string, CustomValue = Record<string, unknown>> {
+  options: FilterOptionConfig<FilterKey, CustomValue>[]
   displayLabel?: React.ReactNode | string
   dropdownAlign?: 'start' | 'end'
   inputPlaceholder?: string
   buttonLabel?: string
-  onChange: (option: FilterOptionConfig<FilterKey>) => void
+  onChange: (option: FilterOptionConfig<FilterKey, CustomValue>) => void
   onReset?: () => void
 }
 
-const FilterSelect = <FilterKey extends string>({
+const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unknown>>({
   displayLabel,
   dropdownAlign = 'end',
   onChange,
@@ -22,7 +22,7 @@ const FilterSelect = <FilterKey extends string>({
   options,
   inputPlaceholder,
   buttonLabel
-}: FilterTriggerProps<FilterKey>) => {
+}: FilterTriggerProps<FilterKey, CustomValue>) => {
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredBySearchOptions = options.filter(

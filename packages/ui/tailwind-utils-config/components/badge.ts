@@ -47,7 +47,8 @@ function createBadgeVariantStyles() {
       if (variant !== 'status') {
         style[`backgroundColor`] = `var(--cn-set-${themeStyle}-${variant}-bg)`
         style[`color`] = `var(--cn-set-${themeStyle}-${variant}-text)`
-        style[`borderColor`] = `var(--cn-set-${themeStyle}-${variant}-border)`
+        style[`borderColor`] =
+          `var(--cn-set-${themeStyle}-${variant}-border, var(--cn-set-${themeStyle}-${variant}-bg))`
 
         combinationStyles[`&:where(.badge-${variant}.badge-${theme})`] = style
       } else {
@@ -78,7 +79,7 @@ export default {
 
     '&:where(:not(.badge-status))': {
       borderRadius: 'var(--cn-badge-radius)',
-      border: 'var(--cn-badge-border) solid var(--cn-set-gray-solid-border)',
+      border: 'var(--cn-badge-border) solid var(--cn-set-gray-surface-border)',
       gap: 'var(--cn-badge-default-gap)'
     },
 

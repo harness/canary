@@ -1,7 +1,7 @@
 import { parse } from 'yaml'
 
 export function parseYamlSafe(yaml: string) {
-  let yamlObject: Record<string, unknown> | undefined = undefined
+  let yamlObject: Record<string, any> | undefined = undefined
   let isYamlSyntaxValid = true
 
   try {

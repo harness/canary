@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import {
   Button,
-  Tooltip,
   Icon,
   Logo,
   MoreActionsTooltip,
@@ -10,7 +9,8 @@ import {
   SkeletonList,
   SkeletonTable,
   Table,
-  Text
+  Text,
+  Tooltip
 } from '@/components'
 import { timeAgo } from '@utils/utils'
 import { TranslationStore } from '@views/repo'

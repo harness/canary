@@ -41,6 +41,7 @@ const buttonVariants = cva('button', {
     }
   },
   compoundVariants: [
+    // Primary
     {
       variant: 'primary',
       theme: 'default',
@@ -57,12 +58,14 @@ const buttonVariants = cva('button', {
       class: 'button-soft button-danger'
     },
 
+    // Secondary
     {
       variant: 'secondary',
       theme: 'default',
       class: 'button-soft button-muted'
     },
 
+    // Outline
     {
       variant: 'outline',
       theme: 'default',
@@ -79,6 +82,7 @@ const buttonVariants = cva('button', {
       class: 'button-surface button-danger'
     },
 
+    // Ghost
     {
       variant: 'ghost',
       theme: 'default',

@@ -46,7 +46,7 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   showIcon?: boolean
   showReset?: boolean
   onReset?: () => void
-  keyName?: string
+  label?: string
   value: string
 }
 
@@ -59,13 +59,13 @@ function Tag({
   showIcon,
   showReset,
   onReset,
-  keyName,
+  label,
   value,
   className,
   ...props
 }: TagProps) {
-  if (keyName) {
-    return <TagSplit {...{ variant, size, theme, rounded, icon, showIcon, showReset, onReset, keyName, value }} />
+  if (label) {
+    return <TagSplit {...{ variant, size, theme, rounded, icon, showIcon, showReset, onReset, label: label, value }} />
   }
 
   const fillColor = getCSSVarValue(`--cn-set-${theme || 'gray'}-surface-text`)
@@ -108,7 +108,7 @@ function TagSplit(props: TagProps) {
         {...sharedProps}
         showReset={false}
         showIcon={props.showIcon}
-        value={props.keyName || ''}
+        value={props.label || ''}
         className="tag-split-left pointer-events-none"
       />
       <Tag

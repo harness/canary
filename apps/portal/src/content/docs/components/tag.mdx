@@ -1,0 +1,325 @@
+---
+title: Tag
+description: Interactive tag component for displaying labels and actions
+---
+
+The `Tag` component is used to display small, interactive elements with optional icons, reset functionality, and customizable styles.
+
+import { DocsPage } from "@/components/docs-page";
+import { Tag } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-8">
+  
+{/* Themes */}
+
+<div>
+  <h5 className="text-lg font-semibold mb-3">Themes</h5>
+  <div className="flex flex-wrap items-end gap-3">
+    {[
+      "gray",
+      "blue",
+      "brown",
+      "cyan",
+      "green",
+      "indigo",
+      "lime",
+      "mint",
+      "orange",
+      "pink",
+      "purple",
+      "red",
+      "violet",
+      "yellow",
+    ].map((theme) => (
+      <Tag
+        key={theme}
+        value={theme.charAt(0).toUpperCase() + theme.slice(1)}
+        theme={theme}
+      />
+    ))}
+  </div>
+</div>
+
+{/* Variants */}
+
+<div>
+  <h5 className="text-lg font-semibold mb-3">Variants</h5>
+  <div className="flex flex-wrap items-end gap-3">
+    <Tag value="Outline Tag" variant="outline" />
+    <Tag value="Secondary Tag" variant="secondary" />
+  </div>
+</div>
+
+{/* Rounded Tags */}
+
+<div>
+  <h5 className="text-lg font-semibold mb-3">Rounded Tags</h5>
+  <div className="flex flex-wrap items-end gap-3">
+    <Tag value="Rounded Outline Tag" variant="outline" rounded />
+    <Tag value="Rounded Secondary Tag" variant="secondary" rounded />
+  </div>
+</div>
+
+{/* Split Tags */}
+
+<div>
+  <h5 className="text-lg font-semibold mb-3">Split Tags</h5>
+  <div className="flex flex-wrap items-end gap-3">
+    <Tag label="Label" value="Value" variant="outline" />
+    <Tag label="Label" value="Value" variant="secondary" />
+    <Tag label="Label" value="Value" variant="outline" rounded />
+    <Tag label="Label" value="Value" variant="secondary" rounded />
+  </div>
+</div>
+
+{/* Tags with Icon */}
+
+<div>
+  <h5 className="text-lg font-semibold mb-3">Tags with Icon</h5>
+  <div className="flex flex-wrap items-end gap-3">
+    <Tag value="Outline Icon" variant="outline" showIcon icon="tag-new" />
+    <Tag value="Secondary Icon" variant="secondary" showIcon icon="tag-new" />
+    <Tag
+      value="Rounded Outline Icon"
+      variant="outline"
+      rounded
+      showIcon
+      icon="tag-new"
+    />
+    <Tag
+      value="Rounded Secondary Icon"
+      variant="secondary"
+      rounded
+      showIcon
+      icon="tag-new"
+    />
+  </div>
+</div>
+
+{/* Tags with Custom Icon */}
+
+<div>
+  <h5 className="text-lg font-semibold mb-3">Tags with Custom Icon</h5>
+  <div className="flex flex-wrap items-end gap-3">
+    <Tag value="Custom Icon" variant="outline" showIcon icon="plus" />
+    <Tag
+      value="Custom Icon Secondary"
+      variant="secondary"
+      showIcon
+      icon="plus"
+    />
+    <Tag
+      value="Rounded Custom Icon"
+      variant="outline"
+      rounded
+      showIcon
+      icon="plus"
+    />
+    <Tag
+      value="Rounded Custom Icon Secondary"
+      variant="secondary"
+      rounded
+      showIcon
+      icon="plus"
+    />
+  </div>
+</div>
+
+{/* Tags with Reset */}
+
+<div>
+  <h5 className="text-lg font-semibold mb-3">Tags with Reset</h5>
+  <div className="flex flex-wrap items-end gap-3">
+    <Tag
+      value="Outline Reset"
+      variant="outline"
+      showReset
+      onReset={() => alert("Reset clicked")}
+    />
+    <Tag
+      value="Secondary Reset"
+      variant="secondary"
+      showReset
+      onReset={() => alert("Reset clicked")}
+    />
+    <Tag
+      value="Rounded Outline Reset"
+      variant="outline"
+      rounded
+      showReset
+      onReset={() => alert("Reset clicked")}
+    />
+    <Tag
+      value="Rounded Secondary Reset"
+      variant="secondary"
+      rounded
+      showReset
+      onReset={() => alert("Reset clicked")}
+    />
+  </div>
+</div>
+
+{/* Tags with Icon and Reset */}
+
+  <div>
+    <h5 className="text-lg font-semibold mb-3">Tags with Icon and Reset</h5>
+    <div className="flex flex-wrap items-end gap-3">
+      <Tag
+        value="Outline Icon Reset"
+        variant="outline"
+        showIcon
+        icon="tag-new"
+        showReset
+        onReset={() => alert("Reset clicked")}
+      />
+      <Tag
+        value="Secondary Icon Reset"
+        variant="secondary"
+        showIcon
+        icon="tag-new"
+        showReset
+        onReset={() => alert("Reset clicked")}
+      />
+      <Tag
+        value="Rounded Outline Icon Reset"
+        variant="outline"
+        rounded
+        showIcon
+        icon="tag-new"
+        showReset
+        onReset={() => alert("Reset clicked")}
+      />
+      <Tag
+        value="Rounded Secondary Icon Reset"
+        variant="secondary"
+        rounded
+        showIcon
+        icon="tag-new"
+        showReset
+        onReset={() => alert("Reset clicked")}
+      />
+    </div>
+  </div>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Tag } from '@harnessio/ui/components'
+
+// Basic usage
+<Tag value="Default Tag" />
+
+// Themes
+<Tag value="Blue Tag" theme="blue" />
+<Tag value="Green Tag" theme="green" />
+
+// Variants
+<Tag value="Outline Tag" variant="outline" />
+<Tag value="Secondary Tag" variant="secondary" />
+
+// Rounded tags
+<Tag value="Rounded Outline Tag" variant="outline" rounded />
+<Tag value="Rounded Secondary Tag" variant="secondary" rounded />
+
+// Split tags
+<Tag label="Label" value="Value" variant="outline" />
+<Tag label="Label" value="Value" variant="secondary" />
+<Tag label="Label" value="Value" variant="outline" rounded />
+<Tag label="Label" value="Value" variant="secondary" rounded />
+
+// Tags with icon
+<Tag value="Outline Icon" variant="outline" showIcon icon="tag-new" />
+<Tag value="Secondary Icon" variant="secondary" showIcon icon="tag-new" />
+
+// Tags with custom icon
+<Tag value="Custom Icon" variant="outline" showIcon icon="plus" />
+<Tag value="Custom Icon Secondary" variant="secondary" showIcon icon="plus" />
+<Tag value="Rounded Custom Icon" variant="outline" rounded showIcon icon="plus" />
+<Tag value="Rounded Custom Icon Secondary" variant="secondary" rounded showIcon icon="plus" />
+
+// Tags with reset
+<Tag value="Outline Reset" variant="outline" showReset onReset={() => alert('Reset clicked')} />
+<Tag value="Secondary Reset" variant="secondary" showReset onReset={() => alert('Reset clicked')} />
+
+// Tags with icon and reset
+<Tag value="Outline Icon Reset" variant="outline" showIcon icon="tag-new" showReset onReset={() => alert('Reset clicked')} />
+<Tag value="Secondary Icon Reset" variant="secondary" showIcon icon="tag-new" showReset onReset={() => alert('Reset clicked')} />
+```
+
+## Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "Visual style of the tag.",
+      required: false,
+      value: "'outline' | 'secondary'",
+      defaultValue: "'outline'",
+    },
+    {
+      name: "size",
+      description: "Size of the tag.",
+      required: false,
+      value: "'default' | 'sm'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "theme",
+      description: "Color theme of the tag.",
+      required: false,
+      value: "'gray' | 'blue' | 'green' | 'red' | ...",
+      defaultValue: "'gray'",
+    },
+    {
+      name: "rounded",
+      description: "Applies rounded corners to the tag.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "icon",
+      description: "Specifies the name of the icon to display.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "showIcon",
+      description: "If true, displays the icon.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "showReset",
+      description: "If true, displays a reset (close) icon.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onReset",
+      description:
+        "Callback function triggered when the reset icon is clicked.",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "label",
+      description: "Optional key name for split tags.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "The main text content of the tag.",
+      required: true,
+      value: "string",
+    },
+  ]}
+/>

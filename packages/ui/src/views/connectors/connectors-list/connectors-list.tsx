@@ -42,7 +42,8 @@ const ConnectivityStatus = ({
     <div className="flex items-center gap-2">
       <Icon name="dot" size={8} className="text-icons-success" />
       <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
-        {t('views:connectors.status.success', 'Success')}
+        {/* {t('views:connectors.status.success', 'Success')} */}
+        Success
       </Text>
     </div>
   ) : (
@@ -52,17 +53,20 @@ const ConnectivityStatus = ({
           <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
             <Icon name="dot" size={8} className="text-icons-danger" />
             <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
-              {t('views:connectors.status.failure', 'Failed')}
+              {/* {t('views:connectors.status.failure', 'Failed')} */}
+              Failed
             </Text>
           </Button>
         </Tooltip.Trigger>
         <Tooltip.Content className="w-72 whitespace-normal" side="bottom">
           <h3 className="font-medium text-cn-foreground-1">
-            {t('views:connectors.errorEncountered', 'Error Encountered')}
+            {/* {t('views:connectors.errorEncountered', 'Error Encountered')} */}
+            Error Encountered
           </h3>
           <p className="mt-1.5 text-cn-foreground-3">{item?.status?.errorSummary}</p>
           <Button className="mt-2.5" variant="link" onClick={() => setErrorConnectionOpen(true)}>
-            {t('views:connectors.viewDetails', 'View details')}
+            {/* {t('views:connectors.viewDetails', 'View details')} */}
+            View details
           </Button>
         </Tooltip.Content>
       </Tooltip.Root>

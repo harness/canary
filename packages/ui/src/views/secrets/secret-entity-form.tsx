@@ -54,8 +54,6 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
     return getDefaultValuesFromFormDefinition(secretsFormDefinition ?? { inputs: [] })
   }, [secretsFormDefinition])
 
-  console.log('defaultSecretValues', defaultSecretValues)
-
   return (
     <RootForm
       defaultValues={defaultSecretValues}

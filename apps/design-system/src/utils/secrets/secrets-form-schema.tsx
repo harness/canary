@@ -34,8 +34,7 @@ const inputs: IInputConfigWithConfigInterface[] = [
     path: `secret.identifier`,
     inputConfig: {
       tooltip: 'When you create an entity, Harness assigns a unique ID. You can change it until the entity is saved.'
-    },
-    default: 'hello'
+    }
   },
   {
     inputType: 'text',

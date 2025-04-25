@@ -26,7 +26,7 @@ const ConnectorsListPageWrapper = (): JSX.Element => {
             name: connector.connector.name,
             identifier: connector.connector.identifier,
             type: connector.connector.type,
-            status: connector.status.status,
+            status: connector.status,
             lastTestedAt: connector.status.lastTestedAt,
             lastModifiedAt: connector.lastModifiedAt,
             spec: {

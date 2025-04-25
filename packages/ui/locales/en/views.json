@@ -305,7 +305,8 @@
     "created": "Created",
     "updated": "Last updated",
     "success": "Success",
-    "failure": "Failed"
+    "failure": "Failed",
+    "errorEncountered": "Error Encountered"
   },
   "notFound": {
     "button": "Reload page",

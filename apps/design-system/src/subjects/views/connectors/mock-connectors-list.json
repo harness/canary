@@ -114,9 +114,15 @@
     "createdAt": 1733229191871,
     "lastModifiedAt": 1733229191867,
     "status": {
-      "status": "ERROR",
-      "errorSummary": null,
-      "errors": null,
+      "status": "FAILURE",
+      "errorSummary": "Error Encountered (Please ensure that the api access credentials are correct.)",
+      "errors": [
+        {
+          "reason": "Unexpected Error",
+          "message": "Please ensure that the api access credentials are correct.",
+          "code": 450
+        }
+      ],
       "testedAt": 1733229196534,
       "lastTestedAt": 0,
       "lastConnectedAt": 1733229196534,

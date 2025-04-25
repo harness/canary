@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import {
   Button,
   HoverCard,
@@ -7,16 +9,14 @@ import {
   NoData,
   SkeletonList,
   SkeletonTable,
-  StyledLink,
   Table,
   Text
 } from '@/components'
-import { useRouterContext } from '@/context'
-import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
+import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
-import { TFunction } from 'i18next'
 
+import { ConnectorTestConnectionDialog } from '../components/connector-test-connection-dialog'
 import { ConnectorListItem, ConnectorListProps } from './types'
 import { ConnectorTypeToLogoNameMap } from './utils'
 
@@ -26,34 +26,58 @@ const Title = ({ title }: { title: string }): JSX.Element => (
   </span>
 )
 
-const ConnectivityStatus = ({ item, t }: { item: ConnectorListItem; t: TFunction }): JSX.Element => {
-  const isSuccess = item?.status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
-  return (
-    <HoverCard.Root>
-      <HoverCard.Trigger asChild>
-        <Button className="group h-auto gap-2 p-0 font-normal hover:bg-transparent" variant="ghost">
-          <Icon name="dot" size={8} className={cn(isSuccess ? 'text-icons-success' : 'text-icons-danger')} />
-          <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200" color="secondary">
-            {isSuccess
-              ? t('views:connectors.status.success', 'Success')
-              : t('views:connectors.status.failure', 'Failed')}
-          </Text>
-        </Button>
-      </HoverCard.Trigger>
-      <HoverCard.Content className="w-72 whitespace-normal">
-        {/* TODO: need to provide real data */}
-        <h3 className="text-cn-foreground-1 font-medium">
-          {isSuccess ? t('views:connectors.status.success', 'Success') : t('views:connectors.status.failure', 'Failed')}
-        </h3>
-        <p className="text-cn-foreground-3 mt-1.5">
-          Update the username & password. Check if the provided credentials are correct. Invalid Docker Registry
-          credentials.
-        </p>
-        <StyledLink to="#" className="mt-2.5 block" variant="accent">
-          {t('views:connectors.viewDetails', 'View details')}
-        </StyledLink>
-      </HoverCard.Content>
-    </HoverCard.Root>
+const ConnectivityStatus = ({
+  item,
+  useTranslationStore
+}: {
+  item: ConnectorListItem
+  connectorDetailUrl: string
+  useTranslationStore: () => TranslationStore
+}): JSX.Element => {
+  const { t } = useTranslationStore()
+  const isSuccess = item?.status?.status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
+  const [errorConnectionOpen, setErrorConnectionOpen] = useState(false)
+
+  return isSuccess ? (
+    <div className="flex items-center gap-2">
+      <Icon name="dot" size={8} className="text-icons-success" />
+      <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200" color="secondary">
+        {t('views:connectors.status.success', 'Success')}
+      </Text>
+    </div>
+  ) : (
+    <>
+      <HoverCard.Root>
+        <HoverCard.Trigger asChild>
+          <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
+            <Icon name="dot" size={8} className="text-icons-danger" />
+            <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200" color="secondary">
+              {t('views:connectors.status.failure', 'Failed')}
+            </Text>
+          </Button>
+        </HoverCard.Trigger>
+        <HoverCard.Content className="w-72 whitespace-normal">
+          <h3 className="text-cn-foreground-1 font-medium">
+            {t('views:connectors.errorEncountered', 'Error Encountered')}
+          </h3>
+          <p className="text-cn-foreground-3 mt-1.5">{item?.status?.errorSummary}</p>
+          <Button className="mt-2.5" variant="link" onClick={() => setErrorConnectionOpen(true)}>
+            {t('views:connectors.viewDetails', 'View details')}
+          </Button>
+        </HoverCard.Content>
+      </HoverCard.Root>
+
+      <ConnectorTestConnectionDialog
+        title={item?.name}
+        apiUrl={item?.spec?.url}
+        status="error"
+        errorMessage={item?.status?.errorSummary}
+        isOpen={errorConnectionOpen}
+        onClose={() => setErrorConnectionOpen(false)}
+        useTranslationStore={useTranslationStore}
+        errorData={item.status?.errors ? { errors: item.status?.errors } : undefined}
+      />
+    </>
   )
 }
 
@@ -65,7 +89,6 @@ export function ConnectorsList({
   onDeleteConnector,
   onToggleFavoriteConnector
 }: ConnectorListProps): JSX.Element {
-  const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
 
   if (isLoading) {
@@ -108,8 +131,10 @@ export function ConnectorsList({
         <SkeletonTable countRows={12} countColumns={5} />
       ) : (
         <Table.Body>
-          {connectors.map(({ identifier, type, spec, status, lastModifiedAt, isFavorite }) => {
+          {connectors.map(({ name, identifier, type, spec, status, lastModifiedAt, isFavorite }) => {
             const connectorLogo = type ? ConnectorTypeToLogoNameMap.get(type) : undefined
+            const connectorDetailUrl = toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt }) || ''
+
             return (
               <Table.Row className="[&_td]:py-5" key={identifier}>
                 <Table.Cell className="content-center truncate">
@@ -125,7 +150,11 @@ export function ConnectorsList({
                 </Table.Cell>
                 <Table.Cell className="content-center whitespace-nowrap">
                   {status ? (
-                    <ConnectivityStatus item={{ identifier, type, spec, status, lastModifiedAt }} t={t} />
+                    <ConnectivityStatus
+                      item={{ name, identifier, type, spec, status, lastModifiedAt }}
+                      connectorDetailUrl={connectorDetailUrl}
+                      useTranslationStore={useTranslationStore}
+                    />
                   ) : null}
                 </Table.Cell>
                 <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
@@ -148,8 +177,7 @@ export function ConnectorsList({
                     actions={[
                       {
                         title: t('views:connectors.viewDetails', 'View Details'),
-                        onClick: () =>
-                          navigate(`${toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt })}`)
+                        to: connectorDetailUrl
                       },
                       {
                         isDanger: true,

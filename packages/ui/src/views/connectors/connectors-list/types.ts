@@ -14,7 +14,15 @@ export interface ConnectorListItem {
   type?: ConnectorConfigType
   name?: string
   description?: string
-  status?: ExecutionState
+  status?: {
+    status: ExecutionState
+    errorSummary?: string
+    errors?: {
+      reason: string
+      message: string
+      code: number
+    }[]
+  }
   lastModifiedAt?: number
   lastTestedAt?: number
   spec?: {

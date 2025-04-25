@@ -287,7 +287,8 @@
     "created": "Créé",
     "updated": "Dernière mise à jour",
     "success": "Succès",
-    "failure": "Échec"
+    "failure": "Échec",
+    "errorEncountered": "Erreur rencontrée"
   },
   "notFound": {
     "button": "Recharger la page",

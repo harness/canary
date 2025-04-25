@@ -8,6 +8,10 @@
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.1-half}"
+      },
+      "min-width": {
+        "$type": "spacing",
+        "$value": "{size.56}"
       }
     },
     "md": {
@@ -18,6 +22,10 @@
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.2}"
+      },
+      "min-width": {
+        "$type": "spacing",
+        "$value": "{size.64}"
       }
     }
   }

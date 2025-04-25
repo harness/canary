@@ -44,7 +44,7 @@ export const CalendarInputView = ({
       />
 
       {isOpen && (
-        <div className="absolute z-10 mt-1 bg-cn-background-1 shadow rounded border" style={{ top: '100%' }}>
+        <div className="absolute z-10 mt-1 bg-cn-background-1 shadow rounded border">
           <Calendar mode="single" selected={value ? new Date(value) : undefined} onSelect={handleDaySelect} />
         </div>
       )}

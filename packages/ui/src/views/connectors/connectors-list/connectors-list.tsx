@@ -42,7 +42,7 @@ const ConnectivityStatus = ({
     <div className="flex items-center gap-2">
       <Icon name="dot" size={8} className="text-icons-success" />
       <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
-        {t('views:connectors.status.success', 'Success')}
+        {t('views:connectors.success', 'Success')}
         {/* Success */}
       </Text>
     </div>

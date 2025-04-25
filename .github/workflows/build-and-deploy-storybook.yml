@@ -10,6 +10,21 @@ on:
       - main
 
 jobs:
+  CheckCleanGitTree:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: pnpm/action-setup@v4
+      - run: pnpm deps
+      - run: pnpm build
+      - name: Check for uncommitted changes
+        run: |
+          # Show only the names of changed files
+          echo "Changed files:"
+          git diff --name-only HEAD --exit-code || (echo "Error: There are uncommitted changes in the working tree. Please commit or revert these changes." && exit 1)
+
   Lint:
     runs-on: ubuntu-22.04
     steps:

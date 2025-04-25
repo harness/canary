@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import {
   Button,
-  HoverCard,
+  Tooltip,
   Icon,
   Logo,
   MoreActionsTooltip,
@@ -47,16 +47,16 @@ const ConnectivityStatus = ({
     </div>
   ) : (
     <>
-      <HoverCard.Root>
-        <HoverCard.Trigger asChild>
+      <Tooltip.Root>
+        <Tooltip.Trigger asChild>
           <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
             <Icon name="dot" size={8} className="text-icons-danger" />
             <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
               {t('views:connectors.status.failure', 'Failed')}
             </Text>
           </Button>
-        </HoverCard.Trigger>
-        <HoverCard.Content className="w-72 whitespace-normal">
+        </Tooltip.Trigger>
+        <Tooltip.Content className="w-72 whitespace-normal" side="bottom">
           <h3 className="font-medium text-cn-foreground-1">
             {t('views:connectors.errorEncountered', 'Error Encountered')}
           </h3>
@@ -64,8 +64,8 @@ const ConnectivityStatus = ({
           <Button className="mt-2.5" variant="link" onClick={() => setErrorConnectionOpen(true)}>
             {t('views:connectors.viewDetails', 'View details')}
           </Button>
-        </HoverCard.Content>
-      </HoverCard.Root>
+        </Tooltip.Content>
+      </Tooltip.Root>
 
       <ConnectorTestConnectionDialog
         title={item?.name}

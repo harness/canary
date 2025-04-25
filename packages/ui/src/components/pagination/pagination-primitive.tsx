@@ -49,8 +49,8 @@ const PaginationPrimitiveLink = ({
   isFullRounded: rounded,
   children,
   disabled = false,
-  variant = 'soft',
-  theme = 'muted',
+  variant = 'secondary',
+  theme = 'default',
   ...props
 }: PaginationPrimitiveLinkProps) => (
   <a

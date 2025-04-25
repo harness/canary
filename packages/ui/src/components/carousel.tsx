@@ -199,7 +199,7 @@ const CarouselItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 CarouselItem.displayName = 'CarouselItem'
 
 const CarouselPrevious = forwardRef<HTMLButtonElement, ComponentProps<typeof Button>>(
-  ({ className, variant = 'surface', theme = 'muted', size = 'sm', ...props }, ref) => {
+  ({ className, variant = 'outline', theme = 'default', size = 'sm', ...props }, ref) => {
     const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
     return (
@@ -229,7 +229,7 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, ComponentProps<typeof But
 CarouselPrevious.displayName = 'CarouselPrevious'
 
 const CarouselNext = forwardRef<HTMLButtonElement, ComponentProps<typeof Button>>(
-  ({ className, variant = 'surface', theme = 'muted', size = 'sm', ...props }, ref) => {
+  ({ className, variant = 'outline', theme = 'default', size = 'sm', ...props }, ref) => {
     const { orientation, scrollNext, canScrollNext } = useCarousel()
 
     return (

@@ -91,7 +91,7 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
             </Alert.Container>
           )}
           <Dialog.Footer className="-mx-5 -mb-5">
-            <Button type="button" variant="surface" theme="muted" onClick={onClose}>
+            <Button type="button" variant="outline" onClick={onClose}>
               {t('views:profileSettings.cancel', 'Cancel')}
             </Button>
             <Button type="submit" disabled={!isValid}>

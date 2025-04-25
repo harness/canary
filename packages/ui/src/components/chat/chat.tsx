@@ -138,7 +138,7 @@ const EmptyState: FC = () => {
         <ul className="mt-3 flex flex-col gap-y-1.5">
           {emptyStateButtons.map(({ text }, index) => (
             <li key={index}>
-              <Button className="w-full justify-start" variant="soft" theme="muted" size="lg">
+              <Button className="w-full justify-start" variant="secondary">
                 {text}
               </Button>
             </li>

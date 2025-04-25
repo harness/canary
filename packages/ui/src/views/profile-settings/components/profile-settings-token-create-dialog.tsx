@@ -203,7 +203,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
             </Alert.Container>
           )}
           <Dialog.Footer className="-mx-5 -mb-5">
-            <Button type="button" variant="surface" theme="muted" onClick={onClose}>
+            <Button type="button" variant="outline" onClick={onClose}>
               {createdTokenData
                 ? t('views:profileSettings.gotItButton', 'Got it')
                 : t('views:profileSettings.cancel', 'Cancel')}

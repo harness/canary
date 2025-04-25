@@ -118,7 +118,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
         <Spacer size={8} />
       </StepsPaletteContentLayout.Root>
       <StepFormLayout.Footer>
-        <Button variant="soft" theme="muted" onClick={requestClose}>
+        <Button variant="secondary" onClick={requestClose}>
           Cancel
         </Button>
       </StepFormLayout.Footer>

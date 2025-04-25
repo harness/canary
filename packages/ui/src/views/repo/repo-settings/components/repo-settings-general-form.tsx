@@ -207,7 +207,7 @@ export const RepoSettingsGeneralForm: FC<{
                     {!isUpdatingRepoData ? t('views:repos.save', 'Save') : t('views:repos.saving', 'Saving...')}
                   </Button>
                 ) : (
-                  <Button variant="soft" theme="success" type="button" className="pointer-events-none">
+                  <Button variant="primary" theme="success" type="button" className="pointer-events-none">
                     Saved
                     <Icon name="tick" size={14} />
                   </Button>

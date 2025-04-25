@@ -225,14 +225,13 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
               <Button disabled={loading || !!error?.message} onClick={() => rootForm.submitForm()}>
                 Submit
               </Button>
-              <Button variant="soft" theme="muted" onClick={requestClose}>
+              <Button variant="secondary" onClick={requestClose}>
                 Cancel
               </Button>
             </div>
             {editStepIntention && (
               <Button
-                variant="soft"
-                theme="muted"
+                variant="secondary"
                 iconOnly
                 onClick={() => {
                   requestYamlModifications.deleteInArray({ path: editStepIntention.path })

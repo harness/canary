@@ -137,8 +137,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 onCancel()
                 reset()
               }}
-              variant="surface"
-              theme="muted"
+              variant="outline"
             >
               Cancel
             </Button>

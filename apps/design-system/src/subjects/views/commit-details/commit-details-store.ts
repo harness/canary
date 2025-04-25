@@ -3794,13 +3794,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                '-        <Button size="sm" theme="error" className="self-start mt-7" onClick={setOpenDeleteDialog}>',
+                '-        <Button size="sm" theme="danger" className="self-start mt-7" onClick={setOpenDeleteDialog}>',
               type: 'delete',
               oldNumber: 169
             },
             {
               content:
-                '+        <Button size="sm" theme="error" className="mt-7 self-start" onClick={setOpenDeleteDialog}>',
+                '+        <Button size="sm" theme="danger" className="mt-7 self-start" onClick={setOpenDeleteDialog}>',
               type: 'insert',
               newNumber: 169
             },
@@ -3846,7 +3846,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'packages/ui/src/views/project/project-general/project-general-page.tsx::::packages/ui/src/views/project/project-general/project-general-page.tsx',
       filePath: 'packages/ui/src/views/project/project-general/project-general-page.tsx',
-      raw: 'diff --git a/packages/ui/src/views/project/project-general/project-general-page.tsx b/packages/ui/src/views/project/project-general/project-general-page.tsx\nindex 36baed560712faa1490360f38d0c32527e220b84..6e1a559823540f17dc001ec539639c3f4b6ed25c 100644\n--- a/packages/ui/src/views/project/project-general/project-general-page.tsx\n+++ b/packages/ui/src/views/project/project-general/project-general-page.tsx\n@@ -166,7 +166,7 @@ export const ProjectSettingsGeneralPage = ({\n           </Fieldset>\n         </FormWrapper>\n \n-        <Button size="sm" theme="error" className="self-start mt-7" onClick={setOpenDeleteDialog}>\n+        <Button size="sm" theme="error" className="mt-7 self-start" onClick={setOpenDeleteDialog}>\n           Delete project\n         </Button>\n       </SandboxLayout.Content>\n'
+      raw: 'diff --git a/packages/ui/src/views/project/project-general/project-general-page.tsx b/packages/ui/src/views/project/project-general/project-general-page.tsx\nindex 36baed560712faa1490360f38d0c32527e220b84..6e1a559823540f17dc001ec539639c3f4b6ed25c 100644\n--- a/packages/ui/src/views/project/project-general/project-general-page.tsx\n+++ b/packages/ui/src/views/project/project-general/project-general-page.tsx\n@@ -166,7 +166,7 @@ export const ProjectSettingsGeneralPage = ({\n           </Fieldset>\n         </FormWrapper>\n \n-        <Button size="sm" theme="danger" className="self-start mt-7" onClick={setOpenDeleteDialog}>\n+        <Button size="sm" theme="danger" className="mt-7 self-start" onClick={setOpenDeleteDialog}>\n           Delete project\n         </Button>\n       </SandboxLayout.Content>\n'
     },
     {
       blocks: [

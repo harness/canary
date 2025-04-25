@@ -143,7 +143,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
           {intent === EntityIntent.CREATE ? (
             <EntityFormLayout.Footer className="border-none">
               <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-cn-background-2 p-4 shadow-md">
-                <Button variant="soft" theme="muted" onClick={() => onBack?.()}>
+                <Button variant="secondary" onClick={() => onBack?.()}>
                   Back
                 </Button>
                 <Button onClick={() => rootForm.submitForm()}>Submit</Button>

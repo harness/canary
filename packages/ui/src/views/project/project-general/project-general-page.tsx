@@ -158,7 +158,7 @@ export const ProjectSettingsGeneralPage = ({
                             ? t('views:projectSettings.general.formSubmitButton.savingState', 'Saving...')
                             : t('views:projectSettings.general.formSubmitButton.defaultState', 'Save changes')}
                         </Button>
-                        <Button variant="surface" theme="muted" type="button" onClick={handleReset}>
+                        <Button variant="outline" type="button" onClick={handleReset}>
                           {t('views:projectSettings.general.formCancelButton', 'Cancel')}
                         </Button>
                       </>
@@ -183,7 +183,7 @@ export const ProjectSettingsGeneralPage = ({
                 'This will permanently delete this project, and everything contained in it. All repositories in it will also be deleted.'
               )}
             >
-              <Button theme="danger" variant="soft" className="mt-3.5 w-fit" onClick={setOpenDeleteDialog}>
+              <Button theme="danger" variant="secondary" className="mt-3.5 w-fit" onClick={setOpenDeleteDialog}>
                 {t('views:projectSettings.general.deleteProjectButton', 'Delete project')}
               </Button>
             </Legend>

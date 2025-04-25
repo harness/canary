@@ -50,12 +50,12 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
         <Dialog.Footer>
           <ButtonGroup className="justify-end">
             {!isDeletingUser && (
-              <Button type="button" variant="surface" theme="muted" onClick={onClose}>
+              <Button type="button" variant="outline" onClick={onClose}>
                 {t('views:userManagement.cancel', 'Cancel')}
               </Button>
             )}
 
-            <Button variant="soft" theme="danger" onClick={onSubmit} disabled={isDeletingUser}>
+            <Button variant="primary" theme="danger" onClick={onSubmit} disabled={isDeletingUser}>
               {isDeletingUser
                 ? t('views:userManagement.deleteUser.pending', 'Deleting user...')
                 : t('views:userManagement.deleteUser.confirm', 'Yes, delete user')}

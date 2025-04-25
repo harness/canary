@@ -63,8 +63,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
         <DropdownMenu.Trigger asChild>
           <Button
             className="group/contribute data-[state=open]:border-cn-borders-9 gap-x-2 px-2.5 data-[state=open]:text-cn-foreground-1 [&_svg]:data-[state=open]:text-icons-9"
-            variant="surface"
-            theme="muted"
+            variant="outline"
           >
             <Icon name="merged" size={14} />
             <span>Contribute</span>
@@ -93,7 +92,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
             </div>
           </div>
           <div className="mt-4 flex flex-col gap-y-2.5">
-            <Button className="w-full" variant="surface" theme="muted" asChild>
+            <Button className="w-full" variant="outline" asChild>
               <Link
                 to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${activeBranchTag?.name}`}
               >

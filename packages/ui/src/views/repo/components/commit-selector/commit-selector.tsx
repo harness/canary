@@ -51,7 +51,7 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button variant="surface" theme="muted" size={buttonSize}>
+        <Button variant="outline" size={buttonSize}>
           <Text className="w-full text-cn-foreground-1" truncate align="left">
             {commitTitle}
           </Text>

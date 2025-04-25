@@ -124,7 +124,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
             >
               Run pipeline
             </Button>
-            <Button onClick={onCancel} variant="soft" theme="muted" disabled={isExecutingPipeline}>
+            <Button onClick={onCancel} variant="secondary" disabled={isExecutingPipeline}>
               Cancel
             </Button>
           </div>

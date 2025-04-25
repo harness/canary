@@ -83,7 +83,7 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
 
         <Dialog.Footer>
           <ButtonGroup className="justify-end">
-            <Button variant="surface" theme="muted" type="button" onClick={onClose} disabled={isCreatingUser}>
+            <Button variant="outline" onClick={onClose} disabled={isCreatingUser}>
               {t('views:userManagement.cancel', 'Cancel')}
             </Button>
             <Button type="submit" disabled={isCreatingUser} form="create-user-form">

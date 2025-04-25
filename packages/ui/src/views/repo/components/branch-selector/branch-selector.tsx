@@ -40,7 +40,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button variant="surface" theme="muted" size={buttonSize}>
+        <Button variant="outline" size={buttonSize}>
           {!branchPrefix && <Icon className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'branch'} size={14} />}
 
           <span className="w-full truncate text-left">

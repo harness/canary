@@ -59,9 +59,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
         <div className="mt-5 rounded-md border border-cn-borders-2">
           <div className="flex items-center justify-between rounded-t-md border-b border-cn-borders-2 bg-cn-background-2 px-4 py-3">
             <span className="text-14 font-mono font-medium leading-snug text-cn-foreground-1">{commitData?.title}</span>
-            <Button variant="surface" theme="muted">
-              {t('views:commits.browseFiles', 'Browse files')}
-            </Button>
+            <Button variant="outline">{t('views:commits.browseFiles', 'Browse files')}</Button>
           </div>
           <div className="flex items-center justify-between px-4 py-3">
             <div className="flex h-6 items-center gap-x-1 rounded-md bg-cn-background-8 px-2.5">

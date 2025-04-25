@@ -218,10 +218,10 @@ export const ManageNavigation = ({
           <ButtonGroup>
             {!submitted ? (
               <>
-                <Button variant="surface" theme="muted" onClick={handleCancel} disabled={isSubmitting}>
+                <Button variant="outline" onClick={handleCancel} disabled={isSubmitting}>
                   Cancel
                 </Button>
-                <Button type="button" theme="primary" onClick={onSubmit} disabled={isSubmitting}>
+                <Button type="button" variant="primary" onClick={onSubmit} disabled={isSubmitting}>
                   {isSubmitting ? 'Saving...' : 'Save'}
                 </Button>
               </>

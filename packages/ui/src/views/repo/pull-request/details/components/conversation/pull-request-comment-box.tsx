@@ -223,7 +223,7 @@ export const PullRequestCommentBox = ({
 
           <div className="ml-auto flex gap-x-3">
             {(inReplyMode || isEditMode) && (
-              <Button variant="surface" theme="muted" onClick={onCancelClick}>
+              <Button variant="outline" onClick={onCancelClick}>
                 Cancel
               </Button>
             )}

@@ -64,13 +64,12 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
 
         <Dialog.Footer>
           <ButtonGroup className="justify-end">
-            <Button type="button" variant="surface" theme="muted" onClick={onClose} disabled={isUpdatingUserAdmin}>
+            <Button type="button" variant="outline" onClick={onClose} disabled={isUpdatingUserAdmin}>
               {t('views:userManagement.cancel', 'Cancel')}
             </Button>
             <Button
               type="submit"
-              variant="surface"
-              theme={isAdmin ? 'danger' : 'muted'}
+              theme={isAdmin ? 'danger' : 'default'}
               disabled={isUpdatingUserAdmin}
               form="remove-admin-form"
             >

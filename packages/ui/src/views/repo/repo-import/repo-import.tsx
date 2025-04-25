@@ -358,7 +358,7 @@ export function RepoImportPage({
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Import repository' : 'Importing repository...'}
                 </Button>
-                <Button type="button" variant="surface" theme="muted" onClick={handleCancel}>
+                <Button type="button" variant="outline" onClick={handleCancel}>
                   Cancel
                 </Button>
               </ButtonGroup>

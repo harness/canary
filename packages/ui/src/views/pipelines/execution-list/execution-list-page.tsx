@@ -65,7 +65,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
           <ListActions.Right>
             {/* TODO: two buttons - xd review required */}
             <div className="flex gap-3">
-              <Button variant="surface" theme="muted" asChild>
+              <Button variant="outline" asChild>
                 <Link to={`edit`}>Edit</Link>
               </Button>
               <Button asChild>

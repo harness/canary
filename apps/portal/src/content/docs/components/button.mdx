@@ -6,115 +6,42 @@ description: Interactive button component for user actions
 The `Button` component allows users to trigger actions, submit forms, and navigate through the application.
 
 import { DocsPage } from "@/components/docs-page";
-import { Badge } from "@harnessio/ui/components";
+import { Button } from "@harnessio/ui/components";
 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col gap-8">
-  {/* Special case for AI theme which doesn't allow variant prop */}
+  {/* Variants */}
   <div>
-    <h5 className="text-lg font-semibold mb-3">AI Theme (No Variant)</h5>
+    <h5 className="text-lg font-semibold mb-3">Variants</h5>
     <div className="flex flex-wrap items-end gap-3">
-      <Button theme="ai" size="sm">Small AI</Button>
-      <Button theme="ai">AI Button</Button>
-      <Button theme="ai" size="lg">Large AI</Button>
-    
+      <Button variant="primary">Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="ai">AI</Button>
+      <Button variant="link">Link</Button>
     </div>
   </div>
 
-{/* Solid Variant - compatible themes */}
+{/* Themes */}
 
 <div>
-  <h5 className="text-lg font-semibold mb-3">Solid Variant</h5>
+  <h5 className="text-lg font-semibold mb-3">Themes</h5>
   <div className="flex flex-wrap items-end gap-3">
-    <Button variant="solid">Default</Button>
-    <Button variant="solid" theme="primary">
-      Primary
-    </Button>
-    <Button variant="solid" theme="muted">
-      Muted
-    </Button>
-    {/* Note: success and danger are not allowed with solid variant */}
+    <Button theme="default">Default</Button>
+    <Button theme="success">Success</Button>
+    <Button theme="danger">Danger</Button>
   </div>
 </div>
 
-{/* Soft Variant */}
-
-<div>
-  <h5 className="text-lg font-semibold mb-3">Soft Variant</h5>
-  <div className="flex flex-wrap items-end gap-3">
-    <Button variant="soft">Default</Button>
-    <Button variant="soft" theme="primary">
-      Primary
-    </Button>
-    <Button variant="soft" theme="success">
-      Success
-    </Button>
-    <Button variant="soft" theme="danger">
-      Danger
-    </Button>
-    <Button variant="soft" theme="muted">
-      Muted
-    </Button>
-  </div>
-</div>
-
-{/* Surface Variant */}
-
-<div>
-  <h5 className="text-lg font-semibold mb-3">Surface Variant</h5>
-  <div className="flex flex-wrap items-end gap-3">
-    <Button variant="surface">Default</Button>
-    <Button variant="surface" theme="primary">
-      Primary
-    </Button>
-    <Button variant="surface" theme="success">
-      Success
-    </Button>
-    <Button variant="surface" theme="danger">
-      Danger
-    </Button>
-    <Button variant="surface" theme="muted">
-      Muted
-    </Button>
-  </div>
-</div>
-
-{/* Ghost Variant - no theme allowed */}
-
-<div>
-  <h5 className="text-lg font-semibold mb-3">Ghost Variant (No Theme)</h5>
-  <div className="flex flex-wrap items-end gap-3">
-    <Button variant="ghost" size="sm">
-      Small Ghost
-    </Button>
-    <Button variant="ghost">Ghost Button</Button>
-    <Button variant="ghost" size="lg">
-      Large Ghost
-    </Button>
-  </div>
-</div>
-
-{/* Link Variant - no theme allowed */}
-
-<div>
-  <h5 className="text-lg font-semibold mb-3">Link Variant (No Theme)</h5>
-  <div className="flex flex-wrap items-end gap-3">
-    <Button variant="link" size="sm">
-      Small Link
-    </Button>
-    <Button variant="link">Link Button</Button>
-  </div>
-</div>
-
-{/* Button sizes */}
+{/* Sizes */}
 
 <div>
   <h5 className="text-lg font-semibold mb-3">Sizes</h5>
-  <div className="flex items-end flex-wrap gap-3">
-    <Button size="sm">Small Size</Button>
-    <Button>Default Size</Button>
-    <Button size="lg">Large Size</Button>
+  <div className="flex flex-wrap items-end gap-3">
+    <Button>Default</Button>
+    <Button size="sm">Small</Button>
   </div>
 </div>
 
@@ -123,93 +50,10 @@ import { Badge } from "@harnessio/ui/components";
 <div>
   <h5 className="text-lg font-semibold mb-3">Rounded Buttons</h5>
   <div className="flex flex-wrap items-end gap-3">
-    <Button rounded>Default Rounded</Button>
-    <Button rounded variant="soft">
-      Soft Rounded
+    <Button rounded>Rounded</Button>
+    <Button rounded variant="outline">
+      Rounded Outline
     </Button>
-    <Button rounded variant="surface">
-      Surface Rounded
-    </Button>
-  </div>
-</div>
-
-{/* Icon Only Buttons */}
-
-<div>
-  <h5 className="text-lg font-semibold mb-3">Icon Only Buttons</h5>
-  <div className="flex flex-col gap-6">
-    {/* Icon Only by Size */}
-    <div>
-      <h5 className="text-sm font-semibold mb-2">Sizes</h5>
-      <div className="flex flex-wrap items-end gap-3">
-        <Button iconOnly size="sm">
-          <Icon name="plus" />
-        </Button>
-        <Button iconOnly>
-          <Icon name="plus" />
-        </Button>
-        
-      </div>
-    </div>
-
-    {/* Icon Only by Variant */}
-    <div>
-      <h5 className="text-sm font-semibold mb-2">Variants</h5>
-      <div className="flex flex-wrap items-end gap-3">
-        <Button iconOnly variant="solid">
-          <Icon name="plus" />
-        </Button>
-        <Button iconOnly variant="soft">
-          <Icon name="plus" />
-        </Button>
-        <Button iconOnly variant="surface">
-          <Icon name="plus" />
-        </Button>
-        <Button iconOnly variant="ghost">
-          <Icon name="plus" />
-        </Button>
-      </div>
-    </div>
-
-    {/* Icon Only by Theme */}
-    <div>
-      <h5 className="text-sm font-semibold mb-2">Themes</h5>
-      <div className="flex flex-wrap items-end gap-3">
-        <Button iconOnly>
-          <Icon name="plus" />
-        </Button>
-        <Button iconOnly theme="primary">
-          <Icon name="plus" />
-        </Button>
-        <Button iconOnly theme="muted">
-          <Icon name="plus" />
-        </Button>
-        <Button iconOnly variant="soft" theme="success">
-          <Icon name="tick" />
-        </Button>
-        <Button iconOnly variant="soft" theme="danger">
-          <Icon name="trash" />
-        </Button>
-
-      </div>
-    </div>
-
-    {/* Icon Only with Different Styles */}
-    <div>
-      <h5 className="text-sm font-semibold mb-2">Styles</h5>
-      <div className="flex flex-wrap items-end gap-3">
-        <Button iconOnly rounded>
-          <Icon name="plus" />
-        </Button>
-        <Button iconOnly variant="surface" theme="muted" size="sm">
-          <Icon name="plus" size={12} />
-        </Button>
-        <Button iconOnly variant="surface" theme="danger" size="sm">
-          <Icon name="trash" size={12} />
-        </Button>
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -219,23 +63,38 @@ import { Badge } from "@harnessio/ui/components";
   <h5 className="text-lg font-semibold mb-3">Loading State</h5>
   <div className="flex flex-wrap items-end gap-3">
     <Button loading>Loading</Button>
-    <Button loading variant="soft">
-      Loading Soft
+    <Button loading variant="primary">
+      Loading Primary
     </Button>
   </div>
 </div>
 
 {/* Disabled Buttons */}
 
-  <div>
-    <h5 className="text-lg font-semibold mb-3">Disabled Buttons</h5>
-    <div className="flex flex-wrap items-end gap-3">
-      <Button disabled>Disabled</Button>
-      <Button disabled variant="soft">Disabled Soft</Button>
-      <Button disabled variant="surface">Disabled Surface</Button>
-      <Button disabled variant="ghost">Disabled Ghost</Button>
-    </div>
+<div>
+  <h5 className="text-lg font-semibold mb-3">Disabled Buttons</h5>
+  <div className="flex flex-wrap items-end gap-3">
+    <Button disabled>Disabled</Button>
+    <Button disabled variant="secondary">
+      Disabled Secondary
+    </Button>
   </div>
+</div>
+
+{/* Icon Only Buttons */}
+
+<div>
+  <h5 className="text-lg font-semibold mb-3">Icon Only Buttons</h5>
+  <div className="flex flex-wrap items-end gap-3">
+    <Button iconOnly>
+      <Icon name="plus" />
+    </Button>
+    <Button iconOnly variant="secondary">
+      <Icon name="branch" />
+    </Button>
+  </div>
+</div>
+
 </div>`}
 />
 
@@ -247,243 +106,113 @@ import { Button } from '@harnessio/ui/components'
 // Basic usage
 <Button>Default Button</Button>
 
-// With variant and theme
-<Button variant="soft" theme="primary">Primary Soft Button</Button>
-
-// Special AI theme (no variant allowed)
-<Button theme="ai">AI Button</Button>
-
-// Ghost and Link variants (no theme allowed)
+// Variants
+<Button variant="primary">Primary Button</Button>
+<Button variant="secondary">Secondary Button</Button>
+<Button variant="outline">Outline Button</Button>
 <Button variant="ghost">Ghost Button</Button>
+<Button variant="ai">AI Button</Button>
 <Button variant="link">Link Button</Button>
 
-// With size
+// Themes
+<Button theme="default">Default Theme</Button>
+<Button theme="success">Success Theme</Button>
+<Button theme="danger">Danger Theme</Button>
+
+// Sizes
 <Button size="sm">Small Button</Button>
-<Button size="lg">Large Button</Button>
+<Button>Default Size Button</Button>
 
-// With rounded corners
+// Rounded
 <Button rounded>Rounded Button</Button>
+<Button rounded variant="outline">Rounded Outline Button</Button>
 
-// Icon only button
-<Button iconOnly><Icon name="plus" /></Button>
+// Icon Only
+<Button iconOnly>
+  <Icon name="plus" />
+</Button>
+<Button iconOnly variant="secondary">
+  <Icon name="check" />
+</Button>
 
-// Loading state
-<Button loading>Loading</Button>
+// Loading
+<Button loading>Loading Button</Button>
+<Button loading variant="primary">Loading Primary Button</Button>
 
-// Disabled state
-<Button disabled>Disabled</Button>
+// Disabled
+<Button disabled>Disabled Button</Button>
+<Button disabled variant="secondary">Disabled Secondary Button</Button>
 ```
 
-## Variant and Theme Compatibility
-
-The Button component uses a discriminated union pattern with strict type checking to enforce certain prop combinations:
-
-1. When `variant` is "ghost" or "link", no `theme` is allowed
-2. When `theme` is "ai", no `variant` is allowed
-3. When `variant` is "solid", `theme` cannot be "success" or "danger"
-
-## Variants
-
-The `Button` component supports different visual variants.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-wrap items-center gap-3">
-  <Button variant="solid">Solid</Button>
-  <Button variant="soft">Soft</Button>
-  <Button variant="surface">Surface</Button>
-  <Button variant="ghost">Ghost</Button>
-  <Button variant="link">Link</Button>
-</div>`}
-/>
-
-## Themes
-
-The `Button` component supports different color themes.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-wrap items-end gap-3">
-  <Button>Default</Button>
-  <Button theme="primary">Primary</Button>
-  <Button theme="muted">Muted</Button>
-  <Button theme="success" variant="soft">Success</Button>
-  <Button theme="danger" variant="soft">Danger</Button>
-  <Button theme="ai">AI</Button>
-</div>`}
-/>
-
-## Sizes
-
-The `Button` component comes in three sizes: `sm`, `default`, and `lg`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex items-end gap-3">
-  <Button size="sm">Small</Button>
-  <Button>Default</Button>
-  <Button size="lg">Large</Button>
-</div>`}
-/>
-
-## Rounded
-
-Buttons can have rounded corners with the `rounded` prop.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-wrap items-end gap-3">
-  <Button rounded>Rounded Button</Button>
-  <Button rounded variant="soft">Soft Rounded</Button>
-</div>`}
-/>
-
-## Icon Only
-
-Buttons can be configured to display only an icon with the `iconOnly` prop.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-6">
-  {/* Icon Only by Size */}
-  <div>
-    <h5 className="text-sm font-semibold mb-2">Sizes</h5>
-    <div className="flex flex-wrap items-end gap-3">
-      <Button iconOnly size="sm"><Icon name="plus" /></Button>
-      <Button iconOnly><Icon name="plus" /></Button>
-    </div>
-  </div>
-  
-  {/* Icon Only by Variant */}
-  <div>
-    <h5 className="text-sm font-semibold mb-2">Variants</h5>
-    <div className="flex flex-wrap items-end gap-3">
-      <Button iconOnly variant="solid"><Icon name="plus" /></Button>
-      <Button iconOnly variant="soft"><Icon name="plus" /></Button>
-      <Button iconOnly variant="surface"><Icon name="plus" /></Button>
-      <Button iconOnly variant="ghost"><Icon name="plus" /></Button>
-    </div>
-  </div>
-  
-  {/* Icon Only by Theme */}
-  <div>
-    <h5 className="text-sm font-semibold mb-2">Themes</h5>
-    <div className="flex flex-wrap items-end gap-3">
-      <Button iconOnly><Icon name="plus" /></Button>
-      <Button iconOnly theme="primary"><Icon name="plus" /></Button>
-      <Button iconOnly theme="muted"><Icon name="plus" /></Button>
-      <Button iconOnly variant="soft" theme="success"><Icon name="tick" /></Button>
-      <Button iconOnly variant="soft" theme="danger"><Icon name="trash" /></Button>
-    </div>
-  </div>
-  
-  {/* Icon Only with Different Styles */}
-  <div>
-    <h5 className="text-sm font-semibold mb-2">Rounded</h5>
-    <div className="flex flex-wrap items-end gap-3">
-      <Button iconOnly rounded><Icon name="arrow" /></Button>
-      <Button iconOnly rounded variant="surface" theme="muted" size="sm"><Icon name="plus" size={12}/></Button>
-    </div>
-  </div>
-</div>`}
-/>
-
-## Loading
-
-Buttons can display a loading state with the `loading` prop.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-wrap items-end gap-3">
-  <Button loading>Loading</Button>
-  <Button loading variant="soft" theme="primary">Loading</Button>
-  <Button loading size="sm">Loading</Button>
-</div>`}
-/>
-
-## Disabled
-
-Buttons can be disabled with the `disabled` prop.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-wrap items-end gap-3">
-  <Button disabled>Disabled</Button>
-  <Button disabled variant="soft">Disabled Soft</Button>
-</div>`}
-/>
-
-## API Reference
+## Props
 
 <DocsPage.PropsTable
   props={[
     {
       name: "variant",
-      description:
-        "Visual style of the button. Cannot be used with theme='ai'.",
+      description: "Visual style of the button.",
       required: false,
-      value: "'solid' | 'surface' | 'soft' | 'ghost' | 'link'",
-      defaultValue: "'solid'",
-    },
-    {
-      name: "theme",
-      description:
-        "Color theme of the button. Cannot be used with variant='ghost' or variant='link'. When theme='ai', no variant allowed.",
-      required: false,
-      value: "'primary' | 'success' | 'danger' | 'muted' | 'ai'",
+      value: "'primary' | 'secondary' | 'outline' | 'ghost' | 'ai' | 'link'",
       defaultValue: "'primary'",
     },
     {
-      name: "size",
-      description: "Size of the button",
+      name: "theme",
+      description: "Color theme of the button.",
       required: false,
-      value: "'sm' | 'default' | 'lg'",
+      value: "'default' | 'success' | 'danger'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "size",
+      description: "Size of the button.",
+      required: false,
+      value: "'default' | 'sm'",
       defaultValue: "'default'",
     },
     {
       name: "rounded",
-      description: "Applies rounded corners to the button",
+      description: "Applies rounded corners to the button.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "iconOnly",
-      description: "Optimizes the button styling for displaying only an icon",
+      description: "Optimizes the button styling for displaying only an icon.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "loading",
-      description: "Shows a loading spinner and disables the button",
+      description: "Shows a loading spinner and disables the button.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "disabled",
-      description: "Disables the button",
+      description: "Disables the button.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "asChild",
-      description: "Passes the component styling to a child element",
+      description: "Passes the component styling to a child element.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "className",
-      description: "Additional CSS class names",
+      description: "Additional CSS class names.",
       required: false,
       value: "string",
     },
     {
       name: "children",
-      description: "Content to display inside the button",
+      description: "Content to display inside the button.",
       required: true,
       value: "ReactNode",
     },

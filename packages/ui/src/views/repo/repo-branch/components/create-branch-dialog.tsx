@@ -118,8 +118,7 @@ export function CreateBranchDialog({
 
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button
-              variant="surface"
-              theme="muted"
+              variant="outline"
               type="button"
               onClick={handleClose}
               loading={isCreatingBranch}

@@ -310,8 +310,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   )}
                   <div className={cn('flex items-center gap-x-4 border-t', replyBoxClassName)}>
                     <Button
-                      variant="surface"
-                      theme="muted"
+                      variant="outline"
                       onClick={() => {
                         toggleConversationStatus?.(isResolved ? 'active' : 'resolved', parentCommentId)
                       }}

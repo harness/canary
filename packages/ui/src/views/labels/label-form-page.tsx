@@ -267,7 +267,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               <Button type="submit" disabled={!isValid || isSaving}>
                 {isSaving ? t('views:repos.saving', 'Saving…') : t('views:repos.save', 'Save')}
               </Button>
-              <Button type="reset" variant="surface" theme="muted" onClick={onFormCancel}>
+              <Button type="reset" variant="outline" onClick={onFormCancel}>
                 {t('views:repos.cancel', 'Cancel')}
               </Button>
             </ButtonGroup>

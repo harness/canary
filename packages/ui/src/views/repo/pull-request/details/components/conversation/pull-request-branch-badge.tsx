@@ -8,7 +8,7 @@ interface BranchBadgeProps {
 
 const PullRequestBranchBadge: React.FC<BranchBadgeProps> = ({ branchName, onClick, className = '' }) => {
   return (
-    <Button variant="soft" size="sm" theme="muted" onClick={onClick} className={`cursor-pointer ${className}`}>
+    <Button variant="secondary" size="sm" onClick={onClick} className={`cursor-pointer ${className}`}>
       <Icon name="branch" size={12} className="mr-1" /> {branchName}
     </Button>
   )

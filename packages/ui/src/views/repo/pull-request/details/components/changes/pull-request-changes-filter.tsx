@@ -309,7 +309,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
 
         <div className="flex items-center gap-x-2.5">
           {commitSuggestionsBatchCount > 0 ? (
-            <Button variant="surface" theme="muted" onClick={() => onCommitSuggestionsBatch()}>
+            <Button variant="outline" onClick={() => onCommitSuggestionsBatch()}>
               Commit suggestion
               {/* TODO: Design system: Update it with info Badge component once ready */}
               <Badge variant="counter" size="sm">

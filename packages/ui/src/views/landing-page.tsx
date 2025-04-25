@@ -52,7 +52,7 @@ export const LandingPageView: FC<LandingPageProps> = ({
         <ButtonGroup>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
-              <Button size="lg">
+              <Button>
                 <span>{t('views:landingPage.projectSelector', 'Select Project')}</span>
                 <Icon name="chevron-down" size={15} className="chevron-down" />
               </Button>
@@ -74,7 +74,7 @@ export const LandingPageView: FC<LandingPageProps> = ({
             </DropdownMenu.Content>
           </DropdownMenu.Root>
 
-          <Button size="lg" variant="surface" asChild>
+          <Button variant="outline" asChild>
             <Link to={toCreateProject?.() || ''}>{t('views:landingPage.createProject', 'Create Project')}</Link>
           </Button>
         </ButtonGroup>

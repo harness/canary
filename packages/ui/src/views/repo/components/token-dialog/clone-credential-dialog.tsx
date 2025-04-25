@@ -85,7 +85,7 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
         <Dialog.Footer>
           <ButtonGroup>
             <>
-              <Button variant="surface" theme="muted" onClick={onClose}>
+              <Button variant="outline" onClick={onClose}>
                 Close
               </Button>
               <Button type="button" onClick={() => navigateToManageToken?.()}>

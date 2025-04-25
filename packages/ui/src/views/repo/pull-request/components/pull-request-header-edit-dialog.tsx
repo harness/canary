@@ -63,7 +63,7 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
         </FormWrapper>
 
         <Dialog.Footer>
-          <Button type="button" variant="surface" theme="muted" onClick={onClose}>
+          <Button type="button" variant="outline" onClick={onClose}>
             Cancel
           </Button>
 

@@ -185,7 +185,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* PR link */}
                 <Table.Cell className="max-w-20 content-center">
                   {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
-                    <Button variant="soft" theme="muted" size="sm" asChild>
+                    <Button variant="secondary" size="sm" asChild>
                       <Link to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}>
                         <Icon
                           name={

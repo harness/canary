@@ -48,7 +48,7 @@ export const EditRepoDetails = ({
         />
         <AlertDialog.Footer>
           <ButtonGroup>
-            <Button variant="surface" theme="muted" onClick={handleClose}>
+            <Button variant="outline" onClick={handleClose}>
               Cancel
             </Button>
             <Button type="button" onClick={() => onSave(newDesc)}>

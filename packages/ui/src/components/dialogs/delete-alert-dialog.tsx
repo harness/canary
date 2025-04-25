@@ -77,10 +77,10 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
         {!!error && error.message && <p className="text-2 text-cn-foreground-danger">{error.message}</p>}
 
         <AlertDialog.Footer>
-          <Button variant="surface" theme="muted" onClick={onClose} disabled={isLoading}>
+          <Button variant="outline" onClick={onClose} disabled={isLoading}>
             {t('component:deleteDialog.cancel', 'Cancel')}
           </Button>
-          <Button variant="soft" theme="danger" disabled={isDisabled} onClick={handleDelete}>
+          <Button variant="secondary" theme="danger" disabled={isDisabled} onClick={handleDelete}>
             {isLoading ? `Deleting ${type}...` : `Yes, delete ${type}`}
           </Button>
         </AlertDialog.Footer>

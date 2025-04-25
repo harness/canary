@@ -31,7 +31,7 @@ export const NotFoundPage: FC<NotFoundPageProps> = ({ useTranslationStore, pageT
               })
             : t('views:notFound.description', 'The requested page is not found.')}
         </span>
-        <Button variant="surface" theme="muted" type="button" onClick={handleReload}>
+        <Button variant="outline" type="button" onClick={handleReload}>
           {t('views:notFound.button', 'Reload page')}
         </Button>
       </div>

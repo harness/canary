@@ -62,7 +62,7 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
       </StepsPaletteContentLayout.Root>
       <StepFormLayout.Footer className="border-none">
         <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
-          <Button variant="surface" theme="muted" onClick={requestClose}>
+          <Button variant="outline" onClick={requestClose}>
             Cancel
           </Button>
         </div>

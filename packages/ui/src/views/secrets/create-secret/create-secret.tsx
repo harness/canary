@@ -192,7 +192,7 @@ export function CreateSecretPage({
                       <p className="mb-2 text-sm text-cn-foreground-2">
                         Drag and drop your file here or click to browse
                       </p>
-                      <Button type="button" variant="surface" theme="muted" onClick={openFileInput}>
+                      <Button type="button" variant="outline" onClick={openFileInput}>
                         Browse Files
                       </Button>
                     </>
@@ -203,10 +203,10 @@ export function CreateSecretPage({
                           Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
                         </span>
                         <div className="flex gap-2">
-                          <Button type="button" variant="surface" theme="muted" size="sm" onClick={openFileInput}>
+                          <Button type="button" variant="outline" size="sm" onClick={openFileInput}>
                             Change
                           </Button>
-                          <Button type="button" variant="soft" theme="danger" size="sm" onClick={removeFile}>
+                          <Button type="button" variant="primary" theme="danger" size="sm" onClick={removeFile}>
                             Remove
                           </Button>
                         </div>
@@ -266,7 +266,7 @@ export function CreateSecretPage({
         <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
           <ControlGroup>
             <ButtonGroup className="flex flex-row justify-between">
-              <Button type="button" variant="soft" theme="muted" onClick={handleCancel}>
+              <Button type="button" variant="secondary" onClick={handleCancel}>
                 Cancel
               </Button>
               <Button type="submit" disabled={isLoading}>

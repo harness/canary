@@ -23,15 +23,17 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
   )
 
   return (
-    <SandboxRepoListPage
-      useRepoStore={useRepoListStore}
-      useTranslationStore={useTranslationStore}
-      isLoading={false}
-      isError={false}
-      searchQuery=""
-      setSearchQuery={noop}
-      {...props}
-    />
+    <>
+      <SandboxRepoListPage
+        useRepoStore={useRepoListStore}
+        useTranslationStore={useTranslationStore}
+        isLoading={false}
+        isError={false}
+        searchQuery=""
+        setSearchQuery={noop}
+        {...props}
+      />
+    </>
   )
 }
 

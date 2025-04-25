@@ -1,4 +1,4 @@
-import { JSX, useState } from 'react'
+import { JSX, useEffect, useRef, useState } from 'react'
 
 import { Calendar, Input } from '@/components'
 
@@ -14,6 +14,7 @@ export const CalendarInputView = ({
   placeholder = 'Select date'
 }: CalendarInputViewProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false)
+  const calendarRef = useRef<HTMLDivElement>(null)
 
   const handleDaySelect = (date: Date | undefined) => {
     if (date) {
@@ -32,8 +33,24 @@ export const CalendarInputView = ({
     setValue(inputValue)
   }
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
+
   return (
-    <div className="relative">
+    <div className="relative" ref={calendarRef}>
       <Input
         type="text"
         value={value || ''}

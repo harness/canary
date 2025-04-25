@@ -87,7 +87,9 @@ function Tag({
       {...props}
     >
       {showIcon && <Icon name={icon || 'tag-new'} {...baseIconProps} />}
-      {value}
+      <span className="truncate" title={value}>
+        {value}
+      </span>
       {showReset && <Icon name="close-new" {...resetIconProps} role="button" onClick={onReset} />}
     </div>
   )

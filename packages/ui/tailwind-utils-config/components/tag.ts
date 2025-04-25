@@ -25,6 +25,7 @@ const sharedStyles: CSSRuleObject = {
   borderWidth: `var(--cn-tag-border)`,
   borderRadius: `var(--cn-tag-radius-default)`,
   font: `var(--cn-body-tight-normal)`,
+  maxWidth: `var(--cn-tag-max-width)`,
   height: `var(--cn-tag-size-default)`,
   '&.tag-sm': {
     font: `var(--cn-caption-tight-normal)`,

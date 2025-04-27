@@ -136,6 +136,8 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
       resolver={resolver}
       mode="onSubmit"
       onSubmit={values => {
+        // TODO: improve handling logic for add/update step or template (in the future could me more entities)
+
         if (!formDefinition) return
 
         const transformers = getTransformers(formDefinition)
@@ -174,11 +176,13 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
             })
           }
         } else if (editStepIntention) {
-          const cleanWith = omitBy(stepValue.template.with, isUndefined)
+          if (formEntity?.source === 'external') {
+            const cleanWith = omitBy(stepValue.template.with, isUndefined)
 
-          // remove "with" if its a empty object
-          if (stepValue.template && isEmpty(cleanWith)) {
-            delete stepValue.template.with
+            // remove "with" if its a empty object
+            if (stepValue.template && isEmpty(cleanWith)) {
+              delete stepValue.template.with
+            }
           }
 
           requestYamlModifications.updateInArray({

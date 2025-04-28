@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import { Badge, Icon, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'

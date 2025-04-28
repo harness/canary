@@ -14,13 +14,12 @@ import {
   Spacer,
   Text
 } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { SandboxLayout, TranslationStore , DelegateItem } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RadioOption, RadioSelect } from '@views/components/RadioSelect'
 import { z } from 'zod'
 
-import { DelegateConnectivityList } from '../components/delegate-connectivity-list'
-import { DelegateItem } from '../types'
+import { DelegateConnectivityList } from '../delegate-connectivity/delegate-connectivity-list'
 
 export enum DelegateSelectionTypes {
   ANY = 'any',
@@ -202,7 +201,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
           </>
         )}
 
-        <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
+        <div className="bg-cn-background-2 absolute inset-x-0 bottom-0 p-4 shadow-md">
           <ControlGroup>
             <ButtonGroup className="flex flex-row justify-between">
               <Button type="button" variant="ghost" onClick={onBack}>

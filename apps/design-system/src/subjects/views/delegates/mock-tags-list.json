@@ -1,0 +1,15 @@
+[
+  "sanity-windows",
+  "eightfivetwoold",
+  "qa-automation",
+  "sanity",
+  "self-hosted-vpc-delegate",
+  "local",
+  "_testDocker",
+  "myrunner",
+  "macos-arm64",
+  "west1-delegate-qa",
+  "linux-amd64",
+  "eightfivetwo",
+  "automation-eks-delegate"
+]

@@ -4,7 +4,7 @@ import { Calendar, Input } from '@/components'
 
 export interface CalendarInputViewProps {
   value?: string
-  setValue: (date: string) => void
+  setValue: (date: Date) => void
   placeholder?: string
 }
 
@@ -18,7 +18,7 @@ export const CalendarInputView = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
-    setValue(inputValue)
+    setValue(new Date(inputValue))
   }
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export const CalendarInputView = ({
           <Calendar
             mode="single"
             selected={value ? new Date(value) : undefined}
-            onSelect={date => setValue(date?.toLocaleDateString() ?? '')}
+            onSelect={date => setValue(date ?? new Date())}
           />
         </div>
       )}

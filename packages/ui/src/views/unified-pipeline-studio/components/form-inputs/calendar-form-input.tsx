@@ -29,7 +29,7 @@ function CalendarFormInputInternal(props: CalendarFormInputProps): JSX.Element {
   })
 
   // Convert ISO date string to timestamp for the form value
-  const handleDateChange = (dateString: string) => {
+  const handleDateChange = (dateString: Date) => {
     console.log(dateString)
     if (!dateString) {
       field.onChange('')
@@ -37,6 +37,7 @@ function CalendarFormInputInternal(props: CalendarFormInputProps): JSX.Element {
     }
     // Convert YYYY-MM-DD to timestamp (milliseconds since epoch)
     const timestamp = new Date(dateString).getTime()
+    console.log(timestamp)
     field.onChange(timestamp)
   }
 

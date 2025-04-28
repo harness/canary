@@ -39,6 +39,13 @@ const sharedStyles: CSSRuleObject = {
     '&.tag-rounded': {
       borderRadius: `var(--cn-tag-radius-full) 0 0 var(--cn-tag-radius-full)`
     }
+  },
+  '&.tag-split-right': {
+    borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
+    borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`,
+    '&.tag-rounded': {
+      borderRadius: `0 var(--cn-tag-radius-full) var(--cn-tag-radius-full) 0`
+    }
   }
 }
 
@@ -85,24 +92,10 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
 export default {
   '.tag-outline': {
     ...sharedStyles,
-    '&.tag-split-right': {
-      borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
-      borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`,
-      '&.tag-rounded': {
-        borderRadius: `0 var(--cn-tag-radius-full) var(--cn-tag-radius-full) 0`
-      }
-    },
     ...createTagVariantStyles('outline')
   },
   '.tag-secondary': {
     ...sharedStyles,
-    '&.tag-split-right': {
-      borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
-      borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`,
-      '&.tag-rounded': {
-        borderRadius: `0 var(--cn-tag-radius-full) var(--cn-tag-radius-full) 0`
-      }
-    },
     ...createTagVariantStyles('secondary')
   }
 }

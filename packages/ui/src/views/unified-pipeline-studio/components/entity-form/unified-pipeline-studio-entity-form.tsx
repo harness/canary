@@ -136,7 +136,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
       resolver={resolver}
       mode="onSubmit"
       onSubmit={values => {
-        // TODO: improve handling logic for add/update step or template (in the future could me more entities)
+        // TODO: improve handling logic for add/update step or template (in the future we could add more entities)
 
         if (!formDefinition) return
 

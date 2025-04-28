@@ -5,7 +5,7 @@ import {
   Alert,
   Button,
   ButtonGroup,
-  ControlGroup,
+  ControlGroup, Drawer,
   Fieldset,
   FormSeparator,
   FormWrapper,
@@ -150,9 +150,9 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
   )
 
   return (
-    <SandboxLayout.Content className="h-full px-0 pt-0">
+    <SandboxLayout.Content className="h-full py-0">
       <Spacer size={5} />
-      <FormWrapper className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper className="flex h-full flex-col pb-0" onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className="mb-0">
           <RadioSelect
             id="type"
@@ -201,7 +201,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
           </>
         )}
 
-        <div className="bg-cn-background-2 absolute inset-x-0 bottom-0 p-4 shadow-md">
+        <div className="bg-cn-background-2 b-0 sticky inset-x-0 bottom-0 -ml-5 w-[calc(100%+theme('spacing.10'))] border-t p-4 shadow-md">
           <ControlGroup>
             <ButtonGroup className="flex flex-row justify-between">
               <Button type="button" variant="ghost" onClick={onBack}>
@@ -215,8 +215,6 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
             </ButtonGroup>
           </ControlGroup>
         </div>
-
-        <div className="pb-16"></div>
       </FormWrapper>
     </SandboxLayout.Content>
   )

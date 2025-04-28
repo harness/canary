@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Drawer, FormSeparator, Icon, StyledLink } from '@/components'
+import { Drawer, Icon, StyledLink } from '@/components'
 
 import { DelegateItem, TranslationStore } from '@/views'
 import { DelegateSelectorForm, DelegateSelectorFormFields, DelegateSelectionTypes } from './delegate-selector-form';
@@ -46,18 +46,18 @@ const DelegateSelectorDrawer = ({
   useTranslationStore
 }: DrawerProps) => (
   <Drawer.Root open={open} onOpenChange={setOpen} direction="right">
-    <Drawer.Content className="w-1/2">
-      <Drawer.Header>
-        <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Delegate selector</Drawer.Title>
-        <FormSeparator className="w-full" />
-        <div className="flex">
-          Haven&apos;t installed a delegate yet?
-          <StyledLink className="ml-1 flex flex-row items-center" variant="accent" to="#">
-            Install delegate <Icon name="attachment-link" className="ml-1" size={12} />
-          </StyledLink>
-        </div>
+    <Drawer.Content className="w-1/2 overflow-y-auto p-0">
+      <Drawer.Header className="z-1 bg-cn-background-2 sticky top-0 -ml-5 w-[calc(100%+theme('spacing.10'))] gap-0 border-b px-5">
+        <Drawer.Title className="text-cn-foreground-1 p-5 text-xl">Delegate selector</Drawer.Title>
         <Drawer.Close onClick={() => setOpen(false)} />
       </Drawer.Header>
+
+      <div className="flex p-5 pb-0">
+        Haven&apos;t installed a delegate yet?
+        <StyledLink className="ml-1 flex flex-row items-center" variant="accent" to="#">
+          Install delegate <Icon name="attachment-link" className="ml-1" size={12} />
+        </StyledLink>
+      </div>
 
       <DelegateSelectorForm
         delegates={delegates}
@@ -110,7 +110,7 @@ export const DelegateSelector = ({
   return (
     <div className="p-5">
       <DelegateSelectorInput
-        placeholder={<StyledLink to="#"> select a delegate</StyledLink>}
+        placeholder={<StyledLink to="#">select a delegate</StyledLink>}
         value={renderSelectedValue(typeA, tagsA)}
         label="Delegate selector"
         onClick={() => setOpenA(true)}

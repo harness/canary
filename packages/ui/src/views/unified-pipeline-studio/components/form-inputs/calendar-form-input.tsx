@@ -23,7 +23,6 @@ function CalendarFormInputInternal(props: CalendarFormInputProps): JSX.Element {
 
   // Convert ISO date string to timestamp for the form value
   const handleDateChange = (dateString: Date) => {
-    console.log(dateString)
     if (!dateString) {
       field.onChange('')
       return

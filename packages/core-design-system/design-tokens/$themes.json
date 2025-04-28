@@ -14572,9 +14572,9 @@
       "caption.tight.normal": "S:2e4c2a1fe87adbe0c2e3238f5646fc1849554fd1,",
       "caption.tight.soft": "S:6bc7dfd59f33f680a6ad0e78ca35a3c15f0d8b61,",
       "comp.link.default": "S:fc4397c0cac6886fca1b47fc058ad28f21b6e7c1,",
-      "comp.link.default-hover": "S:6e98fe3d316e60aaeb5281e39461a133bbf39e51,",
       "comp.link.sm": "S:66eb811dc78bad2dfebf9b28ba0169664e47aecd,",
-      "comp.link.sm-hover": "S:1fdff98dbcd7db1e8ee15ea18d07e7f19ade559f,"
+      "comp.link.default-underline": "S:6e98fe3d316e60aaeb5281e39461a133bbf39e51,",
+      "comp.link.sm-underline": "S:1fdff98dbcd7db1e8ee15ea18d07e7f19ade559f,"
     },
     "selectedTokenSets": {
       "breakpoint/desktop": "enabled",

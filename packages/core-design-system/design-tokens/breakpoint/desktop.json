@@ -196,7 +196,7 @@
         },
         "$description": "Link text-style."
       },
-      "default-hover": {
+      "default-underline": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
@@ -220,7 +220,7 @@
         },
         "$description": "Link text-style."
       },
-      "sm-hover": {
+      "sm-underline": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",

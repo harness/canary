@@ -1280,17 +1280,17 @@
       }
     },
     "link": {
-      "default": {
+      "text": {
         "$type": "color",
         "$value": "{blue.600}",
         "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
       },
-      "hover": {
+      "text-hover": {
         "$type": "color",
         "$value": "{blue.800}",
         "$description": "Hover color for text links."
       },
-      "visited": {
+      "text-visited": {
         "$type": "color",
         "$value": "{purple.600}",
         "$description": "Visited state color for text links. Differentiates links the user has already activated."

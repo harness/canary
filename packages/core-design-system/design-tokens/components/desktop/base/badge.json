@@ -56,7 +56,7 @@
   "badge-counter": {
     "py": {
       "$type": "spacing",
-      "$value": "{spacing.half}"
+      "$value": "{spacing.0}"
     },
     "px": {
       "$type": "spacing",

@@ -60,7 +60,7 @@ export function DelegateConnectivityList({
               groupImplicitSelectors
             }) => {
               return (
-                <Table.Row key={groupId} className="hover:cn-background-1">
+                <Table.Row key={groupId} className="hover:bg-cn-borders-2">
                   <Table.Cell className="max-w-40 content-center truncate">
                     <div className="flex items-center gap-2.5">
                       <Title title={groupName} />

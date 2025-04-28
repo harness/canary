@@ -1,12 +1,12 @@
 ---
 title: MultiSelect
 description: MultiSelect component
+beta: true
 ---
 
 The `MultiSelect` component allows users to select multiple options from a dropdown list. It is useful for scenarios where multiple selections are needed.
 
 import { DocsPage } from "@/components/docs-page";
-import { MultiSelect } from "@harnessio/ui/components";
 
 <DocsPage.ComponentExample client:only code={`<div className="flex w-full flex-col flex-wrap gap-4 items-baseline">
     <div> MultiSelect with custom select items </div>
@@ -40,7 +40,8 @@ import { MultiSelect } from "@harnessio/ui/components";
       handleChange={(selected) => console.log(selected)}
     />
 
-  </div>`} />
+</div>`}
+/>
 
 ## Usage
 

@@ -1,6 +1,7 @@
 ---
 title: SplitButton
 description: Interactive split button with dropdown options
+beta: true
 ---
 
 The `SplitButton` component provides a flexible UI element combining a button with a dropdown menu of options. It can be used in two different modes:
@@ -8,12 +9,16 @@ The `SplitButton` component provides a flexible UI element combining a button wi
 - Regular dropdown menu (default behavior)
 - Radio button selection group (when `selectedValue` is provided)
 
-> **Note:** The `SplitButton` supports specific combinations of `variant` and `theme` props:
->
-> - `variant="primary"` with `theme="default"`
-> - `variant="outline"` with `theme="default" | "success" | "danger"`
+import { DocsPage } from "../../../components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
-import { DocsPage } from "@/components/docs-page";
+<Aside>
+  The `SplitButton` component supports specific combinations of `variant` and `theme` props:
+
+- `variant="primary"` with `theme="default"`
+- `variant="outline"` with `theme="default" | "success" | "danger"`
+
+</Aside>
 
 <DocsPage.ComponentExample
   client:only
@@ -153,6 +158,8 @@ import { DocsPage } from "@/components/docs-page";
 ```typescript jsx
 import { SplitButton } from '@harnessio/ui/components'
 
+// ...
+
 // Basic usage with primary+default combination
 const options = [
   { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
@@ -160,40 +167,45 @@ const options = [
 ]
 
 // Primary variant with default theme
-<SplitButton
-  id="primary-default"
-  handleButtonClick={() => console.log('Button clicked')}
-  options={options}
-  handleOptionChange={(value) => console.log('Selected:', value)}
->
-  Primary + Default
-</SplitButton>
+return (
+  <>
+    {/* Primary variant with default theme */}
+    <SplitButton
+      id="primary-default"
+      handleButtonClick={() => console.log('Button clicked')}
+      options={options}
+      handleOptionChange={(value) => console.log('Selected:', value)}
+    >
+      Primary + Default
+    </SplitButton>
 
-// Outline variant with success theme
-<SplitButton
-  id="outline-success"
-  variant="outline"
-  theme="success"
-  handleButtonClick={() => console.log('Button clicked')}
-  options={options}
-  handleOptionChange={(value) => console.log('Selected:', value)}
->
-  Outline + Success
-</SplitButton>
+    {/* Outline variant with success theme */}
+    <SplitButton
+      id="outline-success"
+      variant="outline"
+      theme="success"
+      handleButtonClick={() => console.log('Button clicked')}
+      options={options}
+      handleOptionChange={(value) => console.log('Selected:', value)}
+    >
+      Outline + Success
+    </SplitButton>
 
-// As a radio button group
-<SplitButton
-  id="radio-button"
-  handleButtonClick={() => console.log('Button clicked')}
-  selectedValue="option1"
-  options={options}
-  handleOptionChange={(value) => console.log('Selected:', value)}
->
-  With Selected Value
-</SplitButton>
+    {/* As a radio button group */}
+    <SplitButton
+      id="radio-button"
+      handleButtonClick={() => console.log('Button clicked')}
+      selectedValue="option1"
+      options={options}
+      handleOptionChange={(value) => console.log('Selected:', value)}
+    >
+      With Selected Value
+    </SplitButton>
+  </>
+)
 ```
 
-## Props
+## API Reference
 
 <DocsPage.PropsTable
   props={[

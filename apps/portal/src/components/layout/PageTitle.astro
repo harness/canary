@@ -1,5 +1,14 @@
 ---
-
+import { StatusBadge } from "@harnessio/ui/components";
 ---
 
-<h1 id="_top">{Astro.locals.starlightRoute.entry.data.title}</h1>
+<div class="flex items-center gap-2">
+  <h1 id="_top">{Astro.locals.starlightRoute.entry.data.title}</h1>
+  {
+    Astro.locals.starlightRoute.entry.data.beta && (
+      <StatusBadge variant="outline" theme="info" size="sm">
+        beta
+      </StatusBadge>
+    )
+  }
+</div>

@@ -5,9 +5,17 @@
         "$type": "sizing",
         "$value": "{size.7}"
       },
+      "sm-link": {
+        "$type": "sizing",
+        "$value": "{size.4}"
+      },
       "default": {
         "$type": "sizing",
         "$value": "{size.8}"
+      },
+      "default-link": {
+        "$type": "sizing",
+        "$value": "{size.4-half}"
       },
       "icon": {
         "$type": "sizing",
@@ -77,7 +85,7 @@
       }
     }
   },
-  "btn-link": {
+  "link": {
     "gap": {
       "sm": {
         "$type": "spacing",
@@ -88,7 +96,7 @@
         "$value": "{spacing.1}"
       }
     },
-    "py": {
+    "pb": {
       "sm": {
         "$type": "spacing",
         "$value": "{spacing.half}"

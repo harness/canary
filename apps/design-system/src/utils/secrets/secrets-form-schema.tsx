@@ -61,6 +61,11 @@ const inputs: IInputConfigWithConfigInterface[] = [
     inputConfig: {
       autoExpandGroups: true
     }
+  },
+  {
+    inputType: 'calendar',
+    path: `secret.spec.expiryDate`,
+    label: 'Expiry Date'
   }
 ]
 

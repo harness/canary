@@ -1,5 +1,6 @@
 import type { ArrayInputConfig } from './ArrayInput'
 import type { BooleanInputConfig } from './BooleanInput'
+import { CalendarInputConfig } from './calendar-form-input'
 import type { GroupInputConfig } from './GroupInput'
 import type { ListInputConfig } from './ListInput'
 import type { NumberInputConfig } from './NumberInput'
@@ -21,6 +22,7 @@ export type InputType =
   | 'separator'
   | 'radio'
   | 'secretSelect'
+  | 'calendar'
 
 export type InputConfigType =
   | BooleanInputConfig
@@ -33,6 +35,7 @@ export type InputConfigType =
   | SelectInputConfig
   | RadialInputConfig
   | SecretSelectInputConfig
+  | CalendarInputConfig
 
 export interface RadioOption {
   label: string

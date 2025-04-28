@@ -2,6 +2,7 @@ import { InputFactory } from '@harnessio/forms'
 
 import { ArrayInput } from '../ArrayInput'
 import { BooleanInput } from '../BooleanInput'
+import { CalendarInput } from '../calendar-form-input'
 import { GroupInput } from '../GroupInput'
 import { ListInput } from '../ListInput'
 import { NumberInput } from '../NumberInput'
@@ -24,5 +25,6 @@ inputComponentFactory.registerComponent(new SelectInput())
 inputComponentFactory.registerComponent(new SeparatorInput())
 inputComponentFactory.registerComponent(new RadialInput())
 inputComponentFactory.registerComponent(new SecretSelectInput()) // Register the SecretSelectInput
+inputComponentFactory.registerComponent(new CalendarInput())
 
 export { inputComponentFactory }

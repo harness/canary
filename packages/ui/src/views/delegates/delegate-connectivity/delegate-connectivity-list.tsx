@@ -35,15 +35,15 @@ export function DelegateConnectivityList({
 
   return (
     <Table.Root
-      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
+      className={cn(isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : '', 'overflow-visible', 'pt-[0.3125rem]')}
       variant="asStackedList"
     >
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-96">Delegate</Table.Head>
+          <Table.Head className="w-60">Delegate</Table.Head>
           <Table.Head className="w-44 whitespace-nowrap">Heartbeat</Table.Head>
           <Table.Head className="w-96">Tags</Table.Head>
-          <Table.Head className="w-44">Selected</Table.Head>
+          <Table.Head className="w-44 text-center">Selected</Table.Head>
         </Table.Row>
       </Table.Header>
       {isLoading ? (
@@ -60,13 +60,13 @@ export function DelegateConnectivityList({
               groupImplicitSelectors
             }) => {
               return (
-                <Table.Row key={groupId}>
-                  <Table.Cell className="max-w-80 content-center truncate">
+                <Table.Row key={groupId} className="hover:cn-background-1">
+                  <Table.Cell className="max-w-40 content-center truncate">
                     <div className="flex items-center gap-2.5">
                       <Title title={groupName} />
                     </div>
                   </Table.Cell>
-                  <Table.Cell className="content-center">
+                  <Table.Cell className="min-w-40 content-center">
                     <div className="inline-flex items-center gap-2">
                       <Icon
                         name="dot"
@@ -77,17 +77,23 @@ export function DelegateConnectivityList({
                     </div>
                   </Table.Cell>
                   <Table.Cell className="max-w-80 content-center truncate">
-                    {groupCustomSelectors.map((selector: string) => (
-                      <Badge variant="soft" theme="merged" key={selector} className="mr-2">
-                        {selector}
-                      </Badge>
-                    ))}
+                    <div className="flex flex-wrap gap-2">
+                      {groupCustomSelectors.map((selector: string) => (
+                        <Badge variant="soft" theme="merged" key={selector}>
+                          {selector}
+                        </Badge>
+                      ))}
+                    </div>
                   </Table.Cell>
-                  <Table.Cell className="min-w-8 text-right">
-                    {isDelegateSelected(
-                      [...defaultTo(groupImplicitSelectors, []), ...defaultTo(groupCustomSelectors, [])],
-                      selectedTags || []
-                    ) && <Icon name="tick" size={12} className="text-icons-success" />}
+                  <Table.Cell className="relative min-w-6 text-right">
+                      {isDelegateSelected(
+                        [...defaultTo(groupImplicitSelectors, []), ...defaultTo(groupCustomSelectors, [])],
+                        selectedTags || []
+                      ) &&
+                        <div className="absolute inset-0 flex w-full items-center justify-center">
+                          <Icon name="tick" size={12} className="text-icons-success" />
+                        </div>
+                      }
                   </Table.Cell>
                 </Table.Row>
               )

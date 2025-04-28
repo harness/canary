@@ -46,7 +46,7 @@ const DelegateSelectorDrawer = ({
   useTranslationStore
 }: DrawerProps) => (
   <Drawer.Root open={open} onOpenChange={setOpen} direction="right">
-    <Drawer.Content className="w-1/2 overflow-y-auto p-0">
+    <Drawer.Content className="w-1/2 overflow-y-auto overflow-x-hidden p-0">
       <Drawer.Header className="z-1 bg-cn-background-2 sticky top-0 -ml-5 w-[calc(100%+theme('spacing.10'))] gap-0 border-b px-5">
         <Drawer.Title className="text-cn-foreground-1 p-5 text-xl">Delegate selector</Drawer.Title>
         <Drawer.Close onClick={() => setOpen(false)} />

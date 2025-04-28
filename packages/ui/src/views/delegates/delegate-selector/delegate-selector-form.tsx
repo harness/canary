@@ -201,7 +201,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
           </>
         )}
 
-        <div className="bg-cn-background-2 b-0 sticky inset-x-0 bottom-0 -ml-5 w-[calc(100%+theme('spacing.10'))] border-t p-4 shadow-md">
+        <div className="bg-cn-background-2 b-0 sticky inset-x-0 bottom-0 -ml-5 mt-auto w-[calc(100%+theme('spacing.10'))] border-t p-4 shadow-md">
           <ControlGroup>
             <ButtonGroup className="flex flex-row justify-between">
               <Button type="button" variant="ghost" onClick={onBack}>

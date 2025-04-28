@@ -183,6 +183,56 @@
     }
   },
   "comp": {
+    "link": {
+      "default": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.400}",
+          "fontSize": "{fontSize.2}",
+          "lineHeight": "{lineHeight.2.tight}",
+          "letterSpacing": "{tracking.tight}",
+          "textDecoration": "{textDecoration.none}"
+        },
+        "$description": "Link text-style."
+      },
+      "default-hover": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.400}",
+          "fontSize": "{fontSize.2}",
+          "lineHeight": "{lineHeight.2.tight}",
+          "letterSpacing": "{tracking.tight}",
+          "textDecoration": "{textDecoration.underline}"
+        },
+        "$description": "Link text-style."
+      },
+      "sm": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.500}",
+          "fontSize": "{fontSize.1}",
+          "lineHeight": "{lineHeight.1.tight}",
+          "letterSpacing": "{tracking.normal}",
+          "textDecoration": "{textDecoration.none}"
+        },
+        "$description": "Link text-style."
+      },
+      "sm-hover": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.500}",
+          "fontSize": "{fontSize.1}",
+          "lineHeight": "{lineHeight.1.tight}",
+          "letterSpacing": "{tracking.normal}",
+          "textDecoration": "{textDecoration.underline}"
+        },
+        "$description": "Link text-style."
+      }
+    },
     "dialog": {
       "title": {
         "$type": "typography",

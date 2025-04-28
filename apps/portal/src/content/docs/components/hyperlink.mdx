@@ -1,0 +1,101 @@
+---
+title: Hyperlink
+description: Hyperlink component
+---
+
+The `Hyperlink` component provides styled links for navigation within and outside the application. It offers two size options and distinguishes between internal and external links with appropriate visual indicator. The component ensures consistent styling while maintaining accessibility standards.
+
+import { DocsPage } from "../../../components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-4">
+    <div className="flex flex-col gap-4">
+        <h5>Standard usage</h5>
+        <Hyperlink href="/my-link">Internal Link</Hyperlink>
+        <Hyperlink href="/my-link" data-state="hovered">Internal Link (hovered)</Hyperlink>
+        <Hyperlink href="/my-link" data-state="visited">Internal Link</Hyperlink>
+    </div>
+
+    <hr />
+
+    <div className="flex flex-col gap-4">
+        <h5>With optional indicator</h5>
+        <Label htmlFor="email" optional>Email</Label>
+        <input id="email" type="email" />
+    </div>
+
+    <hr />
+
+    <div className="flex flex-col gap-4">
+        <h5>Primary variant</h5>
+        <Label variant="primary" htmlFor="password">Password</Label>
+        <input id="password" type="password" />
+    </div>
+
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Hyperlink } from '@harnessio/ui/components'
+
+// ...
+
+return (
+  <>
+    <Hyperlink href="/your-url-here">Username</Hyperlink>
+  </>
+)
+```
+
+## API Reference
+
+The `Label` component provides a styled label for form elements with customizable options.
+
+```typescript jsx
+<Label
+  htmlFor="inputId" // [OPTIONAL] ID of the form control this label is associated with
+  optional          // [OPTIONAL] Indicate if the associated form field is optional
+>
+  Label Text
+</Label>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "The color variant of the label",
+      defaultValue: "default",
+      required: false,
+      value: "'default' | 'primary'",
+    },
+    {
+      name: "htmlFor",
+      description: "The id of the form control this label is associated with",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "optional",
+      description: "Indicates if the associated form field is optional",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the label",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "The content of the label",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

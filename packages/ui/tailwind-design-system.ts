@@ -9,6 +9,7 @@ import {
   checkboxStyles,
   dialogStyles,
   labelStyles,
+  linkStyles,
   radioStyles,
   switchStyles,
   tagStyles
@@ -428,6 +429,7 @@ export default {
       addComponents(buttonStyles)
       addComponents(dialogStyles)
       addComponents(switchStyles)
+      addComponents(linkStyles)
       addComponents(labelStyles)
       addComponents(tagStyles)
       addComponents(checkboxStyles)

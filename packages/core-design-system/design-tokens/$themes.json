@@ -14616,10 +14616,7 @@
       "avatar.radius.default": "d2c45a724879986dffe6e7b8e6aecae3777c9d12",
       "avatar.radius.rounded": "d961edfa4631b6266db41f340dfc91cc6c46adb8",
       "btn.size.sm": "7564493c6f6e1b31d870f780a63186a83d391b92",
-      "btn.size.sm-link": "6780bf1b08992866648f5bd841a3a3eb757805cc",
       "btn.size.default": "a0dae7caa10a660e5a4e323c53ce92e18649f8c4",
-      "btn.size.default-link": "0c6cb3f5892d1ed2d1363ab2f50c0aca44b73d05",
-      "btn.size.icon": "ba8c0767d71c382a2e85d147e2eb6a848a2eedb6",
       "btn.size.lg": "da0096d7be55eae5cd33fb29aca005e9b684aeb2",
       "btn.gap.sm": "bc933be436aa19c62fc92b8cd092d89f060be7ea",
       "btn.gap.default": "cb438207df15d1ee698464077876ef43bb8f7f06",
@@ -14743,7 +14740,9 @@
       "link.gap.sm": "e63b120b0015804d7581ad9bdcde168886bf350c",
       "link.gap.default": "dd3aa27e1885fd22d4ab02fd4055d911d46d075c",
       "link.pb.sm": "dec9e4b4734700388571bc3fa4f10f11fcfb5fbf",
-      "link.pb.default": "07c348e3b35c41c509b04f887f4bd2e78dd7e1fe"
+      "link.pb.default": "07c348e3b35c41c509b04f887f4bd2e78dd7e1fe",
+      "btn.size.sm-text": "6780bf1b08992866648f5bd841a3a3eb757805cc",
+      "btn.size.default-text": "0c6cb3f5892d1ed2d1363ab2f50c0aca44b73d05"
     },
     "group": "breakpoint"
   }

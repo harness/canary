@@ -5,7 +5,7 @@ import {
   Alert,
   Button,
   ButtonGroup,
-  ControlGroup, Drawer,
+  ControlGroup,
   Fieldset,
   FormSeparator,
   FormWrapper,
@@ -150,7 +150,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
   )
 
   return (
-    <SandboxLayout.Content className="h-full py-0">
+    <SandboxLayout.Content className="h-[calc(100%-theme('spacing.28'))] py-0">
       <Spacer size={5} />
       <FormWrapper className="flex h-full flex-col pb-0" onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className="mb-0">

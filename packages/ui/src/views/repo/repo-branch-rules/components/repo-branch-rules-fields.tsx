@@ -147,8 +147,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
                 className="group flex h-6 items-center gap-x-1.5"
                 size="sm"
                 type="button"
-                variant="soft"
-                theme="muted"
+                variant="secondary"
                 onClick={() => handleRemovePattern(pattern.pattern)}
               >
                 <span className="flex items-center gap-1">

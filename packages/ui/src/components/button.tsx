@@ -20,7 +20,8 @@ const buttonVariants = cva('button', {
       link: 'button-link'
     },
     size: {
-      default: 'button-lg',
+      default: '',
+      lg: 'button-lg',
       sm: 'button-sm'
     },
     rounded: {
@@ -32,7 +33,7 @@ const buttonVariants = cva('button', {
     },
 
     theme: {
-      default: 'button-muted',
+      default: '',
       success: 'button-success',
       danger: 'button-danger'
       // primary: 'button-primary',
@@ -120,7 +121,19 @@ export type ButtonSizes = VariantProps<typeof buttonVariants>['size']
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant, size, theme, rounded, iconOnly, asChild = false, loading, disabled, children, ...props },
+    {
+      className,
+      variant = 'primary',
+      size = 'default',
+      theme = 'default',
+      rounded,
+      iconOnly,
+      asChild = false,
+      loading,
+      disabled,
+      children,
+      ...props
+    },
     ref
   ) => {
     const Comp = asChild ? Slot : 'button'

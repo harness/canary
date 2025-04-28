@@ -30,14 +30,14 @@ interface SplitButtonBaseProps<T extends string> {
 
 // For solid variant with primary theme
 interface SplitButtonSolidProps<T extends string> extends SplitButtonBaseProps<T> {
-  variant?: 'solid'
-  theme?: 'primary'
+  variant?: 'primary'
+  theme?: 'default'
 }
 
 // For surface variant with success or danger theme
 interface SplitButtonSurfaceProps<T extends string> extends SplitButtonBaseProps<T> {
-  variant?: 'surface'
-  theme?: 'success' | 'danger' | 'muted'
+  variant?: 'outline'
+  theme?: 'success' | 'danger' | 'default'
 }
 
 // Combined discriminated union
@@ -61,8 +61,8 @@ export const SplitButton = <T extends string>({
   handleOptionChange,
   className,
   buttonClassName,
-  theme = 'primary',
-  variant = 'solid',
+  theme = 'default',
+  variant = 'primary',
   disabled = false,
   children,
   dropdownContentClassName

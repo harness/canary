@@ -62,7 +62,7 @@ export const CopyButton: FC<CopyButtonProps> = ({
       className={className}
       type="button"
       variant={buttonVariant}
-      theme="muted"
+      theme="default"
       size="sm"
       iconOnly
       aria-label="Copy"

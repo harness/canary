@@ -8,22 +8,25 @@ The `SplitButton` component provides a flexible UI element combining a button wi
 - Regular dropdown menu (default behavior)
 - Radio button selection group (when `selectedValue` is provided)
 
-> **Note:** Unlike the standard Button component, SplitButton does not support different sizes. It automatically inherits the default size from the underlying Button component.
+> **Note:** The `SplitButton` supports specific combinations of `variant` and `theme` props:
+>
+> - `variant="primary"` with `theme="default"`
+> - `variant="outline"` with `theme="default" | "success" | "danger"`
 
 import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col gap-8">
-  {/* Different variants */}
+  {/* Variants and Themes */}
   <div>
-    <h5 className="text-lg font-semibold mb-3">Allowed Combinations</h5>
+    <h5 className="text-lg font-semibold mb-3">Variants and Themes</h5>
     <div className="flex flex-wrap items-end gap-4">
-      {/* Solid variant with Primary theme (default) */}
+      {/* Primary variant with Default theme */}
       <SplitButton
-        id="solid-primary"
-        variant="solid"
-        theme="primary"
+        id="primary-default"
+        variant="primary"
+        theme="default"
         handleButtonClick={() => {}}
         options={[
           { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
@@ -31,13 +34,13 @@ import { DocsPage } from "@/components/docs-page";
         ]}
         handleOptionChange={() => {}}
       >
-        Solid + Primary (Default)
+        Primary + Default
       </SplitButton>
 
-      {/* Surface variant with Success theme */}
+      {/* Outline variant with Success theme */}
       <SplitButton
-        id="surface-success"
-        variant="surface"
+        id="outline-success"
+        variant="outline"
         theme="success"
         handleButtonClick={() => {}}
         options={[
@@ -46,13 +49,13 @@ import { DocsPage } from "@/components/docs-page";
         ]}
         handleOptionChange={() => {}}
       >
-        Surface + Success
+        Outline + Success
       </SplitButton>
 
-      {/* Surface variant with Danger theme */}
+      {/* Outline variant with Danger theme */}
       <SplitButton
-        id="surface-danger"
-        variant="surface"
+        id="outline-danger"
+        variant="outline"
         theme="danger"
         handleButtonClick={() => {}}
         options={[
@@ -61,28 +64,13 @@ import { DocsPage } from "@/components/docs-page";
         ]}
         handleOptionChange={() => {}}
       >
-        Surface + Danger
-      </SplitButton>
-
-      {/* Surface variant with Muted theme */}
-      <SplitButton
-        id="surface-muted"
-        variant="surface"
-        theme="muted"
-        handleButtonClick={() => {}}
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={() => {}}
-      >
-        Surface + Muted
+        Outline + Danger
       </SplitButton>
     </div>
 
   </div>
 
-{/* Radio button behavior (with selectedValue) */}
+{/* Radio Button Behavior */}
 
 <div>
   <h5 className="text-lg font-semibold mb-3">Radio Button Selection</h5>
@@ -110,7 +98,7 @@ import { DocsPage } from "@/components/docs-page";
   </div>
 </div>
 
-{/* Loading state */}
+{/* Loading State */}
 
 <div>
   <h5 className="text-lg font-semibold mb-3">Loading State</h5>
@@ -138,7 +126,7 @@ import { DocsPage } from "@/components/docs-page";
   </div>
 </div>
 
-{/* Disabled state */}
+{/* Disabled State */}
 
   <div>
     <h5 className="text-lg font-semibold mb-3">Disabled State</h5>
@@ -165,32 +153,32 @@ import { DocsPage } from "@/components/docs-page";
 ```typescript jsx
 import { SplitButton } from '@harnessio/ui/components'
 
-// Basic usage with default solid+primary combination
+// Basic usage with primary+default combination
 const options = [
   { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
   { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
 ]
 
-// Default combination (solid variant with primary theme)
+// Primary variant with default theme
 <SplitButton
-  id="my-button"
+  id="primary-default"
   handleButtonClick={() => console.log('Button clicked')}
   options={options}
   handleOptionChange={(value) => console.log('Selected:', value)}
 >
-  Default Button
+  Primary + Default
 </SplitButton>
 
-// Surface variant with success theme
+// Outline variant with success theme
 <SplitButton
-  id="success-button"
-  variant="surface"
+  id="outline-success"
+  variant="outline"
   theme="success"
   handleButtonClick={() => console.log('Button clicked')}
   options={options}
   handleOptionChange={(value) => console.log('Selected:', value)}
 >
-  Success Button
+  Outline + Success
 </SplitButton>
 
 // As a radio button group
@@ -205,159 +193,31 @@ const options = [
 </SplitButton>
 ```
 
-## Allowed Combinations
-
-The `SplitButton` component has specific rules for variant and theme combinations.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-4">
-  <div>
-    <h6 className="font-medium mb-2">Default Combination: Solid + Primary</h6>
-    <SplitButton
-      id="solid-primary-example"
-      variant="solid"
-      theme="primary"
-      handleButtonClick={() => {}}
-      options={[
-        { value: 'option1', label: 'Option 1' },
-        { value: 'option2', label: 'Option 2' },
-      ]}
-      handleOptionChange={() => {}}
-    >
-      Solid + Primary
-    </SplitButton>
-  </div>
-  
-  <div>
-    <h6 className="font-medium mb-2">Surface Variant Combinations</h6>
-    <div className="flex flex-wrap items-end gap-3">
-      <SplitButton
-        id="surface-success-example"
-        variant="surface"
-        theme="success"
-        handleButtonClick={() => {}}
-        options={[
-          { value: 'option1', label: 'Option 1' },
-          { value: 'option2', label: 'Option 2' },
-        ]}
-        handleOptionChange={() => {}}
-      >
-        Surface + Success
-      </SplitButton>
-      
-      <SplitButton
-        id="surface-danger-example"
-        variant="surface"
-        theme="danger"
-        handleButtonClick={() => {}}
-        options={[
-          { value: 'option1', label: 'Option 1' },
-          { value: 'option2', label: 'Option 2' },
-        ]}
-        handleOptionChange={() => {}}
-      >
-        Surface + Danger
-      </SplitButton>
-      
-      <SplitButton
-        id="surface-muted-example"
-        variant="surface"
-        theme="muted"
-        handleButtonClick={() => {}}
-        options={[
-          { value: 'option1', label: 'Option 1' },
-          { value: 'option2', label: 'Option 2' },
-        ]}
-        handleOptionChange={() => {}}
-      >
-        Surface + Muted
-      </SplitButton>
-    </div>
-  </div>
-</div>`}
-/>
-
-## Radio Button Selection
-
-When providing a `selectedValue`, the dropdown behaves as a radio button group.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<SplitButton
-  id="radio-example"
-  handleButtonClick={() => {}}
-  selectedValue="option1"
-  options={[
-    { value: 'option1', label: 'Option 1', description: 'Currently selected' },
-    { value: 'option2', label: 'Option 2', description: 'Click to select' },
-  ]}
-  handleOptionChange={() => {}}
->
-  With Selected Value
-</SplitButton>`}
-/>
-
-## States
-
-The component supports various states like loading and disabled.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-wrap items-end gap-3">
-  <SplitButton
-    id="loading-example"
-    handleButtonClick={() => {}}
-    loading={true}
-    options={[
-      { value: 'option1', label: 'Option 1' },
-      { value: 'option2', label: 'Option 2' },
-    ]}
-    handleOptionChange={() => {}}
-  >
-    Loading
-  </SplitButton>
-  
-  <SplitButton
-    id="disabled-example"
-    handleButtonClick={() => {}}
-    disabled={true}
-    options={[
-      { value: 'option1', label: 'Option 1' },
-      { value: 'option2', label: 'Option 2' },
-    ]}
-    handleOptionChange={() => {}}
-  >
-    Disabled
-  </SplitButton>
-</div>`}
-/>
-
-## API Reference
+## Props
 
 <DocsPage.PropsTable
   props={[
     {
       name: "id",
-      description: "Unique identifier for the component",
+      description: "Unique identifier for the component.",
       required: true,
       value: "string",
     },
     {
       name: "handleButtonClick",
-      description: "Function to handle button click",
+      description: "Function to handle button click.",
       required: true,
       value: "(e: MouseEvent) => void",
     },
     {
       name: "options",
-      description: "Array of options to display in the dropdown",
+      description: "Array of options to display in the dropdown.",
       required: true,
       value: "{ value: string; label: string; description?: string }[]",
     },
     {
       name: "handleOptionChange",
-      description: "Function to handle option selection",
+      description: "Function to handle option selection.",
       required: true,
       value: "(val: string) => void",
     },
@@ -370,14 +230,14 @@ The component supports various states like loading and disabled.
     },
     {
       name: "loading",
-      description: "Indicates if the button is in a loading state",
+      description: "Indicates if the button is in a loading state.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "disabled",
-      description: "Disables the button and dropdown",
+      description: "Disables the button and dropdown.",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -385,40 +245,40 @@ The component supports various states like loading and disabled.
     {
       name: "variant",
       description:
-        "Visual style of the button. The only allowed combinations are: solid+primary, or surface+(success|danger|muted)",
+        "Visual style of the button. Allowed combinations: primary+default, or outline+(default|success|danger).",
       required: false,
-      value: "'solid' | 'surface'",
-      defaultValue: "'solid'",
+      value: "'primary' | 'outline'",
+      defaultValue: "'primary'",
     },
     {
       name: "theme",
       description:
-        "Color theme of the button. The only allowed combinations are: solid+primary, or surface+(success|danger|muted)",
+        "Color theme of the button. Allowed combinations: primary+default, or outline+(default|success|danger).",
       required: false,
-      value: "'primary' | 'success' | 'danger' | 'muted'",
-      defaultValue: "'primary'",
+      value: "'default' | 'success' | 'danger'",
+      defaultValue: "'default'",
     },
     {
       name: "children",
-      description: "Content to display inside the button",
+      description: "Content to display inside the button.",
       required: true,
       value: "ReactNode",
     },
     {
       name: "className",
-      description: "Additional class name for the container",
+      description: "Additional class name for the container.",
       required: false,
       value: "string",
     },
     {
       name: "buttonClassName",
-      description: "Additional class name for the button element",
+      description: "Additional class name for the button element.",
       required: false,
       value: "string",
     },
     {
       name: "dropdownContentClassName",
-      description: "Additional class name for the dropdown content",
+      description: "Additional class name for the dropdown content.",
       required: false,
       value: "string",
     },

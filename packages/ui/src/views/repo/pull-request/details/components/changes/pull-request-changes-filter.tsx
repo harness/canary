@@ -324,7 +324,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               id="pr-status"
               theme={getApprovalStateTheme(approveState)}
               disabled={isActiveUserPROwner}
-              variant="surface"
+              variant="outline"
               handleOptionChange={selectedMethod => {
                 submitReview?.(selectedMethod as PullReqReviewDecision)
               }}

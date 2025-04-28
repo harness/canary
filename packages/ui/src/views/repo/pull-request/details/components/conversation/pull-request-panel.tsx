@@ -331,7 +331,7 @@ const PullRequestPanel = ({
                     id="pr-type"
                     theme={buttonState.theme as Extract<ButtonThemes, 'success' | 'danger' | 'muted'>}
                     disabled={buttonState.disabled}
-                    variant="surface"
+                    variant="outline"
                     selectedValue={mergeButtonValue}
                     handleOptionChange={setMergeButtonValue}
                     options={actions.map(action => ({

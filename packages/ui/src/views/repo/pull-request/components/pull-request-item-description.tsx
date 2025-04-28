@@ -50,13 +50,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
 
       {sourceBranch && (
         <>
-          <Button
-            variant="soft"
-            theme="muted"
-            size="sm"
-            className="w-full min-w-[60px] max-w-fit justify-start"
-            asChild
-          >
+          <Button variant="secondary" size="sm" className="w-full min-w-[60px] max-w-fit justify-start" asChild>
             <Link to={`${relativePath}/code/${targetBranch}`}>
               <Icon name="branch" size={11} className="mr-1 text-cn-foreground-3" />
               <span className="max-w-[calc(100%-15px)] truncate p-0.5 text-2 hover:underline">{targetBranch}</span>
@@ -64,13 +58,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
           </Button>
 
           <span>&larr;</span>
-          <Button
-            variant="soft"
-            theme="muted"
-            size="sm"
-            className="w-full min-w-[60px] max-w-fit justify-start"
-            asChild
-          >
+          <Button variant="secondary" size="sm" className="w-full min-w-[60px] max-w-fit justify-start" asChild>
             <Link to={`${relativePath}/code/${sourceBranch}`}>
               <span className="max-w-full truncate p-0.5 text-2 hover:underline">{sourceBranch}</span>
             </Link>

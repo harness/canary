@@ -63,8 +63,7 @@ export function FloatingAddButton(props: FloatingAddButtonProp) {
           alignSelf: 'center',
           marginTop: `${buttonMarginTopValue}px`
         }}
-        variant="surface"
-        theme="muted"
+        variant="outline"
         onMouseDown={e => e.stopPropagation()}
         onClick={e => {
           e.stopPropagation()

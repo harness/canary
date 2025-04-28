@@ -45,8 +45,7 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
         </Carousel.Root>
         <Dialog.Footer className="!justify-center">
           <Button
-            variant="surface"
-            theme="muted"
+            variant="outline"
             size="sm"
             iconOnly
             data-testid="zoomOutButton"
@@ -60,8 +59,7 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
             <Icon name="minus" size={16} />
           </Button>
           <Button
-            variant="surface"
-            theme="muted"
+            variant="outline"
             size="sm"
             iconOnly
             data-testid="zoomInButton"

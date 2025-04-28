@@ -147,8 +147,7 @@ export function CreateTagDialog({
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button
               type="button"
-              variant="surface"
-              theme="muted"
+              variant="outline"
               onClick={() => {
                 clearErrors()
                 reset({

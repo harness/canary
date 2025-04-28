@@ -118,14 +118,7 @@ export const MultiSelect = <T = unknown,>({
       {!!selectedItems.length && (
         <div className="mt-2 flex flex-wrap gap-1.5">
           {selectedItems.map(it => (
-            <Button
-              key={it.id}
-              size="sm"
-              type="button"
-              variant="surface"
-              theme="muted"
-              onClick={() => handleChange(it)}
-            >
+            <Button key={it.id} size="sm" type="button" variant="outline" onClick={() => handleChange(it)}>
               {it.label}
               <Icon name="close" size={10} />
             </Button>

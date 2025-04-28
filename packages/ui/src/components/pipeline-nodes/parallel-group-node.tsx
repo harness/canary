@@ -71,8 +71,7 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
         <Button
           rounded
           className="self-center p-3"
-          variant="surface"
-          theme="muted"
+          variant="outline"
           size="lg"
           onMouseDown={e => e.stopPropagation()}
           onClick={onAddInClick}

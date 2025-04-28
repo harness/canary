@@ -98,8 +98,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
             />
             <Button
               className="mt-10 w-full"
-              variant="surface"
-              theme="muted"
+              variant="outline"
               rounded
               type="submit"
               loading={isLoading}

@@ -74,8 +74,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
 
           <Button
             className="group"
-            variant="surface"
-            theme="muted"
+            variant="outline"
             iconOnly
             aria-label="Edit"
             onClick={() => {

@@ -45,13 +45,7 @@ export const RepoSidebar = ({
                     setSearchQuery={setSearchQuery}
                   />
                 )}
-                <Button
-                  iconOnly
-                  theme="muted"
-                  variant="surface"
-                  aria-label="Create new file"
-                  onClick={navigateToNewFile}
-                >
+                <Button iconOnly variant="outline" aria-label="Create new file" onClick={navigateToNewFile}>
                   <Icon size={16} name="plus" className="text-icons-3" />
                 </Button>
               </div>

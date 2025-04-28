@@ -23,8 +23,7 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
         <Button
           className={cn('border-y rounded-none')}
           size="sm"
-          variant="surface"
-          theme="muted"
+          variant="outline"
           iconOnly
           aria-label="Edit"
           onClick={onEditClick}
@@ -36,8 +35,7 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
         className={cn('rounded-l-none', showEdit ? 'border' : 'border-l-0 border-y border-r')}
         size="sm"
         iconOnly
-        variant="surface"
-        theme="muted"
+        variant="outline"
         aria-label="Download"
         onClick={onDownloadClick}
       >

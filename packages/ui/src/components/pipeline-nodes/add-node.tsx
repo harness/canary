@@ -14,8 +14,7 @@ export function AddNode(props: AddNodeProp) {
         className="self-center p-3"
         rounded
         style={{ alignSelf: 'center' }}
-        variant="surface"
-        theme="muted"
+        variant="outline"
         size="lg"
         onMouseDown={e => e.stopPropagation()}
         onClick={onClick}

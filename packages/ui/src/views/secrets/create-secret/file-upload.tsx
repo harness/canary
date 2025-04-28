@@ -72,8 +72,7 @@ export function FileUpload({ selectedFile, onFileChange, error }: FileUploadProp
                 <div className="flex gap-2">
                   <Button
                     type="button"
-                    variant="surface"
-                    theme="muted"
+                    variant="outline"
                     size="sm"
                     onClick={e => {
                       e.stopPropagation()
@@ -84,7 +83,7 @@ export function FileUpload({ selectedFile, onFileChange, error }: FileUploadProp
                   </Button>
                   <Button
                     type="button"
-                    variant="soft"
+                    variant="secondary"
                     theme="danger"
                     size="sm"
                     onClick={e => {

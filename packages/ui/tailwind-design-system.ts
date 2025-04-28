@@ -6,6 +6,7 @@ import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/conf
 import {
   badgeStyles,
   buttonStyles,
+  checkboxStyles,
   dialogStyles,
   labelStyles,
   switchStyles,
@@ -428,6 +429,7 @@ export default {
       addComponents(switchStyles)
       addComponents(labelStyles)
       addComponents(tagStyles)
+      addComponents(checkboxStyles)
     }),
     tailwindcssAnimate,
     typography,

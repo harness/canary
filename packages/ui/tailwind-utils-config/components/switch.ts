@@ -82,7 +82,7 @@ export default {
   '.cn-switch-description': {
     font: 'var(--cn-body-normal)',
     color: 'var(--cn-text-2)',
-    '&:where([disabled])': {
+    '&:where(.disabled)': {
       color: 'var(--cn-state-disabled-text)'
     },
     '@apply truncate': ''

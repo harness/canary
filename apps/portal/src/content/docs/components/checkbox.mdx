@@ -3,7 +3,8 @@ title: Checkbox
 description: Checkbox component documentation
 ---
 
-The `Checkbox` component provides a customizable, accessible checkbox input. It is built on top of the Radix UI Checkbox primitive with additional styling.
+The `Checkbox` component provides a customizable, accessible checkbox input.  
+It is built on top of the Radix UI Checkbox primitive with additional styling.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -11,54 +12,186 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`() => {
     const [checked, setChecked] = React.useState(false);
-    return (<div className="flex flex-col gap-4">
-      <section class="flex items-center gap-3">
-        <Checkbox id="checkboxId" checked={checked} onCheckedChange={setChecked} />
-        <label className="Label" htmlFor="checkboxId">
-          Accept terms and conditions.
-        </label>
-      </section>
-    
-      <section class="flex items-center gap-3">
-        <Checkbox id="checkboxId2" checked={false} onCheckedChange={Function} disabled />
-        <label className="Label" htmlFor="checkboxId2">
-          Disabled checkbox
-        </label>
-      </section>
-    </div>)
-  }`}
+    const [checkedIndeterminate, setCheckedIndeterminate] = React.useState(false);
+    const [woLabelChecked, setWOLabelChecked] = React.useState(false);
+    const [onlyLabelChecked, setOnlyLabelChecked] = React.useState(false);
+
+    return (
+      <div className="flex flex-col space-y-8">
+        {/* Standard usage */}
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium">Standard usage</h4>
+          <Checkbox
+            id="checkbox-standard"
+            checked={checked}
+            onCheckedChange={setChecked}
+            label="Accept terms and conditions"
+            description="You must accept terms and conditions to proceed."
+          />
+        </div>
+
+        {/* Indeterminate state */}
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium">Indeterminate state</h4>
+          <Checkbox
+            id="checkbox-indeterminate"
+            checked={checkedIndeterminate ? "indeterminate" : false}
+            onCheckedChange={() => setCheckedIndeterminate(!checkedIndeterminate)}
+            label="Select items"
+            description="Indicates partial selection of items."
+          />
+        </div>
+
+        {/* Disabled */}
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium">Disabled</h4>
+          <Checkbox
+            id="checkbox-disabled"
+            checked={false}
+            onCheckedChange={() => {}}
+            disabled
+            label="Subscribe to newsletter"
+            description="This option is currently unavailable."
+          />
+        </div>
+
+        {/* Only Label */}
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium">Only Label</h4>
+          <Checkbox
+            id="checkbox-only-label"
+            checked={onlyLabelChecked}
+            onCheckedChange={setOnlyLabelChecked}
+            label="Enable notifications"
+          />
+        </div>
+
+        {/* Without Label and Description */}
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium">Without Label and Description</h4>
+          <Checkbox
+            id="checkbox-no-label"
+            checked={woLabelChecked}
+            onCheckedChange={setWOLabelChecked}
+          />
+        </div>
+      </div>
+    );
+
+}`}
 />
 
 ## Usage
 
 ```typescript jsx
-import { Checkbox } from '@harnessio/ui/components'
+import { Checkbox } from "@harnessio/ui/components";
 
-return (
-  <Checkbox id="checkbox" checked={true} onCheckedChange={(checked) => alert(\`Checked: \${checked}\`)} />
-)
+function Example() {
+  const [checked, setChecked] = React.useState(false);
+  const [checkedIndeterminate, setCheckedIndeterminate] = React.useState(false);
+  const [woLabelChecked, setWOLabelChecked] = React.useState(false);
+  const [onlyLabelChecked, setOnlyLabelChecked] = React.useState(false);
+
+  return (
+    <div className="flex flex-col space-y-8">
+      {/* Standard usage */}
+      <Checkbox
+        id="checkbox-standard"
+        checked={checked}
+        onCheckedChange={setChecked}
+        label="Accept terms and conditions"
+        description="You must accept terms and conditions to proceed."
+      />
+
+      {/* Indeterminate state */}
+      <Checkbox
+        id="checkbox-indeterminate"
+        checked={checkedIndeterminate ? "indeterminate" : false}
+        onCheckedChange={() => setCheckedIndeterminate(!checkedIndeterminate)}
+        label="Select all items"
+        description="Indicates partial selection of items."
+      />
+
+      {/* Disabled */}
+      <Checkbox
+        id="checkbox-disabled"
+        checked={false}
+        onCheckedChange={() => {}}
+        disabled
+        label="Subscribe to newsletter"
+        description="This option is currently unavailable."
+      />
+
+      {/* Without Label and Description */}
+      <Checkbox
+        id="checkbox-no-label"
+        checked={woLabelChecked}
+        onCheckedChange={setWOLabelChecked}
+      />
+
+      {/* Only Label */}
+      <Checkbox
+        id="checkbox-only-label"
+        checked={onlyLabelChecked}
+        onCheckedChange={setOnlyLabelChecked}
+        label="Enable notifications"
+      />
+    </div>
+  );
+}
 ```
 
 ## API Reference
+
+The `Checkbox` component can be used either controlled with the `checked` and `onCheckedChange` props, or uncontrolled.  
+When used uncontrolled, the `defaultChecked` prop can be used to set the initial state of the checkbox.
+
+```typescript jsx
+<Checkbox
+  id="accept-terms"              // [OPTIONAL] ID of the checkbox
+  checked                        // [OPTIONAL] whether the checkbox is checked or indeterminate
+  defaultChecked                 // [OPTIONAL] initial checked state
+  required                       // [OPTIONAL] whether the checkbox is required
+  onCheckedChange={handleChange} // [OPTIONAL] callback called when the checked state changes
+  disabled                       // [OPTIONAL] whether the checkbox is disabled
+  label                          // [OPTIONAL] a label displayed next to the checkbox
+  description                    // [OPTIONAL] a description displayed under the label
+/>
+```
 
 <DocsPage.PropsTable
   props={[
     {
       name: "id",
       description: "Unique identifier for the checkbox",
-      required: true,
+      required: false,
       value: "string",
     },
     {
       name: "checked",
-      description: "Indicates whether the checkbox is checked",
-      required: true,
+      description: "Indicates whether the checkbox is checked or indeterminate",
+      required: false,
+      value: '"boolean" | "indeterminate"',
+      defaultValue: "false",
+    },
+    {
+      name: "defaultChecked",
+      description: "Initial checked state of the checkbox",
+      required: false,
       value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "required",
+      description: "Indicates whether the checkbox is required",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
     {
       name: "onCheckedChange",
-      description: "Function to handle checked state change",
-      required: true,
+      description: "Function called when the checked state changes",
+      required: false,
       value: "(checked: boolean) => void",
     },
     {
@@ -66,10 +199,17 @@ return (
       description: "Indicates whether the checkbox is disabled",
       required: false,
       value: "boolean",
+      defaultValue: "false",
     },
     {
-      name: "className",
-      description: "Additional class names to apply to the checkbox",
+      name: "label",
+      description: "Label displayed alongside the checkbox",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "description",
+      description: "Description displayed under the label",
       required: false,
       value: "string",
     },

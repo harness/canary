@@ -26,10 +26,10 @@ const sharedStyles: CSSRuleObject = {
   borderRadius: `var(--cn-tag-radius-default)`,
   font: `var(--cn-body-tight-normal)`,
   maxWidth: `var(--cn-tag-max-width)`,
-  height: `var(--cn-tag-size-default)`,
+  minHeight: `var(--cn-tag-size-default)`,
   '&.tag-sm': {
     font: `var(--cn-caption-tight-normal)`,
-    height: `var(--cn-tag-size-sm)`
+    minHeight: `var(--cn-tag-size-sm)`
   },
   '&.tag-rounded': {
     borderRadius: `var(--cn-tag-radius-full)`

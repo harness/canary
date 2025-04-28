@@ -323,9 +323,6 @@ const PullRequestPanel = ({
                       />
                     }
                     label="Bypass and merge anyway"
-                    labelProps={{
-                      color: 'secondary'
-                    }}
                   />
                 )}
 

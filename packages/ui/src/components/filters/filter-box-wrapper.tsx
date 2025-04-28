@@ -47,7 +47,7 @@ const FilterBoxWrapper = ({
     >
       <DropdownMenu.Trigger asChild>
         <Button variant="soft" theme="muted" className="gap-x-3">
-          <div className="text-1 flex items-center gap-x-1.5">
+          <div className="flex items-center gap-x-1.5 text-1">
             <span className="text-cn-foreground-1">
               {filterLabel}
               {!!valueLabel && ': '}

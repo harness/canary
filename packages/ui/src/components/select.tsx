@@ -154,7 +154,7 @@ const SelectContent = forwardRef<
           )}
         >
           {!!withSearch && (
-            <div className="bg-cn-background-2 sticky -top-1 z-[1] -mx-1 -mt-1 mb-1 border-b px-3 py-2.5">
+            <div className="sticky -top-1 z-[1] -mx-1 -mt-1 mb-1 border-b bg-cn-background-2 px-3 py-2.5">
               <SearchBox.Root
                 className="w-full"
                 placeholder={searchProps?.placeholder || ''}
@@ -168,7 +168,7 @@ const SelectContent = forwardRef<
             children
           ) : (
             <div className="px-5 py-4 text-center">
-              <span className="text-cn-foreground-2 leading-tight">Nothing to select</span>
+              <span className="leading-tight text-cn-foreground-2">Nothing to select</span>
             </div>
           )}
         </SelectPrimitive.Viewport>

@@ -151,7 +151,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
 
   return (
     <SandboxLayout.Content className={cn('!flex-none w-[610px]', className)}>
-      <h1 className="text-cn-foreground-1 mb-10 text-2xl font-medium">
+      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">
         {labelId
           ? t('views:labelData.form.editTitle', 'Label details')
           : t('views:labelData.form.createTitle', 'Create a label')}
@@ -233,7 +233,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
           </Fieldset>
 
           <section className="mt-1 flex flex-col gap-y-5">
-            <h3 className="text-cn-foreground-2 text-sm leading-none">
+            <h3 className="text-sm leading-none text-cn-foreground-2">
               {t('views:labelData.form.previewLabel', 'Label preview')}
             </h3>
 

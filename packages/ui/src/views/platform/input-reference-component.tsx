@@ -5,12 +5,12 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const inputReferenceVariants = cva(
-  'bg-cn-background-2 text-cn-foreground-1 flex h-9 min-h-9 cursor-pointer items-center justify-between rounded px-3 py-2 transition-colors',
+  'flex h-9 min-h-9 cursor-pointer items-center justify-between rounded bg-cn-background-2 px-3 py-2 text-cn-foreground-1 transition-colors',
   {
     variants: {
       state: {
-        default: 'border-cn-borders-2 border',
-        disabled: 'border-cn-borders-1 bg-cn-background-3 text-cn-foreground-3 cursor-not-allowed border'
+        default: 'border border-cn-borders-2',
+        disabled: 'cursor-not-allowed border border-cn-borders-1 bg-cn-background-3 text-cn-foreground-3'
       }
     },
     defaultVariants: {

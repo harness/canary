@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactElement } from 'react'
 
+import { Button, ButtonProps } from '@/components'
 import { Icon } from '@components/icon'
 import * as ToastPrimitives from '@radix-ui/react-toast'
 import { cn } from '@utils/cn'
@@ -62,20 +63,11 @@ const ToastAction = forwardRef<
 ))
 ToastAction.displayName = ToastPrimitives.Action.displayName
 
-const ToastClose = forwardRef<
-  ElementRef<typeof ToastPrimitives.Close>,
-  ComponentPropsWithoutRef<typeof ToastPrimitives.Close>
->(({ className, ...props }, ref) => (
-  <ToastPrimitives.Close
-    ref={ref}
-    className={cn(
-      'absolute flex items-center justify-center right-1 my-auto size-8 rounded-md focus:outline-none focus:ring-1',
-      className
-    )}
-    toast-close=""
-    {...props}
-  >
-    <Icon name="cross" size={12} />
+const ToastClose = forwardRef<ElementRef<typeof ToastPrimitives.Close>, ButtonProps>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Close ref={ref} asChild>
+    <Button iconOnly className={cn('absolute right-1 top-1.5', className)} {...props}>
+      <Icon name="cross" size={12} />
+    </Button>
   </ToastPrimitives.Close>
 ))
 ToastClose.displayName = ToastPrimitives.Close.displayName

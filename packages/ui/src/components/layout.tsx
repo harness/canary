@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC, forwardRef, ReactNode } from 'react'
 
 import { cn } from '@/utils/cn'
 
@@ -8,13 +8,19 @@ interface LayoutProps {
   className?: string
 }
 
-const Vertical: FC<LayoutProps> = ({ children, gap = 'space-y-4', className }) => {
-  return <div className={cn(`flex flex-col ${gap}`, className)}>{children}</div>
-}
+const Vertical = forwardRef<HTMLDivElement, LayoutProps>(({ children, gap = 'space-y-4', className }, ref) => {
+  return (
+    <div ref={ref} className={cn(`flex flex-col ${gap}`, className)}>
+      {children}
+    </div>
+  )
+})
+Vertical.displayName = 'VerticalLayout'
 
-const Horizontal: FC<LayoutProps> = ({ children, gap = 'space-x-4', className }) => {
+const Horizontal = forwardRef<HTMLDivElement, LayoutProps>(({ children, gap = 'space-x-4', className }) => {
   return <div className={cn(`flex ${gap}`, className)}>{children}</div>
-}
+})
+Horizontal.displayName = 'HorizontalLayout'
 
 export const Layout = {
   Vertical,

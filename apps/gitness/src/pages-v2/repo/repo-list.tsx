@@ -41,15 +41,10 @@ export default function ReposListPage() {
     error
   } = useListReposQuery(
     {
-      queryParams: {
-        page: queryPage,
-        query: query ?? ''
-      },
+      queryParams: { page: queryPage, query: query ?? '' },
       space_ref: `${spaceURL}/+`
     },
-    {
-      retry: 5
-    }
+    { retry: 5 }
   )
 
   const { mutate: deleteRepository, isLoading: isCancellingImport } = useDeleteRepositoryMutation(
@@ -74,15 +69,29 @@ export default function ReposListPage() {
     }
   }, [repoData, headers, setRepositories])
 
-  // const isRepoImporting: boolean = useMemo(() => {
-  //   return repoData?.some(repository => repository.importing) ?? false
-  // }, [repoData])
-
   useEffect(() => {
     toast({
       title: `Unable to create feature flag because of an OPA policy violation`,
       description:
-        'We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies '
+        'We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies ',
+      duration: 300000,
+      action: <Toast.Action altText="Cancel import">{isCancellingImport ? 'Canceling...' : 'Cancel'}</Toast.Action>
+    })
+    toast({
+      title: `Unable to create feature flag because of an OPA policy violation`,
+      description:
+        'We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies ',
+      duration: 300000,
+      withIndicator: true,
+      variant: 'success'
+    })
+    toast({
+      title: `!! Unable to create feature flag because of an OPA policy violation`,
+      description:
+        '!! We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies ',
+      duration: 300000,
+      withIndicator: true,
+      variant: 'failed'
     })
   }, [])
 

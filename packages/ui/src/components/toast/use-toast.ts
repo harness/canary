@@ -10,7 +10,7 @@ type ToasterToast = ToastProps & {
   title?: ReactNode
   description?: ReactNode
   action?: ToastActionElement
-  showIcon?: boolean
+  withIndicator?: boolean
 }
 
 let count = 0

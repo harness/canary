@@ -29,7 +29,6 @@ function CalendarFormInputInternal(props: CalendarFormInputProps): JSX.Element {
     }
     // Convert YYYY-MM-DD to timestamp (milliseconds since epoch)
     const timestamp = new Date(dateString).getTime()
-    console.log(timestamp)
     field.onChange(timestamp)
   }
 

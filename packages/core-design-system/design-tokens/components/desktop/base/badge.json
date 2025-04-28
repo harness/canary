@@ -18,6 +18,10 @@
       "px": {
         "$type": "spacing",
         "$value": "{spacing.2}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.half}"
       }
     },
     "radius": {
@@ -36,6 +40,10 @@
       "px": {
         "$type": "spacing",
         "$value": "{spacing.1-half}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.px}"
       }
     }
   },

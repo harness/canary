@@ -4,7 +4,7 @@ import { Calendar, Input } from '@/components'
 
 export interface CalendarInputViewProps {
   value?: string
-  setValue: (date: string) => void
+  setValue: (date: Date) => void
   placeholder?: string
 }
 
@@ -16,21 +16,9 @@ export const CalendarInputView = ({
   const [isOpen, setIsOpen] = useState(false)
   const calendarRef = useRef<HTMLDivElement>(null)
 
-  const handleDaySelect = (date: Date | undefined) => {
-    if (date) {
-      const year = date.getFullYear()
-      const month = String(date.getMonth() + 1).padStart(2, '0')
-      const day = String(date.getDate()).padStart(2, '0')
-      const formattedDate = `${year}-${month}-${day}`
-
-      setValue(formattedDate)
-      setIsOpen(false)
-    }
-  }
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
-    setValue(inputValue)
+    setValue(new Date(inputValue))
   }
 
   useEffect(() => {
@@ -53,7 +41,7 @@ export const CalendarInputView = ({
     <div className="relative" ref={calendarRef}>
       <Input
         type="text"
-        value={value || ''}
+        value={value ? new Date(value).toLocaleDateString() : ''}
         onChange={handleInputChange}
         onClick={() => setIsOpen(true)}
         placeholder={placeholder}
@@ -62,7 +50,11 @@ export const CalendarInputView = ({
 
       {isOpen && (
         <div className="absolute z-10 mt-1 rounded border bg-cn-background-1 shadow">
-          <Calendar mode="single" selected={value ? new Date(value) : undefined} onSelect={handleDaySelect} />
+          <Calendar
+            mode="single"
+            selected={value ? new Date(value) : undefined}
+            onSelect={date => setValue(date ?? new Date())}
+          />
         </div>
       )}
     </div>

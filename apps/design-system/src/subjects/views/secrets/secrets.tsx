@@ -8,6 +8,7 @@ import { Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
   ArrayInput,
   BooleanInput,
+  CalendarInput,
   DirectionEnum,
   EntityIntent,
   GroupInput,
@@ -43,6 +44,7 @@ inputComponentFactory.registerComponent(new GroupInput())
 inputComponentFactory.registerComponent(new SelectInput())
 inputComponentFactory.registerComponent(new SeparatorInput())
 inputComponentFactory.registerComponent(new RadialInput())
+inputComponentFactory.registerComponent(new CalendarInput())
 
 export const SecretsPage = ({
   isDrawerOpen,

@@ -800,6 +800,9 @@ importers:
       monaco-editor:
         specifier: ^0.40.0
         version: 0.40.0
+      next-themes:
+        specifier: ^0.4.6
+        version: 0.4.6(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       overlayscrollbars:
         specifier: ^2.10.0
         version: 2.11.1
@@ -834,7 +837,7 @@ importers:
         specifier: ^14.11.1
         version: 14.11.1
       sonner:
-        specifier: ^1.5.0
+        specifier: ^1.7.4
         version: 1.7.4(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       tailwind-merge:
         specifier: ^2.3.0
@@ -7588,6 +7591,12 @@ packages:
   neotraverse@0.6.18:
     resolution: {integrity: sha512-Z4SmBUweYa09+o6pG+eASabEpP6QkQ70yHj351pQoEXIs8uHbaU2DWVmzBANKgflPa47A50PtB2+NgRpQvr7vA==}
     engines: {node: '>= 10'}
+
+  next-themes@0.4.6:
+    resolution: {integrity: sha512-pZvgD5L0IEvX5/9GWyHMf3m8BKiVQwsCMHfoFosXtXBMnaS0ZnIJ9ST4b4NqLVKDEm8QBxoNNGNaBv2JNF6XNA==}
+    peerDependencies:
+      react: 17.0.2
+      react-dom: 17.0.2
 
   nice-try@1.0.5:
     resolution: {integrity: sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==}
@@ -14397,17 +14406,17 @@ snapshots:
 
   '@webpack-cli/configtest@2.1.1(webpack-cli@5.1.4)(webpack@5.98.0)':
     dependencies:
-      webpack: 5.98.0(@swc/core@1.11.7)(webpack-cli@5.1.4)
+      webpack: 5.98.0(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-dev-server@5.2.0)(webpack@5.98.0)
 
   '@webpack-cli/info@2.0.2(webpack-cli@5.1.4)(webpack@5.98.0)':
     dependencies:
-      webpack: 5.98.0(@swc/core@1.11.7)(webpack-cli@5.1.4)
+      webpack: 5.98.0(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-dev-server@5.2.0)(webpack@5.98.0)
 
   '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4)(webpack-dev-server@5.2.0)(webpack@5.98.0)':
     dependencies:
-      webpack: 5.98.0(@swc/core@1.11.7)(webpack-cli@5.1.4)
+      webpack: 5.98.0(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-dev-server@5.2.0)(webpack@5.98.0)
     optionalDependencies:
       webpack-dev-server: 5.2.0(webpack-cli@5.1.4)(webpack@5.98.0)
@@ -15487,7 +15496,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.7.1
     optionalDependencies:
-      webpack: 5.98.0(@swc/core@1.11.7)(webpack-cli@5.1.4)
+      webpack: 5.98.0(webpack-cli@5.1.4)
 
   css-select@4.3.0:
     dependencies:
@@ -17058,7 +17067,7 @@ snapshots:
       pretty-error: 4.0.0
       tapable: 2.2.1
     optionalDependencies:
-      webpack: 5.98.0(@swc/core@1.11.7)(webpack-cli@5.1.4)
+      webpack: 5.98.0(webpack-cli@5.1.4)
 
   html-whitespace-sensitive-tag-names@3.0.1: {}
 
@@ -18747,7 +18756,7 @@ snapshots:
     dependencies:
       loader-utils: 2.0.4
       monaco-editor: 0.40.0
-      webpack: 5.98.0(@swc/core@1.11.7)(webpack-cli@5.1.4)
+      webpack: 5.98.0(webpack-cli@5.1.4)
 
   monaco-editor@0.40.0: {}
 
@@ -18809,6 +18818,11 @@ snapshots:
   neo-async@2.6.2: {}
 
   neotraverse@0.6.18: {}
+
+  next-themes@0.4.6(react-dom@17.0.2(react@17.0.2))(react@17.0.2):
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
 
   nice-try@1.0.5: {}
 
@@ -20616,7 +20630,7 @@ snapshots:
 
   style-loader@4.0.0(webpack@5.98.0):
     dependencies:
-      webpack: 5.98.0(@swc/core@1.11.7)(webpack-cli@5.1.4)
+      webpack: 5.98.0(webpack-cli@5.1.4)
 
   style-to-js@1.1.16:
     dependencies:
@@ -21759,7 +21773,7 @@ snapshots:
       import-local: 3.2.0
       interpret: 3.1.1
       rechoir: 0.8.0
-      webpack: 5.98.0(@swc/core@1.11.7)(webpack-cli@5.1.4)
+      webpack: 5.98.0(webpack-cli@5.1.4)
       webpack-merge: 5.10.0
     optionalDependencies:
       webpack-dev-server: 5.2.0(webpack-cli@5.1.4)(webpack@5.98.0)
@@ -21773,7 +21787,7 @@ snapshots:
       range-parser: 1.2.1
       schema-utils: 4.3.0
     optionalDependencies:
-      webpack: 5.98.0(@swc/core@1.11.7)(webpack-cli@5.1.4)
+      webpack: 5.98.0(webpack-cli@5.1.4)
 
   webpack-dev-server@5.2.0(webpack-cli@5.1.4)(webpack@5.98.0):
     dependencies:
@@ -21805,7 +21819,7 @@ snapshots:
       webpack-dev-middleware: 7.4.2(webpack@5.98.0)
       ws: 8.18.1
     optionalDependencies:
-      webpack: 5.98.0(@swc/core@1.11.7)(webpack-cli@5.1.4)
+      webpack: 5.98.0(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-dev-server@5.2.0)(webpack@5.98.0)
     transitivePeerDependencies:
       - bufferutil

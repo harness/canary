@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
-import { NavbarItemType, Toaster, useSidebar } from '@harnessio/ui/components'
+import { NavbarItemType, Sonner, Toaster, useSidebar } from '@harnessio/ui/components'
 import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useNav } from '../../components/stores/recent-pinned-nav-links.store'
@@ -75,6 +75,7 @@ export const AppShell: FC = () => {
         </MainContentLayout>
       </AppSideBar>
       <Toaster useTranslationStore={useTranslationStore} />
+      <Sonner />
     </>
   )
 }

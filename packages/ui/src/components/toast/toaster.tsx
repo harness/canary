@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Button, Icon, IconProps, Layout, Toast, useToast } from '@/components'
 import { cn } from '@/utils/cn'
 import { TranslationStore } from '@/views'
+import { useSonner } from 'sonner'
 
 type ToastContentState = {
   [key in string]: {

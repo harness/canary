@@ -10,17 +10,15 @@
     },
     "px": {
       "$type": "spacing",
-      "$value": "{spacing.4}"
+      "$value": "{spacing.3}"
     },
-    "wrapper": {
-      "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
-      }
-    },
-    "borderRadius": {
+    "radius": {
       "$type": "borderRadius",
       "$value": "{rounded.2}"
+    },
+    "min-width": {
+      "$type": "sizing",
+      "$value": "{size.64}"
     }
   }
 }

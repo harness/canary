@@ -14597,7 +14597,8 @@
       "components/desktop/base/avatar": "enabled",
       "components/desktop/base/tabs": "enabled",
       "components/desktop/base/sidebar": "enabled",
-      "components/desktop/base/accordion": "enabled"
+      "components/desktop/base/accordion": "enabled",
+      "components/desktop/base/alert": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",
@@ -14612,6 +14613,11 @@
       "layout.md": "86aab0dd284dd48fc0c63fe94860ea19410e2b02",
       "layout.lg": "bca232d9f98188a88c35eb4779b59bbca01d46a0",
       "layout.xl": "7d04f468f31fc00b7c1ad94fd2aa8a6bd65bf835",
+      "alert.gap": "b992cf6d2308c8534c7c33689a0e7475568ab63b",
+      "alert.py": "a0397198c3ad69c0faec56799530e2aecf665254",
+      "alert.px": "e920078cd1fed634b143a33e4117ad384176c7b8",
+      "alert.radius": "a0407368fd8119979a7d3f0a5904d8e0938711f4",
+      "alert.min-width": "77f6dfb16424f6a423e7b4fca6ace1014dac9e76",
       "accordion.default.py": "8ad5c94f5535898eb1b6f266c54e91a60ae76b88",
       "accordion.default.gap": "aab742dddcf65573d39382631b853d4ddc15c9e9",
       "accordion.md.py": "882ea499eec2854c4f95b4c7438e724e0a9be714",

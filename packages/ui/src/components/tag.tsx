@@ -1,9 +1,8 @@
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
-import { getCSSVarValue } from '@utils/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const tagVariants = cva('w-fit transition-colors', {
+const tagVariants = cva('tag w-fit transition-colors cursor-pointer', {
   variants: {
     variant: {
       outline: 'tag-outline',
@@ -28,6 +27,9 @@ const tagVariants = cva('w-fit transition-colors', {
       red: 'tag-red',
       violet: 'tag-violet',
       yellow: 'tag-yellow'
+    },
+    rounded: {
+      true: 'tag-rounded'
     }
   },
   defaultVariants: {
@@ -56,75 +58,43 @@ function Tag({
   theme,
   rounded,
   icon,
-  showIcon,
-  showReset,
   onReset,
   label,
   value,
   className,
+  showReset = false,
+  showIcon = false,
   ...props
 }: TagProps) {
   if (label) {
     return <TagSplit {...{ variant, size, theme, rounded, icon, showIcon, showReset, onReset, label: label, value }} />
   }
 
-  const fillColor = getCSSVarValue(`--cn-set-${theme || 'gray'}-surface-text`)
-  const baseIconProps = {
-    fill: fillColor,
-    width: getCSSVarValue('--icon-size-default') || '16px',
-    height: getCSSVarValue('--icon-size-default') || '16px'
-  }
-  const resetIconProps = {
-    fill: fillColor,
-    width: getCSSVarValue('--icon-size-xs') || '12px',
-    height: getCSSVarValue('--icon-size-xs') || '12px'
-  }
-
   return (
-    <div
-      tabIndex={-1}
-      className={cn(tagVariants({ variant, size, theme }), rounded && 'tag-rounded', 'cursor-pointer', className)}
-      {...props}
-    >
-      {showIcon && <Icon name={icon || 'tag-new'} {...baseIconProps} />}
+    <div tabIndex={-1} className={cn(tagVariants({ variant, size, theme, rounded }), className)} {...props}>
+      {showIcon && <Icon name={icon || 'tag-new'} className="tag-icon" />}
       <span className="truncate" title={value}>
         {value}
       </span>
       {showReset && (
         <button onClick={onReset}>
-          <Icon name="close-new" {...resetIconProps} />
+          <Icon name="close-new" className="tag-reset-icon" />
         </button>
       )}
     </div>
   )
 }
 
-function TagSplit(props: TagProps) {
-  const sharedProps = {
-    variant: props.variant,
-    size: props.size,
-    theme: props.theme,
-    rounded: props.rounded,
-    icon: props.icon
-  }
+function TagSplit({ variant, size, theme, rounded, icon, showIcon, showReset, value, label = '', onReset }: TagProps) {
+  const sharedProps = { variant, size, theme, rounded, icon }
 
   return (
     <div className="w-fit flex items-center justify-center cursor-pointer tag-split">
-      <Tag
-        {...sharedProps}
-        showReset={false}
-        showIcon={props.showIcon}
-        value={props.label || ''}
-        className="tag-split-left"
-      />
-      <Tag
-        {...sharedProps}
-        showIcon={false}
-        showReset={props.showReset}
-        onReset={props.onReset}
-        value={props.value}
-        className="tag-split-right"
-      />
+      {/* LEFT TAG - should never have a Reset Icon */}
+      <Tag {...sharedProps} showIcon={showIcon} value={label} className="tag-split-left" />
+
+      {/* RIGHT TAG - should never have a tag Icon */}
+      <Tag {...sharedProps} showReset={showReset} onReset={onReset} value={value} className="tag-split-right" />
     </div>
   )
 }

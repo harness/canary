@@ -17,37 +17,37 @@ const themes = [
   'yellow'
 ] as const
 
-const sharedStyles: CSSRuleObject = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  padding: 'var(--cn-tag-py) var(--cn-tag-px)',
-  gap: 'var(--cn-tag-gap)',
-  borderWidth: `var(--cn-tag-border)`,
-  borderRadius: `var(--cn-tag-radius-default)`,
-  font: `var(--cn-body-tight-normal)`,
-  maxWidth: `var(--cn-tag-max-width)`,
-  minHeight: `var(--cn-tag-size-default)`,
-  '&.tag-sm': {
-    font: `var(--cn-caption-tight-normal)`,
-    minHeight: `var(--cn-tag-size-sm)`
-  },
-  '&.tag-rounded': {
-    borderRadius: `var(--cn-tag-radius-full)`
-  },
-  '&.tag-split-left': {
-    borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`,
-    '&.tag-rounded': {
-      borderRadius: `var(--cn-tag-radius-full) 0 0 var(--cn-tag-radius-full)`
-    }
-  },
-  '&.tag-split-right': {
-    borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
-    borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`,
-    '&.tag-rounded': {
-      borderRadius: `0 var(--cn-tag-radius-full) var(--cn-tag-radius-full) 0`
-    }
-  }
-}
+// const sharedStyles: CSSRuleObject = {
+//   display: 'inline-flex',
+//   alignItems: 'center',
+//   padding: 'var(--cn-tag-py) var(--cn-tag-px)',
+//   gap: 'var(--cn-tag-gap)',
+//   borderWidth: `var(--cn-tag-border)`,
+//   borderRadius: `var(--cn-tag-radius-default)`,
+//   font: `var(--cn-body-tight-normal)`,
+//   maxWidth: `var(--cn-tag-max-width)`,
+//   height: `var(--cn-tag-size-default)`,
+//   '&.tag-sm': {
+//     font: `var(--cn-caption-tight-normal)`,
+//     height: `var(--cn-tag-size-sm)`
+//   },
+//   '&.tag-rounded': {
+//     borderRadius: `var(--cn-tag-radius-full)`
+//   },
+//   '&.tag-split-left': {
+//     borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`,
+//     '&.tag-rounded': {
+//       borderRadius: `var(--cn-tag-radius-full) 0 0 var(--cn-tag-radius-full)`
+//     }
+//   },
+//   '&.tag-split-right': {
+//     borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
+//     borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`,
+//     '&.tag-rounded': {
+//       borderRadius: `0 var(--cn-tag-radius-full) var(--cn-tag-radius-full) 0`
+//     }
+//   }
+// }
 
 function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject {
   const styles: CSSRuleObject = {}
@@ -80,7 +80,17 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
             '.tag-split:hover &': {
               backgroundColor: `var(--cn-set-${theme}-surface-bg-hover)`
             }
-          }
+          },
+      '&.tag-icon': {
+        width: `var(--cn-icon-size-default, 16px)`,
+        height: `var(--cn-icon-size-default, 16px)`,
+        stroke: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'})`
+      },
+      '&.tag-reset-icon': {
+        width: `var(--cn-icon-size-xs, 12px)`,
+        height: `var(--cn-icon-size-xs, 12px)`,
+        stroke: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'})`
+      }
     }
 
     styles[`&:where(.tag-${theme})`] = style
@@ -90,12 +100,46 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
 }
 
 export default {
-  '.tag-outline': {
-    ...sharedStyles,
-    ...createTagVariantStyles('outline')
-  },
-  '.tag-secondary': {
-    ...sharedStyles,
-    ...createTagVariantStyles('secondary')
+  '.tag': {
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: 'var(--cn-tag-py) var(--cn-tag-px)',
+    gap: 'var(--cn-tag-gap)',
+    borderWidth: `var(--cn-tag-border)`,
+    borderRadius: `var(--cn-tag-radius-default)`,
+    font: `var(--cn-body-tight-normal)`,
+    maxWidth: `var(--cn-tag-max-width)`,
+    height: `var(--cn-tag-size-default)`,
+
+    '&:where(.tag-sm)': {
+      font: `var(--cn-caption-tight-normal)`,
+      height: `var(--cn-tag-size-sm)`
+    },
+
+    '&:where(.tag-rounded)': {
+      borderRadius: `var(--cn-tag-radius-full)`
+    },
+
+    '&:where(.tag-split-left)': {
+      borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`,
+      '&.tag-rounded': {
+        borderRadius: `var(--cn-tag-radius-full) 0 0 var(--cn-tag-radius-full)`
+      }
+    },
+
+    '&:where(.tag-split-right)': {
+      borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
+      borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`,
+      '&.tag-rounded': {
+        borderRadius: `0 var(--cn-tag-radius-full) var(--cn-tag-radius-full) 0`
+      }
+    },
+
+    '&:where(.tag-outline)': {
+      ...createTagVariantStyles('outline')
+    },
+    '&:where(.tag-secondary)': {
+      ...createTagVariantStyles('secondary')
+    }
   }
 }

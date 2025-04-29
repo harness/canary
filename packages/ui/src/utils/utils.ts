@@ -150,14 +150,3 @@ export function generateAlphaNumericHash(length: number) {
 
   return result
 }
-
-/**
- * Get the value of a CSS variable.
- * @param varName - The name of the CSS variable.
- * @returns The value of the CSS variable.
- * @example
- * getCSSVarValue("--cn-set-gray-background") // Returns the value of the CSS variable
- */
-export function getCSSVarValue(varName: string) {
-  return window.getComputedStyle(document.documentElement).getPropertyValue(varName)
-}

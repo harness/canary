@@ -14,11 +14,16 @@ export interface GcpRegionsMultiSelectProps {
   useTranslationStore: () => TranslationStore
 }
 
-const SELECT_REGIONS = 'Select regions'
-const FAILED_TO_FETCH = 'Failed to fetch regions'
-
 export function GcpRegionsMultiSelect(props: GcpRegionsMultiSelectProps): React.ReactElement {
-  const { value, onChange, placeholder = SELECT_REGIONS, regionsOptions, isLoading, error, useTranslationStore } = props
+  const {
+    value,
+    onChange,
+    placeholder = 'Select regions',
+    regionsOptions,
+    isLoading,
+    error,
+    useTranslationStore
+  } = props
   const [selectedItems, setSelectedItems] = useState<Array<{ id: string; label: string }>>([])
   const { t } = useTranslationStore()
 
@@ -56,7 +61,7 @@ export function GcpRegionsMultiSelect(props: GcpRegionsMultiSelectProps): React.
         <SkeletonList />
       ) : error ? (
         <Alert.Container variant="destructive" className="my-2">
-          <Alert.Description>{error?.toString() || FAILED_TO_FETCH}</Alert.Description>
+          <Alert.Description>{error?.toString() || 'Failed to fetch regions'}</Alert.Description>
         </Alert.Container>
       ) : (
         <MultiSelect

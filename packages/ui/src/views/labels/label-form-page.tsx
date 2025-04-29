@@ -22,7 +22,6 @@ import {
   CreateLabelFormFields,
   createLabelFormSchema,
   ILabelsStore,
-  LabelMarker,
   LabelType,
   NotFoundPage,
   SandboxLayout,
@@ -239,7 +238,6 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
             </h3>
 
             <div className="flex flex-col items-start gap-y-2.5">
-              {/* Design System: Replaced with Tag */}
               <Tag
                 variant="secondary"
                 size="sm"

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { Accordion, Icon, Tag } from '@/components'
-import { ILabelType, LabelMarker, LabelValueType } from '@/views'
+import { ILabelType, LabelValueType } from '@/views'
 import { cn } from '@utils/cn'
 
 export interface LabelCellContentProps {
@@ -26,7 +26,6 @@ export const LabelCellContent: FC<LabelCellContentProps> = ({ label, values }) =
               />
             )}
 
-            {/* Design System: Replaced with Tag */}
             <Tag
               variant="secondary"
               size="sm"
@@ -39,7 +38,6 @@ export const LabelCellContent: FC<LabelCellContentProps> = ({ label, values }) =
 
         {isWithValues && (
           <Accordion.Content className="flex flex-col gap-y-2.5 pb-0 pl-[22px] pt-2.5">
-            {/* Design System: Replaced with Tag */}
             {values.map(item => (
               <Tag
                 key={item.id}

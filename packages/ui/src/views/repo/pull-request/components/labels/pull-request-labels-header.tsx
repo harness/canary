@@ -7,7 +7,6 @@ import {
   HandleAddLabelType,
   ILabelType,
   LabelAssignmentType,
-  LabelMarker,
   LabelType,
   LabelValuesType,
   LabelValueType,
@@ -157,7 +156,6 @@ export const LabelsHeader = ({
                   {labelsListWithValues?.map((label, idx) => (
                     <DropdownMenu.Item key={`${label.id}-${idx}`} onSelect={handleOnSelect(label)}>
                       <div className="relative grid w-full gap-y-1.5 pr-7">
-                        {/* Design System: Replaced with Tag */}
                         <Tag
                           variant="secondary"
                           size="sm"

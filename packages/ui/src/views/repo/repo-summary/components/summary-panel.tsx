@@ -69,7 +69,6 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
           </>
         )}
         <Spacer size={3} />
-        {/* Design system: Replaced with Tag */}
         <Tag
           rounded
           theme={!is_public ? 'gray' : 'green'}

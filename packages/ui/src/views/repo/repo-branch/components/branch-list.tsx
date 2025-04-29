@@ -119,7 +119,6 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
-                    {/* Design system: Replaced with Tag */}
                     <Tag
                       variant="secondary"
                       size="sm"

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { ColorsEnum, LabelMarker, LabelMarkerProps, PRListLabelType } from '@/views'
+import { LabelMarkerProps, PRListLabelType } from '@/views'
 import { Tag } from '@components/tag'
 import { cn } from '@utils/cn'
 
@@ -20,7 +20,6 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset }
   return (
     <div className={cn('flex flex-wrap gap-1.5', className)}>
       {labels.map(label => (
-        // Design system: Replaced with Tag
         <Tag
           key={label.key}
           variant="secondary"

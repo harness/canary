@@ -8,7 +8,6 @@ import {
   CommentType,
   GeneralPayload,
   LabelActivity,
-  LabelMarker,
   MergeStrategy,
   ReviewerAddActivity,
   TypesPullReqActivity
@@ -241,7 +240,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
             description: (
               <span className="inline-flex items-center text-sm text-cn-foreground-3">
                 {labelType ? labelActivityToTitleDict[labelType] : 'modified'}
-                {/* Design system: Replaced with Tag */}
                 <div className="mx-1.5">
                   <Tag
                     variant="secondary"

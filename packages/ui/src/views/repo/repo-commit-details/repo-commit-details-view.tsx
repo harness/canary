@@ -62,7 +62,6 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
             <Button variant="outline">{t('views:commits.browseFiles', 'Browse files')}</Button>
           </div>
           <div className="flex items-center justify-between px-4 py-3">
-            {/* Design system: Replaced with Tag */}
             {/* TODO: get branch name from commitData */}
             <Tag value="main" icon="branch-2" variant="secondary" showIcon />
             <CommitCopyActions toCommitDetails={toCommitDetails} sha={commitData?.sha || ''} />

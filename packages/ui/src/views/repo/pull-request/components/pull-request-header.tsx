@@ -98,7 +98,6 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
             </span>
             <span>into</span>
-            {/* Design system: Replaced with Tag */}
             <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}>
               <Tag variant="secondary" icon="branch-2" size="sm" value={target_branch || ''} showIcon />
             </Link>

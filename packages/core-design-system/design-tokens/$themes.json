@@ -5,8 +5,7 @@
     "selectedTokenSets": {
       "core/typography": "source",
       "core/dimensions": "source",
-      "core/colors_lch": "source",
-      "components/desktop/base/toggle": "disabled"
+      "core/colors_lch": "source"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -332,8 +331,7 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "mode/dark/default": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/default": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1140,6 +1138,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -1207,10 +1208,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:3",
@@ -1514,8 +1512,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/dimmer": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:0",
@@ -1720,6 +1717,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -1787,10 +1787,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -2091,8 +2088,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/default": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/default": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:4",
@@ -2297,6 +2293,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -2364,10 +2363,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -2669,8 +2665,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/high-contrast": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:1",
@@ -2874,6 +2869,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -2941,10 +2939,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -3246,8 +3241,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-protanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/default-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:2",
@@ -3452,6 +3446,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -3519,10 +3516,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -3824,8 +3818,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-protanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/dimmer-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:3",
@@ -4030,6 +4023,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -4097,10 +4093,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -4402,8 +4395,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-protanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/high-contrast-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:4",
@@ -4608,6 +4600,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -4675,10 +4670,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -4980,8 +4972,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-deuteranopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/default-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:5",
@@ -5186,6 +5177,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -5253,10 +5247,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -5558,8 +5549,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-deuteranopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/dimmer-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:6",
@@ -5764,6 +5754,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -5831,10 +5824,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -6136,8 +6126,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-deuteranopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/high-contrast-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:7",
@@ -6342,6 +6331,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -6409,10 +6401,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -6714,8 +6703,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-tritanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/default-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:8",
@@ -6920,6 +6908,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -6987,10 +6978,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -7292,8 +7280,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-tritanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/dimmer-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:9",
@@ -7498,6 +7485,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -7565,10 +7555,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -7870,8 +7857,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-tritanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/dark/high-contrast-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:10",
@@ -8076,6 +8062,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -8143,10 +8132,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -8447,8 +8433,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/dimmer": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:11",
@@ -8653,6 +8638,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -8720,10 +8708,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -9024,8 +9009,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/high-contrast": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:12",
@@ -9230,6 +9214,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -9297,10 +9284,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -9601,8 +9585,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/default-protanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/default-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:13",
@@ -9807,6 +9790,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -9874,10 +9860,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -10178,8 +10161,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-protanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/dimmer-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:14",
@@ -10384,6 +10366,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -10451,10 +10436,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -10755,8 +10737,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-protanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/high-contrast-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:15",
@@ -10961,6 +10942,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -11028,10 +11012,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -11332,8 +11313,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/default-deuteranopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/default-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:16",
@@ -11538,6 +11518,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -11605,10 +11588,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -11933,8 +11913,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-deuteranopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/dimmer-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:17",
@@ -12139,6 +12118,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -12206,10 +12188,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -12510,8 +12489,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-deuteranopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/high-contrast-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:18",
@@ -12716,6 +12694,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -12783,10 +12764,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -13087,8 +13065,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/default-tritanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/default-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:19",
@@ -13293,6 +13270,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -13360,10 +13340,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -13664,8 +13641,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-tritanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/dimmer-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:20",
@@ -13870,6 +13846,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -13937,10 +13916,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -14241,8 +14217,7 @@
       "ring.warning": "S:d30450b2ce5fb70cd037012518c4bb2f241e8bb1,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-tritanopia": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "mode/light/high-contrast-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:21",
@@ -14447,6 +14422,9 @@
       "comp.diff.hunk-lineNumber": "bccfad80b84e35edf4b47af2ca30057eba2b2ebf",
       "comp.diff.hunk-content-color": "68c5d6a95d475f7275062e3eb58dba464df3d059",
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
+      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
+      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
+      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "111bedbea20cbcf5743a65c16a4dcd4fe1f3be05",
       "comp.pipeline.card.border": "09dca541cb8b58cdf8fb168174044bed51eb0c01",
@@ -14514,10 +14492,7 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
-      "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -14599,7 +14574,11 @@
       "comp.link.default": "S:fc4397c0cac6886fca1b47fc058ad28f21b6e7c1,",
       "comp.link.sm": "S:66eb811dc78bad2dfebf9b28ba0169664e47aecd,",
       "comp.link.default-underline": "S:6e98fe3d316e60aaeb5281e39461a133bbf39e51,",
-      "comp.link.sm-underline": "S:1fdff98dbcd7db1e8ee15ea18d07e7f19ade559f,"
+      "comp.link.sm-underline": "S:1fdff98dbcd7db1e8ee15ea18d07e7f19ade559f,",
+      "body.single-line.normal": "S:1fff25f6aa5bcbf8f5e75573b06f5568c572710e,",
+      "body.single-line.strong": "S:7d1a7534c09046cc7649c226896c36f69a0d761a,",
+      "caption.single-line.normal": "S:48ca02008d90879d690d786d949f1a365a114acb,",
+      "caption.single-line.soft": "S:8db313f55198f8be6831dc9d1643512c28e7a84c,"
     },
     "selectedTokenSets": {
       "breakpoint/desktop": "enabled",
@@ -14618,8 +14597,7 @@
       "components/desktop/base/avatar": "enabled",
       "components/desktop/base/tabs": "enabled",
       "components/desktop/base/sidebar": "enabled",
-      "components/desktop/base/accordion": "enabled",
-      "components/desktop/base/toggle": "disabled"
+      "components/desktop/base/accordion": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",

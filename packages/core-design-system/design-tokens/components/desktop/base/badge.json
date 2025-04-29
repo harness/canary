@@ -21,7 +21,7 @@
       },
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.half}"
+        "$value": "{spacing.1}"
       }
     },
     "radius": {
@@ -43,7 +43,7 @@
       },
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.px}"
+        "$value": "{spacing.half}"
       }
     }
   },

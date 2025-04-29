@@ -10,18 +10,18 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-wrap flex-col gap-4 items-baseline">
-    <div className="font-bold w-full"> Variants: </div>
-    <Input variant={"extended"} value={"input with extended variant"} />
+  code.{`<div className."flex flex-wrap flex-col gap-4 items-baseline">
+    <div className."font-bold w-full"> Variants: </div>
+    <Input variant.{"extended"} value.{"input with extended variant"} />
     <Input />
-    <div className="font-bold w-full"> Sizes: </div>
-    <Input value={"input with default size"} />
-    <Input size={"md"} value={"input with md size"} />
-    <div className="font-bold w-full"> Themes: </div>
-    <Input theme={"danger"} value={"input with danger theme"} label={"label"} optional />
-    <Input caption={"dummy caption"} error={"dummy error text"} />
-    <Input value={"input with icon"} inputIconName={"plus"} />
-    <Input value={"input with right element"} rightElement={<Button className="ml-[12px]">Update</Button>} />
+    <div className."font-bold w-full"> Sizes: </div>
+    <Input value.{"input with default size"} />
+    <Input size.{"md"} value.{"input with md size"} />
+    <div className."font-bold w-full"> Themes: </div>
+    <Input theme.{"danger"} value.{"input with danger theme"} label.{"label"} optional />
+    <Input caption.{"dummy caption"} error.{"dummy error text"} />
+    <Input value.{"input with icon"} inputIconName.{"plus"} />
+    <Input value.{"input with right element"} rightElement.{<Button className."ml-[12px]">Update</Button>} />
   </div>`}
 />
 
@@ -34,13 +34,13 @@ import { Input } from '@harnessio/ui/components'
 
 return (
   <Input
-    variant={"extended"}
-    size={"md"}
-    value={"input with value"}
-    theme={"danger"}
-    caption={"dummy caption"}
-    inputIconName={"plus"}
-    rightElement={<Button>Right element</Button>}
+    variant.{"extended"}
+    size.{"md"}
+    value.{"input with value"}
+    theme.{"danger"}
+    caption.{"dummy caption"}
+    inputIconName.{"plus"}
+    rightElement.{<Button>Right element</Button>}
   />
 )
 ```
@@ -48,7 +48,7 @@ return (
 ## API Reference
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "variant",
       description: "Variant of the input",

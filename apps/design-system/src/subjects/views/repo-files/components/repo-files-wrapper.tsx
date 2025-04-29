@@ -14,9 +14,9 @@ interface RepoFilesWrapperProps {
   isMarkdown?: boolean
 }
 
-export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, isMarkdown = false }) => {
-  const useRepoBranchesStore = useCallback(
-    (): IBranchSelectorStore => ({
+export const RepoFilesWrapper: FC<RepoFilesWrapperProps> . ({ codeMode, isDir, isMarkdown . false }) .> {
+  const useRepoBranchesStore . useCallback(
+    (): IBranchSelectorStore .> ({
       ...repoFilesStore.branchSelectorStore,
       selectedRefType: BranchSelectorTab.BRANCHES,
       setSelectedBranchTag: noop,
@@ -39,12 +39,12 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
   /**
    * Render File content view or Edit file view
    */
-  const renderCodeView = useMemo(() => {
-    if (codeMode === CodeModes.VIEW && !isDir) {
-      return <RepoFileContentViewer isMarkdown={isMarkdown} />
+  const renderCodeView . useMemo(() .> {
+    if (codeMode ... CodeModes.VIEW && !isDir) {
+      return <RepoFileContentViewer isMarkdown.{isMarkdown} />
     }
 
-    if (codeMode !== CodeModes.VIEW) {
+    if (codeMode !.. CodeModes.VIEW) {
       return <RepoFileEdit />
     }
 
@@ -53,21 +53,21 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
 
   return (
     <RepoFiles
-      isRepoEmpty={repoFilesStore.repository.is_empty}
-      pathParts={repoFilesStore.pathParts}
-      loading={false}
-      files={repoFilesStore.files}
-      isDir={isDir}
-      isShowSummary={true}
-      latestFile={repoFilesStore.latestCommitInfo}
-      useTranslationStore={useTranslationStore}
-      pathNewFile=""
-      pathUploadFiles=""
-      codeMode={codeMode}
-      useRepoBranchesStore={useRepoBranchesStore}
-      defaultBranchName={repoFilesStore.repository.default_branch}
-      currentBranchDivergence={{ behind: 0, ahead: 0 }}
-      isLoadingRepoDetails={false}
+      isRepoEmpty.{repoFilesStore.repository.is_empty}
+      pathParts.{repoFilesStore.pathParts}
+      loading.{false}
+      files.{repoFilesStore.files}
+      isDir.{isDir}
+      isShowSummary.{true}
+      latestFile.{repoFilesStore.latestCommitInfo}
+      useTranslationStore.{useTranslationStore}
+      pathNewFile.""
+      pathUploadFiles.""
+      codeMode.{codeMode}
+      useRepoBranchesStore.{useRepoBranchesStore}
+      defaultBranchName.{repoFilesStore.repository.default_branch}
+      currentBranchDivergence.{{ behind: 0, ahead: 0 }}
+      isLoadingRepoDetails.{false}
     >
       {renderCodeView}
     </RepoFiles>

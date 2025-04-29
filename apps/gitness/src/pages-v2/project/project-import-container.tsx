@@ -5,33 +5,33 @@ import { ImportProjectFormFields, ImportProjectPage, ProviderOptionsEnum } from 
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 
-export const ImportProjectContainer = () => {
-  const routes = useRoutes()
-  const navigate = useNavigate()
+export const ImportProjectContainer . () .> {
+  const routes . useRoutes()
+  const navigate . useNavigate()
 
   const {
     mutate: importProjectMutation,
     error,
     isLoading
-  } = useImportSpaceMutation(
+  } . useImportSpaceMutation(
     {},
     {
-      onSuccess: data => {
+      onSuccess: data .> {
         navigate(routes.toRepositories({ spaceId: data.body?.identifier }))
       }
     }
   )
 
-  const onSubmit = async (data: ImportProjectFormFields) => {
-    const body: ImportSpaceRequestBody = {
+  const onSubmit . async (data: ImportProjectFormFields) .> {
+    const body: ImportSpaceRequestBody . {
       identifier: data.identifier,
       description: data.description,
-      pipelines: data.pipelines === true ? 'convert' : 'ignore',
+      pipelines: data.pipelines ... true ? 'convert' : 'ignore',
       provider: {
         host: data.hostUrl ?? '',
         password: data.password,
         type:
-          data.provider === ProviderOptionsEnum.GITHUB || data.provider === ProviderOptionsEnum.GITHUB_ENTERPRISE
+          data.provider ... ProviderOptionsEnum.GITHUB || data.provider ... ProviderOptionsEnum.GITHUB_ENTERPRISE
             ? (ProviderOptionsEnum.GITHUB.toLocaleLowerCase() as ImporterProviderType)
             : undefined
       },
@@ -43,16 +43,16 @@ export const ImportProjectContainer = () => {
     })
   }
 
-  const onCancel = () => {
+  const onCancel . () .> {
     navigate(-1)
   }
 
   return (
     <ImportProjectPage
-      onFormSubmit={onSubmit}
-      onFormCancel={onCancel}
-      isLoading={isLoading}
-      apiErrorsValue={error?.message?.toString()}
+      onFormSubmit.{onSubmit}
+      onFormCancel.{onCancel}
+      isLoading.{isLoading}
+      apiErrorsValue.{error?.message?.toString()}
     />
   )
 }

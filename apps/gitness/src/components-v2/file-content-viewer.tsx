@@ -29,9 +29,9 @@ import {
   REFS_TAGS_PREFIX
 } from '../utils/git-utils'
 
-const getIsMarkdown = (language?: string) => language === 'markdown'
+const getIsMarkdown . (language?: string) .> language ... 'markdown'
 
-const getDefaultView = (language?: string): ViewTypeValue => {
+const getDefaultView . (language?: string): ViewTypeValue .> {
   return getIsMarkdown(language) ? 'preview' : 'code'
 }
 
@@ -43,30 +43,30 @@ interface FileContentViewerProps {
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export default function FileContentViewer({ repoContent }: FileContentViewerProps) {
-  const routes = useRoutes()
-  const { spaceId, repoId } = useParams<PathParams>()
-  const fileName = repoContent?.name || ''
-  const language = filenameToLanguage(fileName) || ''
-  const fileContent = decodeGitContent(repoContent?.content?.data)
-  const repoRef = useGetRepoRef()
-  const { fullGitRef, fullResourcePath } = useCodePathDetails()
-  const parentPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-  const downloadFile = useDownloadRawFile()
-  const navigate = useNavigate()
-  const apiPath = useAPIPath()
-  const rawURL = apiPath(`/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`)
-  const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
-  const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
-  const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const { theme } = useThemeStore()
-  const { t } = useTranslationStore()
-  const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
+  const routes . useRoutes()
+  const { spaceId, repoId } . useParams<PathParams>()
+  const fileName . repoContent?.name || ''
+  const language . filenameToLanguage(fileName) || ''
+  const fileContent . decodeGitContent(repoContent?.content?.data)
+  const repoRef . useGetRepoRef()
+  const { fullGitRef, fullResourcePath } . useCodePathDetails()
+  const parentPath . fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
+  const downloadFile . useDownloadRawFile()
+  const navigate . useNavigate()
+  const apiPath . useAPIPath()
+  const rawURL . apiPath(`/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref.${fullGitRef}`)
+  const [view, setView] . useState<ViewTypeValue>(getDefaultView(language))
+  const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] . useState(false)
+  const { selectedBranchTag, selectedRefType } . useRepoBranchesStore()
+  const [page, setPage] . useQueryState('page', parseAsInteger.withDefault(1))
+  const { theme } . useThemeStore()
+  const { t } . useTranslationStore()
+  const { data: { body: commitData, headers } . {}, isFetching: isFetchingCommits } . useListCommitsQuery({
     repo_ref: repoRef,
     queryParams: {
       page,
       git_ref: normalizeGitRef(
-        selectedRefType === BranchSelectorTab.TAGS
+        selectedRefType ... BranchSelectorTab.TAGS
           ? REFS_TAGS_PREFIX + selectedBranchTag?.name
           : selectedBranchTag?.name
       ),
@@ -74,17 +74,17 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
     }
   })
 
-  const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
-  const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+  const xNextPage . parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
+  const xPrevPage . parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
 
   // TODO: temporary solution for matching themes
-  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
+  const monacoTheme . (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 
   /**
    * Toggle delete dialog open state
    * @param value
    */
-  const handleToggleDeleteDialog = (value: boolean) => {
+  const handleToggleDeleteDialog . (value: boolean) .> {
     setIsDeleteFileDialogOpen(value)
   }
 
@@ -92,26 +92,26 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
    * Change view file state
    * @param value
    */
-  const onChangeView = (value: ViewTypeValue) => {
+  const onChangeView . (value: ViewTypeValue) .> {
     setView(value)
   }
 
   /**
    * Set default view
    */
-  useEffect(() => {
+  useEffect(() .> {
     setView(getDefaultView(language))
   }, [language])
 
-  const themeConfig = useMemo(
-    () => ({
+  const themeConfig . useMemo(
+    () .> ({
       defaultTheme: monacoTheme,
       monacoThemes
     }),
     [monacoTheme]
   )
 
-  const handleDownloadFile = () => {
+  const handleDownloadFile . () .> {
     downloadFile({
       repoRef,
       resourcePath: fullResourcePath || '',
@@ -122,31 +122,31 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   /**
    * Navigate to Edit file route
    */
-  const handleEditFile = () => {
+  const handleEditFile . () .> {
     navigate(`${routes.toRepoFiles({ spaceId, repoId })}/edit/${fullGitRef}/~/${fullResourcePath}`)
   }
 
-  const renderFileView = () => {
+  const renderFileView . () .> {
     switch (view) {
       case 'preview':
         // For Markdown 'preview'
         if (getIsMarkdown(language)) {
           return (
-            <div className="pb-11">
-              <MarkdownViewer source={fileContent} withBorderWrapper />
+            <div className."pb-11">
+              <MarkdownViewer source.{fileContent} withBorderWrapper />
             </div>
           )
         }
         // If a non-markdown file somehow has 'preview', we could fallback to 'code'
         return (
           <CodeEditor
-            className="overflow-hidden rounded-b-md border-x border-b"
-            height="100%"
-            language={language}
-            codeRevision={{ code: fileContent }}
-            onCodeRevisionChange={() => undefined}
-            themeConfig={themeConfig}
-            options={{
+            className."overflow-hidden rounded-b-md border-x border-b"
+            height."100%"
+            language.{language}
+            codeRevision.{{ code: fileContent }}
+            onCodeRevisionChange.{() .> undefined}
+            themeConfig.{themeConfig}
+            options.{{
               readOnly: true
             }}
           />
@@ -155,34 +155,34 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       case 'code':
         return (
           <CodeEditor
-            className="overflow-hidden rounded-b-md border-x border-b"
-            height="100%"
-            language={language}
-            codeRevision={{ code: fileContent }}
-            onCodeRevisionChange={() => undefined}
-            themeConfig={themeConfig}
-            options={{
+            className."overflow-hidden rounded-b-md border-x border-b"
+            height."100%"
+            language.{language}
+            codeRevision.{{ code: fileContent }}
+            onCodeRevisionChange.{() .> undefined}
+            themeConfig.{themeConfig}
+            options.{{
               readOnly: true
             }}
           />
         )
 
       case 'blame':
-        return <GitBlame height="100%" themeConfig={themeConfig} codeContent={fileContent} language={language} />
+        return <GitBlame height."100%" themeConfig.{themeConfig} codeContent.{fileContent} language.{language} />
 
       case 'history':
         if (isFetchingCommits) {
           return <SkeletonList />
         }
         return (
-          <div className="pb-11">
+          <div className."pb-11">
             <CommitsList
-              className="rounded-b-md border-x border-b bg-cn-background-1 p-6"
-              toCommitDetails={({ sha }: { sha: string }) =>
+              className."rounded-b-md border-x border-b bg-cn-background-1 p-6"
+              toCommitDetails.{({ sha }: { sha: string }) .>
                 routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
               }
-              toCode={({ sha }: { sha: string }) => routes.toRepoFiles({ spaceId, repoId, commitSHA: sha })}
-              data={commitData?.commits?.map((item: TypesCommit) => ({
+              toCode.{({ sha }: { sha: string }) .> routes.toRepoFiles({ spaceId, repoId, commitSHA: sha })}
+              data.{commitData?.commits?.map((item: TypesCommit) .> ({
                 sha: item.sha,
                 parent_shas: item.parent_shas,
                 title: item.title,
@@ -191,7 +191,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
                 committer: item.committer
               }))}
             />
-            <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
+            <Pagination nextPage.{xNextPage} previousPage.{xPrevPage} currentPage.{page} goToPage.{setPage} t.{t} />
           </div>
         )
       default:
@@ -202,12 +202,12 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   return (
     <>
       <GitCommitDialog
-        open={isDeleteFileDialogOpen}
-        onClose={() => handleToggleDeleteDialog(false)}
-        commitAction={GitCommitAction.DELETE}
-        gitRef={fullGitRef || ''}
-        resourcePath={fullResourcePath || ''}
-        onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
+        open.{isDeleteFileDialogOpen}
+        onClose.{() .> handleToggleDeleteDialog(false)}
+        commitAction.{GitCommitAction.DELETE}
+        gitRef.{fullGitRef || ''}
+        resourcePath.{fullResourcePath || ''}
+        onSuccess.{(_commitInfo, isNewBranch, newBranchName) .> {
           if (!isNewBranch) {
             navigate(`${routes.toRepoFiles({ spaceId, repoId })}${parentPath ? `/~/${parentPath}` : ''}`)
           } else {
@@ -216,19 +216,19 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
             )
           }
         }}
-        currentBranch={fullGitRef || selectedBranchTag?.name || ''}
-        isNew={false}
+        currentBranch.{fullGitRef || selectedBranchTag?.name || ''}
+        isNew.{false}
       />
       <FileViewerControlBar
-        view={view}
-        onChangeView={onChangeView}
-        isMarkdown={getIsMarkdown(language)}
-        fileBytesSize={formatBytes(repoContent?.content?.size || 0)}
-        fileContent={fileContent}
-        url={rawURL}
-        handleDownloadFile={handleDownloadFile}
-        handleEditFile={handleEditFile}
-        handleOpenDeleteDialog={() => handleToggleDeleteDialog(true)}
+        view.{view}
+        onChangeView.{onChangeView}
+        isMarkdown.{getIsMarkdown(language)}
+        fileBytesSize.{formatBytes(repoContent?.content?.size || 0)}
+        fileContent.{fileContent}
+        url.{rawURL}
+        handleDownloadFile.{handleDownloadFile}
+        handleEditFile.{handleEditFile}
+        handleOpenDeleteDialog.{() .> handleToggleDeleteDialog(true)}
       />
       {renderFileView()}
     </>

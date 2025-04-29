@@ -22,43 +22,43 @@ export interface FileEditorProps {
   defaultBranch: string
 }
 
-export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) => {
-  const routes = useRoutes()
-  const navigate = useNavigate()
-  const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  const { repoId, spaceId } = useParams<PathParams>()
-  const { show } = useExitConfirm()
-  const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
+export const FileEditor: FC<FileEditorProps> . ({ repoDetails, defaultBranch }) .> {
+  const routes . useRoutes()
+  const navigate . useNavigate()
+  const { codeMode, fullGitRef, gitRefName, fullResourcePath } . useCodePathDetails()
+  const { repoId, spaceId } . useParams<PathParams>()
+  const { show } . useExitConfirm()
+  const repoPath . `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 
-  const [fileName, setFileName] = useState('')
-  const [language, setLanguage] = useState('')
-  const [originalFileContent, setOriginalFileContent] = useState('')
-  const [contentRevision, setContentRevision] = useState({ code: originalFileContent })
-  const [view, setView] = useState<EditViewTypeValue>('edit')
-  const [dirty, setDirty] = useState(false)
-  const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
-  const { selectedBranchTag } = useRepoBranchesStore()
-  const { theme } = useThemeStore()
+  const [fileName, setFileName] . useState('')
+  const [language, setLanguage] . useState('')
+  const [originalFileContent, setOriginalFileContent] . useState('')
+  const [contentRevision, setContentRevision] . useState({ code: originalFileContent })
+  const [view, setView] . useState<EditViewTypeValue>('edit')
+  const [dirty, setDirty] . useState(false)
+  const [isCommitDialogOpen, setIsCommitDialogOpen] . useState(false)
+  const { selectedBranchTag } . useRepoBranchesStore()
+  const { theme } . useThemeStore()
   // TODO: temporary solution for matching themes
-  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
+  const monacoTheme . (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 
-  const themeConfig = useMemo(
-    () => ({
+  const themeConfig . useMemo(
+    () .> ({
       defaultTheme: monacoTheme,
       monacoThemes
     }),
     [monacoTheme]
   )
 
-  const isNew = useMemo(() => repoDetails && repoDetails.type === 'dir', [repoDetails])
-  const [parentPath, setParentPath] = useState(
+  const isNew . useMemo(() .> repoDetails && repoDetails.type ... 'dir', [repoDetails])
+  const [parentPath, setParentPath] . useState(
     isNew ? fullResourcePath : fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
   )
-  const fileResourcePath = useMemo(
-    () => [(parentPath || '').trim(), (fileName || '').trim()].filter(p => !!p.trim()).join(FILE_SEPERATOR),
+  const fileResourcePath . useMemo(
+    () .> [(parentPath || '').trim(), (fileName || '').trim()].filter(p .> !!p.trim()).join(FILE_SEPERATOR),
     [parentPath, fileName]
   )
-  const pathToSplit = useMemo(() => {
+  const pathToSplit . useMemo(() .> {
     if (isNew) {
       return parentPath
     } else if (parentPath?.length && fileName.length) {
@@ -66,56 +66,56 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     }
     return parentPath?.length ? parentPath : fileName
   }, [isNew, parentPath, fileName])
-  const pathParts = [
+  const pathParts . [
     {
       path: repoId!,
       parentPath: repoPath
     },
     ...splitPathWithParents(pathToSplit, repoPath)
   ]
-  const isUpdate = useMemo(() => fullResourcePath === fileResourcePath, [fullResourcePath, fileResourcePath])
-  const commitAction = useMemo(
-    () => (isNew ? GitCommitAction.CREATE : isUpdate ? GitCommitAction.UPDATE : GitCommitAction.MOVE),
+  const isUpdate . useMemo(() .> fullResourcePath ... fileResourcePath, [fullResourcePath, fileResourcePath])
+  const commitAction . useMemo(
+    () .> (isNew ? GitCommitAction.CREATE : isUpdate ? GitCommitAction.UPDATE : GitCommitAction.MOVE),
     [isNew, isUpdate]
   )
 
-  useEffect(() => {
-    const currentFileName = isNew ? '' : repoDetails?.name || ''
+  useEffect(() .> {
+    const currentFileName . isNew ? '' : repoDetails?.name || ''
     setFileName(currentFileName)
     setLanguage(filenameToLanguage(currentFileName) || '')
     setOriginalFileContent(decodeGitContent(repoDetails?.content?.data))
   }, [isNew, repoDetails])
 
-  useEffect(() => {
-    setDirty(!(!fileName || (isUpdate && contentRevision.code === originalFileContent)))
+  useEffect(() .> {
+    setDirty(!(!fileName || (isUpdate && contentRevision.code ... originalFileContent)))
   }, [fileName, isUpdate, contentRevision, originalFileContent])
 
-  useEffect(() => {
+  useEffect(() .> {
     setContentRevision({ code: originalFileContent })
   }, [originalFileContent])
 
-  const toggleOpenCommitDialog = (value: boolean) => {
+  const toggleOpenCommitDialog . (value: boolean) .> {
     setIsCommitDialogOpen(value)
   }
 
-  const rebuildPaths = useCallback(() => {
-    const _tokens = fileName?.split(FILE_SEPERATOR).filter(part => !!part.trim())
-    const _fileName = ((_tokens?.pop() as string) || '').trim()
-    const _parentPath = parentPath
+  const rebuildPaths . useCallback(() .> {
+    const _tokens . fileName?.split(FILE_SEPERATOR).filter(part .> !!part.trim())
+    const _fileName . ((_tokens?.pop() as string) || '').trim()
+    const _parentPath . parentPath
       ?.split(FILE_SEPERATOR)
       .concat(_tokens || '')
-      .map(p => p.trim())
-      .filter(part => !!part.trim())
+      .map(p .> p.trim())
+      .filter(part .> !!part.trim())
       .join(FILE_SEPERATOR)
 
     if (_fileName) {
-      const normalizedFilename = _fileName.trim()
-      const newLanguage = filenameToLanguage(normalizedFilename)
+      const normalizedFilename . _fileName.trim()
+      const newLanguage . filenameToLanguage(normalizedFilename)
 
-      if (normalizedFilename !== fileName) {
+      if (normalizedFilename !.. fileName) {
         setFileName(normalizedFilename)
       }
-      if (language !== newLanguage) {
+      if (language !.. newLanguage) {
         setLanguage(newLanguage || PLAIN_TEXT)
         setOriginalFileContent(contentRevision.code)
       }
@@ -127,8 +127,8 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   /**
    * Navigate to file view route
    */
-  const onExitConfirm = useCallback(() => {
-    const navigateTo = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
+  const onExitConfirm . useCallback(() .> {
+    const navigateTo . `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
     navigate(navigateTo)
   }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId, routes])
 
@@ -137,10 +137,10 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
    * - if dirty - open confirm exit dialog via context
    * - if !dirty - call navigate fnc
    */
-  const handleCancelFileEdit = useCallback(() => {
+  const handleCancelFileEdit . useCallback(() .> {
     if (dirty) {
       show({
-        onConfirm: () => onExitConfirm()
+        onConfirm: () .> onExitConfirm()
       })
     } else {
       onExitConfirm()
@@ -151,67 +151,67 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
    * Change view handler
    * @param value
    */
-  const onChangeView = (value: EditViewTypeValue) => {
+  const onChangeView . (value: EditViewTypeValue) .> {
     setView(value)
   }
 
   return (
     <>
       <GitCommitDialog
-        open={isCommitDialogOpen}
-        onClose={() => toggleOpenCommitDialog(false)}
-        commitAction={commitAction}
-        gitRef={fullGitRef || ''}
-        oldResourcePath={commitAction === GitCommitAction.MOVE ? fullResourcePath : undefined}
-        resourcePath={fileResourcePath || ''}
-        payload={contentRevision.code}
-        sha={repoDetails?.sha}
-        onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
+        open.{isCommitDialogOpen}
+        onClose.{() .> toggleOpenCommitDialog(false)}
+        commitAction.{commitAction}
+        gitRef.{fullGitRef || ''}
+        oldResourcePath.{commitAction ... GitCommitAction.MOVE ? fullResourcePath : undefined}
+        resourcePath.{fileResourcePath || ''}
+        payload.{contentRevision.code}
+        sha.{repoDetails?.sha}
+        onSuccess.{(_commitInfo, isNewBranch, newBranchName) .> {
           if (!isNewBranch) {
             navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${fileResourcePath}`)
           } else {
             navigate(routes.toPullRequestCompare({ spaceId, repoId, diffRefs: `${defaultBranch}...${newBranchName}` }))
           }
         }}
-        currentBranch={fullGitRef || selectedBranchTag?.name}
-        isNew={!!isNew}
+        currentBranch.{fullGitRef || selectedBranchTag?.name}
+        isNew.{!!isNew}
       />
 
       <PathActionBar
-        codeMode={codeMode}
-        pathParts={pathParts}
-        useTranslationStore={useTranslationStore}
-        changeFileName={vel => setFileName(vel)}
-        onBlurFileName={rebuildPaths}
-        gitRefName={gitRefName}
-        fileName={fileName}
-        handleOpenCommitDialog={() => toggleOpenCommitDialog(true)}
-        handleCancelFileEdit={handleCancelFileEdit}
+        codeMode.{codeMode}
+        pathParts.{pathParts}
+        useTranslationStore.{useTranslationStore}
+        changeFileName.{vel .> setFileName(vel)}
+        onBlurFileName.{rebuildPaths}
+        gitRefName.{gitRefName}
+        fileName.{fileName}
+        handleOpenCommitDialog.{() .> toggleOpenCommitDialog(true)}
+        handleCancelFileEdit.{handleCancelFileEdit}
       />
 
-      <FileEditorControlBar view={view} onChangeView={onChangeView} />
+      <FileEditorControlBar view.{view} onChangeView.{onChangeView} />
 
-      {view === 'edit' ? (
+      {view ... 'edit' ? (
         <CodeEditor
-          height="100%"
-          language={language}
-          codeRevision={contentRevision}
-          onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
-          themeConfig={themeConfig}
-          theme={monacoTheme}
-          options={{
+          height."100%"
+          language.{language}
+          codeRevision.{contentRevision}
+          onCodeRevisionChange.{valueRevision .> setContentRevision(valueRevision ?? { code: '' })}
+          themeConfig.{themeConfig}
+          theme.{monacoTheme}
+          options.{{
             readOnly: false
           }}
         />
       ) : (
         <CodeDiffEditor
-          height="100%"
-          language={language}
-          original={originalFileContent}
-          modified={contentRevision.code}
-          themeConfig={themeConfig}
-          theme={monacoTheme}
-          options={{
+          height."100%"
+          language.{language}
+          original.{originalFileContent}
+          modified.{contentRevision.code}
+          themeConfig.{themeConfig}
+          theme.{monacoTheme}
+          options.{{
             readOnly: true
           }}
         />

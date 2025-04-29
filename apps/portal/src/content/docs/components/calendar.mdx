@@ -9,18 +9,18 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`() => {
-    const [selectedDate, setSelectedDate] = React.useState<Date | undefined>([new Date()]);
+  code.{`() .> {
+    const [selectedDate, setSelectedDate] . React.useState<Date | undefined>([new Date()]);
 
     return (
       <Calendar
-        mode="range"
-        selected={selectedDate}
-        onSelect={setSelectedDate}
+        mode."range"
+        selected.{selectedDate}
+        onSelect.{setSelectedDate}
         showOutsideDays
-        fromDate={new Date().setDate(new Date().getDate() - 10)}
-        toDate={new Date().setDate(new Date().getDate() + 10)}
-        weekStartsOn={1}
+        fromDate.{new Date().setDate(new Date().getDate() - 10)}
+        toDate.{new Date().setDate(new Date().getDate() + 10)}
+        weekStartsOn.{1}
       />
     );
 
@@ -34,18 +34,18 @@ import { DocsPage } from "@/components/docs-page";
 import { useState } from 'react';
 import { Calendar } from '@harnessio/ui/components';
 
-const CalendarExample = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+const CalendarExample . () .> {
+  const [selectedDate, setSelectedDate] . useState<Date | undefined>(new Date());
 
   return (
       <Calendar
-        mode="range"
-        selected={selectedDate}
-        onSelect={setSelectedDate}
+        mode."range"
+        selected.{selectedDate}
+        onSelect.{setSelectedDate}
         showOutsideDays
-        fromDate={new Date().setDate(new Date().getDate() - 10)}
-        toDate={new Date().setDate(new Date().getDate() + 10)}
-        weekStartsOn={1}
+        fromDate.{new Date().setDate(new Date().getDate() - 10)}
+        toDate.{new Date().setDate(new Date().getDate() + 10)}
+        weekStartsOn.{1}
       />
     );
 };
@@ -56,7 +56,7 @@ export default CalendarExample;
 ## API Reference
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "mode",
       description: "The selection mode for the calendar",
@@ -74,7 +74,7 @@ export default CalendarExample;
       name: "onSelect",
       description: "Function to handle date selection",
       required: false,
-      value: "(date: Date | Date[] | { from: Date; to: Date }) => void",
+      value: "(date: Date | Date[] | { from: Date; to: Date }) .> void",
     },
     {
       name: "showOutsideDays",

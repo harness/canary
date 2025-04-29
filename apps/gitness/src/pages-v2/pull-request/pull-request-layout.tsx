@@ -9,28 +9,28 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestStore } from './stores/pull-request-store'
 
-const PullRequestLayout = () => {
-  const { setPullRequest, setRefetchPullReq, setPullReqError, setPullReqLoading } = usePullRequestStore()
+const PullRequestLayout . () .> {
+  const { setPullRequest, setRefetchPullReq, setPullReqError, setPullReqLoading } . usePullRequestStore()
 
-  const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
+  const { pullRequestId, spaceId, repoId } . useParams<PathParams>()
 
-  const repoRef = useGetRepoRef()
+  const repoRef . useGetRepoRef()
 
   const {
-    data: { body: pullReqData } = {},
+    data: { body: pullReqData } . {},
     error: pullReqError,
     isFetching: pullReqLoading,
     refetch: refetchPullReq
-  } = useGetPullReqQuery({
+  } . useGetPullReqQuery({
     repo_ref: repoRef,
     pullreq_number: Number(pullRequestId),
     queryParams: {}
   })
-  const { mutateAsync: updateTitle } = useUpdatePullReqMutation({
+  const { mutateAsync: updateTitle } . useUpdatePullReqMutation({
     repo_ref: repoRef,
     pullreq_number: Number(pullRequestId)
   })
-  useEffect(() => {
+  useEffect(() .> {
     if (pullReqData) {
       setPullRequest(pullReqData)
       setRefetchPullReq(refetchPullReq)
@@ -48,17 +48,17 @@ const PullRequestLayout = () => {
     setPullReqLoading
   ])
 
-  const handleUpdateTitle = async (title: string, description: string) => {
+  const handleUpdateTitle . async (title: string, description: string) .> {
     await updateTitle({ body: { title, description } })
   }
 
   return (
     <PullRequestLayoutView
-      useTranslationStore={useTranslationStore}
-      usePullRequestStore={usePullRequestStore}
-      spaceId={spaceId || ''}
-      repoId={repoId}
-      updateTitle={handleUpdateTitle}
+      useTranslationStore.{useTranslationStore}
+      usePullRequestStore.{usePullRequestStore}
+      spaceId.{spaceId || ''}
+      repoId.{repoId}
+      updateTitle.{handleUpdateTitle}
     />
   )
 }

@@ -9,11 +9,11 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`
-  <div className="flex flex-col space-y-8">
-    <Card.Root variant="default" width="md">
+  code.{`
+  <div className."flex flex-col space-y-8">
+    <Card.Root variant."default" width."md">
       <Card.Header>
-        <Card.Title as="h4">Card Title H4</Card.Title>
+        <Card.Title as."h4">Card Title H4</Card.Title>
         <Card.Description>This is the card description.</Card.Description>
       </Card.Header>
       <Card.Content>
@@ -24,9 +24,9 @@ import { DocsPage } from "@/components/docs-page";
       </Card.Footer>
     </Card.Root>
 
-    <Card.Root variant="plain" width="lg">
+    <Card.Root variant."plain" width."lg">
       <Card.Header>
-        <Card.Title as="h5">Card Title H5</Card.Title>
+        <Card.Title as."h5">Card Title H5</Card.Title>
         <Card.Description>This is the card description.</Card.Description>
       </Card.Header>
       <Card.Content>
@@ -37,9 +37,9 @@ import { DocsPage } from "@/components/docs-page";
       </Card.Footer>
     </Card.Root>
 
-    <Card.Root variant="default" width="full">
+    <Card.Root variant."default" width."full">
       <Card.Header>
-        <Card.Title as="h6">Card Title H6</Card.Title>
+        <Card.Title as."h6">Card Title H6</Card.Title>
         <Card.Description>This is the card description.</Card.Description>
       </Card.Header>
       <Card.Content>
@@ -59,9 +59,9 @@ import { DocsPage } from "@/components/docs-page";
 import { Card } from '@harnessio/ui/components'
 
 return (
-    <Card.Root variant="default" width="md">
+    <Card.Root variant."default" width."md">
       <Card.Header>
-        <Card.Title as="h1">Card Title H1</Card.Title>
+        <Card.Title as."h1">Card Title H1</Card.Title>
         <Card.Description>This is the card description.</Card.Description>
       </Card.Header>
       <Card.Content>
@@ -96,7 +96,7 @@ All parts of the `Card` component can be imported and composed as required.
 The `Root` component serves as the main container for all card elements.
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description:
@@ -140,7 +140,7 @@ The `Header` component is used to define the header section of the card.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Content to display",
@@ -165,7 +165,7 @@ The `Title` component displays the title of the card.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Title content",
@@ -197,7 +197,7 @@ The `Description` component displays the description of the card.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Description content",
@@ -224,7 +224,7 @@ The `Content` component defines the main content area of the card.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Content to display",
@@ -251,7 +251,7 @@ The `Footer` component is used to define the footer section of the card.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Footer content",

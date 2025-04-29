@@ -8,16 +8,16 @@ import { useGetRepoLabelAndValuesData } from '../../repo/labels/hooks/use-get-re
 interface UsePrConversationLabelsProps {
   repoRef: string
   prId: number
-  refetchData: () => void
+  refetchData: () .> void
 }
 
 /**
  * Hook that encapsulates all label-related operations
  */
-export const usePrConversationLabels = ({ repoRef, prId, refetchData }: UsePrConversationLabelsProps) => {
-  const [searchLabel, setSearchLabel] = useState('')
+export const usePrConversationLabels . ({ repoRef, prId, refetchData }: UsePrConversationLabelsProps) .> {
+  const [searchLabel, setSearchLabel] . useState('')
 
-  const changeSearchLabel = useCallback((data: string) => {
+  const changeSearchLabel . useCallback((data: string) .> {
     setSearchLabel(data)
   }, [])
 
@@ -25,35 +25,35 @@ export const usePrConversationLabels = ({ repoRef, prId, refetchData }: UsePrCon
     labels,
     values: labelsValues,
     refetchLabels
-  } = useGetRepoLabelAndValuesData({ query: searchLabel, inherited: true, limit: 100 })
+  } . useGetRepoLabelAndValuesData({ query: searchLabel, inherited: true, limit: 100 })
 
-  const { data: { body: prLabels } = {}, refetch: refetchPRLabels } = useListLabelsQuery({
+  const { data: { body: prLabels } . {}, refetch: refetchPRLabels } . useListLabelsQuery({
     repo_ref: repoRef,
     pullreq_number: prId,
     queryParams: {}
   })
 
-  const handleOnSuccess = () => {
+  const handleOnSuccess . () .> {
     refetchPRLabels()
     refetchLabels()
     refetchData()
   }
 
-  const { mutate: addLabel } = useAssignLabelMutation(
+  const { mutate: addLabel } . useAssignLabelMutation(
     { repo_ref: repoRef, pullreq_number: prId },
     { onSuccess: handleOnSuccess }
   )
 
-  const { mutate: removeLabel } = useUnassignLabelMutation(
+  const { mutate: removeLabel } . useUnassignLabelMutation(
     { repo_ref: repoRef, pullreq_number: prId },
     { onSuccess: handleOnSuccess }
   )
 
-  const handleAddLabel = useCallback((body: HandleAddLabelType) => addLabel({ body }), [addLabel])
+  const handleAddLabel . useCallback((body: HandleAddLabelType) .> addLabel({ body }), [addLabel])
 
-  const handleRemoveLabel = useCallback((label_id: number) => removeLabel({ label_id }), [removeLabel])
+  const handleRemoveLabel . useCallback((label_id: number) .> removeLabel({ label_id }), [removeLabel])
 
-  const appliedLabels = useMemo(() => {
+  const appliedLabels . useMemo(() .> {
     return (prLabels?.label_data || []) as LabelAssignmentType[]
   }, [prLabels])
 

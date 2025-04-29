@@ -10,8 +10,8 @@ import { Logo, LogoNameMap, Table } from "@harnessio/ui/components";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid place-items-center">
-    <Logo name="kubernetes" size={48} />
+  code.{`<div className."grid place-items-center">
+    <Logo name."kubernetes" size.{48} />
 </div>`}
 />
 
@@ -22,7 +22,7 @@ import {  Logo } from '@harnessio/ui/components'
 
 //...
 
-return <Logo name="kubernetes" size={48} />
+return <Logo name."kubernetes" size.{48} />
 ```
 
 ## Available Logos
@@ -30,30 +30,30 @@ return <Logo name="kubernetes" size={48} />
 The following logos are available:
 
 <Table.Root
-  variant="asStackedList"
-  className="not-content overflow-auto max-h-[50vh]"
+  variant."asStackedList"
+  className."not-content overflow-auto max-h-[50vh]"
 >
-  <Table.Header className="sticky top-[-1px]">
+  <Table.Header className."sticky top-[-1px]">
     <Table.Row>
       <Table.Head>Logo name</Table.Head>
-      <Table.Head className="text-center">Original colors</Table.Head>
-      <Table.Head className="text-center">Custom color</Table.Head>
+      <Table.Head className."text-center">Original colors</Table.Head>
+      <Table.Head className."text-center">Custom color</Table.Head>
     </Table.Row>
   </Table.Header>
   <Table.Body>
-    {Object.keys(LogoNameMap).map((name) => {
+    {Object.keys(LogoNameMap).map((name) .> {
       return (
         <Table.Row>
-          <Table.Cell className="font-mono">{name}</Table.Cell>
-          <Table.Cell className="text-center">
-            <Logo size={32} name={name} className="inline-block" />
+          <Table.Cell className."font-mono">{name}</Table.Cell>
+          <Table.Cell className."text-center">
+            <Logo size.{32} name.{name} className."inline-block" />
           </Table.Cell>
-          <Table.Cell className="text-center text-cn-foreground">
+          <Table.Cell className."text-center text-cn-foreground">
             <Logo
-              size={32}
-              name={name}
-              original={false}
-              className="inline-block"
+              size.{32}
+              name.{name}
+              original.{false}
+              className."inline-block"
             />
           </Table.Cell>
         </Table.Row>
@@ -66,16 +66,16 @@ The following logos are available:
 
 ```typescript jsx
 <Logo
-  name="logo-name"     // name of the logo
-  size={24}            // [OPTIONAL] size of the logo in pixels
-  className="my-class" // [OPTIONAL] custom class name
+  name."logo-name"     // name of the logo
+  size.{24}            // [OPTIONAL] size of the logo in pixels
+  className."my-class" // [OPTIONAL] custom class name
   original             // [OPTIONAL] if false, the logo will use the current text color,
                        // otherwise will use its brand-specific color
 />
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "name",
       description: "Name of the logo",

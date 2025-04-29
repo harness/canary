@@ -3,11 +3,11 @@ import { noop } from '@utils/viewUtils'
 import { CreateWebhookFormFields, ListRepoWebhooksOkResponse, WebhookStore } from '@harnessio/ui/views'
 
 interface RepoWebhooksListStore {
-  useWebhookStore: () => WebhookStore
+  useWebhookStore: () .> WebhookStore
 }
 
-export const repoWebhooksListStore: RepoWebhooksListStore = {
-  useWebhookStore: () => ({
+export const repoWebhooksListStore: RepoWebhooksListStore . {
+  useWebhookStore: () .> ({
     webhooks: [
       {
         id: 6,
@@ -32,23 +32,23 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
     ],
     error: undefined,
     webhookExecutionPage: 1,
-    setWebhookExecutionPage: (_: number) => {},
+    setWebhookExecutionPage: (_: number) .> {},
     totalWebhookExecutionPages: 1,
     executions: [],
-    setExecutions: () => {},
-    setTotalWebhookExecutionPages: (_: Headers) => {},
+    setExecutions: () .> {},
+    setTotalWebhookExecutionPages: (_: Headers) .> {},
     setError: noop,
     totalPages: 20,
     webhookLoading: false,
-    setWebhookLoading: (_: boolean) => {},
+    setWebhookLoading: (_: boolean) .> {},
     page: 1,
-    setPage: (_: number) => {},
-    setTotalPages: (_: Headers | undefined) => {},
-    setWebhooks: (_data: ListRepoWebhooksOkResponse) => {},
+    setPage: (_: number) .> {},
+    setTotalPages: (_: Headers | undefined) .> {},
+    setWebhooks: (_data: ListRepoWebhooksOkResponse) .> {},
     preSetWebhookData: null,
-    setPreSetWebhookData: (_: CreateWebhookFormFields | null) => {},
+    setPreSetWebhookData: (_: CreateWebhookFormFields | null) .> {},
     executionId: null,
-    setExecutionId: (_: number | null) => {},
-    updateExecution: () => {}
+    setExecutionId: (_: number | null) .> {},
+    updateExecution: () .> {}
   })
 }

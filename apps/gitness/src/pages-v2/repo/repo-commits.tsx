@@ -13,31 +13,31 @@ import { PageResponseHeader } from '../../types'
 import { normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 
 export default function RepoCommitsPage() {
-  const routes = useRoutes()
-  const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
-  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
-  const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const routes . useRoutes()
+  const repoRef . useGetRepoRef()
+  const { spaceId, repoId } . useParams<PathParams>()
+  const [selectedBranchOrTag, setSelectedBranchOrTag] . useState<BranchSelectorListItem | null>(null)
+  const [selectedRefType, setSelectedRefType] . useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
+  const [searchParams, setSearchParams] . useSearchParams()
 
-  const queryPage = parseInt(searchParams.get('page') || '1', 10)
+  const queryPage . parseInt(searchParams.get('page') || '1', 10)
 
-  const [page, setPage] = useState(queryPage)
+  const [page, setPage] . useState(queryPage)
 
-  useEffect(() => {
+  useEffect(() .> {
     setSearchParams({ page: String(page) })
   }, [page, setSearchParams])
 
-  useEffect(() => {
+  useEffect(() .> {
     setPage(queryPage)
   }, [queryPage])
 
-  const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
+  const { data: { body: commitData, headers } . {}, isFetching: isFetchingCommits } . useListCommitsQuery({
     repo_ref: repoRef,
     queryParams: {
       page: page,
       git_ref: normalizeGitRef(
-        selectedRefType === BranchSelectorTab.TAGS
+        selectedRefType ... BranchSelectorTab.TAGS
           ? REFS_TAGS_PREFIX + selectedBranchOrTag?.name
           : selectedBranchOrTag?.name
       ),
@@ -45,16 +45,16 @@ export default function RepoCommitsPage() {
     }
   })
 
-  const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
-  const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+  const xNextPage . parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
+  const xPrevPage . parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
 
-  const selectBranchOrTag = useCallback(
-    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      if (type === BranchSelectorTab.BRANCHES) {
+  const selectBranchOrTag . useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) .> {
+      if (type ... BranchSelectorTab.BRANCHES) {
         setPage(1)
         setSelectedBranchOrTag(branchTagName)
         setSelectedRefType(type)
-      } else if (type === BranchSelectorTab.TAGS) {
+      } else if (type ... BranchSelectorTab.TAGS) {
         setPage(1)
         setSelectedBranchOrTag(branchTagName)
         setSelectedRefType(type)
@@ -65,17 +65,17 @@ export default function RepoCommitsPage() {
 
   return (
     <RepoCommitsView
-      toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
-      toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
-      commitsList={commitData?.commits}
-      isFetchingCommits={isFetchingCommits}
-      page={page}
-      setPage={setPage}
-      xNextPage={xNextPage}
-      xPrevPage={xPrevPage}
-      useTranslationStore={useTranslationStore}
-      renderProp={() => (
-        <BranchSelectorContainer onSelectBranchorTag={selectBranchOrTag} selectedBranch={selectedBranchOrTag} />
+      toCommitDetails.{({ sha }: { sha: string }) .> routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
+      toCode.{({ sha }: { sha: string }) .> `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
+      commitsList.{commitData?.commits}
+      isFetchingCommits.{isFetchingCommits}
+      page.{page}
+      setPage.{setPage}
+      xNextPage.{xNextPage}
+      xPrevPage.{xPrevPage}
+      useTranslationStore.{useTranslationStore}
+      renderProp.{() .> (
+        <BranchSelectorContainer onSelectBranchorTag.{selectBranchOrTag} selectedBranch.{selectedBranchOrTag} />
       )}
     />
   )

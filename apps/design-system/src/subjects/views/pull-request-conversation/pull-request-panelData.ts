@@ -15,7 +15,7 @@ import {
   TypesPullReqActivity
 } from '@harnessio/ui/views'
 
-export const prPanelInfo = {
+export const prPanelInfo . {
   ruleViolation: true,
   ruleViolationArr: {
     data: {
@@ -57,14 +57,14 @@ export const prPanelInfo = {
   resolvedCommentArr: { params: [] }
 }
 
-export const changesInfoData = {
+export const changesInfoData . {
   title: 'No reviews required',
   statusMessage: 'Pull request can be merged without any reviews',
   statusColor: 'grey',
   statusIcon: 'success',
   isNotRequired: false
 }
-export const pendingChangesInfoData = {
+export const pendingChangesInfoData . {
   title: 'Approvals pending',
   statusMessage: 'Changes are pending approval from required reviewers',
   statusColor: 'text-cn-foreground-warning',
@@ -72,7 +72,7 @@ export const pendingChangesInfoData = {
   isNotRequired: false
 }
 
-export const pullReqChecksDecisionSucceeded = {
+export const pullReqChecksDecisionSucceeded . {
   overallStatus: 'success',
   count: {
     error: 0,
@@ -132,12 +132,12 @@ export const pullReqChecksDecisionSucceeded = {
   },
   summaryText: '1 succeeded'
 }
-export const mockPullRequestActions = [
+export const mockPullRequestActions . [
   {
     id: '0',
     title: 'Squash and merge',
     description: 'All commits from this branch will be combined into one commit in the base branch.',
-    action: () => {
+    action: () .> {
       noop()
     }
   },
@@ -145,7 +145,7 @@ export const mockPullRequestActions = [
     id: '1',
     title: 'Merge pull request',
     description: 'All commits from this branch will be added to the base branch via a merge commit.',
-    action: () => {
+    action: () .> {
       noop()
     }
   },
@@ -153,7 +153,7 @@ export const mockPullRequestActions = [
     id: '2',
     title: 'Rebase and merge',
     description: 'All commits from this branch will be rebased and added to the base branch.',
-    action: () => {
+    action: () .> {
       noop()
     }
   },
@@ -162,13 +162,13 @@ export const mockPullRequestActions = [
     title: 'Fast-forward merge',
     description:
       'All commits from this branch will be added to the base branch without a merge commit. Rebase may be required.',
-    action: () => {
+    action: () .> {
       noop()
     }
   }
 ]
 
-export const mockActivities = [
+export const mockActivities . [
   {
     id: 795,
     created: 1737660580605,
@@ -824,7 +824,7 @@ export const mockActivities = [
   }
 ] as TypesPullReqActivity[]
 
-export const mockReviewers = [
+export const mockReviewers . [
   {
     created: 1737596173845,
     updated: 1737596173845,
@@ -879,7 +879,7 @@ export const mockReviewers = [
   }
 ]
 
-export const mockLabelList: ILabelType[] = [
+export const mockLabelList: ILabelType[] . [
   {
     id: 1,
     space_id: 3,
@@ -927,7 +927,7 @@ export interface PRLabelsData {
   label_data: LabelAssignmentType[]
 }
 
-export const mockPrLabels: PRLabelsData = {
+export const mockPrLabels: PRLabelsData . {
   scope_data: [
     {
       scope: 1,

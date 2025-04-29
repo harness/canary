@@ -4,40 +4,40 @@ import { IAdminListUsersStore, UsersProps } from '@harnessio/ui/views'
 
 import { PageResponseHeader } from '../../../types'
 
-export const useAdminListUsersStore = create<IAdminListUsersStore>(set => ({
+export const useAdminListUsersStore . create<IAdminListUsersStore>(set .> ({
   users: [],
   totalPages: 1,
   page: 1,
   password: null,
   user: null,
   generatePassword: false,
-  setPage: page =>
+  setPage: page .>
     set({
       page
     }),
-  setUsers: (data: UsersProps[]) => {
+  setUsers: (data: UsersProps[]) .> {
     set({
       users: data
     })
   },
-  setTotalPages: (headers: Headers) => {
-    const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
+  setTotalPages: (headers: Headers) .> {
+    const totalPages . parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
 
     set({
       totalPages
     })
   },
-  setPassword: (password: string) => {
+  setPassword: (password: string) .> {
     set({
       password
     })
   },
-  setUser: (user: UsersProps) => {
+  setUser: (user: UsersProps) .> {
     set({
       user
     })
   },
-  setGeneratePassword: (generatePassword: boolean) => {
+  setGeneratePassword: (generatePassword: boolean) .> {
     set({
       generatePassword
     })

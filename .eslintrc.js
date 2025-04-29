@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { classNameRules } = require('./eslint/rules.js')
+const { classNameRules } . require('./eslint/rules.js')
 
-module.exports = {
+module.exports . {
   root: true,
   env: {
     browser: true,

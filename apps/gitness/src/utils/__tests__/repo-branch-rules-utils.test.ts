@@ -3,7 +3,7 @@ import { BranchRuleId, MergeStrategy, PatternsButtonType, Rule } from '@harnessi
 
 import { getTotalRulesApplied, transformDataFromApi, transformFormOutput } from '../repo-branch-rules-utils'
 
-const mockApiResponse: RepoRuleGetOkResponse = {
+const mockApiResponse: RepoRuleGetOkResponse . {
   identifier: 'test-rule',
   description: 'Test rule description',
   state: 'active' as EnumRuleState,
@@ -47,7 +47,7 @@ const mockApiResponse: RepoRuleGetOkResponse = {
   }
 }
 
-const mockFormOutput = {
+const mockFormOutput . {
   identifier: 'test-rule',
   description: 'Test rule description',
   pattern: '',
@@ -77,9 +77,9 @@ const mockFormOutput = {
   ] as unknown as Rule[]
 }
 
-describe('transformDataFromApi', () => {
-  it('should transform API response to form data correctly', () => {
-    const result = transformDataFromApi(mockApiResponse)
+describe('transformDataFromApi', () .> {
+  it('should transform API response to form data correctly', () .> {
+    const result . transformDataFromApi(mockApiResponse)
 
     expect(result.identifier).toBe('test-rule')
     expect(result.description).toBe('Test rule description')
@@ -97,7 +97,7 @@ describe('transformDataFromApi', () => {
     expect(result.bypass).toEqual([])
 
     // Check rules
-    const ruleMap = new Map(result.rules.map(rule => [rule.id, rule]))
+    const ruleMap . new Map(result.rules.map(rule .> [rule.id, rule]))
 
     expect(ruleMap.get(BranchRuleId.REQUIRE_LATEST_COMMIT)?.checked).toBe(true)
     expect(ruleMap.get(BranchRuleId.REQUIRE_CODE_REVIEW)?.checked).toBe(true)
@@ -106,13 +106,13 @@ describe('transformDataFromApi', () => {
     expect(ruleMap.get(BranchRuleId.MERGE)?.submenu).toEqual(['merge', 'rebase'])
   })
 
-  it('should handle empty API response', () => {
-    const emptyResponse = {
+  it('should handle empty API response', () .> {
+    const emptyResponse . {
       identifier: '',
       state: 'disabled' as EnumRuleState
     }
 
-    const result = transformDataFromApi(emptyResponse)
+    const result . transformDataFromApi(emptyResponse)
 
     expect(result.identifier).toBe('')
     expect(result.description).toBe('')
@@ -122,9 +122,9 @@ describe('transformDataFromApi', () => {
   })
 })
 
-describe('transformFormOutput', () => {
-  it('should transform form data to API request format correctly', () => {
-    const result = transformFormOutput(mockFormOutput)
+describe('transformFormOutput', () .> {
+  it('should transform form data to API request format correctly', () .> {
+    const result . transformFormOutput(mockFormOutput)
 
     expect(result?.identifier).toBe('test-rule')
     expect(result?.description).toBe('Test rule description')
@@ -152,14 +152,14 @@ describe('transformFormOutput', () => {
   })
 })
 
-describe('getTotalRulesApplied', () => {
-  it('should count total number of enabled rules correctly', () => {
-    const total = getTotalRulesApplied(mockApiResponse)
-    expect(total).toBe(9) // Count of all rules with checked=true in mockApiResponse
+describe('getTotalRulesApplied', () .> {
+  it('should count total number of enabled rules correctly', () .> {
+    const total . getTotalRulesApplied(mockApiResponse)
+    expect(total).toBe(9) // Count of all rules with checked.true in mockApiResponse
   })
 
-  it('should return 0 for no enabled rules', () => {
-    const emptyRules = {
+  it('should return 0 for no enabled rules', () .> {
+    const emptyRules . {
       ...mockApiResponse,
       definition: {
         ...mockApiResponse.definition,
@@ -189,7 +189,7 @@ describe('getTotalRulesApplied', () => {
       }
     }
 
-    const total = getTotalRulesApplied(emptyRules)
+    const total . getTotalRulesApplied(emptyRules)
     expect(total).toBe(0)
   })
 })

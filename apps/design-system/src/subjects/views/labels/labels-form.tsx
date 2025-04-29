@@ -3,15 +3,15 @@ import { useTranslationStore } from '@utils/viewUtils.ts'
 
 import { LabelFormPage } from '@harnessio/ui/views'
 
-export const LabelsForm = () => {
+export const LabelsForm . () .> {
   return (
     <LabelFormPage
-      useLabelsStore={LabelsListStore.useLabelsStore}
-      useTranslationStore={useTranslationStore}
-      isSaving={false}
-      onSubmit={() => {}}
-      onFormCancel={() => {}}
-      error={''}
+      useLabelsStore.{LabelsListStore.useLabelsStore}
+      useTranslationStore.{useTranslationStore}
+      isSaving.{false}
+      onSubmit.{() .> {}}
+      onFormCancel.{() .> {}}
+      error.{''}
     />
   )
 }

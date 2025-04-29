@@ -22,10 +22,10 @@ Each input has a unique type.
 
 ```
 export enum InputType {
-  text = "text",
-  number = "number",
-  checkbox = "checkbox",
-  connector = "connector"
+  text . "text",
+  number . "number",
+  checkbox . "checkbox",
+  connector . "connector"
   ...
 }
 ```
@@ -45,23 +45,23 @@ export interface TextInputConfig {
 }
 
 function TextInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
-  const { readonly, path, input } = props
-  const { label = '', required, placeholder } = input
+  const { readonly, path, input } . props
+  const { label . '', required, placeholder } . input
 
-  const { field, formState } = useController<{ [key: string]: boolean }>({
+  const { field, formState } . useController<{ [key: string]: boolean }>({
     name: path
   })
 
   return (
     <>
       <label>{label}</label>
-      <input placeholder={placeholder} {...field} disabled={readonly} tabIndex={0} />
+      <input placeholder.{placeholder} {...field} disabled.{readonly} tabIndex.{0} />
     </>
   )
 }
 
 export class TextInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.text
+  public internalType . InputType.text
 
   renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
     return <TextInputInternal {...props} />
@@ -79,7 +79,7 @@ import { InputFactory } from '@harnessio/forms'
 
 import { TextInput } from '../inputs/TextInput'
 
-const inputComponentFactory = new InputFactory()
+const inputComponentFactory . new InputFactory()
 inputComponentFactory.registerComponent(new TextInput())
 
 export default inputComponentFactory
@@ -90,7 +90,7 @@ export default inputComponentFactory
 Form model is a blueprint for creating form.
 
 ```js
-export const formDefinition: IFormDefinition = {
+export const formDefinition: IFormDefinition . {
   inputs: [
     {
         inputType: InputType.string,
@@ -122,12 +122,12 @@ export interface ListInputConfig {
 function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element ....
 
 // 3. Make union of all Input configs
-export type InputConfigType =
+export type InputConfigType .
   | ListInputConfig
   | TextInputConfig ...
 
 // 4. Use union type when defining form
-export const formDefinition: IFormDefinition<InputConfigType> = {
+export const formDefinition: IFormDefinition<InputConfigType> . {
   inputs: [...]
 }
 ```
@@ -139,8 +139,8 @@ For more info check [List input example](../views/src/components/form-inputs/Tex
 Use RootForm and RenderForm components.
 
 ```js
-<RootForm initialValues={{}} onSubmit={handleOnSubmit}>
-  <RenderForm factory={inputComponentFactory} inputs={formDefinition} />
+<RootForm initialValues.{{}} onSubmit.{handleOnSubmit}>
+  <RenderForm factory.{inputComponentFactory} inputs.{formDefinition} />
 </RootForm>
 ```
 
@@ -156,7 +156,7 @@ When the library is generating validation, it tries to pick the first available 
 
 ```js
 // Required validation config example
-const validationConfig: IGlobalValidationConfig = {
+const validationConfig: IGlobalValidationConfig . {
   requiredSchemaPerInput: {
     [InputType.string]: zod.string(),
     [InputType.number]: zod.number(),
@@ -172,7 +172,7 @@ Message can be set globally or per input.
 ```js
 // Required message config example
 
-const validationConfig: IGlobalValidationConfig = {
+const validationConfig: IGlobalValidationConfig . {
   requiredMessage: "Required field",
   requiredMessagePerInput: {
     [InputType.string]: "Field is required",

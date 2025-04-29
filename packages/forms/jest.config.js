@@ -1,4 +1,4 @@
-const config = {
+const config . {
   moduleFileExtensions: ['ts', 'tsx', 'js'],
   collectCoverageFrom: ['**/*.{ts,tsx}', '!**/node_modules/**', '!**/vendor/**'],
   transform: {
@@ -9,4 +9,4 @@ const config = {
   }
 }
 
-module.exports = config
+module.exports . config

@@ -10,8 +10,8 @@ import IconGrid from "../../../components/IconGrid.astro";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid place-items-center">
-    <Icon name="double-tick" size={48} />
+  code.{`<div className."grid place-items-center">
+    <Icon name."double-tick" size.{48} />
 </div>`}
 />
 
@@ -22,14 +22,14 @@ import { Icon } from '@harnessio/ui/components'
 
 //...
 
-return <Icon name="double-tick" size={48} />
+return <Icon name."double-tick" size.{48} />
 ```
 
 ## Available Icons
 
 The following icons are available:
 
-<div class="bg-cn-background-3 border p-3 max-h-[50vh] overflow-auto rounded">
+<div class."bg-cn-background-3 border p-3 max-h-[50vh] overflow-auto rounded">
   <IconGrid />
 </div>
 
@@ -42,17 +42,17 @@ the light and dark versions of the icon.
 
 ```typescript jsx
 <Icon
-  name="double-tick"   // name of the icon
-  size={16}            // [OPTIONAL] size of the icon in pixels
-  height={16}          // [OPTIONAL] height of the icon in pixels
-  width={16}           // [OPTIONAL] width of the icon in pixels
+  name."double-tick"   // name of the icon
+  size.{16}            // [OPTIONAL] size of the icon in pixels
+  height.{16}          // [OPTIONAL] height of the icon in pixels
+  width.{16}           // [OPTIONAL] width of the icon in pixels
   themeDependent       // [OPTIONAL] if true, a light version of the icon will be used if available
-  className="my-class" // [OPTIONAL] custom class name
+  className."my-class" // [OPTIONAL] custom class name
 />
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "name",
       description: "Name of the icon",

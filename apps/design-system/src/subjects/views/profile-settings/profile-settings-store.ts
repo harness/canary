@@ -1,4 +1,4 @@
-const tokens = [
+const tokens . [
   {
     principal_id: 4,
     type: 'pat',
@@ -18,7 +18,7 @@ const tokens = [
   }
 ]
 
-const publicKeys = [
+const publicKeys . [
   {
     created: 1737548081988,
     verified: null,
@@ -30,7 +30,7 @@ const publicKeys = [
   }
 ]
 
-export const mockProfileSettingsStore = () => ({
+export const mockProfileSettingsStore . () .> ({
   publicKeys: publicKeys,
   tokens: tokens,
   createdTokenData: null,
@@ -39,12 +39,12 @@ export const mockProfileSettingsStore = () => ({
     username: 'test',
     email: 'test@email.com'
   },
-  setPublicKeys: () => {},
-  addPublicKey: () => {},
-  deletePublicKey: () => {},
-  setTokens: () => {},
-  deleteToken: () => {},
-  addToken: () => {},
-  setCreatedTokenData: () => {},
-  setUserData: () => {}
+  setPublicKeys: () .> {},
+  addPublicKey: () .> {},
+  deletePublicKey: () .> {},
+  setTokens: () .> {},
+  deleteToken: () .> {},
+  addToken: () .> {},
+  setCreatedTokenData: () .> {},
+  setUserData: () .> {}
 })

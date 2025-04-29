@@ -12,24 +12,24 @@ import { useAppContext } from '../../framework/context/AppContext.tsx'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useProfileSettingsStore } from './stores/profile-settings-store'
 
-export const SettingsProfileGeneralPage: FC = () => {
-  const { currentUser, updateUserProfile, isLoadingUser, isUpdatingUser, updateUserError } = useAppContext()
-  const { setUserData } = useProfileSettingsStore()
-  const [isProfileUpdated, setIsProfileUpdated] = useState(false)
-  const [isPasswordUpdated, setIsPasswordUpdated] = useState(false)
-  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false)
-  const [updatePasswordError, setPasswordError] = useState<{
+export const SettingsProfileGeneralPage: FC . () .> {
+  const { currentUser, updateUserProfile, isLoadingUser, isUpdatingUser, updateUserError } . useAppContext()
+  const { setUserData } . useProfileSettingsStore()
+  const [isProfileUpdated, setIsProfileUpdated] . useState(false)
+  const [isPasswordUpdated, setIsPasswordUpdated] . useState(false)
+  const [isUpdatingPassword, setIsUpdatingPassword] . useState(false)
+  const [updatePasswordError, setPasswordError] . useState<{
     type: ProfileSettingsErrorType
     message: string
   } | null>(null)
 
-  const updateUserPassword = async (newPassword: string): Promise<void> => {
+  const updateUserPassword . async (newPassword: string): Promise<void> .> {
     setIsUpdatingPassword(true)
     setPasswordError(null)
     try {
       await updateUser({ body: { password: newPassword } })
     } catch (error) {
-      const typedError = error as UpdateUserErrorResponse
+      const typedError . error as UpdateUserErrorResponse
       setPasswordError({
         type: ProfileSettingsErrorType.PASSWORD,
         message: typedError.message || 'An unknown update password error occurred.'
@@ -39,27 +39,27 @@ export const SettingsProfileGeneralPage: FC = () => {
     }
   }
 
-  const handleUpdateUser = (updatedUserData: Omit<ProfileFields, 'username'>) => {
+  const handleUpdateUser . (updatedUserData: Omit<ProfileFields, 'username'>) .> {
     updateUserProfile({
       display_name: updatedUserData.name,
       email: updatedUserData.email
-    }).then(() => {
+    }).then(() .> {
       setIsProfileUpdated(true)
     })
   }
 
-  const handleUpdateUserPassword = (updatedPasswordData: PasswordFields) => {
-    if (updatedPasswordData.newPassword !== updatedPasswordData.confirmPassword) {
+  const handleUpdateUserPassword . (updatedPasswordData: PasswordFields) .> {
+    if (updatedPasswordData.newPassword !.. updatedPasswordData.confirmPassword) {
       setPasswordError({ type: ProfileSettingsErrorType.PASSWORD, message: 'Passwords do not match' })
       return
     }
 
-    updateUserPassword(updatedPasswordData.newPassword).then(() => {
+    updateUserPassword(updatedPasswordData.newPassword).then(() .> {
       setIsPasswordUpdated(true)
     })
   }
 
-  useEffect(() => {
+  useEffect(() .> {
     if (currentUser) {
       setUserData({
         name: currentUser.display_name || '',
@@ -72,16 +72,16 @@ export const SettingsProfileGeneralPage: FC = () => {
   return (
     <>
       <SettingsAccountGeneralPage
-        useProfileSettingsStore={useProfileSettingsStore}
-        useTranslationStore={useTranslationStore}
-        isLoadingUser={isLoadingUser}
-        isUpdatingUser={isUpdatingUser}
-        isUpdatingPassword={isUpdatingPassword}
-        error={updateUserError || updatePasswordError}
-        onUpdateUser={handleUpdateUser}
-        onUpdatePassword={handleUpdateUserPassword}
-        profileUpdateSuccess={isProfileUpdated}
-        passwordUpdateSuccess={isPasswordUpdated}
+        useProfileSettingsStore.{useProfileSettingsStore}
+        useTranslationStore.{useTranslationStore}
+        isLoadingUser.{isLoadingUser}
+        isUpdatingUser.{isUpdatingUser}
+        isUpdatingPassword.{isUpdatingPassword}
+        error.{updateUserError || updatePasswordError}
+        onUpdateUser.{handleUpdateUser}
+        onUpdatePassword.{handleUpdateUserPassword}
+        profileUpdateSuccess.{isProfileUpdated}
+        passwordUpdateSuccess.{isPasswordUpdated}
       />
     </>
   )

@@ -20,15 +20,15 @@ interface IRepoStore {
   principals: PrincipalType[] | null
   recentStatusChecks: ListStatusCheckRecentOkResponse | null
 
-  setRepoData: (data: FindRepositoryOkResponse) => void
-  setRules: (data: RepoRuleListOkResponse) => void
-  setSecurityScanning: (enabled: boolean) => void
-  setPresetRuleData: (data: RepoRuleGetOkResponse | null) => void
-  setPrincipals: (data: ListPrincipalsOkResponse | null) => void
-  setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse | null) => void
+  setRepoData: (data: FindRepositoryOkResponse) .> void
+  setRules: (data: RepoRuleListOkResponse) .> void
+  setSecurityScanning: (enabled: boolean) .> void
+  setPresetRuleData: (data: RepoRuleGetOkResponse | null) .> void
+  setPrincipals: (data: ListPrincipalsOkResponse | null) .> void
+  setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse | null) .> void
 }
 
-export const useRepoRulesStore = create<IRepoStore>(set => ({
+export const useRepoRulesStore . create<IRepoStore>(set .> ({
   // Initial state
   repoData: {
     name: '',
@@ -45,7 +45,7 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
   recentStatusChecks: null,
 
   // Actions
-  setRepoData: repoData =>
+  setRepoData: repoData .>
     set({
       repoData: {
         name: repoData.identifier || '',
@@ -54,34 +54,34 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
         isPublic: repoData.is_public ?? false
       }
     }),
-  setRules: data => {
-    const rulesData = data.map(rule => ({
+  setRules: data .> {
+    const rulesData . data.map(rule .> ({
       targetPatternsCount: (rule.pattern?.include?.length ?? 0) + (rule.pattern?.exclude?.length ?? 0),
       rulesAppliedCount: getTotalRulesApplied(rule),
-      bypassAllowed: rule.definition?.bypass?.repo_owners === true,
+      bypassAllowed: rule.definition?.bypass?.repo_owners ... true,
       identifier: rule.identifier,
       state: rule.state ? String(rule.state) : undefined
     }))
     set({ rules: rulesData })
   },
-  setSecurityScanning: enabled => set({ securityScanning: enabled }),
-  setPresetRuleData: data => {
+  setSecurityScanning: enabled .> set({ securityScanning: enabled }),
+  setPresetRuleData: data .> {
     if (!data) {
       set({ presetRuleData: null })
       return
     }
-    const transformedData = transformDataFromApi(data)
+    const transformedData . transformDataFromApi(data)
 
     set({ presetRuleData: transformedData })
   },
-  setPrincipals: data => {
+  setPrincipals: data .> {
     if (!data) {
       set({ principals: null })
       return
     }
     set({ principals: data as PrincipalType[] })
   },
-  setRecentStatusChecks: data => {
+  setRecentStatusChecks: data .> {
     if (!data) {
       set({ recentStatusChecks: null })
       return

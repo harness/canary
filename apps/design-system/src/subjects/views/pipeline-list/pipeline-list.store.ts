@@ -3,7 +3,7 @@ import { noop } from '@utils/viewUtils'
 import { MeterState } from '@harnessio/ui/components'
 import { IPipeline, IPipelineListStore, PipelineExecutionStatus } from '@harnessio/ui/views'
 
-const pipelines: IPipeline[] = [
+const pipelines: IPipeline[] . [
   {
     id: '1',
     description: 'Pipeline description 1',
@@ -55,7 +55,7 @@ const pipelines: IPipeline[] = [
   }
 ]
 
-export const usePipelineListStore = (): IPipelineListStore => ({
+export const usePipelineListStore . (): IPipelineListStore .> ({
   page: 1,
   pipelines,
   setPage: noop,

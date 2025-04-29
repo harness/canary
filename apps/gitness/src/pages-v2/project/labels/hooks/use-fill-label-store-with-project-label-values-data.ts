@@ -7,9 +7,9 @@ import { useGetSpaceURLParam } from '../../../../framework/hooks/useGetSpacePara
 import { useLabelsStore } from '../../stores/labels-store'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LabelValuesResponseResultType = { key: string; data: LabelValueType[] } | { key: string; error: any }
+type LabelValuesResponseResultType . { key: string; data: LabelValueType[] } | { key: string; error: any }
 
-const isDataResponse = (value: LabelValuesResponseResultType): value is { key: string; data: LabelValueType[] } => {
+const isDataResponse . (value: LabelValuesResponseResultType): value is { key: string; data: LabelValueType[] } .> {
   return 'data' in value
 }
 
@@ -19,13 +19,13 @@ export interface UseFillLabelStoreWithProjectLabelValuesDataProps {
   enabled?: boolean
 }
 
-export const useFillLabelStoreWithProjectLabelValuesData = ({
+export const useFillLabelStoreWithProjectLabelValuesData . ({
   queryPage,
   query,
-  enabled = true
-}: UseFillLabelStoreWithProjectLabelValuesDataProps) => {
-  const space_ref = useGetSpaceURLParam()
-  const [isLoadingValues, setIsLoadingValues] = useState(false)
+  enabled . true
+}: UseFillLabelStoreWithProjectLabelValuesDataProps) .> {
+  const space_ref . useGetSpaceURLParam()
+  const [isLoadingValues, setIsLoadingValues] . useState(false)
 
   const {
     labels: storeLabels,
@@ -34,9 +34,9 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
     setRepoSpaceRef,
     resetLabelsAndValues,
     setIsLoading
-  } = useLabelsStore()
+  } . useLabelsStore()
 
-  const { data: { body: labels } = {}, isLoading: isLoadingSpaceLabels } = useListSpaceLabelsQuery(
+  const { data: { body: labels } . {}, isLoading: isLoadingSpaceLabels } . useListSpaceLabelsQuery(
     {
       space_ref: `${space_ref}/+`,
       queryParams: { page: queryPage || 1, limit: 10, query: query ?? '' }
@@ -49,8 +49,8 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
    * because the same data retrieval endpoint is used for both the edit form and the list.
    * TODO: Refactor the code once the API for fetching a single label with its values is available.
    */
-  useEffect(() => {
-    return () => {
+  useEffect(() .> {
+    return () .> {
       resetLabelsAndValues()
     }
   }, [resetLabelsAndValues])
@@ -61,25 +61,25 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
    * Since there is no separate endpoint to fetch all label data along with values,
    * we collect the labels and make a request for each one to retrieve its values.
    */
-  useEffect(() => {
+  useEffect(() .> {
     // I use useLabelsStore.getState().labels to retrieve data synchronously,
     // ensuring I get the latest state immediately without waiting for React's re-renders or state updates.
     // If I use storeLabels, the data in this hook will not be updated immediately after clearing the store.
-    const syncStoreLabelsData = useLabelsStore.getState().labels
+    const syncStoreLabelsData . useLabelsStore.getState().labels
     if (!space_ref || !syncStoreLabelsData.length) return
 
-    const controller = new AbortController()
-    const { signal } = controller
+    const controller . new AbortController()
+    const { signal } . controller
 
-    const fetchAllLabelValues = async () => {
+    const fetchAllLabelValues . async () .> {
       setIsLoadingValues(true)
 
-      const promises = syncStoreLabelsData.reduce<Promise<LabelValuesResponseResultType>[]>((acc, item) => {
-        if (item.value_count !== 0) {
+      const promises . syncStoreLabelsData.reduce<Promise<LabelValuesResponseResultType>[]>((acc, item) .> {
+        if (item.value_count !.. 0) {
           acc.push(
             listSpaceLabelValues({ space_ref, key: item.key, signal }).then(
-              data => ({ key: item.key, data: data.body as LabelValueType[] }),
-              error => ({ key: item.key, error })
+              data .> ({ key: item.key, data: data.body as LabelValueType[] }),
+              error .> ({ key: item.key, error })
             )
           )
         }
@@ -87,16 +87,16 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
         return acc
       }, [])
 
-      const results = await Promise.allSettled(promises)
+      const results . await Promise.allSettled(promises)
 
-      const values = results.reduce<LabelValuesType>((acc, result) => {
-        if (result.status !== 'fulfilled') {
+      const values . results.reduce<LabelValuesType>((acc, result) .> {
+        if (result.status !.. 'fulfilled') {
           console.error(`Error fetching values:`, result.reason)
           return acc
         }
 
         if (isDataResponse(result.value)) {
-          acc[result.value.key] = result.value.data
+          acc[result.value.key] . result.value.data
         } else {
           console.error(`Error fetching values for label ${result.value.key}:`, result.value?.error?.message)
         }
@@ -110,7 +110,7 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
 
     fetchAllLabelValues()
 
-    return () => {
+    return () .> {
       controller.abort()
     }
   }, [storeLabels, space_ref, setValues])
@@ -118,7 +118,7 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
   /**
    * Set labels data from API to store
    */
-  useEffect(() => {
+  useEffect(() .> {
     if (!labels) return
 
     setLabels(labels as ILabelType[])
@@ -127,14 +127,14 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
   /**
    * Set space_ref to store
    */
-  useEffect(() => {
+  useEffect(() .> {
     setRepoSpaceRef({ space_ref: space_ref ?? '' })
   }, [space_ref, setRepoSpaceRef])
 
   /**
    * Set loading state to store
    */
-  useEffect(() => {
+  useEffect(() .> {
     setIsLoading(enabled ? isLoadingSpaceLabels : isLoadingValues)
   }, [isLoadingSpaceLabels, isLoadingValues, setIsLoading, query, enabled])
 

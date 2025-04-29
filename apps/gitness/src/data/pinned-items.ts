@@ -4,7 +4,7 @@ import { NavbarItemType } from '@harnessio/ui/components'
 
 import { RouteFunctionMap } from '../framework/routing/types'
 
-export const getPinnedMenuItemsData = ({
+export const getPinnedMenuItemsData . ({
   t,
   spaceId,
   routes
@@ -12,7 +12,7 @@ export const getPinnedMenuItemsData = ({
   t: TFunction
   routes: RouteFunctionMap
   spaceId?: string
-}): NavbarItemType[] => [
+}): NavbarItemType[] .> [
   {
     id: 0,
     iconName: 'repositories-gradient',

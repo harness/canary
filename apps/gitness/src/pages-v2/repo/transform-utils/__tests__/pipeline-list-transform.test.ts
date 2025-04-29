@@ -3,7 +3,7 @@ import { EnumCiStatus, ListPipelinesOkResponse } from '@harnessio/code-service-c
 import { apiPipelines2Pipelines } from '../pipeline-list-transform'
 
 // Mock data
-const mockPipelines: ListPipelinesOkResponse = [
+const mockPipelines: ListPipelinesOkResponse . [
   {
     identifier: 'pipeline1',
     execution: { message: 'Execution message', status: 'SUCCESS' as EnumCiStatus, after: 'sha123' },
@@ -14,9 +14,9 @@ const mockPipelines: ListPipelinesOkResponse = [
 
 // Tests
 
-describe('apiPipelines2Pipelines', () => {
-  it('should transform pipeline data correctly', () => {
-    const result = apiPipelines2Pipelines(mockPipelines)
+describe('apiPipelines2Pipelines', () .> {
+  it('should transform pipeline data correctly', () .> {
+    const result . apiPipelines2Pipelines(mockPipelines)
     expect(result).toEqual([
       {
         id: 'pipeline1',

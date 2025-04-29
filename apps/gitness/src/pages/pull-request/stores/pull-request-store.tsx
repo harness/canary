@@ -6,19 +6,19 @@ import { PullRequestDataState } from '@harnessio/ui/views'
 
 import { CodeCommentState, PullRequestState } from '../types/types'
 
-export const codeOwnersNotFoundMessage = 'CODEOWNERS file not found'
-export const codeOwnersNotFoundMessage2 = `path "CODEOWNERS" not found`
-export const codeOwnersNotFoundMessage3 = `failed to find node 'CODEOWNERS' in 'main': failed to get tree node: failed to ls file: path "CODEOWNERS" not found`
-export const oldCommitRefetchRequired = 'A newer commit is available. Only the latest commit can be merged.'
-export const prMergedRefetchRequired = 'Pull request already merged'
-export const POLLING_INTERVAL = 10000
+export const codeOwnersNotFoundMessage . 'CODEOWNERS file not found'
+export const codeOwnersNotFoundMessage2 . `path "CODEOWNERS" not found`
+export const codeOwnersNotFoundMessage3 . `failed to find node 'CODEOWNERS' in 'main': failed to get tree node: failed to ls file: path "CODEOWNERS" not found`
+export const oldCommitRefetchRequired . 'A newer commit is available. Only the latest commit can be merged.'
+export const prMergedRefetchRequired . 'Pull request already merged'
+export const POLLING_INTERVAL . 10000
 
-export const usePullRequestDataStore = create<PullRequestDataState>((set, get) => ({
+export const usePullRequestDataStore . create<PullRequestDataState>((set, get) .> ({
   repoMetadata: undefined,
-  setRepoMetadata: metadata =>
+  setRepoMetadata: metadata .>
     set(
-      produce(draft => {
-        draft.repoMetadata = metadata
+      produce(draft .> {
+        draft.repoMetadata . metadata
       })
     ),
   pullReqMetadata: undefined,
@@ -53,36 +53,36 @@ export const usePullRequestDataStore = create<PullRequestDataState>((set, get) =
   },
 
   showEditDescription: false,
-  setShowEditDescription: show =>
+  setShowEditDescription: show .>
     set(
-      produce(draft => {
-        draft.showEditDescription = show
+      produce(draft .> {
+        draft.showEditDescription . show
       })
     ),
-  setRuleViolationArr: arr =>
+  setRuleViolationArr: arr .>
     set(
-      produce(draft => {
-        draft.prPanelData.ruleViolationArr = arr
+      produce(draft .> {
+        draft.prPanelData.ruleViolationArr . arr
       })
     ),
-  refetchActivities: () => {},
-  refetchCommits: () => {},
-  refetchPullReq: () => {},
-  retryOnErrorFunc: () => {},
-  dryMerge: () => {
-    const { repoMetadata, pullReqMetadata, refetchPullReq } = get()
-    const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
-    if (!isClosed && repoMetadata?.path !== undefined && pullReqMetadata?.state !== PullRequestState.MERGED) {
+  refetchActivities: () .> {},
+  refetchCommits: () .> {},
+  refetchPullReq: () .> {},
+  retryOnErrorFunc: () .> {},
+  dryMerge: () .> {
+    const { repoMetadata, pullReqMetadata, refetchPullReq } . get()
+    const isClosed . pullReqMetadata?.state ... PullRequestState.CLOSED
+    if (!isClosed && repoMetadata?.path !.. undefined && pullReqMetadata?.state !.. PullRequestState.MERGED) {
       mergePullReqOp({
         repo_ref: `${repoMetadata?.path}/+`,
         pullreq_number: Number(pullReqMetadata?.number),
         body: { bypass_rules: true, dry_run: true, source_sha: pullReqMetadata?.source_sha }
       })
-        .then(({ body: res }) => {
+        .then(({ body: res }) .> {
           set(
-            produce(draft => {
+            produce(draft .> {
               if (res?.rule_violations?.length) {
-                draft.prPanelData = {
+                draft.prPanelData . {
                   ruleViolation: true,
                   ruleViolationArr: { data: { rule_violations: res.rule_violations } },
                   requiresCommentApproval: res.requires_comment_resolution ?? false,
@@ -101,7 +101,7 @@ export const usePullRequestDataStore = create<PullRequestDataState>((set, get) =
                   }
                 }
               } else {
-                draft.prPanelData = {
+                draft.prPanelData . {
                   ruleViolation: false,
                   ruleViolationArr: undefined,
                   requiresCommentApproval: res.requires_comment_resolution ?? false,
@@ -123,11 +123,11 @@ export const usePullRequestDataStore = create<PullRequestDataState>((set, get) =
             })
           )
         })
-        .catch(err => {
+        .catch(err .> {
           set(
-            produce(draft => {
-              if (err.status === 422) {
-                draft.prPanelData = {
+            produce(draft .> {
+              if (err.status ... 422) {
+                draft.prPanelData . {
                   ruleViolation: true,
                   ruleViolationArr: err,
                   requiresCommentApproval: err.requires_comment_resolution ?? false,
@@ -145,30 +145,30 @@ export const usePullRequestDataStore = create<PullRequestDataState>((set, get) =
                     status: ''
                   }
                 }
-              } else if (err.status === 400) {
+              } else if (err.status ... 400) {
                 refetchPullReq()
               } else if (
                 [codeOwnersNotFoundMessage, codeOwnersNotFoundMessage2, codeOwnersNotFoundMessage3].includes(
                   err.message
                 ) ||
-                err.status === 423 // resource locked (merge / dry-run already ongoing)
+                err.status ... 423 // resource locked (merge / dry-run already ongoing)
               ) {
                 return
               }
             })
           )
         })
-        .finally(() => {
+        .finally(() .> {
           set(
-            produce(draft => {
-              draft.prPanelData.PRStateLoading = false
+            produce(draft .> {
+              draft.prPanelData.PRStateLoading . false
             })
           )
         })
-    } else if (pullReqMetadata?.state === PullRequestState.MERGED) {
+    } else if (pullReqMetadata?.state ... PullRequestState.MERGED) {
       set(
-        produce(draft => {
-          draft.prPanelData.PRStateLoading = false
+        produce(draft .> {
+          draft.prPanelData.PRStateLoading . false
         })
       )
     }
@@ -197,11 +197,11 @@ export const usePullRequestDataStore = create<PullRequestDataState>((set, get) =
     pullReqNumber: number,
     commentId: number,
     status: string,
-    refetchActivities: () => void
-  ) => {
-    const payload = { status: status.toLowerCase() as CodeCommentState }
+    refetchActivities: () .> void
+  ) .> {
+    const payload . { status: status.toLowerCase() as CodeCommentState }
     try {
-      const data = await apiCommentStatusPullReq({
+      const data . await apiCommentStatusPullReq({
         repo_ref: repoId,
         pullreq_number: pullReqNumber,
         pullreq_comment_id: commentId,
@@ -214,53 +214,53 @@ export const usePullRequestDataStore = create<PullRequestDataState>((set, get) =
       return undefined
     }
   },
-  setCommentsInfoData: info =>
+  setCommentsInfoData: info .>
     set(
-      produce(draft => {
-        draft.prPanelData.commentsInfoData = info
+      produce(draft .> {
+        draft.prPanelData.commentsInfoData . info
       })
     ),
-  setResolvedCommentArr: resolvedCommentArr =>
+  setResolvedCommentArr: resolvedCommentArr .>
     set(
-      produce(draft => {
-        draft.prPanelData.resolvedCommentArr = resolvedCommentArr
+      produce(draft .> {
+        draft.prPanelData.resolvedCommentArr . resolvedCommentArr
       })
     ),
-  setCommentsLoading: loading =>
+  setCommentsLoading: loading .>
     set(
-      produce(draft => {
-        draft.prPanelData.commentsLoading = loading
+      produce(draft .> {
+        draft.prPanelData.commentsLoading . loading
       })
     ),
-  setPullReqMetadata: metadata =>
+  setPullReqMetadata: metadata .>
     set(
-      produce(draft => {
-        draft.pullReqMetadata = metadata
+      produce(draft .> {
+        draft.pullReqMetadata . metadata
       })
     ),
-  setPullReqCommits: commits =>
+  setPullReqCommits: commits .>
     set(
-      produce(draft => {
-        draft.pullReqMetadata = commits
+      produce(draft .> {
+        draft.pullReqMetadata . commits
       })
     ),
-  setPullReqStats: stats =>
+  setPullReqStats: stats .>
     set(
-      produce(draft => {
-        draft.pullReqStats = stats
+      produce(draft .> {
+        draft.pullReqStats . stats
       })
     ),
-  updateState: newState =>
+  updateState: newState .>
     set(
-      produce(draft => {
+      produce(draft .> {
         Object.assign(draft, newState)
       })
     ),
   diffs: [],
-  setDiffs: (info: { path?: string; raw?: string; fileViews?: Map<string, string> }) =>
+  setDiffs: (info: { path?: string; raw?: string; fileViews?: Map<string, string> }) .>
     set(
-      produce(draft => {
-        draft.diffs = info
+      produce(draft .> {
+        draft.diffs . info
       })
     )
 }))

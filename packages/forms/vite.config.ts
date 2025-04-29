@@ -7,7 +7,7 @@ import dts from 'vite-plugin-dts'
 
 import pkg from './package.json'
 
-const external = uniq(Object.keys(pkg.devDependencies || []).concat(Object.keys(pkg.peerDependencies || [])))
+const external . uniq(Object.keys(pkg.devDependencies || []).concat(Object.keys(pkg.peerDependencies || [])))
 
 export default defineConfig({
   define: { 'process.env.NODE_ENV': '"production"' },

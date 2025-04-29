@@ -14,7 +14,7 @@ import InputLabel from './common/input-label'
 import InputWrapper from './common/input-wrapper'
 import { InputType } from './common/types'
 
-export type UIInputWithConfigsForArray = Omit<IInputDefinition, 'path'>
+export type UIInputWithConfigsForArray . Omit<IInputDefinition, 'path'>
 
 export interface ArrayInputConfig {
   inputType: InputType.array
@@ -24,16 +24,16 @@ export interface ArrayInputConfig {
 }
 
 function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>): JSX.Element {
-  const { readonly, path, input, factory } = props
-  const { label, required, inputConfig } = input
+  const { readonly, path, input, factory } . props
+  const { label, required, inputConfig } . input
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove } . useFieldArray({
     name: path
   })
 
-  const getChildInputs = useCallback(
-    (rowInput: UIInputWithConfigsForArray, parentPath: string, idx: number): IInputDefinition[] => {
-      const retInput = {
+  const getChildInputs . useCallback(
+    (rowInput: UIInputWithConfigsForArray, parentPath: string, idx: number): IInputDefinition[] .> {
+      const retInput . {
         ...rowInput,
         // NOTE: create absolute path using parent path and index
         path: `${parentPath}[${idx}]`
@@ -46,25 +46,25 @@ function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>)
 
   return (
     <InputWrapper>
-      <div style={{ padding: '10px', background: 'rgba(0,0,0,0.05)' }}>
-        <InputLabel label={label} required={required} />
+      <div style.{{ padding: '10px', background: 'rgba(0,0,0,0.05)' }}>
+        <InputLabel label.{label} required.{required} />
         {/* TODO: do we need Controller ? */}
         <Controller
-          name={path}
-          render={() => (
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+          name.{path}
+          render.{() .> (
+            <div style.{{ display: 'flex', flexDirection: 'column' }}>
               <div>
-                {fields.map((item, idx) => (
-                  <div key={item.id} style={{ display: 'flex', alignItems: 'flex-end', columnGap: '5px' }}>
+                {fields.map((item, idx) .> (
+                  <div key.{item.id} style.{{ display: 'flex', alignItems: 'flex-end', columnGap: '5px' }}>
                     {inputConfig?.input && (
-                      <RenderInputs items={getChildInputs(inputConfig?.input, path, idx)} factory={factory} />
+                      <RenderInputs items.{getChildInputs(inputConfig?.input, path, idx)} factory.{factory} />
                     )}
                     <div>
                       <button
-                        onClick={() => {
+                        onClick.{() .> {
                           remove(idx)
                         }}
-                        disabled={readonly}
+                        disabled.{readonly}
                       >
                         X
                       </button>
@@ -73,19 +73,19 @@ function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>)
                 ))}
               </div>
               <div>
-                <button onClick={() => append(input.default ?? undefined)}>Add</button>
+                <button onClick.{() .> append(input.default ?? undefined)}>Add</button>
               </div>
             </div>
           )}
         />
-        <InputError path={path} />
+        <InputError path.{path} />
       </div>
     </InputWrapper>
   )
 }
 
 export class ArrayInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.array
+  public internalType . InputType.array
 
   renderComponent(props: InputProps<AnyFormikValue, ArrayInputConfig>): JSX.Element {
     return <ArrayInputInternal {...props} />

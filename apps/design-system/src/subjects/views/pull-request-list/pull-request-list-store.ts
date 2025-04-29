@@ -2,7 +2,7 @@ import { noop } from '@utils/viewUtils'
 
 import { ColorsEnum, PullRequestListStore } from '@harnessio/ui/views'
 
-export const pullRequestListStore: PullRequestListStore = {
+export const pullRequestListStore: PullRequestListStore . {
   pullRequests: [
     {
       is_draft: false,

@@ -25,7 +25,7 @@ import {
   TextInput
 } from '@harnessio/ui/views'
 
-const inputComponentFactory = new InputFactory()
+const inputComponentFactory . new InputFactory()
 inputComponentFactory.registerComponent(new TextInput())
 inputComponentFactory.registerComponent(new BooleanInput())
 inputComponentFactory.registerComponent(new NumberInput())
@@ -37,23 +37,23 @@ inputComponentFactory.registerComponent(new SelectInput())
 inputComponentFactory.registerComponent(new SeparatorInput())
 inputComponentFactory.registerComponent(new RadialInput())
 
-const ConnectorsListPageContent = (): JSX.Element => {
-  const [connectorEntity, setConnectorEntity] = useState<ConnectorEntity | null>(null)
-  const [isConnectorDrawerOpen, setIsConnectorDrawerOpen] = useState(false)
-  const [isEditConnectorDrawerOpen, setIsEditConnectorDrawerOpen] = useState(false)
-  const [isConnectorSelected, setIsConnectorSelected] = useState(false)
-  const [intent, setIntent] = useState<EntityIntent>(EntityIntent.CREATE)
-  const [testConnectionOpen, setTestConnectionOpen] = useState(false)
+const ConnectorsListPageContent . (): JSX.Element .> {
+  const [connectorEntity, setConnectorEntity] . useState<ConnectorEntity | null>(null)
+  const [isConnectorDrawerOpen, setIsConnectorDrawerOpen] . useState(false)
+  const [isEditConnectorDrawerOpen, setIsEditConnectorDrawerOpen] . useState(false)
+  const [isConnectorSelected, setIsConnectorSelected] . useState(false)
+  const [intent, setIntent] . useState<EntityIntent>(EntityIntent.CREATE)
+  const [testConnectionOpen, setTestConnectionOpen] . useState(false)
   return (
-    <SandboxLayout.Main className="max-w-[1040px]">
+    <SandboxLayout.Main className."max-w-[1040px]">
       <SandboxLayout.Content>
         <>
-          <h1 className="text-6 text-cn-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
-          <Spacer size={6} />
+          <h1 className."text-6 text-cn-foreground-1 font-medium leading-snug tracking-tight">Connectors</h1>
+          <Spacer size.{6} />
           <ListActions.Root>
             <ListActions.Right>
               <Button
-                onClick={() => {
+                onClick.{() .> {
                   setIsConnectorDrawerOpen(true)
                   setIntent(EntityIntent.CREATE)
                 }}
@@ -61,7 +61,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
                 Create Connector
               </Button>
               <Button
-                onClick={() => {
+                onClick.{() .> {
                   setConnectorEntity({
                     type: 'AwsKms',
                     name: 'AWS KMS test',
@@ -78,75 +78,75 @@ const ConnectorsListPageContent = (): JSX.Element => {
               >
                 Edit Connector
               </Button>
-              <Button onClick={() => setTestConnectionOpen(true)}>Test Connection</Button>
+              <Button onClick.{() .> setTestConnectionOpen(true)}>Test Connection</Button>
             </ListActions.Right>
           </ListActions.Root>
-          <Spacer size={5} />
+          <Spacer size.{5} />
         </>
       </SandboxLayout.Content>
 
       <ConnectorTestConnectionDialog
-        title="Test Connection"
-        apiUrl="https://docker.harness.io"
-        status="error"
-        percentageFilled={50}
-        errorMessage="Error Encountered (Update the username & password. Check if the provided credentials are correct. Invalid Docker Registry credentials)."
-        description="Validating connector authentication and permissions"
-        isOpen={testConnectionOpen}
-        onClose={() => setTestConnectionOpen(false)}
-        viewDocClick={() => {
+        title."Test Connection"
+        apiUrl."https://docker.harness.io"
+        status."error"
+        percentageFilled.{50}
+        errorMessage."Error Encountered (Update the username & password. Check if the provided credentials are correct. Invalid Docker Registry credentials)."
+        description."Validating connector authentication and permissions"
+        isOpen.{testConnectionOpen}
+        onClose.{() .> setTestConnectionOpen(false)}
+        viewDocClick.{() .> {
           console.log('')
         }}
-        useTranslationStore={useTranslationStore}
-        errorData={{ errors: [{ reason: 'Unexpected Error', message: 'Bad credentials' }] }}
+        useTranslationStore.{useTranslationStore}
+        errorData.{{ errors: [{ reason: 'Unexpected Error', message: 'Bad credentials' }] }}
       />
-      <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
+      <Drawer.Root open.{isConnectorDrawerOpen} onOpenChange.{setIsConnectorDrawerOpen} direction."right">
         <Drawer.Content>
           <ConnectorsPalette
-            useTranslationStore={useTranslationStore}
-            connectors={harnessConnectors}
-            onSelectConnector={() => setIsConnectorSelected(true)}
-            setConnectorEntity={setConnectorEntity}
-            requestClose={() => {
+            useTranslationStore.{useTranslationStore}
+            connectors.{harnessConnectors}
+            onSelectConnector.{() .> setIsConnectorSelected(true)}
+            setConnectorEntity.{setConnectorEntity}
+            requestClose.{() .> {
               setConnectorEntity(null)
               setIsConnectorDrawerOpen(false)
             }}
           />
-          <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
+          <Drawer.Root open.{isConnectorSelected} onOpenChange.{setIsConnectorSelected} direction."right" nested>
             <Drawer.Content>
               {connectorEntity ? (
                 <ConnectorEntityForm
-                  useTranslationStore={() =>
+                  useTranslationStore.{() .>
                     ({
-                      t: () => 'dummy',
+                      t: () .> 'dummy',
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       i18n: {} as any,
                       changeLanguage: noop
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     }) as any
                   }
-                  connector={connectorEntity}
-                  onBack={() => setIsConnectorSelected(false)}
-                  // onFormSubmit={handleFormSubmit}
-                  getConnectorDefinition={getHarnessConnectorDefinition}
-                  inputComponentFactory={inputComponentFactory}
-                  intent={intent}
+                  connector.{connectorEntity}
+                  onBack.{() .> setIsConnectorSelected(false)}
+                  // onFormSubmit.{handleFormSubmit}
+                  getConnectorDefinition.{getHarnessConnectorDefinition}
+                  inputComponentFactory.{inputComponentFactory}
+                  intent.{intent}
                 />
               ) : null}
             </Drawer.Content>
           </Drawer.Root>
         </Drawer.Content>
       </Drawer.Root>
-      <Drawer.Root open={isEditConnectorDrawerOpen} onOpenChange={setIsEditConnectorDrawerOpen} direction="right">
+      <Drawer.Root open.{isEditConnectorDrawerOpen} onOpenChange.{setIsEditConnectorDrawerOpen} direction."right">
         <Drawer.Content>
           {connectorEntity ? (
             <ConnectorEntityForm
-              useTranslationStore={useTranslationStore}
-              connector={connectorEntity}
-              onBack={() => setIsConnectorSelected(false)}
-              getConnectorDefinition={getHarnessConnectorDefinition}
-              inputComponentFactory={inputComponentFactory}
-              intent={intent}
+              useTranslationStore.{useTranslationStore}
+              connector.{connectorEntity}
+              onBack.{() .> setIsConnectorSelected(false)}
+              getConnectorDefinition.{getHarnessConnectorDefinition}
+              inputComponentFactory.{inputComponentFactory}
+              intent.{intent}
             />
           ) : null}
         </Drawer.Content>
@@ -156,7 +156,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
 }
 
 // temp component for testing in standalone
-const ConnectorsPage = (): JSX.Element => {
+const ConnectorsPage . (): JSX.Element .> {
   return <ConnectorsListPageContent />
 }
 

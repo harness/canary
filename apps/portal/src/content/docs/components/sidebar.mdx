@@ -9,15 +9,15 @@ The `Sidebar` component provides a responsive, collapsible navigation interface 
 
 <DocsPage.ComponentExample
   client:only
-  padding={false}
-  code={`() => {
-    const t = (key, fallback) => fallback || key
+  padding.{false}
+  code.{`() .> {
+    const t . (key, fallback) .> fallback || key
 
     return (
-      <Sidebar.Provider className="flex justify-start">
-        <Sidebar.Root className="h-[500px]">
+      <Sidebar.Provider className."flex justify-start">
+        <Sidebar.Root className."h-[500px]">
           <Sidebar.Header>
-            <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
+            <SidebarSearchLegacy t.{t} logo.{<HarnessLogo />} />
           </Sidebar.Header>
           <Sidebar.Content>
             <Sidebar.Group>
@@ -26,27 +26,27 @@ The `Sidebar` component provides a responsive, collapsible navigation interface 
                   <Sidebar.MenuItem>
                     <Sidebar.MenuButton>
                       <Sidebar.MenuItemText
-                        className="pl-0"
-                        text='Repositories'
-                        icon={<Icon name="repositories" size={14} />}
+                        className."pl-0"
+                        text.'Repositories'
+                        icon.{<Icon name."repositories" size.{14} />}
                       />
                     </Sidebar.MenuButton>
                   </Sidebar.MenuItem>
                   <Sidebar.MenuItem>
                     <Sidebar.MenuButton>
                       <Sidebar.MenuItemText
-                        className="pl-0"
-                        text='Pipelines'
-                        icon={<Icon name="pipelines" size={14} />}
+                        className."pl-0"
+                        text.'Pipelines'
+                        icon.{<Icon name."pipelines" size.{14} />}
                       />
                     </Sidebar.MenuButton>
                   </Sidebar.MenuItem>
                   <Sidebar.MenuItem>
                     <Sidebar.MenuButton>
                       <Sidebar.MenuItemText
-                        className="pl-0"
-                        text='More'
-                        icon={<Icon name="ellipsis" size={14} />}
+                        className."pl-0"
+                        text.'More'
+                        icon.{<Icon name."ellipsis" size.{14} />}
                       />
                     </Sidebar.MenuButton>
                   </Sidebar.MenuItem>
@@ -54,16 +54,16 @@ The `Sidebar` component provides a responsive, collapsible navigation interface 
               </Sidebar.GroupContent>
             </Sidebar.Group>
 
-            <Sidebar.Group title="Recent" className="border-t">
-              <Sidebar.GroupLabel className="mb-0">Recent</Sidebar.GroupLabel>
+            <Sidebar.Group title."Recent" className."border-t">
+              <Sidebar.GroupLabel className."mb-0">Recent</Sidebar.GroupLabel>
               <Sidebar.GroupContent>
                 <Sidebar.Menu>
                   <Sidebar.MenuItem>
                     <Sidebar.MenuButton>
                       <Sidebar.MenuItemText
-                        className="pl-0"
-                        text='User Management'
-                        icon={<Icon name="user" size={14} />}
+                        className."pl-0"
+                        text.'User Management'
+                        icon.{<Icon name."user" size.{14} />}
                       />
                     </Sidebar.MenuButton>
                   </Sidebar.MenuItem>
@@ -71,38 +71,38 @@ The `Sidebar` component provides a responsive, collapsible navigation interface 
               </Sidebar.GroupContent>
             </Sidebar.Group>
           </Sidebar.Content>
-          <Sidebar.Footer className="border-t border-sidebar-border-1 px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">
+          <Sidebar.Footer className."border-t border-sidebar-border-1 px-1.5 transition-[padding] duration-150 ease-linear group-data-[state.collapsed]:px-2">
             <User
-              user={{
+              user.{{
                 display_name: 'John Doe',
                 email: 'johndoe@example.com',
                 url: 'https://ui.shadcn.com/avatars/shadcn.jpg',
               }}
-              openThemeDialog={() => {}}
-              openLanguageDialog={() => {}}
-              handleLogOut={() => {}}
-              t={t}
+              openThemeDialog.{() .> {}}
+              openLanguageDialog.{() .> {}}
+              handleLogOut.{() .> {}}
+              t.{t}
             />
           </Sidebar.Footer>
           <Sidebar.Rail />
         </Sidebar.Root>
-        <div className="flex flex-col w-full">
-          <div className="flex items-center border-b w-[full] border-sidebar-border-1">
-            <Sidebar.Trigger className="ml-2" />
+        <div className."flex flex-col w-full">
+          <div className."flex items-center border-b w-[full] border-sidebar-border-1">
+            <Sidebar.Trigger className."ml-2" />
             <Sidebar.Separator
-              orientation="vertical"
-              className="h-4 w-[2px] bg-sidebar-border-1 mr-4"
+              orientation."vertical"
+              className."h-4 w-[2px] bg-sidebar-border-1 mr-4"
             />
-            <Breadcrumb.Root className="select-none">
+            <Breadcrumb.Root className."select-none">
               <Breadcrumb.List>
                 <Breadcrumb.Item>
-                  <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>
+                  <Breadcrumb.Link href."#">Lorem</Breadcrumb.Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Separator />
                 <Breadcrumb.Ellipsis />
                 <Breadcrumb.Separator />
                 <Breadcrumb.Item>
-                  <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>
+                  <Breadcrumb.Link href."#">Ipsum</Breadcrumb.Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Separator />
                 <Breadcrumb.Page>Dolor</Breadcrumb.Page>
@@ -110,9 +110,9 @@ The `Sidebar` component provides a responsive, collapsible navigation interface 
             </Breadcrumb.Root>
           </div>
 
-          <div className="flex-1 ml-3 mt-2">
-            <p className="text-cn-foreground-1">Main Content</p>
-            <p className="mt-2">This is where your main content would appear.</p>
+          <div className."flex-1 ml-3 mt-2">
+            <p className."text-cn-foreground-1">Main Content</p>
+            <p className."mt-2">This is where your main content would appear.</p>
           </div>
         </div>
       </Sidebar.Provider>
@@ -127,13 +127,13 @@ The `Sidebar` component provides a responsive, collapsible navigation interface 
 import { Sidebar } from '@harnessio/ui/components'
 
 // Basic usage with all main components
-const SidebarExample = () => {
+const SidebarExample . () .> {
   return (
     <Sidebar.Provider>
-      <Sidebar.Root className="h-screen">
+      <Sidebar.Root className."h-screen">
         <Sidebar.Header>
           {/* Your logo and search component */}
-          <SidebarSearch logo={<YourLogo />} />
+          <SidebarSearch logo.{<YourLogo />} />
         </Sidebar.Header>
 
         <Sidebar.Content>
@@ -144,16 +144,16 @@ const SidebarExample = () => {
                 <Sidebar.MenuItem>
                   <Sidebar.MenuButton>
                     <Sidebar.MenuItemText
-                      text="Dashboard"
-                      icon={<Icon name="dashboard" size={14} />}
+                      text."Dashboard"
+                      icon.{<Icon name."dashboard" size.{14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
                 <Sidebar.MenuItem>
                   <Sidebar.MenuButton>
                     <Sidebar.MenuItemText
-                      text="Projects"
-                      icon={<Icon name="folder" size={14} />}
+                      text."Projects"
+                      icon.{<Icon name."folder" size.{14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -162,15 +162,15 @@ const SidebarExample = () => {
           </Sidebar.Group>
 
           {/* Grouped navigation items */}
-          <Sidebar.Group title="Recent">
+          <Sidebar.Group title."Recent">
             <Sidebar.GroupLabel>Recent</Sidebar.GroupLabel>
             <Sidebar.GroupContent>
               <Sidebar.Menu>
                 <Sidebar.MenuItem>
                   <Sidebar.MenuButton>
                     <Sidebar.MenuItemText
-                      text="Project Alpha"
-                      icon={<Icon name="folder" size={14} />}
+                      text."Project Alpha"
+                      icon.{<Icon name."folder" size.{14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -188,10 +188,10 @@ const SidebarExample = () => {
       </Sidebar.Root>
 
       {/* Main content area */}
-      <div className="flex-1">
-        <div className="border-b flex items-center">
+      <div className."flex-1">
+        <div className."border-b flex items-center">
           <Sidebar.Trigger />
-          <Sidebar.Separator orientation="vertical" />
+          <Sidebar.Separator orientation."vertical" />
           {/* Breadcrumb or other header content */}
         </div>
         <main>
@@ -238,7 +238,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Provider
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the provider",
@@ -275,7 +275,7 @@ The `Sidebar` component is composed of several nested components that work toget
       name: "onOpenChange",
       description: "Callback function when sidebar open state changes",
       required: false,
-      value: "(open: boolean) => void",
+      value: "(open: boolean) .> void",
     },
   ]}
 />
@@ -283,7 +283,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Root
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the sidebar",
@@ -323,7 +323,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Header
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the header",
@@ -342,7 +342,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Content
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the content area",
@@ -361,7 +361,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Group
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the group",
@@ -386,7 +386,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.GroupLabel
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the group label",
@@ -412,7 +412,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.GroupAction
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the group action",
@@ -438,7 +438,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.GroupContent
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the group content",
@@ -457,7 +457,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Menu
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The menu items to be rendered",
@@ -476,7 +476,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.MenuItem
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the menu item",
@@ -495,7 +495,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.MenuButton
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the menu button",
@@ -512,7 +512,7 @@ The `Sidebar` component is composed of several nested components that work toget
       name: "onClick",
       description: "Function called when the button is clicked",
       required: false,
-      value: "() => void",
+      value: "() .> void",
     },
     {
       name: "active",
@@ -562,7 +562,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.MenuItemText
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "text",
       description: "The text to display in the menu item",
@@ -594,7 +594,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.MenuAction
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the menu action",
@@ -627,7 +627,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.MenuBadge
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the badge",
@@ -646,7 +646,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.MenuSkeleton
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Additional CSS classes to apply to the skeleton",
@@ -666,7 +666,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.MenuSub
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the submenu",
@@ -685,7 +685,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.MenuSubItem
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the submenu item",
@@ -704,7 +704,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.MenuSubButton
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the submenu button",
@@ -743,7 +743,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Footer
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the footer",
@@ -762,7 +762,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Rail
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Additional CSS classes to apply to the rail",
@@ -775,7 +775,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Trigger
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Additional CSS classes to apply to the trigger",
@@ -786,7 +786,7 @@ The `Sidebar` component is composed of several nested components that work toget
       name: "onClick",
       description: "Function called when the trigger is clicked",
       required: false,
-      value: "() => void",
+      value: "() .> void",
     },
   ]}
 />
@@ -794,7 +794,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Separator
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "orientation",
       description: "The orientation of the separator",
@@ -814,7 +814,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Input
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Additional CSS classes to apply to the input",
@@ -833,7 +833,7 @@ The `Sidebar` component is composed of several nested components that work toget
 ### Sidebar.Inset
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content to be rendered within the inset container",

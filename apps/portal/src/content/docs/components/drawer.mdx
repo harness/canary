@@ -9,33 +9,33 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Drawer.Root direction='right'>
+  code.{`<Drawer.Root direction.'right'>
     <Drawer.Trigger><Button>Open Drawer</Button></Drawer.Trigger>
     <Drawer.Content>
       <Drawer.Header>
         <Drawer.Title>Run Step</Drawer.Title>
         <Drawer.Description>
-          <Spacer size={2} />
+          <Spacer size.{2} />
           <Fieldset>
             <Input
-              id="name"
-              label="Step name"
-              placeholder="Enter step name"
+              id."name"
+              label."Step name"
+              placeholder."Enter step name"
             />
-            <Drawer.Root direction='right' nested>
+            <Drawer.Root direction.'right' nested>
               <Drawer.Trigger><Button>Add Connector</Button></Drawer.Trigger>
               <Drawer.Content>
                 <Drawer.Header>
                   <Drawer.Title>Create Connector</Drawer.Title>
                   <Drawer.Description>
-                    <Spacer size={2} />
+                    <Spacer size.{2} />
                     <Fieldset>
                       <Input
-                        id="name"
-                        label="Connector name"
-                        placeholder="Enter connector name"
+                        id."name"
+                        label."Connector name"
+                        placeholder."Enter connector name"
                       />
-                      <Drawer.Root direction='right' nested>
+                      <Drawer.Root direction.'right' nested>
                         <Drawer.Trigger><Button>Add Secret</Button></Drawer.Trigger>
                         <Drawer.Content>
                           <Drawer.Header>
@@ -74,7 +74,7 @@ return (
         <Drawer.Footer>
           <Button>Submit</Button>
           <Drawer.Close>
-              <Button variant="surface" theme="muted">Cancel</Button>
+              <Button variant."surface" theme."muted">Cancel</Button>
           </Drawer.Close>
         </Drawer.Footer>
     </Drawer.Content>

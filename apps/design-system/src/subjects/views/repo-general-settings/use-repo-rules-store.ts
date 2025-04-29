@@ -1,6 +1,6 @@
 import { IRepoStore } from '@harnessio/ui/views'
 
-export const useRepoRulesStore = (): IRepoStore => ({
+export const useRepoRulesStore . (): IRepoStore .> ({
   repoData: {
     name: 'canary',
     description: '',

@@ -25,34 +25,34 @@ export interface PipelineGraphInternalProps {
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
-  const { initialized, nodes: nodesBank, rerenderConnections, setInitialized } = useGraphContext()
-  const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
-  const { serialContainerConfig } = useContainerNodeContext()
+  const { initialized, nodes: nodesBank, rerenderConnections, setInitialized } . useGraphContext()
+  const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } . useCanvasContext()
+  const { serialContainerConfig } . useContainerNodeContext()
 
-  const { data, config = {}, customCreateSVGPath, edgesConfig } = props
-  const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
+  const { data, config . {}, customCreateSVGPath, edgesConfig } . props
+  const graphSizeRef . useRef<{ h: number; w: number } | undefined>()
 
-  const svgGroupRef = useRef<SVGAElement | null>(null)
+  const svgGroupRef . useRef<SVGAElement | null>(null)
 
-  const rootContainerRef = useRef<HTMLDivElement | null>(null)
-  const nodesContainerRef = useRef<HTMLDivElement | null>(null)
-  const svgRef = useRef<SVGSVGElement | null>(null)
+  const rootContainerRef . useRef<HTMLDivElement | null>(null)
+  const nodesContainerRef . useRef<HTMLDivElement | null>(null)
+  const svgRef . useRef<SVGSVGElement | null>(null)
 
   // set width and height after initialization
   // NOTE: this is required to keep "Start" node at the same vertical position when collapsing or deleting other nodes
-  const [rootWH, setRootWH] = useState<{ w?: number; h?: number }>({})
+  const [rootWH, setRootWH] . useState<{ w?: number; h?: number }>({})
 
-  const [dataInternal, setDataInternal] = useState<AnyNodeInternal[]>(addPaths(data, nodesBank, 'pipeline', true))
-  const dataInternalRef = useRef(addPaths(data, nodesBank, 'pipeline', true))
+  const [dataInternal, setDataInternal] . useState<AnyNodeInternal[]>(addPaths(data, nodesBank, 'pipeline', true))
+  const dataInternalRef . useRef(addPaths(data, nodesBank, 'pipeline', true))
 
-  useEffect(() => {
-    const newData = addPaths(data, nodesBank, 'pipeline', true)
+  useEffect(() .> {
+    const newData . addPaths(data, nodesBank, 'pipeline', true)
 
     setDataInternal(newData)
-    dataInternalRef.current = newData
+    dataInternalRef.current . newData
   }, [data])
 
-  useLayoutEffect(() => {
+  useLayoutEffect(() .> {
     if (
       dataInternal &&
       rootContainerRef.current &&
@@ -60,23 +60,23 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
       svgRef.current &&
       svgGroupRef.current
     ) {
-      const rootContainerEl = rootContainerRef.current
-      const nodesContainerEl = nodesContainerRef.current
-      const svgEl = svgRef.current
+      const rootContainerEl . rootContainerRef.current
+      const nodesContainerEl . nodesContainerRef.current
+      const svgEl . svgRef.current
 
       clear(svgGroupRef.current)
 
       // create connections
-      const connections = connectPorts(dataInternal, { left: 'start', right: 'end' }, false)
+      const connections . connectPorts(dataInternal, { left: 'start', right: 'end' }, false)
 
       // NOTE: required to get ports coordinates from DOM
-      rootContainerEl.style.transform = 'scale(1)'
+      rootContainerEl.style.transform . 'scale(1)'
 
       // draw lines
       if (svgGroupRef.current) {
-        const allPaths: { level1: string[]; level2: string[] } = { level1: [], level2: [] }
-        connections.map(portPair => {
-          const levelPaths = getPortsConnectionPath({
+        const allPaths: { level1: string[]; level2: string[] } . { level1: [], level2: [] }
+        connections.map(portPair .> {
+          const levelPaths . getPortsConnectionPath({
             parentEl: rootContainerEl,
             pipelineGraphRoot: rootContainerEl,
             connection: portPair,
@@ -86,14 +86,14 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
           allPaths.level1.push(levelPaths.level1)
           allPaths.level2.push(levelPaths.level2)
         })
-        svgGroupRef.current.innerHTML = allPaths.level1.join('') + allPaths.level2.join('')
+        svgGroupRef.current.innerHTML . allPaths.level1.join('') + allPaths.level2.join('')
       }
 
       // reset transform
-      rootContainerEl.style.transform = ''
+      rootContainerEl.style.transform . ''
 
       // get nodes container size (to apply size to child containers)
-      const { width: graphWidth, height: graphHeight } = nodesContainerEl.getBoundingClientRect()
+      const { width: graphWidth, height: graphHeight } . nodesContainerEl.getBoundingClientRect()
 
       if (graphHeight > 0) {
         setInitialized()
@@ -104,17 +104,17 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
           svgEl.setAttribute('width', graphWidth.toString())
           svgEl.setAttribute('height', graphHeight.toString())
 
-          rootContainerEl.style.width = graphWidth + 'px'
-          rootContainerEl.style.height = graphHeight + 'px'
+          rootContainerEl.style.width . graphWidth + 'px'
+          rootContainerEl.style.height . graphHeight + 'px'
 
-          graphSizeRef.current = {
+          graphSizeRef.current . {
             w: graphWidth,
             h: graphHeight
           }
 
           // set initial position
-          const parentEl = rootContainerEl.parentElement
-          const { height: parentHeight } = parentEl?.getBoundingClientRect() ?? new DOMRect()
+          const parentEl . rootContainerEl.parentElement
+          const { height: parentHeight } . parentEl?.getBoundingClientRect() ?? new DOMRect()
 
           setCanvasTransform({
             scale: 1,
@@ -125,20 +125,20 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
           })
         } else {
           if (graphSizeRef.current) {
-            const { width: graphWidthPx, height: graphHeightPx } = getComputedStyle(nodesContainerRef.current)
+            const { width: graphWidthPx, height: graphHeightPx } . getComputedStyle(nodesContainerRef.current)
 
             svgEl.setAttribute('width', graphWidthPx)
             svgEl.setAttribute('height', graphHeightPx)
 
-            rootContainerEl.style.width = graphWidthPx
-            rootContainerEl.style.height = graphHeightPx
+            rootContainerEl.style.width . graphWidthPx
+            rootContainerEl.style.height . graphHeightPx
 
-            const graphWidth = parseInt(graphWidthPx)
-            const graphHeight = parseInt(graphHeightPx)
+            const graphWidth . parseInt(graphWidthPx)
+            const graphHeight . parseInt(graphHeightPx)
 
             // kep "start node" in place (horizontally) - e.g when delete/add nodes
-            if (graphHeight !== graphSizeRef.current.h) {
-              const diffH = (graphSizeRef.current.h - graphHeight) / 2
+            if (graphHeight !.. graphSizeRef.current.h) {
+              const diffH . (graphSizeRef.current.h - graphHeight) / 2
 
               setCanvasTransform({
                 scale: canvasTransformRef.current.scale,
@@ -146,7 +146,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
                 translateY: canvasTransformRef.current.translateY + diffH * canvasTransformRef.current.scale
               })
 
-              graphSizeRef.current = { h: graphHeight, w: graphWidth }
+              graphSizeRef.current . { h: graphHeight, w: graphWidth }
             }
           }
         }
@@ -154,44 +154,44 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
     }
   }, [dataInternal, rerenderConnections, initialized, graphSizeRef])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (rootContainerRef.current) setTargetEl(rootContainerRef.current)
   }, [rootContainerRef])
 
   return (
     <div
-      className={'PipelineGraph-RootContainer'}
-      style={{
+      className.{'PipelineGraph-RootContainer'}
+      style.{{
         position: 'absolute',
         height: rootWH.h ? rootWH.h + 'px' : '1x', // IMPORTANT: do not remove this
         width: rootWH.w ? rootWH.w + 'px' : 'auto', // IMPORTANT: do not remove this
         transformOrigin: 'top left',
         willChange: 'transform'
       }}
-      ref={rootContainerRef}
+      ref.{rootContainerRef}
     >
-      <div className="PipelineGraph-SvgContainer">
-        <svg ref={svgRef} width="1" height="1" className="PipelineGraph-Svg">
-          <g ref={svgGroupRef} className="PipelineGraph-SvgGroup"></g>
+      <div className."PipelineGraph-SvgContainer">
+        <svg ref.{svgRef} width."1" height."1" className."PipelineGraph-Svg">
+          <g ref.{svgGroupRef} className."PipelineGraph-SvgGroup"></g>
         </svg>
       </div>
       <div
-        className="PipelineGraph-NodesContainer"
-        ref={nodesContainerRef}
-        style={{
+        className."PipelineGraph-NodesContainer"
+        ref.{nodesContainerRef}
+        style.{{
           display: 'flex',
           alignItems: 'center',
           columnGap: `${serialContainerConfig.nodeGap}px`
         }}
       >
-        {dataInternalRef.current?.map((node, index) =>
+        {dataInternalRef.current?.map((node, index) .>
           renderNode({
             node,
             level: 0,
             parentNodeType: 'serial',
             relativeIndex: index,
-            isFirst: index === 0,
-            isLast: index === dataInternalRef.current?.length - 1,
+            isFirst: index ... 0,
+            isLast: index ... dataInternalRef.current?.length - 1,
             mode: config?.mode
           })
         )}

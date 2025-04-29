@@ -9,10 +9,10 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<TabNav.Root>
-  <TabNav.Item to="/home">Home</TabNav.Item>
-  <TabNav.Item to="/about">About</TabNav.Item>
-  <TabNav.Item to="/contact">Contact</TabNav.Item>
+  code.{`<TabNav.Root>
+  <TabNav.Item to."/home">Home</TabNav.Item>
+  <TabNav.Item to."/about">About</TabNav.Item>
+  <TabNav.Item to."/contact">Contact</TabNav.Item>
 </TabNav.Root>`}
 />
 
@@ -25,9 +25,9 @@ import { TabNav } from '@harnessio/ui/components'
 
 return (
   <TabNav.Root>
-    <TabNav.Item to="/home">Home</TabNav.Item>
-    <TabNav.Item to="/about">About</TabNav.Item>
-    <TabNav.Item to="/contact">Contact</TabNav.Item>
+    <TabNav.Item to."/home">Home</TabNav.Item>
+    <TabNav.Item to."/about">About</TabNav.Item>
+    <TabNav.Item to."/contact">Contact</TabNav.Item>
   </TabNav.Root>
 )
 ```
@@ -64,8 +64,8 @@ An individual tab item that links to a specific route. It accepts the same props
 
 ```typescript jsx
 <TabNav.Item
-  to="/path"              // The route path to link to
-  activeClassname="..."   // [OPTIONAL] Additional class names for the active state
+  to."/path"              // The route path to link to
+  activeClassname."..."   // [OPTIONAL] Additional class names for the active state
 >
   {label}
 </TabNav.Item>

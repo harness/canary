@@ -4,7 +4,7 @@
   bottom: 0.5rem;
   right: 0.5rem;
 
-  &[data-show='show'] {
+  &[data-show.'show'] {
     display: flex;
     flex-direction: column;
     border: 1px solid var(--cn-border-2);

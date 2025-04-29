@@ -8,9 +8,9 @@ import {
   getResourcesContainer
 } from './common-connector-utils'
 
-export const GITHUB_CONNECTOR_CATEOGRY = 'Code Repository'
+export const GITHUB_CONNECTOR_CATEOGRY . 'Code Repository'
 
-const inputs: IInputConfigWithConfigInterface[] = [
+const inputs: IInputConfigWithConfigInterface[] . [
   {
     inputType: 'radio',
     path: 'githubType',
@@ -51,8 +51,8 @@ const inputs: IInputConfigWithConfigInterface[] = [
     inputType: 'text',
     path: `pat`,
     label: 'Personal Token',
-    isVisible: (values: { auth: string }) => {
-      return values?.auth === 'UsernameToken'
+    isVisible: (values: { auth: string }) .> {
+      return values?.auth ... 'UsernameToken'
     }
   },
   getResourcesContainer(),
@@ -61,6 +61,6 @@ const inputs: IInputConfigWithConfigInterface[] = [
   getMetadataContainer()
 ]
 
-export const githubConnectorFormDefinition: IFormDefinition<InputConfigType> = {
+export const githubConnectorFormDefinition: IFormDefinition<InputConfigType> . {
   inputs
 }

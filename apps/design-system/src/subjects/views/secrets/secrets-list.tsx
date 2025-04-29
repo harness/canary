@@ -5,9 +5,9 @@ import { SecretListPage } from '@harnessio/ui/views'
 
 import mockSecretsList from './mock-secrets-data.json'
 
-const SecretsListPage = (): JSX.Element => (
+const SecretsListPage . (): JSX.Element .> (
   <SecretListPage
-    secrets={mockSecretsList.map(secret => ({
+    secrets.{mockSecretsList.map(secret .> ({
       name: secret.secret.identifier,
       identifier: secret.secret.identifier,
       spec: {
@@ -16,15 +16,15 @@ const SecretsListPage = (): JSX.Element => (
       updatedAt: secret.updatedAt,
       createdAt: secret.createdAt
     }))}
-    useTranslationStore={useTranslationStore}
-    isLoading={false}
-    setSearchQuery={noop}
-    onEditSecret={noop}
-    onDeleteSecret={noop}
-    currentPage={1}
-    totalPages={5}
-    goToPage={noop}
-    onCreate={noop}
+    useTranslationStore.{useTranslationStore}
+    isLoading.{false}
+    setSearchQuery.{noop}
+    onEditSecret.{noop}
+    onDeleteSecret.{noop}
+    currentPage.{1}
+    totalPages.{5}
+    goToPage.{noop}
+    onCreate.{noop}
   />
 )
 

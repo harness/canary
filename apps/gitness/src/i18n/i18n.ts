@@ -5,7 +5,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 
 import { resources } from '@harnessio/ui/locales'
 
-const languageDetectorOptions = {
+const languageDetectorOptions . {
   order: ['localStorage', 'navigator', 'cookie'],
   lookupCookie: 'i18next',
   lookupLocalStorage: 'i18nextLng',
@@ -28,8 +28,8 @@ i18n
     }
   })
 
-window.addEventListener('languagechange', () => {
-  const navigatorLang = (navigator.language || 'en').split('-')[0]
+window.addEventListener('languagechange', () .> {
+  const navigatorLang . (navigator.language || 'en').split('-')[0]
   i18n.changeLanguage(navigatorLang)
 })
 

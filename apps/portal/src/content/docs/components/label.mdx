@@ -9,27 +9,27 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-4">
-    <div className="flex flex-col gap-4">
+  code.{`<div className."flex flex-col gap-4">
+    <div className."flex flex-col gap-4">
         <h5>Standard usage</h5>
-        <Label htmlFor="name">Name</Label>
-        <input id="name" type="text" />
+        <Label htmlFor."name">Name</Label>
+        <input id."name" type."text" />
     </div>
 
     <hr />
 
-    <div className="flex flex-col gap-4">
+    <div className."flex flex-col gap-4">
         <h5>With optional indicator</h5>
-        <Label htmlFor="email" optional>Email</Label>
-        <input id="email" type="email" />
+        <Label htmlFor."email" optional>Email</Label>
+        <input id."email" type."email" />
     </div>
 
     <hr />
 
-    <div className="flex flex-col gap-4">
+    <div className."flex flex-col gap-4">
         <h5>Primary variant</h5>
-        <Label variant="primary" htmlFor="password">Password</Label>
-        <input id="password" type="password" />
+        <Label variant."primary" htmlFor."password">Password</Label>
+        <input id."password" type."password" />
     </div>
 
 </div>`}
@@ -44,8 +44,8 @@ import { Label } from '@harnessio/ui/components'
 
 return (
   <>
-    <Label htmlFor="username">Username</Label>
-    <input id="username" type="text" />
+    <Label htmlFor."username">Username</Label>
+    <input id."username" type."text" />
   </>
 )
 ```
@@ -56,7 +56,7 @@ The `Label` component provides a styled label for form elements with customizabl
 
 ```typescript jsx
 <Label
-  htmlFor="inputId" // [OPTIONAL] ID of the form control this label is associated with
+  htmlFor."inputId" // [OPTIONAL] ID of the form control this label is associated with
   optional          // [OPTIONAL] Indicate if the associated form field is optional
 >
   Label Text
@@ -64,7 +64,7 @@ The `Label` component provides a styled label for form elements with customizabl
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "variant",
       description: "The color variant of the label",

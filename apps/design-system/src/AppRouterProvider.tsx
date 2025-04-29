@@ -12,20 +12,20 @@ import {
 
 import { RouterContextProvider } from '@harnessio/ui/context'
 
-const AppRouterProvider: FC = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
+const AppRouterProvider: FC . () .> {
+  const navigate . useNavigate()
+  const location . useLocation()
 
   return (
     <RouterContextProvider
-      Link={Link}
-      NavLink={NavLink}
-      Outlet={Outlet}
-      location={location}
-      navigate={navigate}
-      useSearchParams={useSearchParams}
-      useMatches={useMatches}
-      useParams={useParams}
+      Link.{Link}
+      NavLink.{NavLink}
+      Outlet.{Outlet}
+      location.{location}
+      navigate.{navigate}
+      useSearchParams.{useSearchParams}
+      useMatches.{useMatches}
+      useParams.{useParams}
     >
       <Outlet />
     </RouterContextProvider>

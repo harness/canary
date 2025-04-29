@@ -9,7 +9,7 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LanguageDialog onOpenChange={() => {}} onChange={() => {}} onSave={() => {}} onCancel={() => {}}><button>Select Language</button></LanguageDialog>`}
+  code.{`<LanguageDialog onOpenChange.{() .> {}} onChange.{() .> {}} onSave.{() .> {}} onCancel.{() .> {}}><button>Select Language</button></LanguageDialog>`}
 />
 
 ## Usage
@@ -19,34 +19,34 @@ import { useState } from 'react';
 import { LanguageDialog } from '@harnessio/ui/components';
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] . useState(false);
 
-  const handleOpenChange = (open: boolean) => {
+  const handleOpenChange . (open: boolean) .> {
     setIsOpen(open);
   };
 
-  const handleChange = (language: LanguageInterface) => {
+  const handleChange . (language: LanguageInterface) .> {
     console.log(language);
   };
 
-  const handleSave = (language: LanguageInterface) => {
+  const handleSave . (language: LanguageInterface) .> {
     console.log(language);
   };
 
-  const handleCancel = () => {
+  const handleCancel . () .> {
     console.log('Cancelled');
     setIsOpen(false);
   };
 
   return (
       <LanguageDialog
-        open={isOpen}
-        onOpenChange={handleOpenChange}
-        onChange={handleChange}
-        onSave={handleSave}
-        onCancel={handleCancel}
+        open.{isOpen}
+        onOpenChange.{handleOpenChange}
+        onChange.{handleChange}
+        onSave.{handleSave}
+        onCancel.{handleCancel}
       >
-        <button onClick={() => setIsOpen(true)}>Select Language</button>
+        <button onClick.{() .> setIsOpen(true)}>Select Language</button>
       </LanguageDialog>
   );
 }

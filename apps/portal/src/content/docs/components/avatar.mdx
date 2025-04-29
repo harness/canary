@@ -9,18 +9,18 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-8">
-    <div className="flex flex-col items-center gap-4">
+  code.{`<div className."flex flex-col gap-8">
+    <div className."flex flex-col items-center gap-4">
         <h5>With image</h5>
-        <Avatar.Root size={8}>
-            <Avatar.Image src="https://github.com/shadcn.png" alt="Avatar image" />
+        <Avatar.Root size.{8}>
+            <Avatar.Image src."https://github.com/shadcn.png" alt."Avatar image" />
             <Avatar.Fallback>JD</Avatar.Fallback>
         </Avatar.Root>
     </div>
     <hr />
-    <div className="flex flex-col items-center gap-4">
+    <div className."flex flex-col items-center gap-4">
         <h5>With fallback</h5>
-        <Avatar.Root size={8}>
+        <Avatar.Root size.{8}>
             <Avatar.Fallback>JD</Avatar.Fallback>
         </Avatar.Root>
     </div>
@@ -36,7 +36,7 @@ import { Avatar } from '@harnessio/ui/components'
 
 return (
   <Avatar.Root>
-    <Avatar.Image src="avatarurl.jpg" alt="Avatar image" />
+    <Avatar.Image src."avatarurl.jpg" alt."Avatar image" />
     <Avatar.Fallback>JD</Avatar.Fallback>
   </Avatar.Root>
 )
@@ -61,15 +61,15 @@ The `Root` component serves as the main container for all avatar elements.
 
 ```typescript jsx
 <Avatar.Root
-  size={6}          // [OPTIONAL] Size of the avatar, can be one of "4.5", "6", "8", or "20"
-  className="class" // [OPTIONAL] Class name to be applied to the outermost element
+  size.{6}          // [OPTIONAL] Size of the avatar, can be one of "4.5", "6", "8", or "20"
+  className."class" // [OPTIONAL] Class name to be applied to the outermost element
 >
   {/* Image and Fallback components */}
 </Avatar.Root>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "size",
       description:
@@ -93,14 +93,14 @@ The `Image` component is used to display an image within the avatar. If the imag
 
 ```typescript jsx
 <Avatar.Image
-  src="avatarurl.jpg" // source URL of the image
-  alt="Avatar image"  // [OPTIONAL] alt text of the image
-  className="class"   // [OPTIONAL] Class name to be applied to the image element
+  src."avatarurl.jpg" // source URL of the image
+  alt."Avatar image"  // [OPTIONAL] alt text of the image
+  className."class"   // [OPTIONAL] Class name to be applied to the image element
 />
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "src",
       description: "The source URL of the image",
@@ -128,14 +128,14 @@ The `Fallback` component is displayed when the image can not be loaded.
 
 ```typescript jsx
 <Avatar.Fallback
-  className="class" // [OPTIONAL] Class name to be applied to the fallback element
+  className."class" // [OPTIONAL] Class name to be applied to the fallback element
 >
   JD
 </Avatar.Fallback>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "The content of the fallback element",

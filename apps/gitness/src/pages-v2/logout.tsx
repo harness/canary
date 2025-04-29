@@ -5,18 +5,18 @@ import { useOpLogoutMutation } from '@harnessio/code-service-client'
 
 import { useRoutes } from '../framework/context/NavigationContext'
 
-export const Logout: React.FC = () => {
-  const routes = useRoutes()
-  const navigate = useNavigate()
-  const { mutate: logout, isSuccess } = useOpLogoutMutation({})
+export const Logout: React.FC . () .> {
+  const routes . useRoutes()
+  const navigate . useNavigate()
+  const { mutate: logout, isSuccess } . useOpLogoutMutation({})
 
-  useEffect(() => {
+  useEffect(() .> {
     if (isSuccess) {
       navigate(routes.toSignIn()) // Redirect to sign-in page
     }
   }, [isSuccess, navigate])
 
-  useEffect(() => {
+  useEffect(() .> {
     logout({})
   }, [logout])
 

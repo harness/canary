@@ -13,18 +13,18 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'
 
-export const WebhookExecutionDetailsContainer = () => {
-  const { repoId, spaceId, webhookId, executionId } = useParams<PathParams>()
-  const repo_ref = useGetRepoRef()
-  const { setExecutionId, updateExecution } = useWebhookStore()
-  const navigate = useNavigate()
-  const routes = useRoutes()
+export const WebhookExecutionDetailsContainer . () .> {
+  const { repoId, spaceId, webhookId, executionId } . useParams<PathParams>()
+  const repo_ref . useGetRepoRef()
+  const { setExecutionId, updateExecution } . useWebhookStore()
+  const navigate . useNavigate()
+  const routes . useRoutes()
 
-  useEffect(() => {
+  useEffect(() .> {
     setExecutionId(parseInt(executionId ?? ''))
   }, [setExecutionId, executionId])
 
-  const { data: { body: execution } = {} } = useGetRepoWebhookExecutionQuery(
+  const { data: { body: execution } . {} } . useGetRepoWebhookExecutionQuery(
     {
       repo_ref: repo_ref ?? '',
       webhook_identifier: parseInt(webhookId ?? ''),
@@ -36,23 +36,23 @@ export const WebhookExecutionDetailsContainer = () => {
     }
   )
 
-  const { mutate: retriggerExecution, isLoading: isTriggeringExecution } = useRetriggerRepoWebhookExecutionMutation(
+  const { mutate: retriggerExecution, isLoading: isTriggeringExecution } . useRetriggerRepoWebhookExecutionMutation(
     {},
     {
-      onSuccess: data => {
+      onSuccess: data .> {
         updateExecution(data.body as WebhookExecutionType)
         navigate(routes.toRepoWebhookExecutionDetails({ spaceId, repoId, webhookId, executionId: `${data.body.id}` }))
       }
     }
   )
 
-  useEffect(() => {
+  useEffect(() .> {
     if (execution) {
       updateExecution(execution as WebhookExecutionType)
     }
   }, [execution, updateExecution])
 
-  const handleRetriggerExecution = () => {
+  const handleRetriggerExecution . () .> {
     retriggerExecution({
       repo_ref: repo_ref ?? '',
       webhook_identifier: parseInt(webhookId ?? ''),
@@ -62,10 +62,10 @@ export const WebhookExecutionDetailsContainer = () => {
 
   return (
     <RepoWebhookExecutionDetailsPage
-      useWebhookStore={useWebhookStore}
-      useTranslationStore={useTranslationStore}
-      isLoading={isTriggeringExecution}
-      handleRetriggerExecution={handleRetriggerExecution}
+      useWebhookStore.{useWebhookStore}
+      useTranslationStore.{useTranslationStore}
+      isLoading.{isTriggeringExecution}
+      handleRetriggerExecution.{handleRetriggerExecution}
     />
   )
 }

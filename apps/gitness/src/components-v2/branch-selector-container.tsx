@@ -12,27 +12,27 @@ import { orderSortDate } from '../types'
 
 interface BranchSelectorContainerProps {
   selectedBranch?: BranchSelectorListItem | null
-  onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
+  onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) .> void
   isBranchOnly?: boolean
   dynamicWidth?: boolean
   preSelectedTab?: BranchSelectorTab
 }
-export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = ({
+export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> . ({
   selectedBranch,
   onSelectBranchorTag,
-  isBranchOnly = false,
-  dynamicWidth = false,
+  isBranchOnly . false,
+  dynamicWidth . false,
   preSelectedTab
-}) => {
-  const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
-  const [branchTagQuery, setBranchTagQuery] = useState<string | null>(null)
-  const [branchList, setBranchList] = useState<BranchData[]>([])
-  const [tagList, setTagList] = useState<BranchSelectorListItem[]>([])
+}) .> {
+  const repoRef . useGetRepoRef()
+  const { spaceId, repoId } . useParams<PathParams>()
+  const [branchTagQuery, setBranchTagQuery] . useState<string | null>(null)
+  const [branchList, setBranchList] . useState<BranchData[]>([])
+  const [tagList, setTagList] . useState<BranchSelectorListItem[]>([])
 
-  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repository } . {} } . useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const { data: { body: branches } = {} } = useListBranchesQuery({
+  const { data: { body: branches } . {} } . useListBranchesQuery({
     repo_ref: repoRef,
     queryParams: {
       include_commit: false,
@@ -43,7 +43,7 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
     }
   })
 
-  const { data: { body: tags } = {} } = useListTagsQuery({
+  const { data: { body: tags } . {} } . useListTagsQuery({
     repo_ref: repoRef,
     queryParams: {
       include_commit: false,
@@ -55,9 +55,9 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
     }
   })
 
-  useEffect(() => {
+  useEffect(() .> {
     if (repository && !selectedBranch) {
-      const defaultBranch = branches?.find(branch => branch.name === repository.default_branch)
+      const defaultBranch . branches?.find(branch .> branch.name ... repository.default_branch)
 
       onSelectBranchorTag(
         { name: defaultBranch?.name ?? repository.default_branch ?? '', sha: defaultBranch?.sha ?? '', default: true },
@@ -66,16 +66,16 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
     }
   }, [branches, repository])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (branches) {
       setBranchList(transformBranchList(branches, repository?.default_branch))
     }
   }, [branches, repository?.default_branch, setBranchList])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (tags) {
       setTagList(
-        tags.map(item => ({
+        tags.map(item .> ({
           name: item?.name || '',
           sha: item?.sha || '',
           default: false
@@ -86,18 +86,18 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
 
   return (
     <BranchSelectorV2
-      useTranslationStore={useTranslationStore}
-      branchList={branchList}
-      tagList={tagList}
-      selectedBranchorTag={selectedBranch ?? { name: '', sha: '', default: false }}
-      repoId={repoId ?? ''}
-      spaceId={spaceId ?? ''}
-      searchQuery={branchTagQuery ?? ''}
-      setSearchQuery={setBranchTagQuery}
-      onSelectBranch={onSelectBranchorTag}
-      isBranchOnly={isBranchOnly}
-      dynamicWidth={dynamicWidth}
-      preSelectedTab={preSelectedTab}
+      useTranslationStore.{useTranslationStore}
+      branchList.{branchList}
+      tagList.{tagList}
+      selectedBranchorTag.{selectedBranch ?? { name: '', sha: '', default: false }}
+      repoId.{repoId ?? ''}
+      spaceId.{spaceId ?? ''}
+      searchQuery.{branchTagQuery ?? ''}
+      setSearchQuery.{setBranchTagQuery}
+      onSelectBranch.{onSelectBranchorTag}
+      isBranchOnly.{isBranchOnly}
+      dynamicWidth.{dynamicWidth}
+      preSelectedTab.{preSelectedTab}
     />
   )
 }

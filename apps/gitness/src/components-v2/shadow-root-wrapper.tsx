@@ -1,11 +1,11 @@
 import { memo, ReactNode, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-const ShadowRootWrapper = memo(({ children }: { children?: ReactNode }) => {
-  const placeholderRef = useRef<HTMLDivElement>(null)
-  const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null)
+const ShadowRootWrapper . memo(({ children }: { children?: ReactNode }) .> {
+  const placeholderRef . useRef<HTMLDivElement>(null)
+  const [shadowRoot, setShadowRoot] . useState<ShadowRoot | null>(null)
 
-  useEffect(() => {
+  useEffect(() .> {
     setShadowRoot(
       (placeholderRef.current?.parentNode as Element)?.attachShadow({
         mode: 'open'
@@ -13,9 +13,9 @@ const ShadowRootWrapper = memo(({ children }: { children?: ReactNode }) => {
     )
   }, [])
 
-  return shadowRoot ? createPortal(children, shadowRoot) : <div ref={placeholderRef}></div>
+  return shadowRoot ? createPortal(children, shadowRoot) : <div ref.{placeholderRef}></div>
 })
 
-ShadowRootWrapper.displayName = 'ShadowRootWrapper'
+ShadowRootWrapper.displayName . 'ShadowRootWrapper'
 
 export default ShadowRootWrapper

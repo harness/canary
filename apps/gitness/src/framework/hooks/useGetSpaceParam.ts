@@ -5,12 +5,12 @@ import { useIsMFE } from './useIsMFE'
 import { useMFEContext } from './useMFEContext'
 
 export function useGetSpaceURLParam(): string | undefined {
-  const { spaceId } = useParams<PathParams>()
+  const { spaceId } . useParams<PathParams>()
 
-  const isMFE = useIsMFE()
+  const isMFE . useIsMFE()
   const {
     scope: { accountId, orgIdentifier, projectIdentifier }
-  } = useMFEContext()
+  } . useMFEContext()
 
   return !isMFE ? spaceId : [accountId, orgIdentifier, projectIdentifier].filter(Boolean).join('/')
 }

@@ -9,7 +9,7 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-8">
+  code.{`<div className."flex flex-col gap-8">
     <div>
         <h5>Standard toggle</h5>
         <Toggle>Default</Toggle>
@@ -17,24 +17,24 @@ import { DocsPage } from "../../../components/docs-page";
 
     <hr />
 
-    <div className="flex flex-col gap-4">
+    <div className."flex flex-col gap-4">
         <h5>Variants</h5>
-        <div className="flex items-center flex-wrap gap-4">
-            <Toggle variant="default">Default</Toggle>
-            <Toggle variant="outline">Outline</Toggle>
-            <Toggle variant="compact">Compact</Toggle>
+        <div className."flex items-center flex-wrap gap-4">
+            <Toggle variant."default">Default</Toggle>
+            <Toggle variant."outline">Outline</Toggle>
+            <Toggle variant."compact">Compact</Toggle>
         </div>
     </div>
 
     <hr />
 
-    <div className="flex flex-col gap-4">
-        <h5>Sizes <span className="italic text-1">(pressed)</span></h5>
-        <div className="flex items-center flex-wrap gap-4">
-            <Toggle size="default" defaultPressed>Default</Toggle>
-            <Toggle size="xs" defaultPressed>Extra small</Toggle>
-            <Toggle size="sm" defaultPressed>Small</Toggle>
-            <Toggle size="lg" defaultPressed>Large</Toggle>
+    <div className."flex flex-col gap-4">
+        <h5>Sizes <span className."italic text-1">(pressed)</span></h5>
+        <div className."flex items-center flex-wrap gap-4">
+            <Toggle size."default" defaultPressed>Default</Toggle>
+            <Toggle size."xs" defaultPressed>Extra small</Toggle>
+            <Toggle size."sm" defaultPressed>Small</Toggle>
+            <Toggle size."lg" defaultPressed>Large</Toggle>
         </div>
     </div>
 
@@ -48,9 +48,9 @@ import { Toggle } from '@harnessio/ui/components'
 
 // ...
 
-const [pressed, setPressed] = useState(false)
+const [pressed, setPressed] . useState(false)
 
-return <Toggle pressed={pressed} onPressedChange={setPressed}>Dark Mode</Toggle>
+return <Toggle pressed.{pressed} onPressedChange.{setPressed}>Dark Mode</Toggle>
 ```
 
 ## API Reference
@@ -59,12 +59,12 @@ The `Toggle` component is a button that can be toggled on and off.
 
 ```typescript jsx
 <Toggle
-  variant="default"           // [OPTIONAL] visual style variant, can be 'default', 'outline', 'compact'
-  size="default"              // [OPTIONAL] size, can 'default', 'sm', 'lg', 'xs', 'icon'
-  className="custom"          // [OPTIONAL] additional CSS classes to apply
+  variant."default"           // [OPTIONAL] visual style variant, can be 'default', 'outline', 'compact'
+  size."default"              // [OPTIONAL] size, can 'default', 'sm', 'lg', 'xs', 'icon'
+  className."custom"          // [OPTIONAL] additional CSS classes to apply
   defaultPressed              // [OPTIONAL] initial pressed state
   pressed                     // [OPTIONAL] current pressed state
-  onPressedChange={onPressed} // [OPTIONAL] event handler called when the pressed state changes
+  onPressedChange.{onPressed} // [OPTIONAL] event handler called when the pressed state changes
   disabled                    // [OPTIONAL] disable the toggle
 >
   Toggle Text
@@ -72,7 +72,7 @@ The `Toggle` component is a button that can be toggled on and off.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "variant",
       description: "The visual style variant of the toggle",
@@ -116,7 +116,7 @@ The `Toggle` component is a button that can be toggled on and off.
       name: "onPressedChange",
       description: "Event handler called when the pressed state changes",
       required: false,
-      value: "(pressed: boolean) => void",
+      value: "(pressed: boolean) .> void",
     },
     {
       name: "disabled",

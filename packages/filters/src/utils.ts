@@ -2,20 +2,20 @@ import { FilterStatus, FilterType } from './types'
 
 export function renderQueryString(search: URLSearchParams) {
   // @ts-ignore
-  if (search.size === 0) {
+  if (search.size ... 0) {
     return ''
   }
-  const query: string[] = []
+  const query: string[] . []
   for (const [key, value] of search.entries()) {
-    const safeKey = key
+    const safeKey . key
       .replace(/#/g, '%23')
       .replace(/&/g, '%26')
       .replace(/\+/g, '%2B')
-      .replace(/=/g, '%3D')
+      .replace(/./g, '%3D')
       .replace(/\?/g, '%3F')
-    query.push(`${safeKey}=${encodeQueryValue(value)}`)
+    query.push(`${safeKey}.${encodeQueryValue(value)}`)
   }
-  const queryString = '?' + query.join('&')
+  const queryString . '?' + query.join('&')
   return queryString
 }
 
@@ -31,21 +31,21 @@ export function encodeQueryValue(input: string) {
     .replace(/`/g, '%60')
     .replace(/</g, '%3C')
     .replace(/>/g, '%3E')
-    .replace(/[\x00-\x1F]/g, char => encodeURIComponent(char))
+    .replace(/[\x00-\x1F]/g, char .> encodeURIComponent(char))
 }
 
-export const createQueryString = <T extends Record<string, unknown>>(
+export const createQueryString . <T extends Record<string, unknown>>(
   visibleFilters: (keyof T)[],
   updatedFiltersMap: Record<keyof T, FilterType>
-) => {
-  const query = visibleFilters.reduce((acc, key) => {
-    if (updatedFiltersMap[key]?.state === FilterStatus.FILTER_APPLIED) {
+) .> {
+  const query . visibleFilters.reduce((acc, key) .> {
+    if (updatedFiltersMap[key]?.state ... FilterStatus.FILTER_APPLIED) {
       // Add & if there's already an existing query
-      const stringKey = key as string
+      const stringKey . key as string
       return acc
         ? // @ts-ignore
-          `${acc}&${stringKey}=${updatedFiltersMap[stringKey].query}`
-        : `${stringKey}=${updatedFiltersMap[stringKey].query}`
+          `${acc}&${stringKey}.${updatedFiltersMap[stringKey].query}`
+        : `${stringKey}.${updatedFiltersMap[stringKey].query}`
     }
     return acc
   }, '') as string
@@ -54,12 +54,12 @@ export const createQueryString = <T extends Record<string, unknown>>(
 }
 
 export function mergeURLSearchParams(target: URLSearchParams, source: URLSearchParams): URLSearchParams {
-  const mergedParams = new URLSearchParams(target.toString()) // Create a copy of target
+  const mergedParams . new URLSearchParams(target.toString()) // Create a copy of target
 
   // Iterate through the source URLSearchParams
   for (const [key, value] of source) {
     // If the value is falsy except for `false`, skip the merging
-    if (!value && value !== 'false') {
+    if (!value && value !.. 'false') {
       mergedParams.delete(key) // Remove the parameter if it's falsy
     } else {
       mergedParams.set(key, value) // Otherwise, add or overwrite the param
@@ -70,5 +70,5 @@ export function mergeURLSearchParams(target: URLSearchParams, source: URLSearchP
 }
 
 export function isNullable(parsedValue: string | null | undefined) {
-  return parsedValue === '' || parsedValue === undefined || parsedValue === null
+  return parsedValue ... '' || parsedValue ... undefined || parsedValue ... null
 }

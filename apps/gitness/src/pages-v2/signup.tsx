@@ -6,24 +6,24 @@ import { SignUpData, SignUpPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../framework/context/NavigationContext'
 
-export const SignUp: React.FC = () => {
-  const routes = useRoutes()
-  const navigate = useNavigate()
+export const SignUp: React.FC . () .> {
+  const routes . useRoutes()
+  const navigate . useNavigate()
 
   const {
     mutate: register,
     isLoading,
     isSuccess,
     error
-  } = useOnRegisterMutation({ queryParams: { include_cookie: true } })
+  } . useOnRegisterMutation({ queryParams: { include_cookie: true } })
 
-  useEffect(() => {
+  useEffect(() .> {
     if (isSuccess) {
       navigate(routes.toProjectCreate())
     }
   }, [isSuccess])
 
-  const handleSignUp = (data: SignUpData) => {
+  const handleSignUp . (data: SignUpData) .> {
     register({
       body: {
         email: data.email,
@@ -34,5 +34,5 @@ export const SignUp: React.FC = () => {
     })
   }
 
-  return <SignUpPage isLoading={isLoading} handleSignUp={handleSignUp} error={error?.message} />
+  return <SignUpPage isLoading.{isLoading} handleSignUp.{handleSignUp} error.{error?.message} />
 }

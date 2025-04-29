@@ -12,9 +12,9 @@ export function useZodValidationResolver(
   options?: IGetValidationSchemaOptions
 ): Resolver<any, any> | undefined {
   return useCallback(
-    async (data: FieldValues, _: any, resolverOptions: ResolverOptions<FieldValues>) => {
+    async (data: FieldValues, _: any, resolverOptions: ResolverOptions<FieldValues>) .> {
       try {
-        const validationSchema = getValidationSchema(formDefinition, data, options)
+        const validationSchema . getValidationSchema(formDefinition, data, options)
 
         await validationSchema.parseAsync(data)
 

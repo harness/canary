@@ -7,21 +7,21 @@ import { ProjectSettingsTabNav, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import RootViewWrapper from './root-view-wrapper'
 
-const Layout = () => {
+const Layout . () .> {
   return (
     <SubHeaderWrapper>
-      <ProjectSettingsTabNav useTranslationStore={useTranslationStore} />
+      <ProjectSettingsTabNav useTranslationStore.{useTranslationStore} />
     </SubHeaderWrapper>
   )
 }
 
-export const ProjectSettingsWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
+export const ProjectSettingsWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> . ({ children }) .> {
   return (
     <>
       <RootViewWrapper asChild>
         <Route
-          path="*"
-          element={
+          path."*"
+          element.{
             <>
               <Layout />
               {children}

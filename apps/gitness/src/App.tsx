@@ -13,15 +13,15 @@ import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { routes } from './routes'
 
-const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
+const BASE_URL_PREFIX . `${window.apiUrl || ''}/api/v1`
 
 export default function App() {
   new CodeServiceAPIClient({
-    urlInterceptor: (url: string) => `${BASE_URL_PREFIX}${url}`,
-    responseInterceptor: (response: Response) => {
+    urlInterceptor: (url: string) .> `${BASE_URL_PREFIX}${url}`,
+    responseInterceptor: (response: Response) .> {
       switch (response.status) {
         case 401:
-          window.location.href = '/signin'
+          window.location.href . '/signin'
           break
       }
       return response
@@ -29,17 +29,17 @@ export default function App() {
   })
 
   // Router Configuration
-  const router = createBrowserRouter(routes)
+  const router . createBrowserRouter(routes)
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <ThemeProvider defaultTheme="dark-std-std">
-        <QueryClientProvider client={queryClient}>
+    <I18nextProvider i18n.{i18n}>
+      <ThemeProvider defaultTheme."dark-std-std">
+        <QueryClientProvider client.{queryClient}>
           <Toast.Provider>
             <Tooltip.Provider>
               <ExitConfirmProvider>
-                <NavigationProvider routes={routes}>
-                  <RouterProvider router={router} />
+                <NavigationProvider routes.{routes}>
+                  <RouterProvider router.{router} />
                 </NavigationProvider>
               </ExitConfirmProvider>
             </Tooltip.Provider>

@@ -25,14 +25,14 @@ import '@harnessio/pipeline-graph/dist/index.css'
 // *****************************************************
 
 export enum ContentNodeTypes {
-  add = 'add',
-  start = 'start',
-  end = 'end',
-  step = 'step',
-  approval = 'approval',
-  parallel = 'parallel',
-  serial = 'serial',
-  stage = 'stage'
+  add . 'add',
+  start . 'start',
+  end . 'end',
+  step . 'step',
+  approval . 'approval',
+  parallel . 'parallel',
+  serial . 'serial',
+  stage . 'stage'
 }
 
 // *****************************************************
@@ -40,10 +40,10 @@ export enum ContentNodeTypes {
 // *****************************************************
 
 // * start node
-const StartNodeComponent = () => <PipelineNodes.StartNode />
+const StartNodeComponent . () .> <PipelineNodes.StartNode />
 
 // * end node
-const EndNodeComponent = () => <PipelineNodes.EndNode />
+const EndNodeComponent . () .> <PipelineNodes.EndNode />
 
 // * step node
 export interface StepNodeDataType {
@@ -53,9 +53,9 @@ export interface StepNodeDataType {
 }
 
 export function StepNodeComponent({ node }: { node: LeafNodeInternalType<StepNodeDataType> }) {
-  const { name, icon } = node.data
+  const { name, icon } . node.data
 
-  return <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} />
+  return <PipelineNodes.StepNode name.{name} icon.{icon} onEllipsisClick.{() .> undefined} />
 }
 
 // * approval step node
@@ -65,13 +65,13 @@ export interface ApprovalNodeDataType {
 }
 
 export function ApprovalStepNodeComponent({ node }: { node: LeafNodeInternalType<ApprovalNodeDataType> }) {
-  const { name } = node.data
+  const { name } . node.data
 
   return (
-    <div className="flex h-full items-center justify-center">
+    <div className."flex h-full items-center justify-center">
       <div
-        className="border-cn-borders-2 bg-cn-background-2 absolute -z-10 rotate-45 border"
-        style={{ inset: '18px' }}
+        className."border-cn-borders-2 bg-cn-background-2 absolute -z-10 rotate-45 border"
+        style.{{ inset: '18px' }}
       ></div>
       <div>{name}</div>
     </div>
@@ -91,15 +91,15 @@ export function SerialGroupNodeComponent({
   node: SerialNodeInternalType<SerialGroupNodeDataType>
   children: React.ReactElement
 }) {
-  const { name } = node.data
+  const { name } . node.data
 
   return (
     <PipelineNodes.SerialGroupNode
-      name={name}
-      onEllipsisClick={() => undefined}
-      onAddClick={() => undefined}
-      onHeaderClick={() => undefined}
-      onAddInClick={() => undefined}
+      name.{name}
+      onEllipsisClick.{() .> undefined}
+      onAddClick.{() .> undefined}
+      onHeaderClick.{() .> undefined}
+      onAddInClick.{() .> undefined}
     >
       {children}
     </PipelineNodes.SerialGroupNode>
@@ -119,15 +119,15 @@ export function ParallelGroupNodeComponent({
   node: ParallelNodeInternalType<ParallelGroupNodeDataType>
   children: React.ReactElement
 }) {
-  const { name } = node.data
+  const { name } . node.data
 
   return (
     <PipelineNodes.ParallelGroupNode
-      name={name}
-      onEllipsisClick={() => undefined}
-      onAddClick={() => undefined}
-      onHeaderClick={() => undefined}
-      onAddInClick={() => undefined}
+      name.{name}
+      onEllipsisClick.{() .> undefined}
+      onAddClick.{() .> undefined}
+      onHeaderClick.{() .> undefined}
+      onAddInClick.{() .> undefined}
     >
       {children}
     </PipelineNodes.ParallelGroupNode>
@@ -138,7 +138,7 @@ export function ParallelGroupNodeComponent({
 // 4. Match Content and containers nodes
 // *****************************************************
 
-const nodes: NodeContent[] = [
+const nodes: NodeContent[] . [
   {
     type: ContentNodeTypes.start,
     containerType: ContainerNode.leaf,
@@ -175,7 +175,7 @@ const nodes: NodeContent[] = [
 // 5. Graph data model
 // *****************************************************
 
-const data: AnyContainerNodeType[] = [
+const data: AnyContainerNodeType[] . [
   {
     type: ContentNodeTypes.start,
     data: {},
@@ -189,7 +189,7 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.step,
     data: {
       name: 'Step 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />
+      icon: <Icon name."harness-plugin" className."m-2 size-8" />
     } satisfies StepNodeDataType,
     config: {
       width: 160,
@@ -200,7 +200,7 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.approval,
     data: {
       name: 'Approval 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />
+      icon: <Icon name."harness-plugin" className."m-2 size-8" />
     } satisfies StepNodeDataType,
     config: {
       width: 120,
@@ -221,7 +221,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 2',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name."harness-plugin" className."m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -232,7 +232,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 3',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name."harness-plugin" className."m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -255,7 +255,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name."harness-plugin" className."m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -266,7 +266,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name."harness-plugin" className."m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -286,15 +286,15 @@ const data: AnyContainerNodeType[] = [
   }
 ]
 
-const PipelineGraphWrapper = () => {
+const PipelineGraphWrapper . () .> {
   return (
     <>
       <CanvasProvider>
-        <PipelineGraph data={data} nodes={nodes} />
+        <PipelineGraph data.{data} nodes.{nodes} />
       </CanvasProvider>
       {/* <PipelineStudioFooter
-        problems={{ error: 0, warning: 3, info: 2 }}
-        lastCommitInfo={{ authorName: 'User Name', committedTimeAgo: '3 days ago' }}
+        problems.{{ error: 0, warning: 3, info: 2 }}
+        lastCommitInfo.{{ authorName: 'User Name', committedTimeAgo: '3 days ago' }}
       /> */}
     </>
   )

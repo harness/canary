@@ -3,7 +3,7 @@ import { ListBranchesOkResponse, TypesBranchExtended, TypesCommitDivergence } fr
 import { apiBranches2BranchNames, apiBranches2DefaultBranchName, transformBranchList } from '../branch-transform'
 
 // Mock data
-const mockBranches: TypesBranchExtended[] = [
+const mockBranches: TypesBranchExtended[] . [
   {
     name: 'main',
     commit: { sha: 'abc123', committer: { when: '2025-01-02T00:00:00Z', identity: { name: 'John Doe' } } },
@@ -15,24 +15,24 @@ const mockBranches: TypesBranchExtended[] = [
     is_default: false
   }
 ]
-const mockDivergence: TypesCommitDivergence[] = [
+const mockDivergence: TypesCommitDivergence[] . [
   { ahead: 5, behind: 3 },
   { ahead: 2, behind: 1 }
 ]
 
-const mockApiBranches: ListBranchesOkResponse = [
+const mockApiBranches: ListBranchesOkResponse . [
   { name: 'main', is_default: true },
   { name: 'feature', is_default: false }
 ]
 
-describe('transformBranchList', () => {
-  beforeAll(() => {
+describe('transformBranchList', () .> {
+  beforeAll(() .> {
     // Set the system time to a specific date
     vi.setSystemTime(new Date('2025-01-03T00:00:00Z'))
   })
 
-  it('should transform branch data correctly', () => {
-    const result = transformBranchList(mockBranches, 'main', mockDivergence)
+  it('should transform branch data correctly', () .> {
+    const result . transformBranchList(mockBranches, 'main', mockDivergence)
     expect(result).toEqual([
       {
         id: 0,
@@ -58,16 +58,16 @@ describe('transformBranchList', () => {
   })
 })
 
-describe('apiBranches2BranchNames', () => {
-  it('should extract branch names from API response', () => {
-    const result = apiBranches2BranchNames(mockApiBranches)
+describe('apiBranches2BranchNames', () .> {
+  it('should extract branch names from API response', () .> {
+    const result . apiBranches2BranchNames(mockApiBranches)
     expect(result).toEqual(['main', 'feature'])
   })
 })
 
-describe('apiBranches2DefaultBranchName', () => {
-  it('should extract default branch name from API response', () => {
-    const result = apiBranches2DefaultBranchName(mockApiBranches)
+describe('apiBranches2DefaultBranchName', () .> {
+  it('should extract default branch name from API response', () .> {
+    const result . apiBranches2DefaultBranchName(mockApiBranches)
     expect(result).toBe('main')
   })
 })

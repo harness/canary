@@ -4,11 +4,11 @@ import { IPipeline } from '@harnessio/ui/views'
 import { getExecutionStatus, getMeterState } from '../../../utils/execution-utils'
 
 export function apiPipelines2Pipelines(data: ListPipelinesOkResponse): IPipeline[] {
-  return data.map(pipelineBody => ({
+  return data.map(pipelineBody .> ({
     id: pipelineBody.identifier ?? '',
     description: pipelineBody?.execution?.message,
     meter:
-      pipelineBody.last_executions?.map((exec, idx) => ({
+      pipelineBody.last_executions?.map((exec, idx) .> ({
         id: exec.number?.toString() ?? idx.toString(),
         state: getMeterState(pipelineBody?.execution?.status)
       })) ?? [],

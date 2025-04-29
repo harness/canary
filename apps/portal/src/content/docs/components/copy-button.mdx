@@ -9,7 +9,7 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<CopyButton name="Text to copy" />`}
+  code.{`<CopyButton name."Text to copy" />`}
 />
 
 ## Usage
@@ -18,14 +18,14 @@ import { DocsPage } from "@/components/docs-page";
 import { CopyButton } from '@harnessio/ui/components'
 
 return (
-  <CopyButton name="Text to copy" />
+  <CopyButton name."Text to copy" />
 )
 ```
 
 ## API Reference
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "name",
       description: "The text to be copied to the clipboard",
@@ -56,7 +56,7 @@ return (
       name: "onClick",
       description: "Function to handle click event",
       required: false,
-      value: "(e: MouseEvent) => void",
+      value: "(e: MouseEvent) .> void",
     },
     {
       name: "color",

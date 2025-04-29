@@ -3,9 +3,9 @@ export interface NodeProps {
 }
 
 export enum ContainerNode {
-  leaf = 'leaf',
-  parallel = 'parallel',
-  serial = 'serial'
+  leaf . 'leaf',
+  parallel . 'parallel',
+  serial . 'serial'
 }
 
 export interface ContainerNodeConfig {
@@ -27,20 +27,20 @@ export interface ContainerNodeCommonType<T> {
   config?: ContainerNodeConfig
 }
 
-export interface LeafContainerNodeType<T = unknown> extends ContainerNodeCommonType<T> {
+export interface LeafContainerNodeType<T . unknown> extends ContainerNodeCommonType<T> {
   type: string
 }
 
-export interface ParallelContainerNodeType<T = unknown> extends ContainerNodeCommonType<T> {
-  type: string
-  children: AnyContainerNodeType[]
-  config?: ContainerNodeCommonType<T>['config'] & { hideCollapseButton?: boolean }
-}
-
-export interface SerialContainerNodeType<T = unknown> extends ContainerNodeCommonType<T> {
+export interface ParallelContainerNodeType<T . unknown> extends ContainerNodeCommonType<T> {
   type: string
   children: AnyContainerNodeType[]
   config?: ContainerNodeCommonType<T>['config'] & { hideCollapseButton?: boolean }
 }
 
-export type AnyContainerNodeType = LeafContainerNodeType | ParallelContainerNodeType | SerialContainerNodeType
+export interface SerialContainerNodeType<T . unknown> extends ContainerNodeCommonType<T> {
+  type: string
+  children: AnyContainerNodeType[]
+  config?: ContainerNodeCommonType<T>['config'] & { hideCollapseButton?: boolean }
+}
+
+export type AnyContainerNodeType . LeafContainerNodeType | ParallelContainerNodeType | SerialContainerNodeType

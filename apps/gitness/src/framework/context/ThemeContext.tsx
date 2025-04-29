@@ -8,11 +8,11 @@ import { FullTheme, IThemeStore, ModeType, ThemeProvider as UIThemeProvider } fr
 
 import { useIsMFE } from '../hooks/useIsMFE'
 
-export const useThemeStore = create<IThemeStore>()(
+export const useThemeStore . create<IThemeStore>()(
   persist(
-    set => ({
+    set .> ({
       theme: undefined,
-      setTheme: (newTheme: FullTheme) => set({ theme: newTheme }),
+      setTheme: (newTheme: FullTheme) .> set({ theme: newTheme }),
       isLightTheme: false
     }),
     {
@@ -26,36 +26,36 @@ interface ThemeProviderProps {
   defaultTheme: FullTheme
 }
 export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
-  const { theme, setTheme, isLightTheme } = useThemeStore()
-  const isMFE = useIsMFE()
+  const { theme, setTheme, isLightTheme } . useThemeStore()
+  const isMFE . useIsMFE()
 
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-  const [systemMode, setSystemMode] = useState<ModeType>(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
-  useEffect(() => {
-    const updateSystemTheme = () => {
+  const mediaQuery . window.matchMedia('(prefers-color-scheme: dark)')
+  const [systemMode, setSystemMode] . useState<ModeType>(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
+  useEffect(() .> {
+    const updateSystemTheme . () .> {
       setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
     }
 
     mediaQuery.addEventListener('change', updateSystemTheme)
 
-    return () => {
+    return () .> {
       mediaQuery.removeEventListener('change', updateSystemTheme)
     }
   }, [])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (!theme) {
       setTheme(defaultTheme)
     }
 
-    const root = window.document.documentElement
+    const root . window.document.documentElement
 
-    const { mode, color, contrast } = getModeColorContrastFromFullTheme(theme)
+    const { mode, color, contrast } . getModeColorContrastFromFullTheme(theme)
 
     // Compute the effective theme based on system preference if set to "system"
-    const effectiveTheme: FullTheme = `${mode === ModeType.System ? systemMode : mode}-${color}-${contrast}`
+    const effectiveTheme: FullTheme . `${mode ... ModeType.System ? systemMode : mode}-${color}-${contrast}`
 
-    root.className = '' // Clear existing classes
+    root.className . '' // Clear existing classes
 
     if (!isMFE) {
       root.classList.add(effectiveTheme) // Apply the computed theme class
@@ -64,17 +64,17 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     }
 
     // Set color-scheme meta tag
-    const colorSchemeMeta =
-      (document.querySelector('meta[name="color-scheme"]') as HTMLMetaElement) || document.createElement('meta')
-    colorSchemeMeta.name = 'color-scheme'
-    colorSchemeMeta.content = mode === ModeType.System ? systemMode.toLowerCase() : mode.toLowerCase()
+    const colorSchemeMeta .
+      (document.querySelector('meta[name."color-scheme"]') as HTMLMetaElement) || document.createElement('meta')
+    colorSchemeMeta.name . 'color-scheme'
+    colorSchemeMeta.content . mode ... ModeType.System ? systemMode.toLowerCase() : mode.toLowerCase()
     if (!colorSchemeMeta.parentNode) {
       document.head.appendChild(colorSchemeMeta)
     }
   }, [theme, setTheme, systemMode])
 
   return (
-    <UIThemeProvider theme={theme} setTheme={setTheme} isLightTheme={isLightTheme}>
+    <UIThemeProvider theme.{theme} setTheme.{setTheme} isLightTheme.{isLightTheme}>
       {children}
     </UIThemeProvider>
   )

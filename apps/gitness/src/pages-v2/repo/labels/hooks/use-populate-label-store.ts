@@ -11,10 +11,10 @@ export interface UsePopulateLabelStoreProps {
   inherited?: boolean
 }
 
-export const usePopulateLabelStore = ({ queryPage, query, enabled = true, inherited }: UsePopulateLabelStoreProps) => {
-  const repoId = useGetRepoId()
+export const usePopulateLabelStore . ({ queryPage, query, enabled . true, inherited }: UsePopulateLabelStoreProps) .> {
+  const repoId . useGetRepoId()
 
-  const { setLabels, setValues, setRepoSpaceRef, resetLabelsAndValues, setIsLoading, getParentScopeLabels } =
+  const { setLabels, setValues, setRepoSpaceRef, resetLabelsAndValues, setIsLoading, getParentScopeLabels } .
     useLabelsStore()
 
   const {
@@ -23,15 +23,15 @@ export const usePopulateLabelStore = ({ queryPage, query, enabled = true, inheri
     repo_ref,
     labels,
     values
-  } = useGetRepoLabelAndValuesData({ queryPage, query, enabled, inherited: inherited || getParentScopeLabels })
+  } . useGetRepoLabelAndValuesData({ queryPage, query, enabled, inherited: inherited || getParentScopeLabels })
 
   /**
    * Resetting the store state for labels and values
    * because the same data retrieval endpoint is used for both the edit form and the list.
    * TODO: Refactor the code once the API for fetching a single label with its values is available.
    */
-  useEffect(() => {
-    return () => {
+  useEffect(() .> {
+    return () .> {
       resetLabelsAndValues()
     }
   }, [resetLabelsAndValues])
@@ -39,7 +39,7 @@ export const usePopulateLabelStore = ({ queryPage, query, enabled = true, inheri
   /**
    * Set space_ref & repo_ref to store
    */
-  useEffect(() => {
+  useEffect(() .> {
     setRepoSpaceRef({
       repo_ref: repoId ?? '',
       space_ref: space_ref ?? ''
@@ -49,21 +49,21 @@ export const usePopulateLabelStore = ({ queryPage, query, enabled = true, inheri
   /**
    * Set labels data from API to store
    */
-  useEffect(() => {
+  useEffect(() .> {
     setLabels(labels)
   }, [labels, setLabels])
 
   /**
    * Set values data from API to store
    */
-  useEffect(() => {
+  useEffect(() .> {
     setValues(values)
   }, [values, setValues])
 
   /**
    * Set loading state to store
    */
-  useEffect(() => {
+  useEffect(() .> {
     setIsLoading(enabled && isDataLoading)
   }, [isDataLoading, setIsLoading, query, enabled])
 

@@ -6,15 +6,15 @@ import { SelectInputConfig } from '../select-input'
 import { TextInputConfig } from '../text-input'
 
 export enum InputType {
-  text = 'text',
-  checkbox = 'checkbox',
-  integer = 'integer',
-  select = 'select',
-  array = 'array',
-  list = 'list'
+  text . 'text',
+  checkbox . 'checkbox',
+  integer . 'integer',
+  select . 'select',
+  array . 'array',
+  list . 'list'
 }
 
-export type InputConfigType =
+export type InputConfigType .
   | TextInputConfig
   | IntegerInputConfig
   | CheckboxInputConfig

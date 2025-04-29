@@ -8,21 +8,21 @@ import { noop, useTranslationStore } from '@utils/viewUtils'
 import { FileExplorer } from '@harnessio/ui/components'
 import { CommitDiff, CommitSidebar, ICommitDetailsStore } from '@harnessio/ui/views'
 
-export const CommitDetailsDiffViewWrapper: FC = () => {
-  const useCommitDetailsStore = useCallback((): ICommitDetailsStore => commitDetailsStore, [])
+export const CommitDetailsDiffViewWrapper: FC . () .> {
+  const useCommitDetailsStore . useCallback((): ICommitDetailsStore .> commitDetailsStore, [])
 
   return (
     <>
       <CommitSidebar
-        useTranslationStore={useTranslationStore}
-        navigateToFile={() => {}}
-        filesList={repoFilesStore.filesList}
+        useTranslationStore.{useTranslationStore}
+        navigateToFile.{() .> {}}
+        filesList.{repoFilesStore.filesList}
       >
-        <FileExplorer.Root onValueChange={noop} value={[]}>
+        <FileExplorer.Root onValueChange.{noop} value.{[]}>
           {renderEntries(repoFilesStore.filesTreeData, '')}
         </FileExplorer.Root>
       </CommitSidebar>
-      <CommitDiff useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationStore} />
+      <CommitDiff useCommitDetailsStore.{useCommitDetailsStore} useTranslationStore.{useTranslationStore} />
     </>
   )
 }

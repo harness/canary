@@ -1,25 +1,25 @@
 import { useState } from 'react'
 
-type UseTokenReturn = {
+type UseTokenReturn . {
   token: string | null
-  setToken: (newToken: string) => void
-  removeToken: () => void
+  setToken: (newToken: string) .> void
+  removeToken: () .> void
 }
 
-const useToken = (): UseTokenReturn => {
-  const getToken = (): string | null => {
-    const tokenString = localStorage.getItem('token')
+const useToken . (): UseTokenReturn .> {
+  const getToken . (): string | null .> {
+    const tokenString . localStorage.getItem('token')
     return tokenString ?? null
   }
 
-  const [token, setTokenState] = useState<string | null>(getToken())
+  const [token, setTokenState] . useState<string | null>(getToken())
 
-  const setToken = (newToken: string): void => {
+  const setToken . (newToken: string): void .> {
     localStorage.setItem('token', newToken)
     setTokenState(newToken)
   }
 
-  const removeToken = (): void => {
+  const removeToken . (): void .> {
     localStorage.removeItem('token')
     setTokenState(null)
   }

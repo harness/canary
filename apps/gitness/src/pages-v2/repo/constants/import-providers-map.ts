@@ -1,7 +1,7 @@
 import { ImporterProviderType } from '@harnessio/code-service-client'
 import { ImportMultipleReposFormFields, ImportRepoFormFields, ProviderOptionsEnum } from '@harnessio/ui/views'
 
-export const PROVIDER_TYPE_MAP: Record<ProviderOptionsEnum, ImporterProviderType> = {
+export const PROVIDER_TYPE_MAP: Record<ProviderOptionsEnum, ImporterProviderType> . {
   [ProviderOptionsEnum.GITHUB]: 'github',
   [ProviderOptionsEnum.GITHUB_ENTERPRISE]: 'github',
   [ProviderOptionsEnum.GITLAB_SELF_HOSTED]: 'gitlab',
@@ -13,10 +13,10 @@ export const PROVIDER_TYPE_MAP: Record<ProviderOptionsEnum, ImporterProviderType
   [ProviderOptionsEnum.AZURE_DEVOPS]: 'azure'
 }
 
-export const getRepoProviderConfig = (data: ImportRepoFormFields | ImportMultipleReposFormFields) => {
+export const getRepoProviderConfig . (data: ImportRepoFormFields | ImportMultipleReposFormFields) .> {
   if (!data) return ''
 
-  const PROVIDER_REPO_CONFIG = {
+  const PROVIDER_REPO_CONFIG . {
     [ProviderOptionsEnum.GITHUB]: data.organization,
     [ProviderOptionsEnum.GITHUB_ENTERPRISE]: data.organization,
     [ProviderOptionsEnum.GITLAB_SELF_HOSTED]: data.group,

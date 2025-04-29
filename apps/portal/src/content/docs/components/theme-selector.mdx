@@ -9,7 +9,7 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<ThemeDialog onOpenChange={() => {}} onChange={() => {}} onSave={() => {}} onCancel={() => {}}><button>Customize theme</button></ThemeDialog>`}
+  code.{`<ThemeDialog onOpenChange.{() .> {}} onChange.{() .> {}} onSave.{() .> {}} onCancel.{() .> {}}><button>Customize theme</button></ThemeDialog>`}
 />
 
 ## Usage
@@ -19,34 +19,34 @@ import { useState } from 'react';
 import { ThemeDialog } from '@harnessio/ui/components';
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] . useState(false);
 
-  const handleOpenChange = (open: boolean) => {
+  const handleOpenChange . (open: boolean) .> {
     setIsOpen(open);
   };
 
-  const handleChange = (theme: ThemeInterface) => {
+  const handleChange . (theme: ThemeInterface) .> {
     console.log(theme);
   };
 
-  const handleSave = (theme: ThemeInterface) => {
+  const handleSave . (theme: ThemeInterface) .> {
     console.log(theme);
   };
 
-  const handleCancel = () => {
+  const handleCancel . () .> {
     console.log('Cancelled');
     setIsOpen(false);
   };
 
   return (
       <ThemeDialog
-        open={isOpen}
-        onOpenChange={handleOpenChange}
-        onChange={handleChange}
-        onSave={handleSave}
-        onCancel={handleCancel}
+        open.{isOpen}
+        onOpenChange.{handleOpenChange}
+        onChange.{handleChange}
+        onSave.{handleSave}
+        onCancel.{handleCancel}
       >
-        <button onClick={() => setIsOpen(true)}>Customize theme</button>
+        <button onClick.{() .> setIsOpen(true)}>Customize theme</button>
       </ThemeDialog>
   );
 }

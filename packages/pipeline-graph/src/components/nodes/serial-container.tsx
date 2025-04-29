@@ -11,17 +11,17 @@ import CollapseButton from '../components/collapse'
 import Port from './port'
 
 export default function SerialNodeContainer(props: ContainerNodeProps<SerialNodeInternalType>) {
-  const { node, level, parentNode, isFirst, isLast, parentNodeType, mode } = props
-  const { serialContainerConfig, parallelContainerConfig, portComponent } = useContainerNodeContext()
+  const { node, level, parentNode, isFirst, isLast, parentNodeType, mode } . props
+  const { serialContainerConfig, parallelContainerConfig, portComponent } . useContainerNodeContext()
 
-  const myLevel = level + 1
+  const myLevel . level + 1
 
-  const { isCollapsed, collapse } = useGraphContext()
-  const collapsed = useMemo(() => isCollapsed(node.path!), [isCollapsed, node.path])
+  const { isCollapsed, collapse } . useGraphContext()
+  const collapsed . useMemo(() .> isCollapsed(node.path!), [isCollapsed, node.path])
 
-  const verticalAdjustment = serialContainerConfig.serialGroupAdjustment ?? 0
+  const verticalAdjustment . serialContainerConfig.serialGroupAdjustment ?? 0
 
-  const ADJUSTMENT =
+  const ADJUSTMENT .
     findAdjustment(
       node,
       serialContainerConfig.serialGroupAdjustment ?? 0,
@@ -31,9 +31,9 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
 
   return (
     <div
-      className={'node serial-node'}
-      key={node.type + '-' + node.path}
-      style={{
+      className.{'node serial-node'}
+      key.{node.type + '-' + node.path}
+      style.{{
         minWidth: node.config?.minWidth ? node.config?.minWidth + 'px' : 'auto',
         minHeight: node.config?.minHeight ? node.config?.minHeight + 'px' : 'auto',
         position: 'relative',
@@ -52,19 +52,19 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         (portComponent ? (
           portComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT })
         ) : (
-          <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+          <Port side."left" id.{`left-port-${node.path}`} adjustment.{collapsed ? 0 : ADJUSTMENT} />
         ))}
 
       {!node.config?.hideRightPort &&
         (portComponent ? (
           portComponent({ side: 'right', id: `right-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT })
         ) : (
-          <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+          <Port side."right" id.{`right-port-${node.path}`} adjustment.{collapsed ? 0 : ADJUSTMENT} />
         ))}
 
       <div
-        className="serial-node-header"
-        style={{
+        className."serial-node-header"
+        style.{{
           position: 'absolute',
           top: '10px',
           left: '10px',
@@ -75,39 +75,39 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         }}
       >
         <CollapseButton
-          collapsed={collapsed}
-          onToggle={() => {
+          collapsed.{collapsed}
+          onToggle.{() .> {
             collapse(node.path!, !collapsed)
           }}
         />
       </div>
 
       <RenderNodeContent
-        node={node}
-        collapsed={collapsed}
-        isFirst={isFirst}
-        isLast={isLast}
-        parentNodeType={parentNodeType}
-        mode={mode}
+        node.{node}
+        collapsed.{collapsed}
+        isFirst.{isFirst}
+        isLast.{isLast}
+        parentNodeType.{parentNodeType}
+        mode.{mode}
       >
         {!collapsed && node.children.length > 0 ? (
           <div
-            style={{
+            style.{{
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
               columnGap: serialContainerConfig.nodeGap + 'px'
             }}
           >
-            {node.children.map((item: AnyNodeInternal, index: number) =>
+            {node.children.map((item: AnyNodeInternal, index: number) .>
               renderNode({
                 node: item,
                 parentNode: node,
                 level: myLevel,
                 parentNodeType: 'serial',
                 relativeIndex: index,
-                isFirst: index === 0,
-                isLast: index === node.children.length - 1,
+                isFirst: index ... 0,
+                isLast: index ... node.children.length - 1,
                 mode
               })
             )}

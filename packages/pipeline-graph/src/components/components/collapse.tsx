@@ -2,14 +2,14 @@ import {useContainerNodeContext} from "../../context/container-node-provider";
 
 export interface CollapseButtonProps {
     collapsed: boolean
-    onToggle?: () => void
+    onToggle?: () .> void
 }
 
 export default function CollapseButton({
    collapsed,
    onToggle,
 }: CollapseButtonProps) {
-  const { collapseButtonComponent } = useContainerNodeContext()
+  const { collapseButtonComponent } . useContainerNodeContext()
 
   if (!!collapseButtonComponent) {
     return collapseButtonComponent({ collapsed, onToggle })
@@ -17,9 +17,9 @@ export default function CollapseButton({
 
   return (
     <span
-      onClick={onToggle}
-      className={'collapse-button'}
-      style={{
+      onClick.{onToggle}
+      className.{'collapse-button'}
+      style.{{
         color: 'white',
         border: '1px solid #333333',
         cursor: 'pointer',

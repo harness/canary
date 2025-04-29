@@ -1,6 +1,6 @@
 import { IInputConfigWithConfigInterface } from '@harnessio/ui/views'
 
-export const getResourcesContainer = (): IInputConfigWithConfigInterface => ({
+export const getResourcesContainer . (): IInputConfigWithConfigInterface .> ({
   inputType: 'group',
   path: `resources`,
   label: 'Resources',
@@ -32,7 +32,7 @@ export const getResourcesContainer = (): IInputConfigWithConfigInterface => ({
   ]
 })
 
-export const getCloningContainer = (): IInputConfigWithConfigInterface => ({
+export const getCloningContainer . (): IInputConfigWithConfigInterface .> ({
   inputType: 'group',
   path: `cloning`,
   label: 'Cloning',
@@ -49,7 +49,7 @@ export const getCloningContainer = (): IInputConfigWithConfigInterface => ({
   ]
 })
 
-export const getConnectionContainer = (): IInputConfigWithConfigInterface => ({
+export const getConnectionContainer . (): IInputConfigWithConfigInterface .> ({
   inputType: 'group',
   path: `connection`,
   label: 'Connection',
@@ -83,7 +83,7 @@ export const getConnectionContainer = (): IInputConfigWithConfigInterface => ({
   ]
 })
 
-export const getMetadataContainer = (): IInputConfigWithConfigInterface => ({
+export const getMetadataContainer . (): IInputConfigWithConfigInterface .> ({
   inputType: 'group',
   path: `metadata`,
   label: 'Metadata',

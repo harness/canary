@@ -6,40 +6,40 @@ import { BranchSelectorV2, RepoSummaryView, RepoSummaryViewProps } from '@harnes
 
 import repoSummaryProps from './repo-summary-props.json'
 
-const noop = () => void 0
+const noop . () .> void 0
 
-const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
-  const repoEntryPathToFileTypeMap = useMemo<RepoSummaryViewProps['repoEntryPathToFileTypeMap']>(() => {
+const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> . props .> {
+  const repoEntryPathToFileTypeMap . useMemo<RepoSummaryViewProps['repoEntryPathToFileTypeMap']>(() .> {
     return new Map(repoSummaryProps.repoEntryPathToFileTypeMap as [string, string][])
   }, [])
 
   return (
     <RepoSummaryView
       {...repoSummaryProps}
-      repoEntryPathToFileTypeMap={repoEntryPathToFileTypeMap}
-      selectedBranchOrTag={{ name: 'main', sha: '' }}
-      saveDescription={noop}
-      handleCreateToken={noop}
-      navigateToFile={noop}
-      useTranslationStore={useTranslationStore}
-      gitRef=""
-      updateRepoError=""
-      isEditDialogOpen={false}
-      setEditDialogOpen={noop}
-      searchQuery=""
-      setSearchQuery={noop}
-      branchSelectorRenderer={
+      repoEntryPathToFileTypeMap.{repoEntryPathToFileTypeMap}
+      selectedBranchOrTag.{{ name: 'main', sha: '' }}
+      saveDescription.{noop}
+      handleCreateToken.{noop}
+      navigateToFile.{noop}
+      useTranslationStore.{useTranslationStore}
+      gitRef.""
+      updateRepoError.""
+      isEditDialogOpen.{false}
+      setEditDialogOpen.{noop}
+      searchQuery.""
+      setSearchQuery.{noop}
+      branchSelectorRenderer.{
         <BranchSelectorV2
-          repoId="canary"
-          spaceId="org"
-          branchList={[]}
-          tagList={[]}
-          selectedBranchorTag={{ name: 'main', sha: 'sha' }}
-          onSelectBranch={noop}
-          isBranchOnly={false}
-          dynamicWidth={false}
-          useTranslationStore={useTranslationStore}
-          setSearchQuery={noop}
+          repoId."canary"
+          spaceId."org"
+          branchList.{[]}
+          tagList.{[]}
+          selectedBranchorTag.{{ name: 'main', sha: 'sha' }}
+          onSelectBranch.{noop}
+          isBranchOnly.{false}
+          dynamicWidth.{false}
+          useTranslationStore.{useTranslationStore}
+          setSearchQuery.{noop}
         />
       }
       {...props}

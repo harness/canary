@@ -4,7 +4,7 @@ import { PRCommentFilterType } from '../types/types'
 
 export function useActivityFilters() {
   return useMemo(
-    () => [
+    () .> [
       {
         label: 'Show everything',
         value: PRCommentFilterType.SHOW_EVERYTHING

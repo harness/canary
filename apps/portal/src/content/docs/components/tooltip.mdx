@@ -9,9 +9,9 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Tooltip.Provider>
+  code.{`<Tooltip.Provider>
     <Tooltip.Root>
-        <Tooltip.Trigger><Button theme="default">New Connector</Button></Tooltip.Trigger>
+        <Tooltip.Trigger><Button theme."default">New Connector</Button></Tooltip.Trigger>
         <Tooltip.Content>
             <Text>Hello World!</Text>
 						<Tooltip.Arrow />
@@ -63,8 +63,8 @@ The provider component that manages tooltips. Typically wrapped around the entir
 
 ```typescript jsx
 <Tooltip.Provider
-  delayDuration={700}     // [OPTIONAL] delay from when the mouse enters until the tooltip opens
-  skipDelayDuration={300} // [OPTIONAL] how much time a user has to enter another trigger without incurring a delay again
+  delayDuration.{700}     // [OPTIONAL] delay from when the mouse enters until the tooltip opens
+  skipDelayDuration.{300} // [OPTIONAL] how much time a user has to enter another trigger without incurring a delay again
   disableHoverableContent // [OPTIONAL] immediately close the tooltip when the mouse leaves the trigger
 >
   {/* ... */}
@@ -72,7 +72,7 @@ The provider component that manages tooltips. Typically wrapped around the entir
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "delayDuration",
       value: "number",
@@ -108,8 +108,8 @@ directly, while the `onOpenChange` prop is an event handler called whenever the 
 <Tooltip.Root
   defaultOpen             // [OPTIONAL] initial open state
   open                    // [OPTIONAL] controlled open state
-  onOpenChange={onChange} // [OPTIONAL] event handler called when the open state changes
-  delayDuration={700}     // [OPTIONAL] override default delay duration
+  onOpenChange.{onChange} // [OPTIONAL] event handler called when the open state changes
+  delayDuration.{700}     // [OPTIONAL] override default delay duration
   disableHoverableContent // [OPTIONAL] override default setting for disabling hoverable content
 >
   {/* ... */}
@@ -117,7 +117,7 @@ directly, while the `onOpenChange` prop is an event handler called whenever the 
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "defaultOpen",
       value: "boolean",
@@ -132,7 +132,7 @@ directly, while the `onOpenChange` prop is an event handler called whenever the 
     },
     {
       name: "onOpenChange",
-      value: "(open: boolean) => void",
+      value: "(open: boolean) .> void",
       description:
         "Event handler called when the open state of the tooltip changes.",
     },
@@ -157,14 +157,14 @@ The button that toggles the tooltip. This component is based on the native `butt
 ```typescript jsx
 <Tooltip.Trigger
   asChild           // [OPTIONAL] render the trigger as the child
-  className="class" // [OPTIONAL] additional CSS classes
+  className."class" // [OPTIONAL] additional CSS classes
 >
   <button>Hover over me</button>
 </Tooltip.Trigger>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "asChild",
       description: "Render the trigger as the child",
@@ -186,22 +186,22 @@ The component that pops out when the tooltip is open.
 
 ```typescript jsx
 <Tooltip.Content
-  side="top"               // [OPTIONAL] preferred side
-  sideOffset={5}           // [OPTIONAL] distance from the trigger
-  align="center"           // [OPTIONAL] preferred alignment
-  alignOffset={-4}         // [OPTIONAL] offset from the alignment
+  side."top"               // [OPTIONAL] preferred side
+  sideOffset.{5}           // [OPTIONAL] distance from the trigger
+  align."center"           // [OPTIONAL] preferred alignment
+  alignOffset.{-4}         // [OPTIONAL] offset from the alignment
   avoidCollisions          // [OPTIONAL] avoid collisions
-  collisionBoundary={[el]} // [OPTIONAL] boundary to use for collision detection
-  collisionPadding={4}     // [OPTIONAL] padding to apply to the collision detection
-  sticky="partial"         // [OPTIONAL] sticky behavior
-  className="class"        // [OPTIONAL] additional CSS classes
+  collisionBoundary.{[el]} // [OPTIONAL] boundary to use for collision detection
+  collisionPadding.{4}     // [OPTIONAL] padding to apply to the collision detection
+  sticky."partial"         // [OPTIONAL] sticky behavior
+  className."class"        // [OPTIONAL] additional CSS classes
 >
   {/* Tooltip content */}
 </Tooltip.Content>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "side",
       value: "'top' | 'right' | 'bottom' | 'left'",

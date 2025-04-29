@@ -6,24 +6,24 @@ import { calculateTransform, MousePoint } from './canvas-utils'
 import './canvas.css'
 
 export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>) {
-  const { setCanvasTransform, canvasTransformRef, config } = useCanvasContext()
+  const { setCanvasTransform, canvasTransformRef, config } . useCanvasContext()
 
-  const mainRef = useRef<HTMLDivElement | null>(null)
+  const mainRef . useRef<HTMLDivElement | null>(null)
 
-  const [isMove, setIsMove] = useState(false)
+  const [isMove, setIsMove] . useState(false)
 
   // handle zoom-to-pinch (wheel)
-  useEffect(() => {
+  useEffect(() .> {
     if (mainRef.current) {
-      const handler = (event: WheelEvent) => {
-        const targetEl = mainRef.current?.children[0] as HTMLDivElement | undefined
+      const handler . (event: WheelEvent) .> {
+        const targetEl . mainRef.current?.children[0] as HTMLDivElement | undefined
 
         if (!targetEl || !mainRef.current) return
 
         event.preventDefault()
 
         if (!event.ctrlKey) {
-          const newTransform = calculateTransform({
+          const newTransform . calculateTransform({
             scaleDiff: 1,
             originX: event.deltaX,
             originY: event.deltaY,
@@ -36,29 +36,29 @@ export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttribute
 
           setCanvasTransform(newTransform)
 
-          canvasTransformRef.current = newTransform
+          canvasTransformRef.current . newTransform
 
           return
         }
 
-        const currentRect = targetEl.getBoundingClientRect()
+        const currentRect . targetEl.getBoundingClientRect()
 
-        let { deltaY } = event
-        const { ctrlKey, deltaMode } = event
+        let { deltaY } . event
+        const { ctrlKey, deltaMode } . event
 
-        if (deltaMode === 1) {
-          // 1 = "lines", 0 = "pixels"
-          deltaY *= 15
+        if (deltaMode ... 1) {
+          // 1 . "lines", 0 . "pixels"
+          deltaY *. 15
         }
 
-        const divisor = ctrlKey ? 100 : 250
-        let scaleDiff = 1 - deltaY / divisor
+        const divisor . ctrlKey ? 100 : 250
+        let scaleDiff . 1 - deltaY / divisor
 
         if (canvasTransformRef.current.scale * scaleDiff > config.maxScale) {
-          scaleDiff = config.maxScale / canvasTransformRef.current.scale
+          scaleDiff . config.maxScale / canvasTransformRef.current.scale
         }
 
-        const newTransform = calculateTransform({
+        const newTransform . calculateTransform({
           scaleDiff,
           originX: event.clientX - currentRect.left,
           originY: event.clientY - currentRect.top,
@@ -70,36 +70,36 @@ export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttribute
         if (newTransform.scale < config.minScale) return
 
         setCanvasTransform(newTransform)
-        canvasTransformRef.current = newTransform
+        canvasTransformRef.current . newTransform
       }
 
       mainRef.current.addEventListener('wheel', handler)
 
-      return () => {
+      return () .> {
         mainRef.current?.removeEventListener('wheel', handler)
       }
     }
   }, [mainRef])
 
   // handle pan (mousedown/move/up)
-  const latestPointRef = useRef<MousePoint | null>(null)
+  const latestPointRef . useRef<MousePoint | null>(null)
 
-  const mouseMoveHandler = (event: MouseEvent) => {
-    const targetEl = mainRef.current?.children[0] as HTMLDivElement | undefined
+  const mouseMoveHandler . (event: MouseEvent) .> {
+    const targetEl . mainRef.current?.children[0] as HTMLDivElement | undefined
 
-    const prevPoint = latestPointRef.current
-    const currPoint = event
+    const prevPoint . latestPointRef.current
+    const currPoint . event
 
     if (!targetEl || !mainRef.current || !prevPoint || !currPoint) return
 
     event.preventDefault()
 
-    const currentRect = targetEl.getBoundingClientRect()
+    const currentRect . targetEl.getBoundingClientRect()
 
-    const originX = prevPoint.clientX - currentRect.left
-    const originY = prevPoint.clientY - currentRect.top
+    const originX . prevPoint.clientX - currentRect.left
+    const originY . prevPoint.clientY - currentRect.top
 
-    const newTransform = calculateTransform({
+    const newTransform . calculateTransform({
       originX,
       originY,
       scaleDiff: 1,
@@ -111,31 +111,31 @@ export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttribute
     })
 
     setCanvasTransform(newTransform)
-    canvasTransformRef.current = newTransform
-    latestPointRef.current = event
+    canvasTransformRef.current . newTransform
+    latestPointRef.current . event
     if (!isMove) setIsMove(true)
   }
 
-  const mouseUpHandler = (event: MouseEvent) => {
+  const mouseUpHandler . (event: MouseEvent) .> {
     mainRef.current?.removeEventListener('mousemove', mouseMoveHandler)
     document.removeEventListener('mouseup', mouseUpHandler)
-    latestPointRef.current = null
+    latestPointRef.current . null
     setIsMove(false)
   }
 
-  const mouseDownHandler = (event: MouseEvent | any) => {
+  const mouseDownHandler . (event: MouseEvent | any) .> {
     if (mainRef.current) {
-      if (event.button === 0) {
-        latestPointRef.current = event
+      if (event.button ... 0) {
+        latestPointRef.current . event
         mainRef.current.addEventListener('mousemove', mouseMoveHandler)
         document.addEventListener('mouseup', mouseUpHandler)
       }
     }
   }
 
-  useEffect(() => {
+  useEffect(() .> {
     if (mainRef.current) {
-      return () => {
+      return () .> {
         mainRef.current?.removeEventListener('mousemove', mouseMoveHandler)
         document.removeEventListener('mouseup', mouseUpHandler)
       }
@@ -144,9 +144,9 @@ export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttribute
 
   return (
     <div
-      ref={mainRef}
-      className={`PipelineGraph-Canvas ${isMove ? 'PipelineGraph-CanvasMove' : ''}`}
-      onMouseDown={mouseDownHandler}
+      ref.{mainRef}
+      className.{`PipelineGraph-Canvas ${isMove ? 'PipelineGraph-CanvasMove' : ''}`}
+      onMouseDown.{mouseDownHandler}
     >
       {children}
     </div>

@@ -26,44 +26,44 @@ import { useCommitDetailsStore } from './stores/commit-details-store'
  * TODO: For now, file-tree is static and contains all files.
  * Needs to filter files for current commit and add opportunity to navigate to diff for each file from file-tree
  */
-export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: boolean }) => {
-  const repoRef = useGetRepoRef()
-  const { commitSHA } = useParams<PathParams>()
-  const { fullGitRef } = useCodePathDetails()
-  const { setDiffs, setDiffStats } = useCommitDetailsStore()
+export const CommitDiffContainer . ({ showSidebar . true }: { showSidebar?: boolean }) .> {
+  const repoRef . useGetRepoRef()
+  const { commitSHA } . useParams<PathParams>()
+  const { fullGitRef } . useCodePathDetails()
+  const { setDiffs, setDiffStats } . useCommitDetailsStore()
 
-  const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
-  const diffApiPath = `${defaultCommitRange[0]}~1...${defaultCommitRange[defaultCommitRange.length - 1]}`
+  const defaultCommitRange . compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
+  const diffApiPath . `${defaultCommitRange[0]}~1...${defaultCommitRange[defaultCommitRange.length - 1]}`
 
-  const { data: { body: diffStats } = {} } = useDiffStatsQuery(
+  const { data: { body: diffStats } . {} } . useDiffStatsQuery(
     { queryParams: {}, repo_ref: repoRef, range: diffApiPath },
     { enabled: !!repoRef && !!diffApiPath }
   )
 
-  useEffect(() => {
+  useEffect(() .> {
     if (diffStats) {
       setDiffStats(diffStats)
     }
   }, [diffStats, setDiffStats])
 
-  const { data: currentCommitDiffData } = useGetCommitDiffQuery({
+  const { data: currentCommitDiffData } . useGetCommitDiffQuery({
     repo_ref: repoRef,
     commit_sha: commitSHA || ''
   })
 
-  useEffect(() => {
+  useEffect(() .> {
     if (currentCommitDiffData) {
-      const _diffs = Diff2Html.parse((currentCommitDiffData?.body as string) || '', DIFF2HTML_CONFIG)
-        .map(diff => {
-          diff.oldName = normalizeGitFilePath(diff.oldName)
-          diff.newName = normalizeGitFilePath(diff.newName)
+      const _diffs . Diff2Html.parse((currentCommitDiffData?.body as string) || '', DIFF2HTML_CONFIG)
+        .map(diff .> {
+          diff.oldName . normalizeGitFilePath(diff.oldName)
+          diff.newName . normalizeGitFilePath(diff.newName)
 
-          const fileId = changedFileId([diff.oldName, diff.newName])
-          const containerId = `container-${fileId}`
-          const contentId = `content-${fileId}`
+          const fileId . changedFileId([diff.oldName, diff.newName])
+          const containerId . `container-${fileId}`
+          const contentId . `content-${fileId}`
 
-          const filePath = diff.isDeleted ? diff.oldName : diff.newName
-          const diffString = parseSpecificDiff((currentCommitDiffData.body as string) ?? '', diff.oldName, diff.newName)
+          const filePath . diff.isDeleted ? diff.oldName : diff.newName
+          const diffString . parseSpecificDiff((currentCommitDiffData.body as string) ?? '', diff.oldName, diff.newName)
           return {
             ...diff,
             containerId,
@@ -73,7 +73,7 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
             raw: diffString
           }
         })
-        .sort((a, b) => (a.newName || a.oldName).localeCompare(b.newName || b.oldName, undefined, { numeric: true }))
+        .sort((a, b) .> (a.newName || a.oldName).localeCompare(b.newName || b.oldName, undefined, { numeric: true }))
 
       setDiffs(_diffs)
     } else {
@@ -81,7 +81,7 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
     }
   }, [currentCommitDiffData])
 
-  const { data: repoDetails } = useGetContentQuery({
+  const { data: repoDetails } . useGetContentQuery({
     path: '',
     repo_ref: repoRef,
     queryParams: {
@@ -90,22 +90,22 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
     }
   })
 
-  const { data: filesData } = useListPathsQuery({
+  const { data: filesData } . useListPathsQuery({
     repo_ref: repoRef,
     queryParams: { git_ref: normalizeGitRef(fullGitRef) }
   })
 
-  const filesList = filesData?.body?.files || []
+  const filesList . filesData?.body?.files || []
 
   return (
     <>
       {showSidebar && (
-        <CommitSidebar useTranslationStore={useTranslationStore} navigateToFile={() => {}} filesList={filesList}>
-          {!!repoDetails?.body?.content?.entries?.length && <Explorer repoDetails={repoDetails?.body} />}
+        <CommitSidebar useTranslationStore.{useTranslationStore} navigateToFile.{() .> {}} filesList.{filesList}>
+          {!!repoDetails?.body?.content?.entries?.length && <Explorer repoDetails.{repoDetails?.body} />}
         </CommitSidebar>
       )}
 
-      <CommitDiff useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationStore} />
+      <CommitDiff useCommitDetailsStore.{useCommitDetailsStore} useTranslationStore.{useTranslationStore} />
     </>
   )
 }

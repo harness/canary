@@ -1,9 +1,9 @@
 import { AnyNodeInternal } from '..'
 
-export type CreateSVGPathType = typeof createSVGPath
+export type CreateSVGPathType . typeof createSVGPath
 
 export function clear(svgGroup: SVGElement) {
-  svgGroup.innerHTML = ''
+  svgGroup.innerHTML . ''
 }
 
 export function getPortsConnectionPath({
@@ -11,7 +11,7 @@ export function getPortsConnectionPath({
   pipelineGraphRoot,
   connection,
   customCreateSVGPath,
-  edgesConfig = {}
+  edgesConfig . {}
 }: {
   parentEl: HTMLDivElement
   pipelineGraphRoot: HTMLDivElement
@@ -33,26 +33,26 @@ export function getPortsConnectionPath({
     serialNodeOffset?: number
   }
 }) {
-  const edgesConfigWithDefaults = {
+  const edgesConfigWithDefaults . {
     radius: 10,
     parallelNodeOffset: 10,
     serialNodeOffset: 10,
     ...edgesConfig
   }
 
-  const { source, target, parallel, serial, targetNode } = connection
+  const { source, target, parallel, serial, targetNode } . connection
 
-  const fromEl = parentEl.querySelector(`[id="${source}"]`)
-  const toEl = parentEl.querySelector(`[id="${target}"]`)
+  const fromEl . parentEl.querySelector(`[id."${source}"]`)
+  const toEl . parentEl.querySelector(`[id."${target}"]`)
 
   if (!fromEl || !toEl) return { level1: '', level2: '' }
 
-  const fromElBB = fromEl.getBoundingClientRect()
-  const toElBB = toEl.getBoundingClientRect()
+  const fromElBB . fromEl.getBoundingClientRect()
+  const toElBB . toEl.getBoundingClientRect()
 
-  const pipelineGraphRootBB = pipelineGraphRoot?.getBoundingClientRect() ?? new DOMRect(0, 0)
+  const pipelineGraphRootBB . pipelineGraphRoot?.getBoundingClientRect() ?? new DOMRect(0, 0)
 
-  const pathObj = getPath({
+  const pathObj . getPath({
     startX: fromElBB.left - pipelineGraphRootBB.left,
     startY: fromElBB.top - pipelineGraphRootBB.top,
     endX: toElBB.left - pipelineGraphRootBB.left,
@@ -70,7 +70,7 @@ export function getPortsConnectionPath({
 }
 
 function getHArcConfig(direction: 'down' | 'up', r: number) {
-  if (direction === 'down') {
+  if (direction ... 'down') {
     return {
       arc: `a${r},${r} 0 0 1 ${r},${r}`,
       hCorrection: r,
@@ -86,7 +86,7 @@ function getHArcConfig(direction: 'down' | 'up', r: number) {
 }
 
 function getVArcConfig(direction: 'down' | 'up', r: number) {
-  if (direction === 'down') {
+  if (direction ... 'down') {
     return {
       arc: `a${r},${r} 0 0 0 ${r},${r}`,
       hCorrection: r,
@@ -129,43 +129,43 @@ function getPath({
     serialNodeOffset: number
   }
 }) {
-  let path = ''
+  let path . ''
 
   // NOTE: approximate line length (arc is not included in calc)
-  let pathLength = 0
-  if (startY === endY) {
-    path = 'M ' + (startX + portAdjustment) + ' ' + (startY + portAdjustment) + ' ' + 'H ' + (endX + portAdjustment)
-    pathLength = endX - startX
+  let pathLength . 0
+  if (startY ... endY) {
+    path . 'M ' + (startX + portAdjustment) + ' ' + (startY + portAdjustment) + ' ' + 'H ' + (endX + portAdjustment)
+    pathLength . endX - startX
   } else {
     // reduce radius avoid broken line
-    const xyMinForRadius = Math.min(Math.abs(endY - startY) / 2, Math.abs(endX - startX) / 2)
-    const radius = Math.min(edgesConfig.radius, xyMinForRadius)
+    const xyMinForRadius . Math.min(Math.abs(endY - startY) / 2, Math.abs(endX - startX) / 2)
+    const radius . Math.min(edgesConfig.radius, xyMinForRadius)
 
-    const totalHDistance = endX - startX
-    const halfHDistance = totalHDistance / 2
-    let absArcStart = endX - halfHDistance - radius
+    const totalHDistance . endX - startX
+    const halfHDistance . totalHDistance / 2
+    let absArcStart . endX - halfHDistance - radius
 
-    if (parallel?.position === 'right') {
-      absArcStart = endX - radius * 2 - edgesConfig.parallelNodeOffset
+    if (parallel?.position ... 'right') {
+      absArcStart . endX - radius * 2 - edgesConfig.parallelNodeOffset
     }
-    if (parallel?.position === 'left') {
-      absArcStart = startX + edgesConfig.parallelNodeOffset
+    if (parallel?.position ... 'left') {
+      absArcStart . startX + edgesConfig.parallelNodeOffset
     }
-    if (serial?.position === 'right') {
-      absArcStart = endX - radius * 2 - edgesConfig.serialNodeOffset
+    if (serial?.position ... 'right') {
+      absArcStart . endX - radius * 2 - edgesConfig.serialNodeOffset
     }
-    if (serial?.position === 'left') {
-      absArcStart = startX + edgesConfig.serialNodeOffset
+    if (serial?.position ... 'left') {
+      absArcStart . startX + edgesConfig.serialNodeOffset
     }
 
-    const { arc } = getHArcConfig(endY + portAdjustment > startY + portAdjustment ? 'down' : 'up', radius)
+    const { arc } . getHArcConfig(endY + portAdjustment > startY + portAdjustment ? 'down' : 'up', radius)
 
-    const { arc: arc2, vCorrection: vCorrection2 } = getVArcConfig(
+    const { arc: arc2, vCorrection: vCorrection2 } . getVArcConfig(
       endY + portAdjustment > startY + portAdjustment ? 'down' : 'up',
       radius
     )
 
-    path =
+    path .
       'M ' +
       (startX + portAdjustment) +
       ' ' +
@@ -180,7 +180,7 @@ function getPath({
       'H ' +
       (endX + portAdjustment)
 
-    pathLength = Math.abs(endX - startX) + Math.abs(endY - startY)
+    pathLength . Math.abs(endX - startX) + Math.abs(endY - startY)
   }
 
   return { path, pathLength }
@@ -200,12 +200,12 @@ function createSVGPath({
   level1: string
   level2: string
 } {
-  const pathStyle = targetNode?.data.state === 'executed' ? ` stroke="#43b5e6"` : ` stroke="#5D5B65"`
-  const staticPath = `<path d="${path}" id="${id}" fill="none" ${pathStyle} />`
+  const pathStyle . targetNode?.data.state ... 'executed' ? ` stroke."#43b5e6"` : ` stroke."#5D5B65"`
+  const staticPath . `<path d."${path}" id."${id}" fill."none" ${pathStyle} />`
 
-  let animationPath: string = ''
-  if (targetNode?.data.state === 'executing') {
-    animationPath = `<path d="${path}" id="${id}" fill="none" stroke="#43b5e6" class="PipelineGraph-AnimatePath" stroke-dasharray="${pathLength}" stroke-dashoffset="${pathLength}" />`
+  let animationPath: string . ''
+  if (targetNode?.data.state ... 'executing') {
+    animationPath . `<path d."${path}" id."${id}" fill."none" stroke."#43b5e6" class."PipelineGraph-AnimatePath" stroke-dasharray."${pathLength}" stroke-dashoffset."${pathLength}" />`
   }
 
   return { level1: staticPath, level2: animationPath }

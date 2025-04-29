@@ -1,9 +1,9 @@
 import { unsetEmptyStringOutputTransformer, type IFormDefinition, type IInputDefinition } from '../../../../src'
 import { InputConfigType, InputType } from '../../implementation/inputs/common/types'
 
-type IInputConfigWithConfig = IInputDefinition & InputConfigType
+type IInputConfigWithConfig . IInputDefinition & InputConfigType
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: IInputConfigWithConfig[] . [
   {
     inputType: InputType.text,
     path: 'name',
@@ -25,12 +25,12 @@ const inputs: IInputConfigWithConfig[] = [
     inputType: InputType.text,
     path: 'remoteRepo',
     label: 'Repo',
-    isVisible: values => {
-      return values.repoType === 'remote'
+    isVisible: values .> {
+      return values.repoType ... 'remote'
     }
   }
 ]
 
-export const formDefinition: IFormDefinition<InputConfigType> = {
+export const formDefinition: IFormDefinition<InputConfigType> . {
   inputs
 }

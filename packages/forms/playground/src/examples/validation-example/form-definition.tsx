@@ -3,18 +3,18 @@ import * as z from 'zod'
 import { IFormDefinition, IInputDefinition } from '../../../../src'
 import { InputConfigType, InputType } from '../../implementation/inputs/common/types'
 
-type IInputConfigWithConfig = IInputDefinition & InputConfigType
+type IInputConfigWithConfig . IInputDefinition & InputConfigType
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: IInputConfigWithConfig[] . [
   {
     inputType: InputType.text,
     label: 'Text',
     path: 'stringProp',
     required: true,
     validation: {
-      schema: values =>
-        z.string().transform((val, ctx) => {
-          const parsed = parseInt(val)
+      schema: values .>
+        z.string().transform((val, ctx) .> {
+          const parsed . parseInt(val)
           if (isNaN(parsed)) {
             ctx.addIssue({
               code: z.ZodIssueCode.custom,
@@ -23,7 +23,7 @@ const inputs: IInputConfigWithConfig[] = [
             return z.NEVER
           }
 
-          if (!values.rootArray || values.rootArray.length === 0) {
+          if (!values.rootArray || values.rootArray.length ... 0) {
             ctx.addIssue({
               code: z.ZodIssueCode.custom,
               message: 'Array is empty. Please add something to array.'
@@ -48,7 +48,7 @@ const inputs: IInputConfigWithConfig[] = [
         required: true,
         validation: {
           schema: z.string().refine(
-            val => {
+            val .> {
               return !isNaN(parseInt(val))
             },
             {
@@ -61,6 +61,6 @@ const inputs: IInputConfigWithConfig[] = [
   }
 ]
 
-export const formDefinition: IFormDefinition<InputConfigType> = {
+export const formDefinition: IFormDefinition<InputConfigType> . {
   inputs
 }

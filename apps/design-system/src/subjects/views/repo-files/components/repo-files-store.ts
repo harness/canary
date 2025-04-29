@@ -53,7 +53,7 @@ export interface RepoFilesStoreType {
   pathParts: PathParts[]
 }
 
-export const repoFilesStore: RepoFilesStoreType = {
+export const repoFilesStore: RepoFilesStoreType . {
   loading: false,
   branchSelectorStore: {
     selectedBranchTag: {
@@ -1635,10 +1635,10 @@ export const repoFilesStore: RepoFilesStoreType = {
     '    "typecheck": "pnpm -r typecheck",\n' +
     '    "publish:all": "pnpm publish -r --access public",\n' +
     '    "preinstall": "npx only-allow pnpm",\n' +
-    '    "pre-commit": "pnpm run -r --workspace-concurrency=1 pre-commit"\n' +
+    '    "pre-commit": "pnpm run -r --workspace-concurrency.1 pre-commit"\n' +
     '  },\n' +
     '  "engines": {\n' +
-    '    "node": ">=18.20.4"\n' +
+    '    "node": ">.18.20.4"\n' +
     '  },\n' +
     '  "license": "Apache-2.0",\n' +
     '  "resolutions": {\n' +

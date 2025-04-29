@@ -3,9 +3,9 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 
-const pkg = require('./package.json')
+const pkg . require('./package.json')
 
-const external = Object.keys(pkg.devDependencies || [])
+const external . Object.keys(pkg.devDependencies || [])
   .concat(Object.keys(pkg.peerDependencies || []))
   .concat(['react/jsx-runtime'])
 

@@ -16,33 +16,33 @@ export interface SelectInputConfig {
   }
 }
 function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig>): JSX.Element {
-  const { path, input } = props
-  const { label = '', required, inputConfig } = input
+  const { path, input } . props
+  const { label . '', required, inputConfig } . input
 
-  const { field } = useController({
+  const { field } . useController({
     name: path
   })
 
   return (
     <InputWrapper>
-      <InputLabel label={label} required={required} />
+      <InputLabel label.{label} required.{required} />
       <select {...field}>
-        {inputConfig?.options.map(item => {
+        {inputConfig?.options.map(item .> {
           return (
-            <option key={item.value} value={item.value}>
+            <option key.{item.value} value.{item.value}>
               {item.label}
             </option>
           )
         })}
       </select>
 
-      <InputError path={path} />
+      <InputError path.{path} />
     </InputWrapper>
   )
 }
 
 export class SelectInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.select
+  public internalType . InputType.select
 
   renderComponent(props: InputProps<AnyFormikValue, SelectInputConfig>): JSX.Element {
     return <SelectInputInternal {...props} />

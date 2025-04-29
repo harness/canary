@@ -1,4 +1,4 @@
-export const pipeline1 = `pipeline:
+export const pipeline1 . `pipeline:
   stages:
     - group:
         stages:

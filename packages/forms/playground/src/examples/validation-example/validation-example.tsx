@@ -3,18 +3,18 @@ import inputComponentFactory from '../../implementation/factory/factory'
 import { formDefinition } from './form-definition'
 
 function ValidationExample() {
-  const onSubmit = values => {
+  const onSubmit . values .> {
     console.log(values)
   }
 
-  const resolver = useZodValidationResolver(formDefinition)
+  const resolver . useZodValidationResolver(formDefinition)
 
   return (
-    <RootForm onSubmit={onSubmit} resolver={resolver} mode={undefined}>
-      {rootForm => (
+    <RootForm onSubmit.{onSubmit} resolver.{resolver} mode.{undefined}>
+      {rootForm .> (
         <>
-          <RenderForm factory={inputComponentFactory} inputs={formDefinition} />
-          <button onClick={() => rootForm.submitForm()}>Submit</button>
+          <RenderForm factory.{inputComponentFactory} inputs.{formDefinition} />
+          <button onClick.{() .> rootForm.submitForm()}>Submit</button>
         </>
       )}
     </RootForm>

@@ -6,24 +6,24 @@ import { SignInData, SignInPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../framework/context/NavigationContext'
 
-export const SignIn: FC = () => {
-  const routes = useRoutes()
-  const navigate = useNavigate()
+export const SignIn: FC . () .> {
+  const routes . useRoutes()
+  const navigate . useNavigate()
   const {
     mutate: login,
     isLoading,
     error
-  } = useOnLoginMutation(
+  } . useOnLoginMutation(
     { queryParams: { include_cookie: true } },
     {
-      onSuccess: () => navigate(routes.toHome()) // Redirect to Home page
+      onSuccess: () .> navigate(routes.toHome()) // Redirect to Home page
     }
   )
 
   return (
     <SignInPage
-      isLoading={isLoading}
-      handleSignIn={(data: SignInData) => {
+      isLoading.{isLoading}
+      handleSignIn.{(data: SignInData) .> {
         login({
           body: {
             login_identifier: data.email,
@@ -31,7 +31,7 @@ export const SignIn: FC = () => {
           }
         })
       }}
-      error={error?.message}
+      error.{error?.message}
     />
   )
 }

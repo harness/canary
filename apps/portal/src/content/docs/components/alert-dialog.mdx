@@ -9,7 +9,7 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<AlertDialog.Root>
+  code.{`<AlertDialog.Root>
     <AlertDialog.Trigger asChild>
       <Button>Open Alert Dialog</Button>
     </AlertDialog.Trigger>
@@ -17,7 +17,7 @@ import { DocsPage } from "@/components/docs-page";
       <AlertDialog.Header>
         <AlertDialog.Title>Alert Dialog Title</AlertDialog.Title>
       </AlertDialog.Header>
-      <AlertDialog.Description variant="secondary">
+      <AlertDialog.Description variant."secondary">
         Alert dialog content goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </AlertDialog.Description>
       <AlertDialog.Footer>
@@ -42,13 +42,13 @@ return (
       <AlertDialog.Header>
         <AlertDialog.Title>Alert Dialog Title</AlertDialog.Title>
       </AlertDialog.Header>
-      <AlertDialog.Description variant="secondary">
+      <AlertDialog.Description variant."secondary">
         This is the alert dialog description.
         Alert dialog content goes here.
       </AlertDialog.Description>
       <AlertDialog.Footer>
         <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-        <AlertDialog.Action onClick={handleConfirm}>
+        <AlertDialog.Action onClick.{handleConfirm}>
           Confirm
         </AlertDialog.Action>
       </AlertDialog.Footer>
@@ -84,7 +84,7 @@ All parts of the `AlertDialog` component can be imported and composed as require
 The `Root` component serves as the main container for all alert dialog elements.
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description:
@@ -106,7 +106,7 @@ The `Trigger` component is used to open the alert dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Content to display",
@@ -132,7 +132,7 @@ The `Content` component defines the main content area of the alert dialog.
   <AlertDialog.Header>
     <AlertDialog.Title>Alert Dialog Title</AlertDialog.Title>
   </AlertDialog.Header>
-  <AlertDialog.Description variant="secondary">
+  <AlertDialog.Description variant."secondary">
     This is the alert dialog description.
     Alert dialog content goes here.
   </AlertDialog.Description>
@@ -144,7 +144,7 @@ The `Content` component defines the main content area of the alert dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Content to display",
@@ -178,7 +178,7 @@ The `Header` component is used to define the header section of the alert dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Content to display",
@@ -206,7 +206,7 @@ The `Footer` component is used to define the footer section of the alert dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Footer content",
@@ -231,7 +231,7 @@ The `Title` component displays the title of the alert dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Title content",
@@ -252,14 +252,14 @@ The `Title` component displays the title of the alert dialog.
 The `Description` component displays the description of the alert dialog.
 
 ```typescript jsx
-<AlertDialog.Description variant="secondary">
+<AlertDialog.Description variant."secondary">
   This is the alert dialog description.
   Alert dialog content goes here.
 </AlertDialog.Description>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Description content",
@@ -292,7 +292,7 @@ The `Action` component is used to define the action button of the alert dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Action button content",
@@ -325,7 +325,7 @@ The `Cancel` component is used to define the cancel button of the alert dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Cancel button content",

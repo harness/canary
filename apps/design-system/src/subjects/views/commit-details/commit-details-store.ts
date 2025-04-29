@@ -2,7 +2,7 @@ import { noop } from '@utils/viewUtils'
 
 import { DiffFileEntry, ICommitDetailsStore } from '@harnessio/ui/views'
 
-export const commitDetailsStore: ICommitDetailsStore = {
+export const commitDetailsStore: ICommitDetailsStore . {
   diffs: [
     {
       blocks: [
@@ -54,7 +54,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 9
             },
             {
-              content: "+const CodeBlock: FC<CodeBlockProps> = ({ code, language = 'typescript tsx' }) => (",
+              content: "+const CodeBlock: FC<CodeBlockProps> . ({ code, language . 'typescript tsx' }) .> (",
               type: 'insert',
               newNumber: 10
             },
@@ -64,7 +64,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 11
             },
             {
-              content: '+    source={`',
+              content: '+    source.{`',
               type: 'insert',
               newNumber: 12
             },
@@ -130,7 +130,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-/dev/null::::apps/design-system/src/components/docs-page/code-block.tsx',
       fileId: '/dev/null::::apps/design-system/src/components/docs-page/code-block.tsx',
       filePath: 'apps/design-system/src/components/docs-page/code-block.tsx',
-      raw: "diff --git a/apps/design-system/src/components/docs-page/code-block.tsx b/apps/design-system/src/components/docs-page/code-block.tsx\nnew file mode 100644\nindex 0000000000000000000000000000000000000000..29e67d052254a294ca3d36fc7a0eecd890e3f862\n--- /dev/null\n+++ b/apps/design-system/src/components/docs-page/code-block.tsx\n@@ -0,0 +1,20 @@\n+import { FC } from 'react'\n+\n+import { MarkdownViewer } from '@harnessio/ui/components'\n+\n+export interface CodeBlockProps {\n+  code: string\n+  language?: string\n+}\n+\n+const CodeBlock: FC<CodeBlockProps> = ({ code, language = 'typescript tsx' }) => (\n+  <MarkdownViewer\n+    source={`\n+\\`\\`\\`${language}\n+${code}\n+\\`\\`\\`\n+`}\n+  />\n+)\n+\n+export default CodeBlock\n"
+      raw: "diff --git a/apps/design-system/src/components/docs-page/code-block.tsx b/apps/design-system/src/components/docs-page/code-block.tsx\nnew file mode 100644\nindex 0000000000000000000000000000000000000000..29e67d052254a294ca3d36fc7a0eecd890e3f862\n--- /dev/null\n+++ b/apps/design-system/src/components/docs-page/code-block.tsx\n@@ -0,0 +1,20 @@\n+import { FC } from 'react'\n+\n+import { MarkdownViewer } from '@harnessio/ui/components'\n+\n+export interface CodeBlockProps {\n+  code: string\n+  language?: string\n+}\n+\n+const CodeBlock: FC<CodeBlockProps> . ({ code, language . 'typescript tsx' }) .> (\n+  <MarkdownViewer\n+    source.{`\n+\\`\\`\\`${language}\n+${code}\n+\\`\\`\\`\n+`}\n+  />\n+)\n+\n+export default CodeBlock\n"
     },
     {
       blocks: [
@@ -188,7 +188,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 9
             },
             {
-              content: ' export const DocsPage = {',
+              content: ' export const DocsPage . {',
               type: 'context',
               oldNumber: 7,
               newNumber: 10
@@ -272,7 +272,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'apps/design-system/src/components/docs-page/docs-page.tsx::::apps/design-system/src/components/docs-page/docs-page.tsx',
       filePath: 'apps/design-system/src/components/docs-page/docs-page.tsx',
-      raw: "diff --git a/apps/design-system/src/components/docs-page/docs-page.tsx b/apps/design-system/src/components/docs-page/docs-page.tsx\nindex 42fd1bddc44007476270e4c34ec7104602e39c9a..5f3bdaf0b672d6ddb144cb7994003adee63c02c6 100644\n--- a/apps/design-system/src/components/docs-page/docs-page.tsx\n+++ b/apps/design-system/src/components/docs-page/docs-page.tsx\n@@ -1,13 +1,19 @@\n+import CodeBlock from './code-block.tsx'\n import ComponentExample from './component-example'\n import Example from './example'\n+import PropsTable from './props-table.tsx'\n import Root from './root'\n import Section from './section'\n+import SubSection from './sub-section.tsx'\n import Summary from './summary'\n \n export const DocsPage = {\n   Root,\n   Summary,\n   Section,\n+  SubSection,\n   Example,\n-  ComponentExample\n+  ComponentExample,\n+  CodeBlock,\n+  PropsTable\n }\n"
+      raw: "diff --git a/apps/design-system/src/components/docs-page/docs-page.tsx b/apps/design-system/src/components/docs-page/docs-page.tsx\nindex 42fd1bddc44007476270e4c34ec7104602e39c9a..5f3bdaf0b672d6ddb144cb7994003adee63c02c6 100644\n--- a/apps/design-system/src/components/docs-page/docs-page.tsx\n+++ b/apps/design-system/src/components/docs-page/docs-page.tsx\n@@ -1,13 +1,19 @@\n+import CodeBlock from './code-block.tsx'\n import ComponentExample from './component-example'\n import Example from './example'\n+import PropsTable from './props-table.tsx'\n import Root from './root'\n import Section from './section'\n+import SubSection from './sub-section.tsx'\n import Summary from './summary'\n \n export const DocsPage . {\n   Root,\n   Summary,\n   Section,\n+  SubSection,\n   Example,\n-  ComponentExample\n+  ComponentExample,\n+  CodeBlock,\n+  PropsTable\n }\n"
     },
     {
       blocks: [
@@ -355,7 +355,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 15
             },
             {
-              content: '+const PropsTable: FC<PropsTableProps> = ({ props }) => (',
+              content: '+const PropsTable: FC<PropsTableProps> . ({ props }) .> (',
               type: 'insert',
               newNumber: 16
             },
@@ -405,17 +405,17 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 25
             },
             {
-              content: '+      {props.map(({ name, required, defaultValue, description }) => (',
+              content: '+      {props.map(({ name, required, defaultValue, description }) .> (',
               type: 'insert',
               newNumber: 26
             },
             {
-              content: '+        <TableRow key={name}>',
+              content: '+        <TableRow key.{name}>',
               type: 'insert',
               newNumber: 27
             },
             {
-              content: '+          <TableCell title={description}>{name}</TableCell>',
+              content: '+          <TableCell title.{description}>{name}</TableCell>',
               type: 'insert',
               newNumber: 28
             },
@@ -486,7 +486,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-/dev/null::::apps/design-system/src/components/docs-page/props-table.tsx',
       fileId: '/dev/null::::apps/design-system/src/components/docs-page/props-table.tsx',
       filePath: 'apps/design-system/src/components/docs-page/props-table.tsx',
-      raw: "diff --git a/apps/design-system/src/components/docs-page/props-table.tsx b/apps/design-system/src/components/docs-page/props-table.tsx\nnew file mode 100644\nindex 0000000000000000000000000000000000000000..8b8aeb204e6979d83260ddaccd5dda94830cfec1\n--- /dev/null\n+++ b/apps/design-system/src/components/docs-page/props-table.tsx\n@@ -0,0 +1,37 @@\n+import { FC } from 'react'\n+\n+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@harnessio/ui/components'\n+\n+interface PropDescription {\n+  name: string\n+  required?: boolean\n+  defaultValue?: string\n+  description?: string\n+}\n+\n+export interface PropsTableProps {\n+  props: PropDescription[]\n+}\n+\n+const PropsTable: FC<PropsTableProps> = ({ props }) => (\n+  <Table>\n+    <TableHeader>\n+      <TableRow>\n+        <TableHead>Prop</TableHead>\n+        <TableHead>Required</TableHead>\n+        <TableHead>Default</TableHead>\n+      </TableRow>\n+    </TableHeader>\n+    <TableBody>\n+      {props.map(({ name, required, defaultValue, description }) => (\n+        <TableRow key={name}>\n+          <TableCell title={description}>{name}</TableCell>\n+          <TableCell>{required ? 'yup' : 'nope'}</TableCell>\n+          <TableCell>{defaultValue}</TableCell>\n+        </TableRow>\n+      ))}\n+    </TableBody>\n+  </Table>\n+)\n+\n+export default PropsTable\n"
+      raw: "diff --git a/apps/design-system/src/components/docs-page/props-table.tsx b/apps/design-system/src/components/docs-page/props-table.tsx\nnew file mode 100644\nindex 0000000000000000000000000000000000000000..8b8aeb204e6979d83260ddaccd5dda94830cfec1\n--- /dev/null\n+++ b/apps/design-system/src/components/docs-page/props-table.tsx\n@@ -0,0 +1,37 @@\n+import { FC } from 'react'\n+\n+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@harnessio/ui/components'\n+\n+interface PropDescription {\n+  name: string\n+  required?: boolean\n+  defaultValue?: string\n+  description?: string\n+}\n+\n+export interface PropsTableProps {\n+  props: PropDescription[]\n+}\n+\n+const PropsTable: FC<PropsTableProps> . ({ props }) .> (\n+  <Table>\n+    <TableHeader>\n+      <TableRow>\n+        <TableHead>Prop</TableHead>\n+        <TableHead>Required</TableHead>\n+        <TableHead>Default</TableHead>\n+      </TableRow>\n+    </TableHeader>\n+    <TableBody>\n+      {props.map(({ name, required, defaultValue, description }) .> (\n+        <TableRow key.{name}>\n+          <TableCell title.{description}>{name}</TableCell>\n+          <TableCell>{required ? 'yup' : 'nope'}</TableCell>\n+          <TableCell>{defaultValue}</TableCell>\n+        </TableRow>\n+      ))}\n+    </TableBody>\n+  </Table>\n+)\n+\n+export default PropsTable\n"
     },
     {
       blocks: [
@@ -604,7 +604,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 11
             },
             {
-              content: ' const Section: FC<SectionProps> = ({ title, description, children }) => (',
+              content: ' const Section: FC<SectionProps> . ({ title, description, children }) .> (',
               type: 'context',
               oldNumber: 10,
               newNumber: 12
@@ -615,12 +615,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 11
             },
             {
-              content: '+  <section className={css.section}>',
+              content: '+  <section className.{css.section}>',
               type: 'insert',
               newNumber: 13
             },
             {
-              content: '     <Text as="h3" size={5}>',
+              content: '     <Text as."h3" size.{5}>',
               type: 'context',
               oldNumber: 12,
               newNumber: 14
@@ -661,7 +661,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'apps/design-system/src/components/docs-page/section.tsx::::apps/design-system/src/components/docs-page/section.tsx',
       filePath: 'apps/design-system/src/components/docs-page/section.tsx',
-      raw: "diff --git a/apps/design-system/src/components/docs-page/section.tsx b/apps/design-system/src/components/docs-page/section.tsx\nindex 395cdc7b75f17ec147c82604c890d29c8181fa78..0d7d92a0a22cf451320980a9c0301ede2efd0c1d 100644\n--- a/apps/design-system/src/components/docs-page/section.tsx\n+++ b/apps/design-system/src/components/docs-page/section.tsx\n@@ -2,13 +2,15 @@ import { FC, PropsWithChildren, ReactNode } from 'react'\n \n import { Text } from '@harnessio/ui/components'\n \n+import css from './section.module.css'\n+\n export interface SectionProps extends PropsWithChildren {\n   title: string\n   description?: ReactNode\n }\n \n const Section: FC<SectionProps> = ({ title, description, children }) => (\n-  <section>\n+  <section className={css.section}>\n     <Text as=\"h3\" size={5}>\n       {title}\n     </Text>\n"
+      raw: "diff --git a/apps/design-system/src/components/docs-page/section.tsx b/apps/design-system/src/components/docs-page/section.tsx\nindex 395cdc7b75f17ec147c82604c890d29c8181fa78..0d7d92a0a22cf451320980a9c0301ede2efd0c1d 100644\n--- a/apps/design-system/src/components/docs-page/section.tsx\n+++ b/apps/design-system/src/components/docs-page/section.tsx\n@@ -2,13 +2,15 @@ import { FC, PropsWithChildren, ReactNode } from 'react'\n \n import { Text } from '@harnessio/ui/components'\n \n+import css from './section.module.css'\n+\n export interface SectionProps extends PropsWithChildren {\n   title: string\n   description?: ReactNode\n }\n \n const Section: FC<SectionProps> . ({ title, description, children }) .> (\n-  <section>\n+  <section className.{css.section}>\n     <Text as.\"h3\" size.{5}>\n       {title}\n     </Text>\n"
     },
     {
       blocks: [
@@ -723,17 +723,17 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 11
             },
             {
-              content: '+const SubSection: FC<SubSectionProps> = ({ title, description, children }) => (',
+              content: '+const SubSection: FC<SubSectionProps> . ({ title, description, children }) .> (',
               type: 'insert',
               newNumber: 12
             },
             {
-              content: '+  <section className={css.section}>',
+              content: '+  <section className.{css.section}>',
               type: 'insert',
               newNumber: 13
             },
             {
-              content: '+    <Text as="h4" size={4}>',
+              content: '+    <Text as."h4" size.{4}>',
               type: 'insert',
               newNumber: 14
             },
@@ -799,7 +799,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-/dev/null::::apps/design-system/src/components/docs-page/sub-section.tsx',
       fileId: '/dev/null::::apps/design-system/src/components/docs-page/sub-section.tsx',
       filePath: 'apps/design-system/src/components/docs-page/sub-section.tsx',
-      raw: "diff --git a/apps/design-system/src/components/docs-page/sub-section.tsx b/apps/design-system/src/components/docs-page/sub-section.tsx\nnew file mode 100644\nindex 0000000000000000000000000000000000000000..90db2c3a606d6e32ad9d1d7d208bb02fa2d4b05e\n--- /dev/null\n+++ b/apps/design-system/src/components/docs-page/sub-section.tsx\n@@ -0,0 +1,22 @@\n+import { FC, PropsWithChildren, ReactNode } from 'react'\n+\n+import { Text } from '@harnessio/ui/components'\n+\n+import css from './section.module.css'\n+\n+export interface SubSectionProps extends PropsWithChildren {\n+  title: string\n+  description?: ReactNode\n+}\n+\n+const SubSection: FC<SubSectionProps> = ({ title, description, children }) => (\n+  <section className={css.section}>\n+    <Text as=\"h4\" size={4}>\n+      {title}\n+    </Text>\n+    {description}\n+    {children}\n+  </section>\n+)\n+\n+export default SubSection\n"
+      raw: "diff --git a/apps/design-system/src/components/docs-page/sub-section.tsx b/apps/design-system/src/components/docs-page/sub-section.tsx\nnew file mode 100644\nindex 0000000000000000000000000000000000000000..90db2c3a606d6e32ad9d1d7d208bb02fa2d4b05e\n--- /dev/null\n+++ b/apps/design-system/src/components/docs-page/sub-section.tsx\n@@ -0,0 +1,22 @@\n+import { FC, PropsWithChildren, ReactNode } from 'react'\n+\n+import { Text } from '@harnessio/ui/components'\n+\n+import css from './section.module.css'\n+\n+export interface SubSectionProps extends PropsWithChildren {\n+  title: string\n+  description?: ReactNode\n+}\n+\n+const SubSection: FC<SubSectionProps> . ({ title, description, children }) .> (\n+  <section className.{css.section}>\n+    <Text as.\"h4\" size.{4}>\n+      {title}\n+    </Text>\n+    {description}\n+    {children}\n+  </section>\n+)\n+\n+export default SubSection\n"
     },
     {
       blocks: [
@@ -892,7 +892,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                ' const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ children, asChild = false }) => {',
+                ' const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> . ({ children, asChild . false }) .> {',
               type: 'context',
               oldNumber: 18,
               newNumber: 9
@@ -906,7 +906,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
         {
           lines: [
             {
-              content: '               <div className="bg-cn-background-1 sticky top-0 z-40">',
+              content: '               <div className."bg-cn-background-1 sticky top-0 z-40">',
               type: 'context',
               oldNumber: 62,
               newNumber: 53
@@ -924,7 +924,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 55
             },
             {
-              content: '-                    <Breadcrumb className="select-none">',
+              content: '-                    <Breadcrumb className."select-none">',
               type: 'delete',
               oldNumber: 65
             },
@@ -939,7 +939,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 67
             },
             {
-              content: '-                          <BreadcrumbLink href="#">Lorem</BreadcrumbLink>',
+              content: '-                          <BreadcrumbLink href."#">Lorem</BreadcrumbLink>',
               type: 'delete',
               oldNumber: 68
             },
@@ -959,7 +959,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 71
             },
             {
-              content: '-                          <BreadcrumbLink href="#">Ipsum</BreadcrumbLink>',
+              content: '-                          <BreadcrumbLink href."#">Ipsum</BreadcrumbLink>',
               type: 'delete',
               oldNumber: 72
             },
@@ -989,7 +989,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 77
             },
             {
-              content: '+                    <Breadcrumb.Root className="select-none">',
+              content: '+                    <Breadcrumb.Root className."select-none">',
               type: 'insert',
               newNumber: 56
             },
@@ -1004,7 +1004,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 58
             },
             {
-              content: '+                          <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>',
+              content: '+                          <Breadcrumb.Link href."#">Lorem</Breadcrumb.Link>',
               type: 'insert',
               newNumber: 59
             },
@@ -1024,7 +1024,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 62
             },
             {
-              content: '+                          <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>',
+              content: '+                          <Breadcrumb.Link href."#">Ipsum</Breadcrumb.Link>',
               type: 'insert',
               newNumber: 63
             },
@@ -1075,7 +1075,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 62,
           oldStartLine2: null,
           newStartLine: 53,
-          header: '@@ -62,19 +53,19 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre'
+          header: '@@ -62,19 +53,19 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> . ({ childre'
         }
       ],
       deletedLines: 23,
@@ -1095,7 +1095,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'apps/design-system/src/pages/view-preview/root-view-wrapper.tsx::::apps/design-system/src/pages/view-preview/root-view-wrapper.tsx',
       filePath: 'apps/design-system/src/pages/view-preview/root-view-wrapper.tsx',
-      raw: 'diff --git a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\nindex 31551abd93ce31e564e2304d83638dca29b302f2..57549ac177fdd0b5197f562edb3983a2f0197a1f 100644\n--- a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n+++ b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n@@ -3,16 +3,7 @@ import { Outlet, Route, Routes } from \'react-router-dom\'\n \n import { noop, useThemeStore, useTranslationStore } from \'@utils/viewUtils\'\n \n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbSeparator,\n-  Navbar,\n-  NavbarItemType,\n-  Topbar\n-} from \'@harnessio/ui/components\'\n+import { Breadcrumb, Navbar, NavbarItemType, Topbar } from \'@harnessio/ui/components\'\n import { SandboxLayout } from \'@harnessio/ui/views\'\n \n const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ children, asChild = false }) => {\n@@ -62,19 +53,19 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre\n               <div className="bg-cn-background-1 sticky top-0 z-40">\n                 <Topbar.Root>\n                   <Topbar.Left>\n-                    <Breadcrumb className="select-none">\n-                      <BreadcrumbList>\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href="#">Lorem</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href="#">Ipsum</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>Dolor</BreadcrumbItem>\n-                      </BreadcrumbList>\n-                    </Breadcrumb>\n+                    <Breadcrumb.Root className="select-none">\n+                      <Breadcrumb.List>\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>Dolor</Breadcrumb.Item>\n+                      </Breadcrumb.List>\n+                    </Breadcrumb.Root>\n                   </Topbar.Left>\n                 </Topbar.Root>\n               </div>\n'
+      raw: 'diff --git a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\nindex 31551abd93ce31e564e2304d83638dca29b302f2..57549ac177fdd0b5197f562edb3983a2f0197a1f 100644\n--- a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n+++ b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n@@ -3,16 +3,7 @@ import { Outlet, Route, Routes } from \'react-router-dom\'\n \n import { noop, useThemeStore, useTranslationStore } from \'@utils/viewUtils\'\n \n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbSeparator,\n-  Navbar,\n-  NavbarItemType,\n-  Topbar\n-} from \'@harnessio/ui/components\'\n+import { Breadcrumb, Navbar, NavbarItemType, Topbar } from \'@harnessio/ui/components\'\n import { SandboxLayout } from \'@harnessio/ui/views\'\n \n const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> . ({ children, asChild . false }) .> {\n@@ -62,19 +53,19 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> . ({ childre\n               <div className."bg-cn-background-1 sticky top-0 z-40">\n                 <Topbar.Root>\n                   <Topbar.Left>\n-                    <Breadcrumb className."select-none">\n-                      <BreadcrumbList>\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href."#">Lorem</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href."#">Ipsum</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>Dolor</BreadcrumbItem>\n-                      </BreadcrumbList>\n-                    </Breadcrumb>\n+                    <Breadcrumb.Root className."select-none">\n+                      <Breadcrumb.List>\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href."#">Lorem</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href."#">Ipsum</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>Dolor</Breadcrumb.Item>\n+                      </Breadcrumb.List>\n+                    </Breadcrumb.Root>\n                   </Topbar.Left>\n                 </Topbar.Root>\n               </div>\n'
     },
     {
       blocks: [
@@ -1112,7 +1112,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 2
             },
             {
-              content: '+const BreadcrumbComponent = () => (',
+              content: '+const BreadcrumbComponent . () .> (',
               type: 'insert',
               newNumber: 3
             },
@@ -1122,7 +1122,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 4
             },
             {
-              content: '+    <DocsPage.Summary title="Breadcrumb">',
+              content: '+    <DocsPage.Summary title."Breadcrumb">',
               type: 'insert',
               newNumber: 5
             },
@@ -1163,12 +1163,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 12
             },
             {
-              content: '+      code={`',
+              content: '+      code.{`',
               type: 'insert',
               newNumber: 13
             },
             {
-              content: '+  <Breadcrumb.Root className="select-none">',
+              content: '+  <Breadcrumb.Root className."select-none">',
               type: 'insert',
               newNumber: 14
             },
@@ -1183,7 +1183,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 16
             },
             {
-              content: '+        <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>',
+              content: '+        <Breadcrumb.Link href."#">Lorem</Breadcrumb.Link>',
               type: 'insert',
               newNumber: 17
             },
@@ -1213,7 +1213,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 22
             },
             {
-              content: '+        <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>',
+              content: '+        <Breadcrumb.Link href."#">Ipsum</Breadcrumb.Link>',
               type: 'insert',
               newNumber: 23
             },
@@ -1258,7 +1258,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 31
             },
             {
-              content: '+    <DocsPage.Section title="Anatomy">',
+              content: '+    <DocsPage.Section title."Anatomy">',
               type: 'insert',
               newNumber: 32
             },
@@ -1278,7 +1278,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 35
             },
             {
-              content: '+        code={`<Breadcrumb.Root className="select-none">',
+              content: '+        code.{`<Breadcrumb.Root className."select-none">',
               type: 'insert',
               newNumber: 36
             },
@@ -1293,7 +1293,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 38
             },
             {
-              content: '+      <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>',
+              content: '+      <Breadcrumb.Link href."#">Lorem</Breadcrumb.Link>',
               type: 'insert',
               newNumber: 39
             },
@@ -1323,7 +1323,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 44
             },
             {
-              content: '+      <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>',
+              content: '+      <Breadcrumb.Link href."#">Ipsum</Breadcrumb.Link>',
               type: 'insert',
               newNumber: 45
             },
@@ -1368,12 +1368,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 53
             },
             {
-              content: '+    <DocsPage.Section title="API Reference">',
+              content: '+    <DocsPage.Section title."API Reference">',
               type: 'insert',
               newNumber: 54
             },
             {
-              content: '+      <DocsPage.SubSection title="Root">',
+              content: '+      <DocsPage.SubSection title."Root">',
               type: 'insert',
               newNumber: 55
             },
@@ -1389,7 +1389,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 57
             },
             {
-              content: '+          props={[',
+              content: '+          props.{[',
               type: 'insert',
               newNumber: 58
             },
@@ -1425,7 +1425,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 64
             },
             {
-              content: '+      <DocsPage.SubSection title="List">',
+              content: '+      <DocsPage.SubSection title."List">',
               type: 'insert',
               newNumber: 65
             },
@@ -1441,7 +1441,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 67
             },
             {
-              content: '+          code={`<Breadcrumb.List>',
+              content: '+          code.{`<Breadcrumb.List>',
               type: 'insert',
               newNumber: 68
             },
@@ -1466,7 +1466,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 72
             },
             {
-              content: '+          props={[',
+              content: '+          props.{[',
               type: 'insert',
               newNumber: 73
             },
@@ -1502,7 +1502,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 79
             },
             {
-              content: '+      <DocsPage.SubSection title="Item">',
+              content: '+      <DocsPage.SubSection title."Item">',
               type: 'insert',
               newNumber: 80
             },
@@ -1517,7 +1517,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 82
             },
             {
-              content: '+          code={`<Breadcrumb.Item>',
+              content: '+          code.{`<Breadcrumb.Item>',
               type: 'insert',
               newNumber: 83
             },
@@ -1542,7 +1542,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 87
             },
             {
-              content: '+          props={[',
+              content: '+          props.{[',
               type: 'insert',
               newNumber: 88
             },
@@ -1577,7 +1577,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 94
             },
             {
-              content: '+      <DocsPage.SubSection title="Link">',
+              content: '+      <DocsPage.SubSection title."Link">',
               type: 'insert',
               newNumber: 95
             },
@@ -1603,12 +1603,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 99
             },
             {
-              content: '+          code={`<Breadcrumb.Item>',
+              content: '+          code.{`<Breadcrumb.Item>',
               type: 'insert',
               newNumber: 100
             },
             {
-              content: '+  <Breadcrumb.Link href="#">',
+              content: '+  <Breadcrumb.Link href."#">',
               type: 'insert',
               newNumber: 101
             },
@@ -1643,7 +1643,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 107
             },
             {
-              content: '+    <button onClick={handleLinkClick}>Click me</button>',
+              content: '+    <button onClick.{handleLinkClick}>Click me</button>',
               type: 'insert',
               newNumber: 108
             },
@@ -1668,7 +1668,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 112
             },
             {
-              content: '+          props={[',
+              content: '+          props.{[',
               type: 'insert',
               newNumber: 113
             },
@@ -1735,7 +1735,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 125
             },
             {
-              content: '+      <DocsPage.SubSection title="Page">',
+              content: '+      <DocsPage.SubSection title."Page">',
               type: 'insert',
               newNumber: 126
             },
@@ -1761,7 +1761,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 130
             },
             {
-              content: '+        <DocsPage.CodeBlock code={`<Breadcrumb.Page>Lorem ipsum</Breadcrumb.Page>`} />',
+              content: '+        <DocsPage.CodeBlock code.{`<Breadcrumb.Page>Lorem ipsum</Breadcrumb.Page>`} />',
               type: 'insert',
               newNumber: 131
             },
@@ -1771,7 +1771,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 132
             },
             {
-              content: '+          props={[',
+              content: '+          props.{[',
               type: 'insert',
               newNumber: 133
             },
@@ -1806,7 +1806,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 139
             },
             {
-              content: '+      <DocsPage.SubSection title="Separator">',
+              content: '+      <DocsPage.SubSection title."Separator">',
               type: 'insert',
               newNumber: 140
             },
@@ -1822,7 +1822,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 142
             },
             {
-              content: '+          code={`<Breadcrumb.Separator />',
+              content: '+          code.{`<Breadcrumb.Separator />',
               type: 'insert',
               newNumber: 143
             },
@@ -1877,7 +1877,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 153
             },
             {
-              content: '+          props={[',
+              content: '+          props.{[',
               type: 'insert',
               newNumber: 154
             },
@@ -1912,7 +1912,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 160
             },
             {
-              content: '+      <DocsPage.SubSection title="Ellipsis">',
+              content: '+      <DocsPage.SubSection title."Ellipsis">',
               type: 'insert',
               newNumber: 161
             },
@@ -1923,12 +1923,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 162
             },
             {
-              content: '+        <DocsPage.CodeBlock code={`<Breadcrumb.Ellipsis />`} />',
+              content: '+        <DocsPage.CodeBlock code.{`<Breadcrumb.Ellipsis />`} />',
               type: 'insert',
               newNumber: 163
             },
             {
-              content: "+        <DocsPage.PropsTable props={[{ name: 'className', required: false }]} />",
+              content: "+        <DocsPage.PropsTable props.{[{ name: 'className', required: false }]} />",
               type: 'insert',
               newNumber: 164
             },
@@ -1984,7 +1984,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-/dev/null::::apps/design-system/src/subjects/components/breadcrumb.tsx',
       fileId: '/dev/null::::apps/design-system/src/subjects/components/breadcrumb.tsx',
       filePath: 'apps/design-system/src/subjects/components/breadcrumb.tsx',
-      raw: "diff --git a/apps/design-system/src/subjects/components/breadcrumb.tsx b/apps/design-system/src/subjects/components/breadcrumb.tsx\nnew file mode 100644\nindex 0000000000000000000000000000000000000000..35d3931575e2cebe57ae880faa5eecc1196fae09\n--- /dev/null\n+++ b/apps/design-system/src/subjects/components/breadcrumb.tsx\n@@ -0,0 +1,170 @@\n+import { DocsPage } from '@components/docs-page/docs-page'\n+\n+const BreadcrumbComponent = () => (\n+  <DocsPage.Root>\n+    <DocsPage.Summary title=\"Breadcrumb\">\n+      <p>\n+        A breadcrumbs is a list of links that help visualize the location of a page within the hierarchical structure of\n+        a site, it allows navigation up to any of the ancestors.\n+      </p>\n+    </DocsPage.Summary>\n+\n+    <DocsPage.ComponentExample\n+      code={`\n+  <Breadcrumb.Root className=\"select-none\">\n+    <Breadcrumb.List>\n+      <Breadcrumb.Item>\n+        <Breadcrumb.Link href=\"#\">Lorem</Breadcrumb.Link>\n+      </Breadcrumb.Item>\n+      <Breadcrumb.Separator />\n+      <Breadcrumb.Ellipsis />\n+      <Breadcrumb.Separator />\n+      <Breadcrumb.Item>\n+        <Breadcrumb.Link href=\"#\">Ipsum</Breadcrumb.Link>\n+      </Breadcrumb.Item>\n+      <Breadcrumb.Separator />\n+      <Breadcrumb.Page>Dolor</Breadcrumb.Page>\n+    </Breadcrumb.List>\n+  </Breadcrumb.Root>\n+    `}\n+    />\n+\n+    <DocsPage.Section title=\"Anatomy\">\n+      <p>All parts of the breadcrumb can be imported and composed as required.</p>\n+\n+      <DocsPage.CodeBlock\n+        code={`<Breadcrumb.Root className=\"select-none\">\n+  <Breadcrumb.List>\n+    <Breadcrumb.Item>\n+      <Breadcrumb.Link href=\"#\">Lorem</Breadcrumb.Link>\n+    </Breadcrumb.Item>\n+    <Breadcrumb.Separator />\n+    <Breadcrumb.Ellipsis />\n+    <Breadcrumb.Separator />\n+    <Breadcrumb.Item>\n+      <Breadcrumb.Link href=\"#\">Ipsum</Breadcrumb.Link>\n+    </Breadcrumb.Item>\n+    <Breadcrumb.Separator />\n+    <Breadcrumb.Page>Dolor</Breadcrumb.Page>\n+  </Breadcrumb.List>\n+</Breadcrumb.Root>`}\n+      />\n+    </DocsPage.Section>\n+\n+    <DocsPage.Section title=\"API Reference\">\n+      <DocsPage.SubSection title=\"Root\">\n+        <p>The `Root` component wraps the breadcrumb with a `nav` tag for use as page navigation.</p>\n+        <DocsPage.PropsTable\n+          props={[\n+            { name: 'children', description: 'You can pass in your `Breadcrumb.List` as a child', required: true },\n+            { name: 'className', required: false }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title=\"List\">\n+        <p>The `List` component adds styling to ensure the breadcrumb is displayed inline as a list.</p>\n+        <DocsPage.CodeBlock\n+          code={`<Breadcrumb.List>\n+  {/* Pass Breadcrumb.Item, Breadcrumb.Separator and Breadcrumb.Page elements as children */}\n+</Breadcrumb.List>`}\n+        />\n+        <DocsPage.PropsTable\n+          props={[\n+            { name: 'children', description: 'You can pass in your `Breadcrumb.Item`s as children', required: true },\n+            { name: 'className', required: false }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title=\"Item\">\n+        <p>The `Item` component displays its contents as a node within the breadcrumb.</p>\n+        <DocsPage.CodeBlock\n+          code={`<Breadcrumb.Item>\n+  {/* Pass text, JSX elements or Breadcrumb.Link elements as children */}\n+</Breadcrumb.Item>`}\n+        />\n+        <DocsPage.PropsTable\n+          props={[\n+            { name: 'children', description: 'Content to display', required: true },\n+            { name: 'className', required: false }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title=\"Link\">\n+        <p>\n+          The `Link` component can be passed as a child to an `Item` component to display a clickable breadcrumb item.\n+        </p>\n+        <DocsPage.CodeBlock\n+          code={`<Breadcrumb.Item>\n+  <Breadcrumb.Link href=\"#\">\n+    Lorem\n+  </Breadcrumb.Link>\n+</Breadcrumb.Item>\n+\n+<Breadcrumb.Item>\n+  <Breadcrumb.Link asChild>\n+    <button onClick={handleLinkClick}>Click me</button>\n+  </Breadcrumb.Link>\n+</Breadcrumb.Item>`}\n+        />\n+        <DocsPage.PropsTable\n+          props={[\n+            { name: 'href', description: 'Where to link to' },\n+            { name: 'children', description: 'Content to display in the link', required: true },\n+            {\n+              name: 'asChild',\n+              description: 'Render using the passed child element instead of as an anchor element',\n+              defaultValue: 'false'\n+            },\n+            { name: 'className' }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title=\"Page\">\n+        <p>\n+          The `Page` component displays its contents as a node within the breadcrumb with styling to denote that it is\n+          the current page.\n+        </p>\n+        <DocsPage.CodeBlock code={`<Breadcrumb.Page>Lorem ipsum</Breadcrumb.Page>`} />\n+        <DocsPage.PropsTable\n+          props={[\n+            { name: 'children', description: 'Content to display', required: true },\n+            { name: 'className', required: false }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title=\"Separator\">\n+        <p>The `Separator` component displays a separator between the items of the breadcrumb.</p>\n+        <DocsPage.CodeBlock\n+          code={`<Breadcrumb.Separator />\n+\n+<Breadcrumb.Item>\n+  Lorem ipsum\n+</Breadcrumb.Item>\n+\n+<Breadcrumb.Separator>\n+  &gt;\n+</Breadcrumb.Separator>`}\n+        />\n+        <DocsPage.PropsTable\n+          props={[\n+            { name: 'children', description: 'Content to display', defaultValue: '/' },\n+            { name: 'className', required: false }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title=\"Ellipsis\">\n+        <p>The `Ellipsis` component displays an ellipsis for use when there are too many items to display.</p>\n+        <DocsPage.CodeBlock code={`<Breadcrumb.Ellipsis />`} />\n+        <DocsPage.PropsTable props={[{ name: 'className', required: false }]} />\n+      </DocsPage.SubSection>\n+    </DocsPage.Section>\n+  </DocsPage.Root>\n+)\n+\n+export default BreadcrumbComponent\n"
+      raw: "diff --git a/apps/design-system/src/subjects/components/breadcrumb.tsx b/apps/design-system/src/subjects/components/breadcrumb.tsx\nnew file mode 100644\nindex 0000000000000000000000000000000000000000..35d3931575e2cebe57ae880faa5eecc1196fae09\n--- /dev/null\n+++ b/apps/design-system/src/subjects/components/breadcrumb.tsx\n@@ -0,0 +1,170 @@\n+import { DocsPage } from '@components/docs-page/docs-page'\n+\n+const BreadcrumbComponent . () .> (\n+  <DocsPage.Root>\n+    <DocsPage.Summary title.\"Breadcrumb\">\n+      <p>\n+        A breadcrumbs is a list of links that help visualize the location of a page within the hierarchical structure of\n+        a site, it allows navigation up to any of the ancestors.\n+      </p>\n+    </DocsPage.Summary>\n+\n+    <DocsPage.ComponentExample\n+      code.{`\n+  <Breadcrumb.Root className.\"select-none\">\n+    <Breadcrumb.List>\n+      <Breadcrumb.Item>\n+        <Breadcrumb.Link href.\"#\">Lorem</Breadcrumb.Link>\n+      </Breadcrumb.Item>\n+      <Breadcrumb.Separator />\n+      <Breadcrumb.Ellipsis />\n+      <Breadcrumb.Separator />\n+      <Breadcrumb.Item>\n+        <Breadcrumb.Link href.\"#\">Ipsum</Breadcrumb.Link>\n+      </Breadcrumb.Item>\n+      <Breadcrumb.Separator />\n+      <Breadcrumb.Page>Dolor</Breadcrumb.Page>\n+    </Breadcrumb.List>\n+  </Breadcrumb.Root>\n+    `}\n+    />\n+\n+    <DocsPage.Section title.\"Anatomy\">\n+      <p>All parts of the breadcrumb can be imported and composed as required.</p>\n+\n+      <DocsPage.CodeBlock\n+        code.{`<Breadcrumb.Root className.\"select-none\">\n+  <Breadcrumb.List>\n+    <Breadcrumb.Item>\n+      <Breadcrumb.Link href.\"#\">Lorem</Breadcrumb.Link>\n+    </Breadcrumb.Item>\n+    <Breadcrumb.Separator />\n+    <Breadcrumb.Ellipsis />\n+    <Breadcrumb.Separator />\n+    <Breadcrumb.Item>\n+      <Breadcrumb.Link href.\"#\">Ipsum</Breadcrumb.Link>\n+    </Breadcrumb.Item>\n+    <Breadcrumb.Separator />\n+    <Breadcrumb.Page>Dolor</Breadcrumb.Page>\n+  </Breadcrumb.List>\n+</Breadcrumb.Root>`}\n+      />\n+    </DocsPage.Section>\n+\n+    <DocsPage.Section title.\"API Reference\">\n+      <DocsPage.SubSection title.\"Root\">\n+        <p>The `Root` component wraps the breadcrumb with a `nav` tag for use as page navigation.</p>\n+        <DocsPage.PropsTable\n+          props.{[\n+            { name: 'children', description: 'You can pass in your `Breadcrumb.List` as a child', required: true },\n+            { name: 'className', required: false }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title.\"List\">\n+        <p>The `List` component adds styling to ensure the breadcrumb is displayed inline as a list.</p>\n+        <DocsPage.CodeBlock\n+          code.{`<Breadcrumb.List>\n+  {/* Pass Breadcrumb.Item, Breadcrumb.Separator and Breadcrumb.Page elements as children */}\n+</Breadcrumb.List>`}\n+        />\n+        <DocsPage.PropsTable\n+          props.{[\n+            { name: 'children', description: 'You can pass in your `Breadcrumb.Item`s as children', required: true },\n+            { name: 'className', required: false }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title.\"Item\">\n+        <p>The `Item` component displays its contents as a node within the breadcrumb.</p>\n+        <DocsPage.CodeBlock\n+          code.{`<Breadcrumb.Item>\n+  {/* Pass text, JSX elements or Breadcrumb.Link elements as children */}\n+</Breadcrumb.Item>`}\n+        />\n+        <DocsPage.PropsTable\n+          props.{[\n+            { name: 'children', description: 'Content to display', required: true },\n+            { name: 'className', required: false }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title.\"Link\">\n+        <p>\n+          The `Link` component can be passed as a child to an `Item` component to display a clickable breadcrumb item.\n+        </p>\n+        <DocsPage.CodeBlock\n+          code.{`<Breadcrumb.Item>\n+  <Breadcrumb.Link href.\"#\">\n+    Lorem\n+  </Breadcrumb.Link>\n+</Breadcrumb.Item>\n+\n+<Breadcrumb.Item>\n+  <Breadcrumb.Link asChild>\n+    <button onClick.{handleLinkClick}>Click me</button>\n+  </Breadcrumb.Link>\n+</Breadcrumb.Item>`}\n+        />\n+        <DocsPage.PropsTable\n+          props.{[\n+            { name: 'href', description: 'Where to link to' },\n+            { name: 'children', description: 'Content to display in the link', required: true },\n+            {\n+              name: 'asChild',\n+              description: 'Render using the passed child element instead of as an anchor element',\n+              defaultValue: 'false'\n+            },\n+            { name: 'className' }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title.\"Page\">\n+        <p>\n+          The `Page` component displays its contents as a node within the breadcrumb with styling to denote that it is\n+          the current page.\n+        </p>\n+        <DocsPage.CodeBlock code.{`<Breadcrumb.Page>Lorem ipsum</Breadcrumb.Page>`} />\n+        <DocsPage.PropsTable\n+          props.{[\n+            { name: 'children', description: 'Content to display', required: true },\n+            { name: 'className', required: false }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title.\"Separator\">\n+        <p>The `Separator` component displays a separator between the items of the breadcrumb.</p>\n+        <DocsPage.CodeBlock\n+          code.{`<Breadcrumb.Separator />\n+\n+<Breadcrumb.Item>\n+  Lorem ipsum\n+</Breadcrumb.Item>\n+\n+<Breadcrumb.Separator>\n+  &gt;\n+</Breadcrumb.Separator>`}\n+        />\n+        <DocsPage.PropsTable\n+          props.{[\n+            { name: 'children', description: 'Content to display', defaultValue: '/' },\n+            { name: 'className', required: false }\n+          ]}\n+        />\n+      </DocsPage.SubSection>\n+\n+      <DocsPage.SubSection title.\"Ellipsis\">\n+        <p>The `Ellipsis` component displays an ellipsis for use when there are too many items to display.</p>\n+        <DocsPage.CodeBlock code.{`<Breadcrumb.Ellipsis />`} />\n+        <DocsPage.PropsTable props.{[{ name: 'className', required: false }]} />\n+      </DocsPage.SubSection>\n+    </DocsPage.Section>\n+  </DocsPage.Root>\n+)\n+\n+export default BreadcrumbComponent\n"
     },
     {
       blocks: [
@@ -2064,7 +2064,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
         {
           lines: [
             {
-              content: ' export const componentPages: ComponentPage[] = [',
+              content: ' export const componentPages: ComponentPage[] . [',
               type: 'context',
               oldNumber: 13,
               newNumber: 14
@@ -2122,7 +2122,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'apps/design-system/src/subjects/components/componentPages.ts::::apps/design-system/src/subjects/components/componentPages.ts',
       filePath: 'apps/design-system/src/subjects/components/componentPages.ts',
-      raw: "diff --git a/apps/design-system/src/subjects/components/componentPages.ts b/apps/design-system/src/subjects/components/componentPages.ts\nindex e145a7e8e55ef2c5bc18bddc5ec7bc7ab1122372..12dbeedab5985b9b313fe89540da383288a972b7 100644\n--- a/apps/design-system/src/subjects/components/componentPages.ts\n+++ b/apps/design-system/src/subjects/components/componentPages.ts\n@@ -1,8 +1,9 @@\n import type { RouteProps } from 'react-router-dom'\n \n-import AlertComponent from '@subjects/components/alert'\n-import BadgeComponent from '@subjects/components/badge'\n-import ButtonComponent from '@subjects/components/button'\n+import AlertComponent from './alert'\n+import BadgeComponent from './badge'\n+import BreadcrumbComponent from './breadcrumb'\n+import ButtonComponent from './button'\n \n interface ComponentPage {\n   name: string\n@@ -13,5 +14,6 @@ interface ComponentPage {\n export const componentPages: ComponentPage[] = [\n   { name: 'Alert', path: 'alert', Component: AlertComponent },\n   { name: 'Badge', path: 'badge', Component: BadgeComponent },\n+  { name: 'Breadcrumb', path: 'breadcrumb', Component: BreadcrumbComponent },\n   { name: 'Button', path: 'button', Component: ButtonComponent }\n ]\n"
+      raw: "diff --git a/apps/design-system/src/subjects/components/componentPages.ts b/apps/design-system/src/subjects/components/componentPages.ts\nindex e145a7e8e55ef2c5bc18bddc5ec7bc7ab1122372..12dbeedab5985b9b313fe89540da383288a972b7 100644\n--- a/apps/design-system/src/subjects/components/componentPages.ts\n+++ b/apps/design-system/src/subjects/components/componentPages.ts\n@@ -1,8 +1,9 @@\n import type { RouteProps } from 'react-router-dom'\n \n-import AlertComponent from '@subjects/components/alert'\n-import BadgeComponent from '@subjects/components/badge'\n-import ButtonComponent from '@subjects/components/button'\n+import AlertComponent from './alert'\n+import BadgeComponent from './badge'\n+import BreadcrumbComponent from './breadcrumb'\n+import ButtonComponent from './button'\n \n interface ComponentPage {\n   name: string\n@@ -13,5 +14,6 @@ interface ComponentPage {\n export const componentPages: ComponentPage[] . [\n   { name: 'Alert', path: 'alert', Component: AlertComponent },\n   { name: 'Badge', path: 'badge', Component: BadgeComponent },\n+  { name: 'Breadcrumb', path: 'breadcrumb', Component: BreadcrumbComponent },\n   { name: 'Button', path: 'button', Component: ButtonComponent }\n ]\n"
     },
     {
       blocks: [
@@ -2230,7 +2230,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 12
             },
             {
-              content: '-        <Breadcrumb className="select-none">',
+              content: '-        <Breadcrumb className."select-none">',
               type: 'delete',
               oldNumber: 20
             },
@@ -2240,7 +2240,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 21
             },
             {
-              content: '+        <Breadcrumb.Root className="select-none">',
+              content: '+        <Breadcrumb.Root className."select-none">',
               type: 'insert',
               newNumber: 13
             },
@@ -2250,19 +2250,19 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 14
             },
             {
-              content: '             {matches.map((match, index) => {',
+              content: '             {matches.map((match, index) .> {',
               type: 'context',
               oldNumber: 22,
               newNumber: 15
             },
             {
-              content: '               const { breadcrumb } = (match.handle || {}) as CustomHandle',
+              content: '               const { breadcrumb } . (match.handle || {}) as CustomHandle',
               type: 'context',
               oldNumber: 23,
               newNumber: 16
             },
             {
-              content: '               const isFirst = index === 1',
+              content: '               const isFirst . index ... 1',
               type: 'context',
               oldNumber: 24,
               newNumber: 17
@@ -2294,7 +2294,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 22
             },
             {
-              content: '-                <BreadcrumbItem key={index}>',
+              content: '-                <BreadcrumbItem key.{index}>',
               type: 'delete',
               oldNumber: 30
             },
@@ -2304,7 +2304,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 31
             },
             {
-              content: '+                <Breadcrumb.Item key={index}>',
+              content: '+                <Breadcrumb.Item key.{index}>',
               type: 'insert',
               newNumber: 23
             },
@@ -2333,13 +2333,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                '-                    <BreadcrumbLink href={match.pathname}>{breadcrumb(match.params)}</BreadcrumbLink>',
+                '-                    <BreadcrumbLink href.{match.pathname}>{breadcrumb(match.params)}</BreadcrumbLink>',
               type: 'delete',
               oldNumber: 35
             },
             {
               content:
-                '+                    <Breadcrumb.Link href={match.pathname}>{breadcrumb(match.params)}</Breadcrumb.Link>',
+                '+                    <Breadcrumb.Link href.{match.pathname}>{breadcrumb(match.params)}</Breadcrumb.Link>',
               type: 'insert',
               newNumber: 28
             },
@@ -2433,7 +2433,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'apps/gitness/src/components-v2/breadcrumbs/breadcrumbs.tsx::::apps/gitness/src/components-v2/breadcrumbs/breadcrumbs.tsx',
       filePath: 'apps/gitness/src/components-v2/breadcrumbs/breadcrumbs.tsx',
-      raw: "diff --git a/apps/gitness/src/components-v2/breadcrumbs/breadcrumbs.tsx b/apps/gitness/src/components-v2/breadcrumbs/breadcrumbs.tsx\nindex 802f9d66f57c0fb61f917b5b9568a0177a259f66..3dfca19d21605a07f078e41d2eddea3be12bf46d 100644\n--- a/apps/gitness/src/components-v2/breadcrumbs/breadcrumbs.tsx\n+++ b/apps/gitness/src/components-v2/breadcrumbs/breadcrumbs.tsx\n@@ -1,13 +1,6 @@\n import { useMatches } from 'react-router-dom'\n \n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbSeparator,\n-  Topbar\n-} from '@harnessio/ui/components'\n+import { Breadcrumb, Topbar } from '@harnessio/ui/components'\n \n import { CustomHandle } from '../../framework/routing/types'\n \n@@ -17,8 +10,8 @@ function Breadcrumbs() {\n   return (\n     <Topbar.Root>\n       <Topbar.Left>\n-        <Breadcrumb className=\"select-none\">\n-          <BreadcrumbList>\n+        <Breadcrumb.Root className=\"select-none\">\n+          <Breadcrumb.List>\n             {matches.map((match, index) => {\n               const { breadcrumb } = (match.handle || {}) as CustomHandle\n               const isFirst = index === 1\n@@ -27,18 +20,18 @@ function Breadcrumbs() {\n               if (!breadcrumb) return null\n \n               return (\n-                <BreadcrumbItem key={index}>\n-                  {!isFirst ? <BreadcrumbSeparator /> : null}\n+                <Breadcrumb.Item key={index}>\n+                  {!isFirst ? <Breadcrumb.Separator /> : null}\n                   {isLast ? (\n                     breadcrumb(match.params)\n                   ) : (\n-                    <BreadcrumbLink href={match.pathname}>{breadcrumb(match.params)}</BreadcrumbLink>\n+                    <Breadcrumb.Link href={match.pathname}>{breadcrumb(match.params)}</Breadcrumb.Link>\n                   )}\n-                </BreadcrumbItem>\n+                </Breadcrumb.Item>\n               )\n             })}\n-          </BreadcrumbList>\n-        </Breadcrumb>\n+          </Breadcrumb.List>\n+        </Breadcrumb.Root>\n       </Topbar.Left>\n     </Topbar.Root>\n   )\n"
+      raw: "diff --git a/apps/gitness/src/components-v2/breadcrumbs/breadcrumbs.tsx b/apps/gitness/src/components-v2/breadcrumbs/breadcrumbs.tsx\nindex 802f9d66f57c0fb61f917b5b9568a0177a259f66..3dfca19d21605a07f078e41d2eddea3be12bf46d 100644\n--- a/apps/gitness/src/components-v2/breadcrumbs/breadcrumbs.tsx\n+++ b/apps/gitness/src/components-v2/breadcrumbs/breadcrumbs.tsx\n@@ -1,13 +1,6 @@\n import { useMatches } from 'react-router-dom'\n \n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbSeparator,\n-  Topbar\n-} from '@harnessio/ui/components'\n+import { Breadcrumb, Topbar } from '@harnessio/ui/components'\n \n import { CustomHandle } from '../../framework/routing/types'\n \n@@ -17,8 +10,8 @@ function Breadcrumbs() {\n   return (\n     <Topbar.Root>\n       <Topbar.Left>\n-        <Breadcrumb className.\"select-none\">\n-          <BreadcrumbList>\n+        <Breadcrumb.Root className.\"select-none\">\n+          <Breadcrumb.List>\n             {matches.map((match, index) .> {\n               const { breadcrumb } . (match.handle || {}) as CustomHandle\n               const isFirst . index ... 1\n@@ -27,18 +20,18 @@ function Breadcrumbs() {\n               if (!breadcrumb) return null\n \n               return (\n-                <BreadcrumbItem key.{index}>\n-                  {!isFirst ? <BreadcrumbSeparator /> : null}\n+                <Breadcrumb.Item key.{index}>\n+                  {!isFirst ? <Breadcrumb.Separator /> : null}\n                   {isLast ? (\n                     breadcrumb(match.params)\n                   ) : (\n-                    <BreadcrumbLink href.{match.pathname}>{breadcrumb(match.params)}</BreadcrumbLink>\n+                    <Breadcrumb.Link href.{match.pathname}>{breadcrumb(match.params)}</Breadcrumb.Link>\n                   )}\n-                </BreadcrumbItem>\n+                </Breadcrumb.Item>\n               )\n             })}\n-          </BreadcrumbList>\n-        </Breadcrumb>\n+          </Breadcrumb.List>\n+        </Breadcrumb.Root>\n       </Topbar.Left>\n     </Topbar.Root>\n   )\n"
     },
     {
       blocks: [
@@ -2544,7 +2544,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 21
             },
             {
-              content: '-              <BreadcrumbLink href="/">harness-next</BreadcrumbLink>',
+              content: '-              <BreadcrumbLink href."/">harness-next</BreadcrumbLink>',
               type: 'delete',
               oldNumber: 22
             },
@@ -2554,7 +2554,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 23
             },
             {
-              content: '-            <BreadcrumbSeparator className="font-thin">/</BreadcrumbSeparator>',
+              content: '-            <BreadcrumbSeparator className."font-thin">/</BreadcrumbSeparator>',
               type: 'delete',
               oldNumber: 24
             },
@@ -2564,7 +2564,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 25
             },
             {
-              content: '-              <BreadcrumbLink href="/components">pipeline.yml</BreadcrumbLink>',
+              content: '-              <BreadcrumbLink href."/components">pipeline.yml</BreadcrumbLink>',
               type: 'delete',
               oldNumber: 26
             },
@@ -2599,7 +2599,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 14
             },
             {
-              content: '+              <Breadcrumb.Link href="/">harness-next</Breadcrumb.Link>',
+              content: '+              <Breadcrumb.Link href."/">harness-next</Breadcrumb.Link>',
               type: 'insert',
               newNumber: 15
             },
@@ -2619,7 +2619,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 18
             },
             {
-              content: '+              <Breadcrumb.Link href="/components">pipeline.yml</Breadcrumb.Link>',
+              content: '+              <Breadcrumb.Link href."/components">pipeline.yml</Breadcrumb.Link>',
               type: 'insert',
               newNumber: 19
             },
@@ -2680,7 +2680,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'apps/gitness/src/pages-v2/pipeline/pipeline-edit/components/pipeline-studio-header.tsx::::apps/gitness/src/pages-v2/pipeline/pipeline-edit/components/pipeline-studio-header.tsx',
       filePath: 'apps/gitness/src/pages-v2/pipeline/pipeline-edit/components/pipeline-studio-header.tsx',
-      raw: 'diff --git a/apps/gitness/src/pages-v2/pipeline/pipeline-edit/components/pipeline-studio-header.tsx b/apps/gitness/src/pages-v2/pipeline/pipeline-edit/components/pipeline-studio-header.tsx\nindex 1986641e2e5fe4d5e3894ba2b2e0355b0e8ab18f..5d47345e6c47bbf7098896191daa3225351636a1 100644\n--- a/apps/gitness/src/pages-v2/pipeline/pipeline-edit/components/pipeline-studio-header.tsx\n+++ b/apps/gitness/src/pages-v2/pipeline/pipeline-edit/components/pipeline-studio-header.tsx\n@@ -1,11 +1,4 @@\n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbPage,\n-  BreadcrumbSeparator\n-} from \'@harnessio/canary\'\n+import { Breadcrumb } from \'@harnessio/ui/components\'\n import { Topbar } from \'@harnessio/views\'\n \n import PipelineStudioHeaderActions from \'./pipeline-studio-header-actions\'\n@@ -16,17 +9,17 @@ export function PipelineStudioHeader(): JSX.Element {\n     <Topbar.Root>\n       <Topbar.Left>\n         {/** TODO: common component */}\n-        <Breadcrumb>\n-          <BreadcrumbList>\n-            <BreadcrumbItem>\n-              <BreadcrumbLink href="/">harness-next</BreadcrumbLink>\n-            </BreadcrumbItem>\n-            <BreadcrumbSeparator className="font-thin">/</BreadcrumbSeparator>\n-            <BreadcrumbPage>\n-              <BreadcrumbLink href="/components">pipeline.yml</BreadcrumbLink>\n-            </BreadcrumbPage>\n-          </BreadcrumbList>\n-        </Breadcrumb>\n+        <Breadcrumb.Root>\n+          <Breadcrumb.List>\n+            <Breadcrumb.Item>\n+              <Breadcrumb.Link href="/">harness-next</Breadcrumb.Link>\n+            </Breadcrumb.Item>\n+            <Breadcrumb.Separator />\n+            <Breadcrumb.Page>\n+              <Breadcrumb.Link href="/components">pipeline.yml</Breadcrumb.Link>\n+            </Breadcrumb.Page>\n+          </Breadcrumb.List>\n+        </Breadcrumb.Root>\n       </Topbar.Left>\n       <Topbar.Right>\n         <PipelineStudioHeaderActions />\n'
+      raw: 'diff --git a/apps/gitness/src/pages-v2/pipeline/pipeline-edit/components/pipeline-studio-header.tsx b/apps/gitness/src/pages-v2/pipeline/pipeline-edit/components/pipeline-studio-header.tsx\nindex 1986641e2e5fe4d5e3894ba2b2e0355b0e8ab18f..5d47345e6c47bbf7098896191daa3225351636a1 100644\n--- a/apps/gitness/src/pages-v2/pipeline/pipeline-edit/components/pipeline-studio-header.tsx\n+++ b/apps/gitness/src/pages-v2/pipeline/pipeline-edit/components/pipeline-studio-header.tsx\n@@ -1,11 +1,4 @@\n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbPage,\n-  BreadcrumbSeparator\n-} from \'@harnessio/canary\'\n+import { Breadcrumb } from \'@harnessio/ui/components\'\n import { Topbar } from \'@harnessio/views\'\n \n import PipelineStudioHeaderActions from \'./pipeline-studio-header-actions\'\n@@ -16,17 +9,17 @@ export function PipelineStudioHeader(): JSX.Element {\n     <Topbar.Root>\n       <Topbar.Left>\n         {/** TODO: common component */}\n-        <Breadcrumb>\n-          <BreadcrumbList>\n-            <BreadcrumbItem>\n-              <BreadcrumbLink href."/">harness-next</BreadcrumbLink>\n-            </BreadcrumbItem>\n-            <BreadcrumbSeparator className."font-thin">/</BreadcrumbSeparator>\n-            <BreadcrumbPage>\n-              <BreadcrumbLink href."/components">pipeline.yml</BreadcrumbLink>\n-            </BreadcrumbPage>\n-          </BreadcrumbList>\n-        </Breadcrumb>\n+        <Breadcrumb.Root>\n+          <Breadcrumb.List>\n+            <Breadcrumb.Item>\n+              <Breadcrumb.Link href."/">harness-next</Breadcrumb.Link>\n+            </Breadcrumb.Item>\n+            <Breadcrumb.Separator />\n+            <Breadcrumb.Page>\n+              <Breadcrumb.Link href."/components">pipeline.yml</Breadcrumb.Link>\n+            </Breadcrumb.Page>\n+          </Breadcrumb.List>\n+        </Breadcrumb.Root>\n       </Topbar.Left>\n       <Topbar.Right>\n         <PipelineStudioHeaderActions />\n'
     },
     {
       blocks: [
@@ -2735,7 +2735,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
         {
           lines: [
             {
-              content: '           breadcrumb: () => (',
+              content: '           breadcrumb: () .> (',
               type: 'context',
               oldNumber: 486,
               newNumber: 486
@@ -2784,12 +2784,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 486,
           oldStartLine2: null,
           newStartLine: 486,
-          header: '@@ -486,7 +486,7 @@ export const routes: CustomRouteObject[] = ['
+          header: '@@ -486,7 +486,7 @@ export const routes: CustomRouteObject[] . ['
         },
         {
           lines: [
             {
-              content: '           breadcrumb: () => (',
+              content: '           breadcrumb: () .> (',
               type: 'context',
               oldNumber: 499,
               newNumber: 499
@@ -2807,12 +2807,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 501
             },
             {
-              content: '-              <BreadcrumbSeparator className="mx-2.5" />',
+              content: '-              <BreadcrumbSeparator className."mx-2.5" />',
               type: 'delete',
               oldNumber: 502
             },
             {
-              content: '+              <Breadcrumb.Separator className="mx-2.5" />',
+              content: '+              <Breadcrumb.Separator className."mx-2.5" />',
               type: 'insert',
               newNumber: 502
             },
@@ -2838,7 +2838,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 499,
           oldStartLine2: null,
           newStartLine: 499,
-          header: '@@ -499,7 +499,7 @@ export const routes: CustomRouteObject[] = ['
+          header: '@@ -499,7 +499,7 @@ export const routes: CustomRouteObject[] . ['
         }
       ],
       deletedLines: 3,
@@ -2855,7 +2855,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-apps/gitness/src/routes.tsx::::apps/gitness/src/routes.tsx',
       fileId: 'apps/gitness/src/routes.tsx::::apps/gitness/src/routes.tsx',
       filePath: 'apps/gitness/src/routes.tsx',
-      raw: "diff --git a/apps/gitness/src/routes.tsx b/apps/gitness/src/routes.tsx\nindex f2d3a7332bea9f8fe67a416afed29bf524f3cd18..4f0fe9334a9cad3ce85910b0c540c319826b2205 100644\n--- a/apps/gitness/src/routes.tsx\n+++ b/apps/gitness/src/routes.tsx\n@@ -1,6 +1,6 @@\n import { Navigate } from 'react-router-dom'\n \n-import { BreadcrumbSeparator, Text } from '@harnessio/ui/components'\n+import { Breadcrumb, Text } from '@harnessio/ui/components'\n import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'\n \n import AppShell from './components-v2/app-shell'\n@@ -486,7 +486,7 @@ export const routes: CustomRouteObject[] = [\n           breadcrumb: () => (\n             <>\n               <Text>Account</Text>\n-              <BreadcrumbSeparator />\n+              <Breadcrumb.Separator />\n               <Text>Users</Text>\n             </>\n           )\n@@ -499,7 +499,7 @@ export const routes: CustomRouteObject[] = [\n           breadcrumb: () => (\n             <>\n               <Text>User</Text>\n-              <BreadcrumbSeparator className=\"mx-2.5\" />\n+              <Breadcrumb.Separator className=\"mx-2.5\" />\n               <Text>Settings</Text>\n             </>\n           )\n"
+      raw: "diff --git a/apps/gitness/src/routes.tsx b/apps/gitness/src/routes.tsx\nindex f2d3a7332bea9f8fe67a416afed29bf524f3cd18..4f0fe9334a9cad3ce85910b0c540c319826b2205 100644\n--- a/apps/gitness/src/routes.tsx\n+++ b/apps/gitness/src/routes.tsx\n@@ -1,6 +1,6 @@\n import { Navigate } from 'react-router-dom'\n \n-import { BreadcrumbSeparator, Text } from '@harnessio/ui/components'\n+import { Breadcrumb, Text } from '@harnessio/ui/components'\n import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'\n \n import AppShell from './components-v2/app-shell'\n@@ -486,7 +486,7 @@ export const routes: CustomRouteObject[] . [\n           breadcrumb: () .> (\n             <>\n               <Text>Account</Text>\n-              <BreadcrumbSeparator />\n+              <Breadcrumb.Separator />\n               <Text>Users</Text>\n             </>\n           )\n@@ -499,7 +499,7 @@ export const routes: CustomRouteObject[] . [\n           breadcrumb: () .> (\n             <>\n               <Text>User</Text>\n-              <BreadcrumbSeparator className.\"mx-2.5\" />\n+              <Breadcrumb.Separator className.\"mx-2.5\" />\n               <Text>Settings</Text>\n             </>\n           )\n"
     },
     {
       blocks: [
@@ -2880,12 +2880,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 6
             },
             {
-              content: "-type BreadcrumbProps = ComponentPropsWithoutRef<'nav'> & {",
+              content: "-type BreadcrumbProps . ComponentPropsWithoutRef<'nav'> & {",
               type: 'delete',
               oldNumber: 7
             },
             {
-              content: "+type BreadcrumbRootProps = ComponentPropsWithoutRef<'nav'> & {",
+              content: "+type BreadcrumbRootProps . ComponentPropsWithoutRef<'nav'> & {",
               type: 'insert',
               newNumber: 7
             },
@@ -2908,17 +2908,17 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 10
             },
             {
-              content: '-const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(({ ...props }, ref) => {',
+              content: '-const Breadcrumb . forwardRef<HTMLElement, BreadcrumbProps>(({ ...props }, ref) .> {',
               type: 'delete',
               oldNumber: 11
             },
             {
-              content: '+const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbRootProps>(({ ...props }, ref) => {',
+              content: '+const BreadcrumbRoot . forwardRef<HTMLElement, BreadcrumbRootProps>(({ ...props }, ref) .> {',
               type: 'insert',
               newNumber: 11
             },
             {
-              content: '   return <nav ref={ref} aria-label="breadcrumb" {...props} />',
+              content: '   return <nav ref.{ref} aria-label."breadcrumb" {...props} />',
               type: 'context',
               oldNumber: 12,
               newNumber: 12
@@ -2930,12 +2930,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 13
             },
             {
-              content: "-Breadcrumb.displayName = 'Breadcrumb'",
+              content: "-Breadcrumb.displayName . 'Breadcrumb'",
               type: 'delete',
               oldNumber: 14
             },
             {
-              content: "+BreadcrumbRoot.displayName = 'BreadcrumbRoot'",
+              content: "+BreadcrumbRoot.displayName . 'BreadcrumbRoot'",
               type: 'insert',
               newNumber: 14
             },
@@ -2946,7 +2946,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 15
             },
             {
-              content: " type BreadcrumbListProps = ComponentPropsWithoutRef<'ol'>",
+              content: " type BreadcrumbListProps . ComponentPropsWithoutRef<'ol'>",
               type: 'context',
               oldNumber: 16,
               newNumber: 16
@@ -2972,7 +2972,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 83
             },
             {
-              content: " BreadcrumbEllipsis.displayName = 'BreadcrumbEllipsis'",
+              content: " BreadcrumbEllipsis.displayName . 'BreadcrumbEllipsis'",
               type: 'context',
               oldNumber: 84,
               newNumber: 84
@@ -2984,7 +2984,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 85
             },
             {
-              content: '+const Breadcrumb = {',
+              content: '+const Breadcrumb . {',
               type: 'insert',
               newNumber: 86
             },
@@ -3131,7 +3131,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 83,
           oldStartLine2: null,
           newStartLine: 83,
-          header: '@@ -83,19 +83,23 @@ const BreadcrumbEllipsis = ({ className, ...props }: BreadcrumbEllipsisProps) =>'
+          header: '@@ -83,19 +83,23 @@ const BreadcrumbEllipsis . ({ className, ...props }: BreadcrumbEllipsisProps) .>'
         }
       ],
       deletedLines: 10,
@@ -3148,7 +3148,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-packages/ui/src/components/breadcrumb.tsx::::packages/ui/src/components/breadcrumb.tsx',
       fileId: 'packages/ui/src/components/breadcrumb.tsx::::packages/ui/src/components/breadcrumb.tsx',
       filePath: 'packages/ui/src/components/breadcrumb.tsx',
-      raw: "diff --git a/packages/ui/src/components/breadcrumb.tsx b/packages/ui/src/components/breadcrumb.tsx\nindex 643b5ab48be6ec413ada7551967d252376e7b38f..a7e03df75a1882cea32814c39d4895946a67fa6c 100644\n--- a/packages/ui/src/components/breadcrumb.tsx\n+++ b/packages/ui/src/components/breadcrumb.tsx\n@@ -4,14 +4,14 @@ import { DotsHorizontalIcon } from '@radix-ui/react-icons'\n import { Slot } from '@radix-ui/react-slot'\n import { cn } from '@utils/cn'\n \n-type BreadcrumbProps = ComponentPropsWithoutRef<'nav'> & {\n+type BreadcrumbRootProps = ComponentPropsWithoutRef<'nav'> & {\n   separator?: ReactNode\n }\n \n-const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(({ ...props }, ref) => {\n+const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbRootProps>(({ ...props }, ref) => {\n   return <nav ref={ref} aria-label=\"breadcrumb\" {...props} />\n })\n-Breadcrumb.displayName = 'Breadcrumb'\n+BreadcrumbRoot.displayName = 'BreadcrumbRoot'\n \n type BreadcrumbListProps = ComponentPropsWithoutRef<'ol'>\n \n@@ -83,19 +83,23 @@ const BreadcrumbEllipsis = ({ className, ...props }: BreadcrumbEllipsisProps) =>\n )\n BreadcrumbEllipsis.displayName = 'BreadcrumbEllipsis'\n \n+const Breadcrumb = {\n+  Root: BreadcrumbRoot,\n+  List: BreadcrumbList,\n+  Item: BreadcrumbItem,\n+  Link: BreadcrumbLink,\n+  Page: BreadcrumbPage,\n+  Separator: BreadcrumbSeparator,\n+  Ellipsis: BreadcrumbEllipsis\n+}\n+\n export {\n   Breadcrumb,\n-  BreadcrumbProps,\n-  BreadcrumbList,\n+  BreadcrumbRootProps,\n   BreadcrumbListProps,\n-  BreadcrumbItem,\n   BreadcrumbItemProps,\n-  BreadcrumbLink,\n   BreadcrumbLinkProps,\n-  BreadcrumbPage,\n   BreadcrumbPageProps,\n-  BreadcrumbSeparator,\n   BreadcrumbSeparatorProps,\n-  BreadcrumbEllipsis,\n   BreadcrumbEllipsisProps\n }\n"
+      raw: "diff --git a/packages/ui/src/components/breadcrumb.tsx b/packages/ui/src/components/breadcrumb.tsx\nindex 643b5ab48be6ec413ada7551967d252376e7b38f..a7e03df75a1882cea32814c39d4895946a67fa6c 100644\n--- a/packages/ui/src/components/breadcrumb.tsx\n+++ b/packages/ui/src/components/breadcrumb.tsx\n@@ -4,14 +4,14 @@ import { DotsHorizontalIcon } from '@radix-ui/react-icons'\n import { Slot } from '@radix-ui/react-slot'\n import { cn } from '@utils/cn'\n \n-type BreadcrumbProps . ComponentPropsWithoutRef<'nav'> & {\n+type BreadcrumbRootProps . ComponentPropsWithoutRef<'nav'> & {\n   separator?: ReactNode\n }\n \n-const Breadcrumb . forwardRef<HTMLElement, BreadcrumbProps>(({ ...props }, ref) .> {\n+const BreadcrumbRoot . forwardRef<HTMLElement, BreadcrumbRootProps>(({ ...props }, ref) .> {\n   return <nav ref.{ref} aria-label.\"breadcrumb\" {...props} />\n })\n-Breadcrumb.displayName . 'Breadcrumb'\n+BreadcrumbRoot.displayName . 'BreadcrumbRoot'\n \n type BreadcrumbListProps . ComponentPropsWithoutRef<'ol'>\n \n@@ -83,19 +83,23 @@ const BreadcrumbEllipsis . ({ className, ...props }: BreadcrumbEllipsisProps) .>\n )\n BreadcrumbEllipsis.displayName . 'BreadcrumbEllipsis'\n \n+const Breadcrumb . {\n+  Root: BreadcrumbRoot,\n+  List: BreadcrumbList,\n+  Item: BreadcrumbItem,\n+  Link: BreadcrumbLink,\n+  Page: BreadcrumbPage,\n+  Separator: BreadcrumbSeparator,\n+  Ellipsis: BreadcrumbEllipsis\n+}\n+\n export {\n   Breadcrumb,\n-  BreadcrumbProps,\n-  BreadcrumbList,\n+  BreadcrumbRootProps,\n   BreadcrumbListProps,\n-  BreadcrumbItem,\n   BreadcrumbItemProps,\n-  BreadcrumbLink,\n   BreadcrumbLinkProps,\n-  BreadcrumbPage,\n   BreadcrumbPageProps,\n-  BreadcrumbSeparator,\n   BreadcrumbSeparatorProps,\n-  BreadcrumbEllipsis,\n   BreadcrumbEllipsisProps\n }\n"
     },
     {
       blocks: [
@@ -3162,7 +3162,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                '     <span className="absolute left-2 flex size-4 items-center justify-center rounded-full border border-icons-1">',
+                '     <span className."absolute left-2 flex size-4 items-center justify-center rounded-full border border-icons-1">',
               type: 'context',
               oldNumber: 151,
               newNumber: 151
@@ -3174,12 +3174,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 152
             },
             {
-              content: '-        <span className="size-2 bg-icons-2 rounded-full block" />',
+              content: '-        <span className."size-2 bg-icons-2 rounded-full block" />',
               type: 'delete',
               oldNumber: 153
             },
             {
-              content: '+        <span className="block size-2 rounded-full bg-icons-2" />',
+              content: '+        <span className."block size-2 rounded-full bg-icons-2" />',
               type: 'insert',
               newNumber: 153
             },
@@ -3205,7 +3205,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 150,
           oldStartLine2: null,
           newStartLine: 150,
-          header: '@@ -150,7 +150,7 @@ const DropdownMenuRadioItem = React.forwardRef<'
+          header: '@@ -150,7 +150,7 @@ const DropdownMenuRadioItem . React.forwardRef<'
         }
       ],
       deletedLines: 1,
@@ -3223,7 +3223,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-packages/ui/src/components/dropdown-menu.tsx::::packages/ui/src/components/dropdown-menu.tsx',
       fileId: 'packages/ui/src/components/dropdown-menu.tsx::::packages/ui/src/components/dropdown-menu.tsx',
       filePath: 'packages/ui/src/components/dropdown-menu.tsx',
-      raw: 'diff --git a/packages/ui/src/components/dropdown-menu.tsx b/packages/ui/src/components/dropdown-menu.tsx\nindex b5476fe12dfc08aeb6c1478d4ca77c46b4263490..651d2b8a9c79fc3dbc8bae8dd60f039e14cf83bb 100644\n--- a/packages/ui/src/components/dropdown-menu.tsx\n+++ b/packages/ui/src/components/dropdown-menu.tsx\n@@ -150,7 +150,7 @@ const DropdownMenuRadioItem = React.forwardRef<\n   >\n     <span className="absolute left-2 flex size-4 items-center justify-center rounded-full border border-icons-1">\n       <DropdownMenuPrimitive.ItemIndicator>\n-        <span className="size-2 bg-icons-2 rounded-full block" />\n+        <span className="block size-2 rounded-full bg-icons-2" />\n       </DropdownMenuPrimitive.ItemIndicator>\n     </span>\n     {children}\n'
+      raw: 'diff --git a/packages/ui/src/components/dropdown-menu.tsx b/packages/ui/src/components/dropdown-menu.tsx\nindex b5476fe12dfc08aeb6c1478d4ca77c46b4263490..651d2b8a9c79fc3dbc8bae8dd60f039e14cf83bb 100644\n--- a/packages/ui/src/components/dropdown-menu.tsx\n+++ b/packages/ui/src/components/dropdown-menu.tsx\n@@ -150,7 +150,7 @@ const DropdownMenuRadioItem . React.forwardRef<\n   >\n     <span className."absolute left-2 flex size-4 items-center justify-center rounded-full border border-icons-1">\n       <DropdownMenuPrimitive.ItemIndicator>\n-        <span className."size-2 bg-icons-2 rounded-full block" />\n+        <span className."block size-2 rounded-full bg-icons-2" />\n       </DropdownMenuPrimitive.ItemIndicator>\n     </span>\n     {children}\n'
     },
     {
       blocks: [
@@ -3367,13 +3367,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 108
             },
             {
-              content: '         {items.map(({ parentPath, path }, idx) => {',
+              content: '         {items.map(({ parentPath, path }, idx) .> {',
               type: 'context',
               oldNumber: 118,
               newNumber: 109
             },
             {
-              content: '           const isLast = length === idx + 1',
+              content: '           const isLast . length ... idx + 1',
               type: 'context',
               oldNumber: 119,
               newNumber: 110
@@ -3397,7 +3397,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 113
             },
             {
-              content: '-              <BreadcrumbItem key={idx}>',
+              content: '-              <BreadcrumbItem key.{idx}>',
               type: 'delete',
               oldNumber: 123
             },
@@ -3412,7 +3412,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 125
             },
             {
-              content: '+              <Breadcrumb.Item key={idx}>',
+              content: '+              <Breadcrumb.Item key.{idx}>',
               type: 'insert',
               newNumber: 114
             },
@@ -3451,7 +3451,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 120
             },
             {
-              content: '             <Fragment key={idx}>',
+              content: '             <Fragment key.{idx}>',
               type: 'context',
               oldNumber: 130,
               newNumber: 121
@@ -3477,7 +3477,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 123
             },
             {
-              content: '                   <Link to={parentPath}>{path}</Link>',
+              content: '                   <Link to.{parentPath}>{path}</Link>',
               type: 'context',
               oldNumber: 133,
               newNumber: 124
@@ -3617,7 +3617,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine2: null,
           newStartLine: 104,
           header:
-            '@@ -113,38 +104,38 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru'
+            '@@ -113,38 +104,38 @@ export const PathBreadcrumbs . ({ items, isEdit, isNew, ...props }: PathBreadcru'
         }
       ],
       deletedLines: 24,
@@ -3636,7 +3636,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
         'content-packages/ui/src/components/path-breadcrumbs.tsx::::packages/ui/src/components/path-breadcrumbs.tsx',
       fileId: 'packages/ui/src/components/path-breadcrumbs.tsx::::packages/ui/src/components/path-breadcrumbs.tsx',
       filePath: 'packages/ui/src/components/path-breadcrumbs.tsx',
-      raw: "diff --git a/packages/ui/src/components/path-breadcrumbs.tsx b/packages/ui/src/components/path-breadcrumbs.tsx\nindex 77c3a3c32b739cf09935dc9f475d618bc97b5afc..0fa3cc01a986d5c85615b0daf9d1a3e055b59a29 100644\n--- a/packages/ui/src/components/path-breadcrumbs.tsx\n+++ b/packages/ui/src/components/path-breadcrumbs.tsx\n@@ -1,16 +1,7 @@\n import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react'\n import { Link } from 'react-router-dom'\n \n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbPage,\n-  BreadcrumbSeparator,\n-  Icon,\n-  Input\n-} from '@/components'\n+import { Breadcrumb, Icon, Input } from '@/components'\n import { debounce } from 'lodash-es'\n \n interface InputPathBreadcrumbItemProps {\n@@ -113,38 +104,38 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru\n   }\n \n   return (\n-    <Breadcrumb>\n-      <BreadcrumbList>\n+    <Breadcrumb.Root>\n+      <Breadcrumb.List>\n         {items.map(({ parentPath, path }, idx) => {\n           const isLast = length === idx + 1\n \n           if (isLast) {\n             return (\n-              <BreadcrumbItem key={idx}>\n-                {isEdit ? renderInput() : <BreadcrumbPage>{path}</BreadcrumbPage>}\n-              </BreadcrumbItem>\n+              <Breadcrumb.Item key={idx}>\n+                {isEdit ? renderInput() : <Breadcrumb.Page>{path}</Breadcrumb.Page>}\n+              </Breadcrumb.Item>\n             )\n           }\n \n           return (\n             <Fragment key={idx}>\n-              <BreadcrumbItem>\n-                <BreadcrumbLink asChild>\n+              <Breadcrumb.Item>\n+                <Breadcrumb.Link asChild>\n                   <Link to={parentPath}>{path}</Link>\n-                </BreadcrumbLink>\n-              </BreadcrumbItem>\n-              <BreadcrumbSeparator />\n+                </Breadcrumb.Link>\n+              </Breadcrumb.Item>\n+              <Breadcrumb.Separator />\n             </Fragment>\n           )\n         })}\n \n         {isNew && (\n           <>\n-            {!!items.length && <BreadcrumbSeparator />}\n-            <BreadcrumbItem>{renderInput()}</BreadcrumbItem>\n+            {!!items.length && <Breadcrumb.Separator />}\n+            <Breadcrumb.Item>{renderInput()}</Breadcrumb.Item>\n           </>\n         )}\n-      </BreadcrumbList>\n-    </Breadcrumb>\n+      </Breadcrumb.List>\n+    </Breadcrumb.Root>\n   )\n }\n"
+      raw: "diff --git a/packages/ui/src/components/path-breadcrumbs.tsx b/packages/ui/src/components/path-breadcrumbs.tsx\nindex 77c3a3c32b739cf09935dc9f475d618bc97b5afc..0fa3cc01a986d5c85615b0daf9d1a3e055b59a29 100644\n--- a/packages/ui/src/components/path-breadcrumbs.tsx\n+++ b/packages/ui/src/components/path-breadcrumbs.tsx\n@@ -1,16 +1,7 @@\n import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react'\n import { Link } from 'react-router-dom'\n \n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbPage,\n-  BreadcrumbSeparator,\n-  Icon,\n-  Input\n-} from '@/components'\n+import { Breadcrumb, Icon, Input } from '@/components'\n import { debounce } from 'lodash-es'\n \n interface InputPathBreadcrumbItemProps {\n@@ -113,38 +104,38 @@ export const PathBreadcrumbs . ({ items, isEdit, isNew, ...props }: PathBreadcru\n   }\n \n   return (\n-    <Breadcrumb>\n-      <BreadcrumbList>\n+    <Breadcrumb.Root>\n+      <Breadcrumb.List>\n         {items.map(({ parentPath, path }, idx) .> {\n           const isLast . length ... idx + 1\n \n           if (isLast) {\n             return (\n-              <BreadcrumbItem key.{idx}>\n-                {isEdit ? renderInput() : <BreadcrumbPage>{path}</BreadcrumbPage>}\n-              </BreadcrumbItem>\n+              <Breadcrumb.Item key.{idx}>\n+                {isEdit ? renderInput() : <Breadcrumb.Page>{path}</Breadcrumb.Page>}\n+              </Breadcrumb.Item>\n             )\n           }\n \n           return (\n             <Fragment key.{idx}>\n-              <BreadcrumbItem>\n-                <BreadcrumbLink asChild>\n+              <Breadcrumb.Item>\n+                <Breadcrumb.Link asChild>\n                   <Link to.{parentPath}>{path}</Link>\n-                </BreadcrumbLink>\n-              </BreadcrumbItem>\n-              <BreadcrumbSeparator />\n+                </Breadcrumb.Link>\n+              </Breadcrumb.Item>\n+              <Breadcrumb.Separator />\n             </Fragment>\n           )\n         })}\n \n         {isNew && (\n           <>\n-            {!!items.length && <BreadcrumbSeparator />}\n-            <BreadcrumbItem>{renderInput()}</BreadcrumbItem>\n+            {!!items.length && <Breadcrumb.Separator />}\n+            <Breadcrumb.Item>{renderInput()}</Breadcrumb.Item>\n           </>\n         )}\n-      </BreadcrumbList>\n-    </Breadcrumb>\n+      </Breadcrumb.List>\n+    </Breadcrumb.Root>\n   )\n }\n"
     },
     {
       blocks: [
@@ -3694,7 +3694,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 11,
           oldStartLine2: null,
           newStartLine: 11,
-          header: "@@ -11,7 +11,7 @@ const tabsListVariants = cva('inline-flex items-center text-cn-foreground-3', {"
+          header: "@@ -11,7 +11,7 @@ const tabsListVariants . cva('inline-flex items-center text-cn-foreground-3', {"
         },
         {
           lines: [
@@ -3706,7 +3706,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                "           'm-0 -mb-px h-11 border-b border-solid border-b-transparent px-0 text-2 font-normal text-cn-foreground-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-1',",
+                "           'm-0 -mb-px h-11 border-b border-solid border-b-transparent px-0 text-2 font-normal text-cn-foreground-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state.active]:border-cn-borders-1',",
               type: 'context',
               oldNumber: 31,
               newNumber: 31
@@ -3719,13 +3719,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                "-          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-background-1'",
+                "-          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state.active]:border-cn-borders-2 data-[state.active]:text-cn-foreground-1 data-[state.active]:bg-cn-background-1'",
               type: 'delete',
               oldNumber: 33
             },
             {
               content:
-                "+          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1'",
+                "+          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state.active]:border-cn-borders-2 data-[state.active]:bg-cn-background-1 data-[state.active]:text-cn-foreground-1'",
               type: 'insert',
               newNumber: 33
             },
@@ -3751,7 +3751,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 30,
           oldStartLine2: null,
           newStartLine: 30,
-          header: '@@ -30,7 +30,7 @@ const tabsTriggerVariants = cva('
+          header: '@@ -30,7 +30,7 @@ const tabsTriggerVariants . cva('
         }
       ],
       deletedLines: 2,
@@ -3768,7 +3768,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-packages/ui/src/components/tabs.tsx::::packages/ui/src/components/tabs.tsx',
       fileId: 'packages/ui/src/components/tabs.tsx::::packages/ui/src/components/tabs.tsx',
       filePath: 'packages/ui/src/components/tabs.tsx',
-      raw: "diff --git a/packages/ui/src/components/tabs.tsx b/packages/ui/src/components/tabs.tsx\nindex 5cbae7da53b01c1fdcd7d7e940e0c2c6c10dfce4..631a8515f53931f3a9ec94f17fb4c3499bef513d 100644\n--- a/packages/ui/src/components/tabs.tsx\n+++ b/packages/ui/src/components/tabs.tsx\n@@ -11,7 +11,7 @@ const tabsListVariants = cva('inline-flex items-center text-cn-foreground-3', {\n       underline: 'h-11 justify-center gap-4',\n       navigation: 'h-11 w-full justify-start gap-6 border-b border-cn-borders-2 px-6',\n       tabnav:\n-        'relative flex w-full before:absolute before:left-0 before:h-px before:w-full before:bg-cn-background-2 before:bottom-0'\n+        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-background-2'\n     }\n   },\n   defaultVariants: {\n@@ -30,7 +30,7 @@ const tabsTriggerVariants = cva(\n         navigation:\n           'm-0 -mb-px h-11 border-b border-solid border-b-transparent px-0 text-2 font-normal text-cn-foreground-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-1',\n         tabnav:\n-          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-background-1'\n+          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1'\n       }\n     },\n     defaultVariants: {\n"
+      raw: "diff --git a/packages/ui/src/components/tabs.tsx b/packages/ui/src/components/tabs.tsx\nindex 5cbae7da53b01c1fdcd7d7e940e0c2c6c10dfce4..631a8515f53931f3a9ec94f17fb4c3499bef513d 100644\n--- a/packages/ui/src/components/tabs.tsx\n+++ b/packages/ui/src/components/tabs.tsx\n@@ -11,7 +11,7 @@ const tabsListVariants . cva('inline-flex items-center text-cn-foreground-3', {\n       underline: 'h-11 justify-center gap-4',\n       navigation: 'h-11 w-full justify-start gap-6 border-b border-cn-borders-2 px-6',\n       tabnav:\n-        'relative flex w-full before:absolute before:left-0 before:h-px before:w-full before:bg-cn-background-2 before:bottom-0'\n+        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-background-2'\n     }\n   },\n   defaultVariants: {\n@@ -30,7 +30,7 @@ const tabsTriggerVariants . cva(\n         navigation:\n           'm-0 -mb-px h-11 border-b border-solid border-b-transparent px-0 text-2 font-normal text-cn-foreground-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state.active]:border-cn-borders-1',\n         tabnav:\n-          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state.active]:border-cn-borders-2 data-[state.active]:text-cn-foreground-1 data-[state.active]:bg-cn-background-1'\n+          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state.active]:border-cn-borders-2 data-[state.active]:bg-cn-background-1 data-[state.active]:text-cn-foreground-1'\n       }\n     },\n     defaultVariants: {\n"
     },
     {
       blocks: [
@@ -3794,13 +3794,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                '-        <Button size="sm" theme="error" className="self-start mt-7" onClick={setOpenDeleteDialog}>',
+                '-        <Button size."sm" theme."error" className."self-start mt-7" onClick.{setOpenDeleteDialog}>',
               type: 'delete',
               oldNumber: 169
             },
             {
               content:
-                '+        <Button size="sm" theme="error" className="mt-7 self-start" onClick={setOpenDeleteDialog}>',
+                '+        <Button size."sm" theme."error" className."mt-7 self-start" onClick.{setOpenDeleteDialog}>',
               type: 'insert',
               newNumber: 169
             },
@@ -3826,7 +3826,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 166,
           oldStartLine2: null,
           newStartLine: 166,
-          header: '@@ -166,7 +166,7 @@ export const ProjectSettingsGeneralPage = ({'
+          header: '@@ -166,7 +166,7 @@ export const ProjectSettingsGeneralPage . ({'
         }
       ],
       deletedLines: 1,
@@ -3846,7 +3846,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'packages/ui/src/views/project/project-general/project-general-page.tsx::::packages/ui/src/views/project/project-general/project-general-page.tsx',
       filePath: 'packages/ui/src/views/project/project-general/project-general-page.tsx',
-      raw: 'diff --git a/packages/ui/src/views/project/project-general/project-general-page.tsx b/packages/ui/src/views/project/project-general/project-general-page.tsx\nindex 36baed560712faa1490360f38d0c32527e220b84..6e1a559823540f17dc001ec539639c3f4b6ed25c 100644\n--- a/packages/ui/src/views/project/project-general/project-general-page.tsx\n+++ b/packages/ui/src/views/project/project-general/project-general-page.tsx\n@@ -166,7 +166,7 @@ export const ProjectSettingsGeneralPage = ({\n           </Fieldset>\n         </FormWrapper>\n \n-        <Button size="sm" theme="error" className="self-start mt-7" onClick={setOpenDeleteDialog}>\n+        <Button size="sm" theme="error" className="mt-7 self-start" onClick={setOpenDeleteDialog}>\n           Delete project\n         </Button>\n       </SandboxLayout.Content>\n'
+      raw: 'diff --git a/packages/ui/src/views/project/project-general/project-general-page.tsx b/packages/ui/src/views/project/project-general/project-general-page.tsx\nindex 36baed560712faa1490360f38d0c32527e220b84..6e1a559823540f17dc001ec539639c3f4b6ed25c 100644\n--- a/packages/ui/src/views/project/project-general/project-general-page.tsx\n+++ b/packages/ui/src/views/project/project-general/project-general-page.tsx\n@@ -166,7 +166,7 @@ export const ProjectSettingsGeneralPage . ({\n           </Fieldset>\n         </FormWrapper>\n \n-        <Button size."sm" theme."error" className."self-start mt-7" onClick.{setOpenDeleteDialog}>\n+        <Button size."sm" theme."error" className."mt-7 self-start" onClick.{setOpenDeleteDialog}>\n           Delete project\n         </Button>\n       </SandboxLayout.Content>\n'
     },
     {
       blocks: [
@@ -3859,24 +3859,24 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 50
             },
             {
-              content: '     <div className="flex flex-col gap-y-4">',
+              content: '     <div className."flex flex-col gap-y-4">',
               type: 'context',
               oldNumber: 51,
               newNumber: 51
             },
             {
-              content: '       <div className="flex items-center">',
+              content: '       <div className."flex items-center">',
               type: 'context',
               oldNumber: 52,
               newNumber: 52
             },
             {
-              content: '-        <h1 className="text-cn-foreground-1 font-medium text-6 flex gap-x-2.5">',
+              content: '-        <h1 className."text-cn-foreground-1 font-medium text-6 flex gap-x-2.5">',
               type: 'delete',
               oldNumber: 53
             },
             {
-              content: '+        <h1 className="flex gap-x-2.5 text-6 font-medium text-cn-foreground-1">',
+              content: '+        <h1 className."flex gap-x-2.5 text-6 font-medium text-cn-foreground-1">',
               type: 'insert',
               newNumber: 53
             },
@@ -3887,7 +3887,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 54
             },
             {
-              content: '           <span className="font-normal text-cn-foreground-3">#{number}</span>',
+              content: '           <span className."font-normal text-cn-foreground-3">#{number}</span>',
               type: 'context',
               oldNumber: 55,
               newNumber: 55
@@ -3902,7 +3902,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 50,
           oldStartLine2: null,
           newStartLine: 50,
-          header: '@@ -50,7 +50,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({'
+          header: '@@ -50,7 +50,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> . ({'
         },
         {
           lines: [
@@ -3925,17 +3925,17 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 84
             },
             {
-              content: '-          <span className="w-px h-4 mx-1.5 bg-cn-background-3" />',
+              content: '-          <span className."w-px h-4 mx-1.5 bg-cn-background-3" />',
               type: 'delete',
               oldNumber: 85
             },
             {
-              content: '+          <span className="mx-1.5 h-4 w-px bg-cn-background-3" />',
+              content: '+          <span className."mx-1.5 h-4 w-px bg-cn-background-3" />',
               type: 'insert',
               newNumber: 85
             },
             {
-              content: '           <span className="text-cn-foreground-3">{formattedTime}</span>',
+              content: '           <span className."text-cn-foreground-3">{formattedTime}</span>',
               type: 'context',
               oldNumber: 86,
               newNumber: 86
@@ -3956,7 +3956,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 82,
           oldStartLine2: null,
           newStartLine: 82,
-          header: '@@ -82,7 +82,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({'
+          header: '@@ -82,7 +82,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> . ({'
         }
       ],
       deletedLines: 2,
@@ -3976,7 +3976,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx::::packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx',
       filePath: 'packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\nindex 0e0a22511ef8f94379e3d1aa907cf82ef0d385ff..8cfd0819eb80a4a70596c94ef0a37f7f9b55c747 100644\n--- a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n+++ b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n@@ -50,7 +50,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n   return (\n     <div className="flex flex-col gap-y-4">\n       <div className="flex items-center">\n-        <h1 className="text-cn-foreground-1 font-medium text-6 flex gap-x-2.5">\n+        <h1 className="flex gap-x-2.5 text-6 font-medium text-cn-foreground-1">\n           {original}\n           <span className="font-normal text-cn-foreground-3">#{number}</span>\n         </h1>\n@@ -82,7 +82,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n               {source_branch}\n             </Link>\n           </Badge>\n-          <span className="w-px h-4 mx-1.5 bg-cn-background-3" />\n+          <span className="mx-1.5 h-4 w-px bg-cn-background-3" />\n           <span className="text-cn-foreground-3">{formattedTime}</span>\n         </div>\n       </div>\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\nindex 0e0a22511ef8f94379e3d1aa907cf82ef0d385ff..8cfd0819eb80a4a70596c94ef0a37f7f9b55c747 100644\n--- a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n+++ b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n@@ -50,7 +50,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> . ({\n   return (\n     <div className."flex flex-col gap-y-4">\n       <div className."flex items-center">\n-        <h1 className."text-cn-foreground-1 font-medium text-6 flex gap-x-2.5">\n+        <h1 className."flex gap-x-2.5 text-6 font-medium text-cn-foreground-1">\n           {original}\n           <span className."font-normal text-cn-foreground-3">#{number}</span>\n         </h1>\n@@ -82,7 +82,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> . ({\n               {source_branch}\n             </Link>\n           </Badge>\n-          <span className."w-px h-4 mx-1.5 bg-cn-background-3" />\n+          <span className."mx-1.5 h-4 w-px bg-cn-background-3" />\n           <span className."text-cn-foreground-3">{formattedTime}</span>\n         </div>\n       </div>\n'
     },
     {
       blocks: [
@@ -3995,18 +3995,18 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 112
             },
             {
-              content: '           <div className="flex w-full justify-end">',
+              content: '           <div className."flex w-full justify-end">',
               type: 'context',
               oldNumber: 113,
               newNumber: 113
             },
             {
-              content: '-            <span className="text-cn-foreground-danger text-1">{props.headerMsg}</span>',
+              content: '-            <span className."text-cn-foreground-danger text-1">{props.headerMsg}</span>',
               type: 'delete',
               oldNumber: 114
             },
             {
-              content: '+            <span className="text-1 text-cn-foreground-danger">{props.headerMsg}</span>',
+              content: '+            <span className."text-1 text-cn-foreground-danger">{props.headerMsg}</span>',
               type: 'insert',
               newNumber: 114
             },
@@ -4032,7 +4032,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 111,
           oldStartLine2: null,
           newStartLine: 111,
-          header: '@@ -111,7 +111,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {'
+          header: '@@ -111,7 +111,7 @@ const HeaderTitle . ({ ...props }: HeaderProps) .> {'
         },
         {
           lines: [
@@ -4056,13 +4056,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                '-                      <span className="text-cn-foreground-1 text-1">Bypass and merge anyway</span>',
+                '-                      <span className."text-cn-foreground-1 text-1">Bypass and merge anyway</span>',
               type: 'delete',
               oldNumber: 234
             },
             {
               content:
-                '+                      <span className="text-1 text-cn-foreground-1">Bypass and merge anyway</span>',
+                '+                      <span className."text-1 text-cn-foreground-1">Bypass and merge anyway</span>',
               type: 'insert',
               newNumber: 234
             },
@@ -4088,12 +4088,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 231,
           oldStartLine2: null,
           newStartLine: 231,
-          header: '@@ -231,7 +231,7 @@ const PullRequestPanel = ({'
+          header: '@@ -231,7 +231,7 @@ const PullRequestPanel . ({'
         },
         {
           lines: [
             {
-              content: '                                     key={action_idx}',
+              content: '                                     key.{action_idx}',
               type: 'context',
               oldNumber: 264,
               newNumber: 264
@@ -4105,32 +4105,32 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 265
             },
             {
-              content: '                                     <div className="flex flex-col">',
+              content: '                                     <div className."flex flex-col">',
               type: 'context',
               oldNumber: 266,
               newNumber: 266
             },
             {
               content:
-                '-                                      <span className="text-cn-foreground-2 leading-none">{action.title}</span>',
+                '-                                      <span className."text-cn-foreground-2 leading-none">{action.title}</span>',
               type: 'delete',
               oldNumber: 267
             },
             {
               content:
-                '-                                      <span className="text-cn-foreground-3 mt-1.5">{action.description}</span>',
+                '-                                      <span className."text-cn-foreground-3 mt-1.5">{action.description}</span>',
               type: 'delete',
               oldNumber: 268
             },
             {
               content:
-                '+                                      <span className="leading-none text-cn-foreground-2">{action.title}</span>',
+                '+                                      <span className."leading-none text-cn-foreground-2">{action.title}</span>',
               type: 'insert',
               newNumber: 267
             },
             {
               content:
-                '+                                      <span className="mt-1.5 text-cn-foreground-3">{action.description}</span>',
+                '+                                      <span className."mt-1.5 text-cn-foreground-3">{action.description}</span>',
               type: 'insert',
               newNumber: 268
             },
@@ -4156,7 +4156,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 264,
           oldStartLine2: null,
           newStartLine: 264,
-          header: '@@ -264,8 +264,8 @@ const PullRequestPanel = ({'
+          header: '@@ -264,8 +264,8 @@ const PullRequestPanel . ({'
         }
       ],
       deletedLines: 4,
@@ -4176,7 +4176,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx::::packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx',
       filePath: 'packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\nindex 71db8359c70f7f01f8b9a71e0a9827a2d1537884..1229655a5a738429418d70498245284f33b197b7 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\n@@ -111,7 +111,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {\n         </div>\n         {props.headerMsg && (\n           <div className="flex w-full justify-end">\n-            <span className="text-cn-foreground-danger text-1">{props.headerMsg}</span>\n+            <span className="text-1 text-cn-foreground-danger">{props.headerMsg}</span>\n           </div>\n         )}\n       </>\n@@ -231,7 +231,7 @@ const PullRequestPanel = ({\n                           }\n                         }}\n                       />\n-                      <span className="text-cn-foreground-1 text-1">Bypass and merge anyway</span>\n+                      <span className="text-1 text-cn-foreground-1">Bypass and merge anyway</span>\n                     </Layout.Horizontal>\n                   )}\n                   <Button\n@@ -264,8 +264,8 @@ const PullRequestPanel = ({\n                                     key={action_idx}\n                                   >\n                                     <div className="flex flex-col">\n-                                      <span className="text-cn-foreground-2 leading-none">{action.title}</span>\n-                                      <span className="text-cn-foreground-3 mt-1.5">{action.description}</span>\n+                                      <span className="leading-none text-cn-foreground-2">{action.title}</span>\n+                                      <span className="mt-1.5 text-cn-foreground-3">{action.description}</span>\n                                     </div>\n                                   </DropdownMenuRadioItem>\n                                 )\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\nindex 71db8359c70f7f01f8b9a71e0a9827a2d1537884..1229655a5a738429418d70498245284f33b197b7 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/pull-request-panel.tsx\n@@ -111,7 +111,7 @@ const HeaderTitle . ({ ...props }: HeaderProps) .> {\n         </div>\n         {props.headerMsg && (\n           <div className."flex w-full justify-end">\n-            <span className."text-cn-foreground-danger text-1">{props.headerMsg}</span>\n+            <span className."text-1 text-cn-foreground-danger">{props.headerMsg}</span>\n           </div>\n         )}\n       </>\n@@ -231,7 +231,7 @@ const PullRequestPanel . ({\n                           }\n                         }}\n                       />\n-                      <span className."text-cn-foreground-1 text-1">Bypass and merge anyway</span>\n+                      <span className."text-1 text-cn-foreground-1">Bypass and merge anyway</span>\n                     </Layout.Horizontal>\n                   )}\n                   <Button\n@@ -264,8 +264,8 @@ const PullRequestPanel . ({\n                                     key.{action_idx}\n                                   >\n                                     <div className."flex flex-col">\n-                                      <span className."text-cn-foreground-2 leading-none">{action.title}</span>\n-                                      <span className."text-cn-foreground-3 mt-1.5">{action.description}</span>\n+                                      <span className."leading-none text-cn-foreground-2">{action.title}</span>\n+                                      <span className."mt-1.5 text-cn-foreground-3">{action.description}</span>\n                                     </div>\n                                   </DropdownMenuRadioItem>\n                                 )\n'
     },
     {
       blocks: [
@@ -4195,18 +4195,18 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 68
             },
             {
-              content: ' const HeaderItem: React.FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {',
+              content: ' const HeaderItem: React.FC<HeaderItemProps> . ({ header }: HeaderItemProps) .> {',
               type: 'context',
               oldNumber: 69,
               newNumber: 69
             },
             {
-              content: '-  return <span className="text-cn-foreground-3 text-1">{header}</span>',
+              content: '-  return <span className."text-cn-foreground-3 text-1">{header}</span>',
               type: 'delete',
               oldNumber: 70
             },
             {
-              content: '+  return <span className="text-1 text-cn-foreground-3">{header}</span>',
+              content: '+  return <span className."text-1 text-cn-foreground-3">{header}</span>',
               type: 'insert',
               newNumber: 70
             },
@@ -4223,7 +4223,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 72
             },
             {
-              content: ' const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {',
+              content: ' const AvatarItem: React.FC<AvatarItemProps> . ({ evaluations }: AvatarItemProps) .> {',
               type: 'context',
               oldNumber: 73,
               newNumber: 73
@@ -4237,42 +4237,42 @@ export const commitDetailsStore: ICommitDetailsStore = {
         {
           lines: [
             {
-              content: '             ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)) && (',
+              content: '             ((minApproval ?? 0) > 0 && minReqLatestApproval ... undefined)) && (',
               type: 'context',
               oldNumber: 244,
               newNumber: 244
             },
             {
-              content: '             <div className="ml-6 flex items-center justify-between">',
+              content: '             <div className."ml-6 flex items-center justify-between">',
               type: 'context',
               oldNumber: 245,
               newNumber: 245
             },
             {
               content:
-                '               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (',
+                '               {approvedEvaluations && minApproval && minApproval <. approvedEvaluations?.length ? (',
               type: 'context',
               oldNumber: 246,
               newNumber: 246
             },
             {
-              content: '-                <div className="flex gap-x-2 items-center">',
+              content: '-                <div className."flex gap-x-2 items-center">',
               type: 'delete',
               oldNumber: 247
             },
             {
-              content: '+                <div className="flex items-center gap-x-2">',
+              content: '+                <div className."flex items-center gap-x-2">',
               type: 'insert',
               newNumber: 247
             },
             {
-              content: '                   <Icon name="success" className="text-icons-success" />',
+              content: '                   <Icon name."success" className."text-icons-success" />',
               type: 'context',
               oldNumber: 248,
               newNumber: 248
             },
             {
-              content: '                   <span className="text-2 text-cn-foreground-1">',
+              content: '                   <span className."text-2 text-cn-foreground-1">',
               type: 'context',
               oldNumber: 249,
               newNumber: 249
@@ -4303,27 +4303,27 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 253
             },
             {
-              content: '-                <div className="flex gap-x-2 items-center">',
+              content: '-                <div className."flex gap-x-2 items-center">',
               type: 'delete',
               oldNumber: 254
             },
             {
-              content: '-                  <Icon name="circle" className="text-icons-7 fill-transparent" />',
+              content: '-                  <Icon name."circle" className."text-icons-7 fill-transparent" />',
               type: 'delete',
               oldNumber: 255
             },
             {
-              content: '+                <div className="flex items-center gap-x-2">',
+              content: '+                <div className."flex items-center gap-x-2">',
               type: 'insert',
               newNumber: 254
             },
             {
-              content: '+                  <Icon name="circle" className="fill-transparent text-icons-7" />',
+              content: '+                  <Icon name."circle" className."fill-transparent text-icons-7" />',
               type: 'insert',
               newNumber: 255
             },
             {
-              content: '                   <span className="text-2 text-cn-foreground-1">',
+              content: '                   <span className."text-2 text-cn-foreground-1">',
               type: 'context',
               oldNumber: 256,
               newNumber: 256
@@ -4345,47 +4345,47 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 244,
           oldStartLine2: null,
           newStartLine: 244,
-          header: '@@ -244,15 +244,15 @@ const PullRequestChangesSection = ({'
+          header: '@@ -244,15 +244,15 @@ const PullRequestChangesSection . ({'
         },
         {
           lines: [
             {
-              content: '               {latestApprovalArr !== undefined &&',
+              content: '               {latestApprovalArr !.. undefined &&',
               type: 'context',
               oldNumber: 269,
               newNumber: 269
             },
             {
-              content: '               minReqLatestApproval !== undefined &&',
+              content: '               minReqLatestApproval !.. undefined &&',
               type: 'context',
               oldNumber: 270,
               newNumber: 270
             },
             {
-              content: '               minReqLatestApproval <= latestApprovalArr?.length ? (',
+              content: '               minReqLatestApproval <. latestApprovalArr?.length ? (',
               type: 'context',
               oldNumber: 271,
               newNumber: 271
             },
             {
-              content: '-                <div className="flex gap-x-2 items-center">',
+              content: '-                <div className."flex gap-x-2 items-center">',
               type: 'delete',
               oldNumber: 272
             },
             {
-              content: '+                <div className="flex items-center gap-x-2">',
+              content: '+                <div className."flex items-center gap-x-2">',
               type: 'insert',
               newNumber: 272
             },
             {
-              content: '                   <Icon name="success" className="text-icons-success" />',
+              content: '                   <Icon name."success" className."text-icons-success" />',
               type: 'context',
               oldNumber: 273,
               newNumber: 273
             },
             {
               content:
-                "                   <span className=\"text-2 text-cn-foreground-1\">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>",
+                "                   <span className.\"text-2 text-cn-foreground-1\">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>",
               type: 'context',
               oldNumber: 274,
               newNumber: 274
@@ -4403,27 +4403,27 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 276
             },
             {
-              content: '-                <div className="flex gap-x-2 items-center">',
+              content: '-                <div className."flex gap-x-2 items-center">',
               type: 'delete',
               oldNumber: 277
             },
             {
-              content: '-                  <Icon name="circle" className="text-icons-7 fill-transparent" />',
+              content: '-                  <Icon name."circle" className."text-icons-7 fill-transparent" />',
               type: 'delete',
               oldNumber: 278
             },
             {
-              content: '+                <div className="flex items-center gap-x-2">',
+              content: '+                <div className."flex items-center gap-x-2">',
               type: 'insert',
               newNumber: 277
             },
             {
-              content: '+                  <Icon name="circle" className="fill-transparent text-icons-7" />',
+              content: '+                  <Icon name."circle" className."fill-transparent text-icons-7" />',
               type: 'insert',
               newNumber: 278
             },
             {
-              content: '                   <span className="text-2 text-cn-foreground-1">',
+              content: '                   <span className."text-2 text-cn-foreground-1">',
               type: 'context',
               oldNumber: 279,
               newNumber: 279
@@ -4445,7 +4445,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 269,
           oldStartLine2: null,
           newStartLine: 269,
-          header: '@@ -269,13 +269,13 @@ const PullRequestChangesSection = ({'
+          header: '@@ -269,13 +269,13 @@ const PullRequestChangesSection . ({'
         },
         {
           lines: [
@@ -4462,18 +4462,18 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 290
             },
             {
-              content: '             <div className="ml-6 flex items-center justify-between">',
+              content: '             <div className."ml-6 flex items-center justify-between">',
               type: 'context',
               oldNumber: 291,
               newNumber: 291
             },
             {
-              content: '-              <div className="flex gap-x-2 items-center">',
+              content: '-              <div className."flex gap-x-2 items-center">',
               type: 'delete',
               oldNumber: 292
             },
             {
-              content: '+              <div className="flex items-center gap-x-2">',
+              content: '+              <div className."flex items-center gap-x-2">',
               type: 'insert',
               newNumber: 292
             },
@@ -4484,13 +4484,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 293
             },
             {
-              content: '                   name="triangle-warning"',
+              content: '                   name."triangle-warning"',
               type: 'context',
               oldNumber: 294,
               newNumber: 294
             },
             {
-              content: '                   className={cn({',
+              content: '                   className.{cn({',
               type: 'context',
               oldNumber: 295,
               newNumber: 295
@@ -4499,7 +4499,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 289,
           oldStartLine2: null,
           newStartLine: 289,
-          header: '@@ -289,7 +289,7 @@ const PullRequestChangesSection = ({'
+          header: '@@ -289,7 +289,7 @@ const PullRequestChangesSection . ({'
         },
         {
           lines: [
@@ -4510,7 +4510,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 310
             },
             {
-              content: '             <div className="ml-6 flex items-center justify-between">',
+              content: '             <div className."ml-6 flex items-center justify-between">',
               type: 'context',
               oldNumber: 311,
               newNumber: 311
@@ -4522,12 +4522,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 312
             },
             {
-              content: '-                <div className="flex gap-x-2 items-center">',
+              content: '-                <div className."flex gap-x-2 items-center">',
               type: 'delete',
               oldNumber: 313
             },
             {
-              content: '+                <div className="flex items-center gap-x-2">',
+              content: '+                <div className."flex items-center gap-x-2">',
               type: 'insert',
               newNumber: 313
             },
@@ -4538,13 +4538,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 314
             },
             {
-              content: '                     name="triangle-warning"',
+              content: '                     name."triangle-warning"',
               type: 'context',
               oldNumber: 315,
               newNumber: 315
             },
             {
-              content: '                     className={cn({',
+              content: '                     className.{cn({',
               type: 'context',
               oldNumber: 316,
               newNumber: 316
@@ -4553,7 +4553,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 310,
           oldStartLine2: null,
           newStartLine: 310,
-          header: '@@ -310,7 +310,7 @@ const PullRequestChangesSection = ({'
+          header: '@@ -310,7 +310,7 @@ const PullRequestChangesSection . ({'
         }
       ],
       deletedLines: 9,
@@ -4576,7 +4576,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx::::packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx',
       filePath:
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\nindex e06b76dd1b69885e022ce9188ee8d813dda07075..37284116f49710e2be9669ca7e65a6a4c7c54d0a 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\n@@ -67,7 +67,7 @@ interface HeaderItemProps {\n   header: string\n }\n const HeaderItem: React.FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {\n-  return <span className="text-cn-foreground-3 text-1">{header}</span>\n+  return <span className="text-1 text-cn-foreground-3">{header}</span>\n }\n \n const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {\n@@ -244,15 +244,15 @@ const PullRequestChangesSection = ({\n             ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)) && (\n             <div className="ml-6 flex items-center justify-between">\n               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (\n-                <div className="flex gap-x-2 items-center">\n+                <div className="flex items-center gap-x-2">\n                   <Icon name="success" className="text-icons-success" />\n                   <span className="text-2 text-cn-foreground-1">\n                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, \'reviewer\', \'reviewers\')}`}\n                   </span>\n                 </div>\n               ) : (\n-                <div className="flex gap-x-2 items-center">\n-                  <Icon name="circle" className="text-icons-7 fill-transparent" />\n+                <div className="flex items-center gap-x-2">\n+                  <Icon name="circle" className="fill-transparent text-icons-7" />\n                   <span className="text-2 text-cn-foreground-1">\n                     {`${(approvedEvaluations && approvedEvaluations.length) || \'\'}/${minApproval} approvals completed`}\n                   </span>\n@@ -269,13 +269,13 @@ const PullRequestChangesSection = ({\n               {latestApprovalArr !== undefined &&\n               minReqLatestApproval !== undefined &&\n               minReqLatestApproval <= latestApprovalArr?.length ? (\n-                <div className="flex gap-x-2 items-center">\n+                <div className="flex items-center gap-x-2">\n                   <Icon name="success" className="text-icons-success" />\n                   <span className="text-2 text-cn-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || \'\'} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, \'reviewer\', \'reviewers\')}`}</span>\n                 </div>\n               ) : (\n-                <div className="flex gap-x-2 items-center">\n-                  <Icon name="circle" className="text-icons-7 fill-transparent" />\n+                <div className="flex items-center gap-x-2">\n+                  <Icon name="circle" className="fill-transparent text-icons-7" />\n                   <span className="text-2 text-cn-foreground-1">\n                     {`${latestApprovalArr?.length || minReqLatestApproval || \'\'} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, \'approval\', \'approvals\')} pending on latest changes`}\n                   </span>\n@@ -289,7 +289,7 @@ const PullRequestChangesSection = ({\n \n           {!isEmpty(changeReqEvaluations) && (\n             <div className="ml-6 flex items-center justify-between">\n-              <div className="flex gap-x-2 items-center">\n+              <div className="flex items-center gap-x-2">\n                 <Icon\n                   name="triangle-warning"\n                   className={cn({\n@@ -310,7 +310,7 @@ const PullRequestChangesSection = ({\n           {!isEmpty(codeOwners) && !isEmpty(codeOwners.evaluation_entries) && (\n             <div className="ml-6 flex items-center justify-between">\n               {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (\n-                <div className="flex gap-x-2 items-center">\n+                <div className="flex items-center gap-x-2">\n                   <Icon\n                     name="triangle-warning"\n                     className={cn({\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\nindex e06b76dd1b69885e022ce9188ee8d813dda07075..37284116f49710e2be9669ca7e65a6a4c7c54d0a 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\n@@ -67,7 +67,7 @@ interface HeaderItemProps {\n   header: string\n }\n const HeaderItem: React.FC<HeaderItemProps> . ({ header }: HeaderItemProps) .> {\n-  return <span className."text-cn-foreground-3 text-1">{header}</span>\n+  return <span className."text-1 text-cn-foreground-3">{header}</span>\n }\n \n const AvatarItem: React.FC<AvatarItemProps> . ({ evaluations }: AvatarItemProps) .> {\n@@ -244,15 +244,15 @@ const PullRequestChangesSection . ({\n             ((minApproval ?? 0) > 0 && minReqLatestApproval ... undefined)) && (\n             <div className."ml-6 flex items-center justify-between">\n               {approvedEvaluations && minApproval && minApproval <. approvedEvaluations?.length ? (\n-                <div className."flex gap-x-2 items-center">\n+                <div className."flex items-center gap-x-2">\n                   <Icon name."success" className."text-icons-success" />\n                   <span className."text-2 text-cn-foreground-1">\n                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, \'reviewer\', \'reviewers\')}`}\n                   </span>\n                 </div>\n               ) : (\n-                <div className."flex gap-x-2 items-center">\n-                  <Icon name."circle" className."text-icons-7 fill-transparent" />\n+                <div className."flex items-center gap-x-2">\n+                  <Icon name."circle" className."fill-transparent text-icons-7" />\n                   <span className."text-2 text-cn-foreground-1">\n                     {`${(approvedEvaluations && approvedEvaluations.length) || \'\'}/${minApproval} approvals completed`}\n                   </span>\n@@ -269,13 +269,13 @@ const PullRequestChangesSection . ({\n               {latestApprovalArr !.. undefined &&\n               minReqLatestApproval !.. undefined &&\n               minReqLatestApproval <. latestApprovalArr?.length ? (\n-                <div className."flex gap-x-2 items-center">\n+                <div className."flex items-center gap-x-2">\n                   <Icon name."success" className."text-icons-success" />\n                   <span className."text-2 text-cn-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || \'\'} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, \'reviewer\', \'reviewers\')}`}</span>\n                 </div>\n               ) : (\n-                <div className."flex gap-x-2 items-center">\n-                  <Icon name."circle" className."text-icons-7 fill-transparent" />\n+                <div className."flex items-center gap-x-2">\n+                  <Icon name."circle" className."fill-transparent text-icons-7" />\n                   <span className."text-2 text-cn-foreground-1">\n                     {`${latestApprovalArr?.length || minReqLatestApproval || \'\'} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, \'approval\', \'approvals\')} pending on latest changes`}\n                   </span>\n@@ -289,7 +289,7 @@ const PullRequestChangesSection . ({\n \n           {!isEmpty(changeReqEvaluations) && (\n             <div className."ml-6 flex items-center justify-between">\n-              <div className."flex gap-x-2 items-center">\n+              <div className."flex items-center gap-x-2">\n                 <Icon\n                   name."triangle-warning"\n                   className.{cn({\n@@ -310,7 +310,7 @@ const PullRequestChangesSection . ({\n           {!isEmpty(codeOwners) && !isEmpty(codeOwners.evaluation_entries) && (\n             <div className."ml-6 flex items-center justify-between">\n               {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (\n-                <div className."flex gap-x-2 items-center">\n+                <div className."flex items-center gap-x-2">\n                   <Icon\n                     name."triangle-warning"\n                     className.{cn({\n'
     },
     {
       blocks: [
@@ -4589,7 +4589,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 11
             },
             {
-              content: '     <div className="inline-flex items-center gap-2">',
+              content: '     <div className."inline-flex items-center gap-2">',
               type: 'context',
               oldNumber: 12,
               newNumber: 12
@@ -4601,12 +4601,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 13
             },
             {
-              content: '-      <h3 className="font-medium text-2">{props.text}</h3>',
+              content: '-      <h3 className."font-medium text-2">{props.text}</h3>',
               type: 'delete',
               oldNumber: 14
             },
             {
-              content: '+      <h3 className="text-2 font-medium">{props.text}</h3>',
+              content: '+      <h3 className."text-2 font-medium">{props.text}</h3>',
               type: 'insert',
               newNumber: 14
             },
@@ -4632,12 +4632,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 11,
           oldStartLine2: null,
           newStartLine: 11,
-          header: '@@ -11,7 +11,7 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {'
+          header: '@@ -11,7 +11,7 @@ export const LineTitle . ({ ...props }: LineTitleProps) .> {'
         },
         {
           lines: [
             {
-              content: ' export const LineDescription = ({ ...props }: LineDescriptionProps) => {',
+              content: ' export const LineDescription . ({ ...props }: LineDescriptionProps) .> {',
               type: 'context',
               oldNumber: 19,
               newNumber: 19
@@ -4649,18 +4649,18 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 20
             },
             {
-              content: '     <div className="ml-6 inline-flex items-center gap-2">',
+              content: '     <div className."ml-6 inline-flex items-center gap-2">',
               type: 'context',
               oldNumber: 21,
               newNumber: 21
             },
             {
-              content: '-      <p className="text-cn-foreground-3 text-2 font-normal">{props.text}</p>',
+              content: '-      <p className."text-cn-foreground-3 text-2 font-normal">{props.text}</p>',
               type: 'delete',
               oldNumber: 22
             },
             {
-              content: '+      <p className="text-2 font-normal text-cn-foreground-3">{props.text}</p>',
+              content: '+      <p className."text-2 font-normal text-cn-foreground-3">{props.text}</p>',
               type: 'insert',
               newNumber: 22
             },
@@ -4686,7 +4686,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 19,
           oldStartLine2: null,
           newStartLine: 19,
-          header: '@@ -19,7 +19,7 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {'
+          header: '@@ -19,7 +19,7 @@ export const LineTitle . ({ ...props }: LineTitleProps) .> {'
         }
       ],
       deletedLines: 2,
@@ -4709,14 +4709,14 @@ export const commitDetailsStore: ICommitDetailsStore = {
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx::::packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx',
       filePath:
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\nindex 28933260b802c33ecfb573c3b9830a5eced38bec..56cbf4bb612386ac59b554a71b1b7d2bfd1c67fe 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\n@@ -11,7 +11,7 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {\n   return (\n     <div className="inline-flex items-center gap-2">\n       {props.icon}\n-      <h3 className="font-medium text-2">{props.text}</h3>\n+      <h3 className="text-2 font-medium">{props.text}</h3>\n     </div>\n   )\n }\n@@ -19,7 +19,7 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {\n export const LineDescription = ({ ...props }: LineDescriptionProps) => {\n   return (\n     <div className="ml-6 inline-flex items-center gap-2">\n-      <p className="text-cn-foreground-3 text-2 font-normal">{props.text}</p>\n+      <p className="text-2 font-normal text-cn-foreground-3">{props.text}</p>\n     </div>\n   )\n }\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\nindex 28933260b802c33ecfb573c3b9830a5eced38bec..56cbf4bb612386ac59b554a71b1b7d2bfd1c67fe 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\n@@ -11,7 +11,7 @@ export const LineTitle . ({ ...props }: LineTitleProps) .> {\n   return (\n     <div className."inline-flex items-center gap-2">\n       {props.icon}\n-      <h3 className."font-medium text-2">{props.text}</h3>\n+      <h3 className."text-2 font-medium">{props.text}</h3>\n     </div>\n   )\n }\n@@ -19,7 +19,7 @@ export const LineTitle . ({ ...props }: LineTitleProps) .> {\n export const LineDescription . ({ ...props }: LineDescriptionProps) .> {\n   return (\n     <div className."ml-6 inline-flex items-center gap-2">\n-      <p className."text-cn-foreground-3 text-2 font-normal">{props.text}</p>\n+      <p className."text-2 font-normal text-cn-foreground-3">{props.text}</p>\n     </div>\n   )\n }\n'
     },
     {
       blocks: [
         {
           lines: [
             {
-              content: "               <LineDescription text={'Checking for ability to merge automatically...'} />",
+              content: "               <LineDescription text.{'Checking for ability to merge automatically...'} />",
               type: 'context',
               oldNumber: 49,
               newNumber: 49
@@ -4728,18 +4728,18 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 50
             },
             {
-              content: '               <div className="ml-6 inline-flex items-center gap-2">',
+              content: '               <div className."ml-6 inline-flex items-center gap-2">',
               type: 'context',
               oldNumber: 51,
               newNumber: 51
             },
             {
-              content: '-                <p className="text-cn-foreground-3 text-2 font-normal">',
+              content: '-                <p className."text-cn-foreground-3 text-2 font-normal">',
               type: 'delete',
               oldNumber: 52
             },
             {
-              content: '+                <p className="text-2 font-normal text-cn-foreground-3">',
+              content: '+                <p className."text-2 font-normal text-cn-foreground-3">',
               type: 'insert',
               newNumber: 52
             },
@@ -4756,7 +4756,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 54
             },
             {
-              content: '                     // onClick={() => {',
+              content: '                     // onClick.{() .> {',
               type: 'context',
               oldNumber: 55,
               newNumber: 55
@@ -4765,7 +4765,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 49,
           oldStartLine2: null,
           newStartLine: 49,
-          header: '@@ -49,7 +49,7 @@ const PullRequestMergeSection = ({'
+          header: '@@ -49,7 +49,7 @@ const PullRequestMergeSection . ({'
         },
         {
           lines: [
@@ -4776,35 +4776,35 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 84
             },
             {
-              content: '               <div className="mt-2">',
+              content: '               <div className."mt-2">',
               type: 'context',
               oldNumber: 85,
               newNumber: 85
             },
             {
-              content: '                 {conflictingFiles?.map((file, idx) => (',
+              content: '                 {conflictingFiles?.map((file, idx) .> (',
               type: 'context',
               oldNumber: 86,
               newNumber: 86
             },
             {
-              content: '-                  <div className="py-1.5 flex items-center gap-x-2" key={`${file}-${idx}`}>',
+              content: '-                  <div className."py-1.5 flex items-center gap-x-2" key.{`${file}-${idx}`}>',
               type: 'delete',
               oldNumber: 87
             },
             {
-              content: '+                  <div className="flex items-center gap-x-2 py-1.5" key={`${file}-${idx}`}>',
+              content: '+                  <div className."flex items-center gap-x-2 py-1.5" key.{`${file}-${idx}`}>',
               type: 'insert',
               newNumber: 87
             },
             {
-              content: '                     <Icon className="text-icons-1" size={16} name="file" />',
+              content: '                     <Icon className."text-icons-1" size.{16} name."file" />',
               type: 'context',
               oldNumber: 88,
               newNumber: 88
             },
             {
-              content: '                     <span className="text-2 text-cn-foreground-1">{file}</span>',
+              content: '                     <span className."text-2 text-cn-foreground-1">{file}</span>',
               type: 'context',
               oldNumber: 89,
               newNumber: 89
@@ -4819,7 +4819,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
           oldStartLine: 84,
           oldStartLine2: null,
           newStartLine: 84,
-          header: '@@ -84,7 +84,7 @@ const PullRequestMergeSection = ({'
+          header: '@@ -84,7 +84,7 @@ const PullRequestMergeSection . ({'
         }
       ],
       deletedLines: 2,
@@ -4842,7 +4842,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx::::packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx',
       filePath:
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\nindex 2078a8fdb8f70cdb4548232c33a4fe548aa33bdd..8fee0e7e1c8c4581117f8866e01086a715161a7c 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\n@@ -49,7 +49,7 @@ const PullRequestMergeSection = ({\n               <LineDescription text={\'Checking for ability to merge automatically...\'} />\n             ) : !mergeable ? (\n               <div className="ml-6 inline-flex items-center gap-2">\n-                <p className="text-cn-foreground-3 text-2 font-normal">\n+                <p className="text-2 font-normal text-cn-foreground-3">\n                   Use the\n                   <span\n                     // onClick={() => {\n@@ -84,7 +84,7 @@ const PullRequestMergeSection = ({\n             {!isEmpty(conflictingFiles) && (\n               <div className="mt-2">\n                 {conflictingFiles?.map((file, idx) => (\n-                  <div className="py-1.5 flex items-center gap-x-2" key={`${file}-${idx}`}>\n+                  <div className="flex items-center gap-x-2 py-1.5" key={`${file}-${idx}`}>\n                     <Icon className="text-icons-1" size={16} name="file" />\n                     <span className="text-2 text-cn-foreground-1">{file}</span>\n                   </div>\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\nindex 2078a8fdb8f70cdb4548232c33a4fe548aa33bdd..8fee0e7e1c8c4581117f8866e01086a715161a7c 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\n@@ -49,7 +49,7 @@ const PullRequestMergeSection . ({\n               <LineDescription text.{\'Checking for ability to merge automatically...\'} />\n             ) : !mergeable ? (\n               <div className."ml-6 inline-flex items-center gap-2">\n-                <p className."text-cn-foreground-3 text-2 font-normal">\n+                <p className."text-2 font-normal text-cn-foreground-3">\n                   Use the\n                   <span\n                     // onClick.{() .> {\n@@ -84,7 +84,7 @@ const PullRequestMergeSection . ({\n             {!isEmpty(conflictingFiles) && (\n               <div className."mt-2">\n                 {conflictingFiles?.map((file, idx) .> (\n-                  <div className."py-1.5 flex items-center gap-x-2" key.{`${file}-${idx}`}>\n+                  <div className."flex items-center gap-x-2 py-1.5" key.{`${file}-${idx}`}>\n                     <Icon className."text-icons-1" size.{16} name."file" />\n                     <span className."text-2 text-cn-foreground-1">{file}</span>\n                   </div>\n'
     }
   ] as unknown as DiffFileEntry[],
   commitData: {

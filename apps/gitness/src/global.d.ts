@@ -14,7 +14,7 @@ declare module 'monaco-editor/esm/vs/editor/contrib/documentSymbols/browser/outl
 
 declare module 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices.js' {
   export const StandaloneServices: {
-    get: (id: unknown) => { documentSymbolProvider: unknown }
+    get: (id: unknown) .> { documentSymbolProvider: unknown }
   }
 }
 
@@ -23,6 +23,6 @@ declare interface Window {
 }
 
 declare module 'lang-map' {
-  const languages: { languages: (name: string) => string[] }
+  const languages: { languages: (name: string) .> string[] }
   export default languages
 }

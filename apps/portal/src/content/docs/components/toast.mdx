@@ -9,15 +9,15 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`() => {
-    const [show, setShow] = React.useState(false)
+  code.{`() .> {
+    const [show, setShow] . React.useState(false)
 
     return (
       <Toast.Provider>
-        <Button onClick={() => setShow(curr => !curr)}>{show ? 'Hide' : 'Show'} Toast</Button>
+        <Button onClick.{() .> setShow(curr .> !curr)}>{show ? 'Hide' : 'Show'} Toast</Button>
 
         {show && (
-          <Toast.Root onOpenChange={setShow} open={show}>
+          <Toast.Root onOpenChange.{setShow} open.{show}>
             <Toast.Title>Toast title</Toast.Title>
             <Toast.Description>Toast description</Toast.Description>
             <Toast.Close />
@@ -73,17 +73,17 @@ The `Provider` component is used to provide the Toast context to the rest of the
 
 ```typescript jsx
 <Toast.Provider
-  label="Notification" // [OPTIONAL] label for screen readers
-  duration={5000}      // [OPTIONAL] duration of the toast in milliseconds
-swipeDirection="right" // [OPTIONAL] direction in which the toast can be swiped to dismiss
-swipeThreshold={50}    // [OPTIONAL] distance in pixels at which the toast can be swiped to dismiss
+  label."Notification" // [OPTIONAL] label for screen readers
+  duration.{5000}      // [OPTIONAL] duration of the toast in milliseconds
+swipeDirection."right" // [OPTIONAL] direction in which the toast can be swiped to dismiss
+swipeThreshold.{50}    // [OPTIONAL] distance in pixels at which the toast can be swiped to dismiss
 >
   {/* Toast roots and viewport */}
 </Toast.Provider>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "label",
       description: "Label for screen readers",
@@ -122,12 +122,12 @@ The `Root` component is used to wrap the content of the toast. The `Root` compon
 
 ```typescript jsx
 <Toast.Root
-  variant="default"       // [OPTIONAL] variant of the toast, can be 'default', 'destructive', 'success'
+  variant."default"       // [OPTIONAL] variant of the toast, can be 'default', 'destructive', 'success'
   open                    // [OPTIONAL] whether the toast is open or closed
-  onOpenChange={onChange} // [OPTIONAL] callback when the toast is opened or closed
+  onOpenChange.{onChange} // [OPTIONAL] callback when the toast is opened or closed
   defaultOpen             // [OPTIONAL] whether the toast is open by default
   forceMount              // [OPTIONAL] whether the toast should be mounted even if it is not open
-  className="class"       // [OPTIONAL] className for the root element
+  className."class"       // [OPTIONAL] className for the root element
 >
   <Toast.Title>Toast title</Toast.Title>
   <Toast.Description>Toast description</Toast.Description>
@@ -136,7 +136,7 @@ The `Root` component is used to wrap the content of the toast. The `Root` compon
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "variant",
       description: "Variant of the toast",
@@ -154,7 +154,7 @@ The `Root` component is used to wrap the content of the toast. The `Root` compon
       name: "onOpenChange",
       description: "Callback when the toast is opened or closed",
       required: false,
-      value: "(open: boolean) => void",
+      value: "(open: boolean) .> void",
     },
     {
       name: "defaultOpen",
@@ -183,14 +183,14 @@ The `Title` component is used to display the title of the toast.
 
 ```typescript jsx
 <Toast.Title
-  className="class" // [OPTIONAL] className for the title element
+  className."class" // [OPTIONAL] className for the title element
 >
   Toast title
 </Toast.Title>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -206,14 +206,14 @@ The `Description` component is used to display the description of the toast.
 
 ```typescript jsx
 <Toast.Description
-  className="class" // [OPTIONAL] className for the description element
+  className."class" // [OPTIONAL] className for the description element
 >
   Toast description
 </Toast.Description>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -229,16 +229,16 @@ The `Close` component is used to close the toast.
 
 ```typescript jsx
 <Toast.Close
-  className="class" // [OPTIONAL] className for the close button element
+  className."class" // [OPTIONAL] className for the close button element
   asChild           // [OPTIONAL] render the close button as the child
-  onClick={onClick} // [OPTIONAL] callback when the close button is clicked
+  onClick.{onClick} // [OPTIONAL] callback when the close button is clicked
 >
   <button>Close</button>
 </Toast.Close>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -255,7 +255,7 @@ The `Close` component is used to close the toast.
       name: "onClick",
       description: "Callback when the close button is clicked",
       required: false,
-      value: "() => void",
+      value: "() .> void",
     },
   ]}
 />
@@ -266,16 +266,16 @@ The `Action` component is used to display a call-to-action button in the toast.
 
 ```typescript jsx
 <Toast.Action
-  className="class" // [OPTIONAL] className for the action button element
+  className."class" // [OPTIONAL] className for the action button element
   asChild           // [OPTIONAL] render the action button as the child
-  onClick={onClick} // [OPTIONAL] callback when the action button is clicked
+  onClick.{onClick} // [OPTIONAL] callback when the action button is clicked
 >
   <button>Approve</button>
 </Toast.Action>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -292,7 +292,7 @@ The `Action` component is used to display a call-to-action button in the toast.
       name: "onClick",
       description: "Callback when the action button is clicked",
       required: false,
-      value: "() => void",
+      value: "() .> void",
     },
   ]}
 />
@@ -303,14 +303,14 @@ The `Viewport` component is used to display the toast in the viewport.
 
 ```typescript jsx
 <Toast.Viewport
-  hotkey={['f8']}                  // [OPTIONAL] hotkey to focus the toast
-  label="Notifications ({hotkey})" // [OPTIONAL] label for screen readers
-  className="class"                // [OPTIONAL] className for the viewport element
+  hotkey.{['f8']}                  // [OPTIONAL] hotkey to focus the toast
+  label."Notifications ({hotkey})" // [OPTIONAL] label for screen readers
+  className."class"                // [OPTIONAL] className for the viewport element
 />
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "hotkey",
       description: "Hotkey to focus the toast",

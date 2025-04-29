@@ -9,19 +9,19 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`() => {
-    const t = (key, fallback) => fallback || key
-    const [currentPage, setCurrentPage] = React.useState(1)
+  code.{`() .> {
+    const t . (key, fallback) .> fallback || key
+    const [currentPage, setCurrentPage] . React.useState(1)
 
     return (
-        <div className="flex flex-col space-y-4">
+        <div className."flex flex-col space-y-4">
             <div>
                 <h5>With Known Total Pages</h5>
                 <Pagination
-                    totalPages={10}
-                    currentPage={currentPage}
-                    goToPage={setCurrentPage}
-                    t={t}
+                    totalPages.{10}
+                    currentPage.{currentPage}
+                    goToPage.{setCurrentPage}
+                    t.{t}
                 />
             </div>
 
@@ -30,11 +30,11 @@ import { DocsPage } from "@/components/docs-page";
             <div>
                 <h5>Without Known Total Pages</h5>
                 <Pagination
-                    currentPage={2}
-                    nextPage={3}
-                    previousPage={1}
-                    goToPage={(pageNum) => console.log("Go to page:", pageNum)}
-                    t={t}
+                    currentPage.{2}
+                    nextPage.{3}
+                    previousPage.{1}
+                    goToPage.{(pageNum) .> console.log("Go to page:", pageNum)}
+                    t.{t}
                 />
             </div>
         </div>
@@ -52,15 +52,15 @@ import { Pagination } from '@harnessio/ui/components'
 
 //...
 
-const [currentPage, setCurrentPage] = useState(1)
-const { t } = useTranslationStore()
+const [currentPage, setCurrentPage] . useState(1)
+const { t } . useTranslationStore()
 
 return (
   <Pagination
-    totalPages={10}
-    currentPage={currentPage}
-    goToPage={setCurrentPage}
-    t={t}
+    totalPages.{10}
+    currentPage.{currentPage}
+    goToPage.{setCurrentPage}
+    t.{t}
   />
 )
 ```
@@ -72,16 +72,16 @@ import { Pagination } from '@harnessio/ui/components'
 
 //...
 
-const [currentPage, setCurrentPage] = useState(1)
-const { t } = useTranslationStore()
+const [currentPage, setCurrentPage] . useState(1)
+const { t } . useTranslationStore()
 
 return (
   <Pagination
-    currentPage={currentPage}
-    nextPage={currentPage + 1}
-    previousPage={currentPage - 1}
-    goToPage={setCurrentPage}
-    t={t}
+    currentPage.{currentPage}
+    nextPage.{currentPage + 1}
+    previousPage.{currentPage - 1}
+    goToPage.{setCurrentPage}
+    t.{t}
   />
 )
 ```
@@ -94,18 +94,18 @@ The component can be used either with a known total number of pages or with just
 
 ```typescript jsx
 <Pagination
-  currentPage={1}              // current page number
-  goToPage={(pageNum) => {}}   // function to handle page change
-  t={t}                        // translation function
-  totalPages={10}              // [OPTIONAL] total number of pages
-  nextPage={2}                 // [OPTIONAL] next page number
-  previousPage={0}             // [OPTIONAL] previous page number
-  className="custom-class"     // [OPTIONAL] custom class name
+  currentPage.{1}              // current page number
+  goToPage.{(pageNum) .> {}}   // function to handle page change
+  t.{t}                        // translation function
+  totalPages.{10}              // [OPTIONAL] total number of pages
+  nextPage.{2}                 // [OPTIONAL] next page number
+  previousPage.{0}             // [OPTIONAL] previous page number
+  className."custom-class"     // [OPTIONAL] custom class name
 />
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "totalPages",
       description: "Total number of pages",
@@ -122,7 +122,7 @@ The component can be used either with a known total number of pages or with just
       name: "goToPage",
       description: "Function to handle page change",
       required: true,
-      value: "(pageNum: number) => void",
+      value: "(pageNum: number) .> void",
     },
     {
       name: "nextPage",

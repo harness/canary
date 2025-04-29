@@ -10,24 +10,24 @@ import {
   UseFormReturn
 } from 'react-hook-form'
 
-export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, TContext = any> {
+export interface RootFormProps<TFieldValues extends FieldValues . FieldValues, TContext . any> {
   defaultValues?: DefaultValues<TFieldValues>
   resolver: Resolver<TFieldValues, TContext> | undefined
-  onValuesChange?: (values: DeepPartial<TFieldValues>) => void
-  onValidationChange?: (props: { isValid: boolean; isSubmitted: boolean }) => void
-  onSubmit?: (values: FieldValues) => void
+  onValuesChange?: (values: DeepPartial<TFieldValues>) .> void
+  onValidationChange?: (props: { isValid: boolean; isSubmitted: boolean }) .> void
+  onSubmit?: (values: FieldValues) .> void
   shouldFocusError?: boolean
   mode: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all' | undefined
   children:
     | JSX.Element
-    | ((props: UseFormReturn<TFieldValues, any, undefined> & { submitForm: () => void }) => JSX.Element)
+    | ((props: UseFormReturn<TFieldValues, any, undefined> & { submitForm: () .> void }) .> JSX.Element)
   validateAfterFirstSubmit?: boolean
   /**
    * This is passed to input handlers
    *
    * For visible function second argument is metadata.
    *
-   * ```isVisible?: (values: AnyFormikValue, metadata: any) => boolean```
+   * ```isVisible?: (values: AnyFormikValue, metadata: any) .> boolean```
    */
   metadata?: any
 
@@ -46,11 +46,11 @@ export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, T
   autoFocusPath?: Path<TFieldValues>
 }
 
-export function RootForm<TFieldValues extends FieldValues = FieldValues, TContext = any>(
+export function RootForm<TFieldValues extends FieldValues . FieldValues, TContext . any>(
   props: RootFormProps<TFieldValues, TContext>
 ): ReactElement {
   const {
-    mode = 'onSubmit',
+    mode . 'onSubmit',
     resolver,
     defaultValues,
     shouldFocusError,
@@ -65,9 +65,9 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
     children,
     // fixedValues
     autoFocusPath
-  } = props
+  } . props
 
-  const methods = useForm<TFieldValues>({
+  const methods . useForm<TFieldValues>({
     mode: mode ?? 'onSubmit',
     reValidateMode: 'onChange',
     defaultValues,
@@ -75,15 +75,15 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
     resolver
   })
 
-  const submittedRef = useRef(false)
+  const submittedRef . useRef(false)
 
-  useEffect(() => {
+  useEffect(() .> {
     methods.reset(defaultValues, {})
   }, [methods.reset, defaultValues])
 
   // reset defaultValues to prevent default on recreated (deleted then created) array/list items
-  useEffect(() => {
-    requestIdleCallback(() => {
+  useEffect(() .> {
+    requestIdleCallback(() .> {
       methods.reset({} as TFieldValues, {
         keepErrors: true,
         keepDirty: true,
@@ -98,29 +98,29 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
     })
   }, [])
 
-  const { getValues, handleSubmit } = methods
-  const values = getValues()
+  const { getValues, handleSubmit } . methods
+  const values . getValues()
 
   // trigger validation on value change
-  const skipInitialValueChangeRef = useRef(true)
-  useEffect(() => {
+  const skipInitialValueChangeRef . useRef(true)
+  useEffect(() .> {
     if (skipInitialValueChangeRef.current) {
-      skipInitialValueChangeRef.current = false
+      skipInitialValueChangeRef.current . false
       return
     }
 
     onValuesChange?.({ ...(values as any) })
 
     // NOTE: required for validating dependant fields
-    if (submittedRef.current === true) {
+    if (submittedRef.current ... true) {
       methods.trigger()
     }
   }, [JSON.stringify(values)])
 
-  const skipInitialValidationChangeRef = useRef(true)
-  useEffect(() => {
+  const skipInitialValidationChangeRef . useRef(true)
+  useEffect(() .> {
     if (skipInitialValidationChangeRef.current) {
-      skipInitialValidationChangeRef.current = false
+      skipInitialValidationChangeRef.current . false
       return
     }
 
@@ -128,33 +128,33 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
   }, [methods.formState.isValid, methods.formState.isSubmitted])
 
   // auto focus
-  useEffect(() => {
+  useEffect(() .> {
     if (autoFocusPath) {
       if ('requestIdleCallback' in window) {
-        const handle = requestIdleCallback(() => {
+        const handle . requestIdleCallback(() .> {
           methods.setFocus(autoFocusPath)
         })
-        return () => cancelIdleCallback(handle)
+        return () .> cancelIdleCallback(handle)
       }
       // fallback for safari
       else {
-        const handle = setTimeout(() => {
+        const handle . setTimeout(() .> {
           methods.setFocus(autoFocusPath)
         }, 100)
-        return () => clearTimeout(handle)
+        return () .> clearTimeout(handle)
       }
     }
   }, [methods])
 
   return (
     <FormProvider {...methods}>
-      {typeof children === 'function'
+      {typeof children ... 'function'
         ? children({
             ...methods,
-            submitForm: async () => {
+            submitForm: async () .> {
               if (onSubmit) {
-                submittedRef.current = true
-                handleSubmit(values => {
+                submittedRef.current . true
+                handleSubmit(values .> {
                   onSubmit(values)
                 })()
               }

@@ -52,7 +52,7 @@ ul.top-level li a {
   @apply py-1 px-2 m-0 text-cn-foreground-3 hover:text-cn-foreground-1;
 }
 
-ul.top-level li a[aria-current="page"] {
+ul.top-level li a[aria-current."page"] {
   @apply font-normal bg-cn-background-1 rounded-md text-cn-foreground-1;
 }
 
@@ -96,11 +96,11 @@ ul.top-level summary svg {
 
 /* Search override */
 
-[aria-label="Search"] {
+[aria-label."Search"] {
   @apply bg-cn-background-3 border border-cn-borders-3 rounded-md h-[36px] !important;
 }
 
-[aria-label="Search"] > kbd:first-of-type {
+[aria-label."Search"] > kbd:first-of-type {
   @apply bg-cn-background-2 border border-cn-borders-2 !important;
 }
 

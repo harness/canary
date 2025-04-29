@@ -5,11 +5,11 @@ import { useTranslationStore } from '@utils/viewUtils'
 
 import { ProfileSettingsLayout } from '@harnessio/ui/views'
 
-export const ProfileSettingsViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
+export const ProfileSettingsViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> . ({ children }) .> {
   return (
     <Routes>
-      <Route path="*" element={<ProfileSettingsLayout useTranslationStore={useTranslationStore} />}>
-        <Route path="*" element={children} />
+      <Route path."*" element.{<ProfileSettingsLayout useTranslationStore.{useTranslationStore} />}>
+        <Route path."*" element.{children} />
       </Route>
     </Routes>
   )

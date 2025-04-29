@@ -1,9 +1,9 @@
-const { container } = require('webpack')
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
+const { container } . require('webpack')
+const MonacoWebpackPlugin . require('monaco-editor-webpack-plugin')
 
-const { ModuleFederationPlugin } = container
+const { ModuleFederationPlugin } . container
 
-module.exports = {
+module.exports . {
   devtool: 'cheap-module-source-map',
   entry: './src/mfe-entry.ts',
   devServer: {

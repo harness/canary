@@ -8,9 +8,9 @@ import { PullRequestLayout } from '@harnessio/ui/views'
 
 import RootViewWrapper from './root-view-wrapper'
 
-const PullRequestLayoutWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  const usePullRequestStore = useCallback(
-    () => ({
+const PullRequestLayoutWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> . ({ children }) .> {
+  const usePullRequestStore . useCallback(
+    () .> ({
       ...pullRequestStore
     }),
     []
@@ -18,20 +18,20 @@ const PullRequestLayoutWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLEl
   return (
     <RootViewWrapper asChild>
       <Route
-        path="*"
-        element={
+        path."*"
+        element.{
           <PullRequestLayout
-            useTranslationStore={useTranslationStore}
-            usePullRequestStore={usePullRequestStore}
-            spaceId={''}
-            repoId={''}
-            updateTitle={() => {
+            useTranslationStore.{useTranslationStore}
+            usePullRequestStore.{usePullRequestStore}
+            spaceId.{''}
+            repoId.{''}
+            updateTitle.{() .> {
               return Promise.resolve()
             }}
           />
         }
       >
-        <Route path="*" element={children} />
+        <Route path."*" element.{children} />
       </Route>
     </RootViewWrapper>
   )

@@ -8,11 +8,11 @@ import {
 } from '@harnessio/ui/views'
 
 interface RepoLabelsListStore {
-  useLabelsStore: () => ILabelsStore
+  useLabelsStore: () .> ILabelsStore
 }
 
-export const LabelsListStore: RepoLabelsListStore = {
-  useLabelsStore: () => ({
+export const LabelsListStore: RepoLabelsListStore . {
+  useLabelsStore: () .> ({
     labels: [
       {
         id: 31,
@@ -78,17 +78,17 @@ export const LabelsListStore: RepoLabelsListStore = {
 
     getParentScopeLabels: false,
 
-    setLabels: (_: ILabelType[]) => {},
+    setLabels: (_: ILabelType[]) .> {},
 
-    addLabel: (_: ILabelType) => {},
+    addLabel: (_: ILabelType) .> {},
 
-    deleteLabel: (_: string) => {},
-    setIsLoading: (_: boolean) => {},
+    deleteLabel: (_: string) .> {},
+    setIsLoading: (_: boolean) .> {},
 
-    setValues: (_: Record<string, LabelValueType[]>) => {},
-    setRepoSpaceRef: (_: SetRepoSpaceRefProps) => {},
-    setGetParentScopeLabels: (_: boolean) => {},
-    setPage: (_: number) => {},
-    resetLabelsAndValues: () => {}
+    setValues: (_: Record<string, LabelValueType[]>) .> {},
+    setRepoSpaceRef: (_: SetRepoSpaceRefProps) .> {},
+    setGetParentScopeLabels: (_: boolean) .> {},
+    setPage: (_: number) .> {},
+    resetLabelsAndValues: () .> {}
   })
 }

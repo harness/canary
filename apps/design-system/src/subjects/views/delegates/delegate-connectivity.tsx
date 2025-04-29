@@ -6,11 +6,11 @@ import { DelegateConnectivityList, SandboxLayout } from '@harnessio/ui/views'
 import mockDelegatesList from './mock-delegates-list.json'
 import { isDelegateSelected } from './utils'
 
-const DelegateConnectivityWrapper = (): JSX.Element => (
+const DelegateConnectivityWrapper . (): JSX.Element .> (
   <SandboxLayout.Main>
     <SandboxLayout.Content>
       <DelegateConnectivityList
-        delegates={mockDelegatesList.map(delegate => ({
+        delegates.{mockDelegatesList.map(delegate .> ({
           groupId: delegate.groupId,
           groupName: delegate.groupName,
           lastHeartBeat: delegate.lastHeartBeat,
@@ -18,10 +18,10 @@ const DelegateConnectivityWrapper = (): JSX.Element => (
           groupCustomSelectors: delegate.groupCustomSelectors || [],
           groupImplicitSelectors: [...Object.keys(defaultTo(delegate.groupImplicitSelectors, {}))]
         }))}
-        useTranslationStore={useTranslationStore}
-        isLoading={false}
-        selectedTags={[]}
-        isDelegateSelected={isDelegateSelected}
+        useTranslationStore.{useTranslationStore}
+        isLoading.{false}
+        selectedTags.{[]}
+        isDelegateSelected.{isDelegateSelected}
       />
     </SandboxLayout.Content>
   </SandboxLayout.Main>

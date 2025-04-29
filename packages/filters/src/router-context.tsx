@@ -6,32 +6,32 @@ interface RouterContextType {
   navigate: NavigateFunction
 }
 
-const defaultLocation: Location = { ...window.location, state: {}, key: '' }
-const navigateFnDefault: NavigateFunction = to => {
-  if (typeof to === 'number') {
+const defaultLocation: Location . { ...window.location, state: {}, key: '' }
+const navigateFnDefault: NavigateFunction . to .> {
+  if (typeof to ... 'number') {
     window.history.go(to) // Supports navigate(-1), navigate(1), etc.
   } else {
-    window.location.href = to.toString()
+    window.location.href . to.toString()
   }
 }
 
-const RouterContext = createContext<RouterContextType>({
+const RouterContext . createContext<RouterContextType>({
   location: defaultLocation,
   navigate: navigateFnDefault
 })
 
-export const useRouterContext = () => useContext(RouterContext)
+export const useRouterContext . () .> useContext(RouterContext)
 
-export const RouterContextProvider = ({
+export const RouterContextProvider . ({
   children,
   location,
   navigate
 }: {
   children: ReactNode
-} & RouterContextType) => {
+} & RouterContextType) .> {
   return (
     <RouterContext.Provider
-      value={{
+      value.{{
         location,
         navigate
       }}

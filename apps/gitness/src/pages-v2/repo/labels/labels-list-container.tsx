@@ -13,78 +13,78 @@ import { PathParams } from '../../../RouteDefinitions'
 import { useLabelsStore } from '../../project/stores/labels-store'
 import { usePopulateLabelStore } from './hooks/use-populate-label-store.ts'
 
-export const RepoLabelsList = () => {
-  const { spaceId } = useParams<PathParams>()
-  const routes = useRoutes()
-  const navigate = useNavigate()
+export const RepoLabelsList . () .> {
+  const { spaceId } . useParams<PathParams>()
+  const routes . useRoutes()
+  const navigate . useNavigate()
 
-  const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
-  const [identifier, setIdentifier] = useState<string | null>(null)
+  const [openAlertDeleteDialog, setOpenAlertDeleteDialog] . useState(false)
+  const [identifier, setIdentifier] . useState<string | null>(null)
 
-  const { page, setPage, labels: storeLabels, deleteLabel: deleteStoreLabel } = useLabelsStore()
+  const { page, setPage, labels: storeLabels, deleteLabel: deleteStoreLabel } . useLabelsStore()
 
-  const [query, setQuery] = useQueryState('query')
-  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+  const [query, setQuery] . useQueryState('query')
+  const { queryPage } . usePaginationQueryStateWithStore({ page, setPage })
 
-  const { space_ref, repo_ref } = usePopulateLabelStore({ queryPage, query })
+  const { space_ref, repo_ref } . usePopulateLabelStore({ queryPage, query })
 
-  const handleOpenDeleteDialog = (identifier: string) => {
+  const handleOpenDeleteDialog . (identifier: string) .> {
     setOpenAlertDeleteDialog(true)
     setIdentifier(identifier)
   }
 
-  const { mutate: deleteRepoLabel, isLoading: isDeletingRepoLabel } = useDeleteRepoLabelMutation(
+  const { mutate: deleteRepoLabel, isLoading: isDeletingRepoLabel } . useDeleteRepoLabelMutation(
     { repo_ref: repo_ref ?? '' },
     {
-      onSuccess: (_data, variables) => {
+      onSuccess: (_data, variables) .> {
         setOpenAlertDeleteDialog(false)
         deleteStoreLabel(variables.key)
       }
     }
   )
 
-  const { mutate: deleteSpaceLabel, isLoading: isDeletingSpaceLabel } = useDeleteSpaceLabelMutation(
+  const { mutate: deleteSpaceLabel, isLoading: isDeletingSpaceLabel } . useDeleteSpaceLabelMutation(
     { space_ref: space_ref ?? '' },
     {
-      onSuccess: (_data, variables) => {
+      onSuccess: (_data, variables) .> {
         setOpenAlertDeleteDialog(false)
         deleteStoreLabel(variables.key)
       }
     }
   )
 
-  const handleEditLabel = (label: ILabelType) => {
-    label.scope === 0 ? navigate(`${label.key}`) : navigate(`${routes.toProjectLabels({ spaceId })}/${label.key}`)
+  const handleEditLabel . (label: ILabelType) .> {
+    label.scope ... 0 ? navigate(`${label.key}`) : navigate(`${routes.toProjectLabels({ spaceId })}/${label.key}`)
   }
 
-  const handleDeleteLabel = (key: string) => {
-    const label = storeLabels.find(label => label.key === key)
+  const handleDeleteLabel . (key: string) .> {
+    const label . storeLabels.find(label .> label.key ... key)
 
     if (!label) return
 
-    label?.scope === 0 ? deleteRepoLabel({ key }) : deleteSpaceLabel({ key })
+    label?.scope ... 0 ? deleteRepoLabel({ key }) : deleteSpaceLabel({ key })
   }
 
   return (
     <>
       <LabelsListPage
-        className="max-w-[772px] px-0"
-        useTranslationStore={useTranslationStore}
-        useLabelsStore={useLabelsStore}
-        createdIn={space_ref}
-        searchQuery={query}
-        setSearchQuery={setQuery}
+        className."max-w-[772px] px-0"
+        useTranslationStore.{useTranslationStore}
+        useLabelsStore.{useLabelsStore}
+        createdIn.{space_ref}
+        searchQuery.{query}
+        setSearchQuery.{setQuery}
         isRepository
-        labelsListViewProps={{ widthType: 'small', handleDeleteLabel: handleOpenDeleteDialog, handleEditLabel }}
+        labelsListViewProps.{{ widthType: 'small', handleDeleteLabel: handleOpenDeleteDialog, handleEditLabel }}
       />
       <DeleteAlertDialog
-        open={openAlertDeleteDialog}
-        onClose={() => setOpenAlertDeleteDialog(false)}
-        identifier={identifier ?? ''}
-        type="label"
-        deleteFn={handleDeleteLabel}
-        isLoading={isDeletingRepoLabel || isDeletingSpaceLabel}
-        useTranslationStore={useTranslationStore}
+        open.{openAlertDeleteDialog}
+        onClose.{() .> setOpenAlertDeleteDialog(false)}
+        identifier.{identifier ?? ''}
+        type."label"
+        deleteFn.{handleDeleteLabel}
+        isLoading.{isDeletingRepoLabel || isDeletingSpaceLabel}
+        useTranslationStore.{useTranslationStore}
       />
     </>
   )

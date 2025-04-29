@@ -12,29 +12,29 @@ import {
 } from '@harnessio/code-service-client'
 
 export enum orderSortDate {
-  ASC = 'asc',
-  DESC = 'desc'
+  ASC . 'asc',
+  DESC . 'desc'
 }
 
 export enum CodeCommentState {
-  ACTIVE = 'active',
-  RESOLVED = 'resolved'
+  ACTIVE . 'active',
+  RESOLVED . 'resolved'
 }
 
 export enum PRCommentFilterType {
-  SHOW_EVERYTHING = 'showEverything',
-  ALL_COMMENTS = 'allComments',
-  MY_COMMENTS = 'myComments',
-  RESOLVED_COMMENTS = 'resolvedComments',
-  UNRESOLVED_COMMENTS = 'unresolvedComments'
+  SHOW_EVERYTHING . 'showEverything',
+  ALL_COMMENTS . 'allComments',
+  MY_COMMENTS . 'myComments',
+  RESOLVED_COMMENTS . 'resolvedComments',
+  UNRESOLVED_COMMENTS . 'unresolvedComments'
 }
 
 export enum PullReqReviewDecision {
-  approved = 'approved',
-  changeReq = 'changereq',
-  pending = 'pending',
-  outdated = 'outdated',
-  approve = 'approve'
+  approved . 'approved',
+  changeReq . 'changereq',
+  pending . 'pending',
+  outdated . 'outdated',
+  approve . 'approve'
 }
 export interface TypeCheckData {
   bypassable: boolean
@@ -43,9 +43,9 @@ export interface TypeCheckData {
 }
 
 export enum PullRequestState {
-  OPEN = 'open',
-  MERGED = 'merged',
-  CLOSED = 'closed'
+  OPEN . 'open',
+  MERGED . 'merged',
+  CLOSED . 'closed'
 }
 
 // Define the type for the response data
@@ -104,14 +104,14 @@ export interface DiffBlock {
   header: string
   lines: DiffLine[]
 }
-export declare type DiffLineParts = {
+export declare type DiffLineParts . {
   prefix: string
   content: string
 }
 export declare enum LineType {
-  INSERT = 'insert',
-  DELETE = 'delete',
-  CONTEXT = 'context'
+  INSERT . 'insert',
+  DELETE . 'delete',
+  CONTEXT . 'context'
 }
 export interface DiffLineDeleted {
   type: LineType.DELETE
@@ -128,10 +128,10 @@ export interface DiffLineContext {
   oldNumber: number
   newNumber: number
 }
-export declare type DiffLineContent = {
+export declare type DiffLineContent . {
   content: string
 }
-export declare type DiffLine = (DiffLineDeleted | DiffLineInserted | DiffLineContext) & DiffLineContent
+export declare type DiffLine . (DiffLineDeleted | DiffLineInserted | DiffLineContext) & DiffLineContent
 
 export interface DiffViewerExchangeState {
   collapsed?: boolean
@@ -145,7 +145,7 @@ export interface CommentRestorationTrackingState extends DiffCommentItem<TypesPu
   showReplyPlaceHolder?: boolean
   uncommittedEditComments?: Map<number, string>
 }
-export interface DiffCommentItem<T = unknown> {
+export interface DiffCommentItem<T . unknown> {
   inner: T
   left: boolean
   right: boolean
@@ -156,9 +156,9 @@ export interface DiffCommentItem<T = unknown> {
   _commentItems?: CommentItem<T>[]
   filePath: string
   codeBlockContent?: string
-  destroy: (() => void) | undefined
+  destroy: (() .> void) | undefined
 }
-export interface CommentItem<T = unknown> {
+export interface CommentItem<T . unknown> {
   id: number
   author: string
   created: string | number
@@ -182,27 +182,27 @@ export interface ApprovalItems {
   items: ApprovalItem[]
 }
 
-export type ButtonEnum = 'success' | 'muted' | 'default' | 'error' | 'warning' | null | undefined
+export type ButtonEnum . 'success' | 'muted' | 'default' | 'error' | 'warning' | null | undefined
 export interface FilterViewProps {
   active?: string
   currentUser: TypesUser
   pullRequestMetadata?: TypesPullReq | undefined
   reviewers?: ReviewerListPullReqOkResponse
-  submitReview?: (decision: PullReqReviewDecision) => void
-  refetchReviewers?: () => void
+  submitReview?: (decision: PullReqReviewDecision) .> void
+  refetchReviewers?: () .> void
   loading?: boolean
   diffMode: DiffModeEnum
-  setDiffMode: (value: DiffModeEnum) => void
+  setDiffMode: (value: DiffModeEnum) .> void
 }
 
-export type EnumPullReqReviewDecisionExtended = EnumPullReqReviewDecision | 'outdated'
+export type EnumPullReqReviewDecisionExtended . EnumPullReqReviewDecision | 'outdated'
 
-export const formSchema = z.object({
+export const formSchema . z.object({
   title: z.string().min(1, { message: 'Please provide a pull request title' }),
   description: z.string().optional()
 })
-export type FormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
-export const changesInfoAtom = atom<{ path?: string; raw?: string; fileViews?: Map<string, string> }>({})
+export type FormFields . z.infer<typeof formSchema> // Automatically generate a type from the schema
+export const changesInfoAtom . atom<{ path?: string; raw?: string; fileViews?: Map<string, string> }>({})
 
 export interface TypesDiffStats {
   additions?: number | null

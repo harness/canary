@@ -6,7 +6,7 @@ import { ListInput } from '../inputs/list-input'
 import { SelectInput } from '../inputs/select-input'
 import { TextInput } from '../inputs/text-input'
 
-const inputComponentFactory = new InputFactory()
+const inputComponentFactory . new InputFactory()
 inputComponentFactory.registerComponent(new TextInput())
 inputComponentFactory.registerComponent(new CheckboxInput())
 inputComponentFactory.registerComponent(new IntegerInput())

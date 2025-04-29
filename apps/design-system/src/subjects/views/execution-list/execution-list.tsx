@@ -7,18 +7,18 @@ import { ExecutionListPage, RepoSummaryViewProps, TLinkComponent } from '@harnes
 
 import { useExecutionListStore } from './execution-list.store'
 
-const LinkComponent: TLinkComponent = ({ to, children }) => <Link to={to}>{children}</Link>
+const LinkComponent: TLinkComponent . ({ to, children }) .> <Link to.{to}>{children}</Link>
 
-const ExecutionListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
+const ExecutionListWrapper: FC<Partial<RepoSummaryViewProps>> . () .> {
   return (
     <ExecutionListPage
-      useExecutionListStore={useExecutionListStore}
-      useTranslationStore={useTranslationStore}
-      setSearchQuery={noop}
-      isLoading={false}
-      isError={false}
-      LinkComponent={LinkComponent}
-      handleExecutePipeline={noop}
+      useExecutionListStore.{useExecutionListStore}
+      useTranslationStore.{useTranslationStore}
+      setSearchQuery.{noop}
+      isLoading.{false}
+      isError.{false}
+      LinkComponent.{LinkComponent}
+      handleExecutePipeline.{noop}
     />
   )
 }

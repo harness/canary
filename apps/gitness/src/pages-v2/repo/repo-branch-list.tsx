@@ -25,10 +25,10 @@ import { useRepoBranchesStore } from './stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
 
 export function RepoBranchesListPage() {
-  const routes = useRoutes()
-  const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
-  const queryClient = useQueryClient()
+  const routes . useRoutes()
+  const repoRef . useGetRepoRef()
+  const { spaceId, repoId } . useParams<PathParams>()
+  const queryClient . useQueryClient()
 
   const {
     page,
@@ -39,18 +39,18 @@ export function RepoBranchesListPage() {
     setSpaceIdAndRepoId,
     setPaginationFromHeaders,
     branchList
-  } = useRepoBranchesStore()
+  } . useRepoBranchesStore()
 
-  const [query, setQuery] = useQueryState('query')
-  const [createBranchSearchQuery, setCreateBranchSearchQuery] = useState('')
-  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+  const [query, setQuery] . useQueryState('query')
+  const [createBranchSearchQuery, setCreateBranchSearchQuery] . useState('')
+  const { queryPage } . usePaginationQueryStateWithStore({ page, setPage })
 
-  const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
-  const [deleteBranchName, setDeleteBranchName] = useState<string | null>(null)
+  const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] . useState(false)
+  const [deleteBranchName, setDeleteBranchName] . useState<string | null>(null)
 
-  const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repoMetadata } . {} } . useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const { isLoading: isLoadingBranches, data: { body: branches, headers } = {} } = useListBranchesQuery({
+  const { isLoading: isLoadingBranches, data: { body: branches, headers } . {} } . useListBranchesQuery({
     queryParams: {
       page: queryPage,
       limit: 10,
@@ -62,7 +62,7 @@ export function RepoBranchesListPage() {
     repo_ref: repoRef
   })
 
-  const { data: { body: searchBranches } = {} } = useListBranchesQuery({
+  const { data: { body: searchBranches } . {} } . useListBranchesQuery({
     queryParams: {
       query: createBranchSearchQuery,
       limit: 10,
@@ -73,12 +73,12 @@ export function RepoBranchesListPage() {
 
   const {
     isLoading: isLoadingDivergence,
-    data: { body: _branchDivergence = [] } = {},
+    data: { body: _branchDivergence . [] } . {},
     mutate: calculateBranchDivergence
-  } = useCalculateCommitDivergenceMutation(
+  } . useCalculateCommitDivergenceMutation(
     { repo_ref: repoRef },
     {
-      onSuccess: data => {
+      onSuccess: data .> {
         if (data.body && branches) {
           setBranchList(transformBranchList(branches, repoMetadata?.default_branch, data.body))
         }
@@ -86,18 +86,18 @@ export function RepoBranchesListPage() {
     }
   )
 
-  const handleInvalidateBranchList = () => {
+  const handleInvalidateBranchList . () .> {
     queryClient.invalidateQueries({ queryKey: ['listBranches'] })
   }
 
-  const handleResetDeleteBranch = () => {
+  const handleResetDeleteBranch . () .> {
     setDeleteBranchName(null)
     if (deleteBranchError) {
       resetDeleteBranch()
     }
   }
 
-  const handleSetDeleteBranch = (branchName: string) => {
+  const handleSetDeleteBranch . (branchName: string) .> {
     setDeleteBranchName(branchName)
   }
 
@@ -106,58 +106,58 @@ export function RepoBranchesListPage() {
     isLoading: isDeletingBranch,
     error: deleteBranchError,
     reset: resetDeleteBranch
-  } = useDeleteBranchMutation(
+  } . useDeleteBranchMutation(
     { repo_ref: repoRef },
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         handleResetDeleteBranch()
         handleInvalidateBranchList()
       }
     }
   )
 
-  const { mutateAsync: saveBranch, isLoading: isCreatingBranch, error: createBranchError } = useCreateBranchMutation({})
+  const { mutateAsync: saveBranch, isLoading: isCreatingBranch, error: createBranchError } . useCreateBranchMutation({})
 
-  const onSubmit = async (formValues: CreateBranchFormFields) => {
-    const { name, target } = formValues
+  const onSubmit . async (formValues: CreateBranchFormFields) .> {
+    const { name, target } . formValues
     await saveBranch({ repo_ref: repoRef, body: { name, target, bypass_rules: false } })
     handleInvalidateBranchList()
     setCreateBranchDialogOpen(false)
   }
 
-  const handleDeleteBranch = (branch_name: string) => {
+  const handleDeleteBranch . (branch_name: string) .> {
     deleteBranch({ branch_name, queryParams: {} })
   }
 
-  useEffect(() => {
+  useEffect(() .> {
     setPaginationFromHeaders(
       parseInt(headers?.get(PageResponseHeader.xNextPage) || ''),
       parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
     )
   }, [headers, setPaginationFromHeaders])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (!branches) return
 
-    if (branches?.length === 0) {
+    if (branches?.length ... 0) {
       return setBranchList([])
     }
 
     calculateBranchDivergence({
-      body: { requests: branches?.map(branch => ({ from: branch.name, to: repoMetadata?.default_branch })) || [] }
+      body: { requests: branches?.map(branch .> ({ from: branch.name, to: repoMetadata?.default_branch })) || [] }
     })
   }, [calculateBranchDivergence, branches, repoMetadata?.default_branch])
 
-  useEffect(() => {
+  useEffect(() .> {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId, setSpaceIdAndRepoId])
 
-  // useEffect(() => {
+  // useEffect(() .> {
   //   setDefaultBranch(repoMetadata?.default_branch || '')
   // }, [repoMetadata, setDefaultBranch])
 
-  useEffect(() => {
-    const defaultBranch = branchList?.find(branch => branch.default)
+  useEffect(() .> {
+    const defaultBranch . branchList?.find(branch .> branch.default)
     setSelectedBranchTag({
       name: defaultBranch?.name || repoMetadata?.default_branch || '',
       sha: defaultBranch?.sha || '',
@@ -169,44 +169,44 @@ export function RepoBranchesListPage() {
   return (
     <>
       <RepoBranchListView
-        isLoading={isLoadingBranches || isLoadingDivergence}
-        isCreatingBranch={isCreatingBranch}
-        onSubmit={onSubmit}
-        useRepoBranchesStore={useRepoBranchesStore}
-        useTranslationStore={useTranslationStore}
-        isCreateBranchDialogOpen={isCreateBranchDialogOpen}
-        setCreateBranchDialogOpen={setCreateBranchDialogOpen}
-        searchQuery={query}
-        setSearchQuery={setQuery}
-        createBranchError={createBranchError?.message}
-        toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
-        toPullRequestCompare={({ diffRefs }: { diffRefs: string }) =>
+        isLoading.{isLoadingBranches || isLoadingDivergence}
+        isCreatingBranch.{isCreatingBranch}
+        onSubmit.{onSubmit}
+        useRepoBranchesStore.{useRepoBranchesStore}
+        useTranslationStore.{useTranslationStore}
+        isCreateBranchDialogOpen.{isCreateBranchDialogOpen}
+        setCreateBranchDialogOpen.{setCreateBranchDialogOpen}
+        searchQuery.{query}
+        setSearchQuery.{setQuery}
+        createBranchError.{createBranchError?.message}
+        toBranchRules.{() .> routes.toRepoBranchRules({ spaceId, repoId })}
+        toPullRequestCompare.{({ diffRefs }: { diffRefs: string }) .>
           routes.toPullRequestCompare({ spaceId, repoId, diffRefs })
         }
-        toPullRequest={({ pullRequestId }: { pullRequestId: number }) =>
+        toPullRequest.{({ pullRequestId }: { pullRequestId: number }) .>
           routes.toPullRequest({ spaceId, repoId, pullRequestId: pullRequestId.toString() })
         }
-        toCode={({ branchName }: { branchName: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${branchName}`}
-        onDeleteBranch={handleSetDeleteBranch}
-        searchBranches={searchBranches || []}
-        setCreateBranchSearchQuery={setCreateBranchSearchQuery}
+        toCode.{({ branchName }: { branchName: string }) .> `${routes.toRepoFiles({ spaceId, repoId })}/${branchName}`}
+        onDeleteBranch.{handleSetDeleteBranch}
+        searchBranches.{searchBranches || []}
+        setCreateBranchSearchQuery.{setCreateBranchSearchQuery}
       />
 
       <CreateBranchDialog
-        open={isCreateBranchDialogOpen}
-        onClose={() => setCreateBranchDialogOpen(false)}
-        onSuccess={handleInvalidateBranchList}
+        open.{isCreateBranchDialogOpen}
+        onClose.{() .> setCreateBranchDialogOpen(false)}
+        onSuccess.{handleInvalidateBranchList}
       />
 
       <DeleteAlertDialog
-        open={deleteBranchName !== null}
-        onClose={handleResetDeleteBranch}
-        deleteFn={handleDeleteBranch}
-        error={deleteBranchError ? { message: deleteBranchError?.message ?? '' } : null}
-        type="branch"
-        identifier={deleteBranchName ?? undefined}
-        isLoading={isDeletingBranch}
-        useTranslationStore={useTranslationStore}
+        open.{deleteBranchName !.. null}
+        onClose.{handleResetDeleteBranch}
+        deleteFn.{handleDeleteBranch}
+        error.{deleteBranchError ? { message: deleteBranchError?.message ?? '' } : null}
+        type."branch"
+        identifier.{deleteBranchName ?? undefined}
+        isLoading.{isDeletingBranch}
+        useTranslationStore.{useTranslationStore}
       />
     </>
   )

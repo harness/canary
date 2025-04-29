@@ -24,30 +24,30 @@ import { transformDataFromApi, transformFormOutput } from '../../utils/repo-bran
 import { useBranchRulesStore } from '../repo/stores/repo-branch-rules-store'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
-export const ProjectRulesCreateOrUpdateContainer = () => {
-  const { t } = useTranslationStore()
-  const navigate = useNavigate()
+export const ProjectRulesCreateOrUpdateContainer . () .> {
+  const { t } . useTranslationStore()
+  const navigate . useNavigate()
 
-  const spaceURL = useGetSpaceURLParam()
+  const spaceURL . useGetSpaceURLParam()
 
-  const { ruleId: ruleIdentifier } = useParams()
-  const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useProjectRulesStore()
-  const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
-  const { dispatch, resetRules } = useBranchRulesStore()
-  const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
+  const { ruleId: ruleIdentifier } . useParams()
+  const { setPresetRuleData, setPrincipals, setRecentStatusChecks } . useProjectRulesStore()
+  const [principalsSearchQuery, setPrincipalsSearchQuery] . useState('')
+  const { dispatch, resetRules } . useBranchRulesStore()
+  const [isSubmitSuccess, setIsSubmitSuccess] . useState<boolean>()
   const {
     scope: { accountId }
-  } = useMFEContext()
+  } . useMFEContext()
 
-  const branchRules = useMemo(() => {
+  const branchRules . useMemo(() .> {
     return getBranchRules(t)
   }, [t])
 
   /**
    * Reset form data
    */
-  useEffect(() => {
-    return () => {
+  useEffect(() .> {
+    return () .> {
       setPresetRuleData(null)
       setPrincipals(null)
       setRecentStatusChecks(null)
@@ -55,7 +55,7 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
     }
   }, [resetRules, setPresetRuleData, setPrincipals, setRecentStatusChecks])
 
-  const { data: { body: rulesData } = {} } = useSpaceRuleGetQuery(
+  const { data: { body: rulesData } . {} } . useSpaceRuleGetQuery(
     { space_ref: `${spaceURL}/+`, rule_identifier: ruleIdentifier ?? '' },
     {
       enabled: !!ruleIdentifier
@@ -66,17 +66,17 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
     mutate: addRule,
     error: addRuleError,
     isLoading: addingRule
-  } = useSpaceRuleAddMutation(
+  } . useSpaceRuleAddMutation(
     { space_ref: `${spaceURL}/+` },
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         setIsSubmitSuccess(true)
         navigate('..')
       }
     }
   )
 
-  const { data: { body: principals } = {}, error: principalsError } = useListPrincipalsQuery({
+  const { data: { body: principals } . {}, error: principalsError } . useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery, accountIdentifier: accountId }
   })
@@ -85,22 +85,22 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
     mutate: updateRule,
     error: updateRuleError,
     isLoading: updatingRule
-  } = useSpaceRuleUpdateMutation(
+  } . useSpaceRuleUpdateMutation(
     { space_ref: `${spaceURL}/+`, rule_identifier: ruleIdentifier! },
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         setIsSubmitSuccess(true)
         navigate('..')
       }
     }
   )
-  const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentSpaceQuery({
+  const { data: { body: recentStatusChecks } . {}, error: statusChecksError } . useListStatusCheckRecentSpaceQuery({
     space_ref: `${spaceURL}/+`,
     queryParams: {}
   })
 
-  const handleRuleUpdate = (data: RepoBranchSettingsFormFields) => {
-    const formattedData = transformFormOutput(data)
+  const handleRuleUpdate . (data: RepoBranchSettingsFormFields) .> {
+    const formattedData . transformFormOutput(data)
 
     if (ruleIdentifier) {
       // Update existing rule
@@ -115,28 +115,28 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
     }
   }
 
-  const handleCheckboxChange = (ruleId: string, checked: boolean) => {
+  const handleCheckboxChange . (ruleId: string, checked: boolean) .> {
     dispatch({ type: BranchRulesActionType.TOGGLE_RULE, ruleId, checked })
   }
 
-  const handleSubmenuChange = (ruleId: string, submenuId: string, checked: boolean) => {
+  const handleSubmenuChange . (ruleId: string, submenuId: string, checked: boolean) .> {
     dispatch({ type: BranchRulesActionType.TOGGLE_SUBMENU, ruleId, submenuId, checked })
   }
 
-  const handleSelectChangeForRule = (ruleId: string, checkName: string) => {
+  const handleSelectChangeForRule . (ruleId: string, checkName: string) .> {
     dispatch({ type: BranchRulesActionType.SET_SELECT_OPTION, ruleId, checkName })
   }
 
-  const handleInputChange = (ruleId: string, value: string) => {
+  const handleInputChange . (ruleId: string, value: string) .> {
     dispatch({ type: BranchRulesActionType.SET_INPUT_VALUE, ruleId, value })
   }
 
-  const handleInitialRules = useCallback(
-    (presetRuleData: RepoBranchSettingsFormFields | null) => {
+  const handleInitialRules . useCallback(
+    (presetRuleData: RepoBranchSettingsFormFields | null) .> {
       if (!presetRuleData) {
         dispatch({
           type: BranchRulesActionType.SET_INITIAL_RULES,
-          payload: branchRules.map(rule => ({
+          payload: branchRules.map(rule .> ({
             id: rule.id,
             checked: false,
             submenu: [],
@@ -149,7 +149,7 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
 
       dispatch({
         type: BranchRulesActionType.SET_INITIAL_RULES,
-        payload: presetRuleData.rules.map(rule => ({
+        payload: presetRuleData.rules.map(rule .> ({
           id: rule.id,
           checked: rule.checked || false,
           submenu: (rule.submenu || []) as MergeStrategy[],
@@ -161,26 +161,26 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
     [branchRules, dispatch]
   )
 
-  useEffect(() => {
+  useEffect(() .> {
     if (rulesData) {
-      const transformedData = transformDataFromApi(rulesData)
+      const transformedData . transformDataFromApi(rulesData)
       setPresetRuleData(transformedData)
     }
   }, [rulesData, setPresetRuleData])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (principals) {
       setPrincipals(principals as PrincipalType[])
     }
   }, [principals, setPrincipals])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (recentStatusChecks) {
       setRecentStatusChecks(recentStatusChecks)
     }
   }, [recentStatusChecks, setRecentStatusChecks])
 
-  const errors = {
+  const errors . {
     principals: principalsError?.message || null,
     addRule: addRuleError?.message || null,
     updateRule: updateRuleError?.message || null,
@@ -189,20 +189,20 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
 
   return (
     <RepoBranchSettingsRulesPage
-      handleRuleUpdate={handleRuleUpdate}
-      apiErrors={errors}
-      isLoading={addingRule || updatingRule}
-      useRepoRulesStore={useProjectRulesStore}
-      useBranchRulesStore={useBranchRulesStore}
-      handleCheckboxChange={handleCheckboxChange}
-      handleSubmenuChange={handleSubmenuChange}
-      handleSelectChangeForRule={handleSelectChangeForRule}
-      handleInputChange={handleInputChange}
-      handleInitialRules={handleInitialRules}
-      useTranslationStore={useTranslationStore}
-      setPrincipalsSearchQuery={setPrincipalsSearchQuery}
-      principalsSearchQuery={principalsSearchQuery}
-      isSubmitSuccess={isSubmitSuccess}
+      handleRuleUpdate.{handleRuleUpdate}
+      apiErrors.{errors}
+      isLoading.{addingRule || updatingRule}
+      useRepoRulesStore.{useProjectRulesStore}
+      useBranchRulesStore.{useBranchRulesStore}
+      handleCheckboxChange.{handleCheckboxChange}
+      handleSubmenuChange.{handleSubmenuChange}
+      handleSelectChangeForRule.{handleSelectChangeForRule}
+      handleInputChange.{handleInputChange}
+      handleInitialRules.{handleInitialRules}
+      useTranslationStore.{useTranslationStore}
+      setPrincipalsSearchQuery.{setPrincipalsSearchQuery}
+      principalsSearchQuery.{principalsSearchQuery}
+      isSubmitSuccess.{isSubmitSuccess}
       projectScope
     />
   )

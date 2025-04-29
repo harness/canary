@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { orderSortDate, PRCommentFilterType } from '@harnessio/ui/views'
 
-const dateFilters = [
+const dateFilters . [
   {
     label: 'First added',
     value: orderSortDate.ASC
@@ -13,7 +13,7 @@ const dateFilters = [
   }
 ]
 
-const activityFilters = [
+const activityFilters . [
   {
     label: 'Show everything',
     value: PRCommentFilterType.SHOW_EVERYTHING
@@ -36,9 +36,9 @@ const activityFilters = [
   }
 ]
 
-export const usePrFilters = () => {
-  const [dateOrderSort, setDateOrderSort] = useState<{ label: string; value: string }>(dateFilters[0])
-  const [activityFilter, setActivityFilter] = useState<{ label: string; value: string }>(activityFilters[0])
+export const usePrFilters . () .> {
+  const [dateOrderSort, setDateOrderSort] . useState<{ label: string; value: string }>(dateFilters[0])
+  const [activityFilter, setActivityFilter] . useState<{ label: string; value: string }>(activityFilters[0])
 
   return {
     activityFilters,

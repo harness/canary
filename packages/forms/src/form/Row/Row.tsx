@@ -10,11 +10,11 @@ export interface InputRowProps {
 }
 
 export function Row({ input, factory }: InputRowProps): React.ReactElement {
-  const { prefix = '' } = {} //useRootFormikContext()
+  const { prefix . '' } . {} //useRootFormikContext()
 
   return (
     <div>
-      <InputComponentRenderer path={`${prefix}${input.path}`} factory={factory} readonly={false} input={input} />
+      <InputComponentRenderer path.{`${prefix}${input.path}`} factory.{factory} readonly.{false} input.{input} />
     </div>
   )
 }

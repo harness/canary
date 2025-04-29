@@ -9,19 +9,19 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="min-w-[400px] flex flex-col gap-8">
+  code.{`<div className."min-w-[400px] flex flex-col gap-8">
     <div>
         <h5>Single non-collapsible</h5>
-        <Accordion.Root type="single" defaultValue="item1">
-            <Accordion.Item value="item1">
-                <Accordion.Trigger className="text-cn-foreground-2">Item 1</Accordion.Trigger>
+        <Accordion.Root type."single" defaultValue."item1">
+            <Accordion.Item value."item1">
+                <Accordion.Trigger className."text-cn-foreground-2">Item 1</Accordion.Trigger>
                 <Accordion.Content>
                     <p>This is the content of item 1</p>
                 </Accordion.Content>
             </Accordion.Item>
 
-            <Accordion.Item value="item2" isLast>
-                <Accordion.Trigger className="text-cn-foreground-2">Item 2</Accordion.Trigger>
+            <Accordion.Item value."item2" isLast>
+                <Accordion.Trigger className."text-cn-foreground-2">Item 2</Accordion.Trigger>
                 <Accordion.Content>
                     <p>This is the content of item 2</p>
                 </Accordion.Content>
@@ -33,16 +33,16 @@ import { DocsPage } from "@/components/docs-page";
 
     <div>
         <h5>Single collapsible</h5>
-        <Accordion.Root type="single" collapsible>
-            <Accordion.Item value="item1">
-                <Accordion.Trigger className="text-cn-foreground-2">Item 1</Accordion.Trigger>
+        <Accordion.Root type."single" collapsible>
+            <Accordion.Item value."item1">
+                <Accordion.Trigger className."text-cn-foreground-2">Item 1</Accordion.Trigger>
                 <Accordion.Content>
                     <p>This is the content of item 1</p>
                 </Accordion.Content>
             </Accordion.Item>
 
-            <Accordion.Item value="item2" isLast>
-                <Accordion.Trigger className="text-cn-foreground-2">Item 2</Accordion.Trigger>
+            <Accordion.Item value."item2" isLast>
+                <Accordion.Trigger className."text-cn-foreground-2">Item 2</Accordion.Trigger>
                 <Accordion.Content>
                    <p>This is the content of item 2</p>
                 </Accordion.Content>
@@ -54,16 +54,16 @@ import { DocsPage } from "@/components/docs-page";
 
     <div>
         <h5>Multiple</h5>
-        <Accordion.Root type="multiple">
-            <Accordion.Item value="item1">
-                <Accordion.Trigger className="text-cn-foreground-2">Item 1</Accordion.Trigger>
+        <Accordion.Root type."multiple">
+            <Accordion.Item value."item1">
+                <Accordion.Trigger className."text-cn-foreground-2">Item 1</Accordion.Trigger>
                 <Accordion.Content>
                    <p>This is the content of item 1</p>
                 </Accordion.Content>
             </Accordion.Item>
 
-            <Accordion.Item value="item2" isLast>
-                <Accordion.Trigger className="text-cn-foreground-2">Item 2</Accordion.Trigger>
+            <Accordion.Item value."item2" isLast>
+                <Accordion.Trigger className."text-cn-foreground-2">Item 2</Accordion.Trigger>
                 <Accordion.Content>
                     <p>This is the content of item 2</p>
                 </Accordion.Content>
@@ -82,16 +82,16 @@ import { Accordion } from '@harnessio/ui/components'
 //...
 
 return (
-  <Accordion.Root type="multiple">
-    <Accordion.Item value="item1">
-      <Accordion.Trigger className="text-cn-foreground-2">Item 1</Accordion.Trigger>
+  <Accordion.Root type."multiple">
+    <Accordion.Item value."item1">
+      <Accordion.Trigger className."text-cn-foreground-2">Item 1</Accordion.Trigger>
       <Accordion.Content>
         <p>This is the content of item 1</p>
       </Accordion.Content>
     </Accordion.Item>
 
-    <Accordion.Item value="item2" isLast>
-      <Accordion.Trigger className="text-cn-foreground-2">Item 2</Accordion.Trigger>
+    <Accordion.Item value."item2" isLast>
+      <Accordion.Trigger className."text-cn-foreground-2">Item 2</Accordion.Trigger>
       <Accordion.Content>
         <p>This is the content of item 2</p>
       </Accordion.Content>
@@ -124,15 +124,15 @@ props are supplied, the accordion becomes **controlled** and state is handled ex
 
 ```typescript jsx
 <Accordion.Root
-  type="single"                // single|multiple
+  type."single"                // single|multiple
   collapsible                  // [OPTIONAL] allow all panels to be collapsed
                                //            when type is "single"
-  defaultValue="ItemValue"     // [OPTIONAL] value of item to expand initially
+  defaultValue."ItemValue"     // [OPTIONAL] value of item to expand initially
   disabled                     // [OPTIONAL] disable the accordion
                                //            expanded when type is "single"
-  onValueChange={handleChange} // [OPTIONAL] handler triggered when value changes
+  onValueChange.{handleChange} // [OPTIONAL] handler triggered when value changes
                                //            when externally controlled
-  value={currentValue}         // [OPTIONAL] value of item currently selected
+  value.{currentValue}         // [OPTIONAL] value of item currently selected
                                //            when externally controlled
 >
   {/* <Accordion.Item>'s as children */}
@@ -148,7 +148,7 @@ for a different visual treatment.
 
 ```typescript jsx
 <Accordion.Item
-  value="ItemValue" // item value
+  value."ItemValue" // item value
   disabled          // [OPTIONAL] disable item
   isLast            // [OPTIONAL] mark item as the last in the accordion
 >
@@ -162,7 +162,7 @@ The `Accordion.Trigger` component displays the item with a chevron disclosure ic
 
 ```typescript jsx
 <Accordion.Trigger
-  chevronClassName="size-5" // [OPTIONAL] class to apply to chevron icon
+  chevronClassName."size-5" // [OPTIONAL] class to apply to chevron icon
   hideChevron               // [OPTIONAL] hide the disclosure icon
   leftChevron               // [OPTIONAL] display the chevron disclosure
                             //            icon to the left

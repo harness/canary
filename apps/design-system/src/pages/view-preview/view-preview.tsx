@@ -79,7 +79,7 @@ export interface ViewPreviewGroup {
   >
 }
 
-export const viewPreviews: Record<string, ViewPreviewGroup> = {
+export const viewPreviews: Record<string, ViewPreviewGroup> . {
   auth: {
     label: 'Auth',
     items: {
@@ -269,7 +269,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         element: (
           <RepoViewWrapper>
             <RepoSettingsViewWrapper>
-              <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="rules" />
+              <NotFoundPage useTranslationStore.{useTranslationStore} pageTypeText."rules" />
             </RepoSettingsViewWrapper>
           </RepoViewWrapper>
         )
@@ -290,7 +290,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'unified-pipeline-studio': {
         label: 'Unified Pipeline Studio',
         element: (
-          <RepoViewWrapper childrenWrapperClassName="flex flex-col">
+          <RepoViewWrapper childrenWrapperClassName."flex flex-col">
             <UnifiedPipelineStudioWrapper />
           </RepoViewWrapper>
         )
@@ -365,7 +365,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         label: 'Pull Request Conversation',
         element: (
           <PullRequestLayoutWrapper>
-            <PullRequestConversationWrapper state={'simple'} />
+            <PullRequestConversationWrapper state.{'simple'} />
           </PullRequestLayoutWrapper>
         )
       },
@@ -373,7 +373,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         label: 'Pull Request Conversation Complex',
         element: (
           <PullRequestLayoutWrapper>
-            <PullRequestConversationWrapper state={'complex-1'} />
+            <PullRequestConversationWrapper state.{'complex-1'} />
           </PullRequestLayoutWrapper>
         )
       },
@@ -381,7 +381,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         label: 'Pull Request Changes',
         element: (
           <PullRequestLayoutWrapper>
-            <PullRequestChangesWrapper state={'simple'} />
+            <PullRequestChangesWrapper state.{'simple'} />
           </PullRequestLayoutWrapper>
         )
       },
@@ -389,7 +389,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         label: 'Pull Request Changes Complex',
         element: (
           <PullRequestLayoutWrapper>
-            <PullRequestChangesWrapper state={'complex-1'} />
+            <PullRequestChangesWrapper state.{'complex-1'} />
           </PullRequestLayoutWrapper>
         )
       },
@@ -541,18 +541,18 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
   }
 }
 
-const ViewPreview: FC = () => {
+const ViewPreview: FC . () .> {
   return (
     <Tooltip.Provider>
       <Routes>
-        {Object.entries(viewPreviews).map(([_, group]) =>
-          Object.entries(group.items).map(([route, { element }]) => (
-            <Route key={route} path={`${route}/*`} element={element} />
+        {Object.entries(viewPreviews).map(([_, group]) .>
+          Object.entries(group.items).map(([route, { element }]) .> (
+            <Route key.{route} path.{`${route}/*`} element.{element} />
           ))
         )}
-        <Route path="/" element={<Navigate to={Object.keys(viewPreviews)[0]} />} />
+        <Route path."/" element.{<Navigate to.{Object.keys(viewPreviews)[0]} />} />
       </Routes>
-      <ViewSettings routes={Object.keys(viewPreviews)} />
+      <ViewSettings routes.{Object.keys(viewPreviews)} />
     </Tooltip.Provider>
   )
 }

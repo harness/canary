@@ -16,78 +16,78 @@ import { useRoutes } from '../../framework/context/NavigationContext.tsx'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 
-export const ProjectGeneralSettingsPageContainer = () => {
-  const routes = useRoutes()
-  const navigate = useNavigate()
-  const spaceURL = useGetSpaceURLParam()
-  const { spaces, isSpacesLoading, setSpaces } = useAppContext()
-  const space = spaces.find((space: TypesSpace) => space?.identifier === spaceURL)
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
-  const [updateError, setUpdateError] = useState<string | null>(null)
-  const [deleteError, setDeleteError] = useState<DeleteAlertDialogProps['error']>(null)
+export const ProjectGeneralSettingsPageContainer . () .> {
+  const routes . useRoutes()
+  const navigate . useNavigate()
+  const spaceURL . useGetSpaceURLParam()
+  const { spaces, isSpacesLoading, setSpaces } . useAppContext()
+  const space . spaces.find((space: TypesSpace) .> space?.identifier ... spaceURL)
+  const [openDeleteDialog, setOpenDeleteDialog] . useState(false)
+  const [updateError, setUpdateError] . useState<string | null>(null)
+  const [deleteError, setDeleteError] . useState<DeleteAlertDialogProps['error']>(null)
 
-  const updateDescription = useUpdateSpaceMutation(
+  const updateDescription . useUpdateSpaceMutation(
     { space_ref: space?.path },
     {
-      onSuccess: ({ body: data }) => {
+      onSuccess: ({ body: data }) .> {
         if (space) {
           setUpdateError('')
-          space.description = data?.description
+          space.description . data?.description
         }
         navigate(routes.toHome())
       },
-      onError: (error: UpdateSpaceErrorResponse) => {
-        const errormsg = error?.message || 'An unknown error occurred.'
+      onError: (error: UpdateSpaceErrorResponse) .> {
+        const errormsg . error?.message || 'An unknown error occurred.'
         setUpdateError(errormsg)
       }
     }
   )
 
-  const handleFormSubmit = (formData: ProjectSettingsGeneralFields) => {
+  const handleFormSubmit . (formData: ProjectSettingsGeneralFields) .> {
     updateDescription.mutate({ space_ref: space?.path, body: { description: formData?.description } })
   }
 
   // delete API call here
-  const { mutate: deleteSpaceMutation, isLoading } = useDeleteSpaceMutation(
+  const { mutate: deleteSpaceMutation, isLoading } . useDeleteSpaceMutation(
     { space_ref: space?.path },
     {
-      onSuccess: ({ body: data }) => {
+      onSuccess: ({ body: data }) .> {
         if (!data) return
 
         setDeleteError(null)
         navigate(routes.toHome())
-        setSpaces(spaces.filter((s: TypesSpace) => s.identifier !== space?.identifier))
+        setSpaces(spaces.filter((s: TypesSpace) .> s.identifier !.. space?.identifier))
       },
-      onError: (error: DeleteSpaceErrorResponse) => {
-        const deleteErrorMsg = error?.message || 'An unknown error occurred.'
+      onError: (error: DeleteSpaceErrorResponse) .> {
+        const deleteErrorMsg . error?.message || 'An unknown error occurred.'
         setDeleteError({ message: deleteErrorMsg })
       }
     }
   )
 
-  const handleDeleteProject = () => deleteSpaceMutation({})
+  const handleDeleteProject . () .> deleteSpaceMutation({})
 
   return (
     <>
       <ProjectSettingsGeneralPage
-        data={space}
-        isLoading={isSpacesLoading}
-        onFormSubmit={handleFormSubmit}
-        isUpdating={updateDescription.isLoading}
-        isUpdateSuccess={updateDescription.isSuccess}
-        updateError={updateError}
-        setOpenDeleteDialog={() => setOpenDeleteDialog(true)}
-        useTranslationStore={useTranslationStore}
+        data.{space}
+        isLoading.{isSpacesLoading}
+        onFormSubmit.{handleFormSubmit}
+        isUpdating.{updateDescription.isLoading}
+        isUpdateSuccess.{updateDescription.isSuccess}
+        updateError.{updateError}
+        setOpenDeleteDialog.{() .> setOpenDeleteDialog(true)}
+        useTranslationStore.{useTranslationStore}
       />
       <DeleteAlertDialog
-        open={openDeleteDialog}
-        onClose={() => setOpenDeleteDialog(false)}
-        deleteFn={handleDeleteProject}
-        type="Project"
-        error={deleteError}
-        isLoading={isLoading}
+        open.{openDeleteDialog}
+        onClose.{() .> setOpenDeleteDialog(false)}
+        deleteFn.{handleDeleteProject}
+        type."Project"
+        error.{deleteError}
+        isLoading.{isLoading}
         withForm
-        useTranslationStore={useTranslationStore}
+        useTranslationStore.{useTranslationStore}
       />
     </>
   )

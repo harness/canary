@@ -20,25 +20,25 @@ import { useSelectedSpaceId } from '../../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 
-const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { t } = useTranslationStore()
-  const { currentUser } = useAppContext()
-  const { spaceId, repoId } = useParams<PathParams>()
-  const selectedSpaceId = useSelectedSpaceId(spaceId)
-  const spaceIdPathParam = spaceId ?? selectedSpaceId ?? ''
-  const routes = useRoutes()
-  const navigate = useNavigate()
-  const location = useLocation()
-  const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } = useNav()
-  const [showMoreMenu, setShowMoreMenu] = useState(false)
-  const [showSettingMenu, setShowSettingMenu] = useState(false)
-  const [showCustomNav, setShowCustomNav] = useState(false)
+const AppSideBar: FC<{ children: React.ReactNode }> . ({ children }) .> {
+  const { t } . useTranslationStore()
+  const { currentUser } . useAppContext()
+  const { spaceId, repoId } . useParams<PathParams>()
+  const selectedSpaceId . useSelectedSpaceId(spaceId)
+  const spaceIdPathParam . spaceId ?? selectedSpaceId ?? ''
+  const routes . useRoutes()
+  const navigate . useNavigate()
+  const location . useLocation()
+  const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } . useNav()
+  const [showMoreMenu, setShowMoreMenu] . useState(false)
+  const [showSettingMenu, setShowSettingMenu] . useState(false)
+  const [showCustomNav, setShowCustomNav] . useState(false)
 
   /**
    * Map mock data menu by type to Settings and More
    */
-  const { moreMenu, settingsMenu } = useMemo(() => {
-    const navbarMenuData = getNavbarMenuData({
+  const { moreMenu, settingsMenu } . useMemo(() .> {
+    const navbarMenuData . getNavbarMenuData({
       t,
       routes,
       spaceId: spaceIdPathParam,
@@ -48,8 +48,8 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
       moreMenu: MenuGroupType[]
       settingsMenu: MenuGroupType[]
     }>(
-      (acc, item) => {
-        if (item.type === MenuGroupTypes.SETTINGS) {
+      (acc, item) .> {
+        if (item.type ... MenuGroupTypes.SETTINGS) {
           acc.settingsMenu.push(item)
         } else {
           acc.moreMenu.push(item)
@@ -67,35 +67,35 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
   /**
    * Handle logout
    */
-  const handleLogOut = () => navigate(routes.toLogout())
+  const handleLogOut . () .> navigate(routes.toLogout())
 
   /**
    * Toggle show more menu
    */
-  const handleMoreMenu = useCallback((state?: boolean) => {
+  const handleMoreMenu . useCallback((state?: boolean) .> {
     setShowSettingMenu(false)
-    setShowMoreMenu(prevState => state ?? !prevState)
+    setShowMoreMenu(prevState .> state ?? !prevState)
   }, [])
 
   /**
    * Toggle system settings menu
    */
-  const handleSettingsMenu = useCallback((state?: boolean) => {
+  const handleSettingsMenu . useCallback((state?: boolean) .> {
     setShowMoreMenu(false)
-    setShowSettingMenu(prevState => state ?? !prevState)
+    setShowSettingMenu(prevState .> state ?? !prevState)
   }, [])
 
   /**
    * Toggle custom navigation modal
    */
-  const handleCustomNav = useCallback(() => {
-    setShowCustomNav(prevState => !prevState)
+  const handleCustomNav . useCallback(() .> {
+    setShowCustomNav(prevState .> !prevState)
   }, [])
 
   /**
    * Close all menu when location changed
    */
-  useEffect(() => {
+  useEffect(() .> {
     setShowMoreMenu(false)
     setShowSettingMenu(false)
     setShowCustomNav(false)
@@ -104,7 +104,7 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
   /**
    * Handle save recent and pinned items
    */
-  const handleSave = (nextRecentItems: NavbarItemType[], nextPinnedItems: NavbarItemType[]) => {
+  const handleSave . (nextRecentItems: NavbarItemType[], nextPinnedItems: NavbarItemType[]) .> {
     setNavLinks({
       pinnedMenu: nextPinnedItems,
       recentMenu: nextRecentItems
@@ -114,8 +114,8 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
   /**
    * Remove recent menu item
    */
-  const handleRemoveRecentMenuItem = useCallback(
-    (item: NavbarItemType) => {
+  const handleRemoveRecentMenuItem . useCallback(
+    (item: NavbarItemType) .> {
       setRecent(item, true)
     },
     [setRecent]
@@ -124,8 +124,8 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
   /**
    * Change pinned menu items
    */
-  const handleChangePinnedMenuItem = useCallback(
-    (item: NavbarItemType, pin: boolean) => {
+  const handleChangePinnedMenuItem . useCallback(
+    (item: NavbarItemType, pin: boolean) .> {
       setPinned(item, pin)
     },
     [setPinned]
@@ -134,33 +134,33 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <>
       <SidebarView
-        showMoreMenu={showMoreMenu}
-        showSettingMenu={showSettingMenu}
-        handleMoreMenu={handleMoreMenu}
-        handleSettingsMenu={handleSettingsMenu}
-        currentUser={currentUser}
-        handleCustomNav={handleCustomNav}
-        handleLogOut={handleLogOut}
-        recentMenuItems={recentMenu}
-        pinnedMenuItems={pinnedMenu}
-        handleChangePinnedMenuItem={handleChangePinnedMenuItem}
-        handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-        useTranslationStore={useTranslationStore}
+        showMoreMenu.{showMoreMenu}
+        showSettingMenu.{showSettingMenu}
+        handleMoreMenu.{handleMoreMenu}
+        handleSettingsMenu.{handleSettingsMenu}
+        currentUser.{currentUser}
+        handleCustomNav.{handleCustomNav}
+        handleLogOut.{handleLogOut}
+        recentMenuItems.{recentMenu}
+        pinnedMenuItems.{pinnedMenu}
+        handleChangePinnedMenuItem.{handleChangePinnedMenuItem}
+        handleRemoveRecentMenuItem.{handleRemoveRecentMenuItem}
+        useTranslationStore.{useTranslationStore}
       />
 
       <Sidebar.Inset>
         {children}
-        <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
-        <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
+        <MoreSubmenu showMoreMenu.{showMoreMenu} handleMoreMenu.{handleMoreMenu} items.{moreMenu} />
+        <SettingsMenu showSettingMenu.{showSettingMenu} handleSettingsMenu.{handleSettingsMenu} items.{settingsMenu} />
         <ManageNavigation
-          pinnedItems={pinnedMenu}
-          recentItems={recentMenu}
-          navbarMenuData={getNavbarMenuData({ t, routes, spaceId: spaceIdPathParam, repoId })}
-          showManageNavigation={showCustomNav}
-          isSubmitting={false}
-          submitted={false}
-          onSave={handleSave}
-          onClose={handleCustomNav}
+          pinnedItems.{pinnedMenu}
+          recentItems.{recentMenu}
+          navbarMenuData.{getNavbarMenuData({ t, routes, spaceId: spaceIdPathParam, repoId })}
+          showManageNavigation.{showCustomNav}
+          isSubmitting.{false}
+          submitted.{false}
+          onSave.{handleSave}
+          onClose.{handleCustomNav}
         />
       </Sidebar.Inset>
     </>

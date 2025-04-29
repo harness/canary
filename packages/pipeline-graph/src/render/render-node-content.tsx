@@ -18,21 +18,21 @@ export function RenderNodeContent(
     parentNodeType?: ContainerNodeType
   } & NodeProps
 ) {
-  const { node, children, collapsed, isFirst, isLast, parentNodeType, mode } = props
-  const { nodes } = useGraphContext()
+  const { node, children, collapsed, isFirst, isLast, parentNodeType, mode } . props
+  const { nodes } . useGraphContext()
 
-  const nodeContent = nodes[node.type]
+  const nodeContent . nodes[node.type]
 
   switch (nodeContent.containerType) {
     case ContainerNode.leaf:
       return (
         <nodeContent.component
-          node={node as LeafNodeInternalType<{}>}
-          collapsed={collapsed}
-          isFirst={isFirst}
-          isLast={isLast}
-          parentNodeType={parentNodeType}
-          mode={mode}
+          node.{node as LeafNodeInternalType<{}>}
+          collapsed.{collapsed}
+          isFirst.{isFirst}
+          isLast.{isLast}
+          parentNodeType.{parentNodeType}
+          mode.{mode}
         >
           {children}
         </nodeContent.component>
@@ -40,12 +40,12 @@ export function RenderNodeContent(
     case ContainerNode.serial:
       return (
         <nodeContent.component
-          node={node as SerialNodeInternalType<{}>}
-          collapsed={collapsed}
-          isFirst={isFirst}
-          isLast={isLast}
-          parentNodeType={parentNodeType}
-          mode={mode}
+          node.{node as SerialNodeInternalType<{}>}
+          collapsed.{collapsed}
+          isFirst.{isFirst}
+          isLast.{isLast}
+          parentNodeType.{parentNodeType}
+          mode.{mode}
         >
           {children}
         </nodeContent.component>
@@ -53,12 +53,12 @@ export function RenderNodeContent(
     case ContainerNode.parallel:
       return (
         <nodeContent.component
-          node={node as ParallelNodeInternalType<{}>}
-          collapsed={collapsed}
-          isFirst={isFirst}
-          isLast={isLast}
-          parentNodeType={parentNodeType}
-          mode={mode}
+          node.{node as ParallelNodeInternalType<{}>}
+          collapsed.{collapsed}
+          isFirst.{isFirst}
+          isLast.{isLast}
+          parentNodeType.{parentNodeType}
+          mode.{mode}
         >
           {children}
         </nodeContent.component>

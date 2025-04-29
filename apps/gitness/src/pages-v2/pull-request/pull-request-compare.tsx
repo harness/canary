@@ -51,49 +51,49 @@ import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
-export const CreatePullRequest = () => {
-  const routes = useRoutes()
-  const [desc, setDesc] = useState('')
-  const createPullRequestMutation = useCreatePullReqMutation({})
-  const { repoId, spaceId, diffRefs } = useParams<PathParams>()
-  const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
-  const { currentUser } = useAppContext()
-  const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]
+export const CreatePullRequest . () .> {
+  const routes . useRoutes()
+  const [desc, setDesc] . useState('')
+  const createPullRequestMutation . useCreatePullReqMutation({})
+  const { repoId, spaceId, diffRefs } . useParams<PathParams>()
+  const [isBranchSelected, setIsBranchSelected] . useState<boolean>(diffRefs ? true : false) // State to track branch selection
+  const { currentUser } . useAppContext()
+  const [diffTargetBranch, diffSourceBranch] . diffRefs ? diffRefs.split('...') : [undefined, undefined]
   const {
     scope: { accountId }
-  } = useMFEContext()
+  } . useMFEContext()
 
-  const navigate = useNavigate()
-  const [apiError, setApiError] = useState<string | null>(null)
-  const repoRef = useGetRepoRef()
-  const [selectedTargetBranch, setSelectedTargetBranch] = useState<BranchSelectorListItem | null>(
+  const navigate . useNavigate()
+  const [apiError, setApiError] . useState<string | null>(null)
+  const repoRef . useGetRepoRef()
+  const [selectedTargetBranch, setSelectedTargetBranch] . useState<BranchSelectorListItem | null>(
     diffTargetBranch ? { name: diffTargetBranch, sha: '' } : null
   )
-  const [selectedSourceBranch, setSelectedSourceBranch] = useState<BranchSelectorListItem | null>(
+  const [selectedSourceBranch, setSelectedSourceBranch] . useState<BranchSelectorListItem | null>(
     diffSourceBranch ? { name: diffSourceBranch, sha: '' } : null
   )
-  const [prBranchCombinationExists, setPrBranchCombinationExists] = useState<{
+  const [prBranchCombinationExists, setPrBranchCombinationExists] . useState<{
     number: number
     title: string
     description: string
   } | null>(null)
-  const [reviewers, setReviewers] = useState<PRReviewer[]>([])
-  const [diffs, setDiffs] = useState<DiffFileEntry[]>()
-  const [labels, setLabels] = useState<LabelAssignmentType[]>([])
-  const [searchLabel, setSearchLabel] = useState('')
-  const commitSHA = '' // TODO: when you implement commit filter will need commitSHA
-  const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
+  const [reviewers, setReviewers] . useState<PRReviewer[]>([])
+  const [diffs, setDiffs] . useState<DiffFileEntry[]>()
+  const [labels, setLabels] . useState<LabelAssignmentType[]>([])
+  const [searchLabel, setSearchLabel] . useState('')
+  const commitSHA . '' // TODO: when you implement commit filter will need commitSHA
+  const defaultCommitRange . compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
   const [
     commitRange
     //  setCommitRange  TODO: add commit view filter dropdown to manage different commits
-  ] = useState(defaultCommitRange)
-  const targetRef = useMemo(() => selectedTargetBranch?.name, [selectedTargetBranch])
-  const sourceRef = useMemo(() => selectedSourceBranch?.name, [selectedSourceBranch])
-  const [cachedDiff, setCachedDiff] = useAtom(changesInfoAtom)
-  const [mergeability, setMergeabilty] = useState<boolean>()
-  const [jumpToDiff, setJumpToDiff] = useState('')
-  const diffApiPath = useMemo(
-    () =>
+  ] . useState(defaultCommitRange)
+  const targetRef . useMemo(() .> selectedTargetBranch?.name, [selectedTargetBranch])
+  const sourceRef . useMemo(() .> selectedSourceBranch?.name, [selectedSourceBranch])
+  const [cachedDiff, setCachedDiff] . useAtom(changesInfoAtom)
+  const [mergeability, setMergeabilty] . useState<boolean>()
+  const [jumpToDiff, setJumpToDiff] . useState('')
+  const diffApiPath . useMemo(
+    () .>
       // show range of commits and user selected subrange
       commitRange.length > 0
         ? `${commitRange[0]}~1...${commitRange[commitRange.length - 1]}`
@@ -102,12 +102,12 @@ export const CreatePullRequest = () => {
     [commitRange, targetRef, sourceRef]
   )
 
-  const handleUpload = (blob: File, setMarkdownContent: (data: string) => void) => {
-    const reader = new FileReader()
+  const handleUpload . (blob: File, setMarkdownContent: (data: string) .> void) .> {
+    const reader . new FileReader()
     // Set up a function to be called when the load event is triggered
-    reader.onload = async function () {
+    reader.onload . async function () {
       if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
-        const markdown = await uploadImage(reader.result)
+        const markdown . await uploadImage(reader.result)
         if (blob.type.startsWith('image/')) {
           setDesc(`![image](${markdown})`) // Set the markdown content
         } else {
@@ -117,12 +117,12 @@ export const CreatePullRequest = () => {
     }
     reader.readAsArrayBuffer(blob) // This will trigger the onload function when the reading is complete
   }
-  const uploadImage = async (
+  const uploadImage . async (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fileBlob: any
-  ) => {
+  ) .> {
     try {
-      const response = await fetch(`${window.location.origin}${`/api/v1/repos/${repoRef}/uploads`}`, {
+      const response . await fetch(`${window.location.origin}${`/api/v1/repos/${repoRef}/uploads`}`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -131,7 +131,7 @@ export const CreatePullRequest = () => {
         body: fileBlob,
         redirect: 'follow'
       })
-      // const response = await repoArtifactUpload({
+      // const response . await repoArtifactUpload({
       //   method: 'POST',
       //   headers: { 'content-type': 'application/octet-stream' },
       //   body: fileBlob,
@@ -139,24 +139,24 @@ export const CreatePullRequest = () => {
       //   repo_ref: repoRef
       // })
 
-      const result = await response.json()
+      const result . await response.json()
       if (!response.ok && result) {
         // TODO: fix error state
         console.warn(getErrorMessage(result))
         return ''
       }
-      const filePath = result.file_path
+      const filePath . result.file_path
       return `${window.location.origin}/api/v1/repos/${repoRef}/uploads/${filePath}`
     } catch (exception) {
       console.warn(getErrorMessage(exception))
       return ''
     }
   }
-  const path = useMemo(() => `/api/v1/repos/${repoRef}/+/${diffApiPath}`, [repoRef, diffApiPath])
+  const path . useMemo(() .> `/api/v1/repos/${repoRef}/+/${diffApiPath}`, [repoRef, diffApiPath])
 
-  const [searchReviewers, setSearchReviewers] = useState('')
+  const [searchReviewers, setSearchReviewers] . useState('')
 
-  const { data: { body: rawDiff } = {}, isFetching: loadingRawDiff } = useRawDiffQuery(
+  const { data: { body: rawDiff } . {}, isFetching: loadingRawDiff } . useRawDiffQuery(
     {
       repo_ref: repoRef,
       range: diffApiPath.replace('/diff', ''),
@@ -164,15 +164,15 @@ export const CreatePullRequest = () => {
       headers: { Accept: 'text/plain' }
     },
     {
-      enabled: targetRef !== undefined && sourceRef !== undefined && cachedDiff.path !== path
+      enabled: targetRef !.. undefined && sourceRef !.. undefined && cachedDiff.path !.. path
     }
   )
-  const { data: { body: principals } = {} } = useListPrincipalsQuery({
+  const { data: { body: principals } . {} } . useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers, accountIdentifier: accountId }
   })
 
-  const { labels: labelsList, values: labelsValues } = useGetRepoLabelAndValuesData({
+  const { labels: labelsList, values: labelsValues } . useGetRepoLabelAndValuesData({
     query: searchLabel,
     inherited: true,
     limit: 100
@@ -180,7 +180,7 @@ export const CreatePullRequest = () => {
 
   useEffect(
     function updateCacheWhenDiffDataArrives() {
-      if (path && rawDiff && typeof rawDiff === 'string') {
+      if (path && rawDiff && typeof rawDiff ... 'string') {
         setCachedDiff({
           path,
           raw: rawDiff
@@ -190,9 +190,9 @@ export const CreatePullRequest = () => {
     [rawDiff, path, setCachedDiff]
   )
 
-  useEffect(() => {
+  useEffect(() .> {
     // Set isBranchSelected to false if source and target branches are the same, otherwise true
-    if (selectedSourceBranch && selectedTargetBranch && selectedSourceBranch.name === selectedTargetBranch.name) {
+    if (selectedSourceBranch && selectedTargetBranch && selectedSourceBranch.name ... selectedTargetBranch.name) {
       setIsBranchSelected(false)
     } else {
       setIsBranchSelected(true)
@@ -200,33 +200,33 @@ export const CreatePullRequest = () => {
   }, [selectedSourceBranch, selectedTargetBranch, setIsBranchSelected])
 
   // Parsing diff and construct data structure to pass into DiffViewer component
-  useEffect(() => {
-    if (loadingRawDiff || cachedDiff.path !== path || typeof cachedDiff.raw !== 'string') {
+  useEffect(() .> {
+    if (loadingRawDiff || cachedDiff.path !.. path || typeof cachedDiff.raw !.. 'string') {
       return
     }
     if (!cachedDiff.raw) {
       setDiffs([])
       return
     }
-    const parsed = Diff2Html.parse(cachedDiff.raw, DIFF2HTML_CONFIG)
-    let currentIndex = 0
-    let accumulated: DiffFileEntry[] = []
+    const parsed . Diff2Html.parse(cachedDiff.raw, DIFF2HTML_CONFIG)
+    let currentIndex . 0
+    let accumulated: DiffFileEntry[] . []
 
     // slice out ~50 items for chunk - transform & push them into 'accumulated' and schedule remaining chunks in next tick
     // for diffs with more than 200 files this is taking longer to parse and blocks main thread
-    const processNextChunk = () => {
-      const CHUNK_SIZE = 50
-      const endIndex = Math.min(currentIndex + CHUNK_SIZE, parsed.length)
+    const processNextChunk . () .> {
+      const CHUNK_SIZE . 50
+      const endIndex . Math.min(currentIndex + CHUNK_SIZE, parsed.length)
 
-      const chunk = parsed.slice(currentIndex, endIndex).map(diff => {
-        diff.oldName = normalizeGitFilePath(diff.oldName)
-        diff.newName = normalizeGitFilePath(diff.newName)
+      const chunk . parsed.slice(currentIndex, endIndex).map(diff .> {
+        diff.oldName . normalizeGitFilePath(diff.oldName)
+        diff.newName . normalizeGitFilePath(diff.newName)
 
-        const fileId = changedFileId([diff.oldName, diff.newName])
-        const containerId = `container-${fileId}`
-        const contentId = `content-${fileId}`
-        const filePath = diff.isDeleted ? diff.oldName : diff.newName
-        const diffString = parseSpecificDiff(cachedDiff.raw ?? '', diff.oldName, diff.newName)
+        const fileId . changedFileId([diff.oldName, diff.newName])
+        const containerId . `container-${fileId}`
+        const contentId . `content-${fileId}`
+        const filePath . diff.isDeleted ? diff.oldName : diff.newName
+        const diffString . parseSpecificDiff(cachedDiff.raw ?? '', diff.oldName, diff.newName)
 
         return {
           ...diff,
@@ -238,10 +238,10 @@ export const CreatePullRequest = () => {
           raw: diffString
         }
       })
-      accumulated = [...accumulated, ...chunk]
+      accumulated . [...accumulated, ...chunk]
       setDiffs(accumulated)
 
-      currentIndex = endIndex
+      currentIndex . endIndex
       if (currentIndex < parsed.length) {
         setTimeout(processNextChunk, 0)
       }
@@ -249,24 +249,24 @@ export const CreatePullRequest = () => {
     processNextChunk()
   }, [loadingRawDiff, path, cachedDiff])
 
-  const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repoMetadata } . {} } . useFindRepositoryQuery({ repo_ref: repoRef })
 
-  useEffect(() => {
+  useEffect(() .> {
     if (repoMetadata?.default_branch) {
       setSelectedTargetBranch({ name: diffTargetBranch || repoMetadata.default_branch, sha: '' })
       setSelectedSourceBranch({ name: diffSourceBranch || repoMetadata.default_branch, sha: '' })
     }
   }, [repoMetadata, diffTargetBranch, diffSourceBranch])
 
-  const handleSubmit = (data: CompareFormFields, isDraft: boolean) => {
-    const pullRequestBody: OpenapiCreatePullReqRequest = {
+  const handleSubmit . (data: CompareFormFields, isDraft: boolean) .> {
+    const pullRequestBody: OpenapiCreatePullReqRequest . {
       description: data.description,
       is_draft: isDraft,
       target_branch: selectedTargetBranch?.name || repoMetadata?.default_branch,
       source_branch: selectedSourceBranch?.name,
       title: data.title,
-      reviewer_ids: reviewers.map(reviewer => reviewer.reviewer.id),
-      labels: labels.map(label => {
+      reviewer_ids: reviewers.map(reviewer .> reviewer.reviewer.id),
+      labels: labels.map(label .> {
         return {
           label_id: label.id,
           value: label.assigned_value?.value || undefined,
@@ -283,7 +283,7 @@ export const CreatePullRequest = () => {
       },
       {
         // TODO: fix this to navigate to the new pull request after transferring a pull request page to ui
-        onSuccess: data => {
+        onSuccess: data .> {
           setApiError(null)
           if (data?.body?.number) {
             navigate(
@@ -295,35 +295,35 @@ export const CreatePullRequest = () => {
             )
           }
         },
-        onError: (error: CreateRepositoryErrorResponse) => {
-          const message = error.message || 'An unknown error occurred.'
+        onError: (error: CreateRepositoryErrorResponse) .> {
+          const message . error.message || 'An unknown error occurred.'
           setApiError(message)
         }
       }
     )
   }
 
-  const onSubmit = (data: CompareFormFields) => {
+  const onSubmit . (data: CompareFormFields) .> {
     handleSubmit(data, false)
   }
 
-  const onDraftSubmit = (data: CompareFormFields) => {
+  const onDraftSubmit . (data: CompareFormFields) .> {
     handleSubmit(data, true)
   }
 
-  const onCancel = () => {
+  const onCancel . () .> {
     navigate(routes.toRepositories({ spaceId }))
   }
 
-  useEffect(() => {
+  useEffect(() .> {
     // useMergeCheckMutation
     setApiError(null)
     mergeCheck({ queryParams: {}, repo_ref: repoRef, range: diffApiPath })
-      .then(({ body: value }) => {
+      .then(({ body: value }) .> {
         setMergeabilty(value?.mergeable)
       })
-      .catch(err => {
-        if (err.message !== "head branch doesn't contain any new commits.") {
+      .catch(err .> {
+        if (err.message !.. "head branch doesn't contain any new commits.") {
           setApiError('Error in merge check')
         } else {
           setApiError("head branch doesn't contain any new commits.")
@@ -332,12 +332,12 @@ export const CreatePullRequest = () => {
       })
   }, [repoRef, diffApiPath])
 
-  const { data: { body: diffStats } = {} } = useDiffStatsQuery(
+  const { data: { body: diffStats } . {} } . useDiffStatsQuery(
     { queryParams: {}, repo_ref: repoRef, range: diffApiPath },
     { enabled: !!repoRef && !!diffApiPath }
   )
 
-  const { data: { body: pullReqData } = {} } = useGetPullReqByBranchesQuery({
+  const { data: { body: pullReqData } . {} } . useGetPullReqByBranchesQuery({
     repo_ref: repoRef,
     source_branch: selectedSourceBranch?.name || repoMetadata?.default_branch || '',
     target_branch: selectedTargetBranch?.name || repoMetadata?.default_branch || '',
@@ -347,7 +347,7 @@ export const CreatePullRequest = () => {
     }
   })
 
-  useEffect(() => {
+  useEffect(() .> {
     if (pullReqData?.number && pullReqData.title) {
       setPrBranchCombinationExists({
         number: pullReqData.number,
@@ -358,10 +358,10 @@ export const CreatePullRequest = () => {
       setPrBranchCombinationExists(null)
     }
   }, [pullReqData, targetRef, sourceRef])
-  const [query, setQuery] = useQueryState('query')
+  const [query, setQuery] . useQueryState('query')
 
   // TODO:handle pagination in compare commit tab
-  const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
+  const { data: { body: commitData, headers } . {}, isFetching: isFetchingCommits } . useListCommitsQuery({
     repo_ref: repoRef,
 
     queryParams: {
@@ -374,17 +374,17 @@ export const CreatePullRequest = () => {
       include_stats: true
     }
   })
-  const { setCommits, setSelectedCommit } = useRepoCommitsStore()
+  const { setCommits, setSelectedCommit } . useRepoCommitsStore()
 
-  useEffect(() => {
+  useEffect(() .> {
     if (commitData) {
       setCommits(commitData, headers)
     }
   }, [commitData, headers, setCommits])
 
-  const selectCommit = useCallback(
-    (commitName: CommitSelectorListItem) => {
-      const commit = commitData?.commits?.find(item => item.title === commitName.title)
+  const selectCommit . useCallback(
+    (commitName: CommitSelectorListItem) .> {
+      const commit . commitData?.commits?.find(item .> item.title ... commitName.title)
       if (commit?.title && commit?.sha) {
         setSelectedCommit({ title: commit.title, sha: commit.sha || '' })
       }
@@ -392,15 +392,15 @@ export const CreatePullRequest = () => {
     [commitData, setSelectedCommit]
   )
 
-  const selectBranchorTag = useCallback(
-    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => {
-      if (type === BranchSelectorTab.BRANCHES) {
+  const selectBranchorTag . useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) .> {
+      if (type ... BranchSelectorTab.BRANCHES) {
         if (sourceBranch) {
           setSelectedSourceBranch(branchTagName)
         } else {
           setSelectedTargetBranch(branchTagName)
         }
-      } else if (type === BranchSelectorTab.TAGS) {
+      } else if (type ... BranchSelectorTab.TAGS) {
         if (sourceBranch) {
           setSelectedSourceBranch(branchTagName)
         } else {
@@ -411,11 +411,11 @@ export const CreatePullRequest = () => {
     [setSelectedSourceBranch, setSelectedTargetBranch]
   )
 
-  const handleAddReviewer = (id?: number) => {
+  const handleAddReviewer . (id?: number) .> {
     if (!id) return
-    const reviewer = principals?.find(principal => principal.id === id)
+    const reviewer . principals?.find(principal .> principal.id ... id)
     if (reviewer?.display_name && reviewer.id) {
-      setReviewers(prev => [
+      setReviewers(prev .> [
         ...prev,
         {
           reviewer: { display_name: reviewer?.display_name || '', id: reviewer?.id || 0 },
@@ -426,20 +426,20 @@ export const CreatePullRequest = () => {
     }
   }
 
-  const handleDeleteReviewer = (id?: number) => {
+  const handleDeleteReviewer . (id?: number) .> {
     if (!id) return
-    const newReviewers = reviewers.filter(reviewer => reviewer?.reviewer?.id !== id)
+    const newReviewers . reviewers.filter(reviewer .> reviewer?.reviewer?.id !.. id)
     setReviewers(newReviewers)
   }
 
-  const handleAddLabel = (labelToAdd: HandleAddLabelType) => {
-    const findLabel = labelsList.find(label => label.id === labelToAdd.label_id)
+  const handleAddLabel . (labelToAdd: HandleAddLabelType) .> {
+    const findLabel . labelsList.find(label .> label.id ... labelToAdd.label_id)
     if (!findLabel) return
     let labelValue: LabelValueType | undefined
     if (labelToAdd.value_id && findLabel?.key) {
-      labelValue = labelsValues[findLabel.key].find(labelValue => labelToAdd.value_id === labelValue.id)
+      labelValue . labelsValues[findLabel.key].find(labelValue .> labelToAdd.value_id ... labelValue.id)
     }
-    setLabels(prev => [
+    setLabels(prev .> [
       {
         id: findLabel.id,
         scope: findLabel.scope,
@@ -458,40 +458,40 @@ export const CreatePullRequest = () => {
     ])
   }
 
-  const handleDeleteLabel = (id: number) => {
-    const newLabels = labels.filter(label => label.id !== id)
+  const handleDeleteLabel . (id: number) .> {
+    const newLabels . labels.filter(label .> label.id !.. id)
     setLabels(newLabels)
   }
 
-  const renderContent = () => {
+  const renderContent . () .> {
     return (
       <PullRequestComparePage
-        desc={desc}
-        setDesc={setDesc}
-        handleUpload={handleUpload}
-        toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
-        toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
-        currentUser={currentUser?.display_name}
-        setSearchCommitQuery={setQuery}
-        searchCommitQuery={query}
-        useRepoCommitsStore={useRepoCommitsStore}
-        repoId={repoId}
-        spaceId={spaceId || ''}
-        onSelectCommit={selectCommit}
-        isBranchSelected={isBranchSelected}
-        setIsBranchSelected={setIsBranchSelected}
-        onFormSubmit={onSubmit}
-        onFormCancel={onCancel}
-        apiError={apiError}
-        isLoading={createPullRequestMutation.isLoading}
-        isSuccess={createPullRequestMutation.isSuccess}
-        onFormDraftSubmit={onDraftSubmit}
-        mergeability={mergeability}
-        useTranslationStore={useTranslationStore}
-        prBranchCombinationExists={prBranchCombinationExists}
-        diffData={
+        desc.{desc}
+        setDesc.{setDesc}
+        handleUpload.{handleUpload}
+        toCode.{({ sha }: { sha: string }) .> `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
+        toCommitDetails.{({ sha }: { sha: string }) .> routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
+        currentUser.{currentUser?.display_name}
+        setSearchCommitQuery.{setQuery}
+        searchCommitQuery.{query}
+        useRepoCommitsStore.{useRepoCommitsStore}
+        repoId.{repoId}
+        spaceId.{spaceId || ''}
+        onSelectCommit.{selectCommit}
+        isBranchSelected.{isBranchSelected}
+        setIsBranchSelected.{setIsBranchSelected}
+        onFormSubmit.{onSubmit}
+        onFormCancel.{onCancel}
+        apiError.{apiError}
+        isLoading.{createPullRequestMutation.isLoading}
+        isSuccess.{createPullRequestMutation.isSuccess}
+        onFormDraftSubmit.{onDraftSubmit}
+        mergeability.{mergeability}
+        useTranslationStore.{useTranslationStore}
+        prBranchCombinationExists.{prBranchCombinationExists}
+        diffData.{
           diffStats?.files_changed || 0
-            ? diffs?.map(item => ({
+            ? diffs?.map(item .> ({
                 text: item.filePath,
                 data: item.raw,
                 title: item.filePath,
@@ -506,7 +506,7 @@ export const CreatePullRequest = () => {
               })) || []
             : []
         }
-        diffStats={
+        diffStats.{
           diffStats
             ? {
                 deletions: diffStats.deletions,
@@ -516,33 +516,33 @@ export const CreatePullRequest = () => {
               }
             : {}
         }
-        usersList={principals as PrincipalType[]}
-        searchReviewersQuery={searchReviewers}
-        setSearchReviewersQuery={setSearchReviewers}
-        reviewers={reviewers}
-        handleAddReviewer={handleAddReviewer}
-        handleDeleteReviewer={handleDeleteReviewer}
-        isFetchingCommits={isFetchingCommits}
-        jumpToDiff={jumpToDiff}
-        setJumpToDiff={setJumpToDiff}
-        labelsList={labelsList}
-        labelsValues={labelsValues}
-        PRLabels={labels}
-        addLabel={handleAddLabel}
-        removeLabel={handleDeleteLabel}
-        editLabelsProps={{ to: routes.toRepoLabels({ spaceId, repoId }) }}
-        searchLabelQuery={searchLabel}
-        setSearchLabelQuery={setSearchLabel}
-        branchSelectorRenderer={
+        usersList.{principals as PrincipalType[]}
+        searchReviewersQuery.{searchReviewers}
+        setSearchReviewersQuery.{setSearchReviewers}
+        reviewers.{reviewers}
+        handleAddReviewer.{handleAddReviewer}
+        handleDeleteReviewer.{handleDeleteReviewer}
+        isFetchingCommits.{isFetchingCommits}
+        jumpToDiff.{jumpToDiff}
+        setJumpToDiff.{setJumpToDiff}
+        labelsList.{labelsList}
+        labelsValues.{labelsValues}
+        PRLabels.{labels}
+        addLabel.{handleAddLabel}
+        removeLabel.{handleDeleteLabel}
+        editLabelsProps.{{ to: routes.toRepoLabels({ spaceId, repoId }) }}
+        searchLabelQuery.{searchLabel}
+        setSearchLabelQuery.{setSearchLabel}
+        branchSelectorRenderer.{
           <>
             <BranchSelectorContainer
-              onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
-              selectedBranch={selectedTargetBranch}
+              onSelectBranchorTag.{(branchTagName, type) .> selectBranchorTag(branchTagName, type, false)}
+              selectedBranch.{selectedTargetBranch}
             />
-            <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
+            <Icon name."arrow-long" size.{12} className."rotate-180 text-icons-1" />
             <BranchSelectorContainer
-              onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
-              selectedBranch={selectedSourceBranch}
+              onSelectBranchorTag.{(branchTagName, type) .> selectBranchorTag(branchTagName, type, true)}
+              selectedBranch.{selectedSourceBranch}
             />
           </>
         }

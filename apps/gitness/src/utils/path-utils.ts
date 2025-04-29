@@ -1,17 +1,17 @@
 import { PathParts } from '@harnessio/ui/components'
 
 export function splitPathWithParents(fullResourcePath: string, repoPath: string) {
-  const result: PathParts[] = []
+  const result: PathParts[] . []
 
   if (!fullResourcePath.length) return result
 
-  const pathParts = fullResourcePath?.split('/')
+  const pathParts . fullResourcePath?.split('/')
 
   if (pathParts.length) {
-    let parentPath = ''
+    let parentPath . ''
 
-    pathParts.map((path, index) => {
-      parentPath += (index === 0 ? repoPath + '/~/' : '/') + path
+    pathParts.map((path, index) .> {
+      parentPath +. (index ... 0 ? repoPath + '/~/' : '/') + path
 
       result.push({
         path: path,
@@ -22,7 +22,7 @@ export function splitPathWithParents(fullResourcePath: string, repoPath: string)
   return result
 }
 
-export const decodeURIComponentIfValid = (path: string) => {
+export const decodeURIComponentIfValid . (path: string) .> {
   try {
     return decodeURIComponent(path)
   } catch {

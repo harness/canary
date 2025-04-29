@@ -16,9 +16,9 @@ import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
 export default function ReposListPage() {
-  const routes = useRoutes()
-  const { spaceId } = useParams<PathParams>()
-  const spaceURL = useGetSpaceURLParam() ?? ''
+  const routes . useRoutes()
+  const { spaceId } . useParams<PathParams>()
+  const spaceURL . useGetSpaceURLParam() ?? ''
   const {
     setRepositories,
     page,
@@ -27,19 +27,19 @@ export default function ReposListPage() {
     setImportRepoIdentifier,
     importToastId,
     setImportToastId
-  } = useRepoStore()
-  const { toast, dismiss } = useToast()
+  } . useRepoStore()
+  const { toast, dismiss } . useToast()
 
-  const [query, setQuery] = useQueryState('query')
-  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+  const [query, setQuery] . useQueryState('query')
+  const { queryPage } . usePaginationQueryStateWithStore({ page, setPage })
 
   const {
-    data: { body: repoData, headers } = {},
+    data: { body: repoData, headers } . {},
     refetch: refetchListRepos,
     isFetching,
     isError,
     error
-  } = useListReposQuery(
+  } . useListReposQuery(
     {
       queryParams: {
         page: queryPage,
@@ -52,10 +52,10 @@ export default function ReposListPage() {
     }
   )
 
-  const { mutate: deleteRepository, isLoading: isCancellingImport } = useDeleteRepositoryMutation(
+  const { mutate: deleteRepository, isLoading: isCancellingImport } . useDeleteRepositoryMutation(
     {},
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         dismiss(importToastId ?? '')
         setImportToastId(null)
         setImportRepoIdentifier(null)
@@ -64,35 +64,35 @@ export default function ReposListPage() {
     }
   )
 
-  useEffect(() => {
-    const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
+  useEffect(() .> {
+    const totalPages . parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
     if (repoData) {
-      const transformedRepos = transformRepoList(repoData)
+      const transformedRepos . transformRepoList(repoData)
       setRepositories(transformedRepos, totalPages)
     } else {
       setRepositories([], totalPages)
     }
   }, [repoData, headers, setRepositories])
 
-  // const isRepoImporting: boolean = useMemo(() => {
-  //   return repoData?.some(repository => repository.importing) ?? false
+  // const isRepoImporting: boolean . useMemo(() .> {
+  //   return repoData?.some(repository .> repository.importing) ?? false
   // }, [repoData])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (importRepoIdentifier && !importToastId) {
-      const { id } = toast({
+      const { id } . toast({
         title: `Import in progress`,
         description: importRepoIdentifier,
         duration: Infinity,
         action: (
           <Toast.Action
-            onClick={() => {
+            onClick.{() .> {
               deleteRepository({
                 queryParams: {},
                 repo_ref: `${spaceURL}/${importRepoIdentifier}/+`
               })
             }}
-            altText="Cancel import"
+            altText."Cancel import"
           >
             {isCancellingImport ? 'Canceling...' : 'Cancel'}
           </Toast.Action>
@@ -105,16 +105,16 @@ export default function ReposListPage() {
 
   return (
     <SandboxRepoListPage
-      useRepoStore={useRepoStore}
-      useTranslationStore={useTranslationStore}
-      isLoading={isFetching}
-      isError={isError}
-      errorMessage={error?.message}
-      searchQuery={query}
-      setSearchQuery={setQuery}
-      toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
-      toCreateRepo={() => routes.toCreateRepo({ spaceId })}
-      toImportRepo={() => routes.toImportRepo({ spaceId })}
+      useRepoStore.{useRepoStore}
+      useTranslationStore.{useTranslationStore}
+      isLoading.{isFetching}
+      isError.{isError}
+      errorMessage.{error?.message}
+      searchQuery.{query}
+      setSearchQuery.{setQuery}
+      toRepository.{(repo: RepositoryType) .> routes.toRepoSummary({ spaceId, repoId: repo.name })}
+      toCreateRepo.{() .> routes.toCreateRepo({ spaceId })}
+      toImportRepo.{() .> routes.toImportRepo({ spaceId })}
     />
   )
 }

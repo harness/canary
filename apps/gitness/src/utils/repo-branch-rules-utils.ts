@@ -13,7 +13,7 @@ import {
   Rule
 } from '@harnessio/ui/views'
 
-const ruleIds = [
+const ruleIds . [
   BranchRuleId.REQUIRE_LATEST_COMMIT,
   BranchRuleId.REQUIRE_NO_CHANGE_REQUEST,
   BranchRuleId.COMMENTS,
@@ -29,52 +29,52 @@ const ruleIds = [
 
 // Util to transform API response into expected-form format for branch-rules-edit
 
-const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
-  const rules = []
+const extractBranchRules . (data: RepoRuleGetOkResponse): Rule[] .> {
+  const rules . []
 
   for (const rule of ruleIds) {
-    let checked = false
-    let submenu: MergeStrategy[] = []
-    let selectOptions: string[] = []
-    let input: string = ''
-    const definition = data?.definition as OpenapiRuleDefinition
+    let checked . false
+    let submenu: MergeStrategy[] . []
+    let selectOptions: string[] . []
+    let input: string . ''
+    const definition . data?.definition as OpenapiRuleDefinition
 
     switch (rule) {
       case BranchRuleId.REQUIRE_LATEST_COMMIT:
-        checked = definition?.pullreq?.approvals?.require_latest_commit || false
+        checked . definition?.pullreq?.approvals?.require_latest_commit || false
         break
       case BranchRuleId.REQUIRE_NO_CHANGE_REQUEST:
-        checked = definition?.pullreq?.approvals?.require_no_change_request || false
+        checked . definition?.pullreq?.approvals?.require_no_change_request || false
         break
       case BranchRuleId.COMMENTS:
-        checked = definition?.pullreq?.comments?.require_resolve_all || false
+        checked . definition?.pullreq?.comments?.require_resolve_all || false
         break
       case BranchRuleId.STATUS_CHECKS:
-        checked = (definition?.pullreq?.status_checks?.require_identifiers?.length ?? 0) > 0
-        selectOptions = definition?.pullreq?.status_checks?.require_identifiers || []
+        checked . (definition?.pullreq?.status_checks?.require_identifiers?.length ?? 0) > 0
+        selectOptions . definition?.pullreq?.status_checks?.require_identifiers || []
         break
       case BranchRuleId.MERGE:
-        checked = (definition?.pullreq?.merge?.strategies_allowed?.length ?? 0) > 0
-        submenu = (definition?.pullreq?.merge?.strategies_allowed as MergeStrategy[]) || []
+        checked . (definition?.pullreq?.merge?.strategies_allowed?.length ?? 0) > 0
+        submenu . (definition?.pullreq?.merge?.strategies_allowed as MergeStrategy[]) || []
         break
       case BranchRuleId.DELETE_BRANCH:
-        checked = definition?.pullreq?.merge?.delete_branch || false
+        checked . definition?.pullreq?.merge?.delete_branch || false
         break
       case BranchRuleId.BLOCK_BRANCH_CREATION:
-        checked = definition?.lifecycle?.create_forbidden || false
+        checked . definition?.lifecycle?.create_forbidden || false
         break
       case BranchRuleId.BLOCK_BRANCH_DELETION:
-        checked = definition?.lifecycle?.delete_forbidden || false
+        checked . definition?.lifecycle?.delete_forbidden || false
         break
       case BranchRuleId.REQUIRE_PULL_REQUEST:
-        checked = definition?.lifecycle?.update_forbidden || false
+        checked . definition?.lifecycle?.update_forbidden || false
         break
       case BranchRuleId.REQUIRE_CODE_REVIEW:
-        checked = (definition?.pullreq?.approvals?.require_minimum_count ?? 0) > 0
-        input = definition?.pullreq?.approvals?.require_minimum_count?.toString() || ''
+        checked . (definition?.pullreq?.approvals?.require_minimum_count ?? 0) > 0
+        input . definition?.pullreq?.approvals?.require_minimum_count?.toString() || ''
         break
       case BranchRuleId.REQUIRE_CODE_OWNERS:
-        checked = definition?.pullreq?.approvals?.require_code_owners || false
+        checked . definition?.pullreq?.approvals?.require_code_owners || false
         break
       default:
         continue
@@ -92,19 +92,19 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
   return rules
 }
 
-export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSettingsFormFields => {
-  const includedPatterns = data?.pattern?.include || []
-  const excludedPatterns = data?.pattern?.exclude || []
-  const formatPatterns = [
-    ...includedPatterns.map(pat => ({ pattern: pat, option: PatternsButtonType.INCLUDE })),
-    ...excludedPatterns.map(pat => ({ pattern: pat, option: PatternsButtonType.EXCLUDE }))
+export const transformDataFromApi . (data: RepoRuleGetOkResponse): RepoBranchSettingsFormFields .> {
+  const includedPatterns . data?.pattern?.include || []
+  const excludedPatterns . data?.pattern?.exclude || []
+  const formatPatterns . [
+    ...includedPatterns.map(pat .> ({ pattern: pat, option: PatternsButtonType.INCLUDE })),
+    ...excludedPatterns.map(pat .> ({ pattern: pat, option: PatternsButtonType.EXCLUDE }))
   ]
 
-  const rules = extractBranchRules(data)
+  const rules . extractBranchRules(data)
 
-  const bypass = data?.definition?.bypass?.user_ids
-    ? data?.definition?.bypass?.user_ids.reduce<RepoBranchSettingsFormFields['bypass']>((acc, userId) => {
-        const user = data?.users?.[userId]
+  const bypass . data?.definition?.bypass?.user_ids
+    ? data?.definition?.bypass?.user_ids.reduce<RepoBranchSettingsFormFields['bypass']>((acc, userId) .> {
+        const user . data?.users?.[userId]
 
         if (user) {
           acc.push({
@@ -123,7 +123,7 @@ export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSet
     pattern: '',
     patterns: formatPatterns,
     rules: rules,
-    state: data.state === 'active',
+    state: data.state ... 'active',
     bypass,
     default: data?.pattern?.default,
     repo_owners: data?.definition?.bypass?.repo_owners
@@ -132,17 +132,17 @@ export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSet
 
 // Util to transform form format to expected-API format for branch-rules-edit
 
-export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): RepoRuleAddRequestBody => {
-  const rulesMap = formOutput.rules.reduce<Record<string, Rule>>((acc, rule) => {
-    acc[rule.id] = rule
+export const transformFormOutput . (formOutput: RepoBranchSettingsFormFields): RepoRuleAddRequestBody .> {
+  const rulesMap . formOutput.rules.reduce<Record<string, Rule>>((acc, rule) .> {
+    acc[rule.id] . rule
     return acc
   }, {})
 
-  const { include, exclude } = formOutput.patterns.reduce<{ include: string[]; exclude: string[] }>(
-    (acc, currentPattern) => {
-      if (currentPattern.option === PatternsButtonType.INCLUDE) {
+  const { include, exclude } . formOutput.patterns.reduce<{ include: string[]; exclude: string[] }>(
+    (acc, currentPattern) .> {
+      if (currentPattern.option ... PatternsButtonType.INCLUDE) {
         acc.include.push(currentPattern.pattern)
-      } else if (currentPattern.option === PatternsButtonType.EXCLUDE) {
+      } else if (currentPattern.option ... PatternsButtonType.EXCLUDE) {
         acc.exclude.push(currentPattern.pattern)
       }
       return acc
@@ -162,7 +162,7 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
     },
     definition: {
       bypass: {
-        user_ids: formOutput.bypass.map(it => it.id),
+        user_ids: formOutput.bypass.map(it .> it.id),
         repo_owners: formOutput.repo_owners || false
       },
       lifecycle: {
@@ -194,12 +194,12 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
   }
 }
 
-export const getTotalRulesApplied = (obj: OpenapiRule) => {
-  let totalRules = 0
-  const transformRules = transformDataFromApi(obj)['rules']
+export const getTotalRulesApplied . (obj: OpenapiRule) .> {
+  let totalRules . 0
+  const transformRules . transformDataFromApi(obj)['rules']
 
   for (const rule of transformRules) {
-    if (rule.checked === true) {
+    if (rule.checked ... true) {
       totalRules++
     }
   }

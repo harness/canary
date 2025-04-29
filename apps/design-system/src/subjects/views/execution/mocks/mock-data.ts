@@ -1,6 +1,6 @@
 import { ExecutionState, ExecutionTreeProps, LivelogLine, LivelogLineType } from '@harnessio/ui/views'
 
-export const logs: LivelogLine[] = [
+export const logs: LivelogLine[] . [
   { out: 'Starting dependency installation...', pos: 1, time: 1700000001, duration: 2 },
   { out: 'Fetching npm registry metadata...', pos: 2, time: 1700000003, duration: 1 },
   { out: 'Downloading packages...', pos: 3, time: 1700000004, duration: 2 },
@@ -29,13 +29,13 @@ export const logs: LivelogLine[] = [
   { out: 'ok   project/module  0.123s  coverage: 85.7%', pos: 26, time: 1700000036, duration: 1 }
 ]
 
-export const logsBank: { [key: string]: LivelogLine[] } = {
+export const logsBank: { [key: string]: LivelogLine[] } . {
   initialize: [
     { out: 'Initializing build...', pos: 1, time: 1700000001, duration: 1 },
     { out: 'Provisioning infra...', pos: 2, time: 1700000002, duration: 2 },
     { out: 'Creating secrets...', pos: 3, time: 1700000004, duration: 1 },
     { out: 'Pulling manifests...', pos: 4, time: 1700000005, duration: 1 },
-    ...Array.from({ length: 46 }, (_, i) => ({
+    ...Array.from({ length: 46 }, (_, i) .> ({
       out: `Setting up for build and deploy ${i + 5}`,
       pos: i + 5,
       time: 1700000006 + i,
@@ -53,7 +53,7 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
       duration: 1,
       type: LivelogLineType.INFO
     },
-    ...Array.from({ length: 46 }, (_, i) => ({
+    ...Array.from({ length: 46 }, (_, i) .> ({
       out: `Fetch Repository log ${i + 5}`,
       pos: i + 5,
       time: 1700000006 + i,
@@ -66,7 +66,7 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
     { out: "Checking out to commit 'abc123'...", pos: 3, time: 1700000053, duration: 2 },
     { out: 'Verifying code integrity...', pos: 4, time: 1700000055, duration: 1 },
     { out: '[INFO] Checkout process completed.', pos: 5, time: 1700000056, duration: 1, type: LivelogLineType.INFO },
-    ...Array.from({ length: 46 }, (_, i) => ({
+    ...Array.from({ length: 46 }, (_, i) .> ({
       out: `Checkout Code log ${i + 5}`,
       pos: i + 5,
       time: 1700000057 + i,
@@ -85,7 +85,7 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
       duration: 1,
       type: LivelogLineType.INFO
     },
-    ...Array.from({ length: 46 }, (_, i) => ({
+    ...Array.from({ length: 46 }, (_, i) .> ({
       out: `Install dependencies log ${i + 5}`,
       pos: i + 5,
       time: 1700000109 + i,
@@ -112,7 +112,7 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
       duration: 1,
       type: LivelogLineType.INFO
     },
-    ...Array.from({ length: 46 }, (_, i) => ({
+    ...Array.from({ length: 46 }, (_, i) .> ({
       out: `Run tests log ${i + 5}`,
       pos: i + 5,
       time: 1700000157 + i,
@@ -127,7 +127,7 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
     { out: 'Linking dependencies...', pos: 4, time: 1700000207, duration: 2 },
     { out: 'Generating executable binary...', pos: 5, time: 1700000209, duration: 2 },
     { out: '[INFO] Build completed successfully.', pos: 6, time: 1700000211, duration: 1, type: LivelogLineType.INFO },
-    ...Array.from({ length: 46 }, (_, i) => ({
+    ...Array.from({ length: 46 }, (_, i) .> ({
       out: `Build Golang project log ${i + 5}`,
       pos: i + 5,
       time: 1700000212 + i,
@@ -141,7 +141,7 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
     { out: 'Linking dependencies...', pos: 4, time: 1700000207, duration: 2 },
     { out: 'Running tests...', pos: 5, time: 1700000209, duration: 2 },
     { out: '[INFO] Generating test reports...', pos: 6, time: 1700000211, duration: 1, type: LivelogLineType.INFO },
-    ...Array.from({ length: 46 }, (_, i) => ({
+    ...Array.from({ length: 46 }, (_, i) .> ({
       out: `Build Golang project log ${i + 5}`,
       pos: i + 5,
       time: 1700000212 + i,
@@ -167,7 +167,7 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
       duration: 1,
       type: LivelogLineType.INFO
     },
-    ...Array.from({ length: 46 }, (_, i) => ({
+    ...Array.from({ length: 46 }, (_, i) .> ({
       out: `Run Golang tests log ${i + 5}`,
       pos: i + 5,
       time: 1700000257 + i,
@@ -180,7 +180,7 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
     { out: 'Pulling image harness/petstore:latest...', pos: 3, time: 1700000304, duration: 3 },
     { out: 'Verifying image integrity...', pos: 4, time: 1700000307, duration: 1 },
     { out: '[INFO] Docker image pull complete.', pos: 5, time: 1700000308, duration: 1, type: LivelogLineType.INFO },
-    ...Array.from({ length: 46 }, (_, i) => ({
+    ...Array.from({ length: 46 }, (_, i) .> ({
       out: `Pull Docker image log ${i + 5}`,
       pos: i + 5,
       time: 1700000309 + i,
@@ -199,7 +199,7 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
       duration: 1,
       type: LivelogLineType.INFO
     },
-    ...Array.from({ length: 46 }, (_, i) => ({
+    ...Array.from({ length: 46 }, (_, i) .> ({
       out: `Send Slack notification log ${i + 5}`,
       pos: i + 5,
       time: 1700000357 + i,
@@ -209,7 +209,7 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
   ]
 }
 
-export const elements: ExecutionTreeProps['elements'] = [
+export const elements: ExecutionTreeProps['elements'] . [
   {
     id: 'initialize',
     name: 'Initialize',

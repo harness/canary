@@ -9,11 +9,11 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Textarea
-    name="about-you"
-    label="About you"
-    placeholder="Tell me about yourself..."
-    caption="What do you like to do in your free time?"
+  code.{`<Textarea
+    name."about-you"
+    label."About you"
+    placeholder."Tell me about yourself..."
+    caption."What do you like to do in your free time?"
     optional
 />`}
 />
@@ -27,10 +27,10 @@ import { Textarea } from '@harnessio/ui/components'
 
 return (
   <Textarea
-    label="Textarea label"
-    placeholder="Placeholder"
-    name="textarea-name"
-    onChange={handleChange}
+    label."Textarea label"
+    placeholder."Placeholder"
+    name."textarea-name"
+    onChange.{handleChange}
   />
 )
 ```
@@ -45,13 +45,13 @@ all attributes of the `textarea` HTML element.
 
 ```typescript jsx
 <Textarea
-  name="textarea-name"       // [OPTIONAL] name of the textarea
-  id="textarea-id"           // [OPTIONAL] id of the textarea
-  value="Textarea value"     // [OPTIONAL] value of the textarea
-  onChange={handleChange}    // [OPTIONAL] callback to call when the value changes
-  label="Textarea label"     // [OPTIONAL] label for the textarea
-  caption="Textarea caption" // [OPTIONAL] caption to describe the textarea
-  error="Error message"      // [OPTIONAL] error message to display below
+  name."textarea-name"       // [OPTIONAL] name of the textarea
+  id."textarea-id"           // [OPTIONAL] id of the textarea
+  value."Textarea value"     // [OPTIONAL] value of the textarea
+  onChange.{handleChange}    // [OPTIONAL] callback to call when the value changes
+  label."Textarea label"     // [OPTIONAL] label for the textarea
+  caption."Textarea caption" // [OPTIONAL] caption to describe the textarea
+  error."Error message"      // [OPTIONAL] error message to display below
   optional                   // [OPTIONAL] indicate if the textarea is optional
   resizable                  // [OPTIONAL] indicate if the textarea should be resizable
   disabled                   // [OPTIONAL] indicate if the textarea is disabled
@@ -59,7 +59,7 @@ all attributes of the `textarea` HTML element.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "name",
       description: "Name of the textarea",
@@ -82,7 +82,7 @@ all attributes of the `textarea` HTML element.
       name: "onChange",
       description: "Callback to call when the value changes",
       required: false,
-      value: "(value: string) => void",
+      value: "(value: string) .> void",
     },
     {
       name: "label",

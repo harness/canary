@@ -17,11 +17,11 @@ import { getErrorMessage } from '../pull-request-utils'
 interface usePRCommonInteractionsProps {
   repoRef: string
   prId: number
-  refetchActivities: () => void
-  updateCommentStatus: (repoRef: string, prId: number, commentId: number, status: string, done: () => void) => void
+  refetchActivities: () .> void
+  updateCommentStatus: (repoRef: string, prId: number, commentId: number, status: string, done: () .> void) .> void
   currentUserName?: string
   setActivities?: React.Dispatch<React.SetStateAction<ListPullReqActivitiesOkResponse | undefined>>
-  dryMerge?: () => void
+  dryMerge?: () .> void
 }
 
 export function usePRCommonInteractions({
@@ -33,17 +33,17 @@ export function usePRCommonInteractions({
   setActivities,
   dryMerge
 }: usePRCommonInteractionsProps) {
-  const apiPath = useAPIPath()
-  const count = useRef(generateAlphaNumericHash(5))
-  const uploadsURL = useMemo(() => `/api/v1/repos/${repoRef}/uploads`, [repoRef])
+  const apiPath . useAPIPath()
+  const count . useRef(generateAlphaNumericHash(5))
+  const uploadsURL . useMemo(() .> `/api/v1/repos/${repoRef}/uploads`, [repoRef])
 
-  const uploadImage = useCallback(
+  const uploadImage . useCallback(
     async (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       fileBlob: any
-    ) => {
+    ) .> {
       try {
-        const response = await fetch(apiPath(uploadsURL), {
+        const response . await fetch(apiPath(uploadsURL), {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -52,7 +52,7 @@ export function usePRCommonInteractions({
           body: fileBlob,
           redirect: 'follow'
         })
-        // const response = await repoArtifactUpload({
+        // const response . await repoArtifactUpload({
         //   method: 'POST',
         //   headers: { 'content-type': 'application/octet-stream' },
         //   body: fileBlob,
@@ -60,13 +60,13 @@ export function usePRCommonInteractions({
         //   repo_ref: repoRef
         // })
 
-        const result = await response.json()
+        const result . await response.json()
         if (!response.ok && result) {
           // TODO: fix error state
           console.warn(getErrorMessage(result))
           return ''
         }
-        const filePath = result.file_path
+        const filePath . result.file_path
         return apiPath(`${uploadsURL}/${filePath}`)
       } catch (exception) {
         console.warn(getErrorMessage(exception))
@@ -76,14 +76,14 @@ export function usePRCommonInteractions({
     [uploadsURL, apiPath]
   )
 
-  const handleUpload = useCallback(
-    (blob: File, setMarkdownContent: (data: string) => void) => {
-      const reader = new FileReader()
+  const handleUpload . useCallback(
+    (blob: File, setMarkdownContent: (data: string) .> void) .> {
+      const reader . new FileReader()
 
       // Set up a function to be called when the load event is triggered
-      reader.onload = async function () {
+      reader.onload . async function () {
         if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
-          const markdown = await uploadImage(reader.result)
+          const markdown . await uploadImage(reader.result)
 
           if (blob.type.startsWith('image/')) {
             setMarkdownContent(`![image](${markdown})`) // Set the markdown content
@@ -98,10 +98,10 @@ export function usePRCommonInteractions({
     [uploadImage]
   )
 
-  const handleSaveComment = useCallback(
-    async (text: string, parentId?: number) => {
+  const handleSaveComment . useCallback(
+    async (text: string, parentId?: number) .> {
       // Optionally replicate ephemeral logic from conversation page:
-      const newComment: TypesPullReqActivity = {
+      const newComment: TypesPullReqActivity . {
         id: parentId ?? 0, // Temporary ID or fallback
         author: { display_name: currentUserName ?? '' },
         created: Date.now(),
@@ -124,10 +124,10 @@ export function usePRCommonInteractions({
         }
       }
 
-      count.current += 1 // increment ephemeral ID
+      count.current +. 1 // increment ephemeral ID
 
       if (setActivities) {
-        setActivities(prev => {
+        setActivities(prev .> {
           if (!prev) return prev
           return [...prev, newComment]
         })
@@ -139,12 +139,12 @@ export function usePRCommonInteractions({
         pullreq_number: prId,
         body: { text, parent_id: parentId }
       })
-        .then(() => {
+        .then(() .> {
           refetchActivities()
         })
-        .catch(error => {
+        .catch(error .> {
           if (setActivities) {
-            setActivities(prev => prev?.filter(item => item.id !== newComment.id))
+            setActivities(prev .> prev?.filter(item .> item.id !.. newComment.id))
           }
           console.error('Failed to create comment:', error)
         })
@@ -152,66 +152,66 @@ export function usePRCommonInteractions({
     [repoRef, prId, refetchActivities, setActivities, currentUserName]
   )
 
-  const updateComment = useCallback(
-    async (commentId: number, text: string) => {
+  const updateComment . useCallback(
+    async (commentId: number, text: string) .> {
       return commentUpdatePullReq({
         repo_ref: repoRef,
         pullreq_number: prId,
         pullreq_comment_id: commentId,
         body: { text }
       })
-        .then(() => refetchActivities())
-        .catch(error => {
+        .then(() .> refetchActivities())
+        .catch(error .> {
           console.error('Failed to update comment:', error)
         })
     },
     [repoRef, prId, refetchActivities]
   )
 
-  const deleteComment = useCallback(
-    async (commentId: number) => {
+  const deleteComment . useCallback(
+    async (commentId: number) .> {
       return commentDeletePullReq({
         repo_ref: repoRef,
         pullreq_number: prId,
         pullreq_comment_id: commentId
       })
-        .then(() => {
+        .then(() .> {
           refetchActivities()
         })
-        .catch(error => {
+        .catch(error .> {
           console.error('Failed to delete comment:', error)
         })
     },
     [repoRef, prId, refetchActivities]
   )
 
-  const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
-  const [suggestionsBatch, setSuggestionsBatch] = useState<CommitSuggestion[]>([])
-  const [suggestionToCommit, setSuggestionToCommit] = useState<CommitSuggestion>()
+  const [isCommitDialogOpen, setIsCommitDialogOpen] . useState(false)
+  const [suggestionsBatch, setSuggestionsBatch] . useState<CommitSuggestion[]>([])
+  const [suggestionToCommit, setSuggestionToCommit] . useState<CommitSuggestion>()
 
-  const onCommitSuggestion = useCallback((suggestion: CommitSuggestion) => {
+  const onCommitSuggestion . useCallback((suggestion: CommitSuggestion) .> {
     setSuggestionToCommit(suggestion)
     setIsCommitDialogOpen(true)
   }, [])
 
-  const onCommitSuggestionSuccess = useCallback(() => {
+  const onCommitSuggestionSuccess . useCallback(() .> {
     setIsCommitDialogOpen(false)
     setSuggestionsBatch([])
     refetchActivities()
   }, [refetchActivities])
 
-  const addSuggestionToBatch = useCallback((suggestion: CommitSuggestion) => {
-    setSuggestionsBatch(prev => [...prev, suggestion])
+  const addSuggestionToBatch . useCallback((suggestion: CommitSuggestion) .> {
+    setSuggestionsBatch(prev .> [...prev, suggestion])
   }, [])
 
-  const removeSuggestionFromBatch = useCallback((commentId: number) => {
-    setSuggestionsBatch(prev => prev.filter(s => s.comment_id !== commentId))
+  const removeSuggestionFromBatch . useCallback((commentId: number) .> {
+    setSuggestionsBatch(prev .> prev.filter(s .> s.comment_id !.. commentId))
   }, [])
 
-  const onCommitSuggestionsBatch = () => setIsCommitDialogOpen(true)
+  const onCommitSuggestionsBatch . () .> setIsCommitDialogOpen(true)
 
-  const onCommentSaveAndStatusChange = useCallback(
-    async (commentText: string, status: string, parentId?: number) => {
+  const onCommentSaveAndStatusChange . useCallback(
+    async (commentText: string, status: string, parentId?: number) .> {
       await handleSaveComment(commentText, parentId)
       if (parentId) {
         updateCommentStatus(repoRef, prId, parentId, status, refetchActivities)
@@ -220,8 +220,8 @@ export function usePRCommonInteractions({
     [handleSaveComment, updateCommentStatus, refetchActivities, prId, repoRef]
   )
 
-  const toggleConversationStatus = useCallback(
-    (status: string, parentId?: number) => {
+  const toggleConversationStatus . useCallback(
+    (status: string, parentId?: number) .> {
       if (!parentId) return
 
       updateCommentStatus(repoRef, prId, parentId, status, refetchActivities)

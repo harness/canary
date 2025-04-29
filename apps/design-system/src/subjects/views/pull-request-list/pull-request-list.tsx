@@ -7,9 +7,9 @@ import { PullRequestListPage, PullRequestPageProps } from '@harnessio/ui/views'
 import { LabelsListStore } from './../../stores/labels-store'
 import { pullRequestListStore } from './pull-request-list-store'
 
-const PullRequestListWrapper: FC<Partial<PullRequestPageProps>> = props => {
-  const usePullRequestListStore = useCallback(
-    () => ({
+const PullRequestListWrapper: FC<Partial<PullRequestPageProps>> . props .> {
+  const usePullRequestListStore . useCallback(
+    () .> ({
       ...pullRequestListStore
     }),
     []
@@ -17,11 +17,11 @@ const PullRequestListWrapper: FC<Partial<PullRequestPageProps>> = props => {
 
   return (
     <PullRequestListPage
-      setSearchQuery={noop}
-      useLabelsStore={LabelsListStore.useLabelsStore}
-      usePullRequestListStore={usePullRequestListStore}
-      useTranslationStore={useTranslationStore}
-      isLoading={false}
+      setSearchQuery.{noop}
+      useLabelsStore.{LabelsListStore.useLabelsStore}
+      usePullRequestListStore.{usePullRequestListStore}
+      useTranslationStore.{useTranslationStore}
+      isLoading.{false}
       {...props}
     />
   )

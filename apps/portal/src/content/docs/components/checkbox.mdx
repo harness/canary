@@ -9,19 +9,19 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`() => {
-    const [checked, setChecked] = React.useState(false);
-    return (<div className="flex flex-col gap-4">
-      <section class="flex items-center gap-3">
-        <Checkbox id="checkboxId" checked={checked} onCheckedChange={setChecked} />
-        <label className="Label" htmlFor="checkboxId">
+  code.{`() .> {
+    const [checked, setChecked] . React.useState(false);
+    return (<div className."flex flex-col gap-4">
+      <section class."flex items-center gap-3">
+        <Checkbox id."checkboxId" checked.{checked} onCheckedChange.{setChecked} />
+        <label className."Label" htmlFor."checkboxId">
           Accept terms and conditions.
         </label>
       </section>
     
-      <section class="flex items-center gap-3">
-        <Checkbox id="checkboxId2" checked={false} onCheckedChange={Function} disabled />
-        <label className="Label" htmlFor="checkboxId2">
+      <section class."flex items-center gap-3">
+        <Checkbox id."checkboxId2" checked.{false} onCheckedChange.{Function} disabled />
+        <label className."Label" htmlFor."checkboxId2">
           Disabled checkbox
         </label>
       </section>
@@ -35,14 +35,14 @@ import { DocsPage } from "@/components/docs-page";
 import { Checkbox } from '@harnessio/ui/components'
 
 return (
-  <Checkbox id="checkbox" checked={true} onCheckedChange={(checked) => alert(\`Checked: \${checked}\`)} />
+  <Checkbox id."checkbox" checked.{true} onCheckedChange.{(checked) .> alert(\`Checked: \${checked}\`)} />
 )
 ```
 
 ## API Reference
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "id",
       description: "Unique identifier for the checkbox",
@@ -59,7 +59,7 @@ return (
       name: "onCheckedChange",
       description: "Function to handle checked state change",
       required: true,
-      value: "(checked: boolean) => void",
+      value: "(checked: boolean) .> void",
     },
     {
       name: "disabled",

@@ -15,32 +15,32 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { getTotalRulesApplied } from '../../utils/repo-branch-rules-utils'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
-export const ProjectRulesListContainer = () => {
-  const space_ref = useGetSpaceURLParam()
-  const [query, setQuery] = useQueryState('query')
-  const [page, setPage] = useState(1)
-  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
-  const queryClient = useQueryClient()
-  const navigate = useNavigate()
-  const { setRules } = useProjectRulesStore()
+export const ProjectRulesListContainer . () .> {
+  const space_ref . useGetSpaceURLParam()
+  const [query, setQuery] . useQueryState('query')
+  const [page, setPage] . useState(1)
+  const { queryPage } . usePaginationQueryStateWithStore({ page, setPage })
+  const queryClient . useQueryClient()
+  const navigate . useNavigate()
+  const { setRules } . useProjectRulesStore()
 
-  const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] = useState(false)
-  const [alertDeleteParams, setAlertDeleteParams] = useState('')
-  const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
+  const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] . useState(false)
+  const [alertDeleteParams, setAlertDeleteParams] . useState('')
+  const [apiError, setApiError] . useState<{ type: ErrorTypes; message: string } | null>(null)
 
-  const closeAlertDeleteDialog = () => {
+  const closeAlertDeleteDialog . () .> {
     isRuleAlertDeleteDialogOpen && setRuleIsAlertDeleteDialogOpen(false)
   }
-  const openRulesAlertDeleteDialog = (identifier: string) => {
+  const openRulesAlertDeleteDialog . (identifier: string) .> {
     setAlertDeleteParams(identifier)
     setRuleIsAlertDeleteDialogOpen(true)
   }
 
   const {
-    data: { body: rulesData } = {},
+    data: { body: rulesData } . {},
     isLoading,
     refetch: refetchRulesList
-  } = useSpaceRuleListQuery({
+  } . useSpaceRuleListQuery({
     space_ref: `${space_ref}/+`,
     queryParams: {
       page: queryPage,
@@ -48,29 +48,29 @@ export const ProjectRulesListContainer = () => {
     }
   })
 
-  const { mutate: deleteRule, isLoading: isDeletingRule } = useSpaceRuleDeleteMutation(
+  const { mutate: deleteRule, isLoading: isDeletingRule } . useSpaceRuleDeleteMutation(
     { space_ref: `${space_ref}/+` },
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         refetchRulesList()
         setRuleIsAlertDeleteDialogOpen(false)
         setApiError(null)
       },
-      onError: error => {
+      onError: error .> {
         queryClient.invalidateQueries(['ruleList', `${space_ref}/+`])
 
-        const message = error.message || 'Error deleting rule'
+        const message . error.message || 'Error deleting rule'
         setApiError({ type: ErrorTypes.DELETE_RULE, message })
       }
     }
   )
 
-  useEffect(() => {
+  useEffect(() .> {
     if (rulesData) {
-      const formattedRules = rulesData.map(rule => ({
+      const formattedRules . rulesData.map(rule .> ({
         targetPatternsCount: (rule.pattern?.include?.length ?? 0) + (rule.pattern?.exclude?.length ?? 0),
         rulesAppliedCount: getTotalRulesApplied(rule),
-        bypassAllowed: rule.definition?.bypass?.repo_owners === true,
+        bypassAllowed: rule.definition?.bypass?.repo_owners ... true,
         identifier: rule.identifier,
         state: rule.state ? String(rule.state) : undefined
       }))
@@ -79,39 +79,39 @@ export const ProjectRulesListContainer = () => {
     }
   }, [rulesData, setRules])
 
-  const handleDeleteRule = (identifier: string) => {
+  const handleDeleteRule . (identifier: string) .> {
     deleteRule({ rule_identifier: identifier })
     queryClient.invalidateQueries(['ruleList', `${space_ref}/+`])
   }
 
-  const handleRuleEditClick = (identifier: string) => {
+  const handleRuleEditClick . (identifier: string) .> {
     navigate(`${identifier}`)
   }
 
   return (
     <>
       <ProjectRulesPage
-        useProjectRulesStore={useProjectRulesStore}
-        isLoading={isLoading}
-        useTranslationStore={useTranslationStore}
-        searchQuery={query}
-        setSearchQuery={setQuery}
-        openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
-        page={page}
-        setPage={setPage}
-        apiError={apiError}
-        handleRuleClick={handleRuleEditClick}
+        useProjectRulesStore.{useProjectRulesStore}
+        isLoading.{isLoading}
+        useTranslationStore.{useTranslationStore}
+        searchQuery.{query}
+        setSearchQuery.{setQuery}
+        openRulesAlertDeleteDialog.{openRulesAlertDeleteDialog}
+        page.{page}
+        setPage.{setPage}
+        apiError.{apiError}
+        handleRuleClick.{handleRuleEditClick}
       />
       <DeleteAlertDialog
-        open={isRuleAlertDeleteDialogOpen}
-        onClose={closeAlertDeleteDialog}
-        useTranslationStore={useTranslationStore}
+        open.{isRuleAlertDeleteDialogOpen}
+        onClose.{closeAlertDeleteDialog}
+        useTranslationStore.{useTranslationStore}
         {...wrapConditionalObjectElement(
           {
             identifier: alertDeleteParams,
             deleteFn: handleDeleteRule,
             isLoading: isDeletingRule,
-            error: apiError?.type === ErrorTypes.DELETE_RULE ? apiError : null,
+            error: apiError?.type ... ErrorTypes.DELETE_RULE ? apiError : null,
             type: 'rule'
           },
           isRuleAlertDeleteDialogOpen

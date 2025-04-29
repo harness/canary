@@ -3,8 +3,8 @@ import { RepositoryType } from '@harnessio/ui/views'
 
 import { timeAgoFromEpochTime } from '../../../pages/pipeline-edit/utils/time-utils'
 
-export const transformRepoList = (repoList: RepoRepositoryOutput[]): RepositoryType[] => {
-  return repoList.map(repo => ({
+export const transformRepoList . (repoList: RepoRepositoryOutput[]): RepositoryType[] .> {
+  return repoList.map(repo .> ({
     id: repo.id || 0,
     name: repo.identifier || '',
     description: repo.description || '',

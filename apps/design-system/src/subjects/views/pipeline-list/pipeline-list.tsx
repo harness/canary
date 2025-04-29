@@ -7,30 +7,30 @@ import { CreatePipelineDialog, PipelineListPage, RepoSummaryViewProps, TLinkComp
 
 import { usePipelineListStore } from './pipeline-list.store'
 
-const LinkComponent: TLinkComponent = ({ to, children }) => <Link to={to}>{children}</Link>
+const LinkComponent: TLinkComponent . ({ to, children }) .> <Link to.{to}>{children}</Link>
 
-const PipelineListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
-  const [createPipelineOpen, setCreatePipelineOpen] = useState(false)
+const PipelineListWrapper: FC<Partial<RepoSummaryViewProps>> . () .> {
+  const [createPipelineOpen, setCreatePipelineOpen] . useState(false)
   return (
     <>
       <PipelineListPage
-        usePipelineListStore={usePipelineListStore}
-        useTranslationStore={useTranslationStore}
-        setSearchQuery={noop}
-        isLoading={false}
-        isError={false}
-        handleCreatePipeline={() => setCreatePipelineOpen(true)}
-        LinkComponent={LinkComponent}
+        usePipelineListStore.{usePipelineListStore}
+        useTranslationStore.{useTranslationStore}
+        setSearchQuery.{noop}
+        isLoading.{false}
+        isError.{false}
+        handleCreatePipeline.{() .> setCreatePipelineOpen(true)}
+        LinkComponent.{LinkComponent}
       />
       <CreatePipelineDialog
-        isOpen={createPipelineOpen}
-        onClose={() => setCreatePipelineOpen(false)}
-        onSubmit={() => {
+        isOpen.{createPipelineOpen}
+        onClose.{() .> setCreatePipelineOpen(false)}
+        onSubmit.{() .> {
           setCreatePipelineOpen(false)
-          return new Promise(() => undefined)
+          return new Promise(() .> undefined)
         }}
-        onCancel={() => setCreatePipelineOpen(false)}
-        useCreatePipelineStore={() => ({
+        onCancel.{() .> setCreatePipelineOpen(false)}
+        useCreatePipelineStore.{() .> ({
           isLoadingBranchNames: false,
           branchNames: ['main', 'branch1', 'branch2'],
           defaultBranch: 'main',

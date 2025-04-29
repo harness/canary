@@ -6,7 +6,7 @@ interface Scope {
   projectIdentifier?: string
 }
 
-export type Unknown = any
+export type Unknown . any
 
 interface IMFEContext {
   /**
@@ -30,7 +30,7 @@ interface IMFEContext {
   }>
 }
 
-export const MFEContext = createContext<IMFEContext>({
+export const MFEContext . createContext<IMFEContext>({
   scope: {},
   renderUrl: '',
   customHooks: {},

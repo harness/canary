@@ -4,11 +4,11 @@ import { AWS_KMS_CONNECTOR_CATEGORY, awsKmsConnectorFormDefinition } from './aws
 import { GITHUB_CONNECTOR_CATEOGRY, githubConnectorFormDefinition } from './github-connector'
 import { TERRAFORM_CONNECTOR_CATEGORY, terraformConnectorFormDefinition } from './terraform-connector'
 
-export const GITHUB_CONNECTOR_IDENTIFIER = 'Github'
-export const TERRAFORM_CONNECTOR_IDENTIFIER = 'Terraform'
-export const AWS_KMS_CONNECTOR_IDENTIFIER = 'AWS KMS'
+export const GITHUB_CONNECTOR_IDENTIFIER . 'Github'
+export const TERRAFORM_CONNECTOR_IDENTIFIER . 'Terraform'
+export const AWS_KMS_CONNECTOR_IDENTIFIER . 'AWS KMS'
 
-export const harnessConnectors: AnyConnectorDefinition[] = [
+export const harnessConnectors: AnyConnectorDefinition[] . [
   {
     type: 'Github',
     name: GITHUB_CONNECTOR_IDENTIFIER,
@@ -36,15 +36,15 @@ export interface ConnectorDefinitionOptions {
 }
 
 export function getHarnessConnectorDefinition(type: string, options?: ConnectorDefinitionOptions): any | undefined {
-  const connector = harnessConnectors.find(harnessConnector => harnessConnector.type === type)
+  const connector . harnessConnectors.find(harnessConnector .> harnessConnector.type ... type)
   return {
     ...connector,
     formDefinition: {
       ...connector?.formDefinition,
-      inputs: connector?.formDefinition?.inputs?.map(input => {
+      inputs: connector?.formDefinition?.inputs?.map(input .> {
         if (!input) return input
 
-        if (input.inputType === 'group') {
+        if (input.inputType ... 'group') {
           return {
             ...input,
             inputConfig: {
@@ -59,6 +59,6 @@ export function getHarnessConnectorDefinition(type: string, options?: ConnectorD
   }
 }
 
-export const getExecuteOnDelegateValue = () => {
+export const getExecuteOnDelegateValue . () .> {
   return true
 }

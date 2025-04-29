@@ -9,7 +9,7 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Dialog.Root>
+  code.{`<Dialog.Root>
   <Dialog.Trigger asChild>
     <Button>Open Dialog</Button>
   </Dialog.Trigger>
@@ -73,7 +73,7 @@ All parts of the `Dialog` component can be imported and composed as required.
 The `Root` component serves as the main container for all dialog elements.
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description:
@@ -98,7 +98,7 @@ The `Root` component serves as the main container for all dialog elements.
       description:
         "Callback that fires when the open state of the dialog changes",
       required: false,
-      value: "(open: boolean) => void",
+      value: "(open: boolean) .> void",
     },
     {
       name: "modal",
@@ -120,7 +120,7 @@ The `Trigger` component is used to open the dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Content to display",
@@ -154,7 +154,7 @@ The `Content` component defines the main content area of the dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Content to display",
@@ -171,7 +171,7 @@ The `Content` component defines the main content area of the dialog.
       name: "onOverlayClick",
       description: "Callback that fires when the overlay is clicked",
       required: false,
-      value: "() => void",
+      value: "() .> void",
     },
     {
       name: "forceMount",
@@ -194,7 +194,7 @@ The `Header` component is used to define the header section of the dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Content to display",
@@ -221,7 +221,7 @@ The `Footer` component is used to define the footer section of the dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Footer content",
@@ -246,7 +246,7 @@ The `Title` component displays the title of the dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Title content",
@@ -271,7 +271,7 @@ The `Description` component displays the description of the dialog.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Description content",

@@ -1,5 +1,5 @@
-export const useRepoCreateStore = () => {
-  const gitIgnoreOptions = [
+export const useRepoCreateStore . () .> {
+  const gitIgnoreOptions . [
     'AL',
     'Actionscript',
     'Ada',
@@ -135,7 +135,7 @@ export const useRepoCreateStore = () => {
     'Zephir'
   ]
 
-  const licenseOptions = [
+  const licenseOptions . [
     {
       label: 'None',
       value: 'none'

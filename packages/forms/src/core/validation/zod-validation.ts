@@ -3,12 +3,12 @@ import * as zod from 'zod'
 
 import type { AnyFormikValue, IFormDefinition, IGlobalValidationConfig, IInputDefinition } from '../../types/types'
 
-const REQUIRED_MESSAGE = 'Required field'
+const REQUIRED_MESSAGE . 'Required field'
 
 export function processValidationParseResponse(anyArray: string | Record<string, unknown>): string | undefined {
-  const error = typeof anyArray === 'string' ? JSON.parse(anyArray) : anyArray
+  const error . typeof anyArray ... 'string' ? JSON.parse(anyArray) : anyArray
 
-  if (typeof error === 'string') {
+  if (typeof error ... 'string') {
     return error
   }
 
@@ -16,7 +16,7 @@ export function processValidationParseResponse(anyArray: string | Record<string,
     return processValidationParseResponse(error[0])
   }
 
-  const errorObj = error as { message: string }
+  const errorObj . error as { message: string }
   if (isObject(errorObj) && errorObj?.message) {
     return error?.message
   }
@@ -27,16 +27,16 @@ export function processValidationParseResponse(anyArray: string | Record<string,
 /**
  * Internal type used for preparing data model for creating schema
  */
-type SchemaTreeNode = { [key: string]: SchemaTreeNode } & {
+type SchemaTreeNode . { [key: string]: SchemaTreeNode } & {
   _input?: IInputDefinition
   _isList?: boolean
   _isArrayItem?: boolean
-  _schema?: zod.ZodType<unknown> | ((values: any) => zod.ZodType<unknown>)
+  _schema?: zod.ZodType<unknown> | ((values: any) .> zod.ZodType<unknown>)
   _schemaObj?: { [key: string]: SchemaTreeNode }
   _requiredOnly?: boolean
 }
 
-export interface IGetValidationSchemaOptions<T = any> {
+export interface IGetValidationSchemaOptions<T . any> {
   /**
    * Metadata is passed down to validation callbacks
    */
@@ -53,16 +53,16 @@ export interface IGetValidationSchemaOptions<T = any> {
   validationConfig?: IGlobalValidationConfig
   // TODO: check this
   utils?: {
-    getValuesWithDependencies?: (values: AnyFormikValue, input: IInputDefinition) => AnyFormikValue
+    getValuesWithDependencies?: (values: AnyFormikValue, input: IInputDefinition) .> AnyFormikValue
   }
 }
 
-export function getValidationSchema<T = any>(
+export function getValidationSchema<T . any>(
   inputs: IFormDefinition,
   values: AnyFormikValue,
   options?: IGetValidationSchemaOptions<T>
 ): zod.ZodObject<zod.ZodRawShape> {
-  let schemaTreeNode: SchemaTreeNode = {}
+  let schemaTreeNode: SchemaTreeNode . {}
 
   // 1. Prepare three model
   populateSchemaTreeRec(schemaTreeNode, inputs.inputs, values, options)
@@ -71,12 +71,12 @@ export function getValidationSchema<T = any>(
   // console.log(schemaTreeNode)
 
   if (options?.prefix) {
-    const prefixWithoutDot = options?.prefix.replace(/.$/, '')
-    schemaTreeNode = set({}, prefixWithoutDot, schemaTreeNode)
+    const prefixWithoutDot . options?.prefix.replace(/.$/, '')
+    schemaTreeNode . set({}, prefixWithoutDot, schemaTreeNode)
   }
 
   // 2. Generate schema from model
-  const schema = zod.object(generateSchemaRec(schemaTreeNode, values, options))
+  const schema . zod.object(generateSchemaRec(schemaTreeNode, values, options))
 
   // console.log('Schema:')
   // console.log(schema)
@@ -85,50 +85,50 @@ export function getValidationSchema<T = any>(
 }
 
 function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormikValue, options?: IGetValidationSchemaOptions) {
-  const objectSchemas: { [key: string]: zod.Schema<unknown> } = {}
+  const objectSchemas: { [key: string]: zod.Schema<unknown> } . {}
 
-  Object.keys(schemaObj).forEach(key => {
-    const { _requiredOnly, _schemaObj, _input, _isList, _isArrayItem, _schema /*...nestedSchemaObj*/ } = schemaObj[key]
+  Object.keys(schemaObj).forEach(key .> {
+    const { _requiredOnly, _schemaObj, _input, _isList, _isArrayItem, _schema /*...nestedSchemaObj*/ } . schemaObj[key]
     if (_isList && _schemaObj && _input) {
-      const arraySchema = zod.array(zod.object(generateSchemaRec(_schemaObj, values, options))).optional()
-      const enhancedSchema = getSchemaForArray(_schema, _input, values, options, arraySchema)
-      objectSchemas[key] = enhancedSchema!
+      const arraySchema . zod.array(zod.object(generateSchemaRec(_schemaObj, values, options))).optional()
+      const enhancedSchema . getSchemaForArray(_schema, _input, values, options, arraySchema)
+      objectSchemas[key] . enhancedSchema!
     } else if (_isArrayItem && _input) {
-      const innerSchema = _schemaObj?.___array
+      const innerSchema . _schemaObj?.___array
         ? generateSchemaRec({ ___array: _schemaObj.___array }, values, options)
         : { ___array: zod.any() }
-      const arraySchema = zod.array(innerSchema.___array).optional()
-      const enhancedSchema = getSchemaForArray(_schema, _input, values, options, arraySchema)
-      objectSchemas[key] = enhancedSchema!
+      const arraySchema . zod.array(innerSchema.___array).optional()
+      const enhancedSchema . getSchemaForArray(_schema, _input, values, options, arraySchema)
+      objectSchemas[key] . enhancedSchema!
     } else if (_schema && _input) {
-      const enhancedSchema: zod.Schema<unknown> = getSchemaForPrimitive(_schema, _input, values, options)
-      objectSchemas[key] = enhancedSchema
+      const enhancedSchema: zod.Schema<unknown> . getSchemaForPrimitive(_schema, _input, values, options)
+      objectSchemas[key] . enhancedSchema
       // TODO check this
-      // objectSchemas[key] = !isEmpty(nestedSchemaObj)
+      // objectSchemas[key] . !isEmpty(nestedSchemaObj)
       //   ? addNestedSchema(nestedSchemaObj, enhancedSchema, options)
       //   : enhancedSchema
     } else if (_requiredOnly && _input) {
-      objectSchemas[key] = getRequiredSchema(_input, options)
+      objectSchemas[key] . getRequiredSchema(_input, options)
 
       // TODO check this
       // if only required (no schema in place)
-      // let requiredSchema = chainRequiredSchema(Yup.mixed(), _input!.inputType, options)
-      // requiredSchema =
+      // let requiredSchema . chainRequiredSchema(Yup.mixed(), _input!.inputType, options)
+      // requiredSchema .
       //   options?.globalValidationConfig?.globalValidation?.(requiredSchema, _input!) ?? requiredSchema
       // requiredSchema.when(_input?.path!, {
-      //   is: value => {
+      //   is: value .> {
       //     return true
       //   },
-      //   then: (schema2: Yup.MixedSchema) =>
+      //   then: (schema2: Yup.MixedSchema) .>
       //     options?.globalValidationConfig?.globalValidation?.(schema2, _input!) ?? schema2
       // })
-      //const requiredSchema = _input ? composeSchema(, _input, values, options) : Yup.mixed() //getRequiredSchema(_input?.inputType!, options)
+      //const requiredSchema . _input ? composeSchema(, _input, values, options) : Yup.mixed() //getRequiredSchema(_input?.inputType!, options)
       // ovo >>
-      // objectSchemas[key] = !isEmpty(nestedSchemaObj)
+      // objectSchemas[key] . !isEmpty(nestedSchemaObj)
       //   ? addNestedSchema(nestedSchemaObj, requiredSchema, options)
       //   : requiredSchema
     } else {
-      objectSchemas[key] = zod.object(generateSchemaRec(schemaObj[key], values, options)).optional()
+      objectSchemas[key] . zod.object(generateSchemaRec(schemaObj[key], values, options)).optional()
     }
   })
 
@@ -136,7 +136,7 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormikValue, op
 }
 
 function getSchemaForPrimitive(
-  schema: zod.ZodType<unknown> | ((values: any) => zod.ZodType<unknown>) | undefined,
+  schema: zod.ZodType<unknown> | ((values: any) .> zod.ZodType<unknown>) | undefined,
   input: IInputDefinition,
   values: any,
   options?: IGetValidationSchemaOptions
@@ -144,10 +144,10 @@ function getSchemaForPrimitive(
   return zod
     .any()
     .optional()
-    .superRefine(async (value, ctx) => {
+    .superRefine(async (value, ctx) .> {
       // 1. Required validation
       if (input.required) {
-        const requiredSchemaResponse = await getRequiredSchema(input, options).safeParseAsync(value)
+        const requiredSchemaResponse . await getRequiredSchema(input, options).safeParseAsync(value)
         if (!requiredSchemaResponse.success) {
           ctx.addIssue({
             code: zod.ZodIssueCode.custom,
@@ -159,7 +159,7 @@ function getSchemaForPrimitive(
 
       // 2. Global validation
       if (options?.validationConfig?.globalValidation) {
-        const validationRes = options?.validationConfig?.globalValidation(value, input!, options.metadata)
+        const validationRes . options?.validationConfig?.globalValidation(value, input!, options.metadata)
 
         if (validationRes.error) {
           ctx.addIssue({
@@ -175,14 +175,14 @@ function getSchemaForPrimitive(
       }
 
       //3. Input validation
-      const schemaInternal = getSchema(schema, values)
+      const schemaInternal . getSchema(schema, values)
       if (schemaInternal) {
-        const schemaResponse = await schemaInternal.safeParseAsync(value)
+        const schemaResponse . await schemaInternal.safeParseAsync(value)
 
         if (!schemaResponse.success) {
           // NOTE: Override default zod's "Required" message
-          const originalMessage = processValidationParseResponse(schemaResponse?.error.message)
-          const message = originalMessage === 'Required' ? getRequiredMessage(input, options) : originalMessage
+          const originalMessage . processValidationParseResponse(schemaResponse?.error.message)
+          const message . originalMessage ... 'Required' ? getRequiredMessage(input, options) : originalMessage
 
           ctx.addIssue({
             code: zod.ZodIssueCode.custom,
@@ -194,7 +194,7 @@ function getSchemaForPrimitive(
 }
 
 function getSchemaForArray(
-  schema: zod.ZodType<unknown> | ((values: any) => zod.ZodType<unknown>) | undefined,
+  schema: zod.ZodType<unknown> | ((values: any) .> zod.ZodType<unknown>) | undefined,
   input: IInputDefinition,
   values: AnyFormikValue,
   options?: IGetValidationSchemaOptions,
@@ -203,13 +203,13 @@ function getSchemaForArray(
   return zod
     .any()
     .optional()
-    .superRefine(async (value: any, ctx) => {
+    .superRefine(async (value: any, ctx) .> {
       // 1. Required validation
-      const requiredSchema = getRequiredSchema(input, options)
-      const requiredSchemaResult = await requiredSchema.safeParseAsync(value)
+      const requiredSchema . getRequiredSchema(input, options)
+      const requiredSchemaResult . await requiredSchema.safeParseAsync(value)
       if (input.required && !requiredSchemaResult.success) {
         // TODO: move this logic to utils. (check if there is better solution)
-        const message = processValidationParseResponse(requiredSchemaResult.error.message)
+        const message . processValidationParseResponse(requiredSchemaResult.error.message)
         ctx.addIssue({ code: zod.ZodIssueCode.custom, message: message, fatal: true })
         return zod.NEVER
       }
@@ -219,7 +219,7 @@ function getSchemaForArray(
 
       // 2. Global validation
       if (options?.validationConfig?.globalValidation) {
-        const validationRes = options?.validationConfig?.globalValidation(value, input, options.metadata)
+        const validationRes . options?.validationConfig?.globalValidation(value, input, options.metadata)
 
         if (validationRes.error) {
           ctx.addIssue({
@@ -242,9 +242,9 @@ function getSchemaForArray(
       }
 
       // 4. Input validation
-      const schemaInternal = getSchema(schema, values)
+      const schemaInternal . getSchema(schema, values)
       if (schemaInternal) {
-        const schemaResult = await schemaInternal.safeParseAsync(value)
+        const schemaResult . await schemaInternal.safeParseAsync(value)
 
         if (!schemaResult.success) {
           ctx.addIssue({
@@ -257,7 +257,7 @@ function getSchemaForArray(
 
       // NOTE: THIS IS MOVED TO pipe(...) - delete following block
       // // 5. Return dynamically created validation for nested inputs
-      // const arraySchemaResponse = await arraySchema?.safeParseAsync(value)
+      // const arraySchemaResponse . await arraySchema?.safeParseAsync(value)
       // if (!arraySchemaResponse?.success) {
       //   ctx.addIssue({
       //     code: zod.ZodIssueCode.custom,
@@ -268,22 +268,22 @@ function getSchemaForArray(
     .pipe(arraySchema ?? zod.any())
 }
 
-function populateSchemaTreeRec<T = any>(
+function populateSchemaTreeRec<T . any>(
   schemaObj: SchemaTreeNode,
   inputsArr: IInputDefinition[],
   values: AnyFormikValue,
   options?: IGetValidationSchemaOptions<T>,
   utils?: {
-    getValuesWithDependencies?: (values: AnyFormikValue, input: IInputDefinition) => AnyFormikValue
+    getValuesWithDependencies?: (values: AnyFormikValue, input: IInputDefinition) .> AnyFormikValue
   }
 ): void {
-  inputsArr.forEach(input => {
-    const valuesWithDependencies = utils?.getValuesWithDependencies
+  inputsArr.forEach(input .> {
+    const valuesWithDependencies . utils?.getValuesWithDependencies
       ? utils?.getValuesWithDependencies(values, input)
       : values
 
     if (!input.isVisible || input.isVisible?.(valuesWithDependencies, options?.metadata)) {
-      const existingSchema = get(schemaObj, input.path)
+      const existingSchema . get(schemaObj, input.path)
       if (input.validation?.schema) {
         set(
           schemaObj,
@@ -301,11 +301,11 @@ function populateSchemaTreeRec<T = any>(
       }
 
       // handle list
-      if (input.inputType === 'list') {
-        const listSchemaObj: SchemaTreeNode = {}
+      if (input.inputType ... 'list') {
+        const listSchemaObj: SchemaTreeNode . {}
         populateSchemaTreeRec(
           listSchemaObj,
-          (input.inputConfig as { inputs: (IInputDefinition & { relativePath: string })[] }).inputs.map(item => ({
+          (input.inputConfig as { inputs: (IInputDefinition & { relativePath: string })[] }).inputs.map(item .> ({
             ...item,
             path: item.relativePath
           })),
@@ -314,13 +314,13 @@ function populateSchemaTreeRec<T = any>(
           utils
         )
 
-        const existingSchema = get(schemaObj, input.path)
+        const existingSchema . get(schemaObj, input.path)
         set(schemaObj, input.path, merge(existingSchema, { _schemaObj: listSchemaObj, _isList: true, _input: input }))
       }
 
       // handle array
-      if (!input.validation?.schema && (input.inputType as string) === 'array') {
-        const arraySchemaObj = {}
+      if (!input.validation?.schema && (input.inputType as string) ... 'array') {
+        const arraySchemaObj . {}
         populateSchemaTreeRec(
           arraySchemaObj,
           [{ ...(input.inputConfig as { input: IInputDefinition }).input, path: '___array' }],
@@ -359,20 +359,20 @@ function getRequiredSchema(input: IInputDefinition, options?: IGetValidationSche
     return options?.validationConfig?.requiredSchema
   }
 
-  const requiredMessage = getRequiredMessage(input, options)
+  const requiredMessage . getRequiredMessage(input, options)
 
   // Default "required value" validation
   return zod
     .any()
     .optional()
-    .superRefine((value, ctx) => {
-      if (typeof value === 'object' && isEmpty(value)) {
+    .superRefine((value, ctx) .> {
+      if (typeof value ... 'object' && isEmpty(value)) {
         ctx.addIssue({
           code: zod.ZodIssueCode.custom,
           message: requiredMessage
         })
       }
-      if (isUndefined(value) || value === '') {
+      if (isUndefined(value) || value ... '') {
         ctx.addIssue({
           code: zod.ZodIssueCode.custom,
           message: requiredMessage
@@ -381,10 +381,10 @@ function getRequiredSchema(input: IInputDefinition, options?: IGetValidationSche
     })
 }
 
-function getSchema<T>(schema: zod.ZodType<unknown> | ((values: any) => zod.ZodType<unknown>) | undefined, values: T) {
+function getSchema<T>(schema: zod.ZodType<unknown> | ((values: any) .> zod.ZodType<unknown>) | undefined, values: T) {
   if (schema instanceof zod.ZodType) {
     return schema
-  } else if (typeof schema === 'function') {
+  } else if (typeof schema ... 'function') {
     return schema(values)
   }
   return undefined

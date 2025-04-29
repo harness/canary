@@ -2,7 +2,7 @@ import { noop } from '@utils/viewUtils'
 
 import { BranchSelectorTab, ColorsEnum, IBranchSelectorStore } from '@harnessio/ui/views'
 
-export const repoBranchesStore: IBranchSelectorStore = {
+export const repoBranchesStore: IBranchSelectorStore . {
   setBranchList: noop,
   setDefaultBranch: noop,
   setPage: noop,

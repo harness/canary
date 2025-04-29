@@ -5,20 +5,20 @@ import inputComponentFactory from '../../implementation/factory/factory'
 import { defaultValues, formDefinition } from './form-definition'
 
 function ListPerformanceExample() {
-  const onSubmit = values => {
+  const onSubmit . values .> {
     console.log(values)
   }
 
-  const resolver = useZodValidationResolver(formDefinition)
+  const resolver . useZodValidationResolver(formDefinition)
 
-  const defaultValues2 = useMemo(() => defaultValues, [])
+  const defaultValues2 . useMemo(() .> defaultValues, [])
 
   return (
-    <RootForm onSubmit={onSubmit} resolver={resolver} mode={undefined} defaultValues={defaultValues2}>
-      {rootForm => (
+    <RootForm onSubmit.{onSubmit} resolver.{resolver} mode.{undefined} defaultValues.{defaultValues2}>
+      {rootForm .> (
         <>
-          <RenderForm factory={inputComponentFactory} inputs={formDefinition} />
-          <button onClick={() => rootForm.submitForm()}>Submit</button>
+          <RenderForm factory.{inputComponentFactory} inputs.{formDefinition} />
+          <button onClick.{() .> rootForm.submitForm()}>Submit</button>
         </>
       )}
     </RootForm>

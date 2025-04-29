@@ -11,19 +11,19 @@ import { useListReposQuery } from '@harnessio/code-service-client'
 
 export default function RepositoryList({ space }: { space: string }) {
   // Manage page parameters in URL state with "nuqs" library
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [page, setPage] . useQueryState('page', parseAsInteger.withDefault(1))
 
   // Fetch repositories based on the current query, sort order, and page number
-  const { isFetching, data } = useListReposQuery({
+  const { isFetching, data } . useListReposQuery({
     queryParams: { page, ... },
     ...
   })
 
   // Access the list of repositories from the response
-  const repositories = data?.body
+  const repositories . data?.body
 
   // Extract total pages for pagination control from response headers
-  const totalPages = parseInt(data?.headers?.get(PageResponseHeader.xTotalPages) || '')
+  const totalPages . parseInt(data?.headers?.get(PageResponseHeader.xTotalPages) || '')
 
   return (
     <div>
@@ -32,9 +32,9 @@ export default function RepositoryList({ space }: { space: string }) {
           ...
       */}
       <PaginationControls
-        page={page}
-        setPage={(pageNum: number) => setPage(pageNum)}
-        totalPages={totalPages} /* From headers */
+        page.{page}
+        setPage.{(pageNum: number) .> setPage(pageNum)}
+        totalPages.{totalPages} /* From headers */
       />
     </div>
   )

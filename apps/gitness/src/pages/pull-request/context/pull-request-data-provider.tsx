@@ -23,13 +23,13 @@ import { usePRChecksDecision } from '../hooks/usePRChecksDecision'
 import { usePullRequestDataStore } from '../stores/pull-request-store'
 import { extractSpecificViolations } from '../utils'
 
-const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  const spaceURL = useGetSpaceURLParam() ?? ''
-  const repoRef = useGetRepoRef()
-  const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
-  const pullRequestTab = useGetPullRequestTab({ spaceId, repoId, pullRequestId })
-  const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
-  const store = usePullRequestDataStore()
+const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> . ({ children }) .> {
+  const spaceURL . useGetSpaceURLParam() ?? ''
+  const repoRef . useGetRepoRef()
+  const { pullRequestId, spaceId, repoId } . useParams<PathParams>()
+  const pullRequestTab . useGetPullRequestTab({ spaceId, repoId, pullRequestId })
+  const { data: { body: repoMetadata } . {} } . useFindRepositoryQuery({ repo_ref: repoRef })
+  const store . usePullRequestDataStore()
   const {
     pullReqMetadata,
     dryMerge,
@@ -43,34 +43,34 @@ const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement
     setRepoMetadata,
     setPullReqCommits,
     pullReqCommits
-  } = store
+  } . store
 
   const {
-    data: { body: pullReqData } = {},
+    data: { body: pullReqData } . {},
     error: pullReqError,
     isFetching: pullReqLoading,
     refetch: refetchPullReq
-  } = useGetPullReqQuery({
+  } . useGetPullReqQuery({
     repo_ref: repoRef,
     pullreq_number: Number(pullRequestId),
     queryParams: {}
   })
 
   const {
-    data: { body: activities } = {},
+    data: { body: activities } . {},
     isFetching: activitiesLoading,
     error: activitiesError,
     refetch: refetchActivities
-  } = useListPullReqActivitiesQuery({
+  } . useListPullReqActivitiesQuery({
     repo_ref: repoRef,
     pullreq_number: Number(pullRequestId),
     queryParams: {}
   })
   const {
-    data: { body: commits } = {},
+    data: { body: commits } . {},
     error: commitsError,
     refetch: refetchCommits
-  } = useListCommitsQuery({
+  } . useListCommitsQuery({
     queryParams: {
       limit: 500,
       git_ref: normalizeGitRef(pullReqData?.source_sha),
@@ -78,10 +78,10 @@ const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement
     },
     repo_ref: repoRef
   })
-  const pullReqChecksDecision = usePRChecksDecision({ repoMetadata, pullReqMetadata: pullReqData })
-  const handleEvent = useCallback(
-    (data: TypesPullReq) => {
-      if (data && String(data?.number) === pullRequestId) {
+  const pullReqChecksDecision . usePRChecksDecision({ repoMetadata, pullReqMetadata: pullReqData })
+  const handleEvent . useCallback(
+    (data: TypesPullReq) .> {
+      if (data && String(data?.number) ... pullRequestId) {
         refetchPullReq()
       }
     },
@@ -93,18 +93,18 @@ const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement
     onEvent: handleEvent,
     shouldRun: !!(spaceURL && pullRequestId) // Ensure shouldRun is true only when space and pullRequestId are valid
   })
-  useEffect(() => {
+  useEffect(() .> {
     if (repoMetadata) {
       setRepoMetadata(repoMetadata as RepoRepositoryOutput)
     }
   }, [repoMetadata, setRepoMetadata])
-  useEffect(() => {
+  useEffect(() .> {
     if (pullReqData && !isEqual(pullReqMetadata, pullReqData)) {
       if (
         !pullReqMetadata ||
         (pullReqMetadata &&
-          (pullReqMetadata.merge_base_sha !== pullReqData.merge_base_sha ||
-            pullReqMetadata.source_sha !== pullReqData.source_sha))
+          (pullReqMetadata.merge_base_sha !.. pullReqData.merge_base_sha ||
+            pullReqMetadata.source_sha !.. pullReqData.source_sha))
       ) {
         refetchCommits()
       }
@@ -126,8 +126,8 @@ const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement
     refetchCommits
   ])
 
-  useEffect(() => {
-    const hasChanges =
+  useEffect(() .> {
+    const hasChanges .
       !isEqual(store.pullReqMetadata, pullReqData) ||
       !isEqual(store.pullReqStats, pullReqData?.stats) ||
       !isEqual(store.pullReqCommits, commits) ||
@@ -148,7 +148,7 @@ const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement
         refetchActivities,
         refetchCommits,
         refetchPullReq,
-        retryOnErrorFunc: () => {
+        retryOnErrorFunc: () .> {
           if (pullReqError) {
             refetchPullReq()
           } else if (commitsError) {
@@ -184,18 +184,18 @@ const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement
     setResolvedCommentArr
   ])
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (pullReqMetadata?.source_sha && pullRequestTab === PullRequestTab.CONVERSATION && repoRef) {
+  useEffect(() .> {
+    const intervalId . setInterval(() .> {
+      if (pullReqMetadata?.source_sha && pullRequestTab ... PullRequestTab.CONVERSATION && repoRef) {
         dryMerge()
       }
     }, 10000) // Poll every 10 seconds
 
-    return () => clearInterval(intervalId)
+    return () .> clearInterval(intervalId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pullReqMetadata?.source_sha, pullRequestTab, repoRef])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (repoRef && pullReqData?.source_sha) {
       // store.updateState({ prPanelData: { ...prPanelData, PRStateLoading: true } })
       dryMerge()
@@ -203,12 +203,12 @@ const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [repoRef, pullReqData?.source_sha, pullRequestTab])
 
-  useEffect(() => {
-    const resolvedComments = prPanelData.requiresCommentApproval && !prPanelData.resolvedCommentArr?.params
+  useEffect(() .> {
+    const resolvedComments . prPanelData.requiresCommentApproval && !prPanelData.resolvedCommentArr?.params
     if (resolvedComments) {
       setCommentsInfoData({ header: 'All comments are resolved', content: undefined, status: 'success' })
     } else {
-      const unresolvedCount = prPanelData.resolvedCommentArr?.params || 0 // Ensure a default value
+      const unresolvedCount . prPanelData.resolvedCommentArr?.params || 0 // Ensure a default value
 
       setCommentsInfoData({
         header: 'Unresolved comments',
@@ -227,15 +227,15 @@ const PullRequestDataProviderV1: FC<PropsWithChildren<HTMLAttributes<HTMLElement
     setResolvedCommentArr,
     prPanelData.ruleViolationArr
   ])
-  useEffect(() => {
+  useEffect(() .> {
     if (commits && !isEqual(commits, pullReqCommits)) {
       setPullReqCommits(commits)
     }
   }, [commits, pullReqCommits, setPullReqCommits])
-  useEffect(() => {
-    const ruleViolationArr = prPanelData.ruleViolationArr
+  useEffect(() .> {
+    const ruleViolationArr . prPanelData.ruleViolationArr
     if (ruleViolationArr) {
-      const requireResCommentRule = extractSpecificViolations(ruleViolationArr, 'pullreq.comments.require_resolve_all')
+      const requireResCommentRule . extractSpecificViolations(ruleViolationArr, 'pullreq.comments.require_resolve_all')
       if (requireResCommentRule) {
         setResolvedCommentArr(requireResCommentRule[0])
       }

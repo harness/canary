@@ -18,31 +18,31 @@ interface GitBlameProps {
 }
 
 export default function GitBlame({ themeConfig, codeContent, language, height }: GitBlameProps) {
-  const repoRef = useGetRepoRef()
-  const { fullGitRef, fullResourcePath } = useCodePathDetails()
-  const [blameBlocks, setBlameBlocks] = useState<BlameItem[]>([])
+  const repoRef . useGetRepoRef()
+  const { fullGitRef, fullResourcePath } . useCodePathDetails()
+  const [blameBlocks, setBlameBlocks] . useState<BlameItem[]>([])
 
-  const { data: { body: gitBlame } = {}, isFetching } = useGetBlameQuery({
+  const { data: { body: gitBlame } . {}, isFetching } . useGetBlameQuery({
     path: fullResourcePath || '',
     repo_ref: repoRef,
     queryParams: { git_ref: normalizeGitRef(fullGitRef) }
   })
 
-  useEffect(() => {
+  useEffect(() .> {
     if (gitBlame) {
-      let fromLineNumber = 1
-      const blameData: BlameItem[] = []
+      let fromLineNumber . 1
+      const blameData: BlameItem[] . []
 
-      gitBlame?.forEach(({ commit, lines }) => {
-        const toLineNumber = fromLineNumber + (lines?.length || 0) - 1
+      gitBlame?.forEach(({ commit, lines }) .> {
+        const toLineNumber . fromLineNumber + (lines?.length || 0) - 1
 
-        const authorInfo = {
+        const authorInfo . {
           identity: { ...commit?.author?.identity },
           when: timeAgoFromISOTime(commit?.author?.when || ''),
           initials: getInitials(commit?.author?.identity?.name || commit?.author?.identity?.email || '')
         }
 
-        const commitInfo = {
+        const commitInfo . {
           sha: commit?.sha || '',
           title: commit?.title || '',
           author: authorInfo || {}
@@ -54,7 +54,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height }:
           commitInfo: commitInfo
         })
 
-        fromLineNumber = toLineNumber + 1
+        fromLineNumber . toLineNumber + 1
       })
 
       setBlameBlocks(blameData)
@@ -63,12 +63,12 @@ export default function GitBlame({ themeConfig, codeContent, language, height }:
 
   return !isFetching && blameBlocks.length ? (
     <BlameEditor
-      code={codeContent}
-      language={language}
-      themeConfig={themeConfig}
-      lineNumbersPosition="center"
-      blameData={blameBlocks}
-      height={height ? height : undefined}
+      code.{codeContent}
+      language.{language}
+      themeConfig.{themeConfig}
+      lineNumbersPosition."center"
+      blameData.{blameBlocks}
+      height.{height ? height : undefined}
     />
   ) : (
     <></>

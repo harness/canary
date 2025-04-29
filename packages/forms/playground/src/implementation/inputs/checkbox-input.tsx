@@ -9,24 +9,24 @@ export interface CheckboxInputConfig extends IInputDefinition {
 }
 
 function CheckboxInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
-  const { readonly, path, input } = props
-  const { label = '', required } = input
+  const { readonly, path, input } . props
+  const { label . '', required } . input
 
-  const { field } = useController({
+  const { field } . useController({
     name: path
   })
 
   return (
     <InputWrapper>
-      <InputLabel label={label} required={required} />
-      <input type="checkbox" {...field} disabled={readonly} tabIndex={0} />
-      <InputError path={path} />
+      <InputLabel label.{label} required.{required} />
+      <input type."checkbox" {...field} disabled.{readonly} tabIndex.{0} />
+      <InputError path.{path} />
     </InputWrapper>
   )
 }
 
 export class CheckboxInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.checkbox
+  public internalType . InputType.checkbox
 
   renderComponent(props: InputProps<AnyFormikValue, CheckboxInputConfig>): JSX.Element {
     return <CheckboxInputInternal {...props} />

@@ -14,15 +14,15 @@ export interface AppViewWrapperProps {
   childrenWrapperClassName?: string
 }
 
-export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
+export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> . ({
   children,
   breadcrumbs,
   childrenWrapperClassName,
-  asChild = false
-}) => {
-  const [showMoreMenu, setShowMoreMenu] = useState(false)
-  const [showSettingsMenu, setShowSettingsMenu] = useState(false)
-  const [pinnedMenu, setPinnedMenu] = useState<NavbarItemType[]>([
+  asChild . false
+}) .> {
+  const [showMoreMenu, setShowMoreMenu] . useState(false)
+  const [showSettingsMenu, setShowSettingsMenu] . useState(false)
+  const [pinnedMenu, setPinnedMenu] . useState<NavbarItemType[]>([
     {
       id: 0,
       iconName: 'repositories-gradient',
@@ -67,59 +67,59 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
       to: '/developer/insights'
     }
   ])
-  const [recentMenu] = useState<NavbarItemType[]>([])
-  const { moreMenu, settingsMenu } = useRootViewWrapperStore()
+  const [recentMenu] . useState<NavbarItemType[]>([])
+  const { moreMenu, settingsMenu } . useRootViewWrapperStore()
 
-  const setPinned = useCallback((item: NavbarItemType, pin: boolean) => {
-    setPinnedMenu(current => (pin ? [...current, item] : current.filter(pinnedItem => pinnedItem !== item)))
+  const setPinned . useCallback((item: NavbarItemType, pin: boolean) .> {
+    setPinnedMenu(current .> (pin ? [...current, item] : current.filter(pinnedItem .> pinnedItem !.. item)))
   }, [])
 
-  const onToggleMoreMenu = useCallback(() => {
+  const onToggleMoreMenu . useCallback(() .> {
     setShowSettingsMenu(false)
-    setShowMoreMenu(current => !current)
+    setShowMoreMenu(current .> !current)
   }, [])
 
-  const onToggleSettingsMenu = useCallback(() => {
+  const onToggleSettingsMenu . useCallback(() .> {
     setShowMoreMenu(false)
-    setShowSettingsMenu(current => !current)
+    setShowSettingsMenu(current .> !current)
   }, [])
 
   return (
     <Routes>
       <Route
-        path="*"
-        element={
+        path."*"
+        element.{
           <Sidebar.Provider>
             <SidebarView
-              showMoreMenu={showMoreMenu}
-              showSettingMenu={showSettingsMenu}
-              handleMoreMenu={onToggleMoreMenu}
-              handleSettingsMenu={onToggleSettingsMenu}
-              currentUser={undefined}
-              handleCustomNav={noop}
-              handleLogOut={noop}
-              recentMenuItems={recentMenu}
-              pinnedMenuItems={pinnedMenu}
-              handleChangePinnedMenuItem={setPinned}
-              handleRemoveRecentMenuItem={noop}
-              useTranslationStore={useTranslationStore}
+              showMoreMenu.{showMoreMenu}
+              showSettingMenu.{showSettingsMenu}
+              handleMoreMenu.{onToggleMoreMenu}
+              handleSettingsMenu.{onToggleSettingsMenu}
+              currentUser.{undefined}
+              handleCustomNav.{noop}
+              handleLogOut.{noop}
+              recentMenuItems.{recentMenu}
+              pinnedMenuItems.{pinnedMenu}
+              handleChangePinnedMenuItem.{setPinned}
+              handleRemoveRecentMenuItem.{noop}
+              useTranslationStore.{useTranslationStore}
             />
             <Sidebar.Inset>
               {breadcrumbs}
-              <MainContentLayout className={childrenWrapperClassName} withBreadcrumbs>
+              <MainContentLayout className.{childrenWrapperClassName} withBreadcrumbs>
                 <Outlet />
               </MainContentLayout>
-              <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />
+              <MoreSubmenu showMoreMenu.{showMoreMenu} handleMoreMenu.{onToggleMoreMenu} items.{moreMenu} />
               <SettingsMenu
-                showSettingMenu={showSettingsMenu}
-                handleSettingsMenu={onToggleSettingsMenu}
-                items={settingsMenu}
+                showSettingMenu.{showSettingsMenu}
+                handleSettingsMenu.{onToggleSettingsMenu}
+                items.{settingsMenu}
               />
             </Sidebar.Inset>
           </Sidebar.Provider>
         }
       >
-        {asChild ? children : <Route path="*" element={children} />}
+        {asChild ? children : <Route path."*" element.{children} />}
       </Route>
     </Routes>
   )

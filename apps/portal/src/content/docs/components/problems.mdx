@@ -9,17 +9,17 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Problems
-  problems={[
+  code.{`<Problems
+  problems.{[
     { message: 'Error message', position: { row: 1, column: 5 }, severity: 'error', action: 'Debug' },
     { message: 'Warning message', position: { row: 2, column: 10 }, severity: 'warning', action: <Button>Check</Button> },
     { message: 'Info message', position: { row: 3, column: 15 }, severity: 'info' }
   ]}
-  onClick={(problem) => console.log(problem)}
+  onClick.{(problem) .> console.log(problem)}
 />`}
 />
 
-<DocsPage.ComponentExample client:only code={`<NoProblemsFound />`} />
+<DocsPage.ComponentExample client:only code.{`<NoProblemsFound />`} />
 
 ## Usage
 
@@ -31,12 +31,12 @@ import { Problems, NoProblemsFound } from '@harnessio/ui/components'
 return (
   <>
     <Problems
-      problems={[
+      problems.{[
         { message: 'Error message', position: { row: 1, column: 5 }, severity: 'error' },
         { message: 'Warning message', position: { row: 2, column: 10 }, severity: 'warning' },
         { message: 'Info message', position: { row: 3, column: 15 }, severity: 'info' }
       ]}
-      onClick={(problem) => console.log(problem)}
+      onClick.{(problem) .> console.log(problem)}
     />
 
     <NoProblemsFound />
@@ -48,7 +48,7 @@ return (
 
 ```
 <Problems
-  problems={[
+  problems.{[
     // Array of problems to display
     {
       message: "...", // Problem message
@@ -60,7 +60,7 @@ return (
       severity: "...", // Severity of the problem ('error', 'warning', 'info')
     },
   ]}
-  onClick={handleClick} // Function to call when a problem is clicked
-  selectedProblemIdx={0} // [OPTIONAL] Index of the selected problem for controlled mode
+  onClick.{handleClick} // Function to call when a problem is clicked
+  selectedProblemIdx.{0} // [OPTIONAL] Index of the selected problem for controlled mode
 />
 ```

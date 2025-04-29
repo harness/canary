@@ -1,9 +1,9 @@
 import { NodeProps } from './nodes'
 import { AnyNodeInternal, ParallelNodeInternalType, SerialNodeInternalType } from './nodes-internal'
 
-export type ContainerNodeType = 'leaf' | 'serial' | 'parallel'
+export type ContainerNodeType . 'leaf' | 'serial' | 'parallel'
 
-export interface ContainerNodeProps<CONTAINER_NODE = AnyNodeInternal> extends NodeProps {
+export interface ContainerNodeProps<CONTAINER_NODE . AnyNodeInternal> extends NodeProps {
   /* node itself :) */
   node: CONTAINER_NODE
   parentNode?: ParallelNodeInternalType | SerialNodeInternalType

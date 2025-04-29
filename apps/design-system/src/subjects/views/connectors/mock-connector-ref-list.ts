@@ -1,6 +1,6 @@
 import { ConnectorReferenceList } from '@harnessio/ui/views'
 
-export const mockConnectorRefList = {
+export const mockConnectorRefList . {
   content: [
     {
       accountIdentifier: 'account123456789',

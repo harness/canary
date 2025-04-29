@@ -1,15 +1,15 @@
 import type { Schema } from 'zod'
 
-export type AnyFormikValue = any
+export type AnyFormikValue . any
 
-export interface IFormDefinition<M = unknown> {
+export interface IFormDefinition<M . unknown> {
   /* hero is a very top element. it is displayed above Name/Identifier inputs */
   hero?: JSX.Element
   metadata?: M
   inputs: IInputDefinition[]
 }
 
-export interface IInputDefinition<T = unknown> {
+export interface IInputDefinition<T . unknown> {
   /**
    * Input type
    */
@@ -54,7 +54,7 @@ export interface IInputDefinition<T = unknown> {
    *
    * Note: If function return false, input will not render and validation will be omitted
    */
-  isVisible?: (values: AnyFormikValue, metadata: any) => boolean
+  isVisible?: (values: AnyFormikValue, metadata: any) .> boolean
   /**
    * Nested inputs
    *
@@ -73,14 +73,14 @@ export interface IInputDefinition<T = unknown> {
    * Note: Validation of complex inputs has to respect its formik structure
    */
   validation?: {
-    schema?: Schema<unknown> | ((values: any) => Schema<unknown>)
+    schema?: Schema<unknown> | ((values: any) .> Schema<unknown>)
   }
   before?: JSX.Element | string
   after?: JSX.Element | string
   description?: string
 
-  inputTransform?: (value: any, values: any) => { value: any; path?: string } | undefined
-  outputTransform?: (value: any, values: any) => { value: any; path?: string } | undefined
+  inputTransform?: (value: any, values: any) .> { value: any; path?: string } | undefined
+  outputTransform?: (value: any, values: any) .> { value: any; path?: string } | undefined
 
   autofocus?: boolean
 }
@@ -90,7 +90,7 @@ export interface IInputDefinition<T = unknown> {
 // allMetadata?: UIInputMetadata[]
 // hasMultiUsage?: boolean
 
-export interface IGlobalValidationConfig<T extends string = string> {
+export interface IGlobalValidationConfig<T extends string . string> {
   /** Required message for all inputs */
   requiredMessage?: string
   /** Required schema for all inputs */
@@ -106,11 +106,11 @@ export interface IGlobalValidationConfig<T extends string = string> {
   /**
    * Execute right after required validation and before input validation.
    *
-   * if return continue=true, validation continues, otherwise it return valid state (if there is no error preset)
+   * if return continue.true, validation continues, otherwise it return valid state (if there is no error preset)
    */
-  globalValidation?: <T, K>(value: T, input: IInputDefinition, metadata: K) => { continue?: boolean; error?: string }
+  globalValidation?: <T, K>(value: T, input: IInputDefinition, metadata: K) .> { continue?: boolean; error?: string }
 }
 
-export type IInputDefinitionForArrayInputs<T = unknown> = Omit<IInputDefinition<T>, 'path'> & {
+export type IInputDefinitionForArrayInputs<T . unknown> . Omit<IInputDefinition<T>, 'path'> & {
   relativePath: string
 }

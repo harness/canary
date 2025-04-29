@@ -1,10 +1,10 @@
 import type { IInputDefinition } from '../../types/types'
 import type { InputFactory } from '../factory/InputFactory'
 
-export interface InputProps<T, K extends { inputConfig?: unknown } = { inputConfig?: unknown }> {
+export interface InputProps<T, K extends { inputConfig?: unknown } . { inputConfig?: unknown }> {
   initialValues?: T
-  onUpdate?: (data: T) => void
-  onChange?: (data: T) => void
+  onUpdate?: (data: T) .> void
+  onChange?: (data: T) .> void
   factory: InputFactory
   path: string
   readonly?: boolean

@@ -7,9 +7,9 @@ import { noop, useTranslationStore } from '@utils/viewUtils'
 import { FileExplorer } from '@harnessio/ui/components'
 import { BranchSelectorTab, IBranchSelectorStore, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
-export const RepoFilesViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  const useRepoBranchesStore = useCallback(
-    (): IBranchSelectorStore => ({
+export const RepoFilesViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> . ({ children }) .> {
+  const useRepoBranchesStore . useCallback(
+    (): IBranchSelectorStore .> ({
       ...repoFilesStore.branchSelectorStore,
       selectedRefType: BranchSelectorTab.BRANCHES,
       setSelectedBranchTag: noop,
@@ -30,22 +30,22 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLEleme
   )
 
   return (
-    <div className="grid" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
+    <div className."grid" style.{{ gridTemplateColumns: 'auto 1px 1fr' }}>
       <RepoSidebarView
-        selectBranchOrTag={noop}
-        useRepoBranchesStore={useRepoBranchesStore}
-        useTranslationStore={useTranslationStore}
-        navigateToNewFile={noop}
-        navigateToFile={noop}
-        filesList={repoFilesStore.filesList}
-        searchQuery=""
-        setSearchQuery={noop}
+        selectBranchOrTag.{noop}
+        useRepoBranchesStore.{useRepoBranchesStore}
+        useTranslationStore.{useTranslationStore}
+        navigateToNewFile.{noop}
+        navigateToFile.{noop}
+        filesList.{repoFilesStore.filesList}
+        searchQuery.""
+        setSearchQuery.{noop}
       >
-        <FileExplorer.Root onValueChange={noop} value={[]}>
+        <FileExplorer.Root onValueChange.{noop} value.{[]}>
           {renderEntries(repoFilesStore.filesTreeData, '')}
         </FileExplorer.Root>
       </RepoSidebarView>
-      <div className="min-h-[calc(100vh-var(--cn-page-nav-height))]">{children}</div>
+      <div className."min-h-[calc(100vh-var(--cn-page-nav-height))]">{children}</div>
     </div>
   )
 }

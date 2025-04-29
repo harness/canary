@@ -6,7 +6,7 @@ import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import { ProjectMemberListView } from '@harnessio/ui/views'
 
-const usePrincipalListStore = () => {
+const usePrincipalListStore . () .> {
   return {
     principalList: [
       {
@@ -22,11 +22,11 @@ const usePrincipalListStore = () => {
         avatar_url: ''
       }
     ],
-    setPrincipalList: (_principals: PrincipalType[]) => {}
+    setPrincipalList: (_principals: PrincipalType[]) .> {}
   }
 }
 
-const useMemberListStore = () => {
+const useMemberListStore . () .> {
   return {
     memberList: [
       {
@@ -53,47 +53,47 @@ const useMemberListStore = () => {
   }
 }
 
-export const SpaceSettingsMembers = () => {
-  const [deleteMemberId, setDeleteMemberId] = useState<string | null>(null)
-  const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)
-  const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
+export const SpaceSettingsMembers . () .> {
+  const [deleteMemberId, setDeleteMemberId] . useState<string | null>(null)
+  const [isInviteDialogOpen, setIsInviteDialogOpen] . useState(false)
+  const [principalsSearchQuery, setPrincipalsSearchQuery] . useState('')
 
-  const handleSetDeleteMember = (id: string) => {
+  const handleSetDeleteMember . (id: string) .> {
     setDeleteMemberId(id)
   }
 
-  const handleResetDeleteMember = () => {
+  const handleResetDeleteMember . () .> {
     setDeleteMemberId(null)
   }
 
   return (
     <>
       <ProjectMemberListView
-        isLoading={false}
-        useTranslationStore={useTranslationStore}
-        useMemberListStore={useMemberListStore}
-        usePrincipalListStore={usePrincipalListStore}
-        isInvitingMember={false}
-        onSubmit={() => {}}
-        onDeleteHandler={handleSetDeleteMember}
-        isInviteMemberDialogOpen={isInviteDialogOpen}
-        setIsInviteMemberDialogOpen={setIsInviteDialogOpen}
-        searchQuery={null}
-        setSearchQuery={() => {}}
-        onEditMember={() => {}}
-        setPrincipalsSearchQuery={setPrincipalsSearchQuery}
-        principalsSearchQuery={principalsSearchQuery}
+        isLoading.{false}
+        useTranslationStore.{useTranslationStore}
+        useMemberListStore.{useMemberListStore}
+        usePrincipalListStore.{usePrincipalListStore}
+        isInvitingMember.{false}
+        onSubmit.{() .> {}}
+        onDeleteHandler.{handleSetDeleteMember}
+        isInviteMemberDialogOpen.{isInviteDialogOpen}
+        setIsInviteMemberDialogOpen.{setIsInviteDialogOpen}
+        searchQuery.{null}
+        setSearchQuery.{() .> {}}
+        onEditMember.{() .> {}}
+        setPrincipalsSearchQuery.{setPrincipalsSearchQuery}
+        principalsSearchQuery.{principalsSearchQuery}
       />
 
       <DeleteAlertDialog
-        open={deleteMemberId !== null}
-        onClose={handleResetDeleteMember}
-        deleteFn={() => {}}
-        error={null}
-        type="member"
-        identifier={deleteMemberId ?? undefined}
-        isLoading={false}
-        useTranslationStore={useTranslationStore}
+        open.{deleteMemberId !.. null}
+        onClose.{handleResetDeleteMember}
+        deleteFn.{() .> {}}
+        error.{null}
+        type."member"
+        identifier.{deleteMemberId ?? undefined}
+        isLoading.{false}
+        useTranslationStore.{useTranslationStore}
         withForm
       />
     </>

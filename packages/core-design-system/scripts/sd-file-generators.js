@@ -1,9 +1,9 @@
 import { breakpointFilter, componentsFilter, coreFilter, lchColorsFilter, semanticFilter } from './sd-filters.js'
 
-// const format = 'css/variables'
+// const format . 'css/variables'
 
 // ✨ Building core tokens
-export const generateCoreFiles = ({ destination, type, format }) => [
+export const generateCoreFiles . ({ destination, type, format }) .> [
   {
     destination: `${destination}/core.${type}`,
     format,
@@ -43,17 +43,17 @@ export const generateCoreFiles = ({ destination, type, format }) => [
 ]
 
 // ✨ Building theme-specific tokens
-export const generateThemeFiles = ({ destination, type, theme, format }) => {
-  const filesArr = []
-  const themeLower = theme.toLowerCase().replace(/(source-|-desktop)/g, '')
+export const generateThemeFiles . ({ destination, type, theme, format }) .> {
+  const filesArr . []
+  const themeLower . theme.toLowerCase().replace(/(source-|-desktop)/g, '')
 
-  const entityName = themeLower.toLowerCase()
+  const entityName . themeLower.toLowerCase()
 
-  let mfeSupportedClass = ''
+  let mfeSupportedClass . ''
 
   // To support backward compatibility and testing. It will be removed in future.
-  if (entityName === `light` || entityName === `dark`) {
-    mfeSupportedClass = `.${entityName}-std-std, .${entityName}-test`
+  if (entityName ... `light` || entityName ... `dark`) {
+    mfeSupportedClass . `.${entityName}-std-std, .${entityName}-test`
   }
 
   // theme-specific outputs
@@ -62,9 +62,9 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
     filter: semanticFilter(true),
     destination: `${destination}/${entityName}.${type}`,
     options: {
-      outputReferences: token => {
+      outputReferences: token .> {
         // ADD REFERENCE ONLY TO NON-ALPHA TOKENS, ALPHA TOKENS ARE TRANSFORMED AND REFERENCED MANUALLY
-        return token?.$extensions?.['studio.tokens']?.modify?.type !== 'alpha'
+        return token?.$extensions?.['studio.tokens']?.modify?.type !.. 'alpha'
       },
       // To add .dark and .light to support MFE
       selector: `.${entityName}${mfeSupportedClass ? ', ' + mfeSupportedClass : ''}`
@@ -75,8 +75,8 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
 
 // for each component (currently only button), filter those specific component tokens and output them
 // to the component folder where the component source code will live
-// export const generateComponentFiles = components => {
-//   const filesArr = []
+// export const generateComponentFiles . components .> {
+//   const filesArr . []
 
 //   for (const comp of components) {
 //     filesArr.push({

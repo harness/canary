@@ -2,6 +2,6 @@ import { useContext } from 'react'
 
 import { MFEContext } from '../context/MFEContext'
 
-export const useMFEContext = () => {
+export const useMFEContext . () .> {
   return useContext(MFEContext)
 }

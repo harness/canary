@@ -6,9 +6,9 @@ import { RepoListProps, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import repoListStore from './repo-list-store.json'
 
-const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
-  const useRepoListStore = useCallback(
-    () => ({
+const RepoListWrapper: FC<Partial<RepoListProps>> . props .> {
+  const useRepoListStore . useCallback(
+    () .> ({
       ...repoListStore,
       importToastId: null,
       setImportToastId: noop,
@@ -25,12 +25,12 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
   return (
     <>
       <SandboxRepoListPage
-        useRepoStore={useRepoListStore}
-        useTranslationStore={useTranslationStore}
-        isLoading={false}
-        isError={false}
-        searchQuery=""
-        setSearchQuery={noop}
+        useRepoStore.{useRepoListStore}
+        useTranslationStore.{useTranslationStore}
+        isLoading.{false}
+        isError.{false}
+        searchQuery.""
+        setSearchQuery.{noop}
         {...props}
       />
     </>

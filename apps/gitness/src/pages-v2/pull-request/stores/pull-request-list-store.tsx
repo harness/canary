@@ -13,13 +13,13 @@ interface PullRequestListStore {
   openPullReqs: number
   closedPullReqs: number
   page: number
-  setPage: (page: number) => void
-  setLabelsQuery: (query: string) => void
-  setPullRequests: (data: ListPullReqOkResponse, headers?: Headers) => void
-  setOpenClosePullRequests: (data: ListPullReqOkResponse) => void
+  setPage: (page: number) .> void
+  setLabelsQuery: (query: string) .> void
+  setPullRequests: (data: ListPullReqOkResponse, headers?: Headers) .> void
+  setOpenClosePullRequests: (data: ListPullReqOkResponse) .> void
 }
 
-export const usePullRequestListStore = create<PullRequestListStore>(set => ({
+export const usePullRequestListStore . create<PullRequestListStore>(set .> ({
   pullRequests: null,
   totalPages: 0,
   page: 1,
@@ -27,10 +27,10 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   closedPullReqs: 0,
   labels: [],
   labelsQuery: '',
-  setPage: page => set({ page }),
+  setPage: page .> set({ page }),
 
-  setPullRequests: (data, headers) => {
-    const transformedPullRequests: PullRequestType[] = data.map(item => ({
+  setPullRequests: (data, headers) .> {
+    const transformedPullRequests: PullRequestType[] . data.map(item .> ({
       is_draft: item?.is_draft,
       merged: item?.merged,
       name: item?.title,
@@ -47,7 +47,7 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
       state: item?.state,
       updated: item?.updated ? item?.updated : 0,
       labels:
-        item?.labels?.map(label => ({
+        item?.labels?.map(label .> ({
           key: label?.key || '',
           value: label?.value || undefined,
           color: (label?.value_color || label?.color) as ColorsEnum
@@ -59,12 +59,12 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
       totalPages: parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
     })
   },
-  setOpenClosePullRequests: data => {
+  setOpenClosePullRequests: data .> {
     set({
-      openPullReqs: data.filter(pr => pr?.state === 'open').length || 0,
-      closedPullReqs: data.filter(pr => pr?.state === 'closed' || pr?.state === 'merged').length || 0
+      openPullReqs: data.filter(pr .> pr?.state ... 'open').length || 0,
+      closedPullReqs: data.filter(pr .> pr?.state ... 'closed' || pr?.state ... 'merged').length || 0
     })
   },
 
-  setLabelsQuery: (query: string) => set({ labelsQuery: query })
+  setLabelsQuery: (query: string) .> set({ labelsQuery: query })
 }))

@@ -6,25 +6,25 @@ import { SettingsAccountGeneralPage } from '@harnessio/ui/views'
 
 import { mockProfileSettingsStore } from './profile-settings-store.ts'
 
-export const ProfileSettingsView = () => {
-  const [isLoadingUser, setIsLoadingUser] = useState(true)
+export const ProfileSettingsView . () .> {
+  const [isLoadingUser, setIsLoadingUser] . useState(true)
 
-  useEffect(() => {
+  useEffect(() .> {
     setIsLoadingUser(false)
   }, [])
 
   return (
     <SettingsAccountGeneralPage
-      useProfileSettingsStore={mockProfileSettingsStore}
-      useTranslationStore={useTranslationStore}
-      isLoadingUser={isLoadingUser}
-      isUpdatingUser={false}
-      isUpdatingPassword={false}
-      error={null}
-      onUpdateUser={noop}
-      onUpdatePassword={noop}
-      profileUpdateSuccess={false}
-      passwordUpdateSuccess={false}
+      useProfileSettingsStore.{mockProfileSettingsStore}
+      useTranslationStore.{useTranslationStore}
+      isLoadingUser.{isLoadingUser}
+      isUpdatingUser.{false}
+      isUpdatingPassword.{false}
+      error.{null}
+      onUpdateUser.{noop}
+      onUpdatePassword.{noop}
+      profileUpdateSuccess.{false}
+      passwordUpdateSuccess.{false}
     />
   )
 }

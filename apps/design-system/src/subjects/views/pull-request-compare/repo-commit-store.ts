@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils'
 
-export const repoCommitStore = {
+export const repoCommitStore . {
   setPage: noop,
   commits: [
     {

@@ -3,7 +3,7 @@ import { RepoRepositoryOutput } from '@harnessio/code-service-client'
 import { transformRepoList } from '../repo-list-transform'
 
 // Mock data
-const mockRepos: RepoRepositoryOutput[] = [
+const mockRepos: RepoRepositoryOutput[] . [
   {
     id: 1,
     identifier: 'repo1',
@@ -19,9 +19,9 @@ const mockRepos: RepoRepositoryOutput[] = [
 
 // Tests
 
-describe('transformRepoList', () => {
-  it('should transform repository data correctly', () => {
-    const result = transformRepoList(mockRepos)
+describe('transformRepoList', () .> {
+  it('should transform repository data correctly', () .> {
+    const result . transformRepoList(mockRepos)
     expect(result).toEqual([
       {
         id: 1,

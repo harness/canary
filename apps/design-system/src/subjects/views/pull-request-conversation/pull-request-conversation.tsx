@@ -33,63 +33,63 @@ interface PullRequestConversationProps extends PropsWithChildren<React.HTMLAttri
   state: string
 }
 
-const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) => {
-  const isCommitDialogOpen = false
+const PullRequestConversation: FC<PullRequestConversationProps> . ({ state }) .> {
+  const isCommitDialogOpen . false
 
-  const suggestionsBatch: CommitSuggestion[] = []
+  const suggestionsBatch: CommitSuggestion[] . []
 
-  const handleRebaseBranch = () => {}
-  const handlePrState = () => {}
-  const changesInfo = state === 'complex-1' ? pendingChangesInfoData : changesInfoData
-  const pullReqChecksDecision =
-    state === 'complex-1'
+  const handleRebaseBranch . () .> {}
+  const handlePrState . () .> {}
+  const changesInfo . state ... 'complex-1' ? pendingChangesInfoData : changesInfoData
+  const pullReqChecksDecision .
+    state ... 'complex-1'
       ? pullReqChecksDecisionSucceeded
       : { checkInfo: { title: '', status: '' }, summaryText: '', data: { checks: [] } }
-  const prPanelData = prPanelInfo
-  const approvedEvaluations: TypesPullReqReviewer[] = []
-  const changeReqEvaluations: TypesPullReqReviewer[] = []
-  const codeOwners: TypesCodeOwnerEvaluation = {} as TypesCodeOwnerEvaluation
-  const latestApprovalArr: TypesPullReqReviewer[] = []
-  const changeReqReviewer = ''
-  const codeOwnerPendingEntries: TypesCodeOwnerEvaluationEntry[] = []
+  const prPanelData . prPanelInfo
+  const approvedEvaluations: TypesPullReqReviewer[] . []
+  const changeReqEvaluations: TypesPullReqReviewer[] . []
+  const codeOwners: TypesCodeOwnerEvaluation . {} as TypesCodeOwnerEvaluation
+  const latestApprovalArr: TypesPullReqReviewer[] . []
+  const changeReqReviewer . ''
+  const codeOwnerPendingEntries: TypesCodeOwnerEvaluationEntry[] . []
 
-  const showDeleteBranchButton = false
-  const showRestoreBranchButton = false
-  const errorMsg = ''
+  const showDeleteBranchButton . false
+  const showRestoreBranchButton . false
+  const errorMsg . ''
 
-  const currentUserData = { display_name: 'admin', uid: '' }
+  const currentUserData . { display_name: 'admin', uid: '' }
 
-  const comment = ''
+  const comment . ''
 
-  const processReviewDecision = (): EnumPullReqReviewDecision | PullReqReviewDecision.outdated => {
+  const processReviewDecision . (): EnumPullReqReviewDecision | PullReqReviewDecision.outdated .> {
     // Example implementation
     return 'approved'
   }
-  const activities = state === 'complex-1' ? mockActivities : undefined
+  const activities . state ... 'complex-1' ? mockActivities : undefined
 
-  const searchReviewers = ''
+  const searchReviewers . ''
 
-  const labelsList: ILabelType[] = state === 'complex-1' ? mockLabelList : []
-  const PRLabels = state === 'complex-1' ? mockPrLabels : { label_data: [] as LabelAssignmentType[] }
-  const searchLabel = ''
-  const pullReqMetadata = { source_sha: '' }
-  const reviewers = state === 'complex-1' ? mockReviewers : undefined
+  const labelsList: ILabelType[] . state ... 'complex-1' ? mockLabelList : []
+  const PRLabels . state ... 'complex-1' ? mockPrLabels : { label_data: [] as LabelAssignmentType[] }
+  const searchLabel . ''
+  const pullReqMetadata . { source_sha: '' }
+  const reviewers . state ... 'complex-1' ? mockReviewers : undefined
 
-  const filtersData = usePrFilters()
+  const filtersData . usePrFilters()
 
   return (
     <>
       <CommitSuggestionsDialog
-        isOpen={isCommitDialogOpen}
-        onClose={noop}
-        onFormSubmit={() => Promise.resolve()}
-        isSubmitting={false}
+        isOpen.{isCommitDialogOpen}
+        onClose.{noop}
+        onFormSubmit.{() .> Promise.resolve()}
+        isSubmitting.{false}
       />
       <PullRequestConversationPage
-        rebaseErrorMessage={null}
-        filtersProps={filtersData}
-        useTranslationStore={useTranslationStore}
-        panelProps={{
+        rebaseErrorMessage.{null}
+        filtersProps.{filtersData}
+        useTranslationStore.{useTranslationStore}
+        panelProps.{{
           handleRebaseBranch,
           handlePrState,
           changesInfo: {
@@ -123,12 +123,12 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
           headerMsg: errorMsg,
           commitSuggestionsBatchCount: suggestionsBatch?.length,
           onCommitSuggestions: noop,
-          toPRCheck: _ => '',
+          toPRCheck: _ .> '',
           spaceId: '',
           repoId: ''
         }}
-        overviewProps={{
-          toCommitDetails: _ => '',
+        overviewProps.{{
+          toCommitDetails: _ .> '',
           handleUpdateDescription: noop,
           handleDeleteComment: noop,
           handleUpdateComment: noop,
@@ -150,14 +150,14 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
           filenameToLanguage: noop,
           handleUpload: noop
         }}
-        commentBoxProps={{
+        commentBoxProps.{{
           comment,
           setComment: noop,
           currentUser: currentUserData?.display_name,
           onSaveComment: noop,
           handleUpload: noop
         }}
-        sideBarProps={{
+        sideBarProps.{{
           addReviewers: noop,
           usersList: undefined,
           currentUserId: currentUserData?.uid,

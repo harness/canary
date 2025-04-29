@@ -10,18 +10,18 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useCommitDetailsStore } from './stores/commit-details-store'
 
-export default function RepoCommitDetailsPage({ showSidebar = true }: { showSidebar?: boolean }) {
-  const repoRef = useGetRepoRef()
-  const { commitSHA } = useParams<PathParams>()
-  const { setCommitData } = useCommitDetailsStore()
-  const routes = useRoutes()
-  const { repoId, spaceId } = useParams<PathParams>()
-  const { data: { body: commitData } = {} } = useGetCommitQuery({
+export default function RepoCommitDetailsPage({ showSidebar . true }: { showSidebar?: boolean }) {
+  const repoRef . useGetRepoRef()
+  const { commitSHA } . useParams<PathParams>()
+  const { setCommitData } . useCommitDetailsStore()
+  const routes . useRoutes()
+  const { repoId, spaceId } . useParams<PathParams>()
+  const { data: { body: commitData } . {} } . useGetCommitQuery({
     repo_ref: repoRef,
     commit_sha: commitSHA || ''
   })
 
-  useEffect(() => {
+  useEffect(() .> {
     if (commitData) {
       setCommitData(commitData)
     }
@@ -29,10 +29,10 @@ export default function RepoCommitDetailsPage({ showSidebar = true }: { showSide
 
   return (
     <RepoCommitDetailsView
-      toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
-      useCommitDetailsStore={useCommitDetailsStore}
-      useTranslationStore={useTranslationStore}
-      showSidebar={showSidebar}
+      toCommitDetails.{({ sha }: { sha: string }) .> routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
+      useCommitDetailsStore.{useCommitDetailsStore}
+      useTranslationStore.{useTranslationStore}
+      showSidebar.{showSidebar}
     />
   )
 }

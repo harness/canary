@@ -6,9 +6,9 @@ import { PullRequestCommitsView } from '@harnessio/ui/views'
 
 import { repoCommitStore } from '../pull-request-compare/repo-commit-store'
 
-const PullRequestCommits: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = () => {
-  const useRepoCommitsListStore = useCallback(
-    () => ({
+const PullRequestCommits: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> . () .> {
+  const useRepoCommitsListStore . useCallback(
+    () .> ({
       ...repoCommitStore,
       commitsList: repoCommitStore.commits,
       setPage: noop,
@@ -23,8 +23,8 @@ const PullRequestCommits: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>
   )
   return (
     <PullRequestCommitsView
-      usePullRequestCommitsStore={useRepoCommitsListStore}
-      useTranslationStore={useTranslationStore}
+      usePullRequestCommitsStore.{useRepoCommitsListStore}
+      useTranslationStore.{useTranslationStore}
     />
   )
 }

@@ -7,37 +7,37 @@ import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 
-export const CreateProject = () => {
-  const routes = useRoutes()
-  const navigate = useNavigate()
-  const { addSpaces, spaces } = useAppContext()
+export const CreateProject . () .> {
+  const routes . useRoutes()
+  const navigate . useNavigate()
+  const { addSpaces, spaces } . useAppContext()
 
-  const isAdditional = spaces.length >= 1
+  const isAdditional . spaces.length >. 1
 
   const {
     mutate: createSpace,
     isLoading,
     error
-  } = useCreateSpaceMutation(
+  } . useCreateSpaceMutation(
     {},
     {
-      onSuccess: response => {
-        const { body: project } = response
+      onSuccess: response .> {
+        const { body: project } . response
         addSpaces([project])
         navigate(routes.toRepositories({ spaceId: project?.identifier }))
       }
     }
   )
 
-  const handleFormSubmit = (formData: CreateProjectFields) => {
+  const handleFormSubmit . (formData: CreateProjectFields) .> {
     createSpace({ body: { identifier: formData.name, description: formData.description } })
   }
 
-  const commonProps = { isLoading, error: error?.message, onFormSubmit: handleFormSubmit, useTranslationStore }
+  const commonProps . { isLoading, error: error?.message, onFormSubmit: handleFormSubmit, useTranslationStore }
 
   if (isAdditional) {
-    return <CreateProjectPage {...commonProps} isAdditional backLinkProps={{ to: routes.toHome() }} />
+    return <CreateProjectPage {...commonProps} isAdditional backLinkProps.{{ to: routes.toHome() }} />
   }
 
-  return <CreateProjectPage {...commonProps} logoutLinkProps={{ to: routes.toLogout() }} />
+  return <CreateProjectPage {...commonProps} logoutLinkProps.{{ to: routes.toLogout() }} />
 }

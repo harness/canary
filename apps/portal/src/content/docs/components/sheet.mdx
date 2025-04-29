@@ -9,7 +9,7 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Sheet.Root>
+  code.{`<Sheet.Root>
   <Sheet.Trigger asChild>
     <Button>Open Sheet</Button>
   </Sheet.Trigger>
@@ -74,7 +74,7 @@ All parts of the `Sheet` component can be imported and composed as required.
 The `Root` component serves as the main container for all sheet elements.
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description:
@@ -96,7 +96,7 @@ The `Trigger` component is used to open the sheet.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     { name: "children", description: "Content to display", required: true },
     { name: "className", required: false },
   ]}
@@ -122,7 +122,7 @@ The `Content` component defines the main content area of the sheet.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     { name: "children", description: "Content to display", required: true },
     { name: "className", required: false },
     {
@@ -168,7 +168,7 @@ The `Header` component is used to define the header section of the sheet.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     { name: "children", description: "Content to display", required: true },
     { name: "className", required: false },
   ]}
@@ -185,7 +185,7 @@ The `Footer` component is used to define the footer section of the sheet.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     { name: "children", description: "Footer content", required: true },
     { name: "className", required: false },
   ]}
@@ -200,7 +200,7 @@ The `Title` component displays the title of the sheet.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     { name: "children", description: "Title content", required: true },
     { name: "className", required: false },
   ]}
@@ -215,7 +215,7 @@ The `Description` component displays the description of the sheet.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     { name: "children", description: "Description content", required: true },
     { name: "className" },
   ]}

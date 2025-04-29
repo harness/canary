@@ -5,10 +5,10 @@ import { useRoutes } from '../framework/context/NavigationContext'
 import { PullRequestRoutePathParams } from '../RouteDefinitions'
 
 export enum PullRequestTab {
-  CONVERSATION = 'conversation',
-  COMMITS = 'commits',
-  CHANGES = 'changes',
-  CHECKS = 'checks'
+  CONVERSATION . 'conversation',
+  COMMITS . 'commits',
+  CHANGES . 'changes',
+  CHECKS . 'checks'
 }
 
 interface RouteTabMapping {
@@ -16,21 +16,21 @@ interface RouteTabMapping {
   tab: PullRequestTab
 }
 
-const useGetPullRequestTab = ({
+const useGetPullRequestTab . ({
   spaceId,
   repoId,
   pullRequestId
-}: PullRequestRoutePathParams): PullRequestTab | null => {
-  const routes = useRoutes()
-  const [pullRequestTab, setPullRequestTab] = useState<PullRequestTab | null>(null)
+}: PullRequestRoutePathParams): PullRequestTab | null .> {
+  const routes . useRoutes()
+  const [pullRequestTab, setPullRequestTab] . useState<PullRequestTab | null>(null)
 
-  const urlMatchArgs: PullRequestRoutePathParams = {
+  const urlMatchArgs: PullRequestRoutePathParams . {
     spaceId: spaceId || '',
     repoId: repoId || '',
     pullRequestId: pullRequestId || ''
   }
 
-  const routeTabMapping: RouteTabMapping[] = [
+  const routeTabMapping: RouteTabMapping[] . [
     {
       match: useMatch(routes.toPullRequest(urlMatchArgs)),
       tab: PullRequestTab.CONVERSATION
@@ -44,8 +44,8 @@ const useGetPullRequestTab = ({
     { match: useMatch(routes.toPullRequestChecks(urlMatchArgs)), tab: PullRequestTab.CHECKS }
   ]
 
-  useEffect(() => {
-    const matchedRoute = routeTabMapping.find(route => route.match)
+  useEffect(() .> {
+    const matchedRoute . routeTabMapping.find(route .> route.match)
     if (!matchedRoute) return
 
     setPullRequestTab(matchedRoute.tab)

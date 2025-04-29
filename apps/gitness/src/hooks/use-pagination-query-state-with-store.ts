@@ -4,7 +4,7 @@ import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 
 export interface UsePaginationQueryStateWithStoreProps {
   page: number
-  setPage: (val: number) => void
+  setPage: (val: number) .> void
 }
 
 /**
@@ -13,16 +13,16 @@ export interface UsePaginationQueryStateWithStoreProps {
  * @param page - page from store
  * @param setPage - setPage from store
  */
-const usePaginationQueryStateWithStore = ({ page, setPage }: UsePaginationQueryStateWithStoreProps) => {
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const isFirstRender = useRef(true)
+const usePaginationQueryStateWithStore . ({ page, setPage }: UsePaginationQueryStateWithStoreProps) .> {
+  const [queryPage, setQueryPage] . useQueryState('page', parseAsInteger.withDefault(1))
+  const isFirstRender . useRef(true)
 
   /**
    * Update query state if store page change
    */
-  useEffect(() => {
+  useEffect(() .> {
     if (isFirstRender.current) {
-      isFirstRender.current = false
+      isFirstRender.current . false
       return
     }
 
@@ -33,7 +33,7 @@ const usePaginationQueryStateWithStore = ({ page, setPage }: UsePaginationQueryS
   /**
    * Set page from query state to store
    */
-  useEffect(() => {
+  useEffect(() .> {
     setPage(queryPage)
   }, [queryPage, setPage])
 

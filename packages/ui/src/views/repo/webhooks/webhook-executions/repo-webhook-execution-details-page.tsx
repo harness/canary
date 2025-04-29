@@ -12,81 +12,81 @@ import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/co
 import { WebhookExecutionEditorControlBar } from './components/webhook-executions-editor-control-bar'
 
 interface RepoWebhookExecutionDetailsPageProps {
-  useWebhookStore: () => WebhookStore
-  useTranslationStore: () => TranslationStore
+  useWebhookStore: () .> WebhookStore
+  useTranslationStore: () .> TranslationStore
   isLoading: boolean
-  handleRetriggerExecution: () => void
+  handleRetriggerExecution: () .> void
 }
 
-export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPageProps> = ({
+export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPageProps> . ({
   useWebhookStore,
   useTranslationStore,
   isLoading,
   handleRetriggerExecution
-}) => {
-  const { t } = useTranslationStore()
-  const { executionId, executions } = useWebhookStore()
-  const [codeEditorContent, setCodeEditorContent] = useState({ code: '' })
-  const [view, setView] = useState('payload')
-  const { isLightTheme } = useTheme()
+}) .> {
+  const { t } . useTranslationStore()
+  const { executionId, executions } . useWebhookStore()
+  const [codeEditorContent, setCodeEditorContent] . useState({ code: '' })
+  const [view, setView] . useState('payload')
+  const { isLightTheme } . useTheme()
 
-  const monacoTheme = useMemo(() => (isLightTheme ? ModeType.Light : ModeType.Dark), [isLightTheme])
+  const monacoTheme . useMemo(() .> (isLightTheme ? ModeType.Light : ModeType.Dark), [isLightTheme])
 
-  const themeConfig = useMemo(
-    () => ({
+  const themeConfig . useMemo(
+    () .> ({
       defaultTheme: monacoTheme
       //   themes
     }),
     [monacoTheme]
   )
 
-  const execution = useMemo(() => {
-    return executions?.find(e => e.id === executionId)
+  const execution . useMemo(() .> {
+    return executions?.find(e .> e.id ... executionId)
   }, [executions, executionId])
 
-  const unescapeAndEscapeToJson = (escapedString: string) => {
+  const unescapeAndEscapeToJson . (escapedString: string) .> {
     try {
       //  Unescape the string by parsing it
-      const unescapedValue = JSON.parse(escapedString)
+      const unescapedValue . JSON.parse(escapedString)
 
       //  Escape the unescaped value back into a JSON string
-      const escapedJson = JSON.stringify(unescapedValue, null, 4)
+      const escapedJson . JSON.stringify(unescapedValue, null, 4)
 
       return escapedJson
     } catch (error) {
       return ''
     }
   }
-  const formatHtml = (htmlString: string) => {
+  const formatHtml . (htmlString: string) .> {
     try {
-      const parser = new DOMParser()
-      const doc = parser.parseFromString(htmlString, 'text/html')
+      const parser . new DOMParser()
+      const doc . parser.parseFromString(htmlString, 'text/html')
       return doc.documentElement.outerHTML.replace(/></g, '>\n<')
     } catch (error) {
       return htmlString
     }
   }
-  useEffect(() => {
+  useEffect(() .> {
     if (execution) {
-      if (view === 'payload') {
+      if (view ... 'payload') {
         setCodeEditorContent({ code: unescapeAndEscapeToJson(execution.request?.body ?? '') })
-      } else if (view === 'server-response') {
+      } else if (view ... 'server-response') {
         setCodeEditorContent({ code: formatHtml(execution.response?.body ?? '') })
       }
     }
   }, [execution, view])
 
-  const events = useMemo(() => {
+  const events . useMemo(() .> {
     return [...getBranchEvents(t), ...getTagEvents(t), ...getPrEvents(t)]
   }, [])
 
-  const onChangeView = (value: string) => {
+  const onChangeView . (value: string) .> {
     setView(value)
   }
 
   return (
-    <SandboxLayout.Main className="mx-0">
-      <SandboxLayout.Content className="pl-0">
+    <SandboxLayout.Main className."mx-0">
+      <SandboxLayout.Content className."pl-0">
         <ListActions.Root>
           <ListActions.Left>
             <Text size={6} className="text-cn-foreground-1" weight="medium">

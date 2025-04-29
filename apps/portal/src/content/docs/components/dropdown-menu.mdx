@@ -10,9 +10,9 @@ import { Aside } from "@astrojs/starlight/components";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<DropdownMenu.Root>
-    <DropdownMenu.Trigger className="flex gap-1 items-center" aria-label="options menu">
-        <Icon name="menu-dots" />
+  code.{`<DropdownMenu.Root>
+    <DropdownMenu.Trigger className."flex gap-1 items-center" aria-label."options menu">
+        <Icon name."menu-dots" />
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
@@ -34,9 +34,9 @@ import { Aside } from "@astrojs/starlight/components";
 
         <DropdownMenu.RadioGroup>
             <DropdownMenu.Label>Group 2</DropdownMenu.Label>
-            <DropdownMenu.RadioItem value="option4">Option 4</DropdownMenu.RadioItem>
-            <DropdownMenu.RadioItem value="option5">Option 5</DropdownMenu.RadioItem>
-            <DropdownMenu.RadioItem value="option6">Option 6</DropdownMenu.RadioItem>
+            <DropdownMenu.RadioItem value."option4">Option 4</DropdownMenu.RadioItem>
+            <DropdownMenu.RadioItem value."option5">Option 5</DropdownMenu.RadioItem>
+            <DropdownMenu.RadioItem value."option6">Option 6</DropdownMenu.RadioItem>
         </DropdownMenu.RadioGroup>
 
         <DropdownMenu.Separator />
@@ -63,13 +63,13 @@ import { DropdownMenu } from "@harnessio/ui/components";
 
 return (
   <DropdownMenu.Root>
-    <DropdownMenu.Trigger aria-label="options menu">
-      <Icon name="menu-dots" />
+    <DropdownMenu.Trigger aria-label."options menu">
+      <Icon name."menu-dots" />
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
-      <DropdownMenu.Item onSelect={onEdit}>Edit</DropdownMenu.Item>
-      <DropdownMenu.Item onSelect={onDelete}>Delete</DropdownMenu.Item>
+      <DropdownMenu.Item onSelect.{onEdit}>Edit</DropdownMenu.Item>
+      <DropdownMenu.Item onSelect.{onDelete}>Delete</DropdownMenu.Item>
     </DropdownMenu.Content>
   </DropdownMenu.Root>
 )
@@ -118,9 +118,9 @@ the `open` state is stored internally.
 
 ```typescript jsx
 <DropdownMenu.Root
-  className="my-class"    // [OPTIONAL] custom class
+  className."my-class"    // [OPTIONAL] custom class
   open                    // [OPTIONAL] controlled open state
-  onOpenChange={onChange} // [OPTIONAL] event handler called when the open state changes
+  onOpenChange.{onChange} // [OPTIONAL] event handler called when the open state changes
   defaultOpen             // [OPTIONAL] default open state
   modal                   // [OPTIONAL] when set to true, interaction with outside elements
                           //            will be disabled and only menu content will be
@@ -131,7 +131,7 @@ the `open` state is stored internally.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -149,7 +149,7 @@ the `open` state is stored internally.
       name: "onOpenChange",
       description: "Event handler called when the open state changes",
       required: false,
-      value: "(open: boolean) => void",
+      value: "(open: boolean) .> void",
     },
     {
       name: "defaultOpen",
@@ -179,7 +179,7 @@ the `open` state is stored internally.
 
 The `Trigger` component represents the button that triggers the dropdown menu.
 
-<Aside title="Accessibility">
+<Aside title."Accessibility">
   The `Trigger` component renders as a `button` by default. It is recommended to include descriptive
   text inside the `Trigger` component to allow assistive technologies to announce the button
   with appropriate context. If the child is solely an icon, ensure that either `aria-label`
@@ -188,8 +188,8 @@ The `Trigger` component represents the button that triggers the dropdown menu.
     <summary>Example</summary>
 
 ```typescript jsx
-<DropdownMenu.Trigger aria-label="options menu">
-  <Icon name="menu-dots" />
+<DropdownMenu.Trigger aria-label."options menu">
+  <Icon name."menu-dots" />
 </DropdownMenu.Trigger>
 ```
 
@@ -197,8 +197,8 @@ Or
 
 ```typescript jsx
 <DropdownMenu.Trigger>
-  <Icon name="menu-dots" />
-  <span className="sr-only">Options menu</span>
+  <Icon name."menu-dots" />
+  <span className."sr-only">Options menu</span>
 </DropdownMenu.Trigger>
 ```
 
@@ -207,7 +207,7 @@ Or
 
 ```typescript jsx
 <DropdownMenu.Trigger
-  className="my-class" // [OPTIONAL] custom class
+  className."my-class" // [OPTIONAL] custom class
   insideSplitButton    // [OPTIONAL] whether the trigger is inside a split button
   asChild              // [OPTIONAL] render the trigger as the child
 >
@@ -216,7 +216,7 @@ Or
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -251,15 +251,15 @@ The `Content` component represents the dropdown menu content.
 
 ```typescript jsx
 <DropdownMenu.Content
-  className="my-class" // [OPTIONAL] custom class
-  sideOffset={4}       // [OPTIONAL] offset on the side
+  className."my-class" // [OPTIONAL] custom class
+  sideOffset.{4}       // [OPTIONAL] offset on the side
 >
   {/* Item, Group, Separator, RadioGroup, Sub */}
 </DropdownMenu.Content>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -288,11 +288,11 @@ The `Item` component represents a dropdown menu item.
 
 ```typescript jsx
 <DropdownMenu.Item
-  className="my-class" // [OPTIONAL] custom class
+  className."my-class" // [OPTIONAL] custom class
   inset                // [OPTIONAL] whether the item is inset
   disabled             // [OPTIONAL] disable the item
-  onSelect={onSelect}  // [OPTIONAL] event handler called when the item is selected
-  textValue="text"     // [OPTIONAL] text value of the item to be used for when value is not suitable for typeahead search
+  onSelect.{onSelect}  // [OPTIONAL] event handler called when the item is selected
+  textValue."text"     // [OPTIONAL] text value of the item to be used for when value is not suitable for typeahead search
   asChild              // [OPTIONAL] render the item as the child
 >
   {/* Item content */}
@@ -300,7 +300,7 @@ The `Item` component represents a dropdown menu item.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -324,7 +324,7 @@ The `Item` component represents a dropdown menu item.
       name: "onSelect",
       description: "Event handler called when the item is selected",
       required: false,
-      value: "(value: string) => void",
+      value: "(value: string) .> void",
     },
     {
       name: "textValue",
@@ -348,12 +348,12 @@ The `Separator` component represents a dropdown menu separator.
 
 ```typescript jsx
 <DropdownMenu.Separator
-  className="my-class" // [OPTIONAL] custom class
+  className."my-class" // [OPTIONAL] custom class
 />
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -371,7 +371,7 @@ pass in the `open` and `onOpenChange` props. When used in an uncontrolled manner
 ```typescript jsx
 <DropdownMenu.Sub
   open                    // [OPTIONAL] controlled open state
-  onOpenChange={onChange} // [OPTIONAL] event handler called when the open state changes
+  onOpenChange.{onChange} // [OPTIONAL] event handler called when the open state changes
   defaultOpen             // [OPTIONAL] default open state
 >
   {/* SubTrigger and SubContent */}
@@ -379,7 +379,7 @@ pass in the `open` and `onOpenChange` props. When used in an uncontrolled manner
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "open",
       description: "Controlled open state",
@@ -390,7 +390,7 @@ pass in the `open` and `onOpenChange` props. When used in an uncontrolled manner
       name: "onOpenChange",
       description: "Event handler called when the open state changes",
       required: false,
-      value: "(open: boolean) => void",
+      value: "(open: boolean) .> void",
     },
     {
       name: "defaultOpen",
@@ -421,14 +421,14 @@ The `Group` component represents a dropdown menu group.
 
 ```typescript jsx
 <DropdownMenu.Group
-  className="my-class" // [OPTIONAL] custom class
+  className."my-class" // [OPTIONAL] custom class
 >
   {/* Label, Item, etc */}
 </DropdownMenu.Group>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -450,14 +450,14 @@ The `Label` component represents a dropdown menu label.
 
 ```typescript jsx
 <DropdownMenu.Label
-  className="my-class" // [OPTIONAL] custom class
+  className."my-class" // [OPTIONAL] custom class
 >
   {/* Label content */}
 </DropdownMenu.Label>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -486,7 +486,7 @@ The `Shortcut` component visually represents the shortcut to press to activate t
 <DropdownMenu.Item>
   {/* Item content */}
   <DropdownMenu.Shortcut
-    className="my-class" // [OPTIONAL] custom class
+    className."my-class" // [OPTIONAL] custom class
   >
     ⌘C
   </DropdownMenu.Shortcut>
@@ -494,7 +494,7 @@ The `Shortcut` component visually represents the shortcut to press to activate t
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Shortcut content",
@@ -518,15 +518,15 @@ The `CheckboxItem` component displays a checkbox next to the item. When the user
 ```typescript jsx
 <DropdownMenu.CheckboxItem
   checked                    // [OPTIONAL] whether the checkbox is checked
-  onCheckedChange={onChange} // [OPTIONAL] callback called when the checked state changes
-  className="my-class"       // [OPTIONAL] custom class
+  onCheckedChange.{onChange} // [OPTIONAL] callback called when the checked state changes
+  className."my-class"       // [OPTIONAL] custom class
 >
   {/* Item content */}
 </DropdownMenu.CheckboxItem>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "checked",
       description: "Whether the checkbox is checked",
@@ -538,7 +538,7 @@ The `CheckboxItem` component displays a checkbox next to the item. When the user
       name: "onCheckedChange",
       description: "Callback called when the checked state changes",
       required: false,
-      value: "(checked: boolean) => void",
+      value: "(checked: boolean) .> void",
     },
     {
       name: "className",
@@ -562,15 +562,15 @@ The `RadioGroup` component groups together `RadioItem` components and controls t
 ```typescript jsx
 <DropdownMenu.RadioGroup
   value                    // [OPTIONAL] the selected radio item
-  onValueChange={onChange} // [OPTIONAL] callback called when the selected radio item changes
-  className="my-class"     // [OPTIONAL] custom class
+  onValueChange.{onChange} // [OPTIONAL] callback called when the selected radio item changes
+  className."my-class"     // [OPTIONAL] custom class
 >
   {/* RadioItem */}
 </DropdownMenu.RadioGroup>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "value",
       description: "The selected radio item",
@@ -581,7 +581,7 @@ The `RadioGroup` component groups together `RadioItem` components and controls t
       name: "onValueChange",
       description: "Callback called when the selected radio item changes",
       required: false,
-      value: "(value: string) => void",
+      value: "(value: string) .> void",
     },
     {
       name: "className",
@@ -605,12 +605,12 @@ the `onValueChange` prop of the parent `RadioGroup` component is called with the
 
 ```typescript jsx
 <DropdownMenu.RadioGroup
-  value={currentItem}
-  onValueChange={setCurrentItem}
+  value.{currentItem}
+  onValueChange.{setCurrentItem}
 >
   <DropdownMenu.RadioItem
-    value="item-1"       // value of the item
-    className="my-class" // [OPTIONAL] custom class
+    value."item-1"       // value of the item
+    className."my-class" // [OPTIONAL] custom class
   >
     {/* Item content */}
   </DropdownMenu.RadioItem>
@@ -618,7 +618,7 @@ the `onValueChange` prop of the parent `RadioGroup` component is called with the
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "value",
       description: "The value of the radio item",

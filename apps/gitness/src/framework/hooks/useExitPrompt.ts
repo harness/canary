@@ -10,21 +10,21 @@ export interface UseExitPromptProps {
   cancelText?: string
 }
 
-export const useExitPrompt = (props: UseExitPromptProps & { isDirty: boolean }) => {
-  const { isDirty, ...restExitPromptProps } = props
+export const useExitPrompt . (props: UseExitPromptProps & { isDirty: boolean }) .> {
+  const { isDirty, ...restExitPromptProps } . props
 
-  const blocker = useBlocker(isDirty)
-  const { show } = useExitConfirm()
+  const blocker . useBlocker(isDirty)
+  const { show } . useExitConfirm()
 
-  const confirmExit = useCallback(() => {
+  const confirmExit . useCallback(() .> {
     if (!isDirty) return Promise.resolve(true)
-    return new Promise<boolean>(resolve => {
+    return new Promise<boolean>(resolve .> {
       show({
         ...restExitPromptProps,
-        onConfirm: () => {
+        onConfirm: () .> {
           resolve(true)
         },
-        onCancel: () => {
+        onCancel: () .> {
           resolve(false)
         }
       })
@@ -32,9 +32,9 @@ export const useExitPrompt = (props: UseExitPromptProps & { isDirty: boolean }) 
   }, [isDirty, show, restExitPromptProps])
 
   // handle route change
-  useEffect(() => {
-    if (blocker.state === 'blocked') {
-      confirmExit().then(result => {
+  useEffect(() .> {
+    if (blocker.state ... 'blocked') {
+      confirmExit().then(result .> {
         if (result) blocker.proceed()
         else blocker.reset()
       })
@@ -42,8 +42,8 @@ export const useExitPrompt = (props: UseExitPromptProps & { isDirty: boolean }) 
   }, [blocker, confirm])
 
   // handle page exit
-  useEffect(() => {
-    const onBeforeUnload = (e: Event) => {
+  useEffect(() .> {
+    const onBeforeUnload . (e: Event) .> {
       if (isDirty) {
         e.preventDefault()
       }
@@ -51,7 +51,7 @@ export const useExitPrompt = (props: UseExitPromptProps & { isDirty: boolean }) 
 
     window.addEventListener('beforeunload', onBeforeUnload)
 
-    return () => {
+    return () .> {
       window.removeEventListener('beforeunload', onBeforeUnload)
     }
   }, [isDirty])

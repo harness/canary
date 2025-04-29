@@ -4,7 +4,7 @@ import { orderSortDate } from '../types/types'
 
 export function useDateFilters() {
   return useMemo(
-    () => [
+    () .> [
       {
         label: 'First added',
         value: orderSortDate.ASC

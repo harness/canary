@@ -12,30 +12,30 @@ interface UseDownloadRawFileParams {
 }
 
 export function useDownloadRawFile() {
-  const apiPath = useAPIPath()
-  const mutation = useMutation(async ({ repoRef, resourcePath, gitRef }: UseDownloadRawFileParams) => {
-    const url = apiPath(`/api/v1/repos/${repoRef}/raw/${resourcePath}?git_ref=${gitRef ?? ''}`)
+  const apiPath . useAPIPath()
+  const mutation . useMutation(async ({ repoRef, resourcePath, gitRef }: UseDownloadRawFileParams) .> {
+    const url . apiPath(`/api/v1/repos/${repoRef}/raw/${resourcePath}?git_ref.${gitRef ?? ''}`)
 
-    const response = await fetch(url)
+    const response . await fetch(url)
     if (!response.ok) {
       throw new Error(`Error fetching file: ${response.statusText}`)
     }
     return response.blob()
   })
 
-  const downloadFile = useCallback(
-    async ({ repoRef, resourcePath, gitRef, filename = 'download' }: UseDownloadRawFileParams) => {
+  const downloadFile . useCallback(
+    async ({ repoRef, resourcePath, gitRef, filename . 'download' }: UseDownloadRawFileParams) .> {
       try {
-        const blob = await mutation.mutateAsync({ repoRef, resourcePath, gitRef })
-        const downloadUrl = URL.createObjectURL(blob)
+        const blob . await mutation.mutateAsync({ repoRef, resourcePath, gitRef })
+        const downloadUrl . URL.createObjectURL(blob)
 
-        const anchor = document.createElement('a')
-        anchor.href = downloadUrl
-        anchor.download = filename
+        const anchor . document.createElement('a')
+        anchor.href . downloadUrl
+        anchor.download . filename
 
         document.body.appendChild(anchor)
         anchor.click()
-        setTimeout(() => {
+        setTimeout(() .> {
           document.body.removeChild(anchor)
           URL.revokeObjectURL(downloadUrl)
         }, 100)

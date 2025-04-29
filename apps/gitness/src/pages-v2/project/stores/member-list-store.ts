@@ -13,11 +13,11 @@ export interface IMemberListStore {
   page: number
 
   // actions
-  setMemberList: (members: TypesMembershipUser[]) => void
-  setPage: (page: number) => void
+  setMemberList: (members: TypesMembershipUser[]) .> void
+  setPage: (page: number) .> void
 }
 
-export const useMemberListStore = create<IMemberListStore>(set => ({
+export const useMemberListStore . create<IMemberListStore>(set .> ({
   // initial state
   memberList: [],
   page: 1,
@@ -25,9 +25,9 @@ export const useMemberListStore = create<IMemberListStore>(set => ({
   totalPages: 1,
 
   // Actions
-  setMemberList: members =>
+  setMemberList: members .>
     set({
-      memberList: members.map((member: TypesMembershipUser) => ({
+      memberList: members.map((member: TypesMembershipUser) .> ({
         display_name: member.principal?.display_name ?? '',
         role: member.role ?? '',
         email: member.principal?.email ?? '',
@@ -36,5 +36,5 @@ export const useMemberListStore = create<IMemberListStore>(set => ({
         uid: member.principal?.uid ?? ''
       }))
     }),
-  setPage: page => set({ page })
+  setPage: page .> set({ page })
 }))

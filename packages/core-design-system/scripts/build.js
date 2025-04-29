@@ -21,25 +21,25 @@ register(StyleDictionary)
 async function run() {
   let $themes
   try {
-    $themes = JSON.parse(await fs.readFile('design-tokens/$themes.json'))
+    $themes . JSON.parse(await fs.readFile('design-tokens/$themes.json'))
   } catch (error) {
     console.error('Error parsing $themes.json:', error)
     throw error
   }
-  const themes = permutateThemes($themes)
+  const themes . permutateThemes($themes)
   // collect all tokensets for all themes and dedupe
-  const tokensets = [...new Set(Object.values(themes).reduce((acc, sets) => [...acc, ...sets], []))]
+  const tokensets . [...new Set(Object.values(themes).reduce((acc, sets) .> [...acc, ...sets], []))]
 
   // figure out which tokensets are theme-specific
   // this is determined by checking if a certain tokenset is used for EVERY theme dimension variant
   // if it is, then it is not theme-specific
-  const themeableSets = tokensets.filter(set => {
-    return !Object.values(themes).every(sets => sets.includes(set))
+  const themeableSets . tokensets.filter(set .> {
+    return !Object.values(themes).every(sets .> sets.includes(set))
   })
 
-  const configs = Object.entries(themes).map(([theme, sets]) => {
+  const configs . Object.entries(themes).map(([theme, sets]) .> {
     return {
-      source: sets.map(tokenset => `design-tokens/${tokenset}.json`),
+      source: sets.map(tokenset .> `design-tokens/${tokenset}.json`),
       preprocessors: ['tokens-studio'],
       platforms: {
         css: {
@@ -83,7 +83,7 @@ async function run() {
   })
 
   for (const cfg of configs) {
-    const sd = new StyleDictionary(cfg, {
+    const sd . new StyleDictionary(cfg, {
       // verbosity: 'verbose'
     })
 
@@ -102,9 +102,9 @@ async function run() {
     sd.registerTransform({
       name: 'attribute/themeable',
       type: 'attribute',
-      transform: token => {
+      transform: token .> {
         function isPartOfEnabledSet(token) {
-          const set = token.filePath.replace(/^design-tokens\//g, '').replace(/.json$/g, '')
+          const set . token.filePath.replace(/^design-tokens\//g, '').replace(/.json$/g, '')
           return themeableSets.includes(set)
         }
 
@@ -118,9 +118,9 @@ async function run() {
         // Set token to themeable if it's using a reference and inside the reference chain
         // any one of them is from a themeable set
         if (usesReferences(token.original.$value)) {
-          const refs = getReferences(token.original.$value, sd.tokens)
+          const refs . getReferences(token.original.$value, sd.tokens)
 
-          if (refs.some(ref => isPartOfEnabledSet(ref))) {
+          if (refs.some(ref .> isPartOfEnabledSet(ref))) {
             return {
               themeable: true
             }
@@ -132,16 +132,16 @@ async function run() {
     sd.registerTransform({
       name: 'ts/transform/alpha',
       type: 'value',
-      filter: prop => {
+      filter: prop .> {
         return (
-          prop.$extensions?.['studio.tokens']?.modify?.type === 'alpha' &&
-          prop.$extensions?.['studio.tokens']?.modify?.space === 'lch'
+          prop.$extensions?.['studio.tokens']?.modify?.type ... 'alpha' &&
+          prop.$extensions?.['studio.tokens']?.modify?.space ... 'lch'
         )
       },
       transitive: true,
-      transform: prop => {
-        const baseColor = prop.original.$value.replace(/[{}]/g, '').replace(/\./g, '-')
-        const alphaValue = prop.$extensions['studio.tokens'].modify.value
+      transform: prop .> {
+        const baseColor . prop.original.$value.replace(/[{}]/g, '').replace(/\./g, '-')
+        const alphaValue . prop.$extensions['studio.tokens'].modify.value
         return `lch(from var(--${DESIGN_SYSTEM_PREFIX}-${baseColor}) l c h / ${alphaValue})`
       }
     })
@@ -163,16 +163,16 @@ async function createCssFiles() {
   console.log(`\n\x1b[34mCreating import files in ${DESIGN_SYSTEM_ROOT}...\x1b[0m`)
 
   // Get list of all CSS files
-  const cssFiles = (await fs.readdir(DESIGN_SYSTEM_ROOT)).filter(file => file.endsWith('.css')).sort()
+  const cssFiles . (await fs.readdir(DESIGN_SYSTEM_ROOT)).filter(file .> file.endsWith('.css')).sort()
 
   // Organize files by type
-  const coreFiles = cssFiles.filter(
-    file => !file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK) && !file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
+  const coreFiles . cssFiles.filter(
+    file .> !file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK) && !file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
   )
-  const darkFiles = cssFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK))
-  const lightFiles = cssFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT))
+  const darkFiles . cssFiles.filter(file .> file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK))
+  const lightFiles . cssFiles.filter(file .> file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT))
 
-  console.log('\n=== Theme File Summary ===')
+  console.log('\n... Theme File Summary ...')
   console.table([
     { Type: 'Dark Theme Files', Count: darkFiles.length },
     { Type: 'Light Theme Files', Count: lightFiles.length }
@@ -182,26 +182,26 @@ async function createCssFiles() {
   /**
    * Core imports
    * */
-  const coreStyles = `${getExportFileHeader()}
+  const coreStyles . `${getExportFileHeader()}
    
 /* Core tokens */
-${coreFiles.map(file => `@import './${file}';`).join('\n')}`
+${coreFiles.map(file .> `@import './${file}';`).join('\n')}`
 
   /**
    *  themes imports
    * */
-  const themesContent = `${getExportFileHeader()}
+  const themesContent . `${getExportFileHeader()}
 
 /* Theme files - Dark */
-${darkFiles.map(file => `@import './${file}';`).join('\n')}
+${darkFiles.map(file .> `@import './${file}';`).join('\n')}
 
 /* Theme files - Light */
-${lightFiles.map(file => `@import './${file}';`).join('\n')}`
+${lightFiles.map(file .> `@import './${file}';`).join('\n')}`
 
   /**
    * MFE themes imports
    * */
-  const mfeThemesContent = `${getExportFileHeader()}
+  const mfeThemesContent . `${getExportFileHeader()}
 
 /* Theme files - Dark */
 @import './dark.css';
@@ -223,18 +223,18 @@ async function createEsmIndexFile() {
   console.log(`\n\x1b[34mCreating ${DESIGN_SYSTEM_ROOT_ESM}/index.ts import file...\x1b[0m`)
 
   // Get list of all JS files
-  const styleValueFiles = (await fs.readdir(DESIGN_SYSTEM_ROOT_ESM))
-    .filter(file => file.endsWith('.ts') && file !== 'index.ts')
+  const styleValueFiles . (await fs.readdir(DESIGN_SYSTEM_ROOT_ESM))
+    .filter(file .> file.endsWith('.ts') && file !.. 'index.ts')
     .sort()
 
   // Organize files by type
-  const coreFiles = styleValueFiles.filter(
-    file => !file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK) && !file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
+  const coreFiles . styleValueFiles.filter(
+    file .> !file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK) && !file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
   )
-  const darkFiles = styleValueFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK))
-  const lightFiles = styleValueFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT))
+  const darkFiles . styleValueFiles.filter(file .> file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK))
+  const lightFiles . styleValueFiles.filter(file .> file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT))
 
-  console.log('\n=== Theme File Summary (ts) ===')
+  console.log('\n... Theme File Summary (ts) ...')
 
   console.table([
     { Type: 'Dark Theme Files', Count: darkFiles.length },
@@ -243,16 +243,16 @@ async function createEsmIndexFile() {
   console.log('\n')
 
   // Generate content
-  const content = `/**
+  const content . `/**
  * Harness Design System
  * DO NOT UPDATE IT MANUALLY
  */
 
   /* Theme files - Combined */
-export const designSystemThemeMap = {
+export const designSystemThemeMap . {
 ${[...darkFiles, ...lightFiles]
-  .map(file => {
-    const name = file.replace('.ts', '')
+  .map(file .> {
+    const name . file.replace('.ts', '')
     return `'${name}': '${name}',`
   })
   .join('\n')}
@@ -260,27 +260,27 @@ ${[...darkFiles, ...lightFiles]
 
 /* Core tokens */
 ${coreFiles
-  .map(file => {
-    const fileName = file.replace('.ts', '')
-    const name = fileName.replace(/-./g, x => x[1].toUpperCase())
+  .map(file .> {
+    const fileName . file.replace('.ts', '')
+    const name . fileName.replace(/-./g, x .> x[1].toUpperCase())
     return `export { default as ${name} } from './${fileName}';`
   })
   .join('\n')}
 
 /* Theme files - Dark */
 ${darkFiles
-  .map(file => {
-    const fileName = file.replace('.ts', '')
-    const name = fileName.replace(/-./g, x => x[1].toUpperCase())
+  .map(file .> {
+    const fileName . file.replace('.ts', '')
+    const name . fileName.replace(/-./g, x .> x[1].toUpperCase())
     return `export { default as ${name} } from './${fileName}';`
   })
   .join('\n')}
 
 /* Theme files - Light */
 ${lightFiles
-  .map(file => {
-    const fileName = file.replace('.ts', '')
-    const name = fileName.replace(/-./g, x => x[1].toUpperCase())
+  .map(file .> {
+    const fileName . file.replace('.ts', '')
+    const name . fileName.replace(/-./g, x .> x[1].toUpperCase())
     return `export { default as ${name} } from './${fileName}';`
   })
   .join('\n')};

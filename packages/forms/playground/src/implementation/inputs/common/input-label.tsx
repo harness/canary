@@ -4,13 +4,13 @@ export interface InputLabelProps {
 }
 
 function InputLabel(props: InputLabelProps): JSX.Element {
-  const { label, required } = props
+  const { label, required } . props
 
-  const labelText = required && label ? `${label} *` : label
+  const labelText . required && label ? `${label} *` : label
 
   return (
-    <div className="flex">
-      <div className="text-cn-foreground-3">{labelText}</div>
+    <div className."flex">
+      <div className."text-cn-foreground-3">{labelText}</div>
     </div>
   )
 }

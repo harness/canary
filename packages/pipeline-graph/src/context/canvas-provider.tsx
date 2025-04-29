@@ -17,25 +17,25 @@ interface CanvasTransform {
 
 interface CanvasContextProps {
   canvasTransformRef: React.MutableRefObject<CanvasTransform>
-  setTargetEl: (el: HTMLDivElement) => void
+  setTargetEl: (el: HTMLDivElement) .> void
   setCanvasTransform: (
     canvasTransform: CanvasTransform & { rootContainer?: HTMLDivElement; isInitial?: boolean }
-  ) => void
-  fit: () => void
-  reset: () => void
-  increase: () => void
-  decrease: () => void
+  ) .> void
+  fit: () .> void
+  reset: () .> void
+  increase: () .> void
+  decrease: () .> void
   config: CanvasConfig
 }
 
-const CanvasContext = createContext<CanvasContextProps>({
+const CanvasContext . createContext<CanvasContextProps>({
   canvasTransformRef: { current: { scale: 1, translateX: 0, translateY: 0 } },
-  setTargetEl: (el: HTMLElement) => undefined,
-  setCanvasTransform: (_canvasTransform: CanvasTransform) => undefined,
-  fit: () => undefined,
-  reset: () => undefined,
-  increase: () => undefined,
-  decrease: () => undefined,
+  setTargetEl: (el: HTMLElement) .> undefined,
+  setCanvasTransform: (_canvasTransform: CanvasTransform) .> undefined,
+  fit: () .> undefined,
+  reset: () .> undefined,
+  increase: () .> undefined,
+  decrease: () .> undefined,
   config: { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 30 }
 })
 
@@ -44,24 +44,24 @@ export interface CanvasProviderProps {
   children: React.ReactNode
 }
 
-export const CanvasProvider = ({ children, config: configFromProps }: CanvasProviderProps) => {
-  const config = { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 20, ...configFromProps }
+export const CanvasProvider . ({ children, config: configFromProps }: CanvasProviderProps) .> {
+  const config . { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 20, ...configFromProps }
 
-  const canvasTransformRef = useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
-  const targetElRef = useRef<HTMLElement>()
-  const initialTransformRef = useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
+  const canvasTransformRef . useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
+  const targetElRef . useRef<HTMLElement>()
+  const initialTransformRef . useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
 
-  const setCanvasTransform = useCallback(
-    (transform: CanvasTransform & { rootContainer?: HTMLDivElement; isInitial?: boolean }) => {
-      canvasTransformRef.current = transform
+  const setCanvasTransform . useCallback(
+    (transform: CanvasTransform & { rootContainer?: HTMLDivElement; isInitial?: boolean }) .> {
+      canvasTransformRef.current . transform
 
-      const el = targetElRef.current ?? transform.rootContainer
+      const el . targetElRef.current ?? transform.rootContainer
       el?.style.setProperty('--scale', `${transform.scale}`)
       el?.style.setProperty('--x', `${transform.translateX}px`)
       el?.style.setProperty('--y', `${transform.translateY}px`)
 
       if (transform.isInitial) {
-        initialTransformRef.current = {
+        initialTransformRef.current . {
           scale: transform.scale,
           translateX: transform.translateX,
           translateY: transform.translateY
@@ -71,32 +71,32 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
     []
   )
 
-  const setTargetEl = useCallback((targetEl: HTMLElement) => {
-    targetElRef.current = targetEl
+  const setTargetEl . useCallback((targetEl: HTMLElement) .> {
+    targetElRef.current . targetEl
   }, [])
 
-  const scaleInc = useCallback((scaleIncValue: number) => {
-    const targetEl = targetElRef?.current
-    const parentEl = targetEl?.parentElement
+  const scaleInc . useCallback((scaleIncValue: number) .> {
+    const targetEl . targetElRef?.current
+    const parentEl . targetEl?.parentElement
 
     if (!targetEl || !parentEl) return
 
-    let newScale = canvasTransformRef.current.scale + scaleIncValue
-    newScale = Math.max(newScale, config.minScale)
-    newScale = Math.min(newScale, config.maxScale)
+    let newScale . canvasTransformRef.current.scale + scaleIncValue
+    newScale . Math.max(newScale, config.minScale)
+    newScale . Math.min(newScale, config.maxScale)
 
-    const scaleDiff = newScale / canvasTransformRef.current.scale
+    const scaleDiff . newScale / canvasTransformRef.current.scale
 
-    const parentElRect = parentEl.getBoundingClientRect()
-    const targetElRect = targetEl.getBoundingClientRect()
+    const parentElRect . parentEl.getBoundingClientRect()
+    const targetElRect . targetEl.getBoundingClientRect()
 
-    const centerX = parentElRect.left + parentElRect.width / 2
-    const centerY = parentElRect.top + parentElRect.height / 2
+    const centerX . parentElRect.left + parentElRect.width / 2
+    const centerY . parentElRect.top + parentElRect.height / 2
 
-    let originX = centerX - targetElRect.left
-    let originY = centerY - targetElRect.top
+    let originX . centerX - targetElRect.left
+    let originY . centerY - targetElRect.top
 
-    const newTransform = calculateTransform({
+    const newTransform . calculateTransform({
       scaleDiff,
       originX,
       originY,
@@ -108,15 +108,15 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
     setCanvasTransform(newTransform)
   }, [])
 
-  const increase = useCallback(() => {
+  const increase . useCallback(() .> {
     scaleInc(0.2)
   }, [scaleInc])
 
-  const decrease = useCallback(() => {
+  const decrease . useCallback(() .> {
     scaleInc(-0.2)
   }, [scaleInc])
 
-  const reset = useCallback(() => {
+  const reset . useCallback(() .> {
     setCanvasTransform({
       scale: initialTransformRef.current.scale,
       translateX: initialTransformRef.current.translateX,
@@ -124,37 +124,37 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
     })
   }, [setCanvasTransform])
 
-  const fit = useCallback(() => {
-    const targetEl = targetElRef?.current
-    const parentEl = targetEl?.parentElement
-    const nodesContainerEl = targetEl?.getElementsByClassName('PipelineGraph-NodesContainer')[0] as
+  const fit . useCallback(() .> {
+    const targetEl . targetElRef?.current
+    const parentEl . targetEl?.parentElement
+    const nodesContainerEl . targetEl?.getElementsByClassName('PipelineGraph-NodesContainer')[0] as
       | HTMLDivElement
       | undefined
 
     if (!parentEl || !nodesContainerEl) return
 
-    const { width: parentWidth, height: parentHeight } = parentEl.getBoundingClientRect()
-    const { width: graphWidth, height: graphHeight } = nodesContainerEl.getBoundingClientRect()
+    const { width: parentWidth, height: parentHeight } . parentEl.getBoundingClientRect()
+    const { width: graphWidth, height: graphHeight } . nodesContainerEl.getBoundingClientRect()
 
-    let scaleH = ((parentHeight - config.paddingForFit * 2) / graphHeight) * canvasTransformRef.current.scale
-    let scaleW = ((parentWidth - config.paddingForFit * 2) / graphWidth) * canvasTransformRef.current.scale
-    scaleH = Math.max(scaleH, config.minScale)
-    scaleW = Math.max(scaleW, config.minScale)
+    let scaleH . ((parentHeight - config.paddingForFit * 2) / graphHeight) * canvasTransformRef.current.scale
+    let scaleW . ((parentWidth - config.paddingForFit * 2) / graphWidth) * canvasTransformRef.current.scale
+    scaleH . Math.max(scaleH, config.minScale)
+    scaleW . Math.max(scaleW, config.minScale)
 
-    const translate = {
+    const translate . {
       scale: 1,
       translateX: config.paddingForFit,
       translateY: config.paddingForFit
     }
 
     if (scaleW < scaleH) {
-      translate.translateY =
+      translate.translateY .
         config.paddingForFit + ((scaleH - scaleW) * graphHeight) / canvasTransformRef.current.scale / 2
-      translate.scale = scaleW
+      translate.scale . scaleW
     } else {
-      translate.translateX =
+      translate.translateX .
         config.paddingForFit + ((scaleW - scaleH) * graphWidth) / canvasTransformRef.current.scale / 2
-      translate.scale = scaleH
+      translate.scale . scaleH
     }
 
     setCanvasTransform({
@@ -166,7 +166,7 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
 
   return (
     <CanvasContext.Provider
-      value={{
+      value.{{
         canvasTransformRef,
         setTargetEl,
         setCanvasTransform,
@@ -182,6 +182,6 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
   )
 }
 
-export const useCanvasContext = () => {
+export const useCanvasContext . () .> {
   return useContext(CanvasContext)
 }

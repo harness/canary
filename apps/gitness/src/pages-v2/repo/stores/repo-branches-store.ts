@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 import { BranchData, BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@harnessio/ui/views'
 
-export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
+export const useRepoBranchesStore . create<IBranchSelectorStore>(set .> ({
   // initial state
   defaultBranch: '',
   spaceId: '',
@@ -16,20 +16,20 @@ export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
   page: 1,
 
   // Actions
-  setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => set({ selectedBranchTag }),
-  setSelectedRefType: (selectedRefType: BranchSelectorTab) => set({ selectedRefType }),
-  setTagList: (tagList: BranchSelectorListItem[]) => set({ tagList }),
-  setSpaceIdAndRepoId: (spaceId: string, repoId: string) => set({ spaceId, repoId }),
-  setBranchList: (branches: BranchData[]) =>
+  setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) .> set({ selectedBranchTag }),
+  setSelectedRefType: (selectedRefType: BranchSelectorTab) .> set({ selectedRefType }),
+  setTagList: (tagList: BranchSelectorListItem[]) .> set({ tagList }),
+  setSpaceIdAndRepoId: (spaceId: string, repoId: string) .> set({ spaceId, repoId }),
+  setBranchList: (branches: BranchData[]) .>
     set({
       branchList: branches
     }),
-  setDefaultBranch: (branchName: string) =>
+  setDefaultBranch: (branchName: string) .>
     set({
       defaultBranch: branchName
     }),
-  setPage: page => set({ page }),
-  setPaginationFromHeaders: (xNextPage: number, xPrevPage: number) => {
+  setPage: page .> set({ page }),
+  setPaginationFromHeaders: (xNextPage: number, xPrevPage: number) .> {
     set({ xNextPage, xPrevPage })
   }
 }))

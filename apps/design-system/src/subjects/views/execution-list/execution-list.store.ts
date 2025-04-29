@@ -2,7 +2,7 @@ import { noop } from '@utils/viewUtils'
 
 import { IExecution, IExecutionListStore, PipelineExecutionStatus } from '@harnessio/ui/views'
 
-const executions: IExecution[] = [
+const executions: IExecution[] . [
   {
     id: '1',
     description: 'Execution description 1',
@@ -35,7 +35,7 @@ const executions: IExecution[] = [
   }
 ]
 
-export const useExecutionListStore = (): IExecutionListStore => ({
+export const useExecutionListStore . (): IExecutionListStore .> ({
   page: 1,
   executions,
   setPage: noop,

@@ -6,36 +6,36 @@ interface IPullRequestStore {
   pullRequest?: TypesPullReq | null
   pullReqError?: UsererrorError | null
   pullReqLoading: boolean
-  refetchPullReq: () => void
+  refetchPullReq: () .> void
 
-  setPullRequest: (metadata: TypesPullReq | undefined) => void
-  setPullReqError: (error: UsererrorError | null) => void
-  setPullReqLoading: (loading: boolean) => void
-  setRefetchPullReq: (refetch: () => void) => void
+  setPullRequest: (metadata: TypesPullReq | undefined) .> void
+  setPullReqError: (error: UsererrorError | null) .> void
+  setPullReqLoading: (loading: boolean) .> void
+  setRefetchPullReq: (refetch: () .> void) .> void
 }
 
-export const usePullRequestStore = create<IPullRequestStore>(set => ({
+export const usePullRequestStore . create<IPullRequestStore>(set .> ({
   pullRequest: null,
   pullReqError: null,
   pullReqLoading: false,
-  refetchPullReq: () => {},
+  refetchPullReq: () .> {},
 
-  setPullRequest: data => {
+  setPullRequest: data .> {
     set({
       pullRequest: data
     })
   },
-  setPullReqError: error => {
+  setPullReqError: error .> {
     set({
       pullReqError: error
     })
   },
-  setPullReqLoading: loading => {
+  setPullReqLoading: loading .> {
     set({
       pullReqLoading: loading
     })
   },
-  setRefetchPullReq: refetch => {
+  setRefetchPullReq: refetch .> {
     set({
       refetchPullReq: refetch
     })

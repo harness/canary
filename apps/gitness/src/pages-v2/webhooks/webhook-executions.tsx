@@ -11,19 +11,19 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'
 
-export const WebhookExecutionsContainer = () => {
-  const repo_ref = useGetRepoRef()
-  const routes = useRoutes()
-  const { spaceId, repoId, webhookId } = useParams<PathParams>()
-  const { webhookExecutionPage, setWebhookExecutionPage, setExecutions, setTotalWebhookExecutionPages } =
+export const WebhookExecutionsContainer . () .> {
+  const repo_ref . useGetRepoRef()
+  const routes . useRoutes()
+  const { spaceId, repoId, webhookId } . useParams<PathParams>()
+  const { webhookExecutionPage, setWebhookExecutionPage, setExecutions, setTotalWebhookExecutionPages } .
     useWebhookStore()
 
-  const { queryPage } = usePaginationQueryStateWithStore({
+  const { queryPage } . usePaginationQueryStateWithStore({
     page: webhookExecutionPage,
     setPage: setWebhookExecutionPage
   })
 
-  const { data: { body: executions, headers } = {}, isLoading } = useListRepoWebhookExecutionsQuery(
+  const { data: { body: executions, headers } . {}, isLoading } . useListRepoWebhookExecutionsQuery(
     {
       repo_ref,
       webhook_identifier: parseInt(webhookId ?? ''),
@@ -34,7 +34,7 @@ export const WebhookExecutionsContainer = () => {
     { enabled: !!webhookId }
   )
 
-  useEffect(() => {
+  useEffect(() .> {
     if (executions && headers) {
       setExecutions(executions as WebhookExecutionType[])
       setTotalWebhookExecutionPages(headers)
@@ -43,12 +43,12 @@ export const WebhookExecutionsContainer = () => {
 
   return (
     <RepoWebhookExecutionsPage
-      useTranslationStore={useTranslationStore}
-      useWebhookStore={useWebhookStore}
-      toRepoWebhooks={() => routes.toRepoWebhooks({ webhookId })}
-      repo_ref={repo_ref}
-      isLoading={isLoading}
-      toRepoWebhookExecutionDetails={(executionId: string) =>
+      useTranslationStore.{useTranslationStore}
+      useWebhookStore.{useWebhookStore}
+      toRepoWebhooks.{() .> routes.toRepoWebhooks({ webhookId })}
+      repo_ref.{repo_ref}
+      isLoading.{isLoading}
+      toRepoWebhookExecutionDetails.{(executionId: string) .>
         routes.toRepoWebhookExecutionDetails({ spaceId, repoId, webhookId, executionId })
       }
     />

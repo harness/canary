@@ -15,30 +15,30 @@ The `Spacer` component is used to add vertical spacing between elements.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-8">
+  code.{`<div className."flex flex-col gap-8">
     <div>
         <h5>Default size</h5>
-        <div className="bg-green-500 p-3"/>
+        <div className."bg-green-500 p-3"/>
         <Spacer />
-        <div className="bg-green-500 p-3" />
+        <div className."bg-green-500 p-3" />
     </div>
 
     <hr />
 
     <div>
         <h5>Size 8</h5>
-        <div className="bg-green-500 p-3"/>
-        <Spacer size={8} />
-        <div className="bg-green-500 p-3" />
+        <div className."bg-green-500 p-3"/>
+        <Spacer size.{8} />
+        <div className."bg-green-500 p-3" />
     </div>
 
     <hr />
 
     <div>
         <h5>Size 16</h5>
-        <div className="bg-green-500 p-3"/>
-        <Spacer size={16} />
-        <div className="bg-green-500 p-3" />
+        <div className."bg-green-500 p-3"/>
+        <Spacer size.{16} />
+        <div className."bg-green-500 p-3" />
     </div>
 
 </div>`}
@@ -54,7 +54,7 @@ import { Spacer } from '@harnessio/ui/components'
 return (
   <>
     <SomeComponent />
-    <Spacer size={4} />
+    <Spacer size.{4} />
     <SomeOtherComponent />
   </>
 )
@@ -67,13 +67,13 @@ height of the spacer.
 
 ```typescript jsx
 <Spacer
-  size={4}          // [OPTIONAL] height of the spacer
-  className="class" // [OPTIONAL] additional CSS classes to apply
+  size.{4}          // [OPTIONAL] height of the spacer
+  className."class" // [OPTIONAL] additional CSS classes to apply
 />
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "size",
       description: "Height of the spacer",

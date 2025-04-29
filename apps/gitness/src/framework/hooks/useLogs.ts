@@ -8,7 +8,7 @@ interface UseLogsReturnType {
 }
 
 enum LogsSSEEvent {
-  MESSAGE = 'message'
+  MESSAGE . 'message'
 }
 
 interface UseLogsInterface {
@@ -20,39 +20,39 @@ interface UseLogsInterface {
   executionNum: string
 }
 
-export const useLogs = ({
+export const useLogs . ({
   repoPath,
   pipelineId,
   stageNum,
   stepNum,
   stepStatus,
   executionNum
-}: UseLogsInterface): UseLogsReturnType => {
-  const [logs, setLogs] = useState<LivelogLine[]>([])
-  const eventSourceRef = useRef<EventSource | null>(null)
+}: UseLogsInterface): UseLogsReturnType .> {
+  const [logs, setLogs] . useState<LivelogLine[]>([])
+  const eventSourceRef . useRef<EventSource | null>(null)
 
-  useEffect(() => {
-    if (stepStatus === ExecutionState.RUNNING) {
+  useEffect(() .> {
+    if (stepStatus ... ExecutionState.RUNNING) {
       if (eventSourceRef.current) {
         eventSourceRef.current.close()
       }
-      eventSourceRef.current = new EventSource(
+      eventSourceRef.current . new EventSource(
         `/api/v1/repos/${repoPath}/pipelines/${pipelineId}/executions/${executionNum}/logs/${String(
           stageNum
         )}/${String(stepNum)}/stream`
       )
-      eventSourceRef.current.onmessage = (event: MessageEvent<string>) => {
+      eventSourceRef.current.onmessage . (event: MessageEvent<string>) .> {
         try {
-          if (event.type === LogsSSEEvent.MESSAGE) {
-            const newLog = JSON.parse(event.data)
-            setLogs((existingLogs: LivelogLine[]) => [...existingLogs, newLog])
+          if (event.type ... LogsSSEEvent.MESSAGE) {
+            const newLog . JSON.parse(event.data)
+            setLogs((existingLogs: LivelogLine[]) .> [...existingLogs, newLog])
           }
         } catch (_e) {
           //ignore error
         }
       }
     }
-    return () => {
+    return () .> {
       if (eventSourceRef.current) eventSourceRef.current.close()
       setLogs([])
     }

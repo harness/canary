@@ -3,7 +3,7 @@ import { createContext, useContext, useMemo } from 'react'
 import { CollapseButtonProps } from '../components/components/collapse'
 import { ParallelContainerConfigType, SerialContainerConfigType } from '../types/container-node'
 
-export const defaultSerialContainerConfig = {
+export const defaultSerialContainerConfig . {
   paddingLeft: 42,
   paddingRight: 42,
   paddingTop: 50,
@@ -11,7 +11,7 @@ export const defaultSerialContainerConfig = {
   nodeGap: 36
 }
 
-export const defaultParallelContainerConfig = {
+export const defaultParallelContainerConfig . {
   paddingLeft: 42,
   paddingRight: 42,
   paddingTop: 50,
@@ -22,11 +22,11 @@ export const defaultParallelContainerConfig = {
 interface ContainerNodeContextProps {
   serialContainerConfig: SerialContainerConfigType
   parallelContainerConfig: ParallelContainerConfigType
-  portComponent?: (props: { side: 'left' | 'right'; id?: string; adjustment?: number }) => JSX.Element
-  collapseButtonComponent?: (props: CollapseButtonProps) => JSX.Element
+  portComponent?: (props: { side: 'left' | 'right'; id?: string; adjustment?: number }) .> JSX.Element
+  collapseButtonComponent?: (props: CollapseButtonProps) .> JSX.Element
 }
 
-const ContainerNodeContext = createContext<ContainerNodeContextProps>({
+const ContainerNodeContext . createContext<ContainerNodeContextProps>({
   serialContainerConfig: defaultSerialContainerConfig,
   parallelContainerConfig: defaultParallelContainerConfig
 })
@@ -34,32 +34,32 @@ const ContainerNodeContext = createContext<ContainerNodeContextProps>({
 export interface ContainerNodeProviderProps {
   serialContainerConfig?: Partial<SerialContainerConfigType>
   parallelContainerConfig?: Partial<ParallelContainerConfigType>
-  portComponent?: (props: { side: 'left' | 'right'; id?: string; adjustment?: number }) => JSX.Element
-  collapseButtonComponent?: (props: CollapseButtonProps) => JSX.Element
+  portComponent?: (props: { side: 'left' | 'right'; id?: string; adjustment?: number }) .> JSX.Element
+  collapseButtonComponent?: (props: CollapseButtonProps) .> JSX.Element
 }
 
-const ContainerNodeProvider = ({
+const ContainerNodeProvider . ({
   serialContainerConfig,
   parallelContainerConfig,
   portComponent,
   collapseButtonComponent,
   children
-}: React.PropsWithChildren<ContainerNodeProviderProps>) => {
-  const serialConfig: SerialContainerConfigType = useMemo(() => {
-    const merged = { ...defaultSerialContainerConfig, ...serialContainerConfig }
-    merged.serialGroupAdjustment = (merged.paddingTop - merged.paddingBottom) / 2
+}: React.PropsWithChildren<ContainerNodeProviderProps>) .> {
+  const serialConfig: SerialContainerConfigType . useMemo(() .> {
+    const merged . { ...defaultSerialContainerConfig, ...serialContainerConfig }
+    merged.serialGroupAdjustment . (merged.paddingTop - merged.paddingBottom) / 2
     return merged
   }, [serialContainerConfig])
 
-  const parallelConfig: ParallelContainerConfigType = useMemo(() => {
-    const merged = { ...defaultParallelContainerConfig, ...parallelContainerConfig }
-    merged.parallelGroupAdjustment = 0
+  const parallelConfig: ParallelContainerConfigType . useMemo(() .> {
+    const merged . { ...defaultParallelContainerConfig, ...parallelContainerConfig }
+    merged.parallelGroupAdjustment . 0
     return merged
   }, [serialContainerConfig])
 
   return (
     <ContainerNodeContext.Provider
-      value={{
+      value.{{
         serialContainerConfig: serialConfig,
         parallelContainerConfig: parallelConfig,
         portComponent,
@@ -73,6 +73,6 @@ const ContainerNodeProvider = ({
 
 export default ContainerNodeProvider
 
-export const useContainerNodeContext = () => {
+export const useContainerNodeContext . () .> {
   return useContext(ContainerNodeContext)
 }

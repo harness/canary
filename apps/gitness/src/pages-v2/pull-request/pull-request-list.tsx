@@ -19,23 +19,23 @@ import { usePopulateLabelStore } from '../repo/labels/hooks/use-populate-label-s
 import { usePullRequestListStore } from './stores/pull-request-list-store'
 
 export default function PullRequestListPage() {
-  const repoRef = useGetRepoRef() ?? ''
-  const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery } = usePullRequestListStore()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const repoRef . useGetRepoRef() ?? ''
+  const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery } . usePullRequestListStore()
+  const { spaceId, repoId } . useParams<PathParams>()
 
   /* Query and Pagination */
-  const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
-  const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
-  const [populateLabelStore, setPopulateLabelStore] = useState(false)
-  const [searchParams] = useSearchParams()
-  const defaultAuthorId = searchParams.get('created_by')
-  const labelBy = searchParams.get('label_by')
-  const mfeContext = useMFEContext()
+  const [query, setQuery] . useQueryState('query')
+  const [queryPage, setQueryPage] . useQueryState('page', parseAsInteger.withDefault(1))
+  const [filterValues, setFilterValues] . useState<ListPullReqQueryQueryParams>({})
+  const [principalsSearchQuery, setPrincipalsSearchQuery] . useState<string>()
+  const [populateLabelStore, setPopulateLabelStore] . useState(false)
+  const [searchParams] . useSearchParams()
+  const defaultAuthorId . searchParams.get('created_by')
+  const labelBy . searchParams.get('label_by')
+  const mfeContext . useMFEContext()
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
 
-  const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
+  const { data: { body: pullRequestData, headers } . {}, isFetching: fetchingPullReqData } . useListPullReqQuery(
     {
       queryParams: { page, query: query ?? '', ...filterValues },
       repo_ref: repoRef,
@@ -46,7 +46,7 @@ export default function PullRequestListPage() {
     { retry: false }
   )
 
-  const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
+  const { data: { body: defaultSelectedAuthor } . {}, error: defaultSelectedAuthorError } . useGetPrincipalQuery(
     {
       queryParams: { page, query: query ?? '', ...filterValues },
       id: Number(searchParams.get('created_by'))
@@ -55,7 +55,7 @@ export default function PullRequestListPage() {
     { enabled: !!defaultAuthorId, staleTime: Infinity }
   )
 
-  const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(
+  const { data: { body: principalDataList } . {}, isFetching: fetchingPrincipalData } . useListPrincipalsQuery(
     {
       queryParams: {
         page: 1,
@@ -67,23 +67,23 @@ export default function PullRequestListPage() {
       }
     },
     {
-      enabled: principalsSearchQuery !== undefined
+      enabled: principalsSearchQuery !.. undefined
     }
   )
 
-  useEffect(() => {
+  useEffect(() .> {
     if (pullRequestData) {
       setPullRequests(pullRequestData, headers)
       setOpenClosePullRequests(pullRequestData)
     }
   }, [pullRequestData, headers, setPullRequests])
 
-  useEffect(() => {
+  useEffect(() .> {
     setQueryPage(page)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, queryPage, setPage])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (labelBy) {
       setPopulateLabelStore(true)
     }
@@ -91,38 +91,38 @@ export default function PullRequestListPage() {
 
   return (
     <SandboxPullRequestListPage
-      repoId={repoId}
-      spaceId={spaceId || ''}
-      isLoading={fetchingPullReqData}
-      isPrincipalsLoading={fetchingPrincipalData}
-      principalsSearchQuery={principalsSearchQuery}
-      defaultSelectedAuthorError={defaultSelectedAuthorError}
-      principalData={principalDataList}
-      defaultSelectedAuthor={defaultSelectedAuthor}
-      setPrincipalsSearchQuery={setPrincipalsSearchQuery}
-      useLabelsStore={useLabelsStore}
-      usePullRequestListStore={usePullRequestListStore}
-      useTranslationStore={useTranslationStore}
-      onFilterOpen={(filterValues: keyof PRListFilters) => {
-        if (filterValues === 'label_by') {
+      repoId.{repoId}
+      spaceId.{spaceId || ''}
+      isLoading.{fetchingPullReqData}
+      isPrincipalsLoading.{fetchingPrincipalData}
+      principalsSearchQuery.{principalsSearchQuery}
+      defaultSelectedAuthorError.{defaultSelectedAuthorError}
+      principalData.{principalDataList}
+      defaultSelectedAuthor.{defaultSelectedAuthor}
+      setPrincipalsSearchQuery.{setPrincipalsSearchQuery}
+      useLabelsStore.{useLabelsStore}
+      usePullRequestListStore.{usePullRequestListStore}
+      useTranslationStore.{useTranslationStore}
+      onFilterOpen.{(filterValues: keyof PRListFilters) .> {
+        if (filterValues ... 'label_by') {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={(filterData: PRListFilters) => {
+      onFilterChange.{(filterData: PRListFilters) .> {
         setFilterValues(
           Object.entries(filterData).reduce<
             Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>
-          >((acc, [key, value]) => {
-            if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
-              acc[key] = value.getTime().toString()
+          >((acc, [key, value]) .> {
+            if ((key ... 'created_gt' || key ... 'created_lt') && value instanceof Date) {
+              acc[key] . value.getTime().toString()
             }
-            if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
-              acc[key] = value.value
+            if (key ... 'created_by' && typeof value ... 'object' && 'value' in value) {
+              acc[key] . value.value
             }
-            if (key === 'label_by') {
-              const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
-              const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
-                if (value === true) {
+            if (key ... 'label_by') {
+              const defaultLabel: { labelId: string[]; valueId: string[] } . { labelId: [], valueId: [] }
+              const { labelId, valueId } . Object.entries(value).reduce((labelAcc, [labelKey, value]) .> {
+                if (value ... true) {
                   labelAcc.labelId.push(labelKey)
                 } else if (value) {
                   labelAcc.valueId.push(value)
@@ -130,15 +130,15 @@ export default function PullRequestListPage() {
                 return labelAcc
               }, defaultLabel)
 
-              acc['label_id'] = labelId.map(Number)
-              acc['value_id'] = valueId.map(Number)
+              acc['label_id'] . labelId.map(Number)
+              acc['value_id'] . valueId.map(Number)
             }
             return acc
           }, {})
         )
       }}
-      searchQuery={query}
-      setSearchQuery={setQuery}
+      searchQuery.{query}
+      setSearchQuery.{setQuery}
     />
   )
 }

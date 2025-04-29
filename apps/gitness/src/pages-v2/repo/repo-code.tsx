@@ -26,41 +26,41 @@ import { useRepoBranchesStore } from './stores/repo-branches-store'
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
-export const RepoCode = () => {
-  const repoRef = useGetRepoRef()
-  const { spaceId, repoId, selectedBranchTag } = useRepoBranchesStore()
-  const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  const routes = useRoutes()
-  const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
+export const RepoCode . () .> {
+  const repoRef . useGetRepoRef()
+  const { spaceId, repoId, selectedBranchTag } . useRepoBranchesStore()
+  const { codeMode, fullGitRef, gitRefName, fullResourcePath } . useCodePathDetails()
+  const routes . useRoutes()
+  const repoPath . `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 
   // TODO: pathParts - should have all data for files path breadcrumbs
-  const pathParts = [
+  const pathParts . [
     {
       path: repoId!,
       parentPath: repoPath
     },
     ...splitPathWithParents(fullResourcePath || '', repoPath)
   ]
-  const [files, setFiles] = useState<RepoFile[]>([])
-  const [loading, setLoading] = useState(false)
-  const [selectedBranch, setSelectedBranch] = useState(gitRefName || '')
-  const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
+  const [files, setFiles] . useState<RepoFile[]>([])
+  const [loading, setLoading] . useState(false)
+  const [selectedBranch, setSelectedBranch] . useState(gitRefName || '')
+  const [currBranchDivergence, setCurrBranchDivergence] . useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
 
   const {
-    data: { body: repoDetails } = {},
+    data: { body: repoDetails } . {},
     refetch: refetchRepoContent,
     isLoading: isLoadingRepoDetails
-  } = useGetContentQuery({
+  } . useGetContentQuery({
     path: fullResourcePath || '',
     repo_ref: repoRef,
     queryParams: { include_commit: true, git_ref: normalizeGitRef(fullGitRef || '') }
   })
 
-  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
-  const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
+  const { data: { body: repository } . {} } . useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: branchDivergence . [] } . {}, mutate: calculateDivergence } .
     useCalculateCommitDivergenceMutation({ repo_ref: repoRef })
 
-  useEffect(() => {
+  useEffect(() .> {
     if (repository && !fullGitRef) {
       setSelectedBranch(repository?.default_branch || '')
     } else if (fullGitRef) {
@@ -68,36 +68,36 @@ export const RepoCode = () => {
     }
   }, [repository, fullGitRef])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (branchDivergence.length) {
       setCurrBranchDivergence(branchDivergence[0])
     }
   }, [branchDivergence])
 
-  const repoEntryPathToFileTypeMap = useMemo((): Map<string, OpenapiGetContentOutput['type']> => {
+  const repoEntryPathToFileTypeMap . useMemo((): Map<string, OpenapiGetContentOutput['type']> .> {
     if (!repoDetails?.content?.entries?.length) return new Map()
 
-    const nonEmptyPathEntries = repoDetails.content.entries.filter(entry => !!entry.path)
+    const nonEmptyPathEntries . repoDetails.content.entries.filter(entry .> !!entry.path)
 
-    return new Map(nonEmptyPathEntries.map((entry: OpenapiContentInfo) => [entry?.path ? entry.path : '', entry.type]))
+    return new Map(nonEmptyPathEntries.map((entry: OpenapiContentInfo) .> [entry?.path ? entry.path : '', entry.type]))
   }, [repoDetails])
 
-  const getSummaryItemType = (type: OpenapiGetContentOutput['type']): SummaryItemType => {
-    if (type === 'dir') {
+  const getSummaryItemType . (type: OpenapiGetContentOutput['type']): SummaryItemType .> {
+    if (type ... 'dir') {
       return SummaryItemType.Folder
     }
     return SummaryItemType.File
   }
 
-  const getLastPathSegment = (path: string) => {
+  const getLastPathSegment . (path: string) .> {
     if (!path || /^\/+$/.test(path)) {
       return ''
     }
-    path = path.replace(/\/+$/, '')
+    path . path.replace(/\/+$/, '')
     return path.split('/').pop()
   }
 
-  useEffect(() => {
+  useEffect(() .> {
     if (repoEntryPathToFileTypeMap.size > 0) {
       setLoading(true)
       pathDetails({
@@ -105,11 +105,11 @@ export const RepoCode = () => {
         body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
         repo_ref: repoRef
       })
-        .then(({ body: response }) => {
+        .then(({ body: response }) .> {
           if (response?.details && response.details.length > 0) {
             setFiles(
               sortFilesByType(
-                response.details.map((item: GitPathDetails) => ({
+                response.details.map((item: GitPathDetails) .> ({
                   id: item?.path || '',
                   type: item?.path
                     ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path))
@@ -126,14 +126,14 @@ export const RepoCode = () => {
           }
         })
         .catch()
-        .finally(() => {
+        .finally(() .> {
           setLoading(false)
         })
     }
   }, [repoEntryPathToFileTypeMap.size, repoRef, selectedBranch])
 
-  const latestFiles = useMemo(() => {
-    const { author, message, sha } = repoDetails?.latest_commit || {}
+  const latestFiles . useMemo(() .> {
+    const { author, message, sha } . repoDetails?.latest_commit || {}
 
     return {
       user: {
@@ -145,20 +145,20 @@ export const RepoCode = () => {
     }
   }, [repoDetails?.latest_commit])
 
-  const pathToNewFile = useMemo(() => {
+  const pathToNewFile . useMemo(() .> {
     if (fullResourcePath && repoDetails) {
-      if (repoDetails?.type === 'dir') {
+      if (repoDetails?.type ... 'dir') {
         return `new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`
       }
 
-      const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
+      const parentDirPath . fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
       return `new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`
     }
 
     return `new/${fullGitRef || selectedBranchTag.name}/~/`
   }, [fullGitRef, fullResourcePath, repoDetails, selectedBranchTag.name])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (selectedBranchTag.name && repository?.default_branch) {
       calculateDivergence({
         body: {
@@ -168,20 +168,20 @@ export const RepoCode = () => {
     }
   }, [selectedBranchTag.name, repository?.default_branch, calculateDivergence])
 
-  useEffect(() => {
+  useEffect(() .> {
     refetchRepoContent()
   }, [codeMode, refetchRepoContent])
 
   /**
    * Render File content view or Edit file view
    */
-  const renderCodeView = useMemo(() => {
-    if (codeMode === CodeModes.VIEW && !!repoDetails?.type && repoDetails.type !== 'dir') {
-      return <FileContentViewer repoContent={repoDetails} />
+  const renderCodeView . useMemo(() .> {
+    if (codeMode ... CodeModes.VIEW && !!repoDetails?.type && repoDetails.type !.. 'dir') {
+      return <FileContentViewer repoContent.{repoDetails} />
     }
 
-    if (codeMode !== CodeModes.VIEW) {
-      return <FileEditor repoDetails={repoDetails} defaultBranch={repository?.default_branch || ''} />
+    if (codeMode !.. CodeModes.VIEW) {
+      return <FileEditor repoDetails.{repoDetails} defaultBranch.{repository?.default_branch || ''} />
     }
 
     return <></>
@@ -191,23 +191,23 @@ export const RepoCode = () => {
 
   return (
     <RepoFiles
-      toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
-      isRepoEmpty={repository?.is_empty}
-      pathParts={pathParts}
-      loading={loading}
-      files={files}
-      isDir={repoDetails?.type === 'dir'}
-      isShowSummary={!!repoEntryPathToFileTypeMap.size}
-      latestFile={latestFiles}
-      useTranslationStore={useTranslationStore}
-      pathNewFile={pathToNewFile}
+      toCommitDetails.{({ sha }: { sha: string }) .> routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
+      isRepoEmpty.{repository?.is_empty}
+      pathParts.{pathParts}
+      loading.{loading}
+      files.{files}
+      isDir.{repoDetails?.type ... 'dir'}
+      isShowSummary.{!!repoEntryPathToFileTypeMap.size}
+      latestFile.{latestFiles}
+      useTranslationStore.{useTranslationStore}
+      pathNewFile.{pathToNewFile}
       // TODO: add correct path to Upload files page
-      pathUploadFiles="/upload-file"
-      codeMode={codeMode}
-      useRepoBranchesStore={useRepoBranchesStore}
-      defaultBranchName={repository?.default_branch}
-      currentBranchDivergence={currBranchDivergence}
-      isLoadingRepoDetails={isLoadingRepoDetails}
+      pathUploadFiles."/upload-file"
+      codeMode.{codeMode}
+      useRepoBranchesStore.{useRepoBranchesStore}
+      defaultBranchName.{repository?.default_branch}
+      currentBranchDivergence.{currBranchDivergence}
+      isLoadingRepoDetails.{isLoadingRepoDetails}
     >
       {renderCodeView}
     </RepoFiles>

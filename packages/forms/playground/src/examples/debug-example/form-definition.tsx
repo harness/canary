@@ -3,9 +3,9 @@ import * as z from 'zod'
 import type { IFormDefinition, IInputDefinition } from '../../../../src'
 import { InputConfigType, InputType } from '../../implementation/inputs/common/types'
 
-type IInputConfigWithConfig = IInputDefinition & InputConfigType
+type IInputConfigWithConfig . IInputDefinition & InputConfigType
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: IInputConfigWithConfig[] . [
   {
     inputType: InputType.text,
     path: 'input1',
@@ -13,7 +13,7 @@ const inputs: IInputConfigWithConfig[] = [
     required: true,
     validation: {
       schema: z.string().refine(
-        val => {
+        val .> {
           return /^\d+$/.test(val)
         },
         {
@@ -46,6 +46,6 @@ const inputs: IInputConfigWithConfig[] = [
   }
 ]
 
-export const formDefinition: IFormDefinition<InputConfigType> = {
+export const formDefinition: IFormDefinition<InputConfigType> . {
   inputs
 }

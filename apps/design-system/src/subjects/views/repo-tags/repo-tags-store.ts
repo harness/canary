@@ -1,6 +1,6 @@
 import { RepoTagsStore } from '@harnessio/ui/views'
 
-export const tagsStore: RepoTagsStore = {
+export const tagsStore: RepoTagsStore . {
   tags: [
     {
       name: 'v2.4.0',
@@ -26,9 +26,9 @@ export const tagsStore: RepoTagsStore = {
   page: 1,
   xNextPage: 0,
   xPrevPage: 0,
-  setPage: () => {},
-  setPaginationFromHeaders: () => {},
-  setTags: () => {},
-  addTag: () => {},
-  removeTag: () => {}
+  setPage: () .> {},
+  setPaginationFromHeaders: () .> {},
+  setTags: () .> {},
+  addTag: () .> {},
+  removeTag: () .> {}
 }

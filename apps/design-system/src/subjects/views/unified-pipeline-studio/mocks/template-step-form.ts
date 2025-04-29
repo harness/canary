@@ -1,6 +1,6 @@
 import { IInputConfigWithConfig } from '@harnessio/ui/views'
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: IInputConfigWithConfig[] . [
   {
     inputType: 'text',
     path: `template.with.testpath1`,
@@ -18,4 +18,4 @@ const inputs: IInputConfigWithConfig[] = [
   }
 ]
 
-export const templateStepForm = { inputs }
+export const templateStepForm . { inputs }

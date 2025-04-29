@@ -1,6 +1,6 @@
-export type Inputs = Record<string, Input>
+export type Inputs . Record<string, Input>
 
-export interface Input<T = unknown> {
+export interface Input<T . unknown> {
   type: 'string' | 'number' | 'boolean' | 'array' | 'duration' | 'secret'
   description?: string
   default?: T

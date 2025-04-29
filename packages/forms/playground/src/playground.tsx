@@ -10,7 +10,7 @@ import ListPerformanceExample from './examples/list-performance-example/list-per
 import PerformanceExample from './examples/performance-example/performance-example'
 import ValidationExample from './examples/validation-example/validation-example'
 
-const demoArr = [
+const demoArr . [
   {
     name: 'Debug',
     component: DebugExample
@@ -38,16 +38,16 @@ const demoArr = [
 ]
 
 function App() {
-  const [demo, setDemo] = useState(demoArr[0])
+  const [demo, setDemo] . useState(demoArr[0])
 
   return (
     <>
-      <div className="main-buttons-holder">
-        {demoArr.map(demoItem => (
+      <div className."main-buttons-holder">
+        {demoArr.map(demoItem .> (
           <button
-            key={demoItem.name}
-            className={demoItem.name === demo.name ? 'active-button' : undefined}
-            onClick={() => {
+            key.{demoItem.name}
+            className.{demoItem.name ... demo.name ? 'active-button' : undefined}
+            onClick.{() .> {
               setDemo(demoItem)
             }}
           >
@@ -55,7 +55,7 @@ function App() {
           </button>
         ))}
       </div>
-      <div className="demo-holder">
+      <div className."demo-holder">
         <demo.component />
       </div>
     </>

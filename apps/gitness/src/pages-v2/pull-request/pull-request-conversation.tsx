@@ -56,19 +56,19 @@ import {
 } from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
-const onCopyClick = (commentId?: number, isNotCodeComment = false) => {
+const onCopyClick . (commentId?: number, isNotCodeComment . false) .> {
   if (!commentId) return
 
-  const url = new URL(window.location.href)
+  const url . new URL(window.location.href)
 
-  if (isNotCodeComment) url.pathname = url.pathname.replace('/conversation', '/changes')
+  if (isNotCodeComment) url.pathname . url.pathname.replace('/conversation', '/changes')
 
   url.searchParams.set('commentId', commentId.toString())
   copy(url.toString())
 }
 
 export default function PullRequestConversationPage() {
-  const routes = useRoutes()
+  const routes . useRoutes()
   const {
     pullReqMetadata,
     refetchPullReq,
@@ -78,7 +78,7 @@ export default function PullRequestConversationPage() {
     pullReqChecksDecision,
     updateCommentStatus,
     dryMerge
-  } = usePullRequestProviderStore(state => ({
+  } . usePullRequestProviderStore(state .> ({
     dryMerge: state.dryMerge,
     pullReqMetadata: state.pullReqMetadata,
     refetchPullReq: state.refetchPullReq,
@@ -89,48 +89,48 @@ export default function PullRequestConversationPage() {
     updateCommentStatus: state.updateCommentStatus
   }))
 
-  const { currentUser: currentUserData } = useAppContext()
+  const { currentUser: currentUserData } . useAppContext()
 
-  const [checkboxBypass, setCheckboxBypass] = useState(false)
-  const [searchReviewers, setSearchReviewers] = useState('')
-  const [addReviewerError, setAddReviewerError] = useState('')
-  const [removeReviewerError, setRemoveReviewerError] = useState('')
+  const [checkboxBypass, setCheckboxBypass] . useState(false)
+  const [searchReviewers, setSearchReviewers] . useState('')
+  const [addReviewerError, setAddReviewerError] . useState('')
+  const [removeReviewerError, setRemoveReviewerError] . useState('')
 
-  const [changesLoading, setChangesLoading] = useState(true)
-  const [showDeleteBranchButton, setShowDeleteBranchButton] = useState(false)
-  const [showRestoreBranchButton, setShowRestoreBranchButton] = useState(false)
-  const [errorMsg, setErrorMsg] = useState('')
-  const { spaceId, repoId } = useParams<PathParams>()
+  const [changesLoading, setChangesLoading] . useState(true)
+  const [showDeleteBranchButton, setShowDeleteBranchButton] . useState(false)
+  const [showRestoreBranchButton, setShowRestoreBranchButton] . useState(false)
+  const [errorMsg, setErrorMsg] . useState('')
+  const { spaceId, repoId } . useParams<PathParams>()
   const {
     scope: { accountId }
-  } = useMFEContext()
-  const [comment, setComment] = useState<string>('')
-  const [commentId] = useQueryState('commentId')
-  const [isScrolledToComment, setIsScrolledToComment] = useState(false)
+  } . useMFEContext()
+  const [comment, setComment] . useState<string>('')
+  const [commentId] . useQueryState('commentId')
+  const [isScrolledToComment, setIsScrolledToComment] . useState(false)
 
-  const repoRef = useGetRepoRef()
-  const { pullRequestId } = useParams<PathParams>()
-  const prId = (pullRequestId && Number(pullRequestId)) || -1
-  // const [loadState, setLoadState] = useState('data-loaded')
+  const repoRef . useGetRepoRef()
+  const { pullRequestId } . useParams<PathParams>()
+  const prId . (pullRequestId && Number(pullRequestId)) || -1
+  // const [loadState, setLoadState] . useState('data-loaded')
 
-  const filtersData = usePrFilters()
+  const filtersData . usePrFilters()
 
-  const { data: { body: principals } = {} } = useListPrincipalsQuery({
+  const { data: { body: principals } . {} } . useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers, accountIdentifier: accountId }
   })
 
-  const { data: { body: reviewers } = {}, refetch: refetchReviewers } = useReviewerListPullReqQuery({
+  const { data: { body: reviewers } . {}, refetch: refetchReviewers } . useReviewerListPullReqQuery({
     repo_ref: repoRef,
     pullreq_number: prId
   })
 
-  const { data: { body: codeOwners } = {}, refetch: refetchCodeOwners } = useCodeownersPullReqQuery({
+  const { data: { body: codeOwners } . {}, refetch: refetchCodeOwners } . useCodeownersPullReqQuery({
     repo_ref: repoRef,
     pullreq_number: prId
   })
 
-  const { data: { body: activityData } = {} } = useListPullReqActivitiesQuery({
+  const { data: { body: activityData } . {} } . useListPullReqActivitiesQuery({
     repo_ref: repoRef,
     pullreq_number: prId,
     queryParams: {}
@@ -139,21 +139,21 @@ export default function PullRequestConversationPage() {
   /**
    * get all label-related data
    */
-  const { searchLabel, changeSearchLabel, labels, labelsValues, handleAddLabel, handleRemoveLabel, appliedLabels } =
+  const { searchLabel, changeSearchLabel, labels, labelsValues, handleAddLabel, handleRemoveLabel, appliedLabels } .
     usePrConversationLabels({
       repoRef,
       prId,
       refetchData: refetchActivities
     })
 
-  const { mutateAsync: restoreBranch } = useRestorePullReqSourceBranchMutation({})
-  const onRestoreBranch = () => {
+  const { mutateAsync: restoreBranch } . useRestorePullReqSourceBranchMutation({})
+  const onRestoreBranch . () .> {
     restoreBranch({
       repo_ref: repoRef,
       pullreq_number: prId,
       body: { bypass_rules: false }
     })
-      .then(res => {
+      .then(res .> {
         if (res.body.name) {
           setErrorMsg('')
           setShowRestoreBranchButton(false)
@@ -161,33 +161,33 @@ export default function PullRequestConversationPage() {
           refetchActivities()
         }
       })
-      .catch(err => {
+      .catch(err .> {
         setErrorMsg(err.message)
       })
   }
   const {
-    data: { body: sourceBranch } = {},
+    data: { body: sourceBranch } . {},
     error: branchError,
     refetch: refetchBranch
-  } = useGetBranchQuery({
+  } . useGetBranchQuery({
     repo_ref: repoRef,
     branch_name: pullReqMetadata?.source_branch || '',
     queryParams: { include_checks: true, include_rules: true }
   })
-  const { mutateAsync: deleteBranch } = useDeletePullReqSourceBranchMutation({
+  const { mutateAsync: deleteBranch } . useDeletePullReqSourceBranchMutation({
     repo_ref: repoRef,
     pullreq_number: prId,
     queryParams: { dry_run_rules: true }
   })
-  const { mutateAsync: createBranch } = useCreateBranchMutation({})
-  const { mutateAsync: updateTitle } = useUpdatePullReqMutation({
+  const { mutateAsync: createBranch } . useCreateBranchMutation({})
+  const { mutateAsync: updateTitle } . useUpdatePullReqMutation({
     repo_ref: repoRef,
     pullreq_number: Number(pullRequestId)
   })
 
-  const handleUpdateDescription = useCallback(
-    (title: string, description: string) => {
-      updateTitle({ body: { title, description } }).catch(err => {
+  const handleUpdateDescription . useCallback(
+    (title: string, description: string) .> {
+      updateTitle({ body: { title, description } }).catch(err .> {
         setErrorMsg(err.message)
       })
       refetchPullReq()
@@ -195,16 +195,16 @@ export default function PullRequestConversationPage() {
     [updateTitle, refetchPullReq]
   )
 
-  const onDeleteBranch = () => {
+  const onDeleteBranch . () .> {
     deleteBranch({
       repo_ref: repoRef,
       pullreq_number: prId,
       queryParams: { bypass_rules: true, dry_run_rules: false }
     })
-      .then(res => {
+      .then(res .> {
         refetchBranch()
         if (res?.body?.rule_violations) {
-          const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(res.body?.rule_violations)
+          const { checkIfBypassAllowed } . extractInfoFromRuleViolationArr(res.body?.rule_violations)
           if (checkIfBypassAllowed) {
             setShowDeleteBranchButton(true)
           } else {
@@ -216,18 +216,18 @@ export default function PullRequestConversationPage() {
         setErrorMsg('')
         refetchActivities()
       })
-      .catch(err => {
+      .catch(err .> {
         setErrorMsg(err.message)
       })
   }
 
-  useEffect(() => {
+  useEffect(() .> {
     if (sourceBranch && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
       setShowDeleteBranchButton(true)
     }
   }, [sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (!branchError) return
 
     if (pullReqMetadata?.merged || pullReqMetadata?.closed) {
@@ -244,9 +244,9 @@ export default function PullRequestConversationPage() {
         bypass_rules: true,
         dry_run_rules: true
       }
-    }).then(res => {
+    }).then(res .> {
       if (res?.body?.rule_violations) {
-        const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(res.body?.rule_violations)
+        const { checkIfBypassAllowed } . extractInfoFromRuleViolationArr(res.body?.rule_violations)
 
         setShowRestoreBranchButton(checkIfBypassAllowed)
         return
@@ -256,62 +256,62 @@ export default function PullRequestConversationPage() {
     })
   }, [branchError])
 
-  const [activities, setActivities] = useState<TypesPullReqActivity[] | undefined>(activityData)
-  const approvedEvaluations = reviewers?.filter(evaluation => evaluation.review_decision === 'approved')
-  const latestApprovalArr = approvedEvaluations?.filter(
-    approved => !checkIfOutdatedSha(approved.sha, pullReqMetadata?.source_sha as string)
+  const [activities, setActivities] . useState<TypesPullReqActivity[] | undefined>(activityData)
+  const approvedEvaluations . reviewers?.filter(evaluation .> evaluation.review_decision ... 'approved')
+  const latestApprovalArr . approvedEvaluations?.filter(
+    approved .> !checkIfOutdatedSha(approved.sha, pullReqMetadata?.source_sha as string)
   )
-  const changeReqEvaluations = reviewers?.filter(evaluation => evaluation.review_decision === 'changereq')
-  const changeReqReviewer =
+  const changeReqEvaluations . reviewers?.filter(evaluation .> evaluation.review_decision ... 'changereq')
+  const changeReqReviewer .
     changeReqEvaluations && !isEmpty(changeReqEvaluations)
       ? capitalizeFirstLetter(
           changeReqEvaluations[0].reviewer?.display_name || changeReqEvaluations[0].reviewer?.uid || ''
         )
       : 'Reviewer'
-  const codeOwnerChangeReqEntries = findChangeReqDecisions(
+  const codeOwnerChangeReqEntries . findChangeReqDecisions(
     codeOwners?.evaluation_entries,
     CodeOwnerReqDecision.CHANGEREQ
   )
-  const codeOwnerPendingEntries = findWaitingDecisions(codeOwners?.evaluation_entries)
-  const codeOwnerApprovalEntries = findChangeReqDecisions(codeOwners?.evaluation_entries, CodeOwnerReqDecision.APPROVED)
-  const latestCodeOwnerApprovalArr = codeOwnerApprovalEntries
-    ?.map(entry => {
+  const codeOwnerPendingEntries . findWaitingDecisions(codeOwners?.evaluation_entries)
+  const codeOwnerApprovalEntries . findChangeReqDecisions(codeOwners?.evaluation_entries, CodeOwnerReqDecision.APPROVED)
+  const latestCodeOwnerApprovalArr . codeOwnerApprovalEntries
+    ?.map(entry .> {
       // Filter the owner_evaluations for 'changereq' decisions
-      const entryEvaluation = entry?.owner_evaluations.filter(
+      const entryEvaluation . entry?.owner_evaluations.filter(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (evaluation: any) => !checkIfOutdatedSha(evaluation?.review_sha, pullReqMetadata?.source_sha as string)
+        (evaluation: any) .> !checkIfOutdatedSha(evaluation?.review_sha, pullReqMetadata?.source_sha as string)
       )
       // If there are any 'changereq' decisions, return the entry along with them
       if (entryEvaluation && entryEvaluation?.length > 0) {
         return { entryEvaluation }
       }
     }) // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((entry: any) => entry !== null && entry !== undefined) // Filter out the null entries
+    .filter((entry: any) .> entry !.. null && entry !.. undefined) // Filter out the null entries
 
-  useEffect(() => {
+  useEffect(() .> {
     refetchCodeOwners()
   }, [pullReqMetadata, pullReqMetadata?.title, pullReqMetadata?.state, pullReqMetadata?.source_sha, refetchCodeOwners])
 
-  useEffect(() => {
+  useEffect(() .> {
     setActivities(activityData)
   }, [activityData])
 
-  useEffect(() => {
-    if (!commentId || isScrolledToComment || prPanelData.PRStateLoading || activityData?.length === 0) return
+  useEffect(() .> {
+    if (!commentId || isScrolledToComment || prPanelData.PRStateLoading || activityData?.length ... 0) return
     // Slight timeout so the UI has time to expand/hydrate
-    const timeoutId = setTimeout(() => {
-      const elem = document.getElementById(`comment-${commentId}`)
+    const timeoutId . setTimeout(() .> {
+      const elem . document.getElementById(`comment-${commentId}`)
       if (!elem) return
       elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
       setIsScrolledToComment(true)
     }, 500)
 
-    return () => {
+    return () .> {
       clearTimeout(timeoutId)
     }
   }, [commentId, isScrolledToComment, prPanelData.PRStateLoading, activityData])
 
-  const changesInfo = extractInfoForCodeOwnerContent({
+  const changesInfo . extractInfoForCodeOwnerContent({
     approvedEvaluations,
     reqNoChangeReq: prPanelData?.atLeastOneReviewerRule,
     reqCodeOwnerApproval: prPanelData?.reqCodeOwnerApproval,
@@ -327,12 +327,12 @@ export default function PullRequestConversationPage() {
     changeReqEvaluations
   })
 
-  useEffect(() => {
+  useEffect(() .> {
     if (
       !prPanelData?.PRStateLoading &&
-      changesInfo?.title !== '' &&
-      changesInfo?.statusMessage !== '' &&
-      changesInfo?.statusIcon !== ''
+      changesInfo?.title !.. '' &&
+      changesInfo?.statusMessage !.. '' &&
+      changesInfo?.statusIcon !.. ''
     ) {
       setChangesLoading(false)
     } else if (pullReqMetadata?.merged) {
@@ -346,52 +346,52 @@ export default function PullRequestConversationPage() {
     pullReqMetadata?.merged
   ])
 
-  const handleAddReviewer = (id?: number) => {
+  const handleAddReviewer . (id?: number) .> {
     reviewerAddPullReq({ repo_ref: repoRef, pullreq_number: prId, body: { reviewer_id: id } })
-      .then(() => refetchReviewers())
-      .catch(error => setAddReviewerError(error.message))
+      .then(() .> refetchReviewers())
+      .catch(error .> setAddReviewerError(error.message))
   }
-  const handleDeleteReviewer = (id: number) => {
+  const handleDeleteReviewer . (id: number) .> {
     reviewerDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_reviewer_id: id })
-      .then(() => refetchReviewers())
-      .catch(error => setRemoveReviewerError(error.message))
+      .then(() .> refetchReviewers())
+      .catch(error .> setRemoveReviewerError(error.message))
   }
 
-  const onPRStateChanged = useCallback(() => {
+  const onPRStateChanged . useCallback(() .> {
     refetchCodeOwners()
     refetchPullReq()
     refetchActivities()
   }, [refetchCodeOwners, repoRef, handleAddReviewer, handleDeleteReviewer]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleMerge = (method: string) => {
-    const payload: OpenapiMergePullReq = {
+  const handleMerge . (method: string) .> {
+    const payload: OpenapiMergePullReq . {
       method: method as EnumMergeMethod,
       source_sha: pullReqMetadata?.source_sha,
       bypass_rules: checkboxBypass,
       dry_run: false
       // message: data.commitMessage
     }
-    mergePullReqOp({ body: payload, repo_ref: repoRef, pullreq_number: prId }).then(() => {
+    mergePullReqOp({ body: payload, repo_ref: repoRef, pullreq_number: prId }).then(() .> {
       onPRStateChanged()
       setRuleViolationArr(undefined)
     })
     //todo: add catch t o show errors
-    // .catch(exception => showError(getErrorMessage(exception)))
+    // .catch(exception .> showError(getErrorMessage(exception)))
   }
 
-  const handlePrState = (state: string) => {
-    const payload: OpenapiStatePullReqRequest = {
-      ...(state === 'draft' && { is_draft: true }),
-      state: state === 'draft' ? 'open' : (state as EnumPullReqState)
+  const handlePrState . (state: string) .> {
+    const payload: OpenapiStatePullReqRequest . {
+      ...(state ... 'draft' && { is_draft: true }),
+      state: state ... 'draft' ? 'open' : (state as EnumPullReqState)
     }
-    statePullReq({ body: payload, repo_ref: repoRef, pullreq_number: prId }).then(() => {
+    statePullReq({ body: payload, repo_ref: repoRef, pullreq_number: prId }).then(() .> {
       onPRStateChanged()
       setRuleViolationArr(undefined)
     })
   }
 
-  const handleRebaseBranch = () => {
-    const payload: RebaseBranchRequestBody = {
+  const handleRebaseBranch . () .> {
+    const payload: RebaseBranchRequestBody . {
       base_branch: pullReqMetadata?.target_branch,
       bypass_rules: true,
       dry_run_rules: false,
@@ -400,24 +400,24 @@ export default function PullRequestConversationPage() {
     }
 
     rebaseBranch({ body: payload, repo_ref: repoRef }).then(
-      () => {
+      () .> {
         onPRStateChanged()
         setRuleViolationArr(undefined)
       },
-      error => {
+      error .> {
         setRebaseErrorMessage(error.message)
       }
     )
   }
 
-  const mockPullRequestActions = [
+  const mockPullRequestActions . [
     ...(pullReqMetadata?.closed
       ? [
           {
             id: '0',
             title: 'Open for review',
             description: 'Open this pull request for review.',
-            action: () => {
+            action: () .> {
               handlePrState('open')
             }
           }
@@ -428,7 +428,7 @@ export default function PullRequestConversationPage() {
               id: '0',
               title: 'Ready for review',
               description: 'Open this pull request for review.',
-              action: () => {
+              action: () .> {
                 handlePrState('open')
               }
             },
@@ -436,7 +436,7 @@ export default function PullRequestConversationPage() {
               id: '1',
               title: 'Close pull request',
               description: 'Close this pull request. You can still re-open the request after closing.',
-              action: () => {
+              action: () .> {
                 handlePrState('closed')
               }
             }
@@ -446,7 +446,7 @@ export default function PullRequestConversationPage() {
               id: '0',
               title: 'Squash and merge',
               description: 'All commits from this branch will be combined into one commit in the base branch.',
-              action: () => {
+              action: () .> {
                 handleMerge('squash')
               }
             },
@@ -454,7 +454,7 @@ export default function PullRequestConversationPage() {
               id: '1',
               title: 'Merge pull request',
               description: 'All commits from this branch will be added to the base branch via a merge commit.',
-              action: () => {
+              action: () .> {
                 handleMerge('merge')
               }
             },
@@ -462,7 +462,7 @@ export default function PullRequestConversationPage() {
               id: '2',
               title: 'Rebase and merge',
               description: 'All commits from this branch will be rebased and added to the base branch.',
-              action: () => {
+              action: () .> {
                 handleMerge('rebase')
               }
             },
@@ -471,7 +471,7 @@ export default function PullRequestConversationPage() {
               title: 'Fast-forward merge',
               description:
                 'All commits from this branch will be added to the base branch without a merge commit. Rebase may be required.',
-              action: () => {
+              action: () .> {
                 handleMerge('fast-forward')
               }
             }
@@ -493,7 +493,7 @@ export default function PullRequestConversationPage() {
     suggestionToCommit,
     toggleConversationStatus,
     handleUpload
-  } = usePRCommonInteractions({
+  } . usePRCommonInteractions({
     repoRef,
     prId,
     refetchActivities,
@@ -503,14 +503,14 @@ export default function PullRequestConversationPage() {
     dryMerge
   })
 
-  const [rebaseErrorMessage, setRebaseErrorMessage] = useState<string | null>(null)
+  const [rebaseErrorMessage, setRebaseErrorMessage] . useState<string | null>(null)
 
   /**
    * Memoize overviewProps
    */
-  const overviewProps = useMemo(
-    () => ({
-      toCommitDetails: ({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha }),
+  const overviewProps . useMemo(
+    () .> ({
+      toCommitDetails: ({ sha }: { sha: string }) .> routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha }),
       handleUpdateDescription,
       handleDeleteComment: deleteComment,
       handleUpdateComment: updateComment,
@@ -531,7 +531,7 @@ export default function PullRequestConversationPage() {
       removeSuggestionFromBatch,
       filenameToLanguage,
       handleUpload,
-      toCode: ({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`
+      toCode: ({ sha }: { sha: string }) .> `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`
     }),
     [
       routes,
@@ -561,18 +561,18 @@ export default function PullRequestConversationPage() {
   return (
     <>
       <CommitSuggestionsDialog
-        open={isCommitDialogOpen}
-        onClose={() => setIsCommitDialogOpen(false)}
-        onSuccess={onCommitSuggestionSuccess}
-        suggestions={suggestionsBatch?.length ? suggestionsBatch : suggestionToCommit ? [suggestionToCommit] : null}
-        prId={prId}
+        open.{isCommitDialogOpen}
+        onClose.{() .> setIsCommitDialogOpen(false)}
+        onSuccess.{onCommitSuggestionSuccess}
+        suggestions.{suggestionsBatch?.length ? suggestionsBatch : suggestionToCommit ? [suggestionToCommit] : null}
+        prId.{prId}
       />
       <PullRequestConversationView
-        rebaseErrorMessage={rebaseErrorMessage}
-        filtersProps={filtersData}
-        useTranslationStore={useTranslationStore}
+        rebaseErrorMessage.{rebaseErrorMessage}
+        filtersProps.{filtersData}
+        useTranslationStore.{useTranslationStore}
         // TODO: create useMemo of panelProps
-        panelProps={{
+        panelProps.{{
           handleRebaseBranch,
           handlePrState,
           changesInfo: {
@@ -609,13 +609,13 @@ export default function PullRequestConversationPage() {
           headerMsg: errorMsg,
           commitSuggestionsBatchCount: suggestionsBatch?.length,
           onCommitSuggestions: onCommitSuggestionsBatch,
-          toPRCheck: ({ pipelineId, executionId }) => routes.toExecution({ spaceId, repoId, pipelineId, executionId }),
+          toPRCheck: ({ pipelineId, executionId }) .> routes.toExecution({ spaceId, repoId, pipelineId, executionId }),
           spaceId,
           repoId
         }}
-        overviewProps={overviewProps}
+        overviewProps.{overviewProps}
         // TODO: create useMemo of commentBoxProps
-        commentBoxProps={{
+        commentBoxProps.{{
           comment,
           setComment,
           currentUser: currentUserData?.display_name,
@@ -623,7 +623,7 @@ export default function PullRequestConversationPage() {
           handleUpload
         }}
         // TODO: create useMemo of sideBarProps
-        sideBarProps={{
+        sideBarProps.{{
           addReviewers: handleAddReviewer,
           usersList: principals as PrincipalType[],
           currentUserId: currentUserData?.uid,
@@ -633,7 +633,7 @@ export default function PullRequestConversationPage() {
           handleDelete: handleDeleteReviewer,
           addReviewerError,
           removeReviewerError,
-          reviewers: reviewers?.map((val: TypesPullReqReviewer) => ({
+          reviewers: reviewers?.map((val: TypesPullReqReviewer) .> ({
             reviewer: {
               display_name: val.reviewer?.display_name || '',
               id: val.reviewer?.id || 0

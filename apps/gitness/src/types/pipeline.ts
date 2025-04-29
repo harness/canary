@@ -1,1 +1,1 @@
-export type VisualYamlValue = 'visual' | 'yaml'
+export type VisualYamlValue . 'visual' | 'yaml'

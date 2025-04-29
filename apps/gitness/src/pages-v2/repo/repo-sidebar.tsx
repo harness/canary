@@ -26,8 +26,8 @@ import { transformBranchList } from './transform-utils/branch-transform'
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
-export const RepoSidebar = () => {
-  const routes = useRoutes()
+export const RepoSidebar . () .> {
+  const routes . useRoutes()
   const {
     branchList,
     tagList,
@@ -38,21 +38,21 @@ export const RepoSidebar = () => {
     setSelectedBranchTag,
     setSelectedRefType,
     setSpaceIdAndRepoId
-  } = useRepoBranchesStore()
+  } . useRepoBranchesStore()
 
-  const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
-  const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  const navigate = useNavigate()
-  const [searchQuery, setSearchQuery] = useState('')
+  const repoRef . useGetRepoRef()
+  const { spaceId, repoId } . useParams<PathParams>()
+  const { fullGitRef, gitRefName, fullResourcePath } . useCodePathDetails()
+  const navigate . useNavigate()
+  const [searchQuery, setSearchQuery] . useState('')
 
-  useEffect(() => {
+  useEffect(() .> {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
 
-  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repository } . {} } . useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const { data: { body: branches } = {} } = useListBranchesQuery({
+  const { data: { body: branches } . {} } . useListBranchesQuery({
     repo_ref: repoRef,
     queryParams: {
       include_commit: false,
@@ -63,7 +63,7 @@ export const RepoSidebar = () => {
     }
   })
 
-  const { data: { body: selectedGitRefBranch } = {} } = useGetBranchQuery(
+  const { data: { body: selectedGitRefBranch } . {} } . useGetBranchQuery(
     {
       repo_ref: repoRef,
       branch_name: fullGitRef,
@@ -74,7 +74,7 @@ export const RepoSidebar = () => {
     }
   )
 
-  useEffect(() => {
+  useEffect(() .> {
     if (selectedGitRefBranch) {
       setSelectedBranchTag({
         name: selectedGitRefBranch.name ?? '',
@@ -83,7 +83,7 @@ export const RepoSidebar = () => {
     }
   }, [selectedGitRefBranch, fullGitRef])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (branches) {
       setBranchList(transformBranchList(branches, repository?.default_branch))
     }
@@ -92,7 +92,7 @@ export const RepoSidebar = () => {
     }
   }, [branches, repository?.default_branch])
 
-  const { data: { body: tags } = {} } = useListTagsQuery({
+  const { data: { body: tags } . {} } . useListTagsQuery({
     repo_ref: repoRef,
     queryParams: {
       include_commit: false,
@@ -102,10 +102,10 @@ export const RepoSidebar = () => {
     }
   })
 
-  useEffect(() => {
+  useEffect(() .> {
     if (tags) {
       setTagList(
-        tags.map(item => ({
+        tags.map(item .> ({
           name: item?.name || '',
           sha: item?.sha || '',
           default: false
@@ -114,19 +114,19 @@ export const RepoSidebar = () => {
     }
   }, [tags])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (!repository?.default_branch || !branchList.length) {
       return
     }
     if (!fullGitRef) {
-      const defaultBranch = branchList.find(branch => branch.default)
+      const defaultBranch . branchList.find(branch .> branch.default)
       setSelectedBranchTag({
         name: defaultBranch?.name || repository?.default_branch || '',
         sha: defaultBranch?.sha || '',
         default: true
       })
     } else {
-      const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
+      const selectedGitRefTag . tagList.find(tag .> tag.name ... gitRefName)
       if (selectedGitRefBranch) {
         setSelectedBranchTag({ name: selectedGitRefBranch.name ?? '', sha: selectedGitRefBranch.sha ?? '' })
       } else if (selectedGitRefTag) {
@@ -135,7 +135,7 @@ export const RepoSidebar = () => {
     }
   }, [repository?.default_branch, fullGitRef, branchList, tagList])
 
-  const { data: repoDetails } = useGetContentQuery({
+  const { data: repoDetails } . useGetContentQuery({
     path: '',
     repo_ref: repoRef,
     queryParams: {
@@ -144,24 +144,24 @@ export const RepoSidebar = () => {
     }
   })
 
-  const { data: filesData } = useListPathsQuery({
+  const { data: filesData } . useListPathsQuery({
     repo_ref: repoRef,
     queryParams: { git_ref: normalizeGitRef(fullGitRef || selectedBranchTag.name) }
   })
 
-  const filesList = filesData?.body?.files || []
+  const filesList . filesData?.body?.files || []
 
-  const selectBranchOrTag = useCallback(
-    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      if (type === BranchSelectorTab.BRANCHES) {
-        const branch = branchList.find(branch => branch.name === branchTagName.name)
+  const selectBranchOrTag . useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) .> {
+      if (type ... BranchSelectorTab.BRANCHES) {
+        const branch . branchList.find(branch .> branch.name ... branchTagName.name)
         if (branch) {
           setSelectedBranchTag(branch)
           setSelectedRefType(type)
           navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branch.name}`)
         }
-      } else if (type === BranchSelectorTab.TAGS) {
-        const tag = tagList.find(tag => tag.name === branchTagName.name)
+      } else if (type ... BranchSelectorTab.TAGS) {
+        const tag . tagList.find(tag .> tag.name ... branchTagName.name)
         if (tag) {
           setSelectedBranchTag(tag)
           setSelectedRefType(type)
@@ -172,7 +172,7 @@ export const RepoSidebar = () => {
     [navigate, repoId, spaceId, branchList, tagList]
   )
 
-  const navigateToNewFile = useCallback(() => {
+  const navigateToNewFile . useCallback(() .> {
     if (fullResourcePath) {
       getContent({
         path: fullResourcePath || '',
@@ -181,13 +181,13 @@ export const RepoSidebar = () => {
           include_commit: true,
           git_ref: normalizeGitRef(fullGitRef || selectedBranchTag.name)
         }
-      }).then(response => {
-        if (response.body.type === 'dir') {
+      }).then(response .> {
+        if (response.body.type ... 'dir') {
           navigate(
             `${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`
           )
         } else {
-          const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
+          const parentDirPath . fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
           navigate(
             `${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`
           )
@@ -198,8 +198,8 @@ export const RepoSidebar = () => {
     }
   }, [fullResourcePath, fullGitRef, navigate, repoId, repoRef, selectedBranchTag.name])
 
-  const navigateToFile = useCallback(
-    (filePath: string) => {
+  const navigateToFile . useCallback(
+    (filePath: string) .> {
       navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranchTag.name}/~/${filePath}`)
     },
     [fullGitRef, selectedBranchTag.name, navigate, repoId]
@@ -210,20 +210,20 @@ export const RepoSidebar = () => {
 
   return (
     <>
-      <div className="grid" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
+      <div className."grid" style.{{ gridTemplateColumns: 'auto 1px 1fr' }}>
         {!repository?.is_empty && (
           <RepoSidebarView
-            selectBranchOrTag={selectBranchOrTag}
-            useRepoBranchesStore={useRepoBranchesStore}
-            useTranslationStore={useTranslationStore}
-            navigateToNewFile={navigateToNewFile}
-            navigateToFile={navigateToFile}
-            filesList={filesList}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
+            selectBranchOrTag.{selectBranchOrTag}
+            useRepoBranchesStore.{useRepoBranchesStore}
+            useTranslationStore.{useTranslationStore}
+            navigateToNewFile.{navigateToNewFile}
+            navigateToFile.{navigateToFile}
+            filesList.{filesList}
+            searchQuery.{searchQuery}
+            setSearchQuery.{setSearchQuery}
           >
             {!!repoDetails?.body?.content?.entries?.length && (
-              <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />
+              <Explorer repoDetails.{repoDetails?.body} selectedBranch.{selectedBranchTag.name} />
             )}
           </RepoSidebarView>
         )}

@@ -6,11 +6,11 @@ import { cloneDeep, set } from 'lodash-es'
 //import { useRootFormikContext } from '../context/RootFormikContext'
 import type { InputProps } from './InputComponent'
 
-export interface InputComponentRendererProps<T = unknown> extends InputProps<T> {
+export interface InputComponentRendererProps<T . unknown> extends InputProps<T> {
   children?: React.ReactNode
 }
 
-export function InputComponentRenderer<T = unknown>({
+export function InputComponentRenderer<T . unknown>({
   path,
   factory,
   onUpdate,
@@ -19,13 +19,13 @@ export function InputComponentRenderer<T = unknown>({
   initialValues,
   input
 }: InputComponentRendererProps<T>): JSX.Element | null {
-  const { formState, watch } = useFormContext()
-  const { metadata = {}, fixedValues = {} /*getValuesWithDependencies*/ } = {} as any // useRootFormikContext()
+  const { formState, watch } . useFormContext()
+  const { metadata . {}, fixedValues . {} /*getValuesWithDependencies*/ } . {} as any // useRootFormikContext()
 
-  const inputComponent = factory?.getComponent<T>(input.inputType as string)
+  const inputComponent . factory?.getComponent<T>(input.inputType as string)
 
-  const commonProps = useMemo(
-    () => ({
+  const commonProps . useMemo(
+    () .> ({
       path,
       initialValues,
       onUpdate,
@@ -37,19 +37,19 @@ export function InputComponentRenderer<T = unknown>({
     [factory, initialValues, input, onChange, onUpdate, path, readonly, formState.errors]
   )
 
-  const values = watch()
-  const valuesWithDependenciesAndStepPaths = cloneDeep(values) //getValuesWithDependencies(values, input as IInputDefinition)
+  const values . watch()
+  const valuesWithDependenciesAndStepPaths . cloneDeep(values) //getValuesWithDependencies(values, input as IInputDefinition)
 
   if (fixedValues) {
-    Object.keys(fixedValues).forEach(path => {
-      const fixedValue = fixedValues[path]
+    Object.keys(fixedValues).forEach(path .> {
+      const fixedValue . fixedValues[path]
       set(valuesWithDependenciesAndStepPaths, path, fixedValue)
     })
   }
 
-  const isVisible = !input.isVisible || input?.isVisible(valuesWithDependenciesAndStepPaths, metadata)
+  const isVisible . !input.isVisible || input?.isVisible(valuesWithDependenciesAndStepPaths, metadata)
 
-  const component = useMemo(() => {
+  const component . useMemo(() .> {
     if (isVisible) {
       return (
         <>

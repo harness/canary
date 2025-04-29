@@ -16,19 +16,19 @@ import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-s
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useAdminListUsersStore } from './stores/admin-list-store'
 
-export const UserManagementPageContainer = () => {
-  const queryClient = useQueryClient()
+export const UserManagementPageContainer . () .> {
+  const queryClient . useQueryClient()
 
-  const { setUsers, setTotalPages, setPage, page, password } = useAdminListUsersStore()
+  const { setUsers, setTotalPages, setPage, page, password } . useAdminListUsersStore()
 
-  const [query, setQuery] = useQueryState('query')
-  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+  const [query, setQuery] . useQueryState('query')
+  const { queryPage } . usePaginationQueryStateWithStore({ page, setPage })
 
   const {
     isFetching,
     error,
-    data: { body: userData, headers } = {}
-  } = useAdminListUsersQuery({
+    data: { body: userData, headers } . {}
+  } . useAdminListUsersQuery({
     queryParams: {
       page: queryPage,
       // TODO: add search functionality by query parameter
@@ -37,7 +37,7 @@ export const UserManagementPageContainer = () => {
     }
   })
 
-  useEffect(() => {
+  useEffect(() .> {
     if (userData) {
       setUsers(userData)
     }
@@ -50,10 +50,10 @@ export const UserManagementPageContainer = () => {
     mutateAsync: updateUser,
     isLoading: isUpdatingUser,
     error: updateUserError
-  } = useAdminUpdateUserMutation(
+  } . useAdminUpdateUserMutation(
     {},
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
       }
     }
@@ -63,10 +63,10 @@ export const UserManagementPageContainer = () => {
     mutateAsync: deleteUser,
     isLoading: isDeletingUser,
     error: deleteUserError
-  } = useAdminDeleteUserMutation(
+  } . useAdminDeleteUserMutation(
     {},
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
       }
     }
@@ -76,10 +76,10 @@ export const UserManagementPageContainer = () => {
     mutateAsync: updateUserAdmin,
     isLoading: isUpdatingUserAdmin,
     error: updateUserAdminError
-  } = useUpdateUserAdminMutation(
+  } . useUpdateUserAdminMutation(
     {},
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
       }
     }
@@ -89,16 +89,16 @@ export const UserManagementPageContainer = () => {
     mutateAsync: createUser,
     isLoading: isCreatingUser,
     error: createUserError
-  } = useAdminCreateUserMutation(
+  } . useAdminCreateUserMutation(
     {},
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
       }
     }
   )
 
-  const handleCreateUser = (data: ICreateUserData) => {
+  const handleCreateUser . (data: ICreateUserData) .> {
     return createUser({
       body: {
         uid: data.uid,
@@ -109,7 +109,7 @@ export const UserManagementPageContainer = () => {
     })
   }
 
-  const handleUpdateUser = (data: IUpdateUserData) => {
+  const handleUpdateUser . (data: IUpdateUserData) .> {
     return updateUser({
       user_uid: data.userID,
       body: {
@@ -119,13 +119,13 @@ export const UserManagementPageContainer = () => {
     })
   }
 
-  const handleDeleteUser = (userUid: string) => {
+  const handleDeleteUser . (userUid: string) .> {
     return deleteUser({
       user_uid: userUid
     })
   }
 
-  const handleUpdateUserAdmin = (userUid: string, isAdmin: boolean) => {
+  const handleUpdateUserAdmin . (userUid: string, isAdmin: boolean) .> {
     return updateUserAdmin({
       user_uid: userUid,
       body: {
@@ -134,7 +134,7 @@ export const UserManagementPageContainer = () => {
     })
   }
 
-  const handleUpdatePassword = (userId: string) => {
+  const handleUpdatePassword . (userId: string) .> {
     return updateUser({
       user_uid: userId,
       body: {
@@ -143,7 +143,7 @@ export const UserManagementPageContainer = () => {
     })
   }
 
-  const handlers = {
+  const handlers . {
     handleUpdateUser,
     handleDeleteUser,
     handleUpdateUserAdmin,
@@ -151,7 +151,7 @@ export const UserManagementPageContainer = () => {
     handleCreateUser
   }
 
-  const loadingStates = {
+  const loadingStates . {
     isFetchingUsers: isFetching,
     isUpdatingUser,
     isDeletingUser,
@@ -159,7 +159,7 @@ export const UserManagementPageContainer = () => {
     isCreatingUser
   }
 
-  const errorStates = {
+  const errorStates . {
     fetchUsersError: error?.message?.toString() ?? '',
     updateUserError: updateUserError?.message?.toString() ?? '',
     deleteUserError: deleteUserError?.message?.toString() ?? '',
@@ -170,13 +170,13 @@ export const UserManagementPageContainer = () => {
   return (
     <>
       <UserManagementPage
-        useAdminListUsersStore={useAdminListUsersStore}
-        useTranslationStore={useTranslationStore}
-        handlers={handlers}
-        loadingStates={loadingStates}
-        errorStates={errorStates}
-        searchQuery={query}
-        setSearchQuery={setQuery}
+        useAdminListUsersStore.{useAdminListUsersStore}
+        useTranslationStore.{useTranslationStore}
+        handlers.{handlers}
+        loadingStates.{loadingStates}
+        errorStates.{errorStates}
+        searchQuery.{query}
+        setSearchQuery.{setQuery}
       />
     </>
   )

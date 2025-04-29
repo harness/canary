@@ -3,7 +3,7 @@ import { noop } from '@utils/viewUtils.ts'
 import { EnumPrincipalType } from '@harnessio/ui/types'
 import { EnumPullReqState } from '@harnessio/ui/views'
 
-export const pullRequestStore = {
+export const pullRequestStore . {
   pullRequest: {
     number: 1,
     created: 1737044851123,

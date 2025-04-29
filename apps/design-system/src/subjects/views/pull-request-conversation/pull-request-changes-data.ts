@@ -1,4 +1,4 @@
-export const currentUser = {
+export const currentUser . {
   uid: 'admin',
   email: 'admin@gitness.io',
   display_name: 'Administrator',
@@ -8,7 +8,7 @@ export const currentUser = {
   updated: 1699863416002
 }
 
-export const commitData = {
+export const commitData . {
   commits: [
     {
       sha: 'c59260ea5656e3e831b2d06a6524ad03c9f1ca9a',

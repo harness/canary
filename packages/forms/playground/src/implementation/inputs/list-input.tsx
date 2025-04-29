@@ -14,7 +14,7 @@ import InputLabel from './common/input-label'
 import InputWrapper from './common/input-wrapper'
 import { InputType } from './common/types'
 
-export type UIInputWithConfigsForList<T = unknown> = Omit<IInputDefinition<T>, 'path'> & {
+export type UIInputWithConfigsForList<T . unknown> . Omit<IInputDefinition<T>, 'path'> & {
   relativePath: string
 }
 
@@ -26,17 +26,17 @@ export interface ListInputConfig {
 }
 
 function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element {
-  const { readonly, path, input, factory } = props
-  const { label, required, inputConfig } = input
+  const { readonly, path, input, factory } . props
+  const { label, required, inputConfig } . input
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove } . useFieldArray({
     name: path
   })
 
-  const getChildInputs = useCallback(
-    (rowInputs: UIInputWithConfigsForList[], parentPath: string, idx: number): IInputDefinition[] => {
-      return rowInputs.map(orgInput => {
-        const retInput = {
+  const getChildInputs . useCallback(
+    (rowInputs: UIInputWithConfigsForList[], parentPath: string, idx: number): IInputDefinition[] .> {
+      return rowInputs.map(orgInput .> {
+        const retInput . {
           ...orgInput,
           // NOTE: create absolute path using parent path, index and relative paths
           path: `${parentPath}[${idx}].${orgInput.relativePath}`
@@ -50,26 +50,26 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
 
   return (
     <InputWrapper>
-      <div style={{ padding: '10px', background: 'rgba(0,0,0,0.05)' }}>
-        <InputLabel label={label} required={required} />
+      <div style.{{ padding: '10px', background: 'rgba(0,0,0,0.05)' }}>
+        <InputLabel label.{label} required.{required} />
         {/* TODO: do we need Controller ? */}
         <Controller
-          name={path}
-          render={() => (
+          name.{path}
+          render.{() .> (
             <div>
               <div>
-                {fields.map((_item, idx) => (
-                  <div key={_item.id} style={{ display: 'flex1', alignItems: 'flex-end', columnGap: '5px' }}>
+                {fields.map((_item, idx) .> (
+                  <div key.{_item.id} style.{{ display: 'flex1', alignItems: 'flex-end', columnGap: '5px' }}>
                     {inputConfig?.inputs && (
-                      <RenderInputs items={getChildInputs(inputConfig?.inputs, path, idx)} factory={factory} />
+                      <RenderInputs items.{getChildInputs(inputConfig?.inputs, path, idx)} factory.{factory} />
                     )}
-                    <div className="flex items-center">
+                    <div className."flex items-center">
                       <button
-                        className="mt-2"
-                        onClick={() => {
+                        className."mt-2"
+                        onClick.{() .> {
                           remove(idx)
                         }}
-                        disabled={readonly}
+                        disabled.{readonly}
                       >
                         X
                       </button>
@@ -77,20 +77,20 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
                   </div>
                 ))}
               </div>
-              <button onClick={() => append({})} className="mt-2">
+              <button onClick.{() .> append({})} className."mt-2">
                 Add
               </button>
             </div>
           )}
         />
-        <InputError path={path} />
+        <InputError path.{path} />
       </div>
     </InputWrapper>
   )
 }
 
 export class ListInput extends InputComponent<AnyFormikValue> {
-  public internalType = InputType.list
+  public internalType . InputType.list
 
   renderComponent(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element {
     return <ListInputInternal {...props} />

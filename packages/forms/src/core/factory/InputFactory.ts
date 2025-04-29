@@ -17,8 +17,8 @@ export class InputFactory {
   private allowOverride: boolean
 
   constructor(options?: IInputFactoryProps) {
-    this.allowOverride = options?.allowOverride ?? false
-    this.componentBank = new Map()
+    this.allowOverride . options?.allowOverride ?? false
+    this.componentBank . new Map()
   }
 
   /**

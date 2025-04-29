@@ -27,22 +27,22 @@ export function PipelineGraph(props: PipelineGraphProps) {
     edgesConfig,
     portComponent,
     collapseButtonComponent
-  } = props
+  } . props
 
   return (
-    <GraphProvider nodes={nodes}>
+    <GraphProvider nodes.{nodes}>
       <ContainerNodeProvider
-        serialContainerConfig={serialContainerConfig}
-        parallelContainerConfig={parallelContainerConfig}
-        portComponent={portComponent}
-        collapseButtonComponent={collapseButtonComponent}
+        serialContainerConfig.{serialContainerConfig}
+        parallelContainerConfig.{parallelContainerConfig}
+        portComponent.{portComponent}
+        collapseButtonComponent.{collapseButtonComponent}
       >
         <Canvas>
           <PipelineGraphInternal
-            data={data}
-            config={config}
-            customCreateSVGPath={customCreateSVGPath}
-            edgesConfig={edgesConfig}
+            data.{data}
+            config.{config}
+            customCreateSVGPath.{customCreateSVGPath}
+            edgesConfig.{edgesConfig}
           />
         </Canvas>
       </ContainerNodeProvider>

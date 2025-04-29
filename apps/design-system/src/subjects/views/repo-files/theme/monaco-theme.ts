@@ -2,7 +2,7 @@ import { editor } from 'monaco-editor'
 
 import { ThemeDefinition } from '@harnessio/yaml-editor'
 
-const harnessLightTheme = {
+const harnessLightTheme . {
   base: 'vs' as editor.BuiltinTheme,
   inherit: true,
   rules: [
@@ -148,7 +148,7 @@ const harnessLightTheme = {
   }
 }
 
-const harnessDarkTheme = {
+const harnessDarkTheme . {
   base: 'vs-dark' as editor.BuiltinTheme,
   inherit: true,
   rules: [
@@ -393,12 +393,12 @@ const harnessDarkTheme = {
   }
 }
 
-export const themes: ThemeDefinition[] = [
+export const themes: ThemeDefinition[] . [
   { themeName: 'dark', themeData: harnessDarkTheme },
   { themeName: 'light', themeData: harnessLightTheme }
 ]
 
-export const themesForBlame: ThemeDefinition[] = [
+export const themesForBlame: ThemeDefinition[] . [
   { themeName: 'dark', themeData: harnessDarkTheme },
   { themeName: 'light', themeData: harnessLightTheme }
 ]

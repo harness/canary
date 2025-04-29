@@ -1,9 +1,9 @@
 import { IFormDefinition, IInputDefinition } from '../../../../src'
 import { InputConfigType, InputType } from '../../implementation/inputs/common/types'
 
-type IInputConfigWithConfig = IInputDefinition & InputConfigType
+type IInputConfigWithConfig . IInputDefinition & InputConfigType
 
-export const defaultValues = {
+export const defaultValues . {
   rootArray: new Array(5).fill({
     secondArray: new Array(5).fill({
       secondArrayProp: 'second',
@@ -12,7 +12,7 @@ export const defaultValues = {
   })
 }
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: IInputConfigWithConfig[] . [
   {
     inputType: InputType.list,
     path: 'rootArray',
@@ -61,6 +61,6 @@ const inputs: IInputConfigWithConfig[] = [
   }
 ]
 
-export const formDefinition: IFormDefinition<InputConfigType> = {
+export const formDefinition: IFormDefinition<InputConfigType> . {
   inputs
 }

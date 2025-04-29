@@ -8,22 +8,22 @@ import { ThemeProvider } from '@harnessio/ui/context'
 
 import AppRouterProvider from './AppRouterProvider'
 
-const router = createBrowserRouter([
+const router . createBrowserRouter([
   {
     element: <AppRouterProvider />,
     children: [
       { path: '/view-preview/*', element: <ViewPreview /> },
-      { path: '/*', element: <Navigate to="/view-preview" /> }
+      { path: '/*', element: <Navigate to."/view-preview" /> }
     ]
   }
 ])
 
-const App: FC = () => {
-  const themeStore = useThemeStore()
+const App: FC . () .> {
+  const themeStore . useThemeStore()
 
   return (
     <ThemeProvider {...themeStore}>
-      <RouterProvider router={router} />
+      <RouterProvider router.{router} />
     </ThemeProvider>
   )
 }

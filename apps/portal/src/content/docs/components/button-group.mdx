@@ -9,9 +9,9 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-wrap gap-2 items-baseline flex-col">
+  code.{`<div className."flex flex-wrap gap-2 items-baseline flex-col">
     <div>
-      <div className="text-lg font-semibold mb-2">Horizontal Button Group</div>
+      <div className."text-lg font-semibold mb-2">Horizontal Button Group</div>
       <ButtonGroup>
         <Button>Button 1</Button>
         <Button>Button 2</Button>
@@ -19,16 +19,16 @@ import { DocsPage } from "../../../components/docs-page";
       </ButtonGroup>
     </div>
     <div>
-      <div className="text-lg font-semibold mb-2">Vertical Button Group with center alignment</div>
-      <ButtonGroup direction="vertical" verticalAlign="center">
+      <div className."text-lg font-semibold mb-2">Vertical Button Group with center alignment</div>
+      <ButtonGroup direction."vertical" verticalAlign."center">
         <Button>Button A</Button>
         <Button>Button B</Button>
         <Button>Button C</Button>
       </ButtonGroup>
     </div>
     <div>
-      <div className="text-lg font-semibold mb-2">Button Group with Custom Spacing</div>
-      <ButtonGroup spacing="2">
+      <div className."text-lg font-semibold mb-2">Button Group with Custom Spacing</div>
+      <ButtonGroup spacing."2">
         <Button>Button X</Button>
         <Button>Button Y</Button>
         <Button>Button Z</Button>
@@ -57,17 +57,17 @@ return (
 
 ```typescript jsx
 <ButtonGroup
-  direction="horizontal"   // [OPTIONAL] Direction of the button group, can be 'horizontal' or 'vertical'
-  className="custom-class" // [OPTIONAL] Custom class name
-  spacing="4"              // [OPTIONAL] Spacing between the buttons
-  verticalAlign="center"   // [OPTIONAL] Vertical alignment of the buttons when the direction is set to vertical
+  direction."horizontal"   // [OPTIONAL] Direction of the button group, can be 'horizontal' or 'vertical'
+  className."custom-class" // [OPTIONAL] Custom class name
+  spacing."4"              // [OPTIONAL] Spacing between the buttons
+  verticalAlign."center"   // [OPTIONAL] Vertical alignment of the buttons when the direction is set to vertical
 >
   {/* Buttons */}
 </ButtonGroup>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Can contain multiple `Button` components.",

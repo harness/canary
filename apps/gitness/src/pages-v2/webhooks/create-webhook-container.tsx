@@ -22,15 +22,15 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'
 
-export const CreateWebhookContainer = () => {
-  const routes = useRoutes()
-  const repo_ref = useGetRepoRef()
-  const navigate = useNavigate()
-  const { spaceId, repoId, webhookId } = useParams<PathParams>()
+export const CreateWebhookContainer . () .> {
+  const routes . useRoutes()
+  const repo_ref . useGetRepoRef()
+  const navigate . useNavigate()
+  const { spaceId, repoId, webhookId } . useParams<PathParams>()
 
-  const { setPreSetWebhookData } = useWebhookStore()
+  const { setPreSetWebhookData } . useWebhookStore()
 
-  useEffect(() => {
+  useEffect(() .> {
     if (!webhookId) {
       setPreSetWebhookData(null)
     }
@@ -40,10 +40,10 @@ export const CreateWebhookContainer = () => {
     mutate: createWebHook,
     isLoading: creatingWebHook,
     error: createWebHookError
-  } = useCreateRepoWebhookMutation(
+  } . useCreateRepoWebhookMutation(
     { repo_ref: repo_ref },
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         navigate(routes.toRepoWebhooks({ spaceId, repoId }))
       }
     }
@@ -53,22 +53,22 @@ export const CreateWebhookContainer = () => {
     mutate: updateWebHook,
     isLoading: updatingWebHook,
     error: updateWebhookError
-  } = useUpdateRepoWebhookMutation(
+  } . useUpdateRepoWebhookMutation(
     { repo_ref: repo_ref, webhook_identifier: Number(webhookId) },
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         navigate(routes.toRepoWebhooks({ spaceId, repoId }))
       }
     }
   )
 
-  const { data: { body: webhookData } = {}, isLoading: getWebhookIsLoading } = useGetRepoWebhookQuery(
+  const { data: { body: webhookData } . {}, isLoading: getWebhookIsLoading } . useGetRepoWebhookQuery(
     {
       repo_ref,
       webhook_identifier: Number(webhookId)
     },
     {
-      onSuccess: ({ body: data }) => {
+      onSuccess: ({ body: data }) .> {
         setPreSetWebhookData({
           identifier: data.identifier || '',
           description: data.description,
@@ -83,7 +83,7 @@ export const CreateWebhookContainer = () => {
     }
   )
 
-  useEffect(() => {
+  useEffect(() .> {
     if (webhookData) {
       setPreSetWebhookData({
         identifier: webhookData.identifier || '',
@@ -97,14 +97,14 @@ export const CreateWebhookContainer = () => {
     }
   }, [webhookData, setPreSetWebhookData])
 
-  const onSubmit = (data: CreateWebhookFormFields) => {
-    const webhookRequest = {
+  const onSubmit . (data: CreateWebhookFormFields) .> {
+    const webhookRequest . {
       identifier: data.identifier,
       display_name: data.identifier,
       description: data.description,
       url: data.url,
       enabled: data.enabled,
-      insecure: data.insecure === SSLVerificationEnum.DISABLED,
+      insecure: data.insecure ... SSLVerificationEnum.DISABLED,
       triggers: data.triggers
     }
 
@@ -122,28 +122,28 @@ export const CreateWebhookContainer = () => {
     }
   }
 
-  const onCancel = () => {
+  const onCancel . () .> {
     navigate(routes.toRepoWebhooks({ spaceId, repoId }))
   }
 
-  const apiError = createWebHookError?.message || updateWebhookError?.message || null
+  const apiError . createWebHookError?.message || updateWebhookError?.message || null
 
   if (!!webhookId && getWebhookIsLoading) {
-    return <SkeletonForm className="mt-7" />
+    return <SkeletonForm className."mt-7" />
   }
 
   if (!!webhookId && !webhookData)
-    return <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="webhooks" />
+    return <NotFoundPage useTranslationStore.{useTranslationStore} pageTypeText."webhooks" />
 
   return (
     <>
       <RepoWebhooksCreatePage
-        onFormSubmit={onSubmit}
-        onFormCancel={onCancel}
-        apiError={apiError}
-        isLoading={creatingWebHook || updatingWebHook}
-        useWebhookStore={useWebhookStore}
-        useTranslationStore={useTranslationStore}
+        onFormSubmit.{onSubmit}
+        onFormCancel.{onCancel}
+        apiError.{apiError}
+        isLoading.{creatingWebHook || updatingWebHook}
+        useWebhookStore.{useWebhookStore}
+        useTranslationStore.{useTranslationStore}
       />
     </>
   )

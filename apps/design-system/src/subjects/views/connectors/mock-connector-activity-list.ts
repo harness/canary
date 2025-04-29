@@ -1,6 +1,6 @@
 import { ConnectorActivityList } from '@harnessio/ui/views'
 
-export const mockConnectorActivityList = {
+export const mockConnectorActivityList . {
   content: [
     {
       referredEntity: {

@@ -9,22 +9,22 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`
-  <div className="flex flex-col space-y-8">
+  code.{`
+  <div className."flex flex-col space-y-8">
     <section>
-      <div className="text-l font-semibold mb-4">Single Selection Example</div>
-      <ToggleGroup.Root type="single">
-        <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-        <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-        <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      <div className."text-l font-semibold mb-4">Single Selection Example</div>
+      <ToggleGroup.Root type."single">
+        <ToggleGroup.Item value."1">Option 1</ToggleGroup.Item>
+        <ToggleGroup.Item value."2">Option 2</ToggleGroup.Item>
+        <ToggleGroup.Item value."3">Option 3</ToggleGroup.Item>
       </ToggleGroup.Root>
     </section>
     <section>
-      <div className="text-l font-semibold mb-4">Multiple Selection Example with outline variant </div>
-      <ToggleGroup.Root type="multiple" variant="outline">
-        <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-        <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-        <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      <div className."text-l font-semibold mb-4">Multiple Selection Example with outline variant </div>
+      <ToggleGroup.Root type."multiple" variant."outline">
+        <ToggleGroup.Item value."1">Option 1</ToggleGroup.Item>
+        <ToggleGroup.Item value."2">Option 2</ToggleGroup.Item>
+        <ToggleGroup.Item value."3">Option 3</ToggleGroup.Item>
       </ToggleGroup.Root>
     </section>
   </div>`}
@@ -38,10 +38,10 @@ import { ToggleGroup } from '@harnessio/ui/components'
 // ...
 
 return (
-  <ToggleGroup.Root onValueChange={updateControlledInputValue} value={controlledInputValue} type="single">
-    <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-    <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-    <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+  <ToggleGroup.Root onValueChange.{updateControlledInputValue} value.{controlledInputValue} type."single">
+    <ToggleGroup.Item value."1">Option 1</ToggleGroup.Item>
+    <ToggleGroup.Item value."2">Option 2</ToggleGroup.Item>
+    <ToggleGroup.Item value."3">Option 3</ToggleGroup.Item>
   </ToggleGroup.Root>
 )
 ```
@@ -63,7 +63,7 @@ All parts of the `ToggleGroup` component can be imported and composed as require
 The `Root` component serves as the main container for all toggle group elements.
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "You can pass in your `ToggleGroup.Item` as childrens",
@@ -108,7 +108,7 @@ The `Root` component serves as the main container for all toggle group elements.
       description:
         "Callback that fires when the value of the toggle group changes",
       required: false,
-      value: "(value: string | string[]) => void",
+      value: "(value: string | string[]) .> void",
     },
     {
       name: "disabled",
@@ -148,11 +148,11 @@ The `Root` component serves as the main container for all toggle group elements.
 The `Item` component is used to define each toggle button within the group.
 
 ```typescript jsx
-<ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+<ToggleGroup.Item value."1">Option 1</ToggleGroup.Item>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Content to display",
@@ -210,7 +210,7 @@ The `Item` component is used to define each toggle button within the group.
       name: "onPressedChange",
       description: "Callback that fires when the state of the toggle changes",
       required: false,
-      value: "(pressed: boolean) => void",
+      value: "(pressed: boolean) .> void",
     },
   ]}
 />

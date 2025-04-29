@@ -10,12 +10,12 @@ import {
 } from '@harnessio/ui/views'
 import { YamlRevision } from '@harnessio/yaml-editor'
 
-const inputComponentFactory = new InputFactory()
+const inputComponentFactory . new InputFactory()
 inputComponentFactory.registerComponent(new TextInput())
 inputComponentFactory.registerComponent(new BooleanInput())
 inputComponentFactory.registerComponent(new NumberInput())
 
-const pipelineInputs = {
+const pipelineInputs . {
   stringRequired: { type: 'string', required: true },
   stringPattern: { type: 'string', pattern: '^[A-Z]*$' },
   stringRequiredPattern: { type: 'string', required: true, pattern: '^[A-Z]*$' },
@@ -29,32 +29,32 @@ const pipelineInputs = {
 }
 
 export interface RunPipelineFormProps {
-  onClose: () => void
+  onClose: () .> void
 }
 
 export default function RunPipelineDrawerContent({ onClose }: RunPipelineFormProps) {
-  const [yamlRevision, setYamlRevision] = useState<YamlRevision>({ yaml: '' })
-  const [view, setView] = useState<VisualYamlValue>('visual')
-  const [isLoadingPipeline] = useState(false)
-  const [isValid, setIsValid] = useState(true)
-  const [error, setError] = useState<{ message?: string } | undefined>()
+  const [yamlRevision, setYamlRevision] . useState<YamlRevision>({ yaml: '' })
+  const [view, setView] . useState<VisualYamlValue>('visual')
+  const [isLoadingPipeline] . useState(false)
+  const [isValid, setIsValid] . useState(true)
+  const [error, setError] . useState<{ message?: string } | undefined>()
 
   return (
     <RunPipelineDrawerContentView
-      isValid={isValid}
-      onValidationChange={setIsValid}
-      view={view}
-      onViewChange={setView}
-      isLoadingPipeline={isLoadingPipeline}
-      yamlRevision={yamlRevision}
-      onYamlRevisionChange={setYamlRevision}
-      onCancel={onClose}
-      onRun={() => setError({ message: 'Pipeline execution failed. Error message ...' })}
-      pipelineInputs={pipelineInputs}
-      inputComponentFactory={inputComponentFactory}
-      theme={'dark'}
-      error={error}
-      isExecutingPipeline={false}
+      isValid.{isValid}
+      onValidationChange.{setIsValid}
+      view.{view}
+      onViewChange.{setView}
+      isLoadingPipeline.{isLoadingPipeline}
+      yamlRevision.{yamlRevision}
+      onYamlRevisionChange.{setYamlRevision}
+      onCancel.{onClose}
+      onRun.{() .> setError({ message: 'Pipeline execution failed. Error message ...' })}
+      pipelineInputs.{pipelineInputs}
+      inputComponentFactory.{inputComponentFactory}
+      theme.{'dark'}
+      error.{error}
+      isExecutingPipeline.{false}
     />
   )
 }

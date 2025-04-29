@@ -1,7 +1,7 @@
 import { MenuGroupType, MenuGroupTypes } from '@harnessio/ui/components'
 
-export const useRootViewWrapperStore = () => {
-  const moreMenu = [
+export const useRootViewWrapperStore . () .> {
+  const moreMenu . [
     {
       groupId: 0,
       title: 'Devops',
@@ -158,7 +158,7 @@ export const useRootViewWrapperStore = () => {
     }
   ] as MenuGroupType[]
 
-  const settingsMenu = [
+  const settingsMenu . [
     {
       groupId: 6,
       title: 'General',

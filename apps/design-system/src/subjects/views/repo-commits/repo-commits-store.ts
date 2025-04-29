@@ -4,7 +4,7 @@ interface RepoCommitsStore {
   commits: RepoCommitsViewProps['commitsList']
 }
 
-export const repoCommitsStore: RepoCommitsStore = {
+export const repoCommitsStore: RepoCommitsStore . {
   commits: [
     {
       sha: '1d0e5a9461b340ebb3d7e092a2d35ff6d0d5c952',

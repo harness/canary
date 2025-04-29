@@ -2,17 +2,17 @@ import { EnumCiStatus, TypesExecution } from '@harnessio/code-service-client'
 import { Icon, MeterState } from '@harnessio/ui/components'
 import { PipelineExecutionStatus } from '@harnessio/ui/views'
 
-const renderBranch = (branch: string): React.ReactElement => {
+const renderBranch . (branch: string): React.ReactElement .> {
   return (
-    <div className="flex items-center gap-1 rounded-md bg-cn-background-1/10 px-1.5 font-mono">
-      <Icon name="branch" size={11} className="text-cn-foreground-3" />
+    <div className."flex items-center gap-1 rounded-md bg-cn-background-1/10 px-1.5 font-mono">
+      <Icon name."branch" size.{11} className."text-cn-foreground-3" />
       {branch}
     </div>
   )
 }
 
-export const getLabel = (execution: TypesExecution): string | React.ReactElement => {
-  const { author_name, event, source, target } = execution
+export const getLabel . (execution: TypesExecution): string | React.ReactElement .> {
+  const { author_name, event, source, target } . execution
   if (!author_name || !event) {
     return ''
   }
@@ -21,7 +21,7 @@ export const getLabel = (execution: TypesExecution): string | React.ReactElement
       return `${author_name} triggered manually`
     case 'pull_request':
       return (
-        <div className="flex items-center gap-1">
+        <div className."flex items-center gap-1">
           <span>{`${author_name} created pull request`}</span>
           {source && <>from{renderBranch(source)}</>}
           {source && <span>to</span>}
@@ -33,7 +33,7 @@ export const getLabel = (execution: TypesExecution): string | React.ReactElement
   }
 }
 
-export const getExecutionStatus = (status?: EnumCiStatus): PipelineExecutionStatus => {
+export const getExecutionStatus . (status?: EnumCiStatus): PipelineExecutionStatus .> {
   switch (status) {
     case 'running':
       return PipelineExecutionStatus.RUNNING
@@ -50,7 +50,7 @@ export const getExecutionStatus = (status?: EnumCiStatus): PipelineExecutionStat
   }
 }
 
-export const getMeterState = (status?: EnumCiStatus): MeterState => {
+export const getMeterState . (status?: EnumCiStatus): MeterState .> {
   switch (status) {
     case PipelineExecutionStatus.FAILURE:
     case PipelineExecutionStatus.KILLED:

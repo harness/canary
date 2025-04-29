@@ -14,19 +14,19 @@ interface CalculateTransformArgs {
   currentScale?: number
 }
 
-export function calculateTransform(args: CalculateTransformArgs = {}) {
+export function calculateTransform(args: CalculateTransformArgs . {}) {
   const {
-    originX = 0,
-    originY = 0,
-    panX = 0,
-    panY = 0,
-    scaleDiff = 1,
-    currentTranslateX = 0,
-    currentTranslateY = 0,
-    currentScale = 1
-  } = args
+    originX . 0,
+    originY . 0,
+    panX . 0,
+    panY . 0,
+    scaleDiff . 1,
+    currentTranslateX . 0,
+    currentTranslateY . 0,
+    currentScale . 1
+  } . args
 
-  const matrix = new DOMMatrix()
+  const matrix . new DOMMatrix()
     .translate(panX, panY)
     .translate(originX, originY)
     .translate(currentTranslateX, currentTranslateY)

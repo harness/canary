@@ -14,24 +14,24 @@ import { BranchSelectorContainer } from './branch-selector-container'
 
 interface CreateBranchDialogProps {
   open: boolean
-  onClose: () => void
-  onSuccess?: () => void
+  onClose: () .> void
+  onSuccess?: () .> void
   preselectedBranchOrTag?: BranchSelectorListItem | null
   preselectedTab?: BranchSelectorTab
 }
 
-export const CreateBranchDialog = ({
+export const CreateBranchDialog . ({
   open,
   onClose,
   onSuccess,
   preselectedBranchOrTag,
   preselectedTab
-}: CreateBranchDialogProps) => {
-  const repo_ref = useGetRepoRef()
+}: CreateBranchDialogProps) .> {
+  const repo_ref . useGetRepoRef()
 
-  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
+  const [selectedBranchOrTag, setSelectedBranchOrTag] . useState<BranchSelectorListItem | null>(null)
 
-  const selectBranchOrTag = useCallback((branchTagName: BranchSelectorListItem) => {
+  const selectBranchOrTag . useCallback((branchTagName: BranchSelectorListItem) .> {
     setSelectedBranchOrTag(branchTagName)
   }, [])
 
@@ -40,17 +40,17 @@ export const CreateBranchDialog = ({
     error: createBranchError,
     isLoading: isCreatingBranch,
     reset: resetBranchMutation
-  } = useCreateBranchMutation(
+  } . useCreateBranchMutation(
     {},
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         onClose()
         onSuccess?.()
       }
     }
   )
 
-  const handleCreateBranch = async (data: CreateBranchFormFields) => {
+  const handleCreateBranch . async (data: CreateBranchFormFields) .> {
     await createBranch({
       repo_ref,
       body: {
@@ -59,13 +59,13 @@ export const CreateBranchDialog = ({
     })
   }
 
-  useEffect(() => {
+  useEffect(() .> {
     if (!open) {
       resetBranchMutation()
     }
   }, [open, resetBranchMutation])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (preselectedBranchOrTag) {
       setSelectedBranchOrTag(preselectedBranchOrTag)
     }
@@ -73,18 +73,18 @@ export const CreateBranchDialog = ({
 
   return (
     <CreateBranchDialogComp
-      useTranslationStore={useTranslationStore}
-      open={open}
-      onClose={onClose}
-      selectedBranchOrTag={selectedBranchOrTag}
-      onSubmit={handleCreateBranch}
-      isCreatingBranch={isCreatingBranch}
-      error={createBranchError?.message}
-      renderProp={() => (
+      useTranslationStore.{useTranslationStore}
+      open.{open}
+      onClose.{onClose}
+      selectedBranchOrTag.{selectedBranchOrTag}
+      onSubmit.{handleCreateBranch}
+      isCreatingBranch.{isCreatingBranch}
+      error.{createBranchError?.message}
+      renderProp.{() .> (
         <BranchSelectorContainer
-          onSelectBranchorTag={selectBranchOrTag}
-          selectedBranch={selectedBranchOrTag}
-          preSelectedTab={preselectedTab}
+          onSelectBranchorTag.{selectBranchOrTag}
+          selectedBranch.{selectedBranchOrTag}
+          preSelectedTab.{preselectedTab}
         />
       )}
     />

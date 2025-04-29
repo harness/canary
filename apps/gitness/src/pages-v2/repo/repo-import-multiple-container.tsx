@@ -9,18 +9,18 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useAPIPath } from '../../hooks/useAPIPath'
 import { getRepoProviderConfig, PROVIDER_TYPE_MAP } from './constants/import-providers-map'
 
-export const ImportMultipleRepos = () => {
-  const routes = useRoutes()
-  const spaceURL = useGetSpaceURLParam()
-  const navigate = useNavigate()
-  const apiPath = useAPIPath()
-  const multiRepoImportPath = apiPath(`/api/v1/spaces/${spaceURL}/+/import?space_path=${spaceURL}`)
-  const [apiError, setApiError] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
+export const ImportMultipleRepos . () .> {
+  const routes . useRoutes()
+  const spaceURL . useGetSpaceURLParam()
+  const navigate . useNavigate()
+  const apiPath . useAPIPath()
+  const multiRepoImportPath . apiPath(`/api/v1/spaces/${spaceURL}/+/import?space_path.${spaceURL}`)
+  const [apiError, setApiError] . useState<string>('')
+  const [loading, setLoading] . useState<boolean>(false)
 
-  const onSubmit = async (data: ImportMultipleReposFormFields) => {
-    const provider_space = getRepoProviderConfig(data)
-    const body: ImportSpaceRequestBody = {
+  const onSubmit . async (data: ImportMultipleReposFormFields) .> {
+    const provider_space . getRepoProviderConfig(data)
+    const body: ImportSpaceRequestBody . {
       identifier: spaceURL,
       description: '',
       parent_ref: spaceURL,
@@ -36,7 +36,7 @@ export const ImportMultipleRepos = () => {
 
     try {
       setLoading(true)
-      const response = await fetch(multiRepoImportPath, {
+      const response . await fetch(multiRepoImportPath, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -45,11 +45,11 @@ export const ImportMultipleRepos = () => {
       })
 
       if (!response.ok) {
-        const errorData = await response.json()
+        const errorData . await response.json()
 
         // temporary solution to handle unauthorized requests
 
-        if (response.status === 401) {
+        if (response.status ... 401) {
           navigate('/login')
         }
 
@@ -66,7 +66,7 @@ export const ImportMultipleRepos = () => {
     }
   }
 
-  const onCancel = () => {
+  const onCancel . () .> {
     setLoading(false)
     navigate(routes.toRepositories({ spaceId: spaceURL }))
   }
@@ -75,10 +75,10 @@ export const ImportMultipleRepos = () => {
     // @TODO: Add loading states and error handling when API is available
     <>
       <RepoImportMultiplePage
-        onFormSubmit={onSubmit}
-        onFormCancel={onCancel}
-        isLoading={loading}
-        apiErrorsValue={apiError}
+        onFormSubmit.{onSubmit}
+        onFormCancel.{onCancel}
+        isLoading.{loading}
+        apiErrorsValue.{apiError}
       />
     </>
   )

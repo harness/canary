@@ -2,7 +2,7 @@ import { ContainerNodeType } from './container-node'
 import { ContainerNode, NodeProps } from './nodes'
 import { LeafNodeInternalType, ParallelNodeInternalType, SerialNodeInternalType } from './nodes-internal'
 
-export interface LeafNodeContent<T = any> {
+export interface LeafNodeContent<T . any> {
   containerType: ContainerNode.leaf
   type: string
   component: (
@@ -14,10 +14,10 @@ export interface LeafNodeContent<T = any> {
       isLast?: boolean
       parentNodeType?: ContainerNodeType
     } & NodeProps
-  ) => JSX.Element
+  ) .> JSX.Element
 }
 
-export interface SerialNodeContent<T = any> {
+export interface SerialNodeContent<T . any> {
   containerType: ContainerNode.serial
   type: string
   component: (
@@ -29,10 +29,10 @@ export interface SerialNodeContent<T = any> {
       isLast?: boolean
       parentNodeType?: ContainerNodeType
     } & NodeProps
-  ) => JSX.Element
+  ) .> JSX.Element
 }
 
-export interface ParallelNodeContent<T = any> {
+export interface ParallelNodeContent<T . any> {
   containerType: ContainerNode.parallel
   type: string
   component: (
@@ -44,7 +44,7 @@ export interface ParallelNodeContent<T = any> {
       isLast?: boolean
       parentNodeType?: ContainerNodeType
     } & NodeProps
-  ) => JSX.Element
+  ) .> JSX.Element
 }
 
-export type NodeContent = LeafNodeContent | SerialNodeContent | ParallelNodeContent
+export type NodeContent . LeafNodeContent | SerialNodeContent | ParallelNodeContent

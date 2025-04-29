@@ -9,18 +9,18 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex items-center justify-center">
-    <Carousel.Root className="w-1/2">
+  code.{`<div className."flex items-center justify-center">
+    <Carousel.Root className."w-1/2">
       <Carousel.Previous />
       <Carousel.Content>
         <Carousel.Item>
-          <div className="h-64 w-full bg-blue-800 text-cn-foreground-1 flex items-center justify-center">Slide 1</div>
+          <div className."h-64 w-full bg-blue-800 text-cn-foreground-1 flex items-center justify-center">Slide 1</div>
         </Carousel.Item>
         <Carousel.Item>
-          <div className="h-64 w-full bg-green-800 text-cn-foreground-1 flex items-center justify-center">Slide 2</div>
+          <div className."h-64 w-full bg-green-800 text-cn-foreground-1 flex items-center justify-center">Slide 2</div>
         </Carousel.Item>
         <Carousel.Item>
-          <div className="h-64 w-full bg-red-800 text-cn-foreground-1 flex items-center justify-center">Slide 3</div>
+          <div className."h-64 w-full bg-red-800 text-cn-foreground-1 flex items-center justify-center">Slide 3</div>
         </Carousel.Item>
       </Carousel.Content>
       <Carousel.Next />
@@ -38,13 +38,13 @@ return (
     <Carousel.Previous />
     <Carousel.Content>
       <Carousel.Item>
-        <div className="h-64 w-full bg-blue-800 text-cn-foreground-1 flex items-center justify-center">Slide 1</div>
+        <div className."h-64 w-full bg-blue-800 text-cn-foreground-1 flex items-center justify-center">Slide 1</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div className="h-64 w-full bg-green-800 text-cn-foreground-1 flex items-center justify-center">Slide 2</div>
+        <div className."h-64 w-full bg-green-800 text-cn-foreground-1 flex items-center justify-center">Slide 2</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div className="h-64 w-full bg-red-800 text-cn-foreground-1 flex items-center justify-center">Slide 3</div>
+        <div className."h-64 w-full bg-red-800 text-cn-foreground-1 flex items-center justify-center">Slide 3</div>
       </Carousel.Item>
     </Carousel.Content>
     <Carousel.Next />
@@ -73,7 +73,7 @@ All parts of the `Carousel` component can be imported and composed as required.
 The `Root` component serves as the main container for all carousel elements.
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description:
@@ -104,7 +104,7 @@ The `Root` component serves as the main container for all carousel elements.
       name: "setApi",
       description: "Function to set the carousel API",
       required: false,
-      value: "(api: CarouselApi) => void",
+      value: "(api: CarouselApi) .> void",
     },
     {
       name: "initialSlide",
@@ -128,19 +128,19 @@ The `Content` component defines the main content area of the carousel.
 ```typescript jsx
 <Carousel.Content>
   <Carousel.Item>
-    <div className="h-64 w-full bg-blue-800 text-cn-foreground-1 flex items-center justify-center">Slide 1</div>
+    <div className."h-64 w-full bg-blue-800 text-cn-foreground-1 flex items-center justify-center">Slide 1</div>
   </Carousel.Item>
   <Carousel.Item>
-    <div className="h-64 w-full bg-green-800 text-cn-foreground-1 flex items-center justify-center">Slide 2</div>
+    <div className."h-64 w-full bg-green-800 text-cn-foreground-1 flex items-center justify-center">Slide 2</div>
   </Carousel.Item>
   <Carousel.Item>
-    <div className="h-64 w-full bg-red-800 text-cn-foreground-1 flex items-center justify-center">Slide 3</div>
+    <div className."h-64 w-full bg-red-800 text-cn-foreground-1 flex items-center justify-center">Slide 3</div>
   </Carousel.Item>
 </Carousel.Content>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Content to display",
@@ -168,12 +168,12 @@ The `Item` component defines an individual item within the carousel.
 
 ```typescript jsx
 <Carousel.Item>
-  <div className="h-64 w-full bg-blue-800 text-cn-foreground-1 flex items-center justify-center">Slide 1</div>
+  <div className."h-64 w-full bg-blue-800 text-cn-foreground-1 flex items-center justify-center">Slide 1</div>
 </Carousel.Item>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "children",
       description: "Content to display",
@@ -198,7 +198,7 @@ The `Previous` component is used to navigate to the previous slide.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Additional class names to apply to the button",
@@ -231,7 +231,7 @@ The `Next` component is used to navigate to the next slide.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Additional class names to apply to the button",

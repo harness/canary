@@ -23,33 +23,33 @@ import { orderSortDate } from '../../types'
 import { usePrincipalListStore } from '../account/stores/principal-list-store'
 import { useMemberListStore } from './stores/member-list-store'
 
-const mapToEnumMembershipRole = (role: string): EnumMembershipRole | undefined =>
+const mapToEnumMembershipRole . (role: string): EnumMembershipRole | undefined .>
   (['contributor', 'executor', 'reader', 'space_owner'] as const).includes(role as EnumMembershipRole)
     ? (role as EnumMembershipRole)
     : undefined
 
 export function ProjectMemberListPage() {
-  const spaceURL = useGetSpaceURLParam()
-  const { page, setPage, setMemberList } = useMemberListStore()
-  const { setPrincipalList } = usePrincipalListStore()
-  const queryClient = useQueryClient()
-  const [query, setQuery] = useQueryState('query')
+  const spaceURL . useGetSpaceURLParam()
+  const { page, setPage, setMemberList } . useMemberListStore()
+  const { setPrincipalList } . usePrincipalListStore()
+  const queryClient . useQueryClient()
+  const [query, setQuery] . useQueryState('query')
   const {
     scope: { accountId }
-  } = useMFEContext()
+  } . useMFEContext()
 
-  const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
-  const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)
-  const [deleteMemberId, setDeleteMemberId] = useState<string | null>(null)
+  const [principalsSearchQuery, setPrincipalsSearchQuery] . useState('')
+  const [isInviteDialogOpen, setIsInviteDialogOpen] . useState(false)
+  const [deleteMemberId, setDeleteMemberId] . useState<string | null>(null)
 
-  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+  const { queryPage } . usePaginationQueryStateWithStore({ page, setPage })
 
-  const { data: { body: principalData } = {} } = useListPrincipalsQuery({
+  const { data: { body: principalData } . {} } . useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemented
     queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery, accountIdentifier: accountId }
   })
 
-  const { isLoading, data: { body: membersData } = {} } = useMembershipListQuery({
+  const { isLoading, data: { body: membersData } . {} } . useMembershipListQuery({
     space_ref: spaceURL ?? '',
     queryParams: {
       page: queryPage,
@@ -58,21 +58,21 @@ export function ProjectMemberListPage() {
     }
   })
 
-  const { mutateAsync: updateRole } = useMembershipUpdateMutation({
+  const { mutateAsync: updateRole } . useMembershipUpdateMutation({
     space_ref: spaceURL ?? ''
   })
 
   /**
    * Close dialog for Delete member and if it was API error - reset it
    */
-  const handleResetDeleteMember = () => {
+  const handleResetDeleteMember . () .> {
     setDeleteMemberId(null)
     if (deleteMemberError) {
       resetDeleteMember()
     }
   }
 
-  const handleSetDeleteMember = (id: string) => {
+  const handleSetDeleteMember . (id: string) .> {
     setDeleteMemberId(id)
   }
 
@@ -81,10 +81,10 @@ export function ProjectMemberListPage() {
     isLoading: isDeletingMember,
     error: deleteMemberError,
     reset: resetDeleteMember
-  } = useMembershipDeleteMutation(
+  } . useMembershipDeleteMutation(
     { space_ref: spaceURL ?? '' },
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         handleResetDeleteMember()
         handleInvalidateMemberList()
       }
@@ -96,15 +96,15 @@ export function ProjectMemberListPage() {
     isLoading: isInvitingMember,
     error: inviteMemberError,
     reset
-  } = useMembershipAddMutation({
+  } . useMembershipAddMutation({
     space_ref: spaceURL ?? ''
   })
 
-  const handleDeleteMember = (user_uid: string) => {
+  const handleDeleteMember . (user_uid: string) .> {
     deleteMember({ user_uid })
   }
 
-  const handleInvalidateMemberList = () => {
+  const handleInvalidateMemberList . () .> {
     queryClient.invalidateQueries({ queryKey: ['membershipList'] })
   }
 
@@ -112,7 +112,7 @@ export function ProjectMemberListPage() {
    * - Reset principalsSearchQuery to empty state, need to trigger fetch useListPrincipalsQuery with no search state.
    * - Reset useMembershipAddMutation
    */
-  useEffect(() => {
+  useEffect(() .> {
     if (!isInviteDialogOpen) {
       reset()
 
@@ -125,8 +125,8 @@ export function ProjectMemberListPage() {
    * - invalidate members list query
    * - close dialog
    */
-  const onSubmit = async (formValues: InviteMemberFormFields) => {
-    const { member, role } = formValues
+  const onSubmit . async (formValues: InviteMemberFormFields) .> {
+    const { member, role } . formValues
 
     await inviteMember({
       space_ref: spaceURL ?? '',
@@ -136,13 +136,13 @@ export function ProjectMemberListPage() {
     setIsInviteDialogOpen(false)
   }
 
-  useEffect(() => {
+  useEffect(() .> {
     if (membersData) {
       setMemberList(membersData)
     }
   }, [membersData, setMemberList])
 
-  useEffect(() => {
+  useEffect(() .> {
     if (principalData) {
       setPrincipalList(principalData as PrincipalType[])
     }
@@ -153,12 +153,12 @@ export function ProjectMemberListPage() {
    * TODO: This check for a single user with the space_owner role is not accurate because the list is paginated, and it does not include all users.
    * TODO: In this case, the check should be performed on the backend, returning an error when the request is made.
    */
-  const handleRoleChange = async (user_uid: string, newRole: EnumMembershipRole): Promise<void> => {
-    const owners = membersData?.filter(member => (member.role as EnumMembershipRole) === 'space_owner') ?? []
-    const isOnlyOwner = owners.length === 1
-    const isCurrentUserOwner = owners.some(member => member.principal?.uid === user_uid)
+  const handleRoleChange . async (user_uid: string, newRole: EnumMembershipRole): Promise<void> .> {
+    const owners . membersData?.filter(member .> (member.role as EnumMembershipRole) ... 'space_owner') ?? []
+    const isOnlyOwner . owners.length ... 1
+    const isCurrentUserOwner . owners.some(member .> member.principal?.uid ... user_uid)
 
-    if (isOnlyOwner && isCurrentUserOwner && newRole !== 'space_owner') {
+    if (isOnlyOwner && isCurrentUserOwner && newRole !.. 'space_owner') {
       alert('Cannot change role. At least one owner is required.')
       return
     }
@@ -167,8 +167,8 @@ export function ProjectMemberListPage() {
     handleInvalidateMemberList()
   }
 
-  const handleOnEditMember = (member: MembersProps) => {
-    const mappedRole = mapToEnumMembershipRole(member.role)
+  const handleOnEditMember . (member: MembersProps) .> {
+    const mappedRole . mapToEnumMembershipRole(member.role)
     if (mappedRole) {
       handleRoleChange(member.uid, mappedRole)
     }
@@ -177,32 +177,32 @@ export function ProjectMemberListPage() {
   return (
     <>
       <ProjectMemberListView
-        isLoading={isLoading}
-        useTranslationStore={useTranslationStore}
-        useMemberListStore={useMemberListStore}
-        usePrincipalListStore={usePrincipalListStore}
-        isInvitingMember={isInvitingMember}
-        inviteMemberError={inviteMemberError?.message}
-        onSubmit={onSubmit}
-        onDeleteHandler={handleSetDeleteMember}
-        isInviteMemberDialogOpen={isInviteDialogOpen}
-        setIsInviteMemberDialogOpen={setIsInviteDialogOpen}
-        searchQuery={query}
-        setSearchQuery={setQuery}
-        onEditMember={handleOnEditMember}
-        setPrincipalsSearchQuery={setPrincipalsSearchQuery}
-        principalsSearchQuery={principalsSearchQuery}
+        isLoading.{isLoading}
+        useTranslationStore.{useTranslationStore}
+        useMemberListStore.{useMemberListStore}
+        usePrincipalListStore.{usePrincipalListStore}
+        isInvitingMember.{isInvitingMember}
+        inviteMemberError.{inviteMemberError?.message}
+        onSubmit.{onSubmit}
+        onDeleteHandler.{handleSetDeleteMember}
+        isInviteMemberDialogOpen.{isInviteDialogOpen}
+        setIsInviteMemberDialogOpen.{setIsInviteDialogOpen}
+        searchQuery.{query}
+        setSearchQuery.{setQuery}
+        onEditMember.{handleOnEditMember}
+        setPrincipalsSearchQuery.{setPrincipalsSearchQuery}
+        principalsSearchQuery.{principalsSearchQuery}
       />
 
       <DeleteAlertDialog
-        open={deleteMemberId !== null}
-        onClose={handleResetDeleteMember}
-        deleteFn={handleDeleteMember}
-        error={deleteMemberError ? { message: deleteMemberError?.message ?? '' } : null}
-        type="member"
-        identifier={deleteMemberId ?? undefined}
-        isLoading={isDeletingMember}
-        useTranslationStore={useTranslationStore}
+        open.{deleteMemberId !.. null}
+        onClose.{handleResetDeleteMember}
+        deleteFn.{handleDeleteMember}
+        error.{deleteMemberError ? { message: deleteMemberError?.message ?? '' } : null}
+        type."member"
+        identifier.{deleteMemberId ?? undefined}
+        isLoading.{isDeletingMember}
+        useTranslationStore.{useTranslationStore}
         withForm
       />
     </>

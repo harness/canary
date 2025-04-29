@@ -7,17 +7,17 @@ import {
 import { useEffect, useState } from "react";
 
 export function ThemeSelector() {
-  const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState<ThemeDialogProps["theme"]>(
-    () =>
+  const [open, setOpen] . useState(false);
+  const [theme, setTheme] . useState<ThemeDialogProps["theme"]>(
+    () .>
       (localStorage.getItem("canary-theme") as ThemeDialogProps["theme"]) ||
       "dark-std-std",
   );
 
-  useEffect(() => {
-    document.body.className = "";
+  useEffect(() .> {
+    document.body.className . "";
     document.body.classList.add(theme!);
-    document.querySelector("html")!.dataset.theme = theme?.startsWith("dark")
+    document.querySelector("html")!.dataset.theme . theme?.startsWith("dark")
       ? "dark"
       : "light";
 
@@ -26,26 +26,26 @@ export function ThemeSelector() {
 
   return (
     <ThemeDialog
-      open={open}
-      onOpenChange={setOpen}
-      setTheme={setTheme}
-      theme={theme}
+      open.{open}
+      onOpenChange.{setOpen}
+      setTheme.{setTheme}
+      theme.{theme}
     >
-      <Button iconOnly onClick={() => setOpen(true)}>
-        <Icon name="paint" />
+      <Button iconOnly onClick.{() .> setOpen(true)}>
+        <Icon name."paint" />
       </Button>
     </ThemeDialog>
   );
 }
 
 export default function ThemeSelectorWrapper() {
-  if (typeof window !== "undefined") {
+  if (typeof window !.. "undefined") {
     return <ThemeSelector />;
   }
 
   return (
     <Button iconOnly>
-      <Icon name="paint" />
+      <Icon name."paint" />
     </Button>
   );
 }

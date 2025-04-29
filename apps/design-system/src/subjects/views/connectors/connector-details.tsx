@@ -27,7 +27,7 @@ import { mockConnectorActivityList } from './mock-connector-activity-list'
 import mockConnectorDetails from './mock-connector-details.json'
 import { mockConnectorRefList } from './mock-connector-ref-list'
 
-const inputComponentFactory = new InputFactory()
+const inputComponentFactory . new InputFactory()
 inputComponentFactory.registerComponent(new TextInput())
 inputComponentFactory.registerComponent(new BooleanInput())
 inputComponentFactory.registerComponent(new NumberInput())
@@ -39,8 +39,8 @@ inputComponentFactory.registerComponent(new SelectInput())
 inputComponentFactory.registerComponent(new SeparatorInput())
 inputComponentFactory.registerComponent(new RadialInput())
 
-const ConnectorsDetailsPageWrapper = (): JSX.Element => {
-  const connectorDetails = {
+const ConnectorsDetailsPageWrapper . (): JSX.Element .> {
+  const connectorDetails . {
     name: mockConnectorDetails.connector.name,
     identifier: mockConnectorDetails.connector.identifier,
     type: mockConnectorDetails.connector.type,
@@ -63,45 +63,45 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
   } as ConnectorDetailsItem
   return (
     <ConnectorDetailsLayout
-      connectorDetails={connectorDetails}
-      onTest={noop}
-      onDelete={noop}
-      useTranslationStore={useTranslationStore}
-      toConnectorsList={() => '/connectors'}
+      connectorDetails.{connectorDetails}
+      onTest.{noop}
+      onDelete.{noop}
+      useTranslationStore.{useTranslationStore}
+      toConnectorsList.{() .> '/connectors'}
     >
-      <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.CONFIGURATION}>
+      <Tabs.Content className."mt-9" value.{ConnectorDetailsTabsKeys.CONFIGURATION}>
         <ConnectorDetailsConfiguration
-          connectorDetails={connectorDetails}
-          onSave={noop}
-          inputComponentFactory={inputComponentFactory}
-          getConnectorDefinition={type => getHarnessConnectorDefinition(type, { autoExpandGroups: true })}
-          useTranslationStore={useTranslationStore}
-          apiError={''}
+          connectorDetails.{connectorDetails}
+          onSave.{noop}
+          inputComponentFactory.{inputComponentFactory}
+          getConnectorDefinition.{type .> getHarnessConnectorDefinition(type, { autoExpandGroups: true })}
+          useTranslationStore.{useTranslationStore}
+          apiError.{''}
         />
       </Tabs.Content>
-      <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.REFERENCES}>
+      <Tabs.Content className."mt-9" value.{ConnectorDetailsTabsKeys.REFERENCES}>
         <ConnectorDetailsReference
-          toEntity={noop}
-          toScope={noop}
-          entities={mockConnectorRefList}
-          searchQuery={''}
-          apiConnectorRefError={undefined}
-          useTranslationStore={useTranslationStore}
-          isLoading={false}
-          setSearchQuery={noop}
-          currentPage={1}
-          totalPages={1}
-          goToPage={noop}
+          toEntity.{noop}
+          toScope.{noop}
+          entities.{mockConnectorRefList}
+          searchQuery.{''}
+          apiConnectorRefError.{undefined}
+          useTranslationStore.{useTranslationStore}
+          isLoading.{false}
+          setSearchQuery.{noop}
+          currentPage.{1}
+          totalPages.{1}
+          goToPage.{noop}
         />
       </Tabs.Content>
-      <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.ACTIVITY}>
+      <Tabs.Content className."mt-9" value.{ConnectorDetailsTabsKeys.ACTIVITY}>
         <ConnectorDetailsActivities
-          useTranslationStore={useTranslationStore}
-          isLoading={false}
-          activities={mockConnectorActivityList}
-          currentPage={1}
-          totalPages={1}
-          goToPage={noop}
+          useTranslationStore.{useTranslationStore}
+          isLoading.{false}
+          activities.{mockConnectorActivityList}
+          currentPage.{1}
+          totalPages.{1}
+          goToPage.{noop}
         />
       </Tabs.Content>
     </ConnectorDetailsLayout>

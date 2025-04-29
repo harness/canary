@@ -25,30 +25,30 @@ interface NavLinkStorageInterface {
   }
 }
 
-export const AppShell: FC = () => {
-  const { isMobile } = useSidebar()
-  const routes = useRoutes()
-  const { spaceId } = useParams<PathParams>()
-  const { pinnedMenu, setRecent, setNavLinks } = useNav()
-  const { t } = useTranslationStore()
-  const selectedSpaceId = useSelectedSpaceId(spaceId)
-  const spaceIdPathParam = spaceId ?? selectedSpaceId ?? ''
+export const AppShell: FC . () .> {
+  const { isMobile } . useSidebar()
+  const routes . useRoutes()
+  const { spaceId } . useParams<PathParams>()
+  const { pinnedMenu, setRecent, setNavLinks } . useNav()
+  const { t } . useTranslationStore()
+  const selectedSpaceId . useSelectedSpaceId(spaceId)
+  const spaceIdPathParam . spaceId ?? selectedSpaceId ?? ''
 
-  const { breadcrumbs } = useGetBreadcrumbs()
+  const { breadcrumbs } . useGetBreadcrumbs()
 
-  const pinnedMenuItemsData = useMemo(
-    () => getPinnedMenuItemsData({ t, routes, spaceId: spaceIdPathParam }),
+  const pinnedMenuItemsData . useMemo(
+    () .> getPinnedMenuItemsData({ t, routes, spaceId: spaceIdPathParam }),
     [t, routes, spaceIdPathParam]
   )
 
   useLocationChange({ t, onRouteChange: setRecent, getNavbarMenuData })
 
-  useEffect(() => {
-    const linksFromStorage = localStorage.getItem('nav-items')
+  useEffect(() .> {
+    const linksFromStorage . localStorage.getItem('nav-items')
     let parsedLinksFromStorage: NavLinkStorageInterface | undefined
 
     if (linksFromStorage) {
-      parsedLinksFromStorage = JSON.parse(linksFromStorage)
+      parsedLinksFromStorage . JSON.parse(linksFromStorage)
     }
 
     /**
@@ -58,8 +58,8 @@ export const AppShell: FC = () => {
      * Pinned links cannot be empty as we will have some links permanantly.
      */
     if (parsedLinksFromStorage && !parsedLinksFromStorage?.state?.pinned?.length) {
-      const pinnedItems = pinnedMenu.filter(
-        item => !pinnedMenuItemsData.some(staticPinned => staticPinned.id === item.id)
+      const pinnedItems . pinnedMenu.filter(
+        item .> !pinnedMenuItemsData.some(staticPinned .> staticPinned.id ... item.id)
       )
       setNavLinks({ pinnedMenu: [...pinnedMenuItemsData, ...pinnedItems] })
     }
@@ -70,8 +70,8 @@ export const AppShell: FC = () => {
   return (
     <>
       <AppSideBar>
-        <Breadcrumbs breadcrumbs={breadcrumbs} isMobile={isMobile} withMobileSidebarToggle />
-        <MainContentLayout useSidebar={useSidebar} withBreadcrumbs={breadcrumbs.length > 0}>
+        <Breadcrumbs breadcrumbs.{breadcrumbs} isMobile.{isMobile} withMobileSidebarToggle />
+        <MainContentLayout useSidebar.{useSidebar} withBreadcrumbs.{breadcrumbs.length > 0}>
           <Outlet />
         </MainContentLayout>
       </AppSideBar>

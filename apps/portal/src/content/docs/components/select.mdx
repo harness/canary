@@ -9,41 +9,41 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`() => {
-    const [color, setColor] = React.useState()
-    const [randomItem, setRandomItem] = React.useState()
-    const [searchRandomItems, setSearchRandomItems] = React.useState('')
+  code.{`() .> {
+    const [color, setColor] . React.useState()
+    const [randomItem, setRandomItem] . React.useState()
+    const [searchRandomItems, setSearchRandomItems] . React.useState('')
 
-    const allRandomItems = React.useMemo(
-      () => [...new Array(300)].map((_, index) => ({value: index+1, label: \`Item \${index+1}\`})),
+    const allRandomItems . React.useMemo(
+      () .> [...new Array(300)].map((_, index) .> ({value: index+1, label: \`Item \${index+1}\`})),
       []
     )
 
-    const filteredRandomItems = React.useMemo(
-      () => searchRandomItems.trim() ? allRandomItems.filter(item => item.label.toLowerCase().includes(searchRandomItems.toLowerCase())) : allRandomItems,
+    const filteredRandomItems . React.useMemo(
+      () .> searchRandomItems.trim() ? allRandomItems.filter(item .> item.label.toLowerCase().includes(searchRandomItems.toLowerCase())) : allRandomItems,
     )
 
     return (
-        <div className="flex flex-col gap-8">
+        <div className."flex flex-col gap-8">
             <div>
                 <h5>With group</h5>
                 <Select.Root
-                    name="color"
-                    placeholder="Select..."
-                    label="Color theme"
-                    value={color}
-                    onValueChange={setColor}
+                    name."color"
+                    placeholder."Select..."
+                    label."Color theme"
+                    value.{color}
+                    onValueChange.{setColor}
                 >
-                    <Select.Content defaultValue={color}>
-                        <Select.Item value="standard">Standard</Select.Item>
-                        <Select.Item value="accessible">Accessible</Select.Item>
-                        <Select.Item value="vivid">Vivid</Select.Item>
+                    <Select.Content defaultValue.{color}>
+                        <Select.Item value."standard">Standard</Select.Item>
+                        <Select.Item value."accessible">Accessible</Select.Item>
+                        <Select.Item value."vivid">Vivid</Select.Item>
 
                         <Select.Separator />
 
                         <Select.Group>
                             <Select.Label>Custom label</Select.Label>
-                            <Select.Item value="custom">Custom</Select.Item>
+                            <Select.Item value."custom">Custom</Select.Item>
                         </Select.Group>
                     </Select.Content>
                 </Select.Root>
@@ -54,23 +54,23 @@ import { DocsPage } from "../../../components/docs-page";
             <div>
                 <h5>With search</h5>
                 <Select.Root
-                    name="random"
-                    placeholder="Select..."
-                    label="Random item"
-                    value={randomItem}
-                    onValueChange={setRandomItem}
+                    name."random"
+                    placeholder."Select..."
+                    label."Random item"
+                    value.{randomItem}
+                    onValueChange.{setRandomItem}
                 >
                     <Select.Content
                         withSearch
-                        searchProps={{
+                        searchProps.{{
                             searchValue: searchRandomItems,
                             handleChangeSearchValue: setSearchRandomItems
                         }}
                     >
-                        {filteredRandomItems.map(item => (
+                        {filteredRandomItems.map(item .> (
                             <Select.Item
-                                key={item.value}
-                                value={item.value}
+                                key.{item.value}
+                                value.{item.value}
                             >
                                 {item.label}
                             </Select.Item>
@@ -91,26 +91,26 @@ import { Select } from '@harnessio/ui/components'
 
 //...
 
-const [color, setColor] = useState()
+const [color, setColor] . useState()
 
 return (
   <Select.Root
-    name="color"
-    placeholder="Select..."
-    label="Color theme"
-    value={color}
-    onValueChange={setColor}
+    name."color"
+    placeholder."Select..."
+    label."Color theme"
+    value.{color}
+    onValueChange.{setColor}
   >
     <Select.Content>
-      <Select.Item value="standard">Standard</Select.Item>
-      <Select.Item value="accessible">Accessible</Select.Item>
-      <Select.Item value="vivid">Vivid</Select.Item>
+      <Select.Item value."standard">Standard</Select.Item>
+      <Select.Item value."accessible">Accessible</Select.Item>
+      <Select.Item value."vivid">Vivid</Select.Item>
 
       <Select.Separator />
 
       <Select.Group>
         <Select.Label>Custom label</Select.Label>
-        <Select.Item value="custom">Custom</Select.Item>
+        <Select.Item value."custom">Custom</Select.Item>
       </Select.Group>
     </Select.Content>
   </Select.Root>
@@ -145,18 +145,18 @@ changed from outside the component.
 
 ```typescript jsx
 <Select.Root
-  name="color"                        // [OPTIONAL] Name of the select
-  label="Color theme"                 // [OPTIONAL] Label text
-  placeholder="Select a color theme"  // [OPTIONAL] Placeholder text
-  value={color}                       // [OPTIONAL] Current value
-  onValueChange={setColor}            // [OPTIONAL] Value change handler
+  name."color"                        // [OPTIONAL] Name of the select
+  label."Color theme"                 // [OPTIONAL] Label text
+  placeholder."Select a color theme"  // [OPTIONAL] Placeholder text
+  value.{color}                       // [OPTIONAL] Current value
+  onValueChange.{setColor}            // [OPTIONAL] Value change handler
 >
   {/* Select content */}
 </Select.Root>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "name",
       description: "Name of the select",
@@ -185,7 +185,7 @@ changed from outside the component.
       name: "onValueChange",
       description: "Handler called when the value changes",
       required: false,
-      value: "(value: string) => void",
+      value: "(value: string) .> void",
     },
   ]}
 />
@@ -199,11 +199,11 @@ true. This can be used to customize the search input, such as changing the place
 
 ```typescript jsx
 <Select.Content
-  defaultValue={color}                 // [OPTIONAL] Default value
-  className="custom-class"             // [OPTIONAL] Custom class name
-  position="popper"                    // [OPTIONAL] Position of the content, either 'item-aligned' or 'popper'
+  defaultValue.{color}                 // [OPTIONAL] Default value
+  className."custom-class"             // [OPTIONAL] Custom class name
+  position."popper"                    // [OPTIONAL] Position of the content, either 'item-aligned' or 'popper'
   withSearch                           // [OPTIONAL] Enable search
-  searchProps={{                       // [OPTIONAL] Search props
+  searchProps.{{                       // [OPTIONAL] Search props
     placeholder: 'Search...',          // [OPTIONAL] Placeholder text
     searchValue: search,               // [OPTIONAL] Current search value
     handleChangeSearchValue: setSearch // [OPTIONAL] Search value change handler
@@ -214,7 +214,7 @@ true. This can be used to customize the search input, such as changing the place
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "defaultValue",
       description: "Default value for the select",
@@ -246,7 +246,7 @@ true. This can be used to customize the search input, such as changing the place
       description: "Props for the search",
       required: false,
       value:
-        "{ placeholder?: string, searchValue: string, handleChangeSearchValue: (searchValue: string) => void }",
+        "{ placeholder?: string, searchValue: string, handleChangeSearchValue: (searchValue: string) .> void }",
     },
   ]}
 />
@@ -260,8 +260,8 @@ be used to provide a searchable label for the object.
 
 ```typescript jsx
 <Select.Item
-  value="value"     // Value of the item
-  textValue="text"  // [OPTIONAL] Text value of the item to be used for when value suitable for typeahead search
+  value."value"     // Value of the item
+  textValue."text"  // [OPTIONAL] Text value of the item to be used for when value suitable for typeahead search
   disabled          // [OPTIONAL] Disable the item
   asChild           // [OPTIONAL] Render the item as a child
   isItemTextAsChild // [OPTIONAL] Render the item text as a child
@@ -271,7 +271,7 @@ be used to provide a searchable label for the object.
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "value",
       description: "Value of the item",
@@ -315,12 +315,12 @@ The `Separator` component is used to create a separator in the select dropdown.
 
 ```typescript jsx
 <Select.Separator
-  className="custom-class" // [OPTIONAL] Custom class name
+  className."custom-class" // [OPTIONAL] Custom class name
 />
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -336,15 +336,15 @@ The `Group` component is used to create a group of items in the select dropdown.
 
 ```typescript jsx
 <Select.Group
-  className="custom-class" // [OPTIONAL] Custom class name
+  className."custom-class" // [OPTIONAL] Custom class name
 >
   <Select.Label>Custom label</Select.Label>
-  <Select.Item value="custom">Custom</Select.Item>
+  <Select.Item value."custom">Custom</Select.Item>
 </Select.Group>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -360,14 +360,14 @@ The `Label` component is used to create a label for a group of items in the sele
 
 ```typescript jsx
 <Select.Label
-  className="custom-class" // [OPTIONAL] Custom class name
+  className."custom-class" // [OPTIONAL] Custom class name
 >
   Custom label
 </Select.Label>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",

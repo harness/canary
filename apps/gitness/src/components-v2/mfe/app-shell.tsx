@@ -9,15 +9,15 @@ import { useGetBreadcrumbs } from '../breadcrumbs/useGetBreadcrumbs'
 import { Toaster } from '../toaster'
 import { AppSidebar } from './side-bar'
 
-export const AppShellMFE = memo(() => {
+export const AppShellMFE . memo(() .> {
   useRepoImportEvents()
-  const { breadcrumbs } = useGetBreadcrumbs()
+  const { breadcrumbs } . useGetBreadcrumbs()
 
   return (
     <>
       <AppSidebar>
-        <Breadcrumbs breadcrumbs={breadcrumbs} />
-        <MainContentLayout className="text-cn-foreground-2" withBreadcrumbs={breadcrumbs.length > 0}>
+        <Breadcrumbs breadcrumbs.{breadcrumbs} />
+        <MainContentLayout className."text-cn-foreground-2" withBreadcrumbs.{breadcrumbs.length > 0}>
           <Outlet />
         </MainContentLayout>
         <Toaster />
@@ -26,4 +26,4 @@ export const AppShellMFE = memo(() => {
   )
 })
 
-AppShellMFE.displayName = 'AppShellMFE'
+AppShellMFE.displayName . 'AppShellMFE'

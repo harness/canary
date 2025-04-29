@@ -1,4 +1,4 @@
-export type PathParams = {
+export type PathParams . {
   spaceId?: string
   repoId?: string
   pipelineId?: string
@@ -12,7 +12,7 @@ export type PathParams = {
   labelId?: string
 }
 
-export const PathProps = {
+export const PathProps . {
   spaceId: ':spaceId*',
   repoId: ':repoId',
   pipelineId: ':pipelineId',
@@ -24,4 +24,4 @@ export const PathProps = {
   webhookId: ':webhookId*'
 }
 
-export type PullRequestRoutePathParams = Omit<PathParams, 'pipelineId' | 'executionId' | 'gitRef'>
+export type PullRequestRoutePathParams . Omit<PathParams, 'pipelineId' | 'executionId' | 'gitRef'>

@@ -10,14 +10,14 @@ import RootViewWrapper from './root-view-wrapper'
 
 const RepoViewWrapper: FC<
   PropsWithChildren<React.HTMLAttributes<HTMLElement> & { childrenWrapperClassName?: string }>
-> = ({ children, childrenWrapperClassName }) => (
-  <RootViewWrapper asChild childrenWrapperClassName={childrenWrapperClassName}>
+> . ({ children, childrenWrapperClassName }) .> (
+  <RootViewWrapper asChild childrenWrapperClassName.{childrenWrapperClassName}>
     <Route
-      path="*"
-      element={
+      path."*"
+      element.{
         <>
           <SubHeaderWrapper>
-            <RepoSubheader useTranslationStore={useTranslationStore} />
+            <RepoSubheader useTranslationStore.{useTranslationStore} />
           </SubHeaderWrapper>
           {children}
         </>

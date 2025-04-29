@@ -5,11 +5,11 @@ import { useTranslationStore } from '@utils/viewUtils'
 
 import { RepoSettingsLayout } from '@harnessio/ui/views'
 
-export const RepoSettingsViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => {
+export const RepoSettingsViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> . ({ children }) .> {
   return (
     <Routes>
-      <Route path="*" element={<RepoSettingsLayout useTranslationStore={useTranslationStore} />}>
-        <Route path="*" element={children} />
+      <Route path."*" element.{<RepoSettingsLayout useTranslationStore.{useTranslationStore} />}>
+        <Route path."*" element.{children} />
       </Route>
     </Routes>
   )

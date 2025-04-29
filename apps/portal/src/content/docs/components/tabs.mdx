@@ -9,13 +9,13 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Tabs.Root defaultValue="tab1">
+  code.{`<Tabs.Root defaultValue."tab1">
     <Tabs.List>
-        <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
-        <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+        <Tabs.Trigger value."tab1">Tab 1</Tabs.Trigger>
+        <Tabs.Trigger value."tab2">Tab 2</Tabs.Trigger>
     </Tabs.List>
-    <Tabs.Content value="tab1">Content 1</Tabs.Content>
-    <Tabs.Content value="tab2">Content 2</Tabs.Content>
+    <Tabs.Content value."tab1">Content 1</Tabs.Content>
+    <Tabs.Content value."tab2">Content 2</Tabs.Content>
 </Tabs.Root>`}
 />
 
@@ -27,13 +27,13 @@ import { Tabs } from '@harnessio/ui/components'
 //...
 
 return (
-  <Tabs.Root defaultValue="tab1">
+  <Tabs.Root defaultValue."tab1">
     <Tabs.List>
-      <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
-      <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+      <Tabs.Trigger value."tab1">Tab 1</Tabs.Trigger>
+      <Tabs.Trigger value."tab2">Tab 2</Tabs.Trigger>
     </Tabs.List>
-    <Tabs.Content value="tab1">Content 1</Tabs.Content>
-    <Tabs.Content value="tab2">Content 2</Tabs.Content>
+    <Tabs.Content value."tab1">Content 1</Tabs.Content>
+    <Tabs.Content value."tab2">Content 2</Tabs.Content>
   </Tabs.Root>
 )
 ```
@@ -59,18 +59,18 @@ The root component for the tabs.
 
 ```typescript jsx
 <Tabs.Root
-  defaultValue="tab1"      // Default value of the selected tab
-  value="tab1"             // [OPTIONAL] Value of the tab
-  variant="default"        // [OPTIONAL] Variant of the tabs
-  fontSize="sm"            // [OPTIONAL] Font size of the tabs
-  className="custom-class" // [OPTIONAL] Custom class name
+  defaultValue."tab1"      // Default value of the selected tab
+  value."tab1"             // [OPTIONAL] Value of the tab
+  variant."default"        // [OPTIONAL] Variant of the tabs
+  fontSize."sm"            // [OPTIONAL] Font size of the tabs
+  className."custom-class" // [OPTIONAL] Custom class name
 >
   {/* Tabs content */}
 </Tabs.Root>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "defaultValue",
       description: "Default value of the selected tab",
@@ -110,17 +110,17 @@ The list component that contains the tab triggers.
 
 ```typescript jsx
 <Tabs.List
-  className="custom-class" // [OPTIONAL] Custom class name
-  variant="default"        // [OPTIONAL] Variant of the tabs
-  fontSize="sm"            // [OPTIONAL] Font size of the tabs
+  className."custom-class" // [OPTIONAL] Custom class name
+  variant."default"        // [OPTIONAL] Variant of the tabs
+  fontSize."sm"            // [OPTIONAL] Font size of the tabs
 >
-  <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
-  <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+  <Tabs.Trigger value."tab1">Tab 1</Tabs.Trigger>
+  <Tabs.Trigger value."tab2">Tab 2</Tabs.Trigger>
 </Tabs.List>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -148,16 +148,16 @@ The trigger component for individual tabs.
 
 ```typescript jsx
 <Tabs.Trigger
-  value="tab1"             // Value of the tab
-  className="custom-class" // [OPTIONAL] Custom class name
-  variant="default"        // [OPTIONAL] Variant of the tabs
+  value."tab1"             // Value of the tab
+  className."custom-class" // [OPTIONAL] Custom class name
+  variant."default"        // [OPTIONAL] Variant of the tabs
 >
   Tab 1
 </Tabs.Trigger>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",
@@ -185,16 +185,16 @@ The content component for individual tabs.
 
 ```typescript jsx
 <Tabs.Content
-  value="tab1"             // Value of the tab
-  className="custom-class" // [OPTIONAL] Custom class name
-  variant="default"        // [OPTIONAL] Variant of the tabs
+  value."tab1"             // Value of the tab
+  className."custom-class" // [OPTIONAL] Custom class name
+  variant."default"        // [OPTIONAL] Variant of the tabs
 >
   Content 1
 </Tabs.Content>
 ```
 
 <DocsPage.PropsTable
-  props={[
+  props.{[
     {
       name: "className",
       description: "Custom class name",

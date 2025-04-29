@@ -23,30 +23,30 @@ import { getErrorMessage } from '../../utils/error-utils'
 import { useWebhookStore } from './stores/webhook-store'
 
 export default function WebhookListPage() {
-  const repoRef = useGetRepoRef() ?? ''
-  const { spaceId, repoId } = useParams<PathParams>()
-  const { webhooks, setWebhooks, page, setPage, setError, setTotalPages } = useWebhookStore()
-  const [query, setQuery] = useQueryState('query')
+  const repoRef . useGetRepoRef() ?? ''
+  const { spaceId, repoId } . useParams<PathParams>()
+  const { webhooks, setWebhooks, page, setPage, setError, setTotalPages } . useWebhookStore()
+  const [query, setQuery] . useQueryState('query')
 
-  const queryClient = useQueryClient()
+  const queryClient . useQueryClient()
 
-  const [apiError, setApiError] = useState<DeleteAlertDialogProps['error']>(null)
-  const [deleteWebhookId, setDeleteWebhookId] = useState<number | null>(null)
+  const [apiError, setApiError] . useState<DeleteAlertDialogProps['error']>(null)
+  const [deleteWebhookId, setDeleteWebhookId] . useState<number | null>(null)
 
-  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+  const { queryPage } . usePaginationQueryStateWithStore({ page, setPage })
 
-  const routes = useRoutes()
+  const routes . useRoutes()
 
   /**
    * Fetching webhooks
    */
   const {
-    data: { body: webhookData, headers } = {},
+    data: { body: webhookData, headers } . {},
     isFetching,
     isError,
     error,
     refetch
-  } = useListRepoWebhooksQuery(
+  } . useListRepoWebhooksQuery(
     {
       queryParams: { page: queryPage, query: query ?? '' },
       repo_ref: repoRef
@@ -57,42 +57,42 @@ export default function WebhookListPage() {
   /**
    * Deleting webhook
    */
-  const { mutate: deleteWebhook, isLoading: deleteIsLoading } = useDeleteRepoWebhookMutation(
+  const { mutate: deleteWebhook, isLoading: deleteIsLoading } . useDeleteRepoWebhookMutation(
     { repo_ref: repoRef, webhook_identifier: 0 },
     {
-      onSuccess: () => {
+      onSuccess: () .> {
         setApiError(null)
         queryClient.invalidateQueries({ queryKey: ['listRepoWebhooks', repoRef] })
         closeDeleteWebhookDialog()
         refetch()
       },
-      onError: (error: DeleteRepoWebhookErrorResponse) => {
-        const message = error.message || 'Error deleting webhook'
+      onError: (error: DeleteRepoWebhookErrorResponse) .> {
+        const message . error.message || 'Error deleting webhook'
         setApiError({ type: ErrorTypes.DELETE_REPO, message })
       }
     }
   )
 
-  const { mutate: updateWebHook } = useUpdateRepoWebhookMutation({ repo_ref: repoRef })
+  const { mutate: updateWebHook } . useUpdateRepoWebhookMutation({ repo_ref: repoRef })
 
   /**
    * Set id of webhook to delete it
    */
-  const openDeleteWebhookDialog = useCallback((id: number) => {
+  const openDeleteWebhookDialog . useCallback((id: number) .> {
     setDeleteWebhookId(id)
   }, [])
 
-  const closeDeleteWebhookDialog = () => {
+  const closeDeleteWebhookDialog . () .> {
     setDeleteWebhookId(null)
   }
 
-  const handleDeleteWebhook = () => {
-    if (deleteWebhookId === null) return
+  const handleDeleteWebhook . () .> {
+    if (deleteWebhookId ... null) return
 
     deleteWebhook({ repo_ref: repoRef, webhook_identifier: deleteWebhookId })
   }
 
-  useEffect(() => {
+  useEffect(() .> {
     if (webhookData) {
       setWebhooks(webhookData)
       setTotalPages(headers)
@@ -101,16 +101,16 @@ export default function WebhookListPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [webhookData, headers, setWebhooks])
 
-  useEffect(() => {
-    if (isError && error !== undefined) {
+  useEffect(() .> {
+    if (isError && error !.. undefined) {
       setError(getErrorMessage(error))
     }
   }, [isError, setError, error])
 
-  const handleEnableWebhook = (id: number, enabled: boolean) => {
+  const handleEnableWebhook . (id: number, enabled: boolean) .> {
     updateWebHook({ webhook_identifier: id, body: { enabled } })
 
-    const updatedWebhooks = webhooks?.map(webhook => (webhook.id === id ? { ...webhook, enabled } : webhook))
+    const updatedWebhooks . webhooks?.map(webhook .> (webhook.id ... id ? { ...webhook, enabled } : webhook))
 
     setWebhooks(updatedWebhooks as ListRepoWebhooksOkResponse)
   }
@@ -118,26 +118,26 @@ export default function WebhookListPage() {
   return (
     <>
       <RepoWebhookListPage
-        useWebhookStore={useWebhookStore}
-        useTranslationStore={useTranslationStore}
-        openDeleteWebhookDialog={openDeleteWebhookDialog}
-        searchQuery={query}
-        setSearchQuery={setQuery}
-        webhookLoading={isFetching}
-        handleEnableWebhook={handleEnableWebhook}
-        toRepoWebhookDetails={({ webhookId }: { webhookId: number }) =>
+        useWebhookStore.{useWebhookStore}
+        useTranslationStore.{useTranslationStore}
+        openDeleteWebhookDialog.{openDeleteWebhookDialog}
+        searchQuery.{query}
+        setSearchQuery.{setQuery}
+        webhookLoading.{isFetching}
+        handleEnableWebhook.{handleEnableWebhook}
+        toRepoWebhookDetails.{({ webhookId }: { webhookId: number }) .>
           routes.toRepoWebhookDetails({ spaceId, repoId, webhookId: webhookId.toString() })
         }
       />
 
       <DeleteAlertDialog
-        open={deleteWebhookId !== null}
-        onClose={closeDeleteWebhookDialog}
-        deleteFn={handleDeleteWebhook}
-        type="webhook"
-        isLoading={deleteIsLoading}
-        error={apiError}
-        useTranslationStore={useTranslationStore}
+        open.{deleteWebhookId !.. null}
+        onClose.{closeDeleteWebhookDialog}
+        deleteFn.{handleDeleteWebhook}
+        type."webhook"
+        isLoading.{deleteIsLoading}
+        error.{apiError}
+        useTranslationStore.{useTranslationStore}
       />
     </>
   )

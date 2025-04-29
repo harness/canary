@@ -11,17 +11,17 @@ import CollapseButton from '../components/collapse'
 import Port from './port'
 
 export default function ParallelNodeContainer(props: ContainerNodeProps<ParallelNodeInternalType>) {
-  const { node, level, parentNode, isFirst, isLast, parentNodeType, mode } = props
-  const { parallelContainerConfig, serialContainerConfig, portComponent } = useContainerNodeContext()
+  const { node, level, parentNode, isFirst, isLast, parentNodeType, mode } . props
+  const { parallelContainerConfig, serialContainerConfig, portComponent } . useContainerNodeContext()
 
-  const myLevel = level + 1
+  const myLevel . level + 1
 
-  const { isCollapsed, collapse } = useGraphContext()
-  const collapsed = useMemo(() => isCollapsed(props.node.path!), [isCollapsed])
+  const { isCollapsed, collapse } . useGraphContext()
+  const collapsed . useMemo(() .> isCollapsed(props.node.path!), [isCollapsed])
 
-  const verticalAdjustment = parallelContainerConfig.parallelGroupAdjustment ?? 0
+  const verticalAdjustment . parallelContainerConfig.parallelGroupAdjustment ?? 0
 
-  const ADJUSTMENT =
+  const ADJUSTMENT .
     findAdjustment(
       node,
       serialContainerConfig.serialGroupAdjustment ?? 0,
@@ -31,9 +31,9 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
 
   return (
     <div
-      className={'PipelineGraph-ParallelContainerNode'}
-      key={props.node.type + '-' + props.node.path}
-      style={{
+      className.{'PipelineGraph-ParallelContainerNode'}
+      key.{props.node.type + '-' + props.node.path}
+      style.{{
         minWidth: node.config?.minWidth ? node.config?.minWidth + 'px' : 'auto',
         minHeight: node.config?.minHeight ? node.config?.minHeight + 'px' : 'auto',
         position: 'relative',
@@ -52,19 +52,19 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
         (portComponent ? (
           portComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT })
         ) : (
-          <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+          <Port side."left" id.{`left-port-${node.path}`} adjustment.{collapsed ? 0 : ADJUSTMENT} />
         ))}
 
       {!node.config?.hideRightPort &&
         (portComponent ? (
           portComponent({ side: 'right', id: `right-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT })
         ) : (
-          <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+          <Port side."right" id.{`right-port-${node.path}`} adjustment.{collapsed ? 0 : ADJUSTMENT} />
         ))}
 
       <div
-        className="parallel-node-header"
-        style={{
+        className."parallel-node-header"
+        style.{{
           position: 'absolute',
           top: '10px',
           left: '10px',
@@ -75,39 +75,39 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
         }}
       >
         <CollapseButton
-          collapsed={collapsed}
-          onToggle={() => {
+          collapsed.{collapsed}
+          onToggle.{() .> {
             collapse(node.path!, !collapsed)
           }}
         />
       </div>
 
       <RenderNodeContent
-        node={node}
-        collapsed={collapsed}
-        isFirst={isFirst}
-        isLast={isLast}
-        parentNodeType={parentNodeType}
-        mode={mode}
+        node.{node}
+        collapsed.{collapsed}
+        isFirst.{isFirst}
+        isLast.{isLast}
+        parentNodeType.{parentNodeType}
+        mode.{mode}
       >
         {!collapsed && node.children.length > 0 ? (
           <div
-            style={{
+            style.{{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               rowGap: parallelContainerConfig.nodeGap + 'px'
             }}
           >
-            {node.children.map((item: AnyNodeInternal, index: number) =>
+            {node.children.map((item: AnyNodeInternal, index: number) .>
               renderNode({
                 node: item,
                 parentNode: node,
                 level: myLevel,
                 parentNodeType: 'parallel',
                 relativeIndex: index,
-                isFirst: index === 0,
-                isLast: index === node.children.length - 1,
+                isFirst: index ... 0,
+                isLast: index ... node.children.length - 1,
                 mode
               })
             )}

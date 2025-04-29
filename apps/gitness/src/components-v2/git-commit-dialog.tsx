@@ -18,16 +18,16 @@ import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'
 import { GitCommitAction } from '../utils/git-utils'
 
-export type CommitDialogOnSuccess = (
+export type CommitDialogOnSuccess . (
   response: TypesCommitFilesResponse,
   isNewBranch: boolean,
   newBranchName: string,
   fileName?: string
-) => void
+) .> void
 
 interface CommitDialogProps {
   open: boolean
-  onClose: () => void
+  onClose: () .> void
   commitAction: GitCommitAction
   gitRef: string
   sha?: string
@@ -55,31 +55,31 @@ export default function GitCommitDialog({
   currentBranch,
   isNew
 }: CommitDialogProps) {
-  const repoRef = useGetRepoRef()
-  const [error, setError] = useState<UsererrorError>()
-  const [disableCTA, setDisableCTA] = useState(false)
-  const queryClient = useQueryClient()
-  const { violation, bypassable, bypassed, setAllStates, resetViolation } = useRuleViolationCheck()
-  const { mutateAsync: commitChanges } = useCommitFilesMutation({})
+  const repoRef . useGetRepoRef()
+  const [error, setError] . useState<UsererrorError>()
+  const [disableCTA, setDisableCTA] . useState(false)
+  const queryClient . useQueryClient()
+  const { violation, bypassable, bypassed, setAllStates, resetViolation } . useRuleViolationCheck()
+  const { mutateAsync: commitChanges } . useCommitFilesMutation({})
 
-  const commitTitle =
-    commitAction === GitCommitAction.DELETE
+  const commitTitle .
+    commitAction ... GitCommitAction.DELETE
       ? 'Delete'
-      : commitAction === GitCommitAction.MOVE
+      : commitAction ... GitCommitAction.MOVE
         ? 'Move'
-        : commitAction === GitCommitAction.CREATE
+        : commitAction ... GitCommitAction.CREATE
           ? 'Create'
           : 'Edit'
 
-  const commitTitlePlaceholder =
-    commitAction === GitCommitAction.MOVE
+  const commitTitlePlaceholder .
+    commitAction ... GitCommitAction.MOVE
       ? commitTitle + ' ' + oldResourcePath + ' to ' + resourcePath
       : commitTitle + ' ' + resourcePath
 
-  const onSubmit = async (formValues: GitCommitFormType) => {
-    const { message, description, commitToGitRef, newBranchName, fileName } = formValues
-    const path = oldResourcePath ?? (isNew && resourcePath.length < 1 ? '/' + fileName : resourcePath)
-    const data: OpenapiCommitFilesRequest = {
+  const onSubmit . async (formValues: GitCommitFormType) .> {
+    const { message, description, commitToGitRef, newBranchName, fileName } . formValues
+    const path . oldResourcePath ?? (isNew && resourcePath.length < 1 ? '/' + fileName : resourcePath)
+    const data: OpenapiCommitFilesRequest . {
       actions: [
         {
           action: commitAction,
@@ -89,7 +89,7 @@ export default function GitCommitDialog({
         }
       ],
       branch: gitRef,
-      new_branch: commitToGitRef === CommitToGitRefOption.NEW_BRANCH ? newBranchName : '',
+      new_branch: commitToGitRef ... CommitToGitRefOption.NEW_BRANCH ? newBranchName : '',
       title: message || commitTitlePlaceholder,
       message: description,
       bypass_rules: bypassed
@@ -99,13 +99,13 @@ export default function GitCommitDialog({
       repo_ref: repoRef,
       body: { ...data }
     })
-      .then(response => {
+      .then(response .> {
         if ([GitCommitAction.MOVE, GitCommitAction.CREATE, GitCommitAction.DELETE].includes(commitAction)) {
           queryClient.invalidateQueries(['folderContents', repoRef, gitRef])
         }
-        onSuccess(response.body, commitToGitRef === CommitToGitRefOption.NEW_BRANCH, newBranchName || '', fileName)
+        onSuccess(response.body, commitToGitRef ... CommitToGitRefOption.NEW_BRANCH, newBranchName || '', fileName)
       })
-      .catch(_error => {
+      .catch(_error .> {
         if (_error?.violations?.length > 0) {
           setAllStates({
             violation: true,
@@ -118,13 +118,13 @@ export default function GitCommitDialog({
       })
   }
 
-  const dryRun = async (commitToGitRef: CommitToGitRefOption, fileName?: string) => {
+  const dryRun . async (commitToGitRef: CommitToGitRefOption, fileName?: string) .> {
     resetViolation()
     setDisableCTA(false)
-    const path = oldResourcePath ?? (isNew && resourcePath.length < 1 ? '/' + fileName : resourcePath)
-    if (commitToGitRef === CommitToGitRefOption.DIRECTLY) {
+    const path . oldResourcePath ?? (isNew && resourcePath.length < 1 ? '/' + fileName : resourcePath)
+    if (commitToGitRef ... CommitToGitRefOption.DIRECTLY) {
       try {
-        const data: OpenapiCommitFilesRequest = {
+        const data: OpenapiCommitFilesRequest . {
           actions: [
             {
               action: commitAction,
@@ -141,7 +141,7 @@ export default function GitCommitDialog({
           dry_run_rules: true
         }
 
-        const { body: response } = await commitChanges({
+        const { body: response } . await commitChanges({
           repo_ref: repoRef,
           body: { ...data }
         })
@@ -160,26 +160,26 @@ export default function GitCommitDialog({
     }
   }
 
-  useEffect(() => {
+  useEffect(() .> {
     dryRun(CommitToGitRefOption.DIRECTLY)
   }, [])
 
   return (
     <GitCommitDialogComp
-      isOpen={open}
-      onClose={onClose}
-      onFormSubmit={onSubmit}
-      commitTitlePlaceHolder={commitTitlePlaceholder}
-      error={error}
-      disableCTA={disableCTA}
-      dryRun={dryRun}
-      violation={violation}
-      bypassable={bypassable}
-      currentBranch={currentBranch || 'Master'}
-      isFileNameRequired={isNew && resourcePath?.length < 1}
-      setAllStates={setAllStates}
+      isOpen.{open}
+      onClose.{onClose}
+      onFormSubmit.{onSubmit}
+      commitTitlePlaceHolder.{commitTitlePlaceholder}
+      error.{error}
+      disableCTA.{disableCTA}
+      dryRun.{dryRun}
+      violation.{violation}
+      bypassable.{bypassable}
+      currentBranch.{currentBranch || 'Master'}
+      isFileNameRequired.{isNew && resourcePath?.length < 1}
+      setAllStates.{setAllStates}
       // TODO: Add a loading state for submission
-      isSubmitting={false}
+      isSubmitting.{false}
     />
   )
 }

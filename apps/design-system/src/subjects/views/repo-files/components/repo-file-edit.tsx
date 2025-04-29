@@ -10,13 +10,13 @@ import { useExitConfirm } from '../hooks/use-exit-confirm'
 import { themes } from '../theme/monaco-theme'
 import { repoFilesStore } from './repo-files-store'
 
-export const RepoFileEdit = () => {
-  const [view, setView] = useState<EditViewTypeValue>('edit')
-  const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
-  const [fileName, setFileName] = useState('README.md')
-  const { show } = useExitConfirm()
+export const RepoFileEdit . () .> {
+  const [view, setView] . useState<EditViewTypeValue>('edit')
+  const [isCommitDialogOpen, setIsCommitDialogOpen] . useState(false)
+  const [fileName, setFileName] . useState('README.md')
+  const { show } . useExitConfirm()
 
-  const toggleOpenCommitDialog = (value: boolean) => {
+  const toggleOpenCommitDialog . (value: boolean) .> {
     setIsCommitDialogOpen(value)
   }
 
@@ -24,14 +24,14 @@ export const RepoFileEdit = () => {
    * Change view handler
    * @param value
    */
-  const onChangeView = (value: EditViewTypeValue) => {
+  const onChangeView . (value: EditViewTypeValue) .> {
     setView(value)
   }
 
   /**
    * Cancel edit handler
    */
-  const handleCancelFileEdit = useCallback(() => {
+  const handleCancelFileEdit . useCallback(() .> {
     show({
       onConfirm: noop
     })
@@ -40,58 +40,58 @@ export const RepoFileEdit = () => {
   return (
     <>
       <GitCommitDialog
-        isOpen={isCommitDialogOpen}
-        onClose={() => toggleOpenCommitDialog(false)}
-        onFormSubmit={noop as unknown as (formValues: GitCommitFormType) => Promise<void>}
-        disableCTA={false}
-        dryRun={noop}
-        violation={false}
-        bypassable={false}
-        currentBranch={repoFilesStore.branchSelectorStore.selectedBranchTag.name}
-        setAllStates={noop}
-        isSubmitting={false}
+        isOpen.{isCommitDialogOpen}
+        onClose.{() .> toggleOpenCommitDialog(false)}
+        onFormSubmit.{noop as unknown as (formValues: GitCommitFormType) .> Promise<void>}
+        disableCTA.{false}
+        dryRun.{noop}
+        violation.{false}
+        bypassable.{false}
+        currentBranch.{repoFilesStore.branchSelectorStore.selectedBranchTag.name}
+        setAllStates.{noop}
+        isSubmitting.{false}
       />
 
       <PathActionBar
-        codeMode={CodeModes.EDIT}
-        pathParts={repoFilesStore.pathParts}
-        useTranslationStore={useTranslationStore}
-        changeFileName={vel => setFileName(vel)}
-        onBlurFileName={noop}
-        gitRefName={repoFilesStore.branchSelectorStore.selectedBranchTag.name}
-        fileName={fileName}
-        handleOpenCommitDialog={() => toggleOpenCommitDialog(true)}
-        handleCancelFileEdit={handleCancelFileEdit}
+        codeMode.{CodeModes.EDIT}
+        pathParts.{repoFilesStore.pathParts}
+        useTranslationStore.{useTranslationStore}
+        changeFileName.{vel .> setFileName(vel)}
+        onBlurFileName.{noop}
+        gitRefName.{repoFilesStore.branchSelectorStore.selectedBranchTag.name}
+        fileName.{fileName}
+        handleOpenCommitDialog.{() .> toggleOpenCommitDialog(true)}
+        handleCancelFileEdit.{handleCancelFileEdit}
       />
 
-      <FileEditorControlBar view={view} onChangeView={onChangeView} />
+      <FileEditorControlBar view.{view} onChangeView.{onChangeView} />
 
-      {view === 'edit' ? (
+      {view ... 'edit' ? (
         <CodeEditor
-          language="json"
-          codeRevision={{
+          language."json"
+          codeRevision.{{
             code: repoFilesStore.jsonFileContent
           }}
-          onCodeRevisionChange={() => undefined}
-          themeConfig={{
+          onCodeRevisionChange.{() .> undefined}
+          themeConfig.{{
             defaultTheme: 'dark',
             themes
           }}
-          options={{
+          options.{{
             readOnly: false
           }}
         />
       ) : (
         <CodeDiffEditor
-          language="json"
-          original={repoFilesStore.jsonFileContent}
-          modified={repoFilesStore.jsonFileContent}
-          themeConfig={{
+          language."json"
+          original.{repoFilesStore.jsonFileContent}
+          modified.{repoFilesStore.jsonFileContent}
+          themeConfig.{{
             defaultTheme: 'dark',
             themes
           }}
-          theme="dark"
-          options={{
+          theme."dark"
+          options.{{
             readOnly: true
           }}
         />

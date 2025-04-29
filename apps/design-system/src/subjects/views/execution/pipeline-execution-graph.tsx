@@ -27,14 +27,14 @@ import { logs } from './mocks/mock-data'
 // *****************************************************
 
 export enum ContentNodeTypes {
-  add = 'add',
-  start = 'start',
-  end = 'end',
-  step = 'step',
-  approval = 'approval',
-  parallel = 'parallel',
-  serial = 'serial',
-  stage = 'stage'
+  add . 'add',
+  start . 'start',
+  end . 'end',
+  step . 'step',
+  approval . 'approval',
+  parallel . 'parallel',
+  serial . 'serial',
+  stage . 'stage'
 }
 
 // *****************************************************
@@ -42,10 +42,10 @@ export enum ContentNodeTypes {
 // *****************************************************
 
 // * start node
-const StartNodeComponent = () => <PipelineNodes.StartNode />
+const StartNodeComponent . () .> <PipelineNodes.StartNode />
 
 // * end node
-const EndNodeComponent = () => <PipelineNodes.EndNode />
+const EndNodeComponent . () .> <PipelineNodes.EndNode />
 
 interface NodeProps {
   mode?: 'Edit' | 'Execution'
@@ -68,36 +68,36 @@ export function StepNodeComponent({
 }: {
   node: LeafNodeInternalType<StepNodeDataType>
 } & NodeProps) {
-  const { name, icon, logs } = node.data
-  const stepNode = <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} />
+  const { name, icon, logs } . node.data
+  const stepNode . <PipelineNodes.StepNode name.{name} icon.{icon} onEllipsisClick.{() .> undefined} />
 
-  if (mode === 'Edit') {
+  if (mode ... 'Edit') {
     return stepNode
   }
 
   return (
-    <Drawer.Root direction="right">
+    <Drawer.Root direction."right">
       <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
-      <Drawer.Content className="bg-cn-background-1 border-cn-borders-2 size-full max-w-2xl rounded-none border-l p-0 ">
+      <Drawer.Content className."bg-cn-background-1 border-cn-borders-2 size-full max-w-2xl rounded-none border-l p-0 ">
         <Drawer.Header>
           <ExecutionHeader
-            commitName="8fbru3ix"
-            branchName="master"
-            title={{ title: 'npm_build' }}
-            status={ExecutionState.RUNNING}
-            buildTime="1h 30m"
-            startedTime="10 mins ago"
-            delegateType="cloud"
-            pipelineName="npm_build"
+            commitName."8fbru3ix"
+            branchName."master"
+            title.{{ title: 'npm_build' }}
+            status.{ExecutionState.RUNNING}
+            buildTime."1h 30m"
+            startedTime."10 mins ago"
+            delegateType."cloud"
+            pipelineName."npm_build"
           />
         </Drawer.Header>
-        <div className="border-cn-borders-3 mt-1 border-t pt-3">
+        <div className."border-cn-borders-3 mt-1 border-t pt-3">
           <ExecutionInfo
             isDrawer
-            useLogsStore={() => ({ logs })}
-            onCopy={() => {}}
-            onDownload={() => {}}
-            onEdit={() => {}}
+            useLogsStore.{() .> ({ logs })}
+            onCopy.{() .> {}}
+            onDownload.{() .> {}}
+            onEdit.{() .> {}}
           />
         </div>
       </Drawer.Content>
@@ -115,40 +115,40 @@ export function ApprovalStepNodeComponent({
   node,
   mode
 }: { node: LeafNodeInternalType<ApprovalNodeDataType> } & NodeProps) {
-  const { name } = node.data
-  const approvalNode = (
-    <div className="flex h-full items-center justify-center">
+  const { name } . node.data
+  const approvalNode . (
+    <div className."flex h-full items-center justify-center">
       <div
-        className="border-cn-borders-2 bg-cn-background-2 absolute -z-10 rotate-45 border"
-        style={{ inset: '18px' }}
+        className."border-cn-borders-2 bg-cn-background-2 absolute -z-10 rotate-45 border"
+        style.{{ inset: '18px' }}
       ></div>
       <div>{name}</div>
     </div>
   )
 
-  if (mode === 'Edit') {
+  if (mode ... 'Edit') {
     return approvalNode
   }
 
   return (
-    <Drawer.Root direction="right">
+    <Drawer.Root direction."right">
       <Drawer.Trigger asChild>{approvalNode}</Drawer.Trigger>
-      <Drawer.Content className="flex h-full w-1/2 flex-col justify-between">
-        <div className="flex flex-col gap-4">
+      <Drawer.Content className."flex h-full w-1/2 flex-col justify-between">
+        <div className."flex flex-col gap-4">
           <Drawer.Header>
             <Drawer.Title>Approval</Drawer.Title>
             <Drawer.Description>Approve/Reject step execution</Drawer.Description>
           </Drawer.Header>
-          <div className="flex justify-center gap-2">
-            <Button type="submit">Approve</Button>
-            <Button variant="soft" theme="muted">
+          <div className."flex justify-center gap-2">
+            <Button type."submit">Approve</Button>
+            <Button variant."soft" theme."muted">
               Cancel
             </Button>
           </div>
         </div>
         <Drawer.Footer>
           <Drawer.Close>
-            <Button variant="surface" theme="muted">
+            <Button variant."surface" theme."muted">
               Close
             </Button>
           </Drawer.Close>
@@ -171,15 +171,15 @@ export function SerialGroupNodeComponent({
   node: SerialNodeInternalType<SerialGroupNodeDataType>
   children: React.ReactElement
 } & NodeProps) {
-  const { name } = node.data
+  const { name } . node.data
 
   return (
     <PipelineNodes.SerialGroupNode
-      name={name}
-      onEllipsisClick={() => undefined}
-      onAddClick={() => undefined}
-      onHeaderClick={() => undefined}
-      onAddInClick={() => undefined}
+      name.{name}
+      onEllipsisClick.{() .> undefined}
+      onAddClick.{() .> undefined}
+      onHeaderClick.{() .> undefined}
+      onAddInClick.{() .> undefined}
     >
       {children}
     </PipelineNodes.SerialGroupNode>
@@ -199,15 +199,15 @@ export function ParallelGroupNodeComponent({
   node: ParallelNodeInternalType<ParallelGroupNodeDataType>
   children: React.ReactElement
 } & NodeProps) {
-  const { name } = node.data
+  const { name } . node.data
 
   return (
     <PipelineNodes.ParallelGroupNode
-      name={name}
-      onEllipsisClick={() => undefined}
-      onAddClick={() => undefined}
-      onHeaderClick={() => undefined}
-      onAddInClick={() => undefined}
+      name.{name}
+      onEllipsisClick.{() .> undefined}
+      onAddClick.{() .> undefined}
+      onHeaderClick.{() .> undefined}
+      onAddInClick.{() .> undefined}
     >
       {children}
     </PipelineNodes.ParallelGroupNode>
@@ -218,7 +218,7 @@ export function ParallelGroupNodeComponent({
 // 4. Match Content and containers nodes
 // *****************************************************
 
-const nodes: NodeContent[] = [
+const nodes: NodeContent[] . [
   {
     type: ContentNodeTypes.start,
     containerType: ContainerNode.leaf,
@@ -255,7 +255,7 @@ const nodes: NodeContent[] = [
 // 5. Graph data model
 // *****************************************************
 
-const data: AnyContainerNodeType[] = [
+const data: AnyContainerNodeType[] . [
   {
     type: ContentNodeTypes.start,
     data: {},
@@ -269,7 +269,7 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.step,
     data: {
       name: 'Step 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />,
+      icon: <Icon name."harness-plugin" className."m-2 size-8" />,
       logs: logs
     } satisfies StepNodeDataType,
     config: {
@@ -281,7 +281,7 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.approval,
     data: {
       name: 'Approval 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />
+      icon: <Icon name."harness-plugin" className."m-2 size-8" />
     } satisfies StepNodeDataType,
     config: {
       width: 120,
@@ -302,7 +302,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 2',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name."harness-plugin" className."m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -313,7 +313,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 3',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name."harness-plugin" className."m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -336,7 +336,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name."harness-plugin" className."m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -347,7 +347,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name."harness-plugin" className."m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -367,10 +367,10 @@ const data: AnyContainerNodeType[] = [
   }
 ]
 
-const PipelineExecutionGraph = () => {
+const PipelineExecutionGraph . () .> {
   return (
     <CanvasProvider>
-      <PipelineGraph data={data} nodes={nodes} config={{ mode: 'Execution' }} />
+      <PipelineGraph data.{data} nodes.{nodes} config.{{ mode: 'Execution' }} />
     </CanvasProvider>
   )
 }

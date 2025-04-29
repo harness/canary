@@ -13,13 +13,13 @@ interface PullRequestChangesProps extends PropsWithChildren<React.HTMLAttributes
   state: string
 }
 
-const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
-  const isCommitDialogOpen = false
+const PullRequestChanges: FC<PullRequestChangesProps> . ({ state }) .> {
+  const isCommitDialogOpen . false
 
-  const usePullRequestProviderStore = useCallback(
-    () => ({
+  const usePullRequestProviderStore . useCallback(
+    () .> ({
       ...pullRequestProviderStore,
-      diffs: state === 'complex-1' ? mockDiffs : pullRequestProviderStore.diffs,
+      diffs: state ... 'complex-1' ? mockDiffs : pullRequestProviderStore.diffs,
       setRepoMetadata: noop,
       setPullReqCommits: noop,
       setShowEditDescription: noop,
@@ -29,7 +29,7 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
       refetchPullReq: noop,
       retryOnErrorFunc: noop,
       dryMerge: noop,
-      updateCommentStatus: () => Promise.resolve<TypesPullReqActivity | undefined>(undefined),
+      updateCommentStatus: () .> Promise.resolve<TypesPullReqActivity | undefined>(undefined),
       setCommentsInfoData: noop,
       setCommentsLoading: noop,
       setResolvedCommentArr: noop,
@@ -37,7 +37,7 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
       setPullReqStats: noop,
       updateState: noop,
       setDiffs: noop,
-      getFileViewedState: () => {
+      getFileViewedState: () .> {
         return false
       }
     }),
@@ -47,61 +47,61 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
   return (
     <>
       <CommitSuggestionsDialog
-        isOpen={isCommitDialogOpen}
-        onClose={noop}
-        onFormSubmit={() => Promise.resolve()}
-        isSubmitting={false}
+        isOpen.{isCommitDialogOpen}
+        onClose.{noop}
+        onFormSubmit.{() .> Promise.resolve()}
+        isSubmitting.{false}
       />
       <PullRequestChangesPage
-        handleUpload={noop}
-        usePullRequestProviderStore={usePullRequestProviderStore}
-        useTranslationStore={useTranslationStore}
-        setDiffMode={noop}
-        loadingReviewers={undefined}
+        handleUpload.{noop}
+        usePullRequestProviderStore.{usePullRequestProviderStore}
+        useTranslationStore.{useTranslationStore}
+        setDiffMode.{noop}
+        loadingReviewers.{undefined}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        diffMode={3}
-        reviewers={undefined}
-        refetchReviewers={noop}
-        submitReview={noop}
-        currentUser={currentUser}
-        pullReqMetadata={pullRequestStore.pullRequest}
-        loadingRawDiff={false}
-        handleSaveComment={noop}
-        pullReqCommits={commitData as unknown as TypesCommit[]}
-        deleteComment={noop}
-        updateComment={noop}
-        defaultCommitFilter={{
+        diffMode.{3}
+        reviewers.{undefined}
+        refetchReviewers.{noop}
+        submitReview.{noop}
+        currentUser.{currentUser}
+        pullReqMetadata.{pullRequestStore.pullRequest}
+        loadingRawDiff.{false}
+        handleSaveComment.{noop}
+        pullReqCommits.{commitData as unknown as TypesCommit[]}
+        deleteComment.{noop}
+        updateComment.{noop}
+        defaultCommitFilter.{{
           name: 'All Commits',
           count: 2,
           value: 'ALL'
         }}
-        selectedCommits={[
+        selectedCommits.{[
           {
             name: 'All Commits',
             count: 2,
             value: 'ALL'
           }
         ]}
-        setSelectedCommits={noop}
-        markViewed={noop}
-        unmarkViewed={noop}
-        activities={pullRequestProviderStore?.pullReqActivities}
-        commentId={undefined}
-        onCopyClick={noop}
-        onCommentSaveAndStatusChange={noop}
-        onCommitSuggestion={noop}
-        addSuggestionToBatch={noop}
-        suggestionsBatch={[]}
-        removeSuggestionFromBatch={noop}
-        filenameToLanguage={noop}
-        toggleConversationStatus={noop}
-        commitSuggestionsBatchCount={0}
-        onCommitSuggestionsBatch={noop}
-        onGetFullDiff={() => Promise.resolve()}
-        scrolledToComment={undefined}
-        setScrolledToComment={noop}
-        jumpToDiff=""
-        setJumpToDiff={noop}
+        setSelectedCommits.{noop}
+        markViewed.{noop}
+        unmarkViewed.{noop}
+        activities.{pullRequestProviderStore?.pullReqActivities}
+        commentId.{undefined}
+        onCopyClick.{noop}
+        onCommentSaveAndStatusChange.{noop}
+        onCommitSuggestion.{noop}
+        addSuggestionToBatch.{noop}
+        suggestionsBatch.{[]}
+        removeSuggestionFromBatch.{noop}
+        filenameToLanguage.{noop}
+        toggleConversationStatus.{noop}
+        commitSuggestionsBatchCount.{0}
+        onCommitSuggestionsBatch.{noop}
+        onGetFullDiff.{() .> Promise.resolve()}
+        scrolledToComment.{undefined}
+        setScrolledToComment.{noop}
+        jumpToDiff.""
+        setJumpToDiff.{noop}
       />
     </>
   )

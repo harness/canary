@@ -73,14 +73,13 @@ export default {
     gap: 'var(--cn-tag-gap)',
     borderWidth: `var(--cn-tag-border)`,
     borderRadius: `var(--cn-tag-radius-default)`,
-    font: `var(--cn-body-tight-normal)`,
     maxWidth: `var(--cn-tag-max-width)`,
     height: `var(--cn-tag-size-default)`,
-    '@apply w-fit flex items-center transition-colors cursor-pointer': '',
+    '@apply w-fit flex items-center transition-colors cursor-pointer font-body-tight-normal': '',
 
     '&:where(.tag-sm)': {
-      font: `var(--cn-caption-tight-normal)`,
-      height: `var(--cn-tag-size-sm)`
+      height: `var(--cn-tag-size-sm)`,
+      '@apply font-caption-tight-normal': ''
     },
 
     '&:where(.tag-rounded)': {

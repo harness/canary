@@ -118,7 +118,7 @@ export function ConnectorsList({
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[282px]">{t('views:connectors.id', 'Connector ID')}</Table.Head>
-          <Table.Head className="w-70">{t('views:common.details', 'Details')}</Table.Head>
+          <Table.Head className="w-44">{t('views:common.details', 'Details')}</Table.Head>
           <Table.Head className="w-44 whitespace-nowrap">
             {t('views:connectors.connectivityStatus', 'Connectivity status')}
           </Table.Head>

@@ -80,7 +80,7 @@ export const timeAgo = (timestamp?: number | null, cutoffDays: number = 3): Reac
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-      hour12: false
+      hour12: true
     }).format(date)
 
     return createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestamp })

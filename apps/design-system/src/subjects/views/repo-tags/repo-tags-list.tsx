@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { noop, useTranslationStore } from '@utils/viewUtils.ts'
+import { asyncNoop, noop, useTranslationStore } from '@utils/viewUtils.ts'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import {
@@ -41,6 +41,7 @@ export const RepoTagsList = () => {
   return (
     <>
       <RepoTagsListView
+        isLoading={false}
         useTranslationStore={useTranslationStore}
         openCreateBranchDialog={(selectedTagInList: BranchSelectorListItem) => {
           setOpenCreateBranchDialog(true)
@@ -83,7 +84,7 @@ export const RepoTagsList = () => {
         open={openCreateBranchDialog}
         onClose={() => setOpenCreateBranchDialog(false)}
         selectedBranchOrTag={selectedTagInList}
-        onSubmit={noop}
+        onSubmit={asyncNoop}
         isCreatingBranch={false}
         error=""
         renderProp={() => (

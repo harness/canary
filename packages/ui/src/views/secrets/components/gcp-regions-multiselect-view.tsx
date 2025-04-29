@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { Alert, MultiSelect, SkeletonList } from '@/components'
 import { TranslationStore } from '@views/repo'
-
-import { Alert, MultiSelect, SkeletonList } from '@harnessio/ui/components'
 
 export interface GcpRegionsMultiSelectProps {
   value?: string | string[]

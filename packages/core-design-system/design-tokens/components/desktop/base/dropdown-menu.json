@@ -1,11 +1,6 @@
 {
   "dropdown": {
     "item": {
-      "px": {
-        "$type": "spacing",
-        "$value": "{spacing.1}",
-        "$description": "4px\n"
-      },
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.2-half}",

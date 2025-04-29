@@ -60,7 +60,7 @@
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.3}",
         "lineHeight": "{lineHeight.3.tight}",
-        "letterSpacing": "{tracking.normal}"
+        "letterSpacing": "{tracking.tight}"
       },
       "$description": "Section headers."
     },

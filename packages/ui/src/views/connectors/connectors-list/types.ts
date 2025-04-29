@@ -49,6 +49,7 @@ export interface ConnectorListProps extends Partial<RoutingProps> {
 export type ConnectorListFilters = {
   status?: CheckboxOptions[]
   text?: string
+  favourites?: boolean
 }
 
 export interface ConnectorListPageProps

@@ -1,8 +1,13 @@
+import { ReactNode } from 'react'
+
+import { Button } from '@components/button'
+import { Checkbox } from '@components/checkbox'
+import { Label } from '@components/form-primitives'
 import { TFunction } from 'i18next'
 
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
-import Checkbox from './filters-bar/actions/variants/checkbox'
+import { default as MulltiTypeInput } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import Text from './filters-bar/actions/variants/text-field'
 import {
@@ -33,7 +38,7 @@ const renderFilterValues = <T extends string, V extends FilterValueTypes, Custom
   filter: FilterField<V>,
   filterOption: FilterOptionConfig<T, CustomValue>,
   onUpdateFilter: (selectedValues: V) => void
-) => {
+): JSX.Element | null => {
   if (!onUpdateFilter) return null
 
   switch (filterOption.type) {
@@ -55,10 +60,10 @@ const renderFilterValues = <T extends string, V extends FilterValueTypes, Custom
         />
       )
     }
-    case FilterFieldTypes.Checkbox: {
+    case FilterFieldTypes.MultiSelect: {
       const checkboxFilter = filter as FilterField<CheckboxOptions[]>
       return (
-        <Checkbox
+        <MulltiTypeInput
           filter={checkboxFilter.value || []}
           filterOption={filterOption.filterFieldConfig?.options || []}
           onUpdateFilter={values => onUpdateFilter(values as V)}
@@ -71,6 +76,17 @@ const renderFilterValues = <T extends string, V extends FilterValueTypes, Custom
         value: customFilter.value,
         onChange: (values: unknown) => onUpdateFilter(values as V)
       })
+    }
+    case FilterFieldTypes.Checkbox: {
+      const checkboxFilter = filter as FilterField<boolean>
+      return (
+        <Button variant="soft" theme="muted" className="cursor-pointer" asChild>
+          <Label className="text-1 text-cn-foreground-1 flex items-center gap-x-3">
+            <Checkbox checked={checkboxFilter.value} onCheckedChange={value => onUpdateFilter(value as V)} />
+            <span>{filterOption.filterFieldConfig?.label}</span>
+          </Label>
+        </Button>
+      )
     }
     default:
       return null
@@ -95,6 +111,10 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
     onChange(selectedValues)
   }
 
+  if (filterOption.type === FilterFieldTypes.Checkbox) {
+    return renderFilterValues<T, V, CustomValue>(activeFilterOption, filterOption, onFilterValueChange) ?? null
+  }
+
   return (
     <FilterBoxWrapper
       contentClassName={filterOption.type === FilterFieldTypes.Calendar ? 'w-[250px]' : ''}
@@ -105,7 +125,7 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
       filterLabel={filterOption.label}
       valueLabel={getFilterLabelValue(filterOption, activeFilterOption)}
     >
-      {renderFilterValues<T, V, CustomValue>(activeFilterOption, filterOption, onFilterValueChange)}
+      {renderFilterValues<T, V, CustomValue>(activeFilterOption, filterOption, onFilterValueChange) ?? null}
     </FilterBoxWrapper>
   )
 }

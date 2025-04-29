@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { JSX, ReactNode } from 'react'
 
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
@@ -9,6 +9,7 @@ export enum FilterFieldTypes {
   Text = 'text',
   ComboBox = 'combobox',
   Custom = 'custom',
+  MultiSelect = 'multiselect',
   Checkbox = 'checkbox'
 }
 
@@ -52,16 +53,23 @@ export interface CustomFilterOptionConfig<T extends string = string, V = Record<
   extends FilterOptionConfigBase<T, V> {
   type: FilterFieldTypes.Custom
   filterFieldConfig: {
-    renderCustomComponent: ({ value, onChange }: { value?: V; onChange: (value: V) => void }) => ReactNode
+    renderCustomComponent: ({ value, onChange }: { value?: V; onChange: (value: V) => void }) => JSX.Element | null
     renderFilterLabel?: (value?: V) => ReactNode
   }
 }
 
-interface CheckboxFilterOptionConfig<T extends string = string>
+interface MultiSelectFilterOptionConfig<T extends string = string>
   extends FilterOptionConfigBase<T, Array<CheckboxOptions>> {
-  type: FilterFieldTypes.Checkbox
+  type: FilterFieldTypes.MultiSelect
   filterFieldConfig?: {
     options?: Array<CheckboxOptions>
+  }
+}
+
+interface CheckboxFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T, boolean> {
+  type: FilterFieldTypes.Checkbox
+  filterFieldConfig?: {
+    label: ReactNode
   }
 }
 
@@ -70,6 +78,7 @@ type FilterOptionConfig<T extends string = string, V = Record<string, unknown>> 
   | CalendarFilterOptionConfig<T>
   | TextFilterOptionConfig<T>
   | CheckboxFilterOptionConfig<T>
+  | MultiSelectFilterOptionConfig<T>
   | CustomFilterOptionConfig<T, V>
 type FilterValueTypes = string | number | unknown
 
@@ -78,6 +87,7 @@ export type {
   FilterValueTypes,
   FilterOptionConfig,
   ComboBoxFilterOptionConfig,
+  CheckboxFilterOptionConfig,
   TextFilterOptionConfig,
   CalendarFilterOptionConfig
 }

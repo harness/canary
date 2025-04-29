@@ -29,7 +29,7 @@ export const getFilterLabelValue = <
     case FilterFieldTypes.ComboBox: {
       return (filter.value as ComboBoxOptions)?.label
     }
-    case FilterFieldTypes.Checkbox: {
+    case FilterFieldTypes.MultiSelect: {
       return (filter.value as CheckboxOptions[])?.map(option => option.label).join(', ')
     }
     case FilterFieldTypes.Text: {

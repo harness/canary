@@ -57,7 +57,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     type: FilterFieldTypes.Custom,
     parser: getParserConfig(),
     filterFieldConfig: {
-      renderCustomComponent: function ({ value, onChange }): ReactNode {
+      renderCustomComponent: function ({ value, onChange }) {
         return (
           <LabelsFilter
             isLabelsLoading={isLabelsLoading}

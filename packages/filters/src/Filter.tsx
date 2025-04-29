@@ -9,7 +9,8 @@ type Parser<T> = {
 }
 
 // Spreads generics from Parser<number | string> -> Parser<number> | Parser<string>
-type SpreadParser<T> = T extends unknown ? Parser<T> : never
+type NormalizeBoolean<T> = T extends true | false ? boolean : T
+type SpreadParser<T> = T extends unknown ? Parser<NormalizeBoolean<T>> : never
 
 export interface FilterProps<T extends Record<string, unknown>, K extends keyof T> {
   filterKey: K

@@ -1,4 +1,5 @@
 import { CheckboxOptions, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
+import { Icon } from '@components/icon'
 import { TFunction } from 'i18next'
 
 import { ConnectorListFilters } from './types'
@@ -12,7 +13,7 @@ export const getConnectorListFilterOptions = (t: TFunction): Array<FilterOptionC
     {
       label: t('views:connectors.filterOptions.statusOption.label', 'Connectivity Status'),
       value: 'status',
-      type: FilterFieldTypes.Checkbox,
+      type: FilterFieldTypes.MultiSelect,
       filterFieldConfig: {
         options
       },
@@ -33,6 +34,18 @@ export const getConnectorListFilterOptions = (t: TFunction): Array<FilterOptionC
       label: t('views:connectors.filterOptions.statusOption.label', 'Text'),
       value: 'text',
       type: FilterFieldTypes.Text
+    },
+    {
+      label: t('views:connectors.filterOptions.statusOption.favourite', 'Favourites'),
+      value: 'favourites',
+      type: FilterFieldTypes.Checkbox,
+      filterFieldConfig: {
+        label: <Icon name="star-filled" className="fill-icons-alert" size={14} />
+      },
+      parser: {
+        parse: (value: string): boolean => value === 'true',
+        serialize: (value: boolean): string => (value ? 'true' : 'false')
+      }
     }
   ]
 }

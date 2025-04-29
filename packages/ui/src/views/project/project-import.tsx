@@ -173,24 +173,13 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           {/* authorization - pipelines */}
           <Fieldset>
             <ControlGroup className="flex flex-row gap-5">
-              <Option
-                control={<Checkbox {...register('repositories')} id="authorization" checked={true} disabled />}
-                id="authorization"
-                label="Repositories"
-                className="mt-0 flex min-h-8 items-center"
-              />
-              <Option
-                control={
-                  <Checkbox
-                    {...register('pipelines')}
-                    id="pipelines"
-                    checked={watch('pipelines')}
-                    onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
-                  />
-                }
+              <Checkbox {...register('repositories')} id="authorization" checked={true} disabled label="Repositories" />
+              <Checkbox
+                {...register('pipelines')}
                 id="pipelines"
+                checked={watch('pipelines')}
+                onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
                 label="Import Pipelines"
-                className="mt-0 flex min-h-8 items-center"
               />
             </ControlGroup>
           </Fieldset>

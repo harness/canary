@@ -234,22 +234,15 @@ export function RepoCreatePage({
               <Text className="leading-none text-cn-foreground-2" size={2}>
                 Initialize this repository with
               </Text>
-              <Option
-                className="mt-6"
-                control={<Checkbox id="readme" checked={readmeValue} onCheckedChange={handleReadmeChange} />}
-                id="readme"
-                label="Add a README file"
-                ariaSelected={accessValue === '1'}
-                description={
-                  <>
-                    This is where you can write a long description for your project.{' '}
-                    {/* TODO: when theres a README docs , link to it
-                     <StyledLink className="inline-block" to="/">
-                      Learn more about README
-                    </StyledLink> */}
-                  </>
-                }
-              />
+              <div className="mt-6">
+                <Checkbox
+                  id="readme"
+                  checked={readmeValue}
+                  onCheckedChange={handleReadmeChange}
+                  label="Add a README file"
+                  description="This is where you can write a long description for your project"
+                />
+              </div>
 
               {errors.readme && <Message theme={MessageTheme.ERROR}>{errors.readme.message?.toString()}</Message>}
             </ControlGroup>

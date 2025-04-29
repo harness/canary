@@ -168,18 +168,12 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
       </ControlGroup>
 
       <ControlGroup>
-        <Option
-          control={
-            <Checkbox
-              {...register!('default')}
-              checked={watch!('default')}
-              onCheckedChange={() => setValue!('default', !watch!('default'))}
-              id="default-branch"
-            />
-          }
+        <Checkbox
           id="default-branch"
+          {...register!('default')}
+          checked={watch!('default')}
+          onCheckedChange={() => setValue!('default', !watch!('default'))}
           label={t('views:repos.applyRuleDefaultBranch', 'Apply this rule to the default branch')}
-          className="mt-0"
         />
 
         {!!errors?.default && <Message theme={MessageTheme.ERROR}>{errors?.default?.message?.toString()}</Message>}
@@ -263,21 +257,15 @@ export const BranchSettingsRuleBypassListField: FC<
       </ControlGroup>
 
       <ControlGroup>
-        <Option
-          control={
-            <Checkbox
-              {...register!('repo_owners')}
-              checked={watch!('repo_owners')}
-              onCheckedChange={() => setValue!('repo_owners', !watch!('repo_owners'))}
-              id="edit-permissons"
-            />
-          }
+        <Checkbox
+          {...register!('repo_owners')}
+          checked={watch!('repo_owners')}
+          onCheckedChange={() => setValue!('repo_owners', !watch!('repo_owners'))}
           id="edit-permissons"
           label={t(
             'views:repos.editPermissionsCheckboxDescription',
             'Allow users with edit permission on the repository to bypass'
           )}
-          className="mt-0"
         />
 
         {errors!.repo_owners && <Message theme={MessageTheme.ERROR}>{errors!.repo_owners.message?.toString()}</Message>}
@@ -314,15 +302,10 @@ export const BranchSettingsRuleListField: FC<{
 
           return (
             <Fieldset key={rule.id} className="gap-y-4">
-              <Option
-                control={
-                  <Checkbox
-                    id={rule.id}
-                    checked={isChecked}
-                    onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
-                  />
-                }
+              <Checkbox
                 id={rule.id}
+                checked={isChecked}
+                onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
                 label={rule.label}
                 description={rule.description}
               />
@@ -331,16 +314,10 @@ export const BranchSettingsRuleListField: FC<{
               {!!rule?.submenuOptions && !!rule?.submenuOptions.length && isChecked && (
                 <Fieldset className="gap-y-4 pl-[26px]">
                   {rule.submenuOptions.map(subOption => (
-                    <Option
-                      key={subOption.id}
-                      control={
-                        <Checkbox
-                          id={subOption.id}
-                          checked={rules[index].submenu?.includes(subOption.id as MergeStrategy)}
-                          onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
-                        />
-                      }
+                    <Checkbox
                       id={subOption.id}
+                      checked={rules[index].submenu?.includes(subOption.id as MergeStrategy)}
+                      onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
                       label={subOption.label}
                     />
                   ))}

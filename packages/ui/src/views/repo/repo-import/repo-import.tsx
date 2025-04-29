@@ -272,31 +272,19 @@ export function RepoImportPage({
           {/* authorization - pipelines */}
           <Fieldset className="mt-4">
             <ControlGroup className="flex flex-row gap-5">
-              <Option
-                control={
-                  <Checkbox
-                    {...register('authorization')}
-                    id="authorization"
-                    checked={watch('authorization')}
-                    onCheckedChange={(checked: boolean) => setValue('authorization', checked)}
-                  />
-                }
+              <Checkbox
+                {...register('authorization')}
                 id="authorization"
+                checked={watch('authorization')}
+                onCheckedChange={(checked: boolean) => setValue('authorization', checked)}
                 label="Requires Authorization"
-                className="mt-0 flex min-h-8 items-center"
               />
-              <Option
-                control={
-                  <Checkbox
-                    {...register('pipelines')}
-                    id="pipelines"
-                    checked={watch('pipelines')}
-                    onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
-                  />
-                }
+              <Checkbox
+                {...register('pipelines')}
                 id="pipelines"
+                checked={watch('pipelines')}
+                onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
                 label="Import Pipelines"
-                className="mt-0 flex min-h-8 items-center"
               />
             </ControlGroup>
           </Fieldset>

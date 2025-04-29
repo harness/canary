@@ -16,6 +16,7 @@ export default {
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
+    top: 'var(--cn-spacing-half)',
     width: 'var(--cn-size-4)',
     height: 'var(--cn-size-4)',
     border: 'var(--cn-border-width-1) solid var(--cn-comp-selection-unselected-border)',

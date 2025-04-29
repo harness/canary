@@ -138,27 +138,23 @@ const LineTitle: React.FC<LineTitleProps> = ({
       </div>
       <div className="inline-flex items-center gap-x-6">
         {showViewed ? (
-          <div className="flex items-center gap-2">
-            <Checkbox
-              checked={viewed}
-              onClick={e => {
-                e.stopPropagation()
-                if (viewed) {
-                  setViewed(false)
-                  setCollapsed(false)
-                  unmarkViewed(filePath)
-                } else {
-                  setViewed(true)
-                  setCollapsed(true)
-                  markViewed(filePath, checksumAfter ?? 'unknown')
-                }
-              }}
-              className="size-4"
-            />
-            <Text size={2} className="text-cn-foreground-1/90">
-              {t('views:pullRequests.viewed')}
-            </Text>
-          </div>
+          <Checkbox
+            checked={viewed}
+            onClick={e => {
+              e.stopPropagation()
+              if (viewed) {
+                setViewed(false)
+                setCollapsed(false)
+                unmarkViewed(filePath)
+              } else {
+                setViewed(true)
+                setCollapsed(true)
+                markViewed(filePath, checksumAfter ?? 'unknown')
+              }
+            }}
+            label={t('views:pullRequests.markViewed')}
+            className="size-4"
+          />
         ) : null}
 
         {/* <Button title="coming soon" variant="ghost" size="sm">

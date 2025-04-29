@@ -83,18 +83,12 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
         <SkeletonForm linesCount={2} />
       ) : (
         <ControlGroup>
-          <Option
-            className="mt-0"
-            control={
-              <Checkbox
-                checked={watch('secretScanning')}
-                id="secret-scanning"
-                onCheckedChange={onCheckboxChange}
-                disabled={isDisabled}
-                title={tooltipMessage}
-              />
-            }
+          <Checkbox
+            checked={watch('secretScanning')}
             id="secret-scanning"
+            onCheckedChange={onCheckboxChange}
+            disabled={isDisabled}
+            title={tooltipMessage}
             label={t('views:repos.secretScanning', 'Secret scanning')}
             description={t(
               'views:repos.secretScanningDescription',

@@ -307,20 +307,14 @@ const PullRequestPanel = ({
                   </Button>
                 )}
                 {!notBypassable && isMergeable && !isDraft && prPanelData.ruleViolation && (
-                  <Option
-                    className="mr-2.5 items-center"
+                  <Checkbox
                     id="checkbox-bypass"
-                    control={
-                      <Checkbox
-                        id="checkbox-bypass"
-                        checked={!!checkboxBypass}
-                        onCheckedChange={() => {
-                          if (typeof checkboxBypass === 'boolean') {
-                            setCheckboxBypass?.(!checkboxBypass)
-                          }
-                        }}
-                      />
-                    }
+                    checked={!!checkboxBypass}
+                    onCheckedChange={() => {
+                      if (typeof checkboxBypass === 'boolean') {
+                        setCheckboxBypass?.(!checkboxBypass)
+                      }
+                    }}
                     label="Bypass and merge anyway"
                   />
                 )}

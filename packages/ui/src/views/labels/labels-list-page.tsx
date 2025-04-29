@@ -67,14 +67,14 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
         <h1 className="mb-6 text-2xl font-medium text-cn-foreground-1">{t('views:labelData.title', 'Labels')}</h1>
 
         {isRepository && (
-          <Option
-            className="mb-[18px]"
-            control={
-              <Checkbox checked={getParentScopeLabels} onCheckedChange={setGetParentScopeLabels} id="parent-labels" />
-            }
-            id="parent-labels"
-            label={t('views:labelData.showParentLabels', 'Show labels from parent scopes')}
-          />
+          <div className="mb-[18px]">
+            <Checkbox
+              id="parent-labels"
+              checked={getParentScopeLabels}
+              onCheckedChange={setGetParentScopeLabels}
+              label={t('views:labelData.showParentLabels', 'Show labels from parent scopes')}
+            />
+          </div>
         )}
 
         {(!!spaceLabels.length || isDirtyList) && (

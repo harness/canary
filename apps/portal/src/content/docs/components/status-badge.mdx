@@ -11,6 +11,7 @@ import { DocsPage } from "../../../components/docs-page";
   client:only
   code={`<div className="flex flex-col gap-8">
     <div className="grid grid-cols-[repeat(6,auto)] gap-5">
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-1 text-foreground/90 underline underline-offset-4 decoration-1">Primary (Default)</div>
         <StatusBadge>Default</StatusBadge>
         <StatusBadge theme="success">Success</StatusBadge>
         <StatusBadge theme="warning">Warning</StatusBadge>
@@ -18,6 +19,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge theme="info">Info</StatusBadge>
         <StatusBadge theme="merged">Merged</StatusBadge>
 
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Secondary</div>
         <StatusBadge variant="secondary">Default</StatusBadge>
         <StatusBadge theme="success" variant="secondary">Success</StatusBadge>
         <StatusBadge theme="warning" variant="secondary">Warning</StatusBadge>
@@ -25,6 +27,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge theme="info" variant="secondary">Info</StatusBadge>
         <StatusBadge theme="merged" variant="secondary">Merged</StatusBadge>
 
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Outline</div>
         <StatusBadge variant="outline">Default</StatusBadge>
         <StatusBadge theme="success" variant="outline">Success</StatusBadge>
         <StatusBadge theme="warning" variant="outline">Warning</StatusBadge>
@@ -32,6 +35,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge theme="info" variant="outline">Info</StatusBadge>
         <StatusBadge theme="merged" variant="outline">Merged</StatusBadge>
 
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Ghost</div>
         <StatusBadge variant="ghost">Default</StatusBadge>
         <StatusBadge theme="success" variant="ghost">Success</StatusBadge>
         <StatusBadge theme="warning" variant="ghost">Warning</StatusBadge>
@@ -39,6 +43,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge theme="info" variant="ghost">Info</StatusBadge>
         <StatusBadge theme="merged" variant="ghost">Merged</StatusBadge>
 
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status</div>
         <StatusBadge variant="status">Default</StatusBadge>
         <StatusBadge theme="success" variant="status">Success</StatusBadge>
         <StatusBadge theme="warning" variant="status">Warning</StatusBadge>
@@ -46,6 +51,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge theme="info" variant="status">Info</StatusBadge>
         <StatusBadge theme="merged" variant="status">Merged</StatusBadge>
 
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status with Pulse</div>
         <StatusBadge variant="status" pulse>Default</StatusBadge>
         <StatusBadge theme="success" variant="status" pulse>Success</StatusBadge>
         <StatusBadge theme="warning" variant="status" pulse>Warning</StatusBadge>
@@ -57,6 +63,7 @@ import { DocsPage } from "../../../components/docs-page";
     <hr />
 
     <div className="grid grid-cols-[repeat(6,auto)] gap-5 self-center">
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-1 text-foreground/90 underline underline-offset-4 decoration-1">Primary (Default)</div>
         <StatusBadge size="sm">Default</StatusBadge>
         <StatusBadge size="sm" theme="success">Success</StatusBadge>
         <StatusBadge size="sm" theme="warning">Warning</StatusBadge>
@@ -64,6 +71,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge size="sm" theme="info">Info</StatusBadge>
         <StatusBadge size="sm" theme="merged">Merged</StatusBadge>
 
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Secondary</div>
         <StatusBadge size="sm" variant="secondary">Default</StatusBadge>
         <StatusBadge size="sm" theme="success" variant="secondary">Success</StatusBadge>
         <StatusBadge size="sm" theme="warning" variant="secondary">Warning</StatusBadge>
@@ -71,6 +79,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge size="sm" theme="info" variant="secondary">Info</StatusBadge>
         <StatusBadge size="sm" theme="merged" variant="secondary">Merged</StatusBadge>
 
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Outline</div>
         <StatusBadge size="sm" variant="outline">Default</StatusBadge>
         <StatusBadge size="sm" theme="success" variant="outline">Success</StatusBadge>
         <StatusBadge size="sm" theme="warning" variant="outline">Warning</StatusBadge>
@@ -78,6 +87,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge size="sm" theme="info" variant="outline">Info</StatusBadge>
         <StatusBadge size="sm" theme="merged" variant="outline">Merged</StatusBadge>
 
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Ghost</div>
         <StatusBadge size="sm" variant="ghost">Default</StatusBadge>
         <StatusBadge size="sm" theme="success" variant="ghost">Success</StatusBadge>
         <StatusBadge size="sm" theme="warning" variant="ghost">Warning</StatusBadge>
@@ -85,6 +95,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge size="sm" theme="info" variant="ghost">Info</StatusBadge>
         <StatusBadge size="sm" theme="merged" variant="ghost">Merged</StatusBadge>
 
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status</div>
         <StatusBadge size="sm" variant="status">Default</StatusBadge>
         <StatusBadge size="sm" theme="success" variant="status">Success</StatusBadge>
         <StatusBadge size="sm" theme="warning" variant="status">Warning</StatusBadge>
@@ -92,6 +103,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge size="sm" theme="info" variant="status">Info</StatusBadge>
         <StatusBadge size="sm" theme="merged" variant="status">Merged</StatusBadge>
 
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status with Pulse</div>
         <StatusBadge size="sm" variant="status" pulse>Default</StatusBadge>
         <StatusBadge size="sm" theme="success" variant="status" pulse>Success</StatusBadge>
         <StatusBadge size="sm" theme="warning" variant="status" pulse>Warning</StatusBadge>
@@ -107,6 +119,8 @@ import { DocsPage } from "../../../components/docs-page";
 
 ```typescript jsx
 import { StatusBadge } from '@harnessio/ui/components'
+
+// ...
 
 // Status badge with pulse
 <StatusBadge variant="status" theme="success" pulse>Status</StatusBadge>
@@ -154,7 +168,7 @@ The `StatusBadge` component supports different visual variants, including `prima
 
 ## Sizes
 
-StatusBadge come in two sizes: `default` and `sm`.
+The `StatusBadge` component comes in two sizes: `default` and `sm`.
 
 <DocsPage.ComponentExample
   client:only
@@ -181,36 +195,6 @@ Status badges can optionally include a pulsing indicator to indicate activity us
 ## API Reference
 
 The `StatusBadge` component has several props to control its appearance:
-
-```typescript jsx
-type StatusBadgeProps =
-  | {
-      // Base props
-      className?: string;
-      children: React.ReactNode;
-      size?: "default" | "sm";
-
-      // Theme (applied to all variants)
-      theme?: "muted" | "success" | "warning" | "danger" | "info" | "merged";
-
-      // Status variant specific props
-      variant: "status";
-      pulse?: boolean;
-    }
-  | {
-      // Base props
-      className?: string;
-      children: React.ReactNode;
-      size?: "default" | "sm";
-
-      // Theme (applied to all variants)
-      theme?: "muted" | "success" | "warning" | "danger" | "info" | "merged";
-
-      // Non-status variant props
-      variant: "primary" | "secondary" | "outline" | "ghost";
-      pulse?: never;
-    };
-```
 
 <DocsPage.PropsTable
   props={[

@@ -61,8 +61,6 @@ function StatusBadge({ className, variant, size, pulse, theme = 'muted', childre
 
   return (
     <div
-      aria-readonly="true"
-      tabIndex={-1}
       className={cn(
         statusBadgeVariants({
           variant,

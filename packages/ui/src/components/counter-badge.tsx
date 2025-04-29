@@ -23,8 +23,6 @@ type CounterBadgeProps = Omit<
 function CounterBadge({ className, theme = 'default', children, ...props }: CounterBadgeProps) {
   return (
     <div
-      aria-readonly="true"
-      tabIndex={-1}
       className={cn(
         counterBadgeVariants({
           theme

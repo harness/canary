@@ -45,7 +45,7 @@ function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>)
   )
 
   return (
-    <InputWrapper>
+    <InputWrapper {...props}>
       <div style={{ padding: '10px', background: 'rgba(0,0,0,0.05)' }}>
         <InputLabel label={label} required={required} />
         {/* TODO: do we need Controller ? */}

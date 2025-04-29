@@ -9,7 +9,7 @@ const inputs: IInputConfigWithConfig[] = [
   {
     inputType: InputType.text,
     path: 'input1',
-    label: 'Enter number',
+    label: 'Enter number - runtime test',
     required: true,
     validation: {
       schema: z.string().refine(
@@ -41,7 +41,9 @@ const inputs: IInputConfigWithConfig[] = [
         { label: 'Option 1', value: 'option1' },
         { label: 'Option 2', value: 'option2' },
         { label: 'Option 3', value: 'option3' }
-      ]
+      ],
+      runtime: true,
+      expression: true
     }
   }
 ]

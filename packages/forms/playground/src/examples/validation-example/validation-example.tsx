@@ -12,10 +12,10 @@ function ValidationExample() {
   return (
     <RootForm onSubmit={onSubmit} resolver={resolver} mode={undefined}>
       {rootForm => (
-        <>
+        <div style={{ border: '1px solid lightgray', padding: '10px', maxWidth: '450px' }}>
           <RenderForm factory={inputComponentFactory} inputs={formDefinition} />
           <button onClick={() => rootForm.submitForm()}>Submit</button>
-        </>
+        </div>
       )}
     </RootForm>
   )

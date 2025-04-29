@@ -24,7 +24,7 @@ function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig
   })
 
   return (
-    <InputWrapper>
+    <InputWrapper {...props}>
       <InputLabel label={label} required={required} />
       <select {...field}>
         {inputConfig?.options.map(item => {

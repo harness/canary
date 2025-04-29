@@ -17,7 +17,7 @@ function IntegerInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
   })
 
   return (
-    <InputWrapper>
+    <InputWrapper {...props}>
       <InputLabel label={label} required={required} />
       <input type="number" placeholder={placeholder} {...field} disabled={readonly} tabIndex={0} />
       <InputError path={path} />

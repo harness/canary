@@ -17,9 +17,9 @@ function CheckboxInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
   })
 
   return (
-    <InputWrapper>
+    <InputWrapper {...props}>
       <InputLabel label={label} required={required} />
-      <input type="checkbox" {...field} disabled={readonly} tabIndex={0} />
+      <input type="checkbox" {...field} disabled={readonly} tabIndex={0} checked={field.value} />
       <InputError path={path} />
     </InputWrapper>
   )

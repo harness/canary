@@ -16,9 +16,6 @@ const themeStyleMapper: Record<Exclude<(typeof themes)[number], 'ai'>, string> =
 }
 
 function createBadgeVariantStyles() {
-  // Exclude "counter" variant from variants
-  // const counterFilteredVariants = variants.filter(variant => variant !== 'counter')
-
   const combinationStyles: CSSRuleObject = {}
   const statusCircleStyles: CSSRuleObject = {}
 

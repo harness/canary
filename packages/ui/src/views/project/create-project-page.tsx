@@ -184,7 +184,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             </div>
 
             {/* TODO: Update the variant of this button to outline once the component supports this style. */}
-            <Button asChild className="mt-3 w-full" rounded variant="surface" size="lg">
+            <Button asChild className="mt-3 w-full" rounded variant="outline" size="lg">
               <Link to={importProjectLinkProps.to}>{t('views:createProject.importProject', 'Import project')}</Link>
             </Button>
           </ControlGroup>

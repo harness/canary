@@ -74,7 +74,7 @@ export default {
     transitionTimingFunction: 'ease-in-out',
     borderRadius: 'var(--cn-btn-default-radius)',
     padding: 'var(--cn-btn-py-default) var(--cn-btn-px-default)',
-    minHeight: 'var(--cn-btn-size-default)',
+    height: 'var(--cn-btn-size-default)',
     gap: 'var(--cn-btn-gap-default)',
     border: 'var(--cn-btn-border) solid black',
     '@apply font-body-tight-strong': '',
@@ -96,13 +96,13 @@ export default {
 
     // sizes
     '&:where(.button-sm)': {
-      minHeight: 'var(--cn-btn-size-sm)',
+      height: 'var(--cn-btn-size-sm)',
       padding: 'var(--cn-btn-py-sm) var(--cn-btn-px-sm)',
       gap: 'var(--cn-btn-gap-sm)',
       '@apply font-caption-tight-normal': ''
     },
     '&:where(.button-lg)': {
-      minHeight: 'var(--cn-btn-size-lg)',
+      height: 'var(--cn-btn-size-lg)',
       padding: 'var(--cn-btn-py-lg) var(--cn-btn-px-lg)',
       gap: 'var(--cn-btn-gap-lg)'
     },

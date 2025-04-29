@@ -10,7 +10,8 @@ import {
   NoData,
   SkeletonTable,
   StatusBadge,
-  Table
+  Table,
+  Tag
 } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
@@ -118,12 +119,14 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
-                    <StatusBadge variant="secondary" size="sm">
-                      {defaultBranch === branch?.name && (
-                        <Icon name="lock" size={14} className="-mt-px mr-1 inline-block text-icons-9" />
-                      )}
-                      {branch?.name}
-                    </StatusBadge>
+                    {/* Design system: Replaced with Tag */}
+                    <Tag
+                      variant="secondary"
+                      size="sm"
+                      value={branch?.name}
+                      icon="lock"
+                      showIcon={defaultBranch === branch?.name}
+                    />
                     <CopyButton buttonVariant="ghost" color="gray" name={branch?.name} />
                   </div>
                 </Table.Cell>

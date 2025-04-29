@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, Icon, ScrollArea, SearchBox } from '@/components'
+import { Button, DropdownMenu, Icon, ScrollArea, SearchBox, Tag } from '@/components'
 import { useDebounceSearch } from '@/hooks'
 import { HandleAddLabelType, LabelMarker, LabelValueType, TranslationStore } from '@/views'
 import { wrapConditionalObjectElement } from '@utils/utils'
@@ -104,7 +104,11 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({
           hasSearchIcon={false}
           {...wrapConditionalObjectElement({ maxLength: 50 }, !!label?.isCustom)}
         >
-          <LabelMarker color={label.color} label={label.key} className="max-w-20 pr-2" />
+          {/* Design System: Replaced with Tag */}
+          <div className="max-w-20 pr-2">
+            <Tag variant="secondary" size="sm" theme={label.color} value={label.key} />
+          </div>
+          {/* <LabelMarker color={label.color} label={label.key} className="max-w-20 pr-2" /> */}
         </SearchBox.Root>
 
         <Button iconOnly size="sm" className="absolute right-2.5 top-2 z-20" variant="ghost" onClick={onSearchClean}>
@@ -118,7 +122,9 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({
         {values.map(value => (
           <DropdownMenu.Item key={value.id} onSelect={handleOnSelect(value)}>
             <div className="relative w-full pr-7">
-              <LabelMarker color={value.color} label={label.key} value={value.value} />
+              {/* Design System: Replaced with Tag */}
+              <Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={value.value} />
+              {/* <LabelMarker color={value.color} label={label.key} value={value.value} /> */}
 
               {label.selectedValueId === value.id && (
                 <Icon className="absolute right-0 top-1 text-icons-2" name="tick" size={12} />
@@ -136,6 +142,8 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({
             </span>
 
             <DropdownMenu.Item onSelect={handleAddNewValue}>
+              {/* Design System: Replaced with Tag */}
+              <Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={searchState} />
               <LabelMarker color={label.color} label={label.key} value={searchState} />
             </DropdownMenu.Item>
           </>

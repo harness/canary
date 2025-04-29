@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Accordion, Icon } from '@/components'
+import { Accordion, Icon, Tag } from '@/components'
 import { ILabelType, LabelMarker, LabelValueType } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -26,14 +26,29 @@ export const LabelCellContent: FC<LabelCellContentProps> = ({ label, values }) =
               />
             )}
 
-            <LabelMarker label={label.key} color={label.color} type={label.type} counter={values?.length} />
+            {/* Design System: Replaced with Tag */}
+            <Tag
+              variant="secondary"
+              size="sm"
+              theme={label.color}
+              label={label.key}
+              value={(values?.length || '').toString()}
+            />
           </div>
         </Accordion.Trigger>
 
         {isWithValues && (
           <Accordion.Content className="flex flex-col gap-y-2.5 pb-0 pl-[22px] pt-2.5">
+            {/* Design System: Replaced with Tag */}
             {values.map(item => (
-              <LabelMarker key={item.id} label={label.key} color={item?.color || label.color} value={item.value} />
+              <Tag
+                key={item.id}
+                variant="secondary"
+                size="sm"
+                theme={item?.color || label.color}
+                label={label.key}
+                value={item.value}
+              />
             ))}
           </Accordion.Content>
         )}

@@ -24,6 +24,7 @@ import BoxCloning from '../../icons/box-cloning.svg'
 import BoxGuide from '../../icons/box-guide.svg'
 import BoxLightning from '../../icons/box-lightning.svg'
 import BoxPullRequests from '../../icons/box-pull-requests.svg'
+import Branch2 from '../../icons/branch-2.svg'
 import Branch from '../../icons/branch.svg'
 import Briefcase from '../../icons/briefcase-icon.svg'
 import CancelGrey from '../../icons/cancel-grey.svg'
@@ -305,6 +306,7 @@ export const IconNameMap = {
   file: File,
   tag: Tag,
   branch: Branch,
+  'branch-2': Branch2,
   'open-pr': OpenPR,
   plus: Plus,
   running: Running,

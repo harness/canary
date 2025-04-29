@@ -13,7 +13,8 @@ import {
   Input,
   Label,
   Option,
-  SkeletonForm
+  SkeletonForm,
+  Tag
 } from '@/components'
 import { cn } from '@/utils'
 import {
@@ -238,15 +239,19 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
             </h3>
 
             <div className="flex flex-col items-start gap-y-2.5">
-              <LabelMarker
-                color={color}
-                label={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
-                type={type}
+              {/* Design System: Replaced with Tag */}
+              <Tag
+                variant="secondary"
+                size="sm"
+                theme={color}
+                value={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
               />
               {values.map((value, idx) => (
-                <LabelMarker
+                <Tag
                   key={`${value.value}-${idx}`}
-                  color={value.color}
+                  variant="secondary"
+                  size="sm"
+                  theme={value.color}
                   label={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
                   value={value.value.length ? value.value : t('views:labelData.form.valueName', 'Label value')}
                 />

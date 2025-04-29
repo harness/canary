@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
 import { TranslationStore } from '@/views'
 import { z } from 'zod'
@@ -82,5 +82,5 @@ export interface CreateBranchDialogProps {
   isCreatingBranch?: boolean
   useTranslationStore: () => TranslationStore
   selectedBranchOrTag: BranchSelectorListItem | null
-  renderProp: () => ReactNode
+  renderProp: () => JSX.Element | null
 }

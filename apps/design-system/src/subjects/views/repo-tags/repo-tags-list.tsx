@@ -42,7 +42,6 @@ export const RepoTagsList = () => {
     <>
       <RepoTagsListView
         useTranslationStore={useTranslationStore}
-        isLoading={false}
         openCreateBranchDialog={(selectedTagInList: BranchSelectorListItem) => {
           setOpenCreateBranchDialog(true)
           setSelectedTagInList(selectedTagInList)
@@ -61,7 +60,7 @@ export const RepoTagsList = () => {
         onClose={() => setOpenCreateTagDialog(false)}
         onSubmit={noop}
         isLoading={false}
-        error={''}
+        error=""
         selectedBranchOrTag={null}
         branchSelectorRenderer={() => (
           <BranchSelectorV2
@@ -69,13 +68,13 @@ export const RepoTagsList = () => {
             branchList={branches}
             tagList={tags}
             selectedBranchorTag={branches[0]}
-            repoId={'repoId'}
-            spaceId={'spaceId'}
-            searchQuery={''}
+            repoId="repoId"
+            spaceId="spaceId"
+            searchQuery=""
             setSearchQuery={noop}
             onSelectBranch={noop}
             isBranchOnly={false}
-            dynamicWidth={false}
+            dynamicWidth
           />
         )}
       />
@@ -84,17 +83,17 @@ export const RepoTagsList = () => {
         open={openCreateBranchDialog}
         onClose={() => setOpenCreateBranchDialog(false)}
         selectedBranchOrTag={selectedTagInList}
-        onSubmit={async () => {}}
+        onSubmit={noop}
         isCreatingBranch={false}
-        error={''}
+        error=""
         renderProp={() => (
           <BranchSelectorV2
             useTranslationStore={useTranslationStore}
             branchList={branches}
             tagList={tags}
             selectedBranchorTag={selectedTagInList ?? { name: '', sha: '', default: false }}
-            repoId={'repoId'}
-            spaceId={'spaceId'}
+            repoId="repoId"
+            spaceId="spaceId"
             searchQuery={''}
             setSearchQuery={noop}
             onSelectBranch={noop}
@@ -108,9 +107,7 @@ export const RepoTagsList = () => {
         open={openDeleteTagDialog}
         onClose={() => setOpenDeleteTagDialog(false)}
         deleteFn={noop}
-        error={null}
         type="tag"
-        identifier={undefined}
         isLoading={false}
         useTranslationStore={useTranslationStore}
       />

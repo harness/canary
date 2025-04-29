@@ -72,11 +72,11 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
           useTranslationStore={useTranslationStore}
           useRepoTagsStore={useRepoTagsStore}
           toCommitDetails={toCommitDetails}
-          openCreateBranchDialog={openCreateBranchDialog}
+          onOpenCreateBranchDialog={openCreateBranchDialog}
           isLoading={isLoading}
           isDirtyList={isDirtyList}
-          handleResetFiltersAndPages={handleResetFiltersAndPages}
-          openCreateTagDialog={openCreateTagDialog}
+          onResetFiltersAndPages={handleResetFiltersAndPages}
+          onOpenCreateTagDialog={openCreateTagDialog}
         />
 
         <Spacer size={5} />

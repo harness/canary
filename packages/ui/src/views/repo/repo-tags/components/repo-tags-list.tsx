@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 
 import { Avatar, CommitCopyActions, MoreActionsTooltip, NoData, SkeletonTable, Table, Text } from '@/components'
 import { getInitials, timeAgo } from '@/utils'
@@ -9,45 +9,42 @@ interface RepoTagsListProps {
   onDeleteTag: (tagName: string) => void
   useRepoTagsStore: () => RepoTagsStore
   toCommitDetails?: ({ sha }: { sha: string }) => string
-  openCreateBranchDialog: (selectedTagInList: BranchSelectorListItem) => void
-  isLoading: boolean
-  isDirtyList: boolean
-  handleResetFiltersAndPages: () => void
-  openCreateTagDialog: () => void
+  onOpenCreateBranchDialog: (selectedTagInList: BranchSelectorListItem) => void
+  isLoading?: boolean
+  isDirtyList?: boolean
+  onResetFiltersAndPages: () => void
+  onOpenCreateTagDialog: () => void
 }
 
 export const RepoTagsList: FC<RepoTagsListProps> = ({
   useTranslationStore,
-  onDeleteTag,
   useRepoTagsStore,
   toCommitDetails,
-  openCreateBranchDialog,
-  isLoading,
-  isDirtyList,
-  handleResetFiltersAndPages,
-  openCreateTagDialog
+  isLoading = false,
+  isDirtyList = false,
+  onResetFiltersAndPages,
+  onOpenCreateTagDialog,
+  onDeleteTag,
+  onOpenCreateBranchDialog
 }) => {
   const { t } = useTranslationStore()
   const { tags: tagsList } = useRepoTagsStore()
 
-  const getTableActions = useMemo(
-    () => (tag: CommitTagType) => [
-      {
-        title: t('views:repos.createBranch', 'Create branch'),
-        onClick: () => openCreateBranchDialog(tag)
-      },
-      {
-        title: t('views:repos.viewFiles', 'View Files'),
-        to: `../code/refs/tags/${tag.name}`
-      },
-      {
-        isDanger: true,
-        title: t('views:repos.deleteTag', 'Delete tag'),
-        onClick: () => onDeleteTag(tag.name)
-      }
-    ],
-    [t, openCreateBranchDialog, onDeleteTag]
-  )
+  const getTableActions = (tag: CommitTagType) => [
+    {
+      title: t('views:repos.createBranch', 'Create branch'),
+      onClick: () => onOpenCreateBranchDialog(tag)
+    },
+    {
+      title: t('views:repos.viewFiles', 'View Files'),
+      to: `../code/refs/tags/${tag.name}`
+    },
+    {
+      isDanger: true,
+      title: t('views:repos.deleteTag', 'Delete tag'),
+      onClick: () => onDeleteTag(tag.name)
+    }
+  ]
 
   const getCreationDate = (tag: CommitTagType) => {
     const date = new Date(tag.tagger?.when ?? 0)
@@ -79,11 +76,11 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
           isDirtyList
             ? {
                 label: t('views:noData.clearSearch', 'Clear search'),
-                onClick: handleResetFiltersAndPages
+                onClick: onResetFiltersAndPages
               }
             : {
                 label: t('views:noData.createNewTag', 'Create new tag.'),
-                onClick: openCreateTagDialog
+                onClick: onOpenCreateTagDialog
               }
         }
       />
@@ -94,12 +91,12 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
     <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" variant="asStackedList">
       <Table.Header>
         <Table.Row className="pointer-events-none select-none">
-          <Table.Head className="w-[108px]">{t('views:repos.tag', 'Tag')}</Table.Head>
-          <Table.Head className="w-[330px]">{t('views:repos.description', 'Description')}</Table.Head>
-          <Table.Head className="w-[140px]">{t('views:repos.commit', 'Commit')}</Table.Head>
-          <Table.Head className="w-[146px]">{t('views:repos.tagger', 'Tagger')}</Table.Head>
-          <Table.Head className="w-[170px]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
-          <Table.Head className="w-16" />
+          <Table.Head className="w-[12%]">{t('views:repos.tag', 'Tag')}</Table.Head>
+          <Table.Head className="w-[35%]">{t('views:repos.description', 'Description')}</Table.Head>
+          <Table.Head className="w-[15%]">{t('views:repos.commit', 'Commit')}</Table.Head>
+          <Table.Head className="w-[15%]">{t('views:repos.tagger', 'Tagger')}</Table.Head>
+          <Table.Head className="w-[16%]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
+          <Table.Head className="w-[7%]" />
         </Table.Row>
       </Table.Header>
 

@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, Fragment, useMemo } from 'react'
 
 import { Badge, Tooltip } from '@/components'
 
@@ -62,7 +62,7 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
           const time = zone === 'UTC' ? formattedDates.utcTime : formattedDates.localTime
 
           return (
-            <>
+            <Fragment key={zone}>
               <Badge variant="soft" size="sm">
                 {zone === 'UTC' ? 'UTC' : getTimeZoneAbbreviation()}
               </Badge>
@@ -70,7 +70,7 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
               <time dateTime={time} className="ml-auto text-cn-foreground-3">
                 {time}
               </time>
-            </>
+            </Fragment>
           )
         })}
         <Tooltip.Arrow />

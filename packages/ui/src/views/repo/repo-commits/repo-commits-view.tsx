@@ -13,7 +13,7 @@ export interface RepoCommitsViewProps {
   useTranslationStore: () => TranslationStore
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
-  renderProp: () => React.ReactNode
+  renderProp: () => JSX.Element | null
 }
 
 export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
@@ -43,7 +43,9 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
           Commits
         </Text>
         <Spacer size={6} />
-        <div className="flex justify-between gap-5">{BranchSelectorContainer()}</div>
+        <div className="flex justify-between gap-5">
+          <BranchSelectorContainer />
+        </div>
 
         <Spacer size={5} />
 

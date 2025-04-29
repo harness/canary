@@ -159,7 +159,11 @@ export const RepoTagsListContainer = () => {
         error={createTagError?.message}
         selectedBranchOrTag={selectedBranchOrTag}
         branchSelectorRenderer={() => (
-          <BranchSelectorContainer onSelectBranchorTag={selectBranchOrTag} selectedBranch={selectedBranchOrTag} />
+          <BranchSelectorContainer
+            onSelectBranchorTag={selectBranchOrTag}
+            selectedBranch={selectedBranchOrTag}
+            dynamicWidth
+          />
         )}
       />
       <CreateBranchDialog

@@ -1,4 +1,4 @@
-import { FC, ReactNode, useCallback, useEffect } from 'react'
+import { FC, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Label, Textarea } from '@/components'
@@ -20,7 +20,7 @@ interface CreateTagDialogProps {
   useTranslationStore: () => TranslationStore
   isLoading?: boolean
   selectedBranchOrTag: BranchSelectorListItem | null
-  branchSelectorRenderer: () => ReactNode
+  branchSelectorRenderer: () => JSX.Element | null
 }
 
 export const CreateTagDialog: FC<CreateTagDialogProps> = ({
@@ -29,7 +29,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
   onSubmit,
   error,
   useTranslationStore,
-  isLoading,
+  isLoading = false,
   selectedBranchOrTag,
   branchSelectorRenderer: BranchSelectorContainer
 }) => {
@@ -70,7 +70,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content className="border-border max-w-xl bg-cn-background-1" aria-describedby={undefined}>
+      <Dialog.Content className="border-border max-w-xl bg-cn-background-1">
         <Dialog.Header>
           <Dialog.Title className="font-medium">{t('views:repos.createTagTitle', 'Create a tag')}</Dialog.Title>
         </Dialog.Header>
@@ -94,7 +94,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
               <Label htmlFor="target" className="mb-2">
                 {t('views:forms.basedOn', 'Based on')}
               </Label>
-              {BranchSelectorContainer()}
+              <BranchSelectorContainer />
             </ControlGroup>
           </Fieldset>
 
@@ -118,14 +118,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
           )}
 
           <Dialog.Footer className="-mx-5 -mb-5">
-            <Button
-              type="button"
-              variant="surface"
-              theme="muted"
-              onClick={handleClose}
-              loading={isLoading}
-              disabled={isLoading}
-            >
+            <Button type="button" variant="outline" onClick={handleClose} loading={isLoading} disabled={isLoading}>
               {t('views:repos.cancel', 'Cancel')}
             </Button>
             <Button type="submit" disabled={isLoading} loading={isLoading}>

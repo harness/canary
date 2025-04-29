@@ -1,4 +1,14 @@
-import { Badge, MoreActionsTooltip, NoData, Pagination, Spacer, StackedList, Switch, Table, Text } from '@/components'
+import {
+  MoreActionsTooltip,
+  NoData,
+  Pagination,
+  Spacer,
+  StackedList,
+  StatusBadge,
+  Switch,
+  Table,
+  Text
+} from '@/components'
 import { useRouterContext } from '@/context'
 import { TranslationStore, WebhookType } from '@/views'
 
@@ -125,7 +135,7 @@ export function RepoWebhookList({
                 />
               </Table.Cell>
               <Table.Cell className="cursor-pointer content-center">
-                <Badge
+                <StatusBadge
                   variant="status"
                   theme={
                     webhook.latest_execution_result === 'success'
@@ -142,7 +152,7 @@ export function RepoWebhookList({
                         webhook.latest_execution_result === 'retriable_error'
                       ? 'Failed'
                       : 'Invalid'}
-                </Badge>
+                </StatusBadge>
               </Table.Cell>
 
               <Table.Cell className="cursor-pointer content-center text-right">

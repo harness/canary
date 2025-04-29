@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Badge } from '@components/badge/badge'
+import { CounterBadge } from '@components/counter-badge'
 import { Icon, IconProps } from '@components/icon'
 import { Tabs } from '@components/tabs'
 
@@ -18,11 +18,7 @@ const TabTriggerItem: FC<TabTriggerItemProps> = ({ value, icon, label, badgeCoun
         <Icon size={14} name={icon as IconProps['name']} />
         <span>{label}</span>
       </div>
-      {badgeCount !== undefined && (
-        <Badge variant="counter" size="sm">
-          {badgeCount}
-        </Badge>
-      )}
+      {badgeCount !== undefined && <CounterBadge>{badgeCount}</CounterBadge>}
     </Tabs.Trigger>
   )
 }

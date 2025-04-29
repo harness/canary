@@ -2,7 +2,7 @@
 
 import { FC } from 'react'
 
-import { Badge, Button, MarkdownViewer } from '@/components'
+import { Button, CounterBadge, MarkdownViewer } from '@/components'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
 
 import { CommentItem, TypesPullReqActivity } from '../../pull-request-details-types'
@@ -65,12 +65,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
             }}
           >
             Commit suggestion
-            {!!suggestionsBatch?.length && (
-              // TODO: Design system: Add Badge counter info theme once it is ready
-              <Badge variant="counter" size="sm">
-                {suggestionsBatch.length}
-              </Badge>
-            )}
+            {!!suggestionsBatch?.length && <CounterBadge theme="info">{suggestionsBatch.length}</CounterBadge>}
           </Button>
           {isInBatch ? (
             <Button variant="outline" theme="danger" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>

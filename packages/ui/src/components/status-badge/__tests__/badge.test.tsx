@@ -1,6 +1,6 @@
 import { render, RenderResult, screen } from '@testing-library/react'
 
-import { Badge } from '../badge'
+import { StatusBadge } from '../status-badge'
 
 // Define a simpler props interface for testing
 type TestProps = {
@@ -30,7 +30,7 @@ const renderComponent = (props: TestProps = {}): RenderResult => {
 
   // Using type assertion for test simplicity
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return render(<Badge {...(finalProps as any)}>{BADGE_TEXT}</Badge>)
+  return render(<StatusBadge {...(finalProps as any)}>{BADGE_TEXT}</StatusBadge>)
 }
 
 describe('Badge', () => {

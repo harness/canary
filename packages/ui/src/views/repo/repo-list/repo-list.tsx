@@ -1,4 +1,4 @@
-import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
+import { Icon, NoData, SkeletonList, StackedList, StatusBadge } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
@@ -26,9 +26,9 @@ const Stats = ({ pulls }: { pulls: number }) => (
 const Title = ({ title, isPrivate, t }: { title: string; isPrivate: boolean; t: TFunction }) => (
   <div className="inline-flex items-center gap-2.5">
     <span className="max-w-full truncate font-medium">{title}</span>
-    <Badge variant="surface" className="leading-none" size="sm" theme={isPrivate ? 'muted' : 'success'}>
+    <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
       {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
-    </Badge>
+    </StatusBadge>
   </div>
 )
 

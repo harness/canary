@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Badge, Button, DropdownMenu, Icon, IconProps, Spacer, Text } from '@/components'
+import { Button, CounterBadge, DropdownMenu, Icon, IconProps, Spacer, StatusBadge, Text } from '@/components'
 import { TranslationStore } from '@views/repo/repo-list/types'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
@@ -70,9 +70,9 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         )}
         <Spacer size={3} />
         {/* TODO: Design system: Replace with Tag */}
-        <Badge variant="surface" theme={!is_public ? 'muted' : 'success'}>
+        <StatusBadge variant="outline" theme={!is_public ? 'muted' : 'success'}>
           {!is_public ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
-        </Badge>
+        </StatusBadge>
         {!!description?.length && (
           <>
             <Spacer size={3} />
@@ -89,9 +89,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
               <div key={item.id} className="flex items-center gap-1.5">
                 <Icon name={item.iconName} size={14} className="fill-none text-cn-foreground-3" />
                 <Text>{item.name}</Text>
-                <Badge variant="counter" size="sm">
-                  {item.count}
-                </Badge>
+                <CounterBadge>{item.count}</CounterBadge>
               </div>
             ))}
         </div>

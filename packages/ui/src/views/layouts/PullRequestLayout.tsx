@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, ReactNode } from 'react'
 
-import { Badge, Icon, IconProps, TabNav } from '@/components'
+import { CounterBadge, Icon, IconProps, TabNav } from '@/components'
 import { useRouterContext } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
 import { TranslationStore } from '@views/repo'
@@ -17,11 +17,7 @@ const TabTitleWithIcon = ({
       <Icon className="text-icons-1 group-[.is-active]:text-icons-2" size={14} name={icon} />
       {children}
     </div>
-    {!!badgeContent && (
-      <Badge className="text-foreground-2 font-normal" variant="counter" size="sm">
-        {badgeContent}
-      </Badge>
-    )}
+    {!!badgeContent && <CounterBadge>{badgeContent}</CounterBadge>}
   </>
 )
 

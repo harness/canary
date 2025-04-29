@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
-import { Badge } from '@components/badge/badge'
 import { Checkbox } from '@components/checkbox'
+import { CounterBadge } from '@components/counter-badge'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Input } from '@components/input'
 import { ILabelType, LabelType, LabelValueType } from '@views/labels'
@@ -156,7 +156,7 @@ export function filterLabelRenderer({ selectedValue, labelOptions, valueOptions 
         />
       )}
 
-      {remainingLabelValues > 0 && <Badge size="sm" variant="counter">{`+ ${remainingLabelValues}`}</Badge>}
+      {remainingLabelValues > 0 && <CounterBadge>{`+ ${remainingLabelValues}`}</CounterBadge>}
     </div>
   )
 }

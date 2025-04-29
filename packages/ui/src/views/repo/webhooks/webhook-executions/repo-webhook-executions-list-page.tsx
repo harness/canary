@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Badge, FormSeparator, NoData, Pagination, SkeletonList, Table, Text } from '@/components'
+import { FormSeparator, NoData, Pagination, SkeletonList, StatusBadge, Table, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { timeAgo } from '@utils/utils'
@@ -68,7 +68,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                       {events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type}
                     </Table.Cell>
                     <Table.Cell className="content-center">
-                      <Badge
+                      <StatusBadge
                         variant="status"
                         theme={
                           execution.result === 'success'
@@ -83,7 +83,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                           : ['fatal_error', 'retriable_error'].includes(execution.result ?? '')
                             ? 'Failed'
                             : 'Invalid'}
-                      </Badge>
+                      </StatusBadge>
                     </Table.Cell>
                     <Table.Cell className="relative text-right">{timeAgo(execution.created ?? Date.now())}</Table.Cell>
                   </Table.Row>

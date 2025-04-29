@@ -2,7 +2,6 @@ import { FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from
 
 import {
   Accordion,
-  Badge,
   Button,
   CopyButton,
   DropdownMenu,
@@ -10,6 +9,7 @@ import {
   ListActions,
   Spacer,
   StackedList,
+  StatusBadge,
   Text
 } from '@/components'
 import { DiffModeOptions, InViewDiffRenderer, jumpToFile, TranslationStore, TypesDiffStats } from '@/views'
@@ -245,14 +245,14 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                     </Text>
                     <div className="ml-4 flex items-center space-x-2">
                       {diff.addedLines != null && diff.addedLines > 0 && (
-                        <Badge variant="surface" size="sm" theme="success">
+                        <StatusBadge variant="outline" size="sm" theme="success">
                           +{diff.addedLines}
-                        </Badge>
+                        </StatusBadge>
                       )}
                       {diff.removedLines != null && diff.removedLines > 0 && (
-                        <Badge variant="surface" size="sm" theme="danger">
+                        <StatusBadge variant="outline" size="sm" theme="danger">
                           -{diff.removedLines}
-                        </Badge>
+                        </StatusBadge>
                       )}
                     </div>
                   </DropdownMenu.Item>

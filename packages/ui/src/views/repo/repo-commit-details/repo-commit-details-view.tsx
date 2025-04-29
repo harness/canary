@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Avatar, Badge, Button, CommitCopyActions, Icon } from '@/components'
+import { Avatar, Button, CommitCopyActions, Icon, StatusBadge } from '@/components'
 import { useRouterContext } from '@/context'
 import { ICommitDetailsStore, SandboxLayout, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
@@ -48,9 +48,9 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               {isVerified && (
                 <>
                   <span className="mx-2.5 h-4 w-px bg-cn-background-3" />
-                  <Badge variant="surface" theme="success">
+                  <StatusBadge variant="outline" theme="success">
                     {t('views:commits.verified', 'Verified')}
-                  </Badge>
+                  </StatusBadge>
                 </>
               )}
             </>

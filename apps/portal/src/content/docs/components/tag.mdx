@@ -83,6 +83,15 @@ import { Tag } from "@harnessio/ui/components";
       showReset
       onReset={() => alert("Reset clicked")}
     />
+    <Tag
+      label="Icon"
+      value="Reset"
+      variant="outline"
+      theme="orange"
+      showReset
+      showIcon
+      onReset={() => alert("Reset clicked")}
+    />
   </div>
 </div>
 
@@ -91,26 +100,13 @@ import { Tag } from "@harnessio/ui/components";
 <div>
   <h5 className="text-lg font-semibold mb-3">Tags with Icon</h5>
   <div className="flex flex-wrap items-end gap-3">
-    <Tag
-      value="Outline Icon"
-      variant="outline"
-      showIcon
-      icon="tag-new"
-      theme="yellow"
-    />
-    <Tag
-      value="Secondary Icon"
-      variant="secondary"
-      showIcon
-      icon="tag-new"
-      theme="violet"
-    />
+    <Tag value="Outline Icon" variant="outline" showIcon theme="yellow" />
+    <Tag value="Secondary Icon" variant="secondary" showIcon theme="violet" />
     <Tag
       value="Rounded Outline Icon"
       variant="outline"
       rounded
       showIcon
-      icon="tag-new"
       theme="brown"
     />
     <Tag
@@ -118,7 +114,6 @@ import { Tag } from "@harnessio/ui/components";
       variant="secondary"
       rounded
       showIcon
-      icon="tag-new"
       theme="indigo"
     />
   </div>
@@ -209,7 +204,6 @@ import { Tag } from "@harnessio/ui/components";
         value="Outline Icon Reset"
         variant="outline"
         showIcon
-        icon="tag-new"
         showReset
         onReset={() => alert("Reset clicked")}
         theme="yellow"
@@ -218,7 +212,6 @@ import { Tag } from "@harnessio/ui/components";
         value="Secondary Icon Reset"
         variant="secondary"
         showIcon
-        icon="tag-new"
         showReset
         onReset={() => alert("Reset clicked")}
         theme="violet"
@@ -228,7 +221,6 @@ import { Tag } from "@harnessio/ui/components";
         variant="outline"
         rounded
         showIcon
-        icon="tag-new"
         showReset
         onReset={() => alert("Reset clicked")}
         theme="brown"
@@ -238,7 +230,6 @@ import { Tag } from "@harnessio/ui/components";
         variant="secondary"
         rounded
         showIcon
-        icon="tag-new"
         showReset
         onReset={() => alert("Reset clicked")}
         theme="indigo"
@@ -283,7 +274,6 @@ import { Tag } from '@harnessio/ui/components'
   value="Outline Icon"
   variant="outline"
   showIcon
-  icon="tag-new"
   theme="yellow"
 />
 
@@ -310,7 +300,6 @@ import { Tag } from '@harnessio/ui/components'
   value="Outline Icon Reset"
   variant="outline"
   showIcon
-  icon="tag-new"
   showReset
   onReset={() => alert('Reset clicked')}
   theme="yellow"

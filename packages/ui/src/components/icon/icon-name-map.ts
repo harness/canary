@@ -48,7 +48,7 @@ import Circle from '../../icons/circle.svg'
 import ClockIcon from '../../icons/clock-icon.svg'
 import Clock from '../../icons/clock.svg'
 import Clone from '../../icons/clone.svg'
-import CloseNew from '../../icons/close-new.svg'
+import Close2 from '../../icons/close-2.svg'
 import Close from '../../icons/close.svg'
 import CloudCostsGradient from '../../icons/cloud-costs-gradient.svg'
 import CloudCosts from '../../icons/cloud-costs-icon.svg'
@@ -212,7 +212,7 @@ import Success from '../../icons/success.svg'
 import Suggestion from '../../icons/suggestion.svg'
 import SupplyChainGradient from '../../icons/supply-chain-gradient.svg'
 import SupplyChain from '../../icons/supply-chain-icon.svg'
-import TagNew from '../../icons/tag-new.svg'
+import Tag2 from '../../icons/tag-2.svg'
 import Tag from '../../icons/tag.svg'
 import Tasks from '../../icons/tasks.svg'
 import TickCircle from '../../icons/tick-circle.svg'
@@ -463,6 +463,6 @@ export const IconNameMap = {
   'golang-icon': GolangIcon,
   'attachment-link': AttachmentLink,
   spinner: Spinner,
-  'close-new': CloseNew,
-  'tag-new': TagNew
+  'close-2': Close2,
+  'tag-2': Tag2
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

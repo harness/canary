@@ -2,7 +2,7 @@ import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const tagVariants = cva('tag w-fit transition-colors cursor-pointer', {
+const tagVariants = cva('tag', {
   variants: {
     variant: {
       outline: 'tag-outline',
@@ -72,13 +72,13 @@ function Tag({
 
   return (
     <div tabIndex={-1} className={cn(tagVariants({ variant, size, theme, rounded }), className)} {...props}>
-      {showIcon && <Icon name={icon || 'tag-new'} className="tag-icon" />}
+      {showIcon && <Icon skipSize name={icon || 'tag-2'} className="tag-icon" />}
       <span className="truncate" title={value}>
         {value}
       </span>
       {showReset && (
         <button onClick={onReset}>
-          <Icon name="close-new" className="tag-reset-icon" />
+          <Icon skipSize name="close-2" className="tag-reset-icon" />
         </button>
       )}
     </div>

@@ -91,6 +91,7 @@ export default {
           solidred: 'var(--cn-set-red-solid-border)',
           risk: 'var(--cn-icon-risk)'
         },
+        // Remove Tag Colors once Toast component is removed
         tag: {
           border: {
             gray: {

@@ -33,10 +33,10 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
       borderColor: `var(--cn-set-${theme}-${isOutline ? 'surface-border' : 'soft-bg'})`,
 
       '&:hover:not(.tag-split *)': getHoverStyles(theme, isOutline),
-      '&.tag-split-left': {
+      '&:where(.tag-split-left)': {
         '.tag-split:hover &': getHoverStyles(theme, isOutline)
       },
-      '&.tag-split-right': isOutline
+      '&:where(.tag-split-right)': isOutline
         ? {
             borderColor: `var(--cn-set-${theme}-soft-bg)`,
             '.tag-split:hover &': {

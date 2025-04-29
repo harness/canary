@@ -74,18 +74,17 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
             />
           </ControlGroup>
 
-        <Dialog.Footer className="-mx-5 -mb-5">
-          <ButtonGroup>
-            <>
+          <Dialog.Footer className="-mx-5 -mb-5">
+            <ButtonGroup>
               <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
                 Cancel
               </Button>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Committing...' : 'Commit changes'}
               </Button>
-            </>
-          </ButtonGroup>
-        </Dialog.Footer>
+            </ButtonGroup>
+          </Dialog.Footer>
+        </FormWrapper>
       </Dialog.Content>
     </Dialog.Root>
   )

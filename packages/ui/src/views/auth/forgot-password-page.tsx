@@ -70,7 +70,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
 
   return (
     <Floating1ColumnLayout
-      className="bg-cn-background-1 flex-col pt-20 sm:pt-[186px]"
+      className="flex-col bg-cn-background-1 pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
@@ -101,13 +101,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
               error={errors.email?.message?.toString()}
               autoFocus
             />
-            <Button
-              className="mt-10 w-full"
-              variant="outline"
-              rounded
-              type="submit"
-              loading={isLoading}
-            >
+            <Button className="mt-10 w-full" variant="outline" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Sending...' : 'Send'}
             </Button>
           </form>

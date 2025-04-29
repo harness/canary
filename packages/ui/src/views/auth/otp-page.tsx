@@ -83,7 +83,7 @@ export function OTPPage({
 
   return (
     <Floating1ColumnLayout
-      className="bg-cn-background-1 flex-col pt-20 sm:pt-[186px]"
+      className="flex-col bg-cn-background-1 pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
@@ -123,7 +123,7 @@ export function OTPPage({
               />
               {(errors.otp || serverError) && (
                 <Text
-                  className="text-cn-foreground-danger absolute top-full w-full translate-y-2 leading-none tracking-tight"
+                  className="absolute top-full w-full translate-y-2 leading-none tracking-tight text-cn-foreground-danger"
                   align="center"
                   size={1}
                   as="p"

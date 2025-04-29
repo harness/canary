@@ -119,7 +119,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
               rightElement={
                 createdTokenData && (
                   <CopyButton
-                    className="bg-cn-background-1 absolute right-2.5"
+                    className="absolute right-2.5 bg-cn-background-1"
                     name={createdTokenData.identifier || ''}
                   />
                 )
@@ -149,7 +149,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                   label={t('views:profileSettings.token', 'Token')}
                   rightElement={
                     <CopyButton
-                      className="bg-cn-background-1 absolute right-2.5"
+                      className="absolute right-2.5 bg-cn-background-1"
                       name={createdTokenData?.token || ''}
                     />
                   }
@@ -183,7 +183,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                   </Select.Content>
                 </Select.Root>
                 {isValid && (
-                  <span className="text-2 text-cn-foreground-3 mt-1.5">
+                  <span className="mt-1.5 text-2 text-cn-foreground-3">
                     {watch('lifetime') === 'never' ? (
                       <span>{t('views:profileSettings.tokenExpiryNone', 'Token will never expire')}</span>
                     ) : (

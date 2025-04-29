@@ -119,6 +119,10 @@
     "input": "Rechercher des fichiers...",
     "noFile": "Aucun fichier trouvé."
   },
+  "toaster": {
+    "showLess": "Afficher moins",
+    "showMore": "Afficher plus"
+  },
   "sort": {
     "defaultLabel": "Trier",
     "inputPlaceholder": "Trier par...",

@@ -46,10 +46,10 @@ export function Toaster({ useTranslationStore }: { useTranslationStore: () => Tr
         const { withShowButton = false, withFullHeight = false } = contentState[id] || {}
 
         return (
-          <Toast.Root key={id} variant={variant} {...props}>
+          <Toast.Root key={id} variant={variant} {...props} className="gap-x-[18px]">
             <Layout.Horizontal gap="space-x-2.5" className="items-center">
               {withIndicator && (
-                <>
+                <div className="self-start py-[5px]">
                   {variant === 'success' && (
                     <Icon name="checkbox" className="text-icons-success" {...commonIconProps} />
                   )}
@@ -61,7 +61,7 @@ export function Toaster({ useTranslationStore }: { useTranslationStore: () => Tr
                     />
                   )}
                   {variant === 'failed' && <Icon name="cross" className="text-icons-danger" {...commonIconProps} />}
-                </>
+                </div>
               )}
               <Layout.Vertical
                 gap={cn('space-y-1', { 'line-clamp-3': !withFullHeight })}
@@ -72,25 +72,28 @@ export function Toaster({ useTranslationStore }: { useTranslationStore: () => Tr
               </Layout.Vertical>
             </Layout.Horizontal>
 
-            {withShowButton && (
-              <Button onClick={makeToggleShowButton(id)} className="min-w-fit self-end">
-                {withFullHeight
-                  ? t('component:toaster.showLess', 'Show less')
-                  : t('component:toaster.showMore', 'Show more')}
-              </Button>
-            )}
+            <Layout.Vertical gap="space-y-1" className="items-end justify-between">
+              {!action && (
+                <Toast.Close
+                  variant="ghost"
+                  className={cn(
+                    variant === 'destructive'
+                      ? 'text-toast-icons-danger-default hover:text-toast-icons-danger-hover'
+                      : 'text-icons-1 hover:text-icons-2'
+                  )}
+                />
+              )}
 
-            {action}
+              {action}
 
-            {!action && (
-              <Toast.Close
-                className={cn(
-                  variant === 'destructive'
-                    ? 'text-toast-icons-danger-default hover:text-toast-icons-danger-hover'
-                    : 'text-icons-1 hover:text-icons-2'
-                )}
-              />
-            )}
+              {withShowButton && (
+                <Button variant="link" onClick={makeToggleShowButton(id)} className="min-w-fit self-end">
+                  {withFullHeight
+                    ? t('component:toaster.showLess', 'Show less')
+                    : t('component:toaster.showMore', 'Show more')}
+                </Button>
+              )}
+            </Layout.Vertical>
           </Toast.Root>
         )
       })}

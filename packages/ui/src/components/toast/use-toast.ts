@@ -2,7 +2,7 @@ import { ReactNode, useCallback, useEffect, useState } from 'react'
 
 import type { ToastActionElement, ToastProps } from './toast'
 
-const TOAST_LIMIT = 3
+const TOAST_LIMIT = 5
 const TOAST_REMOVE_DELAY = 10000
 
 type ToasterToast = ToastProps & {

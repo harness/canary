@@ -74,7 +74,7 @@ export const AppShell: FC = () => {
           <Outlet />
         </MainContentLayout>
       </AppSideBar>
-      <Toaster />
+      <Toaster useTranslationStore={useTranslationStore} />
     </>
   )
 }

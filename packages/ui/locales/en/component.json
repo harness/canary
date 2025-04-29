@@ -119,6 +119,10 @@
     "input": "Search files...",
     "noFile": "No file found."
   },
+  "toaster": {
+    "showLess": "Show less",
+    "showMore": "Show more"
+  },
   "sort": {
     "defaultLabel": "Sort",
     "inputPlaceholder": "Sort by...",

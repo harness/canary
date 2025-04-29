@@ -86,7 +86,7 @@ export default function ReposListPage() {
       variant: 'success'
     })
     toast({
-      title: `!! Unable to create feature flag because of an OPA policy violation`,
+      title: `!! Unable to create feature flag because of an OPA policy violation. Unable to create feature flag because of an OPA policy violation`,
       description:
         '!! We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies ',
       duration: 300000,

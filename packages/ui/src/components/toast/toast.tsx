@@ -24,7 +24,7 @@ const ToastViewport = forwardRef<
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName
 
 const toastVariants = cva(
-  'pointer-events-auto relative flex min-h-11 w-full items-center justify-between overflow-hidden rounded border py-3 pl-3.5 pr-11 shadow-lg transition-all',
+  'pointer-events-auto relative flex min-h-11 w-full justify-between overflow-hidden rounded border p-3 shadow-lg transition-all',
   {
     variants: {
       variant: {
@@ -65,7 +65,7 @@ ToastAction.displayName = ToastPrimitives.Action.displayName
 
 const ToastClose = forwardRef<ElementRef<typeof ToastPrimitives.Close>, ButtonProps>(({ className, ...props }, ref) => (
   <ToastPrimitives.Close ref={ref} asChild>
-    <Button iconOnly className={cn('absolute right-1 top-1.5', className)} {...props}>
+    <Button iconOnly className={cn('', className)} {...props}>
       <Icon name="cross" size={12} />
     </Button>
   </ToastPrimitives.Close>

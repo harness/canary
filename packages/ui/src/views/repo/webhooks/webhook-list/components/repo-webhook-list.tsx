@@ -14,6 +14,7 @@ export interface RepoWebhookListProps {
   openDeleteWebhookDialog: (id: number) => void
   handleEnableWebhook: (id: number, enabled: boolean) => void
   toRepoWebhookDetails?: ({ webhookId }: { webhookId: number }) => string
+  toRepoWebhookCreate?: () => string
 }
 
 export function RepoWebhookList({
@@ -27,13 +28,16 @@ export function RepoWebhookList({
   setPage,
   openDeleteWebhookDialog,
   handleEnableWebhook,
-  toRepoWebhookDetails
+  toRepoWebhookDetails,
+  toRepoWebhookCreate
 }: RepoWebhookListProps) {
   const { t } = useTranslationStore()
   const { navigate } = useRouterContext()
 
   const handleNavigate = () => {
-    navigate('create')
+    if (toRepoWebhookCreate) {
+      navigate(toRepoWebhookCreate())
+    }
   }
 
   if (error) {

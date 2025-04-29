@@ -128,6 +128,7 @@ export default function WebhookListPage() {
         toRepoWebhookDetails={({ webhookId }: { webhookId: number }) =>
           routes.toRepoWebhookDetails({ spaceId, repoId, webhookId: webhookId.toString() })
         }
+        toRepoWebhookCreate={() => routes.toRepoWebhookCreate({ spaceId, repoId })}
       />
 
       <DeleteAlertDialog

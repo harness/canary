@@ -496,7 +496,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     path: 'create',
                     element: <CreateWebhookContainer />,
                     handle: {
-                      breadcrumb: () => <span>Create a webhook</span>
+                      breadcrumb: () => <span>Create a webhook</span>,
+                      routeName: RouteConstants.toRepoWebhookCreate
                     }
                   }
                 ]

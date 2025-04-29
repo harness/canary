@@ -21,7 +21,7 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, CheckboxP
       <div className={cn('checkbox-wrapper', className)}>
         <CheckboxPrimitive.Root id={checkboxId} ref={ref} className={cn('checkbox-root')} {...props}>
           <CheckboxPrimitive.Indicator className="checkbox-indicator">
-            {props.checked === 'indeterminate' ? <Icon name="minus" size={10} /> : <Icon name="checkbox" size={10} />}
+            {props.checked === 'indeterminate' ? <Icon name="minus" size={10} /> : <Icon name="check" size={10} />}
           </CheckboxPrimitive.Indicator>
         </CheckboxPrimitive.Root>
 

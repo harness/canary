@@ -31,6 +31,7 @@ import CancelGrey from '../../icons/cancel-grey.svg'
 import Changes from '../../icons/changes.svg'
 import ChaosEngineeringGradient from '../../icons/chaos-engineering-gradient.svg'
 import ChaosEngineering from '../../icons/chaos-engineering-icon.svg'
+import Check from '../../icons/check.svg'
 import CheckboxCircle from '../../icons/checkbox-circle.svg'
 import Checkbox from '../../icons/checkbox.svg'
 import Checklist from '../../icons/checklist.svg'
@@ -247,6 +248,7 @@ export const IconNameMap = {
   download: Download,
   clock: Clock,
   checkbox: Checkbox,
+  check: Check,
   harness: Harness,
   pipelines: Pipelines,
   'pipelines-gradient': PipelinesGradient,

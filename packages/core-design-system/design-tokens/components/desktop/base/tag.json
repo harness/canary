@@ -16,7 +16,7 @@
     },
     "py": {
       "$type": "spacing",
-      "$value": "{spacing.1}"
+      "$value": "{spacing.half}"
     },
     "px": {
       "$type": "spacing",

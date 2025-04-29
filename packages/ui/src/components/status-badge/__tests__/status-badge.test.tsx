@@ -1,14 +1,15 @@
 import { render, RenderResult, screen } from '@testing-library/react'
+import { VariantProps } from 'class-variance-authority'
 
-import { StatusBadge } from '../status-badge'
+import { StatusBadge, statusBadgeVariants } from '../status-badge'
 
 // Define a simpler props interface for testing
 type TestProps = {
-  theme?: string
-  variant?: string
-  size?: string
+  theme?: VariantProps<typeof statusBadgeVariants>['theme']
+  variant?: VariantProps<typeof statusBadgeVariants>['variant']
+  size?: VariantProps<typeof statusBadgeVariants>['size']
   className?: string
-  [key: string]: unknown // Better than 'any'
+  [key: string]: unknown
 }
 
 // Constants for reusable text
@@ -19,13 +20,9 @@ const renderComponent = (props: TestProps = {}): RenderResult => {
   // Handle differently based on theme
   let finalProps: TestProps = { ...props }
 
-  // If theme is 'ai', make sure variant is undefined
-  if (props.theme === 'ai') {
-    finalProps = { ...props, variant: undefined }
-  }
   // If no theme and no variant, provide a default variant
-  else if (!props.theme && !props.variant) {
-    finalProps = { ...props, variant: 'surface' }
+  if (!props.theme && !props.variant) {
+    finalProps = { ...props, variant: 'primary' }
   }
 
   // Using type assertion for test simplicity
@@ -50,17 +47,5 @@ describe('Badge', () => {
     renderComponent({ size: 'sm' })
 
     expect(screen.getByText(BADGE_TEXT)).toHaveClass('badge-sm')
-  })
-
-  test('it should apply ai theme styles correctly', () => {
-    renderComponent({ theme: 'ai' })
-
-    expect(screen.getByText(BADGE_TEXT)).toHaveClass('badge-ai')
-  })
-
-  test('it should apply variant styles correctly', () => {
-    renderComponent({ variant: 'counter' })
-
-    expect(screen.getByText(BADGE_TEXT)).toHaveClass('badge-counter')
   })
 })

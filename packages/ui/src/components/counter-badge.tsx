@@ -13,7 +13,6 @@ const counterBadgeVariants = cva('badge badge-counter inline-flex w-fit items-ce
   }
 })
 
-// Base props without theme-specific requirements
 type CounterBadgeProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
   'color' | 'role' | 'aria-readonly' | 'tabIndex' | 'onClick'

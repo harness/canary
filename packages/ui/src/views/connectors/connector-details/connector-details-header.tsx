@@ -73,7 +73,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           ) : null}
           {status ? (
             <div className="flex flex-col gap-1.5">
-              <span className="text-cn-foreground-3 leading-tight">Connection status</span>
+              <span className="leading-tight text-cn-foreground-3">Connection status</span>
               <StatusBadge
                 className="leading-none"
                 size="sm"

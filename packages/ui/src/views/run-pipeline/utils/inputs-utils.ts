@@ -24,7 +24,7 @@ export function pipelineInput2FormInput(
   name: string,
   inputProps: Record<string, unknown>,
   options: { prefix?: string }
-): IInputDefinition<RuntimeInputConfig> {
+): IInputDefinition<{ tooltip?: string } & RuntimeInputConfig> {
   const inputType = pipelineInputType2FormInputType(inputProps.type as string)
 
   return {
@@ -34,7 +34,8 @@ export function pipelineInput2FormInput(
     default: inputProps.default,
     required: inputProps.required as boolean,
     inputConfig: {
-      allowedValueTypes: ['fixed', 'runtime', 'expression']
+      allowedValueTypes: ['fixed', 'runtime', 'expression'],
+      ...(inputProps.description ? { tooltip: inputProps.description as string } : {})
     },
     outputTransform: inputType === 'text' ? unsetEmptyStringOutputTransformer() : undefined,
     ...(typeof inputProps.pattern === 'string'

@@ -80,7 +80,7 @@ export default {
     '@apply truncate': ''
   },
 
-  '.checkbox-description': {
+  '.checkbox-caption': {
     font: 'var(--cn-body-normal)',
     color: 'var(--cn-text-2)',
     '&:where(.disabled)': {

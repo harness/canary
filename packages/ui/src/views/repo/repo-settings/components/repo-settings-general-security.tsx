@@ -90,7 +90,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
             disabled={isDisabled}
             title={tooltipMessage}
             label={t('views:repos.secretScanning', 'Secret scanning')}
-            description={t(
+            caption={t(
               'views:repos.secretScanningDescription',
               'Block commits containing secrets like passwords, API keys and tokens.'
             )}

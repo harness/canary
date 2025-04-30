@@ -307,7 +307,7 @@ export const BranchSettingsRuleListField: FC<{
                 checked={isChecked}
                 onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
                 label={rule.label}
-                description={rule.description}
+                caption={rule.description}
               />
 
               {/* Conditionally render the submenu if this rule has a submenu and is checked */}

@@ -1,12 +1,13 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { Icon } from '@/components'
+import { Icon, Label } from '@/components'
 import { cn } from '@/utils/cn'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 
 interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
   label?: string
-  description?: string
+  caption?: string
+  optional?: boolean
 }
 
 /**
@@ -14,7 +15,7 @@ interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxPrimitiv
  * Built on top of Radix UI Checkbox primitive with additional styling.
  */
 const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, CheckboxProps>(
-  ({ className, label, description, ...props }, ref) => {
+  ({ className, label, caption, optional, ...props }, ref) => {
     const checkboxId = props.id || `checkbox-${Math.random().toString(36).slice(2, 11)}`
 
     return (
@@ -29,12 +30,16 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, CheckboxP
           </CheckboxPrimitive.Indicator>
         </CheckboxPrimitive.Root>
 
-        {(label || description) && (
+        {(label || caption) && (
           <div className="checkbox-label-wrapper">
-            <label htmlFor={checkboxId} className={`checkbox-label ${props.disabled ? 'disabled' : ''}`}>
-              {(props.required ? `${label} *` : label) || ''}
-            </label>
-            <p className={`checkbox-description ${props.disabled ? 'disabled' : ''}`}>{description || ''}</p>
+            <Label
+              htmlFor={checkboxId}
+              optional={optional}
+              className={`checkbox-label ${props.disabled ? 'disabled' : ''}`}
+            >
+              {label}
+            </Label>
+            <p className={`checkbox-caption ${props.disabled ? 'disabled' : ''}`}>{caption || ''}</p>
           </div>
         )}
       </div>

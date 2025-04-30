@@ -66,6 +66,11 @@ export default {
     }
   },
 
+  '.checkbox-icon': {
+    width: 'var(--cn-icon-size-xs)',
+    height: 'var(--cn-icon-size-xs)'
+  },
+
   '.checkbox-label': {
     font: 'var(--cn-body-strong)',
     color: 'var(--cn-text-1)',

@@ -1,13 +1,12 @@
 import { useMemo, useRef, useState } from 'react'
 import { LinkProps } from 'react-router-dom'
 
-import { Button, DropdownMenu, Icon, ScrollArea, SearchBox, StyledLink } from '@/components'
+import { Button, DropdownMenu, Icon, ScrollArea, SearchBox, StyledLink, Tag } from '@/components'
 import { useDebounceSearch } from '@/hooks'
 import {
   HandleAddLabelType,
   ILabelType,
   LabelAssignmentType,
-  LabelMarker,
   LabelType,
   LabelValuesType,
   LabelValueType,
@@ -157,11 +156,12 @@ export const LabelsHeader = ({
                   {labelsListWithValues?.map((label, idx) => (
                     <DropdownMenu.Item key={`${label.id}-${idx}`} onSelect={handleOnSelect(label)}>
                       <div className="relative grid w-full gap-y-1.5 pr-7">
-                        <LabelMarker
-                          color={label.color}
+                        <Tag
+                          variant="secondary"
+                          size="sm"
+                          theme={label.color}
                           label={label.key}
-                          type={label.type}
-                          counter={label?.values?.length}
+                          value={(label.values?.length || '').toString()}
                         />
 
                         {!!label?.description && (

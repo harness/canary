@@ -74,11 +74,6 @@ const inputs: IInputConfigWithConfigInterface[] = [
     isVisible: values => values?.credential === AwsCredTypeValues.AssumeRoleSTS
   },
   {
-    inputType: 'secretSelect',
-    path: `kmsArn`,
-    label: 'AWS ARN'
-  },
-  {
     inputType: 'text',
     path: `region`,
     label: 'Region'

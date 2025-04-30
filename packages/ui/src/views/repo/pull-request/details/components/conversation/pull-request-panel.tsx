@@ -2,15 +2,16 @@ import { useCallback, useEffect, useState } from 'react'
 
 import {
   Accordion,
-  Badge,
   Button,
   Checkbox,
+  CounterBadge,
   Icon,
   Layout,
   MoreActionsTooltip,
   Option,
   SplitButton,
   StackedList,
+  StatusBadge,
   type ButtonThemes
 } from '@/components'
 import { useRouterContext } from '@/context'
@@ -60,15 +61,15 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         <div className="inline-flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1 font-medium">
             <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
-            <Badge variant="soft" theme="muted" size="sm">
+            <StatusBadge variant="secondary" theme="muted" size="sm">
               <Icon name="branch" size={12} className="text-icons-9" />
               {props?.pullReqMetadata?.source_branch}
-            </Badge>
+            </StatusBadge>
             <span>into</span>
-            <Badge variant="soft" theme="muted" size="sm">
+            <StatusBadge variant="secondary" theme="muted" size="sm">
               <Icon name="branch" size={12} className="text-icons-9" />
               {props?.pullReqMetadata?.target_branch}
-            </Badge>
+            </StatusBadge>
             <span>{formattedTime}</span>
           </div>
           {props.showDeleteBranchButton ? (
@@ -302,9 +303,7 @@ const PullRequestPanel = ({
                   <Button variant="outline" onClick={() => onCommitSuggestions()}>
                     Commit suggestion
                     {/* TODO: Design system: Add Badge counter icon theme once it is ready */}
-                    <Badge variant="counter" size="sm">
-                      {commitSuggestionsBatchCount}
-                    </Badge>
+                    <CounterBadge theme="info">{commitSuggestionsBatchCount}</CounterBadge>
                   </Button>
                 )}
                 {!notBypassable && isMergeable && !isDraft && prPanelData.ruleViolation && (
@@ -437,9 +436,9 @@ const PullRequestPanel = ({
             )}
           </Accordion.Root>
         ) : (
-          <Layout.Horizontal className="flex w-full items-center justify-between py-4" gap="space-x-2">
+          <Layout.Horizontal gap="space-x-2" className="flex w-full items-center justify-between py-4">
             <Layout.Horizontal className="flex w-full items-center" gap="space-x-1">
-              <Badge variant="soft" size="sm">
+              <StatusBadge variant="secondary" size="sm">
                 <Link
                   className="flex items-center gap-x-1.5"
                   to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${pullReqMetadata?.source_branch}`}
@@ -447,8 +446,8 @@ const PullRequestPanel = ({
                   <Icon name="branch" size={12} className="text-icons-9" />
                   {pullReqMetadata?.source_branch}
                 </Link>
-              </Badge>
-              <span className="text-2 text-cn-foreground-1">branch has unmerged changes.</span>
+              </StatusBadge>
+              <span className="text-2 text-cn-foreground-1"> branch has unmerged changes.</span>
             </Layout.Horizontal>
             {showDeleteBranchButton && (
               <Button theme="danger" onClick={onDeleteBranch}>

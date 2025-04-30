@@ -34,8 +34,8 @@ const inputs: IInputConfigWithConfig[] = [
   },
   {
     inputType: InputType.select,
-    path: 'input3',
-    label: 'Checkbox input',
+    path: 'input4',
+    label: 'Select input',
     inputConfig: {
       options: [
         { label: 'Option 1', value: 'option1' },

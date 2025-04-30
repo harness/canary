@@ -1,5 +1,4 @@
 import { Label } from '@components/form-primitives/label'
-import { cn } from '@utils/cn'
 
 export interface InputLabelProps {
   label?: string
@@ -15,7 +14,7 @@ function InputLabel(props: InputLabelProps): JSX.Element | null {
 
   const labelText = required && label ? `${label} *` : label
 
-  return <Label className={cn('mb-2', className)}>{labelText}</Label>
+  return <Label className={className}>{labelText}</Label>
 }
 
 export { InputLabel }

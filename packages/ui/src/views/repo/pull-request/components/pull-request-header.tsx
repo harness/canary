@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 
 import { useRouterContext } from '@/context'
-import { Badge, Button, Icon } from '@components/index'
+import { Button, Icon, StatusBadge, Tag } from '@components/index'
 import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
 
@@ -86,10 +86,10 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         </div>
 
         <div className="flex items-center gap-x-3">
-          <Badge variant="surface" theme={stateObject.theme}>
+          <StatusBadge variant="outline" theme={stateObject.theme}>
             <Icon name={stateObject.icon as IconType} size={13} />
             {stateObject.text}
-          </Badge>
+          </StatusBadge>
 
           <div className="inline-flex flex-wrap items-center gap-1 text-cn-foreground-2">
             <span className="font-medium text-cn-foreground-1">{author?.display_name || author?.email || ''}</span>
@@ -98,26 +98,13 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
             </span>
             <span>into</span>
-            {/* TODO: Design system: Convert it as tag (or clickable element) */}
-            <Badge variant="soft" theme="muted">
-              <Link
-                className="flex items-center gap-x-1.5"
-                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}
-              >
-                <Icon name="branch" size={12} className="text-icons-9" />
-                {target_branch}
-              </Link>
-            </Badge>
+            <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}>
+              <Tag variant="secondary" icon="branch-2" size="sm" value={target_branch || ''} showIcon />
+            </Link>
             <span>from</span>
-            <Badge variant="soft" theme="muted">
-              <Link
-                className="flex items-center gap-x-1"
-                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${source_branch}`}
-              >
-                <Icon name="branch" size={12} className="text-icons-9" />
-                {source_branch}
-              </Link>
-            </Badge>
+            <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${source_branch}`}>
+              <Tag variant="secondary" icon="branch-2" size="sm" value={source_branch || ''} showIcon />
+            </Link>
             <span className="mx-1.5 h-4 w-px bg-cn-background-3" />
             <span className="text-cn-foreground-2">{formattedTime}</span>
           </div>

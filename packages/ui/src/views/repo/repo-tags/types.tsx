@@ -1,4 +1,6 @@
-import { TypesCommit } from '../repo.types'
+import { TranslationStore } from '@views/index'
+
+import { BranchSelectorListItem, TypesCommit } from '../repo.types'
 
 export interface TypeTagger {
   identity: { email?: string; name?: string }
@@ -25,4 +27,16 @@ export interface RepoTagsStore {
   setTags: (tags: CommitTagType[]) => void
   addTag: (tag: CommitTagType) => void
   removeTag: (tagName: string) => void
+}
+
+export interface RepoTagsListViewProps {
+  useTranslationStore: () => TranslationStore
+  isLoading: boolean
+  openCreateBranchDialog: (selectedTagInList: BranchSelectorListItem) => void
+  openCreateTagDialog: () => void
+  searchQuery: string
+  setSearchQuery: (value: string | null) => void
+  onDeleteTag: (tagName: string) => void
+  useRepoTagsStore: () => RepoTagsStore
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }

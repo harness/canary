@@ -1,6 +1,6 @@
 import { memo, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Accordion, Badge, Button, Checkbox, CopyButton, Icon, Layout, StackedList, Text } from '@/components'
+import { Accordion, Button, Checkbox, CopyButton, Icon, Layout, StackedList, StatusBadge, Text } from '@/components'
 import {
   CommentItem,
   CommitFilterItemProps,
@@ -125,14 +125,14 @@ const LineTitle: React.FC<LineTitleProps> = ({
 
         <div className="flex items-center gap-x-1">
           {addedLines != null && addedLines > 0 && (
-            <Badge variant="surface" size="sm" theme="success">
+            <StatusBadge variant="outline" size="sm" theme="success">
               +{addedLines}
-            </Badge>
+            </StatusBadge>
           )}
           {deletedLines != null && deletedLines > 0 && (
-            <Badge variant="surface" size="sm" theme="danger">
+            <StatusBadge variant="outline" size="sm" theme="danger">
               -{deletedLines}
-            </Badge>
+            </StatusBadge>
           )}
         </div>
       </div>

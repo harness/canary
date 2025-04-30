@@ -1,4 +1,4 @@
-import { Accordion, Badge, Icon, StackedList, Text } from '@/components'
+import { Accordion, Icon, StackedList, StatusBadge, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { cn } from '@utils/cn'
@@ -113,11 +113,11 @@ const PullRequestCheckSection = ({
                 </div>
                 <div className="col-span-1 flex justify-end">
                   {check?.check?.status === ExecutionState.PENDING ? (
-                    <Badge variant="surface" size="sm">
+                    <StatusBadge variant="outline" size="sm">
                       <Text size={1} color="tertiaryBackground">
                         Required
                       </Text>
-                    </Badge>
+                    </StatusBadge>
                   ) : (
                     <div className="min-w-[70px]"></div>
                   )}

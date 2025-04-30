@@ -3,7 +3,14 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
-import { badgeStyles, buttonStyles, dialogStyles, labelStyles, switchStyles } from './tailwind-utils-config/components'
+import {
+  badgeStyles,
+  buttonStyles,
+  dialogStyles,
+  labelStyles,
+  switchStyles,
+  tagStyles
+} from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
 export default {
@@ -84,6 +91,21 @@ export default {
           solidred: 'var(--cn-set-red-solid-border)',
           risk: 'var(--cn-icon-risk)'
         },
+        toast: {
+          background: {
+            danger: 'hsla(var(--canary-toast-background-danger))'
+          },
+          foreground: {
+            danger: 'hsla(var(--canary-toast-foreground-danger))'
+          },
+          icons: {
+            danger: {
+              default: 'hsla(var(--canary-toast-icon-danger-default))',
+              hover: 'hsla(var(--canary-toast-icon-danger-hover))'
+            }
+          }
+        },
+        // Remove Tag Colors once Toast component is removed
         tag: {
           border: {
             gray: {
@@ -354,8 +376,6 @@ export default {
         13: 'var(--cn-font-size-13)'
       },
       backgroundImage: {
-        'ai-button':
-          'linear-gradient(to right, var(--cn-gradient-ai-gradient-stop-1), var(--cn-gradient-ai-gradient-stop-2), var(--cn-gradient-ai-gradient-stop-3), var(--cn-gradient-ai-gradient-stop-4))',
         'widget-bg-gradient':
           'radial-gradient(80.82% 77.84% at 80.15% 11.99%, hsla(var(--cn-gradient-pipeline-widget-blob-big-from)) 8.43%, hsla(var(--cn-gradient-pipeline-widget-blob-big-to)) 100%)',
         'widget-number-gradient':
@@ -407,6 +427,7 @@ export default {
       addComponents(dialogStyles)
       addComponents(switchStyles)
       addComponents(labelStyles)
+      addComponents(tagStyles)
     }),
     tailwindcssAnimate,
     typography,
@@ -490,6 +511,9 @@ export default {
     { pattern: /^bg-tag-background-/ },
     { pattern: /^text-tag-foreground-/ },
     { pattern: /^border-tag-border-/ },
+    // toast classes
+    { pattern: /^bg-toast-/ },
+    { pattern: /^text-toast-/ },
     // label classes
     { pattern: /^bg-label-background-/ },
     { pattern: /^bg-label-foreground-/ }, // this is essential for the color select in the LabelFormColorAndNameGroup component
@@ -508,6 +532,7 @@ export default {
     { pattern: /^hover:bg-graph-/ },
     { pattern: /^hover:text-icons-/ },
     { pattern: /^hover:bg-icons-/ },
+    { pattern: /^hover:text-toast-/ },
     // tags classes
     { pattern: /^hover:bg-tag-background-/ },
     { pattern: /^hover:text-tag-foreground-/ },

@@ -24,6 +24,7 @@ import BoxCloning from '../../icons/box-cloning.svg'
 import BoxGuide from '../../icons/box-guide.svg'
 import BoxLightning from '../../icons/box-lightning.svg'
 import BoxPullRequests from '../../icons/box-pull-requests.svg'
+import Branch2 from '../../icons/branch-2.svg'
 import Branch from '../../icons/branch.svg'
 import Briefcase from '../../icons/briefcase-icon.svg'
 import CancelGrey from '../../icons/cancel-grey.svg'
@@ -48,6 +49,7 @@ import Circle from '../../icons/circle.svg'
 import ClockIcon from '../../icons/clock-icon.svg'
 import Clock from '../../icons/clock.svg'
 import Clone from '../../icons/clone.svg'
+import Close2 from '../../icons/close-2.svg'
 import Close from '../../icons/close.svg'
 import CloudCostsGradient from '../../icons/cloud-costs-gradient.svg'
 import CloudCosts from '../../icons/cloud-costs-icon.svg'
@@ -136,7 +138,8 @@ import NoDataPRLight from '../../icons/lists-data-icons/no-data-pr-light.svg'
 import NoDataPR from '../../icons/lists-data-icons/no-data-pr.svg'
 import NoRepositoryLight from '../../icons/lists-data-icons/no-data-repository-light.svg'
 import NoRepository from '../../icons/lists-data-icons/no-data-repository.svg'
-import noDataTags from '../../icons/lists-data-icons/no-data-tags.svg'
+import NoDataTagsLight from '../../icons/lists-data-icons/no-data-tags-light.svg'
+import NoDataTags from '../../icons/lists-data-icons/no-data-tags.svg'
 import NoDataWebhooksLight from '../../icons/lists-data-icons/no-data-webhooks-light.svg'
 import NoDataWebhooks from '../../icons/lists-data-icons/no-data-webhooks.svg'
 import NoSearchMagnifyingGlassLight from '../../icons/lists-data-icons/no-search-magnifying-glass-light.svg'
@@ -210,6 +213,7 @@ import Success from '../../icons/success.svg'
 import Suggestion from '../../icons/suggestion.svg'
 import SupplyChainGradient from '../../icons/supply-chain-gradient.svg'
 import SupplyChain from '../../icons/supply-chain-icon.svg'
+import Tag2 from '../../icons/tag-2.svg'
 import Tag from '../../icons/tag.svg'
 import Tasks from '../../icons/tasks.svg'
 import TickCircle from '../../icons/tick-circle.svg'
@@ -285,7 +289,8 @@ export const IconNameMap = {
   'no-data-error-light': NoDataErrorLight,
   'no-data-pr': NoDataPR,
   'no-data-pr-light': NoDataPRLight,
-  'no-data-tags': noDataTags,
+  'no-data-tags': NoDataTags,
+  'no-data-tags-light': NoDataTagsLight,
   changes: Changes,
   checks: Checks,
   'vertical-ellipsis': VerticalEllipsis,
@@ -301,6 +306,7 @@ export const IconNameMap = {
   file: File,
   tag: Tag,
   branch: Branch,
+  'branch-2': Branch2,
   'open-pr': OpenPR,
   plus: Plus,
   running: Running,
@@ -458,5 +464,7 @@ export const IconNameMap = {
   'node-icon': NodeIcon,
   'golang-icon': GolangIcon,
   'attachment-link': AttachmentLink,
-  spinner: Spinner
+  spinner: Spinner,
+  'close-2': Close2,
+  'tag-2': Tag2
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

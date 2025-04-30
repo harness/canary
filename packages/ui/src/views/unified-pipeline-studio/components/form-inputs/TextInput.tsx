@@ -1,4 +1,3 @@
-import { Icon } from '@/components'
 import { Input } from '@components/input'
 
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
@@ -7,15 +6,18 @@ import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
 import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
+import { RuntimeInputConfig } from './types/types'
 
 export interface TextInputConfig {
   inputType: 'text'
   inputConfig?: {
     tooltip?: string
-  }
+  } & RuntimeInputConfig
 }
 
-function TextInputInternal(props: InputProps<AnyFormikValue, TextInputConfig>): JSX.Element {
+type TextInputProps = InputProps<AnyFormikValue, TextInputConfig>
+
+function TextInputInternal(props: TextInputProps): JSX.Element {
   const { readonly, path, input } = props
   const { label = '', required, placeholder, description, inputConfig } = input
 
@@ -24,11 +26,13 @@ function TextInputInternal(props: InputProps<AnyFormikValue, TextInputConfig>): 
   })
 
   return (
-    <InputWrapper>
-      <InputLabel label={label} description={description} required={required} />
-      <Input placeholder={placeholder} {...field} disabled={readonly} tabIndex={0} />
-      <InputError path={path} />
-      {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
+    <InputWrapper {...props}>
+      <>
+        <InputLabel label={label} description={description} required={required} />
+        <Input placeholder={placeholder} {...field} disabled={readonly} tabIndex={0} />
+        <InputError path={path} />
+        {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
+      </>
     </InputWrapper>
   )
 }
@@ -36,7 +40,7 @@ function TextInputInternal(props: InputProps<AnyFormikValue, TextInputConfig>): 
 export class TextInput extends InputComponent<AnyFormikValue> {
   public internalType = 'text'
 
-  renderComponent(props: InputProps<AnyFormikValue, TextInputConfig>): JSX.Element {
+  renderComponent(props: TextInputProps): JSX.Element {
     return <TextInputInternal {...props} />
   }
 }

@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 
-import { Badge, Button, ListActions, Spacer, Text } from '@/components'
+import { Button, ListActions, Spacer, StatusBadge, Text } from '@/components'
 import { ModeType, useTheme } from '@/context'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { formatDuration } from '@utils/TimeUtils'
@@ -92,7 +92,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
             <Text size={6} className="text-cn-foreground-1" weight="medium">
               #{executionId}
             </Text>
-            <Badge
+            <StatusBadge
               variant="status"
               theme={
                 execution?.result === 'success'
@@ -107,7 +107,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
                 : ['fatal_error', 'retriable_error'].includes(execution?.result ?? '')
                   ? 'Failed'
                   : 'Invalid'}
-            </Badge>
+            </StatusBadge>
           </ListActions.Left>
           <ListActions.Right>
             <Button onClick={handleRetriggerExecution} disabled={isLoading}>

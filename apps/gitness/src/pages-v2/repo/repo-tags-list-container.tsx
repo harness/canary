@@ -1,16 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import {
+  DeleteTagErrorResponse,
   useCreateTagMutation,
   useDeleteTagMutation,
-  useFindRepositoryQuery,
-  useListBranchesQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
-import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { CommitTagType, CreateTagDialog, CreateTagFromFields, RepoTagsListView } from '@harnessio/ui/views'
+import { DeleteAlertDialog, DeleteAlertDialogProps } from '@harnessio/ui/components'
+import {
+  BranchSelectorListItem,
+  BranchSelectorTab,
+  CommitTagType,
+  CreateTagDialog,
+  CreateTagFormFields,
+  RepoTagsListView
+} from '@harnessio/ui/views'
 
+import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -19,30 +26,34 @@ import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-s
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
-import { useRepoBranchesStore } from './stores/repo-branches-store'
 import { useRepoTagsStore } from './stores/repo-tags-store'
-import { transformBranchList } from './transform-utils/branch-transform'
 
 export const RepoTagsListContainer = () => {
   const repo_ref = useGetRepoRef()
-  const { setTags, addTag, removeTag, page, setPage, setPaginationFromHeaders } = useRepoTagsStore()
-  const { setBranchList, setDefaultBranch, setSelectedBranchTag, branchList } = useRepoBranchesStore()
+  const { page, setPage, setPaginationFromHeaders, setTags } = useRepoTagsStore()
   const { spaceId, repoId } = useParams<PathParams>()
 
   const routes = useRoutes()
   const [query, setQuery] = useQueryState('query')
-  const [branchQuery, setBranchQuery] = useState('')
 
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+
+  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
+  const [selectedTagInList, setSelectedTagInList] = useState<BranchSelectorListItem | null>(null)
+  const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
 
   const [openCreateTagDialog, setOpenCreateTagDialog] = useState(false)
   const [openCreateBranchDialog, setOpenCreateBranchDialog] = useState(false)
   const [deleteTagDialog, setDeleteTagDialog] = useState(false)
   const [deleteTagName, setDeleteTagName] = useState<string | null>(null)
 
-  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repo_ref })
+  const [deleteError, setDeleteError] = useState<DeleteAlertDialogProps['error']>(null)
 
-  const { data: { body: tagsList, headers } = {}, isLoading: isLoadingTags } = useListTagsQuery({
+  const {
+    data: { body: tagsList, headers } = {},
+    isLoading: isLoadingTags,
+    refetch: refetchTags
+  } = useListTagsQuery({
     repo_ref: repo_ref,
     queryParams: {
       query: query ?? '',
@@ -51,20 +62,17 @@ export const RepoTagsListContainer = () => {
     }
   })
 
-  const { data: { body: branches } = {} } = useListBranchesQuery({
-    queryParams: {
-      limit: 50,
-      query: branchQuery ?? ''
-    },
-    repo_ref: repo_ref
-  })
-
-  const { mutate: createTag, isLoading: isCreatingTag } = useCreateTagMutation(
+  const {
+    mutate: createTag,
+    isLoading: isCreatingTag,
+    error: createTagError,
+    reset: resetCreateTagMutation
+  } = useCreateTagMutation(
     { repo_ref: repo_ref },
     {
-      onSuccess: data => {
+      onSuccess: () => {
         setOpenCreateTagDialog(false)
-        addTag(data.body as CommitTagType)
+        refetchTags()
       }
     }
   )
@@ -74,7 +82,12 @@ export const RepoTagsListContainer = () => {
     {
       onSuccess: () => {
         setDeleteTagDialog(false)
-        removeTag(deleteTagName ?? '')
+        setDeleteError(null)
+        refetchTags()
+      },
+      onError: (error: DeleteTagErrorResponse) => {
+        const deleteErrorMsg = error?.message || 'An unknown error occurred.'
+        setDeleteError({ message: deleteErrorMsg })
       }
     }
   )
@@ -86,29 +99,13 @@ export const RepoTagsListContainer = () => {
   }, [tagsList, setTags])
 
   useEffect(() => {
-    if (branches) {
-      setBranchList(transformBranchList(branches, repository?.default_branch))
-    }
-  }, [branches, setBranchList, repository])
-
-  useEffect(() => {
     setPaginationFromHeaders(
-      parseInt(headers?.get(PageResponseHeader.xNextPage) || ''),
-      parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+      parseInt(headers?.get(PageResponseHeader.xNextPage) ?? '0'),
+      parseInt(headers?.get(PageResponseHeader.xPrevPage) ?? '0')
     )
   }, [headers, setPaginationFromHeaders])
 
-  useEffect(() => {
-    const defaultBranch = branchList?.find(branch => branch.default)
-    setSelectedBranchTag({
-      name: defaultBranch?.name || repository?.default_branch || '',
-      sha: defaultBranch?.sha || '',
-      default: true
-    })
-    setDefaultBranch(repository?.default_branch ?? '')
-  }, [branchList, repository?.default_branch])
-
-  const onSubmit = (data: CreateTagFromFields) => {
+  const onSubmit = (data: CreateTagFormFields) => {
     createTag({
       body: {
         ...data
@@ -123,12 +120,26 @@ export const RepoTagsListContainer = () => {
     })
   }
 
+  const selectBranchOrTag = useCallback((branchTagName: BranchSelectorListItem) => {
+    setSelectedBranchOrTag(branchTagName)
+  }, [])
+
+  useEffect(() => {
+    if (!openCreateTagDialog) {
+      resetCreateTagMutation()
+    }
+  }, [openCreateTagDialog, resetCreateTagMutation])
+
   return (
     <>
       <RepoTagsListView
         useTranslationStore={useTranslationStore}
         isLoading={isLoadingTags}
-        openCreateBranchDialog={() => setOpenCreateBranchDialog(true)}
+        openCreateBranchDialog={(selectedTagInList: BranchSelectorListItem) => {
+          setOpenCreateBranchDialog(true)
+          setSelectedTagInList(selectedTagInList)
+          setPreSelectedTab(BranchSelectorTab.TAGS)
+        }}
         openCreateTagDialog={() => setOpenCreateTagDialog(true)}
         searchQuery={query}
         setSearchQuery={setQuery}
@@ -144,17 +155,28 @@ export const RepoTagsListContainer = () => {
         open={openCreateTagDialog}
         onClose={() => setOpenCreateTagDialog(false)}
         onSubmit={onSubmit}
-        branchQuery={branchQuery}
-        setBranchQuery={setBranchQuery}
-        useRepoBranchesStore={useRepoBranchesStore}
         isLoading={isCreatingTag}
+        error={createTagError?.message}
+        selectedBranchOrTag={selectedBranchOrTag}
+        branchSelectorRenderer={() => (
+          <BranchSelectorContainer
+            onSelectBranchorTag={selectBranchOrTag}
+            selectedBranch={selectedBranchOrTag}
+            dynamicWidth
+          />
+        )}
       />
-      <CreateBranchDialog open={openCreateBranchDialog} onClose={() => setOpenCreateBranchDialog(false)} />
+      <CreateBranchDialog
+        open={openCreateBranchDialog}
+        onClose={() => setOpenCreateBranchDialog(false)}
+        preselectedBranchOrTag={selectedTagInList}
+        preselectedTab={preSelectedTab}
+      />
       <DeleteAlertDialog
         open={deleteTagDialog}
         onClose={() => setDeleteTagDialog(false)}
         deleteFn={onDeleteTag}
-        error={{ type: '', message: '' }}
+        error={deleteError}
         type="tag"
         identifier={deleteTagName ?? undefined}
         isLoading={isDeletingTag}

@@ -4,14 +4,19 @@ import { CalendarInputView, InputError, InputLabel, InputWrapper } from '@/views
 
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
+import { RuntimeInputConfig } from './types/types'
+
 export type CalendarInputType = 'calendar'
 
 export interface CalendarInputConfig {
   inputType: CalendarInputType
   tooltip?: string
+  inputConfig?: {
+    /* placeholder for more config */
+  } & RuntimeInputConfig
 }
 
-type CalendarFormInputProps = InputProps<AnyFormikValue>
+type CalendarFormInputProps = InputProps<AnyFormikValue, CalendarInputConfig>
 
 function CalendarFormInputInternal(props: CalendarFormInputProps): JSX.Element {
   const { path, input } = props
@@ -33,7 +38,7 @@ function CalendarFormInputInternal(props: CalendarFormInputProps): JSX.Element {
   }
 
   return (
-    <InputWrapper>
+    <InputWrapper {...props}>
       <InputLabel label={label} description={description} required={required} />
       <CalendarInputView value={field.value} setValue={handleDateChange} />
       <InputError path={path} />

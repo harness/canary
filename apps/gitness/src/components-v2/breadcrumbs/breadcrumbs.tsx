@@ -22,8 +22,8 @@ export const Breadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMo
       <Topbar.Left>
         {withMobileSidebarToggle && isMobile && (
           <>
-            <Sidebar.Trigger className="text-topbar-foreground-2 hover:bg-topbar-background-1 hover:text-topbar-foreground-1 -ml-1" />
-            <Separator orientation="vertical" className="bg-cn-background-0 ml-1 mr-2 h-4" />
+            <Sidebar.Trigger className="-ml-1 text-topbar-foreground-2 hover:bg-topbar-background-1 hover:text-topbar-foreground-1" />
+            <Separator orientation="vertical" className="ml-1 mr-2 h-4 bg-cn-background-0" />
           </>
         )}
         <Breadcrumb.Root className="select-none">

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Badge, Button, DropdownMenu, Icon, StyledLink } from '@/components'
+import { Button, DropdownMenu, Icon, StatusBadge, StyledLink } from '@/components'
 import { useRouterContext } from '@/context'
 import { BranchSelectorListItem, IBranchSelectorStore } from '@/views'
 
@@ -54,10 +54,10 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           )}
         </span>
         {/* TODO: Design system: change it to tag */}
-        <Badge variant="soft" theme="muted" size="sm">
+        <StatusBadge variant="secondary" theme="muted" size="sm">
           <Icon name="branch" size={14} />
           <span>{defaultBranchName}</span>
-        </Badge>
+        </StatusBadge>
       </div>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
@@ -81,10 +81,10 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
             </div>
             <div>
               <span className="text-2 leading-snug text-cn-foreground-1">This branch is {ahead} commits ahead of </span>
-              <Badge className="mt-1" variant="soft" theme="muted" size="sm">
+              <StatusBadge className="mt-1" variant="secondary" theme="muted" size="sm">
                 <Icon name="branch" size={14} />
                 <span>{defaultBranchName}</span>
-              </Badge>
+              </StatusBadge>
               .
               <p className="mt-2.5 text-2 leading-tight text-cn-foreground-2">
                 Open a pull request to contribute your changes upstream.

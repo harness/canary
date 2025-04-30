@@ -54,33 +54,29 @@ export const PipelineList = ({
   if (noData) {
     return query ? (
       <StackedList.Root className="grow place-content-center">
-        <div className="flex items-center justify-center">
-          <NoData
-            iconName="no-search-magnifying-glass"
-            title="No search results"
-            description={[
-              t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
-              t('views:noData.changeSearch', 'or search for a different keyword.')
-            ]}
-            primaryButton={{
-              label: t('views:noData.clearSearch', 'Clear search'),
-              onClick: handleResetQuery
-            }}
-          />
-        </div>
-      </StackedList.Root>
-    ) : (
-      <div className="m-auto flex items-center justify-center">
         <NoData
-          iconName="no-data-folder"
-          title="No pipelines yet"
-          description={['There are no pipelines in this project yet.', 'Create new one.']}
+          iconName="no-search-magnifying-glass"
+          title="No search results"
+          description={[
+            t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+            t('views:noData.changeSearch', 'or search for a different keyword.')
+          ]}
           primaryButton={{
-            label: 'Create pipeline',
-            onClick: handleCreatePipeline
+            label: t('views:noData.clearSearch', 'Clear search'),
+            onClick: handleResetQuery
           }}
         />
-      </div>
+      </StackedList.Root>
+    ) : (
+      <NoData
+        iconName="no-data-folder"
+        title="No pipelines yet"
+        description={['There are no pipelines in this project yet.', 'Create new one.']}
+        primaryButton={{
+          label: 'Create pipeline',
+          onClick: handleCreatePipeline
+        }}
+      />
     )
   }
 

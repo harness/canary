@@ -7,6 +7,30 @@ type IInputConfigWithConfig = IInputDefinition & InputConfigType
 
 const inputs: IInputConfigWithConfig[] = [
   {
+    inputType: InputType.array,
+    path: 'rootArray',
+    label: 'Array',
+    required: true,
+    inputConfig: {
+      input: {
+        inputType: InputType.text,
+        label: 'First array prop',
+        path: '',
+        required: true,
+        validation: {
+          schema: z.string().refine(
+            val => {
+              return !isNaN(parseInt(val))
+            },
+            {
+              message: 'Value is not a integer'
+            }
+          )
+        }
+      }
+    }
+  },
+  {
     inputType: InputType.text,
     label: 'Text',
     path: 'stringProp',
@@ -33,30 +57,6 @@ const inputs: IInputConfigWithConfig[] = [
 
           return parsed
         })
-    }
-  },
-  {
-    inputType: InputType.array,
-    path: 'rootArray',
-    label: 'Array',
-    required: true,
-    inputConfig: {
-      input: {
-        inputType: InputType.text,
-        label: 'First array prop',
-        path: '',
-        required: true,
-        validation: {
-          schema: z.string().refine(
-            val => {
-              return !isNaN(parseInt(val))
-            },
-            {
-              message: 'Value is not a integer'
-            }
-          )
-        }
-      }
     }
   }
 ]

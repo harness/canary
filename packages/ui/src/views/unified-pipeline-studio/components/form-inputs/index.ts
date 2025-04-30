@@ -1,4 +1,5 @@
 export * from './common'
+export * from './types/types'
 
 export * from './ArrayInput'
 export * from './BooleanInput'
@@ -10,6 +11,5 @@ export * from './Separator'
 export * from './TextAreaInput'
 export * from './TextInput'
 export * from './RadialInput'
-export * from './SecretSelectInput'
 export * from './types'
 export * from './calendar-form-input'

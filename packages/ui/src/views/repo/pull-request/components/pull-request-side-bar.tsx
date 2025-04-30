@@ -101,6 +101,7 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
           useTranslationStore={useTranslationStore}
         />
         <LabelsList
+          showReset={true}
           labels={PRLabels.map(label => ({
             onDelete: () => removeLabel?.(label.id),
             color: label?.assigned_value?.color || label.color,

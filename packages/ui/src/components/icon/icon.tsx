@@ -10,9 +10,20 @@ export interface IconProps extends SVGProps<SVGSVGElement> {
   size?: number
   // This value should be true if the icon has separate files for different color themes or needs to be inverted.
   themeDependent?: boolean
+
+  // incase size will be added through CSS
+  skipSize?: boolean
 }
 
-const Icon: FC<IconProps> = ({ name, size = 16, height, width, className, themeDependent = false }) => {
+const Icon: FC<IconProps> = ({
+  name,
+  size = 16,
+  height,
+  width,
+  className,
+  themeDependent = false,
+  skipSize = false
+}) => {
   const { isLightTheme } = useTheme()
 
   const isLightIconAvailable = !!IconNameMap[`${name}-light` as keyof typeof IconNameMap]
@@ -24,14 +35,15 @@ const Icon: FC<IconProps> = ({ name, size = 16, height, width, className, themeD
 
   const shouldInvert = themeDependent && isLightTheme && !isLightIconAvailable
 
-  return (
-    <Component
-      className={cn({ invert: shouldInvert }, className)}
-      width={width || size}
-      height={height || size}
-      style={{ minWidth: `${width || size}px`, minHeight: `${height || size}px` }}
-    />
-  )
+  const sizeProps = skipSize
+    ? {}
+    : {
+        width: width || size,
+        height: height || size,
+        style: { minWidth: `${width || size}px`, minHeight: `${height || size}px` }
+      }
+
+  return <Component className={cn({ invert: shouldInvert }, className)} {...sizeProps} />
 }
 
 export { Icon }

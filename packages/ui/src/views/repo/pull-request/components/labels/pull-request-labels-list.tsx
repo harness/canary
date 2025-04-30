@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
-import { LabelMarker, LabelMarkerProps, PRListLabelType } from '@/views'
+import { LabelMarkerProps, PRListLabelType } from '@/views'
+import { Tag } from '@components/tag'
 import { cn } from '@utils/cn'
 
 type LabelListLabel = PRListLabelType & Pick<LabelMarkerProps, 'onDelete'>
@@ -8,9 +9,10 @@ type LabelListLabel = PRListLabelType & Pick<LabelMarkerProps, 'onDelete'>
 interface LabelsListProps {
   labels: LabelListLabel[]
   className?: string
+  showReset?: boolean
 }
 
-export const LabelsList: FC<LabelsListProps> = ({ labels, className }) => {
+export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset }) => {
   if (!labels.length) {
     return <span className="text-2 font-medium text-cn-foreground-3">No labels</span>
   }
@@ -18,12 +20,15 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className }) => {
   return (
     <div className={cn('flex flex-wrap gap-1.5', className)}>
       {labels.map(label => (
-        <LabelMarker
+        <Tag
           key={label.key}
-          color={label.color}
+          variant="secondary"
+          size="sm"
           label={label.key}
-          value={label?.value}
-          onDelete={label.onDelete}
+          value={label.value || ''}
+          theme={label.color}
+          onReset={label.onDelete}
+          showReset={showReset}
         />
       ))}
     </div>

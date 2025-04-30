@@ -17,6 +17,7 @@ import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
 import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
+import { RuntimeInputConfig } from './types/types'
 
 export type UIInputWithConfigsForList<T = unknown> = Omit<IInputDefinition<T>, 'path'> & {
   relativePath: string
@@ -28,10 +29,12 @@ export interface ListInputConfig {
     inputs: UIInputWithConfigsForList[]
     layout?: 'grid' | 'default'
     tooltip?: string
-  }
+  } & RuntimeInputConfig
 }
 
-function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element {
+type ListInputProps = InputProps<AnyFormikValue, ListInputConfig>
+
+function ListInputInternal(props: ListInputProps): JSX.Element {
   const { readonly, path, input, factory } = props
   const { label, required, inputConfig, description } = input
 
@@ -68,57 +71,58 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
   )
 
   return (
-    <InputWrapper>
-      <InputLabel label={label} required={required} description={description} />
-      {/* TODO: do we need Controller ? */}
-      <Controller
-        name={path}
-        render={() => (
-          <div>
+    <InputWrapper {...props}>
+      <>
+        <InputLabel label={label} required={required} description={description} />
+        {/* TODO: do we need Controller ? */}
+        <Controller
+          name={path}
+          render={() => (
             <div>
-              {isGrid && fields.length > 0 && (
-                <div className={rowClass} style={rowStyle}>
-                  {inputConfig?.inputs.map(rowInput => (
-                    <InputLabel
-                      key={rowInput.label}
-                      label={rowInput.label}
-                      required={rowInput.required}
-                      description={rowInput.description}
-                    />
+              <div>
+                {isGrid && fields.length > 0 && (
+                  <div className={rowClass} style={rowStyle}>
+                    {inputConfig?.inputs.map(rowInput => (
+                      <InputLabel
+                        key={rowInput.label}
+                        label={rowInput.label}
+                        required={rowInput.required}
+                        description={rowInput.description}
+                      />
+                    ))}
+                  </div>
+                )}
+                <div className="flex flex-col space-y-2">
+                  {fields.map((_item, idx) => (
+                    <div key={_item.id} className={rowClass} style={rowStyle}>
+                      {inputConfig?.inputs && (
+                        <RenderInputs items={getChildInputs(inputConfig?.inputs, path, idx)} factory={factory} />
+                      )}
+                      <div className="flex items-center">
+                        {/* TODO: Design system: Find alternate */}
+                        <button
+                          className="mt-2"
+                          onClick={() => {
+                            remove(idx)
+                          }}
+                          disabled={readonly}
+                        >
+                          <Icon name="trash" />
+                        </button>
+                      </div>
+                    </div>
                   ))}
                 </div>
-              )}
-              <div className="flex flex-col space-y-2">
-                {fields.map((_item, idx) => (
-                  <div key={_item.id} className={rowClass} style={rowStyle}>
-                    {inputConfig?.inputs && (
-                      <RenderInputs items={getChildInputs(inputConfig?.inputs, path, idx)} factory={factory} />
-                    )}
-                    <div className="flex items-center">
-                      {/* TODO: Design system: Find alternate */}
-                      <button
-                        className="mt-2"
-                        onClick={() => {
-                          remove(idx)
-                        }}
-                        disabled={readonly}
-                      >
-                        <Icon name="trash" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
               </div>
+              <Button size="sm" onClick={() => append({})} className="mt-2">
+                Add
+              </Button>
             </div>
-            <Button size="sm" onClick={() => append({})} className="mt-2">
-              Add
-            </Button>
-          </div>
-        )}
-      />
-      <InputError path={path} />
-
-      {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
+          )}
+        />
+        <InputError path={path} />
+        {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
+      </>
     </InputWrapper>
   )
 }
@@ -126,7 +130,7 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
 export class ListInput extends InputComponent<AnyFormikValue> {
   public internalType = 'list'
 
-  renderComponent(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element {
+  renderComponent(props: ListInputProps): JSX.Element {
     return <ListInputInternal {...props} />
   }
 }

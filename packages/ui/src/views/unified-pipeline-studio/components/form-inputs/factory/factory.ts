@@ -7,7 +7,6 @@ import { GroupInput } from '../GroupInput'
 import { ListInput } from '../ListInput'
 import { NumberInput } from '../NumberInput'
 import { RadialInput } from '../RadialInput'
-import { SecretSelectInput } from '../SecretSelectInput'
 import { SelectInput } from '../SelectInput'
 import { SeparatorInput } from '../Separator'
 import { TextAreaInput } from '../TextAreaInput'
@@ -24,7 +23,6 @@ inputComponentFactory.registerComponent(new GroupInput())
 inputComponentFactory.registerComponent(new SelectInput())
 inputComponentFactory.registerComponent(new SeparatorInput())
 inputComponentFactory.registerComponent(new RadialInput())
-inputComponentFactory.registerComponent(new SecretSelectInput()) // Register the SecretSelectInput
 inputComponentFactory.registerComponent(new CalendarInput())
 
 export { inputComponentFactory }

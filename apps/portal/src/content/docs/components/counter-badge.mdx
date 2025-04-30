@@ -1,0 +1,75 @@
+---
+title: CounterBadge
+description: Display simple numerical or textual count indicators
+---
+
+The `CounterBadge` component is used to highlight and display numerical values or simple count indicators. It is designed to be non-interactive (read-only) and supports different color themes.
+
+import { DocsPage } from "../../../components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-5">
+        <CounterBadge>1</CounterBadge>
+        <CounterBadge theme="info">42</CounterBadge>
+        <CounterBadge>10</CounterBadge>
+        <CounterBadge theme="info">99+</CounterBadge>
+    </div>
+`}
+/>
+
+## Usage
+
+```typescript jsx
+import { CounterBadge } from '@harnessio/ui/components'
+
+// ...
+
+// Default counter badge
+<CounterBadge>1</CounterBadge>
+
+// Info theme counter badge
+<CounterBadge theme="info">42</CounterBadge>
+```
+
+## Themes
+
+The `CounterBadge` component supports two color themes: `default` and `info`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <div className="flex gap-2">
+        <CounterBadge>1</CounterBadge>
+        <CounterBadge theme="info">1024</CounterBadge>
+    </div>
+`}
+/>
+
+## API Reference
+
+The `CounterBadge` component has the following props to control its appearance:
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "theme",
+      description: "Color theme of the badge",
+      required: false,
+      value: "'default' | 'info'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "className",
+      description: "Additional CSS class names",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Content to display inside the badge",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

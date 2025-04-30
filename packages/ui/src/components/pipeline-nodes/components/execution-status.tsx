@@ -1,4 +1,4 @@
-import { Badge } from '@/components'
+import { StatusBadge } from '@/components'
 
 import { ExecutionStatusType } from '../types/types'
 
@@ -8,21 +8,21 @@ export const ExecutionStatus = ({ executionStatus }: { executionStatus: Executio
   return (
     <div className="absolute right-0" style={{ top: '-25px' }}>
       {executionStatus === 'executing' ? (
-        <Badge className="leading-none" size="sm" variant="status" theme="warning">
+        <StatusBadge className="leading-none" size="sm" variant="status" theme="warning">
           Running
-        </Badge>
+        </StatusBadge>
       ) : executionStatus === 'success' ? (
-        <Badge className="leading-none" size="sm" variant="status" theme="success">
+        <StatusBadge className="leading-none" size="sm" variant="status" theme="success">
           Completed
-        </Badge>
+        </StatusBadge>
       ) : executionStatus === 'warning' ? (
-        <Badge className="leading-none" size="sm" variant="status" theme="warning">
+        <StatusBadge className="leading-none" size="sm" variant="status" theme="warning">
           Warning
-        </Badge>
+        </StatusBadge>
       ) : executionStatus === 'error' ? (
-        <Badge className="leading-none" size="sm" variant="status" theme="danger">
+        <StatusBadge className="leading-none" size="sm" variant="status" theme="danger">
           Error
-        </Badge>
+        </StatusBadge>
       ) : null}
     </div>
   )

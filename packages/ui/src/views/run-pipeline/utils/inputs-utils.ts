@@ -1,3 +1,4 @@
+import { RuntimeInputConfig } from '@views/unified-pipeline-studio'
 import { cloneDeep, forOwn } from 'lodash-es'
 import * as z from 'zod'
 
@@ -23,7 +24,7 @@ export function pipelineInput2FormInput(
   name: string,
   inputProps: Record<string, unknown>,
   options: { prefix?: string }
-): IInputDefinition {
+): IInputDefinition<{ tooltip?: string } & RuntimeInputConfig> {
   const inputType = pipelineInputType2FormInputType(inputProps.type as string)
 
   return {
@@ -32,6 +33,10 @@ export function pipelineInput2FormInput(
     label: name,
     default: inputProps.default,
     required: inputProps.required as boolean,
+    inputConfig: {
+      allowedValueTypes: ['fixed', 'runtime', 'expression'],
+      ...(inputProps.description ? { tooltip: inputProps.description as string } : {})
+    },
     outputTransform: inputType === 'text' ? unsetEmptyStringOutputTransformer() : undefined,
     ...(typeof inputProps.pattern === 'string'
       ? {

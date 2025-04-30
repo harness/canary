@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, CommitCopyActions, Icon, IconProps, Layout } from '@/components'
+import { Avatar, CommitCopyActions, Icon, IconProps, Layout, Tag } from '@/components'
 import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
@@ -8,7 +8,6 @@ import {
   CommentType,
   GeneralPayload,
   LabelActivity,
-  LabelMarker,
   MergeStrategy,
   ReviewerAddActivity,
   TypesPullReqActivity
@@ -241,13 +240,16 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
             description: (
               <span className="inline-flex items-center text-sm text-cn-foreground-3">
                 {labelType ? labelActivityToTitleDict[labelType] : 'modified'}
-                <LabelMarker
-                  className="mx-1.5"
-                  key={label as string}
-                  color={(value_color ?? label_color) as ColorsEnum}
-                  label={label as string}
-                  value={value as string}
-                />
+                <div className="mx-1.5">
+                  <Tag
+                    variant="secondary"
+                    size="sm"
+                    key={label as string}
+                    label={label as string}
+                    value={value as string}
+                    theme={(value_color ?? label_color) as ColorsEnum}
+                  />
+                </div>
                 label
               </span>
             )

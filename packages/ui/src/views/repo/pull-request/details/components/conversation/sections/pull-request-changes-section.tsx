@@ -1,6 +1,6 @@
-import { FC, useMemo } from 'react'
+import { useMemo, type FC } from 'react'
 
-import { Accordion, Avatar, Badge, Icon, Layout, StackedList } from '@/components'
+import { Accordion, Avatar, Icon, Layout, StackedList, StatusBadge } from '@/components'
 import {
   easyPluralize,
   TypesCodeOwnerEvaluation,
@@ -259,7 +259,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                   </span>
                 </div>
               )}
-              <Badge variant="soft">Required</Badge>
+              <StatusBadge variant="secondary">Required</StatusBadge>
             </div>
           )}
 
@@ -280,7 +280,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                   </span>
                 </div>
               )}
-              <Badge variant="soft">Required</Badge>
+              <StatusBadge variant="secondary">Required</StatusBadge>
             </div>
           )}
 
@@ -296,7 +296,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 />
                 <span className="text-2 text-cn-foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
               </div>
-              {reqNoChangeReq && <Badge variant="soft">Required</Badge>}
+              {reqNoChangeReq && <StatusBadge variant="secondary">Required</StatusBadge>}
             </div>
           )}
 
@@ -318,7 +318,9 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
               ) : (
                 codeOwnerStatus
               )}
-              {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && <Badge variant="soft">Required</Badge>}
+              {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && (
+                <StatusBadge variant="secondary">Required</StatusBadge>
+              )}
             </div>
           )}
           {/* TODO: add codeowners table */}

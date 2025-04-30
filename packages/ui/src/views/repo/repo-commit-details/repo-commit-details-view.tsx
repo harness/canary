@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Avatar, Badge, Button, CommitCopyActions, Icon } from '@/components'
+import { Avatar, Button, CommitCopyActions, StatusBadge, Tag } from '@/components'
 import { useRouterContext } from '@/context'
 import { ICommitDetailsStore, SandboxLayout, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
@@ -48,9 +48,9 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               {isVerified && (
                 <>
                   <span className="mx-2.5 h-4 w-px bg-cn-background-3" />
-                  <Badge variant="surface" theme="success">
+                  <StatusBadge variant="outline" theme="success">
                     {t('views:commits.verified', 'Verified')}
-                  </Badge>
+                  </StatusBadge>
                 </>
               )}
             </>
@@ -62,11 +62,8 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
             <Button variant="outline">{t('views:commits.browseFiles', 'Browse files')}</Button>
           </div>
           <div className="flex items-center justify-between px-4 py-3">
-            <div className="flex h-6 items-center gap-x-1 rounded-md bg-cn-background-8 px-2.5">
-              <Icon name="branch" size={14} className="text-icons-9" />
-              {/* TODO: get branch name from commitData */}
-              <span className="text-2 font-medium leading-snug text-cn-foreground-1">main</span>
-            </div>
+            {/* TODO: get branch name from commitData */}
+            <Tag value="main" icon="branch-2" variant="secondary" showIcon />
             <CommitCopyActions toCommitDetails={toCommitDetails} sha={commitData?.sha || ''} />
           </div>
         </div>

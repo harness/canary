@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
 
-import { Badge, DropdownMenu, Icon, SearchBox, Tabs } from '@/components'
+import { DropdownMenu, Icon, SearchBox, StatusBadge, Tabs } from '@/components'
 import { useRouterContext } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 import { cn } from '@utils/cn'
@@ -147,9 +147,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 </div>
 
                 {isDefault && (
-                  <Badge variant="surface" theme="muted" size="sm">
+                  <StatusBadge variant="outline" theme="muted" size="sm">
                     {t('views:repos.default', 'Default')}
-                  </Badge>
+                  </StatusBadge>
                 )}
               </DropdownMenu.Item>
             )

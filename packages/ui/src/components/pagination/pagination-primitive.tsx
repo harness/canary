@@ -63,8 +63,8 @@ const PaginationPrimitiveLink = ({
         theme
       }),
       {
-        'button-active': isActive,
-        'button-disabled': disabled
+        'cn-button-active': isActive,
+        'cn-button-disabled': disabled
       },
       className
     )}

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Badge, Button, Icon, Layout, MoreActionsTooltip, Text } from '@/components'
+import { Button, Icon, Layout, MoreActionsTooltip, StatusBadge, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { Logo, LogoName } from '@components/logo'
 import { timeAgo } from '@utils/utils'
@@ -38,10 +38,10 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
         <Layout.Horizontal gap="space-x-2" className="mt-5">
           <Text className="text-cn-foreground-4">Labels:</Text>
           {Object.entries(connectorDetails.tags || {}).map(([key, value]) => (
-            <Badge key={`${key}-${value}`} variant="surface" theme="merged" size="sm">
+            <StatusBadge key={`${key}-${value}`} variant="outline" theme="merged" size="sm">
               {key}
               {value ? `: ${value}` : ''}
-            </Badge>
+            </StatusBadge>
           ))}
         </Layout.Horizontal>
       ) : null}
@@ -74,14 +74,18 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           {status ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Connection status</span>
-              <Badge
+              <StatusBadge
                 className="leading-none"
                 size="sm"
                 variant="status"
                 theme={status.toLowerCase() === 'success' ? 'success' : 'danger'}
               >
-                <span className="text-cn-foreground-1">{status}</span>
-              </Badge>
+                <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
+                  {status.toLowerCase() === 'success'
+                    ? t('views:connectors.success', 'Success')
+                    : t('views:connectors.failure', 'Failed')}
+                </Text>
+              </StatusBadge>
             </div>
           ) : null}
         </div>

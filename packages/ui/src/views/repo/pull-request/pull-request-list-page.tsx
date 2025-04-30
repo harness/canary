@@ -131,42 +131,38 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     if (noData) {
       return selectedFiltersCnt > 0 || searchQuery ? (
         <StackedList.Root className="grow place-content-center">
-          <div className="flex items-center justify-center">
-            <NoData
-              iconName="no-search-magnifying-glass"
-              title={t('views:noData.noResults', 'No search results')}
-              description={[
-                t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
-                t('views:noData.changeSearch', 'or search for a different keyword.')
-              ]}
-              primaryButton={{
-                label: t('views:noData.clearSearch', 'Clear search'),
-                onClick: handleResetQuery
-              }}
-              secondaryButton={{
-                label: t('views:noData.clearFilters', 'Clear filters'),
-                onClick: () => {
-                  filtersRef.current?.reset()
-                }
-              }}
-            />
-          </div>
-        </StackedList.Root>
-      ) : (
-        <div className="m-auto flex items-center justify-center">
           <NoData
-            iconName="no-data-folder"
-            title="No pull requests yet"
+            iconName="no-search-magnifying-glass"
+            title={t('views:noData.noResults', 'No search results')}
             description={[
-              t('views:noData.noPullRequests', 'There are no pull requests in this project yet.'),
-              t('views:noData.createNewPullRequest', 'Create a new pull request.')
+              t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+              t('views:noData.changeSearch', 'or search for a different keyword.')
             ]}
             primaryButton={{
-              label: 'Create pull request',
-              to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+              label: t('views:noData.clearSearch', 'Clear search'),
+              onClick: handleResetQuery
+            }}
+            secondaryButton={{
+              label: t('views:noData.clearFilters', 'Clear filters'),
+              onClick: () => {
+                filtersRef.current?.reset()
+              }
             }}
           />
-        </div>
+        </StackedList.Root>
+      ) : (
+        <NoData
+          iconName="no-data-folder"
+          title="No pull requests yet"
+          description={[
+            t('views:noData.noPullRequests', 'There are no pull requests in this project yet.'),
+            t('views:noData.createNewPullRequest', 'Create a new pull request.')
+          ]}
+          primaryButton={{
+            label: 'Create pull request',
+            to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+          }}
+        />
       )
     }
 

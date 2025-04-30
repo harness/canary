@@ -6,15 +6,18 @@ import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
 import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
+import { RuntimeInputConfig } from './types/types'
 
 export interface NumberInputConfig {
   inputType: 'number'
   inputConfig?: {
     tooltip?: string
-  }
+  } & RuntimeInputConfig
 }
 
-function NumberInputInternal(props: InputProps<AnyFormikValue, NumberInputConfig>): JSX.Element {
+type NumberInputProps = InputProps<AnyFormikValue, NumberInputConfig>
+
+function NumberInputInternal(props: NumberInputProps): JSX.Element {
   const { readonly, path, input } = props
   const { label = '', required, placeholder, description, inputConfig } = input
 
@@ -23,19 +26,21 @@ function NumberInputInternal(props: InputProps<AnyFormikValue, NumberInputConfig
   })
 
   return (
-    <InputWrapper>
-      <InputLabel label={label} description={description} required={required} />
-      <Input
-        placeholder={placeholder}
-        {...field}
-        disabled={readonly}
-        type="number"
-        onChange={evt => {
-          field.onChange(parseFloat(evt.currentTarget.value))
-        }}
-      />
-      <InputError path={path} />
-      {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
+    <InputWrapper {...props}>
+      <>
+        <InputLabel label={label} description={description} required={required} />
+        <Input
+          placeholder={placeholder}
+          {...field}
+          disabled={readonly}
+          type="number"
+          onChange={evt => {
+            field.onChange(parseFloat(evt.currentTarget.value))
+          }}
+        />
+        <InputError path={path} />
+        {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
+      </>
     </InputWrapper>
   )
 }
@@ -43,7 +48,7 @@ function NumberInputInternal(props: InputProps<AnyFormikValue, NumberInputConfig
 export class NumberInput extends InputComponent<AnyFormikValue> {
   public internalType = 'number'
 
-  renderComponent(props: InputProps<AnyFormikValue, NumberInputConfig>): JSX.Element {
+  renderComponent(props: NumberInputProps): JSX.Element {
     return <NumberInputInternal {...props} />
   }
 }

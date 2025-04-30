@@ -8,6 +8,7 @@ import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
 import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
+import { RuntimeInputConfig } from './types/types'
 
 export interface SelectOption {
   label: string
@@ -21,9 +22,12 @@ export interface SelectInputConfig {
     tooltip?: string
     isDisabled?: (values: AnyFormikValue) => boolean
     disabledValue?: string
-  }
+  } & RuntimeInputConfig
 }
-function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig>): JSX.Element {
+
+type SelectInputProps = InputProps<AnyFormikValue, SelectInputConfig>
+
+function SelectInputInternal(props: SelectInputProps): JSX.Element {
   const { path, input } = props
   const { label = '', required, description, inputConfig, readonly } = input
 
@@ -45,27 +49,29 @@ function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig
   }, [disabled])
 
   return (
-    <InputWrapper>
-      <InputLabel label={label} description={description} required={required} />
-      <Select.Root
-        disabled={disabled}
-        value={field.value}
-        onValueChange={value => {
-          field.onChange(value)
-        }}
-      >
-        <Select.Content>
-          {inputConfig?.options.map(item => {
-            return (
-              <Select.Item key={item.value} value={item.value}>
-                {item.label}
-              </Select.Item>
-            )
-          })}
-        </Select.Content>
-      </Select.Root>
-      <InputError path={path} />
-      {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
+    <InputWrapper {...props}>
+      <>
+        <InputLabel label={label} description={description} required={required} />
+        <Select.Root
+          disabled={disabled}
+          value={field.value}
+          onValueChange={value => {
+            field.onChange(value)
+          }}
+        >
+          <Select.Content>
+            {inputConfig?.options.map(item => {
+              return (
+                <Select.Item key={item.value} value={item.value}>
+                  {item.label}
+                </Select.Item>
+              )
+            })}
+          </Select.Content>
+        </Select.Root>
+        <InputError path={path} />
+        {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
+      </>
     </InputWrapper>
   )
 }
@@ -73,7 +79,7 @@ function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig
 export class SelectInput extends InputComponent<AnyFormikValue> {
   public internalType = 'select'
 
-  renderComponent(props: InputProps<AnyFormikValue, SelectInputConfig>): JSX.Element {
+  renderComponent(props: SelectInputProps): JSX.Element {
     return <SelectInputInternal {...props} />
   }
 }

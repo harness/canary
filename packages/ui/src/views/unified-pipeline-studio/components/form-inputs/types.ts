@@ -5,7 +5,6 @@ import type { GroupInputConfig } from './GroupInput'
 import type { ListInputConfig } from './ListInput'
 import type { NumberInputConfig } from './NumberInput'
 import type { RadialInputConfig } from './RadialInput'
-import type { SecretSelectInputConfig } from './SecretSelectInput'
 import type { SelectInputConfig } from './SelectInput'
 import type { TextAreaInputConfig } from './TextAreaInput'
 import type { TextInputConfig } from './TextInput'
@@ -34,7 +33,6 @@ export type InputConfigType =
   | GroupInputConfig
   | SelectInputConfig
   | RadialInputConfig
-  | SecretSelectInputConfig
   | CalendarInputConfig
 
 export interface RadioOption {

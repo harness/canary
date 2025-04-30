@@ -17,6 +17,7 @@ import { InputError } from './common/InputError'
 import { InputLabel } from './common/InputLabel'
 import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
+import { RuntimeInputConfig } from './types/types'
 
 export type UIInputWithConfigsForArray = Omit<IInputDefinition, 'path'>
 
@@ -25,10 +26,12 @@ export interface ArrayInputConfig {
   inputConfig: {
     input: IInputDefinition
     tooltip?: string
-  }
+  } & RuntimeInputConfig
 }
 
-function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>): JSX.Element {
+type ArrayInputInternalProps = InputProps<AnyFormikValue, ArrayInputConfig>
+
+function ArrayInputInternal(props: ArrayInputInternalProps): JSX.Element {
   const { readonly, path, input, factory } = props
   const { label, required, inputConfig, description } = input
 
@@ -50,45 +53,46 @@ function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>)
   )
 
   return (
-    <InputWrapper>
-      <InputLabel label={label} required={required} description={description} />
-      {/* TODO: do we need Controller ? */}
-      <Controller
-        name={path}
-        render={() => (
-          <div className="flex flex-col">
-            <div>
-              {fields.map((item, idx) => (
-                <div key={item.id} className="flex items-end space-x-2">
-                  {inputConfig?.input && (
-                    <RenderInputs items={getChildInputs(inputConfig?.input, path, idx)} factory={factory} />
-                  )}
-                  <div>
-                    {/* TODO: Design system: Find alternate */}
-                    <button
-                      className="mt-2"
-                      onClick={() => {
-                        remove(idx)
-                      }}
-                      disabled={readonly}
-                    >
-                      <Icon name="trash" />
-                    </button>
+    <InputWrapper {...props}>
+      <>
+        <InputLabel label={label} required={required} description={description} />
+        {/* TODO: do we need Controller ? */}
+        <Controller
+          name={path}
+          render={() => (
+            <div className="flex flex-col">
+              <div>
+                {fields.map((item, idx) => (
+                  <div key={item.id} className="flex items-end space-x-2">
+                    {inputConfig?.input && (
+                      <RenderInputs items={getChildInputs(inputConfig?.input, path, idx)} factory={factory} />
+                    )}
+                    <div>
+                      {/* TODO: Design system: Find alternate */}
+                      <button
+                        className="mt-2"
+                        onClick={() => {
+                          remove(idx)
+                        }}
+                        disabled={readonly}
+                      >
+                        <Icon name="trash" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div>
+                <Button size="sm" onClick={() => append(input.default ?? undefined)} className="mt-2">
+                  Add
+                </Button>
+              </div>
             </div>
-            <div>
-              <Button size="sm" onClick={() => append(input.default ?? undefined)} className="mt-2">
-                Add
-              </Button>
-            </div>
-          </div>
-        )}
-      />
-      <InputError path={path} />
-
-      {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
+          )}
+        />
+        <InputError path={path} />
+        {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
+      </>
     </InputWrapper>
   )
 }
@@ -96,7 +100,7 @@ function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>)
 export class ArrayInput extends InputComponent<AnyFormikValue> {
   public internalType = 'array'
 
-  renderComponent(props: InputProps<AnyFormikValue, ArrayInputConfig>): JSX.Element {
+  renderComponent(props: ArrayInputInternalProps): JSX.Element {
     return <ArrayInputInternal {...props} />
   }
 }

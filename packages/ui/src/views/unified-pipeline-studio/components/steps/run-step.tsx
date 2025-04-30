@@ -27,7 +27,8 @@ const inputs: IInputConfigWithConfig[] = [
         { label: 'Powershell', value: 'powershell' },
         { label: 'Pwsh', value: 'pwsh' },
         { label: 'Python', value: 'python' }
-      ]
+      ],
+      allowedValueTypes: ['fixed', 'runtime', 'expression']
     }
   },
   {
@@ -36,7 +37,10 @@ const inputs: IInputConfigWithConfig[] = [
     label: 'Script',
     required: true,
     inputTransform: shorthandObjectInputTransformer('run'),
-    outputTransform: shorthandObjectOutputTransformer('run')
+    outputTransform: shorthandObjectOutputTransformer('run'),
+    inputConfig: {
+      allowedValueTypes: ['fixed', 'runtime', 'expression']
+    }
   },
   getContainerPartial(RUN_STEP_IDENTIFIER),
   {
@@ -86,9 +90,13 @@ const inputs: IInputConfigWithConfig[] = [
         {
           inputType: 'text',
           relativePath: 'path',
-          label: 'Path'
+          label: 'Path',
+          inputConfig: {
+            allowedValueTypes: ['fixed', 'runtime', 'expression']
+          }
         }
-      ]
+      ],
+      allowedValueTypes: ['fixed', 'runtime', 'expression']
     },
     outputTransform: unsetEmptyArrayOutputTransformer()
   }

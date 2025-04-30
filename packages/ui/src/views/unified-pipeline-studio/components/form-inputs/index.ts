@@ -1,4 +1,5 @@
 export * from './common'
+export * from './types/types'
 
 export * from './ArrayInput'
 export * from './BooleanInput'

@@ -32,41 +32,41 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
       backgroundColor: `var(--cn-set-${theme}-${isOutline ? 'surface-bg' : 'soft-bg'})`,
       borderColor: `var(--cn-set-${theme}-${isOutline ? 'surface-border' : 'soft-bg'})`,
 
-      '&:hover:not(.tag-split *)': getHoverStyles(theme, isOutline),
-      '&:where(.tag-split-left)': {
-        '.tag-split:hover &': getHoverStyles(theme, isOutline)
+      '&:hover:not(.cn-tag-split *)': getHoverStyles(theme, isOutline),
+      '&:where(.cn-tag-split-left)': {
+        '.cn-tag-split:hover &': getHoverStyles(theme, isOutline)
       },
-      '&:where(.tag-split-right)': isOutline
+      '&:where(.cn-tag-split-right)': isOutline
         ? {
             borderColor: `var(--cn-set-${theme}-soft-bg)`,
-            '.tag-split:hover &': {
+            '.cn-tag-split:hover &': {
               borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
             }
           }
         : {
             backgroundColor: `var(--cn-set-${theme}-surface-bg)`,
-            '.tag-split:hover &': {
+            '.cn-tag-split:hover &': {
               backgroundColor: `var(--cn-set-${theme}-surface-bg-hover)`
             }
           },
 
       // ICON STYLES
-      '.tag-icon': {
+      '.cn-tag-icon': {
         color: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'})`
       },
-      '.tag-reset-icon': {
+      '.cn-tag-reset-icon': {
         color: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'})`
       }
     }
 
-    styles[`&:where(.tag-${theme})`] = style
+    styles[`&:where(.cn-tag-${theme})`] = style
   })
 
   return styles
 }
 
 export default {
-  '.tag': {
+  '.cn-tag': {
     display: 'inline-flex',
     alignItems: 'center',
     padding: 'var(--cn-tag-py) var(--cn-tag-px)',
@@ -77,43 +77,43 @@ export default {
     height: `var(--cn-tag-size-default)`,
     '@apply w-fit flex items-center transition-colors cursor-pointer font-body-tight-normal': '',
 
-    '&:where(.tag-sm)': {
+    '&:where(.cn-tag-sm)': {
       height: `var(--cn-tag-size-sm)`,
       '@apply font-caption-tight-normal': ''
     },
 
-    '&:where(.tag-rounded)': {
+    '&:where(.cn-tag-rounded)': {
       borderRadius: `var(--cn-tag-radius-full)`
     },
 
-    '&:where(.tag-split-left)': {
+    '&:where(.cn-tag-split-left)': {
       borderRadius: `var(--cn-tag-split-left-radius-l) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-r) var(--cn-tag-split-left-radius-l)`,
-      '&.tag-rounded': {
+      '&.cn-tag-rounded': {
         borderRadius: `var(--cn-tag-radius-full) 0 0 var(--cn-tag-radius-full)`
       }
     },
 
-    '&:where(.tag-split-right)': {
+    '&:where(.cn-tag-split-right)': {
       borderRadius: `var(--cn-tag-split-right-radius-l) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-r) var(--cn-tag-split-right-radius-l)`,
       borderWidth: `var(--cn-tag-border) var(--cn-tag-border) var(--cn-tag-border) 0`,
-      '&.tag-rounded': {
+      '&.cn-tag-rounded': {
         borderRadius: `0 var(--cn-tag-radius-full) var(--cn-tag-radius-full) 0`
       }
     },
 
-    '&:where(.tag-outline)': {
+    '&:where(.cn-tag-outline)': {
       ...createTagVariantStyles('outline')
     },
-    '&:where(.tag-secondary)': {
+    '&:where(.cn-tag-secondary)': {
       ...createTagVariantStyles('secondary')
     },
 
     // ICON STYLES
-    '.tag-icon': {
+    '.cn-tag-icon': {
       width: `var(--cn-icon-size-default, 16px)`,
       height: `var(--cn-icon-size-default, 16px)`
     },
-    '.tag-reset-icon': {
+    '.cn-tag-reset-icon': {
       width: `var(--cn-icon-size-xs, 12px)`,
       height: `var(--cn-icon-size-xs, 12px)`
     }

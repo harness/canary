@@ -36,16 +36,16 @@ function createButtonVariantStyles() {
       style[`borderColor`] = `var(--cn-set-${themeStyle}-${variant}-border, var(--cn-set-${themeStyle}-${variant}-bg))`
 
       // Hover styles
-      style[`&:hover:not([disabled], .button-disabled)`] = {
+      style[`&:hover:not([disabled], .cn-button-disabled)`] = {
         backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-hover, var(--cn-set-${themeStyle}-${variant}-bg))`
       }
 
       // Active styles
-      style[`&:active:not([disabled], .button-disabled), &:where(.button-active)`] = {
+      style[`&:active:not([disabled], .cn-button-disabled), &:where(.cn-button-active)`] = {
         backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`
       }
 
-      separatorStyles[`&:where(.button-split-dropdown.button-${variant}.button-${theme})`] = {
+      separatorStyles[`&:where(.cn-button-split-dropdown.cn-button-${variant}.cn-button-${theme})`] = {
         '&::before': {
           /**
            * Some variants don't have separator
@@ -55,7 +55,7 @@ function createButtonVariantStyles() {
         }
       }
 
-      combinationStyles[`&:where(.button-${variant}.button-${theme})`] = style
+      combinationStyles[`&:where(.cn-button-${variant}.cn-button-${theme})`] = style
     })
   })
 
@@ -63,7 +63,7 @@ function createButtonVariantStyles() {
 }
 
 export default {
-  '.button': {
+  '.cn-button': {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -79,7 +79,7 @@ export default {
     border: 'var(--cn-btn-border) solid black',
     '@apply font-body-tight-strong': '',
 
-    '&:where(.button-split-dropdown)': {
+    '&:where(.cn-button-split-dropdown)': {
       height: 'var(--cn-btn-size-icon)',
       width: 'var(--cn-btn-size-icon)',
       position: 'relative',
@@ -95,43 +95,43 @@ export default {
     },
 
     // sizes
-    '&:where(.button-sm)': {
+    '&:where(.cn-button-sm)': {
       height: 'var(--cn-btn-size-sm)',
       padding: 'var(--cn-btn-py-sm) var(--cn-btn-px-sm)',
       gap: 'var(--cn-btn-gap-sm)',
       '@apply font-caption-tight-normal': ''
     },
-    '&:where(.button-lg)': {
+    '&:where(.cn-button-lg)': {
       height: 'var(--cn-btn-size-lg)',
       padding: 'var(--cn-btn-py-lg) var(--cn-btn-px-lg)',
       gap: 'var(--cn-btn-gap-lg)'
     },
 
     // AI button
-    '&:where(.button-ai)': {
+    '&:where(.cn-button-ai)': {
       color: 'var(--cn-set-ai-surface-text)',
       backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg), var(--cn-set-ai-surface-bg)), var(--cn-set-ai-surface-border)`,
       backgroundOrigin: 'border-box',
       backgroundClip: 'padding-box, border-box',
       border: 'var(--cn-badge-border) solid transparent',
 
-      '&:hover:not([disabled], .button-disabled)': {
+      '&:hover:not([disabled], .cn-button-disabled)': {
         backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg-hover), var(--cn-set-ai-surface-bg-hover)), var(--cn-set-ai-surface-border)`
       },
-      '&:active:not([disabled], .button-disabled), &:where(.button-active)': {
+      '&:active:not([disabled], .cn-button-disabled), &:where(.cn-button-active)': {
         backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg-selected), var(--cn-set-ai-surface-bg-selected)), var(--cn-set-ai-surface-border)`
       }
     },
 
     // Ghost style
-    '&:where(.button-ghost)': {
+    '&:where(.cn-button-ghost)': {
       border: 'none',
       color: 'var(--cn-set-gray-surface-text)',
 
-      '&:hover:not([disabled], .button-disabled)': {
+      '&:hover:not([disabled], .cn-button-disabled)': {
         backgroundColor: 'var(--cn-set-gray-surface-bg-hover)'
       },
-      '&:active:not([disabled], .button-disabled)': {
+      '&:active:not([disabled], .cn-button-disabled)': {
         backgroundColor: 'var(--cn-set-gray-surface-bg-selected)'
       }
     },
@@ -139,18 +139,18 @@ export default {
     ...createButtonVariantStyles(),
 
     // Rounded
-    '&:where(.button-rounded)': {
+    '&:where(.cn-button-rounded)': {
       borderRadius: 'var(--cn-btn-rounded-radius)'
     },
 
     // Icon Only
-    '&:where(.button-icon-only)': {
+    '&:where(.cn-button-icon-only)': {
       width: 'var(--cn-btn-size-icon)',
       height: 'var(--cn-btn-size-icon)'
     },
 
     // Icon Only sizing
-    '&:where(.button-icon-only.button-sm)': {
+    '&:where(.cn-button-icon-only.cn-button-sm)': {
       width: 'var(--cn-btn-size-sm)',
       height: 'var(--cn-btn-size-sm)'
     },
@@ -169,17 +169,17 @@ export default {
      * Disabled state is common for all variants.
      * So it is not added with :where
      */
-    '&:where(:disabled), &:where(.button-disabled)': {
+    '&:where(:disabled), &:where(.cn-button-disabled)': {
       color: 'var(--cn-state-disabled-text)',
       borderColor: 'var(--cn-state-disabled-border)',
       cursor: 'not-allowed',
 
-      '&:not(.button-ghost)': {
+      '&:not(.cn-button-ghost)': {
         backgroundColor: 'var(--cn-state-disabled-bg)'
       },
 
       // Disabled split dropdown
-      '&:where(.button-split-dropdown)': {
+      '&:where(.cn-button-split-dropdown)': {
         '&::before': {
           backgroundColor: 'var(--cn-state-disabled-border)'
         }
@@ -187,7 +187,7 @@ export default {
     },
 
     // link variant
-    '&:where(.button-link)': {
+    '&:where(.cn-button-link)': {
       color: 'var(--cn-comp-link-default)',
       border: 'none',
       height: 'auto',
@@ -199,7 +199,7 @@ export default {
       },
 
       // sm size
-      '&:where(.button-sm)': {
+      '&:where(.cn-button-sm)': {
         height: 'auto',
         gap: 'var(--cn-btn-gap-sm)',
         padding: 'var(--cn-btn-link-py-sm) 0',
@@ -207,7 +207,7 @@ export default {
       },
 
       // disabled
-      '&:where(:disabled), &:where(.button-disabled)': {
+      '&:where(:disabled), &:where(.cn-button-disabled)': {
         color: 'var(--cn-state-disabled-text)',
         cursor: 'not-allowed'
       }

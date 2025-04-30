@@ -40,10 +40,10 @@ function createBadgeVariantStyles() {
         style[`borderColor`] =
           `var(--cn-set-${themeStyle}-${variant}-border, var(--cn-set-${themeStyle}-${variant}-bg))`
 
-        combinationStyles[`&:where(.badge-${variant}.badge-${theme})`] = style
+        combinationStyles[`&:where(.cn-badge-${variant}.cn-badge-${theme})`] = style
       } else {
         // Add status circle styles for each theme
-        statusCircleStyles[`&.badge-status.badge-${theme} > .badge-indicator`] = {
+        statusCircleStyles[`&.cn-badge-status.cn-badge-${theme} > .cn-badge-indicator`] = {
           backgroundColor: `var(--cn-set-${themeStyle}-solid-bg)`
         }
       }
@@ -54,31 +54,31 @@ function createBadgeVariantStyles() {
 }
 
 export default {
-  '.badge': {
+  '.cn-badge': {
     height: 'var(--cn-badge-size-default)',
     padding: '0 var(--cn-badge-default-px)',
     '@apply select-none font-body-tight-normal truncate': '',
 
     /** Size */
-    '&:where(.badge-sm)': {
+    '&:where(.cn-badge-sm)': {
       height: 'var(--cn-badge-size-sm)',
       gap: 'var(--cn-badge-sm-gap)',
       padding: 'var(--cn-badge-sm-px)',
       '@apply font-caption-tight-normal': ''
     },
 
-    '&:where(.badge-ghost)': {
+    '&:where(.cn-badge-ghost)': {
       height: 'auto',
       padding: '0'
     },
 
-    '&:where(:not(.badge-status))': {
+    '&:where(:not(.cn-badge-status))': {
       borderRadius: 'var(--cn-badge-radius)',
       border: 'var(--cn-badge-border) solid var(--cn-set-gray-surface-border)',
       gap: 'var(--cn-badge-default-gap)'
     },
 
-    '&:where(.badge-counter)': {
+    '&:where(.cn-badge-counter)': {
       color: 'var(--cn-set-gray-surface-text)',
       borderRadius: 'var(--cn-badge-counter-radius)',
       borderColor: 'var(--cn-set-gray-surface-border)',
@@ -87,18 +87,18 @@ export default {
       padding: 'var(--cn-badge-counter-py) var(--cn-badge-counter-px)',
       '@apply font-caption-tight-normal': '',
 
-      '&.badge-info': {
+      '&.cn-badge-info': {
         backgroundColor: 'var(--cn-set-blue-surface-bg)',
         color: 'var(--cn-set-blue-surface-text)',
         borderColor: 'var(--cn-set-blue-surface-border)'
       }
     },
 
-    '&:where(.badge-status)': {
+    '&:where(.cn-badge-status)': {
       gap: 'var(--cn-badge-status-gap)',
       padding: '0',
 
-      '> .badge-indicator': {
+      '> .cn-badge-indicator': {
         width: 'var(--cn-badge-indicator-size-default)',
         height: 'var(--cn-badge-indicator-size-default)',
         backgroundColor: 'var(--cn-set-gray-solid-bg)'

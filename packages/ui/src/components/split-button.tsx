@@ -82,7 +82,7 @@ export const SplitButton = <T extends string>({
       </Button>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger
-          className={cn(buttonVariants({ theme, variant }), 'button-split-dropdown')}
+          className={cn(buttonVariants({ theme, variant }), 'cn-button-split-dropdown')}
           disabled={disabled || loading}
         >
           <Icon name="chevron-down" size={12} className="chevron-down" />

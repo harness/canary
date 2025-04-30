@@ -6,39 +6,33 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { Icon } from './icon'
 
-const buttonVariants = cva('button', {
+const buttonVariants = cva('cn-button', {
   variants: {
     variant: {
       primary: '',
       secondary: '',
       outline: '',
-      ai: 'button-ai',
-      // solid: 'button-solid',
-      // surface: 'button-surface',
-      // soft: 'button-soft',
-      ghost: 'button-ghost',
-      link: 'button-link'
+      ai: 'cn-button-ai',
+      ghost: 'cn-button-ghost',
+      link: 'cn-button-link'
     },
     size: {
       default: '',
-      lg: 'button-lg',
-      sm: 'button-sm'
+      lg: 'cn-button-lg',
+      sm: 'cn-button-sm'
     },
     rounded: {
-      true: 'button-rounded'
+      true: 'cn-button-rounded'
     },
 
     iconOnly: {
-      true: 'button-icon-only'
+      true: 'cn-button-icon-only'
     },
 
     theme: {
       default: '',
-      success: 'button-success',
-      danger: 'button-danger'
-      // primary: 'button-primary',
-      // muted: 'button-muted',
-      // ai: 'button-ai'
+      success: 'cn-button-success',
+      danger: 'cn-button-danger'
     }
   },
   compoundVariants: [
@@ -46,58 +40,58 @@ const buttonVariants = cva('button', {
     {
       variant: 'primary',
       theme: 'default',
-      class: 'button-solid button-primary'
+      class: 'cn-button-solid cn-button-primary'
     },
     {
       variant: 'primary',
       theme: 'success',
-      class: 'button-soft button-success'
+      class: 'cn-button-soft cn-button-success'
     },
     {
       variant: 'primary',
       theme: 'danger',
-      class: 'button-soft button-danger'
+      class: 'cn-button-soft cn-button-danger'
     },
 
     // Secondary
     {
       variant: 'secondary',
       theme: 'default',
-      class: 'button-muted button-soft'
+      class: 'cn-button-muted cn-button-soft'
     },
 
     // Outline
     {
       variant: 'outline',
       theme: 'default',
-      class: 'button-muted button-surface'
+      class: 'cn-button-muted cn-button-surface'
     },
     {
       variant: 'outline',
       theme: 'success',
-      class: 'button-success button-surface'
+      class: 'cn-button-success cn-button-surface'
     },
     {
       variant: 'outline',
       theme: 'danger',
-      class: 'button-danger button-surface'
+      class: 'cn-button-danger cn-button-surface'
     },
 
     // Ghost
     {
       variant: 'ghost',
       theme: 'default',
-      class: 'button-ghost button-muted'
+      class: 'cn-button-ghost cn-button-muted'
     },
     {
       variant: 'ghost',
       theme: 'success',
-      class: 'button-ghost button-success'
+      class: 'cn-button-ghost cn-button-success'
     },
     {
       variant: 'ghost',
       theme: 'danger',
-      class: 'button-ghost button-danger'
+      class: 'cn-button-ghost cn-button-danger'
     }
   ],
   defaultVariants: {

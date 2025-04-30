@@ -93,16 +93,16 @@ export default {
         },
         toast: {
           background: {
-              danger: 'hsla(var(--canary-toast-background-danger))'
+            danger: 'hsla(var(--canary-toast-background-danger))'
           },
           foreground: {
-              danger: 'hsla(var(--canary-toast-foreground-danger))'
+            danger: 'hsla(var(--canary-toast-foreground-danger))'
           },
           icons: {
-              danger: {
-                  default: 'hsla(var(--canary-toast-icon-danger-default))',
-                  hover: 'hsla(var(--canary-toast-icon-danger-hover))'
-              }
+            danger: {
+              default: 'hsla(var(--canary-toast-icon-danger-default))',
+              hover: 'hsla(var(--canary-toast-icon-danger-hover))'
+            }
           }
         },
         // Remove Tag Colors once Toast component is removed
@@ -376,8 +376,6 @@ export default {
         13: 'var(--cn-font-size-13)'
       },
       backgroundImage: {
-        'ai-button':
-          'linear-gradient(to right, var(--cn-gradient-ai-gradient-stop-1), var(--cn-gradient-ai-gradient-stop-2), var(--cn-gradient-ai-gradient-stop-3), var(--cn-gradient-ai-gradient-stop-4))',
         'widget-bg-gradient':
           'radial-gradient(80.82% 77.84% at 80.15% 11.99%, hsla(var(--cn-gradient-pipeline-widget-blob-big-from)) 8.43%, hsla(var(--cn-gradient-pipeline-widget-blob-big-to)) 100%)',
         'widget-number-gradient':

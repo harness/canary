@@ -1,27 +1,27 @@
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const statusBadgeVariants = cva('badge inline-flex w-fit items-center transition-colors', {
+const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transition-colors', {
   variants: {
     variant: {
-      primary: 'badge-solid',
-      secondary: 'badge-soft',
-      outline: 'badge-surface',
-      ghost: 'badge-status',
-      status: 'badge-status'
+      primary: 'cn-badge-solid',
+      secondary: 'cn-badge-soft',
+      outline: 'cn-badge-surface',
+      ghost: 'cn-badge-status',
+      status: 'cn-badge-status'
     },
     size: {
       default: '',
-      sm: 'badge-sm'
+      sm: 'cn-badge-sm'
     },
 
     theme: {
-      muted: 'badge-muted',
-      success: 'badge-success',
-      warning: 'badge-warning',
-      danger: 'badge-danger',
-      info: 'badge-info',
-      merged: 'badge-merged'
+      muted: 'cn-badge-muted',
+      success: 'cn-badge-success',
+      warning: 'cn-badge-warning',
+      danger: 'cn-badge-danger',
+      info: 'cn-badge-info',
+      merged: 'cn-badge-merged'
     }
   },
   defaultVariants: {
@@ -72,7 +72,7 @@ function StatusBadge({ className, variant, size, pulse, theme = 'muted', childre
       {...props}
     >
       {isStatusVariant && (
-        <span className={cn('badge-indicator rounded-full', { 'animate-pulse': pulse })} aria-hidden="true" />
+        <span className={cn('cn-badge-indicator rounded-full', { 'animate-pulse': pulse })} aria-hidden="true" />
       )}
       {children}
     </div>

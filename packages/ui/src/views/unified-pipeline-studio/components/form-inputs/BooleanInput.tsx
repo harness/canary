@@ -35,7 +35,7 @@ function BooleanInputInternal(props: BooleanInputInternalProps): JSX.Element {
             field.onChange(value)
           }}
           label={label}
-          description={description}
+          caption={description}
           required={required}
         />
         <InputError path={path} />

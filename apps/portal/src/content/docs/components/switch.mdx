@@ -3,7 +3,8 @@ title: Switch
 description: Switch component
 ---
 
-The `Switch` component provides a toggle switch for on/off states.
+The `Switch` component provides a toggle switch for on/off states.  
+It is built on top of the Radix UI Switch primitive with additional styling.
 
 import { DocsPage } from "../../../components/docs-page";
 
@@ -14,7 +15,17 @@ import { DocsPage } from "../../../components/docs-page";
     <Switch 
       id="airplane-mode"
       label="Airplane mode"
-      description="Enable or disable airplane mode to control all wireless communication."
+      caption="Enable or disable airplane mode to control all wireless communication."
+    />
+
+    <hr className="my-4" />
+
+    <h5>Optional Field</h5>
+    <Switch
+      id="notifications"
+      label="Enable notifications"
+      caption="Toggle to enable or disable notifications."
+      optional
     />
 
     <hr className="my-4" />
@@ -23,16 +34,16 @@ import { DocsPage } from "../../../components/docs-page";
     <Switch
       id="god-mode"
       label="God mode"
-      description="Toggle to enable or disable God mode, which grants unrestricted access and control."
+      caption="Toggle to enable or disable God mode, which grants unrestricted access and control."
       disabled
     />
 
     <hr className="my-4" />
 
-    <h5>Without Label and Description</h5>
+    <h5>Without Label and Caption</h5>
     <div className="flex gap-4">
-      <Switch id="no-label-description" />
-      <Switch id="no-label-description-disabled" disabled />
+      <Switch id="no-label-caption" />
+      <Switch id="no-label-caption-disabled" disabled />
     </div>
 
 </div>`}
@@ -43,22 +54,43 @@ import { DocsPage } from "../../../components/docs-page";
 ```typescript jsx
 import { Switch } from '@harnessio/ui/components'
 
-//...
+// Standard usage
+<Switch
+  id="airplane-mode"
+  checked={airplaneModeEnabled}
+  onCheckedChange={setAirplaneModeEnabled}
+  label="Airplane mode"
+  caption="Enable or disable airplane mode to control all wireless communication."
+/>
 
-return (
-  <Switch
-    id="airplane-mode"
-    checked={airplaneModeEnabled}
-    onCheckedChange={setAirplaneModeEnabled}
-    label="Toggle Airplane mode"
-    description="Enable or disable airplane mode to control all wireless communication."
-  />
-)
+// Optional field
+<Switch
+  id="notifications"
+  checked={notificationsEnabled}
+  onCheckedChange={setNotificationsEnabled}
+  label="Enable notifications"
+  caption="Toggle to enable or disable notifications."
+  optional
+/>
+
+// Disabled
+<Switch
+  id="god-mode"
+  checked={false}
+  onCheckedChange={() => {}}
+  label="God mode"
+  caption="Toggle to enable or disable God mode, which grants unrestricted access and control."
+  disabled
+/>
+
+// Without Label and Caption
+<Switch id="no-label-caption" checked={true} onCheckedChange={() => {}} />
+<Switch id="no-label-caption-disabled" checked={false} disabled />
 ```
 
 ## API Reference
 
-The `Switch` component can be used either controlled with the `checked` and `onCheckedChange` props, or uncontrolled.
+The `Switch` component can be used either controlled with the `checked` and `onCheckedChange` props, or uncontrolled.  
 When used uncontrolled, the `defaultChecked` prop can be used to set the initial state of the switch.
 
 ```typescript jsx
@@ -70,7 +102,8 @@ When used uncontrolled, the `defaultChecked` prop can be used to set the initial
   onCheckedChange={handleChange} // [OPTIONAL] callback called when the checked state changes
   disabled                       // [OPTIONAL] whether the switch is disabled
   label                          // [OPTIONAL] a label for the switch
-  description                    // [OPTIONAL] a description for the switch
+  caption                        // [OPTIONAL] a caption for the switch
+  optional                       // [OPTIONAL] indicates if the field is optional
 />
 ```
 
@@ -78,53 +111,66 @@ When used uncontrolled, the `defaultChecked` prop can be used to set the initial
   props={[
     {
       name: "id",
-      description: "Unique identifier for the switch",
-      required: true,
+      description: "Unique identifier for the switch.",
+      required: false,
       value: "string",
     },
     {
       name: "checked",
-      description: "Indicates whether the switch is checked",
+      description: "Indicates whether the switch is checked.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "defaultChecked",
-      description: "Initial checked state of the switch",
+      description: "Initial checked state of the switch.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "required",
-      description: "Indicates whether the switch is required",
+      description: "Indicates whether the switch is required.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "onCheckedChange",
-      description: "Function to handle checked state change",
+      description: "Function to handle checked state change.",
       required: false,
       value: "(checked: boolean) => void",
     },
     {
       name: "disabled",
-      description: "Indicates whether the switch is disabled",
+      description: "Indicates whether the switch is disabled.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "label",
-      description: "Label for the switch",
+      description: "Label for the switch.",
       required: false,
       value: "string",
     },
     {
-      name: "description",
-      description: "Description for the switch",
+      name: "caption",
+      description: "Caption for the switch.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "optional",
+      description: "Indicates if the field is optional.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the switch.",
       required: false,
       value: "string",
     },

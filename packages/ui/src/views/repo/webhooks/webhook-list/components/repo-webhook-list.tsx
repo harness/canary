@@ -125,7 +125,7 @@ export function RepoWebhookList({
                   onClick={e => e.stopPropagation()}
                   onCheckedChange={() => handleEnableWebhook(webhook.id, !webhook.enabled)}
                   label={webhook.display_name}
-                  description={
+                  caption={
                     webhook?.triggers?.length
                       ? webhook.triggers
                           .map(trigger => trigger.replace(/_/g, ' ').replace(/\b\w/g, match => match.toUpperCase()))

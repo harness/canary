@@ -11,7 +11,7 @@ export type CalendarInputType = 'calendar'
 export interface CalendarInputConfig {
   inputType: CalendarInputType
   tooltip?: string
-  inputConfig: {
+  inputConfig?: {
     /* placeholder for more config */
   } & RuntimeInputConfig
 }

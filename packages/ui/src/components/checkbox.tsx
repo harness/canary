@@ -14,7 +14,7 @@ interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxPrimitiv
  * Checkbox component that provides a customizable, accessible checkbox input.
  * Built on top of Radix UI Checkbox primitive with additional styling.
  */
-const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, CheckboxProps>(
+const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<CheckboxProps, 'required'>>(
   ({ className, label, caption, optional, ...props }, ref) => {
     const checkboxId = props.id || `checkbox-${Math.random().toString(36).slice(2, 11)}`
 

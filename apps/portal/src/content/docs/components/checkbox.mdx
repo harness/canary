@@ -11,10 +11,9 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`() => {
-    const [checked, setChecked] = React.useState(false);
-    const [checkedIndeterminate, setCheckedIndeterminate] = React.useState(false);
-    const [woLabelChecked, setWOLabelChecked] = React.useState(false);
-    const [onlyLabelChecked, setOnlyLabelChecked] = React.useState(false);
+    const [checked, setChecked] = React.useState(true);
+    const [checkedIndeterminate, setCheckedIndeterminate] = React.useState<'indeterminate' | boolean>('indeterminate');
+    const [checkedWOLabel, setCheckedWOLabel] = React.useState(false);
 
     return (
       <div className="flex flex-col space-y-8">
@@ -26,7 +25,7 @@ import { DocsPage } from "@/components/docs-page";
             checked={checked}
             onCheckedChange={setChecked}
             label="Accept terms and conditions"
-            description="You must accept terms and conditions to proceed."
+            caption="You must accept terms and conditions to proceed."
           />
         </div>
 
@@ -38,7 +37,7 @@ import { DocsPage } from "@/components/docs-page";
             checked={checkedIndeterminate ? "indeterminate" : false}
             onCheckedChange={() => setCheckedIndeterminate(!checkedIndeterminate)}
             label="Select items"
-            description="Indicates partial selection of items."
+            caption="Indicates partial selection of items."
           />
         </div>
 
@@ -51,28 +50,17 @@ import { DocsPage } from "@/components/docs-page";
             onCheckedChange={() => {}}
             disabled
             label="Subscribe to newsletter"
-            description="This option is currently unavailable."
+            caption="This option is currently unavailable."
           />
         </div>
 
-        {/* Only Label */}
+        {/* Without Label */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Only Label</h4>
-          <Checkbox
-            id="checkbox-only-label"
-            checked={onlyLabelChecked}
-            onCheckedChange={setOnlyLabelChecked}
-            label="Enable notifications"
-          />
-        </div>
-
-        {/* Without Label and Description */}
-        <div className="space-y-2">
-          <h4 className="text-sm font-medium">Without Label and Description</h4>
+          <h4 className="text-sm font-medium">Without Label</h4>
           <Checkbox
             id="checkbox-no-label"
-            checked={woLabelChecked}
-            onCheckedChange={setWOLabelChecked}
+            checked={checkedWOLabel}
+            onCheckedChange={setCheckedWOLabel}
           />
         </div>
       </div>
@@ -88,9 +76,7 @@ import { Checkbox } from "@harnessio/ui/components";
 
 function Example() {
   const [checked, setChecked] = React.useState(false);
-  const [checkedIndeterminate, setCheckedIndeterminate] = React.useState(false);
-  const [woLabelChecked, setWOLabelChecked] = React.useState(false);
-  const [onlyLabelChecked, setOnlyLabelChecked] = React.useState(false);
+  const [indeterminate, setIndeterminate] = React.useState<'indeterminate' | boolean>(false);
 
   return (
     <div className="flex flex-col space-y-8">
@@ -100,16 +86,16 @@ function Example() {
         checked={checked}
         onCheckedChange={setChecked}
         label="Accept terms and conditions"
-        description="You must accept terms and conditions to proceed."
+        caption="You must accept terms and conditions to proceed."
       />
 
       {/* Indeterminate state */}
       <Checkbox
         id="checkbox-indeterminate"
-        checked={checkedIndeterminate ? "indeterminate" : false}
-        onCheckedChange={() => setCheckedIndeterminate(!checkedIndeterminate)}
-        label="Select all items"
-        description="Indicates partial selection of items."
+        checked={indeterminate}
+        onCheckedChange={setIndeterminate}
+        label="Select items"
+        caption="Indicates partial selection of items."
       />
 
       {/* Disabled */}
@@ -119,22 +105,14 @@ function Example() {
         onCheckedChange={() => {}}
         disabled
         label="Subscribe to newsletter"
-        description="This option is currently unavailable."
+        caption="This option is currently unavailable."
       />
 
-      {/* Without Label and Description */}
+      {/* Without Label */}
       <Checkbox
         id="checkbox-no-label"
-        checked={woLabelChecked}
-        onCheckedChange={setWOLabelChecked}
-      />
-
-      {/* Only Label */}
-      <Checkbox
-        id="checkbox-only-label"
-        checked={onlyLabelChecked}
-        onCheckedChange={setOnlyLabelChecked}
-        label="Enable notifications"
+        checked={checked}
+        onCheckedChange={setChecked}
       />
     </div>
   );
@@ -155,7 +133,7 @@ When used uncontrolled, the `defaultChecked` prop can be used to set the initial
   onCheckedChange={handleChange} // [OPTIONAL] callback called when the checked state changes
   disabled                       // [OPTIONAL] whether the checkbox is disabled
   label                          // [OPTIONAL] a label displayed next to the checkbox
-  description                    // [OPTIONAL] a description displayed under the label
+  caption                        // [OPTIONAL] a caption displayed under the label
 />
 ```
 
@@ -163,53 +141,60 @@ When used uncontrolled, the `defaultChecked` prop can be used to set the initial
   props={[
     {
       name: "id",
-      description: "Unique identifier for the checkbox",
+      description: "Unique identifier for the checkbox.",
       required: false,
       value: "string",
     },
     {
       name: "checked",
-      description: "Indicates whether the checkbox is checked or indeterminate",
+      description:
+        "Indicates whether the checkbox is checked or indeterminate.",
       required: false,
-      value: '"boolean" | "indeterminate"',
+      value: "boolean | 'indeterminate'",
       defaultValue: "false",
     },
     {
       name: "defaultChecked",
-      description: "Initial checked state of the checkbox",
+      description: "Initial checked state of the checkbox.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "required",
-      description: "Indicates whether the checkbox is required",
+      description: "Indicates whether the checkbox is required.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "onCheckedChange",
-      description: "Function called when the checked state changes",
+      description: "Function called when the checked state changes.",
       required: false,
-      value: "(checked: boolean) => void",
+      value: "(checked: boolean | 'indeterminate') => void",
     },
     {
       name: "disabled",
-      description: "Indicates whether the checkbox is disabled",
+      description: "Indicates whether the checkbox is disabled.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "label",
-      description: "Label displayed alongside the checkbox",
+      description: "Label displayed alongside the checkbox.",
       required: false,
       value: "string",
     },
     {
-      name: "description",
-      description: "Description displayed under the label",
+      name: "caption",
+      description: "Caption displayed under the label.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the checkbox.",
       required: false,
       value: "string",
     },

@@ -80,7 +80,11 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
                 variant="status"
                 theme={status.toLowerCase() === 'success' ? 'success' : 'danger'}
               >
-                <span className="text-cn-foreground-1">{status}</span>
+                <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
+                  {status.toLowerCase() === 'success'
+                    ? t('views:connectors.success', 'Success')
+                    : t('views:connectors.failure', 'Failed')}
+                </Text>
               </StatusBadge>
             </div>
           ) : null}

@@ -46,7 +46,7 @@ export function SecretList({
         <Table.Row>
           <Table.Head className="w-[361px]">{t('views:secret.title', 'Name')}</Table.Head>
           <Table.Head className="w-[350px]">{t('views:common.manager', 'Secrets Manager')}</Table.Head>
-          <Table.Head className="w-44">{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
+          <Table.Head className="w-60">{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
           <Table.Head></Table.Head>
         </Table.Row>
       </Table.Header>

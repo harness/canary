@@ -496,7 +496,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     path: 'create',
                     element: <CreateWebhookContainer />,
                     handle: {
-                      breadcrumb: () => <span>Create a webhook</span>
+                      breadcrumb: () => <span>Create a webhook</span>,
+                      routeName: RouteConstants.toRepoWebhookCreate
                     }
                   }
                 ]
@@ -681,7 +682,8 @@ export const routes: CustomRouteObject[] = [
         path: 'import',
         element: <ImportProjectContainer />,
         handle: {
-          breadcrumb: () => <span>Import project</span>
+          breadcrumb: () => <span>Import project</span>,
+          routeName: RouteConstants.toImportProject
         }
       },
       {

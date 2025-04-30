@@ -209,7 +209,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                 : t('views:profileSettings.cancel', 'Cancel')}
             </Button>
             {!createdTokenData && (
-              <Button type="submit" disabled={!isValid || isLoading}>
+              <Button type="submit" disabled={isLoading}>
                 {!isLoading
                   ? t('views:profileSettings.generateTokenButton', 'Generate token')
                   : t('views:profileSettings.generatingTokenButton', 'Generating token...')}

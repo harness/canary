@@ -1,4 +1,4 @@
-import { Badge, Button, Icon } from '@/components'
+import { Button, Icon, StatusBadge } from '@/components'
 
 interface BranchBadgeProps {
   branchName: string

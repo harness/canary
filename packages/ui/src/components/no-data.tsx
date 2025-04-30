@@ -57,13 +57,13 @@ export const NoData: FC<NoDataProps> = ({
   return (
     <div
       className={cn(
-        'flex h-full w-full flex-col place-content-center place-items-center gap-4',
-        { 'py-20 pb-24 h-auto min-h-[75vh] border border-cn-borders-4 rounded-md': withBorder },
+        'flex h-full w-full flex-col place-content-center place-items-center gap-4 my-auto',
+        { 'h-auto min-h-[75vh] border border-cn-borders-4 rounded-md': withBorder },
         className
       )}
     >
       {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} themeDependent />}
-      <div className={cn('flex flex-col place-content-center place-items-center gap-2.5', textWrapperClassName)}>
+      <div className={cn('flex flex-col place-content-center place-items-center gap-2.5 pb-4', textWrapperClassName)}>
         <Text size={5} weight="medium">
           {title}
         </Text>

@@ -63,24 +63,24 @@ const buttonVariants = cva('button', {
     {
       variant: 'secondary',
       theme: 'default',
-      class: 'button-soft button-muted'
+      class: 'button-muted button-soft'
     },
 
     // Outline
     {
       variant: 'outline',
       theme: 'default',
-      class: 'button-surface button-muted'
+      class: 'button-muted button-surface'
     },
     {
       variant: 'outline',
       theme: 'success',
-      class: 'button-surface button-success'
+      class: 'button-success button-surface'
     },
     {
       variant: 'outline',
       theme: 'danger',
-      class: 'button-surface button-danger'
+      class: 'button-danger button-surface'
     },
 
     // Ghost

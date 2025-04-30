@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Badge, Button, Checkbox, DropdownMenu, Icon, SplitButton, Text } from '@/components'
+import { Button, Checkbox, CounterBadge, DropdownMenu, Icon, SplitButton, Text } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
@@ -311,10 +311,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           {commitSuggestionsBatchCount > 0 ? (
             <Button variant="outline" onClick={() => onCommitSuggestionsBatch()}>
               Commit suggestion
-              {/* TODO: Design system: Update it with info Badge component once ready */}
-              <Badge variant="counter" size="sm">
-                {commitSuggestionsBatchCount}
-              </Badge>
+              <CounterBadge theme="info">{commitSuggestionsBatchCount}</CounterBadge>
             </Button>
           ) : (
             <></>

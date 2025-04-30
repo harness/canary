@@ -80,20 +80,18 @@ export const PullRequestList: FC<PullRequestListProps> = ({
             }
           />
         </StackedList.Item>
-        <div className="flex min-h-[50vh] items-center justify-center">
-          <NoData
-            iconName="no-data-folder"
-            title="No open pull requests yet"
-            description={[
-              t('views:noData.noOpenPullRequests', 'There are no open pull requests in this project yet.'),
-              t('views:noData.createNewPullRequest', 'Create a new pull request.')
-            ]}
-            primaryButton={{
-              label: 'Create pull request',
-              to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
-            }}
-          />
-        </div>
+        <NoData
+          iconName="no-data-folder"
+          title="No open pull requests yet"
+          description={[
+            t('views:noData.noOpenPullRequests', 'There are no open pull requests in this project yet.'),
+            t('views:noData.createNewPullRequest', 'Create a new pull request.')
+          ]}
+          primaryButton={{
+            label: 'Create pull request',
+            to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+          }}
+        />
       </StackedList.Root>
     )
   }
@@ -121,20 +119,18 @@ export const PullRequestList: FC<PullRequestListProps> = ({
           />
         </StackedList.Item>
 
-        <div className="flex min-h-[50vh] items-center justify-center">
-          <NoData
-            iconName="no-data-folder"
-            title="No closed pull requests yet"
-            description={[
-              t('views:noData.noClosedPullRequests', 'There are no closed pull requests in this project yet.'),
-              t('views:noData.createNewPullRequest', 'Create a new pull request.')
-            ]}
-            primaryButton={{
-              label: 'Create pull request',
-              to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
-            }}
-          />
-        </div>
+        <NoData
+          iconName="no-data-folder"
+          title="No closed pull requests yet"
+          description={[
+            t('views:noData.noClosedPullRequests', 'There are no closed pull requests in this project yet.'),
+            t('views:noData.createNewPullRequest', 'Create a new pull request.')
+          ]}
+          primaryButton={{
+            label: 'Create pull request',
+            to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+          }}
+        />
       </StackedList.Root>
     )
   }

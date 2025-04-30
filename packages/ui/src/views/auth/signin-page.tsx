@@ -21,7 +21,7 @@ export interface SignInData {
 }
 
 const signInSchema = z.object({
-  email: z.string(),
+  email: z.string().min(1, { message: 'The field can’t be blank' }),
   password: z.string().min(1, { message: 'The field can’t be blank' })
 })
 
@@ -106,7 +106,7 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
               size="md"
               error={errors.password?.message?.toString()}
             />
-            <Button className="mt-10 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
+            <Button className="mt-10 w-full" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
           </form>

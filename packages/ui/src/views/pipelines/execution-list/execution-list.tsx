@@ -62,33 +62,29 @@ export const ExecutionList = ({
   if (noData) {
     return query ? (
       <StackedList.Root className="grow place-content-center">
-        <div className="flex items-center justify-center">
-          <NoData
-            iconName="no-search-magnifying-glass"
-            title="No search results"
-            description={[
-              t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
-              t('views:noData.changeSearch', 'or search for a different keyword.')
-            ]}
-            primaryButton={{
-              label: t('views:noData.clearSearch', 'Clear search'),
-              onClick: handleResetQuery
-            }}
-          />
-        </div>
-      </StackedList.Root>
-    ) : (
-      <div className="m-auto flex items-center justify-center">
         <NoData
-          iconName="no-data-folder"
-          title="No executions yet"
-          description={['There are no executions in this project yet.']}
+          iconName="no-search-magnifying-glass"
+          title="No search results"
+          description={[
+            t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+            t('views:noData.changeSearch', 'or search for a different keyword.')
+          ]}
           primaryButton={{
-            label: 'Execute pipeline',
-            onClick: handleExecutePipeline
+            label: t('views:noData.clearSearch', 'Clear search'),
+            onClick: handleResetQuery
           }}
         />
-      </div>
+      </StackedList.Root>
+    ) : (
+      <NoData
+        iconName="no-data-folder"
+        title="No executions yet"
+        description={['There are no executions in this project yet.']}
+        primaryButton={{
+          label: 'Execute pipeline',
+          onClick: handleExecutePipeline
+        }}
+      />
     )
   }
 

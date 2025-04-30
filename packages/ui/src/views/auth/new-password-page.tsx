@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Input, Text } from '@/components'
+import { Alert, Button, Card, Input, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -90,6 +90,11 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
             Your new password must be different from your previously used password.
           </Text>
         </Card.Header>
+        {serverError && (
+          <Alert.Container variant="destructive">
+            <Alert.Title>{serverError}</Alert.Title>
+          </Alert.Container>
+        )}
         <Card.Content className="mt-10">
           <form onSubmit={handleSubmit(onFormSubmit)}>
             <Input
@@ -111,7 +116,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
               placeholder="Confirm password"
               error={errors.confirmPassword?.message?.toString()}
             />
-            <Button className="mt-10 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
+            <Button className="mt-10 w-full" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Saving...' : 'Save'}
             </Button>
           </form>

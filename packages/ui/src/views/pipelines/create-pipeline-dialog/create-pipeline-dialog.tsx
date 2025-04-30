@@ -33,7 +33,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     watch,
     clearErrors,
     trigger,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<CreatePipelineFormType>({
     resolver: zodResolver(createPipelineSchema),
     mode: 'onChange',
@@ -99,7 +99,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
               label="Yaml path"
               {...register('yamlPath')}
               size="md"
-              error={errors.name?.message?.toString()}
+              error={errors.yamlPath?.message?.toString()}
             />
           </Fieldset>
 
@@ -141,7 +141,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={!isValid || isLoadingBranchNames}>
+            <Button type="submit" disabled={isLoadingBranchNames}>
               Create Pipeline
             </Button>
           </Dialog.Footer>

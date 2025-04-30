@@ -123,7 +123,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
     register: registerPassword,
     reset: resetPasswordForm,
     handleSubmit: handlePasswordSubmit,
-    formState: { errors: passwordErrors, isValid: isPasswordValid }
+    formState: { errors: passwordErrors }
   } = useForm<PasswordFields>({
     resolver: zodResolver(makePasswordSchema(t)),
     mode: 'onChange',
@@ -300,7 +300,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
             <ControlGroup type="button">
               <ButtonGroup>
                 {!passwordSubmitted ? (
-                  <Button type="submit" disabled={!isPasswordValid || isUpdatingPassword}>
+                  <Button type="submit" disabled={isUpdatingPassword}>
                     {isUpdatingPassword
                       ? t('views:profileSettings.updating', 'Updating...')
                       : t('views:profileSettings.updatePassword', 'Update password')}

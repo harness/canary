@@ -1,0 +1,243 @@
+---
+title: StatusBadge
+description: Display small pieces of information or status indicators
+---
+
+The `StatusBadge` component is used to highlight and display small pieces of information, such as status indicators or labels. It supports multiple visual variants and color themes, and is non-interactive (read-only).
+
+import { DocsPage } from "../../../components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-8">
+    <div className="grid grid-cols-[repeat(6,auto)] gap-5">
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-1 text-foreground/90 underline underline-offset-4 decoration-1">Primary (Default)</div>
+        <StatusBadge>Default</StatusBadge>
+        <StatusBadge theme="success">Success</StatusBadge>
+        <StatusBadge theme="warning">Warning</StatusBadge>
+        <StatusBadge theme="danger">Danger</StatusBadge>
+        <StatusBadge theme="info">Info</StatusBadge>
+        <StatusBadge theme="merged">Merged</StatusBadge>
+
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Secondary</div>
+        <StatusBadge variant="secondary">Default</StatusBadge>
+        <StatusBadge theme="success" variant="secondary">Success</StatusBadge>
+        <StatusBadge theme="warning" variant="secondary">Warning</StatusBadge>
+        <StatusBadge theme="danger" variant="secondary">Danger</StatusBadge>
+        <StatusBadge theme="info" variant="secondary">Info</StatusBadge>
+        <StatusBadge theme="merged" variant="secondary">Merged</StatusBadge>
+
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Outline</div>
+        <StatusBadge variant="outline">Default</StatusBadge>
+        <StatusBadge theme="success" variant="outline">Success</StatusBadge>
+        <StatusBadge theme="warning" variant="outline">Warning</StatusBadge>
+        <StatusBadge theme="danger" variant="outline">Danger</StatusBadge>
+        <StatusBadge theme="info" variant="outline">Info</StatusBadge>
+        <StatusBadge theme="merged" variant="outline">Merged</StatusBadge>
+
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Ghost</div>
+        <StatusBadge variant="ghost">Default</StatusBadge>
+        <StatusBadge theme="success" variant="ghost">Success</StatusBadge>
+        <StatusBadge theme="warning" variant="ghost">Warning</StatusBadge>
+        <StatusBadge theme="danger" variant="ghost">Danger</StatusBadge>
+        <StatusBadge theme="info" variant="ghost">Info</StatusBadge>
+        <StatusBadge theme="merged" variant="ghost">Merged</StatusBadge>
+
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status</div>
+        <StatusBadge variant="status">Default</StatusBadge>
+        <StatusBadge theme="success" variant="status">Success</StatusBadge>
+        <StatusBadge theme="warning" variant="status">Warning</StatusBadge>
+        <StatusBadge theme="danger" variant="status">Danger</StatusBadge>
+        <StatusBadge theme="info" variant="status">Info</StatusBadge>
+        <StatusBadge theme="merged" variant="status">Merged</StatusBadge>
+
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status with Pulse</div>
+        <StatusBadge variant="status" pulse>Default</StatusBadge>
+        <StatusBadge theme="success" variant="status" pulse>Success</StatusBadge>
+        <StatusBadge theme="warning" variant="status" pulse>Warning</StatusBadge>
+        <StatusBadge theme="danger" variant="status" pulse>Danger</StatusBadge>
+        <StatusBadge theme="info" variant="status" pulse>Info</StatusBadge>
+        <StatusBadge theme="merged" variant="status" pulse>Merged</StatusBadge>
+    </div>
+
+    <hr />
+
+    <div className="grid grid-cols-[repeat(6,auto)] gap-5 self-center">
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-1 text-foreground/90 underline underline-offset-4 decoration-1">Primary (Default)</div>
+        <StatusBadge size="sm">Default</StatusBadge>
+        <StatusBadge size="sm" theme="success">Success</StatusBadge>
+        <StatusBadge size="sm" theme="warning">Warning</StatusBadge>
+        <StatusBadge size="sm" theme="danger">Danger</StatusBadge>
+        <StatusBadge size="sm" theme="info">Info</StatusBadge>
+        <StatusBadge size="sm" theme="merged">Merged</StatusBadge>
+
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Secondary</div>
+        <StatusBadge size="sm" variant="secondary">Default</StatusBadge>
+        <StatusBadge size="sm" theme="success" variant="secondary">Success</StatusBadge>
+        <StatusBadge size="sm" theme="warning" variant="secondary">Warning</StatusBadge>
+        <StatusBadge size="sm" theme="danger" variant="secondary">Danger</StatusBadge>
+        <StatusBadge size="sm" theme="info" variant="secondary">Info</StatusBadge>
+        <StatusBadge size="sm" theme="merged" variant="secondary">Merged</StatusBadge>
+
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Outline</div>
+        <StatusBadge size="sm" variant="outline">Default</StatusBadge>
+        <StatusBadge size="sm" theme="success" variant="outline">Success</StatusBadge>
+        <StatusBadge size="sm" theme="warning" variant="outline">Warning</StatusBadge>
+        <StatusBadge size="sm" theme="danger" variant="outline">Danger</StatusBadge>
+        <StatusBadge size="sm" theme="info" variant="outline">Info</StatusBadge>
+        <StatusBadge size="sm" theme="merged" variant="outline">Merged</StatusBadge>
+
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Ghost</div>
+        <StatusBadge size="sm" variant="ghost">Default</StatusBadge>
+        <StatusBadge size="sm" theme="success" variant="ghost">Success</StatusBadge>
+        <StatusBadge size="sm" theme="warning" variant="ghost">Warning</StatusBadge>
+        <StatusBadge size="sm" theme="danger" variant="ghost">Danger</StatusBadge>
+        <StatusBadge size="sm" theme="info" variant="ghost">Info</StatusBadge>
+        <StatusBadge size="sm" theme="merged" variant="ghost">Merged</StatusBadge>
+
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status</div>
+        <StatusBadge size="sm" variant="status">Default</StatusBadge>
+        <StatusBadge size="sm" theme="success" variant="status">Success</StatusBadge>
+        <StatusBadge size="sm" theme="warning" variant="status">Warning</StatusBadge>
+        <StatusBadge size="sm" theme="danger" variant="status">Danger</StatusBadge>
+        <StatusBadge size="sm" theme="info" variant="status">Info</StatusBadge>
+        <StatusBadge size="sm" theme="merged" variant="status">Merged</StatusBadge>
+
+        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status with Pulse</div>
+        <StatusBadge size="sm" variant="status" pulse>Default</StatusBadge>
+        <StatusBadge size="sm" theme="success" variant="status" pulse>Success</StatusBadge>
+        <StatusBadge size="sm" theme="warning" variant="status" pulse>Warning</StatusBadge>
+        <StatusBadge size="sm" theme="danger" variant="status" pulse>Danger</StatusBadge>
+        <StatusBadge size="sm" theme="info" variant="status" pulse>Info</StatusBadge>
+        <StatusBadge size="sm" theme="merged" variant="status" pulse>Merged</StatusBadge>
+    </div>
+
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { StatusBadge } from '@harnessio/ui/components'
+
+// ...
+
+// Status badge with pulse
+<StatusBadge variant="status" theme="success" pulse>Status</StatusBadge>
+
+// Other variants (pulse not allowed)
+<StatusBadge variant="primary" theme="info">Info</StatusBadge>
+<StatusBadge variant="secondary" theme="warning">Warning</StatusBadge>
+<StatusBadge variant="outline" theme="danger">Danger</StatusBadge>
+<StatusBadge variant="ghost" theme="muted">Muted</StatusBadge>
+```
+
+## Themes
+
+The `StatusBadge` component supports different color themes, including `muted` (default), `success`, `warning`, `danger`, `info`, and `merged`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-wrap gap-2">
+    <StatusBadge>Default (muted)</StatusBadge>
+    <StatusBadge theme="success">Success</StatusBadge>
+    <StatusBadge theme="warning">Warning</StatusBadge>
+    <StatusBadge theme="danger">Danger</StatusBadge>
+    <StatusBadge theme="info">Info</StatusBadge>
+    <StatusBadge theme="merged">Merged</StatusBadge>
+</div>`}
+/>
+
+## Variants
+
+The `StatusBadge` component supports different visual variants, including `primary` (default), `secondary`, `outline`, `ghost`, and `status`.
+
+- `status` variant supports an optional `pulse` prop for animated status indication.
+- For all other variants, the `pulse` prop is not allowed.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-wrap gap-3 items-end">
+    <StatusBadge variant="primary" theme="muted">Primary</StatusBadge>
+    <StatusBadge variant="secondary" theme="muted">Secondary</StatusBadge>
+    <StatusBadge variant="outline" theme="muted">Outline</StatusBadge>
+    <StatusBadge variant="ghost" theme="muted">Ghost</StatusBadge>
+    <StatusBadge variant="status" theme="success">Status</StatusBadge>
+</div>`}
+/>
+
+## Sizes
+
+The `StatusBadge` component comes in two sizes: `default` and `sm`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-2">
+    <StatusBadge>Default size</StatusBadge>
+    <StatusBadge size="sm">Small size</StatusBadge>
+</div>`}
+/>
+
+## Status StatusBadges
+
+Status badges can optionally include a pulsing indicator to indicate activity using the `pulse` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-wrap items-end gap-3">
+    <StatusBadge variant="status" theme="success">Online</StatusBadge>
+    <StatusBadge variant="status" theme="warning">Warning</StatusBadge>
+    <StatusBadge variant="status" theme="danger">Error</StatusBadge>
+    <StatusBadge variant="status" theme="success" pulse>Live</StatusBadge>
+</div>`}
+/>
+
+## API Reference
+
+The `StatusBadge` component has several props to control its appearance:
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "Visual style of the badge",
+      required: false,
+      value: "'primary' | 'secondary' | 'outline' | 'ghost' | 'status'",
+      defaultValue: "'primary'",
+    },
+    {
+      name: "theme",
+      description: "Color theme of the badge",
+      required: false,
+      value: "'muted' | 'success' | 'warning' | 'danger' | 'info' | 'merged'",
+      defaultValue: "'muted'",
+    },
+    {
+      name: "size",
+      description: "Size of the badge",
+      required: false,
+      value: "'default' | 'sm'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "pulse",
+      description:
+        "Whether the status indicator should pulse (only for status variant)",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Additional CSS class names",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Content to display inside the badge",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

@@ -1,6 +1,6 @@
-import { FC, useMemo } from 'react'
+import { FC, Fragment, useMemo } from 'react'
 
-import { Badge, Tooltip } from '@/components'
+import { StatusBadge, Tooltip } from '@/components'
 
 const utcFormatter = new Intl.DateTimeFormat(undefined, {
   day: '2-digit',
@@ -62,15 +62,15 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
           const time = zone === 'UTC' ? formattedDates.utcTime : formattedDates.localTime
 
           return (
-            <>
-              <Badge variant="soft" size="sm">
+            <Fragment key={zone}>
+              <StatusBadge variant="secondary" size="sm">
                 {zone === 'UTC' ? 'UTC' : getTimeZoneAbbreviation()}
-              </Badge>
+              </StatusBadge>
               <time dateTime={date}>{date}</time>
               <time dateTime={time} className="ml-auto text-cn-foreground-3">
                 {time}
               </time>
-            </>
+            </Fragment>
           )
         })}
         <Tooltip.Arrow />

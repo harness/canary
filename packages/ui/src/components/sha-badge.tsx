@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 import { Button, ButtonSizes } from '@/components'
+import { cn } from '@/utils'
 
 interface RootProps {
   children: ReactNode
@@ -21,9 +22,13 @@ interface ContentProps {
 }
 
 function Root(props: RootProps) {
-  const { children } = props
+  const { children, className } = props
 
-  return <div className="grid-col-[1fr_auto] grid grid-flow-col items-center rounded border">{children}</div>
+  return (
+    <div className={cn('grid-col-[1fr_auto] grid grid-flow-col items-center rounded border', className)}>
+      {children}
+    </div>
+  )
 }
 
 function Content({ children, className, asChild }: ContentProps) {

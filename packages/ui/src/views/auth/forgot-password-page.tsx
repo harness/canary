@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, Card, Input, Spacer, Text } from '@/components'
+import { Alert, Button, Card, Input, Spacer, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -84,6 +84,11 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
             Enter your email to receive the verification code.
           </Text>
         </Card.Header>
+        {serverError && (
+          <Alert.Container variant="destructive">
+            <Alert.Title>{serverError}</Alert.Title>
+          </Alert.Container>
+        )}
         <Card.Content className="mt-10">
           <form onSubmit={handleSubmit(handleOnSubmit)}>
             <Input
@@ -96,14 +101,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
               error={errors.email?.message?.toString()}
               autoFocus
             />
-            <Button
-              className="mt-10 w-full"
-              variant="outline"
-              rounded
-              type="submit"
-              loading={isLoading}
-              disabled={hasError}
-            >
+            <Button className="mt-10 w-full" variant="outline" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Sending...' : 'Send'}
             </Button>
           </form>

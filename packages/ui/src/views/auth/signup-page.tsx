@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Input, Spacer, StyledLink, Text } from '@/components'
+import { Alert, Button, Card, Input, Spacer, StyledLink, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -123,13 +123,11 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               error={errors.confirmPassword?.message?.toString()}
             />
             {serverError && (
-              <>
-                <Text className="mt-1 leading-none tracking-tight text-cn-foreground-danger" size={0}>
-                  {serverError}
-                </Text>
-              </>
+              <Alert.Container variant="destructive">
+                <Alert.Title>{serverError}</Alert.Title>
+              </Alert.Container>
             )}
-            <Button className="mt-10 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
+            <Button className="mt-10 w-full" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Signing up...' : 'Sign up'}
             </Button>
           </form>

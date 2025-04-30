@@ -1,4 +1,4 @@
-import { Avatar, Badge, MoreActionsTooltip, SkeletonList, Table } from '@/components'
+import { Avatar, MoreActionsTooltip, SkeletonList, StatusBadge, Table } from '@/components'
 import { DialogLabels } from '@/views/user-management/components/dialogs'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
 import { ErrorState } from '@/views/user-management/components/page-components/content/components/users-list/components/error-state'
@@ -73,9 +73,9 @@ export const UsersList = () => {
                 {/* ROLE BINDING */}
                 <Table.Cell className="my-6 content-center">
                   <div className="flex gap-1.5">
-                    <Badge variant="surface" size="sm" theme={user.admin ? 'merged' : 'danger'}>
+                    <StatusBadge variant="outline" size="sm" theme={user.admin ? 'merged' : 'danger'}>
                       {user.admin ? 'Admin' : 'User'}
-                    </Badge>
+                    </StatusBadge>
                   </div>
                 </Table.Cell>
 

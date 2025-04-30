@@ -21,6 +21,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
   isLoading,
   secrets,
   onCreate,
+  onDeleteSecret,
   ...props
 }) => {
   const { t } = useTranslationStore()
@@ -76,7 +77,13 @@ const SecretListPage: FC<SecretListPageProps> = ({
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={4} />
-        <SecretList secrets={secrets} useTranslationStore={useTranslationStore} isLoading={isLoading} {...props} />
+        <SecretList
+          secrets={secrets}
+          useTranslationStore={useTranslationStore}
+          isLoading={isLoading}
+          onDeleteSecret={onDeleteSecret}
+          {...props}
+        />
         <Spacer size={8} />
         <Pagination totalPages={totalPages} currentPage={currentPage} goToPage={goToPage} t={t} />
       </SandboxLayout.Content>

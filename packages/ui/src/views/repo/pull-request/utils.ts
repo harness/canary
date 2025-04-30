@@ -1,4 +1,4 @@
-import { BadgeProps } from '@components/index'
+import { StatusBadgeProps } from '@components/index'
 
 import { IconType } from './pull-request.types'
 
@@ -6,7 +6,7 @@ export const getPrState = (
   is_draft?: boolean,
   merged?: number | null,
   state?: string
-): { icon: IconType; text: string; theme: Exclude<BadgeProps['theme'], 'ai'> } => {
+): { icon: IconType; text: string; theme: StatusBadgeProps['theme'] } => {
   if (state === 'open' && is_draft) {
     return { icon: 'pr-draft', text: 'Draft', theme: 'muted' }
   } else if (merged) {

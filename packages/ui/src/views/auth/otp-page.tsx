@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
 
-import { Button, Card, InputOTP, Spacer, Text } from '@/components'
+import { Alert, Button, Card, InputOTP, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -98,6 +98,11 @@ export function OTPPage({
             <span className="text-cn-foreground-1">{email}</span>
           </Text>
         </Card.Header>
+        {serverError && (
+          <Alert.Container variant="destructive">
+            <Alert.Title>{serverError}</Alert.Title>
+          </Alert.Container>
+        )}
         <Card.Content className="mt-10">
           <form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
             <div className="relative">
@@ -127,7 +132,7 @@ export function OTPPage({
                 </Text>
               )}
             </div>
-            <Button className="mt-10 w-full max-w-[212px]" type="submit" loading={isLoading} disabled={hasError}>
+            <Button className="mt-10 w-full max-w-[212px]" type="submit" loading={isLoading}>
               {isLoading ? 'Verifying...' : 'Verify'}
             </Button>
           </form>

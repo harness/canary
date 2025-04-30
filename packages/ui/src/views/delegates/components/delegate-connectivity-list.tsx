@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { Badge, Icon, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { Icon, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
 import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
 import { defaultTo } from 'lodash-es'
@@ -80,9 +80,9 @@ export function DelegateConnectivityList({
                   </Table.Cell>
                   <Table.Cell className="max-w-80 content-center truncate">
                     {groupCustomSelectors.map((selector: string) => (
-                      <Badge variant="soft" theme="merged" key={selector} className="mr-2">
+                      <StatusBadge variant="secondary" theme="merged" key={selector} className="mr-2">
                         {selector}
-                      </Badge>
+                      </StatusBadge>
                     ))}
                   </Table.Cell>
                   <Table.Cell className="min-w-8 text-right">

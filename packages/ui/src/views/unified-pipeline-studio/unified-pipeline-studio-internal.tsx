@@ -53,7 +53,6 @@ export const PipelineStudioInternal = (): JSX.Element => {
                 >
                   Save
                 </Button>
-                {/* TODO: Design system: Handle loading */}
                 <Button loading={saveInProgress} size="sm" onClick={() => onRun()} disabled={isYamlDirty}>
                   Run
                 </Button>

@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import {
   Avatar,
-  Badge,
   Button,
   CopyButton,
   Icon,
@@ -10,6 +9,7 @@ import {
   MoreActionsTooltip,
   NoData,
   SkeletonTable,
+  StatusBadge,
   Table
 } from '@/components'
 import { useRouterContext } from '@/context'
@@ -118,12 +118,12 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
-                    <Badge variant="soft" size="sm">
+                    <StatusBadge variant="secondary" size="sm">
                       {defaultBranch === branch?.name && (
                         <Icon name="lock" size={14} className="-mt-px mr-1 inline-block text-icons-9" />
                       )}
                       {branch?.name}
-                    </Badge>
+                    </StatusBadge>
                     <CopyButton buttonVariant="ghost" color="gray" name={branch?.name} />
                   </div>
                 </Table.Cell>
@@ -170,9 +170,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="content-center">
                   <div className="flex items-center justify-center gap-1.5 align-middle">
                     {branch?.behindAhead?.default ? (
-                      <Badge variant="surface" size="sm">
+                      <StatusBadge variant="outline" size="sm">
                         {t('views:repos.default', 'Default')}
-                      </Badge>
+                      </StatusBadge>
                     ) : (
                       <DivergenceGauge
                         behindAhead={branch?.behindAhead || {}}

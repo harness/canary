@@ -1,8 +1,19 @@
 import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import type { LinkProps } from 'react-router-dom'
 
-import { Button, Card, Fieldset, FormWrapper, Icon, Input, StyledLink, StyledLinkProps } from '@/components'
-import { useTheme } from '@/context'
+import {
+  Button,
+  Card,
+  ControlGroup,
+  Fieldset,
+  FormWrapper,
+  Icon,
+  Input,
+  StyledLink,
+  StyledLinkProps
+} from '@/components'
+import { useRouterContext, useTheme } from '@/context'
 import { Floating1ColumnLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
@@ -15,6 +26,7 @@ export interface CreateProjectPageCommonProps {
   isLoading?: boolean
   onFormSubmit: (data: CreateProjectFields) => void
   useTranslationStore: () => TranslationStore
+  importProjectLinkProps: LinkProps
 }
 
 interface CreateFirstProjectPageProps extends CreateProjectPageCommonProps {
@@ -59,8 +71,9 @@ const createProjectSchema = (t: TranslationStore['t']) =>
 export type CreateProjectFields = z.infer<ReturnType<typeof createProjectSchema>>
 
 export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
-  const { error, isLoading, backLinkProps, onFormSubmit, useTranslationStore } = props
+  const { error, isLoading, backLinkProps, importProjectLinkProps, onFormSubmit, useTranslationStore } = props
   const { isLightTheme } = useTheme()
+  const { Link } = useRouterContext()
 
   const isAdditional = getIsAdditionalProjectPage(props)
   const isFirst = getIsFirstProjectPage(props)
@@ -157,11 +170,24 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             />
           </Fieldset>
 
-          <Button className="mt-3 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
-            {isLoading
-              ? t('views:createProject.create.projectCreation', 'Creating project...')
-              : t('views:createProject.create.createProject', 'Create project')}
-          </Button>
+          <ControlGroup type="button">
+            <Button className="mt-3 w-full" rounded type="submit" loading={isLoading} disabled={hasError} size="lg">
+              {isLoading
+                ? t('views:createProject.create.projectCreation', 'Creating project...')
+                : t('views:createProject.create.createProject', 'Create project')}
+            </Button>
+
+            <div className="mt-3 flex items-center justify-center gap-2">
+              <div className="w-[145px] shrink border-t border-cn-borders-3" />
+              <span className="text-sm text-cn-foreground-3">{t('views:createProject.or', 'or')}</span>
+              <div className="w-[145px] shrink border-t border-cn-borders-3" />
+            </div>
+
+            {/* TODO: Update the variant of this button to outline once the component supports this style. */}
+            <Button asChild className="mt-3 w-full" rounded variant="outline" size="lg">
+              <Link to={importProjectLinkProps.to}>{t('views:createProject.importProject', 'Import project')}</Link>
+            </Button>
+          </ControlGroup>
         </FormWrapper>
 
         {isFirst && (

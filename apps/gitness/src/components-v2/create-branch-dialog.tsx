@@ -85,6 +85,7 @@ export const CreateBranchDialog = ({
           onSelectBranchorTag={selectBranchOrTag}
           selectedBranch={selectedBranchOrTag}
           preSelectedTab={preselectedTab}
+          dynamicWidth
         />
       )}
     />

@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Accordion, Badge, Button, CopyButton, Layout, StackedList } from '@/components'
+import { Accordion, Button, CopyButton, Layout, StackedList, StatusBadge } from '@/components'
 import { TranslationStore } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
@@ -42,14 +42,14 @@ const LineTitle: FC<LineTitleProps> = ({ header, useTranslationStore }) => {
         <span className="text-3 font-medium">{text}</span>
         <CopyButton name={text} color="gray" />
         {!!numAdditions && (
-          <Badge variant="surface" size="sm" theme="success">
+          <StatusBadge variant="outline" size="sm" theme="success">
             +{numAdditions}
-          </Badge>
+          </StatusBadge>
         )}
         {!!numDeletions && (
-          <Badge variant="surface" size="sm" theme="danger">
+          <StatusBadge variant="outline" size="sm" theme="danger">
             -{numDeletions}
-          </Badge>
+          </StatusBadge>
         )}
       </div>
     </div>

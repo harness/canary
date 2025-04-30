@@ -45,7 +45,7 @@ export function CreateBranchDialog({
     setValue,
     reset,
     clearErrors,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<CreateBranchFormFields>({
     resolver: zodResolver(createBranchFormSchema(t)),
     mode: 'onChange',
@@ -104,7 +104,7 @@ export function CreateBranchDialog({
               <Label htmlFor="target" className="mb-2">
                 {t('views:forms.basedOn', 'Based on')}
               </Label>
-              {BranchSelectorContainer()}
+              <BranchSelectorContainer />
             </ControlGroup>
           </Fieldset>
 
@@ -126,7 +126,7 @@ export function CreateBranchDialog({
             >
               {t('views:repos.cancel', 'Cancel')}
             </Button>
-            <Button type="submit" disabled={isCreatingBranch || !isValid}>
+            <Button type="submit" disabled={isCreatingBranch}>
               {t('views:repos.createBranchButton', 'Create branch')}
             </Button>
           </Dialog.Footer>

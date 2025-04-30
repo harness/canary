@@ -103,4 +103,5 @@ export interface RepoWebhookListPageProps {
   webhookLoading: boolean
   handleEnableWebhook: (id: number, enabled: boolean) => void
   toRepoWebhookDetails?: ({ webhookId }: { webhookId: number }) => string
+  toRepoWebhookCreate?: () => string
 }

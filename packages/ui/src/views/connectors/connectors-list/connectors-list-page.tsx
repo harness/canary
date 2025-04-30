@@ -83,11 +83,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
           onFilterValueChange={onFilterValueChange}
           searchInput={searchInput}
           handleInputChange={handleInputChange}
-          headerAction={
-            <Button variant="outline" onClick={onCreate}>
-              {t('views:connectors.createNew', 'New connector')}
-            </Button>
-          }
+          headerAction={<Button onClick={onCreate}>{t('views:connectors.createNew', 'New connector')}</Button>}
           t={t}
           filterOptions={CONNECTOR_FILTER_OPTIONS}
         />

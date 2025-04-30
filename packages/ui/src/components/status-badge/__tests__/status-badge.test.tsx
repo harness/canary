@@ -40,12 +40,12 @@ describe('Badge', () => {
   test('it should apply theme styles correctly', () => {
     renderComponent({ theme: 'danger' })
 
-    expect(screen.getByText(BADGE_TEXT)).toHaveClass(/danger/)
+    expect(screen.getByText(BADGE_TEXT)).toHaveClass('cn-badge-danger')
   })
 
   test('it should apply size styles correctly', () => {
     renderComponent({ size: 'sm' })
 
-    expect(screen.getByText(BADGE_TEXT)).toHaveClass('badge-sm')
+    expect(screen.getByText(BADGE_TEXT)).toHaveClass('cn-badge-sm')
   })
 })

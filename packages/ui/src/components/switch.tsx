@@ -5,9 +5,11 @@ import * as SwitchPrimitives from '@radix-ui/react-switch'
 
 import { Label } from '.'
 
+interface SwitchProps extends ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> {}
+
 const Switch = forwardRef<
   ElementRef<typeof SwitchPrimitives.Root>,
-  ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> & {
+  Omit<SwitchProps, 'required'> & {
     label?: string
     caption?: string
     optional?: boolean

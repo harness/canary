@@ -72,10 +72,10 @@ export default {
   },
 
   '.cn-checkbox-label': {
-    font: 'var(--cn-body-strong)',
-    color: 'var(--cn-text-1)',
+    font: 'var(--cn-body-strong) !important',
+    color: 'var(--cn-text-1) !important',
     '&:where(.disabled)': {
-      color: 'var(--cn-state-disabled-text)'
+      color: 'var(--cn-state-disabled-text) !important'
     },
     '@apply truncate': ''
   },

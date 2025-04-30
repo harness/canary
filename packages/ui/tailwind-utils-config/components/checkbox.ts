@@ -1,17 +1,17 @@
 export default {
-  '.checkbox-wrapper': {
+  '.cn-checkbox-wrapper': {
     display: 'flex',
     gap: 'var(--cn-spacing-2-half)',
     width: '100%'
   },
 
-  '.checkbox-label-wrapper': {
+  '.cn-checkbox-label-wrapper': {
     display: 'flex',
     flexDirection: 'column',
     gap: 'var(--cn-spacing-1)'
   },
 
-  '.checkbox-root': {
+  '.cn-checkbox-root': {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -50,7 +50,7 @@ export default {
     }
   },
 
-  '.checkbox-indicator': {
+  '.cn-checkbox-indicator': {
     color: 'var(--cn-comp-selection-selected-item)',
 
     '&:where([disabled])': {
@@ -66,12 +66,12 @@ export default {
     }
   },
 
-  '.checkbox-icon': {
+  '.cn-checkbox-icon': {
     width: 'var(--cn-icon-size-xs)',
     height: 'var(--cn-icon-size-xs)'
   },
 
-  '.checkbox-label': {
+  '.cn-checkbox-label': {
     font: 'var(--cn-body-strong)',
     color: 'var(--cn-text-1)',
     '&:where(.disabled)': {
@@ -80,7 +80,7 @@ export default {
     '@apply truncate': ''
   },
 
-  '.checkbox-caption': {
+  '.cn-checkbox-caption': {
     font: 'var(--cn-body-normal)',
     color: 'var(--cn-text-2)',
     '&:where(.disabled)': {

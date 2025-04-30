@@ -19,27 +19,27 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, CheckboxP
     const checkboxId = props.id || `checkbox-${Math.random().toString(36).slice(2, 11)}`
 
     return (
-      <div className={cn('checkbox-wrapper', className)}>
-        <CheckboxPrimitive.Root id={checkboxId} ref={ref} className={cn('checkbox-root')} {...props}>
-          <CheckboxPrimitive.Indicator className="checkbox-indicator">
+      <div className={cn('cn-checkbox-wrapper', className)}>
+        <CheckboxPrimitive.Root id={checkboxId} ref={ref} className={cn('cn-checkbox-root')} {...props}>
+          <CheckboxPrimitive.Indicator className="cn-checkbox-indicator">
             {props.checked === 'indeterminate' ? (
-              <Icon name="minus" className="checkbox-icon" skipSize />
+              <Icon name="minus" className="cn-checkbox-icon" skipSize />
             ) : (
-              <Icon name="check" className="checkbox-icon" skipSize />
+              <Icon name="check" className="cn-checkbox-icon" skipSize />
             )}
           </CheckboxPrimitive.Indicator>
         </CheckboxPrimitive.Root>
 
         {(label || caption) && (
-          <div className="checkbox-label-wrapper">
+          <div className="cn-checkbox-label-wrapper">
             <Label
               htmlFor={checkboxId}
               optional={optional}
-              className={`checkbox-label ${props.disabled ? 'disabled' : ''}`}
+              className={`cn-checkbox-label ${props.disabled ? 'disabled' : ''}`}
             >
               {label}
             </Label>
-            <p className={`checkbox-caption ${props.disabled ? 'disabled' : ''}`}>{caption || ''}</p>
+            <p className={`cn-checkbox-caption ${props.disabled ? 'disabled' : ''}`}>{caption || ''}</p>
           </div>
         )}
       </div>

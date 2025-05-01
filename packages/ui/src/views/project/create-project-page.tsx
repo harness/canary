@@ -11,7 +11,7 @@ import {
   Icon,
   Input,
   Link as StyledLink,
-  StyledLinkProps
+  LinkProps as StyledLinkProps
 } from '@/components'
 import { useRouterContext, useTheme } from '@/context'
 import { Floating1ColumnLayout, TranslationStore } from '@/views'
@@ -117,17 +117,18 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
   return (
     <Floating1ColumnLayout
-      className="flex-col justify-start bg-cn-background-1 pt-20 sm:pt-[8.75rem]"
+      className="bg-cn-background-1 flex-col justify-start pt-20 sm:pt-[8.75rem]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
       {isWithBackButton && (
         <StyledLink
           {...backLinkProps}
+          prefixIcon
           variant="secondary"
-          className={cn('fixed left-[14.5%] top-[3.25rem] flex items-center gap-1 p-2', backLinkProps?.className)}
+          className={cn('fixed left-[14.5%] top-[3.25rem] p-2', backLinkProps?.className)}
         >
-          <Icon size={12} name="chevron-down" className="rotate-90" /> {t('views:createProject.backButton', 'Back')}
+          {t('views:createProject.backButton', 'Back')}
         </StyledLink>
       )}
 
@@ -139,11 +140,11 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}
 
-          <Card.Title className="mt-3 text-center text-cn-foreground-1" as="h1">
+          <Card.Title className="text-cn-foreground-1 mt-3 text-center" as="h1">
             {t('views:createProject.title', 'Create your new project')}
           </Card.Title>
 
-          <p className="mt-0.5 text-center text-sm leading-snug text-cn-foreground-2">
+          <p className="text-cn-foreground-2 mt-0.5 text-center text-sm leading-snug">
             {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}
           </p>
         </div>
@@ -178,9 +179,9 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             </Button>
 
             <div className="mt-3 flex items-center justify-center gap-2">
-              <div className="w-[145px] shrink border-t border-cn-borders-3" />
-              <span className="text-sm text-cn-foreground-3">{t('views:createProject.or', 'or')}</span>
-              <div className="w-[145px] shrink border-t border-cn-borders-3" />
+              <div className="border-cn-borders-3 w-[145px] shrink border-t" />
+              <span className="text-cn-foreground-3 text-sm">{t('views:createProject.or', 'or')}</span>
+              <div className="border-cn-borders-3 w-[145px] shrink border-t" />
             </div>
 
             {/* TODO: Update the variant of this button to outline once the component supports this style. */}
@@ -191,11 +192,9 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
         </FormWrapper>
 
         {isFirst && (
-          <p className="foreground-5 mt-4 text-center text-sm text-cn-foreground-3">
+          <p className="foreground-5 text-cn-foreground-3 mt-4 text-center text-sm">
             {t('views:createProject.logout.question', 'Want to use a different account?')}{' '}
-            <StyledLink {...props.logoutLinkProps} variant="accent">
-              {t('views:createProject.logout.link', 'Log out')}
-            </StyledLink>
+            <StyledLink {...props.logoutLinkProps}>{t('views:createProject.logout.link', 'Log out')}</StyledLink>
           </p>
         )}
       </div>

@@ -39,6 +39,7 @@ import Checklist from '../../icons/checklist.svg'
 import Checks from '../../icons/checks.svg'
 import ChevronDown from '../../icons/chevron-down.svg'
 import ChevronFillDown from '../../icons/chevron-fill-down.svg'
+import ChevronLeft from '../../icons/chevron-left.svg'
 import ChevronRight from '../../icons/chevron-right.svg'
 import ChevronUpDown from '../../icons/chevron-up-down.svg'
 import ChevronUp from '../../icons/chevron-up.svg'
@@ -239,6 +240,7 @@ export const IconNameMap = {
   'chevron-down': ChevronDown,
   'chevron-right': ChevronRight,
   'chevron-up': ChevronUp,
+  'chevron-left': ChevronLeft,
   'chevron-up-down': ChevronUpDown,
   'filter-list': FilterList,
   'info-circle': InfoCircle,

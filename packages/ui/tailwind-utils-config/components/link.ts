@@ -1,26 +1,46 @@
 export default {
-  '.link': {
+  '.cn-link': {
     display: 'inline-flex',
     alignItems: 'center',
     gap: 'var(--cn-btn-link-gap-default)',
     width: 'fit-content',
-    color: 'var(--cn-comp-link-default)',
-    textDecoration: 'underline',
     '@apply font-body-tight-normal': '',
 
-    '&:where(.link-sm)': {
+    '&:where(.cn-link-default)': {
+      color: 'var(--cn-comp-link-default)'
+    },
+
+    '&:where(.cn-link-secondary)': {
+      color: 'var(--cn-text-1)'
+    },
+
+    '&:where(.cn-link-sm)': {
+      gap: 'var(--cn-btn-link-gap-sm)',
       '@apply font-caption-tight-normal': ''
     },
 
-    '&:hover, &:where([data-state="hovered"])': {
-      color: 'var(--cn-comp-link-hover)'
+    '&:where([data-disabled="false"])': {
+      '&:where(.cn-link-default)': {
+        '&:hover, &:has([data-hovered="true"])': {
+          color: 'var(--cn-comp-link-hover)'
+        }
+      },
+
+      '&:hover, &:has([data-hovered="true"])': {
+        textDecoration: 'underline',
+        textUnderlineOffset: '4px'
+      }
     },
 
-    '&:visited, &:where([data-state="visited"])': {
-      color: 'var(--cn-comp-link-visited)'
+    '&:where([data-disabled="true"])': {
+      color: 'var(--cn-state-disabled-text)',
+
+      '&:hover, > a:hover': {
+        cursor: 'not-allowed'
+      }
     },
 
-    '> .link-icon': {
+    '> .cn-link-icon': {
       width: '12px',
       height: '12px'
     }

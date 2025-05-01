@@ -80,7 +80,14 @@ module.exports = {
   ignorePatterns: ['**/dist/**'],
   overrides: [
     {
-      files: ['packages/ui/src/**/*.{ts,tsx}'],
+      files: [
+        'packages/ui/src/**/*.{ts,tsx}',
+        'packages/filters/src/**/*.{ts,tsx}',
+        'packages/forms/src/**/*.{ts,tsx}',
+        'packages/pipeline-graph/src/**/*.{ts,tsx}',
+        'packages/core-design-system/src/**/*.{ts,tsx}',
+        'packages/yaml-editor/src/**/*.{ts,tsx}'
+      ],
       rules: {
         'no-restricted-imports': ['error', {
           paths: [{

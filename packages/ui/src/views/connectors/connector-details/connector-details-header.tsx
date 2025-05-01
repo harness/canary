@@ -1,7 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Icon, Layout, MoreActionsTooltip, StatusBadge, Text } from '@/components'
-import { useRouterContext } from '@/context'
+import { Button, Layout, Link, MoreActionsTooltip, StatusBadge, Text } from '@/components'
 import { Logo, LogoName } from '@components/logo'
 import { timeAgo } from '@utils/utils'
 
@@ -16,14 +15,12 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
 }) => {
   const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status } = connectorDetails
   const { t } = useTranslationStore()
-  const { Link } = useRouterContext()
   return (
     <div className="px-8">
       {toConnectorsList ? (
-        <Button variant="link" size="sm" className="mb-3 px-0">
-          <Icon name="chevron-up" className="-rotate-90" />
-          <Link to={toConnectorsList()}>Back to Connectors</Link>
-        </Button>
+        <Link variant="secondary" size="sm" prefixIcon to={toConnectorsList()}>
+          Back to Connectors
+        </Link>
       ) : null}
       <Layout.Horizontal gap="space-x-2" className="items-center">
         <Logo name={connectorDetails.type.toLowerCase() as LogoName} />

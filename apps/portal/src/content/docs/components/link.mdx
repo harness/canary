@@ -9,28 +9,89 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-4">
-    <div className="flex flex-col gap-4">
-        <h5>Standard usage</h5>
-        <Link href="/my-link">Internal Link</Link>
-        <Link href="/my-link" data-state="hovered">Internal Link (hovered)</Link>
-        <Link href="/my-link" data-state="visited">Internal Link</Link>
+  code={`<div className="grid grid-cols-2 gap-4">
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Default</h5>
+        <Link href="">Link</Link>
+        <Link href="" data-hovered="true">Link (hovered)</Link>
+        <Link href="" disabled>Link (disabled)</Link>
+    </div>
+    
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Default sm</h5>
+        <Link size="sm" href="">Link</Link>
+        <Link size="sm" href="" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" href="" disabled>Link (disabled)</Link>
     </div>
 
-    <hr />
-
-    <div className="flex flex-col gap-4">
-        <h5>With optional indicator</h5>
-        <Label htmlFor="email" optional>Email</Label>
-        <input id="email" type="email" />
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Secondary</h5>
+        <Link variant="secondary" href="">Link</Link>
+        <Link variant="secondary" href="" data-hovered="true">Link (hovered)</Link>
+        <Link variant="secondary" href="" disabled>Link (disabled)</Link>
     </div>
 
-    <hr />
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Secondary sm</h5>
+        <Link size="sm" variant="secondary" href="">Link</Link>
+        <Link size="sm" variant="secondary" href="" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" variant="secondary" href="" disabled>Link (disabled)</Link>
+    </div>
 
-    <div className="flex flex-col gap-4">
-        <h5>Primary variant</h5>
-        <Label variant="primary" htmlFor="password">Password</Label>
-        <input id="password" type="password" />
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Default w/prefix icon</h5>
+        <Link prefixIcon href="">Link</Link>
+        <Link prefixIcon href="" data-hovered="true">Link (hovered)</Link>
+        <Link prefixIcon href="" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Default sm w/prefix icon</h5>
+        <Link size="sm" prefixIcon href="">Link</Link>
+        <Link size="sm" prefixIcon href="" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" prefixIcon href="" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Secondary w/prefix icon</h5>
+        <Link prefixIcon variant="secondary" href="">Link</Link>
+        <Link prefixIcon variant="secondary" href="" data-hovered="true">Link (hovered)</Link>
+        <Link prefixIcon variant="secondary" href="" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Secondary sm w/prefix icon</h5>
+        <Link size="sm" prefixIcon variant="secondary" href="">Link</Link>
+        <Link size="sm" prefixIcon variant="secondary" href="" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" prefixIcon variant="secondary" href="" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Default w/suffix icon</h5>
+        <Link suffixIcon href="">Link</Link>
+        <Link suffixIcon href="" data-hovered="true">Link (hovered)</Link>
+        <Link suffixIcon href="" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Default sm w/suffix icon</h5>
+        <Link size="sm" suffixIcon href="">Link</Link>
+        <Link size="sm" suffixIcon href="" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" suffixIcon href="" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Secondary w/suffix icon</h5>
+        <Link suffixIcon variant="secondary" href="">Link</Link>
+        <Link suffixIcon variant="secondary" href="" data-hovered="true">Link (hovered)</Link>
+        <Link suffixIcon variant="secondary" href="" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-2">
+        <h5 className="mb-1">Secondary sm w/suffix icon</h5>
+        <Link size="sm" suffixIcon variant="secondary" href="">Link</Link>
+        <Link size="sm" suffixIcon variant="secondary" href="" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" suffixIcon variant="secondary" href="" disabled>Link (disabled)</Link>
     </div>
 
 </div>`}
@@ -55,47 +116,65 @@ return (
 The `Label` component provides a styled label for form elements with customizable options.
 
 ```typescript jsx
-<Label
-  htmlFor="inputId" // [OPTIONAL] ID of the form control this label is associated with
-  optional          // [OPTIONAL] Indicate if the associated form field is optional
+<Link
+  href="/your-url-here"
+  variant="secondary"
+  size="sm"
+  prefixIcon
 >
-  Label Text
-</Label>
+  Link Text
+</Link>
 ```
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "variant",
-      description: "The color variant of the label",
-      defaultValue: "default",
-      required: false,
-      value: "'default' | 'primary'",
-    },
-    {
-      name: "htmlFor",
-      description: "The id of the form control this label is associated with",
-      required: false,
+      name: "href",
+      description: "The URL that the link points to",
+      required: true,
       value: "string",
     },
     {
-      name: "optional",
-      description: "Indicates if the associated form field is optional",
+      name: "variant",
+      description: "The style variant of the link",
+      defaultValue: "'default'",
+      required: false,
+      value: "'default' | 'secondary'",
+    },
+    {
+      name: "size",
+      description: "The size of the link",
+      defaultValue: "'default'",
+      required: false,
+      value: "'default' | 'sm'",
+    },
+    {
+      name: "prefixIcon",
+      description: "Displays an icon before the link text",
+      defaultValue: "'chevron-left'",
+      required: false,
+      value: "'boolean' | IconProps['name']",
+    },
+    {
+      name: "suffixIcon",
+      description: "Displays an icon after the link text",
+      defaultValue: "'arrow-to-top-right'",
+      required: false,
+      value: "'boolean' | IconProps['name']",
+    },
+    {
+      name: "disabled",
+      description:
+        "Disables the link, preventing clicks and changing its appearance",
       defaultValue: "false",
       required: false,
       value: "boolean",
     },
     {
       name: "className",
-      description: "Additional CSS classes to apply to the label",
+      description: "Additional CSS classes to apply to the link",
       required: false,
       value: "string",
-    },
-    {
-      name: "children",
-      description: "The content of the label",
-      required: true,
-      value: "ReactNode",
     },
   ]}
 />

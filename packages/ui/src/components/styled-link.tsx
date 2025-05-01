@@ -1,44 +1,70 @@
-import { RefAttributes } from 'react'
+import { MouseEvent, RefAttributes } from 'react'
 import type { LinkProps } from 'react-router-dom'
 
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
-import { Icon } from './icon'
+import { Icon, IconProps } from './icon'
 
-export const linkVariants = cva('link', {
+export const linkVariants = cva('cn-link', {
   variants: {
     variant: {
-      default: 'text-cn-foreground-1 hover:decoration-foreground-1',
-      secondary: 'text-cn-foreground-2 hover:decoration-foreground-4',
-      accent: 'text-cn-foreground-accent hover:decoration-foreground-accent'
+      default: 'cn-link-default',
+      secondary: 'cn-link-secondary'
     },
     size: {
       default: '',
-      sm: 'link-sm'
+      sm: 'cn-link-sm'
     }
   }
 })
 
-export interface StyledLinkProps
-  extends LinkProps,
-    RefAttributes<HTMLAnchorElement>,
-    VariantProps<typeof linkVariants> {
-  /**
-   * If true, the link will open in a new tab and have an arrow icon.
-   */
-  isExternal?: boolean
+interface StyledLinkProps extends LinkProps, RefAttributes<HTMLAnchorElement>, VariantProps<typeof linkVariants> {
+  prefixIcon?: boolean | IconProps['name']
+  suffixIcon?: boolean | IconProps['name']
+  disabled?: boolean
 }
 
-const StyledLink = ({ className, variant = 'default', children, isExternal, ...props }: StyledLinkProps) => {
+const StyledLink = ({
+  className,
+  variant = 'default',
+  children,
+  prefixIcon,
+  suffixIcon,
+  disabled = false,
+  size,
+  onClick,
+  ...props
+}: StyledLinkProps) => {
   const { Link } = useRouterContext()
 
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (disabled) {
+      e.preventDefault()
+      e.stopPropagation()
+    } else {
+      onClick?.(e)
+    }
+  }
+
   return (
-    <Link className={cn(linkVariants({ variant }), className)} {...props}>
-      {children} {isExternal && <Icon name="arrow-to-top-right" />}
-    </Link>
+    <span className={cn(linkVariants({ variant, size }), className)} data-disabled={disabled}>
+      {!!prefixIcon && (
+        <Icon className="cn-link-icon" name={typeof prefixIcon === 'string' ? prefixIcon : 'chevron-left'} skipSize />
+      )}
+      <Link {...props} onClick={handleClick} aria-disabled={disabled}>
+        {children}
+      </Link>
+      {!!suffixIcon && (
+        <Icon
+          className="cn-link-icon"
+          name={typeof suffixIcon === 'string' ? suffixIcon : 'arrow-to-top-right'}
+          skipSize
+        />
+      )}
+    </span>
   )
 }
 
-export { StyledLink as Link }
+export { StyledLink as Link, type StyledLinkProps as LinkProps }

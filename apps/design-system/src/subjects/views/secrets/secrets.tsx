@@ -120,7 +120,6 @@ export const SecretsPage = ({
             secretsFormDefinition={secretsFormDefinition}
             onFormSubmit={onSubmit}
             onBack={handleCancel}
-            scrollAreaClassName="h-[calc(100vh-350px)]"
           />
         )
       case SecretType.EXISTING:

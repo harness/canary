@@ -77,5 +77,19 @@ module.exports = {
 
     'tailwindcss/no-custom-classname': 'off'
   },
-  ignorePatterns: ['**/dist/**']
+  ignorePatterns: ['**/dist/**'],
+  overrides: [
+    {
+      files: ['packages/ui/src/**/*.{ts,tsx}'],
+      rules: {
+        'no-restricted-imports': ['error', {
+          paths: [{
+            name: 'react-router-dom',
+            importNames: ['Link'],
+            message: 'Please use our custom Link component instead.'
+          }]
+        }]
+      }
+    }
+  ]
 }

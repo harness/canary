@@ -1,9 +1,9 @@
 ---
-title: Hyperlink
-description: Hyperlink component
+title: Link
+description: Link component
 ---
 
-The `Hyperlink` component provides styled links for navigation within and outside the application. It offers two size options and distinguishes between internal and external links with appropriate visual indicator. The component ensures consistent styling while maintaining accessibility standards.
+The `Link` component provides styled links for navigation within and outside the application. It offers two size options and distinguishes between internal and external links with appropriate visual indicator. The component ensures consistent styling while maintaining accessibility standards.
 
 import { DocsPage } from "../../../components/docs-page";
 
@@ -12,9 +12,9 @@ import { DocsPage } from "../../../components/docs-page";
   code={`<div className="flex gap-4">
     <div className="flex flex-col gap-4">
         <h5>Standard usage</h5>
-        <Hyperlink href="/my-link">Internal Link</Hyperlink>
-        <Hyperlink href="/my-link" data-state="hovered">Internal Link (hovered)</Hyperlink>
-        <Hyperlink href="/my-link" data-state="visited">Internal Link</Hyperlink>
+        <Link href="/my-link">Internal Link</Link>
+        <Link href="/my-link" data-state="hovered">Internal Link (hovered)</Link>
+        <Link href="/my-link" data-state="visited">Internal Link</Link>
     </div>
 
     <hr />
@@ -39,13 +39,13 @@ import { DocsPage } from "../../../components/docs-page";
 ## Usage
 
 ```typescript jsx
-import { Hyperlink } from '@harnessio/ui/components'
+import { Link } from '@harnessio/ui/components'
 
 // ...
 
 return (
   <>
-    <Hyperlink href="/your-url-here">Username</Hyperlink>
+    <Link href="/your-url-here">Username</Link>
   </>
 )
 ```

@@ -31,7 +31,7 @@ export interface StyledLinkProps
   isExternal?: boolean
 }
 
-export const StyledLink = ({ className, variant = 'default', children, isExternal, ...props }: StyledLinkProps) => {
+const StyledLink = ({ className, variant = 'default', children, isExternal, ...props }: StyledLinkProps) => {
   const { Link } = useRouterContext()
 
   return (
@@ -41,4 +41,4 @@ export const StyledLink = ({ className, variant = 'default', children, isExterna
   )
 }
 
-export { StyledLink as Hyperlink }
+export { StyledLink as Link }

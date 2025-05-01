@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { StyledLink } from '@harnessio/ui/components'
+import { Link } from '@harnessio/ui/components'
 import { SecretInput, SecretItem } from '@harnessio/ui/views'
 
 import { SecretsPage } from './secrets'
@@ -12,7 +12,7 @@ export const SecretInputExample = () => {
   return (
     <>
       <SecretInput
-        placeholder={<StyledLink to="#"> Please select a secret</StyledLink>}
+        placeholder={<Link to="#"> Please select a secret</Link>}
         value={selectedSecret}
         label="Select a Secret"
         icon="key"

@@ -10,7 +10,7 @@ import {
   FormWrapper,
   Icon,
   Input,
-  StyledLink,
+  Link as StyledLink,
   StyledLinkProps
 } from '@/components'
 import { useRouterContext, useTheme } from '@/context'

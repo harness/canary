@@ -10,11 +10,10 @@ import {
   GitCommitFormType,
   Icon,
   Input,
+  Link,
   Message,
   MessageTheme,
-  Option,
   Radio,
-  StyledLink,
   Textarea
 } from '@/components'
 import { UsererrorError, ViolationState } from '@/types'
@@ -187,7 +186,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                 label="Create a new branch for this commit and start a pull request"
                 caption={
                   // TODO: Add correct path
-                  <StyledLink to="/">Learn more about pull requests</StyledLink>
+                  <Link to="/">Learn more about pull requests</Link>
                 }
               />
             </Radio.Root>

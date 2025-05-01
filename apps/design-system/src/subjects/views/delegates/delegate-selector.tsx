@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useTranslationStore } from '@utils/viewUtils'
 import { defaultTo } from 'lodash-es'
 
-import { Drawer, FormSeparator, Icon, StyledLink } from '@harnessio/ui/components'
+import { Drawer, FormSeparator, Icon, Link } from '@harnessio/ui/components'
 import {
   DelegateSelectionTypes,
   DelegateSelectorForm,
@@ -59,9 +59,9 @@ const DelegateSelectorDrawer = ({ open, setOpen, preSelectedTags, onSubmit, disa
         <FormSeparator className="w-full" />
         <div className="flex">
           Haven&apos;t installed a delegate yet?
-          <StyledLink className="flex flex-row items-center ml-1" variant="accent" to="#">
+          <Link className="ml-1 flex flex-row items-center" variant="accent" to="#">
             Install delegate <Icon name="attachment-link" className="ml-1" size={12} />
-          </StyledLink>
+          </Link>
         </div>
         <Drawer.Close onClick={() => setOpen(false)} />
       </Drawer.Header>
@@ -109,28 +109,28 @@ export const DelegateSelector = () => {
   return (
     <div className="p-5">
       <DelegateSelectorInput
-        placeholder={<StyledLink to="#"> select a delegate</StyledLink>}
+        placeholder={<Link to="#"> select a delegate</Link>}
         value={renderSelectedValue(typeA, tagsA)}
         label="Delegate selector"
         onClick={() => setOpenA(true)}
         onEdit={() => setOpenA(true)}
         onClear={() => setTagsA([])}
         renderValue={tag => tag}
-        className="max-w-xs mb-8"
+        className="mb-8 max-w-xs"
       />
 
       <DelegateSelectorDrawer open={openA} setOpen={setOpenA} preSelectedTags={tagsA} onSubmit={handleSubmitA} />
 
       <div className="pt-10">
         <DelegateSelectorInput
-          placeholder={<StyledLink to="#">select a delegate (any disabled)</StyledLink>}
+          placeholder={<Link to="#">select a delegate (any disabled)</Link>}
           value={renderSelectedValue(typeB, tagsB)}
           label="Delegate selector"
           onClick={() => setOpenB(true)}
           onEdit={() => setOpenB(true)}
           onClear={() => setTagsB([])}
           renderValue={tag => tag}
-          className="max-w-xs mb-8"
+          className="mb-8 max-w-xs"
         />
 
         <DelegateSelectorDrawer

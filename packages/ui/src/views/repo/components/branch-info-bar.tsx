@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, Icon, StatusBadge, StyledLink } from '@/components'
+import { Button, DropdownMenu, Icon, StatusBadge, Link as StyledLink } from '@/components'
 import { useRouterContext } from '@/context'
 import { BranchSelectorListItem, IBranchSelectorStore } from '@/views'
 

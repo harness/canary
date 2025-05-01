@@ -10,13 +10,13 @@ import {
   Fieldset,
   FormWrapper,
   Input,
+  Link,
   Message,
   MessageTheme,
   Option,
   Radio,
   Select,
   Spacer,
-  StyledLink,
   Text,
   Textarea
 } from '@/components'
@@ -118,14 +118,14 @@ export function RepoCreatePage({
           {t('views:repos.createNewRepo', 'Create a new repository')}
         </Text>
         <Spacer size={2.5} />
-        <Text className="max-w-[476px] text-cn-foreground-2" size={2} as="p">
+        <Text className="text-cn-foreground-2 max-w-[476px]" size={2} as="p">
           {t(
             'views:repos.repoContains',
             'A repository contains all project files, including the revision history. Already have a project repository elsewhere?'
           )}{' '}
-          <StyledLink to="../import" relative="path">
+          <Link to="../import" relative="path">
             {t('views:repos.importRepo', 'Import a repository')}.
-          </StyledLink>
+          </Link>
         </Text>
         <Spacer size={10} />
         <FormWrapper className="gap-y-7" onSubmit={handleSubmit(onSubmit)}>
@@ -200,7 +200,7 @@ export function RepoCreatePage({
           {/* ACCESS */}
           <Fieldset className="mt-4">
             <ControlGroup>
-              <Text className="leading-none text-cn-foreground-2" size={2}>
+              <Text className="text-cn-foreground-2 leading-none" size={2}>
                 Who has access
               </Text>
               <Radio.Root className="mt-6" value={accessValue} onValueChange={handleAccessChange} id="access">
@@ -230,7 +230,7 @@ export function RepoCreatePage({
           {/* README */}
           <Fieldset className="mt-4">
             <ControlGroup>
-              <Text className="leading-none text-cn-foreground-2" size={2}>
+              <Text className="text-cn-foreground-2 leading-none" size={2}>
                 Initialize this repository with
               </Text>
               <div className="mt-6">

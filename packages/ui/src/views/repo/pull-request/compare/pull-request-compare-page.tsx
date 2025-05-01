@@ -2,7 +2,7 @@ import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { LinkProps } from 'react-router-dom'
 
-import { Avatar, Button, Icon, NoData, SkeletonList, Spacer, StyledLink, Tabs } from '@/components'
+import { Avatar, Button, Icon, Link, NoData, SkeletonList, Spacer, Tabs } from '@/components'
 import { useRouterContext } from '@/context'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
@@ -259,9 +259,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     'views:pullRequests.compareChangesDiscussChanges',
                     'Discuss and review the changes in this comparison with others.'
                   )}{' '}
-                  <StyledLink to="/">
+                  <Link to="/">
                     {t('views:pullRequests.compareChangesDiscussChangesLink', 'Learn about pull requests.')}
-                  </StyledLink>
+                  </Link>
                 </>
               ) : (
                 t(

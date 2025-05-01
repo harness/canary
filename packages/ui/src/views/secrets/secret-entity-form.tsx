@@ -24,6 +24,7 @@ interface SecretEntityFormProps {
   inputComponentFactory: InputFactory
   apiError?: string | null
   intent: EntityIntent
+  hasHeader?: boolean
 }
 
 export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
@@ -34,7 +35,8 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
     onBack,
     useTranslationStore,
     inputComponentFactory,
-    intent
+    intent,
+    hasHeader = true
   } = props
   const { t: _t } = useTranslationStore()
 
@@ -69,19 +71,23 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
           <EntityFormSectionLayout.Root>
             <EntityFormSectionLayout.Form className="px-0">
               <div className="flex-1">
-                <ScrollArea className="h-[calc(100vh-350px)]" viewportClassName="pb-6" orientation="both">
+                <ScrollArea
+                  className={hasHeader ? 'h-[calc(100vh-350px)]' : 'h-[calc(100vh-150px)]'}
+                  viewportClassName="pb-6"
+                  orientation="both"
+                >
                   <RenderForm
                     className="max-w-xl space-y-4"
                     factory={inputComponentFactory}
                     inputs={secretsFormDefinition ?? { inputs: [] }}
                   />
+                  {apiError && (
+                    <Alert.Container variant="destructive" className="my-8">
+                      <Alert.Description>{apiError.toString()}</Alert.Description>
+                    </Alert.Container>
+                  )}
                 </ScrollArea>
               </div>
-              {apiError && (
-                <Alert.Container variant="destructive" className="my-8">
-                  <Alert.Description>{apiError.toString()}</Alert.Description>
-                </Alert.Container>
-              )}
             </EntityFormSectionLayout.Form>
           </EntityFormSectionLayout.Root>
           <EntityFormLayout.Footer className="border-none">

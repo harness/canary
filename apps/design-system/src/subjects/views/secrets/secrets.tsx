@@ -120,6 +120,7 @@ export const SecretsPage = ({
             secretsFormDefinition={secretsFormDefinition}
             onFormSubmit={onSubmit}
             onBack={handleCancel}
+            hasHeader={true}
           />
         )
       case SecretType.EXISTING:

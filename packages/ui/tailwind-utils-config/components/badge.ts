@@ -85,13 +85,7 @@ export default {
       backgroundColor: 'var(--cn-set-gray-surface-bg)',
       height: 'var(--cn-badge-counter-size-default)',
       padding: 'var(--cn-badge-counter-py) var(--cn-badge-counter-px)',
-      '@apply font-caption-tight-normal': '',
-
-      '&.cn-badge-info': {
-        backgroundColor: 'var(--cn-set-blue-surface-bg)',
-        color: 'var(--cn-set-blue-surface-text)',
-        borderColor: 'var(--cn-set-blue-surface-border)'
-      }
+      '@apply font-caption-tight-normal': ''
     },
 
     '&:where(.cn-badge-status)': {

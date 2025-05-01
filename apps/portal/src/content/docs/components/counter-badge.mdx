@@ -12,8 +12,8 @@ import { DocsPage } from "../../../components/docs-page";
   code={`<div className="flex gap-5">
         <CounterBadge>1</CounterBadge>
         <CounterBadge theme="info">42</CounterBadge>
-        <CounterBadge>10</CounterBadge>
-        <CounterBadge theme="info">99+</CounterBadge>
+        <CounterBadge theme="success">+2345</CounterBadge>
+        <CounterBadge theme="danger">-123</CounterBadge>
     </div>
 `}
 />
@@ -30,18 +30,44 @@ import { CounterBadge } from '@harnessio/ui/components'
 
 // Info theme counter badge
 <CounterBadge theme="info">42</CounterBadge>
+
+// Success theme counter badge
+<CounterBadge theme="success">10</CounterBadge>
+
+// Danger theme counter badge
+<CounterBadge theme="danger">99+</CounterBadge>
 ```
 
 ## Themes
 
-The `CounterBadge` component supports two color themes: `default` and `info`.
+The `CounterBadge` component supports four color themes that can be categorized into different groups based on their semantic meaning.
+
+### Theme Categories
+
+#### Neutral Indicators
+
+Neutral indicators are used for displaying general counts or values that don't carry specific positive or negative connotations.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <div className="flex gap-2">
-        <CounterBadge>1</CounterBadge>
-        <CounterBadge theme="info">1024</CounterBadge>
+        <CounterBadge>0</CounterBadge>
+        <CounterBadge theme="info">42</CounterBadge>
+    </div>
+`}
+/>
+
+#### Status Indicators
+
+Status indicators communicate the nature of the change or value - whether it represents an improvement (success) or a concern (danger).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <div className="flex gap-2">
+        <CounterBadge theme="success">+2345</CounterBadge>
+        <CounterBadge theme="danger">-123</CounterBadge>
     </div>
 `}
 />
@@ -56,7 +82,7 @@ The `CounterBadge` component has the following props to control its appearance:
       name: "theme",
       description: "Color theme of the badge",
       required: false,
-      value: "'default' | 'info'",
+      value: "'default' | 'info' | 'success' | 'danger'",
       defaultValue: "'default'",
     },
     {

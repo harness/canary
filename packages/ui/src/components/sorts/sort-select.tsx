@@ -22,7 +22,7 @@ const SortSelect = ({ displayLabel, buttonLabel }: SortTriggerProps) => {
     <SearchableDropdown<SortOption>
       displayLabel={
         <>
-          <span className="text-cn-foreground-2 hover:text-cn-foreground-1 flex items-center gap-x-1">
+          <span className="flex items-center gap-x-1 text-cn-foreground-2 hover:text-cn-foreground-1">
             {displayLabel}
           </span>
           <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />

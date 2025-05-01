@@ -8,16 +8,18 @@ interface VisualYamlToggleProps {
   view: VisualYamlValue
   setView: (view: VisualYamlValue) => void
   isYamlValid: boolean
+  className?: string
 }
 
 export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
-  const { view, setView, isYamlValid } = props
+  const { view, setView, isYamlValid, className } = props
   const { isLightTheme } = useTheme()
   return (
     <ToggleGroup.Root
       className={cn(
         'h-8 rounded-md border px-1 bg-cn-background-3 inline-flex',
-        isLightTheme ? 'border-cn-borders-5' : 'border-cn-borders-2'
+        isLightTheme ? 'border-cn-borders-5' : 'border-cn-borders-2',
+        className
       )}
       onValueChange={value => {
         if (value) {

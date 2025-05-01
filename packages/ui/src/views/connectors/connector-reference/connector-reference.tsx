@@ -1,10 +1,10 @@
+import { FC } from 'react'
+
 import { Alert, Button, ButtonGroup, Icon, Logo, StackedList } from '@/components'
+import { ConnectorItem, connectorRefFilters, DirectionEnum, EntityReference, EntityRendererProps } from '@/views'
 import { cn } from '@utils/cn'
-import { EntityReference, EntityRendererProps } from '@views/platform'
-import { DirectionEnum } from '@views/platform/types'
 
 import { ConnectorTypeToLogoNameMap } from '../connectors-list/utils'
-import { ConnectorItem, connectorRefFilters } from '../types'
 
 export interface ConnectorReferenceProps {
   // Data
@@ -28,10 +28,12 @@ export interface ConnectorReferenceProps {
   // Search
   searchValue?: string
   handleChangeSearchValue: (val: string) => void
+
+  isDrawer?: boolean
 }
 
 // Component for selecting existing connectors
-export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
+export const ConnectorReference: FC<ConnectorReferenceProps> = ({
   // Data
   connectorsData,
   childFolder,
@@ -52,7 +54,9 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
 
   // search
   searchValue,
-  handleChangeSearchValue
+  handleChangeSearchValue,
+
+  isDrawer = false
 }) => {
   // Define available scopes
 
@@ -96,20 +100,19 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
         searchValue={searchValue}
         handleChangeSearchValue={handleChangeSearchValue}
       />
-      {apiError ? (
+      {!!apiError && (
         <Alert.Container variant="destructive" className="mt-4">
           <Alert.Description>{apiError}</Alert.Description>
         </Alert.Container>
-      ) : null}
-
-      <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
-        <ButtonGroup className="flex flex-row justify-between">
+      )}
+      {!isDrawer && (
+        <ButtonGroup>
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel
           </Button>
           <Button type="submit">Save</Button>
         </ButtonGroup>
-      </div>
+      )}
     </div>
   )
 }

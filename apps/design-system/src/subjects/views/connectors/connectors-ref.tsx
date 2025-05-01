@@ -4,7 +4,7 @@ import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connect
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
-import { Drawer, FormSeparator, Separator, Spacer, Text } from '@harnessio/ui/components'
+import { Button, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
   ArrayInput,
   BooleanInput,
@@ -111,22 +111,16 @@ export const ConnectorsRefPage = ({
       case ConnectorSelectionType.NEW:
         return (
           <div>
-            <Separator />
-            <Spacer size={2.5} />
             {/* Render create connector flow from here */}
             <ConnectorsPalette
               useTranslationStore={useTranslationStore}
               connectors={harnessConnectors}
               onSelectConnector={() => setIsConnectorSelected(true)}
               setConnectorEntity={setConnectorEntity}
-              requestClose={() => {
-                setConnectorEntity(null)
-                handleCancel()
-              }}
             />
             <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
-              <Drawer.Content>
-                {connectorEntity ? (
+              <Drawer.Content nested>
+                {!!connectorEntity && (
                   <ConnectorEntityForm
                     intent={EntityIntent.CREATE}
                     useTranslationStore={useTranslationStore}
@@ -135,8 +129,9 @@ export const ConnectorsRefPage = ({
                     // onFormSubmit={handleFormSubmit}
                     getConnectorDefinition={getHarnessConnectorDefinition}
                     inputComponentFactory={inputComponentFactory}
+                    isDrawer
                   />
-                ) : null}
+                )}
               </Drawer.Content>
             </Drawer.Root>
           </div>
@@ -158,7 +153,6 @@ export const ConnectorsRefPage = ({
             selectedEntity={selectedConnector}
             onSelectEntity={handleSelectConnector}
             onScopeChange={handleScopeChange}
-            onCancel={handleCancel}
             isLoading={false}
             apiError="Could not fetch connectors, unauthorized"
             currentFolder={currentFolder}
@@ -166,6 +160,7 @@ export const ConnectorsRefPage = ({
             onFilterChange={noop}
             searchValue={search}
             handleChangeSearchValue={setSearch}
+            isDrawer
           />
         )
       default:
@@ -177,23 +172,27 @@ export const ConnectorsRefPage = ({
     <Drawer.Root direction="right" open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <Drawer.Content>
         <Drawer.Header>
-          <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Connectors</Drawer.Title>
-          <FormSeparator className="w-full" />
-          <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
+          <Drawer.Title>Connectors</Drawer.Title>
+          <Drawer.Close onClick={() => setIsDrawerOpen(false)} srOnly />
         </Drawer.Header>
-        <Spacer size={5} />
-        <Text as="div" className="text-cn-foreground-2 my-4">
-          Choose type
-        </Text>
-        <Spacer size={5} />
+        <Drawer.Inner>
+          <Text as="div" className="text-cn-foreground-2 mb-4">
+            Choose type
+          </Text>
+          <ConnectorHeader onChange={setSelectedType} selectedType={selectedType} />
 
-        <ConnectorHeader onChange={setSelectedType} selectedType={selectedType} />
+          <Spacer size={5} />
+          <FormSeparator />
+          <Spacer size={5} />
 
-        <Spacer size={5} />
-        <FormSeparator />
-        <Spacer size={5} />
-
-        {renderConnectorContent()}
+          {renderConnectorContent()}
+        </Drawer.Inner>
+        <Drawer.Footer>
+          <Button type="button" variant="outline" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button>Save</Button>
+        </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
   )

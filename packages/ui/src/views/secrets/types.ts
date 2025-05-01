@@ -1,10 +1,7 @@
-import { LogoNameMap } from '@components/logo'
 import { EntityIntent } from '@views/connectors'
 import { BaseEntityProps } from '@views/platform'
 
-import { FieldValues, IFormDefinition } from '@harnessio/forms'
-
-import { InputConfigType } from '../../views/unified-pipeline-studio/components/form-inputs/types'
+import { FieldValues } from '@harnessio/forms'
 
 export interface SecretDataType {
   type: SecretCreationType

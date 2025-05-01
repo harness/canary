@@ -1,17 +1,7 @@
 import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Checkbox,
-  ControlGroup,
-  Fieldset,
-  Message,
-  MessageTheme,
-  Option,
-  SkeletonForm,
-  Spacer,
-  Text
-} from '@/components'
+import { Checkbox, ControlGroup, Fieldset, Message, MessageTheme, SkeletonForm, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo/repo-list/types'
 import { z } from 'zod'

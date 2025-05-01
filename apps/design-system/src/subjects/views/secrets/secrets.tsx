@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { secretsFormDefinition } from '@utils/secrets/secrets-form-schema'
-import { useTranslationStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
-import { Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
+import { Button, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
   ArrayInput,
   BooleanInput,
@@ -17,6 +17,7 @@ import {
   onSubmitSecretProps,
   RadialInput,
   SecretEntityForm,
+  SecretEntityFormHandle,
   SecretItem,
   SecretReference,
   SecretsHeader,
@@ -57,6 +58,8 @@ export const SecretsPage = ({
   selectedSecret: SecretItem | null
   setSelectedSecret: (selectedSecret: SecretItem | null) => void
 }) => {
+  const formRef = useRef<SecretEntityFormHandle>(null)
+
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.NEW)
 
   const [activeScope, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
@@ -111,18 +114,23 @@ export const SecretsPage = ({
     setIsDrawerOpen(false)
   }
 
+  const handleSubmitEntityForm = () => {
+    formRef.current?.submitForm()
+  }
+
   const renderSecretContent = () => {
     switch (selectedType) {
       case SecretType.NEW:
         return (
           <SecretEntityForm
+            ref={formRef}
             useTranslationStore={useTranslationStore}
             inputComponentFactory={inputComponentFactory}
             intent={EntityIntent.CREATE}
             secretsFormDefinition={secretsFormDefinition}
             onFormSubmit={onSubmit}
             onBack={handleCancel}
-            hasHeader={true}
+            isDrawer
           />
         )
       case SecretType.EXISTING:
@@ -147,6 +155,7 @@ export const SecretsPage = ({
             apiError="Could not fetch secrets, unauthorized"
             searchValue={search}
             handleChangeSearchValue={setSearch}
+            isDrawer
           />
         )
       default:
@@ -159,17 +168,25 @@ export const SecretsPage = ({
       <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
         <Drawer.Content>
           <Drawer.Header>
-            <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Secret</Drawer.Title>
-            <FormSeparator className="w-full" />
-            <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
+            <Drawer.Title>Secret</Drawer.Title>
+            <Drawer.Close onClick={() => setIsDrawerOpen(false)} srOnly />
           </Drawer.Header>
-          {/* <Spacer size={5} /> */}
-          <Text as="div" className="text-cn-foreground-2 my-4">
-            Choose type
-          </Text>
-          <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
-          <Spacer size={5} />
-          {renderSecretContent()}
+          <Drawer.Inner>
+            <Text as="div" className="text-cn-foreground-2 mb-4">
+              Choose type
+            </Text>
+            <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
+            <Spacer size={6} />
+            <FormSeparator className="w-full" />
+            <Spacer size={6} />
+            {renderSecretContent()}
+          </Drawer.Inner>
+          <Drawer.Footer>
+            <Button variant="outline" onClick={handleCancel}>
+              Back
+            </Button>
+            <Button onClick={selectedType === SecretType.NEW ? handleSubmitEntityForm : noop}>Save</Button>
+          </Drawer.Footer>
         </Drawer.Content>
       </Drawer.Root>
     </>

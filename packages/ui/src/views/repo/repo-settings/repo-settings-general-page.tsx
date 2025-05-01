@@ -2,8 +2,8 @@ import { FC, useEffect, useRef } from 'react'
 
 import { Fieldset, FormSeparator } from '@/components'
 import { useRouterContext } from '@/context'
-import { BranchSelectorListItem, SandboxLayout, TranslationStore } from '@/views'
-import { BranchSelectorContainerProps, BranchSelectorTab } from '@/views/repo/components'
+import { SandboxLayout, TranslationStore } from '@/views'
+import { BranchSelectorContainerProps } from '@/views/repo/components'
 
 import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'

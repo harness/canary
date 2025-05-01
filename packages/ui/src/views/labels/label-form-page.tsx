@@ -12,7 +12,6 @@ import {
   Icon,
   Input,
   Label,
-  Option,
   SkeletonForm,
   Tag
 } from '@/components'
@@ -104,7 +103,6 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
     reset({ ...fullLabelData })
   }, [fullLabelData, reset])
 
-  const type = watch('type')
   const values = watch('values')
   const key = watch('key')
   const color = watch('color')

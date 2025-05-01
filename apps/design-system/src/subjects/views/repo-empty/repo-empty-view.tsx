@@ -26,7 +26,6 @@ export const RepoEmpty: FC<Partial<RepoSummaryViewProps>> = props => {
       searchQuery=""
       setSearchQuery={noop}
       isRepoEmpty={true}
-      toRepoFileDetails={_ => ''}
       branchSelectorRenderer={
         <BranchSelectorV2
           repoId="canary"

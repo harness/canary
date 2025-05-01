@@ -28,7 +28,6 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
       setEditDialogOpen={noop}
       searchQuery=""
       setSearchQuery={noop}
-      toRepoFileDetails={_ => ''}
       branchSelectorRenderer={
         <BranchSelectorV2
           repoId="canary"

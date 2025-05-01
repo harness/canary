@@ -73,7 +73,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   renderSidebarComponent?: React.ReactNode
   isRepoEmpty?: boolean
   branchSelectorRenderer: React.ReactElement
-  toRepoFileDetails: ({ path }: { path: string }) => string
+  toRepoFileDetails?: ({ path }: { path: string }) => string
 }
 
 export function RepoSummaryView({

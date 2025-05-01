@@ -320,6 +320,7 @@ export default function RepoSummaryPage() {
         branchSelectorRenderer={
           <BranchSelectorContainer onSelectBranchorTag={selectBranchOrTag} selectedBranch={selectedBranchOrTag} />
         }
+        toRepoFileDetails={({ path }: { path: string }) => path}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

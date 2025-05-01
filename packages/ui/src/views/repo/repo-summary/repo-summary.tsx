@@ -73,6 +73,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   renderSidebarComponent?: React.ReactNode
   isRepoEmpty?: boolean
   branchSelectorRenderer: React.ReactElement
+  toRepoFileDetails: ({ path }: { path: string }) => string
 }
 
 export function RepoSummaryView({
@@ -100,7 +101,8 @@ export function RepoSummaryView({
   navigateToProfileKeys,
   renderSidebarComponent,
   isRepoEmpty,
-  branchSelectorRenderer
+  branchSelectorRenderer,
+  toRepoFileDetails
 }: RepoSummaryViewProps) {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
@@ -226,6 +228,7 @@ export function RepoSummaryView({
               }}
               files={files}
               useTranslationStore={useTranslationStore}
+              toRepoFileDetails={toRepoFileDetails}
               hideHeader
             />
             <Spacer size={5} />

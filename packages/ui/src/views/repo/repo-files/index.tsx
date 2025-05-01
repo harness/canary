@@ -33,6 +33,7 @@ interface RepoFilesProps {
   currentBranchDivergence: CommitDivergenceType
   toCommitDetails?: ({ sha }: { sha: string }) => string
   isLoadingRepoDetails: boolean
+  toRepoFileDetails?: ({ path }: { path: string }) => string
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -52,7 +53,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   currentBranchDivergence,
   isRepoEmpty,
   toCommitDetails,
-  isLoadingRepoDetails
+  isLoadingRepoDetails,
+  toRepoFileDetails
 }) => {
   const { selectedBranchTag, repoId, spaceId } = useRepoBranchesStore()
   const { t } = useTranslationStore()
@@ -110,6 +112,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             latestFile={latestFile}
             files={files}
             useTranslationStore={useTranslationStore}
+            toRepoFileDetails={toRepoFileDetails}
           />
         </>
       )

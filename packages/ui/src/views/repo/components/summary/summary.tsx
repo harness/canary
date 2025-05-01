@@ -12,6 +12,7 @@ interface SummaryProps extends RoutingProps {
   useTranslationStore: () => TranslationStore
   hideHeader?: boolean
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toRepoFileDetails?: ({ path }: { path: string }) => string
 }
 
 export const Summary = ({
@@ -19,7 +20,8 @@ export const Summary = ({
   files,
   useTranslationStore,
   hideHeader = false,
-  toCommitDetails
+  toCommitDetails,
+  toRepoFileDetails
 }: SummaryProps) => {
   const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
@@ -62,7 +64,7 @@ export const Summary = ({
             </Table.Row>
           )}
           {files.map(file => (
-            <Table.Row key={file.id} onClick={() => navigate(file.path)}>
+            <Table.Row key={file.id} onClick={() => navigate(toRepoFileDetails?.({ path: file.path }) ?? '')}>
               <Table.Cell>
                 <div
                   className={`flex cursor-pointer items-center gap-1.5 ${

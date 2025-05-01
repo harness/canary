@@ -208,6 +208,7 @@ export const RepoCode = () => {
       defaultBranchName={repository?.default_branch}
       currentBranchDivergence={currBranchDivergence}
       isLoadingRepoDetails={isLoadingRepoDetails}
+      toRepoFileDetails={({ path }: { path: string }) => `../${path}`}
     >
       {renderCodeView}
     </RepoFiles>

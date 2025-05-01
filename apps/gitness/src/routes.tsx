@@ -272,7 +272,10 @@ export const repoRoutes: CustomRouteObject[] = [
               },
               {
                 path: '*',
-                element: <RepoCode />
+                element: <RepoCode />,
+                handle: {
+                  routeName: RouteConstants.toRepoFileDetails
+                }
               }
             ]
           },

@@ -1,10 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { ElementType, FC, Fragment, useEffect, useMemo, useState } from 'react'
 
+import { Alert, Button, Drawer, EntityFormLayout } from '@/components'
 import { TranslationStore } from '@/views'
-import { Alert } from '@components/alert'
-import { Button } from '@components/button'
-import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
-import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 
 import {
@@ -19,6 +16,32 @@ import {
 
 import { AnyConnectorDefinition, ConnectorEntity, EntityIntent, onSubmitConnectorProps } from './types'
 
+const componentsMap: Record<
+  'true' | 'false',
+  {
+    Content: ElementType
+    Header: ElementType
+    Title: ElementType
+    Inner: ElementType
+    Footer: ElementType
+  }
+> = {
+  true: {
+    Content: Fragment,
+    Header: Drawer.Header,
+    Title: Drawer.Title,
+    Inner: Drawer.Inner,
+    Footer: Drawer.Footer
+  },
+  false: {
+    Content: 'div',
+    Header: EntityFormLayout.Header,
+    Title: EntityFormLayout.Title,
+    Inner: Fragment,
+    Footer: EntityFormLayout.Footer
+  }
+}
+
 interface ConnectorEntityFormProps {
   connector: ConnectorEntity
   onFormSubmit?: (values: onSubmitConnectorProps) => void
@@ -28,21 +51,24 @@ interface ConnectorEntityFormProps {
   inputComponentFactory: InputFactory
   apiError?: string | null
   intent: EntityIntent
+  isDrawer?: boolean
 }
 
-export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Element => {
-  const {
-    connector,
-    apiError = null,
-    onFormSubmit,
-    getConnectorDefinition,
-    onBack,
-    useTranslationStore,
-    inputComponentFactory,
-    intent
-  } = props
+export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
+  connector,
+  apiError = null,
+  onFormSubmit,
+  getConnectorDefinition,
+  onBack,
+  useTranslationStore,
+  inputComponentFactory,
+  intent,
+  isDrawer = false
+}) => {
   const { t: _t } = useTranslationStore()
   const [connectorEditValues, setConnectorEditValues] = useState({})
+  const { Content, Header, Title, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const isCreate = intent === EntityIntent.CREATE
 
   const onSubmit = (data: onSubmitConnectorProps) => {
     onFormSubmit?.(data)
@@ -117,35 +143,31 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
       validateAfterFirstSubmit={true}
     >
       {rootForm => (
-        <EntityFormLayout.Root>
-          <EntityFormSectionLayout.Root>
-            {intent === EntityIntent.CREATE && (
-              <EntityFormSectionLayout.Header withBorder>
-                <EntityFormSectionLayout.Title>Connect to {connector.name}</EntityFormSectionLayout.Title>
-              </EntityFormSectionLayout.Header>
-            )}
-            <EntityFormSectionLayout.Form>
-              <RenderForm className="max-w-xl space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
+        <Content>
+          {isCreate && (
+            <Header>
+              <Title>Connect to {connector.name}</Title>
+            </Header>
+          )}
+          <Inner>
+            <EntityFormLayout.Form>
+              <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={formDefinition} />
               {apiError && (
-                <Alert.Container variant="destructive" className="my-8">
+                <Alert.Container variant="destructive">
                   <Alert.Description>{apiError.toString()}</Alert.Description>
                 </Alert.Container>
               )}
-            </EntityFormSectionLayout.Form>
-          </EntityFormSectionLayout.Root>
-          {intent === EntityIntent.CREATE ? (
-            <EntityFormLayout.Footer className="justify-between" withBorder>
-              <Button variant="secondary" onClick={() => onBack?.()}>
+            </EntityFormLayout.Form>
+          </Inner>
+          <Footer>
+            {isCreate && (
+              <Button variant="outline" onClick={() => onBack?.()}>
                 Back
               </Button>
-              <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-            </EntityFormLayout.Footer>
-          ) : (
-            <div className="border-cn-borders-3 mt-5 flex flex-row justify-end border-t px-6 py-5">
-              <Button onClick={() => rootForm.submitForm()}>Apply changes</Button>
-            </div>
-          )}
-        </EntityFormLayout.Root>
+            )}
+            <Button onClick={() => rootForm.submitForm()}>{isCreate ? 'Submit' : 'Apply changes'}</Button>
+          </Footer>
+        </Content>
       )}
     </RootForm>
   )

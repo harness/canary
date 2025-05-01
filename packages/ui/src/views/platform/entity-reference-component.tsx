@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Button, Icon, Input, ListActions, ScrollArea, SearchBox, SkeletonList, StackedList } from '@/components'
+import { Button, Icon, ListActions, SearchBox, SkeletonList, StackedList } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 

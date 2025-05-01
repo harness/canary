@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useTranslationStore } from '@utils/viewUtils'
 import { defaultTo } from 'lodash-es'
 
-import { Drawer, FormSeparator, Link } from '@harnessio/ui/components'
+import { Drawer, Link } from '@harnessio/ui/components'
 import {
   DelegateSelectionTypes,
   DelegateSelectorForm,
@@ -55,15 +55,8 @@ const DelegateSelectorDrawer = ({ open, setOpen, preSelectedTags, onSubmit, disa
   <Drawer.Root open={open} onOpenChange={setOpen} direction="right">
     <Drawer.Content className="w-1/2">
       <Drawer.Header>
-        <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Delegate selector</Drawer.Title>
-        <FormSeparator className="w-full" />
-        <div className="flex">
-          Haven&apos;t installed a delegate yet?
-          <Link className="ml-1 flex flex-row items-center" to="#" suffixIcon="attachment-link">
-            Install delegate
-          </Link>
-        </div>
-        <Drawer.Close onClick={() => setOpen(false)} />
+        <Drawer.Title>Delegate selector</Drawer.Title>
+        <Drawer.Close onClick={() => setOpen(false)} srOnly />
       </Drawer.Header>
 
       <DelegateSelectorForm
@@ -77,6 +70,7 @@ const DelegateSelectorDrawer = ({ open, setOpen, preSelectedTags, onSubmit, disa
         getMatchedDelegatesCount={getMatchedDelegatesCount}
         preSelectedTags={preSelectedTags}
         disableAnyDelegate={disableAnyDelegate}
+        isDrawer
       />
     </Drawer.Content>
   </Drawer.Root>

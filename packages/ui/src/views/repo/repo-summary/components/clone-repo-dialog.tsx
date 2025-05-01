@@ -64,7 +64,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
               disabled={!isSSHAvailable}
             >
               <Tabs.Trigger
-                className="px-4 data-[state=active]:bg-cn-background-2 data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed"
+                className="px-4 data-[disabled]:cursor-not-allowed data-[state=active]:bg-cn-background-2 data-[disabled]:opacity-50"
                 value={CloneRepoTabs.SSH}
                 onClick={e => e.stopPropagation()}
                 disabled={!isSSHAvailable}

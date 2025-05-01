@@ -1,26 +1,41 @@
-import { useCallback, useEffect, useState } from 'react'
+import { ElementType, FC, useCallback, useEffect, useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
   Alert,
   Button,
-  ButtonGroup,
-  ControlGroup,
+  Drawer,
+  EntityFormLayout,
   Fieldset,
   FormSeparator,
   FormWrapper,
+  Link,
   MultiSelect,
   MultiSelectOptionType,
   Spacer,
   Text
 } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { DelegateConnectivityList, DelegateItem, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RadioSelect, RadioSelectOption } from '@views/components/RadioSelect'
 import { z } from 'zod'
 
-import { DelegateConnectivityList } from '../components/delegate-connectivity-list'
-import { DelegateItem } from '../types'
+const componentsMap: Record<
+  'true' | 'false',
+  {
+    Footer: ElementType
+    Inner: ElementType
+  }
+> = {
+  true: {
+    Inner: Drawer.Inner,
+    Footer: Drawer.Footer
+  },
+  false: {
+    Inner: 'div',
+    Footer: EntityFormLayout.Footer
+  }
+}
 
 export enum DelegateSelectionTypes {
   ANY = 'any',
@@ -61,25 +76,29 @@ export interface DelegateSelectorFormProps {
   getMatchedDelegatesCount: (delegates: DelegateItem[], tags: string[]) => number
   preSelectedTags?: string[]
   disableAnyDelegate?: boolean
+  isDrawer?: boolean
 }
 
-export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Element => {
-  const {
-    delegates,
-    tagsList,
-    useTranslationStore,
-    onFormSubmit,
-    onBack,
-    apiError = null,
-    isLoading,
-    isDelegateSelected,
-    getMatchedDelegatesCount,
-    preSelectedTags,
-    disableAnyDelegate
-  } = props
+export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
+  delegates,
+  tagsList,
+  useTranslationStore,
+  onFormSubmit,
+  onBack,
+  apiError = null,
+  isLoading,
+  isDelegateSelected,
+  getMatchedDelegatesCount,
+  preSelectedTags,
+  disableAnyDelegate,
+  isDrawer = false
+}) => {
   const { t } = useTranslationStore()
   const [searchTag, setSearchTag] = useState('')
   const [matchedDelegates, setMatchedDelegates] = useState(0)
+
+  const { Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+
   const {
     register,
     handleSubmit,
@@ -97,6 +116,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
   })
 
   const onSubmit: SubmitHandler<DelegateSelectorFormFields> = data => {
+    console.log('onSubmit')
     onFormSubmit(data)
     reset()
   }
@@ -151,74 +171,75 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
   )
 
   return (
-    <SandboxLayout.Content className="h-full px-0 pt-0">
-      <Spacer size={5} />
-      <FormWrapper className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
-        <Fieldset className="mb-0">
-          <RadioSelect
-            id="type"
-            {...register('type')}
-            options={options}
-            value={delegateType}
-            onValueChange={value => setValue('type', value)}
-          />
-        </Fieldset>
-
-        {apiError && (
-          <Alert.Container variant="destructive" className="mb-8">
-            <Alert.Description>{apiError?.toString()}</Alert.Description>
-          </Alert.Container>
-        )}
-        <FormSeparator />
-
-        {delegateType === DelegateSelectionTypes.TAGS && (
-          <>
-            <Fieldset className="py-2">
-              {/* TAGS */}
-              <MultiSelect
-                {...register('tags')}
-                selectedItems={selectedTags}
-                t={t}
-                label="Tags"
-                placeholder="Enter tags"
-                handleChange={handleTagChange}
-                options={tagsList.map(tag => {
-                  return { id: tag, label: tag }
-                })}
-                searchValue={searchTag}
-                handleChangeSearchValue={setSearchTag}
-                error={errors.tags?.message?.toString()}
-              />
-            </Fieldset>
-            <Text size={4}>Test Delegate connectivity</Text>
-            <p>Matches: {matchedDelegates}</p>
-            <DelegateConnectivityList
-              delegates={delegates}
-              useTranslationStore={useTranslationStore}
-              isLoading={isLoading}
-              selectedTags={selectedTags.map(tag => tag.id)}
-              isDelegateSelected={isDelegateSelected}
-            />
-          </>
-        )}
-
-        <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
-          <ControlGroup>
-            <ButtonGroup className="flex flex-row justify-between">
-              <Button type="button" variant="ghost" onClick={onBack}>
-                Back
-              </Button>
-              <Button type="submit">
-                Connect&nbsp;
-                {delegateType === DelegateSelectionTypes.TAGS ? matchedDelegates : 'any'}&nbsp;
-                {delegateType === DelegateSelectionTypes.TAGS && matchedDelegates > 1 ? 'delegates' : 'delegate'}
-              </Button>
-            </ButtonGroup>
-          </ControlGroup>
+    <>
+      <Inner>
+        <div className="flex">
+          Haven&apos;t installed a delegate yet?
+          <Link className="ml-1 flex flex-row items-center" to="#" suffixIcon="attachment-link">
+            Install delegate
+          </Link>
         </div>
+        <Spacer size={5} />
+        <FormWrapper className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
+          <Fieldset className="mb-0">
+            <RadioSelect
+              id="type"
+              {...register('type')}
+              options={options}
+              value={delegateType}
+              onValueChange={value => setValue('type', value)}
+            />
+          </Fieldset>
 
-        <div className="pb-16"></div>
-      </FormWrapper>
-    </SandboxLayout.Content>
+          {apiError && (
+            <Alert.Container variant="destructive" className="mb-8">
+              <Alert.Description>{apiError?.toString()}</Alert.Description>
+            </Alert.Container>
+          )}
+          <FormSeparator />
+
+          {delegateType === DelegateSelectionTypes.TAGS && (
+            <>
+              <Fieldset className="py-2">
+                {/* TAGS */}
+                <MultiSelect
+                  {...register('tags')}
+                  selectedItems={selectedTags}
+                  t={t}
+                  label="Tags"
+                  placeholder="Enter tags"
+                  handleChange={handleTagChange}
+                  options={tagsList.map(tag => {
+                    return { id: tag, label: tag }
+                  })}
+                  searchValue={searchTag}
+                  handleChangeSearchValue={setSearchTag}
+                  error={errors.tags?.message?.toString()}
+                />
+              </Fieldset>
+              <Text size={4}>Test Delegate connectivity</Text>
+              <p>Matches: {matchedDelegates}</p>
+              <DelegateConnectivityList
+                delegates={delegates}
+                useTranslationStore={useTranslationStore}
+                isLoading={isLoading}
+                selectedTags={selectedTags.map(tag => tag.id)}
+                isDelegateSelected={isDelegateSelected}
+              />
+            </>
+          )}
+        </FormWrapper>
+      </Inner>
+      <Footer>
+        <Button variant="outline" onClick={onBack}>
+          Back
+        </Button>
+        <Button onClick={handleSubmit(onSubmit)}>
+          Connect&nbsp;
+          {delegateType === DelegateSelectionTypes.TAGS ? matchedDelegates : 'any'}&nbsp;
+          {delegateType === DelegateSelectionTypes.TAGS && matchedDelegates > 1 ? 'delegates' : 'delegate'}
+        </Button>
+      </Footer>
+    </>
   )
 }

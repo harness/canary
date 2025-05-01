@@ -1,9 +1,7 @@
-import { useMemo } from 'react'
+import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react'
 
-import { Alert, Button, ScrollArea } from '@/components'
+import { Alert, Button, ButtonGroup } from '@/components'
 import { EntityIntent, InputConfigType, TranslationStore } from '@/views'
-import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
-import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
 
 import {
   getDefaultValuesFromFormDefinition,
@@ -16,6 +14,10 @@ import {
 
 import { onSubmitSecretProps } from './types'
 
+export type SecretEntityFormHandle = {
+  submitForm: () => void
+}
+
 interface SecretEntityFormProps {
   onFormSubmit?: (values: onSubmitSecretProps) => void
   secretsFormDefinition?: IFormDefinition<InputConfigType>
@@ -24,77 +26,79 @@ interface SecretEntityFormProps {
   inputComponentFactory: InputFactory
   apiError?: string | null
   intent: EntityIntent
-  hasHeader?: boolean
+  isDrawer?: boolean
 }
 
-export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
-  const {
-    apiError = null,
-    onFormSubmit,
-    secretsFormDefinition,
-    onBack,
-    useTranslationStore,
-    inputComponentFactory,
-    intent,
-    hasHeader = true
-  } = props
-  const { t: _t } = useTranslationStore()
+export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityFormProps>(
+  (
+    {
+      apiError = null,
+      onFormSubmit,
+      secretsFormDefinition,
+      onBack,
+      useTranslationStore,
+      inputComponentFactory,
+      intent,
+      isDrawer = false
+    },
+    ref
+  ) => {
+    const { t: _t } = useTranslationStore()
+    const formRef = useRef<SecretEntityFormHandle | null>(null)
 
-  const onSubmit = (data: onSubmitSecretProps) => {
-    onFormSubmit?.(data)
-  }
+    useImperativeHandle(ref, () => ({
+      submitForm: () => formRef.current?.submitForm?.()
+    }))
+
+    const onSubmit = (data: onSubmitSecretProps) => {
+      onFormSubmit?.(data)
+    }
 
   const resolver = useZodValidationResolver(secretsFormDefinition ?? { inputs: [] })
 
-  const defaultSecretValues = useMemo(() => {
-    return getDefaultValuesFromFormDefinition(secretsFormDefinition ?? { inputs: [] })
-  }, [secretsFormDefinition])
+    const defaultSecretValues = useMemo(() => {
+      return getDefaultValuesFromFormDefinition(secretsFormDefinition ?? { inputs: [] })
+    }, [secretsFormDefinition])
 
-  return (
-    <RootForm
-      defaultValues={defaultSecretValues}
-      autoFocusPath={secretsFormDefinition?.inputs[0]?.path}
-      resolver={resolver}
-      mode="onSubmit"
-      onSubmit={values => {
-        onSubmit({ values, intent })
-      }}
-      validateAfterFirstSubmit={true}
-    >
-      {rootForm => (
-        <EntityFormLayout.Root>
-          <EntityFormSectionLayout.Root>
-            <EntityFormSectionLayout.Form className="px-0">
-              <div className="flex-1">
-                <ScrollArea
-                  className={hasHeader ? 'h-[calc(100vh-350px)]' : 'h-[calc(100vh-150px)]'}
-                  viewportClassName="pb-6"
-                  orientation="both"
-                >
-                  <RenderForm
-                    className="max-w-xl space-y-4"
-                    factory={inputComponentFactory}
-                    inputs={secretsFormDefinition ?? { inputs: [] }}
-                  />
-                  {apiError && (
-                    <Alert.Container variant="destructive" className="my-8">
-                      <Alert.Description>{apiError.toString()}</Alert.Description>
-                    </Alert.Container>
-                  )}
-                </ScrollArea>
-              </div>
-            </EntityFormSectionLayout.Form>
-          </EntityFormSectionLayout.Root>
-          <EntityFormLayout.Footer className="border-none">
-            <div className="absolute inset-x-0 bottom-0 flex justify-between gap-x-3 bg-cn-background-2 p-4 shadow-md">
-              <Button variant="ghost" onClick={() => onBack?.()}>
-                Back
-              </Button>
-              <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-            </div>
-          </EntityFormLayout.Footer>
-        </EntityFormLayout.Root>
-      )}
-    </RootForm>
-  )
-}
+    return (
+      <RootForm
+        defaultValues={defaultSecretValues}
+        autoFocusPath={secretsFormDefinition?.inputs[0]?.path}
+        resolver={resolver}
+        mode="onSubmit"
+        onSubmit={values => {
+          onSubmit({ values, intent })
+        }}
+        validateAfterFirstSubmit={true}
+      >
+        {rootForm => {
+          formRef.current = rootForm
+
+          return (
+            <>
+              <RenderForm
+                className="max-w-xl space-y-4"
+                factory={inputComponentFactory}
+                inputs={secretsFormDefinition ?? { inputs: [] }}
+              />
+              {apiError && (
+                <Alert.Container variant="destructive" className="my-8">
+                  <Alert.Description>{apiError.toString()}</Alert.Description>
+                </Alert.Container>
+              )}
+              {!isDrawer && (
+                <ButtonGroup>
+                  <Button variant="outline" onClick={() => onBack?.()}>
+                    Back
+                  </Button>
+                  <Button onClick={() => rootForm.submitForm()}>Submit</Button>
+                </ButtonGroup>
+              )}
+            </>
+          )
+        }}
+      </RootForm>
+    )
+  }
+)
+SecretEntityForm.displayName = 'SecretEntityForm'

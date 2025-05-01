@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
+import { ElementType, useEffect, useState } from 'react'
 
-import { Button } from '@components/button'
-import { Icon } from '@components/icon'
-import { SkeletonList } from '@components/index'
+import { Button, Drawer, EntityFormLayout, Icon, SkeletonList } from '@/components'
+import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 import { get, isEmpty, isUndefined, omit, omitBy } from 'lodash-es'
 import { parse } from 'yaml'
@@ -17,18 +16,43 @@ import {
   useZodValidationResolver
 } from '@harnessio/forms'
 
-import { useUnifiedPipelineStudioContext } from '../../../unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { getHarnessSteOrGroupIdentifier, getHarnessStepOrGroupDefinition, isHarnessGroup } from '../steps/harness-steps'
 import { TEMPLATE_STEP_IDENTIFIER } from '../steps/types'
-import { EntityFormLayout } from './entity-form-layout'
-import { EntityFormSectionLayout } from './entity-form-section-layout'
+
+const componentsMap: Record<
+  'true' | 'false',
+  {
+    Header: ElementType
+    Title: ElementType
+    Description: ElementType
+    Inner: ElementType
+    Footer: ElementType
+  }
+> = {
+  true: {
+    Header: Drawer.Header,
+    Title: Drawer.Title,
+    Description: Drawer.Description,
+    Inner: Drawer.Inner,
+    Footer: Drawer.Footer
+  },
+  false: {
+    Header: EntityFormLayout.Header,
+    Title: EntityFormLayout.Title,
+    Description: EntityFormLayout.Description,
+    Inner: 'div',
+    Footer: EntityFormLayout.Footer
+  }
+}
 
 interface UnifiedPipelineStudioEntityFormProps {
   requestClose: () => void
+  isDrawer?: boolean
 }
 
 export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEntityFormProps) => {
-  const { requestClose } = props
+  const { requestClose, isDrawer = false } = props
+  const { Header, Title, Description, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const {
     yamlRevision,
     addStepIntention,
@@ -197,35 +221,31 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
       validateAfterFirstSubmit={true}
     >
       {rootForm => (
-        <EntityFormLayout.Root>
-          <EntityFormLayout.Header>
-            <EntityFormLayout.Title>
+        <>
+          <Header>
+            <Title>
               {editStepIntention ? 'Edit' : 'Add'} Step :{' '}
               {formEntity?.data?.identifier ?? defaultStepValues.template?.uses}
-            </EntityFormLayout.Title>
-            <EntityFormLayout.Description>{formEntity?.data.description}</EntityFormLayout.Description>
-            {/* <EntityFormLayout.Actions>
-              <AIButton label="AI Autofill" />
-            </EntityFormLayout.Actions> */}
-          </EntityFormLayout.Header>
-          <EntityFormSectionLayout.Root>
+            </Title>
+            <Description>{formEntity?.data.description}</Description>
+            {/*<AIButton label="AI Autofill" />*/}
+          </Header>
+          <Inner>
             {/* <StepFormSection.Header> */}
             {/* <StepFormSection.Title>General</StepFormSection.Title> */}
             {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
             {/* </StepFormSection.Header> */}
-            <EntityFormSectionLayout.Form>
+            <EntityFormLayout.Form>
               {error?.message ? (
                 <p className="text-sm text-cn-foreground-danger">{error.message}</p>
               ) : loading ? (
-                <SkeletonList className="p-5" />
+                <SkeletonList />
               ) : (
-                <>
-                  <RenderForm className="space-y-5 p-5" factory={inputComponentFactory} inputs={formDefinition} />
-                </>
+                <RenderForm className="space-y-5" factory={inputComponentFactory} inputs={formDefinition} />
               )}
-            </EntityFormSectionLayout.Form>
-          </EntityFormSectionLayout.Root>
-          <EntityFormLayout.Footer>
+            </EntityFormLayout.Form>
+          </Inner>
+          <Footer>
             <div className="flex gap-x-3">
               <Button disabled={loading || !!error?.message} onClick={() => rootForm.submitForm()}>
                 Submit
@@ -246,8 +266,8 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
                 <Icon name="trash" />
               </Button>
             )}
-          </EntityFormLayout.Footer>
-        </EntityFormLayout.Root>
+          </Footer>
+        </>
       )}
     </RootForm>
   )

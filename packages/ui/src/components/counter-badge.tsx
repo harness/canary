@@ -1,7 +1,7 @@
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const counterBadgeVariants = cva('cn-badge cn-badge-surface cn-badge-counter inline-flex w-fit items-center', {
+const counterBadgeVariants = cva('cn-badge cn-badge-counter cn-badge-surface inline-flex w-fit items-center', {
   variants: {
     theme: {
       default: 'cn-badge-muted',

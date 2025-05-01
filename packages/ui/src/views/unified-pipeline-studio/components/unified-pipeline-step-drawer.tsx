@@ -1,4 +1,4 @@
-import { Drawer } from '@components/index'
+import { Drawer } from '@/components'
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import { RightDrawer } from '../types/right-drawer-types'
@@ -26,6 +26,7 @@ export const UnifiedPipelineStepDrawer = () => {
               setRightDrawer(RightDrawer.None)
               clearRightDrawerData()
             }}
+            isDrawer
           />
         </Drawer.Content>
       </Drawer.Root>
@@ -47,6 +48,7 @@ export const UnifiedPipelineStepDrawer = () => {
               setRightDrawer(RightDrawer.None)
               clearRightDrawerData()
             }}
+            isDrawer
           />
         </Drawer.Content>
       </Drawer.Root>

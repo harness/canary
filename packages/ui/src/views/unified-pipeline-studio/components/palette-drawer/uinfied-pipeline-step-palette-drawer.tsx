@@ -1,24 +1,43 @@
-import { useMemo, useRef, useState } from 'react'
+import { ElementType, useMemo, useRef, useState } from 'react'
 
-import { Button } from '@components/button'
-import { Pagination } from '@components/index'
-import { Input } from '@components/input'
-import { Spacer } from '@components/spacer'
+import { Button, Drawer, EntityFormLayout, Input, Pagination, Spacer } from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
 
 import { harnessStepGroups, harnessSteps } from '../steps/harness-steps'
-import { StepFormLayout } from './components/step-form-layout'
-import { StepsPaletteContentLayout } from './components/step-palette-content-layout'
-import { StepsPaletteLayout } from './components/step-palette-layout'
 import { StepPaletteSection } from './components/step-palette-section'
+
+const componentsMap: Record<
+  'true' | 'false',
+  {
+    Header: ElementType
+    Title: ElementType
+    Inner: ElementType
+    Footer: ElementType
+  }
+> = {
+  true: {
+    Header: Drawer.Header,
+    Title: Drawer.Title,
+    Inner: Drawer.Inner,
+    Footer: Drawer.Footer
+  },
+  false: {
+    Header: EntityFormLayout.Header,
+    Title: EntityFormLayout.Title,
+    Inner: 'div',
+    Footer: EntityFormLayout.Footer
+  }
+}
 
 interface PipelineStudioStepFormProps {
   requestClose: () => void
+  isDrawer?: boolean
 }
 
 export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Element => {
-  const { requestClose } = props
+  const { requestClose, isDrawer = false } = props
+  const { Header, Title, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const { setFormEntity, setRightDrawer, useTemplateListStore, useTranslationStore } = useUnifiedPipelineStudioContext()
   const { page, xNextPage, xPrevPage, setPage, templates, templatesError } = useTemplateListStore()
 
@@ -39,17 +58,17 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
   )
 
   return (
-    <StepsPaletteLayout.Root>
-      <StepsPaletteLayout.Header>
-        <StepsPaletteLayout.Title>Add Step</StepsPaletteLayout.Title>
+    <>
+      <Header>
+        <Title>Add Step</Title>
         <Input
           placeholder="Search"
           onChange={value => {
             setQuery(value.target.value)
           }}
         />
-      </StepsPaletteLayout.Header>
-      <StepsPaletteContentLayout.Root>
+      </Header>
+      <Inner>
         <StepPaletteSection
           title="Group"
           steps={harnessStepGroupsFiltered}
@@ -101,7 +120,6 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
                 setRightDrawer(RightDrawer.Form)
               }}
             />
-            <Spacer size={8} />
             <Pagination
               nextPage={xNextPage}
               previousPage={xPrevPage}
@@ -116,12 +134,12 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
         )}
 
         <Spacer size={8} />
-      </StepsPaletteContentLayout.Root>
-      <StepFormLayout.Footer>
+      </Inner>
+      <Footer>
         <Button variant="secondary" onClick={requestClose}>
           Cancel
         </Button>
-      </StepFormLayout.Footer>
-    </StepsPaletteLayout.Root>
+      </Footer>
+    </>
   )
 }

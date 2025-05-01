@@ -1,8 +1,5 @@
-import { Button, ButtonGroup, Icon, Spacer, StackedList, Text } from '@/components'
-import { EntityReference, EntityRendererProps } from '@views/platform'
-import { DirectionEnum } from '@views/platform/types'
-
-import { SecretItem, secretsFilterTypes } from '../types'
+import { Button, ButtonGroup, EntityFormLayout, Icon, Spacer, StackedList } from '@/components'
+import { DirectionEnum, EntityReference, EntityRendererProps, SecretItem, secretsFilterTypes } from '@/views'
 
 export interface SecretReferenceProps {
   // Data
@@ -26,6 +23,8 @@ export interface SecretReferenceProps {
   // Search
   searchValue?: string
   handleChangeSearchValue: (val: string) => void
+
+  isDrawer?: boolean
 }
 
 // Component for selecting existing secrets
@@ -50,7 +49,9 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
 
   // search
   searchValue,
-  handleChangeSearchValue
+  handleChangeSearchValue,
+
+  isDrawer = false
 }) => {
   // Custom entity renderer for secrets
   const renderEntity = (props: EntityRendererProps<SecretItem>) => {
@@ -69,7 +70,7 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
 
   return (
     <div className="flex flex-col">
-      <Text size={4}>Secrets list</Text>
+      <EntityFormLayout.Title>Secrets list</EntityFormLayout.Title>
       <Spacer size={5} />
       <EntityReference<SecretItem>
         entities={secretsData}
@@ -89,14 +90,14 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         handleChangeSearchValue={handleChangeSearchValue}
       />
 
-      <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
+      {!isDrawer && (
         <ButtonGroup className="flex flex-row justify-between">
-          <Button type="button" variant="secondary" onClick={onCancel}>
+          <Button variant="outline" onClick={onCancel}>
             Cancel
           </Button>
           <Button type="submit">Save</Button>
         </ButtonGroup>
-      </div>
+      )}
     </div>
   )
 }

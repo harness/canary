@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Checkbox, ControlGroup, Input, Label, Option, Radio, StackedList, Switch, Textarea } from '@/components'
+import { Checkbox, ControlGroup, Input, Label, Radio, StackedList, Switch, Textarea } from '@/components'
 import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
 
 export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (

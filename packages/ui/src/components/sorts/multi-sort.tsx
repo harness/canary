@@ -155,7 +155,7 @@ export default function MultiSort() {
             size={10}
           />
           <span className="text-cn-foreground-1">{getSortTriggerLabel(sortSelections, sortOptions).label}</span>
-          <Icon className="chevron-down text-icons-1 ml-3" name="chevron-down" size={10} />
+          <Icon className="chevron-down ml-3 text-icons-1" name="chevron-down" size={10} />
         </Button>
       </DropdownMenu.Trigger>
 

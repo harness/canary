@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, Checkbox, CounterBadge, DropdownMenu, Icon, SplitButton, Text } from '@/components'
+import { Button, Checkbox, CounterBadge, DropdownMenu, Icon, SplitButton } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'

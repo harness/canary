@@ -44,7 +44,7 @@ interface IMFEContext {
     toOrgSettings: () => string
     toProjectSettings: () => string
   }>
-  hooks: Omit<Hooks, 'useDocumentTitle'>
+  hooks: Hooks
 }
 
 export const MFEContext = createContext<IMFEContext>({

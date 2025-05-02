@@ -21,7 +21,7 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate } from '../../types'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
-// import { useRepoBranchesStore } from './stores/repo-branches-store'
+import { useRepoBranchesStore } from './stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
 
 /**
@@ -29,17 +29,17 @@ import { transformBranchList } from './transform-utils/branch-transform'
  */
 export const RepoSidebar = () => {
   const routes = useRoutes()
-  // const {
-  //   branchList,
-  //   tagList,
-  //   setBranchList,
-  //   setTagList,
-  //   // selectedBranchTag,
-  //   setDefaultBranch,
-  //   // setSelectedBranchTag,
-  //   setSelectedRefType,
-  //   setSpaceIdAndRepoId
-  // } = useRepoBranchesStore()
+  const {
+    branchList,
+    tagList,
+    setBranchList,
+    setTagList,
+    // selectedBranchTag,
+    setDefaultBranch,
+    setSelectedBranchTag,
+    setSelectedRefType,
+    setSpaceIdAndRepoId
+  } = useRepoBranchesStore()
 
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -49,9 +49,9 @@ export const RepoSidebar = () => {
   const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
 
-  // useEffect(() => {
-  //   setSpaceIdAndRepoId(spaceId || '', repoId || '')
-  // }, [spaceId, repoId])
+  useEffect(() => {
+    setSpaceIdAndRepoId(spaceId || '', repoId || '')
+  }, [spaceId, repoId])
 
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -77,23 +77,23 @@ export const RepoSidebar = () => {
     }
   )
 
-  // useEffect(() => {
-  //   if (selectedGitRefBranch) {
-  //     setSelectedBranchTag({
-  //       name: selectedGitRefBranch.name ?? '',
-  //       sha: selectedGitRefBranch.sha ?? ''
-  //     })
-  //   }
-  // }, [selectedGitRefBranch, fullGitRef])
+  useEffect(() => {
+    if (selectedGitRefBranch) {
+      setSelectedBranchOrTag({
+        name: selectedGitRefBranch.name ?? '',
+        sha: selectedGitRefBranch.sha ?? ''
+      })
+    }
+  }, [selectedGitRefBranch, fullGitRef])
 
-  // useEffect(() => {
-  //   if (branches) {
-  //     setBranchList(transformBranchList(branches, repository?.default_branch))
-  //   }
-  //   if (repository?.default_branch) {
-  //     setDefaultBranch(repository?.default_branch)
-  //   }
-  // }, [branches, repository?.default_branch])
+  useEffect(() => {
+    if (branches) {
+      setBranchList(transformBranchList(branches, repository?.default_branch))
+    }
+    if (repository?.default_branch) {
+      setDefaultBranch(repository?.default_branch)
+    }
+  }, [branches, repository?.default_branch])
 
   const { data: { body: tags } = {} } = useListTagsQuery({
     repo_ref: repoRef,
@@ -105,38 +105,38 @@ export const RepoSidebar = () => {
     }
   })
 
-  // useEffect(() => {
-  //   if (tags) {
-  //     setTagList(
-  //       tags.map(item => ({
-  //         name: item?.name || '',
-  //         sha: item?.sha || '',
-  //         default: false
-  //       }))
-  //     )
-  //   }
-  // }, [tags])
+  useEffect(() => {
+    if (tags) {
+      setTagList(
+        tags.map(item => ({
+          name: item?.name || '',
+          sha: item?.sha || '',
+          default: false
+        }))
+      )
+    }
+  }, [tags])
 
-  // useEffect(() => {
-  //   if (!repository?.default_branch || !branchList.length) {
-  //     return
-  //   }
-  //   if (!fullGitRef) {
-  //     const defaultBranch = branchList.find(branch => branch.default)
-  //     setSelectedBranchTag({
-  //       name: defaultBranch?.name || repository?.default_branch || '',
-  //       sha: defaultBranch?.sha || '',
-  //       default: true
-  //     })
-  //   } else {
-  //     const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
-  //     if (selectedGitRefBranch) {
-  //       setSelectedBranchTag({ name: selectedGitRefBranch.name ?? '', sha: selectedGitRefBranch.sha ?? '' })
-  //     } else if (selectedGitRefTag) {
-  //       setSelectedBranchTag(selectedGitRefTag)
-  //     }
-  //   }
-  // }, [repository?.default_branch, fullGitRef, branchList, tagList])
+  useEffect(() => {
+    if (!repository?.default_branch || !branchList.length) {
+      return
+    }
+    if (!fullGitRef) {
+      const defaultBranch = branchList.find(branch => branch.default)
+      setSelectedBranchOrTag({
+        name: defaultBranch?.name || repository?.default_branch || '',
+        sha: defaultBranch?.sha || '',
+        default: true
+      })
+    } else {
+      const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
+      if (selectedGitRefBranch) {
+        setSelectedBranchOrTag({ name: selectedGitRefBranch.name ?? '', sha: selectedGitRefBranch.sha ?? '' })
+      } else if (selectedGitRefTag) {
+        setSelectedBranchOrTag(selectedGitRefTag)
+      }
+    }
+  }, [repository?.default_branch, fullGitRef, branchList, tagList])
 
   const { data: repoDetails } = useGetContentQuery({
     path: '',
@@ -181,10 +181,12 @@ export const RepoSidebar = () => {
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
       if (type === BranchSelectorTab.BRANCHES) {
         setSelectedBranchOrTag(branchTagName)
+        setSelectedBranchTag(branchTagName)
         setPreSelectedTab(BranchSelectorTab.BRANCHES)
         navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branchTagName.name}`)
       } else if (type === BranchSelectorTab.TAGS) {
         setSelectedBranchOrTag(branchTagName)
+        setSelectedBranchTag(branchTagName)
         setPreSelectedTab(BranchSelectorTab.TAGS)
         navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + branchTagName.name}`)
       }

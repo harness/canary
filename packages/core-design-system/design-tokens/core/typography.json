@@ -253,8 +253,8 @@
     },
     "7": {
       "$type": "fontSizes",
-      "$value": "1.875rem",
-      "$description": "30px"
+      "$value": "1.75rem",
+      "$description": "28px"
     },
     "8": {
       "$type": "fontSizes",

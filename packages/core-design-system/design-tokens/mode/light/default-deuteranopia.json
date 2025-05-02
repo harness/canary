@@ -1792,7 +1792,7 @@
       ],
       "$description": "Focus ring effect with background offset and accent border."
     },
-    "error": {
+    "danger": {
       "$type": "boxShadow",
       "$value": {
         "x": "0",
@@ -1800,6 +1800,17 @@
         "blur": "0",
         "spread": "4",
         "color": "{set.red.soft.bg}",
+        "type": "dropShadow"
+      }
+    },
+    "danger-hover": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.red.soft.bg-hover}",
         "type": "dropShadow"
       }
     },
@@ -1825,6 +1836,17 @@
         "type": "dropShadow"
       }
     },
+    "success-hover": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.green.soft.bg-hover}",
+        "type": "dropShadow"
+      }
+    },
     "warning": {
       "$type": "boxShadow",
       "$value": {
@@ -1833,6 +1855,17 @@
         "blur": "0",
         "spread": "4",
         "color": "{set.yellow.soft.bg}",
+        "type": "dropShadow"
+      }
+    },
+    "warning-hover": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.yellow.soft.bg-hover}",
         "type": "dropShadow"
       }
     }

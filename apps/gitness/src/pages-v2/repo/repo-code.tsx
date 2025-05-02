@@ -147,25 +147,25 @@ export const RepoCode = () => {
   const pathToNewFile = useMemo(() => {
     if (fullResourcePath && repoDetails) {
       if (repoDetails?.type === 'dir') {
-        return `new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`
+        return `new/${fullGitRef || selectedBranchTag?.name}/~/${fullResourcePath}`
       }
 
       const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-      return `new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`
+      return `new/${fullGitRef || selectedBranchTag?.name}/~/${parentDirPath}`
     }
 
-    return `new/${fullGitRef || selectedBranchTag.name}/~/`
-  }, [fullGitRef, fullResourcePath, repoDetails, selectedBranchTag.name])
+    return `new/${fullGitRef || selectedBranchTag?.name}/~/`
+  }, [fullGitRef, fullResourcePath, repoDetails, selectedBranchTag?.name])
 
   useEffect(() => {
-    if (selectedBranchTag.name && repository?.default_branch) {
+    if (selectedBranchTag?.name && repository?.default_branch) {
       calculateDivergence({
         body: {
-          requests: [{ from: selectedBranchTag.name, to: repository?.default_branch }]
+          requests: [{ from: selectedBranchTag?.name, to: repository?.default_branch }]
         }
       })
     }
-  }, [selectedBranchTag.name, repository?.default_branch, calculateDivergence])
+  }, [selectedBranchTag?.name, repository?.default_branch, calculateDivergence])
 
   useEffect(() => {
     refetchRepoContent()

@@ -91,14 +91,14 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     if (isShowSummary && files.length)
       return (
         <>
-          {selectedBranchTag.name !== defaultBranchName && (
+          {selectedBranchTag?.name !== defaultBranchName && (
             <>
               <BranchInfoBar
                 repoId={repoId}
                 spaceId={spaceId}
                 defaultBranchName={defaultBranchName}
                 useRepoBranchesStore={useRepoBranchesStore}
-                selectedBranchTag={selectedBranchTag}
+                selectedBranchTag={selectedBranchTag || { name: '', sha: '' }}
                 currentBranchDivergence={{
                   ahead: currentBranchDivergence.ahead || 0,
                   behind: currentBranchDivergence.behind || 0
@@ -136,7 +136,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     loading,
     isShowSummary,
     files,
-    selectedBranchTag.name,
+    selectedBranchTag?.name,
     defaultBranchName,
     useRepoBranchesStore,
     currentBranchDivergence.ahead,

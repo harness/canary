@@ -173,7 +173,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
             navigate(routes.toPullRequestCompare({ spaceId, repoId, diffRefs: `${defaultBranch}...${newBranchName}` }))
           }
         }}
-        currentBranch={fullGitRef || selectedBranchTag?.name}
+        currentBranch={fullGitRef || selectedBranchTag?.name || ''}
         isNew={!!isNew}
       />
 

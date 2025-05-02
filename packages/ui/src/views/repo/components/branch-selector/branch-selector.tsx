@@ -35,7 +35,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
     ? tagList?.some(tag => tag.name === selectedBranchTag.name && tag.sha === selectedBranchTag.sha)
     : false
 
-  const branchName = selectedBranch?.name || selectedBranchTag.name
+  const branchName = selectedBranch?.name || selectedBranchTag?.name
 
   return (
     <DropdownMenu.Root>
@@ -56,7 +56,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
         branchList={branchList}
         tagList={tagList}
         onSelectBranch={onSelectBranch}
-        selectedBranch={selectedBranch || selectedBranchTag}
+        selectedBranch={selectedBranch || selectedBranchTag || { name: '', sha: '' }}
         repoId={repoId}
         spaceId={spaceId}
         useTranslationStore={useTranslationStore}

@@ -10,7 +10,7 @@ export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
   tagList: [{ name: '', sha: '' }],
   branchList: [],
   selectedRefType: BranchSelectorTab.BRANCHES,
-  selectedBranchTag: { name: '', sha: '' },
+  selectedBranchTag: null,
   xNextPage: 0,
   xPrevPage: 0,
   page: 1,

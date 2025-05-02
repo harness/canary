@@ -64,7 +64,6 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
       //   sha: defaultBranch?.sha ?? '',
       //   default: true
       // })
-      console.log('lmaoooo i do it')
 
       onSelectBranchorTag(
         { name: defaultBranch?.name ?? repository.default_branch ?? '', sha: defaultBranch?.sha ?? '', default: true },

@@ -110,7 +110,7 @@ export type CommitDivergenceType = {
 
 export interface IBranchSelectorStore {
   // states
-  selectedBranchTag: BranchSelectorListItem
+  selectedBranchTag: BranchSelectorListItem | null
   selectedRefType: BranchSelectorTab
   branchList: BranchData[]
   tagList: BranchSelectorListItem[]

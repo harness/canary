@@ -212,7 +212,11 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
             navigate(`${routes.toRepoFiles({ spaceId, repoId })}${parentPath ? `/~/${parentPath}` : ''}`)
           } else {
             navigate(
-              routes.toPullRequestCompare({ spaceId, repoId, diffRefs: `${selectedBranchTag.name}...${newBranchName}` })
+              routes.toPullRequestCompare({
+                spaceId,
+                repoId,
+                diffRefs: `${selectedBranchTag?.name}...${newBranchName}`
+              })
             )
           }
         }}

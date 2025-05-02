@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, matchPath, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
 
+import { Hooks, Scope } from '@harness/microfrontends'
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
@@ -72,11 +73,7 @@ interface AppMFEProps {
   /**
    * These types will be later referred from "ChildComponentProps" from @harness/microfrontends
    *  */
-  scope: {
-    accountId?: string
-    orgIdentifier?: string
-    projectIdentifier?: string
-  }
+  scope: Scope
   renderUrl: string
   on401?: () => void
   useMFEThemeContext: () => { theme: string }
@@ -92,10 +89,11 @@ interface AppMFEProps {
     getCurrentUser: Promise<Unknown>
   }>
   routes: Partial<{
-    toAccountSettings: Unknown
-    toOrgSettings: Unknown
-    toProjectSettings: Unknown
+    toAccountSettings: () => string
+    toOrgSettings: () => string
+    toProjectSettings: () => string
   }>
+  hooks: Omit<Hooks, 'useDocumentTitle'>
 }
 
 function decode<T = unknown>(arg: string): T {
@@ -112,7 +110,8 @@ export default function AppMFE({
   customHooks,
   customUtils,
   customPromises,
-  routes
+  routes,
+  hooks
 }: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) =>
@@ -182,7 +181,8 @@ export default function AppMFE({
                   customHooks,
                   customUtils,
                   customPromises,
-                  routes
+                  routes,
+                  hooks
                 }}
               >
                 <I18nextProvider i18n={i18n}>

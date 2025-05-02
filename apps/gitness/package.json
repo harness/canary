@@ -54,6 +54,7 @@
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@git-diff-view/react": "^0.0.16",
+    "@harness/microfrontends": "^2.127.0",
     "@swc/core": "^1.9.3",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^12.1.5",

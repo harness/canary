@@ -34,7 +34,8 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currentUser } = useAppContext()
   const { t } = useTranslationStore()
   const { NavLink } = useRouterContext()
-  const { routes } = useMFEContext()
+  const { routes, hooks } = useMFEContext()
+  const { forceLogout } = hooks?.useLogout?.() || {}
 
   const renderMenuItem = ({ to, text, iconName }: { to: string; text: string; iconName: IconProps['name'] }) => (
     <Sidebar.MenuItem>
@@ -67,7 +68,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
             <Sidebar.GroupContent>
               <Sidebar.Menu>
                 {renderMenuItem({
-                  to: routes?.toProjectSettings?.(),
+                  to: routes?.toProjectSettings?.() || '',
                   text: 'Project Settings',
                   iconName: 'settings-1'
                 })}
@@ -78,12 +79,12 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
             <Sidebar.GroupContent>
               <Sidebar.Menu>
                 {renderMenuItem({
-                  to: routes?.toAccountSettings?.(),
+                  to: routes?.toAccountSettings?.() || '',
                   text: 'Account Settings',
                   iconName: 'settings-1'
                 })}
                 {renderMenuItem({
-                  to: routes?.toOrgSettings?.(),
+                  to: routes?.toOrgSettings?.() || '',
                   text: 'Organization Settings',
                   iconName: 'settings-2'
                 })}
@@ -112,7 +113,13 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
           </Sidebar.Menu>
         </Sidebar.Group>
         <Sidebar.Footer className="border-t border-sidebar-border-1 px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">
-          <User user={currentUser} openThemeDialog={noop} openLanguageDialog={noop} handleLogOut={noop} t={t} />
+          <User
+            user={currentUser}
+            openThemeDialog={noop}
+            openLanguageDialog={noop}
+            handleLogOut={forceLogout || noop}
+            t={t}
+          />
         </Sidebar.Footer>
         <Sidebar.Rail />
       </Sidebar.Root>

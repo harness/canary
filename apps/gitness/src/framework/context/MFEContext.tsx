@@ -1,10 +1,6 @@
 import { createContext } from 'react'
 
-interface Scope {
-  accountId?: string
-  orgIdentifier?: string
-  projectIdentifier?: string
-}
+import { Hooks, Scope } from '@harness/microfrontends'
 
 export type Unknown = any
 
@@ -24,10 +20,11 @@ interface IMFEContext {
     getCurrentUser: Unknown
   }>
   routes: Partial<{
-    toAccountSettings: Unknown
-    toOrgSettings: Unknown
-    toProjectSettings: Unknown
+    toAccountSettings: () => string
+    toOrgSettings: () => string
+    toProjectSettings: () => string
   }>
+  hooks: Omit<Hooks, 'useDocumentTitle'>
 }
 
 export const MFEContext = createContext<IMFEContext>({
@@ -36,5 +33,6 @@ export const MFEContext = createContext<IMFEContext>({
   customHooks: {},
   customUtils: {},
   customPromises: {},
-  routes: {}
+  routes: {},
+  hooks: {}
 })

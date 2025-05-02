@@ -8,9 +8,12 @@ import {
   avatarStyles,
   badgeStyles,
   buttonStyles,
+  captionStyles,
   cardStyles,
   checkboxStyles,
   dialogStyles,
+  formSharedStyles,
+  inputStyles,
   labelStyles,
   linkStyles,
   radioStyles,
@@ -428,18 +431,25 @@ export default {
       addUtilities(typographyStyles)
     }),
     plugin(({ addComponents }) => {
-      addComponents(accordionStyles)
-      addComponents(badgeStyles)
-      addComponents(buttonStyles)
-      addComponents(dialogStyles)
-      addComponents(switchStyles)
-      addComponents(linkStyles)
-      addComponents(labelStyles)
-      addComponents(tagStyles)
-      addComponents(checkboxStyles)
-      addComponents(radioStyles)
-      addComponents(avatarStyles)
-      addComponents(cardStyles)
+      addComponents([
+        accordionStyles,
+        badgeStyles,
+        buttonStyles,
+        dialogStyles,
+        switchStyles,
+        labelStyles,
+        tagStyles,
+        linkStyles,
+        avatarStyles,
+        cardStyles,
+
+        // Form styles
+        formSharedStyles,
+        checkboxStyles,
+        radioStyles,
+        inputStyles,
+        captionStyles
+      ])
     }),
     tailwindcssAnimate,
     typography,

@@ -4,25 +4,26 @@ description: Input component
 beta: true
 ---
 
-The `Input` component is used to handle user input, along with providing options for styling via Variants, Themes, and Sizes.
-Also provides options for adding icons, captions, and error text for the field.
+The `Input` component is used to handle user input, providing options for styling via themes and sizes.
+Also offers options for adding icons, captions, custom content, and error text for the field.
 
 import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-wrap flex-col gap-4 items-baseline">
-    <div className="font-bold w-full"> Variants: </div>
-    <Input variant={"extended"} value={"input with extended variant"} />
-    <Input />
-    <div className="font-bold w-full"> Sizes: </div>
-    <Input value={"input with default size"} />
-    <Input size={"md"} value={"input with md size"} />
-    <div className="font-bold w-full"> Themes: </div>
-    <Input theme={"danger"} value={"input with danger theme"} label={"label"} optional />
-    <Input caption={"dummy caption"} error={"dummy error text"} />
-    <Input value={"input with icon"} inputIconName={"plus"} />
-    <Input value={"input with right element"} rightElement={<Button className="ml-[12px]">Update</Button>} />
+  code={`<div className="flex flex-col gap-12 min-w-[400px]">
+    <div className="font-bold w-full mb-2">Input Examples:</div>
+    
+      <Input placeholder="Enter the value" label="Default Input" caption="This is a helpful message" />
+    
+      <Input theme="danger" label="Input with Error" error="This field is required" />
+    
+      <Input theme="success" label="Success Theme" caption="Your input is valid" />
+    
+      <Input theme="warning" label="Warning Theme" warningMessage="Please double-check this field" />
+    
+      <Input label="With Icon" inputIconName="plus" />
+    
   </div>`}
 />
 
@@ -35,13 +36,14 @@ import { Input } from '@harnessio/ui/components'
 
 return (
   <Input
-    variant={"extended"}
-    size={"md"}
-    value={"input with value"}
-    theme={"danger"}
-    caption={"dummy caption"}
-    inputIconName={"plus"}
-    rightElement={<Button>Right element</Button>}
+    size="default"
+    value="input with value"
+    theme="success"
+    caption="Additional information" // displayed as a caption
+    error="Error message" // displayed as an error with icon
+    inputIconName="plus"
+    rightElement={<Button>Action</Button>}
+    rightElementVariant="filled"
   />
 )
 ```
@@ -51,71 +53,64 @@ return (
 <DocsPage.PropsTable
   props={[
     {
-      name: "variant",
-      description: "Variant of the input",
+      name: "size",
+      description: "Size of the input field",
       required: "false",
       defaultValue: "default",
-      value: "default | extended",
-    },
-    {
-      name: "size",
-      description: "height of the input-field",
-      required: "false",
-      defaultValue: "sm",
-      value: "sm | md",
+      value: "default | sm",
     },
     {
       name: "theme",
-      description: "different themes for the input",
+      description: "Theme of the input field and its caption",
       required: "false",
       defaultValue: "default",
-      value: "default | danger",
+      value: "default | danger | warning | success",
     },
     {
       name: "label",
-      description: "label for the input-field",
+      description: "Label for the input field",
       required: "false",
       defaultValue: "",
       value: "string",
     },
     {
       name: "caption",
-      description: "caption to be displayed under the field",
+      description: "Caption text displayed below the field",
       required: "false",
       defaultValue: "",
-      value: "ReactNode",
+      value: "string",
     },
     {
       name: "error",
-      description: "error for the field to be displayed above caption",
+      description: "Error message to be displayed with danger theme and icon",
       required: "false",
       defaultValue: "",
       value: "string",
     },
     {
       name: "optional",
-      description: "optional tag beside label",
+      description: "Show 'optional' tag beside label",
       required: "false",
-      defaultValue: "",
+      defaultValue: "false",
       value: "boolean",
     },
     {
       name: "className",
-      description: "",
+      description: "Additional classes for the input element",
       required: "false",
       defaultValue: "",
       value: "string",
     },
     {
       name: "wrapperClassName",
-      description: "",
+      description: "Additional classes for the control group wrapper",
       required: "false",
       defaultValue: "",
       value: "string",
     },
     {
       name: "inputIconName",
-      description: "icon to be displayed inside the input-field",
+      description: "Icon to be displayed inside the input field",
       required: "false",
       defaultValue: "",
       value: "IconProps['name']",
@@ -123,10 +118,31 @@ return (
     {
       name: "rightElement",
       description:
-        "element to be displayed on the right side of the input-field",
+        "Element to be displayed on the right side of the input field",
       required: "false",
       defaultValue: "",
       value: "ReactNode",
+    },
+    {
+      name: "rightElementVariant",
+      description: "Style variant for the right element container",
+      required: "false",
+      defaultValue: "default",
+      value: "default | filled",
+    },
+    {
+      name: "customContent",
+      description: "Custom content to be rendered inside the input wrapper",
+      required: "false",
+      defaultValue: "",
+      value: "ReactNode",
+    },
+    {
+      name: "disabled",
+      description: "Disables the input field",
+      required: "false",
+      defaultValue: "false",
+      value: "boolean",
     },
   ]}
 />

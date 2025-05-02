@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, Card, Input, Spacer, Text } from '@/components'
-import { useRouterContext } from '@/context'
+import { Alert, Button, Card, Input, Link, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -25,7 +24,6 @@ const forgotPasswordSchema = z.object({
 })
 
 export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswordPageProps) {
-  const { Link } = useRouterContext()
   const [serverError, setServerError] = useState<string | null>(null)
   const {
     register,
@@ -70,7 +68,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
 
   return (
     <Floating1ColumnLayout
-      className="flex-col bg-cn-background-1 pt-20 sm:pt-[186px]"
+      className="bg-cn-background-1 flex-col pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
@@ -107,10 +105,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
           </form>
           <Spacer size={4} />
           <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
-            Don’t have an account?{' '}
-            <Link className="text-cn-foreground-1" to="/signup">
-              Sign up
-            </Link>
+            Don’t have an account? <Link to="/signup">Sign up</Link>
           </Text>
         </Card.Content>
       </Card.Root>

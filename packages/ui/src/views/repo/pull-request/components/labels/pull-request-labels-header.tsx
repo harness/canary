@@ -1,7 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
-import { type LinkProps } from 'react-router-dom'
 
-import { Button, DropdownMenu, Icon, Link, ScrollArea, SearchBox, Tag } from '@/components'
+import { Button, DropdownMenu, Icon, Link, LinkProps, ScrollArea, SearchBox, Tag } from '@/components'
 import { useDebounceSearch } from '@/hooks'
 import {
   HandleAddLabelType,
@@ -186,8 +185,7 @@ export const LabelsHeader = ({
               <DropdownMenu.Separator />
 
               <div className="p-2">
-                {/* TODO: replace with Link variant when its update is merged (https://github.com/harness/canary/pull/1134) */}
-                <Link className="hover:decoration-foreground-8 text-cn-foreground-1" {...editLabelsProps}>
+                <Link variant="secondary" {...editLabelsProps}>
                   {t('views:pullRequests.editLabels', 'Edit labels')}
                 </Link>
               </div>

@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Button, Checkbox, ListActions, Option, Pagination, SearchBox, SkeletonList } from '@/components'
+import { Button, Checkbox, ListActions, Pagination, SearchBox, SkeletonList } from '@/components'
 import { useRouterContext } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { ILabelsStore, SandboxLayout, TranslationStore } from '@/views'

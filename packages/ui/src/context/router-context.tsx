@@ -1,12 +1,12 @@
 import { ComponentType, createContext, ReactNode, useContext } from 'react'
-import {
-  type LinkProps,
-  type Location,
-  type NavigateFunction,
-  type NavLinkProps,
-  type OutletProps,
-  type Params,
-  type UIMatch
+import type {
+  LinkProps,
+  Location,
+  NavigateFunction,
+  NavLinkProps,
+  OutletProps,
+  Params,
+  UIMatch
 } from 'react-router-dom'
 
 import { RouterContextProvider as FiltersRouterContextProvider } from '@harnessio/filters'

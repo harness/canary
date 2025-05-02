@@ -1,5 +1,5 @@
 import { MouseEvent, RefAttributes } from 'react'
-import type { LinkProps } from 'react-router-dom'
+import type { LinkProps as LinkBaseProps } from 'react-router-dom'
 
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
@@ -20,7 +20,7 @@ export const linkVariants = cva('cn-link', {
   }
 })
 
-interface StyledLinkProps extends LinkProps, RefAttributes<HTMLAnchorElement>, VariantProps<typeof linkVariants> {
+interface LinkProps extends LinkBaseProps, RefAttributes<HTMLAnchorElement>, VariantProps<typeof linkVariants> {
   /**
    * If true, the 'chevron-left' icon will be displayed before the link text.
    * If a string, that string will be used as the icon name.
@@ -38,7 +38,7 @@ interface StyledLinkProps extends LinkProps, RefAttributes<HTMLAnchorElement>, V
   disabled?: boolean
 }
 
-const StyledLink = ({
+const Link = ({
   className,
   variant = 'default',
   children,
@@ -48,8 +48,8 @@ const StyledLink = ({
   size,
   onClick,
   ...props
-}: StyledLinkProps) => {
-  const { Link } = useRouterContext()
+}: LinkProps) => {
+  const { Link: LinkBase } = useRouterContext()
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     if (disabled) {
@@ -61,7 +61,7 @@ const StyledLink = ({
   }
 
   return (
-    <Link
+    <LinkBase
       {...props}
       className={cn(linkVariants({ variant, size }), className)}
       onClick={handleClick}
@@ -79,8 +79,8 @@ const StyledLink = ({
           skipSize
         />
       )}
-    </Link>
+    </LinkBase>
   )
 }
 
-export { StyledLink as Link, type StyledLinkProps as LinkProps }
+export { Link, type LinkProps }

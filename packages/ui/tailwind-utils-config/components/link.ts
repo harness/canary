@@ -5,6 +5,15 @@ export default {
     gap: 'var(--cn-link-gap-default)',
     width: 'fit-content',
     font: 'var(--cn-comp-link-default)',
+    textDecoration: 'underline transparent',
+    textUnderlineOffset: '4px',
+    transitionProperty: 'color, text-decoration-color',
+    transitionDuration: '0.15s',
+    transitionTimingFunction: 'ease-in-out',
+
+    '&:focus-visible': {
+      outline: 'none'
+    },
 
     '&:where(.cn-link-default)': {
       color: 'var(--cn-comp-link-text)'
@@ -21,21 +30,20 @@ export default {
 
     '&:where([data-disabled="false"])': {
       '&:where(.cn-link-default)': {
-        '&:hover, &:where([data-hovered="true"])': {
+        '&:hover, &:focus, &:where([data-hovered="true"])': {
           color: 'var(--cn-comp-link-text-hover)'
         }
       },
 
-      '&:hover, &:where([data-hovered="true"])': {
-        textDecoration: 'underline',
-        textUnderlineOffset: '4px'
+      '&:hover, &:focus, &:where([data-hovered="true"])': {
+        textDecorationColor: 'inherit'
       }
     },
 
     '&:where([data-disabled="true"])': {
       color: 'var(--cn-state-disabled-text)',
 
-      '&:hover, > a:hover': {
+      '&:hover, &:focus': {
         cursor: 'not-allowed'
       }
     },

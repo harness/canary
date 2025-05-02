@@ -105,22 +105,23 @@ import { Link } from '@harnessio/ui/components'
 // ...
 
 return (
-  <>
-    <Link href="/your-url-here">Username</Link>
-  </>
+  <Link href="/your-url-here">Username</Link>
 )
 ```
 
 ## API Reference
 
-The `Label` component provides a styled label for form elements with customizable options.
+The `Link` component allows for the creation of accessible hyperlinks with consistent styling. It supports multiple visual variants, sizes, and icon placements to enhance navigation experiences throughout the application.
 
 ```typescript jsx
 <Link
   href="/your-url-here"
-  variant="secondary"
-  size="sm"
-  prefixIcon
+  className="additional-classes" // [OPTIONAL] Additional CSS classes to apply to the link
+  variant="secondary" // [OPTIONAL] The style variant of the link
+  prefixIcon // [OPTIONAL] Displays an icon before the link text
+  suffixIcon // [OPTIONAL] Displays an icon after the link text
+  disabled // [OPTIONAL] Disables the link, preventing clicks and changing its appearance
+  size="sm" // [OPTIONAL] The size of the link
 >
   Link Text
 </Link>

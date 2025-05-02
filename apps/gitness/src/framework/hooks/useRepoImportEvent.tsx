@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { RepoRepositoryOutput } from '@harnessio/code-service-client'
-import { useToast } from '@harnessio/ui/components'
+import { Link, useToast } from '@harnessio/ui/components'
 
 import { useRepoStore } from '../../pages-v2/repo/stores/repo-list-store'
 import { transformRepoList } from '../../pages-v2/repo/transform-utils/repo-list-transform'
@@ -26,12 +26,7 @@ export const useRepoImportEvents = () => {
         id: importToastId ?? '',
         title: 'Successfully imported',
         description: (
-          <Link
-            className="text-cn-foreground-accent hover:underline"
-            to={routes.toRepoSummary({ spaceId, repoId: importRepoIdentifier ?? '' })}
-          >
-            {importRepoIdentifier}
-          </Link>
+          <Link to={routes.toRepoSummary({ spaceId, repoId: importRepoIdentifier ?? '' })}>{importRepoIdentifier}</Link>
         ),
         action: null,
         duration: 5000,

@@ -20,7 +20,7 @@
     "1": {
       "$type": "color",
       "$value": "{chrome.50}",
-      "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text, primary buttons."
+      "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text."
     },
     "2": {
       "$type": "color",
@@ -127,7 +127,7 @@
       "text": {
         "$type": "color",
         "$value": "{chrome.700}",
-        "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
+        "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options."
       },
       "bg": {
         "$type": "color",

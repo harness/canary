@@ -246,7 +246,7 @@
         "$description": "Dialog headers."
       }
     },
-    "markdown-editor": {
+    "markdown": {
       "title": {
         "h1": {
           "$type": "typography",

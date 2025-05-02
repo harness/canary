@@ -14990,12 +14990,6 @@
       "caption.soft": "S:80ee38bd2b28f54cfd49dcd7145a5e4e3336dbe7,",
       "heading.small": "S:61fab6fed30dea60e495ac6c595a79d59cc4a69c,",
       "body.code": "S:7b5065654e86755ce767176dadc8dc008365d77c,",
-      "comp.markdown-editor.title.h1": "S:f1b57a327f5b8b6ee1a5c2c358366b73a2f6f8ab,",
-      "comp.markdown-editor.title.h2": "S:b266584196fcbce5eedb899c13fa475efc4a009c,",
-      "comp.markdown-editor.title.h3": "S:464606c9cebe20fecf8ca3bb3f35f8560f0bd224,",
-      "comp.markdown-editor.content.lead": "S:594b906739ae96b94950934ff732ef0c56c8f77f,",
-      "comp.markdown-editor.content.emphasized": "S:061aad96d53bf2820b1e5e6041f8e6084698c7ee,",
-      "comp.markdown-editor.content.paragraph": "S:6c5c7b213514a90340c62995f71422ea492b063a,",
       "comp.dialog.title": "S:e322c6b501907f19d24264c95d5938de89a66308,",
       "caption.tight.normal": "S:a754693d20b2d004c06bf550fb1ccce2217f1d70,",
       "caption.tight.soft": "S:9d8e697e9a8171536a273400380563308b45ab96,",
@@ -15006,7 +15000,13 @@
       "body.single-line.normal": "S:1fff25f6aa5bcbf8f5e75573b06f5568c572710e,",
       "body.single-line.strong": "S:7d1a7534c09046cc7649c226896c36f69a0d761a,",
       "caption.single-line.normal": "S:48ca02008d90879d690d786d949f1a365a114acb,",
-      "caption.single-line.soft": "S:8db313f55198f8be6831dc9d1643512c28e7a84c,"
+      "caption.single-line.soft": "S:8db313f55198f8be6831dc9d1643512c28e7a84c,",
+      "comp.markdown.title.h1": "S:f1b57a327f5b8b6ee1a5c2c358366b73a2f6f8ab,",
+      "comp.markdown.title.h2": "S:b266584196fcbce5eedb899c13fa475efc4a009c,",
+      "comp.markdown.title.h3": "S:464606c9cebe20fecf8ca3bb3f35f8560f0bd224,",
+      "comp.markdown.content.lead": "S:594b906739ae96b94950934ff732ef0c56c8f77f,",
+      "comp.markdown.content.emphasized": "S:061aad96d53bf2820b1e5e6041f8e6084698c7ee,",
+      "comp.markdown.content.paragraph": "S:6c5c7b213514a90340c62995f71422ea492b063a,"
     },
     "selectedTokenSets": {
       "breakpoint/desktop": "enabled",

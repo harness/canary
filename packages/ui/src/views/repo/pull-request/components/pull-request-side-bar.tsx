@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { LinkProps } from 'react-router-dom'
+import { type LinkProps } from 'react-router-dom'
 
 import { PrincipalType } from '@/types'
 import {

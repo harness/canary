@@ -1,6 +1,6 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { LinkProps } from 'react-router-dom'
+import { type LinkProps } from 'react-router-dom'
 
 import { Avatar, Button, Icon, Link, NoData, SkeletonList, Spacer, Tabs } from '@/components'
 import { useRouterContext } from '@/context'

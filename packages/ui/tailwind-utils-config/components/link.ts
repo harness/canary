@@ -2,12 +2,12 @@ export default {
   '.cn-link': {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: 'var(--cn-btn-link-gap-default)',
+    gap: 'var(--cn-link-gap-default)',
     width: 'fit-content',
-    '@apply font-body-tight-normal': '',
+    font: 'var(--cn-comp-link-default)',
 
     '&:where(.cn-link-default)': {
-      color: 'var(--cn-comp-link-default)'
+      color: 'var(--cn-comp-link-text)'
     },
 
     '&:where(.cn-link-secondary)': {
@@ -15,18 +15,18 @@ export default {
     },
 
     '&:where(.cn-link-sm)': {
-      gap: 'var(--cn-btn-link-gap-sm)',
-      '@apply font-caption-tight-normal': ''
+      gap: 'var(--cn-link-gap-sm)',
+      font: 'var(--cn-comp-link-sm)'
     },
 
     '&:where([data-disabled="false"])': {
       '&:where(.cn-link-default)': {
-        '&:hover, &:has([data-hovered="true"])': {
-          color: 'var(--cn-comp-link-hover)'
+        '&:hover, &:where([data-hovered="true"])': {
+          color: 'var(--cn-comp-link-text-hover)'
         }
       },
 
-      '&:hover, &:has([data-hovered="true"])': {
+      '&:hover, &:where([data-hovered="true"])': {
         textDecoration: 'underline',
         textUnderlineOffset: '4px'
       }

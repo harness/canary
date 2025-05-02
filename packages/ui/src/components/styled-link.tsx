@@ -21,8 +21,20 @@ export const linkVariants = cva('cn-link', {
 })
 
 interface StyledLinkProps extends LinkProps, RefAttributes<HTMLAnchorElement>, VariantProps<typeof linkVariants> {
+  /**
+   * If true, the 'chevron-left' icon will be displayed before the link text.
+   * If a string, that string will be used as the icon name.
+   */
   prefixIcon?: boolean | IconProps['name']
+  /**
+   * If true, the 'arrow-to-top-right' icon will be displayed before the link text.
+   * If a string, that string will be used as the icon name.
+   */
   suffixIcon?: boolean | IconProps['name']
+  /**
+   * If true, the link will be disabled and not clickable.
+   * The default value is false.
+   */
   disabled?: boolean
 }
 
@@ -49,13 +61,17 @@ const StyledLink = ({
   }
 
   return (
-    <span className={cn(linkVariants({ variant, size }), className)} data-disabled={disabled}>
+    <Link
+      {...props}
+      className={cn(linkVariants({ variant, size }), className)}
+      onClick={handleClick}
+      data-disabled={disabled}
+      aria-disabled={disabled}
+    >
       {!!prefixIcon && (
         <Icon className="cn-link-icon" name={typeof prefixIcon === 'string' ? prefixIcon : 'chevron-left'} skipSize />
       )}
-      <Link {...props} onClick={handleClick} aria-disabled={disabled}>
-        {children}
-      </Link>
+      {children}
       {!!suffixIcon && (
         <Icon
           className="cn-link-icon"
@@ -63,7 +79,7 @@ const StyledLink = ({
           skipSize
         />
       )}
-    </span>
+    </Link>
   )
 }
 

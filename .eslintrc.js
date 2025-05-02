@@ -81,19 +81,20 @@ module.exports = {
   overrides: [
     {
       files: [
-        'packages/ui/src/**/*.{ts,tsx}',
-        'packages/filters/src/**/*.{ts,tsx}',
-        'packages/forms/src/**/*.{ts,tsx}',
-        'packages/pipeline-graph/src/**/*.{ts,tsx}',
-        'packages/core-design-system/src/**/*.{ts,tsx}',
-        'packages/yaml-editor/src/**/*.{ts,tsx}'
+        'packages/ui/**/*.{ts,tsx}',
+        'packages/filters/**/*.{ts,tsx}',
+        'packages/forms/**/*.{ts,tsx}',
+        'packages/pipeline-graph/**/*.{ts,tsx}',
+        'packages/core-design-system/**/*.{ts,tsx}',
+        'packages/yaml-editor/**/*.{ts,tsx}'
       ],
       rules: {
-        'no-restricted-imports': ['error', {
+        'no-restricted-imports': 'off',
+        '@typescript-eslint/no-restricted-imports': ['error', {
           paths: [{
             name: 'react-router-dom',
-            importNames: ['Link'],
-            message: 'Please use our custom Link component instead.'
+            message: 'Please use only type imports from react-router-dom.',
+            allowTypeImports: true
           }]
         }]
       }

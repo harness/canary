@@ -244,9 +244,6 @@ importers:
       '@git-diff-view/react':
         specifier: ^0.0.16
         version: 0.0.16(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
-      '@harness/microfrontends':
-        specifier: ^2.127.0
-        version: 2.127.0
       '@swc/core':
         specifier: ^1.9.3
         version: 1.11.7
@@ -2380,9 +2377,6 @@ packages:
   '@gulpjs/to-absolute-glob@4.0.0':
     resolution: {integrity: sha512-kjotm7XJrJ6v+7knhPaRgaT6q8F8K2jiafwYdNHLzmV0uGLuZY43FK6smNSHUPrhq5kX2slCUy+RGG/xGqmIKA==}
     engines: {node: '>=10.13.0'}
-
-  '@harness/microfrontends@2.127.0':
-    resolution: {integrity: sha512-jdHMb1MYMVfhiVgR1l+TG3EQ1LPIgbKFWTQTKF4Q0lAnC7mKc7izfOkxFvok1w0FxtYxSuzUdg6tVLCPpNI8pQ==, tarball: https://npm.pkg.github.com/download/@harness/microfrontends/2.127.0/9356993466d39bf476d0b782e07266d71cb1f8c7}
 
   '@harnessio/code-service-client@3.5.0':
     resolution: {integrity: sha512-iHWYr3YOR5dICegth6+BcLTlcBsV1yw0+u6Rwz+iOWGEZrEhKLt1D+uUVy+Xa+5zJt8gDk5iWrQ9n3RxIdf/cA==}
@@ -11914,8 +11908,6 @@ snapshots:
   '@gulpjs/to-absolute-glob@4.0.0':
     dependencies:
       is-negated-glob: 1.0.0
-
-  '@harness/microfrontends@2.127.0': {}
 
   '@harnessio/code-service-client@3.5.0': {}
 

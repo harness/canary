@@ -1,6 +1,26 @@
 import { createContext } from 'react'
 
-import { Hooks, Scope } from '@harness/microfrontends'
+/**
+ * @todo import from '@harness/microfrontends'
+ * Currently, unable to do so due to npm access issues.
+ */
+export interface Scope {
+  accountId?: string
+  orgIdentifier?: string
+  projectIdentifier?: string
+}
+
+export interface UseLogoutReturn {
+  forceLogout: () => void
+}
+
+export declare const useLogout: () => UseLogoutReturn
+
+export interface Hooks {
+  useLogout?: typeof useLogout
+}
+
+/**************/
 
 export type Unknown = any
 

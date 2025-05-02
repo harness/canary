@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, matchPath, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
 
-import { Hooks, Scope } from '@harness/microfrontends'
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
@@ -11,7 +10,7 @@ import { PortalProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
-import { MFEContext, Unknown } from './framework/context/MFEContext'
+import { Hooks, MFEContext, Scope, Unknown } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
@@ -70,9 +69,6 @@ function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFER
 }
 
 interface AppMFEProps {
-  /**
-   * These types will be later referred from "ChildComponentProps" from @harness/microfrontends
-   *  */
   scope: Scope
   renderUrl: string
   on401?: () => void
@@ -93,7 +89,7 @@ interface AppMFEProps {
     toOrgSettings: () => string
     toProjectSettings: () => string
   }>
-  hooks: Omit<Hooks, 'useDocumentTitle'>
+  hooks: Hooks
 }
 
 function decode<T = unknown>(arg: string): T {

@@ -53,6 +53,7 @@ export default function RepoSummaryPage() {
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
+  const [tokenGenerationError, setTokenGenerationError] = useState<string | null>(null)
 
   const { currentUser } = useAppContext()
   const isMFE = useIsMFE()
@@ -167,7 +168,6 @@ export default function RepoSummaryPage() {
             : 'No Expiration',
           token: newToken.access_token ?? 'Token not available'
         }
-        console.log('tokenData dfamnit', tokenData)
         setCreatedTokenData(tokenData)
         setShowTokenDialog(true)
         setSuccessTokenDialog(true)
@@ -176,7 +176,6 @@ export default function RepoSummaryPage() {
   )
 
   const handleCreateToken = () => {
-    console.log('isMFE clicked', isMFE)
     if (isMFE) {
       const mfeTokenHash = generateAlphaNumericHash(5)
       setTokenHash(mfeTokenHash)
@@ -189,6 +188,7 @@ export default function RepoSummaryPage() {
     }
   }
   useEffect(() => {
+    console.log(MFEtokenData)
     if (MFEtokenData && MFEtokenData.status === 'SUCCESS') {
       const tokenDataNew = {
         identifier: `code_token_${tokenHash}`,
@@ -201,6 +201,10 @@ export default function RepoSummaryPage() {
       setShowTokenDialog(true)
       setSuccessTokenDialog(true)
       setMFETokenFlag(false)
+      setTokenGenerationError(null)
+    } else if (MFEtokenData && MFEtokenData.data.status === 'ERROR') {
+      console.log(MFEtokenData.message)
+      setTokenGenerationError(MFEtokenData.data.message)
     }
   }, [MFEtokenData, tokenHash])
 
@@ -326,6 +330,7 @@ export default function RepoSummaryPage() {
           <BranchSelectorContainer onSelectBranchorTag={selectBranchOrTag} selectedBranch={selectedBranchOrTag} />
         }
         toRepoFileDetails={({ path }: { path: string }) => path}
+        tokenGenerationError={tokenGenerationError}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

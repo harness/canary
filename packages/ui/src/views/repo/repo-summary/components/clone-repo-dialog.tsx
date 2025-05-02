@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Button, CopyButton, DropdownMenu, Icon, Input, Tabs } from '@/components'
+import { Alert, Button, CopyButton, DropdownMenu, Icon, Input, Tabs } from '@/components'
 import { TranslationStore } from '@/views'
 
 export interface CloneRepoDialogProps {
@@ -8,6 +8,7 @@ export interface CloneRepoDialogProps {
   httpsUrl: string
   handleCreateToken: () => void
   useTranslationStore: () => TranslationStore
+  tokenGenerationError?: string | null
 }
 
 export enum CloneRepoTabs {
@@ -19,7 +20,8 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
   httpsUrl,
   sshUrl,
   handleCreateToken,
-  useTranslationStore
+  useTranslationStore,
+  tokenGenerationError
 }) => {
   const [currentTab, setCurrentTab] = useState(CloneRepoTabs.HTTPS)
   const { t } = useTranslationStore()
@@ -93,6 +95,11 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                   {t('views:repos.cloneCredential', 'Generate Clone Credential')}
                 </Button>
               </div>
+              {tokenGenerationError && (
+                <Alert.Container variant="destructive" className="mt-2">
+                  <Alert.Description>{tokenGenerationError}</Alert.Description>
+                </Alert.Container>
+              )}
             </>
           ) : (
             <Input

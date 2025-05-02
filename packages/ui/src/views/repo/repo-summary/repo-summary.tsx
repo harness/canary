@@ -74,6 +74,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   isRepoEmpty?: boolean
   branchSelectorRenderer: React.ReactElement
   toRepoFileDetails?: ({ path }: { path: string }) => string
+  tokenGenerationError?: string | null
 }
 
 export function RepoSummaryView({
@@ -102,7 +103,8 @@ export function RepoSummaryView({
   renderSidebarComponent,
   isRepoEmpty,
   branchSelectorRenderer,
-  toRepoFileDetails
+  toRepoFileDetails,
+  tokenGenerationError
 }: RepoSummaryViewProps) {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
@@ -197,6 +199,7 @@ export function RepoSummaryView({
                     httpsUrl={repository?.git_url ?? 'could not fetch url'}
                     handleCreateToken={handleCreateToken}
                     useTranslationStore={useTranslationStore}
+                    tokenGenerationError={tokenGenerationError}
                   />
                 </ButtonGroup>
               </ListActions.Right>

@@ -30,6 +30,7 @@ export default function RepoCommitDetailsPage({ showSidebar = true }: { showSide
   return (
     <RepoCommitDetailsView
       toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
+      toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
       useCommitDetailsStore={useCommitDetailsStore}
       useTranslationStore={useTranslationStore}
       showSidebar={showSidebar}

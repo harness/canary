@@ -8,6 +8,7 @@ import { timeAgo } from '@utils/utils'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toCode?: ({ sha }: { sha: string }) => string
 }
 export interface RepoCommitDetailsViewProps extends RoutingProps {
   useCommitDetailsStore: () => ICommitDetailsStore
@@ -19,9 +20,10 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   useCommitDetailsStore,
   useTranslationStore,
   showSidebar = true,
-  toCommitDetails
+  toCommitDetails,
+  toCode
 }) => {
-  const { Outlet } = useRouterContext()
+  const { Outlet, Link } = useRouterContext()
   const { t } = useTranslationStore()
   const { commitData, isVerified } = useCommitDetailsStore()
 
@@ -59,7 +61,11 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
         <div className="mt-5 rounded-md border border-cn-borders-2">
           <div className="flex items-center justify-between rounded-t-md border-b border-cn-borders-2 bg-cn-background-2 px-4 py-3">
             <span className="text-14 font-mono font-medium leading-snug text-cn-foreground-1">{commitData?.title}</span>
-            <Button variant="outline">{t('views:commits.browseFiles', 'Browse files')}</Button>
+            <Button variant="outline" asChild>
+              <Link to={toCode?.({ sha: commitData?.sha || '' }) || ''}>
+                {t('views:commits.browseFiles', 'Browse files')}
+              </Link>
+            </Button>
           </div>
           <div className="flex items-center justify-between px-4 py-3">
             {/* TODO: get branch name from commitData */}

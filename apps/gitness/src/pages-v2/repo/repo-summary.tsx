@@ -110,8 +110,9 @@ export default function RepoSummaryPage() {
 
   const [MFETokenFlag, setMFETokenFlag] = useState(false)
   const [showTokenDialog, setShowTokenDialog] = useState(false)
+  const [tokenHash, setTokenHash] = useState('')
   const MFEtokenData = isMFE
-    ? customHooks.useGenerateToken(generateAlphaNumericHash(5), currentUser?.uid, MFETokenFlag)
+    ? customHooks.useGenerateToken(MFETokenFlag ? tokenHash : '', currentUser?.uid || '', MFETokenFlag)
     : null
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
@@ -177,6 +178,8 @@ export default function RepoSummaryPage() {
   const handleCreateToken = () => {
     console.log('isMFE clicked', isMFE)
     if (isMFE) {
+      const mfeTokenHash = generateAlphaNumericHash(5)
+      setTokenHash(mfeTokenHash)
       setMFETokenFlag(true)
     } else {
       const body = {
@@ -188,7 +191,7 @@ export default function RepoSummaryPage() {
   useEffect(() => {
     if (MFEtokenData && MFEtokenData.status === 'SUCCESS') {
       const tokenDataNew = {
-        identifier: MFEtokenData.token?.identifier ?? 'Unknown',
+        identifier: `code_token_${tokenHash}`,
         lifetime: MFEtokenData.token?.expires_at
           ? new Date(MFEtokenData.token.expires_at).toLocaleDateString()
           : 'No Expiration',
@@ -199,7 +202,7 @@ export default function RepoSummaryPage() {
       setSuccessTokenDialog(true)
       setMFETokenFlag(false)
     }
-  }, [MFEtokenData])
+  }, [MFEtokenData, tokenHash])
 
   const repoEntryPathToFileTypeMap: Map<string, OpenapiGetContentOutput['type']> = useMemo(() => {
     const entries = repoDetails?.content?.entries

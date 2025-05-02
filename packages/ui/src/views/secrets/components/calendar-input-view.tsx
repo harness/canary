@@ -1,4 +1,4 @@
-import { JSX, useEffect, useRef, useState } from 'react'
+import { JSX } from 'react'
 
 import { Calendar, Input, Popover } from '@/components'
 
@@ -13,29 +13,10 @@ export const CalendarInputView = ({
   setValue,
   placeholder = 'Select date'
 }: CalendarInputViewProps): JSX.Element => {
-  const [isOpen, setIsOpen] = useState(false)
-  // const calendarRef = useRef<HTMLDivElement>(null)
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
     setValue(new Date(inputValue))
   }
-
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
-  //       setIsOpen(false)
-  //     }
-  //   }
-
-  //   if (isOpen) {
-  //     document.addEventListener('mousedown', handleClickOutside)
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside)
-  //   }
-  // }, [isOpen])
 
   return (
     <Popover.Root>
@@ -44,7 +25,6 @@ export const CalendarInputView = ({
           type="text"
           value={value ? new Date(value).toLocaleDateString() : ''}
           onChange={handleInputChange}
-          onClick={() => setIsOpen(true)}
           placeholder={placeholder}
           className="cursor-pointer"
         />

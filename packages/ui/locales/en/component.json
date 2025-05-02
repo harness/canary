@@ -121,8 +121,8 @@
   },
   "sort": {
     "defaultLabel": "Sort",
+    "resetSort": "Reset sort",
     "inputPlaceholder": "Sort by...",
-    "buttonLabel": "Reset sort",
     "lastUpdated": "Last updated",
     "stars": "Stars",
     "forks": "Forks",

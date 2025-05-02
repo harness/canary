@@ -1,0 +1,37 @@
+import { Icon } from '@/components'
+import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
+
+import { useSort } from './sort-context'
+import { SortOption } from './type'
+
+interface SortTriggerProps {
+  displayLabel?: React.ReactNode | string
+  buttonLabel?: string
+}
+
+const SortSelect = ({ displayLabel, buttonLabel }: SortTriggerProps) => {
+  const { sortOptions, sortSelections, updateSortSelections } = useSort()
+  const filteredSortOptions = sortOptions.filter(option => !sortSelections.some(sort => sort.type === option.value))
+  return (
+    <SearchableDropdown<SortOption>
+      displayLabel={
+        <>
+          <span className="text-cn-foreground-2 hover:text-cn-foreground-1 flex items-center gap-x-1">
+            {displayLabel}
+          </span>
+          <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
+        </>
+      }
+      inputPlaceholder="Select..."
+      options={filteredSortOptions}
+      onChange={option => updateSortSelections([...sortSelections, { type: option.value, direction: 'asc' }])}
+      customFooter={
+        <button className="w-full font-medium" onClick={() => updateSortSelections([])}>
+          {buttonLabel}
+        </button>
+      }
+    />
+  )
+}
+
+export default SortSelect

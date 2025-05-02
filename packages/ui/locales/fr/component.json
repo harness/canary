@@ -121,8 +121,9 @@
   },
   "sort": {
     "defaultLabel": "Trier",
-    "inputPlaceholder": "Trier par...",
+    "resetSort": "Reset sort",
     "buttonLabel": "Réinitialiser le tri",
+    "inputPlaceholder": "Trier par...",
     "lastUpdated": "Dernière mise à jour",
     "stars": "Étoiles",
     "forks": "Bifurcations",

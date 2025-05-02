@@ -166,7 +166,7 @@ export default function RepoSummaryPage() {
             : 'No Expiration',
           token: newToken.access_token ?? 'Token not available'
         }
-
+        console.log('tokenData dfamnit', tokenData)
         setCreatedTokenData(tokenData)
         setShowTokenDialog(true)
         setSuccessTokenDialog(true)
@@ -175,6 +175,7 @@ export default function RepoSummaryPage() {
   )
 
   const handleCreateToken = () => {
+    console.log('isMFE clicked', isMFE)
     if (isMFE) {
       setMFETokenFlag(true)
     } else {
@@ -185,7 +186,7 @@ export default function RepoSummaryPage() {
     }
   }
   useEffect(() => {
-    if (MFEtokenData) {
+    if (MFEtokenData && MFEtokenData.status === 'SUCCESS') {
       const tokenDataNew = {
         identifier: MFEtokenData.token?.identifier ?? 'Unknown',
         lifetime: MFEtokenData.token?.expires_at
@@ -196,6 +197,7 @@ export default function RepoSummaryPage() {
       setCreatedTokenData(tokenDataNew)
       setShowTokenDialog(true)
       setSuccessTokenDialog(true)
+      setMFETokenFlag(false)
     }
   }, [MFEtokenData])
 

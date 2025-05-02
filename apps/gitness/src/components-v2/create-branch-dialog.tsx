@@ -80,14 +80,14 @@ export const CreateBranchDialog = ({
       onSubmit={handleCreateBranch}
       isCreatingBranch={isCreatingBranch}
       error={createBranchError?.message}
-      renderProp={() => (
+      renderProp={
         <BranchSelectorContainer
           onSelectBranchorTag={selectBranchOrTag}
           selectedBranch={selectedBranchOrTag}
           preSelectedTab={preselectedTab}
-          dynamicWidth
+          // dynamicWidth
         />
-      )}
+      }
     />
   )
 }

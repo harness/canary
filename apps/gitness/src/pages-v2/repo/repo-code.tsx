@@ -45,7 +45,6 @@ export const RepoCode = () => {
   const [loading, setLoading] = useState(false)
   const [selectedBranch, setSelectedBranch] = useState(gitRefName || '')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
-
   const {
     data: { body: repoDetails } = {},
     refetch: refetchRepoContent,

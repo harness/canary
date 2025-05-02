@@ -49,6 +49,8 @@ export const RepoSidebar = () => {
   const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
 
+  console.log('at the top', selectedBranchOrTag)
+
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
@@ -79,11 +81,13 @@ export const RepoSidebar = () => {
 
   useEffect(() => {
     if (selectedGitRefBranch) {
+      console.log('in here 5')
       setSelectedBranchOrTag({
         name: selectedGitRefBranch.name ?? '',
         sha: selectedGitRefBranch.sha ?? ''
       })
     }
+    console.log('in here 4')
   }, [selectedGitRefBranch, fullGitRef])
 
   useEffect(() => {
@@ -118,10 +122,13 @@ export const RepoSidebar = () => {
   }, [tags])
 
   useEffect(() => {
+    console.log('somehting here for sure')
     if (!repository?.default_branch || !branchList.length) {
+      console.log('in here 1')
       return
     }
     if (!fullGitRef) {
+      console.log('in here 2')
       const defaultBranch = branchList.find(branch => branch.default)
       setSelectedBranchOrTag({
         name: defaultBranch?.name || repository?.default_branch || '',
@@ -129,12 +136,16 @@ export const RepoSidebar = () => {
         default: true
       })
     } else {
+      console.log('in here 3', selectedBranchOrTag)
       const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
       if (selectedGitRefBranch) {
+        console.log('in here 3a', selectedGitRefBranch)
         setSelectedBranchOrTag({ name: selectedGitRefBranch.name ?? '', sha: selectedGitRefBranch.sha ?? '' })
       } else if (selectedGitRefTag) {
+        console.log('in here 3b', selectedGitRefTag)
         setSelectedBranchOrTag(selectedGitRefTag)
       }
+      console.log('inside 3', selectedBranchOrTag)
     }
   }, [repository?.default_branch, fullGitRef, branchList, tagList])
 
@@ -161,6 +172,7 @@ export const RepoSidebar = () => {
   //       if (branch) {
   //         setSelectedBranchTag(branch)
   //         setSelectedRefType(type)
+  //         setSelectedBranchOrTag(branch)
   //         navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branch.name}`)
   //         setPreSelectedTab(BranchSelectorTab.BRANCHES)
   //       }
@@ -169,6 +181,7 @@ export const RepoSidebar = () => {
   //       if (tag) {
   //         setSelectedBranchTag(tag)
   //         setSelectedRefType(type)
+  //         setSelectedBranchOrTag(tag)
   //         navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + tag.name}`)
   //         setPreSelectedTab(BranchSelectorTab.TAGS)
   //       }
@@ -179,19 +192,22 @@ export const RepoSidebar = () => {
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      console.log('on change branchtag', branchTagName)
       if (type === BranchSelectorTab.BRANCHES) {
         setSelectedBranchOrTag(branchTagName)
         setSelectedBranchTag(branchTagName)
+        setSelectedRefType(type)
         setPreSelectedTab(BranchSelectorTab.BRANCHES)
         navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branchTagName.name}`)
       } else if (type === BranchSelectorTab.TAGS) {
         setSelectedBranchOrTag(branchTagName)
         setSelectedBranchTag(branchTagName)
+        setSelectedRefType(type)
         setPreSelectedTab(BranchSelectorTab.TAGS)
         navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + branchTagName.name}`)
       }
     },
-    [navigate, repoId, spaceId]
+    [navigate, repoId, spaceId, branchList, tagList]
   )
 
   const navigateToNewFile = useCallback(() => {
@@ -226,6 +242,8 @@ export const RepoSidebar = () => {
     },
     [fullGitRef, selectedBranchOrTag?.name, navigate, repoId]
   )
+
+  console.log('outside fn', selectedBranchOrTag)
 
   // TODO: repoId and spaceId must be defined
   if (!repoId) return <></>

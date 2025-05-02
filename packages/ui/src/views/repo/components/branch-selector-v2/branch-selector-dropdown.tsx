@@ -118,9 +118,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
         <div className="max-h-[360px] overflow-y-auto px-1">
           {filteredItems.map(item => {
-            const isSelected = selectedBranch
-              ? item.name === selectedBranch.name && item.sha === selectedBranch.sha
-              : false
+            const isSelected = selectedBranch ? item.name === selectedBranch.name : false
             const isDefault = activeTab === BranchSelectorTab.BRANCHES && (item as BranchSelectorListItem).default
 
             return (

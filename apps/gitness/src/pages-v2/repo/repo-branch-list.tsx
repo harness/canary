@@ -179,7 +179,7 @@ export function RepoBranchesListPage() {
         searchQuery={query}
         setSearchQuery={setQuery}
         createBranchError={createBranchError?.message}
-        toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
+        // toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
         toPullRequestCompare={({ diffRefs }: { diffRefs: string }) =>
           routes.toPullRequestCompare({ spaceId, repoId, diffRefs })
         }

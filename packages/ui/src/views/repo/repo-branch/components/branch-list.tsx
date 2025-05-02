@@ -29,7 +29,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   isDirtyList,
   setCreateBranchDialogOpen,
   handleResetFiltersAndPages,
-  toBranchRules,
+  // toBranchRules,
   toPullRequestCompare,
   toPullRequest,
   toCode,
@@ -219,10 +219,10 @@ export const BranchesList: FC<BranchListPageProps> = ({
                         title: t('views:repos.newPullReq', 'New pull request'),
                         to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || ''
                       },
-                      {
-                        title: t('views:repos.viewRules', 'View Rules'),
-                        to: toBranchRules?.()
-                      },
+                      // {
+                      //   title: t('views:repos.viewRules', 'View Rules'),
+                      //   to: toBranchRules?.()
+                      // },
                       {
                         title: t('views:repos.browse', 'Browse'),
                         to: toCode?.({ branchName: branch.name }) || ''

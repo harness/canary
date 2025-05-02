@@ -9,25 +9,27 @@ interface RepoSidebarProps {
   navigateToFile: (file: string) => void
   filesList?: string[]
   children: ReactNode
-  selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
-  useRepoBranchesStore: () => IBranchSelectorStore
+  // selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
+  // useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
-  searchQuery: string
-  setSearchQuery: (query: string) => void
+  // searchQuery: string
+  // setSearchQuery: (query: string) => void
+  branchSelectorRenderer: ReactNode
 }
 
 export const RepoSidebar = ({
   navigateToNewFile,
+  branchSelectorRenderer,
   navigateToFile,
   filesList,
   children,
-  selectBranchOrTag,
-  useRepoBranchesStore,
-  useTranslationStore,
-  searchQuery,
-  setSearchQuery
+  // selectBranchOrTag,
+  // useRepoBranchesStore,
+  useTranslationStore
+  // searchQuery,
+  // setSearchQuery
 }: RepoSidebarProps) => {
-  const { branchList } = useRepoBranchesStore()
+  // const { branchList } = useRepoBranchesStore()
 
   return (
     <>
@@ -36,7 +38,8 @@ export const RepoSidebar = ({
           <SandboxLayout.Content className="h-full overflow-hidden p-0">
             <div className="flex size-full flex-col gap-3 pt-5">
               <div className="grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-2 px-5">
-                {branchList && (
+                {branchSelectorRenderer}
+                {/* {branchList && (
                   <BranchSelector
                     onSelectBranch={selectBranchOrTag}
                     useRepoBranchesStore={useRepoBranchesStore}
@@ -44,7 +47,7 @@ export const RepoSidebar = ({
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
                   />
-                )}
+                )} */}
                 <Button iconOnly variant="outline" aria-label="Create new file" onClick={navigateToNewFile}>
                   <Icon size={16} name="plus" className="text-icons-3" />
                 </Button>

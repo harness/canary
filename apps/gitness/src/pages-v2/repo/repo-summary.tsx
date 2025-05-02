@@ -53,6 +53,7 @@ export default function RepoSummaryPage() {
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
+  const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const [tokenGenerationError, setTokenGenerationError] = useState<string | null>(null)
 
   const { currentUser } = useAppContext()
@@ -123,9 +124,11 @@ export default function RepoSummaryPage() {
       if (type === BranchSelectorTab.BRANCHES) {
         setGitRef(branchTagName.name)
         setSelectedBranchOrTag(branchTagName)
+        setPreSelectedTab(BranchSelectorTab.BRANCHES)
       } else if (type === BranchSelectorTab.TAGS) {
         setGitRef(`${REFS_TAGS_PREFIX + branchTagName.name}`)
         setSelectedBranchOrTag(branchTagName)
+        setPreSelectedTab(BranchSelectorTab.TAGS)
       }
     },
     [navigate, repoId, spaceId]
@@ -203,7 +206,6 @@ export default function RepoSummaryPage() {
       setMFETokenFlag(false)
       setTokenGenerationError(null)
     } else if (MFEtokenData && MFEtokenData.data.status === 'ERROR') {
-      console.log(MFEtokenData.message)
       setTokenGenerationError(MFEtokenData.data.message)
     }
   }, [MFEtokenData, tokenHash])
@@ -327,7 +329,11 @@ export default function RepoSummaryPage() {
         navigateToProfileKeys={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
         isRepoEmpty={repository?.is_empty}
         branchSelectorRenderer={
-          <BranchSelectorContainer onSelectBranchorTag={selectBranchOrTag} selectedBranch={selectedBranchOrTag} />
+          <BranchSelectorContainer
+            onSelectBranchorTag={selectBranchOrTag}
+            selectedBranch={selectedBranchOrTag}
+            preSelectedTab={preSelectedTab}
+          />
         }
         toRepoFileDetails={({ path }: { path: string }) => path}
         tokenGenerationError={tokenGenerationError}

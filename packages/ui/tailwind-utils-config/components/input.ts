@@ -6,10 +6,16 @@ function createInputThemeStyles() {
   const styles: CSSRuleObject = {}
 
   themes.forEach(theme => {
-    styles[`&:where(.cn-input-${theme})`] = {
+    styles[`&:where(.cn-input-${theme}):not(:has(input[disabled]))`] = {
       borderColor: `var(--cn-border-${theme})`,
+      boxShadow: `var(--cn-ring-${theme})`,
 
-      '&:where(:focus-visible)': {
+      '&:where(:hover)': {
+        borderColor: `var(--cn-border-${theme})`,
+        boxShadow: `var(--cn-ring-${theme}-hover)`
+      },
+
+      '&:where(:focus-within)': {
         borderColor: `var(--cn-border-${theme})`,
         boxShadow: `var(--cn-ring-${theme})`
       }
@@ -21,50 +27,70 @@ function createInputThemeStyles() {
 
 export default {
   '.cn-input': {
-    height: 'var(--cn-input-size-default)',
-    color: 'var(--cn-text-1)',
-    backgroundColor: 'var(--cn-bg-2)',
-    borderRadius: 'var(--cn-input-radius)',
-    border: 'var(--cn-input-border) solid var(--cn-border-2)',
-    padding:
-      'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)',
-    '@apply font-body-tight-strong w-full transition-[color,box-shadow]': '',
+    '&-input': {
+      height: '100%',
+      minWidth: '0',
+      maxWidth: '100%',
+      borderRadius: 'var(--cn-input-radius)',
+      padding:
+        'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)',
+      '@apply font-body-normal w-full text-inherit bg-transparent': '',
 
-    '&:where(:focus-visible)': {
-      borderColor: 'var(--cn-border-1)',
-      boxShadow: 'var(--cn-ring-selected)',
-      outline: 'none'
-    },
-
-    '&:where([disabled])': {
-      backgroundColor: 'var(--cn-state-disabled-bg)',
-      color: 'var(--cn-state-disabled-text)',
-      borderColor: 'var(--cn-state-disabled-border)',
-      cursor: 'not-allowed',
+      '&:focus-visible': {
+        outline: 'none'
+      },
 
       '&::placeholder': {
-        color: 'var(--cn-state-disabled-text)'
+        color: 'var(--cn-text-3)'
+      },
+
+      '&:where([readonly])': {
+        backgroundColor: 'var(--cn-set-gray-soft-bg)'
+      },
+
+      '&:where([disabled])': {
+        cursor: 'not-allowed',
+
+        '&::placeholder': {
+          color: 'var(--cn-state-disabled-text)'
+        }
       }
     },
+    '&-container': {
+      color: 'var(--cn-text-1)',
+      height: 'var(--cn-input-size-default)',
+      border: 'var(--cn-input-border) solid var(--cn-border-2)',
+      borderRadius: 'var(--cn-input-radius)',
+      backgroundColor: 'var(--cn-bg-2)',
+      '@apply p-0 flex items-center transition-[color,box-shadow,border-color]': '',
 
-    '&:where([readonly])': {
-      backgroundColor: 'var(--cn-set-gray-soft-bg)'
-    },
+      '&:where(:focus-within)': {
+        borderColor: 'var(--cn-border-1)',
+        boxShadow: 'var(--cn-ring-selected)',
+        outline: 'none'
+      },
 
-    // '&:where(:hover):not([disabled])': {
-    //   borderColor: 'var(--cn-border-1)'
-    // },
+      '&:where(:has(input[disabled]))': {
+        backgroundColor: 'var(--cn-state-disabled-bg)',
+        borderColor: 'var(--cn-state-disabled-border)',
+        color: 'var(--cn-state-disabled-text)',
+        cursor: 'not-allowed'
+      },
 
-    '&::placeholder': {
-      color: 'var(--cn-text-3)'
-    },
+      '&:where(:hover):not(:has(input[disabled])):not(.cn-input-success, .cn-input-warning, .cn-input-danger)': {
+        borderColor: 'var(--cn-border-1)'
+      },
 
-    '&:where(.cn-input-sm)': {
-      height: 'var(--cn-input-size-sm)',
-      padding: 'var(--cn-input-sm-py) var(--cn-input-sm-pr) var(--cn-input-sm-py) var(--cn-input-sm-pl)'
-    },
+      '&:where(.cn-input-sm)': {
+        height: 'var(--cn-input-size-sm)',
 
-    ...createInputThemeStyles()
+        '&:where(.cn-input-input)': {
+          padding: 'var(--cn-input-sm-py) var(--cn-input-sm-pr) var(--cn-input-sm-py) var(--cn-input-sm-pl)'
+        }
+      },
+
+      ...createInputThemeStyles()
+    }
   }
 }
 

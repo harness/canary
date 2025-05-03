@@ -145,8 +145,8 @@ export default {
 
     // Icon Only
     '&:where(.cn-button-icon-only)': {
-      width: 'var(--cn-btn-size-icon)',
-      height: 'var(--cn-btn-size-icon)'
+      width: 'var(--cn-btn-size-default)',
+      height: 'var(--cn-btn-size-default)'
     },
 
     // Icon Only sizing

@@ -89,3 +89,5 @@ export * as StackedList from './stacked-list'
 export * as FileExplorer from './file-explorer'
 export * from './theme-selector-v2'
 export * from './language-selector'
+
+export * from './form-input'

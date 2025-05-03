@@ -191,7 +191,6 @@ export default function RepoSummaryPage() {
     }
   }
   useEffect(() => {
-    console.log(MFEtokenData)
     if (MFEtokenData && MFEtokenData.status === 'SUCCESS') {
       const tokenDataNew = {
         identifier: `code_token_${tokenHash}`,

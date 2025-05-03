@@ -28,7 +28,6 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
   const { spaceId, repoId } = useParams<PathParams>()
   const [branchTagQuery, setBranchTagQuery] = useState<string | null>(null)
   const [branchList, setBranchList] = useState<BranchData[]>([])
-  // const [defaultBranch, setDefaultBranch] = useState<BranchSelectorListItem | null>(null)
   const [tagList, setTagList] = useState<BranchSelectorListItem[]>([])
 
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
@@ -59,11 +58,6 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
   useEffect(() => {
     if (repository && !selectedBranch) {
       const defaultBranch = branches?.find(branch => branch.name === repository.default_branch)
-      // setDefaultBranch({
-      //   name: defaultBranch?.name ?? repository.default_branch ?? '',
-      //   sha: defaultBranch?.sha ?? '',
-      //   default: true
-      // })
 
       onSelectBranchorTag(
         { name: defaultBranch?.name ?? repository.default_branch ?? '', sha: defaultBranch?.sha ?? '', default: true },

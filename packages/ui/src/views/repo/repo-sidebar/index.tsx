@@ -2,18 +2,13 @@ import { ReactNode } from 'react'
 
 import { Button, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
-import { BranchSelector, BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@views/repo'
 
 interface RepoSidebarProps {
   navigateToNewFile: () => void
   navigateToFile: (file: string) => void
   filesList?: string[]
   children: ReactNode
-  // selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
-  // useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
-  // searchQuery: string
-  // setSearchQuery: (query: string) => void
   branchSelectorRenderer: ReactNode
 }
 
@@ -23,14 +18,8 @@ export const RepoSidebar = ({
   navigateToFile,
   filesList,
   children,
-  // selectBranchOrTag,
-  // useRepoBranchesStore,
   useTranslationStore
-  // searchQuery,
-  // setSearchQuery
 }: RepoSidebarProps) => {
-  // const { branchList } = useRepoBranchesStore()
-
   return (
     <>
       <div className="nested-sidebar-height sticky top-[var(--cn-page-nav-height)]">
@@ -39,15 +28,6 @@ export const RepoSidebar = ({
             <div className="flex size-full flex-col gap-3 pt-5">
               <div className="grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-2 px-5">
                 {branchSelectorRenderer}
-                {/* {branchList && (
-                  <BranchSelector
-                    onSelectBranch={selectBranchOrTag}
-                    useRepoBranchesStore={useRepoBranchesStore}
-                    useTranslationStore={useTranslationStore}
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                  />
-                )} */}
                 <Button iconOnly variant="outline" aria-label="Create new file" onClick={navigateToNewFile}>
                   <Icon size={16} name="plus" className="text-icons-3" />
                 </Button>

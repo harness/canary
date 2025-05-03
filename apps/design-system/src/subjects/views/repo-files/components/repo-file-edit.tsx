@@ -47,7 +47,7 @@ export const RepoFileEdit = () => {
         dryRun={noop}
         violation={false}
         bypassable={false}
-        currentBranch={repoFilesStore.branchSelectorStore.selectedBranchTag.name}
+        currentBranch={repoFilesStore.branchSelectorStore.selectedBranchTag?.name || ''}
         setAllStates={noop}
         isSubmitting={false}
       />
@@ -58,7 +58,7 @@ export const RepoFileEdit = () => {
         useTranslationStore={useTranslationStore}
         changeFileName={vel => setFileName(vel)}
         onBlurFileName={noop}
-        gitRefName={repoFilesStore.branchSelectorStore.selectedBranchTag.name}
+        gitRefName={repoFilesStore.branchSelectorStore.selectedBranchTag?.name || ''}
         fileName={fileName}
         handleOpenCommitDialog={() => toggleOpenCommitDialog(true)}
         handleCancelFileEdit={handleCancelFileEdit}

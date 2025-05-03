@@ -3,6 +3,7 @@ import { FC, ReactNode, useMemo } from 'react'
 import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
 import {
   BranchInfoBar,
+  BranchSelectorTab,
   CodeModes,
   CommitDivergenceType,
   FileLastChangeBar,
@@ -34,6 +35,7 @@ interface RepoFilesProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
   isLoadingRepoDetails: boolean
   toRepoFileDetails?: ({ path }: { path: string }) => string
+  refType: BranchSelectorTab
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -54,7 +56,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   isRepoEmpty,
   toCommitDetails,
   isLoadingRepoDetails,
-  toRepoFileDetails
+  toRepoFileDetails,
+  refType
 }) => {
   const { selectedBranchTag, repoId, spaceId } = useRepoBranchesStore()
   const { t } = useTranslationStore()
@@ -103,6 +106,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
                   ahead: currentBranchDivergence.ahead || 0,
                   behind: currentBranchDivergence.behind || 0
                 }}
+                refType={refType}
               />
               <Spacer size={4} />
             </>

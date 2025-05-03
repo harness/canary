@@ -327,6 +327,7 @@ export default function RepoSummaryPage() {
         toRepoFiles={() => routes.toRepoFiles({ spaceId, repoId })}
         navigateToProfileKeys={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
         isRepoEmpty={repository?.is_empty}
+        refType={preSelectedTab}
         branchSelectorRenderer={
           <BranchSelectorContainer
             onSelectBranchorTag={selectBranchOrTag}

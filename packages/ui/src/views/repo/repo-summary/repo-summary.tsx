@@ -12,7 +12,7 @@ import {
 } from '@/components'
 import { useRouterContext } from '@/context'
 import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout, TranslationStore } from '@/views'
-import { BranchInfoBar, Summary } from '@/views/repo/components'
+import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
 import { CloneRepoDialog } from './components/clone-repo-dialog'
@@ -75,6 +75,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   branchSelectorRenderer: React.ReactElement
   toRepoFileDetails?: ({ path }: { path: string }) => string
   tokenGenerationError?: string | null
+  refType?: BranchSelectorTab
 }
 
 export function RepoSummaryView({
@@ -104,7 +105,8 @@ export function RepoSummaryView({
   isRepoEmpty,
   branchSelectorRenderer,
   toRepoFileDetails,
-  tokenGenerationError
+  tokenGenerationError,
+  refType = BranchSelectorTab.BRANCHES
 }: RepoSummaryViewProps) {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
@@ -217,6 +219,7 @@ export function RepoSummaryView({
                     ahead: currentBranchDivergence?.ahead || 0,
                     behind: currentBranchDivergence?.behind || 0
                   }}
+                  refType={refType}
                 />
               </>
             )}

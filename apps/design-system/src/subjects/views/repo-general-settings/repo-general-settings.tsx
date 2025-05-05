@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import { useRepoRulesStore } from '@subjects/views/repo-general-settings/use-repo-rules-store'
 import { useTranslationStore } from '@utils/viewUtils'
-import { noop } from 'lodash-es'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { ErrorTypes, RepoSettingsGeneralPage } from '@harnessio/ui/views'
@@ -38,7 +37,6 @@ export const RepoGeneralSettings = () => {
     <>
       <RepoSettingsGeneralPage
         handleRepoUpdate={() => {}}
-        selectBranchOrTag={() => {}}
         handleUpdateSecuritySettings={() => {}}
         apiError={null}
         loadingStates={loadingStates}

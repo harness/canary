@@ -58,7 +58,7 @@ export default {
       border: 'var(--cn-input-border) solid var(--cn-border-2)',
       borderRadius: 'var(--cn-input-radius)',
       backgroundColor: 'var(--cn-bg-2)',
-      '@apply font-body-normal p-0 flex items-center transition-[color,box-shadow,border-color]': '',
+      '@apply w-full font-body-normal p-0 flex items-center transition-[color,box-shadow,border-color]': '',
 
       '&:where(:focus-within)': {
         borderColor: 'var(--cn-border-1)',

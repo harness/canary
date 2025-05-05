@@ -11,9 +11,9 @@ import {
   Text
 } from '@/components'
 import { useRouterContext } from '@/context'
+import { formatDate } from '@/utils'
 import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout, TranslationStore } from '@/views'
 import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
-import { formatDate } from '@utils/utils'
 
 import { CloneRepoDialog } from './components/clone-repo-dialog'
 import SummaryPanel from './components/summary-panel'

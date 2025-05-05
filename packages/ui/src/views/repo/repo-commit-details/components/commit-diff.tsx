@@ -1,5 +1,5 @@
+import { formatNumber } from '@/utils'
 import { ICommitDetailsStore, TranslationStore } from '@/views'
-import { formatNumber } from '@utils/utils'
 
 import { CommitChanges } from './commit-changes'
 

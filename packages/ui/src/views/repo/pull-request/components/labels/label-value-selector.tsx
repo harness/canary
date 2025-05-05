@@ -2,8 +2,8 @@ import { FC, useMemo, useState } from 'react'
 
 import { Button, DropdownMenu, Icon, ScrollArea, SearchBox, Tag } from '@/components'
 import { useDebounceSearch } from '@/hooks'
+import { wrapConditionalObjectElement } from '@/utils'
 import { HandleAddLabelType, LabelValueType, TranslationStore } from '@/views'
-import { wrapConditionalObjectElement } from '@utils/utils'
 
 import { LabelsWithValueType } from './pull-request-labels-header'
 

@@ -5,17 +5,9 @@
         "$type": "sizing",
         "$value": "{size.7}"
       },
-      "sm-text": {
-        "$type": "sizing",
-        "$value": "{size.4}"
-      },
       "default": {
         "$type": "sizing",
         "$value": "{size.8}"
-      },
-      "default-text": {
-        "$type": "sizing",
-        "$value": "{size.4-half}"
       },
       "lg": {
         "$type": "sizing",

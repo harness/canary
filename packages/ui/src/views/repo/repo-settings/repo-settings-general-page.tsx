@@ -25,7 +25,6 @@ interface RepoSettingsGeneralPageProps {
   apiError: { type: ErrorTypes; message: string } | null
   loadingStates: ILoadingStates
   isRepoUpdateSuccess: boolean
-  selectBranchOrTag: (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => void
   handleRuleClick: (identifier: string) => void
   openRulesAlertDeleteDialog: (identifier: string) => void
   openRepoAlertDeleteDialog: () => void
@@ -47,7 +46,6 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   openRepoAlertDeleteDialog,
   useRepoRulesStore,
   useTranslationStore,
-  selectBranchOrTag,
   rulesSearchQuery,
   setRulesSearchQuery,
   branchSelectorRenderer
@@ -81,7 +79,6 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           isUpdatingRepoData={loadingStates.isUpdatingRepoData}
           isRepoUpdateSuccess={isRepoUpdateSuccess}
           useTranslationStore={useTranslationStore}
-          selectBranchOrTag={selectBranchOrTag}
           branchSelectorRenderer={branchSelectorRenderer}
         />
         <FormSeparator />

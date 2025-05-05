@@ -519,3 +519,29 @@ mark {
 .nested-sidebar-height {
   height: calc(100vh - var(--cn-page-nav-height) - var(--cn-inset-layout-indent-with-borders));
 }
+
+.cn-scrollbar {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--cn-comp-scrollbar-thumb) transparent;
+
+  /* WebKit browsers (Chrome, Safari, newer Edge) */
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--cn-comp-scrollbar-thumb);
+    border-radius: 100px;
+    min-height: 33px;
+    max-height: 60px;
+  }
+
+  /* For IE/Edge legacy support (though IE doesn't support custom scrollbars well) */
+  -ms-overflow-style: auto;
+}

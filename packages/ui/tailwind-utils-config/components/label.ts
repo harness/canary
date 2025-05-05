@@ -1,24 +1,28 @@
 export default {
-  '.label': {
+  '.cn-label': {
     '@apply font-body-tight-strong': '',
 
-    '&:where(.label-default)': {
+    '&:where(.cn-label-default)': {
       color: 'var(--cn-text-2)',
 
-      '+ .label-informer': {
+      '+ .cn-label-informer': {
         color: 'var(--cn-text-2)'
       }
     },
 
-    '&:where(.label-primary)': {
+    '&:where(.cn-label-primary)': {
       color: 'var(--cn-text-1)',
 
-      '+ .label-informer': {
+      '+ .cn-label-informer': {
         color: 'var(--cn-text-1)'
       }
     },
 
-    '> .label-optional': {
+    '&:where(.cn-label-disabled), &:where(.cn-label-disabled) > .cn-label-optional': {
+      color: 'var(--cn-state-disabled-text)'
+    },
+
+    '&-optional': {
       '@apply font-body-normal': '',
       color: 'var(--cn-text-3)'
     }

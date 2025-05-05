@@ -23,12 +23,14 @@ type CaptionProps = {
   theme?: VariantProps<typeof captionVariants>['theme']
   className?: string
   showIcon?: boolean
+  disabled?: boolean
 }
 
 export const FormCaption = ({
   theme = 'default',
   showIcon = true,
   className,
+  disabled,
   children
 }: PropsWithChildren<CaptionProps>) => {
   /**
@@ -48,7 +50,11 @@ export const FormCaption = ({
     theme === 'danger' ? 'cross-circle' : theme === 'warning' ? 'warning-triangle-outline' : 'tick'
 
   return (
-    <p role="region" aria-live="polite" className={cn(captionVariants({ theme }), className)}>
+    <p
+      aria-live="polite"
+      className={cn(captionVariants({ theme }), { 'cn-caption-disabled': disabled }, className)}
+      aria-disabled={disabled}
+    >
       {canShowIcon && <Icon name={effectiveIconName} size={14} />}
       <span>{children}</span>
     </p>

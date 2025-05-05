@@ -38,8 +38,8 @@ export const getConnectorListFilterOptions = (t: TFunction): Array<FilterOptionC
       type: FilterFieldTypes.Text
     },
     {
-      label: t('views:connectors.filterOptions.statusOption.favourite', 'Favourites'),
-      value: 'favourites',
+      label: t('views:connectors.filterOptions.statusOption.favorite', 'Favorites'),
+      value: 'favorite',
       type: FilterFieldTypes.Checkbox,
       filterFieldConfig: {
         label: <Icon name="star-filled" className="fill-icons-alert" size={14} />

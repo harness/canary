@@ -19,7 +19,7 @@ const ConnectorsListPageWrapper = (): JSX.Element => {
   }
   const [filterValues, setFilterValues] = useState<ConnectorListFilters>({})
   const filteredMockConnectorsList = mockConnectorsList.filter(connector => {
-    return filterValues?.favourites ? connector.isFavorite : true
+    return filterValues?.favorite ? connector.isFavorite : true
   })
 
   const handleFilterChange = (selectedValues: ConnectorListFilters) => {

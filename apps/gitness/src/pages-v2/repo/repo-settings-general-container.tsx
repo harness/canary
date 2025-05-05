@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { noop } from 'lodash-es'
 
 import {
   DeleteRepositoryErrorResponse,
@@ -260,7 +259,6 @@ export const RepoSettingsGeneralPageContainer = () => {
     <>
       <RepoSettingsGeneralPage
         handleRepoUpdate={handleRepoUpdate}
-        selectBranchOrTag={noop}
         handleUpdateSecuritySettings={handleUpdateSecuritySettings}
         apiError={apiError}
         loadingStates={loadingStates}

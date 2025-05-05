@@ -19,7 +19,6 @@ import {
 } from '@/components'
 import {
   AccessLevel,
-  BranchSelectorListItem,
   ErrorTypes,
   errorTypes,
   generalSettingsFormSchema,
@@ -27,7 +26,7 @@ import {
   RepoUpdateData,
   TranslationStore
 } from '@/views'
-import { BranchSelectorContainerProps, BranchSelectorTab } from '@/views/repo/components'
+import { BranchSelectorContainerProps } from '@/views/repo/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 export const RepoSettingsGeneralForm: FC<{
@@ -37,7 +36,6 @@ export const RepoSettingsGeneralForm: FC<{
   isLoadingRepoData: boolean
   isUpdatingRepoData: boolean
   isRepoUpdateSuccess: boolean
-  selectBranchOrTag: (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => void
   useTranslationStore: () => TranslationStore
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }> = ({
@@ -46,7 +44,6 @@ export const RepoSettingsGeneralForm: FC<{
   isLoadingRepoData,
   isUpdatingRepoData,
   isRepoUpdateSuccess,
-  selectBranchOrTag,
   useTranslationStore,
   branchSelectorRenderer,
   repoData
@@ -153,7 +150,6 @@ export const RepoSettingsGeneralForm: FC<{
               <BranchSelector
                 onSelectBranchorTag={value => {
                   handleSelectChange('branch', value.name)
-                  selectBranchOrTag(value, BranchSelectorTab.BRANCHES)
                 }}
                 isBranchOnly={true}
                 dynamicWidth={true}

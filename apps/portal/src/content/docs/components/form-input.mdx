@@ -58,25 +58,27 @@ import React from "react";
 <FormInput.Text size="sm" prefix="https://" suffix=".com" />
 <FormInput.Text prefix="PAT:" value="ghp_1234567890abcdef" readOnly />
 
-  <FormInput.Text 
-    suffix={
-      <Button variant="outline" iconOnly>
-        <Icon name="chevron-right" size={14} />
-      </Button>
-    } 
-  />
-  <FormInput.Text 
-    prefix={
-      <Button variant="outline" iconOnly>
-        <Icon name="minus" size={14} />
-      </Button>
-    } 
-    suffix={
-      <Button variant="outline" iconOnly>
-        <Icon name="plus" size={14} />
-      </Button>
-    } 
-  />
+<FormInput.Text
+  suffix={
+    <Button variant="outline" iconOnly>
+      <Icon name="chevron-right" size={14} />
+    </Button>
+  }
+/>
+<FormInput.Text
+  prefix={
+    <Button variant="outline" iconOnly>
+      <Icon name="minus" size={14} />
+    </Button>
+  }
+  suffix={
+    <Button variant="outline" iconOnly>
+      <Icon name="plus" size={14} />
+    </Button>
+  }
+/>
+
+<FormInput.Number />
 </div>`}
 />
 
@@ -134,6 +136,252 @@ export default function Search() {
   );
 }
 ```
+
+## Number Input
+
+The `NumberInput` component provides a controlled input field specifically designed for numeric values. It includes stepper buttons for incrementing/decrementing values, decimal validation, and min/max constraints.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-8 min-w-[400px]">
+  {/* Basic Number Input */}
+  <div className="font-bold w-full mb-2">Basic Number Input:</div>
+  <FormInput.Number label="Basic Number Input" placeholder="Enter a number" />
+  
+  {/* Number Input with Min/Max */}
+  <div className="font-bold w-full mb-2">Number Input with Min/Max Limits:</div>
+  <FormInput.Number 
+    label="Limited Range (0-10)" 
+    min={0} 
+    max={10} 
+    defaultValue={5}
+    onChange={(value) => console.log('Value changed:', value)} 
+  />
+  
+  {/* Decimal Numbers */}
+  <div className="font-bold w-full mb-2">Decimal Numbers:</div>
+  <FormInput.Number 
+    label="With Decimals" 
+    decimalScale={2} 
+    allowDecimal={true}
+    defaultValue={3.14} 
+  />
+  <FormInput.Number 
+    label="Integer Only" 
+    allowDecimal={false}
+    defaultValue={42} 
+  />
+  
+  {/* Negative Values */}
+  <div className="font-bold w-full mb-2">Negative Values:</div>
+  <FormInput.Number 
+    label="Allow Negative" 
+    allowNegative={true} 
+    defaultValue={-10} 
+  />
+  <FormInput.Number 
+    label="Positive Only" 
+    allowNegative={false} 
+    min={0}
+    defaultValue={10} 
+  />
+  
+  {/* Custom Steppers */}
+  <div className="font-bold w-full mb-2">Custom Step Values:</div>
+  <FormInput.Number 
+    label="Increment by 0.1" 
+    stepper={0.1} 
+    decimalScale={1}
+    defaultValue={1.0} 
+  />
+  <FormInput.Number 
+    label="Increment by 5" 
+    stepper={5} 
+    defaultValue={10} 
+  />
+  
+  {/* Disabled & Error States */}
+  <div className="font-bold w-full mb-2">States and Feedback:</div>
+  <FormInput.Number 
+    label="Disabled Input" 
+    disabled 
+    defaultValue={50} 
+  />
+  <FormInput.Number 
+    label="With Error" 
+    error="Please enter a valid number" 
+    theme="danger"
+  />
+  <FormInput.Number 
+    label="With Warning" 
+    warningMessage="This is a high value" 
+    theme="warning"
+    defaultValue={95}
+  />
+  <FormInput.Number 
+    label="With Caption" 
+    caption="Enter your preferred quantity" 
+    defaultValue={1}
+  />
+  
+  {/* Optional Label */}
+  <FormInput.Number 
+    label="Optional Field" 
+    optional={true} 
+  />
+  
+  {/* Without Stepper UI */}
+  <div className="font-bold w-full mb-2">Without Stepper Buttons:</div>
+  <FormInput.Number 
+    label="No Stepper UI" 
+    showStepper={false} 
+    placeholder="Enter a number manually"
+  />
+</div>`}
+/>
+
+### Usage
+
+```typescript jsx
+import { FormInput } from '@harnessio/ui/components'
+
+// Basic usage
+return (
+  <FormInput.Number
+    label="Quantity"
+    min={0}
+    max={100}
+    defaultValue={1}
+    onChange={(value) => handleQuantityChange(value)}
+  />
+)
+```
+
+### Number Input Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Controlled value for the number input",
+      required: "false",
+      defaultValue: "",
+      value: "number",
+    },
+    {
+      name: "defaultValue",
+      description: "Initial value for uncontrolled input",
+      required: "false",
+      defaultValue: "",
+      value: "number",
+    },
+    {
+      name: "min",
+      description: "Minimum allowed value",
+      required: "false",
+      defaultValue: "-Infinity",
+      value: "number",
+    },
+    {
+      name: "max",
+      description: "Maximum allowed value",
+      required: "false",
+      defaultValue: "Infinity",
+      value: "number",
+    },
+    {
+      name: "onChange",
+      description: "Callback when value changes",
+      required: "false",
+      defaultValue: "",
+      value: "(value: number | undefined) => void",
+    },
+    {
+      name: "stepper",
+      description: "Amount to increment/decrement when using buttons or arrow keys",
+      required: "false",
+      defaultValue: "1",
+      value: "number",
+    },
+    {
+      name: "decimalScale",
+      description: "Number of decimal places to allow",
+      required: "false",
+      defaultValue: "2",
+      value: "number",
+    },
+    {
+      name: "allowDecimal",
+      description: "Whether to allow decimal input",
+      required: "false",
+      defaultValue: "true",
+      value: "boolean",
+    },
+    {
+      name: "allowNegative",
+      description: "Whether to allow negative numbers",
+      required: "false",
+      defaultValue: "true",
+      value: "boolean",
+    },
+    {
+      name: "showStepper",
+      description: "Whether to show increment/decrement buttons",
+      required: "false",
+      defaultValue: "true",
+      value: "boolean",
+    },
+    {
+      name: "label",
+      description: "Label for the input field",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "optional",
+      description: "Show 'optional' tag beside label",
+      required: "false",
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "error",
+      description: "Error message to display",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "caption",
+      description: "Helper text to display below the input",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "warningMessage",
+      description: "Warning message to display",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "theme",
+      description: "Theme styling for the input",
+      required: "false",
+      defaultValue: "default",
+      value: "default | danger | warning | success",
+    },
+    {
+      name: "disabled",
+      description: "Whether the input is disabled",
+      required: "false",
+      defaultValue: "false",
+      value: "boolean",
+    },
+  ]}
+/>
 
 ## API Reference
 

@@ -34,7 +34,7 @@ export default {
       borderRadius: 'var(--cn-input-radius)',
       padding:
         'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)',
-      '@apply font-body-normal w-full text-inherit bg-transparent': '',
+      '@apply w-full text-inherit bg-transparent': '',
 
       '&:focus-visible': {
         outline: 'none'
@@ -42,10 +42,6 @@ export default {
 
       '&::placeholder': {
         color: 'var(--cn-text-3)'
-      },
-
-      '&:where([readonly])': {
-        backgroundColor: 'var(--cn-set-gray-soft-bg)'
       },
 
       '&:where([disabled])': {
@@ -62,7 +58,7 @@ export default {
       border: 'var(--cn-input-border) solid var(--cn-border-2)',
       borderRadius: 'var(--cn-input-radius)',
       backgroundColor: 'var(--cn-bg-2)',
-      '@apply p-0 flex items-center transition-[color,box-shadow,border-color]': '',
+      '@apply font-body-normal p-0 flex items-center transition-[color,box-shadow,border-color]': '',
 
       '&:where(:focus-within)': {
         borderColor: 'var(--cn-border-1)',
@@ -77,6 +73,11 @@ export default {
         cursor: 'not-allowed'
       },
 
+      '&:where(:has(input[readonly]))': {
+        backgroundColor: 'var(--cn-state-disabled-bg)',
+        borderColor: 'var(--cn-state-disabled-border)'
+      },
+
       '&:where(:hover):not(:has(input[disabled])):not(.cn-input-success, .cn-input-warning, .cn-input-danger)': {
         borderColor: 'var(--cn-border-1)'
       },
@@ -89,13 +90,38 @@ export default {
         }
       },
 
+      '&:where(:has(.cn-input-search)):not(:has(input[disabled]))': {
+        svg: {
+          color: 'var(--cn-text-3)'
+        }
+      },
+
+      ':where(.cn-input-affix)': {
+        '@apply grid place-items-center px-2 select-none': '',
+
+        '&:where(:not(:has(input[disabled])))': {
+          color: 'var(--cn-text-3)'
+        }
+      },
+
+      ':where(.cn-input-prefix)': {
+        '@apply h-full border-0 border-r rounded-r-none': ''
+      },
+
+      ':where(.cn-input-suffix)': {
+        '@apply h-full border-0 border-l rounded-l-none': ''
+      },
+
       ...createInputThemeStyles()
+    },
+    '&-search': {
+      '&:where(.cn-input-input)': {
+        '@apply pl-0': '',
+
+        '&::-webkit-search-cancel-button': {
+          '@apply appearance-none hidden': ''
+        }
+      }
     }
   }
 }
-
-// input[type="search"]::-webkit-search-cancel-button {
-//   -webkit-appearance: none;
-//   appearance: none;
-//   display: none;
-// }

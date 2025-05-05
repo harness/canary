@@ -110,11 +110,11 @@ export default {
 
     // ICON STYLES
     '.cn-tag-icon': {
-      width: `var(--cn-icon-size-default, 16px)`,
+      minWidth: `var(--cn-icon-size-default, 16px)`,
       height: `var(--cn-icon-size-default, 16px)`
     },
     '.cn-tag-reset-icon': {
-      width: `var(--cn-icon-size-xs, 12px)`,
+      minWidth: `var(--cn-icon-size-xs, 12px)`,
       height: `var(--cn-icon-size-xs, 12px)`
     }
   }

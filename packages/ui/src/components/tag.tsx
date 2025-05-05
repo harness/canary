@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -66,15 +68,15 @@ function Tag({
   showIcon = false,
   ...props
 }: TagProps) {
-  if (label) {
+  if (label && value) {
     return <TagSplit {...{ variant, size, theme, rounded, icon, showIcon, showReset, onReset, label: label, value }} />
   }
 
   return (
     <div tabIndex={-1} className={cn(tagVariants({ variant, size, theme, rounded }), className)} {...props}>
       {showIcon && <Icon skipSize name={icon || 'tag-2'} className="cn-tag-icon" />}
-      <span className="truncate" title={value}>
-        {value}
+      <span className="truncate" title={value || label}>
+        {value || label}
       </span>
       {showReset && (
         <button onClick={onReset}>

@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react'
 
 import { Avatar, Button, CommitCopyActions, Icon, NodeGroup, StackedList } from '@/components'
 import { useRouterContext } from '@/context'
-import { formatDate } from '@/utils/utils'
+import { formatDate } from '@/utils'
 import { TypesCommit } from '@/views'
 
 type CommitsGroupedByDate = Record<string, TypesCommit[]>

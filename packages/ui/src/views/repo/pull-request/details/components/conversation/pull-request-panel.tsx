@@ -15,6 +15,7 @@ import {
   type ButtonThemes
 } from '@/components'
 import { useRouterContext } from '@/context'
+import { timeAgo } from '@/utils'
 import {
   EnumCheckStatus,
   extractInfoFromRuleViolationArr,
@@ -27,7 +28,6 @@ import {
   TypesPullReqCheck
 } from '@/views'
 import { cn } from '@utils/cn'
-import { timeAgo } from '@utils/utils'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
 import { PullRequestRoutingProps } from '../../pull-request-details-types'

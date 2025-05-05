@@ -1,6 +1,6 @@
 import { NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
-import { timeAgo } from '@utils/utils'
 import { ExecutionState } from '@views/index'
 
 import { ConnectorActivityItem, ConnectorDetailsActivitiesListProps } from './types'

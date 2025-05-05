@@ -1,4 +1,4 @@
-import { formatDate } from '../utils'
+import { formatDate } from '..'
 
 describe('formatDate', () => {
   it('should format a Unix timestamp to a localized date string', () => {

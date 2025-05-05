@@ -1,8 +1,8 @@
 import { Accordion, Icon, StackedList, StatusBadge, Text } from '@/components'
 import { useRouterContext } from '@/context'
+import { timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { cn } from '@utils/cn'
-import { timeDistance } from '@utils/utils'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
 

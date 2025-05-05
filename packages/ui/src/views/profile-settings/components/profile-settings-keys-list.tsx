@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { Icon, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
-import { timeAgo } from '@utils/utils'
+import { timeAgo } from '@/utils'
 import { TranslationStore } from '@views/repo'
 
 import { KeysList } from '../types'

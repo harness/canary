@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { Button, Checkbox, CounterBadge, DropdownMenu, Icon, SplitButton } from '@/components'
 import { TypesUser } from '@/types'
+import { formatNumber } from '@/utils'
 import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { cn } from '@utils/cn'
-import { formatNumber } from '@utils/utils'
 
 import {
   EnumPullReqReviewDecision,

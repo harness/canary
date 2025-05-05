@@ -1,8 +1,8 @@
 import { FC, useState } from 'react'
 
 import { Avatar, Button, DropdownMenu, Icon, MarkdownViewer, Text } from '@/components'
+import { timeAgo } from '@/utils'
 import { HandleUploadType } from '@/views'
-import { timeAgo } from '@utils/utils'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'
 import PullRequestTimelineItem from './pull-request-timeline-item'

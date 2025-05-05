@@ -2,8 +2,8 @@ import { FC } from 'react'
 
 import { Avatar, Button, CommitCopyActions, StatusBadge, Tag } from '@/components'
 import { useRouterContext } from '@/context'
+import { timeAgo } from '@/utils'
 import { ICommitDetailsStore, SandboxLayout, TranslationStore } from '@/views'
-import { timeAgo } from '@utils/utils'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string

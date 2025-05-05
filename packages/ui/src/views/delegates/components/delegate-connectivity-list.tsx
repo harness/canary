@@ -1,6 +1,6 @@
 import { Icon, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
+import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
-import { timeAgo } from '@utils/utils'
 import { defaultTo } from 'lodash-es'
 
 import { DelegateConnectivityListProps } from '../types'

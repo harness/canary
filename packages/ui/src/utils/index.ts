@@ -1,3 +1,6 @@
 export * from './utils'
 export * from './stringUtils'
 export * from './cn'
+export * from './typeUtils'
+export * from './mergeUtils'
+export * from './TimeUtils'

@@ -21,9 +21,18 @@ const formCaptionVariants = cva('cn-caption', {
 type FormCaptionProps = {
   theme?: VariantProps<typeof formCaptionVariants>['theme']
   className?: string
+  disabled?: boolean
 }
 
-export const FormCaption = ({ theme = 'default', className, children }: PropsWithChildren<FormCaptionProps>) => {
+export const FormCaption = ({
+  theme = 'default',
+  className,
+  disabled,
+  children
+}: PropsWithChildren<FormCaptionProps>) => {
+  /**
+   * Return null if no message, errorMessage, or warningMessage is provided
+   */
   if (!children) {
     return null
   }
@@ -37,7 +46,10 @@ export const FormCaption = ({ theme = 'default', className, children }: PropsWit
   const effectiveIconName = theme === 'danger' ? 'cross-circle' : 'warning-triangle-outline'
 
   return (
-    <p className={cn(formCaptionVariants({ theme }), className)}>
+    <p
+      className={cn(formCaptionVariants({ theme }), { 'cn-caption-disabled': disabled }, className)}
+      aria-disabled={disabled}
+    >
       {canShowIcon && <Icon name={effectiveIconName} size={14} />}
       <span>{children}</span>
     </p>

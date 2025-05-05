@@ -36,6 +36,7 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, RadioI
               {label}
             </Label>
             <div className={`cn-radio-caption ${props.disabled ? 'disabled' : ''}`}>{caption || ''}</div>
+            {/* Need to add Link component here once merged */}
           </div>
         )}
       </div>

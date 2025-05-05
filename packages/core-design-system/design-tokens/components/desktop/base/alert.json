@@ -8,9 +8,13 @@
       "$type": "spacing",
       "$value": "{spacing.3}"
     },
-    "px": {
+    "pl": {
       "$type": "spacing",
       "$value": "{spacing.3}"
+    },
+    "pr": {
+      "$type": "spacing",
+      "$value": "{spacing.8}"
     },
     "radius": {
       "$type": "borderRadius",

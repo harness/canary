@@ -13,9 +13,8 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`() => {
     const [group1Value, setGroup1Value] = React.useState('option1');
-    const [group2Value, setGroup2Value] = React.useState('option1');
-    const [group3Value, setGroup3Value] = React.useState('option3');
-    const [group4Value, setGroup4Value] = React.useState('option1');
+    const [group2Value, setGroup2Value] = React.useState('');
+    const [group3Value, setGroup3Value] = React.useState('option2');
 
     return (
       <div className="flex flex-col space-y-8">
@@ -26,21 +25,9 @@ import { DocsPage } from "@/components/docs-page";
             value={group1Value}
             onValueChange={setGroup1Value}
           >
-            <Radio.Item name="group1" value="option1" label="Option 1" caption="This is option 1" />
-            <Radio.Item name="group1" value="option2" label="Option 2" caption="This is option 2" />
-          </Radio.Root>
-        </div>
-
-        {/* RadioGroup Example */}
-        <div className="space-y-2">
-          <h4 className="text-sm font-medium">RadioGroup Example</h4>
-          <Radio.Root
-            value={group2Value}
-            onValueChange={setGroup2Value}
-          >
-            <Radio.Item name="group2" value="option1" label="Option 1" caption="This is option 1" />
-            <Radio.Item name="group2" value="option2" label="Option 2" caption="This is option 2" />
-            <Radio.Item name="group2" value="option3" label="Option 3" caption="This is option 3" />
+            <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
+            <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
+            <Radio.Item value="option3" label="Option 3" caption="This is option 3" />
           </Radio.Root>
         </div>
 
@@ -48,10 +35,10 @@ import { DocsPage } from "@/components/docs-page";
         <div className="space-y-2">
           <h4 className="text-sm font-medium">Optional</h4>
           <Radio.Root
-            value={group3Value}
-            onValueChange={setGroup3Value}
+            value={group2Value}
+            onValueChange={setGroup2Value}
           >
-            <Radio.Item name="group3" value="option3" label="Option 3" caption="This field is optional" optional />
+            <Radio.Item value="option1" label="Option 1" caption="This field is optional" optional />
           </Radio.Root>
         </div>
 
@@ -59,11 +46,11 @@ import { DocsPage } from "@/components/docs-page";
         <div className="space-y-2">
           <h4 className="text-sm font-medium">Disabled</h4>
           <Radio.Root
-            value={group4Value}
-            onValueChange={setGroup4Value}
+            value={group3Value}
+            onValueChange={setGroup3Value}
           >
-            <Radio.Item name="group4" value="option1" label="Option 1" caption="This option is disabled" disabled />
-            <Radio.Item name="group4" value="option2" label="Option 2" />
+            <Radio.Item value="option1" label="Option 1" caption="This option is disabled" disabled />
+            <Radio.Item value="option2" label="Option 2" />
           </Radio.Root>
         </div>
       </div>
@@ -80,8 +67,8 @@ import { Radio } from "@harnessio/ui/components";
 function Example() {
   const [group1Value, setGroup1Value] = React.useState("option1");
   const [group2Value, setGroup2Value] = React.useState("option1");
-  const [group3Value, setGroup3Value] = React.useState("option3");
-  const [group4Value, setGroup4Value] = React.useState("option1");
+  const [group2Value, setGroup2Value] = React.useState("option3");
+  const [group3Value, setGroup3Value] = React.useState("option1");
 
   return (
     <div className="flex flex-col space-y-8">
@@ -106,16 +93,16 @@ function Example() {
 
       {/* Optional */}
       <Radio.Root
-        value={group3Value}
-        onValueChange={setGroup3Value}
+        value={group2Value}
+        onValueChange={setGroup2Value}
       >
         <Radio.Item name="group3" value="option3" label="Option 3" caption="This field is optional" optional />
       </Radio.Root>
 
       {/* Disabled */}
       <Radio.Root
-        value={group4Value}
-        onValueChange={setGroup4Value}
+        value={group3Value}
+        onValueChange={setGroup3Value}
       >
         <Radio.Item name="group4" value="option1" label="Option 1" caption="This option is disabled" disabled />
         <Radio.Item name="group4" value="option2" label="Option 2" />

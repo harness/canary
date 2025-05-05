@@ -307,6 +307,10 @@
       "$type": "sizing",
       "$value": "320px"
     },
+    "90": {
+      "$type": "sizing",
+      "$value": "360px"
+    },
     "96": {
       "$type": "sizing",
       "$value": "384px"

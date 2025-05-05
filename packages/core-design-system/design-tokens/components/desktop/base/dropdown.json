@@ -1,0 +1,69 @@
+{
+  "dropdown": {
+    "item": {
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}",
+        "$description": "8px"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2}",
+        "$description": "8px"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.3}",
+        "$description": "8px"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.1}"
+      }
+    },
+    "container": {
+      "$type": "spacing",
+      "$value": "{spacing.1}",
+      "$description": "4px\n"
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.2}",
+      "$description": "6px"
+    },
+    "min-width": {
+      "$type": "sizing",
+      "$value": "{size.80}"
+    },
+    "max-height": {
+      "$type": "sizing",
+      "$value": "{size.90}"
+    },
+    "border": {
+      "$type": "border",
+      "$value": {
+        "width": "{borderWidth.1}"
+      }
+    },
+    "header": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      }
+    },
+    "footer": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      }
+    }
+  }
+}

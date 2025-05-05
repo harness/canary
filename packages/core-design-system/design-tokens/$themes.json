@@ -4,7 +4,7 @@
     "name": "source",
     "selectedTokenSets": {
       "core/typography": "source",
-      "core/dimensions": "enabled",
+      "core/dimensions": "source",
       "core/colors_lch": "source"
     },
     "$figmaStyleReferences": {

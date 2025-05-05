@@ -172,22 +172,20 @@ export const RepoSettingsGeneralForm: FC<{
             <ControlGroup>
               <Label className="mb-6">{t('views:repos.visibility', 'Visibility')}</Label>
               <Radio.Root value={accessValue} onValueChange={handleAccessChange} id="visibility">
-                <Option
-                  control={<Radio.Item value="1" id="access-public" />}
+                <Radio.Item
                   id="access-public"
+                  value="1"
                   label={t('views:repos.public', 'Public')}
-                  ariaSelected={accessValue === '1'}
-                  description={t(
+                  caption={t(
                     'views:repos.publicDescription',
                     'Anyone with access to the gitness environment can clone this repo.'
                   )}
                 />
-                <Option
-                  control={<Radio.Item value="2" id="access-private" />}
+                <Radio.Item
                   id="access-private"
+                  value="2"
                   label={t('views:repos.private', 'Private')}
-                  ariaSelected={accessValue === '2'}
-                  description={t(
+                  caption={t(
                     'views:repos.privateDescription',
                     'You can choose who can see and commit to this repository.'
                   )}

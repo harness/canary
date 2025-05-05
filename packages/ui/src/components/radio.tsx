@@ -1,12 +1,12 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactElement } from 'react'
 
 import { Label } from '@/components'
 import { cn } from '@/utils/cn'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 
 interface RadioItemProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> {
-  label?: string
-  caption?: string
+  label?: string | ReactElement
+  caption?: string | ReactElement
   optional?: boolean
 }
 
@@ -35,7 +35,7 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, RadioI
             >
               {label}
             </Label>
-            <p className={`cn-radio-caption ${props.disabled ? 'disabled' : ''}`}>{caption || ''}</p>
+            <div className={`cn-radio-caption ${props.disabled ? 'disabled' : ''}`}>{caption || ''}</div>
           </div>
         )}
       </div>

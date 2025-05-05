@@ -204,19 +204,19 @@ export function RepoCreatePage({
                 Who has access
               </Text>
               <Radio.Root className="mt-6" value={accessValue} onValueChange={handleAccessChange} id="access">
-                <Option
-                  control={<Radio.Item className="mt-px" value="1" id="access-public" />}
+                <Radio.Item
                   id="access-public"
+                  className="mt-px"
+                  value="1"
                   label="Public"
-                  ariaSelected={accessValue === '1'}
-                  description="Anyone with access to the Gitness environment can clone this repo."
+                  caption="Anyone with access to the Gitness environment can clone this repo."
                 />
-                <Option
-                  control={<Radio.Item className="mt-px" value="2" id="access-private" />}
+                <Radio.Item
                   id="access-private"
+                  className="mt-px"
+                  value="2"
                   label="Private"
-                  ariaSelected={accessValue === '2'}
-                  description="You choose who can see and commit to this repository."
+                  caption="You choose who can see and commit to this repository."
                 />
               </Radio.Root>
               {errors.access && (

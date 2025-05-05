@@ -160,15 +160,10 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               value={commitToGitRefValue}
               onValueChange={handleCommitToGitRefChange}
             >
-              <Option
-                control={
-                  <Radio.Item
-                    className="mt-px"
-                    value={CommitToGitRefOption.DIRECTLY}
-                    id={CommitToGitRefOption.DIRECTLY}
-                  />
-                }
+              <Radio.Item
                 id={CommitToGitRefOption.DIRECTLY}
+                className="mt-px"
+                value={CommitToGitRefOption.DIRECTLY}
                 label={
                   <span>
                     Commit directly to the
@@ -184,20 +179,13 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     branch
                   </span>
                 }
-                ariaSelected={commitToGitRefValue === CommitToGitRefOption.DIRECTLY}
               />
-              <Option
-                control={
-                  <Radio.Item
-                    className="mt-px"
-                    value={CommitToGitRefOption.NEW_BRANCH}
-                    id={CommitToGitRefOption.NEW_BRANCH}
-                  />
-                }
+              <Radio.Item
                 id={CommitToGitRefOption.NEW_BRANCH}
+                className="mt-px"
+                value={CommitToGitRefOption.NEW_BRANCH}
                 label="Create a new branch for this commit and start a pull request"
-                ariaSelected={commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH}
-                description={
+                caption={
                   // TODO: Add correct path
                   <StyledLink to="/">Learn more about pull requests</StyledLink>
                 }

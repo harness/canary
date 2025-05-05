@@ -102,16 +102,16 @@ export const CreatePullRequest = () => {
     [commitRange, targetRef, sourceRef]
   )
 
-  const handleUpload = (blob: File, setMarkdownContent: (data: string) => void) => {
+  const handleUpload = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => {
     const reader = new FileReader()
     // Set up a function to be called when the load event is triggered
     reader.onload = async function () {
       if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
         const markdown = await uploadImage(reader.result)
         if (blob.type.startsWith('image/')) {
-          setDesc(`![image](${markdown})`) // Set the markdown content
+          setDesc(`${currentComment} \n ![image](${markdown})`) // Set the markdown content
         } else {
-          setMarkdownContent(markdown) // Set the markdown content
+          setMarkdownContent(`${currentComment} \n ${markdown}`) // Set the markdown content
         }
       }
     }

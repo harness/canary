@@ -252,4 +252,4 @@ export type PRListFilters = {
   label_by?: LabelsValue
 }
 
-export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void) => void
+export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => void

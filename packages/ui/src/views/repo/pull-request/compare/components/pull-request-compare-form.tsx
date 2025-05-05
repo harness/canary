@@ -52,7 +52,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
     const handleUploadCallback = (file: File) => {
       setFile(file)
 
-      handleUpload?.(file, setDesc)
+      handleUpload?.(file, setDesc, desc)
     }
 
     const handleFileSelect = (e: MouseEvent<HTMLButtonElement>) => {

@@ -77,7 +77,7 @@ export function usePRCommonInteractions({
   )
 
   const handleUpload = useCallback(
-    (blob: File, setMarkdownContent: (data: string) => void) => {
+    (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => {
       const reader = new FileReader()
 
       // Set up a function to be called when the load event is triggered
@@ -86,9 +86,9 @@ export function usePRCommonInteractions({
           const markdown = await uploadImage(reader.result)
 
           if (blob.type.startsWith('image/')) {
-            setMarkdownContent(`![image](${markdown})`) // Set the markdown content
+            setMarkdownContent(`${currentComment} \n ![image](${markdown})`) // Set the markdown content
           } else {
-            setMarkdownContent(markdown) // Set the markdown content
+            setMarkdownContent(`${currentComment} \n ${markdown}`) // Set the markdown content
           }
         }
       }

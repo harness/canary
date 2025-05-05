@@ -23,21 +23,12 @@ import {
   ErrorTypes,
   errorTypes,
   generalSettingsFormSchema,
-  IBranchSelectorStore,
   RepoData,
   RepoUpdateData,
   TranslationStore
 } from '@/views'
-import { BranchSelector, BranchSelectorTab } from '@/views/repo/components'
+import { BranchSelectorContainerProps, BranchSelectorTab } from '@/views/repo/components'
 import { zodResolver } from '@hookform/resolvers/zod'
-
-interface BranchSelectorContainerProps {
-  selectedBranch?: BranchSelectorListItem | null
-  onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
-  isBranchOnly?: boolean
-  dynamicWidth?: boolean
-  preSelectedTab?: BranchSelectorTab
-}
 
 export const RepoSettingsGeneralForm: FC<{
   repoData: RepoData
@@ -47,24 +38,18 @@ export const RepoSettingsGeneralForm: FC<{
   isUpdatingRepoData: boolean
   isRepoUpdateSuccess: boolean
   selectBranchOrTag: (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => void
-  useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
-  searchQuery: string
-  setSearchQuery: (query: string) => void
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }> = ({
-  repoData,
   handleRepoUpdate,
   apiError,
   isLoadingRepoData,
   isUpdatingRepoData,
   isRepoUpdateSuccess,
   selectBranchOrTag,
-  useRepoBranchesStore,
   useTranslationStore,
-  searchQuery,
-  setSearchQuery,
-  branchSelectorRenderer
+  branchSelectorRenderer,
+  repoData
 }) => {
   const { t } = useTranslationStore()
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
@@ -83,7 +68,7 @@ export const RepoSettingsGeneralForm: FC<{
     defaultValues: {
       name: repoData.name || '',
       description: repoData.description || '',
-      branch: repoData.defaultBranch || '',
+      branch: repoData.defaultBranch,
       access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
     }
   })
@@ -92,7 +77,7 @@ export const RepoSettingsGeneralForm: FC<{
     reset({
       name: repoData.name || '',
       description: repoData.description || '',
-      branch: repoData.defaultBranch || '',
+      branch: repoData.defaultBranch,
       access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
     })
   }, [repoData, isLoadingRepoData, reset])
@@ -165,17 +150,6 @@ export const RepoSettingsGeneralForm: FC<{
           <Fieldset className="w-[298px]">
             <ControlGroup>
               <Label className="mb-2">{t('views:repos.defaultBranch', 'Default Branch')}</Label>
-              {/* <BranchSelector
-                useTranslationStore={useTranslationStore}
-                useRepoBranchesStore={useRepoBranchesStore}
-                onSelectBranch={value => {
-                  handleSelectChange('branch', value.name)
-                  selectBranchOrTag(value, BranchSelectorTab.BRANCHES)
-                }}
-                isBranchOnly={true}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-              /> */}
               <BranchSelector
                 onSelectBranchorTag={value => {
                   handleSelectChange('branch', value.name)

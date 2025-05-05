@@ -2,8 +2,8 @@ import { FC, useEffect, useRef } from 'react'
 
 import { Fieldset, FormSeparator } from '@/components'
 import { useRouterContext } from '@/context'
-import { BranchSelectorListItem, IBranchSelectorStore, SandboxLayout, TranslationStore } from '@/views'
-import { BranchSelectorTab } from '@/views/repo/components'
+import { BranchSelectorListItem, SandboxLayout, TranslationStore } from '@/views'
+import { BranchSelectorContainerProps, BranchSelectorTab } from '@/views/repo/components'
 
 import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'
@@ -19,14 +19,6 @@ interface ILoadingStates {
   isRulesLoading: boolean
 }
 
-interface BranchSelectorContainerProps {
-  selectedBranch?: BranchSelectorListItem | null
-  onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
-  isBranchOnly?: boolean
-  dynamicWidth?: boolean
-  preSelectedTab?: BranchSelectorTab
-}
-
 interface RepoSettingsGeneralPageProps {
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   handleRepoUpdate: (data: RepoUpdateData) => void
@@ -38,10 +30,7 @@ interface RepoSettingsGeneralPageProps {
   openRulesAlertDeleteDialog: (identifier: string) => void
   openRepoAlertDeleteDialog: () => void
   useRepoRulesStore: () => IRepoStore
-  useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
-  searchQuery: string
-  setSearchQuery: (query: string) => void
   rulesSearchQuery: string
   setRulesSearchQuery: (query: string) => void
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
@@ -57,11 +46,8 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   openRulesAlertDeleteDialog,
   openRepoAlertDeleteDialog,
   useRepoRulesStore,
-  useRepoBranchesStore,
   useTranslationStore,
   selectBranchOrTag,
-  searchQuery,
-  setSearchQuery,
   rulesSearchQuery,
   setRulesSearchQuery,
   branchSelectorRenderer
@@ -94,11 +80,8 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           isLoadingRepoData={loadingStates.isLoadingRepoData}
           isUpdatingRepoData={loadingStates.isUpdatingRepoData}
           isRepoUpdateSuccess={isRepoUpdateSuccess}
-          useRepoBranchesStore={useRepoBranchesStore}
           useTranslationStore={useTranslationStore}
           selectBranchOrTag={selectBranchOrTag}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
           branchSelectorRenderer={branchSelectorRenderer}
         />
         <FormSeparator />

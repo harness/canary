@@ -30,6 +30,7 @@ export interface BranchSelectorDropdownProps {
   searchQuery: string
   setSearchQuery: (query: string) => void
   dynamicWidth?: boolean
+  preSelectedTab?: BranchSelectorTab
 }
 
 export interface BranchSelectorProps extends BranchSelectorDropdownProps {
@@ -37,4 +38,12 @@ export interface BranchSelectorProps extends BranchSelectorDropdownProps {
   prefix?: string
   className?: string
   useTranslationStore: () => TranslationStore
+}
+
+export interface BranchSelectorContainerProps {
+  selectedBranch?: BranchSelectorListItem | null
+  onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
+  isBranchOnly?: boolean
+  dynamicWidth?: boolean
+  preSelectedTab?: BranchSelectorTab
 }

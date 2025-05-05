@@ -1,4 +1,3 @@
-export * from './branch-selector'
 export * from './branch-selector-v2'
 export * from './branch-info-bar'
 export * from './summary/summary'

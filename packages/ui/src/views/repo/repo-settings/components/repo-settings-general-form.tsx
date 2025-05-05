@@ -12,7 +12,6 @@ import {
   Label,
   Message,
   MessageTheme,
-  Option,
   Radio,
   SkeletonForm,
   Text,
@@ -32,6 +31,14 @@ import {
 import { BranchSelector, BranchSelectorTab } from '@/views/repo/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+interface BranchSelectorContainerProps {
+  selectedBranch?: BranchSelectorListItem | null
+  onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
+  isBranchOnly?: boolean
+  dynamicWidth?: boolean
+  preSelectedTab?: BranchSelectorTab
+}
+
 export const RepoSettingsGeneralForm: FC<{
   repoData: RepoData
   handleRepoUpdate: (data: RepoUpdateData) => void
@@ -44,6 +51,7 @@ export const RepoSettingsGeneralForm: FC<{
   useTranslationStore: () => TranslationStore
   searchQuery: string
   setSearchQuery: (query: string) => void
+  branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }> = ({
   repoData,
   handleRepoUpdate,
@@ -55,10 +63,12 @@ export const RepoSettingsGeneralForm: FC<{
   useRepoBranchesStore,
   useTranslationStore,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  branchSelectorRenderer
 }) => {
   const { t } = useTranslationStore()
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
+  const BranchSelector = branchSelectorRenderer
 
   const {
     register,
@@ -88,6 +98,7 @@ export const RepoSettingsGeneralForm: FC<{
   }, [repoData, isLoadingRepoData, reset])
 
   const accessValue = watch('access')
+  const branchValue = watch('branch')
 
   useEffect(() => {
     let timeoutId: number
@@ -154,7 +165,7 @@ export const RepoSettingsGeneralForm: FC<{
           <Fieldset className="w-[298px]">
             <ControlGroup>
               <Label className="mb-2">{t('views:repos.defaultBranch', 'Default Branch')}</Label>
-              <BranchSelector
+              {/* <BranchSelector
                 useTranslationStore={useTranslationStore}
                 useRepoBranchesStore={useRepoBranchesStore}
                 onSelectBranch={value => {
@@ -164,6 +175,15 @@ export const RepoSettingsGeneralForm: FC<{
                 isBranchOnly={true}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
+              /> */}
+              <BranchSelector
+                onSelectBranchorTag={value => {
+                  handleSelectChange('branch', value.name)
+                  selectBranchOrTag(value, BranchSelectorTab.BRANCHES)
+                }}
+                isBranchOnly={true}
+                dynamicWidth={true}
+                selectedBranch={{ name: branchValue, sha: '' }}
               />
             </ControlGroup>
           </Fieldset>

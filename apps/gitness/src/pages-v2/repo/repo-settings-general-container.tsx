@@ -37,6 +37,7 @@ import {
   SecurityScanning
 } from '@harnessio/ui/views'
 
+import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -327,6 +328,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         setSearchQuery={setBranchQuery}
         rulesSearchQuery={rulesSearchQuery}
         setRulesSearchQuery={setRulesSearchQuery}
+        branchSelectorRenderer={BranchSelectorContainer}
       />
 
       <DeleteAlertDialog

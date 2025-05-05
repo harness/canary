@@ -75,7 +75,11 @@ export default function RepoCommitsPage() {
       xPrevPage={xPrevPage}
       useTranslationStore={useTranslationStore}
       renderProp={() => (
-        <BranchSelectorContainer onSelectBranchorTag={selectBranchOrTag} selectedBranch={selectedBranchOrTag} />
+        <BranchSelectorContainer
+          onSelectBranchorTag={selectBranchOrTag}
+          selectedBranch={selectedBranchOrTag}
+          preSelectedTab={selectedRefType}
+        />
       )}
     />
   )

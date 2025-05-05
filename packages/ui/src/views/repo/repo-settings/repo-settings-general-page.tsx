@@ -19,6 +19,14 @@ interface ILoadingStates {
   isRulesLoading: boolean
 }
 
+interface BranchSelectorContainerProps {
+  selectedBranch?: BranchSelectorListItem | null
+  onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
+  isBranchOnly?: boolean
+  dynamicWidth?: boolean
+  preSelectedTab?: BranchSelectorTab
+}
+
 interface RepoSettingsGeneralPageProps {
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   handleRepoUpdate: (data: RepoUpdateData) => void
@@ -36,6 +44,7 @@ interface RepoSettingsGeneralPageProps {
   setSearchQuery: (query: string) => void
   rulesSearchQuery: string
   setRulesSearchQuery: (query: string) => void
+  branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }
 
 export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
@@ -54,7 +63,8 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   searchQuery,
   setSearchQuery,
   rulesSearchQuery,
-  setRulesSearchQuery
+  setRulesSearchQuery,
+  branchSelectorRenderer
 }) => {
   const { location } = useRouterContext()
   const { t } = useTranslationStore()
@@ -89,6 +99,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           selectBranchOrTag={selectBranchOrTag}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          branchSelectorRenderer={branchSelectorRenderer}
         />
         <FormSeparator />
         <div ref={rulesRef}>

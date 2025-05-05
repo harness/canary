@@ -68,6 +68,7 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
       defaultBranchName={repoFilesStore.repository.default_branch}
       currentBranchDivergence={{ behind: 0, ahead: 0 }}
       isLoadingRepoDetails={false}
+      refType={BranchSelectorTab.BRANCHES}
     >
       {renderCodeView}
     </RepoFiles>

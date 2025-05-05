@@ -294,7 +294,8 @@
       "statusOption": {
         "success": "Succès",
         "failure": "Échec",
-        "label": "Statut"
+        "label": "Statut",
+        "favourite": "Favourites"
       }
     },
     "created": "Créé"

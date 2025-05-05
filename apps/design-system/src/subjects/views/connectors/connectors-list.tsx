@@ -4,7 +4,7 @@ import { useTranslationStore } from '@utils/viewUtils'
 import { noop } from 'lodash-es'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { ConnectorListItem, ConnectorsListPage } from '@harnessio/ui/views'
+import { ConnectorListFilters, ConnectorListItem, ConnectorsListPage } from '@harnessio/ui/views'
 
 import mockConnectorsList from './mock-connectors-list.json'
 
@@ -17,12 +17,20 @@ const ConnectorsListPageWrapper = (): JSX.Element => {
     setAlertDeleteParams(identifier)
     setIsAlertDeleteDialogOpen(true)
   }
+  const [filterValues, setFilterValues] = useState<ConnectorListFilters>({})
+  const filteredMockConnectorsList = mockConnectorsList.filter(connector => {
+    return filterValues?.favourites ? connector.isFavorite : true
+  })
+
+  const handleFilterChange = (selectedValues: ConnectorListFilters) => {
+    setFilterValues(selectedValues)
+  }
 
   return (
     <>
       <ConnectorsListPage
         connectors={
-          mockConnectorsList.map(connector => ({
+          filteredMockConnectorsList.map(connector => ({
             name: connector.connector.name,
             identifier: connector.connector.identifier,
             type: connector.connector.type,
@@ -42,6 +50,7 @@ const ConnectorsListPageWrapper = (): JSX.Element => {
         }
         useTranslationStore={useTranslationStore}
         isLoading={false}
+        onFilterChange={handleFilterChange}
         setSearchQuery={noop}
         onEditConnector={noop}
         onDeleteConnector={openAlertDeleteDialog}

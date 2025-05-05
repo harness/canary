@@ -7,7 +7,7 @@ import { TFunction } from 'i18next'
 
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
-import { default as MulltiTypeInput } from './filters-bar/actions/variants/checkbox'
+import { default as MulltiSelect } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import Text from './filters-bar/actions/variants/text-field'
 import {
@@ -63,7 +63,7 @@ const renderFilterValues = <T extends string, V extends FilterValueTypes, Custom
     case FilterFieldTypes.MultiSelect: {
       const checkboxFilter = filter as FilterField<CheckboxOptions[]>
       return (
-        <MulltiTypeInput
+        <MulltiSelect
           filter={checkboxFilter.value || []}
           filterOption={filterOption.filterFieldConfig?.options || []}
           onUpdateFilter={values => onUpdateFilter(values as V)}
@@ -80,7 +80,7 @@ const renderFilterValues = <T extends string, V extends FilterValueTypes, Custom
     case FilterFieldTypes.Checkbox: {
       const checkboxFilter = filter as FilterField<boolean>
       return (
-        <Button variant="soft" theme="muted" className="cursor-pointer" asChild>
+        <Button variant="secondary" theme="default" className="cursor-pointer" asChild>
           <Label className="text-1 text-cn-foreground-1 flex items-center gap-x-3">
             <Checkbox checked={checkboxFilter.value} onCheckedChange={value => onUpdateFilter(value as V)} />
             <span>{filterOption.filterFieldConfig?.label}</span>

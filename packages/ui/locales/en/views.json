@@ -303,7 +303,8 @@
       "statusOption": {
         "success": "Success",
         "failure": "Failure",
-        "label": "Status"
+        "label": "Status",
+        "favourite": "Favourites"
       }
     },
     "created": "Created"

@@ -2,6 +2,8 @@ import { CheckboxOptions, FilterFieldTypes, FilterOptionConfig } from '@componen
 import { Icon } from '@components/icon'
 import { TFunction } from 'i18next'
 
+import { booleanParser } from '@harnessio/filters'
+
 import { ConnectorListFilters } from './types'
 
 export const getConnectorListFilterOptions = (t: TFunction): Array<FilterOptionConfig<keyof ConnectorListFilters>> => {
@@ -42,10 +44,7 @@ export const getConnectorListFilterOptions = (t: TFunction): Array<FilterOptionC
       filterFieldConfig: {
         label: <Icon name="star-filled" className="fill-icons-alert" size={14} />
       },
-      parser: {
-        parse: (value: string): boolean => value === 'true',
-        serialize: (value: boolean): string => (value ? 'true' : 'false')
-      }
+      parser: booleanParser
     }
   ]
 }

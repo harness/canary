@@ -66,13 +66,16 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     }
     return parentPath?.length ? parentPath : fileName
   }, [isNew, parentPath, fileName])
-  const pathParts = [
-    {
-      path: repoId!,
-      parentPath: repoPath
-    },
-    ...splitPathWithParents(pathToSplit, repoPath)
-  ]
+  const pathParts = useMemo(
+    () => [
+      {
+        path: repoId!,
+        parentPath: repoPath
+      },
+      ...splitPathWithParents(pathToSplit, repoPath)
+    ],
+    [pathToSplit, repoId, repoPath]
+  )
   const isUpdate = useMemo(() => fullResourcePath === fileResourcePath, [fullResourcePath, fileResourcePath])
   const commitAction = useMemo(
     () => (isNew ? GitCommitAction.CREATE : isUpdate ? GitCommitAction.UPDATE : GitCommitAction.MOVE),
@@ -155,6 +158,9 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     setView(value)
   }
 
+  console.log('pathToSplit', pathToSplit)
+  console.log('pathPARTS', pathParts)
+
   return (
     <>
       <GitCommitDialog
@@ -187,6 +193,8 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         fileName={fileName}
         handleOpenCommitDialog={() => toggleOpenCommitDialog(true)}
         handleCancelFileEdit={handleCancelFileEdit}
+        parentPath={parentPath}
+        setParentPath={setParentPath}
       />
 
       <FileEditorControlBar view={view} onChangeView={onChangeView} />

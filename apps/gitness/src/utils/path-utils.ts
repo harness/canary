@@ -1,25 +1,17 @@
 import { PathParts } from '@harnessio/ui/components'
 
-export function splitPathWithParents(fullResourcePath: string, repoPath: string) {
-  const result: PathParts[] = []
+import { FILE_SEPERATOR } from './git-utils'
 
-  if (!fullResourcePath.length) return result
+export function splitPathWithParents(fullResourcePath: string, repoPath: string): PathParts[] {
+  const cleaned = fullResourcePath.replace(/^\/+|\/+$/g, '')
+  if (!cleaned) return []
 
-  const pathParts = fullResourcePath?.split('/')
+  const segments = cleaned.split(FILE_SEPERATOR).filter(Boolean)
 
-  if (pathParts.length) {
-    let parentPath = ''
-
-    pathParts.map((path, index) => {
-      parentPath += (index === 0 ? repoPath + '/~/' : '/') + path
-
-      result.push({
-        path: path,
-        parentPath: parentPath
-      })
-    })
-  }
-  return result
+  return segments.map((segment, i) => ({
+    path: segment,
+    parentPath: `${repoPath}/~/${segments.slice(0, i + 1).join(FILE_SEPERATOR)}`
+  }))
 }
 
 export const decodeURIComponentIfValid = (path: string) => {

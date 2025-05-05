@@ -1,8 +1,7 @@
-import { Fragment } from 'react'
+import { ChangeEvent, Fragment } from 'react'
 
 import { Breadcrumb, Icon, Input } from '@/components'
 import { useRouterContext } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 
 interface InputPathBreadcrumbItemProps {
   path: string
@@ -10,6 +9,8 @@ interface InputPathBreadcrumbItemProps {
   gitRefName: string
   isNew?: boolean
   handleOnBlur: () => void
+  parentPath?: string
+  setParentPath?: (value: string) => void
 }
 
 const InputPathBreadcrumbItem = ({
@@ -17,22 +18,26 @@ const InputPathBreadcrumbItem = ({
   changeFileName,
   gitRefName,
   isNew = false,
-  handleOnBlur
+  handleOnBlur,
+  parentPath,
+  setParentPath
 }: InputPathBreadcrumbItemProps) => {
-  const { search: fileName, handleSearchChange: handleInputChange } = useDebounceSearch({
-    handleChangeSearchValue: changeFileName,
-    searchValue: path
-  })
-
   return (
     <div className="flex items-center gap-1.5 text-cn-foreground-2">
       <Input
         className="w-[200px]"
         id="fileName"
-        value={fileName}
+        value={path}
         placeholder="Add a file name"
-        onChange={handleInputChange}
+        onInput={(event: ChangeEvent<HTMLInputElement>) => {
+          changeFileName(event.currentTarget.value)
+        }}
         onBlur={handleOnBlur}
+        onFocus={() => {
+          const value = (parentPath ? parentPath + '/' : '') + path
+          changeFileName(value)
+          setParentPath?.('')
+        }}
         autoFocus={!!isNew}
       />
       <span>in</span>
@@ -60,6 +65,8 @@ export interface PathBreadcrumbsInputProps {
   gitRefName: string
   fileName: string
   handleOnBlur: () => void
+  parentPath?: string
+  setParentPath?: (value: string) => void
 }
 
 export type PathBreadcrumbsProps = PathBreadcrumbsBaseProps & Partial<PathBreadcrumbsInputProps>
@@ -69,7 +76,7 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
   const length = items.length
 
   const renderInput = () => {
-    const { changeFileName, gitRefName, fileName, handleOnBlur } = props
+    const { changeFileName, gitRefName, fileName, handleOnBlur, parentPath, setParentPath } = props
 
     if (!changeFileName || gitRefName === undefined || fileName === undefined || !handleOnBlur) {
       throw new Error('Invalid usage of InputComp')
@@ -82,6 +89,8 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
         gitRefName={gitRefName}
         handleOnBlur={handleOnBlur}
         isNew={isNew}
+        parentPath={parentPath}
+        setParentPath={setParentPath}
       />
     )
   }
@@ -95,7 +104,17 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
           if (isLast) {
             return (
               <Breadcrumb.Item key={idx}>
-                {isEdit ? renderInput() : <Breadcrumb.Page>{path}</Breadcrumb.Page>}
+                {isEdit && length === 1 ? (
+                  <>
+                    <Breadcrumb.Page>{path}</Breadcrumb.Page>
+                    <Breadcrumb.Separator />
+                    {renderInput()}
+                  </>
+                ) : isEdit ? (
+                  renderInput()
+                ) : (
+                  <Breadcrumb.Page>{path}</Breadcrumb.Page>
+                )}
               </Breadcrumb.Item>
             )
           }

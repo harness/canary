@@ -16,6 +16,8 @@ export interface PathActionBarProps {
   pathUploadFiles?: string
   handleOpenCommitDialog?: () => void
   handleCancelFileEdit?: () => void
+  parentPath?: string
+  setParentPath?: (value: string) => void
 }
 
 export const PathActionBar: FC<PathActionBarProps> = ({
@@ -29,7 +31,9 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   pathNewFile,
   pathUploadFiles,
   handleOpenCommitDialog,
-  handleCancelFileEdit
+  handleCancelFileEdit,
+  parentPath,
+  setParentPath
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
@@ -43,6 +47,8 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         handleOnBlur={onBlurFileName}
         gitRefName={gitRefName}
         fileName={fileName}
+        parentPath={parentPath}
+        setParentPath={setParentPath}
       />
       {codeMode === CodeModes.VIEW && pathNewFile && pathUploadFiles && (
         <Button variant="outline">

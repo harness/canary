@@ -15164,8 +15164,6 @@
       "tag.border": "f675fc12a9f950c500255b0c4cca35fa4b94539f",
       "tag.max-width": "59874db9c8d0fa937c05d35cfac76341a9460072",
       "tooltip.radius": "f75277905b2f6c6bbee278e7d79cea149254d620",
-      "tooltip.padding.py": "1a270d3047ced1ec7041b25fbd3ebb5fb7b54f7c",
-      "tooltip.padding.px": "0300d437976ce5969072f3b1c3f4159a32b355a6",
       "sidebar.item.px": "9f976af443d268a5d47ca9ad6652cfab0dc865b3",
       "sidebar.item.size": "19f85b1a35176c6d96a77912c46f7c0e3f50fe00",
       "sidebar.item.gap": "bdf10a3534802adcdc42d6c87f51862de6a1fb6a",
@@ -15182,7 +15180,8 @@
       "sidebar.footer.gap": "7acf5d0f13fc56c0a822358c0bca99e0f3e12bb3",
       "sidebar.user-item.px": "f38377cdc697e2c19c1703ef4e664d61865eb932",
       "sidebar.user-item.gap": "07e466f93355f125bbe792696cc27af9271037a7",
-      "sidebar.user-item.size": "61625bce7d9b9fd4ece03cf3b67fc3e7c0a6695a"
+      "sidebar.user-item.size": "61625bce7d9b9fd4ece03cf3b67fc3e7c0a6695a",
+      "tooltip.padding": "1a270d3047ced1ec7041b25fbd3ebb5fb7b54f7c"
     },
     "group": "breakpoint"
   }

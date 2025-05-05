@@ -15,7 +15,8 @@ import {
   linkStyles,
   radioStyles,
   switchStyles,
-  tagStyles
+  tagStyles,
+  textareaStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -441,6 +442,7 @@ export default {
         formSharedStyles,
         checkboxStyles,
         radioStyles,
+        textareaStyles,
         inputStyles,
         captionStyles
       ])

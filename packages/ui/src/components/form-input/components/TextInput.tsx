@@ -4,6 +4,11 @@ import { BaseInput, InputProps } from './BaseInput'
 
 interface TextInputProps extends InputProps {
   type?: Exclude<HTMLInputElement['type'], 'number' | 'search'>
+  wrapperClassName?: string
+  caption?: string
+  error?: string
+  warningMessage?: string
+  optional?: boolean
 }
 
 export function TextInput({
@@ -27,12 +32,6 @@ export function TextInput({
       )}
 
       <BaseInput type="text" theme={theme} disabled={disabled} id={id} {...props} />
-
-      {/* {!!error && (
-        <Message className="mt-0.5" theme={MessageTheme.ERROR}>
-          {error}
-        </Message>
-      )} */}
 
       <Caption theme={theme} message={caption} errorMessage={error} warningMessage={warningMessage} showIcon />
     </ControlGroup>

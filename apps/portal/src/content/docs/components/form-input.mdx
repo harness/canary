@@ -7,27 +7,77 @@ The `FormInput` component is used to handle user input, providing options for st
 Also offers options for adding icons, captions, custom content, and error text for the field.
 
 import { DocsPage } from "@/components/docs-page";
+import SearchInputDoc from "@/components/samples/SearchInputDoc";
+import React from "react";
 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col gap-12 min-w-[400px]">
-    <div className="font-bold w-full mb-2">Input Examples:</div>
-    
-     <FormInput.Text placeholder="Enter the value" />
-     <FormInput.Text disabled placeholder="Username" label="Disabled Input" />
-     <FormInput.Text label="Success Input" id="someinput" value="input with value" placeholder="Enter the value" theme="success" />
-     <FormInput.Text theme="danger" label="Input with Error" error="This field is required" />
-     <FormInput.Text theme="warning" label="Input with Warning" warningMessage="Please double-check this field" />
-     <FormInput.Text size="sm" label="Small Input" placeholder="Enter the small value" />
-     
-     
-      
-   <FormInput.Text disabled className="pl-0" prefix={<div className="border-r-0 flex items-center justify-center w-8"><Icon name="search" size={12} /></div>} />
-     <FormInput.Text suffix={<Button variant="outline" iconOnly><Icon name="chevron-right" size={14} /></Button>} />
-     <FormInput.Text prefix={<Button variant="outline" iconOnly><Icon name="minus" size={14} /></Button>} suffix={<Button variant="outline" iconOnly><Icon name="plus" size={14} /></Button>} />
-     
-    
-  </div>`}
+  {/* Input Examples */}
+  <div className="font-bold w-full mb-2">Input Examples:</div>
+  <FormInput.Text placeholder="Enter the value" />
+  <FormInput.Text disabled placeholder="Username" label="Disabled Input" />
+  <FormInput.Text 
+    label="Success Input" 
+    id="someinput" 
+    value="input with value" 
+    placeholder="Enter the value" 
+    theme="success" 
+  />
+  <FormInput.Text 
+    theme="danger" 
+    label="Input with Error" 
+    error="This field is required" 
+  />
+  <FormInput.Text 
+    theme="warning" 
+    label="Input with Warning" 
+    warningMessage="Please double-check this field" 
+  />
+  <FormInput.Text 
+    size="sm" 
+    label="Small Input" 
+    placeholder="Enter the small value" 
+  />
+  
+  <hr />
+
+{/* Search Input Examples */}
+
+<div className="font-bold w-full mb-2">Search Input Examples:</div>
+<FormInput.Search />
+<FormInput.Search disabled />
+
+<hr />
+
+{/* Suffix and Prefix Examples */}
+
+<div className="font-bold w-full mb-2">Suffix and Prefix Examples:</div>
+
+<FormInput.Text prefix="https://" suffix=".com" />
+<FormInput.Text size="sm" prefix="https://" suffix=".com" />
+<FormInput.Text prefix="PAT:" value="ghp_1234567890abcdef" readOnly />
+
+  <FormInput.Text 
+    suffix={
+      <Button variant="outline" iconOnly>
+        <Icon name="chevron-right" size={14} />
+      </Button>
+    } 
+  />
+  <FormInput.Text 
+    prefix={
+      <Button variant="outline" iconOnly>
+        <Icon name="minus" size={14} />
+      </Button>
+    } 
+    suffix={
+      <Button variant="outline" iconOnly>
+        <Icon name="plus" size={14} />
+      </Button>
+    } 
+  />
+</div>`}
 />
 
 ## Usage
@@ -49,6 +99,40 @@ return (
     rightElementVariant="filled"
   />
 )
+```
+
+## Search Input with State Example
+
+Below is an example of how to implement a search input that displays the current search value using React state. The SearchInput component includes a built-in 300ms debounce to prevent excessive callbacks when typing:
+
+&nbsp;
+
+<SearchInputDoc client:only />
+
+```tsx
+import { useState } from "react";
+import { FormInput } from "@harnessio/ui/components";
+
+export default function Search() {
+  // Using useState hook to track search value
+  const [searchValue, setSearchValue] = useState("");
+
+  return (
+    <>
+      <div className="mb-2 w-full font-bold">Search with State:</div>
+      <FormInput.Search
+        placeholder="Type to search..."
+        onChange={(value) => setSearchValue(value)}
+      />
+      <div className="rounded-md border bg-slate-50 p-3">
+        <div className="text-sm font-medium">Current Search Value:</div>
+        <div className="mt-1 rounded-md border bg-white p-2 font-mono text-sm">
+          {searchValue || "(empty)"}
+        </div>
+      </div>
+    </>
+  );
+}
 ```
 
 ## API Reference

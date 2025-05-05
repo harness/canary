@@ -1,9 +1,9 @@
 import { FC, ReactElement, ReactNode } from 'react'
 
-import { Checkbox, Label, RadioButton, Text } from '@/components'
+import { Checkbox, Label, Radio, Text } from '@/components'
 import { cn } from '@utils/cn'
 
-type ControlType = ReactElement<typeof RadioButton> | ReactElement<typeof Checkbox>
+type ControlType = ReactElement<typeof Radio.Item> | ReactElement<typeof Checkbox>
 
 interface OptionProps {
   control: ControlType
@@ -18,7 +18,7 @@ interface OptionProps {
  * Individual item that contains a control (radio button or checkbox) with optional label and description
  * @example
  * <Option
- *   control={<RadioButton value="option1" />}
+ *   control={<Radio.Item value="option1" />}
  *   id="option1"
  *   label="Option 1"
  *   description="Description for Option 1"

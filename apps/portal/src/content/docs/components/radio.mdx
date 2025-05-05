@@ -1,0 +1,215 @@
+---
+title: Radio
+description: Radio button component documentation
+---
+
+The `Radio.Item` component provides a customizable, accessible radio button input.  
+It must always be used inside a `Radio.Root` to function correctly.  
+The `Radio.Root` component provides the necessary context for managing grouped selections.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [group1Value, setGroup1Value] = React.useState('option1');
+    const [group2Value, setGroup2Value] = React.useState('option1');
+    const [group3Value, setGroup3Value] = React.useState('option3');
+    const [group4Value, setGroup4Value] = React.useState('option1');
+
+    return (
+      <div className="flex flex-col space-y-8">
+        {/* Standard usage */}
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium">Standard usage</h4>
+          <Radio.Root
+            value={group1Value}
+            onValueChange={setGroup1Value}
+          >
+            <Radio.Item name="group1" value="option1" label="Option 1" caption="This is option 1" />
+            <Radio.Item name="group1" value="option2" label="Option 2" caption="This is option 2" />
+          </Radio.Root>
+        </div>
+
+        {/* RadioGroup Example */}
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium">RadioGroup Example</h4>
+          <Radio.Root
+            value={group2Value}
+            onValueChange={setGroup2Value}
+          >
+            <Radio.Item name="group2" value="option1" label="Option 1" caption="This is option 1" />
+            <Radio.Item name="group2" value="option2" label="Option 2" caption="This is option 2" />
+            <Radio.Item name="group2" value="option3" label="Option 3" caption="This is option 3" />
+          </Radio.Root>
+        </div>
+
+        {/* Optional */}
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium">Optional</h4>
+          <Radio.Root
+            value={group3Value}
+            onValueChange={setGroup3Value}
+          >
+            <Radio.Item name="group3" value="option3" label="Option 3" caption="This field is optional" optional />
+          </Radio.Root>
+        </div>
+
+        {/* Disabled */}
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium">Disabled</h4>
+          <Radio.Root
+            value={group4Value}
+            onValueChange={setGroup4Value}
+          >
+            <Radio.Item name="group4" value="option1" label="Option 1" caption="This option is disabled" disabled />
+            <Radio.Item name="group4" value="option2" label="Option 2" />
+          </Radio.Root>
+        </div>
+      </div>
+    );
+
+}`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Radio } from "@harnessio/ui/components";
+
+function Example() {
+  const [group1Value, setGroup1Value] = React.useState("option1");
+  const [group2Value, setGroup2Value] = React.useState("option1");
+  const [group3Value, setGroup3Value] = React.useState("option3");
+  const [group4Value, setGroup4Value] = React.useState("option1");
+
+  return (
+    <div className="flex flex-col space-y-8">
+      {/* Standard usage */}
+      <Radio.Root
+        value={group1Value}
+        onValueChange={setGroup1Value}
+      >
+        <Radio.Item name="group1" value="option1" label="Option 1" caption="This is option 1" />
+        <Radio.Item name="group1" value="option2" label="Option 2" caption="This is option 2" />
+      </Radio.Root>
+
+      {/* RadioGroup Example */}
+      <Radio.Root
+        value={group2Value}
+        onValueChange={setGroup2Value}
+      >
+        <Radio.Item name="group2" value="option1" label="Option 1" caption="This is option 1" />
+        <Radio.Item name="group2" value="option2" label="Option 2" caption="This is option 2" />
+        <Radio.Item name="group2" value="option3" label="Option 3" caption="This is option 3" />
+      </Radio.Root>
+
+      {/* Optional */}
+      <Radio.Root
+        value={group3Value}
+        onValueChange={setGroup3Value}
+      >
+        <Radio.Item name="group3" value="option3" label="Option 3" caption="This field is optional" optional />
+      </Radio.Root>
+
+      {/* Disabled */}
+      <Radio.Root
+        value={group4Value}
+        onValueChange={setGroup4Value}
+      >
+        <Radio.Item name="group4" value="option1" label="Option 1" caption="This option is disabled" disabled />
+        <Radio.Item name="group4" value="option2" label="Option 2" />
+      </Radio.Root>
+    </div>
+  );
+}
+```
+
+## API Reference
+
+The `Radio.Item` component must always be used inside a `Radio.Root` to function correctly.  
+The `Radio.Root` provides the necessary context for managing grouped selections.
+
+```typescript jsx
+<Radio.Root
+  value="option1"              // [OPTIONAL] The currently selected value
+  onValueChange={handleChange} // [OPTIONAL] Callback called when the selected value changes
+  className="custom-class"     // [OPTIONAL] Additional class names for the group
+>
+  <Radio.Item
+    name="group1"              // [OPTIONAL] Name of the radio button group
+    value="option1"            // [REQUIRED] The value of the radio button
+    label="Option 1"           // [OPTIONAL] Label displayed next to the radio button
+    caption="This is option 1" // [OPTIONAL] Caption displayed under the label
+    optional                   // [OPTIONAL] Indicates if the field is optional
+    disabled                   // [OPTIONAL] Whether the radio button is disabled
+    className="custom-class"   // [OPTIONAL] Additional class names for the radio button
+  />
+</Radio.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the radio button group.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "The value of the radio button.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Label displayed next to the radio button.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "caption",
+      description: "Caption displayed under the label.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "optional",
+      description: "Indicates if the field is optional.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disabled",
+      description: "Indicates whether the radio button is disabled.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the radio button.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value (Radio.Root)",
+      description: "The currently selected value in the radio group.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Callback called when the selected value changes.",
+      required: false,
+      value: "(value: string) => void",
+    },
+    {
+      name: "className (Radio.Root)",
+      description: "Additional class names to apply to the radio group.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

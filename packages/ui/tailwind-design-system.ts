@@ -9,6 +9,7 @@ import {
   checkboxStyles,
   dialogStyles,
   labelStyles,
+  radioStyles,
   switchStyles,
   tagStyles
 } from './tailwind-utils-config/components'
@@ -430,6 +431,7 @@ export default {
       addComponents(labelStyles)
       addComponents(tagStyles)
       addComponents(checkboxStyles)
+      addComponents(radioStyles)
     }),
     tailwindcssAnimate,
     typography,

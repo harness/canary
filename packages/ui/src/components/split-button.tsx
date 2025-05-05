@@ -4,7 +4,7 @@ import { Button, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { Option } from '@components/option'
-import { RadioButton, RadioGroup } from '@components/radio'
+import { Radio } from '@components/radio'
 import { cn } from '@utils/cn'
 
 export interface SplitButtonOptionType<T extends string> {
@@ -89,7 +89,7 @@ export const SplitButton = <T extends string>({
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className={cn('mt-1 max-w-80', dropdownContentClassName)} align="end">
           {selectedValue ? (
-            <RadioGroup value={String(selectedValue)} id={id}>
+            <Radio.Root value={String(selectedValue)} id={id}>
               <DropdownMenu.Group>
                 {options.map(option => (
                   <DropdownMenu.Item
@@ -98,7 +98,7 @@ export const SplitButton = <T extends string>({
                     disabled={loading}
                   >
                     <Option
-                      control={<RadioButton className="mt-px" value={String(option.value)} id={String(option.value)} />}
+                      control={<Radio.Item className="mt-px" value={String(option.value)} id={String(option.value)} />}
                       id={String(option.value)}
                       label={option.label}
                       ariaSelected={selectedValue === option.value}
@@ -107,7 +107,7 @@ export const SplitButton = <T extends string>({
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.Group>
-            </RadioGroup>
+            </Radio.Root>
           ) : (
             <DropdownMenu.Group>
               {options.map(option => (

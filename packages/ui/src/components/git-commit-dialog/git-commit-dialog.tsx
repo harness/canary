@@ -13,8 +13,7 @@ import {
   Message,
   MessageTheme,
   Option,
-  RadioButton,
-  RadioGroup,
+  Radio,
   StyledLink,
   Textarea
 } from '@/components'
@@ -155,7 +154,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
             error={errors.description?.message?.toString()}
           />
           <ControlGroup>
-            <RadioGroup
+            <Radio.Root
               className="gap-6"
               id="commitToGitRef"
               value={commitToGitRefValue}
@@ -163,7 +162,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
             >
               <Option
                 control={
-                  <RadioButton
+                  <Radio.Item
                     className="mt-px"
                     value={CommitToGitRefOption.DIRECTLY}
                     id={CommitToGitRefOption.DIRECTLY}
@@ -189,7 +188,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               />
               <Option
                 control={
-                  <RadioButton
+                  <Radio.Item
                     className="mt-px"
                     value={CommitToGitRefOption.NEW_BRANCH}
                     id={CommitToGitRefOption.NEW_BRANCH}
@@ -203,7 +202,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                   <StyledLink to="/">Learn more about pull requests</StyledLink>
                 }
               />
-            </RadioGroup>
+            </Radio.Root>
             {violation && (
               <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
                 {bypassable

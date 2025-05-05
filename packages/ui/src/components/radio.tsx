@@ -1,50 +1,66 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
+import { Label } from '@/components'
+import { cn } from '@/utils/cn'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
-import { cn } from '@utils/cn'
 
-/**
- * A container component for radio group items
- * @component
- * @example
- * <RadioGroup onValueChange={(value) => console.log(value)}>
- *   <RadioGroupItem control={<RadioButton />} id="option1" label="Option 1" />
- * </RadioGroup>
- */
-const RadioGroup = forwardRef<
-  ElementRef<typeof RadioGroupPrimitive.Root>,
-  ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
->(({ className, ...props }, ref) => {
-  return <RadioGroupPrimitive.Root className={cn('grid gap-5', className)} {...props} ref={ref} />
-})
-RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
+interface RadioItemProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> {
+  label?: string
+  caption?: string
+  optional?: boolean
+}
 
 /**
  * A styled radio button input component
  * @component
  * @example
- * <RadioButton value="option1" name="group" />
+ * <Radio.Item value="option1" name="group" label="Option 1" caption="This is option 1" />
  */
-const RadioButton = forwardRef<
-  ElementRef<typeof RadioGroupPrimitive.Item>,
-  ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>
->(({ className, ...props }, ref) => {
-  return (
-    <RadioGroupPrimitive.Item
-      ref={ref}
-      className={cn(
-        `flex items-center justify-center relative border-icons-1 text-icons-5 aspect-square h-4 w-4 rounded-full border
-        data-[state=checked]:border-icons-2 
-        focus-visible:rounded-full
-        disabled:cursor-not-allowed disabled:border-icons-4`,
-        className
-      )}
-      {...props}
-    >
-      <RadioGroupPrimitive.Indicator className="size-2 rounded-full bg-icons-2" />
-    </RadioGroupPrimitive.Item>
-  )
-})
-RadioButton.displayName = RadioGroupPrimitive.Item.displayName
+const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, RadioItemProps>(
+  ({ className, label, caption, optional, ...props }, ref) => {
+    const radioId = props.id || `radio-${Math.random().toString(36).slice(2, 11)}`
 
-export { RadioGroup, RadioButton }
+    return (
+      <div className={cn('cn-radio-wrapper', className)}>
+        <RadioGroupPrimitive.Item ref={ref} id={radioId} className={cn('cn-radio-root')} {...props}>
+          <RadioGroupPrimitive.Indicator className="cn-radio-indicator" />
+        </RadioGroupPrimitive.Item>
+
+        {(label || caption) && (
+          <div className="cn-radio-label-wrapper">
+            <Label
+              htmlFor={radioId}
+              optional={optional}
+              className={`cn-radio-label ${props.disabled ? 'disabled' : ''}`}
+            >
+              {label}
+            </Label>
+            <p className={`cn-radio-caption ${props.disabled ? 'disabled' : ''}`}>{caption || ''}</p>
+          </div>
+        )}
+      </div>
+    )
+  }
+)
+RadioItem.displayName = RadioGroupPrimitive.Item.displayName
+
+/**
+ * A container component for radio group items
+ * @component
+ * @example
+ * <Radio.Root onValueChange={(value) => console.log(value)}>
+ *   <Radio.Item value="option1" name="group" label="Option 1" />
+ * </Radio.Root>
+ */
+const RadioRoot = forwardRef<
+  ElementRef<typeof RadioGroupPrimitive.Root>,
+  ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
+>(({ className, ...props }, ref) => {
+  return <RadioGroupPrimitive.Root className={cn('grid gap-5', className)} {...props} ref={ref} />
+})
+RadioRoot.displayName = RadioGroupPrimitive.Root.displayName
+
+export const Radio = {
+  Root: RadioRoot,
+  Item: RadioItem
+}

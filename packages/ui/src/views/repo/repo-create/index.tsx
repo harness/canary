@@ -13,8 +13,7 @@ import {
   Message,
   MessageTheme,
   Option,
-  RadioButton,
-  RadioGroup,
+  Radio,
   Select,
   Spacer,
   StyledLink,
@@ -204,22 +203,22 @@ export function RepoCreatePage({
               <Text className="leading-none text-cn-foreground-2" size={2}>
                 Who has access
               </Text>
-              <RadioGroup className="mt-6" value={accessValue} onValueChange={handleAccessChange} id="access">
+              <Radio.Root className="mt-6" value={accessValue} onValueChange={handleAccessChange} id="access">
                 <Option
-                  control={<RadioButton className="mt-px" value="1" id="access-public" />}
+                  control={<Radio.Item className="mt-px" value="1" id="access-public" />}
                   id="access-public"
                   label="Public"
                   ariaSelected={accessValue === '1'}
                   description="Anyone with access to the Gitness environment can clone this repo."
                 />
                 <Option
-                  control={<RadioButton className="mt-px" value="2" id="access-private" />}
+                  control={<Radio.Item className="mt-px" value="2" id="access-private" />}
                   id="access-private"
                   label="Private"
                   ariaSelected={accessValue === '2'}
                   description="You choose who can see and commit to this repository."
                 />
-              </RadioGroup>
+              </Radio.Root>
               {errors.access && (
                 <Message className="mt-0.5" theme={MessageTheme.ERROR}>
                   {errors.access.message?.toString()}

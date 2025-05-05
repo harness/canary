@@ -1,8 +1,12 @@
 import { cloneElement, forwardRef, InputHTMLAttributes, isValidElement, ReactElement, ReactNode } from 'react'
 
-import { Icon, IconProps } from '@/components'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
+
+function InputAffix({ children, isPrefix = false }: { children: ReactNode; isPrefix?: boolean }) {
+  if (!children) return null
+  return <span className={cn('cn-input-affix', isPrefix ? 'cn-input-prefix' : 'cn-input-suffix')}>{children}</span>
+}
 
 export interface BaseInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix' | 'suffix'>,
@@ -10,11 +14,6 @@ export interface BaseInputProps
 
 const inputVariants = cva('cn-input-container', {
   variants: {
-    variant: {
-      // default:
-      //   'flex w-full rounded border text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-cn-foreground-3 focus-visible:rounded focus-visible:outline-none',
-      // extended: 'grow border-none focus-visible:outline-none'
-    },
     size: {
       default: '',
       sm: 'cn-input-sm'
@@ -27,123 +26,50 @@ const inputVariants = cva('cn-input-container', {
     }
   },
   defaultVariants: {
-    variant: undefined,
     theme: 'default',
     size: 'default'
   }
 })
 
-// const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
-//   ({ className, type, variant, size, theme, ...props }, ref) => {
-//     return <input className={cn(inputVariants({ variant, size, theme }), className)} type={type} ref={ref} {...props} />
-//   }
-// )
-
-// BaseInput.displayName = 'BaseInput'
-
-export interface BaseInputWithWrapperProps extends BaseInputProps {
-  children: ReactNode
-}
-
-/**
- * TODO: The component needs to be refined to cover all conditions.
- */
-// const BaseInputWithWrapper = forwardRef<HTMLInputElement, BaseInputWithWrapperProps>(
-//   ({ className, type, variant, size, theme, children, ...props }, ref) => {
-//     return (
-//       <div className={cn(inputVariants({ variant, size, theme }), 'p-0 flex items-center', className)}>
-//         {children}
-//         <input className="cn-input-input" type={type} ref={ref} {...props} />
-//       </div>
-//     )
-//   }
-// )
-
-// BaseInputWithWrapper.displayName = 'BaseInputWithWrapper'
-
 export interface InputProps extends BaseInputProps {
   label?: string
-  caption?: string
-  error?: string
-  warningMessage?: string
-  optional?: boolean
+  theme?: VariantProps<typeof inputVariants>['theme']
   className?: string
-  wrapperClassName?: string
-  inputIconName?: IconProps['name']
+  inputContainerClassName?: string
   prefix?: ReactNode
   suffix?: ReactNode
-  rightElement?: ReactNode
-  rightElementVariant?: 'default' | 'filled'
-  customContent?: ReactNode
-  theme?: VariantProps<typeof inputVariants>['theme']
 }
 
-/**
- * A form input component with support for labels, captions, and error messages.
- * @example
- * <Input
- *   label="Email"
- *   id="email"
- *   type="email"
- *   placeholder="Enter your email"
- *   caption="We'll never share your email"
- *   error='Invalid email format'
- * />
- */
 const BaseInput = forwardRef<HTMLInputElement, InputProps>(
-  ({ theme, type, size, className, wrapperClassName, variant, prefix = null, suffix = null, ...props }, ref) => {
-    // const InputComponent = customContent ? BaseInputWithWrapper : BaseInput
-    // const InputComponent = BaseInputWithWrapper
-
-    // const baseInputComp = (
-    //   <InputComponent
-    //     className={cn(className, {
-    //       'pl-8': !!inputIconName,
-    //       'border-none': !!rightElement
-    //     })}
-    //     id={id}
-    //     ref={ref}
-    //     theme={theme}
-    //     disabled={disabled}
-    //     {...props}
-    //   >
-    //     {customContent}
-    //   </InputComponent>
-    // )
-
+  ({ theme, size, className, inputContainerClassName, prefix = null, suffix = null, ...props }, ref) => {
     // Check if prefix/suffix is a valid React element
     const isPrefixComponent = isValidElement(prefix)
     const isSuffixComponent = isValidElement(suffix)
 
     // Create wrapped versions with classes if they are components
-    const wrappedPrefix = isPrefixComponent
-      ? cloneElement(prefix as ReactElement, {
-          className: cn('h-full border-0 border-r rounded-r-none', (prefix as ReactElement).props?.className)
-        })
-      : prefix
+    const wrappedPrefix = isPrefixComponent ? (
+      cloneElement(prefix as ReactElement, {
+        className: cn('cn-input-prefix', (prefix as ReactElement).props?.className)
+      })
+    ) : (
+      <InputAffix isPrefix>{prefix}</InputAffix>
+    )
 
-    const wrappedSuffix = isSuffixComponent
-      ? cloneElement(suffix as ReactElement, {
-          className: cn('h-full border-0 border-l rounded-l-none', (suffix as ReactElement).props?.className)
-        })
-      : suffix
+    const wrappedSuffix = isSuffixComponent ? (
+      cloneElement(suffix as ReactElement, {
+        className: cn('cn-input-suffix', (suffix as ReactElement).props?.className)
+      })
+    ) : (
+      <InputAffix>{suffix}</InputAffix>
+    )
 
     return (
-      <div className={cn(inputVariants({ variant, size, theme }), wrapperClassName)}>
+      <div className={cn(inputVariants({ size, theme }), inputContainerClassName)}>
         {wrappedPrefix}
-        <input className={cn('cn-input-input', className)} type={type} ref={ref} {...props} />
+        <input className={cn('cn-input-input', className)} ref={ref} {...props} />
         {wrappedSuffix}
       </div>
     )
-
-    // return inputIconName ? (
-    //   <span className="relative">
-    //     <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size={14} />
-    //     {baseInputComp}
-    //   </span>
-    // ) : (
-    //   baseInputComp
-    // )
   }
 )
 

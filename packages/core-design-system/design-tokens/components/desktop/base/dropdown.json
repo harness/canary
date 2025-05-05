@@ -33,7 +33,7 @@
     },
     "min-width": {
       "$type": "sizing",
-      "$value": "{size.80}"
+      "$value": "{size.52}"
     },
     "max-height": {
       "$type": "sizing",
@@ -43,26 +43,6 @@
       "$type": "border",
       "$value": {
         "width": "{borderWidth.1}"
-      }
-    },
-    "header": {
-      "py": {
-        "$type": "spacing",
-        "$value": "{spacing.2-half}"
-      },
-      "px": {
-        "$type": "spacing",
-        "$value": "{spacing.3}"
-      }
-    },
-    "footer": {
-      "py": {
-        "$type": "spacing",
-        "$value": "{spacing.2-half}"
-      },
-      "px": {
-        "$type": "spacing",
-        "$value": "{spacing.3}"
       }
     }
   }

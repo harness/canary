@@ -4,7 +4,7 @@ export default {
     alignItems: 'center',
     gap: 'var(--cn-link-gap-default)',
     width: 'fit-content',
-    font: 'var(--cn-comp-link-default)',
+    '@apply font-link-default': '',
     textDecoration: 'underline transparent',
     textUnderlineOffset: '4px',
     transitionProperty: 'color, text-decoration-color',
@@ -25,11 +25,11 @@ export default {
 
     '&:where(.cn-link-sm)': {
       gap: 'var(--cn-link-gap-sm)',
-      font: 'var(--cn-comp-link-sm)'
+      '@apply font-link-sm': ''
     },
 
     '&:where([data-disabled="false"])': {
-      '&:where(.cn-link-default)': {
+      '&:where(.cn-link-default):not(:visited):not([data-visited="true"])': {
         '&:hover, &:focus, &:where([data-hovered="true"])': {
           color: 'var(--cn-comp-link-text-hover)'
         }
@@ -37,6 +37,10 @@ export default {
 
       '&:hover, &:focus, &:where([data-hovered="true"])': {
         textDecorationColor: 'inherit'
+      },
+
+      '&:visited, &:where([data-visited="true"])': {
+        color: 'var(--cn-comp-link-text-visited)'
       }
     },
 

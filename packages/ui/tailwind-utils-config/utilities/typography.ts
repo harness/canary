@@ -41,6 +41,12 @@ export default {
     },
     '&-caption-tight-soft': {
       font: 'var(--cn-caption-tight-soft)'
+    },
+    '&-link-default': {
+      font: 'var(--cn-comp-link-default)'
+    },
+    '&-link-sm': {
+      font: 'var(--cn-comp-link-sm)'
     }
   }
 }

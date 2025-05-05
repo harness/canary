@@ -17,6 +17,10 @@ export const linkVariants = cva('cn-link', {
       default: '',
       sm: 'cn-link-sm'
     }
+  },
+  defaultVariants: {
+    variant: 'default',
+    size: 'default'
   }
 })
 

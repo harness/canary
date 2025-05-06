@@ -238,7 +238,7 @@ export function RepoCreatePage({
               <div className="mt-6">
                 <Checkbox
                   id="readme"
-                  optional={true}
+                  optional
                   checked={readmeValue}
                   onCheckedChange={handleReadmeChange}
                   label="Add a README file"

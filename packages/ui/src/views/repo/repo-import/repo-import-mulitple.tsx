@@ -307,7 +307,7 @@ export function RepoImportMultiplePage({
               <Checkbox
                 {...register('repositories')}
                 id="authorization"
-                optional={true}
+                optional
                 checked={true}
                 disabled
                 label="Repositories"
@@ -315,7 +315,7 @@ export function RepoImportMultiplePage({
               <Checkbox
                 {...register('pipelines')}
                 id="pipelines"
-                optional={true}
+                optional
                 checked={watch('pipelines')}
                 onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
                 label="Pipelines"

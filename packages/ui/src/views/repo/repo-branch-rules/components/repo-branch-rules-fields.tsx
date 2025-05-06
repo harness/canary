@@ -170,7 +170,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
       <ControlGroup>
         <Checkbox
           id="default-branch"
-          optional={true}
+          optional
           {...register!('default')}
           checked={watch!('default')}
           onCheckedChange={() => setValue!('default', !watch!('default'))}
@@ -260,7 +260,7 @@ export const BranchSettingsRuleBypassListField: FC<
       <ControlGroup>
         <Checkbox
           {...register!('repo_owners')}
-          optional={true}
+          optional
           checked={watch!('repo_owners')}
           onCheckedChange={() => setValue!('repo_owners', !watch!('repo_owners'))}
           id="edit-permissons"
@@ -306,7 +306,7 @@ export const BranchSettingsRuleListField: FC<{
             <Fieldset key={rule.id} className="gap-y-4">
               <Checkbox
                 id={rule.id}
-                optional={true}
+                optional
                 checked={isChecked}
                 onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
                 label={rule.label}
@@ -320,7 +320,7 @@ export const BranchSettingsRuleListField: FC<{
                     <Checkbox
                       key={subOption.id}
                       id={subOption.id}
-                      optional={true}
+                      optional
                       checked={rules[index].submenu?.includes(subOption.id as MergeStrategy)}
                       onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
                       label={subOption.label}

@@ -86,7 +86,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
           <Checkbox
             checked={watch('secretScanning')}
             id="secret-scanning"
-            optional={true}
+            optional
             onCheckedChange={onCheckboxChange}
             disabled={isDisabled}
             title={tooltipMessage}

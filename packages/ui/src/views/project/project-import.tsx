@@ -176,7 +176,7 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
               <Checkbox
                 {...register('repositories')}
                 id="authorization"
-                optional={true}
+                optional
                 checked={true}
                 disabled
                 label="Repositories"
@@ -184,7 +184,7 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
               <Checkbox
                 {...register('pipelines')}
                 id="pipelines"
-                optional={true}
+                optional
                 checked={watch('pipelines')}
                 onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
                 label="Import Pipelines"

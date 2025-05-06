@@ -56,7 +56,7 @@
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{chrome.400}",
+      "$value": "{chrome.700}",
       "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\n\nCommon uses: Focus states, hover states, active elements, primary containers."
     },
     "2": {
@@ -71,7 +71,7 @@
     },
     "accent": {
       "$type": "color",
-      "$value": "{set.brand.solid.bg}",
+      "$value": "{chrome.300}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {

@@ -1,20 +1,50 @@
 {
   "card": {
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.6}"
+    "md": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.4}"
+      }
     },
-    "py": {
-      "$type": "spacing",
-      "$value": "{spacing.6}"
+    "default": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.3}"
+      }
     },
-    "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.6}"
+    "sm": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.3}"
+      }
     },
-    "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.4}"
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     }
   }
 }

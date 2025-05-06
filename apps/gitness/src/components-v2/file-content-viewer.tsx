@@ -181,7 +181,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
               toCommitDetails={({ sha }: { sha: string }) =>
                 routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
               }
-              toCode={({ sha }: { sha: string }) => routes.toRepoFiles({ spaceId, repoId, commitSHA: sha })}
+              toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
               data={commitData?.commits?.map((item: TypesCommit) => ({
                 sha: item.sha,
                 parent_shas: item.parent_shas,

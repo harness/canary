@@ -21,7 +21,20 @@ function GroupInputInternal(props: InputProps<AnyFormikValue, GroupInputConfig>)
   const { label = '', inputs = [], required, description, inputConfig } = input
 
   const { formState } = useFormContext()
-  const error = get(formState.errors, path)
+  const [groupError, setGroupError] = useState<boolean>(false)
+
+  useEffect(() => {
+    const error = get(formState.errors, path)
+    if (error) {
+      setGroupError(true)
+    }
+    inputs.forEach(input => {
+      const errorAtInput = get(formState.errors, input.path)
+      if (errorAtInput) {
+        setGroupError(true)
+      }
+    })
+  }, [formState?.errors])
 
   // NOTE: consider: if group is open hide error as it will be visible in the form
   //const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -52,7 +65,7 @@ function GroupInputInternal(props: InputProps<AnyFormikValue, GroupInputConfig>)
         <Accordion.Trigger>
           <Layout.Horizontal className="items-center">
             <InputLabel label={label} required={required} description={description} className="mb-0" />
-            {error && <Icon name="triangle-warning" className="text-cn-foreground-danger" />}
+            {groupError && <Icon name="triangle-warning" className="text-cn-foreground-danger" />}
           </Layout.Horizontal>
         </Accordion.Trigger>
         <Accordion.Content className="mt-4 space-y-4" forceMount={forceMount}>

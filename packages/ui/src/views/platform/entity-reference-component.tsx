@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 
 import { Button, Icon, Input, ListActions, ScrollArea, SearchBox, SkeletonList, StackedList } from '@/components'
+import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
 import { EntityReferenceFilter } from './components/entity-reference-filter'
@@ -37,6 +38,10 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
 
   // Error
   apiError?: string | null
+
+  // Search
+  searchValue?: string
+  handleChangeSearchValue: (val: string) => void
 }
 
 export function EntityReference<T extends BaseEntityProps, S = string, F = string>({
@@ -62,8 +67,16 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   isLoading = false,
 
   // Error
-  apiError
+  apiError,
+
+  // Search
+  searchValue = '',
+  handleChangeSearchValue
 }: EntityReferenceProps<T, S, F>): JSX.Element {
+  const { search, handleSearchChange } = useDebounceSearch({
+    handleChangeSearchValue,
+    searchValue
+  })
   const handleSelectEntity = useCallback(
     (entity: T) => {
       onSelectEntity?.(entity)
@@ -133,8 +146,8 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
               <SearchBox.Root
                 width="full"
                 className="max-w-96"
-                value={''}
-                handleChange={() => {}}
+                value={search}
+                handleChange={handleSearchChange}
                 placeholder="Search"
               />
             </ListActions.Left>

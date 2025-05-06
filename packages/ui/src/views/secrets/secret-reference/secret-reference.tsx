@@ -22,6 +22,10 @@ export interface SecretReferenceProps {
   onFilterChange?: (filter: string) => void
   onCancel?: () => void
   isLoading?: boolean
+
+  // Search
+  searchValue?: string
+  handleChangeSearchValue: (val: string) => void
 }
 
 // Component for selecting existing secrets
@@ -42,7 +46,11 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   onScopeChange,
   onCancel,
   onFilterChange,
-  isLoading
+  isLoading,
+
+  // search
+  searchValue,
+  handleChangeSearchValue
 }) => {
   // Custom entity renderer for secrets
   const renderEntity = (props: EntityRendererProps<SecretItem>) => {
@@ -77,6 +85,8 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         showBreadcrumbEllipsis={showBreadcrumbEllipsis}
         filterTypes={secretsFilterTypes}
         onFilterChange={onFilterChange}
+        searchValue={searchValue}
+        handleChangeSearchValue={handleChangeSearchValue}
       />
 
       <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">

@@ -7,5 +7,13 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, LogoName> = ne
   ['Gitlab', 'gitlab'],
   ['Bitbucket', 'bitbucket'],
   ['Jira', 'jira'],
-  ['K8sCluster', 'kubernetes']
+  ['K8sCluster', 'kubernetes'],
+  ['DockerRegistry', 'docker'],
+  ['Aws', 'aws'],
+  ['AwsSecretManager', 'awsSecretsManager'],
+  ['Gcp', 'gcp'],
+  ['GcpSecretManager', 'gcpSecretManager'],
+  ['AwsKms', 'awskms'],
+  ['TerraformCloud', 'terraform'],
+  ['Vault', 'hashiCorpVault']
 ])

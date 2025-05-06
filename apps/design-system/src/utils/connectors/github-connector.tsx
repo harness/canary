@@ -1,4 +1,4 @@
-import { IFormDefinition } from '@harnessio/forms'
+import { AnyFormikValue, IFormDefinition } from '@harnessio/forms'
 import { IInputConfigWithConfigInterface, InputConfigType } from '@harnessio/ui/views'
 
 import {
@@ -54,6 +54,23 @@ const inputs: IInputConfigWithConfigInterface[] = [
     isVisible: (values: { auth: string }) => {
       return values?.auth === 'UsernameToken'
     }
+  },
+  {
+    inputType: 'group',
+    path: `connection`,
+    label: 'Connection',
+    placeholder: 'Optional',
+    inputs: [
+      {
+        inputType: 'text',
+        path: `delegateSelectors`,
+        label: 'Delegate Selector',
+        required: true,
+        inputConfig: {
+          disableAnyDelegate: (values: AnyFormikValue) => values?.auth === 'UsernameToken'
+        }
+      }
+    ]
   },
   getResourcesContainer(),
   getCloningContainer(),

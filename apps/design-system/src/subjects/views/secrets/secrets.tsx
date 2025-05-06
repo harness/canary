@@ -67,6 +67,8 @@ export const SecretsPage = ({
     mockOrgData[0].organizationResponse.organization.identifier
   )
 
+  const [search, setSearch] = useState('')
+
   const onSubmit = (data: onSubmitSecretProps) => {
     console.log('Submitted data:', data)
     setIsDrawerOpen(false)
@@ -143,6 +145,8 @@ export const SecretsPage = ({
             showBreadcrumbEllipsis={activeScope === ScopeEnum.PROJECT}
             isLoading={false}
             apiError="Could not fetch secrets, unauthorized"
+            searchValue={search}
+            handleChangeSearchValue={setSearch}
           />
         )
       default:

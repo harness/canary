@@ -147,11 +147,12 @@ The `NumberInput` component provides a controlled input field specifically desig
   code={`<div className="flex flex-col gap-8 min-w-[400px]">
   {/* Basic Number Input */}
   <div className="font-bold w-full mb-2">Basic Number Input:</div>
-  <FormInput.Number label="Basic Number Input" placeholder="Enter a number" />
+  <FormInput.Number id="basic-number" label="Basic Number Input" placeholder="Enter a number" />
   
   {/* Number Input with Min/Max */}
   <div className="font-bold w-full mb-2">Number Input with Min/Max Limits:</div>
   <FormInput.Number 
+    id="limited-range" 
     label="Limited Range (0-10)" 
     min={0} 
     max={10} 
@@ -162,12 +163,14 @@ The `NumberInput` component provides a controlled input field specifically desig
   {/* Decimal Numbers */}
   <div className="font-bold w-full mb-2">Decimal Numbers:</div>
   <FormInput.Number 
+    id="decimal-input" 
     label="With Decimals" 
     decimalScale={2} 
     allowDecimal={true}
     defaultValue={3.14} 
   />
   <FormInput.Number 
+    id="integer-only" 
     label="Integer Only" 
     allowDecimal={false}
     defaultValue={42} 
@@ -176,11 +179,13 @@ The `NumberInput` component provides a controlled input field specifically desig
   {/* Negative Values */}
   <div className="font-bold w-full mb-2">Negative Values:</div>
   <FormInput.Number 
+    id="allow-negative" 
     label="Allow Negative" 
     allowNegative={true} 
     defaultValue={-10} 
   />
   <FormInput.Number 
+    id="positive-only" 
     label="Positive Only" 
     allowNegative={false} 
     min={0}
@@ -190,12 +195,14 @@ The `NumberInput` component provides a controlled input field specifically desig
   {/* Custom Steppers */}
   <div className="font-bold w-full mb-2">Custom Step Values:</div>
   <FormInput.Number 
+    id="small-increment" 
     label="Increment by 0.1" 
     stepper={0.1} 
     decimalScale={1}
     defaultValue={1.0} 
   />
   <FormInput.Number 
+    id="large-increment" 
     label="Increment by 5" 
     stepper={5} 
     defaultValue={10} 
@@ -204,22 +211,26 @@ The `NumberInput` component provides a controlled input field specifically desig
   {/* Disabled & Error States */}
   <div className="font-bold w-full mb-2">States and Feedback:</div>
   <FormInput.Number 
+    id="disabled-input" 
     label="Disabled Input" 
     disabled 
     defaultValue={50} 
   />
   <FormInput.Number 
+    id="error-input" 
     label="With Error" 
     error="Please enter a valid number" 
     theme="danger"
   />
   <FormInput.Number 
+    id="warning-input" 
     label="With Warning" 
     warningMessage="This is a high value" 
     theme="warning"
     defaultValue={95}
   />
   <FormInput.Number 
+    id="caption-input" 
     label="With Caption" 
     caption="Enter your preferred quantity" 
     defaultValue={1}
@@ -227,6 +238,7 @@ The `NumberInput` component provides a controlled input field specifically desig
   
   {/* Optional Label */}
   <FormInput.Number 
+    id="optional-input" 
     label="Optional Field" 
     optional={true} 
   />
@@ -234,6 +246,7 @@ The `NumberInput` component provides a controlled input field specifically desig
   {/* Without Stepper UI */}
   <div className="font-bold w-full mb-2">Without Stepper Buttons:</div>
   <FormInput.Number 
+    id="no-stepper" 
     label="No Stepper UI" 
     showStepper={false} 
     placeholder="Enter a number manually"

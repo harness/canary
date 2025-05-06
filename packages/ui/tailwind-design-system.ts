@@ -440,7 +440,7 @@ export default {
         // Form styles
         formSharedStyles,
         checkboxStyles,
-        radioStyles
+        radioStyles,
         inputStyles,
         captionStyles
       ])

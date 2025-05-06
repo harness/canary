@@ -150,7 +150,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       }, 0)
     }, [value, stepper, min, onChange, allowNegative, formatValue, getNumericValue])
 
-    // Handle key presses for up/down arrow keys
+    // Handle key presses for up/down arrow keys and prevent decimal when not allowed
     const handleKeyDown = useCallback(
       (e: ReactKeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'ArrowUp') {
@@ -159,9 +159,15 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         } else if (e.key === 'ArrowDown') {
           e.preventDefault() // Prevent default browser behavior
           handleDecrement()
+        } else if (!allowDecimal && e.key === '.') {
+          // Prevent decimal point input when decimals are not allowed
+          e.preventDefault()
+        } else if (!allowNegative && e.key === '-') {
+          // Prevent negative sign input when negatives are not allowed
+          e.preventDefault()
         }
       },
-      [handleIncrement, handleDecrement]
+      [handleIncrement, handleDecrement, allowDecimal, allowNegative]
     )
 
     // Update internal state when controlled value changes
@@ -174,26 +180,24 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     // Handle input changes with validation
     const handleInputChange = useCallback(
       (e: ChangeEvent<HTMLInputElement>) => {
-        const inputValue = e.target.value
+        let inputValue = e.target.value
 
-        // Regular expression to validate user input
-        const regex = allowDecimal
-          ? allowNegative
-            ? /^-?\d*\.?\d*$/ // Allow negative and decimal
-            : /^\d*\.?\d*$/ // Allow decimal, no negative
-          : allowNegative
-            ? /^-?\d*$/ // Allow negative, no decimal
-            : /^\d*$/ // No decimal, no negative
+        // When type="number", we need to check if decimals are allowed
+        if (!allowDecimal && inputValue.includes('.')) {
+          inputValue = inputValue.split('.')[0]
+        }
 
-        // Only update if input matches our validation regex
-        if (regex.test(inputValue) || inputValue === '') {
-          setValue(inputValue)
+        // For negative values check
+        if (!allowNegative && inputValue.startsWith('-')) {
+          inputValue = inputValue.substring(1)
+        }
 
-          // Convert to number and call onChange
-          const numericValue = getNumericValue(inputValue)
-          if (onChange) {
-            onChange(numericValue)
-          }
+        setValue(inputValue)
+
+        // Convert to number and call onChange
+        const numericValue = getNumericValue(inputValue)
+        if (onChange) {
+          onChange(numericValue)
         }
       },
       [allowDecimal, allowNegative, onChange, getNumericValue]
@@ -236,50 +240,52 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           </Label>
         )}
 
-        <div className="flex">
-          <BaseInput
-            type="text"
-            ref={setRefs}
-            id={id}
-            value={value}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-            onKeyDown={handleKeyDown}
-            placeholder={placeholder}
-            theme={theme}
-            disabled={disabled}
-            suffix={
-              showStepper ? (
-                <div className="flex flex-col">
-                  <Button
-                    tabIndex={-1}
-                    aria-label={`Increment value by ${stepper}`}
-                    variant="ghost"
-                    iconOnly
-                    onClick={handleIncrement}
-                    disabled={disabled || getNumericValue(value) === max}
-                    size="sm"
-                  >
-                    <Icon name="chevron-up" size={14} />
-                  </Button>
-                  <hr />
-                  <Button
-                    tabIndex={-1}
-                    aria-label={`Decrement value by ${stepper}`}
-                    variant="ghost"
-                    iconOnly
-                    onClick={handleDecrement}
-                    disabled={disabled || getNumericValue(value) === min}
-                    size="sm"
-                  >
-                    <Icon name="chevron-down" size={14} />
-                  </Button>
-                </div>
-              ) : null
-            }
-            {...props}
-          />
-        </div>
+        <BaseInput
+          type="number"
+          ref={setRefs}
+          id={id}
+          value={value}
+          onChange={handleInputChange}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          theme={theme}
+          disabled={disabled}
+          inputMode={allowDecimal ? 'decimal' : 'numeric'}
+          step={allowDecimal ? `${stepper}` : '1'}
+          min={min}
+          max={max}
+          suffix={
+            showStepper ? (
+              <div className="flex flex-col">
+                <Button
+                  tabIndex={-1}
+                  aria-label={`Increment value by ${stepper}`}
+                  variant="ghost"
+                  iconOnly
+                  onClick={handleIncrement}
+                  disabled={disabled || getNumericValue(value) === max}
+                  size="sm"
+                >
+                  <Icon name="chevron-up" size={14} />
+                </Button>
+                <hr />
+                <Button
+                  tabIndex={-1}
+                  aria-label={`Decrement value by ${stepper}`}
+                  variant="ghost"
+                  iconOnly
+                  onClick={handleDecrement}
+                  disabled={disabled || getNumericValue(value) === min}
+                  size="sm"
+                >
+                  <Icon name="chevron-down" size={14} />
+                </Button>
+              </div>
+            ) : null
+          }
+          {...props}
+        />
 
         {error ? (
           <FormCaption theme="danger">{error}</FormCaption>

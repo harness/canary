@@ -91,7 +91,7 @@ function TagSplit({ variant, size, theme, rounded, icon, showIcon, showReset, va
   const sharedProps = { variant, size, theme, rounded, icon }
 
   return (
-    <div className="cn-tag-split flex w-fit cursor-pointer items-center justify-center">
+    <div className="cn-tag-split flex w-fit items-center justify-center">
       {/* LEFT TAG - should never have a Reset Icon */}
       <Tag {...sharedProps} showIcon={showIcon} value={label} className="cn-tag-split-left" />
 

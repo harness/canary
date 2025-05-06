@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Icon } from '@/components'
+import { Icon, Tag } from '@/components'
 import { useRouterContext } from '@/context'
 
 interface PullRequestItemDescriptionProps {
@@ -27,7 +27,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   const relativePath = fullPath.split('/pulls')[0] // Adjust the slice parameters as needed
 
   return (
-    <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-2 leading-none text-cn-foreground-2">
+    <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-2 text-cn-foreground-2">
       <p>
         {`#${number}`} opened {timestamp} by{' '}
         <span className="inline-block max-w-[200px] truncate align-bottom">{author}</span>
@@ -50,19 +50,14 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
 
       {sourceBranch && (
         <>
-          <Button variant="secondary" size="sm" className="w-full min-w-[60px] max-w-fit justify-start" asChild>
-            <Link to={`${relativePath}/code/${targetBranch}`}>
-              <Icon name="branch" size={11} className="mr-1 text-cn-foreground-3" />
-              <span className="max-w-[calc(100%-15px)] truncate p-0.5 text-2 hover:underline">{targetBranch}</span>
-            </Link>
-          </Button>
+          <Link to={`${relativePath}/code/${targetBranch}`}>
+            <Tag variant="secondary" icon="branch-2" value={targetBranch} showIcon />
+          </Link>
 
           <span>&larr;</span>
-          <Button variant="secondary" size="sm" className="w-full min-w-[60px] max-w-fit justify-start" asChild>
-            <Link to={`${relativePath}/code/${sourceBranch}`}>
-              <span className="max-w-full truncate p-0.5 text-2 hover:underline">{sourceBranch}</span>
-            </Link>
-          </Button>
+          <Link to={`${relativePath}/code/${sourceBranch}`}>
+            <Tag variant="secondary" icon="branch-2" value={sourceBranch} showIcon />
+          </Link>
         </>
       )}
     </div>

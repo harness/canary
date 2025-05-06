@@ -4,6 +4,7 @@ import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
 import {
+  avatarStyles,
   badgeStyles,
   buttonStyles,
   checkboxStyles,
@@ -434,6 +435,7 @@ export default {
       addComponents(tagStyles)
       addComponents(checkboxStyles)
       addComponents(radioStyles)
+      addComponents(avatarStyles)
     }),
     tailwindcssAnimate,
     typography,

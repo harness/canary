@@ -70,6 +70,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
           <div className="mb-[18px]">
             <Checkbox
               id="parent-labels"
+              optional={true}
               checked={getParentScopeLabels}
               onCheckedChange={setGetParentScopeLabels}
               label={t('views:labelData.showParentLabels', 'Show labels from parent scopes')}

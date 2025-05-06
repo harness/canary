@@ -54,7 +54,10 @@ export function LabelsFilter({
                   onChange(newValue)
                 }}
               >
-                <Checkbox checked={value[option.id] ? value[option.id] === true || 'indeterminate' : false} />
+                <Checkbox
+                  optional={true}
+                  checked={value[option.id] ? value[option.id] === true || 'indeterminate' : false}
+                />
                 <LabelMarker color={option.color} label={option.key} value={String(option.value_count)} />
               </DropdownMenu.SubTrigger>
               <DropdownMenu.SubContent>

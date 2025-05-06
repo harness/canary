@@ -6,7 +6,7 @@ export const getDefaultValuesFromFormDefinition = (inputs: IFormDefinition): Any
   const defaultValues: AnyFormikValue = {}
 
   // TODO: this implementation is wrong
-  inputs.inputs.forEach(input => {
+  inputs?.inputs?.forEach(input => {
     // add default for nested (group),
     if (input.inputType === 'group') {
       input?.inputs?.forEach(input => {

@@ -66,11 +66,19 @@ export default {
         outline: 'none'
       },
 
+      ':where(hr)': {
+        borderColor: 'var(--cn-border-2)'
+      },
+
       '&:where(:has(input[disabled]))': {
         backgroundColor: 'var(--cn-state-disabled-bg)',
         borderColor: 'var(--cn-state-disabled-border)',
         color: 'var(--cn-state-disabled-text)',
-        cursor: 'not-allowed'
+        cursor: 'not-allowed',
+
+        ':where(hr)': {
+          borderColor: 'inherit'
+        }
       },
 
       '&:where(:has(input[readonly]))': {
@@ -105,11 +113,13 @@ export default {
       },
 
       ':where(.cn-input-prefix)': {
-        '@apply h-full border-0 border-r rounded-r-none': ''
+        '@apply h-full border-0 border-r rounded-r-none': '',
+        borderColor: 'inherit'
       },
 
       ':where(.cn-input-suffix)': {
-        '@apply h-full border-0 border-l rounded-l-none': ''
+        '@apply h-full border-0 border-l rounded-l-none': '',
+        borderColor: 'inherit'
       },
 
       ...createInputThemeStyles()

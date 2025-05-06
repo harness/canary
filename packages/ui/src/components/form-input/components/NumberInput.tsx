@@ -252,25 +252,25 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
               showStepper ? (
                 <div className="flex flex-col">
                   <Button
+                    tabIndex={-1}
                     aria-label={`Increment value by ${stepper}`}
-                    className="border-b"
                     variant="ghost"
                     iconOnly
                     onClick={handleIncrement}
                     disabled={disabled || getNumericValue(value) === max}
                     size="sm"
-                    type="button"
                   >
                     <Icon name="chevron-up" size={14} />
                   </Button>
+                  <hr />
                   <Button
+                    tabIndex={-1}
                     aria-label={`Decrement value by ${stepper}`}
                     variant="ghost"
                     iconOnly
                     onClick={handleDecrement}
                     disabled={disabled || getNumericValue(value) === min}
                     size="sm"
-                    type="button"
                   >
                     <Icon name="chevron-down" size={14} />
                   </Button>

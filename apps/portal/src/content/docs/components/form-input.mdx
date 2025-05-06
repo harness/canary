@@ -56,6 +56,7 @@ import React from "react";
 
 <FormInput.Text prefix="https://" suffix=".com" />
 <FormInput.Text size="sm" prefix="https://" suffix=".com" />
+<FormInput.Text disabled size="sm" prefix="https://" suffix=".com" />
 <FormInput.Text prefix="PAT:" value="ghp_1234567890abcdef" readOnly />
 
 <FormInput.Text
@@ -298,7 +299,8 @@ return (
     },
     {
       name: "stepper",
-      description: "Amount to increment/decrement when using buttons or arrow keys",
+      description:
+        "Amount to increment/decrement when using buttons or arrow keys",
       required: "false",
       defaultValue: "1",
       value: "number",

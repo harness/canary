@@ -79,8 +79,6 @@ function createButtonVariantStyles() {
 export default {
   '.cn-button': {
     transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
-    transitionDuration: '0.15s',
-    transitionTimingFunction: 'ease-in-out',
     borderRadius: 'var(--cn-btn-default-radius)',
     paddingBlock: 'var(--cn-btn-py-default)',
     paddingInline: 'var(--cn-btn-px-default)',

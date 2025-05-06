@@ -9,7 +9,7 @@ import {
   useState
 } from 'react'
 
-import { Button, Caption, ControlGroup, Label } from '@/components'
+import { Button, ControlGroup, FormCaption, Label } from '@/components'
 import { Icon } from '@components/icon'
 
 import { BaseInput, InputProps } from './BaseInput'
@@ -281,9 +281,13 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           />
         </div>
 
-        {(caption || error || warningMessage) && (
-          <Caption theme={theme} message={caption} errorMessage={error} warningMessage={warningMessage} showIcon />
-        )}
+        {error ? (
+          <FormCaption theme="danger">{error}</FormCaption>
+        ) : warningMessage ? (
+          <FormCaption theme="warning">{warningMessage}</FormCaption>
+        ) : caption ? (
+          <FormCaption>{caption}</FormCaption>
+        ) : null}
       </ControlGroup>
     )
   }

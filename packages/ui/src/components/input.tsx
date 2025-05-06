@@ -8,30 +8,35 @@ export interface BaseInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>,
     VariantProps<typeof inputVariants> {}
 
-const inputVariants = cva('cn-input', {
-  variants: {
-    variant: {
-      // default:
-      //   'flex w-full rounded border text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-cn-foreground-3 focus-visible:rounded focus-visible:outline-none',
-      // extended: 'grow border-none focus-visible:outline-none'
+const inputVariants = cva(
+  'bg-cn-background-2 px-3 py-1 text-cn-foreground-1 disabled:cursor-not-allowed disabled:bg-cn-background-3 disabled:text-cn-foreground-3',
+  {
+    variants: {
+      variant: {
+        default:
+          'flex w-full rounded border text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-cn-foreground-3 focus-visible:rounded focus-visible:outline-none',
+        extended: 'grow border-none focus-visible:outline-none'
+      },
+      size: {
+        sm: 'h-8',
+        md: 'h-9'
+      },
+      theme: {
+        default:
+          'border-cn-borders-2 focus-within:border-cn-borders-1 focus-visible:border-cn-borders-1 disabled:border-cn-borders-disabled disabled:placeholder:text-cn-foreground-disabled',
+        danger: 'border-cn-borders-danger',
+        clean: 'bg-transparent outline-none focus:outline-none',
+        sidebar:
+          'border-cn-borders-2 bg-transparent text-sidebar-foreground-1 placeholder:text-sidebar-foreground-4 focus-within:border-sidebar-border-4 focus-visible:border-sidebar-border-4'
+      }
     },
-    size: {
-      default: '',
-      sm: 'cn-input-sm'
-    },
-    theme: {
-      default: '',
-      danger: 'cn-input-danger',
-      warning: 'cn-input-warning',
-      success: 'cn-input-success'
+    defaultVariants: {
+      variant: 'default',
+      theme: 'default',
+      size: 'sm'
     }
-  },
-  defaultVariants: {
-    variant: undefined,
-    theme: 'default',
-    size: 'default'
   }
-})
+)
 
 const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
   ({ className, type, variant, size, theme, ...props }, ref) => {
@@ -54,7 +59,7 @@ const BaseInputWithWrapper = forwardRef<HTMLInputElement, BaseInputWithWrapperPr
       <div className={cn(inputVariants({ variant, size, theme }), 'p-0 flex items-center', className)}>
         {children}
         <input
-          className={cn(inputVariants({ variant: 'extended', size, theme }), 'px-0')}
+          className={cn(inputVariants({ variant: 'extended', size, theme: 'clean' }), 'px-0')}
           type={type}
           ref={ref}
           {...props}
@@ -68,9 +73,8 @@ BaseInputWithWrapper.displayName = 'BaseInputWithWrapper'
 
 export interface InputProps extends BaseInputProps {
   label?: string
-  caption?: string
+  caption?: ReactNode
   error?: string
-  warningMessage?: string
   optional?: boolean
   className?: string
   wrapperClassName?: string
@@ -78,7 +82,6 @@ export interface InputProps extends BaseInputProps {
   rightElement?: ReactNode
   rightElementVariant?: 'default' | 'filled'
   customContent?: ReactNode
-  theme?: VariantProps<typeof inputVariants>['theme']
 }
 
 /**
@@ -99,7 +102,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       label,
       caption,
       error,
-      warningMessage,
       id,
       theme,
       disabled,
@@ -161,20 +163,20 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <ControlGroup className={wrapperClassName}>
         {!!label && (
-          <Label disabled={disabled} optional={optional} htmlFor={id}>
+          <Label className="mb-2" disabled={disabled} optional={optional} htmlFor={id}>
             {label}
           </Label>
         )}
 
         {renderInput()}
 
-        {/* {!!error && (
+        {!!error && (
           <Message className="mt-0.5" theme={MessageTheme.ERROR}>
             {error}
           </Message>
-        )} */}
+        )}
 
-        <Caption theme={theme} message={caption} errorMessage={error} warningMessage={warningMessage} showIcon />
+        {caption && <Caption className={cn({ 'text-cn-foreground-disabled': disabled })}>{caption}</Caption>}
       </ControlGroup>
     )
   }

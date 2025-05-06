@@ -75,7 +75,7 @@ function Tag({
   return (
     <div tabIndex={-1} className={cn(tagVariants({ variant, size, theme, rounded }), className)} {...props}>
       {showIcon && <Icon skipSize name={icon || 'tag-2'} className="cn-tag-icon" />}
-      <span className="truncate" title={value || label}>
+      <span className="cn-tag-text" title={value || label}>
         {value || label}
       </span>
       {showReset && (

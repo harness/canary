@@ -108,10 +108,12 @@ export default {
       ...createTagVariantStyles('secondary')
     },
 
-    // ICON STYLES
     '.cn-tag-icon': {
       minWidth: `var(--cn-icon-size-default, 16px)`,
       height: `var(--cn-icon-size-default, 16px)`
+    },
+    '.cn-tag-text': {
+      '@apply truncate leading-normal align-middle inline-block': ''
     },
     '.cn-tag-reset-icon': {
       minWidth: `var(--cn-icon-size-xs, 12px)`,

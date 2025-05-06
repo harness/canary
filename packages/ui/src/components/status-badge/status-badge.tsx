@@ -7,7 +7,7 @@ const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transit
       primary: 'cn-badge-solid',
       secondary: 'cn-badge-soft',
       outline: 'cn-badge-surface',
-      ghost: 'cn-badge-status',
+      ghost: 'cn-badge-ghost',
       status: 'cn-badge-status'
     },
     size: {

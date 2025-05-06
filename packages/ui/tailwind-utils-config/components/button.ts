@@ -73,11 +73,12 @@ export default {
     transitionDuration: '0.15s',
     transitionTimingFunction: 'ease-in-out',
     borderRadius: 'var(--cn-btn-default-radius)',
-    padding: 'var(--cn-btn-py-default) var(--cn-btn-px-default)',
+    paddingBlock: 'var(--cn-btn-py-default)',
+    paddingInline: 'var(--cn-btn-px-default)',
     height: 'var(--cn-btn-size-default)',
     gap: 'var(--cn-btn-gap-default)',
     border: 'var(--cn-btn-border) solid black',
-    '@apply font-body-tight-strong': '',
+    '@apply font-body-single-line-strong': '',
 
     '&:where(.cn-button-split-dropdown)': {
       height: 'var(--cn-btn-size-icon)',
@@ -99,11 +100,12 @@ export default {
       height: 'var(--cn-btn-size-sm)',
       padding: 'var(--cn-btn-py-sm) var(--cn-btn-px-sm)',
       gap: 'var(--cn-btn-gap-sm)',
-      '@apply font-caption-tight-normal': ''
+      '@apply font-caption-single-line-normal': ''
     },
     '&:where(.cn-button-lg)': {
       height: 'var(--cn-btn-size-lg)',
-      padding: 'var(--cn-btn-py-lg) var(--cn-btn-px-lg)',
+      paddingBlock: 'var(--cn-btn-py-lg)',
+      paddingInline: 'var(--cn-btn-px-lg)',
       gap: 'var(--cn-btn-gap-lg)'
     },
 
@@ -145,8 +147,8 @@ export default {
 
     // Icon Only
     '&:where(.cn-button-icon-only)': {
-      width: 'var(--cn-btn-size-icon)',
-      height: 'var(--cn-btn-size-icon)'
+      width: 'var(--cn-btn-size-default)',
+      height: 'var(--cn-btn-size-default)'
     },
 
     // Icon Only sizing
@@ -174,7 +176,7 @@ export default {
       borderColor: 'var(--cn-state-disabled-border)',
       cursor: 'not-allowed',
 
-      '&:not(.cn-button-ghost)': {
+      '&:not(.cn-button-ghost, .cn-button-link)': {
         backgroundColor: 'var(--cn-state-disabled-bg)'
       },
 
@@ -188,28 +190,31 @@ export default {
 
     // link variant
     '&:where(.cn-button-link)': {
-      color: 'var(--cn-comp-link-default)',
+      color: 'var(--cn-comp-link-text)',
       border: 'none',
-      height: 'auto',
       gap: 'var(--cn-btn-gap-default)',
-      padding: 'var(--cn-btn-link-py-default) 0',
-      '@apply underline-offset-2 font-body-tight-normal': '',
+      padding: '0',
+      '@apply underline-offset-2': '',
       '&:hover': {
-        '@apply underline': ''
+        color: 'var(--cn-comp-link-text-hover)'
+      },
+
+      // active
+      '&:where(:active)': {
+        color: 'var(--cn-comp-link-text)'
       },
 
       // sm size
       '&:where(.cn-button-sm)': {
-        height: 'auto',
         gap: 'var(--cn-btn-gap-sm)',
-        padding: 'var(--cn-btn-link-py-sm) 0',
-        '@apply font-caption-tight-soft': ''
+        padding: '0',
+        '@apply font-caption-single-line-normal': ''
       },
 
       // disabled
       '&:where(:disabled), &:where(.cn-button-disabled)': {
-        color: 'var(--cn-state-disabled-text)',
-        cursor: 'not-allowed'
+        cursor: 'not-allowed',
+        opacity: 'var(--cn-disabled-opacity)'
       }
     }
   }

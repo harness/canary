@@ -75,11 +75,11 @@ export default {
     borderRadius: `var(--cn-tag-radius-default)`,
     maxWidth: `var(--cn-tag-max-width)`,
     height: `var(--cn-tag-size-default)`,
-    '@apply w-fit flex items-center transition-colors cursor-pointer font-body-tight-normal': '',
+    '@apply w-fit flex items-center transition-colors cursor-pointer font-body-single-line-normal': '',
 
     '&:where(.cn-tag-sm)': {
       height: `var(--cn-tag-size-sm)`,
-      '@apply font-caption-tight-normal': ''
+      '@apply font-caption-single-line-normal': ''
     },
 
     '&:where(.cn-tag-rounded)': {

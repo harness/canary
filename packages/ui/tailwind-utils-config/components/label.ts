@@ -1,6 +1,6 @@
 export default {
   '.label': {
-    '@apply font-body-tight-strong': '',
+    '@apply font-body-strong': '',
 
     '&:where(.label-default)': {
       color: 'var(--cn-text-2)',

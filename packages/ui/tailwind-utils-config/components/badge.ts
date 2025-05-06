@@ -30,7 +30,8 @@ function createBadgeVariantStyles() {
          * "ghost" variant has no background and border.
          * It displays text color as same as surface variant.
          */
-        style[`color`] = `var(--cn-set-surface-${variant}-text)`
+        style[`color`] = `var(--cn-set-${themeStyle}-surface-text)`
+        combinationStyles[`&:where(.cn-badge-${variant}.cn-badge-${theme})`] = style
       } else if (variant !== 'status') {
         /**
          * Status variant don't need background, color and border
@@ -56,23 +57,25 @@ function createBadgeVariantStyles() {
 export default {
   '.cn-badge': {
     height: 'var(--cn-badge-size-default)',
-    padding: '0 var(--cn-badge-default-px)',
-    '@apply select-none font-body-tight-normal truncate': '',
+    paddingBlock: 'var(--cn-badge-default-py)',
+    paddingInline: 'var(--cn-badge-default-px)',
+    '@apply select-none font-body-single-line-normal truncate': '',
 
     /** Size */
     '&:where(.cn-badge-sm)': {
       height: 'var(--cn-badge-size-sm)',
       gap: 'var(--cn-badge-sm-gap)',
-      padding: 'var(--cn-badge-sm-px)',
-      '@apply font-caption-tight-normal': ''
+      paddingBlock: 'var(--cn-badge-sm-py)',
+      paddingInline: 'var(--cn-badge-sm-px)',
+      '@apply font-caption-single-line-normal': ''
     },
 
     '&:where(.cn-badge-ghost)': {
-      height: 'auto',
-      padding: '0'
+      padding: '0',
+      border: 'none'
     },
 
-    '&:where(:not(.cn-badge-status))': {
+    '&:where(:not(.cn-badge-status, .cn-badge-ghost))': {
       borderRadius: 'var(--cn-badge-radius)',
       border: 'var(--cn-badge-border) solid var(--cn-set-gray-surface-border)',
       gap: 'var(--cn-badge-default-gap)'
@@ -84,12 +87,14 @@ export default {
       borderColor: 'var(--cn-set-gray-surface-border)',
       backgroundColor: 'var(--cn-set-gray-surface-bg)',
       height: 'var(--cn-badge-counter-size-default)',
-      padding: 'var(--cn-badge-counter-py) var(--cn-badge-counter-px)',
-      '@apply font-caption-tight-normal': ''
+      paddingBlock: 'var(--cn-badge-counter-py)',
+      paddingInline: 'var(--cn-badge-counter-px)',
+      '@apply font-caption-single-line-normal': ''
     },
 
     '&:where(.cn-badge-status)': {
       gap: 'var(--cn-badge-status-gap)',
+      color: 'var(--cn-text-1)',
       padding: '0',
 
       '> .cn-badge-indicator': {

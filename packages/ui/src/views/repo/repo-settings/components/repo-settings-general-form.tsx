@@ -164,7 +164,7 @@ export const RepoSettingsGeneralForm: FC<{
               <Radio.Root value={accessValue} onValueChange={handleAccessChange} id="visibility">
                 <Radio.Item
                   id="access-public"
-                  optional={true}
+                  optional
                   value="1"
                   label={t('views:repos.public', 'Public')}
                   caption={t(
@@ -174,7 +174,7 @@ export const RepoSettingsGeneralForm: FC<{
                 />
                 <Radio.Item
                   id="access-private"
-                  optional={true}
+                  optional
                   value="2"
                   label={t('views:repos.private', 'Private')}
                   caption={t(

@@ -17,6 +17,7 @@ interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxPrimitiv
 const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<CheckboxProps, 'required'>>(
   ({ className, label, caption, optional, ...props }, ref) => {
     const checkboxId = props.id || `checkbox-${Math.random().toString(36).slice(2, 11)}`
+    const isOptional = optional === undefined ? true : optional
 
     return (
       <div className={cn('cn-checkbox-wrapper', className)}>
@@ -24,7 +25,7 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
           id={checkboxId}
           ref={ref}
           className={cn('cn-checkbox-root')}
-          required={!optional}
+          required={!isOptional}
           {...props}
         >
           <CheckboxPrimitive.Indicator className="cn-checkbox-indicator">
@@ -40,7 +41,7 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
           <div className="cn-checkbox-label-wrapper">
             <Label
               htmlFor={checkboxId}
-              optional={optional}
+              optional={isOptional}
               className={`cn-checkbox-label ${props.disabled ? 'disabled' : ''}`}
             >
               {label}

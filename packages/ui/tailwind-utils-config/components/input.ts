@@ -50,6 +50,12 @@ export default {
         '&::placeholder': {
           color: 'var(--cn-state-disabled-text)'
         }
+      },
+
+      '&[type="number"]::-webkit-outer-spin-button, &[type="number"]::-webkit-inner-spin-button': {
+        '-webkit-appearance': 'none',
+        '-moz-appearance': 'textfield',
+        margin: '0'
       }
     },
     '&-container': {

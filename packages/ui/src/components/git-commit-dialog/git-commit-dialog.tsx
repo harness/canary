@@ -161,6 +161,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
             >
               <Radio.Item
                 id={CommitToGitRefOption.DIRECTLY}
+                optional={true}
                 className="mt-px"
                 value={CommitToGitRefOption.DIRECTLY}
                 label={
@@ -181,6 +182,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               />
               <Radio.Item
                 id={CommitToGitRefOption.NEW_BRANCH}
+                optional={true}
                 className="mt-px"
                 value={CommitToGitRefOption.NEW_BRANCH}
                 label="Create a new branch for this commit and start a pull request"

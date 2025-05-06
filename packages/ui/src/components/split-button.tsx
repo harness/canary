@@ -98,7 +98,14 @@ export const SplitButton = <T extends string>({
                     disabled={loading}
                   >
                     <Option
-                      control={<Radio.Item className="mt-px" value={String(option.value)} id={String(option.value)} />}
+                      control={
+                        <Radio.Item
+                          className="mt-px"
+                          optional={true}
+                          value={String(option.value)}
+                          id={String(option.value)}
+                        />
+                      }
                       id={String(option.value)}
                       label={option.label}
                       ariaSelected={selectedValue === option.value}

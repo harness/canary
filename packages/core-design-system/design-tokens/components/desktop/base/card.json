@@ -46,5 +46,21 @@
       "$type": "borderWidth",
       "$value": "{borderWidth.1}"
     }
+  },
+  "card-check": {
+    "default": {
+      "pr": {
+        "$type": "spacing",
+        "$value": "{spacing.11}"
+      },
+      "pl": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      }
+    }
   }
 }

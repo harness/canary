@@ -70,8 +70,6 @@ export default {
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
-    transitionDuration: '0.15s',
-    transitionTimingFunction: 'ease-in-out',
     borderRadius: 'var(--cn-btn-default-radius)',
     padding: 'var(--cn-btn-py-default) var(--cn-btn-px-default)',
     height: 'var(--cn-btn-size-default)',

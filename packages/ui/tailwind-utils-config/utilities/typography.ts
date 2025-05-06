@@ -24,6 +24,12 @@ export default {
     '&-body-code': {
       font: 'var(--cn-body-code)'
     },
+    '&-body-tight-normal': {
+      font: 'var(--cn-body-tight-normal)'
+    },
+    '&-body-tight-strong': {
+      font: 'var(--cn-body-tight-strong)'
+    },
     '&-caption-normal': {
       font: 'var(--cn-caption-normal)'
     },

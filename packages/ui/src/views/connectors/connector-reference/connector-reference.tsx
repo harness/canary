@@ -24,6 +24,10 @@ export interface ConnectorReferenceProps {
   onFilterChange: (type: string) => void
   onCancel?: () => void
   isLoading?: boolean
+
+  // Search
+  searchValue?: string
+  handleChangeSearchValue: (val: string) => void
 }
 
 // Component for selecting existing connectors
@@ -44,7 +48,11 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
   onScopeChange,
   onFilterChange,
   onCancel,
-  isLoading
+  isLoading,
+
+  // search
+  searchValue,
+  handleChangeSearchValue
 }) => {
   // Define available scopes
 
@@ -85,6 +93,8 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
         showBreadcrumbEllipsis={showBreadcrumbEllipsis}
         filterTypes={connectorRefFilters}
         onFilterChange={onFilterChange}
+        searchValue={searchValue}
+        handleChangeSearchValue={handleChangeSearchValue}
       />
       {apiError ? (
         <Alert.Container variant="destructive" className="mt-4">

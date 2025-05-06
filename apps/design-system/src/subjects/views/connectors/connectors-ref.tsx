@@ -67,6 +67,9 @@ export const ConnectorsRefPage = ({
   )
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
   const [isConnectorSelected, setIsConnectorSelected] = useState(false)
+
+  const [search, setSearch] = useState('')
+
   // Handlers for existing connectors
   const handleSelectConnector = (connector: ConnectorItem) => {
     setSelectedConnector(connector)
@@ -161,6 +164,8 @@ export const ConnectorsRefPage = ({
             currentFolder={currentFolder}
             showBreadcrumbEllipsis={activeScope === ScopeEnum.PROJECT}
             onFilterChange={noop}
+            searchValue={search}
+            handleChangeSearchValue={setSearch}
           />
         )
       default:

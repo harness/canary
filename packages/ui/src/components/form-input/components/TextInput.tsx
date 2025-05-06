@@ -1,4 +1,4 @@
-import { Caption, ControlGroup, Label } from '@/components'
+import { ControlGroup, FormCaption, Label } from '@/components'
 
 import { BaseInput, InputProps } from './BaseInput'
 
@@ -30,10 +30,15 @@ export function TextInput({
           {label}
         </Label>
       )}
+      <BaseInput theme={theme} disabled={disabled} id={id} {...props} />
 
-      <BaseInput type="text" theme={theme} disabled={disabled} id={id} {...props} />
-
-      <Caption theme={theme} message={caption} errorMessage={error} warningMessage={warningMessage} showIcon />
+      {error ? (
+        <FormCaption theme="danger">{error}</FormCaption>
+      ) : warningMessage ? (
+        <FormCaption theme="warning">{warningMessage}</FormCaption>
+      ) : caption ? (
+        <FormCaption>{caption}</FormCaption>
+      ) : null}
     </ControlGroup>
   )
 }

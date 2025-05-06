@@ -40,10 +40,8 @@
       "$value": "{size.90}"
     },
     "border": {
-      "$type": "border",
-      "$value": {
-        "width": "{borderWidth.1}"
-      }
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     }
   }
 }

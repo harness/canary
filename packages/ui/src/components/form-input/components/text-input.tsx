@@ -1,6 +1,6 @@
 import { ControlGroup, FormCaption, Label } from '@/components'
 
-import { BaseInput, InputProps } from './BaseInput'
+import { BaseInput, InputProps } from './base-input'
 
 interface TextInputProps extends InputProps {
   type?: Exclude<HTMLInputElement['type'], 'number' | 'search'>

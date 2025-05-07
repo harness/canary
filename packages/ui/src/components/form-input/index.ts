@@ -1,6 +1,6 @@
-import { NumberInput } from './components/NumberInput'
-import { SearchInput } from './components/SearchInput'
-import { TextInput } from './components/TextInput'
+import { NumberInput } from './components/number-input'
+import { SearchInput } from './components/search-input'
+import { TextInput } from './components/text-input'
 
 const FormInput = {
   Text: TextInput,

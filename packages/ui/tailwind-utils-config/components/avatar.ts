@@ -7,6 +7,7 @@ export default {
     position: 'relative',
     height: `var(--cn-avatar-size-default)`,
     width: `var(--cn-avatar-size-default)`,
+    borderWidth: 'var(--cn-border-width-1)',
     borderRadius: `var(--cn-avatar-radius-default)`,
     boxShadow: `var(--cn-shadow-comp-avatar-inner)`,
     '@apply shrink-0': '',
@@ -31,8 +32,6 @@ export default {
     '.cn-avatar-fallback': {
       backgroundColor: `var(--cn-set-brand-soft-bg)`,
       color: `var(--cn-set-brand-soft-text)`,
-      border: 'var(--cn-border-width-1) solid var(--cn-comp-avatar-border)',
-      borderRadius: `var(--cn-avatar-radius-default)`,
       fontSize: `var(--cn-font-size-0)`,
       '@apply h-full w-full flex items-center justify-center select-none': '',
 

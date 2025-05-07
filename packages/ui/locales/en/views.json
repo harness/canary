@@ -293,6 +293,11 @@
     "configuration": "Configuration",
     "references": "References",
     "activityHistory": "Activity history",
+    "sort": {
+      "lastModifiedAt": "Last modified",
+      "createdAt": "Created",
+      "name": "Name"
+    },
     "createNew": "Create new connector",
     "errorEncountered": "Error Encountered",
     "viewDetails": "View Details",

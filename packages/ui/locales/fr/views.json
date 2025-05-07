@@ -284,6 +284,11 @@
     "configuration": "Configuration",
     "references": "Références",
     "activityHistory": "Historique des activités",
+    "sort": {
+      "lastModifiedAt": "Last modified",
+      "createdAt": "Created",
+      "name": "Name"
+    },
     "createNew": "Créer un nouveau connecteur",
     "errorEncountered": "Erreur rencontrée",
     "viewDetails": "Voir les détails",

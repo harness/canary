@@ -11,7 +11,7 @@ export function Sort({
 }: {
   children: ReactNode
   sortOptions: SortOption[]
-  sortDirections: SortDirection[]
+  sortDirections?: SortDirection[]
   onSortChange?: (sortSelections: SortValue[]) => void
 }) {
   const [sortSelections, updateSortSelections] = useState<SortValue[]>([])

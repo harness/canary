@@ -1,5 +1,6 @@
 import { CheckboxOptions } from '@components/filters/types'
 import { PaginationProps } from '@components/index'
+import { SortValue } from '@components/sorts'
 import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 
@@ -60,5 +61,6 @@ export interface ConnectorListPageProps
   isError?: boolean
   errorMessage?: string
   onFilterChange?: (filterValues: ConnectorListFilters) => void
+  onSortChange?: (sort: SortValue[]) => void
   onCreate: () => void
 }

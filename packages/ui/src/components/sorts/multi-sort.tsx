@@ -9,7 +9,7 @@ import useDragAndDrop from '@hooks/use-drag-and-drop'
 import { cn } from '@utils/cn'
 
 import { useSort } from './sort-context'
-import { SortDirection, SortOption, SortValue } from './type'
+import { Direction, SortDirection, SortOption, SortValue } from './type'
 
 export const getSortTriggerLabel = (sortSelections: SortValue[], sortOptions: SortOption[]) => {
   if (sortSelections.length === 0) return { label: '', icon: 'circle-arrows-updown' as const }
@@ -21,7 +21,7 @@ export const getSortTriggerLabel = (sortSelections: SortValue[], sortOptions: So
     return {
       label,
       icon: 'circle-arrow-top' as const,
-      isDescending: currentSort.direction === 'desc'
+      isDescending: currentSort.direction === Direction.DESC
     }
   }
 
@@ -200,7 +200,9 @@ export default function MultiSort() {
               options={filteredBySearchSortOptions}
               dropdownAlign="start"
               inputPlaceholder="Select..."
-              onChange={(sortValue: SortOption) => handleSortChange({ type: sortValue.value, direction: 'asc' })}
+              onChange={(sortValue: SortOption) =>
+                handleSortChange({ type: sortValue.value, direction: Direction.ASC })
+              }
               displayLabel={
                 <Button size="sm" variant="ghost" className="gap-x-1.5">
                   <Icon name="plus" size={12} />

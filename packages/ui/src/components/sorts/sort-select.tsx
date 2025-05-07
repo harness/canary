@@ -2,7 +2,7 @@ import { Icon } from '@/components'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 
 import { useSort } from './sort-context'
-import { SortOption } from './type'
+import { Direction, SortOption } from './type'
 
 interface SortTriggerProps {
   displayLabel?: React.ReactNode | string
@@ -24,7 +24,7 @@ const SortSelect = ({ displayLabel, buttonLabel }: SortTriggerProps) => {
       }
       inputPlaceholder="Select..."
       options={filteredSortOptions}
-      onChange={option => updateSortSelections([...sortSelections, { type: option.value, direction: 'asc' }])}
+      onChange={option => updateSortSelections([...sortSelections, { type: option.value, direction: Direction.ASC }])}
       customFooter={
         <button className="w-full font-medium" onClick={() => updateSortSelections([])}>
           {buttonLabel}

@@ -2,7 +2,7 @@ import { createContext, ReactNode, useContext, useState } from 'react'
 
 import { noop } from 'lodash-es'
 
-import { SortDirection, SortOption, SortValue } from './type'
+import { Direction, SortDirection, SortOption, SortValue } from './type'
 
 interface SortContextProps {
   sortOptions: SortOption[]
@@ -14,8 +14,8 @@ interface SortContextProps {
 }
 
 export const DefaultSortDirections = [
-  { label: 'Ascending', value: 'asc' as const },
-  { label: 'Descending', value: 'desc' as const }
+  { label: 'Ascending', value: Direction.ASC },
+  { label: 'Descending', value: Direction.DESC }
 ]
 
 const SortContext = createContext<SortContextProps>({

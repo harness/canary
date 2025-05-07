@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, Icon } from '@/components'
+import { Button, Icon, Separator } from '@/components'
 import FilterSelect, { FilterSelectAddIconLabel } from '@components/filters/filter-select'
 import FiltersField, { FiltersFieldProps } from '@components/filters/filters-field'
 import { FilterOptionConfig } from '@components/filters/types'
@@ -17,6 +17,8 @@ interface FiltersBarProps<T, V = T[keyof T], CustomValue = Record<string, unknow
       filterFieldConfig: Omit<FiltersFieldProps<Extract<keyof T, string>, V, CustomValue>, 'shouldOpenFilter' | 't'>
     ) => ReactNode
   ) => ReactNode
+  sortSelectionsCnt?: number
+  renderSelectedSort?: () => ReactNode
   renderFilterOptions: (
     filterOptionsRenderer: (filterFieldConfig: FilterOptionsRendererProps<Extract<keyof T, string>>) => ReactNode
   ) => ReactNode
@@ -33,6 +35,8 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
   filterOptions,
   selectedFiltersCnt,
   openedFilter,
+  sortSelectionsCnt,
+  renderSelectedSort,
   setOpenedFilter,
   t,
   renderSelectedFilters,
@@ -72,14 +76,15 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
     </>
   )
 
-  const isListControlVisible = selectedFiltersCnt > 0
+  const isListControlVisible = selectedFiltersCnt > 0 || (sortSelectionsCnt ?? 0) > 0
 
   return (
     <div className={cn('flex items-center gap-x-2', { 'mt-4': isListControlVisible })}>
+      {renderSelectedSort?.()}
       {renderSelectedFilters(filtersFieldRenderer)}
 
       {selectedFiltersCnt > 0 && (
-        <div className="ml-2.5 flex w-full items-center justify-between gap-x-4">
+        <div className="ml-2.5 flex items-center justify-between gap-x-4">
           {renderFilterOptions(filterOptionsRenderer)}
         </div>
       )}

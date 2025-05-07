@@ -24,6 +24,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   goToPage,
   isLoading,
   connectors,
+  onSortChange,
   onFilterChange,
   onCreate,
   ...props
@@ -79,6 +80,14 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
         <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Connectors</h1>
         <Spacer size={7} />
         <FilterGroup<ConnectorListFilters, keyof ConnectorListFilters>
+          sortConfig={{
+            sortOptions: [
+              { label: t('views:connectors.sort.lastModifiedAt', 'Last modified'), value: 'lastModifiedAt' },
+              { label: t('views:connectors.sort.createdAt', 'Created'), value: 'createdAt' },
+              { label: t('views:connectors.sort.name', 'Name'), value: 'name' }
+            ],
+            onSortChange
+          }}
           onFilterSelectionChange={onFilterSelectionChange}
           onFilterValueChange={onFilterValueChange}
           searchInput={searchInput}

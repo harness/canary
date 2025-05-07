@@ -3,7 +3,10 @@ export interface SortOption {
   value: string
 }
 
-type Direction = 'asc' | 'desc'
+export enum Direction {
+  ASC = 'ASC',
+  DESC = 'DESC'
+}
 
 export interface SortDirection {
   label: string

@@ -5,8 +5,7 @@
     "selectedTokenSets": {
       "core/typography": "source",
       "core/dimensions": "source",
-      "core/colors_lch": "source",
-      "components/desktop/base/drawer": "disabled"
+      "core/colors_lch": "source"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -689,8 +688,7 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "mode/dark/default": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/default": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1877,8 +1875,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/dimmer": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:0",
@@ -2457,8 +2454,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/default": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:4",
@@ -3038,8 +3034,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/high-contrast": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:1",
@@ -3618,8 +3613,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-protanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/default-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:2",
@@ -4199,8 +4193,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-protanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/dimmer-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:3",
@@ -4780,8 +4773,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-protanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/high-contrast-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:4",
@@ -5361,8 +5353,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-deuteranopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/default-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:5",
@@ -5942,8 +5933,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-deuteranopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/dimmer-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:6",
@@ -6523,8 +6513,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-deuteranopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/high-contrast-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:7",
@@ -7104,8 +7093,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-tritanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/default-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:8",
@@ -7685,8 +7673,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-tritanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/dimmer-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:9",
@@ -8266,8 +8253,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-tritanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/dark/high-contrast-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:10",
@@ -8846,8 +8832,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/dimmer": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:11",
@@ -9426,8 +9411,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/high-contrast": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:12",
@@ -10006,8 +9990,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default-protanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/default-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:13",
@@ -10586,8 +10569,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-protanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/dimmer-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:14",
@@ -11166,8 +11148,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-protanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/high-contrast-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:15",
@@ -11746,8 +11727,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default-deuteranopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/default-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:16",
@@ -12350,8 +12330,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-deuteranopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/dimmer-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:17",
@@ -12930,8 +12909,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-deuteranopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/high-contrast-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:18",
@@ -13510,8 +13488,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default-tritanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/default-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:19",
@@ -14090,8 +14067,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-tritanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/dimmer-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:20",
@@ -14670,8 +14646,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-tritanopia": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "mode/light/high-contrast-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:21",
@@ -15053,7 +15028,7 @@
       "components/desktop/base/accordion": "enabled",
       "components/desktop/base/alert": "enabled",
       "components/desktop/base/dropdown": "enabled",
-      "components/desktop/base/drawer": "disabled"
+      "components/desktop/base/drawer": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",
@@ -15133,6 +15108,11 @@
       "card-check.default.pl": "19ed91b3c95881c4338a907861c8c71cf37f5ae7",
       "card-check.default.py": "8775361c4096bab69fb9f6fd12e85f42f0eae629",
       "card-check.default.gap": "1db1281050d0d452f55eb749bdb8d0448ccb5b2b",
+      "drawer.sm": "af9e8505af44023dd5a69fe3ff4b849926ee24c1",
+      "drawer.md": "f86891516064b8925e17d7bf8f1a383e46bc4ecb",
+      "drawer.lg": "f08b6ffcd3684c6d793bd0fad0538b5250b19760",
+      "drawer.container": "72d0ec7debd1172b07022f8bb9be505b09d0772a",
+      "drawer.gap": "c106e5a99bd05148aadce366642fb8db64932a49",
       "input.size.sm": "edf74ccf6b9a46893ee8f8e5795b3f159c377ecd",
       "input.size.default": "4a95892360734e5c46645204d2e2aec45eb2eeab",
       "input.radius": "5aa981e02cf0c544fba6bbb492d41ec5c76e2160",

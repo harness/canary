@@ -1,7 +1,8 @@
-import { ComponentPropsWithoutRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, ReactNode } from 'react'
 
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import { cn } from '@utils/cn'
+import { getInitials } from '@utils/stringUtils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const avatarVariants = cva('cn-avatar', {
@@ -31,26 +32,31 @@ interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
 
 const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
   ({ name, src, size = 'default', rounded = false, className, ...props }, ref) => {
-    const initials = name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase()
+    const initials = getInitials(name)
 
     return (
       <AvatarPrimitive.Root ref={ref} className={cn(avatarVariants({ size, rounded }), className)} {...props}>
         {src ? (
-          <AvatarPrimitive.Image src={src} alt={name} className="cn-avatar-image" />
+          <>
+            <AvatarPrimitive.Image src={src} alt={name} className="cn-avatar-image" />
+            <AvatarFallback>{initials}</AvatarFallback>
+          </>
         ) : (
-          <AvatarPrimitive.Fallback delayMs={0} className="cn-avatar-fallback">
-            {initials}
-          </AvatarPrimitive.Fallback>
+          <AvatarFallback delayMs={0}>{initials}</AvatarFallback>
         )}
       </AvatarPrimitive.Root>
     )
   }
 )
-
 Avatar.displayName = 'Avatar'
+
+interface AvatarFallbackProps extends ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback> {
+  children: ReactNode
+}
+const AvatarFallback = ({ children, ...props }: AvatarFallbackProps) => (
+  <AvatarPrimitive.Fallback className="cn-avatar-fallback" {...props}>
+    {children}
+  </AvatarPrimitive.Fallback>
+)
 
 export { Avatar }

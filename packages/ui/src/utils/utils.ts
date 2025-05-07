@@ -105,7 +105,7 @@ export const timeAgo = (timestamp?: number | null, cutoffDays: number = 3): Reac
  * @returns Formatted string.
  */
 export function formatNumber(num: number | bigint): string {
-  return num ? new Intl.NumberFormat(LOCALE).format(num) : ''
+  return num ? new Intl.NumberFormat(LOCALE).format(num) : '0'
 }
 
 export interface Violation {

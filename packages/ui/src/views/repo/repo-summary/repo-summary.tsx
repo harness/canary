@@ -197,7 +197,7 @@ export function RepoSummaryView({
                     </Link>
                   </Button>
                   <CloneRepoDialog
-                    sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
+                    sshUrl={repository?.git_ssh_url}
                     httpsUrl={repository?.git_url ?? 'could not fetch url'}
                     handleCreateToken={handleCreateToken}
                     useTranslationStore={useTranslationStore}

@@ -6,7 +6,7 @@ export const useCommitDetailsStore = create<ICommitDetailsStore>(set => ({
   diffs: [],
   commitData: null,
   diffStats: null,
-  isVerified: true,
+  isVerified: false,
   setDiffs: diffs => set({ diffs }),
   setCommitData: commitData => set({ commitData }),
   setDiffStats: diffStats => set({ diffStats }),

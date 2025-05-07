@@ -4,7 +4,7 @@ import { Alert, Button, CopyButton, DropdownMenu, Icon, Input, Tabs } from '@/co
 import { TranslationStore } from '@/views'
 
 export interface CloneRepoDialogProps {
-  sshUrl: string
+  sshUrl?: string
   httpsUrl: string
   handleCreateToken: () => void
   useTranslationStore: () => TranslationStore
@@ -25,6 +25,8 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
 }) => {
   const [currentTab, setCurrentTab] = useState(CloneRepoTabs.HTTPS)
   const { t } = useTranslationStore()
+
+  const isSSHAvailable = !!sshUrl
 
   return (
     <DropdownMenu.Root>
@@ -55,13 +57,17 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
               className="rounded-t-md p-0"
               onSelect={e => {
                 e.preventDefault()
-                setCurrentTab(CloneRepoTabs.SSH)
+                if (isSSHAvailable) {
+                  setCurrentTab(CloneRepoTabs.SSH)
+                }
               }}
+              disabled={!isSSHAvailable}
             >
               <Tabs.Trigger
-                className="px-4 data-[state=active]:bg-cn-background-2"
+                className="px-4 data-[state=active]:bg-cn-background-2 data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed"
                 value={CloneRepoTabs.SSH}
                 onClick={e => e.stopPropagation()}
+                disabled={!isSSHAvailable}
               >
                 {t('views:repos.cloneSsh', 'SSH')}
               </Tabs.Trigger>
@@ -109,7 +115,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
               value={sshUrl}
               variant="extended"
               rightElementVariant="default"
-              rightElement={<CopyButton name={sshUrl} />}
+              rightElement={<CopyButton name={sshUrl || ''} />}
             />
           )}
         </div>

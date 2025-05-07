@@ -7,10 +7,8 @@ export default {
     position: 'relative',
     height: `var(--cn-avatar-size-default)`,
     width: `var(--cn-avatar-size-default)`,
-    borderWidth: 'var(--cn-border-width-1)',
     borderRadius: `var(--cn-avatar-radius-default)`,
     boxShadow: `var(--cn-shadow-comp-avatar-inner)`,
-    '@apply shrink-0': '',
 
     '&:where(.cn-avatar-sm)': {
       height: `var(--cn-avatar-size-sm)`,
@@ -35,7 +33,7 @@ export default {
       fontSize: `var(--cn-font-size-0)`,
       '@apply h-full w-full flex items-center justify-center select-none': '',
 
-      '&:where(.cn-avatar-lg)': {
+      '>.cn-avatar-lg': {
         fontSize: `var(--cn-font-size-2)`
       }
     }

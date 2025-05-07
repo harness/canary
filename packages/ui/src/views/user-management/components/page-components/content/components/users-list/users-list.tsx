@@ -53,10 +53,7 @@ export const UsersList = () => {
                 {/* NAME */}
                 <Table.Cell className="my-6 content-center">
                   <div className="flex items-center gap-2">
-                    <Avatar.Root className="size-6 rounded-full p-0">
-                      {user.avatarUrl && <Avatar.Image src={user.avatarUrl} />}
-                      <Avatar.Fallback>{getInitials(user.uid!, 2)}</Avatar.Fallback>
-                    </Avatar.Root>
+                    <Avatar name={getInitials(user.uid!, 2)} src={user.avatarUrl} size="default" rounded />
                     <span className="truncate whitespace-nowrap text-sm font-medium text-cn-foreground-1">
                       {user.uid}
                     </span>

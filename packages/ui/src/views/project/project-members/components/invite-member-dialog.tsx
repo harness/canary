@@ -22,10 +22,7 @@ interface PrincipalOptionProps {
 const PrincipalOption = forwardRef<HTMLDivElement, PrincipalOptionProps>(({ principal, isShortView = false }, ref) => {
   return (
     <div ref={ref} className={`flex w-full ${isShortView ? 'gap-x-2' : 'gap-x-2.5 pl-1'} cursor-pointer items-center`}>
-      <Avatar.Root size={isShortView ? '6' : '8'}>
-        {!!principal.avatar_url && <Avatar.Image src={principal.avatar_url} alt={principal.display_name} />}
-        <Avatar.Fallback>{getInitials(principal.display_name)}</Avatar.Fallback>
-      </Avatar.Root>
+      <Avatar name={principal.display_name} src={principal.avatar_url} size={isShortView ? 'sm' : 'default'} rounded />
       <span className="flex flex-col overflow-hidden leading-tight">
         <span className={`truncate ${isShortView ? 'text-cn-foreground-1' : 'text-cn-foreground-1'}`}>
           {principal.display_name}

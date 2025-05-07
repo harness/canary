@@ -61,11 +61,7 @@ export const PullRequestCommentBox = ({
   }
 
   const avatar = useMemo(() => {
-    return (
-      <Avatar.Root>
-        <Avatar.Fallback>{getInitials(currentUser || '')}</Avatar.Fallback>
-      </Avatar.Root>
-    )
+    return <Avatar name={currentUser || ''} size="default" rounded />
   }, [currentUser])
 
   const handleUploadCallback = (file: File) => {

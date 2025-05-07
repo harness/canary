@@ -35,6 +35,7 @@
     "components/desktop/base/btn",
     "components/desktop/base/badge",
     "components/desktop/base/card",
+    "components/desktop/base/drawer",
     "components/desktop/base/input",
     "components/desktop/base/dropdown",
     "components/desktop/base/diff",

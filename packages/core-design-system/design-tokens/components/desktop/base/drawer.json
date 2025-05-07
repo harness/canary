@@ -1,0 +1,24 @@
+{
+  "drawer": {
+    "sm": {
+      "$type": "sizing",
+      "$value": "400"
+    },
+    "md": {
+      "$type": "sizing",
+      "$value": "600"
+    },
+    "lg": {
+      "$type": "sizing",
+      "$value": "800"
+    },
+    "container": {
+      "$type": "spacing",
+      "$value": "{spacing.5}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.4}"
+    }
+  }
+}

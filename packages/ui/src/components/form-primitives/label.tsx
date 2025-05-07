@@ -34,7 +34,8 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
         className={cn(labelVariants({ variant }), { 'cn-label-disabled': disabled }, className)}
         {...props}
       >
-        {children} {optional && <span className="cn-label-optional">(optional)</span>}
+        <span className="cn-label-text">{children}</span>
+        {optional && <span className="cn-label-optional">(optional)</span>}
       </LabelPrimitive.Root>
     )
 

@@ -1,6 +1,9 @@
 export default {
   '.cn-label': {
     '@apply font-body-strong': '',
+    display: 'grid',
+    gridTemplateColumns: 'auto auto',
+    gap: 'var(--cn-spacing-half)',
 
     '&:where(.cn-label-default)': {
       color: 'var(--cn-text-2)',
@@ -20,6 +23,10 @@ export default {
 
     '&:where(.cn-label-disabled), &:where(.cn-label-disabled) > .cn-label-optional': {
       color: 'var(--cn-state-disabled-text)'
+    },
+
+    '&-text': {
+      '@apply truncate': ''
     },
 
     '&-optional': {

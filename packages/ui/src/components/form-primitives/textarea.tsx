@@ -34,7 +34,20 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
  */
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
-    { id, disabled, label, theme, caption, error, optional, className, maxCharacters, resizable = false, ...props },
+    {
+      id,
+      label,
+      theme,
+      error,
+      caption,
+      optional,
+      disabled,
+      onChange,
+      className,
+      maxCharacters,
+      resizable = false,
+      ...props
+    },
     ref
   ) => {
     const [counter, setCounter] = useState(0)
@@ -43,11 +56,13 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setCharactersCount(e.target.value)
-      props?.onChange?.(e)
+      onChange?.(e)
     }
 
     // Set initial count
     useEffect(() => {
+      if (maxCharacters === undefined) return
+
       if (anyTypeOf(props.defaultValue, ['number', 'string'])) {
         setCharactersCount(String(props.defaultValue))
       }
@@ -55,7 +70,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       if (anyTypeOf(props.value, ['number', 'string'])) {
         setCharactersCount(String(props.value))
       }
-    }, [props.defaultValue, props.value, setCharactersCount])
+    }, [maxCharacters, props.defaultValue, props.value, setCharactersCount])
 
     return (
       <ControlGroup>
@@ -82,13 +97,13 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           id={id}
           ref={ref}
-          className={cn('cn-scrollbar', textareaVariants({ theme }), { 'resize-y': resizable }, className)}
+          className={cn(textareaVariants({ theme }), { 'resize-y': resizable }, className)}
           disabled={disabled}
           onChange={handleChange}
           {...props}
         />
 
-        {(disabled || caption) && <FormCaption disabled={disabled}>{caption}</FormCaption>}
+        {caption && <FormCaption disabled={disabled}>{caption}</FormCaption>}
 
         {!disabled && error && <FormCaption theme="danger">{error}</FormCaption>}
       </ControlGroup>

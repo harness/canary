@@ -82,12 +82,14 @@ export default {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      top: 'var(--cn-spacing-2)',
-      width: '100%'
+      gap: 'var(--cn-spacing-2)',
+      width: '100%',
+      maxWidth: '100%'
     },
 
     '&-counter': {
       '@apply font-caption-normal': '',
+      whiteSpace: 'nowrap',
       color: 'var(--cn-text-3)',
 
       '&:where(.cn-textarea-counter-danger)': {

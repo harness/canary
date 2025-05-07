@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, ControlGroup, Dialog, FormWrapper, Input, Textarea } from '@/components'
+import { Button, ButtonGroup, ControlGroup, Dialog, FormInput, FormWrapper, Textarea } from '@/components'
 import { UsererrorError } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -57,13 +57,13 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
 
         <FormWrapper onSubmit={handleSubmit(onFormSubmit)}>
           <ControlGroup className="gap-y-7 pb-4">
-            <Input
+            <FormInput.Text
               id="title"
               label="Commit Message"
               {...register('title')}
               placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
-              size="md"
-              error={errors.title?.message?.toString()}
+              theme={errors.title?.message ? 'danger' : 'default'}
+              error={errors.title?.message}
             />
             <Textarea
               id="message"

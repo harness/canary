@@ -17,6 +17,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   setSearchQuery,
   toCreateRepo,
   toImportRepo,
+  toImportMultipleRepos,
   ...routingProps
 }) => {
   const { t } = useTranslationStore()
@@ -101,7 +102,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                     if (option === 'import') {
                       navigate(toImportRepo?.() || '')
                     } else if (option === 'import-multiple') {
-                      navigate('import-multiple')
+                      navigate(toImportMultipleRepos?.() || '')
                     }
                   }}
                   options={[

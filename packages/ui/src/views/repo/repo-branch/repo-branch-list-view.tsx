@@ -1,6 +1,6 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, Pagination, SearchBox, Spacer } from '@/components'
+import { Button, FormInput, ListActions, Pagination, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
@@ -21,15 +21,17 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   const { t } = useTranslationStore()
   const { branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
 
-  const { search, handleSearchChange } = useDebounceSearch({
-    handleChangeSearchValue: setSearchQuery,
-    searchValue: searchQuery || ''
-  })
-
   const handleResetFiltersAndPages = () => {
     setPage(1)
     setSearchQuery(null)
   }
+
+  const handleSearchChange = useCallback(
+    (query: string) => {
+      setSearchQuery(query)
+    },
+    [setSearchQuery]
+  )
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
@@ -45,12 +47,12 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-80"
-                  value={search || ''}
-                  handleChange={handleSearchChange}
+                <FormInput.Search
+                  size="sm"
+                  defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}
+                  inputContainerClassName="max-w-96"
+                  onChange={handleSearchChange}
                 />
               </ListActions.Left>
               <ListActions.Right>

@@ -79,8 +79,8 @@ export default {
     '@apply font-body-single-line-strong': '',
 
     '&:where(.cn-button-split-dropdown)': {
-      height: 'var(--cn-btn-size-icon)',
-      width: 'var(--cn-btn-size-icon)',
+      height: 'var(--cn-btn-size-default)',
+      width: 'var(--cn-btn-size-default)',
       position: 'relative',
       '@apply rounded-l-none border-l-0': '',
 

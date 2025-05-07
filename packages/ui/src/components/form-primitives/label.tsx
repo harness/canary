@@ -27,7 +27,7 @@ export type LabelProps = Omit<ComponentPropsWithoutRef<typeof LabelPrimitive.Roo
   }
 
 const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
-  ({ className, children, variant = 'default', optional, disabled, informerContent, ...props }, ref) => {
+  ({ className, children, variant = 'default', optional, disabled, informerContent, informerProps, ...props }, ref) => {
     const LabelComponent = ({ className }: { className?: string }) => (
       <LabelPrimitive.Root
         ref={ref}
@@ -41,10 +41,10 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
 
     if (informerContent) {
       return (
-        <span className={cn('flex items-center gap-1', className)}>
+        <span className={cn('cn-label-container', className)}>
           <LabelComponent />
 
-          <Informer className="cn-label-informer" disabled={disabled}>
+          <Informer {...informerProps} className="cn-label-informer" disabled={disabled}>
             {informerContent}
           </Informer>
         </span>

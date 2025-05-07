@@ -3,6 +3,7 @@ export default {
     '@apply font-body-strong': '',
     display: 'grid',
     gridTemplateColumns: 'auto auto',
+    justifyContent: 'start',
     gap: 'var(--cn-spacing-half)',
 
     '&:where(.cn-label-default)': {
@@ -23,6 +24,12 @@ export default {
 
     '&:where(.cn-label-disabled), &:where(.cn-label-disabled) > .cn-label-optional': {
       color: 'var(--cn-state-disabled-text)'
+    },
+
+    '&-container': {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 'var(--cn-spacing-1)'
     },
 
     '&-text': {

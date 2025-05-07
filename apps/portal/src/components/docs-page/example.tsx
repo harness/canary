@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { LiveEditor, LivePreview, LiveProvider } from "react-live";
-import { Icon } from "@harnessio/ui/components";
+import { Icon, Tooltip } from "@harnessio/ui/components";
 import { RouterContextProvider } from "@harnessio/ui/context";
 import ExampleLayout from "./example-layout";
 import { themes } from "prism-react-renderer";
@@ -61,7 +61,9 @@ const Example: FC<ExampleProps> = ({ code, scope }) => {
       path: "*",
       element: (
         <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet}>
-          <LivePreview />
+          <Tooltip.Provider>
+            <LivePreview />
+          </Tooltip.Provider>
         </RouterContextProvider>
       ),
     },

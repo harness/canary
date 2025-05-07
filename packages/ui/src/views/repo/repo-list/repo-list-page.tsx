@@ -1,8 +1,7 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { ListActions, NoData, Pagination, SearchBox, Spacer, SplitButton } from '@/components'
+import { FormInput, ListActions, NoData, Pagination, Spacer, SplitButton } from '@/components'
 import { useRouterContext } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 
 import { RepoList } from './repo-list'
@@ -23,14 +22,12 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const { t } = useTranslationStore()
   const { navigate } = useRouterContext()
 
-  const {
-    search: searchInput,
-    handleSearchChange: handleInputChange,
-    handleResetSearch
-  } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
-    searchValue: searchQuery || ''
-  })
+  const handleSearch = useCallback(
+    (query: string) => {
+      setSearchQuery(query.length ? query : null)
+    },
+    [setSearchQuery]
+  )
 
   // State for storing saved filters and sorts
   // null means no saved state exists
@@ -69,7 +66,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const showTopBar = !noData || !!searchQuery?.length || page !== 1
 
   const handleResetFiltersQueryAndPages = () => {
-    handleResetSearch()
+    handleSearch('')
     setPage(1)
   }
 
@@ -87,12 +84,12 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-96"
-                  value={searchInput || ''}
-                  handleChange={handleInputChange}
+                <FormInput.Search
+                  inputContainerClassName="max-w-96"
+                  defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}
+                  size="sm"
+                  onChange={handleSearch}
                 />
               </ListActions.Left>
               <ListActions.Right>

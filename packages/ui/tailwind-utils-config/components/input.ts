@@ -32,8 +32,8 @@ export default {
       minWidth: '0',
       maxWidth: '100%',
       borderRadius: 'var(--cn-input-radius)',
-      padding:
-        'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)',
+      paddingBlock: 'var(--cn-input-default-py)',
+      paddingInline: 'var(--cn-input-default-pl) var(--cn-input-default-pr)',
       '@apply w-full text-inherit bg-transparent': '',
 
       '&:focus-visible': {

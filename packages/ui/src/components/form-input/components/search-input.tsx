@@ -4,14 +4,15 @@ import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 import { debounce } from 'lodash-es'
 
-import { BaseInput, InputProps } from './BaseInput'
+import { BaseInput, InputProps } from './base-input'
 
 // Custom onChange handler for search that works with strings instead of events
 interface SearchInputProps extends Omit<InputProps, 'type' | 'onChange' | 'label'> {
   onChange?: (value: string) => void
+  disableDebounce?: boolean
 }
 
-export function SearchInput({ placeholder = 'Search', onChange, ...props }: SearchInputProps) {
+export function SearchInput({ placeholder = 'Search', disableDebounce = false, onChange, ...props }: SearchInputProps) {
   const debouncedOnChangeRef = useRef(
     debounce((value: string) => {
       onChange?.(value)
@@ -27,10 +28,17 @@ export function SearchInput({ placeholder = 'Search', onChange, ...props }: Sear
   }, [])
 
   // Handle input change
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    debouncedOnChangeRef.current(value)
-  }, [])
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value
+      if (disableDebounce) {
+        onChange?.(value)
+      } else {
+        debouncedOnChangeRef.current(value)
+      }
+    },
+    [disableDebounce, onChange]
+  )
 
   return (
     <BaseInput

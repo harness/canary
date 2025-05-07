@@ -12,7 +12,7 @@ import {
 import { Button, ControlGroup, FormCaption, Label } from '@/components'
 import { Icon } from '@components/icon'
 
-import { BaseInput, InputProps } from './BaseInput'
+import { BaseInput, InputProps } from './base-input'
 
 export interface NumberInputProps extends Omit<InputProps, 'type' | 'prefix' | 'suffix' | 'onChange'> {
   stepper?: number

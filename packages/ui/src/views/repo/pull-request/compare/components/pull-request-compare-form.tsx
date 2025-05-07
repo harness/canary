@@ -1,7 +1,7 @@
 import { forwardRef, MouseEvent, useRef, useState } from 'react'
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
-import { Button, Fieldset, Icon, Input, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { Button, Fieldset, FormInput, Icon, Input, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { handleFileDrop, handlePaste, HandleUploadType, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { z } from 'zod'
@@ -107,14 +107,14 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
     return (
       <form ref={ref} onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className="gap-y-3">
-          <Input
+          <FormInput.Text
             id="title"
             {...register('title')}
-            placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
-            error={errors.title?.message?.toString()}
             autoFocus
+            placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
+            theme={errors.title?.message ? 'danger' : 'default'}
+            error={errors.title?.message}
             label={t('views:pullRequests.compareChangesFormTitleLabel', 'Title')}
-            size="md"
           />
 
           <div

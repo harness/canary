@@ -8,9 +8,9 @@ import {
   Checkbox,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormWrapper,
   Icon,
-  Input,
   Label,
   SkeletonForm,
   Tag
@@ -176,20 +176,21 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
                 inputProps={{
                   id: 'label-name',
                   ...register('key'),
-                  error: errors.key?.message?.toString(),
+                  theme: errors.key?.message ? 'danger' : 'default',
+                  error: errors.key?.message,
                   autoFocus: !key
                 }}
               />
             </ControlGroup>
 
-            <Input
+            <FormInput.Text
               {...register('description')}
               placeholder={t('views:repos.descriptionPlaceholder', 'Enter a short description for the label')}
               label={t('views:repos.description', 'Description')}
               name="description"
               id="description"
-              error={errors.description?.message?.toString()}
-              size="md"
+              theme={errors.description?.message ? 'danger' : 'default'}
+              error={errors.description?.message}
               optional
             />
 
@@ -212,7 +213,8 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
                   }}
                   inputProps={{
                     ...register(`values.${idx}.value` as keyof CreateLabelFormFields),
-                    error: errors.values?.[idx]?.value?.message?.toString()
+                    theme: errors.values?.[idx]?.value?.message ? 'danger' : 'default',
+                    error: errors.values?.[idx]?.value?.message
                   }}
                 />
               ))}

@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Button, Icon, Input, InputProps, Select, SelectRootProps } from '@/components'
+import { Button, FormInput, Icon, Select, SelectRootProps } from '@/components'
 import { cn } from '@/utils'
 import { ColorsEnum, TranslationStore } from '@/views'
+import { TextInputProps } from '@components/form-input/components/text-input'
 
 interface LabelFormColorAndNameGroupProps {
   className?: string
@@ -10,7 +11,7 @@ interface LabelFormColorAndNameGroupProps {
   useTranslationStore: () => TranslationStore
   handleDeleteValue?: () => void
   selectProps?: SelectRootProps
-  inputProps?: InputProps
+  inputProps?: TextInputProps
 }
 
 export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = ({
@@ -46,13 +47,12 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
         </Select.Content>
       </Select.Root>
 
-      <Input
+      <FormInput.Text
         placeholder={
           isValue
             ? t('views:labelData.form.colorValuePlaceholder', 'Enter value name')
             : t('views:labelData.form.colorLabelPlaceholder', 'Enter label name')
         }
-        size="md"
         {...inputProps}
       />
 

@@ -18,34 +18,23 @@ const captionVariants = cva('cn-caption', {
   }
 })
 
-// Default theme props
-type CaptionProps = {
+type FormCaptionProps = {
   theme?: VariantProps<typeof captionVariants>['theme']
   className?: string
-  showIcon?: boolean
 }
 
-export const FormCaption = ({
-  theme = 'default',
-  showIcon = true,
-  className,
-  children
-}: PropsWithChildren<CaptionProps>) => {
-  /**
-   * Return null if no message, errorMessage, or warningMessage is provided
-   */
+export const FormCaption = ({ theme = 'default', className, children }: PropsWithChildren<FormCaptionProps>) => {
   if (!children) {
     return null
   }
 
-  const canShowIcon = theme === 'danger' || theme === 'warning' ? showIcon : false
+  const canShowIcon = theme === 'danger' || theme === 'warning'
 
   /**
    * cross-circle - danger
    * triangle-warning - warning
    */
-  const effectiveIconName =
-    theme === 'danger' ? 'cross-circle' : theme === 'warning' ? 'warning-triangle-outline' : 'tick'
+  const effectiveIconName = theme === 'danger' ? 'cross-circle' : 'warning-triangle-outline'
 
   return (
     <p role="region" aria-live="polite" className={cn(captionVariants({ theme }), className)}>

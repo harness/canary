@@ -1,8 +1,7 @@
-import { ChangeEvent, ReactNode, useCallback, useMemo, useState } from 'react'
+import { ReactNode, useCallback, useMemo, useState } from 'react'
 
-import { Command, FormInput, Popover, SearchBox, Text } from '@/components'
+import { Command, FormInput, Popover, Text } from '@/components'
 import { TranslationStore } from '@/views'
-import { debounce } from 'lodash-es'
 
 const markedFileClassName = 'w-full text-cn-foreground-1'
 
@@ -46,9 +45,6 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
   const [filteredFiles, setFilteredFiles] = useState<FilteredFile[]>([])
   const { t } = useTranslationStore()
 
-  /**
-   * Debounced function for filtering files
-   */
   const filterQuery = useMemo(
     () => (query: string) => {
       if (!filesList) {

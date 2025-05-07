@@ -1,6 +1,6 @@
-import { ChangeEvent, FC, useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, Icon, SearchBox, StatusBadge, Tabs } from '@/components'
+import { Button, DropdownMenu, FormInput, Icon, StatusBadge, Tabs } from '@/components'
 import { useRouterContext } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 import { cn } from '@utils/cn'
@@ -32,8 +32,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
     return activeTab === BranchSelectorTab.BRANCHES ? branchList : tagList
   }, [activeTab, branchList, tagList])
 
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value)
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query)
   }
 
   const viewAllUrl =
@@ -56,12 +56,14 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
           <span className="text-2 font-medium leading-none">Switch branches/tags</span>
         )}
         <div role="presentation" onKeyDown={e => e.stopPropagation()}>
-          <SearchBox.Root
-            className="mt-2 w-full"
+          <FormInput.Search
+            autoFocus
+            inputContainerClassName="mt-2"
+            id="search"
+            size="sm"
             placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}
-            value={searchQuery}
-            handleChange={handleSearchChange}
-            showOnFocus
+            defaultValue={searchQuery}
+            onChange={handleSearchChange}
           />
         </div>
       </div>

@@ -26,6 +26,7 @@ export interface RoutingProps {
   toRepository: (repo: RepositoryType) => string
   toCreateRepo: () => string
   toImportRepo: () => string
+  toImportMultipleRepos: () => string
 }
 
 /**

@@ -52,10 +52,14 @@ export default {
         }
       },
 
+      // Hide spinners for Chrome, Safari, Edge
       '&[type="number"]::-webkit-outer-spin-button, &[type="number"]::-webkit-inner-spin-button': {
         '-webkit-appearance': 'none',
-        '-moz-appearance': 'textfield',
         margin: '0'
+      },
+      // Hide spinners for Firefox
+      '&[type="number"]': {
+        '-moz-appearance': 'textfield'
       }
     },
     '&-container': {

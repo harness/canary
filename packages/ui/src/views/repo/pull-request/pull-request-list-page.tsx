@@ -1,8 +1,7 @@
-import { FC, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Spacer, StackedList } from '@/components'
+import { Button, FormInput, ListActions, NoData, Pagination, SkeletonList, Spacer, StackedList } from '@/components'
 import { useRouterContext } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
 import { CustomFilterOptionConfig, FilterFieldTypes } from '@components/filters/types'
@@ -92,14 +91,16 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       })) ?? []
   })
 
-  const {
-    search: searchInput,
-    handleSearchChange: handleInputChange,
-    handleResetSearch: handleResetQuery
-  } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
-    searchValue: searchQuery || ''
-  })
+  const handleInputChange = useCallback(
+    (val: string) => {
+      setSearchQuery(val.length ? val : null)
+    },
+    [setSearchQuery]
+  )
+
+  const handleResetQuery = () => {
+    setSearchQuery('')
+  }
 
   /**
    * Initialize filters hook with handlers for managing filter state
@@ -218,12 +219,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
             <ListActions.Root>
               <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-96"
-                  value={searchInput || ''}
-                  handleChange={handleInputChange}
+                <FormInput.Search
+                  size="sm"
+                  defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}
+                  inputContainerClassName="max-w-96"
+                  onChange={handleInputChange}
                 />
               </ListActions.Left>
               <ListActions.Right>

@@ -80,7 +80,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
           <Button variant="outline" onClick={onClose} disabled={isLoading}>
             {t('component:deleteDialog.cancel', 'Cancel')}
           </Button>
-          <Button variant="secondary" theme="danger" disabled={isDisabled} onClick={handleDelete}>
+          <Button variant="primary" theme="danger" disabled={isDisabled} onClick={handleDelete}>
             {isLoading ? `Deleting ${type}...` : `Yes, delete ${type}`}
           </Button>
         </AlertDialog.Footer>

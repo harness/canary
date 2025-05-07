@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Checkbox, ControlGroup, Input, Label, Radio, StackedList, Switch, Textarea } from '@/components'
+import { Checkbox, ControlGroup, FormInput, Label, Radio, StackedList, Switch, Textarea } from '@/components'
 import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
 
 export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (
@@ -32,15 +32,15 @@ export const WebhookNameField: FC<WebhookFormFieldProps & { disabled: boolean }>
   t
 }) => (
   <ControlGroup>
-    <Input
+    <FormInput.Text
       id="name"
       {...register!('identifier')}
       placeholder="Name your webhook"
       autoFocus
       disabled={disabled}
       label={t('views:repos.name', 'Name')}
-      error={errors?.identifier?.message?.toString()}
-      size="md"
+      theme={errors?.identifier?.message ? 'danger' : 'default'}
+      error={errors?.identifier?.message}
     />
   </ControlGroup>
 )
@@ -59,30 +59,30 @@ export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register, e
 
 export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
-    <Input
+    <FormInput.Text
       autoComplete="new-password"
       data-form-type="other"
       id="payloadUrl"
       {...register!('url')}
       placeholder={t('views:repos.urlPlaceholder', 'https://example.com/harness')}
       label={t('views:repos.urlLabel', 'Payload URL')}
-      error={errors?.url?.message?.toString()}
-      size="md"
+      theme={errors?.url?.message ? 'danger' : 'default'}
+      error={errors?.url?.message}
     />
   </ControlGroup>
 )
 
 export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
-    <Input
+    <FormInput.Text
       autoComplete="new-password"
       data-form-type="other"
       id="secret"
       {...register!('secret')}
       type="password"
       label={t('views:repos.secret', 'Secret')}
-      error={errors?.secret?.message?.toString()}
-      size="md"
+      theme={errors?.secret?.message ? 'danger' : 'default'}
+      error={errors?.secret?.message}
     />
   </ControlGroup>
 )

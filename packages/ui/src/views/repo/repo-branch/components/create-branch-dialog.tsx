@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Label } from '@/components'
+import { Alert, Button, ControlGroup, Dialog, Fieldset, FormInput, FormWrapper, Label } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
@@ -86,13 +86,13 @@ export function CreateBranchDialog({
         </Dialog.Header>
         <FormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="name"
               label="Branch name"
               {...register('name')}
               maxLength={250}
               placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
-              size="md"
+              theme={errors.name?.message ? 'danger' : 'default'}
               error={errors.name?.message}
             />
           </Fieldset>

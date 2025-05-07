@@ -1,8 +1,7 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, SearchBox, SkeletonList, Spacer } from '@/components'
+import { Button, FormInput, ListActions, SkeletonList, Spacer } from '@/components'
 import { useRouterContext } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 
 import { RepoWebhookList } from './components/repo-webhook-list'
@@ -23,15 +22,16 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   const { t } = useTranslationStore()
   const { webhooks, totalPages, page, setPage, error } = useWebhookStore()
 
-  // const { query, handleSearch } = useCommonFilter()
-  const {
-    search: searchInput,
-    handleSearchChange: handleInputChange,
-    handleResetSearch
-  } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
-    searchValue: searchQuery || ''
-  })
+  const handleSearchChange = useCallback(
+    (val: string) => {
+      setSearchQuery(val.length ? val : null)
+    },
+    [setSearchQuery]
+  )
+
+  const handleResetSearch = () => {
+    setSearchQuery('')
+  }
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
@@ -55,12 +55,13 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
             <>
               <ListActions.Root>
                 <ListActions.Left>
-                  <SearchBox.Root
-                    width="full"
-                    className="max-w-96"
-                    value={searchInput || ''}
-                    handleChange={handleInputChange}
+                  <FormInput.Search
+                    id="search"
+                    size="sm"
+                    defaultValue={searchQuery || ''}
+                    inputContainerClassName="max-w-96"
                     placeholder={t('views:repos.search', 'Search')}
+                    onChange={handleSearchChange}
                   />
                 </ListActions.Left>
                 <ListActions.Right>

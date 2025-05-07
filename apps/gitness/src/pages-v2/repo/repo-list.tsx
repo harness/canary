@@ -115,6 +115,9 @@ export default function ReposListPage() {
       toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
       toCreateRepo={() => routes.toCreateRepo({ spaceId })}
       toImportRepo={() => routes.toImportRepo({ spaceId })}
+      toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
     />
   )
 }
+
+ReposListPage.displayName = 'ReposListPage'

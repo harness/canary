@@ -1,7 +1,7 @@
-import { forwardRef, TextareaHTMLAttributes, useCallback, useEffect, useState } from 'react'
+import { forwardRef, TextareaHTMLAttributes, useCallback, useState } from 'react'
 
 import { ControlGroup, FormCaption, Label } from '@/components'
-import { anyTypeOf } from '@/utils'
+import { anyTypeOf, useMergeRefs } from '@/utils'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
@@ -52,25 +52,30 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) => {
     const [counter, setCounter] = useState(0)
 
-    const setCharactersCount = useCallback((value: string) => setCounter(value.length), [])
+    const setCharactersCount = useCallback(
+      (value: string) => {
+        if (maxCharacters === undefined) return
+
+        setCounter(value.length)
+      },
+      [maxCharacters]
+    )
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setCharactersCount(e.target.value)
       onChange?.(e)
     }
 
-    // Set initial count
-    useEffect(() => {
-      if (maxCharacters === undefined) return
+    const mergedRef = useMergeRefs<HTMLTextAreaElement>([
+      node => {
+        if (!node) return
 
-      if (anyTypeOf(props.defaultValue, ['number', 'string'])) {
-        setCharactersCount(String(props.defaultValue))
-      }
-
-      if (anyTypeOf(props.value, ['number', 'string'])) {
-        setCharactersCount(String(props.value))
-      }
-    }, [maxCharacters, props.defaultValue, props.value, setCharactersCount])
+        if (anyTypeOf(node.value, ['number', 'string'])) {
+          setCharactersCount(String(node.value))
+        }
+      },
+      ref
+    ])
 
     return (
       <ControlGroup>
@@ -96,16 +101,18 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
         <textarea
           id={id}
-          ref={ref}
+          ref={mergedRef}
           className={cn(textareaVariants({ theme }), { 'resize-y': resizable }, className)}
           disabled={disabled}
           onChange={handleChange}
           {...props}
         />
 
-        {caption && <FormCaption disabled={disabled}>{caption}</FormCaption>}
-
-        {!disabled && error && <FormCaption theme="danger">{error}</FormCaption>}
+        {error && !disabled ? (
+          <FormCaption theme="danger">{error}</FormCaption>
+        ) : caption || disabled ? (
+          <FormCaption disabled={disabled}>{caption}</FormCaption>
+        ) : null}
       </ControlGroup>
     )
   }

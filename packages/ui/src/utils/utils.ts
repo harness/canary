@@ -1,4 +1,4 @@
-import { createElement, ReactNode } from 'react'
+import { createElement, ForwardedRef, MutableRefObject, ReactNode, RefCallback, useCallback } from 'react'
 
 import { TimeAgoHoverCard } from '@/components'
 import { formatDistance, formatDistanceToNow } from 'date-fns'
@@ -165,4 +165,32 @@ type JavaScriptType = 'string' | 'number' | 'boolean' | 'undefined' | 'object' |
 export const anyTypeOf = (value: unknown, types: JavaScriptType[]): boolean => {
   const actualType = typeof value
   return types.includes(actualType as JavaScriptType)
+}
+
+type PossibleRef<T> = MutableRefObject<T> | RefCallback<T> | ForwardedRef<T>
+
+/**
+ * A React hook that merges multiple refs into a single ref callback.
+ */
+export function useMergeRefs<T>(refs: Array<PossibleRef<T> | null | undefined>): RefCallback<T> {
+  return useCallback(
+    (value: T) => {
+      refs.forEach(ref => {
+        if (!ref) return
+
+        if (typeof ref === 'function') {
+          ref(value)
+          return
+        }
+
+        try {
+          ;(ref as MutableRefObject<T>).current = value
+        } catch (error) {
+          console.error('Failed to set ref value:', error)
+        }
+      })
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [...refs]
+  )
 }

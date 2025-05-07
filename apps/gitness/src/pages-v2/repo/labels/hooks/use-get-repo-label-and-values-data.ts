@@ -75,7 +75,7 @@ export const useGetRepoLabelAndValuesData = ({
                   data => ({ key: item.key, data: data.body as LabelValueType[] }),
                   error => ({ key: item.key, error })
                 )
-              : listSpaceLabelValues({ space_ref, key: item.key, signal }).then(
+              : listSpaceLabelValues({ space_ref: `${space_ref}/+`, key: item.key, signal }).then(
                   data => ({ key: item.key, data: data.body as LabelValueType[] }),
                   error => ({ key: item.key, error })
                 )

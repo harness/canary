@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import { useListCommitsQuery } from '@harnessio/code-service-client'
+import { useRouterContext } from '@harnessio/ui/context'
 import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
@@ -15,8 +16,14 @@ import { normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 export default function RepoCommitsPage() {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
-  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
+  const { spaceId, repoId, branchId } = useParams<PathParams>()
+  const { navigate } = useRouterContext()
+
+  const decodedBranchId = branchId ? decodeURIComponent(branchId) : undefined
+
+  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(
+    decodedBranchId ? { name: decodedBranchId, sha: '' } : null
+  )
   const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -63,9 +70,18 @@ export default function RepoCommitsPage() {
     [repoId, spaceId]
   )
 
+  useEffect(() => {
+    if (selectedBranchOrTag?.name) {
+      const encodedBranchOrTagId = encodeURIComponent(selectedBranchOrTag.name)
+      navigate(routes.toRepoCommits({ spaceId, repoId, branchId: encodedBranchOrTagId }))
+    }
+  }, [selectedBranchOrTag, navigate, routes, spaceId, repoId])
+
   return (
     <RepoCommitsView
-      toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
+      toCommitDetails={({ sha }: { sha: string }) =>
+        routes.toRepoCommitDetails({ spaceId, repoId, branchId, commitSHA: sha })
+      }
       toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
       commitsList={commitData?.commits}
       isFetchingCommits={isFetchingCommits}

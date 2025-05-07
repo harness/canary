@@ -206,8 +206,7 @@ export const repoRoutes: CustomRouteObject[] = [
           {
             path: 'commits',
             handle: {
-              breadcrumb: () => <span>{Page.Commits}</span>,
-              routeName: RouteConstants.toRepoCommits
+              breadcrumb: () => <span>{Page.Commits}</span>
             },
             children: [
               {
@@ -217,9 +216,16 @@ export const repoRoutes: CustomRouteObject[] = [
                   pageTitle: Page.Commits
                 }
               },
-
               {
-                path: ':commitSHA',
+                path: 'branch/:branchId',
+                element: <RepoCommitsPage />,
+                handle: {
+                  pageTitle: Page.Commits,
+                  routeName: RouteConstants.toRepoCommits
+                }
+              },
+              {
+                path: 'commit/:commitSHA',
                 element: <RepoCommitDetailsPage showSidebar={false} />,
                 handle: {
                   breadcrumb: ({ commitSHA }: { commitSHA: string }) => (

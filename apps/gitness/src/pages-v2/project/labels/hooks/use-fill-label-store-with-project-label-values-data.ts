@@ -77,7 +77,7 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
       const promises = syncStoreLabelsData.reduce<Promise<LabelValuesResponseResultType>[]>((acc, item) => {
         if (item.value_count !== 0) {
           acc.push(
-            listSpaceLabelValues({ space_ref, key: item.key, signal }).then(
+            listSpaceLabelValues({ space_ref: `${space_ref}/+`, key: item.key, signal }).then(
               data => ({ key: item.key, data: data.body as LabelValueType[] }),
               error => ({ key: item.key, error })
             )

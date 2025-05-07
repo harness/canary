@@ -20,7 +20,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   useTranslationStore,
   useRepoTagsStore,
   toCommitDetails,
-  isLoading = false,
+  isLoading,
   isDirtyList = false,
   onResetFiltersAndPages,
   onOpenCreateTagDialog,
@@ -87,6 +87,10 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
     )
   }
 
+  if (isLoading) {
+    return <SkeletonTable countRows={12} countColumns={5} />
+  }
+
   return (
     <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" variant="asStackedList">
       <Table.Header>
@@ -100,53 +104,49 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         </Table.Row>
       </Table.Header>
 
-      {isLoading ? (
-        <SkeletonTable countRows={12} countColumns={5} />
-      ) : (
-        <Table.Body hasHighlightOnHover>
-          {tagsList.map(tag => (
-            <Table.Row key={tag.sha}>
-              <Table.Cell>
-                <Text className="block leading-snug" truncate>
-                  {tag.name}
+      <Table.Body hasHighlightOnHover>
+        {tagsList.map(tag => (
+          <Table.Row key={tag.sha}>
+            <Table.Cell>
+              <Text className="block leading-snug" truncate>
+                {tag.name}
+              </Text>
+            </Table.Cell>
+            <Table.Cell>
+              <Text color="tertiary" className="line-clamp-3 break-all leading-snug">
+                {tag?.message}
+              </Text>
+            </Table.Cell>
+            <Table.Cell className="!py-2.5">
+              <CommitCopyActions sha={tag.sha} toCommitDetails={toCommitDetails} />
+            </Table.Cell>
+            <Table.Cell>
+              <div className="flex items-center gap-2">
+                <Avatar.Root size="4.5" className="rounded-full text-white">
+                  <Avatar.Fallback>{getInitials(tag.tagger?.identity.name || '')}</Avatar.Fallback>
+                </Avatar.Root>
+                <Text color="tertiary" className="block leading-none" truncate>
+                  {tag.tagger?.identity.name}
                 </Text>
-              </Table.Cell>
-              <Table.Cell>
-                <Text color="tertiary" className="line-clamp-3 break-all leading-snug">
-                  {tag?.message}
-                </Text>
-              </Table.Cell>
-              <Table.Cell className="!py-2.5">
-                <CommitCopyActions sha={tag.sha} toCommitDetails={toCommitDetails} />
-              </Table.Cell>
-              <Table.Cell>
-                <div className="flex items-center gap-2">
-                  <Avatar.Root size="4.5" className="rounded-full text-white">
-                    <Avatar.Fallback>{getInitials(tag.tagger?.identity.name || '')}</Avatar.Fallback>
-                  </Avatar.Root>
-                  <Text color="tertiary" className="block leading-none" truncate>
-                    {tag.tagger?.identity.name}
-                  </Text>
-                </div>
-              </Table.Cell>
-              <Table.Cell>
-                <Text color="tertiary" className="leading-snug">
-                  {getCreationDate(tag)}
-                </Text>
-              </Table.Cell>
-              <Table.Cell className="w-[46px] !py-2.5 text-right">
-                <MoreActionsTooltip
-                  isInTable
-                  actions={getTableActions(tag).map(action => ({
-                    ...action,
-                    to: action?.to?.replace('${tag.name}', tag.name)
-                  }))}
-                />
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      )}
+              </div>
+            </Table.Cell>
+            <Table.Cell>
+              <Text color="tertiary" className="leading-snug">
+                {getCreationDate(tag)}
+              </Text>
+            </Table.Cell>
+            <Table.Cell className="w-[46px] !py-2.5 text-right">
+              <MoreActionsTooltip
+                isInTable
+                actions={getTableActions(tag).map(action => ({
+                  ...action,
+                  to: action?.to?.replace('${tag.name}', tag.name)
+                }))}
+              />
+            </Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
     </Table.Root>
   )
 }

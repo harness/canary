@@ -51,7 +51,7 @@ export const RepoTagsListContainer = () => {
 
   const {
     data: { body: tagsList, headers } = {},
-    isLoading: isLoadingTags,
+    isFetching: isLoadingTags,
     refetch: refetchTags
   } = useListTagsQuery({
     repo_ref: repo_ref,

@@ -40,9 +40,9 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     return (
       <AvatarPrimitive.Root ref={ref} className={cn(avatarVariants({ size, rounded }), className)} {...props}>
         {src ? (
-          <AvatarPrimitive.Image src={src} alt={name} className={cn(avatarVariants({ rounded }), 'cn-avatar-image')} />
+          <AvatarPrimitive.Image src={src} alt={name} className="cn-avatar-image" />
         ) : (
-          <AvatarPrimitive.Fallback delayMs={0} className={cn(avatarVariants({ rounded }), 'cn-avatar-fallback')}>
+          <AvatarPrimitive.Fallback delayMs={0} className="cn-avatar-fallback">
             {initials}
           </AvatarPrimitive.Fallback>
         )}

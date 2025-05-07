@@ -9,6 +9,7 @@ export default {
     width: `var(--cn-avatar-size-default)`,
     borderRadius: `var(--cn-avatar-radius-default)`,
     boxShadow: `var(--cn-shadow-comp-avatar-inner)`,
+    fontSize: `var(--cn-font-size-0)`,
 
     '&:where(.cn-avatar-sm)': {
       height: `var(--cn-avatar-size-sm)`,
@@ -16,7 +17,8 @@ export default {
     },
     '&:where(.cn-avatar-lg)': {
       height: `var(--cn-avatar-size-lg)`,
-      width: `var(--cn-avatar-size-lg)`
+      width: `var(--cn-avatar-size-lg)`,
+      fontSize: `var(--cn-font-size-2)`
     },
 
     '&:where(.cn-avatar-rounded)': {
@@ -24,18 +26,18 @@ export default {
     },
 
     '.cn-avatar-image': {
+      borderRadius: 'inherit',
+      boxShadow: 'inherit',
       '@apply h-full w-full': ''
     },
 
     '.cn-avatar-fallback': {
       backgroundColor: `var(--cn-set-brand-soft-bg)`,
       color: `var(--cn-set-brand-soft-text)`,
-      fontSize: `var(--cn-font-size-0)`,
-      '@apply h-full w-full flex items-center justify-center select-none': '',
-
-      '>.cn-avatar-lg': {
-        fontSize: `var(--cn-font-size-2)`
-      }
+      fontSize: 'inherit',
+      borderRadius: 'inherit',
+      boxShadow: 'inherit',
+      '@apply h-full w-full flex items-center justify-center select-none': ''
     }
   }
 }

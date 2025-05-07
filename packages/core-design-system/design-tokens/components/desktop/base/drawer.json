@@ -2,15 +2,15 @@
   "drawer": {
     "sm": {
       "$type": "sizing",
-      "$value": "400"
+      "$value": "408"
     },
     "md": {
       "$type": "sizing",
-      "$value": "600"
+      "$value": "700"
     },
     "lg": {
       "$type": "sizing",
-      "$value": "800"
+      "$value": "920"
     },
     "container": {
       "$type": "spacing",

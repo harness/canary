@@ -6,6 +6,7 @@ import {
   ButtonGroup,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormWrapper,
   Icon,
   Input,
@@ -119,15 +120,14 @@ export const RepoSettingsGeneralForm: FC<{
           {/* NAME */}
           <Fieldset>
             <ControlGroup>
-              <Input
+              <FormInput.Text
                 id="name"
                 {...register('name')}
                 placeholder={t('views:repos.repoNamePlaceholder', 'Enter repository name')}
                 disabled
                 label={t('views:repos.name', 'Name')}
-                size="md"
-                autoFocus
-                error={errors.name?.message?.toString()}
+                theme={errors.name?.message ? 'danger' : 'default'}
+                error={errors.name?.message}
               />
             </ControlGroup>
             {/* DESCRIPTION */}

@@ -1,8 +1,10 @@
+import { forwardRef } from 'react'
+
 import { ControlGroup, FormCaption, Label } from '@/components'
 
 import { BaseInput, InputProps } from './base-input'
 
-interface TextInputProps extends InputProps {
+export interface TextInputProps extends InputProps {
   type?: Exclude<HTMLInputElement['type'], 'number' | 'search'>
   wrapperClassName?: string
   caption?: string
@@ -11,26 +13,17 @@ interface TextInputProps extends InputProps {
   optional?: boolean
 }
 
-export function TextInput({
-  label,
-  disabled,
-  optional,
-  id,
-  theme,
-  caption,
-  error,
-  warningMessage,
-  wrapperClassName,
-  ...props
-}: TextInputProps) {
+const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
+  const { label, optional, caption, error, warningMessage, wrapperClassName, ...restProps } = props
   return (
     <ControlGroup className={wrapperClassName}>
       {!!label && (
-        <Label disabled={disabled} optional={optional} htmlFor={id}>
+        <Label disabled={props.disabled} optional={optional} htmlFor={props.id}>
           {label}
         </Label>
       )}
-      <BaseInput theme={theme} disabled={disabled} id={id} {...props} />
+
+      <BaseInput {...restProps} ref={ref} />
 
       {error ? (
         <FormCaption theme="danger">{error}</FormCaption>
@@ -41,6 +34,8 @@ export function TextInput({
       ) : null}
     </ControlGroup>
   )
-}
+})
 
 TextInput.displayName = 'TextInput'
+
+export { TextInput }

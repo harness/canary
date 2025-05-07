@@ -1,8 +1,7 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Checkbox, ListActions, Pagination, SearchBox, SkeletonList } from '@/components'
+import { Button, Checkbox, FormInput, ListActions, Pagination, SkeletonList } from '@/components'
 import { useRouterContext } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 import { ILabelsStore, SandboxLayout, TranslationStore } from '@/views'
 
 import { LabelsListView, LabelsListViewProps } from './components/labels-list-view'
@@ -43,21 +42,14 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
     setGetParentScopeLabels
   } = useLabelsStore()
 
-  const {
-    search: searchInput,
-    handleSearchChange: handleInputChange,
-    handleResetSearch
-  } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
-    searchValue: searchQuery || ''
-  })
+  const handleSearchChange = useCallback((val: string) => setSearchQuery(val.length ? val : null), [setSearchQuery])
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
 
   const handleResetQueryAndPages = () => {
-    handleResetSearch()
+    handleSearchChange('')
     setPage(1)
   }
 
@@ -80,11 +72,10 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
         {(!!spaceLabels.length || isDirtyList) && (
           <ListActions.Root>
             <ListActions.Left>
-              <SearchBox.Root
-                width="full"
-                className="max-w-96"
-                value={searchInput}
-                handleChange={handleInputChange}
+              <FormInput.Search
+                inputContainerClassName="max-w-96"
+                defaultValue={searchQuery || ''}
+                onChange={handleSearchChange}
                 placeholder={t('views:repos.search', 'Search')}
               />
             </ListActions.Left>

@@ -8,12 +8,11 @@ import {
   Checkbox,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormWrapper,
-  Input,
   Link,
   Message,
   MessageTheme,
-  Option,
   Radio,
   Select,
   Spacer,
@@ -103,12 +102,16 @@ export function RepoCreatePage({
   }, [isSuccess, reset])
 
   const onSubmit: SubmitHandler<FormFields> = data => {
+    console.log('data', data)
+
     onFormSubmit(data)
   }
 
   const handleCancel = () => {
     onFormCancel()
   }
+
+  console.log('errors', errors)
 
   return (
     <SandboxLayout.Main>
@@ -131,13 +134,13 @@ export function RepoCreatePage({
         <FormWrapper className="gap-y-7" onSubmit={handleSubmit(onSubmit)}>
           {/* NAME */}
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="name"
               label="Name"
               {...register('name')}
               placeholder="Enter repository name"
-              size="md"
-              error={errors.name?.message?.toString()}
+              theme={errors.name?.message ? 'danger' : 'default'}
+              error={errors.name?.message}
               autoFocus
             />
             {/* DESCRIPTION */}

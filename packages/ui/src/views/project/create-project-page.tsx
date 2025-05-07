@@ -7,6 +7,7 @@ import {
   Card,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormWrapper,
   Icon,
   Input,
@@ -151,23 +152,23 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
         <FormWrapper onSubmit={handleSubmit(onFormSubmit)}>
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="name"
               label={t('views:createProject.form.name', 'Project name')}
               placeholder={t('views:createProject.form.namePlaceholder', 'Enter your project name')}
-              size="md"
               {...register('name', { onChange: handleInputChange })}
-              error={errors.name?.message?.toString()}
+              theme={errors.name?.message ? 'danger' : 'default'}
+              error={errors.name?.message}
               autoFocus
             />
 
-            <Input
+            <FormInput.Text
               id="description"
               {...register('description', { onChange: handleInputChange })}
               label={t('views:createProject.form.description', 'Description')}
               placeholder={t('views:createProject.form.descriptionPlaceholder', 'Enter a description (optional)')}
-              size="md"
-              error={errors.description?.message?.toString()}
+              theme={errors.description?.message ? 'danger' : 'default'}
+              error={errors.description?.message}
             />
           </Fieldset>
 

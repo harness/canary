@@ -39,12 +39,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       wrapperClassName,
       label,
       id,
-      theme,
       disabled,
       optional,
       caption,
       error,
-      placeholder,
       warningMessage,
       defaultValue,
       min = -Infinity,
@@ -241,20 +239,18 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         )}
 
         <BaseInput
-          type="number"
-          ref={setRefs}
           id={id}
           value={value}
+          disabled={disabled}
+          min={min}
+          max={max}
+          type="number"
+          ref={setRefs}
           onChange={handleInputChange}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          theme={theme}
-          disabled={disabled}
           inputMode={allowDecimal ? 'decimal' : 'numeric'}
           step={allowDecimal ? `${stepper}` : '1'}
-          min={min}
-          max={max}
           suffix={
             showStepper ? (
               <div className="flex flex-col">

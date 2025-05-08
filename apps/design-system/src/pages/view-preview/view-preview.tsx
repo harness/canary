@@ -67,6 +67,7 @@ import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
 import RepoViewWrapper from './repo-view-wrapper'
 import RootViewWrapper from './root-view-wrapper'
 import ViewSettings from './view-settings'
+import {ListTemplateView} from "@subjects/templates/list";
 
 export interface ViewPreviewGroup {
   label: string
@@ -531,12 +532,23 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       }
     }
   },
-
   project: {
     label: 'Project',
     items: {
       'project-create': { label: 'Project Create', element: <CreateProjectView /> },
       'project-create-additional': { label: 'Project Create Additional', element: <CreateProjectView isAdditional /> }
+    }
+  },
+  templates: {
+    label: 'Templates',
+    items: {
+      list: {
+        label: 'List',
+        element: (
+            <RepoViewWrapper>
+              <ListTemplateView />
+            </RepoViewWrapper>
+        )},
     }
   }
 }

@@ -29,6 +29,7 @@ export default defineConfig({
         index: resolve(__dirname, 'src/index.ts'),
         context: resolve(__dirname, 'src/context/index.ts'),
         types: resolve(__dirname, 'src/types/index.ts'),
+        templates: resolve(__dirname, 'src/templates/index.ts'),
         'tailwind.config': resolve(__dirname, 'tailwind.config.js')
       },
       formats: ['es']

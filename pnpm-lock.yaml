@@ -74,6 +74,9 @@ importers:
 
   apps/design-system:
     dependencies:
+      '@harnessio/filters':
+        specifier: workspace:*
+        version: link:../../packages/filters
       '@harnessio/forms':
         specifier: workspace:*
         version: link:../../packages/forms

@@ -177,6 +177,7 @@ export default function PullRequestConversationPage() {
   const [showDeleteBranchButton, setShowDeleteBranchButton] = useState(false)
   const [showRestoreBranchButton, setShowRestoreBranchButton] = useState(false)
   const [rebaseErrorMessage, setRebaseErrorMessage] = useState<string | null>(null)
+  const [mergeErrorMessage, setMergeErrorMessage] = useState<string | null>(null)
   const [errorMsg, setErrorMsg] = useState('')
   const [comment, setComment] = useState<string>('')
   const [isScrolledToComment, setIsScrolledToComment] = useState(false)
@@ -530,10 +531,12 @@ export default function PullRequestConversationPage() {
         dry_run: false
         // message: data.commitMessage
       }
-      mergePullReqOp({ body: payload, repo_ref: repoRef, pullreq_number: prId }).then(() => {
-        handleRefetchData()
-        setRuleViolationArr(undefined)
-      })
+      mergePullReqOp({ body: payload, repo_ref: repoRef, pullreq_number: prId })
+        .then(() => {
+          handleRefetchData()
+          setRuleViolationArr(undefined)
+        })
+        .catch(error => setMergeErrorMessage(error.message))
       //todo: add catch to show errors
       // .catch(exception => showError(getErrorMessage(exception)))
     },
@@ -679,6 +682,7 @@ export default function PullRequestConversationPage() {
       },
       prPanelData,
       checks: pullReqChecksDecision?.data?.checks,
+      error: mergeErrorMessage,
       // TODO: TypesPullReq is null for someone: vardan will look into why swagger is doing this
       pullReqMetadata,
       // TODO: add dry merge check into pr context
@@ -707,15 +711,17 @@ export default function PullRequestConversationPage() {
       repoId
     }
   }, [
-    routes,
-    spaceId,
-    repoId,
     handleRebaseBranch,
     handlePrState,
-    handleMerge,
-    changesInfo,
-    pullReqChecksDecision,
+    changesInfo.title,
+    changesInfo.statusMessage,
+    changesInfo.statusIcon,
+    pullReqChecksDecision.checkInfo.title,
+    pullReqChecksDecision.checkInfo.status,
+    pullReqChecksDecision.summaryText,
+    pullReqChecksDecision?.data?.checks,
     prPanelData,
+    mergeErrorMessage,
     pullReqMetadata,
     approvedEvaluations,
     changeReqEvaluations,
@@ -726,14 +732,18 @@ export default function PullRequestConversationPage() {
     codeOwnerPendingEntries,
     codeOwnerApprovalEntries,
     latestCodeOwnerApprovalArr,
+    handleMerge,
     checkboxBypass,
     onRestoreBranch,
     onDeleteBranch,
     showDeleteBranchButton,
     showRestoreBranchButton,
     errorMsg,
-    suggestionsBatch,
-    onCommitSuggestionsBatch
+    suggestionsBatch?.length,
+    onCommitSuggestionsBatch,
+    spaceId,
+    repoId,
+    routes
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {

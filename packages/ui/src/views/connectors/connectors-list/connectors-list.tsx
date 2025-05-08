@@ -12,7 +12,7 @@ import {
   Text,
   Tooltip
 } from '@/components'
-import { timeAgo } from '@utils/utils'
+import { timeAgo } from '@/utils'
 import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 

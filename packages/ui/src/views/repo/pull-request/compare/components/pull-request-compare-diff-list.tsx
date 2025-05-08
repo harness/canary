@@ -12,9 +12,9 @@ import {
   StatusBadge,
   Text
 } from '@/components'
+import { formatNumber } from '@/utils'
 import { DiffModeOptions, InViewDiffRenderer, jumpToFile, TranslationStore, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { formatNumber } from '@utils/utils'
 import { chunk } from 'lodash-es'
 
 import PullRequestDiffViewer from '../../components/pull-request-diff-viewer'

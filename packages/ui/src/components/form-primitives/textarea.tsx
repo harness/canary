@@ -108,9 +108,11 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
         />
 
-        {error && !disabled ? (
-          <FormCaption theme="danger">{error}</FormCaption>
-        ) : caption || disabled ? (
+        {error ? (
+          <FormCaption theme="danger" disabled={disabled}>
+            {error}
+          </FormCaption>
+        ) : caption ? (
           <FormCaption disabled={disabled}>{caption}</FormCaption>
         ) : null}
       </ControlGroup>

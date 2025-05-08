@@ -1,6 +1,6 @@
 import { Icon, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { useRouterContext } from '@/context'
-import { timeAgo } from '@utils/utils'
+import { timeAgo } from '@/utils'
 
 import { SecretListProps } from './types'
 

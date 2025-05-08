@@ -16,7 +16,7 @@ interface RadioItemProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimi
  * @example
  * <Radio.Item value="option1" name="group" label="Option 1" caption="This is option 1" />
  */
-const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, RadioItemProps>(
+const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, Omit<RadioItemProps, 'required'>>(
   ({ className, label, caption, optional, ...props }, ref) => {
     const radioId = props.id || `radio-${Math.random().toString(36).slice(2, 11)}`
 

@@ -83,6 +83,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors }
   } = useForm<GitCommitSchemaType>({
     resolver: zodResolver(createGitCommitSchema(isFileNameRequired)),
@@ -118,8 +119,16 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   const handleNewBranchNameChange = (_e: ChangeEvent<HTMLInputElement>) => {
     setAllStates({ violation: false, bypassable: false, bypassed: false })
   }
+  // Custom handler for dialog close that resets the form first
+  const handleDialogClose = (open: boolean) => {
+    if (!open) { // Dialog is closing (including when ESC key is pressed)
+      reset()
+      onClose()
+    }
+  }
+
   return (
-    <Dialog.Root open={isOpen} onOpenChange={onClose}>
+    <Dialog.Root open={isOpen} onOpenChange={handleDialogClose}>
       <Dialog.Content className="max-w-[576px]">
         <Dialog.Header>
           <Dialog.Title>Commit Changes</Dialog.Title>
@@ -233,7 +242,11 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
         <Dialog.Footer>
           <ButtonGroup>
             <>
-              <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
+              <Button
+                variant="outline"
+                onClick={() => handleDialogClose(false)}
+                disabled={isSubmitting}
+              >
                 Cancel
               </Button>
               {!bypassable ? (

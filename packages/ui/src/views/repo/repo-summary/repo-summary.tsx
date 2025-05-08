@@ -22,6 +22,10 @@ import { RepoEmptyView } from './repo-empty-view'
 interface RoutingProps {
   toRepoFiles: () => string
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toRepoCommits: () => string
+  toRepoBranches: () => string
+  toRepoTags: () => string
+  toRepoPullRequests: () => string
   navigateToProfileKeys: () => void
 }
 
@@ -106,7 +110,8 @@ export function RepoSummaryView({
   branchSelectorRenderer,
   toRepoFileDetails,
   tokenGenerationError,
-  refType = BranchSelectorTab.BRANCHES
+  refType = BranchSelectorTab.BRANCHES,
+  ...props
 }: RepoSummaryViewProps) {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
@@ -268,25 +273,29 @@ export function RepoSummaryView({
                   id: '0',
                   name: t('views:repos.commits', 'Commits'),
                   count: default_branch_commit_count,
-                  iconName: 'tube-sign'
+                  iconName: 'tube-sign',
+                  to: props.toRepoCommits?.() ?? '#'
                 },
                 {
                   id: '1',
                   name: t('views:repos.branches', 'Branches'),
                   count: branch_count,
-                  iconName: 'branch'
+                  iconName: 'branch',
+                  to: props.toRepoBranches?.() ?? '#'
                 },
                 {
                   id: '2',
                   name: t('views:repos.tags', 'Tags'),
                   count: tag_count,
-                  iconName: 'tag'
+                  iconName: 'tag',
+                  to: props.toRepoTags?.() ?? '#'
                 },
                 {
                   id: '3',
                   name: t('views:repos.openPullReq', 'Open pull requests'),
                   count: pull_req_summary?.open_count || 0,
-                  iconName: 'open-pr'
+                  iconName: 'open-pr',
+                  to: props.toRepoPullRequests?.() ?? '#'
                 }
               ]}
               timestamp={formatDate(repository?.created || '')}

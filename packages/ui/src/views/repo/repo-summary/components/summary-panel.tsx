@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Button, CounterBadge, DropdownMenu, Icon, IconProps, Spacer, Tag, Text } from '@/components'
+import { useRouterContext } from '@/context'
 import { TranslationStore } from '@views/repo/repo-list/types'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
@@ -10,6 +11,7 @@ interface DetailItem {
   iconName: 'tube-sign' | 'open-pr' | 'tag' | 'branch' | IconProps['name']
   name: string
   count: number
+  to: string
 }
 
 interface SummaryPanelProps {
@@ -44,6 +46,8 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   const onSave = (description: string) => {
     saveDescription(description)
   }
+
+  const { Link } = useRouterContext()
   return (
     <>
       <div className="flex flex-col items-start">
@@ -87,11 +91,13 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         <div className="flex flex-col gap-3">
           {details &&
             details.map(item => (
-              <div key={item.id} className="flex items-center gap-1.5">
-                <Icon name={item.iconName} size={14} className="fill-none text-cn-foreground-3" />
-                <Text>{item.name}</Text>
-                <CounterBadge>{item.count}</CounterBadge>
-              </div>
+              <Link key={item.id} to={item.to}>
+                <div className="cursor-pointer flex items-center gap-1.5">
+                  <Icon name={item.iconName} size={14} className="fill-none text-cn-foreground-3" />
+                  <Text>{item.name}</Text>
+                  <CounterBadge>{item.count}</CounterBadge>
+                </div>
+              </Link>
             ))}
         </div>
       </div>

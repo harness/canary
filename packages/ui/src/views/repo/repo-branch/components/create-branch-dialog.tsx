@@ -67,8 +67,6 @@ export function CreateBranchDialog({
 
   useEffect(() => {
     if (open) {
-      resetForm()
-
       if (selectedBranchOrTag) {
         setValue('target', selectedBranchOrTag.name, { shouldValidate: true })
       }

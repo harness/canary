@@ -3,7 +3,7 @@ import { ComponentProps, ReactNode, useMemo, useRef, useState } from 'react'
 import { ListActions, SearchBox } from '@/components'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
 import { FilterOptionConfig } from '@components/filters/types'
-import Sort, { SortValue } from '@components/sorts'
+import { Sort, SortValue } from '@components/sorts'
 import ListControlBar from '@views/repo/components/list-control-bar'
 import { TFunction } from 'i18next'
 

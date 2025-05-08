@@ -8,34 +8,88 @@ The Avatar component provides a way to represent an image with a fallback for wh
 
 import { DocsPage } from "../../../components/docs-page";
 
+## Variants
+
+### Image (Default)
+
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-8">
-    <div className="flex flex-col items-center gap-8">
-        <h5>With image</h5>
-        <div className="flex items-center gap-8">
-          <Avatar name="John Doe" src="https://github.com/shadcn.png" />
-          <Avatar name="John Doe" src="https://github.com/shadcn.png" size="lg" />
-          <Avatar name="John Doe" src="https://github.com/shadcn.png" size="sm" />
-        </div>
-        <div className="flex items-center gap-8">
-          <Avatar name="John Doe" src="https://github.com/shadcn.png" rounded />
-          <Avatar name="John Doe" src="https://github.com/shadcn.png" size="lg" rounded />
-          <Avatar name="John Doe" src="https://github.com/shadcn.png" size="sm" rounded />
-        </div>
-    </div>
-    <hr />
-    <div className="flex flex-col items-center gap-8">
-        <h5>With fallback</h5>
-        <div className="flex items-center gap-8">
-          <Avatar name="John Doe" />
-          <Avatar name="John Doe" size="lg" />
-        </div>
-        <div className="flex items-center gap-8">
-          <Avatar name="John Doe" rounded />
-          <Avatar name="John Doe" size="lg" rounded />
-        </div>
-    </div>
+  code={`<div className="flex gap-12">
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Default Size</h6>
+    <Avatar name="John Doe" src="https://github.com/shadcn.png" />
+  </div>
+
+<div className="flex flex-col gap-3 items-center">
+  <h6 className="text-sm">Large Size</h6>
+  <Avatar name="John Doe" src="https://github.com/shadcn.png" size="lg" />
+</div>
+
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Small Size</h6>
+    <Avatar name="John Doe" src="https://github.com/shadcn.png" size="sm" />
+  </div>
+</div>`}
+/>
+
+### Image (Rounded)
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-12">
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Default Size</h6>
+    <Avatar name="John Doe" src="https://github.com/shadcn.png" rounded />
+  </div>
+
+<div className="flex flex-col gap-3 items-center">
+  <h6 className="text-sm">Large Size</h6>
+  <Avatar
+    name="John Doe"
+    src="https://github.com/shadcn.png"
+    size="lg"
+    rounded
+  />
+</div>
+
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Small Size</h6>
+    <Avatar name="John Doe" src="https://github.com/shadcn.png" size="sm" rounded />
+  </div>
+</div>`}
+/>
+
+### Fallback (Default)
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-12">
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Default Size</h6>
+    <Avatar name="John Doe" />
+  </div>
+
+<div className="flex flex-col gap-3 items-center">
+  <h6 className="text-sm">Large Size</h6>
+  <Avatar name="John Doe" size="lg" />
+</div>
+</div>`}
+/>
+
+### Fallback (Rounded)
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-12">
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Default Size</h6>
+    <Avatar name="John Doe" rounded />
+  </div>
+
+<div className="flex flex-col gap-3 items-center">
+  <h6 className="text-sm">Large Size</h6>
+  <Avatar name="John Doe" size="lg" rounded />
+</div>
 </div>`}
 />
 
@@ -73,20 +127,17 @@ import { DocsPage } from "../../../components/docs-page";
 <Avatar name="John Doe" size="sm" rounded />
 ```
 
-## Anatomy
-
-The `Avatar` component is a single component that accepts props to configure its behavior.
+## API Reference
 
 ```typescript jsx
 <Avatar
-  name="John Doe"
-  src="avatarurl.jpg"
-  size="lg"
-  rounded
+  name="John Doe"                     // [REQUIRED] Full name of the subject
+  src="https://github.com/shadcn.png" // [OPTIONAL] Source URL of the image
+  size="lg"                           // [OPTIONAL] Size of the avatar ('default' | 'sm' | 'lg')
+  rounded                             // [OPTIONAL] Whether the avatar is circular
+  className="custom-class"            // [OPTIONAL] Additional class names
 />
 ```
-
-## API Reference
 
 ### Props
 

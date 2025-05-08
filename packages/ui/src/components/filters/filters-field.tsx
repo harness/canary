@@ -81,8 +81,13 @@ const renderFilterValues = <T extends string, V extends FilterValueTypes, Custom
       const checkboxFilter = filter as FilterField<boolean>
       return (
         <Button variant="secondary" theme="default" className="cursor-pointer" asChild>
-          <Label className="text-1 text-cn-foreground-1 flex items-center gap-x-3">
-            <Checkbox optional checked={checkboxFilter.value} onCheckedChange={value => onUpdateFilter(value as V)} />
+          <Label className="gap-x-3">
+            <Checkbox
+              className="pb-1"
+              optional
+              checked={checkboxFilter.value}
+              onCheckedChange={value => onUpdateFilter(value as V)}
+            />
             <span>{filterOption.filterFieldConfig?.label}</span>
           </Label>
         </Button>

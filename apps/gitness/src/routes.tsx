@@ -83,7 +83,8 @@ enum Page {
   Keys = 'Keys',
   Home = 'Home',
   Theme = 'Theme',
-  Search = 'Search'
+  Search = 'Search',
+  Tags = 'Tags'
 }
 
 const labelsRoute = {
@@ -287,7 +288,11 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'tags',
-            element: <RepoTagsListContainer />
+            element: <RepoTagsListContainer />,
+            handle: {
+              breadcrumb: () => <span>{Page.Tags}</span>,
+              routeName: RouteConstants.toRepoTags
+            }
           },
           {
             path: 'pulls',

@@ -49,7 +49,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
         {/* TODO: Design system: Add max-width from tailwind config and add .truncate to span */}
         <Button className="justify-start px-3" variant="outline" size={buttonSize}>
           {!branchPrefix && <Icon className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'branch'} size={14} />}
-          <span className="overflow-x-hidden text-ellipsis whitespace-nowrap">
+          <span className="text-ellipsis whitespace-nowrap">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}

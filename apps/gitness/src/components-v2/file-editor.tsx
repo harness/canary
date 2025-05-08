@@ -158,9 +158,6 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     setView(value)
   }
 
-  console.log('pathToSplit', pathToSplit)
-  console.log('pathPARTS', pathParts)
-
   return (
     <>
       <GitCommitDialog

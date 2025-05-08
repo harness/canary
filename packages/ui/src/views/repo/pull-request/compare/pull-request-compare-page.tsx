@@ -147,6 +147,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors, isValid }
   } = useForm<CompareFormFields>({
     resolver: zodResolver(pullRequestFormSchema),
@@ -258,7 +259,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     'views:pullRequests.compareChangesDiscussChanges',
                     'Discuss and review the changes in this comparison with others.'
                   )}{' '}
-                  <Link to="/">
+                  <Link
+                    to="https://www.harness.io/harness-devops-academy/pull-request"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {t('views:pullRequests.compareChangesDiscussChangesLink', 'Learn about pull requests.')}
                   </Link>
                 </>
@@ -274,6 +279,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               isValid={isValid}
               isLoading={isLoading}
               formRef={formRef}
+              getFormValues={getValues}
               onFormDraftSubmit={onFormDraftSubmit}
               onFormSubmit={onFormSubmit}
               useTranslationStore={useTranslationStore}

@@ -17,10 +17,20 @@ interface ConnectorsPaletteProps {
   setConnectorEntity: (value: ConnectorEntity | null) => void
   onSelectConnector: () => void
   useTranslationStore: () => TranslationStore
+  title?: string
+  subtitle?: string
 }
 
 export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element => {
-  const { connectors, requestClose, setConnectorEntity, onSelectConnector, useTranslationStore } = props
+  const {
+    connectors,
+    requestClose,
+    setConnectorEntity,
+    onSelectConnector,
+    useTranslationStore,
+    title = 'Connector Setup',
+    subtitle = 'Select a Connector'
+  } = props
   const { t: _t } = useTranslationStore()
 
   const [query, setQuery] = useState('')
@@ -34,10 +44,8 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
   return (
     <ConnectorsPaletteLayout.Root>
       <ConnectorsPaletteLayout.Header className="!border-none !p-0">
-        <ConnectorsPaletteLayout.Title className="!mt-0">Connector Setup</ConnectorsPaletteLayout.Title>
-        <ConnectorsPaletteLayout.Subtitle className="text-cn-foreground-2">
-          {'Select a Connector'}
-        </ConnectorsPaletteLayout.Subtitle>
+        <ConnectorsPaletteLayout.Title className="!mt-0">{title}</ConnectorsPaletteLayout.Title>
+        <ConnectorsPaletteLayout.Subtitle className="text-cn-foreground-2">{subtitle}</ConnectorsPaletteLayout.Subtitle>
         <Input
           placeholder={'Search'}
           onChange={value => {

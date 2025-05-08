@@ -1,4 +1,5 @@
 import { FC, MouseEvent, RefObject, useCallback, useState } from 'react'
+import { UseFormGetValues } from 'react-hook-form'
 
 import { Button, Icon, SplitButton } from '@/components'
 import { CompareFormFields, TranslationStore } from '@/views'
@@ -8,6 +9,7 @@ interface PullRequestCompareButtonProps {
   isValid: boolean
   isLoading: boolean
   formRef: RefObject<HTMLFormElement>
+  getFormValues: UseFormGetValues<CompareFormFields>
   onFormSubmit: (data: CompareFormFields) => void
   onFormDraftSubmit: (data: CompareFormFields) => void
   useTranslationStore: () => TranslationStore
@@ -21,7 +23,7 @@ enum PR_TYPE {
 const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   isSubmitted,
   isLoading,
-  formRef,
+  getFormValues,
   onFormDraftSubmit,
   onFormSubmit,
   useTranslationStore
@@ -32,23 +34,18 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   const handleButtonClick = useCallback(
     (e: MouseEvent) => {
       e.preventDefault()
-      if (formRef.current) {
-        const formData = new FormData(formRef.current)
-        const data = {
-          title: formData.get('title'),
-          description: formData.get('description')
-        }
-        switch (prType) {
-          case PR_TYPE.DRAFT:
-            onFormDraftSubmit(data as CompareFormFields)
-            break
-          case PR_TYPE.CREATE:
-            onFormSubmit(data as CompareFormFields)
-            break
-        }
+      const data = getFormValues()
+
+      switch (prType) {
+        case PR_TYPE.DRAFT:
+          onFormDraftSubmit(data)
+          break
+        case PR_TYPE.CREATE:
+          onFormSubmit(data)
+          break
       }
     },
-    [formRef, onFormDraftSubmit, onFormSubmit, prType]
+    [getFormValues, onFormDraftSubmit, onFormSubmit, prType]
   )
 
   const handlePrTypeChange = (value: PR_TYPE) => {

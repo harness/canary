@@ -16,7 +16,7 @@ import {
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { RadioOption, RadioSelect } from '@views/components/RadioSelect'
+import { RadioSelect, RadioSelectOption } from '@views/components/RadioSelect'
 import { z } from 'zod'
 
 import { DelegateConnectivityList } from '../components/delegate-connectivity-list'
@@ -113,7 +113,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
     )
   }, [getMatchedDelegatesCount, delegates, selectedTags])
 
-  const options: Array<RadioOption<DelegateSelectionTypes>> = [
+  const options: Array<RadioSelectOption<DelegateSelectionTypes>> = [
     {
       id: 'any',
       title: 'Any delegate',

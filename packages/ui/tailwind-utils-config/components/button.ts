@@ -78,22 +78,17 @@ function createButtonVariantStyles() {
 
 export default {
   '.cn-button': {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
     transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
     transitionDuration: '0.15s',
     transitionTimingFunction: 'ease-in-out',
     borderRadius: 'var(--cn-btn-default-radius)',
     paddingBlock: 'var(--cn-btn-py-default)',
     paddingInline: 'var(--cn-btn-px-default)',
-    userSelect: 'none',
     height: 'var(--cn-btn-size-default)',
     gap: 'var(--cn-btn-gap-default)',
     border: 'var(--cn-btn-border) solid black',
-    '@apply font-body-single-line-strong': '',
+    '@apply font-body-single-line-strong select-none overflow-hidden inline-flex items-center justify-center whitespace-nowrap':
+      '',
 
     '&:where(.cn-button-split-dropdown)': {
       height: 'var(--cn-btn-size-default)',

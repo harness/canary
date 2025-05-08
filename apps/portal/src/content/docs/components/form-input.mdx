@@ -32,7 +32,7 @@ import React from "react";
   <FormInput.Text 
     theme="warning" 
     label="Input with Warning" 
-    warningMessage="Please double-check this field" 
+    warning="Please double-check this field" 
   />
   <FormInput.Text 
     size="sm" 
@@ -225,7 +225,7 @@ The `NumberInput` component provides a controlled input field specifically desig
   <FormInput.Number 
     id="warning-input" 
     label="With Warning" 
-    warningMessage="This is a high value" 
+    warning="This is a high value" 
     theme="warning"
     defaultValue={95}
   />
@@ -375,7 +375,7 @@ return (
       value: "string",
     },
     {
-      name: "warningMessage",
+      name: "warning",
       description: "Warning message to display",
       required: "false",
       defaultValue: "",

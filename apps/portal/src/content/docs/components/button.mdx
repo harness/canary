@@ -4,147 +4,447 @@ description: Interactive button component for user actions
 beta: true
 ---
 
-The `Button` component allows users to trigger actions, submit forms, and navigate through the application.
-
 import { DocsPage } from "@/components/docs-page";
+
+The `Button` component allows users to trigger actions, submit forms, and navigate through the application. The button component supports various combinations of variants, themes, sizes, and states.
+
+## Default Button
+
+The default button with no specified variant or theme.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-8">
-  {/* Variants */}
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
+  <Button>Default Button</Button>
+</div>`}
+/>
+
+## Primary Button
+
+Primary buttons are the most prominent buttons in the interface.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
+  <Button variant="primary" theme="default">Primary Button</Button>
+
+<hr />
+
+<h4>Primary Button with Themes</h4>
+
+<div className="flex gap-3">
+  <Button variant="primary" theme="default">
+    Default
+  </Button>
+  <Button variant="primary" theme="success">
+    Success
+  </Button>
+  <Button variant="primary" theme="danger">
+    Danger
+  </Button>
+</div>
+
+<hr />
+
+<h4>Primary Button with Sizes</h4>
+
+<div className="flex gap-3 items-end">
+  <Button variant="primary" size="lg">
+    Large
+  </Button>
+  <Button variant="primary">Default</Button>
+  <Button variant="primary" size="sm">
+    Small
+  </Button>
+</div>
+
+<hr />
+
+<h4>Primary Button with States</h4>
+
+<div className="flex flex-col gap-3">
+  <div className="flex gap-3">
+    <Button variant="primary" disabled>
+      Default Disabled
+    </Button>
+    <Button variant="primary" theme="success" disabled>
+      Success Disabled
+    </Button>
+    <Button variant="primary" theme="danger" disabled>
+      Danger Disabled
+    </Button>
+  </div>
+  <div className="flex gap-3">
+    <Button variant="primary" loading>
+      Loading
+    </Button>
+  </div>
+</div>
+</div>`}
+/>
+
+## Secondary Button
+
+Secondary buttons are less prominent than primary buttons.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
+  <Button variant="secondary" theme="default">Secondary Button</Button>
+
+<hr />
+
+<h4>Secondary Button with Sizes</h4>
+
+<div className="flex gap-3 items-end">
+  <Button variant="secondary" size="lg">
+    Large
+  </Button>
+  <Button variant="secondary">Default</Button>
+  <Button variant="secondary" size="sm">
+    Small
+  </Button>
+</div>
+
+<hr />
+
+<h4>Secondary Button with States</h4>
+
+<div className="flex flex-col gap-3">
+  <div className="flex gap-3">
+    <Button variant="secondary" disabled>
+      Default Disabled
+    </Button>
+    <Button variant="secondary" loading>
+      Loading
+    </Button>
+  </div>
+</div>
+</div>`}
+/>
+
+## Outline Button
+
+Outline buttons have a transparent background with a visible border.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
+  <Button variant="outline" theme="default">Outline Button</Button>
+
+<hr />
+
+<h4>Outline Button with Themes</h4>
+
+<div className="flex gap-3">
+  <Button variant="outline" theme="default">
+    Default
+  </Button>
+  <Button variant="outline" theme="success">
+    Success
+  </Button>
+  <Button variant="outline" theme="danger">
+    Danger
+  </Button>
+</div>
+
+<hr />
+
+<h4>Outline Button with Sizes</h4>
+
+<div className="flex gap-3 items-end">
+  <Button variant="outline" size="lg">
+    Large
+  </Button>
+  <Button variant="outline">Default</Button>
+  <Button variant="outline" size="sm">
+    Small
+  </Button>
+</div>
+
+<hr />
+
+<h4>Outline Button with States</h4>
+
+<div className="flex flex-col gap-3">
+  <div className="flex gap-3">
+    <Button variant="outline" disabled>
+      Default Disabled
+    </Button>
+    <Button variant="outline" theme="success" disabled>
+      Success Disabled
+    </Button>
+    <Button variant="outline" theme="danger" disabled>
+      Danger Disabled
+    </Button>
+  </div>
+  <div className="flex gap-3">
+    <Button variant="outline" loading>
+      Loading
+    </Button>
+  </div>
+</div>
+</div>`}
+/>
+
+## Ghost Button
+
+Ghost buttons are minimally styled and blend into the background when not interacted with.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
   <div>
-    <h5 className="text-lg font-semibold mb-3">Variants</h5>
-    <div className="flex flex-wrap items-end gap-3">
-      <Button variant="primary">Primary</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="outline">Outline</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="ai">AI</Button>
-      <Button variant="link">Link</Button>
-    </div>
+    <Button variant="ghost">Ghost Button</Button>
   </div>
 
-{/* Themes */}
+<hr />
 
-<div>
-  <h5 className="text-lg font-semibold mb-3">Themes</h5>
-  <div className="flex flex-wrap items-end gap-3">
-    <Button theme="default">Default</Button>
-    <Button theme="success">Success</Button>
-    <Button theme="danger">Danger</Button>
-  </div>
+<h4>Ghost Button with Themes</h4>
+
+<div className="flex gap-3">
+  <Button variant="ghost" theme="default">
+    Default
+  </Button>
+  <Button variant="ghost" theme="success">
+    Success
+  </Button>
+  <Button variant="ghost" theme="danger">
+    Danger
+  </Button>
 </div>
 
-{/* Sizes */}
+<hr />
 
-<div>
-  <h5 className="text-lg font-semibold mb-3">Sizes</h5>
-  <div className="flex flex-wrap items-end gap-3">
-    <Button size="lg">Large</Button>
-    <Button>Default</Button>
-    <Button size="sm">Small</Button>
-  </div>
+<h4>Ghost Button with Sizes</h4>
+
+<div className="flex gap-3 items-end">
+  <Button variant="ghost">Default</Button>
+  <Button variant="ghost" size="sm">
+    Small
+  </Button>
 </div>
 
-{/* Rounded Buttons */}
+<hr />
 
-<div>
-  <h5 className="text-lg font-semibold mb-3">Rounded Buttons</h5>
-  <div className="flex flex-wrap items-end gap-3">
-    <Button rounded>Rounded</Button>
-    <Button rounded variant="outline">
-      Rounded Outline
-    </Button>
-  </div>
+<h4>Ghost Button with States</h4>
+
+<div className="flex gap-3">
+  <Button variant="ghost" disabled>
+    Disabled
+  </Button>
+  <Button variant="ghost" loading>
+    Loading
+  </Button>
+</div>
+</div>`}
+/>
+
+## AI Button
+
+AI variant buttons are used specifically for AI-related actions.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
+  <Button variant="ai">AI Button</Button>
+
+<hr />
+
+<h4>AI Button with Sizes</h4>
+
+<div className="flex gap-3 items-end">
+  <Button variant="ai" size="lg">
+    Large
+  </Button>
+  <Button variant="ai">Default</Button>
+  <Button variant="ai" size="sm">
+    Small
+  </Button>
 </div>
 
-{/* Loading State */}
+<hr />
 
-<div>
-  <h5 className="text-lg font-semibold mb-3">Loading State</h5>
-  <div className="flex flex-wrap items-end gap-3">
-    <Button loading>Loading</Button>
-    <Button loading variant="primary">
-      Loading Primary
-    </Button>
-  </div>
+<h4>AI Button with States</h4>
+
+<div className="flex gap-3">
+  <Button variant="ai" disabled>
+    Disabled
+  </Button>
+  <Button variant="ai" loading>
+    Loading
+  </Button>
+</div>
+</div>`}
+/>
+
+## Link Button
+
+Link buttons appear as text links and don't accept theme props.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
+  <Button variant="link">Link Button</Button>
+
+<hr />
+
+<h4>Link Button with Sizes</h4>
+
+<div className="flex gap-3 items-end">
+  <Button variant="link">Default</Button>
+  <Button variant="link" size="sm">
+    Small
+  </Button>
 </div>
 
-{/* Disabled Buttons */}
+<hr />
 
-<div>
-  <h5 className="text-lg font-semibold mb-3">Disabled Buttons</h5>
-  <div className="flex flex-wrap items-end gap-3">
-    <Button disabled>Disabled</Button>
-    <Button disabled variant="secondary">
-      Disabled Secondary
-    </Button>
-  </div>
+<h4>Link Button with States</h4>
+
+<div className="flex gap-3">
+  <Button variant="link" disabled>
+    Disabled
+  </Button>
+  <Button variant="link" loading>
+    Loading
+  </Button>
+</div>
+</div>`}
+/>
+
+## Transparent Button
+
+Transparent buttons have no background or border and don't accept theme props.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
+  <Button variant="transparent">Transparent Button</Button>
+
+<hr />
+
+<h4>Transparent Button with Sizes</h4>
+
+<div className="flex gap-3 items-end">
+  <Button variant="transparent">Default</Button>
+  <Button variant="transparent" size="sm">
+    Small
+  </Button>
 </div>
 
-{/* Icon Only Buttons */}
+<hr />
 
-<div>
-  <h5 className="text-lg font-semibold mb-3">Icon Only Buttons</h5>
-  <div className="flex flex-wrap items-end gap-3">
-    <Button iconOnly>
-      <Icon name="plus" />
-    </Button>
-    <Button iconOnly variant="secondary">
-      <Icon name="branch" />
-    </Button>
-  </div>
+<h4>Transparent Button with States</h4>
+
+<div className="flex gap-3">
+  <Button variant="transparent" disabled>
+    Disabled
+  </Button>
+  <Button variant="transparent" loading>
+    Loading
+  </Button>
+</div>
+</div>`}
+/>
+
+## Additional Features
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
+<h4>Icon Only Buttons</h4>
+
+<div className="flex gap-3">
+  <Button iconOnly>
+    <Icon name="plus" />
+  </Button>
+  <Button variant="secondary" iconOnly>
+    <Icon name="branch" />
+  </Button>
+  <Button variant="outline" iconOnly>
+    <Icon name="check" />
+  </Button>
+  <Button variant="transparent" size="sm" iconOnly>
+    <Icon name="cross" />
+  </Button>
 </div>
 
+<hr />
+
+<h4>Rounded Buttons</h4>
+
+<div className="flex gap-3">
+  <Button rounded>Rounded Button</Button>
+  <Button rounded variant="outline">
+    Rounded Outline
+  </Button>
+</div>
 </div>`}
 />
 
 ## Usage
 
-```typescript jsx
+```tsx
 import { Button } from '@harnessio/ui/components'
 
-// Basic usage
+// Default button
 <Button>Default Button</Button>
 
-// Variants
-<Button variant="primary">Primary Button</Button>
+// Primary button with themes
+<Button variant="primary" theme="default">Primary Button</Button>
+<Button variant="primary" theme="success">Success Button</Button>
+<Button variant="primary" theme="danger">Danger Button</Button>
+
+// Secondary button
 <Button variant="secondary">Secondary Button</Button>
+
+// Outline button with themes
 <Button variant="outline">Outline Button</Button>
+<Button variant="outline" theme="success">Success Outline</Button>
+<Button variant="outline" theme="danger">Danger Outline</Button>
+
+// Ghost button
 <Button variant="ghost">Ghost Button</Button>
+
+// AI button (a special variant for AI-related actions)
 <Button variant="ai">AI Button</Button>
+
+// Link button (note: doesn't accept theme prop)
 <Button variant="link">Link Button</Button>
 
-// Themes
-<Button theme="default">Default Theme</Button>
-<Button theme="success">Success Theme</Button>
-<Button theme="danger">Danger Theme</Button>
+// Transparent button (note: doesn't accept theme prop)
+<Button variant="transparent">Transparent Button</Button>
 
-// Sizes
+// Button sizes
 <Button size="lg">Large Button</Button>
 <Button>Default Size Button</Button>
 <Button size="sm">Small Button</Button>
 
-// Rounded
+// Rounded button
 <Button rounded>Rounded Button</Button>
-<Button rounded variant="outline">Rounded Outline Button</Button>
 
-// Icon Only
+// Icon only button
 <Button iconOnly>
   <Icon name="plus" />
 </Button>
-<Button iconOnly variant="secondary">
-  <Icon name="check" />
-</Button>
 
-// Loading
+// Loading state
 <Button loading>Loading Button</Button>
-<Button loading variant="primary">Loading Primary Button</Button>
 
-// Disabled
+// Disabled state
 <Button disabled>Disabled Button</Button>
-<Button disabled variant="secondary">Disabled Secondary Button</Button>
 ```
+
+## Type Constraints
+
+The Button component implements a discriminated union pattern with conditional prop requirements:
+
+- When variant is "ghost" or "link", no theme is allowed
+- When variant is "ai", no theme is needed
+- When variant is "solid", themes "success" and "danger" are not allowed
+
+This ensures type safety and provides proper development-time feedback on invalid component usage.
 
 ## Props
 
@@ -154,12 +454,14 @@ import { Button } from '@harnessio/ui/components'
       name: "variant",
       description: "Visual style of the button.",
       required: false,
-      value: "'primary' | 'secondary' | 'outline' | 'ghost' | 'ai' | 'link'",
+      value:
+        "'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'transparent'",
       defaultValue: "'primary'",
     },
     {
       name: "theme",
-      description: "Color theme of the button.",
+      description:
+        "Color theme of the button. Note: not all variants support themes.",
       required: false,
       value: "'default' | 'success' | 'danger'",
       defaultValue: "'default'",
@@ -168,7 +470,7 @@ import { Button } from '@harnessio/ui/components'
       name: "size",
       description: "Size of the button.",
       required: false,
-      value: "'default' | 'sm'",
+      value: "'default' | 'lg' | 'sm'",
       defaultValue: "'default'",
     },
     {

@@ -11,10 +11,11 @@ const buttonVariants = cva('cn-button', {
     variant: {
       primary: '',
       secondary: '',
-      outline: '',
+      outline: 'cn-button-surface',
       ai: 'cn-button-ai',
       ghost: 'cn-button-ghost',
-      link: 'cn-button-link'
+      link: 'cn-button-link',
+      transparent: 'cn-button-transparent'
     },
     size: {
       default: '',
@@ -60,38 +61,18 @@ const buttonVariants = cva('cn-button', {
       class: 'cn-button-muted cn-button-soft'
     },
 
-    // Outline
+    // Default Outline
     {
       variant: 'outline',
       theme: 'default',
-      class: 'cn-button-muted cn-button-surface'
-    },
-    {
-      variant: 'outline',
-      theme: 'success',
-      class: 'cn-button-success cn-button-surface'
-    },
-    {
-      variant: 'outline',
-      theme: 'danger',
-      class: 'cn-button-danger cn-button-surface'
+      class: 'cn-button-muted'
     },
 
-    // Ghost
+    // Default Ghost
     {
       variant: 'ghost',
       theme: 'default',
-      class: 'cn-button-ghost cn-button-muted'
-    },
-    {
-      variant: 'ghost',
-      theme: 'success',
-      class: 'cn-button-ghost cn-button-success'
-    },
-    {
-      variant: 'ghost',
-      theme: 'danger',
-      class: 'cn-button-ghost cn-button-danger'
+      class: 'cn-button-muted'
     }
   ],
   defaultVariants: {

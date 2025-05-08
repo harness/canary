@@ -1,11 +1,11 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
 /** Variants */
-const variants = ['solid', 'soft', 'surface'] as const
+const variants = ['solid', 'soft', 'surface', 'ghost'] as const
 
-const themes = ['success', 'danger', 'muted', 'primary', 'ai'] as const
+const themes = ['success', 'danger', 'muted', 'primary'] as const
 
-const themeStyleMapper: Record<Exclude<(typeof themes)[number], 'ai'>, string> = {
+const themeStyleMapper: Record<(typeof themes)[number], string> = {
   success: 'green',
   danger: 'red',
   muted: 'gray',
@@ -13,14 +13,11 @@ const themeStyleMapper: Record<Exclude<(typeof themes)[number], 'ai'>, string> =
 }
 
 function createButtonVariantStyles() {
-  // Exclude "ai" theme from themes
-  const aiFilteredThemes = themes.filter(theme => theme !== 'ai')
-
   const combinationStyles: CSSRuleObject = {}
   const separatorStyles: CSSRuleObject = {}
 
   variants.forEach(variant => {
-    aiFilteredThemes.forEach(theme => {
+    themes.forEach(theme => {
       // Skip solid variant for success and danger themes
       if (variant === 'solid' && (theme === 'success' || theme === 'danger')) {
         return
@@ -30,28 +27,45 @@ function createButtonVariantStyles() {
 
       const themeStyle = themeStyleMapper[theme as keyof typeof themeStyleMapper]
 
-      // Default styles
-      style[`backgroundColor`] = `var(--cn-set-${themeStyle}-${variant}-bg)`
-      style[`color`] = `var(--cn-set-${themeStyle}-${variant}-text)`
-      style[`borderColor`] = `var(--cn-set-${themeStyle}-${variant}-border, var(--cn-set-${themeStyle}-${variant}-bg))`
+      /**
+       * Ghost variant has no background and border.
+       * It displays text color as same as surface variant.
+       * Hover and active states are added for ghost variant based on surface variant.
+       */
+      if (variant === 'ghost') {
+        style[`color`] = `var(--cn-set-${themeStyle}-surface-text)`
+        style[`&:hover:not(:disabled, .cn-button-disabled)`] = {
+          backgroundColor: `var(--cn-set-${themeStyle}-surface-bg-hover)`
+        }
 
-      // Hover styles
-      style[`&:hover:not([disabled], .cn-button-disabled)`] = {
-        backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-hover, var(--cn-set-${themeStyle}-${variant}-bg))`
-      }
+        style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)`] = {
+          backgroundColor: `var(--cn-set-${themeStyle}-surface-bg-selected)`
+        }
+      } else {
+        // Default styles
+        style[`backgroundColor`] = `var(--cn-set-${themeStyle}-${variant}-bg)`
+        style[`color`] = `var(--cn-set-${themeStyle}-${variant}-text)`
+        style[`borderColor`] =
+          `var(--cn-set-${themeStyle}-${variant}-border, var(--cn-set-${themeStyle}-${variant}-bg))`
 
-      // Active styles
-      style[`&:active:not([disabled], .cn-button-disabled), &:where(.cn-button-active)`] = {
-        backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`
-      }
+        // Hover styles
+        style[`&:hover:not(:disabled, .cn-button-disabled)`] = {
+          backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-hover, var(--cn-set-${themeStyle}-${variant}-bg))`
+        }
 
-      separatorStyles[`&:where(.cn-button-split-dropdown.cn-button-${variant}.cn-button-${theme})`] = {
-        '&::before': {
-          /**
-           * Some variants don't have separator
-           * Hence adding border color for separator
-           *  */
-          backgroundColor: `var(--cn-set-${themeStyle}-${variant}-separator, var(--cn-set-${themeStyle}-${variant}-border))`
+        // Active styles
+        style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)`] = {
+          backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`
+        }
+
+        separatorStyles[`&:where(.cn-button-split-dropdown.cn-button-${variant}.cn-button-${theme})`] = {
+          '&::before': {
+            /**
+             * Some variants don't have separator
+             * Hence adding border color for separator
+             *  */
+            backgroundColor: `var(--cn-set-${themeStyle}-${variant}-separator, var(--cn-set-${themeStyle}-${variant}-border))`
+          }
         }
       }
 
@@ -81,8 +95,8 @@ export default {
     '@apply font-body-single-line-strong': '',
 
     '&:where(.cn-button-split-dropdown)': {
-      height: 'var(--cn-btn-size-icon)',
-      width: 'var(--cn-btn-size-icon)',
+      height: 'var(--cn-btn-size-default)',
+      width: 'var(--cn-btn-size-default)',
       position: 'relative',
       '@apply rounded-l-none border-l-0': '',
 
@@ -117,10 +131,10 @@ export default {
       backgroundClip: 'padding-box, border-box',
       border: 'var(--cn-badge-border) solid transparent',
 
-      '&:hover:not([disabled], .cn-button-disabled)': {
+      '&:hover:not(:disabled, .cn-button-disabled)': {
         backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg-hover), var(--cn-set-ai-surface-bg-hover)), var(--cn-set-ai-surface-border)`
       },
-      '&:active:not([disabled], .cn-button-disabled), &:where(.cn-button-active)': {
+      '&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)': {
         backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg-selected), var(--cn-set-ai-surface-bg-selected)), var(--cn-set-ai-surface-border)`
       }
     },
@@ -130,10 +144,10 @@ export default {
       border: 'none',
       color: 'var(--cn-set-gray-surface-text)',
 
-      '&:hover:not([disabled], .cn-button-disabled)': {
+      '&:hover:not(:disabled, .cn-button-disabled)': {
         backgroundColor: 'var(--cn-set-gray-surface-bg-hover)'
       },
-      '&:active:not([disabled], .cn-button-disabled)': {
+      '&:active:not(:disabled, .cn-button-disabled)': {
         backgroundColor: 'var(--cn-set-gray-surface-bg-selected)'
       }
     },
@@ -171,50 +185,47 @@ export default {
      * Disabled state is common for all variants.
      * So it is not added with :where
      */
-    '&:where(:disabled), &:where(.cn-button-disabled)': {
-      color: 'var(--cn-state-disabled-text)',
-      borderColor: 'var(--cn-state-disabled-border)',
+    '&:where(:disabled, .cn-button-disabled)': {
       cursor: 'not-allowed',
+      opacity: 'var(--cn-disabled-opacity)'
+    },
 
-      '&:not(.cn-button-ghost, .cn-button-link)': {
-        backgroundColor: 'var(--cn-state-disabled-bg)'
-      },
+    '&:where(.cn-button-link, .cn-button-transparent)': {
+      border: 'none',
 
-      // Disabled split dropdown
-      '&:where(.cn-button-split-dropdown)': {
-        '&::before': {
-          backgroundColor: 'var(--cn-state-disabled-border)'
-        }
+      '&:where(:not(.cn-button-icon-only))': {
+        padding: '0'
       }
     },
 
     // link variant
     '&:where(.cn-button-link)': {
       color: 'var(--cn-comp-link-text)',
-      border: 'none',
-      gap: 'var(--cn-btn-gap-default)',
-      padding: '0',
       '@apply underline-offset-2': '',
-      '&:hover': {
+
+      '&:where(:not(:disabled, .cn-button-disabled):hover)': {
         color: 'var(--cn-comp-link-text-hover)'
       },
 
       // active
-      '&:where(:active)': {
+      '&:where(:not(:disabled, .cn-button-disabled):active)': {
         color: 'var(--cn-comp-link-text)'
       },
 
       // sm size
       '&:where(.cn-button-sm)': {
         gap: 'var(--cn-btn-gap-sm)',
-        padding: '0',
-        '@apply font-caption-single-line-normal': ''
-      },
+        padding: '0'
+      }
+    },
 
-      // disabled
-      '&:where(:disabled), &:where(.cn-button-disabled)': {
-        cursor: 'not-allowed',
-        opacity: 'var(--cn-disabled-opacity)'
+    // transparent variant
+    '&:where(.cn-button-transparent)': {
+      color: 'var(--cn-text-2)',
+      backgroundColor: 'transparent',
+
+      '&:where(:not(:disabled, .cn-button-disabled):hover, :not(:disabled, .cn-button-disabled):active)': {
+        color: 'var(--cn-text-1)'
       }
     }
   }

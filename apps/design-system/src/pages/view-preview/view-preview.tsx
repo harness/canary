@@ -6,6 +6,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-settings-view-wrapper.tsx'
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
+import { ListTemplateView } from '@subjects/templates/list'
 import { ConnectorsDetailsPageWrapper } from '@subjects/views/connectors/connector-details'
 import { ConnectorsPage } from '@subjects/views/connectors/connectors'
 import { ConnectorInputExample } from '@subjects/views/connectors/connectors-input'
@@ -560,12 +561,24 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       }
     }
   },
-
   project: {
     label: 'Project',
     items: {
       'project-create': { label: 'Project Create', element: <CreateProjectView /> },
       'project-create-additional': { label: 'Project Create Additional', element: <CreateProjectView isAdditional /> }
+    }
+  },
+  templates: {
+    label: 'Templates',
+    items: {
+      list: {
+        label: 'List',
+        element: (
+          <RepoViewWrapper>
+            <ListTemplateView />
+          </RepoViewWrapper>
+        )
+      }
     }
   }
 }

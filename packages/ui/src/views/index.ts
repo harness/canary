@@ -10,6 +10,9 @@ export * from './layouts/webhooks-settings-layout'
 export * from './layouts/subheader-wrapper'
 export * from './layouts/main-content-layout'
 
+// components
+export * from './components/RadioSelect'
+
 // Account
 export * from './account'
 

@@ -206,7 +206,6 @@ export function RepoCreatePage({
               <Radio.Root className="mt-6" value={accessValue} onValueChange={handleAccessChange} id="access">
                 <Radio.Item
                   id="access-public"
-                  optional
                   className="mt-px"
                   value="1"
                   label="Public"
@@ -214,7 +213,6 @@ export function RepoCreatePage({
                 />
                 <Radio.Item
                   id="access-private"
-                  optional
                   className="mt-px"
                   value="2"
                   label="Private"

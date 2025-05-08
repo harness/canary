@@ -101,13 +101,11 @@ export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ watch, 
       <Radio.Root value={sslVerificationValue} onValueChange={handleAccessChange} id="insecure">
         <Radio.Item
           id="enable-ssl"
-          optional
           value="1"
           label={t('views:repos.sslVerificationLabel', 'Enable SSL Verification')}
         />
         <Radio.Item
           id="disable-ssl"
-          optional
           value="2"
           label={t('views:repos.disableSslLabel', 'Disable SSL verification')}
           caption={t('views:repos.disableSslDescription', 'Not recommended for production use')}
@@ -132,15 +130,9 @@ export const WebhookTriggerField: FC<WebhookFormFieldProps> = ({ watch, setValue
         {t('views:repos.evenTriggerLabel', 'Which events would you like to use to trigger this webhook?')}
       </Label>
       <Radio.Root value={sslVerificationValue} onValueChange={handleTriggerChange} id="trigger">
-        <Radio.Item
-          id="all-events"
-          optional
-          value="1"
-          label={t('views:repos.evenTriggerAllLabel', 'Send me everything')}
-        />
+        <Radio.Item id="all-events" value="1" label={t('views:repos.evenTriggerAllLabel', 'Send me everything')} />
         <Radio.Item
           id="select-events"
-          optional
           value="2"
           label={t('views:repos.eventTriggerIndividualLabel', 'Let me select individual events')}
         />

@@ -10,8 +10,14 @@ interface SortTriggerProps {
 }
 
 const SortSelect = ({ displayLabel, buttonLabel }: SortTriggerProps) => {
-  const { sortOptions, sortSelections, updateSortSelections } = useSort()
+  const { sortOptions, sortSelections, updateSortSelections, setSortOpen } = useSort()
   const filteredSortOptions = sortOptions.filter(option => !sortSelections.some(sort => sort.type === option.value))
+
+  const onSelectChange = (option: SortOption) => {
+    updateSortSelections([...sortSelections, { type: option.value, direction: Direction.ASC }])
+    setSortOpen(true)
+  }
+
   return (
     <SearchableDropdown<SortOption>
       displayLabel={
@@ -24,7 +30,7 @@ const SortSelect = ({ displayLabel, buttonLabel }: SortTriggerProps) => {
       }
       inputPlaceholder="Select..."
       options={filteredSortOptions}
-      onChange={option => updateSortSelections([...sortSelections, { type: option.value, direction: Direction.ASC }])}
+      onChange={onSelectChange}
       customFooter={
         <button className="w-full font-medium" onClick={() => updateSortSelections([])}>
           {buttonLabel}

@@ -713,13 +713,6 @@ export default function PullRequestConversationPage() {
   }, [
     handleRebaseBranch,
     handlePrState,
-    changesInfo.title,
-    changesInfo.statusMessage,
-    changesInfo.statusIcon,
-    pullReqChecksDecision.checkInfo.title,
-    pullReqChecksDecision.checkInfo.status,
-    pullReqChecksDecision.summaryText,
-    pullReqChecksDecision?.data?.checks,
     prPanelData,
     mergeErrorMessage,
     pullReqMetadata,
@@ -732,18 +725,12 @@ export default function PullRequestConversationPage() {
     codeOwnerPendingEntries,
     codeOwnerApprovalEntries,
     latestCodeOwnerApprovalArr,
-    handleMerge,
     checkboxBypass,
     onRestoreBranch,
     onDeleteBranch,
     showDeleteBranchButton,
     showRestoreBranchButton,
-    errorMsg,
-    suggestionsBatch?.length,
-    onCommitSuggestionsBatch,
-    spaceId,
-    repoId,
-    routes
+    errorMsg
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {

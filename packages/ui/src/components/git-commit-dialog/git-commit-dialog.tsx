@@ -119,9 +119,8 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   const handleNewBranchNameChange = (_e: ChangeEvent<HTMLInputElement>) => {
     setAllStates({ violation: false, bypassable: false, bypassed: false })
   }
-  // Custom handler for dialog close that resets the form first
   const handleDialogClose = (open: boolean) => {
-    if (!open) { // Dialog is closing (including when ESC key is pressed)
+    if (!open) {
       reset()
       onClose()
     }
@@ -242,11 +241,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
         <Dialog.Footer>
           <ButtonGroup>
             <>
-              <Button
-                variant="outline"
-                onClick={() => handleDialogClose(false)}
-                disabled={isSubmitting}
-              >
+              <Button variant="outline" onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
                 Cancel
               </Button>
               {!bypassable ? (

@@ -34,9 +34,8 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   const handleButtonClick = useCallback(
     (e: MouseEvent) => {
       e.preventDefault()
-      // Get form values directly from React Hook Form instead of DOM
       const data = getFormValues()
-      
+
       switch (prType) {
         case PR_TYPE.DRAFT:
           onFormDraftSubmit(data)

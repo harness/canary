@@ -9,7 +9,7 @@ interface SwitchProps extends ComponentPropsWithoutRef<typeof SwitchPrimitives.R
 
 const Switch = forwardRef<
   ElementRef<typeof SwitchPrimitives.Root>,
-  Omit<SwitchProps, 'required'> & {
+  SwitchProps & {
     label?: string
     caption?: string
     optional?: boolean

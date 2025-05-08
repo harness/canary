@@ -131,7 +131,6 @@ const LineTitle: React.FC<LineTitleProps> = ({
       <div className="inline-flex items-center gap-x-6">
         {showViewed ? (
           <Checkbox
-            optional
             checked={viewed}
             onClick={e => {
               e.stopPropagation()

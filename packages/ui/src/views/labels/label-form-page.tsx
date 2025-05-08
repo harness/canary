@@ -228,7 +228,6 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
             <div className="mt-5">
               <Checkbox
                 id="type"
-                optional
                 checked={isDynamicValue}
                 onCheckedChange={handleDynamicChange}
                 label={t('views:labelData.form.allowUsersCheckboxLabel', 'Allow users to add values')}

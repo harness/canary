@@ -84,7 +84,6 @@ const renderFilterValues = <T extends string, V extends FilterValueTypes, Custom
           <Label className="gap-x-3">
             <Checkbox
               className="pb-1"
-              optional
               checked={checkboxFilter.value}
               onCheckedChange={value => onUpdateFilter(value as V)}
             />

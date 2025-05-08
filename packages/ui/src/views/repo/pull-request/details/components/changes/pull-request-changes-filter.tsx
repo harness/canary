@@ -186,7 +186,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           onClick={(e: React.MouseEvent<HTMLDivElement>) => handleCommitCheck(e, item)}
           className="flex cursor-pointer items-center"
         >
-          <Checkbox optional checked={isSelected} label={item.name} />
+          <Checkbox checked={isSelected} label={item.name} />
         </DropdownMenu.Item>
       )
     })

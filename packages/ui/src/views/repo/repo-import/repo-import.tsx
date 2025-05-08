@@ -275,7 +275,6 @@ export function RepoImportPage({
               <Checkbox
                 {...register('authorization')}
                 id="authorization"
-                optional
                 checked={watch('authorization')}
                 onCheckedChange={(checked: boolean) => setValue('authorization', checked)}
                 label="Requires Authorization"
@@ -283,7 +282,6 @@ export function RepoImportPage({
               <Checkbox
                 {...register('pipelines')}
                 id="pipelines"
-                optional
                 checked={watch('pipelines')}
                 onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
                 label="Import Pipelines"

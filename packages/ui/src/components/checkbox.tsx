@@ -20,13 +20,7 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
 
     return (
       <div className={cn('cn-checkbox-wrapper', className)}>
-        <CheckboxPrimitive.Root
-          id={checkboxId}
-          ref={ref}
-          className={cn('cn-checkbox-root')}
-          required={!optional}
-          {...props}
-        >
+        <CheckboxPrimitive.Root id={checkboxId} ref={ref} className={cn('cn-checkbox-root')} {...props}>
           <CheckboxPrimitive.Indicator className="cn-checkbox-indicator">
             {props.checked === 'indeterminate' ? (
               <Icon name="minus" className="cn-checkbox-icon" skipSize />

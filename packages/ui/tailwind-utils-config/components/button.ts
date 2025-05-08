@@ -89,6 +89,7 @@ export default {
     borderRadius: 'var(--cn-btn-default-radius)',
     paddingBlock: 'var(--cn-btn-py-default)',
     paddingInline: 'var(--cn-btn-px-default)',
+    userSelect: 'none',
     height: 'var(--cn-btn-size-default)',
     gap: 'var(--cn-btn-gap-default)',
     border: 'var(--cn-btn-border) solid black',

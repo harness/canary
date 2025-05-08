@@ -4,7 +4,7 @@ import SearchableDropdown from '@components/searchable-dropdown/searchable-dropd
 import { useSort } from './sort-context'
 import { Direction, SortOption } from './type'
 
-interface SortTriggerProps {
+export interface SortTriggerProps {
   displayLabel?: React.ReactNode | string
   buttonLabel?: string
 }

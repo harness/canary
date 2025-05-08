@@ -86,7 +86,7 @@ export default {
     paddingInline: 'var(--cn-btn-px-default)',
     height: 'var(--cn-btn-size-default)',
     gap: 'var(--cn-btn-gap-default)',
-    border: 'var(--cn-btn-border) solid black',
+    border: 'var(--cn-btn-border) solid var(--cn-set-gray-surface-border)',
     '@apply font-body-single-line-strong select-none overflow-hidden inline-flex items-center justify-center whitespace-nowrap':
       '',
 

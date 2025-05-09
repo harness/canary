@@ -121,6 +121,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
   }, [formEntity])
 
   const resolver = useZodValidationResolver(formDefinition ?? { inputs: [] }, {
+    // TODO: remove validationConfig
     validationConfig: {
       requiredMessage: 'Required input',
       requiredMessagePerInput: { ['select']: 'Selection is required' }

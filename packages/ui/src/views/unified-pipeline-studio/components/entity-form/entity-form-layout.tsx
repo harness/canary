@@ -18,7 +18,7 @@ const EntityFormLayout = {
   },
 
   Actions: function Title({ children }: { children: React.ReactNode }) {
-    return <div className="my-3">{children}</div>
+    return <div className="my-3 flex gap-x-3">{children}</div>
   },
 
   Footer: function Footer({ children, className }: { children: React.ReactNode; className?: string }) {

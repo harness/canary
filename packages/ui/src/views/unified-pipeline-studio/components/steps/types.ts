@@ -3,6 +3,7 @@ import { IFormDefinition, IInputDefinition } from '@harnessio/forms'
 import { InputConfigType } from '../form-inputs/types'
 
 // type for form definition
+// TODO: move to common
 export type IInputConfigWithConfig = IInputDefinition & InputConfigType
 
 export const RUN_STEP_IDENTIFIER = 'run'

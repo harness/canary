@@ -37,6 +37,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
     setRightDrawer,
     setAddStepIntention,
     setEditStepIntention,
+    setEditStageIntention,
     requestYamlModifications,
     theme,
     animateOnUpdate,
@@ -106,6 +107,14 @@ const PipelineStudioYamlView = (): JSX.Element => {
     [setEditStepIntention]
   )
 
+  const editStage = useCallback(
+    (path: string) => {
+      setRightDrawer(RightDrawer.StageConfig)
+      setEditStageIntention({ path })
+    },
+    [setEditStepIntention]
+  )
+
   const inlineActionCallback: InlineAction<InlineActionArgsType>['onClick'] = useCallback(
     props => {
       const { data, path } = props
@@ -121,6 +130,13 @@ const PipelineStudioYamlView = (): JSX.Element => {
               break
             case 'delete':
               deleteStep(path)
+              break
+          }
+          break
+        case 'stage':
+          switch (data.action) {
+            case 'edit':
+              editStage(path)
               break
           }
           break

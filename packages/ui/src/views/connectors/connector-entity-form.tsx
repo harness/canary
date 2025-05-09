@@ -75,12 +75,7 @@ export const ConnectorEntityForm = (props: ConnectorEntityFormProps): JSX.Elemen
     return { inputs: [] }
   }, [connector.type, getConnectorDefinition])
 
-  const resolver = useZodValidationResolver(formDefinition, {
-    validationConfig: {
-      requiredMessage: 'Required input',
-      requiredMessagePerInput: { ['select']: 'Selection is required' }
-    }
-  })
+  const resolver = useZodValidationResolver(formDefinition)
 
   useEffect(() => {
     if (intent === EntityIntent.EDIT && connector?.spec) {

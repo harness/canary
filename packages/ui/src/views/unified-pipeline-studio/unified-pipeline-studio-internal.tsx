@@ -3,7 +3,8 @@ import { noop } from 'lodash-es'
 
 import { YamlEditorContextProvider } from '@harnessio/yaml-editor'
 
-import { UnifiedPipelineRightDrawer } from './components/unified-pipeline-right-drawer'
+import { UnifiedPipelineStageConfigDrawer } from './components/unified-pipeline-stage-config-drawer'
+import { UnifiedPipelineStepDrawer } from './components/unified-pipeline-step-drawer'
 import { UnifiedPipelineStudioFooter } from './components/unified-pipeline-studio-footer'
 import PipelineStudioView from './components/unified-pipeline-studio-internal'
 import PipelineStudioLayout from './components/unified-pipeline-studio-layout'
@@ -80,7 +81,8 @@ export const PipelineStudioInternal = (): JSX.Element => {
         />
       </PipelineStudioLayout.Root>
 
-      <UnifiedPipelineRightDrawer />
+      <UnifiedPipelineStepDrawer />
+      <UnifiedPipelineStageConfigDrawer />
     </YamlEditorContextProvider>
   )
 }

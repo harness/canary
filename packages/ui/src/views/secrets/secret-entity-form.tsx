@@ -44,12 +44,7 @@ export const SecretEntityForm = (props: SecretEntityFormProps): JSX.Element => {
     onFormSubmit?.(data)
   }
 
-  const resolver = useZodValidationResolver(secretsFormDefinition ?? { inputs: [] }, {
-    validationConfig: {
-      requiredMessage: 'Required input',
-      requiredMessagePerInput: { ['select']: 'Selection is required' }
-    }
-  })
+  const resolver = useZodValidationResolver(secretsFormDefinition ?? { inputs: [] })
 
   const defaultSecretValues = useMemo(() => {
     return getDefaultValuesFromFormDefinition(secretsFormDefinition ?? { inputs: [] })

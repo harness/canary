@@ -5,7 +5,7 @@ import { RightDrawer } from '../types/right-drawer-types'
 import { UnifiedPipelineStudioEntityForm } from './entity-form/unified-pipeline-studio-entity-form'
 import { UnifiedPipelineStudioStepPalette } from './palette-drawer/uinfied-pipeline-step-palette-drawer'
 
-export const UnifiedPipelineRightDrawer = () => {
+export const UnifiedPipelineStepDrawer = () => {
   const { rightDrawer, setRightDrawer, clearRightDrawerData } = useUnifiedPipelineStudioContext()
 
   return (

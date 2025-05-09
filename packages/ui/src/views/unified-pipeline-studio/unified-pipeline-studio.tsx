@@ -56,6 +56,7 @@ export interface UnifiedPipelineStudioProps {
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
   lastCommitInfo?: lastCommitInfoType
+  stageFormDefinition?: IFormDefinition
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {
@@ -85,7 +86,8 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     onAnimateEnd,
     hideSaveBtn,
     yamlParserOptions,
-    lastCommitInfo
+    lastCommitInfo,
+    stageFormDefinition
   } = props
 
   return (
@@ -117,6 +119,7 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       hideSaveBtn={hideSaveBtn}
       yamlParserOptions={yamlParserOptions}
       lastCommitInfo={lastCommitInfo}
+      stageFormDefinition={stageFormDefinition}
     >
       <UnifiedPipelineStudioNodeContextProvider>
         {/* TODO: Loading... */}

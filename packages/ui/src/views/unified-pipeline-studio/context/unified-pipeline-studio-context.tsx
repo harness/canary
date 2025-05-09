@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 
 import { TranslationStore } from '@views/repo'
 
-import { InputFactory } from '@harnessio/forms'
+import { IFormDefinition, InputFactory } from '@harnessio/forms'
 
 import { ITemplateListStore } from '..'
 import { inputComponentFactory } from '../components/form-inputs/factory/factory'
@@ -44,6 +44,17 @@ export type EditStepIntentionType = {
   path: string
 } | null
 
+// add stage intention
+export type AddStageIntentionType = {
+  path: string
+  position: InlineActionArgsType['position']
+} | null
+
+//  edit stage intention
+export type EditStageIntentionType = {
+  path: string
+} | null
+
 export interface UnifiedPipelineStudioContextProps {
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
@@ -71,6 +82,13 @@ export interface UnifiedPipelineStudioContextProps {
   editStepIntention: EditStepIntentionType
   setEditStepIntention: (editStepIntention: EditStepIntentionType) => void
   clearEditStepIntention: () => void
+  // TODO: merge steps and stage intention
+  addStageIntention: AddStageIntentionType
+  setAddStageIntention: (addStepIntention: AddStageIntentionType) => void
+  clearAddStageIntention: () => void
+  editStageIntention: EditStageIntentionType
+  setEditStageIntention: (editStepIntention: EditStageIntentionType) => void
+  clearEditStageIntention: () => void
   requestYamlModifications: {
     injectInArray: (props: {
       path: string
@@ -90,6 +108,7 @@ export interface UnifiedPipelineStudioContextProps {
   onAnimateEnd?: () => void
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
+  stageFormDefinition?: IFormDefinition
 }
 
 export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioContextProps>({
@@ -117,6 +136,12 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
   editStepIntention: null,
   setEditStepIntention: (_editStepIntention: EditStepIntentionType) => undefined,
   clearEditStepIntention: () => undefined,
+  addStageIntention: null,
+  setAddStageIntention: (_addStepIntention: AddStepIntentionType) => undefined,
+  clearAddStageIntention: () => undefined,
+  editStageIntention: null,
+  setEditStageIntention: (_editStepIntention: EditStepIntentionType) => undefined,
+  clearEditStageIntention: () => undefined,
   requestYamlModifications: {
     injectInArray: (_props: {
       path: string
@@ -168,6 +193,7 @@ export interface UnifiedPipelineStudioProviderProps {
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
   lastCommitInfo?: lastCommitInfoType
+  stageFormDefinition?: IFormDefinition
 }
 
 export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProviderProps> = props => {
@@ -186,8 +212,6 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
   const [addStepIntention, setAddStepIntention] = useState<AddStepIntentionType>(null)
   const [editStepIntention, setEditStepIntention] = useState<EditStepIntentionType>(null)
 
-  const [formEntity, setFormEntity] = useState<FormEntityType | null>(null)
-
   const clearEditStepIntention = useCallback(() => {
     setEditStepIntention(null)
     onSelectedPathChange(undefined)
@@ -196,6 +220,21 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
   const clearAddStepIntention = useCallback(() => {
     setAddStepIntention(null)
   }, [setAddStepIntention])
+
+  const [addStageIntention, setAddStageIntention] = useState<AddStepIntentionType>(null)
+  const [editStageIntention, setEditStageIntention] = useState<EditStepIntentionType>(null)
+
+  const clearEditStageIntention = useCallback(() => {
+    setEditStageIntention(null)
+    onSelectedPathChange(undefined)
+  }, [setEditStepIntention])
+
+  const clearAddStageIntention = useCallback(() => {
+    setAddStageIntention(null)
+  }, [setAddStepIntention])
+
+  // TODO: rename to stepFormEntity
+  const [formEntity, setFormEntity] = useState<FormEntityType | null>(null)
 
   const injectInArray = useCallback(
     (injectData: { path: string; position: 'after' | 'before' | 'in' | undefined; item: unknown }) => {
@@ -225,6 +264,9 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
     clearAddStepIntention()
     clearEditStepIntention()
     setFormEntity(null)
+
+    clearAddStageIntention()
+    clearEditStageIntention()
   }, [clearAddStepIntention, clearEditStepIntention, setFormEntity])
 
   const requestYamlModifications = useMemo(
@@ -255,6 +297,12 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
         editStepIntention,
         setEditStepIntention,
         clearEditStepIntention,
+        addStageIntention,
+        setAddStageIntention,
+        clearAddStageIntention,
+        editStageIntention,
+        setEditStageIntention,
+        clearEditStageIntention,
         yamlRevision,
         onYamlRevisionChange,
         requestYamlModifications,

@@ -29,7 +29,7 @@ type SelectInputProps = InputProps<AnyFormikValue, SelectInputConfig>
 
 function SelectInputInternal(props: SelectInputProps): JSX.Element {
   const { path, input } = props
-  const { label = '', required, description, inputConfig, readonly } = input
+  const { label = '', required, description, inputConfig, readonly, placeholder } = input
 
   const methods = useFormContext()
   const values = methods.watch()
@@ -55,6 +55,7 @@ function SelectInputInternal(props: SelectInputProps): JSX.Element {
         <Select.Root
           disabled={disabled}
           value={field.value}
+          placeholder={placeholder}
           onValueChange={value => {
             field.onChange(value)
           }}

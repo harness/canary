@@ -55,7 +55,7 @@ export const getInlineActionConfig = (
       //   }
       // }
     ]
-  }
+  },
   // {
   //   selectors: [{ type: SelectorType.ContainsPath, basePath: '', paths: [/^inputs$/] }],
   //   actions: [
@@ -112,19 +112,19 @@ export const getInlineActionConfig = (
   //     }
   //   ]
   // },
-  // {
-  //   selectors: [{ type: SelectorType.ContainsPath, basePath: 'pipeline', paths: [/^.stages.\d+$/] }],
-  //   actions: [
-  //     {
-  //       title: 'edit',
-  //       onClick,
-  //       data: {
-  //         action: 'edit',
-  //         entityType: 'stage'
-  //       }
-  //     }
-  //   ]
-  // },
+  {
+    selectors: [{ type: SelectorType.ContainsPath, basePath: 'pipeline', paths: [/^.stages.\d+$/] }],
+    actions: [
+      {
+        title: 'Edit stage',
+        onClick,
+        data: {
+          action: 'edit',
+          entityType: 'stage'
+        }
+      }
+    ]
+  }
   // {
   //   selectors: [{ type: SelectorType.ContainsPath, basePath: 'pipeline', paths: [/.group$/] }],
   //   actions: [

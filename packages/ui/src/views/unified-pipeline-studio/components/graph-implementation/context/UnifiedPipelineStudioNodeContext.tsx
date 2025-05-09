@@ -95,6 +95,8 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
     setRightDrawer,
     setEditStepIntention,
     setAddStepIntention,
+    setEditStageIntention,
+    setAddStageIntention,
     selectedPath,
     onSelectedPathChange
   } = useUnifiedPipelineStudioContext()
@@ -104,18 +106,23 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
   }
 
   const onEditIntention = (nodeData: CommonNodeDataType) => {
-    setRightDrawer(RightDrawer.Form)
-    setEditStepIntention({ path: nodeData.yamlPath })
     onSelectedPathChange(nodeData.yamlPath)
+
+    switch (nodeData.yamlEntityType) {
+      case YamlEntityType.Step:
+        setRightDrawer(RightDrawer.Form)
+        setEditStepIntention({ path: nodeData.yamlPath })
+        break
+      case YamlEntityType.Stage:
+        setRightDrawer(RightDrawer.StageConfig)
+        setEditStageIntention({ path: nodeData.yamlPath })
+        break
+    }
   }
 
   const onSelectIntention = (data: CommonNodeDataType) => {
-    // TODO: why not data instead of path
     onSelectedPathChange(data.yamlPath)
-
-    if (data.yamlEntityType === YamlEntityType.Step) {
-      onEditIntention(data)
-    }
+    onEditIntention(data)
   }
 
   const onAddIntention = (
@@ -157,13 +164,18 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
 
     if (yamlEntityTypeToAdd === YamlEntityType.Stage) {
       // NOTE: if we are adding in the array we have to provide path to children array
+      setRightDrawer(RightDrawer.StageConfig)
+
+      // NOTE: if we are adding in the array we have to provide path to children array
       if (position === 'in' && nodeData.yamlChildrenPath) {
-        requestYamlModifications.injectInArray({ path: nodeData.yamlChildrenPath, position, item: { steps: [] } })
+        setAddStageIntention({ path: nodeData.yamlChildrenPath, position })
       } else {
-        requestYamlModifications.injectInArray({ path: nodeData.yamlPath, position, item: { steps: [] } })
+        setAddStageIntention({ path: nodeData.yamlPath, position })
       }
       return
     }
+
+    // TODO: check if last/default action is add step or we need to wrap this code in the condition.
 
     setRightDrawer(RightDrawer.Collection)
 

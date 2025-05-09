@@ -188,7 +188,10 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="max-w-20 content-center">
                   {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                     <Button variant="secondary" size="sm" asChild>
-                      <Link to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}>
+                      <Link
+                        to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}
+                        onClick={e => e.stopPropagation()}
+                      >
                         <Icon
                           name={
                             getPrState(
@@ -215,10 +218,15 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   <MoreActionsTooltip
                     isInTable
                     actions={[
-                      {
-                        title: t('views:repos.newPullReq', 'New pull request'),
-                        to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || ''
-                      },
+                      // Don't show New Pull Request option for default branch
+                      ...(!branch?.behindAhead?.default
+                        ? [
+                            {
+                              title: t('views:repos.newPullReq', 'New pull request'),
+                              to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || ''
+                            }
+                          ]
+                        : []),
                       // {
                       //   title: t('views:repos.viewRules', 'View Rules'),
                       //   to: toBranchRules?.()

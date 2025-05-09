@@ -47,6 +47,7 @@ export function RepoBranchesListPage() {
 
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [deleteBranchName, setDeleteBranchName] = useState<string | null>(null)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -56,8 +57,10 @@ export function RepoBranchesListPage() {
       limit: 10,
       query: query ?? '',
       order: orderSortDate.DESC,
+      sort: 'date',
       include_commit: true,
-      include_pullreqs: true
+      include_pullreqs: true,
+      include_checks: true
     },
     repo_ref: repoRef
   })
@@ -92,6 +95,7 @@ export function RepoBranchesListPage() {
 
   const handleResetDeleteBranch = () => {
     setDeleteBranchName(null)
+    setIsDeleteDialogOpen(false)
     if (deleteBranchError) {
       resetDeleteBranch()
     }
@@ -99,6 +103,7 @@ export function RepoBranchesListPage() {
 
   const handleSetDeleteBranch = (branchName: string) => {
     setDeleteBranchName(branchName)
+    setIsDeleteDialogOpen(true)
   }
 
   const {
@@ -110,6 +115,7 @@ export function RepoBranchesListPage() {
     { repo_ref: repoRef },
     {
       onSuccess: () => {
+        setIsDeleteDialogOpen(false)
         handleResetDeleteBranch()
         handleInvalidateBranchList()
       }
@@ -130,6 +136,7 @@ export function RepoBranchesListPage() {
   }
 
   useEffect(() => {
+    console.log('headers', headers?.get(PageResponseHeader.xNextPage))
     setPaginationFromHeaders(
       parseInt(headers?.get(PageResponseHeader.xNextPage) || ''),
       parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
@@ -199,7 +206,7 @@ export function RepoBranchesListPage() {
       />
 
       <DeleteAlertDialog
-        open={deleteBranchName !== null}
+        open={isDeleteDialogOpen}
         onClose={handleResetDeleteBranch}
         deleteFn={handleDeleteBranch}
         error={deleteBranchError ? { message: deleteBranchError?.message ?? '' } : null}

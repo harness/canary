@@ -122,12 +122,16 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
             </Table.Cell>
             <Table.Cell>
               <div className="flex items-center gap-2">
-                <Avatar.Root size="4.5" className="rounded-full text-white">
-                  <Avatar.Fallback>{getInitials(tag.tagger?.identity.name || '')}</Avatar.Fallback>
-                </Avatar.Root>
-                <Text color="tertiary" className="block leading-none" truncate>
-                  {tag.tagger?.identity.name}
-                </Text>
+                {tag.tagger?.identity.name ? (
+                  <>
+                    <Avatar.Root size="4.5" className="rounded-full text-white">
+                      <Avatar.Fallback>{getInitials(tag.tagger?.identity.name)}</Avatar.Fallback>
+                    </Avatar.Root>
+                    <Text color="tertiary" className="block leading-none" truncate>
+                      {tag.tagger?.identity.name}
+                    </Text>
+                  </>
+                ) : null}
               </div>
             </Table.Cell>
             <Table.Cell>

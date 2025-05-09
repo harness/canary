@@ -12,9 +12,9 @@ const Switch = forwardRef<
   Omit<SwitchProps, 'required'> & {
     label?: string
     caption?: string
-    optional?: boolean
+    showOptionalLabel?: boolean
   }
->(({ className, label, caption, optional, ...props }, ref) => {
+>(({ className, label, caption, showOptionalLabel: optional, ...props }, ref) => {
   const switchId = `switch-${Math.random().toString(36).slice(2, 11)}`
   return (
     <div className="cn-switch-wrapper">

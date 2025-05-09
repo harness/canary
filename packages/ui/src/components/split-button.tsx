@@ -100,7 +100,12 @@ export const SplitButton = <T extends string>({
                   >
                     <Option
                       control={
-                        <Radio.Item className="mt-px" value={String(option.value)} id={String(option.value)} optional />
+                        <Radio.Item
+                          className="mt-px"
+                          value={String(option.value)}
+                          id={String(option.value)}
+                          showOptionalLabel
+                        />
                       }
                       id={String(option.value)}
                       label={option.label}

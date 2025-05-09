@@ -15,7 +15,7 @@ interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxPrimitiv
  * Built on top of Radix UI Checkbox primitive with additional styling.
  */
 const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<CheckboxProps, 'required'>>(
-  ({ className, label, caption, showOptionalLabel: optional, ...props }, ref) => {
+  ({ className, label, caption, showOptionalLabel, ...props }, ref) => {
     const checkboxId = props.id || `checkbox-${Math.random().toString(36).slice(2, 11)}`
 
     return (
@@ -34,7 +34,7 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
           <div className="cn-checkbox-label-wrapper">
             <Label
               htmlFor={checkboxId}
-              optional={optional}
+              optional={showOptionalLabel}
               className={`cn-checkbox-label ${props.disabled ? 'disabled' : ''}`}
             >
               {label}

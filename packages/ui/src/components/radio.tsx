@@ -17,7 +17,7 @@ interface RadioItemProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimi
  * <Radio.Item value="option1" name="group" label="Option 1" caption="This is option 1" />
  */
 const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, Omit<RadioItemProps, 'required'>>(
-  ({ className, label, caption, showOptionalLabel: optional, ...props }, ref) => {
+  ({ className, label, caption, showOptionalLabel, ...props }, ref) => {
     const radioId = props.id || `radio-${Math.random().toString(36).slice(2, 11)}`
 
     return (
@@ -30,7 +30,7 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, Omit<R
           <div className="cn-radio-label-wrapper">
             <Label
               htmlFor={radioId}
-              optional={optional}
+              optional={showOptionalLabel}
               className={`cn-radio-label ${props.disabled ? 'disabled' : ''}`}
             >
               {label}

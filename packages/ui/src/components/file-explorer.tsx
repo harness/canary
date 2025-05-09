@@ -9,27 +9,19 @@ interface FolderItemProps {
   value?: string
   isActive?: boolean
   content?: ReactNode
-  chevronClassName?: string
   link: string
 }
 
-function FolderItem({ children, value = '', isActive, content, chevronClassName, link }: FolderItemProps) {
+function FolderItem({ children, value = '', isActive, content, link }: FolderItemProps) {
   const { Link } = useRouterContext()
   return (
     <Accordion.Item value={value} className="border-none">
       <Accordion.Trigger
         className={cn(
           `relative w-full p-0 pr-1.5
-          before:absolute before:z-[-1] before:top-0 before:-left-1.5 before:right-0 before:h-full before:rounded`,
-          {
-            'before:bg-cn-background-hover': isActive
-          }
+          before:absolute before:z-[-1] before:top-0 before:-left-1.5 before:right-0 before:h-full before:rounded  [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0`,
+          { 'before:bg-cn-background-hover': isActive }
         )}
-        leftChevron
-        rotateChevron
-        chevronClassName={
-          chevronClassName || 'text-icons-9 group-hover:text-icons-2 group-data-[state=open]:text-icons-2'
-        }
       >
         <div
           className={cn(
@@ -108,7 +100,7 @@ interface RootProps {
 
 function Root({ children, onValueChange, value }: RootProps) {
   return (
-    <Accordion.Root type="multiple" className="w-full" onValueChange={onValueChange} value={value}>
+    <Accordion.Root type="multiple" className="w-full" onValueChange={onValueChange} value={value} withLeftIndicator>
       {children}
     </Accordion.Root>
   )

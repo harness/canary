@@ -85,9 +85,9 @@ const CommitsAccordion: FC<{
   return (
     <StackedList.Root>
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
-        <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle}>
-          <Accordion.Item isLast value={header?.text ?? ''}>
-            <Accordion.Trigger leftChevron className="px-4 py-[9px] text-left">
+        <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle} withLeftIndicator>
+          <Accordion.Item value={header?.text ?? ''} className="border-none">
+            <Accordion.Trigger className="px-4 py-[9px] text-left">
               <StackedList.Field title={<LineTitle useTranslationStore={useTranslationStore} header={header} />} />
             </Accordion.Trigger>
             <Accordion.Content className="pb-0">

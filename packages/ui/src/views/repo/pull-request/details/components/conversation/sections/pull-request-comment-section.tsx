@@ -11,11 +11,7 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
 
   return (
     <Accordion.Item value="item-2">
-      <Accordion.Trigger
-        className="py-3 text-left [&>svg]:-rotate-0 [&>svg]:data-[state=open]:-rotate-180"
-        chevronClassName="text-icons-3 self-start mt-1"
-        hideChevron
-      >
+      <Accordion.Trigger className="py-3 text-left [&>.cn-accordion-trigger-indicator]:hidden">
         <StackedList.Field
           className="flex gap-y-1"
           title={

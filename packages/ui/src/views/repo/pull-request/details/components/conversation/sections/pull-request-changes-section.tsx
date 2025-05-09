@@ -219,9 +219,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   return (
     <Accordion.Item value={ACCORDION_VALUE}>
       <Accordion.Trigger
-        className="py-3 text-left [&>svg]:-rotate-0 [&>svg]:data-[state=open]:-rotate-180"
-        chevronClassName="text-icons-3 self-start mt-1"
-        hideChevron={!viewBtn}
+        className={cn('py-3 text-left', { '[&>.cn-accordion-trigger-indicator]:hidden': !viewBtn })}
         onClick={e => {
           if (!viewBtn) e.preventDefault()
         }}

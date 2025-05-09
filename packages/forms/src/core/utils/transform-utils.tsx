@@ -1,4 +1,4 @@
-import { cloneDeep, get, pick, set, unset } from 'lodash-es'
+import { cloneDeep, get, isArray, pick, set, unset } from 'lodash-es'
 
 import { IFormDefinition, IInputDefinition } from '../../types/types'
 
@@ -16,11 +16,17 @@ export function inputTransformValues(values: Record<string, any>, transformerIte
   const retValues = cloneDeep(values)
   transformerItems.forEach(transformItem => {
     if (transformItem.inputTransform) {
+      const inputTransform = isArray(transformItem.inputTransform)
+        ? transformItem.inputTransform
+        : [transformItem.inputTransform]
+
       const rawValue = get(retValues, transformItem.path)
-      const transformedObj = transformItem.inputTransform(rawValue, retValues)
-      if (transformedObj) {
-        set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
-      }
+      inputTransform.forEach(inTransform => {
+        const transformedObj = inTransform(rawValue, retValues)
+        if (transformedObj) {
+          set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
+        }
+      })
     }
   })
   return retValues
@@ -31,11 +37,17 @@ export function outputTransformValues(values: Record<string, any>, transformerIt
   const retValues = cloneDeep(values)
   transformerItems.forEach(transformItem => {
     if (transformItem.outputTransform) {
+      const outputTransform = isArray(transformItem.outputTransform)
+        ? transformItem.outputTransform
+        : [transformItem.outputTransform]
+
       const rawValue = get(retValues, transformItem.path)
-      const transformedObj = transformItem.outputTransform(rawValue, retValues)
-      if (transformedObj) {
-        set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
-      }
+      outputTransform.forEach(outTransform => {
+        const transformedObj = outTransform(rawValue, retValues)
+        if (transformedObj) {
+          set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
+        }
+      })
     }
   })
   return retValues

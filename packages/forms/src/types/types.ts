@@ -9,6 +9,9 @@ export interface IFormDefinition<M = unknown> {
   inputs: IInputDefinition[]
 }
 
+export type IInputTransformerFunc = (value: any, values: any) => { value: any; path?: string } | undefined
+export type IOutputTransformerFunc = (value: any, values: any) => { value: any; path?: string } | undefined
+
 export interface IInputDefinition<T = unknown> {
   /**
    * Input type
@@ -79,8 +82,8 @@ export interface IInputDefinition<T = unknown> {
   after?: JSX.Element | string
   description?: string
 
-  inputTransform?: (value: any, values: any) => { value: any; path?: string } | undefined
-  outputTransform?: (value: any, values: any) => { value: any; path?: string } | undefined
+  inputTransform?: IInputTransformerFunc | IInputTransformerFunc[] | undefined
+  outputTransform?: IOutputTransformerFunc | IOutputTransformerFunc[] | undefined
 
   autofocus?: boolean
 }

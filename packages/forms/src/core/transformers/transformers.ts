@@ -1,6 +1,8 @@
 import { get, isArray, isEmpty, isObject, isString, isUndefined, omitBy } from 'lodash-es'
 
-export function objectToArrayInputTransformer() {
+import { IInputTransformerFunc, IOutputTransformerFunc } from '../../types'
+
+export function objectToArrayInputTransformer(): IInputTransformerFunc {
   return function (value: Record<string, unknown>, _values: Record<string, unknown>) {
     if (typeof value === 'undefined') return undefined
     if (!value) return { value }
@@ -13,7 +15,7 @@ export function objectToArrayInputTransformer() {
   }
 }
 
-export function arrayToObjectOutputTransformer(options?: { unsetIfEmpty?: boolean }) {
+export function arrayToObjectOutputTransformer(options?: { unsetIfEmpty?: boolean }): IOutputTransformerFunc {
   return function (value: { key: string; value: unknown }[], _values: Record<string, unknown>) {
     if (typeof value === 'undefined') return undefined
     if (!value) return { value }
@@ -32,7 +34,10 @@ export function arrayToObjectOutputTransformer(options?: { unsetIfEmpty?: boolea
   }
 }
 
-export function unsetEmptyArrayOutputTransformer() {
+/**
+ * unset property if it contains empty array
+ */
+export function unsetEmptyArrayOutputTransformer(): IOutputTransformerFunc {
   return function (value: unknown, _values: Record<string, unknown>) {
     if (typeof value === 'undefined') return undefined
 
@@ -44,22 +49,31 @@ export function unsetEmptyArrayOutputTransformer() {
   }
 }
 
-export function unsetEmptyObjectOutputTransformer() {
-  return function (value: unknown, _values: Record<string, unknown>) {
+/**
+ * unset property if it contains empty object
+ * @param path - If path is passed it will unset empty object on the path
+ */
+export function unsetEmptyObjectOutputTransformer(path?: string): IOutputTransformerFunc {
+  return function (inputValue: any, values: Record<string, any>) {
+    const value = path ? get(values, path) : inputValue
+
     if (typeof value === 'undefined') return undefined
 
     if (isObject(value)) {
       const cleanObj = omitBy(value, isUndefined)
       if (isEmpty(cleanObj)) {
-        return { value: undefined }
+        return { value: undefined, path }
       }
     }
 
-    return { value }
+    return { value, path }
   }
 }
 
-export function unsetEmptyStringOutputTransformer() {
+/**
+ * unset property if it contains empty string
+ */
+export function unsetEmptyStringOutputTransformer(): IOutputTransformerFunc {
   return function (value: unknown, _values: Record<string, unknown>) {
     if (typeof value === 'undefined') return undefined
 
@@ -71,7 +85,7 @@ export function unsetEmptyStringOutputTransformer() {
   }
 }
 
-export function shorthandObjectInputTransformer(parentPath: string) {
+export function shorthandObjectInputTransformer(parentPath: string): IInputTransformerFunc {
   return function (value: unknown, values: Record<string, unknown>) {
     const parentStr = get(values, parentPath)
 
@@ -83,7 +97,7 @@ export function shorthandObjectInputTransformer(parentPath: string) {
   }
 }
 
-export function shorthandObjectOutputTransformer(parentPath: string) {
+export function shorthandObjectOutputTransformer(parentPath: string): IOutputTransformerFunc {
   return function (value: unknown, values: Record<string, unknown>) {
     if (typeof value === 'undefined') return undefined
     if (!value) return { value }
@@ -101,7 +115,7 @@ export function shorthandObjectOutputTransformer(parentPath: string) {
   }
 }
 
-export function shorthandArrayInputTransformer(parentPath: string) {
+export function shorthandArrayInputTransformer(parentPath: string): IInputTransformerFunc {
   return function (value: unknown, values: Record<string, unknown>) {
     if (typeof value === 'undefined') return undefined
 
@@ -115,7 +129,10 @@ export function shorthandArrayInputTransformer(parentPath: string) {
   }
 }
 
-export function shorthandArrayOutputTransformer(parentPath: string, options?: { unsetIfEmpty?: boolean }) {
+export function shorthandArrayOutputTransformer(
+  parentPath: string,
+  options?: { unsetIfEmpty?: boolean }
+): IOutputTransformerFunc {
   return function (value: unknown, values: Record<string, unknown>) {
     if (typeof value === 'undefined') return undefined
     if (!value) return { value }

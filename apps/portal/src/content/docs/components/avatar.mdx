@@ -14,17 +14,17 @@ import { DocsPage } from "../../../components/docs-page";
     <div>
       <h6 className="font-semibold mb-2 text-center">Image (Default)</h6>
       <div className="flex items-center justify-center gap-6">
-        <Avatar name="John Doe" src="https://github.com/avatar-image.png" size="sm" />
-        <Avatar name="John Doe" src="https://github.com/avatar-image.png" />
-        <Avatar name="John Doe" src="https://github.com/avatar-image.png" size="lg" />
+        <Avatar name="John Doe" src="/avatar.png" size="sm" />
+        <Avatar name="John Doe" src="/avatar.png" />
+        <Avatar name="John Doe" src="/avatar.png" size="lg" />
       </div>
     </div>
     <div>
       <h6 className="font-semibold mb-2 text-center">Image (Rounded)</h6>
       <div className="flex items-center justify-center gap-6">
-        <Avatar name="John Doe" src="https://github.com/avatar-image.png" size="sm" rounded />
-        <Avatar name="John Doe" src="https://github.com/avatar-image.png" rounded />
-        <Avatar name="John Doe" src="https://github.com/avatar-image.png" size="lg" rounded />
+        <Avatar name="John Doe" src="/avatar.png" size="sm" rounded />
+        <Avatar name="John Doe" src="/avatar.png" rounded />
+        <Avatar name="John Doe" src="/avatar.png" size="lg" rounded />
       </div>
     </div>
     <div>
@@ -66,14 +66,14 @@ import { DocsPage } from "../../../components/docs-page";
 
 ```typescript jsx
 // Image (Default)
-<Avatar name="John Doe" src="https://github.com/avatar-image.png" />
-<Avatar name="John Doe" src="https://github.com/avatar-image.png" size="sm" />
-<Avatar name="John Doe" src="https://github.com/avatar-image.png" size="lg" />
+<Avatar name="John Doe" src="/avatar.png" />
+<Avatar name="John Doe" src="/avatar.png" size="sm" />
+<Avatar name="John Doe" src="/avatar.png" size="lg" />
 
 // Image (Rounded)
-<Avatar name="John Doe" src="https://github.com/avatar-image.png" rounded />
-<Avatar name="John Doe" src="https://github.com/avatar-image.png" size="sm" rounded />
-<Avatar name="John Doe" src="https://github.com/avatar-image.png" size="lg" rounded />
+<Avatar name="John Doe" src="/avatar.png" rounded />
+<Avatar name="John Doe" src="/avatar.png" size="sm" rounded />
+<Avatar name="John Doe" src="/avatar.png" size="lg" rounded />
 
 // Initials (Default)
 <Avatar name="John Doe" />
@@ -103,9 +103,9 @@ The `Avatar` component supports three sizes: `sm`, `default`, and `lg`.
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex items-center gap-6">
-    <Avatar name="John Doe" src="https://github.com/avatar-image.png" size="sm" />
-    <Avatar name="John Doe" src="https://github.com/avatar-image.png" />
-    <Avatar name="John Doe" src="https://github.com/avatar-image.png" size="lg" />
+    <Avatar name="John Doe" src="/avatar.png" size="sm" />
+    <Avatar name="John Doe" src="/avatar.png" />
+    <Avatar name="John Doe" src="/avatar.png" size="lg" />
 </div>`}
 />
 
@@ -126,7 +126,7 @@ The `Avatar` component supports two visual variants: `default` and `rounded`.
 ```typescript jsx
 <Avatar
   name="John Doe"                     // [OPTIONAL] Full name of the subject
-  src="https://github.com/avatar-image.png" // [OPTIONAL] Source URL of the image
+  src="/avatar.png" // [OPTIONAL] Source URL of the image
   size="lg"                           // [OPTIONAL] Size of the avatar ('default' | 'sm' | 'lg')
   rounded                             // [OPTIONAL] Whether the avatar is circular
 />

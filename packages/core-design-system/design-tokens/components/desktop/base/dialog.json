@@ -1,0 +1,38 @@
+{
+  "dialog": {
+    "sm": {
+      "$type": "sizing",
+      "$value": "460"
+    },
+    "md": {
+      "$type": "sizing",
+      "$value": "560"
+    },
+    "lg": {
+      "$type": "sizing",
+      "$value": "660"
+    },
+    "container": {
+      "$type": "spacing",
+      "$value": "{spacing.5}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.4}"
+    },
+    "footer": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      }
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.4}"
+    }
+  }
+}

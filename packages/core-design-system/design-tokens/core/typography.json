@@ -285,6 +285,11 @@
       "$type": "fontSizes",
       "$value": "8rem",
       "$description": "128px"
+    },
+    "-1": {
+      "$type": "fontSizes",
+      "$value": "0.5rem",
+      "$description": "8px"
     }
   },
   "lineHeight": {

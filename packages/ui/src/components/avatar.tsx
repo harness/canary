@@ -41,10 +41,10 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
         {src ? (
           <>
             <AvatarPrimitive.Image src={src} alt={name || ''} className="cn-avatar-image" />
-            <AvatarFallback>{initials || <AvatarIcon />}</AvatarFallback>
+            <AvatarFallback>{initials || <Icon name="avatar" className="cn-avatar-icon" />}</AvatarFallback>
           </>
         ) : (
-          <AvatarFallback delayMs={0}>{initials || <AvatarIcon />}</AvatarFallback>
+          <AvatarFallback delayMs={0}>{initials || <Icon name="avatar" className="cn-avatar-icon" />}</AvatarFallback>
         )}
       </AvatarPrimitive.Root>
     )
@@ -60,7 +60,5 @@ const AvatarFallback = ({ children, ...props }: AvatarFallbackProps) => (
     {children}
   </AvatarPrimitive.Fallback>
 )
-
-const AvatarIcon = () => <Icon name="avatar" className="cn-avatar-icon" />
 
 export { Avatar }

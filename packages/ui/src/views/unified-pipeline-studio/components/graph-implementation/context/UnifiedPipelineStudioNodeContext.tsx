@@ -83,12 +83,13 @@ export interface UnifiedPipelineStudioNodeContextProviderProps<T = unknown> {
   globalData?: T
   serialContainerConfig?: Partial<SerialContainerConfigType>
   parallelContainerConfig?: Partial<ParallelContainerConfigType>
+  graph?: 'stages' | 'steps' | 'onecanvas'
 }
 
 export const UnifiedPipelineStudioNodeContextProvider: React.FC<
   UnifiedPipelineStudioNodeContextProviderProps
 > = props => {
-  const { children, globalData, serialContainerConfig, parallelContainerConfig } = props
+  const { children, globalData, serialContainerConfig, parallelContainerConfig, graph = 'onecanvas' } = props
 
   const {
     requestYamlModifications,
@@ -106,12 +107,12 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
   const onEditIntention = (nodeData: CommonNodeDataType) => {
     setRightDrawer(RightDrawer.Form)
     setEditStepIntention({ path: nodeData.yamlPath })
-    onSelectedPathChange(nodeData.yamlPath)
+    onSelectedPathChange({ ...selectedPath, [graph]: nodeData.yamlPath })
   }
 
   const onSelectIntention = (data: CommonNodeDataType) => {
     // TODO: why not data instead of path
-    onSelectedPathChange(data.yamlPath)
+    onSelectedPathChange({ ...selectedPath, [graph]: data.yamlPath })
 
     if (data.yamlEntityType === YamlEntityType.Step) {
       onEditIntention(data)
@@ -178,7 +179,14 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
   const onRevealInYaml = () => {}
 
   const [contextMenuData, setContextMenuData] = useState<ContextMenuData | undefined>(undefined)
-  const [selectionPath, setSelectionPath] = useState<string | undefined>(undefined)
+  const [selectionPath, setSelectionPath] = useState<
+    | {
+        stages?: string | undefined
+        steps?: string | undefined
+        onecanvas?: string | undefined
+      }
+    | undefined
+  >(undefined)
 
   const showContextMenu = ({
     contextMenu,
@@ -221,8 +229,10 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
         contextMenuData,
         showContextMenu,
         hideContextMenu,
-        setSelectionPath,
-        selectionPath,
+        selectionPath: selectionPath?.[graph],
+        setSelectionPath: (path: string) => {
+          setSelectionPath({ ...selectionPath, [graph]: path })
+        },
         onSelectIntention,
         onAddIntention,
         onEditIntention,

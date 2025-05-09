@@ -45,8 +45,16 @@ export interface UnifiedPipelineStudioProps {
   loadInProgress?: boolean
   inputComponentFactory?: InputFactory
   stepsDefinitions?: AnyStepDefinition[]
-  selectedPath?: string
-  onSelectedPathChange: (path: string) => void
+  selectedPath?: {
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }
+  onSelectedPathChange: (props: {
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }) => void
   errors: YamlErrorDataType
   onErrorsChange?: (errors: YamlErrorDataType) => void
   panelOpen: boolean
@@ -56,6 +64,7 @@ export interface UnifiedPipelineStudioProps {
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
   lastCommitInfo?: lastCommitInfoType
+  enableSplitView?: boolean
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {
@@ -85,7 +94,8 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     onAnimateEnd,
     hideSaveBtn,
     yamlParserOptions,
-    lastCommitInfo
+    lastCommitInfo,
+    enableSplitView
   } = props
 
   return (
@@ -117,12 +127,13 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       hideSaveBtn={hideSaveBtn}
       yamlParserOptions={yamlParserOptions}
       lastCommitInfo={lastCommitInfo}
+      enableSplitView={enableSplitView}
     >
-      <UnifiedPipelineStudioNodeContextProvider>
-        {/* TODO: Loading... */}
-        {loadInProgress ? 'Loading...' : <PipelineStudioInternal />}
-        <PipelineStudioNodeContextMenu />
-      </UnifiedPipelineStudioNodeContextProvider>
+      {/* <UnifiedPipelineStudioNodeContextProvider> */}
+      {/* TODO: Loading... */}
+      {loadInProgress ? 'Loading...' : <PipelineStudioInternal />}
+      {/* <PipelineStudioNodeContextMenu />
+      </UnifiedPipelineStudioNodeContextProvider> */}
     </UnifiedPipelineStudioProvider>
   )
 }

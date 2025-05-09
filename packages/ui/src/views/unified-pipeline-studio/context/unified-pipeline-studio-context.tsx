@@ -53,8 +53,16 @@ export interface UnifiedPipelineStudioContextProps {
   saveInProgress?: boolean
   isYamlDirty: boolean
   theme?: 'light' | 'dark' | string
-  selectedPath?: string
-  onSelectedPathChange: (path: string) => void
+  selectedPath?: {
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }
+  onSelectedPathChange: (props: {
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }) => void
   errors: YamlErrorDataType
   lastCommitInfo?: lastCommitInfoType
   onErrorsChange?: (errors: YamlErrorDataType) => void
@@ -70,7 +78,7 @@ export interface UnifiedPipelineStudioContextProps {
   clearAddStepIntention: () => void
   editStepIntention: EditStepIntentionType
   setEditStepIntention: (editStepIntention: EditStepIntentionType) => void
-  clearEditStepIntention: () => void
+  clearEditStepIntention: (graph: 'stages' | 'steps' | 'onecanvas') => void
   requestYamlModifications: {
     injectInArray: (props: {
       path: string
@@ -90,6 +98,9 @@ export interface UnifiedPipelineStudioContextProps {
   onAnimateEnd?: () => void
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
+  splitView?: boolean
+  setSplitView?: (splitView: boolean) => void
+  enableSplitView?: boolean
 }
 
 export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioContextProps>({
@@ -101,7 +112,11 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
   isYamlDirty: false,
   saveInProgress: false,
   selectedPath: undefined,
-  onSelectedPathChange: (_path: string) => undefined,
+  onSelectedPathChange: (props: {
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }) => undefined,
   errors: { isYamlValid: true, problems: [], problemsCount: { all: 0, error: 0, info: 0, warning: 0 } },
   onErrorsChange: (_errors: YamlErrorDataType) => undefined,
   panelOpen: false,
@@ -116,7 +131,7 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
   clearAddStepIntention: () => undefined,
   editStepIntention: null,
   setEditStepIntention: (_editStepIntention: EditStepIntentionType) => undefined,
-  clearEditStepIntention: () => undefined,
+  clearEditStepIntention: (graph: 'stages' | 'steps' | 'onecanvas') => undefined,
   requestYamlModifications: {
     injectInArray: (_props: {
       path: string
@@ -151,8 +166,16 @@ export interface UnifiedPipelineStudioProviderProps {
   saveInProgress?: boolean
   isYamlDirty: boolean
   theme?: 'light' | 'dark' | string
-  selectedPath?: string
-  onSelectedPathChange: (path: string) => void
+  selectedPath?: {
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }
+  onSelectedPathChange: (props: {
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }) => void
   errors: YamlErrorDataType
   onErrorsChange?: (errors: YamlErrorDataType) => void
   panelOpen: boolean
@@ -168,6 +191,7 @@ export interface UnifiedPipelineStudioProviderProps {
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
   lastCommitInfo?: lastCommitInfoType
+  enableSplitView?: boolean
 }
 
 export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProviderProps> = props => {
@@ -178,8 +202,12 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
     inputComponentFactory: inputComponentFactoryFromProps,
     onSelectedPathChange: onSelectedPathChangeFromProps,
     lastCommitInfo,
+    enableSplitView,
+    selectedPath,
     ...rest
   } = props
+
+  const [splitView, setSplitView] = useState<boolean>(!!enableSplitView)
 
   const [rightDrawer, setRightDrawer] = useState<RightDrawer>(RightDrawer.None)
 
@@ -188,10 +216,13 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
 
   const [formEntity, setFormEntity] = useState<FormEntityType | null>(null)
 
-  const clearEditStepIntention = useCallback(() => {
-    setEditStepIntention(null)
-    onSelectedPathChange(undefined)
-  }, [setEditStepIntention])
+  const clearEditStepIntention = useCallback(
+    graph => {
+      setEditStepIntention(null)
+      //onSelectedPathChange({ ...selectedPath, [graph]: undefined })
+    },
+    [setEditStepIntention]
+  )
 
   const clearAddStepIntention = useCallback(() => {
     setAddStepIntention(null)
@@ -223,7 +254,7 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
 
   const clearRightDrawerData = useCallback(() => {
     clearAddStepIntention()
-    clearEditStepIntention()
+    clearEditStepIntention(splitView ? 'steps' : 'onecanvas') // TODO
     setFormEntity(null)
   }, [clearAddStepIntention, clearEditStepIntention, setFormEntity])
 
@@ -237,8 +268,8 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
   )
 
   const onSelectedPathChange = useCallback(
-    path => {
-      onSelectedPathChangeFromProps(path)
+    props => {
+      onSelectedPathChangeFromProps(props)
     },
     [onSelectedPathChangeFromProps]
   )
@@ -263,7 +294,11 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
         clearRightDrawerData,
         inputComponentFactory: inputComponentFactoryFromProps ?? inputComponentFactory,
         onSelectedPathChange,
-        lastCommitInfo
+        lastCommitInfo,
+        splitView,
+        setSplitView,
+        enableSplitView,
+        selectedPath
       }}
     >
       {children}

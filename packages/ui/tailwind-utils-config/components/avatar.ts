@@ -14,7 +14,8 @@ export default {
 
     '&:where(.cn-avatar-sm)': {
       height: `var(--cn-avatar-size-sm)`,
-      width: `var(--cn-avatar-size-sm)`
+      width: `var(--cn-avatar-size-sm)`,
+      fontSize: `var(--cn-font-size-min)`
     },
     '&:where(.cn-avatar-lg)': {
       height: `var(--cn-avatar-size-lg)`,

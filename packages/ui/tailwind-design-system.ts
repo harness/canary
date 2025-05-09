@@ -4,6 +4,7 @@ import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
 import {
+  accordionStyles,
   badgeStyles,
   buttonStyles,
   checkboxStyles,
@@ -425,6 +426,7 @@ export default {
       addUtilities(typographyStyles)
     }),
     plugin(({ addComponents }) => {
+      addComponents(accordionStyles)
       addComponents(badgeStyles)
       addComponents(buttonStyles)
       addComponents(dialogStyles)

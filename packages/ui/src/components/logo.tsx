@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, SVGProps } from 'react'
 
 import {
   siAmazonwebservices,
@@ -46,14 +46,14 @@ const LogoNameMap: Record<LogoName, SimpleIcon> = {
   gcpSecretManager: siGooglecloud
 }
 
-interface LogoProps {
+export interface LogoProps extends SVGProps<SVGSVGElement> {
   name: keyof typeof LogoNameMap
   size?: number
   original?: boolean // Uses brand color when true
   className?: string
 }
 
-const Logo: FC<LogoProps> = ({ name, size = 24, original = true, className }) => {
+const Logo: FC<LogoProps> = ({ name, size = 24, original = true, ...props }) => {
   const icon = LogoNameMap[name]
 
   if (!icon) return <></>
@@ -65,7 +65,8 @@ const Logo: FC<LogoProps> = ({ name, size = 24, original = true, className }) =>
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      {...props}
+      style={{ minWidth: `${size}px`, minHeight: `${size}px`, ...props.style }}
     >
       <path d={icon.path} fill={original ? `#${icon.hex}` : 'currentColor'} />
     </svg>

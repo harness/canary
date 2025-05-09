@@ -92,9 +92,9 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
   return (
     <StackedList.Root>
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
-        <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle}>
-          <Accordion.Item isLast value={header?.text ?? ''}>
-            <Accordion.Trigger leftChevron className="p-4 text-left">
+        <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle} withLeftIndicator>
+          <Accordion.Item value={header?.text ?? ''} className="border-none">
+            <Accordion.Trigger className="p-4 text-left">
               <StackedList.Field title={<LineTitle text={header?.text ?? ''} />} />
             </Accordion.Trigger>
             <Accordion.Content className="pb-0">

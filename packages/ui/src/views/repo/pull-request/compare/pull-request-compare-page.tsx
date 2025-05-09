@@ -335,11 +335,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Tabs.Content className="pt-7" value="overview">
                   <div className="grid grid-cols-[1fr_288px] gap-x-8">
                     <div className="flex gap-x-3">
-                      {currentUser && (
-                        <Avatar.Root>
-                          <Avatar.Fallback>{getInitials(currentUser)}</Avatar.Fallback>
-                        </Avatar.Root>
-                      )}
+                      {currentUser && <Avatar name={currentUser} rounded />}
                       <div className="w-full">
                         <Spacer size={1} />
                         <PullRequestCompareForm

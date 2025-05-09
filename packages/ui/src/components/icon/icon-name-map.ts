@@ -16,6 +16,7 @@ import Artifacts from '../../icons/artifacts-icon.svg'
 import AttachmentImage from '../../icons/attachment-image.svg'
 import AttachmentLink from '../../icons/attachment-link.svg'
 import Attachment from '../../icons/attachment.svg'
+import Avatar from '../../icons/avatar.svg'
 import BitrisePlugin from '../../icons/bitrise-plugin.svg'
 import BoldPlus from '../../icons/bold-plus.svg'
 import Bold from '../../icons/bold.svg'
@@ -470,5 +471,6 @@ export const IconNameMap = {
   'attachment-link': AttachmentLink,
   spinner: Spinner,
   'close-2': Close2,
-  'tag-2': Tag2
+  'tag-2': Tag2,
+  avatar: Avatar
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

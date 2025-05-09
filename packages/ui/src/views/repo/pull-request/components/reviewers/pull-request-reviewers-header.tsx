@@ -86,9 +86,7 @@ const ReviewersHeader = ({
                   >
                     <div className="flex w-full min-w-0 items-center gap-x-2 pl-1">
                       {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
-                      <Avatar.Root>
-                        <Avatar.Fallback>{getInitials(display_name)}</Avatar.Fallback>
-                      </Avatar.Root>
+                      <Avatar name={display_name} rounded />
                       <span className="truncate text-2 font-medium text-cn-foreground-1">{display_name}</span>
                     </div>
                   </DropdownMenu.Item>

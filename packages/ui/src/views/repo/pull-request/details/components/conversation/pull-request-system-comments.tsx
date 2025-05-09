@@ -276,11 +276,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
       key={payloadMain.id}
       header={[
         {
-          avatar: (
-            <Avatar.Root>
-              <Avatar.Fallback>{getInitials(payloadMain?.author?.display_name || '')}</Avatar.Fallback>
-            </Avatar.Root>
-          ),
+          avatar: <Avatar name={payloadMain?.author?.display_name} rounded />,
           name: payloadMain?.author?.display_name,
           ...header
         }

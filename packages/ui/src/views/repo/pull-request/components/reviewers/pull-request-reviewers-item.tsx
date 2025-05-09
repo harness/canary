@@ -21,9 +21,7 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
   return (
     <div key={reviewer?.id} className="flex items-center justify-between space-x-2">
       <div className="flex items-center space-x-2">
-        <Avatar.Root>
-          <Avatar.Fallback>{getInitials(reviewer?.display_name || '')}</Avatar.Fallback>
-        </Avatar.Root>
+        <Avatar name={reviewer?.display_name} rounded />
         <div className="truncate text-2 font-medium text-cn-foreground-1">{reviewer?.display_name}</div>
       </div>
       <div className="px-1.5">

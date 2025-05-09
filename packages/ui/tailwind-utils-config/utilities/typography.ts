@@ -53,6 +53,9 @@ export default {
     },
     '&-caption-single-line-soft': {
       font: 'var(--cn-caption-single-line-soft)'
+    },
+    '&-family-default': {
+      font: 'var(--cn-font-family-default)'
     }
   }
 }

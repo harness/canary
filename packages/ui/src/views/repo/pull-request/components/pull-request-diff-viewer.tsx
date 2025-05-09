@@ -442,11 +442,7 @@ const PullRequestDiffViewer = ({
                       commentId={parent.id}
                       setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                       onQuoteReply={handleQuoteReply}
-                      icon={
-                        <Avatar.Root>
-                          <Avatar.Fallback>{parentInitials}</Avatar.Fallback>
-                        </Avatar.Root>
-                      }
+                      icon={<Avatar name={parentInitials} rounded />}
                       header={[
                         {
                           name: parent.author,
@@ -523,11 +519,7 @@ const PullRequestDiffViewer = ({
                               titleClassName="!flex max-w-full"
                               setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                               onQuoteReply={handleQuoteReply}
-                              icon={
-                                <Avatar.Root>
-                                  <Avatar.Fallback>{replyInitials}</Avatar.Fallback>
-                                </Avatar.Root>
-                              }
+                              icon={<Avatar name={replyInitials} rounded />}
                               header={[
                                 {
                                   name: reply.author,

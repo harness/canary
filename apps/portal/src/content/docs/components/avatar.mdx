@@ -4,26 +4,60 @@ description: Avatar component
 beta: true
 ---
 
-The Avatar component provides a way to represent an image with a fallback for when the image can not be loaded.
+The `Avatar` component provides a way to represent an image with a fallback for when the image cannot be loaded. It supports displaying initials derived from the `name` prop or an Avatar Icon if no `name` or `src` is provided.
 
 import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-8">
-    <div className="flex flex-col items-center gap-4">
-        <h5>With image</h5>
-        <Avatar.Root size={8}>
-            <Avatar.Image src="https://github.com/shadcn.png" alt="Avatar image" />
-            <Avatar.Fallback>JD</Avatar.Fallback>
-        </Avatar.Root>
+  code={`<div className="flex flex-col gap-10">
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Image (Default)</h6>
+      <div className="flex items-center justify-center gap-6">
+        <Avatar name="John Doe" src="/avatar.png" size="sm" />
+        <Avatar name="John Doe" src="/avatar.png" />
+        <Avatar name="John Doe" src="/avatar.png" size="lg" />
+      </div>
     </div>
-    <hr />
-    <div className="flex flex-col items-center gap-4">
-        <h5>With fallback</h5>
-        <Avatar.Root size={8}>
-            <Avatar.Fallback>JD</Avatar.Fallback>
-        </Avatar.Root>
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Image (Rounded)</h6>
+      <div className="flex items-center justify-center gap-6">
+        <Avatar name="John Doe" src="/avatar.png" size="sm" rounded />
+        <Avatar name="John Doe" src="/avatar.png" rounded />
+        <Avatar name="John Doe" src="/avatar.png" size="lg" rounded />
+      </div>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Initials (Default)</h6>
+      <div className="flex items-center justify-center gap-6">
+        <Avatar name="John Doe" size="sm" />
+        <Avatar name="John Doe" />
+        <Avatar name="John Doe" size="lg" />
+      </div>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Initials (Rounded)</h6>
+      <div className="flex items-center justify-center gap-6">
+        <Avatar name="John Doe" size="sm" rounded />
+        <Avatar name="John Doe" rounded />
+        <Avatar name="John Doe" size="lg" rounded />
+      </div>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Avatar Icon (Default)</h6>
+      <div className="flex items-center justify-center gap-6">
+        <Avatar size="sm" />
+        <Avatar />
+        <Avatar size="lg" />
+      </div>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Avatar Icon (Rounded)</h6>
+      <div className="flex items-center justify-center gap-6">
+        <Avatar size="sm" rounded />
+        <Avatar rounded />
+        <Avatar size="lg" rounded />
+      </div>
     </div>
 </div>`}
 />
@@ -31,123 +65,76 @@ import { DocsPage } from "../../../components/docs-page";
 ## Usage
 
 ```typescript jsx
-import { Avatar } from '@harnessio/ui/components'
+import { Avatar } from '@harnessio/ui'
 
-//...
+// ...
 
 return (
-  <Avatar.Root>
-    <Avatar.Image src="avatarurl.jpg" alt="Avatar image" />
-    <Avatar.Fallback>JD</Avatar.Fallback>
-  </Avatar.Root>
+  <Avatar name="John Doe" src="/avatar.png" size="sm" />
 )
 ```
 
-## Anatomy
+## Sizes
 
-All parts of the `Avatar` component can be imported and composed as required.
+The `Avatar` component supports three sizes: `sm`, `default`, and `lg`.
 
-```typescript jsx
-<Avatar.Root>
-  <Avatar.Image />
-  <Avatar.Fallback />
-</Avatar.Root>
-```
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-6">
+    <Avatar name="John Doe" src="/avatar.png" size="sm" />
+    <Avatar name="John Doe" src="/avatar.png" />
+    <Avatar name="John Doe" src="/avatar.png" size="lg" />
+</div>`}
+/>
+
+## Shapes
+
+The `Avatar` component supports two visual shapes: `default` and `rounded`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-6">
+    <Avatar name="John Doe" />
+    <Avatar name="John Doe" rounded />
+</div>`}
+/>
 
 ## API Reference
 
-### `Root`
-
-The `Root` component serves as the main container for all avatar elements.
-
-```typescript jsx
-<Avatar.Root
-  size={6}          // [OPTIONAL] Size of the avatar, can be one of "4.5", "6", "8", or "20"
-  className="class" // [OPTIONAL] Class name to be applied to the outermost element
->
-  {/* Image and Fallback components */}
-</Avatar.Root>
-```
+The `Avatar` component has several props to control its appearance:
 
 <DocsPage.PropsTable
   props={[
+    {
+      name: "name",
+      description:
+        "Full name of the subject of the avatar. Used to generate initials for the fallback and alt text. If not provided, an Avatar Icon will be rendered if no `src` is provided.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "src",
+      description:
+        "The source URL of the image. If not provided, initials or an Avatar Icon will be rendered.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
     {
       name: "size",
       description:
-        "The size of the avatar. Can be one of '4.5', '6', '8', or '20'",
+        "The size of the avatar. Can be one of 'default', 'sm', or 'lg'.",
       required: false,
-      value: "string",
-      defaultValue: "'6'",
+      value: "'default' | 'sm' | 'lg'",
+      defaultValue: "'default'",
     },
     {
-      name: "className",
-      description: "The class name to be applied to the outermost element",
+      name: "rounded",
+      description: "Whether to display the avatar as a circle.",
       required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### `Image`
-
-The `Image` component is used to display an image within the avatar. If the image can not be loaded, the `Fallback` component will be displayed instead.
-
-```typescript jsx
-<Avatar.Image
-  src="avatarurl.jpg" // source URL of the image
-  alt="Avatar image"  // [OPTIONAL] alt text of the image
-  className="class"   // [OPTIONAL] Class name to be applied to the image element
-/>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "src",
-      description: "The source URL of the image",
-      required: true,
-      value: "string",
-    },
-    {
-      name: "alt",
-      description: "The alt text of the image",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "className",
-      description: "The class name to be applied to the image element",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### `Fallback`
-
-The `Fallback` component is displayed when the image can not be loaded.
-
-```typescript jsx
-<Avatar.Fallback
-  className="class" // [OPTIONAL] Class name to be applied to the fallback element
->
-  JD
-</Avatar.Fallback>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "children",
-      description: "The content of the fallback element",
-      required: true,
-      value: "ReactNode",
-    },
-    {
-      name: "className",
-      description: "The class name to be applied to the fallback element",
-      required: false,
-      value: "string",
+      value: "boolean",
+      defaultValue: "false",
     },
   ]}
 />

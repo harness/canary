@@ -6,7 +6,6 @@ import { NoSearchResults } from '@/views/user-management/components/page-compone
 import { useSearch } from '@/views/user-management/providers/search-provider'
 import { useStates } from '@/views/user-management/providers/state-provider/hooks/use-states'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
-import { getInitials } from '@utils/stringUtils'
 import { UsersProps } from '@views/user-management/types'
 
 export const UsersList = () => {
@@ -53,10 +52,7 @@ export const UsersList = () => {
                 {/* NAME */}
                 <Table.Cell className="my-6 content-center">
                   <div className="flex items-center gap-2">
-                    <Avatar.Root className="size-6 rounded-full p-0">
-                      {user.avatarUrl && <Avatar.Image src={user.avatarUrl} />}
-                      <Avatar.Fallback>{getInitials(user.uid!, 2)}</Avatar.Fallback>
-                    </Avatar.Root>
+                    <Avatar name={user.uid} src={user.avatarUrl} rounded />
                     <span className="truncate whitespace-nowrap text-sm font-medium text-cn-foreground-1">
                       {user.uid}
                     </span>

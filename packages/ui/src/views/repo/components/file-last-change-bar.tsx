@@ -7,10 +7,7 @@ import { getInitials } from '@utils/stringUtils'
 const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   return (
     <div className="flex items-center gap-2">
-      <Avatar.Root>
-        {!!user?.avatarUrl && <Avatar.Image src={user.avatarUrl} />}
-        <Avatar.Fallback>{getInitials(user?.name || '')}</Avatar.Fallback>
-      </Avatar.Root>
+      <Avatar name={user?.name} src={user?.avatarUrl} rounded />
       <Text size={2} weight="normal" color="tertiaryBackground" wrap="nowrap">
         {user?.name || ''}
       </Text>

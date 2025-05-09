@@ -189,16 +189,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
         <>
           <FormWrapper onSubmit={handleProfileSubmit(onProfileSubmit)}>
             <Legend title={t('views:profileSettings.personalInfo', 'Personal information')} />
-            {/*
-              FIXME: Avatar size does not work correctly
-              issue – https://github.com/harness/canary/issues/817
-            */}
-            <Avatar.Root size="20" className="shadow-md">
-              <Avatar.Image src="/images/anon.jpg" />
-              <Avatar.Fallback className="text-6 font-medium text-cn-foreground-3">
-                {getInitials(userData?.name || '')}
-              </Avatar.Fallback>
-            </Avatar.Root>
+            <Avatar name={userData?.name} src="/images/anon.jpg" size="lg" rounded />
             <Fieldset>
               <Input
                 id="name"

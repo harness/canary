@@ -23,11 +23,7 @@ import { parseStartingLineIfOne, quoteTransform } from '@views/repo/pull-request
 import { get } from 'lodash-es'
 
 const getAvatar = (name?: string) => {
-  return (
-    <Avatar.Root>
-      <Avatar.Fallback>{getInitials(name || '')}</Avatar.Fallback>
-    </Avatar.Root>
-  )
+  return <Avatar name={name} rounded />
 }
 
 const getPayloadDependentData = (payload: TypesPullReqActivity | undefined) => {

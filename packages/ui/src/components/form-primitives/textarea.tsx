@@ -102,7 +102,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           id={id}
           ref={mergedRef}
-          className={cn(textareaVariants({ theme }), { 'resize-y': resizable }, className)}
+          className={cn(textareaVariants({ theme }), { 'cn-textarea-resizable': resizable }, className)}
           disabled={disabled}
           onChange={handleChange}
           {...props}

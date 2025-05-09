@@ -76,6 +76,10 @@ export default {
       borderColor: 'var(--cn-border-1)'
     },
 
+    '&-resizable': {
+      resize: 'vertical'
+    },
+
     ...createInputThemeStyles(),
 
     '&-label-wrapper': {

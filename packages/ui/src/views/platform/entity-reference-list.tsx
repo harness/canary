@@ -130,7 +130,6 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
           </StackedList.Item>
         )}
       </ScrollArea>
-      <div className="pointer-events-none absolute inset-x-0 bottom-20 z-10 h-32 bg-gradient-to-t from-cn-background-1 via-cn-background-1/80 to-cn-background-1/0"></div>
     </StackedList.Root>
   )
 }

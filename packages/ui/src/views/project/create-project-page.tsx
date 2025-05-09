@@ -117,7 +117,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
   return (
     <Floating1ColumnLayout
-      className="bg-cn-background-1 flex-col justify-start pt-20 sm:pt-[8.75rem]"
+      className="flex-col justify-start bg-cn-background-1 pt-20 sm:pt-[8.75rem]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
@@ -140,11 +140,11 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}
 
-          <Card.Title className="text-cn-foreground-1 mt-3 text-center" as="h1">
+          <Card.Title className="mt-3 text-center text-cn-foreground-1" as="h1">
             {t('views:createProject.title', 'Create your new project')}
           </Card.Title>
 
-          <p className="text-cn-foreground-2 mt-0.5 text-center text-sm leading-snug">
+          <p className="mt-0.5 text-center text-sm leading-snug text-cn-foreground-2">
             {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}
           </p>
         </div>
@@ -179,9 +179,9 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             </Button>
 
             <div className="mt-3 flex items-center justify-center gap-2">
-              <div className="border-cn-borders-3 w-[145px] shrink border-t" />
-              <span className="text-cn-foreground-3 text-sm">{t('views:createProject.or', 'or')}</span>
-              <div className="border-cn-borders-3 w-[145px] shrink border-t" />
+              <div className="w-[145px] shrink border-t border-cn-borders-3" />
+              <span className="text-sm text-cn-foreground-3">{t('views:createProject.or', 'or')}</span>
+              <div className="w-[145px] shrink border-t border-cn-borders-3" />
             </div>
 
             {/* TODO: Update the variant of this button to outline once the component supports this style. */}
@@ -192,7 +192,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
         </FormWrapper>
 
         {isFirst && (
-          <p className="foreground-5 text-cn-foreground-3 mt-4 text-center text-sm">
+          <p className="foreground-5 mt-4 text-center text-sm text-cn-foreground-3">
             {t('views:createProject.logout.question', 'Want to use a different account?')}{' '}
             <StyledLink {...props.logoutLinkProps}>{t('views:createProject.logout.link', 'Log out')}</StyledLink>
           </p>

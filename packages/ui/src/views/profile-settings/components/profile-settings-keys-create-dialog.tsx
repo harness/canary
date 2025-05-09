@@ -35,7 +35,7 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
     handleSubmit,
     watch,
     reset,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<SshKeyFormType>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',

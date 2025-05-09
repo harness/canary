@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react'
 
-import { Button, Drawer, SkeletonList } from '@components/index'
-import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
-import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
+import { Button, Drawer, SkeletonList } from '@/components'
+import { cn } from '@/utils'
 
 import { InputFactory } from '@harnessio/forms'
 import { YamlRevision } from '@harnessio/yaml-editor'
@@ -57,79 +56,71 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
     <Drawer.Content
       //TODO: width
       style={{ width: '500px' }}
-      className="flex flex-col p-0"
     >
-      <EntityFormLayout.Root>
-        <EntityFormLayout.Header>
-          <EntityFormLayout.Title>Run Pipeline</EntityFormLayout.Title>
-          <EntityFormLayout.Actions>
-            <VisualYamlToggle
-              isYamlValid={isYamlSyntaxValid}
+      <Drawer.Header>
+        <Drawer.Title>Run Pipeline</Drawer.Title>
+        <VisualYamlToggle
+          className="self-start"
+          isYamlValid={isYamlSyntaxValid}
+          view={view}
+          setView={view => {
+            onViewChange(view)
+            setAllowDisableRun(false)
+          }}
+        />
+      </Drawer.Header>
+
+      <Drawer.Inner viewportClassName={cn({ 'p-0 [&>div]:h-full': view === 'yaml' })}>
+        {loading ? (
+          <SkeletonList className="p-5" />
+        ) : (
+          <div className="flex grow flex-col">
+            <RunPipelineFormInputs
+              onValidationChange={formState => {
+                onValidationChange(formState.isValid)
+              }}
+              onYamlSyntaxValidationChange={isValid => {
+                setIsYamlSyntaxValid(isValid)
+                onValidationChange(isValid)
+              }}
+              rootFormRef={rootFormRef}
+              onFormSubmit={_values => {
+                // NOTE: latest values are passed with onYamlRevisionChange
+                onRun()
+              }}
+              onYamlRevisionChange={revision => {
+                onYamlRevisionChange(revision)
+              }}
               view={view}
-              setView={view => {
-                onViewChange(view)
-                setAllowDisableRun(false)
-              }}
+              pipelineInputs={pipelineInputs}
+              yamlRevision={yamlRevision}
+              inputComponentFactory={inputComponentFactory}
+              theme={theme}
             />
-          </EntityFormLayout.Actions>
-        </EntityFormLayout.Header>
-
-        <EntityFormSectionLayout.Root>
-          <EntityFormSectionLayout.Form>
-            {loading ? (
-              <SkeletonList className="p-5" />
-            ) : (
-              <div className="flex grow flex-col">
-                <RunPipelineFormInputs
-                  onValidationChange={formState => {
-                    onValidationChange(formState.isValid)
-                  }}
-                  onYamlSyntaxValidationChange={isValid => {
-                    setIsYamlSyntaxValid(isValid)
-                    onValidationChange(isValid)
-                  }}
-                  rootFormRef={rootFormRef}
-                  onFormSubmit={_values => {
-                    // NOTE: latest values are passed with onYamlRevisionChange
-                    onRun()
-                  }}
-                  onYamlRevisionChange={revision => {
-                    onYamlRevisionChange(revision)
-                  }}
-                  view={view}
-                  pipelineInputs={pipelineInputs}
-                  yamlRevision={yamlRevision}
-                  inputComponentFactory={inputComponentFactory}
-                  theme={theme}
-                />
-              </div>
-            )}
-          </EntityFormSectionLayout.Form>
-        </EntityFormSectionLayout.Root>
-
-        <EntityFormLayout.Footer className="flex-col gap-4">
-          {error?.message && <p className="text-sm text-cn-foreground-danger">{error.message}</p>}
-          <div className="flex gap-4">
-            <Button
-              disabled={(allowDisableRun && !isValid) || !isYamlSyntaxValid}
-              loading={isExecutingPipeline}
-              onClick={() => {
-                if (view === 'visual') {
-                  setAllowDisableRun(true)
-                  rootFormRef.current?.submitForm()
-                } else {
-                  onRun()
-                }
-              }}
-            >
-              Run pipeline
-            </Button>
-            <Button onClick={onCancel} variant="secondary" disabled={isExecutingPipeline}>
-              Cancel
-            </Button>
           </div>
-        </EntityFormLayout.Footer>
-      </EntityFormLayout.Root>
+        )}
+        {!!error?.message && <p className="text-sm text-cn-foreground-danger">{error.message}</p>}
+      </Drawer.Inner>
+
+      <Drawer.Footer>
+        <Button
+          disabled={(allowDisableRun && !isValid) || !isYamlSyntaxValid}
+          loading={isExecutingPipeline}
+          onClick={() => {
+            if (view === 'visual') {
+              setAllowDisableRun(true)
+              rootFormRef.current?.submitForm()
+            } else {
+              onRun()
+            }
+          }}
+        >
+          Run pipeline
+        </Button>
+        <Button onClick={onCancel} variant="secondary" disabled={isExecutingPipeline}>
+          Cancel
+        </Button>
+      </Drawer.Footer>
     </Drawer.Content>
   )
 }

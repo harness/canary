@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
 import { useTranslationStore } from '@utils/viewUtils'
-import noop from 'lodash-es/noop'
 
 import { InputFactory } from '@harnessio/forms'
 import { Button, Drawer, ListActions, Spacer } from '@harnessio/ui/components'
@@ -44,6 +43,12 @@ const ConnectorsListPageContent = (): JSX.Element => {
   const [isConnectorSelected, setIsConnectorSelected] = useState(false)
   const [intent, setIntent] = useState<EntityIntent>(EntityIntent.CREATE)
   const [testConnectionOpen, setTestConnectionOpen] = useState(false)
+
+  const onCloseConnectorDrawer = () => {
+    setIsConnectorDrawerOpen(false)
+    setConnectorEntity(null)
+  }
+
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
@@ -100,55 +105,46 @@ const ConnectorsListPageContent = (): JSX.Element => {
         useTranslationStore={useTranslationStore}
         errorData={{ errors: [{ reason: 'Unexpected Error', message: 'Bad credentials' }] }}
       />
+
       <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
-        <Drawer.Content>
-          <ConnectorsPalette
-            useTranslationStore={useTranslationStore}
-            connectors={harnessConnectors}
-            onSelectConnector={() => setIsConnectorSelected(true)}
-            setConnectorEntity={setConnectorEntity}
-            requestClose={() => {
-              setConnectorEntity(null)
-              setIsConnectorDrawerOpen(false)
-            }}
-          />
-          <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
-            <Drawer.Content>
-              {connectorEntity ? (
-                <ConnectorEntityForm
-                  useTranslationStore={() =>
-                    ({
-                      t: () => 'dummy',
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      i18n: {} as any,
-                      changeLanguage: noop
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    }) as any
-                  }
-                  connector={connectorEntity}
-                  onBack={() => setIsConnectorSelected(false)}
-                  // onFormSubmit={handleFormSubmit}
-                  getConnectorDefinition={getHarnessConnectorDefinition}
-                  inputComponentFactory={inputComponentFactory}
-                  intent={intent}
-                />
-              ) : null}
-            </Drawer.Content>
-          </Drawer.Root>
-        </Drawer.Content>
+        <ConnectorsPalette
+          useTranslationStore={useTranslationStore}
+          connectors={harnessConnectors}
+          onSelectConnector={() => setIsConnectorSelected(true)}
+          setConnectorEntity={setConnectorEntity}
+          requestClose={onCloseConnectorDrawer}
+          isDrawer
+        />
+        <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
+          <Drawer.Content nested>
+            {!!connectorEntity && (
+              <ConnectorEntityForm
+                useTranslationStore={useTranslationStore}
+                connector={connectorEntity}
+                onBack={() => setIsConnectorSelected(false)}
+                // onFormSubmit={handleFormSubmit}
+                getConnectorDefinition={getHarnessConnectorDefinition}
+                inputComponentFactory={inputComponentFactory}
+                intent={intent}
+                isDrawer
+              />
+            )}
+          </Drawer.Content>
+        </Drawer.Root>
       </Drawer.Root>
       <Drawer.Root open={isEditConnectorDrawerOpen} onOpenChange={setIsEditConnectorDrawerOpen} direction="right">
         <Drawer.Content>
-          {connectorEntity ? (
+          {!!connectorEntity && (
             <ConnectorEntityForm
               useTranslationStore={useTranslationStore}
               connector={connectorEntity}
-              onBack={() => setIsConnectorSelected(false)}
+              onBack={() => setIsEditConnectorDrawerOpen(false)}
               getConnectorDefinition={getHarnessConnectorDefinition}
               inputComponentFactory={inputComponentFactory}
               intent={intent}
+              isDrawer
             />
-          ) : null}
+          )}
         </Drawer.Content>
       </Drawer.Root>
     </SandboxLayout.Main>

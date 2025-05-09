@@ -3,7 +3,7 @@ import { cn } from '@utils/cn'
 const StepsPaletteItemLayout = {
   Root: function Root({ children, ...rest }: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
     return (
-      <div className="flex size-full cursor-pointer flex-row gap-2 p-2" {...rest}>
+      <div className="flex size-full cursor-pointer flex-row gap-3.5 px-4 py-3" {...rest}>
         {children}
       </div>
     )
@@ -18,10 +18,10 @@ const StepsPaletteItemLayout = {
     return <div className="flex flex-row justify-between">{children}</div>
   },
   Title: function Title({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('font-medium', className)}>{children}</div>
+    return <div className={cn('font-medium leading-4', className)}>{children}</div>
   },
   Description: function Description({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('mt-1.5 line-clamp-2 overflow-hidden text-sm', className)}>{children}</div>
+    return <div className={cn('mt-1.5 line-clamp-2 overflow-hidden text-sm leading-4', className)}>{children}</div>
   },
   BadgeWrapper: function BadgeWrapper({ children }: { children: React.ReactNode }) {
     return (

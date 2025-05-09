@@ -79,7 +79,7 @@ export function StepNodeComponent({
     <Drawer.Root direction="right">
       <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
       <Drawer.Content className="bg-cn-background-1 border-cn-borders-2 size-full max-w-2xl rounded-none border-l p-0 ">
-        <Drawer.Header>
+        <Drawer.Header className="p-0">
           <ExecutionHeader
             commitName="8fbru3ix"
             branchName="master"
@@ -91,7 +91,7 @@ export function StepNodeComponent({
             pipelineName="npm_build"
           />
         </Drawer.Header>
-        <div className="border-cn-borders-3 mt-1 border-t pt-3">
+        <Drawer.Inner viewportClassName="p-0">
           <ExecutionInfo
             isDrawer
             useLogsStore={() => ({ logs })}
@@ -99,7 +99,7 @@ export function StepNodeComponent({
             onDownload={() => {}}
             onEdit={() => {}}
           />
-        </div>
+        </Drawer.Inner>
       </Drawer.Content>
     </Drawer.Root>
   )

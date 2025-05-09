@@ -113,7 +113,7 @@ export const LabelsHeader = ({
 
   return (
     <article className="flex items-center justify-between">
-      <h5 className="text-2 text-cn-foreground-1 font-medium">{t('views:pullRequests.labels')}</h5>
+      <h5 className="text-2 font-medium text-cn-foreground-1">{t('views:pullRequests.labels')}</h5>
 
       <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>
@@ -164,11 +164,11 @@ export const LabelsHeader = ({
                         />
 
                         {!!label?.description && (
-                          <span className="text-cn-foreground-2 w-full truncate">{label.description}</span>
+                          <span className="w-full truncate text-cn-foreground-2">{label.description}</span>
                         )}
 
                         {label.isSelected && (
-                          <Icon className="text-icons-2 absolute right-0 top-1" name="tick" size={12} />
+                          <Icon className="absolute right-0 top-1 text-icons-2" name="tick" size={12} />
                         )}
                       </div>
                     </DropdownMenu.Item>
@@ -177,7 +177,7 @@ export const LabelsHeader = ({
               )}
 
               {!labelsListWithValues.length && (
-                <span className="text-cn-foreground-2 block px-5 py-4 text-center leading-tight">
+                <span className="block px-5 py-4 text-center leading-tight text-cn-foreground-2">
                   {t('views:pullRequests.noLabels', 'No labels found')}
                 </span>
               )}

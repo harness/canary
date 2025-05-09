@@ -9,7 +9,6 @@ import {
   FormSeparator,
   FormWrapper,
   Input,
-  Option,
   Select,
   Spacer,
   Text

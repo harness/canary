@@ -474,7 +474,6 @@
       "fontFamily.default": "1e95627ed050d7022c04d9c054649d2660d7a1b3",
       "fontFamily.mono": "6e2cde7653fb49cb103b1bece4149cf46bb60c98",
       "fontSize.0": "2fdbc7bd30ffd310af3294f2e1c9278f7bbd9708",
-      "fontSize.-1": "82f0a69fbacceb3e2a8a185a09b5e24176918fe6",
       "fontSize.1": "9b079ccd31a0d3ba8e47e486c3e91684be715cf3",
       "fontSize.2": "c60eea6bcf5ccdc456aacedbed9caeb54234e882",
       "fontSize.3": "8f1921cef9703056dbb0471b0584137d0335fab1",
@@ -679,7 +678,8 @@
       "opacity.60": "24a25f920c1de8559e48a5828b4c982bcccf75c0",
       "opacity.70": "24e70506912d5e69d78083757e230896de95107a",
       "opacity.80": "33302799180ddad5fc64a467c05b838de900cbe4",
-      "opacity.90": "2e5e5354d12c683fe7425b9893eee79eaa1f8f42"
+      "opacity.90": "2e5e5354d12c683fe7425b9893eee79eaa1f8f42",
+      "fontSize.min": "82f0a69fbacceb3e2a8a185a09b5e24176918fe6"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491161",
     "$figmaModeId": "426:0",
@@ -689,8 +689,7 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "mode/dark/default": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/default": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1877,8 +1876,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/dimmer": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:0",
@@ -2457,8 +2455,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/default": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:4",
@@ -3038,8 +3035,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/high-contrast": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:1",
@@ -3618,8 +3614,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-protanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/default-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:2",
@@ -4199,8 +4194,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-protanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/dimmer-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:3",
@@ -4780,8 +4774,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-protanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/high-contrast-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:4",
@@ -5361,8 +5354,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-deuteranopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/default-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:5",
@@ -5942,8 +5934,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-deuteranopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/dimmer-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:6",
@@ -6523,8 +6514,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-deuteranopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/high-contrast-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:7",
@@ -7104,8 +7094,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-tritanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/default-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:8",
@@ -7685,8 +7674,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-tritanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/dimmer-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:9",
@@ -8266,8 +8254,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-tritanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/dark/high-contrast-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:10",
@@ -8846,8 +8833,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/dimmer": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:11",
@@ -9426,8 +9412,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/high-contrast": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:12",
@@ -10006,8 +9991,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default-protanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/default-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:13",
@@ -10586,8 +10570,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-protanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/dimmer-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:14",
@@ -11166,8 +11149,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-protanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/high-contrast-protanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:15",
@@ -11746,8 +11728,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default-deuteranopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/default-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:16",
@@ -12350,8 +12331,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-deuteranopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/dimmer-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:17",
@@ -12930,8 +12910,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-deuteranopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/high-contrast-deuteranopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:18",
@@ -13510,8 +13489,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default-tritanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/default-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:19",
@@ -14090,8 +14068,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-tritanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/dimmer-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:20",
@@ -14670,8 +14647,7 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-tritanopia": "enabled",
-      "components/desktop/base/dialog": "disabled"
+      "mode/light/high-contrast-tritanopia": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:21",

@@ -105,6 +105,8 @@ import GitnessLogo from '../../icons/gitness-logo.svg'
 import GolangIcon from '../../icons/golang-icon.svg'
 import GridDots from '../../icons/grid-dots.svg'
 import HarnessLogoText from '../../icons/harness-logo-text.svg'
+import HarnessLogoWithText from '../../icons/harness-logo-with-text.svg'
+import HarnessLogo from '../../icons/harness-logo.svg'
 import HarnessPlugin from '../../icons/harness-plugin.svg'
 import Harness from '../../icons/harness.svg'
 import Header from '../../icons/header.svg'
@@ -470,5 +472,7 @@ export const IconNameMap = {
   'attachment-link': AttachmentLink,
   spinner: Spinner,
   'close-2': Close2,
-  'tag-2': Tag2
+  'tag-2': Tag2,
+  'harness-logo-with-text': HarnessLogoWithText,
+  'harness-logo': HarnessLogo
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

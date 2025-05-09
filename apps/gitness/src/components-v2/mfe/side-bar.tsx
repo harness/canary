@@ -9,9 +9,8 @@ import { useAppContext } from '../../framework/context/AppContext'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
-const SideBarToggleMenuItem: FC = () => {
+const SideBarToggleMenuItem: FC<{ collapsed: boolean; toggleSidebar: () => void }> = ({ collapsed, toggleSidebar }) => {
   const { t } = useTranslationStore()
-  const { collapsed, toggleSidebar } = useSidebar()
   return (
     <Sidebar.MenuItem className="flex justify-center">
       <Sidebar.MenuButton onClick={toggleSidebar}>
@@ -36,6 +35,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { NavLink } = useRouterContext()
   const { routes, hooks } = useMFEContext()
   const { forceLogout } = hooks?.useLogout?.() || {}
+  const { collapsed, toggleSidebar } = useSidebar()
 
   const renderMenuItem = ({ to, text, iconName }: { to: string; text: string; iconName: IconProps['name'] }) => (
     <Sidebar.MenuItem>
@@ -53,7 +53,16 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
     <Sidebar.Provider className="min-h-svh">
       <Sidebar.Root className="h-svh">
         <Sidebar.Header className="pb-3">
-          <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
+          <SidebarSearchLegacy
+            t={t}
+            logo={
+              collapsed ? (
+                <Icon name="harness-logo" size={18} />
+              ) : (
+                <Icon name="harness-logo-with-text" width={82} height={18} />
+              )
+            }
+          />
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group>
@@ -109,7 +118,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
                 />
               </Sidebar.MenuButton>
             </Sidebar.MenuItem>
-            <SideBarToggleMenuItem />
+            <SideBarToggleMenuItem collapsed={collapsed} toggleSidebar={toggleSidebar} />
           </Sidebar.Menu>
         </Sidebar.Group>
         <Sidebar.Footer className="border-t border-sidebar-border-1 px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">

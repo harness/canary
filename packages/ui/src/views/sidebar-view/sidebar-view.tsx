@@ -96,7 +96,16 @@ export const SidebarView = ({
               />
             </SearchProvider>
           ) : (
-            <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
+            <SidebarSearchLegacy
+              t={t}
+              logo={
+                collapsed ? (
+                  <Icon name="harness-logo" size={18} />
+                ) : (
+                  <Icon name="harness-logo-with-text" width={82} height={18} />
+                )
+              }
+            />
           )}
         </Sidebar.Header>
         <Sidebar.Content>

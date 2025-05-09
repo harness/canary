@@ -18,7 +18,10 @@ The `Sidebar` component provides a responsive, collapsible navigation interface 
       <Sidebar.Provider className="flex justify-start">
         <Sidebar.Root className="h-[500px]">
           <Sidebar.Header>
-            <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
+            <SidebarSearchLegacy t={t} logo={<>
+                <Icon name="harness-logo" size={18} className="hidden group-data-[state=collapsed]:block" />
+                <Icon name="harness-logo-with-text" className="block group-data-[state=collapsed]:hidden" width={82} height={18} />
+              </>} />
           </Sidebar.Header>
           <Sidebar.Content>
             <Sidebar.Group>

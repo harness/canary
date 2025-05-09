@@ -40,7 +40,7 @@ interface ConnectorsPaletteProps {
   useTranslationStore: () => TranslationStore
   title?: string
   subtitle?: string
-    isDrawer?: boolean
+  isDrawer?: boolean
 }
 
 export const ConnectorsPalette = ({

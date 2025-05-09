@@ -6,15 +6,15 @@ main {
   @apply px-0 py-10 w-full !important;
 }
 
-.sl-container h1 {
+.sl-container h1[id] {
   @apply text-4xl font-normal text-cn-foreground;
 }
 
-.sl-container h2 {
+.sl-container h2[id] {
   @apply text-3xl font-normal text-cn-foreground;
 }
 
-.sl-container h3 {
+.sl-container h3[id] {
   @apply text-2xl font-normal text-cn-foreground;
 }
 
@@ -112,6 +112,10 @@ ul.top-level summary svg {
 
 .expressive-code .frame {
   box-shadow: none !important;
+}
+
+.expressive-code pre > code {
+  overflow-x: auto !important;
 }
 
 pre.prism-code {

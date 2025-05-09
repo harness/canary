@@ -15,14 +15,14 @@ import { DocsPage } from "@/components/docs-page";
         <h5>Single non-collapsible</h5>
         <Accordion.Root type="single" defaultValue="item1">
             <Accordion.Item value="item1">
-                <Accordion.Trigger className="text-cn-foreground-2">Item 1</Accordion.Trigger>
+                <Accordion.Trigger>Item 1</Accordion.Trigger>
                 <Accordion.Content>
                     <p>This is the content of item 1</p>
                 </Accordion.Content>
             </Accordion.Item>
 
-            <Accordion.Item value="item2" isLast>
-                <Accordion.Trigger className="text-cn-foreground-2">Item 2</Accordion.Trigger>
+            <Accordion.Item value="item2">
+                <Accordion.Trigger>Item 2</Accordion.Trigger>
                 <Accordion.Content>
                     <p>This is the content of item 2</p>
                 </Accordion.Content>
@@ -30,41 +30,69 @@ import { DocsPage } from "@/components/docs-page";
         </Accordion.Root>
     </div>
 
-    <hr />
+    <hr className="border-dashed" />
 
     <div>
-        <h5>Single collapsible</h5>
-        <Accordion.Root type="single" collapsible>
+        <h5>Single collapsible w/left indicator</h5>
+        <Accordion.Root type="single" collapsible withLeftIndicator>
             <Accordion.Item value="item1">
-                <Accordion.Trigger className="text-cn-foreground-2">Item 1</Accordion.Trigger>
+                <Accordion.Trigger suffix="3 items">
+                  <Accordion.TriggerIcon name="info-circle" />
+                  Item 1
+                </Accordion.Trigger>
                 <Accordion.Content>
+                    <p>This is the content of item 1</p>
+                    <p>This is the content of item 1</p>
                     <p>This is the content of item 1</p>
                 </Accordion.Content>
             </Accordion.Item>
 
-            <Accordion.Item value="item2" isLast>
-                <Accordion.Trigger className="text-cn-foreground-2">Item 2</Accordion.Trigger>
+            <Accordion.Item value="item2">
+                <Accordion.Trigger suffix="5 items">
+                  <Accordion.TriggerIcon name="info-circle" />
+                  Item 2
+                </Accordion.Trigger>
                 <Accordion.Content>
-                   <p>This is the content of item 2</p>
+                  <p>This is the content of item 2</p>
+                  <p>This is the content of item 2</p>
+                  <p>This is the content of item 2</p>
+                  <p>This is the content of item 2</p>
+                  <p>This is the content of item 2</p>
                 </Accordion.Content>
             </Accordion.Item>
         </Accordion.Root>
     </div>
 
-    <hr />
+    <hr className="border-dashed" />
 
     <div>
-        <h5>Multiple</h5>
-        <Accordion.Root type="multiple">
+        <h5>Multiple (size md)</h5>
+        <Accordion.Root type="multiple" defaultValue={["item1", "item3"]} size="md">
             <Accordion.Item value="item1">
-                <Accordion.Trigger className="text-cn-foreground-2">Item 1</Accordion.Trigger>
+                <Accordion.Trigger suffix="Suffix text">
+                  <Accordion.TriggerLogo name="docker" />
+                  Item 1
+                </Accordion.Trigger>
                 <Accordion.Content>
-                   <p>This is the content of item 1</p>
+                  <p>This is the content of item 1</p>
                 </Accordion.Content>
             </Accordion.Item>
 
-            <Accordion.Item value="item2" isLast>
-                <Accordion.Trigger className="text-cn-foreground-2">Item 2</Accordion.Trigger>
+            <Accordion.Item value="item2" disabled>
+                <Accordion.Trigger suffix="Suffix text">
+                  <Accordion.TriggerLogo name="docker" />
+                  Item 3 (disabled/closed)
+                </Accordion.Trigger>
+                <Accordion.Content>
+                  <p>This is the content of item 1</p>
+                </Accordion.Content>
+            </Accordion.Item>
+
+            <Accordion.Item value="item3" disabled>
+                <Accordion.Trigger suffix="Suffix text">
+                  <Accordion.TriggerLogo name="docker" />
+                  Item 3 (disabled/expanded)
+                </Accordion.Trigger>
                 <Accordion.Content>
                     <p>This is the content of item 2</p>
                 </Accordion.Content>
@@ -83,18 +111,31 @@ import { Accordion } from '@harnessio/ui/components'
 //...
 
 return (
-  <Accordion.Root type="multiple">
+  <Accordion.Root type="multiple" defaultValue={["item1"]} size="md">
     <Accordion.Item value="item1">
-      <Accordion.Trigger className="text-cn-foreground-2">Item 1</Accordion.Trigger>
+      <Accordion.Trigger>Item 1</Accordion.Trigger>
       <Accordion.Content>
         <p>This is the content of item 1</p>
       </Accordion.Content>
     </Accordion.Item>
 
-    <Accordion.Item value="item2" isLast>
-      <Accordion.Trigger className="text-cn-foreground-2">Item 2</Accordion.Trigger>
+    <Accordion.Item value="item2">
+      <Accordion.Trigger>
+        <Accordion.TriggerLogo name="docker" />
+        Item 2
+      </Accordion.Trigger>
       <Accordion.Content>
         <p>This is the content of item 2</p>
+      </Accordion.Content>
+    </Accordion.Item>
+
+    <Accordion.Item value="item3">
+      <Accordion.Trigger>
+        <Accordion.TriggerIcon name="info-circle" />
+        Item 3
+      </Accordion.Trigger>
+      <Accordion.Content>
+        <p>This is the content of item 3</p>
       </Accordion.Content>
     </Accordion.Item>
   </Accordion.Root>
@@ -108,7 +149,9 @@ All parts of the `Accordion` component can be imported and composed as required.
 ```typescript jsx
 <Accordion.Root>
   <Accordion.Item>
-    <Accordion.Trigger />
+    <Accordion.Trigger>
+      <Accordion.TriggerLogo />
+    </Accordion.Trigger>
     <Accordion.Content />
   </Accordion.Item>
 </Accordion.Root>
@@ -126,15 +169,13 @@ props are supplied, the accordion becomes **controlled** and state is handled ex
 ```typescript jsx
 <Accordion.Root
   type="single"                // single|multiple
-  collapsible                  // [OPTIONAL] allow all panels to be collapsed
-                               //            when type is "single"
+  collapsible                  // [OPTIONAL] allow all panels to be collapsed when type is "single"
   defaultValue="ItemValue"     // [OPTIONAL] value of item to expand initially
-  disabled                     // [OPTIONAL] disable the accordion
-                               //            expanded when type is "single"
-  onValueChange={handleChange} // [OPTIONAL] handler triggered when value changes
-                               //            when externally controlled
-  value={currentValue}         // [OPTIONAL] value of item currently selected
-                               //            when externally controlled
+  disabled                     // [OPTIONAL] disable the accordion expanded when type is "single"
+  onValueChange={handleChange} // [OPTIONAL] handler triggered when value changes when externally controlled
+  value={currentValue}         // [OPTIONAL] value of item currently selected when externally controlled
+  size="md"                    // [OPTIONAL] size of the accordion (default|md)
+  withLeftIndicator            // [OPTIONAL] show left indicator
 >
   {/* <Accordion.Item>'s as children */}
 </Accordion.Root>
@@ -144,14 +185,12 @@ props are supplied, the accordion becomes **controlled** and state is handled ex
 
 The `Accordion.Item` component represents an individual collapsible panel consisting of a trigger and content to display.
 The `value` prop is required and can be thought of as the identifier of the individual `Accordion.Item`. When multiple
-`Accordion.Item`s are wrapped in an `Accordion.Root`, the last `Accordion.Item` should include the `isLast` prop to allow
-for a different visual treatment.
+`Accordion.Item`s are wrapped in an `Accordion.Root`.
 
 ```typescript jsx
 <Accordion.Item
   value="ItemValue" // item value
   disabled          // [OPTIONAL] disable item
-  isLast            // [OPTIONAL] mark item as the last in the accordion
 >
   {/* <Accordion.Trigger> and <Accordion.Content> as children */}
 </Accordion.Item>
@@ -163,17 +202,30 @@ The `Accordion.Trigger` component displays the item with a chevron disclosure ic
 
 ```typescript jsx
 <Accordion.Trigger
-  chevronClassName="size-5" // [OPTIONAL] class to apply to chevron icon
-  hideChevron               // [OPTIONAL] hide the disclosure icon
-  leftChevron               // [OPTIONAL] display the chevron disclosure
-                            //            icon to the left
-  rotateChevron             // [OPTIONAL] `false` to point chevron down/up
-                            //            when closed/opened
-                            //            `true` to point chevron right/down
-                            //            when closed/opened
+  suffix="3 items"  // [OPTIONAL] suffix text
 >
   Item name
 </Accordion.Trigger>
+```
+
+### `TriggerIcon`
+
+The `Accordion.TriggerIcon` component displays the trigger icon.
+
+```typescript jsx
+<Accordion.TriggerIcon
+  name="info-circle" // icon name
+/>
+```
+
+### `TriggerLogo`
+
+The `Accordion.TriggerLogo` component displays the trigger icon.
+
+```typescript jsx
+<Accordion.TriggerLogo
+  name="docker" // logo name
+/>
 ```
 
 ### `Content`

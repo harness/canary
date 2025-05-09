@@ -108,7 +108,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         {tagsList.map(tag => (
           <Table.Row key={tag.sha}>
             <Table.Cell>
-              <Text className="block leading-snug" truncate>
+              <Text className="block leading-snug" truncate title={tag.name}>
                 {tag.name}
               </Text>
             </Table.Cell>
@@ -136,7 +136,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
             </Table.Cell>
             <Table.Cell>
               <Text color="tertiary" className="leading-snug">
-                {getCreationDate(tag)}
+                {tag.tagger?.when ? getCreationDate(tag) : ''}
               </Text>
             </Table.Cell>
             <Table.Cell className="w-[46px] !py-2.5 text-right">

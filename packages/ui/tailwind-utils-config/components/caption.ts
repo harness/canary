@@ -20,6 +20,10 @@ export default {
     gap: 'var(--cn-spacing-1)',
     '@apply w-full inline-flex items-center font-body-normal': '',
 
+    '&:where(.cn-caption-disabled)': {
+      color: 'var(--cn-state-disabled-text)'
+    },
+
     ...createCaptionThemeStyles()
   }
 }

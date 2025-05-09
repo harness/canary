@@ -13,7 +13,6 @@ import {
   MessageTheme,
   MultiSelect,
   MultiSelectOptionType,
-  Option,
   SplitButton,
   StackedList,
   Switch,

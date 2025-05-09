@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react'
 
 import { useRouterContext } from '@/context'
+import { timeAgo } from '@/utils'
 import { Button, Icon, StatusBadge, Tag } from '@components/index'
 import { cn } from '@utils/cn'
-import { timeAgo } from '@utils/utils'
 
 import { IconType } from '../pull-request.types'
 import { getPrState } from '../utils'

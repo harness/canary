@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { LiveEditor, LivePreview, LiveProvider } from "react-live";
-import { Icon } from "@harnessio/ui/components";
+import { Icon, Tooltip } from "@harnessio/ui/components";
 import { RouterContextProvider } from "@harnessio/ui/context";
 import ExampleLayout from "./example-layout";
 import { themes } from "prism-react-renderer";
@@ -61,7 +61,9 @@ const Example: FC<ExampleProps> = ({ code, scope }) => {
       path: "*",
       element: (
         <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet}>
-          <LivePreview />
+          <Tooltip.Provider>
+            <LivePreview />
+          </Tooltip.Provider>
         </RouterContextProvider>
       ),
     },
@@ -70,7 +72,7 @@ const Example: FC<ExampleProps> = ({ code, scope }) => {
   return (
     <div className="bg-cn-background-1 not-content my-12 overflow-hidden rounded-md border">
       <LiveProvider code={code} scope={scopeWithLayout} enableTypeScript>
-        <div className="grid place-items-center p-12">
+        <div className="w-full p-12 [&>div]:grid [&>div]:place-items-center">
           <RouterProvider router={router} />
         </div>
         <details className="example-expand bg-cn-background-2 border-t p-3">

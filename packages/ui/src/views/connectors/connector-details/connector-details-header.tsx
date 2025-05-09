@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
 import { Button, Layout, Link, MoreActionsTooltip, StatusBadge, Text } from '@/components'
+import { timeAgo } from '@/utils'
 import { Logo, LogoName } from '@components/logo'
-import { timeAgo } from '@utils/utils'
 
 import { ConnectorDetailsHeaderProps } from './types'
 

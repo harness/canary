@@ -2,8 +2,8 @@ import { FC, useMemo } from 'react'
 
 import { FormSeparator, NoData, Pagination, SkeletonList, StatusBadge, Table, Text } from '@/components'
 import { useRouterContext } from '@/context'
+import { timeAgo } from '@/utils'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
-import { timeAgo } from '@utils/utils'
 
 import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/components/create-webhook-form-data'
 

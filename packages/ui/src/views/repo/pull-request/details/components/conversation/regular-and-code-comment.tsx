@@ -1,6 +1,7 @@
 import { FC, memo, useCallback, useState } from 'react'
 
 import { Avatar, Icon, Layout } from '@/components'
+import { timeAgo } from '@/utils'
 import {
   CommentItem,
   isCodeComment,
@@ -12,7 +13,6 @@ import {
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { getInitials } from '@utils/stringUtils'
-import { timeAgo } from '@utils/utils'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { PRCommentViewProps } from '@views/repo/pull-request/details/components/common/pull-request-comment-view'
 import PullRequestTimelineItem, {

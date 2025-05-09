@@ -2,9 +2,9 @@ import { FC, useEffect, useMemo, useState } from 'react'
 
 import { Button, ListActions, Spacer, StatusBadge, Text } from '@/components'
 import { ModeType, useTheme } from '@/context'
+import { timeAgo } from '@/utils'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { formatDuration } from '@utils/TimeUtils'
-import { timeAgo } from '@utils/utils'
 
 import { CodeEditor } from '@harnessio/yaml-editor'
 

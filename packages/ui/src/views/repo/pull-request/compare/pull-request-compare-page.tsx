@@ -379,6 +379,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       editLabelsProps={editLabelsProps}
                       searchLabelQuery={searchLabelQuery}
                       setSearchLabelQuery={setSearchLabelQuery}
+                      isCreatingPr
                     />
                   </div>
                 </Tabs.Content>

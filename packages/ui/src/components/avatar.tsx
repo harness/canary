@@ -5,6 +5,8 @@ import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
+import { Icon } from './icon'
+
 const avatarVariants = cva('cn-avatar', {
   variants: {
     size: {
@@ -24,7 +26,7 @@ const avatarVariants = cva('cn-avatar', {
 })
 
 interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
-  name: string
+  name?: string
   src?: string
   size?: VariantProps<typeof avatarVariants>['size']
   rounded?: boolean
@@ -32,17 +34,17 @@ interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
 
 const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
   ({ name, src, size = 'default', rounded = false, className, ...props }, ref) => {
-    const initials = getInitials(name)
+    const initials = getInitials(name || '')
 
     return (
       <AvatarPrimitive.Root ref={ref} className={cn(avatarVariants({ size, rounded }), className)} {...props}>
         {src ? (
           <>
-            <AvatarPrimitive.Image src={src} alt={name} className="cn-avatar-image" />
-            <AvatarFallback>{initials}</AvatarFallback>
+            <AvatarPrimitive.Image src={src} alt={name || ''} className="cn-avatar-image" />
+            <AvatarFallback>{initials || <AvatarIcon />}</AvatarFallback>
           </>
         ) : (
-          <AvatarFallback delayMs={0}>{initials}</AvatarFallback>
+          <AvatarFallback delayMs={0}>{initials || <AvatarIcon />}</AvatarFallback>
         )}
       </AvatarPrimitive.Root>
     )
@@ -58,5 +60,7 @@ const AvatarFallback = ({ children, ...props }: AvatarFallbackProps) => (
     {children}
   </AvatarPrimitive.Fallback>
 )
+
+const AvatarIcon = () => <Icon name="avatar" className="cn-avatar-icon" />
 
 export { Avatar }

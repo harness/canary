@@ -14,18 +14,18 @@ import { DocsPage } from "../../../components/docs-page";
   client:only
   code={`<div className="flex gap-12">
   <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Small Size</h6>
+    <Avatar name="John Doe" src="https://github.com/shadcn.png" size="sm" />
+  </div>
+  
+  <div className="flex flex-col gap-3 items-center">
     <h6 className="text-sm">Default Size</h6>
     <Avatar name="John Doe" src="https://github.com/shadcn.png" />
   </div>
 
-<div className="flex flex-col gap-3 items-center">
-  <h6 className="text-sm">Large Size</h6>
-  <Avatar name="John Doe" src="https://github.com/shadcn.png" size="lg" />
-</div>
-
   <div className="flex flex-col gap-3 items-center">
-    <h6 className="text-sm">Small Size</h6>
-    <Avatar name="John Doe" src="https://github.com/shadcn.png" size="sm" />
+    <h6 className="text-sm">Large Size</h6>
+    <Avatar name="John Doe" src="https://github.com/shadcn.png" size="lg" />
   </div>
 </div>`}
 />
@@ -36,23 +36,23 @@ import { DocsPage } from "../../../components/docs-page";
   client:only
   code={`<div className="flex gap-12">
   <div className="flex flex-col gap-3 items-center">
-    <h6 className="text-sm">Default Size</h6>
-    <Avatar name="John Doe" src="https://github.com/shadcn.png" rounded />
+    <h6 className="text-sm">Small Size</h6>
+    <Avatar name="John Doe" src="https://github.com/shadcn.png" size="sm" rounded />
   </div>
 
 <div className="flex flex-col gap-3 items-center">
-  <h6 className="text-sm">Large Size</h6>
-  <Avatar
-    name="John Doe"
-    src="https://github.com/shadcn.png"
-    size="lg"
-    rounded
-  />
+  <h6 className="text-sm">Default Size</h6>
+  <Avatar name="John Doe" src="https://github.com/shadcn.png" rounded />
 </div>
 
   <div className="flex flex-col gap-3 items-center">
-    <h6 className="text-sm">Small Size</h6>
-    <Avatar name="John Doe" src="https://github.com/shadcn.png" size="sm" rounded />
+    <h6 className="text-sm">Large Size</h6>
+    <Avatar
+      name="John Doe"
+      src="https://github.com/shadcn.png"
+      size="lg"
+      rounded
+    />
   </div>
 </div>`}
 />
@@ -63,14 +63,19 @@ import { DocsPage } from "../../../components/docs-page";
   client:only
   code={`<div className="flex gap-12">
   <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Small Size</h6>
+    <Avatar name="John Doe" size="sm" />
+  </div>
+  
+  <div className="flex flex-col gap-3 items-center">
     <h6 className="text-sm">Default Size</h6>
     <Avatar name="John Doe" />
   </div>
-
-<div className="flex flex-col gap-3 items-center">
-  <h6 className="text-sm">Large Size</h6>
-  <Avatar name="John Doe" size="lg" />
-</div>
+  
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Large Size</h6>
+    <Avatar name="John Doe" size="lg" />
+  </div>
 </div>`}
 />
 
@@ -80,14 +85,63 @@ import { DocsPage } from "../../../components/docs-page";
   client:only
   code={`<div className="flex gap-12">
   <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Small Size</h6>
+    <Avatar name="John Doe" size="sm" rounded />
+  </div>
+
+  <div className="flex flex-col gap-3 items-center">
     <h6 className="text-sm">Default Size</h6>
     <Avatar name="John Doe" rounded />
   </div>
+  
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Large Size</h6>
+    <Avatar name="John Doe" size="lg" rounded />
+  </div>
+</div>`}
+/>
+
+### Avatar Icon (Default)
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-12">
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Small Size</h6>
+    <Avatar size="sm" />
+  </div>
+
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Default Size</h6>
+    <Avatar />
+  </div>
+  
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Large Size</h6>
+    <Avatar size="lg" />
+  </div>  
+</div>`}
+/>
+
+### Avatar Icon (Rounded)
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-12">
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Small Size</h6>
+    <Avatar size="sm" rounded />
+  </div>
 
 <div className="flex flex-col gap-3 items-center">
-  <h6 className="text-sm">Large Size</h6>
-  <Avatar name="John Doe" size="lg" rounded />
+  <h6 className="text-sm">Default Size</h6>
+  <Avatar rounded />
 </div>
+
+  <div className="flex flex-col gap-3 items-center">
+    <h6 className="text-sm">Large Size</h6>
+    <Avatar size="lg" rounded />
+  </div>  
 </div>`}
 />
 
@@ -125,11 +179,27 @@ import { DocsPage } from "../../../components/docs-page";
 <Avatar name="John Doe" size="sm" rounded />
 ```
 
+### Avatar Icon (Default)
+
+```typescript jsx
+<Avatar />
+<Avatar size="lg" />
+<Avatar size="sm" />
+```
+
+### Avatar Icon (Rounded)
+
+```typescript jsx
+<Avatar rounded />
+<Avatar size="lg" rounded />
+<Avatar size="sm" rounded />
+```
+
 ## API Reference
 
 ```typescript jsx
 <Avatar
-  name="John Doe"                     // [REQUIRED] Full name of the subject
+  name="John Doe"                     // [OPTIONAL] Full name of the subject
   src="https://github.com/shadcn.png" // [OPTIONAL] Source URL of the image
   size="lg"                           // [OPTIONAL] Size of the avatar ('default' | 'sm' | 'lg')
   rounded                             // [OPTIONAL] Whether the avatar is circular
@@ -143,14 +213,15 @@ import { DocsPage } from "../../../components/docs-page";
     {
       name: "name",
       description:
-        "Full name of the subject of the avatar. Used to generate initials for the fallback and alt text.",
-      required: true,
+        "Full name of the subject of the avatar. Used to generate initials for the fallback and alt text. If not provided, an Avatar Icon will be rendered if no `src` is provided.",
+      required: false,
       value: "string",
-      defaultValue: "''",
+      defaultValue: "undefined",
     },
     {
       name: "src",
-      description: "The source URL of the image.",
+      description:
+        "The source URL of the image. If not provided, initials or an Avatar Icon will be rendered.",
       required: false,
       value: "string",
       defaultValue: "undefined",

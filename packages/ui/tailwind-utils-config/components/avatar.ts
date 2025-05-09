@@ -39,6 +39,11 @@ export default {
       borderRadius: 'inherit',
       boxShadow: 'inherit',
       '@apply h-full w-full flex items-center justify-center select-none': ''
+    },
+
+    '.cn-avatar-icon': {
+      width: '80%',
+      height: '80%'
     }
   }
 }

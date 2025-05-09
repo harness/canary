@@ -4,132 +4,61 @@ description: Avatar component
 beta: true
 ---
 
-The `Avatar` component provides a way to represent an image with a fallback for when the image cannot be loaded. It also supports displaying initials derived from the `name` prop.
+The `Avatar` component provides a way to represent an image with a fallback for when the image cannot be loaded. It supports displaying initials derived from the `name` prop or an Avatar Icon if no `name` or `src` is provided.
 
 import { DocsPage } from "../../../components/docs-page";
 
-### Examples
-
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-12">
-  <div>
-    <h5 className="font-bold mb-4">Image (Default)</h5>
-    <div className="flex gap-12">
-      <div className="flex flex-col gap-3 items-center">
-        <h6 className="text-sm">Small Size</h6>
+  code={`<div className="flex flex-col gap-10">
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Image (Default)</h6>
+      <div className="flex items-center justify-center gap-6">
         <Avatar name="John Doe" src="https://github.com/shadcn.png" size="sm" />
-      </div>
-      <div className="flex flex-col gap-3 items-center">
-        <h6 className="text-sm">Default Size</h6>
         <Avatar name="John Doe" src="https://github.com/shadcn.png" />
-      </div>
-      <div className="flex flex-col gap-3 items-center">
-        <h6 className="text-sm">Large Size</h6>
         <Avatar name="John Doe" src="https://github.com/shadcn.png" size="lg" />
       </div>
     </div>
-  </div>
-
-<div>
-  <h5 className="font-bold mb-4">Image (Rounded)</h5>
-  <div className="flex gap-12">
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Small Size</h6>
-      <Avatar
-        name="John Doe"
-        src="https://github.com/shadcn.png"
-        size="sm"
-        rounded
-      />
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Image (Rounded)</h6>
+      <div className="flex items-center justify-center gap-6">
+        <Avatar name="John Doe" src="https://github.com/shadcn.png" size="sm" rounded />
+        <Avatar name="John Doe" src="https://github.com/shadcn.png" rounded />
+        <Avatar name="John Doe" src="https://github.com/shadcn.png" size="lg" rounded />
+      </div>
     </div>
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Default Size</h6>
-      <Avatar name="John Doe" src="https://github.com/shadcn.png" rounded />
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Initials (Default)</h6>
+      <div className="flex items-center justify-center gap-6">
+        <Avatar name="John Doe" size="sm" />
+        <Avatar name="John Doe" />
+        <Avatar name="John Doe" size="lg" />
+      </div>
     </div>
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Large Size</h6>
-      <Avatar
-        name="John Doe"
-        src="https://github.com/shadcn.png"
-        size="lg"
-        rounded
-      />
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Initials (Rounded)</h6>
+      <div className="flex items-center justify-center gap-6">
+        <Avatar name="John Doe" size="sm" rounded />
+        <Avatar name="John Doe" rounded />
+        <Avatar name="John Doe" size="lg" rounded />
+      </div>
     </div>
-  </div>
-</div>
-
-<div>
-  <h5 className="font-bold mb-4">Initials (Default)</h5>
-  <div className="flex gap-12">
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Small Size</h6>
-      <Avatar name="John Doe" size="sm" />
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Avatar Icon (Default)</h6>
+      <div className="flex items-center justify-center gap-6">
+        <Avatar size="sm" />
+        <Avatar />
+        <Avatar size="lg" />
+      </div>
     </div>
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Default Size</h6>
-      <Avatar name="John Doe" />
-    </div>
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Large Size</h6>
-      <Avatar name="John Doe" size="lg" />
-    </div>
-  </div>
-</div>
-
-<div>
-  <h5 className="font-bold mb-4">Initials (Rounded)</h5>
-  <div className="flex gap-12">
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Small Size</h6>
-      <Avatar name="John Doe" size="sm" rounded />
-    </div>
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Default Size</h6>
-      <Avatar name="John Doe" rounded />
-    </div>
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Large Size</h6>
-      <Avatar name="John Doe" size="lg" rounded />
-    </div>
-  </div>
-</div>
-
-<div>
-  <h5 className="font-bold mb-4">Avatar Icon (Default)</h5>
-  <div className="flex gap-12">
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Small Size</h6>
-      <Avatar size="sm" />
-    </div>
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Default Size</h6>
-      <Avatar />
-    </div>
-    <div className="flex flex-col gap-3 items-center">
-      <h6 className="text-sm">Large Size</h6>
-      <Avatar size="lg" />
-    </div>
-  </div>
-</div>
-
-  <div>
-    <h5 className="font-bold mb-4">Avatar Icon (Rounded)</h5>
-    <div className="flex gap-12">
-      <div className="flex flex-col gap-3 items-center">
-        <h6 className="text-sm">Small Size</h6>
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Avatar Icon (Rounded)</h6>
+      <div className="flex items-center justify-center gap-6">
         <Avatar size="sm" rounded />
-      </div>
-      <div className="flex flex-col gap-3 items-center">
-        <h6 className="text-sm">Default Size</h6>
         <Avatar rounded />
-      </div>
-      <div className="flex flex-col gap-3 items-center">
-        <h6 className="text-sm">Large Size</h6>
         <Avatar size="lg" rounded />
       </div>
     </div>
-  </div>
 </div>`}
 />
 
@@ -167,6 +96,31 @@ import { DocsPage } from "../../../components/docs-page";
 <Avatar size="lg" rounded />
 ```
 
+## Sizes
+
+The `Avatar` component supports three sizes: `sm`, `default`, and `lg`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-6">
+    <Avatar name="John Doe" src="https://github.com/shadcn.png" size="sm" />
+    <Avatar name="John Doe" src="https://github.com/shadcn.png" />
+    <Avatar name="John Doe" src="https://github.com/shadcn.png" size="lg" />
+</div>`}
+/>
+
+## Variants
+
+The `Avatar` component supports two visual variants: `default` and `rounded`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-6">
+    <Avatar name="John Doe" />
+    <Avatar name="John Doe" rounded />
+</div>`}
+/>
+
 ## API Reference
 
 ```typescript jsx
@@ -179,6 +133,8 @@ import { DocsPage } from "../../../components/docs-page";
 ```
 
 ### Props
+
+The `Avatar` component has several props to control its appearance:
 
 <DocsPage.PropsTable
   props={[

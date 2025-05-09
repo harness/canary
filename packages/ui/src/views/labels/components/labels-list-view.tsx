@@ -95,7 +95,12 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                   size={12}
                 />
 
-                <span className="truncate">{label.scope === 0 ? labelContext.repo : labelContext.space}</span>
+                <span
+                  className="truncate"
+                  title={label.scope === 0 ? (labelContext.repo ?? '') : (labelContext.space ?? '')}
+                >
+                  {label.scope === 0 ? labelContext.repo : labelContext.space}
+                </span>
               </span>
             </Table.Cell>
             <Table.Cell className={cn('w-1/2 !py-3', { 'w-5/12': isSmallWidth })}>

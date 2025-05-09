@@ -110,6 +110,7 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
             reqCodeOwnerLatestApproval: res?.requires_code_owners_approval_latest ?? false,
             minReqLatestApproval: res?.minimum_required_approvals_count_latest ?? 0,
             conflictingFiles: res?.conflict_files,
+            allowedMethods: res?.allowed_methods,
             PRStateLoading: false,
             commentsLoading: false,
             commentsInfoData: getCommentsInfoData({
@@ -144,6 +145,7 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
                   reqCodeOwnerLatestApproval: err.requires_code_owners_approval_latest ?? false,
                   minReqLatestApproval: err.minimum_required_approvals_count_latest ?? 0,
                   conflictingFiles: err.conflict_files,
+                  allowedMethods: err.allowed_methods,
                   PRStateLoading: false,
                   commentsLoading: false,
                   commentsInfoData: {
@@ -201,6 +203,7 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
     resolvedCommentArr: undefined,
     PRStateLoading: true,
     ruleViolation: false,
+    allowedMethods: undefined,
     commentsLoading: false,
     commentsInfoData: {
       header: '',

@@ -32,6 +32,7 @@ import { SkeletonList } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   LatestCodeOwnerApprovalArrType,
+  PRPanelData,
   PullRequestConversationPage as PullRequestConversationView,
   TypesPullReq
 } from '@harnessio/ui/views'
@@ -63,7 +64,8 @@ import { usePullRequestProviderStore } from './stores/pull-request-provider-stor
 const getMockPullRequestActions = (
   handlePrState: (data: string) => void,
   handleMerge: (data: EnumMergeMethod) => void,
-  pullReqMetadata?: TypesPullReq
+  pullReqMetadata?: TypesPullReq,
+  prPanelData?: PRPanelData
 ) => {
   return [
     ...(pullReqMetadata?.closed
@@ -103,7 +105,8 @@ const getMockPullRequestActions = (
               description: 'All commits from this branch will be combined into one commit in the base branch.',
               action: () => {
                 handleMerge('squash')
-              }
+              },
+              disabled: !prPanelData?.allowedMethods?.includes('squash')
             },
             {
               id: '1',
@@ -111,7 +114,8 @@ const getMockPullRequestActions = (
               description: 'All commits from this branch will be added to the base branch via a merge commit.',
               action: () => {
                 handleMerge('merge')
-              }
+              },
+              disabled: !prPanelData?.allowedMethods?.includes('merge')
             },
             {
               id: '2',
@@ -119,7 +123,8 @@ const getMockPullRequestActions = (
               description: 'All commits from this branch will be rebased and added to the base branch.',
               action: () => {
                 handleMerge('rebase')
-              }
+              },
+              disabled: !prPanelData?.allowedMethods?.includes('rebase')
             },
             {
               id: '3',
@@ -128,7 +133,8 @@ const getMockPullRequestActions = (
                 'All commits from this branch will be added to the base branch without a merge commit. Rebase may be required.',
               action: () => {
                 handleMerge('fast-forward')
-              }
+              },
+              disabled: !prPanelData?.allowedMethods?.includes('fast-forward')
             }
           ])
   ]
@@ -250,11 +256,18 @@ export default function PullRequestConversationPage() {
     data: { body: sourceBranch } = {},
     error: branchError,
     refetch: refetchBranch
-  } = useGetBranchQuery({
-    repo_ref: repoRef,
-    branch_name: pullReqMetadata?.source_branch || '',
-    queryParams: { include_checks: true, include_rules: true }
-  })
+  } = useGetBranchQuery(
+    {
+      repo_ref: repoRef,
+      branch_name: pullReqMetadata?.source_branch || '',
+      queryParams: { include_checks: true, include_rules: true }
+    },
+    {
+      // Don't cache the result to ensure we always get fresh data
+      cacheTime: 0,
+      staleTime: 0
+    }
+  )
 
   const { mutateAsync: deleteBranch } = useDeletePullReqSourceBranchMutation({
     repo_ref: repoRef,
@@ -313,16 +326,21 @@ export default function PullRequestConversationPage() {
       })
   }, [deleteBranch, repoRef, prId, refetchBranch, refetchActivities])
 
+  // useEffect(() => {
+  //   if (sourceBranch && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
+  //     setShowDeleteBranchButton(true)
+  //   }
+  // }, [sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
+
   useEffect(() => {
-    if (sourceBranch && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
+    if (sourceBranch && !branchError && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
       setShowDeleteBranchButton(true)
+      setShowRestoreBranchButton(false)
+      return
     }
-  }, [sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
 
-  useEffect(() => {
-    if (!branchError) return
-
-    if (pullReqMetadata?.merged || pullReqMetadata?.closed) {
+    if ((branchError || !sourceBranch) && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
+      setShowDeleteBranchButton(false)
       setShowRestoreBranchButton(true)
       return
     }
@@ -346,7 +364,7 @@ export default function PullRequestConversationPage() {
 
       setShowRestoreBranchButton(true)
     })
-  }, [branchError])
+  }, [branchError, sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
 
   const [activities, setActivities] = useState<TypesPullReqActivity[] | undefined>(activityData)
 
@@ -532,9 +550,17 @@ export default function PullRequestConversationPage() {
         // message: data.commitMessage
       }
       mergePullReqOp({ body: payload, repo_ref: repoRef, pullreq_number: prId })
-        .then(() => {
+        .then(_res => {
           handleRefetchData()
           setRuleViolationArr(undefined)
+          refetchBranch()
+          // if (res.body.branch_deleted) {
+          //   setShowDeleteBranchButton(false)
+          //   setShowRestoreBranchButton(true)
+          // } else {
+          //   setShowDeleteBranchButton(true)
+          //   setShowRestoreBranchButton(false)
+          // }
         })
         .catch(error => setMergeErrorMessage(error.message))
       //todo: add catch to show errors
@@ -695,7 +721,7 @@ export default function PullRequestConversationPage() {
       codeOwnerPendingEntries,
       codeOwnerApprovalEntries,
       latestCodeOwnerApprovalArr,
-      actions: getMockPullRequestActions(handlePrState, handleMerge, pullReqMetadata),
+      actions: getMockPullRequestActions(handlePrState, handleMerge, pullReqMetadata, prPanelData),
       checkboxBypass,
       setCheckboxBypass,
       onRestoreBranch,
@@ -736,7 +762,6 @@ export default function PullRequestConversationPage() {
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {
     return <SkeletonList />
   }
-
   return (
     <>
       <CommitSuggestionsDialog

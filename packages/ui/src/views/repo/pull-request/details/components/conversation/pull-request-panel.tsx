@@ -251,6 +251,15 @@ const PullRequestPanel = ({
     getDataFromPullReqMetadata(pullReqMetadata)
 
   useEffect(() => {
+    const firstEnabledAction = actions.find(action => !action.disabled)
+    if (firstEnabledAction) {
+      setMergeButtonValue(firstEnabledAction.id)
+    } else {
+      setMergeButtonValue(actions[0].id)
+    }
+  }, [actions])
+
+  useEffect(() => {
     const ruleViolationArr = prPanelData?.ruleViolationArr
 
     if (!!ruleViolationArr && !isDraft && ruleViolationArr.data.rule_violations) {
@@ -334,7 +343,8 @@ const PullRequestPanel = ({
                       options={actions.map(action => ({
                         value: action.id,
                         label: action.title,
-                        description: action.description
+                        description: action.description,
+                        disabled: action.disabled
                       }))}
                       handleButtonClick={() => {
                         actions[parseInt(mergeButtonValue)]?.action?.()

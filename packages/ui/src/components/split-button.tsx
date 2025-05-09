@@ -11,6 +11,7 @@ export interface SplitButtonOptionType<T extends string> {
   value: T
   label: string
   description?: string
+  disabled?: boolean
 }
 
 // Base props shared by all variants
@@ -95,7 +96,7 @@ export const SplitButton = <T extends string>({
                   <DropdownMenu.Item
                     key={String(option.value)}
                     onClick={() => handleOptionChange(option.value)}
-                    disabled={loading}
+                    disabled={loading || option.disabled}
                   >
                     <Option
                       control={
@@ -117,6 +118,7 @@ export const SplitButton = <T extends string>({
                   key={String(option.value)}
                   className="px-3 py-2.5"
                   onClick={() => handleOptionChange(option.value)}
+                  disabled={loading || option.disabled}
                 >
                   <span className="flex flex-col gap-y-1.5">
                     <span className="leading-none text-cn-foreground-1">{option.label}</span>

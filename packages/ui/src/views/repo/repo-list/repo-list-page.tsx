@@ -110,15 +110,15 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   options={[
                     {
                       value: 'import',
-                      label: t('views:repos.import-repository', 'Import repository')
+                      label: t('views:repos.import-repository', 'Import Repository')
                     },
                     {
                       value: 'import-multiple',
-                      label: t('views:repos.import-repositories', 'Import repositories')
+                      label: t('views:repos.import-repositories', 'Import Repositories')
                     }
                   ]}
                 >
-                  {t('views:repos.create-repository', 'Create repository')}
+                  {t('views:repos.create-repository', 'Create Repository')}
                 </SplitButton>
               </ListActions.Right>
             </ListActions.Root>

@@ -189,7 +189,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
         <>
           <FormWrapper onSubmit={handleProfileSubmit(onProfileSubmit)}>
             <Legend title={t('views:profileSettings.personalInfo', 'Personal information')} />
-            <Avatar name={userData?.name || ''} src="/images/anon.jpg" size="lg" rounded className="shadow-md" />
+            <Avatar name={userData?.name} src="/images/anon.jpg" size="lg" rounded />
             <Fieldset>
               <Input
                 id="name"

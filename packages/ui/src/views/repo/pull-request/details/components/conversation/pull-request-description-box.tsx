@@ -62,7 +62,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
       isLast={isLast}
       header={[
         {
-          avatar: <Avatar name={author || ''} size="default" rounded />,
+          avatar: <Avatar name={author} rounded />,
           name: author,
           // TODO: pr number must be a link
           description: (

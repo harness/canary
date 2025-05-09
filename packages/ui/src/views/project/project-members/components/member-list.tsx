@@ -37,7 +37,7 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
             {/* USER */}
             <Table.Cell className="content-center">
               <div className="flex items-center gap-2">
-                <Avatar name={member.display_name} src={member.avatarUrl} size="default" rounded />
+                <Avatar name={member.display_name} src={member.avatarUrl} rounded />
                 <span className="font-medium text-cn-foreground-1">{member.display_name}</span>
               </div>
             </Table.Cell>

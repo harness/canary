@@ -124,7 +124,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               <div className="flex items-center gap-2">
                 {tag.tagger?.identity.name ? (
                   <>
-                    <Avatar name={tag.tagger?.identity.name || ''} size="sm" rounded />
+                    <Avatar name={tag.tagger?.identity.name} size="sm" rounded />
                     <Text color="tertiary" className="block leading-none" truncate>
                       {tag.tagger?.identity.name}
                     </Text>

@@ -12,7 +12,7 @@ const UserAvatar = ({ user }: Pick<UserProps, 'user'>) => {
 
   return (
     <>
-      <Avatar name={userName} src={user?.url} size="default" rounded className="mr-2" />
+      <Avatar name={userName} src={user?.url} rounded className="mr-2" />
       <div className="grid flex-1 text-left text-2 leading-tight">
         <span className="truncate font-medium text-sidebar-foreground-1">{userName}</span>
         <span className="truncate text-sidebar-foreground-4">{user?.email}</span>

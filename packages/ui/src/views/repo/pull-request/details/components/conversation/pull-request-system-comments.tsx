@@ -276,7 +276,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
       key={payloadMain.id}
       header={[
         {
-          avatar: <Avatar name={payloadMain?.author?.display_name || ''} size="default" rounded />,
+          avatar: <Avatar name={payloadMain?.author?.display_name} rounded />,
           name: payloadMain?.author?.display_name,
           ...header
         }

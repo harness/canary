@@ -37,7 +37,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
         <div className="mt-4 flex items-center">
           {commitData?.author?.identity?.name && commitData?.author?.when && (
             <>
-              <Avatar name={commitData.author.identity.name} size="default" rounded />
+              <Avatar name={commitData.author.identity.name} rounded />
               <span className="ml-2 text-2 font-medium leading-none text-cn-foreground-1">
                 {commitData.author.identity.name}
               </span>

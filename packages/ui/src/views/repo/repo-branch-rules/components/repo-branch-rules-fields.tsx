@@ -185,7 +185,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
 const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<PrincipalType>) => {
   return (
     <>
-      <Avatar name={option.display_name ?? ''} src={option.avatar_url} size="default" rounded />
+      <Avatar name={option.display_name} src={option.avatar_url} rounded />
       <span className="font-medium">{option.display_name}</span>
     </>
   )

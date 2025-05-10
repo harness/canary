@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, CopyButton, Dialog, Input } from '@/components'
+import { Button, ButtonGroup, CopyButton, Dialog, Input, TextInput } from '@/components'
 import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -48,18 +48,16 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
         <div className="flex flex-col gap-y-7">
           {/* NAME */}
 
-          <Input
+          <TextInput
             className="py-px"
             id="identifier"
             label={t('views:repos.name')}
             value={tokenData?.identifier}
             readOnly
-            variant="extended"
-            rightElementVariant="default"
-            rightElement={<CopyButton name={tokenData?.identifier} />}
+            suffix={<CopyButton iconSize={14} name={tokenData?.identifier} />}
           />
 
-          <Input
+          <TextInput
             className="py-px"
             id="lifetime"
             label={t('views:repos.expiration')}
@@ -68,15 +66,13 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
           />
 
           {/* Expiration Info */}
-          <Input
+          <TextInput
             className="truncate py-px"
             id="token"
             label={t('views:repos.token')}
-            variant="extended"
             value={tokenData?.token}
             readOnly
-            rightElementVariant="default"
-            rightElement={<CopyButton name={tokenData?.token} />}
+            suffix={<CopyButton iconSize={14} name={tokenData?.token} />}
             autoFocus
           />
 
@@ -98,3 +94,5 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
     </Dialog.Root>
   )
 }
+
+CloneCredentialDialog.displayName = 'CloneCredentialDialog'

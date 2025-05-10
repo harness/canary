@@ -80,14 +80,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
   const { t } = useTranslationStore()
   const [searchTag, setSearchTag] = useState('')
   const [matchedDelegates, setMatchedDelegates] = useState(0)
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    watch,
-    formState: { errors }
-  } = useForm<DelegateSelectorFormFields>({
+  const formMethods = useForm<DelegateSelectorFormFields>({
     resolver: zodResolver(delegateSelectorFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -95,6 +88,15 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
       tags: preSelectedTags?.length ? preSelectedTags.map(tag => ({ id: tag, label: tag })) : []
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    formState: { errors }
+  } = formMethods
 
   const onSubmit: SubmitHandler<DelegateSelectorFormFields> = data => {
     onFormSubmit(data)
@@ -153,7 +155,7 @@ export const DelegateSelectorForm = (props: DelegateSelectorFormProps): JSX.Elem
   return (
     <SandboxLayout.Content className="h-full px-0 pt-0">
       <Spacer size={5} />
-      <FormWrapper className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper {...formMethods} className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className="mb-0">
           <RadioSelect
             id="type"

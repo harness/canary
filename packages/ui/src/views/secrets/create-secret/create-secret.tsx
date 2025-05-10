@@ -8,6 +8,7 @@ import {
   ButtonGroup,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormWrapper,
   Input,
   Spacer,
@@ -71,15 +72,7 @@ export function CreateSecretPage({
   const { t: _t } = useTranslationStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    watch,
-    trigger,
-    formState: { errors }
-  } = useForm<CreateSecretFormFields>({
+  const formMethods = useForm<CreateSecretFormFields>({
     resolver: zodResolver(createSecretFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -88,6 +81,16 @@ export function CreateSecretPage({
       tags: prefilledFormData?.tags ?? ''
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    trigger,
+    formState: { errors }
+  } = formMethods
 
   useEffect(() => {
     if (prefilledFormData) {
@@ -149,20 +152,18 @@ export function CreateSecretPage({
   return (
     <SandboxLayout.Content className="h-full px-0 pt-0">
       <Spacer size={5} />
-      <FormWrapper className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper {...formMethods} className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
         {/* NAME */}
         <Fieldset className="mb-0">
-          <Input
+          <FormInput.Text
             id="name"
             label="Secret Name"
             {...register('name')}
             placeholder="Enter secret name"
-            size="md"
-            error={errors.name?.message?.toString()}
             autoFocus
           />
           {(!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_TEXT) && (
-            <Input
+            <FormInput.Text
               id="value"
               {...register('value', {
                 onChange: () => {
@@ -172,8 +173,6 @@ export function CreateSecretPage({
               type="password"
               label="Secret Value"
               placeholder={prefilledFormData ? 'Encryped' : 'Add your secret value'}
-              size="md"
-              error={errors.value?.message?.toString()}
             />
           )}
           {(!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_FILE) && (
@@ -235,15 +234,7 @@ export function CreateSecretPage({
                     optional
                   />
                   {/* TAGS */}
-                  <Input
-                    id="tags"
-                    {...register('tags')}
-                    label="Tags"
-                    placeholder="Enter tags"
-                    size="md"
-                    error={errors.tags?.message?.toString()}
-                    optional
-                  />
+                  <FormInput.Text id="tags" {...register('tags')} label="Tags" placeholder="Enter tags" optional />
                 </Fieldset>
               </Accordion.Content>
             </Accordion.Item>

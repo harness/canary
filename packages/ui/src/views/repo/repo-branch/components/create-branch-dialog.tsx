@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Label } from '@/components'
+import { Alert, Button, ControlGroup, Dialog, Fieldset, FormInput, FormWrapper, Label } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
@@ -39,18 +39,13 @@ export function CreateBranchDialog({
 }: CreateBranchDialogProps) {
   const { t } = useTranslationStore()
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    clearErrors,
-    formState: { errors }
-  } = useForm<CreateBranchFormFields>({
+  const formMethods = useForm<CreateBranchFormFields>({
     resolver: zodResolver(createBranchFormSchema(t)),
     mode: 'onChange',
     defaultValues: INITIAL_FORM_VALUES
   })
+
+  const { register, handleSubmit, setValue, reset, clearErrors } = formMethods
 
   const resetForm = useCallback(() => {
     clearErrors()
@@ -84,16 +79,14 @@ export function CreateBranchDialog({
         <Dialog.Header>
           <Dialog.Title className="font-medium">{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="name"
               label="Branch name"
               {...register('name')}
               maxLength={250}
               placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
-              size="md"
-              error={errors.name?.message}
             />
           </Fieldset>
 

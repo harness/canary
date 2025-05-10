@@ -16,7 +16,7 @@ export interface TextInputConfig {
 }
 
 type TextInputProps = InputProps<AnyFormikValue, TextInputConfig>
-
+// TODO: Design system: Replace it with new TextInput component. Check with Srdjan.
 function TextInputInternal(props: TextInputProps): JSX.Element {
   const { readonly, path, input } = props
   const { label = '', required, placeholder, description, inputConfig } = input

@@ -61,15 +61,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   const { NavLink } = useRouterContext()
   const { t } = useTranslationStore()
   const { presetRuleData, principals, recentStatusChecks } = useRepoRulesStore()
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    clearErrors,
-    formState: { errors }
-  } = useForm<RepoBranchSettingsFormFields>({
+  const formMethods = useForm<RepoBranchSettingsFormFields>({
     resolver: zodResolver(repoBranchSettingsFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -84,6 +76,16 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
       rules: []
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    clearErrors,
+    formState: { errors }
+  } = formMethods
 
   const { rules } = useBranchRulesStore()
 
@@ -128,7 +130,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
         {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
       </h1>
 
-      <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
         <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} t={t} />
 
         <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} t={t} />

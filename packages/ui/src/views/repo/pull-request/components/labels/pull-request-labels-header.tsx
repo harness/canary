@@ -1,7 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 
-import { Button, DropdownMenu, Icon, Link, LinkProps, ScrollArea, SearchBox, Tag } from '@/components'
-import { useDebounceSearch } from '@/hooks'
+import { Button, DropdownMenu, Icon, Link, LinkProps, ScrollArea, SearchInput, Tag } from '@/components'
 import {
   HandleAddLabelType,
   ILabelType,
@@ -54,10 +53,9 @@ export const LabelsHeader = ({
   const { t } = useTranslationStore()
   const [labelWithValuesToShow, setLabelWithValuesToShow] = useState<LabelsWithValueType | null>(null)
 
-  const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
-    handleChangeSearchValue: setSearchQuery,
-    searchValue: searchQuery
-  })
+  const handleSearchQuery = (query: string) => {
+    setSearchQuery?.(query)
+  }
 
   const labelsListWithValues = useMemo(() => {
     return labelsList.map(label => {
@@ -107,7 +105,7 @@ export const LabelsHeader = ({
   const handleCloseValuesView = useRef(
     debounce(() => {
       setLabelWithValuesToShow(null)
-      handleResetSearch()
+      handleSearchQuery('')
     }, 300)
   ).current
 
@@ -137,13 +135,13 @@ export const LabelsHeader = ({
               {!!setSearchQuery && (
                 <>
                   <div className="px-2 py-1.5">
-                    <SearchBox.Root
-                      className="w-full"
+                    <SearchInput
+                      size="sm"
+                      autoFocus
+                      id="search"
+                      defaultValue={searchQuery}
                       placeholder={t('views:pullRequests.searchLabels', 'Search labels')}
-                      value={search}
-                      handleChange={handleSearchChange}
-                      showOnFocus
-                      hasSearchIcon
+                      onChange={handleSearchQuery}
                     />
                   </div>
                   <DropdownMenu.Separator />

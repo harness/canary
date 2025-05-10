@@ -1,6 +1,9 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { FC, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { Button, Dialog, Fieldset, FormWrapper, Input } from '@/components'
+import { Button, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 interface PullRequestHeaderEditDialogProps {
   open: boolean
@@ -15,20 +18,26 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
   onSubmit,
   initialTitle
 }) => {
-  const [title, setTitle] = useState(initialTitle)
-  const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  const isDisabled = !title || isLoading || title === initialTitle
+  const formMethods = useForm<{ title: string }>({
+    resolver: zodResolver(z.object({ title: z.string().min(1, { message: 'Please provide a title' }) })),
+    mode: 'onChange',
+    defaultValues: { title: initialTitle }
+  })
 
-  const handleSubmit = async () => {
-    if (!title) return
+  const { register, handleSubmit } = formMethods
+
+  const handleFormSubmit = async (data: { title: string }) => {
+    console.log(data)
+
+    if (!data.title) return
 
     setIsLoading(true)
-    setError('')
 
     try {
-      await onSubmit(title)
+      await onSubmit(data.title)
       onClose()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred')
@@ -37,40 +46,35 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
     }
   }
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value)
-  }
-
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
       <Dialog.Content aria-describedby={undefined}>
-        <Dialog.Header>
-          <Dialog.Title>Edit PR title</Dialog.Title>
-        </Dialog.Header>
-        <FormWrapper>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} id="edit-pr-title-form">
+          <Dialog.Header>
+            <Dialog.Title>Edit PR title</Dialog.Title>
+          </Dialog.Header>
           <Fieldset>
-            <Input
-              value={title}
-              size="md"
+            <FormInput.Text
+              id="title"
+              {...register('title')}
               placeholder="Enter pull request title"
               label="Title"
               onFocus={event => event.target.select()}
-              onChange={handleChange}
-              error={error}
               autoFocus
             />
+            {error && <p className="text-cn-foreground-danger">{error}</p>}
           </Fieldset>
+
+          <Dialog.Footer>
+            <Button type="button" variant="outline" onClick={onClose}>
+              Cancel
+            </Button>
+
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? 'Saving...' : 'Save'}
+            </Button>
+          </Dialog.Footer>
         </FormWrapper>
-
-        <Dialog.Footer>
-          <Button type="button" variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-
-          <Button type="submit" onClick={handleSubmit} disabled={isDisabled}>
-            {isLoading ? 'Saving...' : 'Save'}
-          </Button>
-        </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
   )

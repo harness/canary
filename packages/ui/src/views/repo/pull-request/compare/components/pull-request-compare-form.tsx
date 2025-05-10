@@ -1,7 +1,7 @@
 import { forwardRef, MouseEvent, useRef, useState } from 'react'
-import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
+import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister, UseFormReturn } from 'react-hook-form'
 
-import { Button, Fieldset, Icon, Input, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { Button, Fieldset, FormInput, FormWrapper, Icon, Input, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { handleFileDrop, handlePaste, HandleUploadType, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { z } from 'zod'
@@ -23,26 +23,26 @@ interface PullRequestFormProps {
   isLoading: boolean
   onFormDraftSubmit: (data: FormFields) => void
   onFormSubmit: (data: FormFields) => void
-  isValid: boolean
-  errors: FieldErrors<FormFields>
-  handleSubmit: UseFormHandleSubmit<FormFields>
-  register: UseFormRegister<FormFields>
   useTranslationStore: () => TranslationStore
   handleUpload?: HandleUploadType
   desc?: string
   setDesc: (desc: string) => void
+  formMethods: UseFormReturn<FormFields>
 }
 
 const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>(
-  (
-    { apiError, register, handleSubmit, errors, onFormSubmit, useTranslationStore, handleUpload, desc, setDesc },
-    ref
-  ) => {
+  ({ apiError, onFormSubmit, useTranslationStore, handleUpload, desc, setDesc, formMethods }, ref) => {
     const { t } = useTranslationStore()
     const onSubmit: SubmitHandler<FormFields> = data => {
       onFormSubmit(data)
     }
     const [__file, setFile] = useState<File>()
+
+    const {
+      register,
+      handleSubmit,
+      formState: { errors }
+    } = formMethods
 
     const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
     const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -105,24 +105,17 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
     }
 
     return (
-      <form ref={ref} onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper {...formMethods} formRef={ref} onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className="gap-y-3">
-          <Input
+          <FormInput.Text
             id="title"
             {...register('title')}
-            placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
-            error={errors.title?.message?.toString()}
             autoFocus
+            placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
             label={t('views:pullRequests.compareChangesFormTitleLabel', 'Title')}
-            size="md"
           />
 
-          <div
-            className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md', {
-              // 'border rounded-md': !inReplyMode || isEditMode,
-              // 'border-t': inReplyMode
-            })}
-          >
+          <div className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md')}>
             <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
               <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
                 <Tabs.Trigger className="data-[state=active]:bg-cn-background-1" value={TABS_KEYS.WRITE}>
@@ -194,7 +187,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
         {apiError && apiError !== "head branch doesn't contain any new commits." && (
           <span className="text-1 text-cn-foreground-danger">{apiError?.toString()}</span>
         )}
-      </form>
+      </FormWrapper>
     )
   }
 )

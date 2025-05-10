@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Checkbox, ControlGroup, Input, Label, Option, Radio, StackedList, Switch, Textarea } from '@/components'
+import { Checkbox, ControlGroup, FormInput, Label, Radio, StackedList, Switch, Textarea } from '@/components'
 import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
 
 export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (
@@ -25,22 +25,15 @@ export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch,
   </StackedList.Root>
 )
 
-export const WebhookNameField: FC<WebhookFormFieldProps & { disabled: boolean }> = ({
-  register,
-  errors,
-  disabled,
-  t
-}) => (
+export const WebhookNameField: FC<WebhookFormFieldProps & { disabled: boolean }> = ({ register, disabled, t }) => (
   <ControlGroup>
-    <Input
+    <FormInput.Text
       id="name"
       {...register!('identifier')}
       placeholder="Name your webhook"
       autoFocus
       disabled={disabled}
       label={t('views:repos.name', 'Name')}
-      error={errors?.identifier?.message?.toString()}
-      size="md"
     />
   </ControlGroup>
 )
@@ -57,32 +50,28 @@ export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register, e
   </ControlGroup>
 )
 
-export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
+export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, t }) => (
   <ControlGroup>
-    <Input
+    <FormInput.Text
       autoComplete="new-password"
       data-form-type="other"
       id="payloadUrl"
       {...register!('url')}
       placeholder={t('views:repos.urlPlaceholder', 'https://example.com/harness')}
       label={t('views:repos.urlLabel', 'Payload URL')}
-      error={errors?.url?.message?.toString()}
-      size="md"
     />
   </ControlGroup>
 )
 
-export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
+export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register, t }) => (
   <ControlGroup>
-    <Input
+    <FormInput.Text
       autoComplete="new-password"
       data-form-type="other"
       id="secret"
       {...register!('secret')}
       type="password"
       label={t('views:repos.secret', 'Secret')}
-      error={errors?.secret?.message?.toString()}
-      size="md"
     />
   </ControlGroup>
 )

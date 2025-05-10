@@ -1,0 +1,285 @@
+---
+title: NumberInput
+description: NumberInput component
+---
+
+The `NumberInput` component is used to handle user input, providing options for styling via themes and sizes.
+Also offers options for adding icons, captions, custom content, and error text for the field.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-8 min-w-[400px]">
+  {/* Basic Number Input */}
+  <div className="font-bold w-full mb-2">Basic Number Input:</div>
+  <NumberInput id="basic-number" label="Basic Number Input" placeholder="Enter a number" />
+  
+  {/* Number Input with Min/Max */}
+  <div className="font-bold w-full mb-2">Number Input with Min/Max Limits:</div>
+  <NumberInput 
+    id="limited-range" 
+    label="Limited Range (0-10)" 
+    min={0} 
+    max={10} 
+    defaultValue={5}
+    onChange={(value) => console.log('Value changed:', value)} 
+  />
+  
+  {/* Decimal Numbers */}
+  <div className="font-bold w-full mb-2">Decimal Numbers:</div>
+  <NumberInput 
+    id="decimal-input" 
+    allowDecimal
+    label="With Decimals" 
+    decimalScale={2} 
+    defaultValue={3.14} 
+  />
+  <NumberInput 
+    id="integer-only" 
+    label="Integer Only" 
+    allowDecimal={false}
+    defaultValue={42} 
+  />
+  
+  {/* Negative Values */}
+  <div className="font-bold w-full mb-2">Negative Values:</div>
+  <NumberInput 
+    id="allow-negative" 
+    label="Allow Negative"  
+    defaultValue={-10} 
+  />
+  <NumberInput 
+    id="positive-only" 
+    label="Positive Only"  
+    min={0}
+    defaultValue={10} 
+  />
+  
+  {/* Custom Steppers */}
+  <div className="font-bold w-full mb-2">Custom Step Values:</div>
+  <NumberInput 
+    id="small-increment" 
+    label="Increment by 0.1" 
+    step={0.1} 
+    allowDecimal={true}
+    defaultValue={1.0} 
+  />
+  <NumberInput 
+    id="large-increment" 
+    label="Increment by 5" 
+    step={5} 
+    defaultValue={10} 
+  />
+  
+  {/* Disabled & Error States */}
+  <div className="font-bold w-full mb-2">States and Feedback:</div>
+  <NumberInput 
+    id="disabled-input" 
+    label="Disabled Input" 
+    disabled 
+    defaultValue={50} 
+  />
+  <NumberInput 
+    id="error-input" 
+    label="With Error" 
+    error="Please enter a valid number" 
+    theme="danger"
+  />
+  <NumberInput 
+    id="warning-input" 
+    label="With Warning" 
+    warning="This is a high value" 
+    theme="warning"
+    defaultValue={95}
+  />
+  <NumberInput 
+    id="caption-input" 
+    label="With Caption" 
+    caption="Enter your preferred quantity" 
+    defaultValue={1}
+  />
+  
+  {/* Optional Label */}
+  <NumberInput 
+    id="optional-input" 
+    label="Optional Field" 
+    optional={true} 
+  />
+  
+  {/* Without Stepper UI */}
+  <div className="font-bold w-full mb-2">Without Stepper Buttons:</div>
+  <NumberInput 
+    hideStepper
+    id="no-stepper" 
+    label="No Stepper UI" 
+    placeholder="Enter a number manually"
+  />
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { NumberInput } from '@harnessio/ui/components'
+
+// Basic usage
+return (
+  <NumberInput
+    integerOnly
+    label="Quantity"
+    placeholder="Enter a number"
+    min={0}
+    max={100}
+    defaultValue={1}
+    onChange={(e) => handleQuantityChange(e.target.value)}
+  />
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "wrapperClassName",
+      description: "Additional CSS classes for the wrapper element",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Label text for the input field",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "id",
+      description: "Unique identifier for the input element",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Whether the input is disabled",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "optional",
+      description: "Whether to display an 'optional' tag beside the label",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "caption",
+      description: "Helper text displayed below the input",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "error",
+      description: "Error message to display (will use danger theme)",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "warning",
+      description: "Warning message to display (will use warning theme)",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "hideStepper",
+      description: "Whether to hide the increment/decrement buttons",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "integerOnly",
+      description: "Whether to allow only integer values (no decimals)",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "min",
+      description: "Minimum allowed value",
+      required: false,
+      defaultValue: "",
+      value: "number",
+    },
+    {
+      name: "max",
+      description: "Maximum allowed value",
+      required: false,
+      defaultValue: "",
+      value: "number",
+    },
+    {
+      name: "step",
+      description: "Amount to increment/decrement when using stepper buttons",
+      required: false,
+      defaultValue: "1",
+      value: "number",
+    },
+    {
+      name: "placeholder",
+      description: "Placeholder text for the input field",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes for the input element",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "theme",
+      description: "Theme styling for the input and caption",
+      required: false,
+      defaultValue: "default",
+      value: "default | success | danger | warning",
+    },
+    {
+      name: "defaultValue",
+      description: "Default value for uncontrolled input",
+      required: false,
+      defaultValue: "",
+      value: "number",
+    },
+    {
+      name: "value",
+      description: "Controlled value for the input",
+      required: false,
+      defaultValue: "",
+      value: "number",
+    },
+    {
+      name: "onChange",
+      description: "Callback when value changes",
+      required: false,
+      defaultValue: "",
+      value: "React.ChangeEventHandler<HTMLInputElement>",
+    },
+    {
+      name: "size",
+      description: "Size of the input field",
+      required: false,
+      defaultValue: "default",
+      value: "default | sm",
+    },
+  ]}
+/>

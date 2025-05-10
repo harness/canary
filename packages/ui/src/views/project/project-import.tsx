@@ -7,10 +7,9 @@ import {
   Checkbox,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormSeparator,
   FormWrapper,
-  Input,
-  Option,
   Select,
   Spacer,
   Text
@@ -51,13 +50,7 @@ interface ImportProjectPageProps {
 }
 
 export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiErrorsValue }: ImportProjectPageProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors }
-  } = useForm<ImportProjectFormFields>({
+  const formMethods = useForm<ImportProjectFormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
@@ -70,6 +63,8 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
       organization: ''
     }
   })
+
+  const { register, handleSubmit, setValue, watch } = formMethods
 
   const providerValue = watch('provider')
   const orgValue = watch('organization')
@@ -98,7 +93,7 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           Import a Project
         </Text>
         <Spacer size={10} />
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
           <Fieldset>
             <ControlGroup>
@@ -130,28 +125,19 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           </Fieldset>
           {watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE && (
             <Fieldset>
-              <Input
-                id="host"
-                label="Host URL"
-                {...register('hostUrl')}
-                placeholder="Enter the host URL"
-                size="md"
-                error={errors.hostUrl?.message?.toString()}
-              />
+              <FormInput.Text id="host" label="Host URL" {...register('hostUrl')} placeholder="Enter the host URL" />
             </Fieldset>
           )}
 
           {/* token */}
           <Fieldset>
             <ControlGroup>
-              <Input
+              <FormInput.Text
                 type="password"
                 id="password"
                 label="Token"
                 {...register('password')}
                 placeholder="Enter your access token"
-                size="md"
-                error={errors.password?.message?.toString()}
               />
             </ControlGroup>
           </Fieldset>
@@ -160,13 +146,11 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
 
           {/* organization */}
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="organization"
               label="Organization"
               {...register('organization')}
               placeholder="Enter the organization name"
-              size="md"
-              error={errors.organization?.message?.toString()}
             />
           </Fieldset>
 
@@ -189,13 +173,11 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           {/* project identifier */}
           <Fieldset>
             <ControlGroup>
-              <Input
+              <FormInput.Text
                 id="identifier"
                 label="Name"
                 {...register('identifier')}
                 placeholder="Enter repository name"
-                size="md"
-                error={errors.identifier?.message?.toString()}
               />
             </ControlGroup>
           </Fieldset>
@@ -203,13 +185,11 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           {/* description */}
           <Fieldset>
             <ControlGroup>
-              <Input
+              <FormInput.Text
                 id="description"
                 label="Description"
                 {...register('description')}
                 placeholder="Enter a description"
-                size="md"
-                error={errors.description?.message?.toString()}
               />
             </ControlGroup>
           </Fieldset>

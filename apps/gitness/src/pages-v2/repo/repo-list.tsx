@@ -104,17 +104,22 @@ export default function ReposListPage() {
   }, [importRepoIdentifier, setImportRepoIdentifier])
 
   return (
-    <SandboxRepoListPage
-      useRepoStore={useRepoStore}
-      useTranslationStore={useTranslationStore}
-      isLoading={isFetching}
-      isError={isError}
-      errorMessage={error?.message}
-      searchQuery={query}
-      setSearchQuery={setQuery}
-      toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
-      toCreateRepo={() => routes.toCreateRepo({ spaceId })}
-      toImportRepo={() => routes.toImportRepo({ spaceId })}
-    />
+    <>
+      <SandboxRepoListPage
+        useRepoStore={useRepoStore}
+        useTranslationStore={useTranslationStore}
+        isLoading={isFetching}
+        isError={isError}
+        errorMessage={error?.message}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+        toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
+        toCreateRepo={() => routes.toCreateRepo({ spaceId })}
+        toImportRepo={() => routes.toImportRepo({ spaceId })}
+        toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
+      />
+    </>
   )
 }
+
+ReposListPage.displayName = 'ReposListPage'

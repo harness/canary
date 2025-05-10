@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useCallback } from 'react'
 
 import {
   Button,
@@ -9,7 +9,8 @@ import {
   Message,
   MessageTheme,
   ScrollArea,
-  SearchBox
+  SearchBox,
+  SearchInput
 } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
@@ -47,10 +48,12 @@ export const MultiSelect = <T = unknown,>({
   error,
   label
 }: MultiSelectProps<T>) => {
-  const { search, handleSearchChange } = useDebounceSearch({
-    handleChangeSearchValue,
-    searchValue
-  })
+  const handleSearchChange = useCallback(
+    (query: string) => {
+      handleChangeSearchValue?.(query)
+    },
+    [handleChangeSearchValue]
+  )
 
   return (
     <ControlGroup className={className}>
@@ -69,12 +72,12 @@ export const MultiSelect = <T = unknown,>({
           {!!handleChangeSearchValue && (
             <>
               <div className="px-2 py-1.5">
-                <SearchBox.Root
+                <SearchInput
                   className="w-full"
                   placeholder={t('views:repos.search', 'Search')}
-                  value={search}
-                  handleChange={handleSearchChange}
-                  showOnFocus
+                  defaultValue={searchValue}
+                  onChange={handleSearchChange}
+                  autoFocus
                 />
               </div>
               <DropdownMenu.Separator />

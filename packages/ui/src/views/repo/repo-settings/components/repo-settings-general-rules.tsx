@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 
 import {
@@ -7,14 +7,13 @@ import {
   ListActions,
   MoreActionsTooltip,
   NoData,
-  SearchBox,
+  SearchInput,
   SkeletonList,
   Spacer,
   StackedList,
   Text
 } from '@/components'
 import { useRouterContext } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 import { ErrorTypes, RuleDataType, TranslationStore } from '@/views'
 import { TFunction } from 'i18next'
 
@@ -75,14 +74,16 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   const { Link, NavLink } = useRouterContext()
   const { t } = useTranslationStore()
 
-  const {
-    search,
-    handleSearchChange: handleInputChange,
-    handleResetSearch: resetSearch
-  } = useDebounceSearch({
-    handleChangeSearchValue: setRulesSearchQuery,
-    searchValue: rulesSearchQuery
-  })
+  const handleSearchChange = useCallback(
+    (val: string) => {
+      setRulesSearchQuery?.(val)
+    },
+    [setRulesSearchQuery]
+  )
+
+  const resetSearch = () => {
+    setRulesSearchQuery?.('')
+  }
 
   const isShowRulesContent = useMemo(() => {
     return !!rules?.length || !!rulesSearchQuery?.length
@@ -117,12 +118,13 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           <>
             <ListActions.Root>
               <ListActions.Left>
-                <SearchBox.Root
-                  className={projectScope ? 'max-w-96' : 'max-w-xs'}
+                <SearchInput
+                  id="search"
+                  size="sm"
+                  defaultValue={rulesSearchQuery}
+                  inputContainerClassName={projectScope ? 'max-w-96' : 'max-w-xs'}
                   placeholder={t('views:repos.search', 'Search')}
-                  width="full"
-                  value={search}
-                  handleChange={handleInputChange}
+                  onChange={handleSearchChange}
                 />
               </ListActions.Left>
               <ListActions.Right>

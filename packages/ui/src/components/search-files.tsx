@@ -1,8 +1,7 @@
-import { ChangeEvent, ReactNode, useCallback, useMemo, useState } from 'react'
+import { ReactNode, useCallback, useMemo, useState } from 'react'
 
-import { Command, Popover, SearchBox, Text } from '@/components'
+import { Command, Popover, SearchInput, Text } from '@/components'
 import { TranslationStore } from '@/views'
-import { debounce } from 'lodash-es'
 
 const markedFileClassName = 'w-full text-cn-foreground-1'
 
@@ -43,61 +42,53 @@ interface SearchFilesProps {
 
 export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: SearchFilesProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [query, setQuery] = useState('')
   const [filteredFiles, setFilteredFiles] = useState<FilteredFile[]>([])
   const { t } = useTranslationStore()
 
-  /**
-   * Debounced function for filtering files
-   */
-  const debouncedFilter = useMemo(
-    () =>
-      debounce((query: string) => {
-        if (!filesList) {
-          setFilteredFiles([])
-          return
+  const filterQuery = useMemo(
+    () => (query: string) => {
+      if (!filesList) {
+        setFilteredFiles([])
+        return
+      }
+
+      const lowerCaseQuery = query.toLowerCase()
+
+      const filtered = filesList.reduce<FilteredFile[]>((acc, file) => {
+        const lowerCaseFile = file.toLowerCase()
+        const matchIndex = lowerCaseFile.indexOf(lowerCaseQuery)
+
+        if (matchIndex > -1) {
+          acc.push({
+            file,
+            element: getMarkedFileElement(file, lowerCaseQuery, matchIndex)
+          })
         }
 
-        const lowerCaseQuery = query.toLowerCase()
+        return acc
+      }, [])
 
-        const filtered = filesList.reduce<FilteredFile[]>((acc, file) => {
-          const lowerCaseFile = file.toLowerCase()
-          const matchIndex = lowerCaseFile.indexOf(lowerCaseQuery)
-
-          if (matchIndex > -1) {
-            acc.push({
-              file,
-              element: getMarkedFileElement(file, lowerCaseQuery, matchIndex)
-            })
-          }
-
-          return acc
-        }, [])
-
-        setFilteredFiles(filtered)
-      }, 300),
+      setFilteredFiles(filtered)
+    },
     [filesList]
   )
 
   const handleInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value
-      setQuery(value)
-      setIsOpen(value !== '')
-      debouncedFilter(value)
+    (searchQuery: string) => {
+      setIsOpen(searchQuery !== '')
+      filterQuery(searchQuery)
     },
-    [debouncedFilter]
+    [filterQuery]
   )
 
   return (
     <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
       <Popover.Anchor asChild>
         <div>
-          <SearchBox.Root
-            width="full"
+          <SearchInput
             placeholder={t('component:searchFile.input', 'Search files...')}
-            handleChange={handleInputChange}
-            value={query}
+            size="sm"
+            onChange={handleInputChange}
           />
         </div>
       </Popover.Anchor>

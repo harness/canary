@@ -17,6 +17,7 @@ export interface NumberInputConfig {
 
 type NumberInputProps = InputProps<AnyFormikValue, NumberInputConfig>
 
+// TODO: Design system: Replace it with new NumberInput component. Check with Srdjan.
 function NumberInputInternal(props: NumberInputProps): JSX.Element {
   const { readonly, path, input } = props
   const { label = '', required, placeholder, description, inputConfig } = input

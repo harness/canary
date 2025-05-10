@@ -7,9 +7,10 @@ import {
   CommitToGitRefOption,
   ControlGroup,
   Dialog,
+  FormInput,
+  FormWrapper,
   GitCommitFormType,
   Icon,
-  Input,
   Link,
   Message,
   MessageTheme,
@@ -78,14 +79,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   isSubmitting,
   error
 }) => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors }
-  } = useForm<GitCommitSchemaType>({
+  const formMethods = useForm<GitCommitSchemaType>({
     resolver: zodResolver(createGitCommitSchema(isFileNameRequired)),
     mode: 'onChange',
     defaultValues: {
@@ -96,6 +90,15 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
       fileName: isFileNameRequired ? '' : undefined
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors }
+  } = formMethods
 
   const isDisabledSubmission = disableCTA || isSubmitting
   const onSubmit: SubmitHandler<GitCommitSchemaType> = data => {
@@ -133,25 +136,26 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
           <Dialog.Title>Commit Changes</Dialog.Title>
         </Dialog.Header>
 
-        <form className="flex flex-col gap-y-7 pb-4" onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {isFileNameRequired && (
-            <Input
+            <FormInput.Text
               id="fileName"
               label="File Name"
               {...register('fileName')}
               placeholder="Add a file name"
-              size="md"
-              error={errors.fileName?.message?.toString()}
+              theme={errors.fileName?.message ? 'danger' : 'default'}
+              error={errors.fileName?.message}
               autoFocus
             />
           )}
-          <Input
+          <FormInput.Text
+            autoFocus={!isFileNameRequired}
             id="message"
             label="Commit Message"
             {...register('message')}
             placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
-            size="md"
-            error={errors.message?.message?.toString()}
+            theme={errors.message?.message ? 'danger' : 'default'}
+            error={errors.message?.message}
           />
           <Textarea
             id="description"
@@ -221,20 +225,25 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
             )}
             {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH && (!violation || (violation && bypassable)) && (
               <div className="ml-8 mt-3">
-                <Input
+                <FormInput.Text
+                  autoFocus
+                  prefix={
+                    <div className="grid place-items-center px-2">
+                      <Icon name="branch" size={14} />
+                    </div>
+                  }
                   id="newBranchName"
                   {...register('newBranchName', {
                     onChange: handleNewBranchNameChange
                   })}
                   placeholder="New Branch Name"
-                  error={errors.newBranchName?.message?.toString()}
-                  autoFocus
-                  inputIconName="branch"
+                  error={errors.newBranchName?.message}
+                  theme={errors.newBranchName?.message ? 'danger' : 'default'}
                 />
               </div>
             )}
           </ControlGroup>
-        </form>
+        </FormWrapper>
 
         <Dialog.Footer>
           <ButtonGroup>

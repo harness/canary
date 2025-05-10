@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, Card, Input, Link, Spacer, Text } from '@/components'
+import { Alert, Button, Card, FormInput, FormWrapper, Link, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -36,14 +36,16 @@ const signUpSchema = z
 
 export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) {
   const [serverError, setServerError] = useState<string | null>(null)
+  const formMethods = useForm({
+    resolver: zodResolver(signUpSchema)
+  })
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     trigger
-  } = useForm({
-    resolver: zodResolver(signUpSchema)
-  })
+  } = formMethods
 
   const onSubmit = (data: SignUpData) => {
     handleSignUp(data)
@@ -81,46 +83,35 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
           </Text>
         </Card.Header>
         <Card.Content className="mt-10">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+            <FormInput.Text
               id="userId"
               type="text"
               {...register('userId', { onChange: handleInputChange })}
               placeholder="User ID"
               label="User ID"
-              size="md"
               autoFocus
-              error={errors.userId?.message?.toString()}
             />
-            <Input
-              wrapperClassName="mt-7"
+            <FormInput.Text
               id="email"
               type="email"
               {...register('email', { onChange: handleInputChange })}
               placeholder="Your email"
               label="Email"
-              size="md"
-              error={errors.email?.message?.toString()}
             />
-            <Input
-              wrapperClassName="mt-7"
+            <FormInput.Text
               id="password"
               type="password"
               placeholder="Password (6+ characters)"
               label="Password"
-              size="md"
               {...register('password', { onChange: handleInputChange })}
-              error={errors.password?.message?.toString()}
             />
-            <Input
-              wrapperClassName="mt-7"
+            <FormInput.Text
               id="confirmPassword"
               type="password"
               placeholder="Confirm password"
               label="Confirm password"
-              size="md"
               {...register('confirmPassword', { onChange: handleInputChange })}
-              error={errors.confirmPassword?.message?.toString()}
             />
             {serverError && (
               <Alert.Container variant="destructive">
@@ -130,7 +121,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
             <Button className="mt-10 w-full" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Signing up...' : 'Sign up'}
             </Button>
-          </form>
+          </FormWrapper>
           <Spacer size={4} />
           <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
             Already have an account? <Link to="/signin">Sign in</Link>

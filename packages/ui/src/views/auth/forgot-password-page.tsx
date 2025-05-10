@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, Card, Input, Link, Spacer, Text } from '@/components'
+import { Alert, Button, Card, FormInput, FormWrapper, Link, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -25,6 +25,10 @@ const forgotPasswordSchema = z.object({
 
 export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswordPageProps) {
   const [serverError, setServerError] = useState<string | null>(null)
+  const formMethods = useForm({
+    resolver: zodResolver(forgotPasswordSchema)
+  })
+
   const {
     register,
     handleSubmit,
@@ -32,9 +36,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
     clearErrors,
     trigger,
     formState: { errors }
-  } = useForm({
-    resolver: zodResolver(forgotPasswordSchema)
-  })
+  } = formMethods
 
   const handleOnSubmit: SubmitHandler<ForgotPasswordData> = data => {
     // Handle the submission of the forgot password form
@@ -88,21 +90,19 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
           </Alert.Container>
         )}
         <Card.Content className="mt-10">
-          <form onSubmit={handleSubmit(handleOnSubmit)}>
-            <Input
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(handleOnSubmit)}>
+            <FormInput.Text
               id="email"
               type="email"
               placeholder="Your email"
               label="Email"
-              size="md"
               {...register('email', { onChange: handleInputChange })}
-              error={errors.email?.message?.toString()}
               autoFocus
             />
             <Button className="mt-10 w-full" variant="outline" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Sending...' : 'Send'}
             </Button>
-          </form>
+          </FormWrapper>
           <Spacer size={4} />
           <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
             Don’t have an account? <Link to="/signup">Sign up</Link>

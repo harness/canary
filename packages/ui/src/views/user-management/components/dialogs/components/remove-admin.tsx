@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, ControlGroup, Dialog, Fieldset, FormWrapper } from '@/components'
+import { Button, ButtonGroup, ControlGroup, Dialog, Fieldset } from '@/components'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
@@ -38,7 +38,10 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
           </Dialog.Title>
         </Dialog.Header>
 
-        <FormWrapper onSubmit={handleSubmit} id="remove-admin-form">
+        {/*  TODO: Design system: Update this example with FormWrapper
+              Check whether form is required or not 
+         */}
+        <form className="flex flex-col gap-y-7" onSubmit={handleSubmit} id="remove-admin-form">
           <Fieldset>
             <ControlGroup>
               <span
@@ -60,7 +63,7 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
           </Fieldset>
 
           {updateUserAdminError && <span className="text-2 text-cn-foreground-danger">{updateUserAdminError}</span>}
-        </FormWrapper>
+        </form>
 
         <Dialog.Footer>
           <ButtonGroup className="justify-end">

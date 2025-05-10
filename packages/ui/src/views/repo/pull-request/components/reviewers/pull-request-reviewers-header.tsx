@@ -1,7 +1,6 @@
 import { useRef } from 'react'
 
-import { Avatar, Button, DropdownMenu, Icon, ScrollArea, SearchBox } from '@/components'
-import { useDebounceSearch } from '@/hooks'
+import { Avatar, Button, DropdownMenu, Icon, ScrollArea, SearchInput } from '@/components'
 import { PrincipalType } from '@/types'
 import { PRReviewer, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
@@ -31,12 +30,11 @@ const ReviewersHeader = ({
 }: ReviewersHeaderProps) => {
   const { t } = useTranslationStore()
 
-  const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
-    handleChangeSearchValue: setSearchQuery,
-    searchValue: searchQuery
-  })
+  const handleSearchQuery = (query: string) => {
+    setSearchQuery(query)
+  }
 
-  const handleCloseValuesView = useRef(debounce(handleResetSearch, 300)).current
+  const handleCloseValuesView = useRef(debounce(() => handleSearchQuery(''), 300)).current
 
   return (
     <div className="mb-0.5 flex items-center justify-between">
@@ -50,12 +48,13 @@ const ReviewersHeader = ({
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
           <div className="px-2 py-1.5" role="presentation" onKeyDown={e => e.stopPropagation()}>
-            <SearchBox.Root
-              className="w-full"
+            <SearchInput
+              size="sm"
+              autoFocus
+              id="search"
+              defaultValue={searchQuery}
               placeholder={t('views:pullRequests.searchUsers', 'Search users')}
-              value={search}
-              handleChange={handleSearchChange}
-              showOnFocus
+              onChange={handleSearchQuery}
             />
           </div>
           <DropdownMenu.Separator />

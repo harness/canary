@@ -1,0 +1,288 @@
+---
+title: TextInput
+description: TextInput component
+---
+
+The `TextInput` component is used to handle user input, providing options for styling via themes and sizes.
+Also offers options for adding icons, captions, custom content, and error text for the field.
+
+import { DocsPage } from "@/components/docs-page";
+import SearchInputDoc from "@/components/samples/SearchInputDoc";
+import React from "react";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-12 min-w-[400px]">
+  {/* Input Examples */}
+  <div className="font-bold w-full mb-2">Input Examples:</div>
+  <TextInput placeholder="Enter the value" />
+  <TextInput disabled placeholder="Username" label="Disabled Input" />
+  <TextInput 
+    label="Success Input" 
+    id="someinput" 
+    value="input with value" 
+    placeholder="Enter the value" 
+    theme="success" 
+  />
+  <TextInput 
+    theme="danger" 
+    label="Input with Error" 
+    error="This field is required" 
+  />
+  <TextInput 
+    theme="warning" 
+    label="Input with Warning" 
+    warning="Please double-check this field" 
+  />
+  <TextInput 
+    size="sm" 
+    label="Small Input" 
+    placeholder="Enter the small value" 
+  />
+  
+  <hr />
+
+{/* Search Input Examples */}
+
+<div className="font-bold w-full mb-2">Search Input Examples:</div>
+<SearchInput />
+<SearchInput disabled />
+
+<hr />
+
+{/* Suffix and Prefix Examples */}
+
+<div className="font-bold w-full mb-2">Suffix and Prefix Examples:</div>
+
+<TextInput prefix="https://" suffix=".com" />
+<TextInput size="sm" prefix="https://" suffix=".com" />
+<TextInput disabled size="sm" prefix="https://" suffix=".com" />
+<TextInput prefix="PAT:" value="ghp_1234567890abcdef" readOnly />
+
+<TextInput
+  suffix={
+    <Button variant="outline" iconOnly>
+      <Icon name="chevron-right" size={14} />
+    </Button>
+  }
+/>
+<TextInput
+  prefix={
+    <Button variant="outline" iconOnly>
+      <Icon name="minus" size={14} />
+    </Button>
+  }
+  suffix={
+    <Button variant="outline" iconOnly>
+      <Icon name="plus" size={14} />
+    </Button>
+  }
+/>
+
+<NumberInput />
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { TextInput } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <TextInput
+    size="default"
+    value="input with value"
+    theme="success"
+    caption="Additional information" // displayed as a caption
+    error="Error message" // displayed as an error with icon
+    inputIconName="plus"
+    rightElement={<Button>Action</Button>}
+    rightElementVariant="filled"
+  />
+)
+```
+
+## Search Input with State Example
+
+Below is an example of how to implement a search input that displays the current search value using React state. The SearchInput component includes a built-in 300ms debounce to prevent excessive callbacks when typing:
+
+<br />
+
+<SearchInputDoc client:only />
+
+```tsx
+import { useState } from "react";
+import { TextInput } from "@harnessio/ui/components";
+
+export default function Search() {
+  // Using useState hook to track search value
+  const [searchValue, setSearchValue] = useState("");
+
+  return (
+    <>
+      <div className="mb-2 w-full font-bold">Search with State:</div>
+      <SearchInput
+        placeholder="Type to search..."
+        onChange={(value) => setSearchValue(value)}
+      />
+      <div className="rounded-md border bg-slate-50 p-3">
+        <div className="text-sm font-medium">Current Search Value:</div>
+        <div className="mt-1 rounded-md border bg-white p-2 font-mono text-sm">
+          {searchValue || "(empty)"}
+        </div>
+      </div>
+    </>
+  );
+}
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "type",
+      description: "HTML input type, excludes 'number' and 'search'",
+      required: false,
+      defaultValue: "text",
+      value: "string",
+    },
+    {
+      name: "wrapperClassName",
+      description: "Additional CSS classes for the wrapper element",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Label text for the input field",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "caption",
+      description: "Helper text displayed below the input",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "error",
+      description: "Error message to display (will use danger theme and icon)",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "warning",
+      description: "Warning message to display (will use warning theme)",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "optional",
+      description: "Whether to display an 'optional' tag beside the label",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "id",
+      description:
+        "Unique identifier for the input element (auto-generated if not provided)",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Whether the input is disabled",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes for the input element",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "inputContainerClassName",
+      description: "Additional CSS classes for the input container",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "theme",
+      description:
+        "Theme styling for the input and caption (automatically set to danger for errors, warning for warnings)",
+      required: false,
+      defaultValue: "default",
+      value: "default | success | danger | warning",
+    },
+    {
+      name: "size",
+      description: "Size of the input field",
+      required: false,
+      defaultValue: "default",
+      value: "default | sm",
+    },
+    {
+      name: "prefix",
+      description: "Content to display before the input field",
+      required: false,
+      defaultValue: "",
+      value: "ReactNode",
+    },
+    {
+      name: "suffix",
+      description: "Content to display after the input field",
+      required: false,
+      defaultValue: "",
+      value: "ReactNode",
+    },
+    {
+      name: "value",
+      description: "Controlled value for the input",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "defaultValue",
+      description: "Default value for uncontrolled input",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "onChange",
+      description: "Callback when value changes",
+      required: false,
+      defaultValue: "",
+      value: "React.ChangeEventHandler<HTMLInputElement>",
+    },
+    {
+      name: "placeholder",
+      description: "Placeholder text for the input field",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "readOnly",
+      description: "Whether the input is read-only",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+  ]}
+/>

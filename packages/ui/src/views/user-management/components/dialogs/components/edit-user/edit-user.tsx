@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, Dialog, Fieldset, FormWrapper, Input } from '@/components'
+import { Button, ButtonGroup, Dialog, Fieldset, FormInput, FormWrapper, Input } from '@/components'
 import {
   createEditUserSchema,
   type EditUserFields
@@ -25,15 +25,12 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
   const { isUpdatingUser } = loadingStates
   const { updateUserError } = errorStates
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset
-  } = useForm<EditUserFields>({
+  const formMethods = useForm<EditUserFields>({
     resolver: zodResolver(createEditUserSchema(t)),
     mode: 'onChange'
   })
+
+  const { register, handleSubmit, reset } = formMethods
 
   useEffect(() => {
     if (user) {
@@ -64,38 +61,32 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
           }}
         />
 
-        <FormWrapper onSubmit={handleSubmit(handleUpdateUser)} id="edit-user-form">
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleUpdateUser)} id="edit-user-form">
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="userID"
-              size="md"
               disabled
               {...register('userID')}
               className="cursor-not-allowed"
               label={t('views:userManagement.userId', 'User ID')}
               caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
-              error={errors.userID?.message?.toString()}
             />
           </Fieldset>
 
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="email"
               type="email"
-              size="md"
               {...register('email')}
               label={t('views:userManagement.editUser.email', 'Email')}
-              error={errors.email?.message?.toString()}
             />
           </Fieldset>
 
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="displayName"
-              size="md"
               {...register('displayName')}
               label={t('views:userManagement.displayName', 'Display name')}
-              error={errors.displayName?.message?.toString()}
             />
           </Fieldset>
 

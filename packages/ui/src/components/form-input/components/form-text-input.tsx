@@ -7,10 +7,6 @@ const FormTextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) 
   // Only access hook if it's available in the component tree
   const formContext = useFormContext()
 
-  // Generate a unique ID if one isn't provided
-  const generateUniqueId = useCallback(() => `text-input-${Math.random().toString(36).substring(2, 9)}`, [])
-  const inputId = props.id || generateUniqueId()
-
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const setRefs = (element: HTMLInputElement | null) => {
@@ -42,11 +38,11 @@ const FormTextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) 
         // Determine if there's an error from the form state
         const errorMessage = fieldState.error?.message || props.error
 
-        return <TextInput {...props} {...field} error={errorMessage} id={inputId} />
+        return <TextInput {...props} {...field} error={errorMessage} />
       }}
     />
   ) : (
-    <TextInput {...props} ref={ref} id={inputId} />
+    <TextInput {...props} ref={ref} />
   )
 })
 

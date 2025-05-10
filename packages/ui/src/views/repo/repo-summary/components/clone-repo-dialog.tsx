@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Alert, Button, CopyButton, DropdownMenu, Icon, Input, Tabs } from '@/components'
+import { Alert, Button, CopyButton, DropdownMenu, Icon, Tabs, TextInput } from '@/components'
 import { TranslationStore } from '@/views'
 
 export interface CloneRepoDialogProps {
@@ -82,14 +82,11 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
           </div>
           {currentTab === 'https' ? (
             <>
-              <Input
-                className="py-px text-cn-foreground-1"
+              <TextInput
                 id="httpsUrl"
                 readOnly
                 value={httpsUrl}
-                variant="extended"
-                rightElementVariant="default"
-                rightElement={<CopyButton name={httpsUrl} />}
+                suffix={<CopyButton iconSize={14} name={httpsUrl} />}
               />
               <div className="mt-4 flex items-center">
                 <span className="leading-snug text-cn-foreground-2">
@@ -108,15 +105,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
               )}
             </>
           ) : (
-            <Input
-              className="py-px text-cn-foreground-1"
-              id="sshUrl"
-              readOnly
-              value={sshUrl}
-              variant="extended"
-              rightElementVariant="default"
-              rightElement={<CopyButton name={sshUrl || ''} />}
-            />
+            <TextInput id="sshUrl" readOnly value={sshUrl} suffix={<CopyButton name={sshUrl || ''} />} />
           )}
         </div>
       </DropdownMenu.Content>

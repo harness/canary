@@ -1,4 +1,4 @@
-import { forwardRef, KeyboardEvent, useRef } from 'react'
+import { forwardRef, KeyboardEvent, useCallback, useRef } from 'react'
 
 import { Button, ControlGroup, FormCaption, Label } from '@/components'
 import { Icon } from '@components/icon'
@@ -9,7 +9,7 @@ export interface NumberInputProps extends Omit<InputProps, 'type' | 'suffix'> {
   wrapperClassName?: string
   caption?: string
   error?: string
-  warningMessage?: string
+  warning?: string
   optional?: boolean
   hideStepper?: boolean
   integerOnly?: boolean
@@ -39,7 +39,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       optional,
       caption,
       error,
-      warningMessage,
+      warning,
       hideStepper = false,
       integerOnly = false,
       ...props
@@ -48,6 +48,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
   ) => {
     // Create a ref for internal focus management
     const inputRef = useRef<HTMLInputElement | null>(null)
+
+    // Generate a unique ID if one isn't provided
+    const generateUniqueId = useCallback(() => `text-input-${Math.random().toString(36).substring(2, 9)}`, [])
+    const inputId = id || generateUniqueId()
 
     // Combine refs to handle both forward ref and internal ref
     const setRefs = (element: HTMLInputElement | null) => {
@@ -83,7 +87,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         <BaseInput
           type="number"
           ref={setRefs}
-          id={id}
+          id={inputId}
           disabled={disabled}
           inputMode={integerOnly ? 'numeric' : 'decimal'}
           onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
@@ -126,8 +130,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
         {error ? (
           <FormCaption theme="danger">{error}</FormCaption>
-        ) : warningMessage ? (
-          <FormCaption theme="warning">{warningMessage}</FormCaption>
+        ) : warning ? (
+          <FormCaption theme="warning">{warning}</FormCaption>
         ) : caption ? (
           <FormCaption>{caption}</FormCaption>
         ) : null}

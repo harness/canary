@@ -1,0 +1,69 @@
+---
+title: Form
+description: Form component
+---
+
+The `Form` component is a container for form elements, providing a structured layout and validation capabilities.
+
+import { DocsPage } from "@/components/docs-page";
+import SearchInputDoc from "@/components/samples/SearchInputDoc";
+import React from "react";
+
+```tsx
+import { useForm } from "react-hook-form";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+//...
+
+// Define the validation schema with zod
+const formSchema = z.object({
+  inputField: z.string().min(3, "Input must be at least 3 characters"),
+});
+
+// Infer the type from the schema
+type FormValues = z.infer<typeof formSchema>;
+
+export const ExampleFormComponent = () => {
+  const [submittedValue, setSubmittedValue] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // Initialize react-hook-form with zod resolver
+  const formMethods = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      inputField: "some text",
+    },
+  });
+
+  // Handle form submission
+  const onSubmit = (data: FormValues) => {
+    setSubmittedValue(data.inputField);
+  };
+
+  return (
+    <div className="w-full max-w-md">
+      {/* ‼️ It is mandatory to pass all return values from useForm to FormWrapper  */}
+      <FormWrapper {...formMethods} onSubmit={methods.handleSubmit(onSubmit)}>
+        <FormInput.Text
+          ref={inputRef}
+          name="inputField"
+          label="Input Field"
+          placeholder="Enter at least 3 characters"
+        />
+
+        <Button type="submit" disabled={methods.formState.isSubmitting}>
+          {methods.formState.isSubmitting ? "Submitting..." : "Submit"}
+        </Button>
+
+        {submittedValue && (
+          <div className="mt-4 p-3 bg-green-50 text-green-800 rounded">
+            Submitted value: {submittedValue}
+          </div>
+        )}
+      </FormWrapper>
+    </div>
+  );
+};
+```

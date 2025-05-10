@@ -10,7 +10,6 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import FormDemoPage from '../../pages/form-demo'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { useRepoStore } from './stores/repo-list-store'
@@ -106,7 +105,6 @@ export default function ReposListPage() {
 
   return (
     <>
-      <FormDemoPage />
       <SandboxRepoListPage
         useRepoStore={useRepoStore}
         useTranslationStore={useTranslationStore}

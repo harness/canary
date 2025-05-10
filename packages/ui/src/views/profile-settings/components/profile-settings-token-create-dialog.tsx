@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, CopyButton, Dialog, Fieldset, FormWrapper, Input, Select } from '@/components'
+import { Alert, Button, CopyButton, Dialog, Fieldset, FormInput, FormWrapper, Select } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
@@ -43,14 +43,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
 }) => {
   const { createdTokenData } = useProfileSettingsStore()
   const { t } = useTranslationStore()
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors, isValid }
-  } = useForm<TokenFormType>({
+  const formMethods = useForm<TokenFormType>({
     resolver: zodResolver(tokenCreateFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -59,6 +52,15 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
       token: ''
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors, isValid }
+  } = formMethods
 
   const expirationValue = watch('lifetime')
   const identifier = watch('identifier')
@@ -106,24 +108,16 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
         <Dialog.Header>
           <Dialog.Title>{t('views:profileSettings.createToken', 'Create a token')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="identifier"
               value={identifier}
-              size="md"
               {...register('identifier')}
               placeholder={t('views:profileSettings.enterTokenPlaceholder', 'Enter token name')}
               label={t('views:profileSettings.name', 'Name')}
               error={errors.identifier?.message?.toString()}
-              rightElement={
-                createdTokenData && (
-                  <CopyButton
-                    className="absolute right-2.5 bg-cn-background-1"
-                    name={createdTokenData.identifier || ''}
-                  />
-                )
-              }
+              suffix={createdTokenData && <CopyButton iconSize={14} name={createdTokenData.identifier || ''} />}
               readOnly={!!createdTokenData}
               autoFocus
             />
@@ -131,28 +125,21 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
           {createdTokenData ? (
             <>
               <Fieldset>
-                <Input
+                <FormInput.Text
                   id="lifetime"
                   value={createdTokenData?.lifetime}
-                  size="md"
                   label={t('views:profileSettings.expiration', 'Expiration')}
                   readOnly
                 />
               </Fieldset>
               <Fieldset>
-                <Input
+                <FormInput.Text
                   className="truncate"
                   id="token"
                   value={createdTokenData?.token}
-                  size="md"
                   readOnly
                   label={t('views:profileSettings.token', 'Token')}
-                  rightElement={
-                    <CopyButton
-                      className="absolute right-2.5 bg-cn-background-1"
-                      name={createdTokenData?.token || ''}
-                    />
-                  }
+                  suffix={<CopyButton iconSize={14} name={createdTokenData?.token || ''} />}
                 />
               </Fieldset>
               <span className="text-2 text-cn-foreground-1">

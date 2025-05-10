@@ -35,11 +35,7 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
   onFormSubmit,
   isSubmitting
 }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<CommitSuggestionsFormFields>({
+  const formMethods = useForm<CommitSuggestionsFormFields>({
     resolver: zodResolver(commitSuggestionsSchema),
     mode: 'onChange',
     defaultValues: {
@@ -48,6 +44,12 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
     }
   })
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = formMethods
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Content className="max-w-[576px]">
@@ -55,15 +57,13 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
           <Dialog.Title>Commit Changes</Dialog.Title>
         </Dialog.Header>
 
-        <FormWrapper onSubmit={handleSubmit(onFormSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onFormSubmit)}>
           <ControlGroup className="gap-y-7 pb-4">
             <FormInput.Text
               id="title"
               label="Commit Message"
               {...register('title')}
               placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
-              theme={errors.title?.message ? 'danger' : 'default'}
-              error={errors.title?.message}
             />
             <Textarea
               id="message"

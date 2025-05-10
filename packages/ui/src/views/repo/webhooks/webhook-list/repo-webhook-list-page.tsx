@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, FormInput, ListActions, SkeletonList, Spacer } from '@/components'
+import { Button, ListActions, SearchInput, SkeletonList, Spacer } from '@/components'
 import { useRouterContext } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -55,7 +55,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
             <>
               <ListActions.Root>
                 <ListActions.Left>
-                  <FormInput.Search
+                  <SearchInput
                     id="search"
                     size="sm"
                     defaultValue={searchQuery || ''}

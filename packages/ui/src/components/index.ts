@@ -92,3 +92,4 @@ export * from './theme-selector-v2'
 export * from './language-selector'
 
 export * from './form-input'
+export * from './inputs'

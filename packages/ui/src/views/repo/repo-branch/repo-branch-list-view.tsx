@@ -1,8 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, FormInput, ListActions, Pagination, Spacer } from '@/components'
+import { Button, ListActions, Pagination, SearchInput, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
-import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
 import { BranchesList } from './components/branch-list'
@@ -47,7 +46,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
-                <FormInput.Search
+                <SearchInput
                   size="sm"
                   defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}

@@ -1,17 +1,6 @@
 import { FC } from 'react'
 
-import {
-  Checkbox,
-  ControlGroup,
-  FormInput,
-  Input,
-  Label,
-  Option,
-  Radio,
-  StackedList,
-  Switch,
-  Textarea
-} from '@/components'
+import { Checkbox, ControlGroup, FormInput, Label, Radio, StackedList, Switch, Textarea } from '@/components'
 import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
 
 export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (
@@ -36,12 +25,7 @@ export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch,
   </StackedList.Root>
 )
 
-export const WebhookNameField: FC<WebhookFormFieldProps & { disabled: boolean }> = ({
-  register,
-  errors,
-  disabled,
-  t
-}) => (
+export const WebhookNameField: FC<WebhookFormFieldProps & { disabled: boolean }> = ({ register, disabled, t }) => (
   <ControlGroup>
     <FormInput.Text
       id="name"
@@ -50,8 +34,6 @@ export const WebhookNameField: FC<WebhookFormFieldProps & { disabled: boolean }>
       autoFocus
       disabled={disabled}
       label={t('views:repos.name', 'Name')}
-      theme={errors?.identifier?.message ? 'danger' : 'default'}
-      error={errors?.identifier?.message}
     />
   </ControlGroup>
 )
@@ -68,7 +50,7 @@ export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register, e
   </ControlGroup>
 )
 
-export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
+export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, t }) => (
   <ControlGroup>
     <FormInput.Text
       autoComplete="new-password"
@@ -77,13 +59,11 @@ export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, er
       {...register!('url')}
       placeholder={t('views:repos.urlPlaceholder', 'https://example.com/harness')}
       label={t('views:repos.urlLabel', 'Payload URL')}
-      theme={errors?.url?.message ? 'danger' : 'default'}
-      error={errors?.url?.message}
     />
   </ControlGroup>
 )
 
-export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
+export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register, t }) => (
   <ControlGroup>
     <FormInput.Text
       autoComplete="new-password"
@@ -92,8 +72,6 @@ export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register, errors
       {...register!('secret')}
       type="password"
       label={t('views:repos.secret', 'Secret')}
-      theme={errors?.secret?.message ? 'danger' : 'default'}
-      error={errors?.secret?.message}
     />
   </ControlGroup>
 )

@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useMemo, useState } from 'react'
 
-import { Command, FormInput, Popover, Text } from '@/components'
+import { Command, Popover, SearchInput, Text } from '@/components'
 import { TranslationStore } from '@/views'
 
 const markedFileClassName = 'w-full text-cn-foreground-1'
@@ -85,7 +85,7 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
     <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
       <Popover.Anchor asChild>
         <div>
-          <FormInput.Search
+          <SearchInput
             placeholder={t('component:searchFile.input', 'Search files...')}
             size="sm"
             onChange={handleInputChange}

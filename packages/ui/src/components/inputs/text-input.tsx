@@ -7,11 +7,7 @@ import { BaseInput, InputProps } from './base-input'
 export interface TextInputProps extends InputProps {
   type?: Exclude<HTMLInputElement['type'], 'number' | 'search'>
   wrapperClassName?: string
-  // caption should take error and warning messages
-  // based on theme it will be decided
   caption?: string
-  // remove error and warningMessage
-  // replace it with theme based
   error?: string
   warning?: string
   optional?: boolean
@@ -19,6 +15,10 @@ export interface TextInputProps extends InputProps {
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   const { label, optional, caption, error, warning, wrapperClassName, ...restProps } = props
+  // TODO: Design system: Theme override
+  // Proposal: override theme based on error and warning
+  const theme = error ? 'danger' : warning ? 'warning' : props.theme
+
   return (
     <ControlGroup className={wrapperClassName}>
       {!!label && (
@@ -27,7 +27,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
         </Label>
       )}
 
-      <BaseInput {...restProps} ref={ref} />
+      <BaseInput {...restProps} ref={ref} theme={theme} />
 
       {error ? (
         <FormCaption theme="danger">{error}</FormCaption>

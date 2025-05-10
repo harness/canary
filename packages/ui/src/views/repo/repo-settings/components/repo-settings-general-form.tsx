@@ -53,14 +53,7 @@ export const RepoSettingsGeneralForm: FC<{
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const BranchSelector = branchSelectorRenderer
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors }
-  } = useForm<RepoUpdateData>({
+  const formMethods = useForm<RepoUpdateData>({
     resolver: zodResolver(generalSettingsFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -70,6 +63,15 @@ export const RepoSettingsGeneralForm: FC<{
       access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors }
+  } = formMethods
 
   useEffect(() => {
     reset({
@@ -116,7 +118,7 @@ export const RepoSettingsGeneralForm: FC<{
       {isLoadingRepoData ? (
         <SkeletonForm />
       ) : (
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* NAME */}
           <Fieldset>
             <ControlGroup>
@@ -126,8 +128,6 @@ export const RepoSettingsGeneralForm: FC<{
                 placeholder={t('views:repos.repoNamePlaceholder', 'Enter repository name')}
                 disabled
                 label={t('views:repos.name', 'Name')}
-                theme={errors.name?.message ? 'danger' : 'default'}
-                error={errors.name?.message}
               />
             </ControlGroup>
             {/* DESCRIPTION */}

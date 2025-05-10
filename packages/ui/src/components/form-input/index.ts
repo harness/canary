@@ -1,13 +1,8 @@
-import { NumberInput } from './components/number-input'
-import { SearchInput } from './components/search-input'
-import { TextInput } from './components/text-input'
-import { TextInput2 } from './components/text-input-2'
+import { FormTextInput } from './components/form-text-input'
 
 const FormInput = {
-  Text: TextInput,
-  Number: NumberInput,
-  Search: SearchInput,
-  FormText: TextInput2
+  Text: FormTextInput,
+  Search: () => null
 }
 
 export { FormInput }

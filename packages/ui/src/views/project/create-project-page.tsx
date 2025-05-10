@@ -10,7 +10,6 @@ import {
   FormInput,
   FormWrapper,
   Icon,
-  Input,
   Link as StyledLink,
   LinkProps as StyledLinkProps
 } from '@/components'
@@ -83,6 +82,10 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
   const { t } = useTranslationStore()
 
   const [serverError, setServerError] = useState<string | null>(null)
+  const formWrapper = useForm<CreateProjectFields>({
+    resolver: zodResolver(createProjectSchema(t))
+  })
+
   const {
     trigger,
     register,
@@ -90,9 +93,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
     formState: { errors },
     clearErrors,
     handleSubmit
-  } = useForm<CreateProjectFields>({
-    resolver: zodResolver(createProjectSchema(t))
-  })
+  } = formWrapper
 
   const handleInputChange = async () => {
     clearErrors()
@@ -150,15 +151,13 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
           </p>
         </div>
 
-        <FormWrapper onSubmit={handleSubmit(onFormSubmit)}>
+        <FormWrapper {...formWrapper} onSubmit={handleSubmit(onFormSubmit)}>
           <Fieldset>
             <FormInput.Text
               id="name"
               label={t('views:createProject.form.name', 'Project name')}
               placeholder={t('views:createProject.form.namePlaceholder', 'Enter your project name')}
               {...register('name', { onChange: handleInputChange })}
-              theme={errors.name?.message ? 'danger' : 'default'}
-              error={errors.name?.message}
               autoFocus
             />
 
@@ -167,8 +166,6 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
               {...register('description', { onChange: handleInputChange })}
               label={t('views:createProject.form.description', 'Description')}
               placeholder={t('views:createProject.form.descriptionPlaceholder', 'Enter a description (optional)')}
-              theme={errors.description?.message ? 'danger' : 'default'}
-              error={errors.description?.message}
             />
           </Fieldset>
 

@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { DropdownMenu, FormInput, Icon, StatusBadge, Tabs } from '@/components'
+import { DropdownMenu, Icon, SearchInput, StatusBadge, Tabs } from '@/components'
 import { useRouterContext } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 import { cn } from '@utils/cn'
@@ -53,7 +53,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
           <span className="text-2 font-medium leading-none">Switch branches/tags</span>
         )}
         <div role="presentation" onKeyDown={e => e.stopPropagation()}>
-          <FormInput.Search
+          <SearchInput
             autoFocus
             inputContainerClassName="mt-2"
             id="search"

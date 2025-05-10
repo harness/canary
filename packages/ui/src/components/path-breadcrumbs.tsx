@@ -1,6 +1,6 @@
 import { ChangeEvent, Fragment } from 'react'
 
-import { Breadcrumb, FormInput, Icon, Input } from '@/components'
+import { Breadcrumb, Icon, TextInput } from '@/components'
 import { useRouterContext } from '@/context'
 
 interface InputPathBreadcrumbItemProps {
@@ -24,7 +24,7 @@ const InputPathBreadcrumbItem = ({
 }: InputPathBreadcrumbItemProps) => {
   return (
     <div className="flex items-center gap-1.5 text-cn-foreground-2">
-      <FormInput.Text
+      <TextInput
         className="w-[200px]"
         size="sm"
         id="fileName"

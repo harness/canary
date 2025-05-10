@@ -1,7 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 
-import { Button, DropdownMenu, FormInput, Icon, Link, LinkProps, ScrollArea, SearchBox, Tag } from '@/components'
-import { useDebounceSearch } from '@/hooks'
+import { Button, DropdownMenu, Icon, Link, LinkProps, ScrollArea, SearchInput, Tag } from '@/components'
 import {
   HandleAddLabelType,
   ILabelType,
@@ -136,7 +135,7 @@ export const LabelsHeader = ({
               {!!setSearchQuery && (
                 <>
                   <div className="px-2 py-1.5">
-                    <FormInput.Search
+                    <SearchInput
                       size="sm"
                       autoFocus
                       id="search"

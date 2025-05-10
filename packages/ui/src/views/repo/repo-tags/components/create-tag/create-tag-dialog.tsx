@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Label, Textarea } from '@/components'
+import { Alert, Button, ControlGroup, Dialog, Fieldset, FormInput, FormWrapper, Label, Textarea } from '@/components'
 import { BranchSelectorListItem, TranslationStore } from '@/views/repo'
 import { CreateTagFormFields, makeCreateTagFormSchema } from '@/views/repo/repo-tags/components/create-tag/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -35,6 +35,12 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
 }) => {
   const { t } = useTranslationStore()
 
+  const formMethods = useForm<CreateTagFormFields>({
+    resolver: zodResolver(makeCreateTagFormSchema(t)),
+    mode: 'onChange',
+    defaultValues: INITIAL_FORM_VALUES
+  })
+
   const {
     register,
     handleSubmit,
@@ -42,11 +48,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
     reset,
     clearErrors,
     formState: { errors }
-  } = useForm<CreateTagFormFields>({
-    resolver: zodResolver(makeCreateTagFormSchema(t)),
-    mode: 'onChange',
-    defaultValues: INITIAL_FORM_VALUES
-  })
+  } = formMethods
 
   const resetForm = useCallback(() => {
     clearErrors()
@@ -75,16 +77,14 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
           <Dialog.Title className="font-medium">{t('views:repos.createTagTitle', 'Create a tag')}</Dialog.Title>
         </Dialog.Header>
 
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper<CreateTagFormFields> {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="name"
               label={t('views:forms.tagName', 'Name')}
-              {...register('name')}
+              name="name"
               maxLength={250}
               placeholder={t('views:forms.enterTagName', 'Enter a tag name here')}
-              size="md"
-              error={errors.name?.message}
               disabled={isLoading}
             />
           </Fieldset>

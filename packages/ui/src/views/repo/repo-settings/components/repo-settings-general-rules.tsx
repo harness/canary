@@ -3,11 +3,11 @@ import { Fragment } from 'react/jsx-runtime'
 
 import {
   Button,
-  FormInput,
   Icon,
   ListActions,
   MoreActionsTooltip,
   NoData,
+  SearchInput,
   SkeletonList,
   Spacer,
   StackedList,
@@ -118,7 +118,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           <>
             <ListActions.Root>
               <ListActions.Left>
-                <FormInput.Search
+                <SearchInput
                   id="search"
                   size="sm"
                   defaultValue={rulesSearchQuery}

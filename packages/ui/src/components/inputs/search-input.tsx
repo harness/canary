@@ -33,10 +33,8 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         if (disableDebounce) {
-          console.log('disableDebounce', value)
           onChange?.(value)
         } else {
-          console.log('debounced', value)
           debouncedOnChangeRef.current(value)
         }
       },

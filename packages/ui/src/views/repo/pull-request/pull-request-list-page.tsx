@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Button, FormInput, ListActions, NoData, Pagination, SkeletonList, Spacer, StackedList } from '@/components'
+import { Button, ListActions, NoData, Pagination, SearchInput, SkeletonList, Spacer, StackedList } from '@/components'
 import { useRouterContext } from '@/context'
 import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
@@ -219,7 +219,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
             <ListActions.Root>
               <ListActions.Left>
-                <FormInput.Search
+                <SearchInput
                   size="sm"
                   defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}

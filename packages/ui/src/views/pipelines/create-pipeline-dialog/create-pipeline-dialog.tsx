@@ -25,6 +25,16 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     setErrorMessage(error?.message)
   }, [error])
 
+  const formMethods = useForm<CreatePipelineFormType>({
+    resolver: zodResolver(createPipelineSchema),
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      branch: defaultBranch,
+      yamlPath: ''
+    }
+  })
+
   const {
     register,
     handleSubmit,
@@ -34,15 +44,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     clearErrors,
     trigger,
     formState: { errors }
-  } = useForm<CreatePipelineFormType>({
-    resolver: zodResolver(createPipelineSchema),
-    mode: 'onChange',
-    defaultValues: {
-      name: '',
-      branch: defaultBranch,
-      yamlPath: ''
-    }
-  })
+  } = formMethods
 
   const branch = watch('branch')
 
@@ -82,7 +84,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
         <Dialog.Header>
           <Dialog.Title>Create Pipeline</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
             <Input
               id="name"

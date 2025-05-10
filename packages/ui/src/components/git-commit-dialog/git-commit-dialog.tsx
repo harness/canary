@@ -8,9 +8,9 @@ import {
   ControlGroup,
   Dialog,
   FormInput,
+  FormWrapper,
   GitCommitFormType,
   Icon,
-  Input,
   Link,
   Message,
   MessageTheme,
@@ -79,14 +79,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   isSubmitting,
   error
 }) => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors }
-  } = useForm<GitCommitSchemaType>({
+  const formMethods = useForm<GitCommitSchemaType>({
     resolver: zodResolver(createGitCommitSchema(isFileNameRequired)),
     mode: 'onChange',
     defaultValues: {
@@ -97,6 +90,15 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
       fileName: isFileNameRequired ? '' : undefined
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors }
+  } = formMethods
 
   const isDisabledSubmission = disableCTA || isSubmitting
   const onSubmit: SubmitHandler<GitCommitSchemaType> = data => {
@@ -134,7 +136,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
           <Dialog.Title>Commit Changes</Dialog.Title>
         </Dialog.Header>
 
-        <form className="flex flex-col gap-y-7 pb-4" onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {isFileNameRequired && (
             <FormInput.Text
               id="fileName"
@@ -241,7 +243,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               </div>
             )}
           </ControlGroup>
-        </form>
+        </FormWrapper>
 
         <Dialog.Footer>
           <ButtonGroup>

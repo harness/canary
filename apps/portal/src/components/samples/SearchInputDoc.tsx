@@ -1,4 +1,4 @@
-import { FormInput } from "@harnessio/ui/components";
+import { SearchInput } from "@harnessio/ui/components";
 import { useState } from "react";
 
 export default function SearchInputDoc() {
@@ -8,7 +8,7 @@ export default function SearchInputDoc() {
   return (
     <>
       <div className="mb-2 w-full font-bold">Search with State:</div>
-      <FormInput.Search
+      <SearchInput
         placeholder="Type to search..."
         onChange={(value) => setSearchValue(value)}
       />

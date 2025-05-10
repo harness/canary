@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Input, Link, Spacer, Text } from '@/components'
+import { Button, Card, FormInput, FormWrapper, Input, Link, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -27,6 +27,10 @@ const signInSchema = z.object({
 
 export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) {
   const [serverError, setServerError] = useState<string | null>(null)
+  const formMethods = useForm({
+    resolver: zodResolver(signInSchema)
+  })
+
   const {
     register,
     handleSubmit,
@@ -34,9 +38,7 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
     clearErrors,
     formState: { errors },
     trigger
-  } = useForm({
-    resolver: zodResolver(signInSchema)
-  })
+  } = formMethods
 
   const onSubmit = (data: SignInData) => {
     handleSignIn(data)
@@ -86,30 +88,25 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
           </Text>
         </div>
         <div className="mt-10 pt-0">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+            <FormInput.Text
               id="email"
               label="Username/Email"
               placeholder="Your email"
-              size="md"
               {...register('email', { onChange: handleInputChange })}
-              error={errors.email?.message?.toString()}
               autoFocus
             />
-            <Input
-              wrapperClassName="mt-7"
+            <FormInput.Text
               id="password"
               type="password"
               {...register('password', { onChange: handleInputChange })}
               label="Password"
               placeholder="Password"
-              size="md"
-              error={errors.password?.message?.toString()}
             />
             <Button className="mt-10 w-full" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
-          </form>
+          </FormWrapper>
           <Spacer size={4} />
           <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
             Don’t have an account? <Link to="/signup">Sign up</Link>

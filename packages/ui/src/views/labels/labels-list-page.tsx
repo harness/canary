@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Checkbox, FormInput, ListActions, Pagination, SkeletonList } from '@/components'
+import { Button, Checkbox, ListActions, Pagination, SearchInput, SkeletonList } from '@/components'
 import { useRouterContext } from '@/context'
 import { ILabelsStore, SandboxLayout, TranslationStore } from '@/views'
 
@@ -72,7 +72,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
         {(!!spaceLabels.length || isDirtyList) && (
           <ListActions.Root>
             <ListActions.Left>
-              <FormInput.Search
+              <SearchInput
                 inputContainerClassName="max-w-96"
                 defaultValue={searchQuery || ''}
                 onChange={handleSearchChange}

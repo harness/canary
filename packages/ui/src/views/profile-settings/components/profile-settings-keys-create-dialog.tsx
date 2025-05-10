@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, Dialog, Fieldset, FormWrapper, Input, Textarea } from '@/components'
+import { Alert, Button, Dialog, Fieldset, FormInput, FormWrapper, Input, Textarea } from '@/components'
 import { ApiErrorType } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo'
@@ -30,13 +30,7 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
   error
 }) => {
   const { t } = useTranslationStore()
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors }
-  } = useForm<SshKeyFormType>({
+  const formMethods = useForm<SshKeyFormType>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
@@ -44,6 +38,14 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
       content: ''
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors }
+  } = formMethods
 
   const content = watch('content')
   const identifier = watch('identifier')
@@ -62,16 +64,14 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
         <Dialog.Header>
           <Dialog.Title>{t('views:profileSettings.newSshKey', 'New SSH key')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="identifier"
               value={identifier}
-              size="md"
               {...register('identifier')}
               placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter the name')}
               label={t('views:profileSettings.newSshKey', 'New SSH key')}
-              error={errors.identifier?.message?.toString()}
               autoFocus
             />
           </Fieldset>

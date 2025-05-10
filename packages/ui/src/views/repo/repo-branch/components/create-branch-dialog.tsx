@@ -40,18 +40,13 @@ export function CreateBranchDialog({
 }: CreateBranchDialogProps) {
   const { t } = useTranslationStore()
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    clearErrors,
-    formState: { errors }
-  } = useForm<CreateBranchFormFields>({
+  const formMethods = useForm<CreateBranchFormFields>({
     resolver: zodResolver(createBranchFormSchema(t)),
     mode: 'onChange',
     defaultValues: INITIAL_FORM_VALUES
   })
+
+  const { register, handleSubmit, setValue, reset, clearErrors } = formMethods
 
   const resetForm = useCallback(() => {
     clearErrors()
@@ -84,7 +79,7 @@ export function CreateBranchDialog({
         <Dialog.Header>
           <Dialog.Title className="font-medium">{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
           <Fieldset>
             <FormInput.Text
               id="name"
@@ -92,8 +87,6 @@ export function CreateBranchDialog({
               {...register('name')}
               maxLength={250}
               placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
-              theme={errors.name?.message ? 'danger' : 'default'}
-              error={errors.name?.message}
             />
           </Fieldset>
 

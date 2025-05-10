@@ -104,6 +104,7 @@ export function OTPPage({
           </Alert.Container>
         )}
         <div className="mt-10 pt-0">
+          {/* TODO: Design system: Replace with FormWrapper once OTP component is ready*/}
           <form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
             <div className="relative">
               <Controller

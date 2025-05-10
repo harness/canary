@@ -55,13 +55,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
 
   const roleOptions = useMemo(() => getRolesData(t), [t])
 
-  const {
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors, isValid }
-  } = useForm<InviteMemberFormFields>({
+  const formMethods = useForm<InviteMemberFormFields>({
     resolver: zodResolver(inviteMemberFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -69,6 +63,14 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
       role: roleOptions[3].uid
     }
   })
+
+  const {
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors, isValid }
+  } = formMethods
 
   const invitedMember = watch('member')
   const memberRole = watch('role')
@@ -105,7 +107,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
         <Dialog.Header>
           <Dialog.Title>{t('views:projectSettings.newMember', 'New member')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
             <ControlGroup>
               <Select.Root

@@ -77,15 +77,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
     }
   }, [storeLabels, storeValues, labelId])
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    watch,
-    trigger,
-    formState: { errors, isValid }
-  } = useForm<CreateLabelFormFields>({
+  const formMethods = useForm<CreateLabelFormFields>({
     resolver: zodResolver(createLabelFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -96,6 +88,16 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
       values: []
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    watch,
+    trigger,
+    formState: { errors, isValid }
+  } = formMethods
 
   useEffect(() => {
     if (!fullLabelData) return
@@ -158,7 +160,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
       {isLoading && <SkeletonForm />}
 
       {!isLoading && (
-        <FormWrapper className="gap-y-10" onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} className="gap-y-10" onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
             <ControlGroup>
               <Label className="mb-2" htmlFor="label-name">
@@ -176,8 +178,6 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
                 inputProps={{
                   id: 'label-name',
                   ...register('key'),
-                  theme: errors.key?.message ? 'danger' : 'default',
-                  error: errors.key?.message,
                   autoFocus: !key
                 }}
               />
@@ -189,8 +189,6 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               label={t('views:repos.description', 'Description')}
               name="description"
               id="description"
-              theme={errors.description?.message ? 'danger' : 'default'}
-              error={errors.description?.message}
               optional
             />
 
@@ -212,9 +210,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
                     onValueChange: makeHandleValueColorChange(idx)
                   }}
                   inputProps={{
-                    ...register(`values.${idx}.value` as keyof CreateLabelFormFields),
-                    theme: errors.values?.[idx]?.value?.message ? 'danger' : 'default',
-                    error: errors.values?.[idx]?.value?.message
+                    ...register(`values.${idx}.value` as keyof CreateLabelFormFields)
                   }}
                 />
               ))}

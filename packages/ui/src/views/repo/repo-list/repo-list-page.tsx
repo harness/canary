@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { FormInput, ListActions, NoData, Pagination, Spacer, SplitButton } from '@/components'
+import { ListActions, NoData, Pagination, SearchInput, Spacer, SplitButton } from '@/components'
 import { useRouterContext } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -85,7 +85,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
-                <FormInput.Search
+                <SearchInput
                   inputContainerClassName="max-w-96"
                   defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}

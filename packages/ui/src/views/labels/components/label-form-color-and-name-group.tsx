@@ -1,9 +1,8 @@
 import { FC } from 'react'
 
-import { Button, FormInput, Icon, Select, SelectRootProps } from '@/components'
+import { Button, FormInput, Icon, Select, SelectRootProps, type TextInputProps } from '@/components'
 import { cn } from '@/utils'
 import { ColorsEnum, TranslationStore } from '@/views'
-import { TextInputProps } from '@components/form-input/components/text-input'
 
 interface LabelFormColorAndNameGroupProps {
   className?: string

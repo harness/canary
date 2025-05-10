@@ -6,9 +6,9 @@ import {
   Checkbox,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormSeparator,
   FormWrapper,
-  Input,
   Select,
   Spacer,
   Text
@@ -113,14 +113,7 @@ export function RepoImportMultiplePage({
   isLoading,
   apiErrorsValue
 }: RepoImportMultiplePageProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-    reset
-  } = useForm<ImportMultipleReposFormFields>({
+  const formMethods = useForm<ImportMultipleReposFormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
@@ -129,6 +122,15 @@ export function RepoImportMultiplePage({
       provider: ProviderOptionsEnum.GITHUB
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+    reset
+  } = formMethods
 
   const providerValue = watch('provider')
 
@@ -156,7 +158,7 @@ export function RepoImportMultiplePage({
           Import Repositories
         </Text>
         <Spacer size={10} />
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
           <Fieldset>
             <ControlGroup>
@@ -189,27 +191,18 @@ export function RepoImportMultiplePage({
             ProviderOptionsEnum.GOGS
           ].includes(watch('provider')) && (
             <Fieldset>
-              <Input
-                id="host"
-                label="Host URL"
-                {...register('hostUrl')}
-                placeholder="Enter the host URL"
-                size="md"
-                error={errors.hostUrl?.message?.toString()}
-              />
+              <FormInput.Text id="host" label="Host URL" {...register('hostUrl')} placeholder="Enter the host URL" />
             </Fieldset>
           )}
 
           {[ProviderOptionsEnum.BITBUCKET, ProviderOptionsEnum.AZURE_DEVOPS].includes(watch('provider')) && (
             <Fieldset>
               <ControlGroup>
-                <Input
+                <FormInput.Text
                   id="username"
                   label="Username"
                   {...register('username')}
                   placeholder="Enter your Username"
-                  size="md"
-                  error={errors.password?.message?.toString()}
                 />
               </ControlGroup>
             </Fieldset>
@@ -218,7 +211,7 @@ export function RepoImportMultiplePage({
           {/* token */}
           <Fieldset>
             <ControlGroup>
-              <Input
+              <FormInput.Text
                 type="password"
                 id="password"
                 label={
@@ -232,8 +225,6 @@ export function RepoImportMultiplePage({
                     ? 'Enter your password'
                     : 'Enter your access token'
                 }
-                size="md"
-                error={errors.password?.message?.toString()}
               />
             </ControlGroup>
           </Fieldset>
@@ -241,27 +232,18 @@ export function RepoImportMultiplePage({
           <FormSeparator />
 
           {[ProviderOptionsEnum.GITLAB, ProviderOptionsEnum.GITLAB_SELF_HOSTED].includes(watch('provider')) && (
-            <Fieldset className="mt-4">
-              <Input
-                id="group"
-                label="Group"
-                {...register('group')}
-                placeholder="Enter the group name"
-                size="md"
-                error={errors.group?.message?.toString()}
-              />
+            <Fieldset>
+              <FormInput.Text id="group" label="Group" {...register('group')} placeholder="Enter the group name" />
             </Fieldset>
           )}
 
           {watch('provider') === ProviderOptionsEnum.BITBUCKET && (
-            <Fieldset className="mt-4">
-              <Input
+            <Fieldset>
+              <FormInput.Text
                 id="workspace"
                 label="Workspace"
                 {...register('workspace')}
                 placeholder="Enter the workspace name"
-                size="md"
-                error={errors.workspace?.message?.toString()}
               />
             </Fieldset>
           )}
@@ -275,27 +257,23 @@ export function RepoImportMultiplePage({
             ProviderOptionsEnum.AZURE_DEVOPS
           ].includes(watch('provider')) && (
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="organization"
                 label="Organization"
                 {...register('organization')}
                 placeholder="Enter the organization name"
-                size="md"
-                error={errors.organization?.message?.toString()}
               />
             </Fieldset>
           )}
 
           {/* Project */}
           {[ProviderOptionsEnum.BITBUCKET_SERVER, ProviderOptionsEnum.AZURE_DEVOPS].includes(watch('provider')) && (
-            <Fieldset className="mt-4">
-              <Input
+            <Fieldset>
+              <FormInput.Text
                 id="project"
                 label="Project"
                 {...register('project')}
                 placeholder="Enter the project name"
-                size="md"
-                error={errors.project?.message?.toString()}
               />
             </Fieldset>
           )}

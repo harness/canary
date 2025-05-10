@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, Card, Input, Text } from '@/components'
+import { Alert, Button, Card, FormInput, FormWrapper, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -32,6 +32,10 @@ const newPasswordSchema = z
 
 export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPasswordPageProps) {
   const [serverError, setServerError] = useState<string | null>(null)
+  const formMethods = useForm({
+    resolver: zodResolver(newPasswordSchema)
+  })
+
   const {
     register,
     handleSubmit,
@@ -39,9 +43,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
     clearErrors,
     trigger,
     formState: { errors }
-  } = useForm({
-    resolver: zodResolver(newPasswordSchema)
-  })
+  } = formMethods
 
   const onFormSubmit = (data: NewPasswordData) => {
     handleFormSubmit?.(data)
@@ -96,30 +98,26 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
           </Alert.Container>
         )}
         <div className="mt-10 pt-0">
-          <form onSubmit={handleSubmit(onFormSubmit)}>
-            <Input
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(onFormSubmit)}>
+            <FormInput.Text
               id="password"
               type="password"
               label="New password"
-              size="md"
               {...register('password', { onChange: handleInputChange })}
               placeholder="Password (6+ characters)"
-              error={errors.password?.message?.toString()}
             />
-            <Input
+            <FormInput.Text
               wrapperClassName="mt-7"
               id="confirmPassword"
               type="password"
               label="Confirm password"
-              size="md"
               {...register('confirmPassword', { onChange: handleInputChange })}
               placeholder="Confirm password"
-              error={errors.confirmPassword?.message?.toString()}
             />
             <Button className="mt-10 w-full" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Saving...' : 'Save'}
             </Button>
-          </form>
+          </FormWrapper>
         </div>
       </div>
       <Agreements />

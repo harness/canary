@@ -7,10 +7,10 @@ import {
   ButtonGroup,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormSeparator,
   FormWrapper,
   Icon,
-  Input,
   Legend,
   SkeletonForm,
   Textarea
@@ -48,13 +48,7 @@ export const ProjectSettingsGeneralPage = ({
   useTranslationStore
 }: ProjectSettingsGeneralPageProps) => {
   const { t } = useTranslationStore()
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    formState: { errors }
-  } = useForm<ProjectSettingsGeneralFields>({
+  const formMethods = useForm<ProjectSettingsGeneralFields>({
     resolver: zodResolver(projectSettingsSchema),
     mode: 'onSubmit',
     defaultValues: {
@@ -62,6 +56,14 @@ export const ProjectSettingsGeneralPage = ({
       description: data?.description ?? ''
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors }
+  } = formMethods
 
   const [submitted, setSubmitted] = useState(false)
 
@@ -115,16 +117,15 @@ export const ProjectSettingsGeneralPage = ({
 
         {!isLoading && (
           <>
-            <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+            <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
               <Fieldset>
                 {/* PROJECT NAME */}
                 <ControlGroup>
-                  <Input
+                  <FormInput.Text
                     id="identifier"
                     {...register('identifier')}
                     placeholder={t('views:projectSettings.general.projectNamePlaceholder', 'Enter project name')}
                     label={t('views:projectSettings.general.projectNameLabel', 'Project name')}
-                    error={errors.identifier?.message?.toString()}
                     // TODO: backend is not ready to update project name
                     disabled
                   />

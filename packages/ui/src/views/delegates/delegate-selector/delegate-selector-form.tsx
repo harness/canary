@@ -99,14 +99,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
 
   const { Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    watch,
-    formState: { errors }
-  } = useForm<DelegateSelectorFormFields>({
+  const formMethods = useForm<DelegateSelectorFormFields>({
     resolver: zodResolver(delegateSelectorFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -114,6 +107,15 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
       tags: preSelectedTags?.length ? preSelectedTags.map(tag => ({ id: tag, label: tag })) : []
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    formState: { errors }
+  } = formMethods
 
   const onSubmit: SubmitHandler<DelegateSelectorFormFields> = data => {
     console.log('onSubmit')
@@ -180,7 +182,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
           </Link>
         </div>
         <Spacer size={5} />
-        <FormWrapper className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
           <Fieldset className="mb-0">
             <RadioSelect
               id="type"

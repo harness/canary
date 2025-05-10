@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, Dialog, Fieldset, FormWrapper, Input } from '@/components'
+import { Button, ButtonGroup, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -23,15 +23,17 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
   const { isCreatingUser } = loadingStates
   const { createUserError } = errorStates
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<NewUserFields>({
+  const formMethods = useForm<NewUserFields>({
     resolver: zodResolver(createNewUserSchema(t)),
     mode: 'onChange',
     defaultValues: { uid: '', email: '', display_name: '' }
   })
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = formMethods
 
   const onSubmit: SubmitHandler<NewUserFields> = data => {
     handleCreateUser(data)
@@ -46,35 +48,29 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
           </Dialog.Title>
         </Dialog.Header>
 
-        <FormWrapper onSubmit={handleSubmit(onSubmit)} id="create-user-form">
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} id="create-user-form">
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="memberName"
-              size="md"
               {...register('uid')}
               label={t('views:userManagement.userId', 'User ID')}
               caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
               placeholder={t('views:userManagement.enterName', 'Enter name')}
-              error={errors.uid?.message?.toString()}
             />
 
-            <Input
+            <FormInput.Text
               id="email"
               type="email"
-              size="md"
               {...register('email')}
               placeholder={t('views:userManagement.enterEmail', 'Enter email address')}
               label={t('views:userManagement.email', 'Email')}
-              error={errors.email?.message?.toString()}
             />
 
-            <Input
+            <FormInput.Text
               id="displayName"
-              size="md"
               {...register('display_name')}
               placeholder={t('views:userManagement.createUser.enterDisplayName', 'Enter display name')}
               label={t('views:userManagement.displayName', 'Display name')}
-              error={errors.display_name?.message?.toString()}
             />
           </Fieldset>
 

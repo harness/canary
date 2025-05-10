@@ -8,6 +8,7 @@ import {
   ButtonGroup,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormSeparator,
   FormWrapper,
   Icon,
@@ -104,12 +105,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
   const [profileSubmitted, setProfileSubmitted] = useState(false)
   const [passwordSubmitted, setPasswordSubmitted] = useState(false)
 
-  const {
-    register: registerProfile,
-    handleSubmit: handleProfileSubmit,
-    reset: resetProfileForm,
-    formState: { errors: profileErrors, isValid: isProfileValid, dirtyFields: profileDirtyFields }
-  } = useForm<ProfileFields>({
+  const profileFormMethods = useForm<ProfileFields>({
     resolver: zodResolver(makeProfileSchema(t)),
     mode: 'onChange',
     defaultValues: {
@@ -120,11 +116,13 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
   })
 
   const {
-    register: registerPassword,
-    reset: resetPasswordForm,
-    handleSubmit: handlePasswordSubmit,
-    formState: { errors: passwordErrors }
-  } = useForm<PasswordFields>({
+    register: registerProfile,
+    handleSubmit: handleProfileSubmit,
+    reset: resetProfileForm,
+    formState: { errors: profileErrors, isValid: isProfileValid, dirtyFields: profileDirtyFields }
+  } = profileFormMethods
+
+  const passwordFormMethods = useForm<PasswordFields>({
     resolver: zodResolver(makePasswordSchema(t)),
     mode: 'onChange',
     defaultValues: {
@@ -132,6 +130,13 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
       confirmPassword: ''
     }
   })
+
+  const {
+    register: registerPassword,
+    reset: resetPasswordForm,
+    handleSubmit: handlePasswordSubmit,
+    formState: { errors: passwordErrors }
+  } = passwordFormMethods
 
   useEffect(() => {
     if (!userData) return
@@ -187,13 +192,12 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
 
       {!isLoadingUser && (
         <>
-          <FormWrapper onSubmit={handleProfileSubmit(onProfileSubmit)}>
+          <FormWrapper {...profileFormMethods} onSubmit={handleProfileSubmit(onProfileSubmit)}>
             <Legend title={t('views:profileSettings.personalInfo', 'Personal information')} />
             <Avatar name={userData?.name} src="/images/anon.jpg" size="lg" rounded />
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="name"
-                size="md"
                 {...registerProfile('name')}
                 placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter your name')}
                 label={t('views:profileSettings.name', 'Name')}
@@ -202,9 +206,8 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
               />
             </Fieldset>
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="username"
-                size="md"
                 {...registerProfile('username')}
                 placeholder={t('views:profileSettings.enterUsernamePlaceholder', 'Enter your username')}
                 disabled
@@ -213,17 +216,14 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                   'views:profileSettings.enterUsernameCaption',
                   'This username will be shown across the platform.'
                 )}
-                error={profileErrors?.username?.message?.toString()}
               />
             </Fieldset>
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="email"
-                size="md"
                 {...registerProfile('email')}
                 placeholder="name@domain.com"
                 label={t('views:profileSettings.accountEmail', 'Account email')}
-                error={profileErrors?.email?.message}
                 disabled={isUpdatingUser}
               />
             </Fieldset>
@@ -253,7 +253,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
 
           <FormSeparator className="border-cn-borders-4 my-7" />
 
-          <FormWrapper onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
+          <FormWrapper {...passwordFormMethods} onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
             <Legend
               title={t('views:profileSettings.passwordSettingsTitle', 'Password settings')}
               description={t(
@@ -262,26 +262,22 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
               )}
             />
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="newPassword"
                 type="password"
-                size="md"
                 {...registerPassword('newPassword')}
                 placeholder={t('views:profileSettings.enterPasswordPlaceholder', 'Enter a new password')}
                 label={t('views:profileSettings.newPassword', 'New password')}
-                error={passwordErrors?.newPassword?.message}
                 disabled={isUpdatingPassword}
               />
             </Fieldset>
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="confirmPassword"
                 type="password"
-                size="md"
                 {...registerPassword('confirmPassword')}
                 placeholder={t('views:profileSettings.confirmPasswordPlaceholder', 'Confirm your new password')}
                 label={t('views:profileSettings.confirmPassword', 'Confirm password')}
-                error={passwordErrors?.confirmPassword?.message}
                 disabled={isUpdatingPassword}
               />
             </Fieldset>

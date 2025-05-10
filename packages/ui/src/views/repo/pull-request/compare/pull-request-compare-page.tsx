@@ -143,13 +143,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const { navigate } = useRouterContext()
   const { t } = useTranslationStore()
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    getValues,
-    formState: { errors, isValid }
-  } = useForm<CompareFormFields>({
+  const formMethods = useForm<CompareFormFields>({
     resolver: zodResolver(pullRequestFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -157,6 +151,12 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
       description: ''
     }
   })
+
+  const {
+    reset,
+    getValues,
+    formState: { isValid }
+  } = formMethods
 
   useEffect(() => {
     if (commitData && commitData.length > 0) {
@@ -342,16 +342,13 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                           desc={desc}
                           setDesc={setDesc}
                           handleUpload={handleUpload}
-                          register={register}
                           ref={formRef}
                           apiError={apiError}
                           isLoading={isLoading}
                           onFormDraftSubmit={onFormDraftSubmit}
                           onFormSubmit={onFormSubmit}
-                          isValid={isValid}
-                          errors={errors}
-                          handleSubmit={handleSubmit}
                           useTranslationStore={useTranslationStore}
+                          formMethods={formMethods}
                         />
                       </div>
                     </div>

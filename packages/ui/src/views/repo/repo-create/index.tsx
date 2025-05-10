@@ -58,14 +58,7 @@ export function RepoCreatePage({
 }: RepoCreatePageProps) {
   const { t } = useTranslationStore()
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors }
-  } = useForm<FormFields>({
+  const formMethods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
@@ -77,6 +70,15 @@ export function RepoCreatePage({
       readme: false
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors }
+  } = formMethods
 
   const accessValue = watch('access')
   const gitignoreValue = watch('gitignore')
@@ -131,7 +133,7 @@ export function RepoCreatePage({
           </Link>
         </Text>
         <Spacer size={10} />
-        <FormWrapper className="gap-y-7" onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* NAME */}
           <Fieldset>
             <FormInput.Text
@@ -139,8 +141,6 @@ export function RepoCreatePage({
               label="Name"
               {...register('name')}
               placeholder="Enter repository name"
-              theme={errors.name?.message ? 'danger' : 'default'}
-              error={errors.name?.message}
               autoFocus
             />
             {/* DESCRIPTION */}

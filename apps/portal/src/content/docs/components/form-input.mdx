@@ -45,8 +45,8 @@ import React from "react";
 {/* Search Input Examples */}
 
 <div className="font-bold w-full mb-2">Search Input Examples:</div>
-<FormInput.Search />
-<FormInput.Search disabled />
+<SearchInput />
+<SearchInput disabled />
 
 <hr />
 
@@ -123,7 +123,7 @@ export default function Search() {
   return (
     <>
       <div className="mb-2 w-full font-bold">Search with State:</div>
-      <FormInput.Search
+      <SearchInput
         placeholder="Type to search..."
         onChange={(value) => setSearchValue(value)}
       />
@@ -164,9 +164,9 @@ The `NumberInput` component provides a controlled input field specifically desig
   <div className="font-bold w-full mb-2">Decimal Numbers:</div>
   <FormInput.Number 
     id="decimal-input" 
+    allowDecimal
     label="With Decimals" 
     decimalScale={2} 
-    allowDecimal={true}
     defaultValue={3.14} 
   />
   <FormInput.Number 
@@ -180,14 +180,12 @@ The `NumberInput` component provides a controlled input field specifically desig
   <div className="font-bold w-full mb-2">Negative Values:</div>
   <FormInput.Number 
     id="allow-negative" 
-    label="Allow Negative" 
-    allowNegative={true} 
+    label="Allow Negative"  
     defaultValue={-10} 
   />
   <FormInput.Number 
     id="positive-only" 
-    label="Positive Only" 
-    allowNegative={false} 
+    label="Positive Only"  
     min={0}
     defaultValue={10} 
   />
@@ -197,14 +195,14 @@ The `NumberInput` component provides a controlled input field specifically desig
   <FormInput.Number 
     id="small-increment" 
     label="Increment by 0.1" 
-    stepper={0.1} 
-    decimalScale={1}
+    step={0.1} 
+    allowDecimal={true}
     defaultValue={1.0} 
   />
   <FormInput.Number 
     id="large-increment" 
     label="Increment by 5" 
-    stepper={5} 
+    step={5} 
     defaultValue={10} 
   />
   
@@ -246,9 +244,9 @@ The `NumberInput` component provides a controlled input field specifically desig
   {/* Without Stepper UI */}
   <div className="font-bold w-full mb-2">Without Stepper Buttons:</div>
   <FormInput.Number 
+    hideStepper
     id="no-stepper" 
     label="No Stepper UI" 
-    showStepper={false} 
     placeholder="Enter a number manually"
   />
 </div>`}

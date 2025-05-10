@@ -6,6 +6,7 @@ import {
   Checkbox,
   ControlGroup,
   Fieldset,
+  FormInput,
   Icon,
   Input,
   Label,
@@ -50,22 +51,15 @@ export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch,
   </StackedList.Root>
 )
 
-export const BranchSettingsRuleNameField: FC<FieldProps & { disabled: boolean }> = ({
-  register,
-  errors,
-  disabled,
-  t
-}) => (
+export const BranchSettingsRuleNameField: FC<FieldProps & { disabled: boolean }> = ({ register, disabled, t }) => (
   <ControlGroup>
-    <Input
+    <FormInput.Text
       id="name"
       label={t('views:repos.name', 'Name')}
       {...register!('identifier')}
       placeholder={t('views:repos.enterRuleName', 'Enter the rule name here')}
       autoFocus
       disabled={disabled}
-      error={errors?.identifier?.message?.toString()}
-      size="md"
     />
   </ControlGroup>
 )
@@ -107,16 +101,14 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
           {t('views:repos.targetPatterns', 'Target patterns')}
         </Label>
         <div className="grid grid-cols-[1fr_112px] items-start gap-x-3.5">
-          <Input
+          <FormInput.Text
             id="pattern"
-            size="md"
             {...register!('pattern')}
             caption={t(
               'views:repos.createRuleCaption',
               'Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)'
             )}
             placeholder={t('views:repos.rulePatternPlaceholder', 'Enter the target patterns')}
-            error={errors?.pattern?.message?.toString()}
           />
           <SplitButton<PatternsButtonType>
             buttonClassName="px-0 w-full"

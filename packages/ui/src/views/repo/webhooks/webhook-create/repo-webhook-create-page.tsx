@@ -37,14 +37,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
   useTranslationStore,
   useWebhookStore
 }) => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors }
-  } = useForm<CreateWebhookFormFields>({
+  const formMethods = useForm<CreateWebhookFormFields>({
     resolver: zodResolver(createWebhookFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -58,6 +51,16 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
       triggers: []
     }
   })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors }
+  } = formMethods
+
   const { t } = useTranslationStore()
 
   const { preSetWebhookData } = useWebhookStore()
@@ -96,15 +99,15 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
           ? t('views:repos.editWebhookTitle', 'Webhook details')
           : t('views:repos.createWebhookTitle', 'Create a webhook')}
       </h1>
-      <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
         <Fieldset>
           <WebhookToggleField register={register} setValue={setValue} watch={watch} t={t} />
         </Fieldset>
         <Fieldset>
-          <WebhookNameField register={register} errors={errors} disabled={false} t={t} />
+          <WebhookNameField register={register} disabled={false} t={t} />
         </Fieldset>
         <Fieldset>
-          <WebhookDescriptionField register={register} errors={errors} t={t} />
+          <WebhookDescriptionField register={register} t={t} />
         </Fieldset>
         <Fieldset>
           <WebhookPayloadUrlField register={register} errors={errors} t={t} />

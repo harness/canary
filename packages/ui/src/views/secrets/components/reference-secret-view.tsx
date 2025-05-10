@@ -1,4 +1,4 @@
-import { Button, Caption, Input } from '@/components'
+import { Button, Caption, TextInput } from '@/components'
 
 interface ReferenceSecretViewProps {
   onTest: (value: string) => void
@@ -11,7 +11,11 @@ export const ReferenceSecretView: React.FC<ReferenceSecretViewProps> = ({ onTest
     <div className="flex flex-col gap-1">
       <div className="flex w-full items-center gap-2">
         <div className="grow">
-          <Input value={value} onChange={e => setValue(e.target.value)} placeholder="Enter reference secret value" />
+          <TextInput
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            placeholder="Enter reference secret value"
+          />
         </div>
         <Button onClick={() => onTest(value)} variant="ghost">
           Test

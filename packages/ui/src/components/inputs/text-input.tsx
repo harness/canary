@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useCallback } from 'react'
 
 import { ControlGroup, FormCaption, Label } from '@/components'
 
@@ -19,15 +19,19 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   // Proposal: override theme based on error and warning
   const theme = error ? 'danger' : warning ? 'warning' : props.theme
 
+  // Generate a unique ID if one isn't provided
+  const generateUniqueId = useCallback(() => `text-input-${Math.random().toString(36).substring(2, 9)}`, [])
+  const inputId = props.id || generateUniqueId()
+
   return (
     <ControlGroup className={wrapperClassName}>
       {!!label && (
-        <Label disabled={props.disabled} optional={optional} htmlFor={props.id}>
+        <Label disabled={props.disabled} optional={optional} htmlFor={inputId}>
           {label}
         </Label>
       )}
 
-      <BaseInput {...restProps} ref={ref} theme={theme} />
+      <BaseInput {...restProps} ref={ref} theme={theme} id={inputId} />
 
       {error ? (
         <FormCaption theme="danger">{error}</FormCaption>

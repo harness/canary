@@ -4,7 +4,7 @@ import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
-const captionVariants = cva('cn-caption', {
+const formCaptionVariants = cva('cn-caption', {
   variants: {
     theme: {
       default: '',
@@ -19,7 +19,7 @@ const captionVariants = cva('cn-caption', {
 })
 
 type FormCaptionProps = {
-  theme?: VariantProps<typeof captionVariants>['theme']
+  theme?: VariantProps<typeof formCaptionVariants>['theme']
   className?: string
 }
 
@@ -37,7 +37,7 @@ export const FormCaption = ({ theme = 'default', className, children }: PropsWit
   const effectiveIconName = theme === 'danger' ? 'cross-circle' : 'warning-triangle-outline'
 
   return (
-    <p role="region" aria-live="polite" className={cn(captionVariants({ theme }), className)}>
+    <p role="region" aria-live="polite" className={cn(formCaptionVariants({ theme }), className)}>
       {canShowIcon && <Icon name={effectiveIconName} size={14} />}
       <span>{children}</span>
     </p>

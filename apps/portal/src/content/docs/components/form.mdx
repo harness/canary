@@ -37,6 +37,8 @@ export const ExampleFormComponent = () => {
     },
   });
 
+  const { register, handleSubmit } = formMethods;
+
   // Handle form submission
   const onSubmit = (data: FormValues) => {
     setSubmittedValue(data.inputField);
@@ -45,16 +47,16 @@ export const ExampleFormComponent = () => {
   return (
     <div className="w-full max-w-md">
       {/* ‼️ It is mandatory to pass all return values from useForm to FormWrapper  */}
-      <FormWrapper {...formMethods} onSubmit={methods.handleSubmit(onSubmit)}>
+      <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
         <FormInput.Text
           ref={inputRef}
-          name="inputField"
           label="Input Field"
           placeholder="Enter at least 3 characters"
+          {...register("inputField")}
         />
 
         <Button type="submit" disabled={methods.formState.isSubmitting}>
-          {methods.formState.isSubmitting ? "Submitting..." : "Submit"}
+          {formMethods.formState.isSubmitting ? "Submitting..." : "Submit"}
         </Button>
 
         {submittedValue && (

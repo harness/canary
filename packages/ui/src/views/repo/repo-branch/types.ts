@@ -83,4 +83,5 @@ export interface CreateBranchDialogProps {
   useTranslationStore: () => TranslationStore
   selectedBranchOrTag: BranchSelectorListItem | null
   renderProp: React.ReactNode
+  prefilledName?: string
 }

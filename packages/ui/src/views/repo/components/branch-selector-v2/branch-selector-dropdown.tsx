@@ -1,10 +1,11 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
 
-import { DropdownMenu, Icon, SearchBox, StatusBadge, Tabs } from '@/components'
+import { Button, DropdownMenu, Icon, SearchBox, StatusBadge, Tabs } from '@/components'
 import { useRouterContext } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 import { cn } from '@utils/cn'
-import { BranchSelectorListItem } from '@views/repo/repo.types'
+
+// import { BranchSelectorListItem } from '@views/repo/repo.types'
 
 export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   selectedBranch,
@@ -18,7 +19,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   searchQuery,
   setSearchQuery,
   dynamicWidth = false,
-  preSelectedTab = BranchSelectorTab.BRANCHES
+  preSelectedTab = BranchSelectorTab.BRANCHES,
+  isFilesPage = false,
+  setCreateBranchDialogOpen
 }) => {
   const { Link } = useRouterContext()
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(preSelectedTab)
@@ -110,16 +113,30 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <span className="text-14 leading-tight text-cn-foreground-2">
-              {t('views:noData.noResults', 'No search results')}
-            </span>
+            {isFilesPage && activeTab === BranchSelectorTab.BRANCHES ? (
+              <div className="w-full overflow-hidden">
+                <Button
+                  variant="link"
+                  className="inline-block max-w-full whitespace-normal text-left leading-tight h-auto"
+                  onClick={() => setCreateBranchDialogOpen?.(true)}
+                >
+                  <span className="break-words">
+                    Create branch {searchQuery} from {selectedBranch?.name}
+                  </span>
+                </Button>
+              </div>
+            ) : (
+              <span className="text-14 leading-tight text-cn-foreground-2">
+                {t('views:noData.noResults', 'No search results')}
+              </span>
+            )}
           </div>
         )}
 
         <div className="max-h-[360px] overflow-y-auto px-1">
           {filteredItems.map(item => {
             const isSelected = selectedBranch ? item.name === selectedBranch.name : false
-            const isDefault = activeTab === BranchSelectorTab.BRANCHES && (item as BranchSelectorListItem).default
+            const isDefault = activeTab === BranchSelectorTab.BRANCHES && item.default
 
             return (
               <DropdownMenu.Item

@@ -31,6 +31,8 @@ export interface BranchSelectorDropdownProps {
   setSearchQuery: (query: string) => void
   dynamicWidth?: boolean
   preSelectedTab?: BranchSelectorTab
+  setCreateBranchDialogOpen?: (open: boolean) => void
+  isFilesPage?: boolean
 }
 
 export interface BranchSelectorProps extends BranchSelectorDropdownProps {

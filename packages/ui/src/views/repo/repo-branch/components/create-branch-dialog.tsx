@@ -35,7 +35,8 @@ export function CreateBranchDialog({
   error,
   useTranslationStore,
   selectedBranchOrTag,
-  renderProp: branchSelectorContainer
+  renderProp: branchSelectorContainer,
+  prefilledName
 }: CreateBranchDialogProps) {
   const { t } = useTranslationStore()
 
@@ -66,12 +67,11 @@ export function CreateBranchDialog({
   }
 
   useEffect(() => {
-    if (open) {
-      if (selectedBranchOrTag) {
-        setValue('target', selectedBranchOrTag.name, { shouldValidate: true })
-      }
-    }
-  }, [selectedBranchOrTag, setValue, open, resetForm])
+    reset({
+      name: prefilledName || '',
+      target: selectedBranchOrTag?.name
+    })
+  }, [selectedBranchOrTag, setValue, open, resetForm, prefilledName])
 
   const handleClose = () => {
     resetForm()

@@ -21,6 +21,8 @@ interface BranchSelectorProps {
   setSearchQuery: (query: string) => void
   dynamicWidth?: boolean
   preSelectedTab?: BranchSelectorTab
+  isFilesPage?: boolean
+  setCreateBranchDialogOpen?: (open: boolean) => void
 }
 export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   repoId,
@@ -37,7 +39,9 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   searchQuery = '',
   setSearchQuery,
   dynamicWidth = false,
-  preSelectedTab
+  preSelectedTab,
+  isFilesPage = false,
+  setCreateBranchDialogOpen
 }) => {
   const isTag = selectedBranchorTag
     ? tagList?.some(tag => tag.name === selectedBranchorTag.name && tag.sha === selectedBranchorTag.sha)
@@ -70,6 +74,8 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
         setSearchQuery={setSearchQuery}
         dynamicWidth={dynamicWidth}
         preSelectedTab={preSelectedTab}
+        isFilesPage={isFilesPage}
+        setCreateBranchDialogOpen={setCreateBranchDialogOpen}
       />
     </DropdownMenu.Root>
   )

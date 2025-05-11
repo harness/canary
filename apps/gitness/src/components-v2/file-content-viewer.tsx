@@ -233,6 +233,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         handleDownloadFile={handleDownloadFile}
         handleEditFile={handleEditFile}
         handleOpenDeleteDialog={() => handleToggleDeleteDialog(true)}
+        // refType={selectedRefType}
       />
       {renderFileView()}
     </>

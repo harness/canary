@@ -1,74 +1,109 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { FC, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { Button, Dialog, Fieldset, FormWrapper, Input } from '@/components'
+import { Button, Dialog, Fieldset, FormWrapper, Input, Textarea } from '@/components'
+import { TranslationStore } from '@/views'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 interface PullRequestHeaderEditDialogProps {
   open: boolean
   onClose: () => void
-  onSubmit: (newTitle: string) => Promise<void>
+  onSubmit: (newTitle: string, newDescription: string) => void
   initialTitle: string
+  initialDescription?: string
+  useTranslationStore: () => TranslationStore
 }
+
+// Field names as constants to avoid lint warnings with string literals
+const FIELD_TITLE = 'title'
+const FIELD_DESCRIPTION = 'description'
+
+const formSchema = z.object({
+  [FIELD_TITLE]: z.string().min(1, { message: 'Title is required' }),
+  [FIELD_DESCRIPTION]: z.string().optional()
+})
+
+type FormFields = z.infer<typeof formSchema>
 
 export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> = ({
   open,
   onClose,
   onSubmit,
-  initialTitle
+  initialTitle,
+  initialDescription = '',
+  useTranslationStore
 }) => {
-  const [title, setTitle] = useState(initialTitle)
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-
-  const isDisabled = !title || isLoading || title === initialTitle
-
-  const handleSubmit = async () => {
-    if (!title) return
-
-    setIsLoading(true)
-    setError('')
-
-    try {
-      await onSubmit(title)
-      onClose()
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error occurred')
-    } finally {
-      setIsLoading(false)
+  const { t } = useTranslationStore()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset
+  } = useForm<FormFields>({
+    resolver: zodResolver(formSchema),
+    mode: 'onChange',
+    defaultValues: {
+      title: initialTitle,
+      description: initialDescription
     }
+  })
+
+  useEffect(() => {
+    reset({
+      title: initialTitle,
+      description: initialDescription
+    })
+  }, [initialTitle, initialDescription])
+
+  const isDisabled = isSubmitting
+
+  const onFormSubmit = (data: FormFields) => {
+    onSubmit(data.title, data.description || '')
+    onClose()
   }
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value)
+  const handleDialogClose = () => {
+    reset()
+    onClose()
   }
 
   return (
-    <Dialog.Root open={open} onOpenChange={onClose}>
+    <Dialog.Root open={open} onOpenChange={handleDialogClose}>
       <Dialog.Content aria-describedby={undefined}>
         <Dialog.Header>
-          <Dialog.Title>Edit PR title</Dialog.Title>
+          <Dialog.Title>Edit PR details</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper>
+        <FormWrapper onSubmit={handleSubmit(onFormSubmit)}>
           <Fieldset>
             <Input
-              value={title}
+              {...register(FIELD_TITLE)}
               size="md"
-              placeholder="Enter pull request title"
-              label="Title"
+              placeholder={t('Enter pull request title')}
+              label={t('Title')}
               onFocus={event => event.target.select()}
-              onChange={handleChange}
-              error={error}
+              error={errors[FIELD_TITLE]?.message}
               autoFocus
+            />
+          </Fieldset>
+          <Fieldset>
+            <Textarea
+              {...register(FIELD_DESCRIPTION)}
+              placeholder={t('Enter pull request description')}
+              label={t('Description')}
+              rows={5}
+              error={errors[FIELD_DESCRIPTION]?.message}
             />
           </Fieldset>
         </FormWrapper>
 
         <Dialog.Footer>
-          <Button type="button" variant="outline" onClick={onClose}>
-            Cancel
+          <Button type="button" variant="outline" onClick={handleDialogClose}>
+            {t('Cancel')}
           </Button>
 
-          <Button type="submit" onClick={handleSubmit} disabled={isDisabled}>
-            {isLoading ? 'Saving...' : 'Save'}
+          <Button type="submit" onClick={handleSubmit(onFormSubmit)} disabled={isDisabled}>
+            {isSubmitting ? t('Saving...') : t('Save')}
           </Button>
         </Dialog.Footer>
       </Dialog.Content>

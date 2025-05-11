@@ -10,7 +10,7 @@ import {
   ToggleGroup,
   ViewTypeValue
 } from '@/components'
-import { BranchSelectorTab } from '@views/repo'
+import { BranchSelectorTab } from '@views/repo/components/branch-selector-v2/types'
 
 export interface FileViewerControlBarProps {
   view: ViewTypeValue
@@ -41,7 +41,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
     window.open(url, '_blank')
   }
 
-  const RightDetails = ({ refType }: { refType: BranchSelectorTab }) => {
+  const RightDetails = () => {
     return (
       <ButtonGroup verticalAlign="center" spacing="2">
         <span className="text-sm text-cn-foreground-2">{`${fileContent?.split('\n').length || 0} lines`}</span>
@@ -88,7 +88,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
           <ToggleGroup.Item value={'blame'}>Blame</ToggleGroup.Item>
           <ToggleGroup.Item value={'history'}>History</ToggleGroup.Item>
         </ToggleGroup.Root>
-        <StackedList.Field right title={<RightDetails refType={refType} />} />
+        <StackedList.Field right title={<RightDetails />} />
       </StackedList.Item>
     </StackedList.Root>
   )

@@ -37,7 +37,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const [view, setView] = useState<EditViewTypeValue>('edit')
   const [dirty, setDirty] = useState(false)
   const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
-  const { selectedBranchTag } = useRepoBranchesStore()
+  const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
   const { theme } = useThemeStore()
   // TODO: temporary solution for matching themes
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
@@ -192,6 +192,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         handleCancelFileEdit={handleCancelFileEdit}
         parentPath={parentPath}
         setParentPath={setParentPath}
+        selectedRefType={selectedRefType}
       />
 
       <FileEditorControlBar view={view} onChangeView={onChangeView} />

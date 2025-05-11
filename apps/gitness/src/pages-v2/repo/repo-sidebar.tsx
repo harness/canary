@@ -105,6 +105,7 @@ export const RepoSidebar = () => {
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      console.log(type, branchTagName)
       if (type === BranchSelectorTab.BRANCHES) {
         setSelectedBranchTag(branchTagName)
         setSelectedRefType(type)

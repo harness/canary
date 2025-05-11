@@ -26,7 +26,7 @@ interface PullRequestLayoutProps {
   spaceId?: string
   repoId?: string
   useTranslationStore: () => TranslationStore
-  updateTitle: (title: string, description: string) => Promise<void>
+  updateTitle: (title: string, description: string) => void
 }
 
 enum PullRequestTabsKeys {
@@ -50,7 +50,12 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="mx-auto max-w-[1500px] px-6">
         {pullRequest && (
-          <PullRequestHeader className="mb-10" updateTitle={updateTitle} data={{ ...pullRequest, spaceId, repoId }} />
+          <PullRequestHeader
+            className="mb-10"
+            updateTitle={updateTitle}
+            data={{ ...pullRequest, spaceId, repoId }}
+            useTranslationStore={useTranslationStore}
+          />
         )}
 
         <TabNav.Root variant="tabs" className="mb-7 before:-left-6 before:w-[calc(100%+3rem)]">

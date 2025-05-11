@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react'
 
+import { Button, Icon, Separator, StatusBadge, Tag } from '@/components'
 import { useRouterContext } from '@/context'
-import { Button, Icon, StatusBadge, Tag } from '@components/index'
+import { TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
 
@@ -26,7 +27,8 @@ interface PullRequestTitleProps {
     repoId?: string
     description?: string
   }
-  updateTitle: (title: string, description: string) => Promise<void>
+  updateTitle: (title: string, description: string) => void
+  useTranslationStore: () => TranslationStore
 }
 
 export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
@@ -46,7 +48,8 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
     repoId,
     description
   },
-  updateTitle
+  updateTitle,
+  useTranslationStore
 }) => {
   const { Link } = useRouterContext()
   const [isEditing, setIsEditing] = useState(false)
@@ -57,10 +60,10 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   const stateObject = getPrState(is_draft, merged, state)
 
   const handleSubmit = useCallback(
-    async (newTitle: string) => {
-      await updateTitle(newTitle, description ?? '')
+    async (newTitle: string, newDescription: string) => {
+      await updateTitle(newTitle, newDescription)
     },
-    [description, updateTitle]
+    [updateTitle]
   )
 
   return (
@@ -82,6 +85,10 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
             }}
           >
             <Icon name="edit-pen" size={16} className="text-icons-1 group-hover:text-icons-3" />
+          </Button>
+          <Separator orientation="vertical" className="mx-1 h-4 bg-cn-background-0" />
+          <Button variant="link" onClick={() => setIsEditing(true)}>
+            Add a description
           </Button>
         </div>
 
@@ -116,6 +123,8 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         onClose={() => setIsEditing(false)}
         onSubmit={handleSubmit}
         initialTitle={title || ''}
+        initialDescription={description || ''}
+        useTranslationStore={useTranslationStore}
       />
     </>
   )

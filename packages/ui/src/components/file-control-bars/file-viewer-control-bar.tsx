@@ -10,6 +10,7 @@ import {
   ToggleGroup,
   ViewTypeValue
 } from '@/components'
+import { BranchSelectorTab } from '@views/repo'
 
 export interface FileViewerControlBarProps {
   view: ViewTypeValue
@@ -21,6 +22,7 @@ export interface FileViewerControlBarProps {
   handleDownloadFile: () => void
   handleEditFile: () => void
   handleOpenDeleteDialog: () => void
+  refType?: BranchSelectorTab
 }
 
 export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
@@ -32,20 +34,21 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   url,
   handleDownloadFile,
   handleEditFile,
-  handleOpenDeleteDialog
+  handleOpenDeleteDialog,
+  refType = BranchSelectorTab.BRANCHES
 }) => {
   const handleViewRaw = () => {
     window.open(url, '_blank')
   }
 
-  const RightDetails = () => {
+  const RightDetails = ({ refType }: { refType: BranchSelectorTab }) => {
     return (
       <ButtonGroup verticalAlign="center" spacing="2">
         <span className="text-sm text-cn-foreground-2">{`${fileContent?.split('\n').length || 0} lines`}</span>
         <span className="h-3 border-l border-cn-borders-2" />
         <span className="mr-5 text-sm text-cn-foreground-2">{fileBytesSize}</span>
         <FileToolbarActions
-          showEdit
+          showEdit={refType === BranchSelectorTab.BRANCHES}
           copyContent={fileContent}
           onDownloadClick={handleDownloadFile}
           onEditClick={handleEditFile}
@@ -85,7 +88,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
           <ToggleGroup.Item value={'blame'}>Blame</ToggleGroup.Item>
           <ToggleGroup.Item value={'history'}>History</ToggleGroup.Item>
         </ToggleGroup.Root>
-        <StackedList.Field right title={<RightDetails />} />
+        <StackedList.Field right title={<RightDetails refType={refType} />} />
       </StackedList.Item>
     </StackedList.Root>
   )

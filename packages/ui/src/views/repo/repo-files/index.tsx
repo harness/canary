@@ -35,7 +35,6 @@ interface RepoFilesProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
   isLoadingRepoDetails: boolean
   toRepoFileDetails?: ({ path }: { path: string }) => string
-  refType: BranchSelectorTab
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -56,10 +55,9 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   isRepoEmpty,
   toCommitDetails,
   isLoadingRepoDetails,
-  toRepoFileDetails,
-  refType
+  toRepoFileDetails
 }) => {
-  const { selectedBranchTag, repoId, spaceId } = useRepoBranchesStore()
+  const { selectedBranchTag, repoId, spaceId, selectedRefType } = useRepoBranchesStore()
   const { t } = useTranslationStore()
 
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
@@ -106,7 +104,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
                   ahead: currentBranchDivergence.ahead || 0,
                   behind: currentBranchDivergence.behind || 0
                 }}
-                refType={refType}
+                refType={selectedRefType}
               />
               <Spacer size={4} />
             </>
@@ -161,6 +159,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             useTranslationStore={useTranslationStore}
             pathNewFile={pathNewFile}
             pathUploadFiles={pathUploadFiles}
+            selectedRefType={selectedRefType}
           />
         )}
         {content}

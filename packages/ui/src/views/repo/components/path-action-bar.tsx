@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { Button, Icon, PathBreadcrumbs, PathParts } from '@/components'
 import { useRouterContext } from '@/context'
-import { CodeModes, TranslationStore } from '@/views'
+import { BranchSelectorTab, CodeModes, TranslationStore } from '@/views'
 
 export interface PathActionBarProps {
   codeMode: CodeModes
@@ -18,6 +18,7 @@ export interface PathActionBarProps {
   handleCancelFileEdit?: () => void
   parentPath?: string
   setParentPath?: (value: string) => void
+  selectedRefType: BranchSelectorTab
 }
 
 export const PathActionBar: FC<PathActionBarProps> = ({
@@ -33,10 +34,12 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   handleOpenCommitDialog,
   handleCancelFileEdit,
   parentPath,
-  setParentPath
+  setParentPath,
+  selectedRefType
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
+  console.log('selectedRefType', selectedRefType)
   return (
     <div className="mb-4 flex h-8 items-center justify-between gap-8">
       <PathBreadcrumbs
@@ -50,14 +53,17 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         parentPath={parentPath}
         setParentPath={setParentPath}
       />
-      {codeMode === CodeModes.VIEW && pathNewFile && pathUploadFiles && (
-        <Button variant="outline" asChild>
-          <Link className="relative grid grid-cols-[auto_1fr] items-center gap-1.5" to={pathNewFile}>
-            <Icon name="plus" size={12} />
-            <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create new file')}</span>
-          </Link>
-        </Button>
-      )}
+      {codeMode === CodeModes.VIEW &&
+        pathNewFile &&
+        pathUploadFiles &&
+        selectedRefType === BranchSelectorTab.BRANCHES && (
+          <Button variant="outline" asChild>
+            <Link className="relative grid grid-cols-[auto_1fr] items-center gap-1.5" to={pathNewFile}>
+              <Icon name="plus" size={12} />
+              <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create new file')}</span>
+            </Link>
+          </Button>
+        )}
       {codeMode !== CodeModes.VIEW && (
         <div className="flex gap-2.5">
           {!!handleCancelFileEdit && (

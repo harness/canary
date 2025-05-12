@@ -54,7 +54,7 @@ export const MultiSelectDemo = () => {
         </div>
       </div>
 
-      <div className="p-6 rounded border border-cn-borders-2">
+      {/* <div className="p-6 rounded border border-cn-borders-2">
         <h3 className="text-lg font-medium mb-4">Input-only Mode (no options)</h3>
         <div className="max-w-md">
           <MultiSelectV2
@@ -65,7 +65,7 @@ export const MultiSelectDemo = () => {
             label="Input Only"
           />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

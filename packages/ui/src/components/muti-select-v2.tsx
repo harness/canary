@@ -1,6 +1,6 @@
-import { ReactNode } from 'react'
+import { KeyboardEvent, ReactNode, useRef, useState } from 'react'
 
-import { Button, ControlGroup, DropdownMenu, Icon, Input, Label, ScrollArea, SearchBox } from '@/components'
+import { Button, ControlGroup, DropdownMenu, Icon, Label, ScrollArea } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
@@ -39,12 +39,62 @@ export const MultiSelectV2 = ({
   error,
   label
 }: MultiSelectV2Props) => {
-  const { search, handleSearchChange } = useDebounceSearch({
+  const { handleSearchChange } = useDebounceSearch({
     handleChangeSearchValue,
     searchValue
   })
-
+  
+  const [inputValue, setInputValue] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
+  
   const hasOptions = options.length > 0
+  
+  const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && inputValue.trim()) {
+      e.preventDefault()
+      const newItem: MultiSelectOptionTypeV2 = { key: inputValue.trim() }
+      handleChange(newItem)
+      setInputValue('')
+    }
+  }
+  
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
+    if (handleChangeSearchValue) {
+      handleSearchChange(e)
+    }
+  }
+  
+  const renderSelectedItemsInInput = () => {
+    return (
+      <div className="flex flex-wrap items-center gap-1 p-1">
+        {selectedItems.map(it => (
+          <Button 
+            key={it.key} 
+            size="sm" 
+            type="button" 
+            variant="outline" 
+            className="h-6 py-0 px-2"
+            onClick={(e) => {
+              e.stopPropagation()
+              handleChange(it)
+            }}
+          >
+            {it.key}
+            <Icon name="close" size={10} className="ml-1" />
+          </Button>
+        ))}
+        <input
+          ref={inputRef}
+          className="min-w-[80px] flex-1 border-none outline-none p-1 bg-transparent"
+          placeholder={selectedItems.length ? '' : placeholder}
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
+        />
+      </div>
+    )
+  }
 
   return (
     <ControlGroup className={className}>
@@ -57,28 +107,19 @@ export const MultiSelectV2 = ({
       {hasOptions ? (
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
-            <div className="w-full">
-              <Input className="w-full" placeholder={placeholder} />
+            <div className="w-full rounded-md border focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background">
+              {renderSelectedItemsInInput()}
             </div>
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content className="z-50" style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
             {!!handleChangeSearchValue && (
               <>
-                <div className="px-2 py-1.5">
-                  <SearchBox.Root
-                    className="w-full"
-                    placeholder={t('views:repos.search', 'Search')}
-                    value={search}
-                    handleChange={handleSearchChange}
-                    showOnFocus
-                  />
-                </div>
                 <DropdownMenu.Separator />
               </>
             )}
             {options.length ? (
-              <ScrollArea viewportClassName="max-h-[300px]">
+              <ScrollArea className="max-h-[300px]">
                 {options.map(option => {
                   const isSelected = selectedItems.findIndex(it => it.key === option.key) > -1
 
@@ -89,10 +130,11 @@ export const MultiSelectV2 = ({
                       onSelect={e => {
                         e.preventDefault()
                         handleChange(option)
+                        setInputValue('')
                       }}
                     >
                       <div className="flex items-center gap-x-2">
-                        {isSelected && <Icon className="min-w-3 text-icons-2" name="tick" size={12} />}
+                        {isSelected && <Icon className="text-icons-2 min-w-3" name="tick" size={12} />}
                         {customOptionElem ? (
                           customOptionElem(option)
                         ) : (
@@ -104,8 +146,8 @@ export const MultiSelectV2 = ({
                 })}
               </ScrollArea>
             ) : (
-              <div className="px-5 py-4 text-center">
-                <span className="leading-tight text-cn-foreground-2">
+              <div className="py-4 px-5 text-center">
+                <span className="text-cn-foreground-2 leading-tight">
                   {t('views:noData.noResults', 'No search results')}
                 </span>
               </div>
@@ -113,19 +155,11 @@ export const MultiSelectV2 = ({
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       ) : (
-        <Input className="w-full" placeholder={placeholder} />
-      )}
-
-      {!!selectedItems.length && (
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {selectedItems.map(it => (
-            <Button key={it.key} size="sm" type="button" variant="outline" onClick={() => handleChange(it)}>
-              {it.key}
-              <Icon name="close" size={10} />
-            </Button>
-          ))}
+        <div className="w-full rounded-md border focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background">
+          {renderSelectedItemsInInput()}
         </div>
       )}
+      {!!error && <p className="mt-1 text-sm text-destructive">{error}</p>}
     </ControlGroup>
   )
 }

@@ -32,7 +32,7 @@ interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
   rounded?: boolean
 }
 
-const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
+const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
   ({ name, src, size = 'default', rounded = false, className, ...props }, ref) => {
     const initials = getInitials(name || '')
 

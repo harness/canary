@@ -45,6 +45,16 @@
     "border": {
       "$type": "borderWidth",
       "$value": "{borderWidth.1}"
+    },
+    "image": {
+      "width": {
+        "$type": "sizing",
+        "$value": "460px"
+      },
+      "height": {
+        "$type": "sizing",
+        "$value": "240px"
+      }
     }
   },
   "card-check": {

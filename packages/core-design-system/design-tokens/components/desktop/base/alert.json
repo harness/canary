@@ -14,7 +14,7 @@
     },
     "pr": {
       "$type": "spacing",
-      "$value": "{spacing.8}"
+      "$value": "{spacing.10}"
     },
     "radius": {
       "$type": "borderRadius",

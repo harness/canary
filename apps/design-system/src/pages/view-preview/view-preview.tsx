@@ -17,6 +17,7 @@ import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
 import { RepoLabelsList } from '@subjects/views/labels/repo-labels-list'
 import { LandingPagePreview } from '@subjects/views/landing-page/landing-page-view'
+import { MultiSelectDemo } from '@subjects/views/multi-select-demo'
 import PipelineGraphWrapper from '@subjects/views/pipeline-graph/pipeline-graph'
 import PipelineGraphMinimalWrapper from '@subjects/views/pipeline-graph/pipeline-graph-minimal'
 import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
@@ -491,6 +492,15 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
             <ChatPreviewWrapper />
           </RepoViewWrapper>
         )
+      }
+    }
+  },
+  multiSelec: {
+    label: 'Multi Select Demo',
+    items: {
+      'multi-select-demo': {
+        label: 'Multi Select Demo',
+        element: <MultiSelectDemo />
       }
     }
   },

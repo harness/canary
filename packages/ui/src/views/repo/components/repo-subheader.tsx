@@ -13,15 +13,13 @@ export enum RepoTabsKeys {
 
 export const repoTabsKeysArr = Object.values(RepoTabsKeys)
 
-export const RepoSubheader = ({
-  useTranslationStore,
-  showPipelinesTab = true,
-  className
-}: {
-  useTranslationStore: () => TranslationStore
-  showPipelinesTab?: boolean
+interface RepoSubheaderProps {
   className?: string
-}) => {
+  showPipelinesTab?: boolean
+  useTranslationStore: () => TranslationStore
+}
+
+export const RepoSubheader = ({ useTranslationStore, showPipelinesTab = true, className }: RepoSubheaderProps) => {
   const { t } = useTranslationStore()
 
   return (

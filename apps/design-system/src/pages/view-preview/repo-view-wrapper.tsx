@@ -3,8 +3,7 @@ import { Route } from 'react-router-dom'
 
 import { useTranslationStore } from '@utils/viewUtils'
 
-import { RepoSubheader } from '@harnessio/ui/components'
-import { SubHeaderWrapper } from '@harnessio/ui/views'
+import { RepoSubheader, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import RootViewWrapper from './root-view-wrapper'
 

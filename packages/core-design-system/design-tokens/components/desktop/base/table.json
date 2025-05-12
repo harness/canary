@@ -1,26 +1,26 @@
 {
   "cellHeight": {
     "single": {
-      "$type": "sizing",
-      "$value": "{size.12}"
+      "value": "{size.12}",
+      "type": "sizing"
     },
     "double": {
-      "$type": "sizing",
-      "$value": "{size.16}"
+      "value": "{size.16}",
+      "type": "sizing"
     }
   },
   "cell": {
     "px": {
-      "$type": "spacing",
-      "$value": "{spacing.4}"
+      "value": "{spacing.4}",
+      "type": "spacing"
     },
     "py": {
-      "$type": "spacing",
-      "$value": "{spacing.3}"
+      "value": "{spacing.3}",
+      "type": "spacing"
     },
     "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.2}"
+      "value": "{spacing.2}",
+      "type": "spacing"
     }
   }
 }

@@ -1,20 +1,20 @@
 {
   "navtab": {
     "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.2}"
+      "value": "{spacing.2}",
+      "type": "spacing"
     },
     "px": {
-      "$type": "spacing",
-      "$value": "{spacing.4}"
+      "value": "{spacing.4}",
+      "type": "spacing"
     },
     "height": {
-      "$type": "sizing",
-      "$value": "{size.9}"
+      "value": "{size.9}",
+      "type": "sizing"
     },
     "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.3}"
+      "value": "{rounded.3}",
+      "type": "borderRadius"
     }
   }
 }

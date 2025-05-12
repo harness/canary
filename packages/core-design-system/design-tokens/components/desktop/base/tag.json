@@ -2,73 +2,73 @@
   "tag": {
     "size": {
       "sm": {
-        "$type": "sizing",
-        "$value": "{size.5}"
+        "value": "{size.5}",
+        "type": "sizing"
       },
       "default": {
-        "$type": "sizing",
-        "$value": "{size.6}"
+        "value": "{size.6}",
+        "type": "sizing"
       }
     },
     "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.1}"
+      "value": "{spacing.1}",
+      "type": "spacing"
     },
     "py": {
-      "$type": "spacing",
-      "$value": "{spacing.half}"
+      "value": "{spacing.half}",
+      "type": "spacing"
     },
     "px": {
-      "$type": "spacing",
-      "$value": "{spacing.2}"
+      "value": "{spacing.2}",
+      "type": "spacing"
     },
     "radius": {
       "default": {
-        "$type": "borderRadius",
-        "$value": "{rounded.2}"
+        "value": "{rounded.2}",
+        "type": "borderRadius"
       },
       "full": {
-        "$type": "borderRadius",
-        "$value": "{rounded.full}"
+        "value": "{rounded.full}",
+        "type": "borderRadius"
       }
     },
     "split": {
       "right": {
         "radius": {
           "r": {
-            "$type": "borderRadius",
-            "$value": "{rounded.2}"
+            "value": "{rounded.2}",
+            "type": "borderRadius"
           },
           "l": {
-            "$type": "borderRadius",
-            "$value": "{rounded.none}"
+            "value": "{rounded.none}",
+            "type": "borderRadius"
           }
         }
       },
       "left": {
         "radius": {
           "r": {
-            "$type": "borderRadius",
-            "$value": "{rounded.none}"
+            "value": "{rounded.none}",
+            "type": "borderRadius"
           },
           "l": {
-            "$type": "borderRadius",
-            "$value": "{rounded.2}"
+            "value": "{rounded.2}",
+            "type": "borderRadius"
           }
         }
       },
       "max-width": {
-        "$type": "sizing",
-        "$value": "{size.28}"
+        "value": "{size.28}",
+        "type": "sizing"
       }
     },
     "border": {
-      "$type": "borderWidth",
-      "$value": "{borderWidth.1}"
+      "value": "{borderWidth.1}",
+      "type": "borderWidth"
     },
     "max-width": {
-      "$type": "sizing",
-      "$value": "{size.56}"
+      "value": "{size.56}",
+      "type": "sizing"
     }
   }
 }

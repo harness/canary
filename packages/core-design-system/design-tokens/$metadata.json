@@ -44,6 +44,7 @@
     "components/desktop/base/navtab",
     "components/desktop/base/menubar",
     "components/desktop/base/tabs",
+    "components/desktop/base/pagination",
     "components/desktop/base/tag",
     "components/desktop/base/tooltip",
     "components/desktop/base/toast",

@@ -5,7 +5,8 @@
     "selectedTokenSets": {
       "core/typography": "source",
       "core/dimensions": "source",
-      "core/colors_lch": "source"
+      "core/colors_lch": "source",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -689,7 +690,8 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "mode/dark/default": "enabled"
+      "mode/dark/default": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -1876,7 +1878,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer": "enabled"
+      "mode/dark/dimmer": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:0",
@@ -2455,7 +2458,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default": "enabled"
+      "mode/light/default": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:4",
@@ -3035,7 +3039,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast": "enabled"
+      "mode/dark/high-contrast": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:1",
@@ -3614,7 +3619,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-protanopia": "enabled"
+      "mode/dark/default-protanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:2",
@@ -4194,7 +4200,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-protanopia": "enabled"
+      "mode/dark/dimmer-protanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:3",
@@ -4774,7 +4781,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-protanopia": "enabled"
+      "mode/dark/high-contrast-protanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:4",
@@ -5354,7 +5362,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-deuteranopia": "enabled"
+      "mode/dark/default-deuteranopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:5",
@@ -5934,7 +5943,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-deuteranopia": "enabled"
+      "mode/dark/dimmer-deuteranopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:6",
@@ -6514,7 +6524,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-deuteranopia": "enabled"
+      "mode/dark/high-contrast-deuteranopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:7",
@@ -7094,7 +7105,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/default-tritanopia": "enabled"
+      "mode/dark/default-tritanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:8",
@@ -7674,7 +7686,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/dimmer-tritanopia": "enabled"
+      "mode/dark/dimmer-tritanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:9",
@@ -8254,7 +8267,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/dark/high-contrast-tritanopia": "enabled"
+      "mode/dark/high-contrast-tritanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:10",
@@ -8833,7 +8847,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer": "enabled"
+      "mode/light/dimmer": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:11",
@@ -9412,7 +9427,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast": "enabled"
+      "mode/light/high-contrast": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:12",
@@ -9991,7 +10007,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default-protanopia": "enabled"
+      "mode/light/default-protanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:13",
@@ -10570,7 +10587,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-protanopia": "enabled"
+      "mode/light/dimmer-protanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:14",
@@ -11149,7 +11167,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-protanopia": "enabled"
+      "mode/light/high-contrast-protanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:15",
@@ -11728,7 +11747,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default-deuteranopia": "enabled"
+      "mode/light/default-deuteranopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:16",
@@ -12331,7 +12351,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-deuteranopia": "enabled"
+      "mode/light/dimmer-deuteranopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:17",
@@ -12910,7 +12931,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-deuteranopia": "enabled"
+      "mode/light/high-contrast-deuteranopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:18",
@@ -13489,7 +13511,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/default-tritanopia": "enabled"
+      "mode/light/default-tritanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:19",
@@ -14068,7 +14091,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/dimmer-tritanopia": "enabled"
+      "mode/light/dimmer-tritanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:20",
@@ -14647,7 +14671,8 @@
       "ring.warning-hover": "S:88da3da4c92dced9724465b3cb2b4abca1e22836,"
     },
     "selectedTokenSets": {
-      "mode/light/high-contrast-tritanopia": "enabled"
+      "mode/light/high-contrast-tritanopia": "enabled",
+      "components/desktop/base/pagination": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:21",
@@ -15029,7 +15054,8 @@
       "components/desktop/base/alert": "enabled",
       "components/desktop/base/dropdown": "enabled",
       "components/desktop/base/drawer": "enabled",
-      "components/desktop/base/dialog": "enabled"
+      "components/desktop/base/dialog": "enabled",
+      "components/desktop/base/pagination": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",
@@ -15105,12 +15131,12 @@
       "card.sm.py": "1e79473166206b269f7e4961ddcc23aac08fdf49",
       "card.sm.radius": "419bcf7f130cd5f73a1577d8a623c629f89d7c8d",
       "card.border": "6e5df5a3eeb5f558c994abe03e40482786ed4c62",
+      "card.image.width": "ea5a2e1ac5f4a67b8fa9045b4e4069cff069aaa1",
+      "card.image.height": "d37386c487eb7c3b0cef92626f6ad7d345bb0fbc",
       "card-check.default.pr": "8810d3dbf13312d515b5c0eabafe260d58b9a0d4",
       "card-check.default.pl": "19ed91b3c95881c4338a907861c8c71cf37f5ae7",
       "card-check.default.py": "8775361c4096bab69fb9f6fd12e85f42f0eae629",
       "card-check.default.gap": "1db1281050d0d452f55eb749bdb8d0448ccb5b2b",
-      "card.image.width": "ea5a2e1ac5f4a67b8fa9045b4e4069cff069aaa1",
-      "card.image.height": "d37386c487eb7c3b0cef92626f6ad7d345bb0fbc",
       "drawer.sm": "af9e8505af44023dd5a69fe3ff4b849926ee24c1",
       "drawer.md": "f86891516064b8925e17d7bf8f1a383e46bc4ecb",
       "drawer.lg": "f08b6ffcd3684c6d793bd0fad0538b5250b19760",
@@ -15169,6 +15195,7 @@
       "tabs.sub.radius": "21aff607fc4fb20149195c7b7c0b1490aacdf527",
       "tabs.px": "7c7406e5b86997045b90316059ba836c6f456574",
       "tabs.radius": "d1c2d1963a1b8d207831c34234acc4baa6200478",
+      "pagination.btn.px": "e6c62dcdf51db159fa807fcf0815337c19eec52a",
       "tag.size.sm": "45fdf4ccb209bc1471e98dcb9f94d14e80bcdaf0",
       "tag.size.default": "5019d42dc0ca112c2a4dd5e9ff57a0310df1a3d5",
       "tag.gap": "4f428fa34534b2d68ed54fbaf34bd38e6cc9ee6b",

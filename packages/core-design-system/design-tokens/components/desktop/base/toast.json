@@ -2,33 +2,33 @@
   "toast": {
     "textwrapper": {
       "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.2}"
+        "value": "{spacing.2}",
+        "type": "spacing"
       },
       "subgap": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
+        "value": "{spacing.1}",
+        "type": "spacing"
       }
     },
     "borderRadius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.3}"
+      "value": "{rounded.3}",
+      "type": "borderRadius"
     },
     "pr": {
-      "$type": "spacing",
-      "$value": "{spacing.7}"
+      "value": "{spacing.7}",
+      "type": "spacing"
     },
     "pl": {
-      "$type": "spacing",
-      "$value": "{spacing.5}"
+      "value": "{spacing.5}",
+      "type": "spacing"
     },
     "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.3}"
+      "value": "{spacing.3}",
+      "type": "spacing"
     },
     "py": {
-      "$type": "spacing",
-      "$value": "{spacing.3}"
+      "value": "{spacing.3}",
+      "type": "spacing"
     }
   }
 }

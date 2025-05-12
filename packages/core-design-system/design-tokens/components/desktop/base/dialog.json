@@ -1,42 +1,42 @@
 {
   "dialog": {
     "sm": {
-      "$type": "sizing",
-      "$value": "460"
+      "value": "460",
+      "type": "sizing"
     },
     "md": {
-      "$type": "sizing",
-      "$value": "560"
+      "value": "560",
+      "type": "sizing"
     },
     "lg": {
-      "$type": "sizing",
-      "$value": "660"
+      "value": "660",
+      "type": "sizing"
     },
     "container": {
-      "$type": "spacing",
-      "$value": "{spacing.5}"
+      "value": "{spacing.5}",
+      "type": "spacing"
     },
     "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.4}"
+      "value": "{spacing.4}",
+      "type": "spacing"
     },
     "footer": {
       "py": {
-        "$type": "spacing",
-        "$value": "{spacing.4}"
+        "value": "{spacing.4}",
+        "type": "spacing"
       }
     },
     "border": {
-      "$type": "borderWidth",
-      "$value": "{borderWidth.1}"
+      "value": "{borderWidth.1}",
+      "type": "borderWidth"
     },
     "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.4}"
+      "value": "{rounded.4}",
+      "type": "borderRadius"
     },
     "safezone": {
-      "$type": "spacing",
-      "$value": "{spacing.10}"
+      "value": "{spacing.10}",
+      "type": "spacing"
     }
   }
 }

@@ -2,82 +2,82 @@
   "badge": {
     "size": {
       "sm": {
-        "$type": "sizing",
-        "$value": "{size.5}"
+        "value": "{size.5}",
+        "type": "sizing"
       },
       "default": {
-        "$type": "sizing",
-        "$value": "{size.6}"
+        "value": "{size.6}",
+        "type": "sizing"
       }
     },
     "default": {
       "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
+        "value": "{spacing.1}",
+        "type": "spacing"
       },
       "px": {
-        "$type": "spacing",
-        "$value": "{spacing.2}"
+        "value": "{spacing.2}",
+        "type": "spacing"
       },
       "py": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
+        "value": "{spacing.1}",
+        "type": "spacing"
       }
     },
     "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.2}"
+      "value": "{rounded.2}",
+      "type": "borderRadius"
     },
     "border": {
-      "$type": "borderWidth",
-      "$value": "{borderWidth.1}"
+      "value": "{borderWidth.1}",
+      "type": "borderWidth"
     },
     "sm": {
       "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.half}"
+        "value": "{spacing.half}",
+        "type": "spacing"
       },
       "px": {
-        "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "value": "{spacing.1-half}",
+        "type": "spacing"
       },
       "py": {
-        "$type": "spacing",
-        "$value": "{spacing.half}"
+        "value": "{spacing.half}",
+        "type": "spacing"
       }
     }
   },
   "badge-status": {
     "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.1-half}"
+      "value": "{spacing.1-half}",
+      "type": "spacing"
     }
   },
   "badge-counter": {
     "py": {
-      "$type": "spacing",
-      "$value": "{spacing.half}"
+      "value": "{spacing.half}",
+      "type": "spacing"
     },
     "px": {
-      "$type": "spacing",
-      "$value": "{spacing.1}"
+      "value": "{spacing.1}",
+      "type": "spacing"
     },
     "size": {
       "default": {
-        "$type": "sizing",
-        "$value": "{size.4-half}"
+        "value": "{size.4-half}",
+        "type": "sizing"
       }
     },
     "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.2}"
+      "value": "{rounded.2}",
+      "type": "borderRadius"
     }
   },
   "badge-indicator": {
     "size": {
       "default": {
-        "$type": "sizing",
-        "$value": "{size.2}"
+        "value": "{size.2}",
+        "type": "sizing"
       }
     }
   }

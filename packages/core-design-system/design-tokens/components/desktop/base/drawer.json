@@ -1,24 +1,24 @@
 {
   "drawer": {
     "sm": {
-      "$type": "sizing",
-      "$value": "408"
+      "value": "408",
+      "type": "sizing"
     },
     "md": {
-      "$type": "sizing",
-      "$value": "700"
+      "value": "700",
+      "type": "sizing"
     },
     "lg": {
-      "$type": "sizing",
-      "$value": "920"
+      "value": "920",
+      "type": "sizing"
     },
     "container": {
-      "$type": "spacing",
-      "$value": "{spacing.5}"
+      "value": "{spacing.5}",
+      "type": "spacing"
     },
     "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.4}"
+      "value": "{spacing.4}",
+      "type": "spacing"
     }
   }
 }

@@ -1,28 +1,28 @@
 {
   "alert": {
     "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.2}"
+      "value": "{spacing.2}",
+      "type": "spacing"
     },
     "py": {
-      "$type": "spacing",
-      "$value": "{spacing.3}"
+      "value": "{spacing.3}",
+      "type": "spacing"
     },
     "pl": {
-      "$type": "spacing",
-      "$value": "{spacing.3}"
+      "value": "{spacing.3}",
+      "type": "spacing"
     },
     "pr": {
-      "$type": "spacing",
-      "$value": "{spacing.10}"
+      "value": "{spacing.10}",
+      "type": "spacing"
     },
     "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.2}"
+      "value": "{rounded.2}",
+      "type": "borderRadius"
     },
     "min-width": {
-      "$type": "sizing",
-      "$value": "{size.64}"
+      "value": "{size.64}",
+      "type": "sizing"
     }
   }
 }

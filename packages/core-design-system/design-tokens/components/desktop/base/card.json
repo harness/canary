@@ -2,78 +2,78 @@
   "card": {
     "md": {
       "px": {
-        "$type": "spacing",
-        "$value": "{spacing.6}"
+        "value": "{spacing.6}",
+        "type": "spacing"
       },
       "py": {
-        "$type": "spacing",
-        "$value": "{spacing.6}"
+        "value": "{spacing.6}",
+        "type": "spacing"
       },
       "radius": {
-        "$type": "borderRadius",
-        "$value": "{rounded.4}"
+        "value": "{rounded.4}",
+        "type": "borderRadius"
       }
     },
     "default": {
       "px": {
-        "$type": "spacing",
-        "$value": "{spacing.4}"
+        "value": "{spacing.4}",
+        "type": "spacing"
       },
       "py": {
-        "$type": "spacing",
-        "$value": "{spacing.4}"
+        "value": "{spacing.4}",
+        "type": "spacing"
       },
       "radius": {
-        "$type": "borderRadius",
-        "$value": "{rounded.3}"
+        "value": "{rounded.3}",
+        "type": "borderRadius"
       }
     },
     "sm": {
       "px": {
-        "$type": "spacing",
-        "$value": "{spacing.3}"
+        "value": "{spacing.3}",
+        "type": "spacing"
       },
       "py": {
-        "$type": "spacing",
-        "$value": "{spacing.3}"
+        "value": "{spacing.3}",
+        "type": "spacing"
       },
       "radius": {
-        "$type": "borderRadius",
-        "$value": "{rounded.3}"
+        "value": "{rounded.3}",
+        "type": "borderRadius"
       }
     },
     "border": {
-      "$type": "borderWidth",
-      "$value": "{borderWidth.1}"
+      "value": "{borderWidth.1}",
+      "type": "borderWidth"
     },
     "image": {
       "width": {
-        "$type": "sizing",
-        "$value": "460px"
+        "value": "460px",
+        "type": "sizing"
       },
       "height": {
-        "$type": "sizing",
-        "$value": "240px"
+        "value": "240px",
+        "type": "sizing"
       }
     }
   },
   "card-check": {
     "default": {
       "pr": {
-        "$type": "spacing",
-        "$value": "{spacing.11}"
+        "value": "{spacing.11}",
+        "type": "spacing"
       },
       "pl": {
-        "$type": "spacing",
-        "$value": "{spacing.4}"
+        "value": "{spacing.4}",
+        "type": "spacing"
       },
       "py": {
-        "$type": "spacing",
-        "$value": "{spacing.3}"
+        "value": "{spacing.3}",
+        "type": "spacing"
       },
       "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.3-half}"
+        "value": "{spacing.3-half}",
+        "type": "spacing"
       }
     }
   }

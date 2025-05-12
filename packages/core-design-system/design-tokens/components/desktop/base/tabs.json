@@ -1,26 +1,26 @@
 {
   "tabs": {
     "height": {
-      "$type": "sizing",
-      "$value": "{size.8}"
+      "value": "{size.8}",
+      "type": "sizing"
     },
     "sub": {
       "height": {
-        "$type": "sizing",
-        "$value": "{size.6}"
+        "value": "{size.6}",
+        "type": "sizing"
       },
       "radius": {
-        "$type": "borderRadius",
-        "$value": "{rounded.2}"
+        "value": "{rounded.2}",
+        "type": "borderRadius"
       }
     },
     "px": {
-      "$type": "spacing",
-      "$value": "{spacing.4}"
+      "value": "{spacing.4}",
+      "type": "spacing"
     },
     "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.3}"
+      "value": "{rounded.3}",
+      "type": "borderRadius"
     }
   }
 }

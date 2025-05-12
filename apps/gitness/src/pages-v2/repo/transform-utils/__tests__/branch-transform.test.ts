@@ -6,12 +6,20 @@ import { apiBranches2BranchNames, apiBranches2DefaultBranchName, transformBranch
 const mockBranches: TypesBranchExtended[] = [
   {
     name: 'main',
-    commit: { sha: 'abc123', committer: { when: '2025-01-02T00:00:00Z', identity: { name: 'John Doe' } } },
+    commit: {
+      sha: 'abc123',
+      committer: { when: '2025-01-02T00:00:00Z', identity: { name: 'John Doe' } },
+      author: { when: '2025-01-02T00:00:00Z', identity: { name: 'John Doe' } }
+    },
     is_default: true
   },
   {
     name: 'feature',
-    commit: { sha: 'def456', committer: { when: '2025-01-02T00:00:00Z', identity: { name: 'Jane Smith' } } },
+    commit: {
+      sha: 'def456',
+      committer: { when: '2025-01-02T00:00:00Z', identity: { name: 'Jane Smith' } },
+      author: { when: '2025-01-02T00:00:00Z', identity: { name: 'Jane Smith' } }
+    },
     is_default: false
   }
 ]

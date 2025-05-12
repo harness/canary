@@ -101,7 +101,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
           </Popover.Trigger>
           <Popover.Content side={'top'} className="mb-4 mr-4 w-80 p-0">
             <PopoverCommitInfo.Root>
-              <PopoverCommitInfo.CommitInfo authorName={authorName} initials={authorInitials} commit={commitSha} />
+              <PopoverCommitInfo.CommitInfo authorName={authorName} commit={commitSha} />
               <PopoverCommitInfo.CommitMessage>{commitMessage}</PopoverCommitInfo.CommitMessage>
             </PopoverCommitInfo.Root>
           </Popover.Content>

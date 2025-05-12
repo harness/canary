@@ -41,24 +41,19 @@ const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
         {src ? (
           <>
             <AvatarPrimitive.Image src={src} alt={name || ''} className="cn-avatar-image" />
-            <AvatarFallback>{initials || <Icon name="avatar" className="cn-avatar-icon" />}</AvatarFallback>
+            <AvatarPrimitive.Fallback className="cn-avatar-fallback">
+              {initials || <Icon name="avatar" className="cn-avatar-icon" />}
+            </AvatarPrimitive.Fallback>
           </>
         ) : (
-          <AvatarFallback delayMs={0}>{initials || <Icon name="avatar" className="cn-avatar-icon" />}</AvatarFallback>
+          <AvatarPrimitive.Fallback className="cn-avatar-fallback" delayMs={0}>
+            {initials || <Icon name="avatar" className="cn-avatar-icon" />}
+          </AvatarPrimitive.Fallback>
         )}
       </AvatarPrimitive.Root>
     )
   }
 )
 Avatar.displayName = 'Avatar'
-
-interface AvatarFallbackProps extends ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback> {
-  children: ReactNode
-}
-const AvatarFallback = ({ children, ...props }: AvatarFallbackProps) => (
-  <AvatarPrimitive.Fallback className="cn-avatar-fallback" {...props}>
-    {children}
-  </AvatarPrimitive.Fallback>
-)
 
 export { Avatar }

@@ -90,6 +90,11 @@ export const RepoSidebar = () => {
     }
   }, [repository?.default_branch, fullGitRef, branchList, tagList, gitRefName, selectedGitRefBranch])
 
+  useEffect(() => {
+    setSelectedBranchTag({ name: repository?.default_branch || '', sha: '' })
+    setSelectedRefType(BranchSelectorTab.BRANCHES)
+  }, [setSelectedBranchTag, setSelectedRefType, repository?.default_branch])
+
   const { data: repoDetails } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
@@ -153,6 +158,9 @@ export const RepoSidebar = () => {
     },
     [fullGitRef, selectedBranchTag?.name, navigate, repoId]
   )
+
+  console.log('repoDetails', repoDetails)
+  console.log('fullGitRef', fullGitRef)
 
   // TODO: repoId and spaceId must be defined
   if (!repoId) return <></>

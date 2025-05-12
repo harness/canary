@@ -2,46 +2,46 @@
   "dropdown": {
     "item": {
       "gap": {
-        "value": "{spacing.2-half}",
-        "description": "8px",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2-half}",
+        "$description": "8px"
       },
       "py": {
-        "value": "{spacing.2}",
-        "description": "8px",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}",
+        "$description": "8px"
       },
       "px": {
-        "value": "{spacing.2}",
-        "description": "8px",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}",
+        "$description": "8px"
       },
       "radius": {
-        "value": "{rounded.1}",
-        "type": "borderRadius"
+        "$type": "borderRadius",
+        "$value": "{rounded.1}"
       }
     },
     "container": {
-      "value": "{spacing.1}",
-      "description": "4px\n",
-      "type": "spacing"
+      "$type": "spacing",
+      "$value": "{spacing.1}",
+      "$description": "4px\n"
     },
     "radius": {
-      "value": "{rounded.2}",
-      "description": "6px",
-      "type": "borderRadius"
+      "$type": "borderRadius",
+      "$value": "{rounded.2}",
+      "$description": "6px"
     },
     "min-width": {
-      "value": "{size.52}",
-      "type": "sizing"
+      "$type": "sizing",
+      "$value": "{size.52}"
     },
     "max-height": {
-      "value": "{size.90}",
-      "type": "sizing"
+      "$type": "sizing",
+      "$value": "{size.90}"
     },
     "border": {
-      "value": "{borderWidth.1}",
-      "type": "borderWidth"
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     }
   }
 }

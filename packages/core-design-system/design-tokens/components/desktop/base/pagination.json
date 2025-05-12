@@ -2,8 +2,8 @@
   "pagination": {
     "btn": {
       "px": {
-        "value": "{spacing.3}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.3}"
       }
     }
   }

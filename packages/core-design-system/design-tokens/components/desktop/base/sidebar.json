@@ -2,82 +2,82 @@
   "sidebar": {
     "item": {
       "px": {
-        "value": "{spacing.2-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
       },
       "size": {
-        "value": "{size.8}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.8}"
       },
       "gap": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       },
       "radius": {
-        "value": "{rounded.2}",
-        "type": "borderRadius"
+        "$type": "borderRadius",
+        "$value": "{rounded.2}"
       }
     },
     "group": {
       "py": {
-        "value": "{spacing.2-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
       },
       "gap": {
-        "value": "{spacing.half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.half}"
       }
     },
     "container": {
       "px": {
-        "value": "{spacing.3}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.3}"
       },
       "py": {
-        "value": "{spacing.2-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
       },
       "width": {
-        "value": "{size.56}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.56}"
       }
     },
     "header": {
       "pt": {
-        "value": "{spacing.2-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
       },
       "pb": {
-        "value": "{spacing.1}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.1}"
       },
       "gap": {
-        "value": "{spacing.5}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.5}"
       }
     },
     "footer": {
       "pt": {
-        "value": "{spacing.1}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.1}"
       },
       "gap": {
-        "value": "{spacing.2-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
       }
     },
     "user-item": {
       "px": {
-        "value": "{spacing.2-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
       },
       "gap": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       },
       "size": {
-        "value": "{size.12}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.12}"
       }
     }
   }

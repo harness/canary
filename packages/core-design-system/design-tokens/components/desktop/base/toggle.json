@@ -2,49 +2,49 @@
   "toggle": {
     "size": {
       "default": {
-        "value": "{size.8}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.8}"
       },
       "sm": {
-        "value": "{size.7}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.7}"
       },
       "lg": {
-        "value": "{size.9}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.9}"
       }
     },
     "px": {
       "sm": {
-        "value": "{spacing.1-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
       },
       "default": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       },
       "lg": {
-        "value": "{spacing.2-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
       }
     },
     "gap": {
       "sm": {
-        "value": "{spacing.1}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.1}"
       },
       "default": {
-        "value": "{spacing.1-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
       },
       "lg": {
-        "value": "{spacing.2-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
       }
     },
     "borderRadius": {
-      "value": "{rounded.3}",
-      "type": "borderRadius"
+      "$type": "borderRadius",
+      "$value": "{rounded.3}"
     }
   }
 }

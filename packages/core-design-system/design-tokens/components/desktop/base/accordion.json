@@ -2,32 +2,32 @@
   "accordion": {
     "default": {
       "py": {
-        "value": "{spacing.4}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.4}"
       },
       "gap": {
-        "value": "{spacing.1-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
       }
     },
     "md": {
       "py": {
-        "value": "{spacing.6}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.6}"
       },
       "gap": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       },
       "min-width": {
-        "value": "{size.64}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.64}"
       }
     },
     "defailt": {
       "min-width": {
-        "value": "{size.56}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.56}"
       }
     }
   }

@@ -2,72 +2,72 @@
   "input": {
     "size": {
       "sm": {
-        "value": "{size.8}",
-        "description": "32px",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.8}",
+        "$description": "32px"
       },
       "default": {
-        "value": "{size.9}",
-        "description": "36px\n",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.9}",
+        "$description": "36px\n"
       }
     },
     "radius": {
-      "value": "{rounded.2}",
-      "description": "6px",
-      "type": "borderRadius"
+      "$type": "borderRadius",
+      "$value": "{rounded.2}",
+      "$description": "6px"
     },
     "default": {
       "gap": {
-        "value": "{spacing.1-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
       },
       "pl": {
-        "value": "{spacing.3}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.3}"
       },
       "pr": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       },
       "py": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       }
     },
     "border": {
-      "value": "{borderWidth.1}",
-      "type": "borderWidth"
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     },
     "wrapper": {
       "gap": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       }
     },
     "sm": {
       "gap": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       },
       "pl": {
-        "value": "{spacing.2-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
       },
       "pr": {
-        "value": "{spacing.1-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
       },
       "py": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       }
     }
   },
   "input-text-area": {
     "min-height": {
-      "value": "{size.32}",
-      "type": "sizing"
+      "$type": "sizing",
+      "$value": "{size.32}"
     }
   }
 }

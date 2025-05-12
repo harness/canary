@@ -129,16 +129,6 @@
     "pullRequests": "Pull Requests",
     "title": "Title"
   },
-  "Enter pull request title": "",
-  "Title": "",
-  "Enter pull request description": "",
-  "Description": "",
-  "Cancel": "",
-  "Saving": {
-    "": ""
-  },
-  "Save": "",
-  "Edit PR details": "",
   "layout": {
     "table": "Table",
     "list": "List"

@@ -79,8 +79,8 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
             <Input
               {...register(FIELD_TITLE)}
               size="md"
-              placeholder={t('Enter pull request title')}
-              label={t('Title')}
+              placeholder="Enter pull request title"
+              label="Title"
               onFocus={event => event.target.select()}
               error={errors[FIELD_TITLE]?.message}
               autoFocus
@@ -89,8 +89,8 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
           <Fieldset>
             <Textarea
               {...register(FIELD_DESCRIPTION)}
-              placeholder={t('Enter pull request description')}
-              label={t('Description')}
+              placeholder="Enter pull request description"
+              label="Description"
               rows={5}
               error={errors[FIELD_DESCRIPTION]?.message}
             />
@@ -99,11 +99,11 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
 
         <Dialog.Footer>
           <Button type="button" variant="outline" onClick={handleDialogClose}>
-            {t('Cancel')}
+            Cancel
           </Button>
 
           <Button type="submit" onClick={handleSubmit(onFormSubmit)} disabled={isDisabled}>
-            {isSubmitting ? t('Saving...') : t('Save')}
+            {isSubmitting ? 'Saving...' : 'Save'}
           </Button>
         </Dialog.Footer>
       </Dialog.Content>

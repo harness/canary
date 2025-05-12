@@ -6,6 +6,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-settings-view-wrapper.tsx'
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
+import { ListTemplateView } from '@subjects/templates/list'
 import { ConnectorsDetailsPageWrapper } from '@subjects/views/connectors/connector-details'
 import { ConnectorsPage } from '@subjects/views/connectors/connectors'
 import { ConnectorInputExample } from '@subjects/views/connectors/connectors-input'
@@ -67,7 +68,6 @@ import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
 import RepoViewWrapper from './repo-view-wrapper'
 import RootViewWrapper from './root-view-wrapper'
 import ViewSettings from './view-settings'
-import {ListTemplateView} from "@subjects/templates/list";
 
 export interface ViewPreviewGroup {
   label: string
@@ -545,10 +545,11 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       list: {
         label: 'List',
         element: (
-            <RepoViewWrapper>
-              <ListTemplateView />
-            </RepoViewWrapper>
-        )},
+          <RepoViewWrapper>
+            <ListTemplateView />
+          </RepoViewWrapper>
+        )
+      }
     }
   }
 }

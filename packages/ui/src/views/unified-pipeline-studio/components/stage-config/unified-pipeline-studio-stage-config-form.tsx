@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { ElementType, Fragment, useEffect, useState } from 'react'
 
-import { Button } from '@components/button'
-import { Icon } from '@components/icon'
+import { Button, ButtonGroup, Drawer, EntityFormLayout, Icon } from '@/components'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
@@ -15,16 +14,45 @@ import {
 } from '@harnessio/forms'
 
 import { useUnifiedPipelineStudioContext } from '../../context/unified-pipeline-studio-context'
-import { EntityFormLayout } from '../entity-form/entity-form-layout'
-import { EntityFormSectionLayout } from '../entity-form/entity-form-section-layout'
 import { basicStageFormDefinition } from './form-definition/stage-form-definition'
+
+const componentsMap: Record<
+  'true' | 'false',
+  {
+    Content: ElementType
+    Header: ElementType
+    Title: ElementType
+    Description: ElementType
+    Inner: ElementType
+    Footer: ElementType
+  }
+> = {
+  true: {
+    Content: Fragment,
+    Header: Drawer.Header,
+    Title: Drawer.Title,
+    Description: Drawer.Description,
+    Inner: Drawer.Inner,
+    Footer: Drawer.Footer
+  },
+  false: {
+    Content: 'div',
+    Header: EntityFormLayout.Header,
+    Title: EntityFormLayout.Title,
+    Description: EntityFormLayout.Description,
+    Inner: Fragment,
+    Footer: EntityFormLayout.Footer
+  }
+}
 
 interface UnifiedPipelineStudioStageConfigFormProps {
   requestClose: () => void
+  isDrawer?: boolean
 }
 
 export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudioStageConfigFormProps) => {
-  const { requestClose } = props
+  const { requestClose, isDrawer = false } = props
+  const { Content, Header, Title, Description, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
 
   const {
     addStageIntention,
@@ -80,29 +108,29 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
       validateAfterFirstSubmit={true}
     >
       {rootForm => (
-        <EntityFormLayout.Root>
-          <EntityFormLayout.Header>
-            <EntityFormLayout.Title>{editStageIntention ? 'Edit' : 'Add'} Stage</EntityFormLayout.Title>
-            <EntityFormLayout.Description>
+        <Content>
+          <Header>
+            <Title>{editStageIntention ? 'Edit' : 'Add'} Stage</Title>
+            <Description>
               Configure a stage for your pipeline. Stages are logical groupings of steps that execute together.
-            </EntityFormLayout.Description>
-            <EntityFormLayout.Actions>
+            </Description>
+            <ButtonGroup>
               <Button variant={'ai'}> AI Autofill</Button>
               <Button variant={'outline'}> Use Template</Button>
-            </EntityFormLayout.Actions>
-          </EntityFormLayout.Header>
-          <EntityFormSectionLayout.Root>
-            <EntityFormSectionLayout.Form>
-              <RenderForm className="space-y-5 p-5" factory={inputComponentFactory} inputs={stageFormDefinition} />
-            </EntityFormSectionLayout.Form>
-          </EntityFormSectionLayout.Root>
-          <EntityFormLayout.Footer>
-            <div className="flex gap-x-3">
+            </ButtonGroup>
+          </Header>
+          <Inner>
+            <EntityFormLayout.Form>
+              <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={stageFormDefinition} />
+            </EntityFormLayout.Form>
+          </Inner>
+          <Footer>
+            <ButtonGroup>
               <Button onClick={() => rootForm.submitForm()}>Submit</Button>
               <Button variant="secondary" onClick={requestClose}>
                 Cancel
               </Button>
-            </div>
+            </ButtonGroup>
             {editStageIntention && (
               <Button
                 variant="secondary"
@@ -115,8 +143,8 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
                 <Icon name="trash" />
               </Button>
             )}
-          </EntityFormLayout.Footer>
-        </EntityFormLayout.Root>
+          </Footer>
+        </Content>
       )}
     </RootForm>
   )

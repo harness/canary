@@ -1,4 +1,4 @@
-import { Drawer } from '@components/index'
+import { Drawer } from '@/components'
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import { RightDrawer } from '../types/right-drawer-types'
@@ -18,12 +18,13 @@ export const UnifiedPipelineStageConfigDrawer = () => {
         }
       }}
     >
-      <Drawer.Content className="w-lg p-0" style={{ minWidth: '500px' }}>
+      <Drawer.Content className="w-lg" style={{ minWidth: '500px' }}>
         <UnifiedPipelineStudioStageConfigForm
           requestClose={() => {
             setRightDrawer(RightDrawer.None)
             clearRightDrawerData()
           }}
+          isDrawer
         />
       </Drawer.Content>
     </Drawer.Root>

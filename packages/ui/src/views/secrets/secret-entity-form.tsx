@@ -54,7 +54,7 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
       onFormSubmit?.(data)
     }
 
-  const resolver = useZodValidationResolver(secretsFormDefinition ?? { inputs: [] })
+    const resolver = useZodValidationResolver(secretsFormDefinition ?? { inputs: [] })
 
     const defaultSecretValues = useMemo(() => {
       return getDefaultValuesFromFormDefinition(secretsFormDefinition ?? { inputs: [] })

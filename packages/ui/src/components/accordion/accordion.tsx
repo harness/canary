@@ -51,30 +51,26 @@ AccordionItem.displayName = 'AccordionItem'
 
 type AccordionTriggerProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
   suffix?: ReactNode
+  indicatorProps?: Omit<IconProps, 'name'>
 }
 
 const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
-  ({ className, children, suffix, ...props }, ref) => {
+  ({ className, children, suffix, indicatorProps, ...props }, ref) => {
     const { withLeftIndicator } = useContext(AccordionContext)
     const withSuffix = !!suffix
 
-    const Indicator = () => <Icon name="chevron-down" size={14} className="cn-accordion-trigger-indicator" />
+    const Indicator = () => (
+      <Icon
+        name="chevron-down"
+        size={14}
+        {...indicatorProps}
+        className={cn('cn-accordion-trigger-indicator', indicatorProps?.className)}
+      />
+    )
 
     return (
       <AccordionPrimitive.Header className="flex">
-        <AccordionPrimitive.Trigger
-          ref={ref}
-          className={cn(
-            'cn-accordion-trigger',
-            {
-              'cn-accordion-trigger-with-suffix': withSuffix,
-              'cn-accordion-trigger-with-left-indicator': withLeftIndicator,
-              'cn-accordion-trigger-with-left-indicator-suffix': withLeftIndicator && withSuffix
-            },
-            className
-          )}
-          {...props}
-        >
+        <AccordionPrimitive.Trigger ref={ref} className={cn('cn-accordion-trigger', className)} {...props}>
           {withLeftIndicator && <Indicator />}
 
           <span className="cn-accordion-trigger-text">{children}</span>

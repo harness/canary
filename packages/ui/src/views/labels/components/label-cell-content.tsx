@@ -13,11 +13,11 @@ export const LabelCellContent: FC<LabelCellContentProps> = ({ label, values }) =
   const isWithValues = !!values?.length
 
   return (
-    <Accordion.Root collapsible type="single" withLeftIndicator className="min-w-0">
+    <Accordion.Root collapsible type="single" withLeftIndicator className="min-w-0 overflow-hidden">
       <Accordion.Item value={label.key} disabled={!isWithValues} className="border-none">
         <Accordion.Trigger
           className={cn('max-w-full flex-auto cursor-pointer p-0', {
-            '[&>.cn-accordion-trigger-indicator]:hidden': !isWithValues
+            '[&>.cn-accordion-trigger-indicator]:invisible': !isWithValues
           })}
         >
           <Tag

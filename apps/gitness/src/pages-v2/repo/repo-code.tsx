@@ -28,7 +28,7 @@ import { useRepoBranchesStore } from './stores/repo-branches-store'
  */
 export const RepoCode = () => {
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId, selectedBranchTag, selectedRefType } = useRepoBranchesStore()
+  const { spaceId, repoId, selectedBranchTag } = useRepoBranchesStore()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const routes = useRoutes()
   const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`

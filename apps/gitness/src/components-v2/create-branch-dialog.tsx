@@ -19,6 +19,7 @@ interface CreateBranchDialogProps {
   preselectedBranchOrTag?: BranchSelectorListItem | null
   preselectedTab?: BranchSelectorTab
   prefilledName?: string
+  onBranchQueryChange?: (query: string) => void
 }
 
 export const CreateBranchDialog = ({
@@ -27,7 +28,8 @@ export const CreateBranchDialog = ({
   onSuccess,
   preselectedBranchOrTag,
   preselectedTab,
-  prefilledName
+  prefilledName,
+  onBranchQueryChange
 }: CreateBranchDialogProps) => {
   const repo_ref = useGetRepoRef()
 
@@ -53,6 +55,7 @@ export const CreateBranchDialog = ({
   )
 
   const handleCreateBranch = async (data: CreateBranchFormFields) => {
+    onBranchQueryChange?.(data.name)
     await createBranch({
       repo_ref,
       body: {

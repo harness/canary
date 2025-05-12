@@ -108,7 +108,6 @@ export const RepoSidebar = () => {
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      console.log(type, branchTagName)
       if (type === BranchSelectorTab.BRANCHES) {
         setSelectedBranchTag(branchTagName)
         setSelectedRefType(type)
@@ -194,6 +193,7 @@ export const RepoSidebar = () => {
           navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branchQueryForNewBranch}`)
           setSelectedBranchTag({ name: branchQueryForNewBranch, sha: '', default: false })
         }}
+        onBranchQueryChange={setBranchQueryForNewBranch}
         preselectedBranchOrTag={selectedBranchTag}
         preselectedTab={selectedRefType}
         prefilledName={branchQueryForNewBranch}

@@ -159,9 +159,6 @@ export const RepoSidebar = () => {
     [fullGitRef, selectedBranchTag?.name, navigate, repoId]
   )
 
-  console.log('repoDetails', repoDetails)
-  console.log('fullGitRef', fullGitRef)
-
   // TODO: repoId and spaceId must be defined
   if (!repoId) return <></>
 

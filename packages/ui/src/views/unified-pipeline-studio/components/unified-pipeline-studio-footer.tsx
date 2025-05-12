@@ -12,7 +12,6 @@ interface PipelineStudioFooterProps {
   lastCommitInfo?: {
     committedTimeAgo: string
     authorName: string
-    authorInitials?: string
     commitSha?: string
     commitMessage?: string
   }
@@ -28,7 +27,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
     currentBranch,
     branchesLoading,
     branches,
-    lastCommitInfo: { committedTimeAgo, authorName, authorInitials, commitSha, commitMessage } = {},
+    lastCommitInfo: { committedTimeAgo, authorName, commitSha, commitMessage } = {},
     onBranchChange,
     togglePane,
     problemsCount

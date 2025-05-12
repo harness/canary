@@ -23,8 +23,8 @@
       "$value": {
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
-        "fontSize": "{fontSize.8}",
-        "lineHeight": "{lineHeight.8.tight}",
+        "fontSize": "{fontSize.7}",
+        "lineHeight": "{lineHeight.7.tight}",
         "letterSpacing": "{tracking.tighter}",
         "textCase": "{textCase.none}"
       },

@@ -1,22 +1,44 @@
 export default {
   '.cn-card': {
-    '@apply flex bg-white text-gray-900 border border-gray-200 overflow-hidden': '',
+    border: 'var(--cn-card-border) solid var(--cn-border-2)',
+    borderRadius: 'var(--cn-card-default-radius)',
+    backgroundColor: 'var(--cn-bg-2)',
+    '&:hover': {
+      borderColor: 'var(--cn-border-1)'
+    },
+    '@apply flex overflow-hidden': '',
 
     '&:where(.cn-card-sm)': {
-      '@apply rounded-md': '',
-      '.cn-card-content-wrapper': { '@apply p-4': '' }
+      borderRadius: 'var(--cn-card-sm-radius)',
+      '.cn-card-content-wrapper': {
+        padding: `var(--cn-card-sm-py) var(--cn-card-sm-px)`
+      }
     },
     '&:where(.cn-card-default)': {
-      '@apply rounded-lg': '',
-      '.cn-card-content-wrapper': { '@apply p-6': '' }
+      borderRadius: 'var(--cn-card-default-radius)',
+      '.cn-card-content-wrapper': {
+        padding: `var(--cn-card-default-py) var(--cn-card-default-px)`
+      }
     },
-    '&:where(.cn-card-lg)': {
-      '@apply rounded-xl': '',
-      '.cn-card-content-wrapper': { '@apply p-8': '' }
+    '&:where(.cn-card-md)': {
+      borderRadius: 'var(--cn-card-md-radius)',
+      '.cn-card-content-wrapper': {
+        padding: `var(--cn-card-md-py) var(--cn-card-md-px)`
+      }
+    },
+
+    '.cn-card-image': {
+      '@apply object-cover': ''
     },
 
     '.cn-card-title': {
-      '@apply font-semibold text-lg leading-tight text-black': ''
+      color: 'var(--cn-text-1)',
+      '@apply font-heading-base mb-2': ''
+    },
+
+    '.cn-card-content': {
+      color: 'var(--cn-text-2)',
+      '@apply font-body-normal': ''
     },
 
     '&:where(.cn-card-vertical)': {
@@ -30,8 +52,7 @@ export default {
 
       '.cn-card-image': {
         height: `var(--cn-card-image-height)`,
-        width: 'auto',
-        '@apply object-cover': ''
+        width: 'auto'
       }
     },
 
@@ -46,16 +67,16 @@ export default {
 
       '.cn-card-image': {
         width: `var(--cn-card-image-width)`,
-        height: 'auto',
-        '@apply object-cover': ''
+        height: 'auto'
       }
     },
 
     '&:where(.cn-card-selected)': {
-      '@apply ring-2 ring-blue-500': ''
+      backgroundColor: 'var(--cn-comp-card-gradient)',
+      borderColor: 'var(--cn-border-accent)'
     },
     '&:where(.cn-card-disabled)': {
-      '@apply opacity-50 pointer-events-none': ''
+      opacity: `var(--cn-disabled-opacity)`
     }
   }
 }

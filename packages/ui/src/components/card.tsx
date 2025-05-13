@@ -8,7 +8,7 @@ const cardVariants = cva('cn-card', {
     size: {
       sm: 'cn-card-sm',
       default: 'cn-card-default',
-      lg: 'cn-card-lg'
+      md: 'cn-card-md'
     },
     orientation: {
       vertical: 'cn-card-vertical',
@@ -37,7 +37,7 @@ const cardVariants = cva('cn-card', {
 })
 
 export interface CardRootProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
-  size?: 'sm' | 'default' | 'lg'
+  size?: 'sm' | 'default' | 'md'
   children: ReactNode
 }
 

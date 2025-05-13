@@ -1,0 +1,109 @@
+export default {
+    '.cn-drawer': {
+        '&-content': {
+            backgroundColor: 'var(--cn-bg-2)',
+            borderColor: 'var(--cn-border-3)',
+            borderRadius: 'var(--cn-drawer-radius)',
+            boxShadow: 'var(--cn-shadow-5)',
+            '@apply fixed flex flex-col z-50 border': '',
+
+            '&:where(.cn-drawer-content-right), &:where(.cn-drawer-content-left)': {
+                '@apply inset-y-0': '',
+
+                '&:where(.cn-drawer-content-sm)': {
+                    width: 'var(--cn-drawer-sm)'
+                },
+                '&:where(.cn-drawer-content-md)': {
+                    width: 'var(--cn-drawer-md)'
+                },
+                '&:where(.cn-drawer-content-lg)': {
+                    width: 'var(--cn-drawer-lg)'
+                }
+            },
+
+            '&:where(.cn-drawer-content-top), &:where(.cn-drawer-content-bottom)': {
+                '@apply inset-x-0': '',
+
+                '&:where(.cn-drawer-content-sm)': {
+                    height: 'var(--cn-drawer-sm)'
+                },
+                '&:where(.cn-drawer-content-md)': {
+                    height: 'var(--cn-drawer-md)'
+                },
+                '&:where(.cn-drawer-content-lg)': {
+                    height: 'var(--cn-drawer-lg)'
+                }
+            },
+
+            '&:where(.cn-drawer-content-right)' : {
+                '@apply border-r-0 rounded-r-none right-0': ''
+            },
+
+            '&:where(.cn-drawer-content-left)' : {
+                '@apply border-l-0 rounded-l-none left-0': ''
+            },
+
+            '&:where(.cn-drawer-content-top)' : {
+                '@apply border-t-0 rounded-t-none top-0': ''
+            },
+
+            '&:where(.cn-drawer-content-bottom)' : {
+                '@apply border-b-0 rounded-b-none bottom-0': ''
+            }
+        },
+
+        '&-backdrop': {
+            backgroundColor: 'var(--cn-comp-dialog-backdrop)',
+            '@apply fixed inset-0 z-50': ''
+        },
+
+        '&-header': {
+            borderBottomWidth: 'var(--cn-border-width-1)',
+            borderBottomColor: 'var(--cn-border-3)',
+            gap: 'var(--cn-drawer-gap)',
+            padding: 'var(--cn-drawer-container)',
+            '@apply flex flex-col border-b': '',
+
+            '&-icon': {
+                width: 'var(--cn-icon-size-lg)',
+                height: 'var(--cn-icon-size-lg)'
+            },
+
+            '&-icon-color': {
+                color: 'var(--cn-text-2)',
+            },
+
+            '&-top': {
+                gap: 'var(--cn-spacing-2-half)',
+                '@apply flex': '',
+
+                '&-with-icon': {
+                    paddingRight: 'var(--cn-spacing-6)',
+                }
+            },
+        },
+
+        '&-title': {
+            font: 'var(--cn-comp-dialog-title)',
+            color: 'var(--cn-text-1)'
+        },
+
+        '&-description': {
+            font: 'var(--cn-body-normal)',
+            color: 'var(--cn-text-2)'
+        },
+
+        '&-body': {
+            padding: 'var(--cn-drawer-container)'
+        },
+
+        '&-footer': {
+            borderTopWidth: 'var(--cn-border-width-1)',
+            borderTopColor: 'var(--cn-border-3)',
+            gapY: 'var(--cn-drawer-gap)',
+            gapX: 'var(--cn-spacing-3)',
+            padding: 'var(--cn-drawer-container)',
+            '@apply flex border-t justify-end': ''
+        }
+    }
+}

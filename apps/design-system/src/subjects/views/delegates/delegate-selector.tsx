@@ -52,11 +52,10 @@ interface DrawerProps {
 }
 
 const DelegateSelectorDrawer = ({ open, setOpen, preSelectedTags, onSubmit, disableAnyDelegate }: DrawerProps) => (
-  <Drawer.Root open={open} onOpenChange={setOpen} direction="right">
+  <Drawer.Root open={open} onOpenChange={setOpen}>
     <Drawer.Content className="w-1/2">
       <Drawer.Header>
         <Drawer.Title>Delegate selector</Drawer.Title>
-        <Drawer.Close onClick={() => setOpen(false)} srOnly />
       </Drawer.Header>
 
       <DelegateSelectorForm

@@ -25,7 +25,7 @@ const componentsMap: Record<
     Header: ElementType
     Title: ElementType
     Description: ElementType
-    Inner: ElementType
+    Body: ElementType
     Footer: ElementType
   }
 > = {
@@ -33,14 +33,14 @@ const componentsMap: Record<
     Header: Drawer.Header,
     Title: Drawer.Title,
     Description: Drawer.Description,
-    Inner: Drawer.Inner,
+    Body: Drawer.Body,
     Footer: Drawer.Footer
   },
   false: {
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
     Description: EntityFormLayout.Description,
-    Inner: 'div',
+    Body: 'div',
     Footer: EntityFormLayout.Footer
   }
 }
@@ -52,7 +52,7 @@ interface UnifiedPipelineStudioEntityFormProps {
 
 export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEntityFormProps) => {
   const { requestClose, isDrawer = false } = props
-  const { Header, Title, Description, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Header, Title, Description, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const {
     yamlRevision,
     addStepIntention,
@@ -230,7 +230,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
             <Description>{formEntity?.data.description}</Description>
             {/*<AIButton label="AI Autofill" />*/}
           </Header>
-          <Inner>
+          <Body>
             {/* <StepFormSection.Header> */}
             {/* <StepFormSection.Title>General</StepFormSection.Title> */}
             {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
@@ -244,7 +244,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
                 <RenderForm className="space-y-5" factory={inputComponentFactory} inputs={formDefinition} />
               )}
             </EntityFormLayout.Form>
-          </Inner>
+          </Body>
           <Footer>
             <div className="flex gap-x-3">
               <Button disabled={loading || !!error?.message} onClick={() => rootForm.submitForm()}>

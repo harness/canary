@@ -70,7 +70,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
         />
       </Drawer.Header>
 
-      <Drawer.Inner viewportClassName={cn({ 'p-0 [&>div]:h-full': view === 'yaml' })}>
+      <Drawer.Body className={cn({ 'p-0 [&>div]:h-full': view === 'yaml' })}>
         {loading ? (
           <SkeletonList className="p-5" />
         ) : (
@@ -100,7 +100,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
           </div>
         )}
         {!!error?.message && <p className="text-sm text-cn-foreground-danger">{error.message}</p>}
-      </Drawer.Inner>
+      </Drawer.Body>
 
       <Drawer.Footer>
         <Button

@@ -76,7 +76,7 @@ export function StepNodeComponent({
   }
 
   return (
-    <Drawer.Root direction="right">
+    <Drawer.Root>
       <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
       <Drawer.Content className="bg-cn-background-1 border-cn-borders-2 size-full max-w-2xl rounded-none border-l p-0 ">
         <Drawer.Header className="p-0">
@@ -91,7 +91,7 @@ export function StepNodeComponent({
             pipelineName="npm_build"
           />
         </Drawer.Header>
-        <Drawer.Inner viewportClassName="p-0">
+        <Drawer.Body className="p-0">
           <ExecutionInfo
             isDrawer
             useLogsStore={() => ({ logs })}
@@ -99,7 +99,7 @@ export function StepNodeComponent({
             onDownload={() => {}}
             onEdit={() => {}}
           />
-        </Drawer.Inner>
+        </Drawer.Body>
       </Drawer.Content>
     </Drawer.Root>
   )
@@ -131,7 +131,7 @@ export function ApprovalStepNodeComponent({
   }
 
   return (
-    <Drawer.Root direction="right">
+    <Drawer.Root>
       <Drawer.Trigger asChild>{approvalNode}</Drawer.Trigger>
       <Drawer.Content className="flex h-full w-1/2 flex-col justify-between">
         <div className="flex flex-col gap-4">

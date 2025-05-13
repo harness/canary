@@ -12,20 +12,20 @@ const componentsMap: Record<
   {
     Header: ElementType
     Title: ElementType
-    Inner: ElementType
+    Body: ElementType
     Footer: ElementType
   }
 > = {
   true: {
     Header: Drawer.Header,
     Title: Drawer.Title,
-    Inner: Drawer.Inner,
+    Body: Drawer.Body,
     Footer: Drawer.Footer
   },
   false: {
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
-    Inner: 'div',
+    Body: 'div',
     Footer: EntityFormLayout.Footer
   }
 }
@@ -37,7 +37,7 @@ interface PipelineStudioStepFormProps {
 
 export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Element => {
   const { requestClose, isDrawer = false } = props
-  const { Header, Title, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Header, Title, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const { setFormEntity, setRightDrawer, useTemplateListStore, useTranslationStore } = useUnifiedPipelineStudioContext()
   const { page, xNextPage, xPrevPage, setPage, templates, templatesError } = useTemplateListStore()
 
@@ -68,7 +68,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
           }}
         />
       </Header>
-      <Inner>
+      <Body>
         <StepPaletteSection
           title="Group"
           steps={harnessStepGroupsFiltered}
@@ -134,7 +134,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
         )}
 
         <Spacer size={8} />
-      </Inner>
+      </Body>
       <Footer>
         <Button variant="secondary" onClick={requestClose}>
           Cancel

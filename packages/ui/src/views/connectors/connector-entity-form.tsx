@@ -22,7 +22,7 @@ const componentsMap: Record<
     Content: ElementType
     Header: ElementType
     Title: ElementType
-    Inner: ElementType
+    Body: ElementType
     Footer: ElementType
   }
 > = {
@@ -30,14 +30,14 @@ const componentsMap: Record<
     Content: Fragment,
     Header: Drawer.Header,
     Title: Drawer.Title,
-    Inner: Drawer.Inner,
+    Body: Drawer.Body,
     Footer: Drawer.Footer
   },
   false: {
     Content: 'div',
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
-    Inner: Fragment,
+    Body: Fragment,
     Footer: EntityFormLayout.Footer
   }
 }
@@ -67,7 +67,7 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
 }) => {
   const { t: _t } = useTranslationStore()
   const [connectorEditValues, setConnectorEditValues] = useState({})
-  const { Content, Header, Title, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Content, Header, Title, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const isCreate = intent === EntityIntent.CREATE
 
   const onSubmit = (data: onSubmitConnectorProps) => {
@@ -149,7 +149,7 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
               <Title>Connect to {connector.name}</Title>
             </Header>
           )}
-          <Inner>
+          <Body>
             <EntityFormLayout.Form>
               <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={formDefinition} />
               {apiError && (
@@ -158,7 +158,7 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
                 </Alert.Container>
               )}
             </EntityFormLayout.Form>
-          </Inner>
+          </Body>
           <Footer>
             {isCreate && (
               <Button variant="outline" onClick={() => onBack?.()}>

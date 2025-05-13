@@ -13,7 +13,7 @@ const componentsMap: Record<
     Title: ElementType
     Description: ElementType
     Content: ElementType
-    Inner: ElementType
+    Body: ElementType
   }
 > = {
   true: {
@@ -21,14 +21,14 @@ const componentsMap: Record<
     Title: Drawer.Title,
     Description: Drawer.Description,
     Content: Drawer.Content,
-    Inner: Drawer.Inner
+    Body: Drawer.Body
   },
   false: {
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
     Description: EntityFormLayout.Description,
     Content: 'div',
-    Inner: 'div'
+    Body: 'div'
   }
 }
 
@@ -54,7 +54,7 @@ export const ConnectorsPalette = ({
   isDrawer = false
 }: ConnectorsPaletteProps): JSX.Element => {
   const { t: _t } = useTranslationStore()
-  const { Header, Title, Description, Content, Inner } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Header, Title, Description, Content, Body } = componentsMap[isDrawer ? 'true' : 'false']
 
   const [query, setQuery] = useState('')
 
@@ -76,7 +76,7 @@ export const ConnectorsPalette = ({
           }}
         />
       </Header>
-      <Inner>
+      <Body>
         <ConnectorsPaletteSection
           connectors={connectorsFiltered}
           onSelect={connector => {
@@ -89,7 +89,7 @@ export const ConnectorsPalette = ({
           }}
           useTranslationStore={useTranslationStore}
         />
-      </Inner>
+      </Body>
       {isDrawer && (
         <Drawer.Footer>
           <Button variant="outline" onClick={requestClose}>

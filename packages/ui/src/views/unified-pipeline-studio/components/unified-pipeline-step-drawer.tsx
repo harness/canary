@@ -11,7 +11,6 @@ export const UnifiedPipelineStepDrawer = () => {
   return (
     <>
       <Drawer.Root
-        direction="right"
         open={rightDrawer === RightDrawer.Collection}
         onOpenChange={open => {
           if (!open) {
@@ -33,7 +32,6 @@ export const UnifiedPipelineStepDrawer = () => {
       {/* TODO: temporary outside to bypass shadow dom issue */}
       <Drawer.Root
         nested={true}
-        direction="right"
         open={rightDrawer === RightDrawer.Form}
         onOpenChange={open => {
           if (!open) {

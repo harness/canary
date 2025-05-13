@@ -106,7 +106,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
         errorData={{ errors: [{ reason: 'Unexpected Error', message: 'Bad credentials' }] }}
       />
 
-      <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
+      <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen}>
         <ConnectorsPalette
           useTranslationStore={useTranslationStore}
           connectors={harnessConnectors}
@@ -115,7 +115,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
           requestClose={onCloseConnectorDrawer}
           isDrawer
         />
-        <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
+        <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} nested>
           <Drawer.Content nested>
             {!!connectorEntity && (
               <ConnectorEntityForm
@@ -132,7 +132,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
           </Drawer.Content>
         </Drawer.Root>
       </Drawer.Root>
-      <Drawer.Root open={isEditConnectorDrawerOpen} onOpenChange={setIsEditConnectorDrawerOpen} direction="right">
+      <Drawer.Root open={isEditConnectorDrawerOpen} onOpenChange={setIsEditConnectorDrawerOpen}>
         <Drawer.Content>
           {!!connectorEntity && (
             <ConnectorEntityForm

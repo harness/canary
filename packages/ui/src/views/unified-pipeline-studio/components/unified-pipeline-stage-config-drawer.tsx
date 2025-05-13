@@ -9,7 +9,6 @@ export const UnifiedPipelineStageConfigDrawer = () => {
 
   return (
     <Drawer.Root
-      direction="right"
       open={rightDrawer === RightDrawer.StageConfig}
       onOpenChange={open => {
         if (!open) {

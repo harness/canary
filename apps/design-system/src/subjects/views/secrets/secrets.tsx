@@ -165,13 +165,12 @@ export const SecretsPage = ({
 
   return (
     <>
-      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
+      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
         <Drawer.Content>
           <Drawer.Header>
             <Drawer.Title>Secret</Drawer.Title>
-            <Drawer.Close onClick={() => setIsDrawerOpen(false)} srOnly />
           </Drawer.Header>
-          <Drawer.Inner>
+          <Drawer.Body>
             <Text as="div" className="text-cn-foreground-2 mb-4">
               Choose type
             </Text>
@@ -180,7 +179,7 @@ export const SecretsPage = ({
             <FormSeparator className="w-full" />
             <Spacer size={6} />
             {renderSecretContent()}
-          </Drawer.Inner>
+          </Drawer.Body>
           <Drawer.Footer>
             <Button variant="outline" onClick={handleCancel}>
               Back

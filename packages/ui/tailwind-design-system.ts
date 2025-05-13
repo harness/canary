@@ -18,7 +18,8 @@ import {
   linkStyles,
   radioStyles,
   switchStyles,
-  tagStyles
+  tagStyles,
+  drawerStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -442,6 +443,7 @@ export default {
         linkStyles,
         avatarStyles,
         cardStyles,
+        drawerStyles,
 
         // Form styles
         formSharedStyles,

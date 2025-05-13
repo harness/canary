@@ -1101,7 +1101,21 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.8",
+              "value": "0.7",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{pure.black}",
+        "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
+      },
+      "backdrop-nested": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.35",
               "space": "lch"
             }
           }

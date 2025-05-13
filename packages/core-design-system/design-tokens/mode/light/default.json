@@ -1109,6 +1109,20 @@
         "$type": "color",
         "$value": "{chrome.900}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
+      },
+      "backdrop-nested": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.15",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{chrome.900}",
+        "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       }
     },
     "diff": {

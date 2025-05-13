@@ -1569,7 +1569,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "comp.dialog.backdrop-nested": "4d6dd58029a86c9031f029656bab6dbc55f4db66"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:3",
@@ -2643,6 +2644,7 @@
       "set.violet.surface.bg-hover": "0947d26c3e42ab66f47a78a6fa4c27110a47d005",
       "comp.avatar.border": "2eb8cc124f0bea395b5584e42732709a8967bfaa",
       "comp.dialog.backdrop": "893e60ed671f891241a3084707057185398446ed",
+      "comp.dialog.backdrop-nested": "4d6dd58029a86c9031f029656bab6dbc55f4db66",
       "comp.diff.grey": "43bf4f466a6e231c9951a639313740579c29d824",
       "comp.diff.add-content": "eb4eccf789a2bda6f3d3875c3310ef0579fd3555",
       "comp.diff.add-lineNumber": "61583aa6e36aaddd0be173a4a082a450e2522d3a",
@@ -15117,6 +15119,8 @@
       "drawer.lg": "f08b6ffcd3684c6d793bd0fad0538b5250b19760",
       "drawer.container": "72d0ec7debd1172b07022f8bb9be505b09d0772a",
       "drawer.gap": "c106e5a99bd05148aadce366642fb8db64932a49",
+      "drawer.border": "9c2116c17f7d4a390f86339ad31d0d4eee58e673",
+      "drawer.radius": "47b39d046f0117b9c745292b0513977577f62e6e",
       "dialog.sm": "082c9cfe30978be58aecc61a4c59db1cbf362530",
       "dialog.md": "fd556149b7dc7759a4431c6da13b0e62eb80a953",
       "dialog.lg": "075e67733b3996b17508c54b79de865e30e7586d",

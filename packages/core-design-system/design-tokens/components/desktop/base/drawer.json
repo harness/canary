@@ -2,7 +2,7 @@
   "drawer": {
     "sm": {
       "$type": "sizing",
-      "$value": "408"
+      "$value": "488"
     },
     "md": {
       "$type": "sizing",
@@ -19,6 +19,14 @@
     "gap": {
       "$type": "spacing",
       "$value": "{spacing.4}"
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.4}"
     }
   }
 }

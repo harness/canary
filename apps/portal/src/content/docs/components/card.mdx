@@ -15,7 +15,7 @@ import { DocsPage } from "@/components/docs-page";
     <div>
       <h6 className="font-semibold mb-2 text-center">Vertical Card (Image Above)</h6>
       <Card.Root orientation="vertical" position="start">
-        <Card.Image src="/card-image.png" width="100%" height="150px" />
+        <Card.Image src="/card-image.png" />
         <Card.Title>Card Title</Card.Title>
         <Card.Content>
           This is the card content. The image is displayed above the content.
@@ -25,7 +25,7 @@ import { DocsPage } from "@/components/docs-page";
     <div>
       <h6 className="font-semibold mb-2 text-center">Vertical Card (Image Below)</h6>
       <Card.Root orientation="vertical" position="end">
-        <Card.Image src="/card-image.png" width="100%" height="150px" />
+        <Card.Image src="/card-image.png" />
         <Card.Title>Card Title</Card.Title>
         <Card.Content>
           This is the card content. The image is displayed below the content.
@@ -35,7 +35,7 @@ import { DocsPage } from "@/components/docs-page";
     <div>
       <h6 className="font-semibold mb-2 text-center">Horizontal Card (Image Left)</h6>
       <Card.Root orientation="horizontal" position="start">
-        <Card.Image src="/card-image.png" width="250px" height="100%" />
+        <Card.Image src="/card-image.png" />
         <div>
           <Card.Title>Card Title</Card.Title>
           <Card.Content>
@@ -47,7 +47,7 @@ import { DocsPage } from "@/components/docs-page";
     <div>
       <h6 className="font-semibold mb-2 text-center">Horizontal Card (Image Right)</h6>
       <Card.Root orientation="horizontal" position="end">
-        <Card.Image src="/card-image.png" width="250px" height="100%" />
+        <Card.Image src="/card-image.png" />
         <div>
           <Card.Title>Card Title</Card.Title>
           <Card.Content>
@@ -68,7 +68,7 @@ import { Card } from '@harnessio/ui'
 
 return (
   <Card.Root orientation="vertical" position="start">
-    <Card.Image src="/card-image.png" width="100%" height="150px" />
+    <Card.Image src="/card-image.png" />
     <Card.Title>Card Title</Card.Title>
     <Card.Content>
       This is the card content. The image is displayed above the content.
@@ -88,19 +88,19 @@ The `Card` component supports a `position` prop to control the placement of the 
   client:only
   code={`<div className="flex flex-col gap-6">
     <Card.Root orientation="vertical" position="start">
-      <Card.Image src="/card-image.png" width="100%" height="150px" />
+      <Card.Image src="/card-image.png" />
       <Card.Title>Image Above</Card.Title>
     </Card.Root>
     <Card.Root orientation="vertical" position="end">
-      <Card.Image src="/card-image.png" width="100%" height="150px" />
+      <Card.Image src="/card-image.png" />
       <Card.Title>Image Below</Card.Title>
     </Card.Root>
     <Card.Root orientation="horizontal" position="start">
-      <Card.Image src="/card-image.png" width="250px" height="100%" />
+      <Card.Image src="/card-image.png" />
       <Card.Title>Image Left</Card.Title>
     </Card.Root>
     <Card.Root orientation="horizontal" position="end">
-      <Card.Image src="/card-image.png" width="250px" height="100%" />
+      <Card.Image src="/card-image.png" />
       <Card.Title>Image Right</Card.Title>
     </Card.Root>
 </div>`}

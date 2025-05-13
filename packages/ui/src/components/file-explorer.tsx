@@ -97,7 +97,13 @@ interface RootProps {
 
 function Root({ children, onValueChange, value }: RootProps) {
   return (
-    <Accordion.Root type="multiple" className="w-full" onValueChange={onValueChange} value={value} withLeftIndicator>
+    <Accordion.Root
+      type="multiple"
+      className="w-full min-w-0"
+      onValueChange={onValueChange}
+      value={value}
+      withLeftIndicator
+    >
       {children}
     </Accordion.Root>
   )

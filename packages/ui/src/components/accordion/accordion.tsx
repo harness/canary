@@ -31,7 +31,7 @@ const AccordionRoot = forwardRef<ElementRef<typeof AccordionPrimitive.Root>, Acc
     <AccordionPrimitive.Root
       ref={ref}
       {...props}
-      className={cn('cn-accordion', accordionVariants({ size }), className)}
+      className={cn(accordionVariants({ size }), className)}
       onValueChange={onValueChange}
     >
       <AccordionContext.Provider value={{ withLeftIndicator }}>{children}</AccordionContext.Provider>

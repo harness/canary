@@ -23,15 +23,15 @@ const componentsMap: Record<
   'true' | 'false',
   {
     Footer: ElementType
-    Inner: ElementType
+    Body: ElementType
   }
 > = {
   true: {
-    Inner: Drawer.Inner,
+    Body: Drawer.Body,
     Footer: Drawer.Footer
   },
   false: {
-    Inner: 'div',
+    Body: 'div',
     Footer: EntityFormLayout.Footer
   }
 }
@@ -96,7 +96,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   const [searchTag, setSearchTag] = useState('')
   const [matchedDelegates, setMatchedDelegates] = useState(0)
 
-  const { Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
 
   const formMethods = useForm<DelegateSelectorFormFields>({
     resolver: zodResolver(delegateSelectorFormSchema),
@@ -155,7 +155,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
 
   return (
     <>
-      <Inner>
+      <Body>
         <div className="flex">
           {t('views:delegates.noDelegatesInstalled', `Haven't installed a delegate yet?`)}
           <Link className="ml-1 flex flex-row items-center" to="#" suffixIcon="attachment-link">
@@ -213,7 +213,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
             </>
           )}
         </FormWrapper>
-      </Inner>
+      </Body>
       <Footer>
         <Button variant="outline" onClick={onBack}>
           {t('views:createProject.backButton', 'Back')}

@@ -11,7 +11,6 @@ export const UnifiedPipelineStepDrawer = () => {
   return (
     <>
       <Drawer.Root
-        direction="right"
         open={rightDrawer === RightDrawer.Collection}
         onOpenChange={open => {
           if (!open) {
@@ -20,7 +19,7 @@ export const UnifiedPipelineStepDrawer = () => {
           }
         }}
       >
-        <Drawer.Content className="w-lg p-0">
+        <Drawer.Content>
           <UnifiedPipelineStudioStepPalette
             requestClose={() => {
               setRightDrawer(RightDrawer.None)
@@ -32,8 +31,6 @@ export const UnifiedPipelineStepDrawer = () => {
       </Drawer.Root>
       {/* TODO: temporary outside to bypass shadow dom issue */}
       <Drawer.Root
-        nested={true}
-        direction="right"
         open={rightDrawer === RightDrawer.Form}
         onOpenChange={open => {
           if (!open) {
@@ -42,7 +39,7 @@ export const UnifiedPipelineStepDrawer = () => {
           }
         }}
       >
-        <Drawer.Content className="w-lg p-0">
+        <Drawer.Content>
           <UnifiedPipelineStudioEntityForm
             requestClose={() => {
               setRightDrawer(RightDrawer.None)

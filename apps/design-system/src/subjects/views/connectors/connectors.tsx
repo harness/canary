@@ -106,7 +106,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
         errorData={{ errors: [{ reason: 'Unexpected Error', message: 'Bad credentials' }] }}
       />
 
-      <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
+      <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen}>
         <ConnectorsPalette
           useTranslationStore={useTranslationStore}
           connectors={harnessConnectors}
@@ -114,25 +114,26 @@ const ConnectorsListPageContent = (): JSX.Element => {
           setConnectorEntity={setConnectorEntity}
           requestClose={onCloseConnectorDrawer}
           isDrawer
-        />
-        <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
-          <Drawer.Content nested>
-            {!!connectorEntity && (
-              <ConnectorEntityForm
-                useTranslationStore={useTranslationStore}
-                connector={connectorEntity}
-                onBack={() => setIsConnectorSelected(false)}
-                // onFormSubmit={handleFormSubmit}
-                getConnectorDefinition={getHarnessConnectorDefinition}
-                inputComponentFactory={inputComponentFactory}
-                intent={intent}
-                isDrawer
-              />
-            )}
-          </Drawer.Content>
-        </Drawer.Root>
+        >
+          <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} nested>
+            <Drawer.Content>
+              {!!connectorEntity && (
+                <ConnectorEntityForm
+                  useTranslationStore={useTranslationStore}
+                  connector={connectorEntity}
+                  onBack={() => setIsConnectorSelected(false)}
+                  // onFormSubmit={handleFormSubmit}
+                  getConnectorDefinition={getHarnessConnectorDefinition}
+                  inputComponentFactory={inputComponentFactory}
+                  intent={intent}
+                  isDrawer
+                />
+              )}
+            </Drawer.Content>
+          </Drawer.Root>
+        </ConnectorsPalette>
       </Drawer.Root>
-      <Drawer.Root open={isEditConnectorDrawerOpen} onOpenChange={setIsEditConnectorDrawerOpen} direction="right">
+      <Drawer.Root open={isEditConnectorDrawerOpen} onOpenChange={setIsEditConnectorDrawerOpen}>
         <Drawer.Content>
           {!!connectorEntity && (
             <ConnectorEntityForm

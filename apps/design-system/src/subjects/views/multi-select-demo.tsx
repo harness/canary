@@ -40,7 +40,7 @@ export const MultiSelectDemo = () => {
         <h3 className="text-lg font-medium mb-4">Dropdown Mode (with options)</h3>
         <div className="max-w-md">
           <MultiSelectV2
-            selectedItems={selectedItems1}
+            value={selectedItems1}
             t={t}
             placeholder="Select options"
             handleChange={option => handleChange(option, setSelectedItems1, selectedItems1)}
@@ -50,6 +50,7 @@ export const MultiSelectDemo = () => {
             handleChangeSearchValue={setSearchValue}
             customOptionElem={data => <span className="font-medium">{data.value}</span>}
             error={selectedItems1.length === 0 ? 'Please select at least one option' : ''}
+            disallowCreations
           />
         </div>
       </div>
@@ -58,7 +59,7 @@ export const MultiSelectDemo = () => {
         <h3 className="text-lg font-medium mb-4">Input-only Mode (no options)</h3>
         <div className="max-w-md">
           <MultiSelectV2
-            selectedItems={selectedItems2}
+            value={selectedItems2}
             t={t}
             placeholder="Type something and press Enter..."
             handleChange={option => handleChange(option, setSelectedItems2, selectedItems2)}

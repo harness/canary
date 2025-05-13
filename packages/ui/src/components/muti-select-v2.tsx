@@ -1,6 +1,6 @@
 import { KeyboardEvent, ReactNode, useEffect, useRef, useState } from 'react'
 
-import { Button, ControlGroup, DropdownMenu, Icon, Label, ScrollArea } from '@/components'
+import { Button, ControlGroup, DropdownMenu, Icon, Input, Label, ScrollArea } from '@/components'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
@@ -13,7 +13,7 @@ export type MultiSelectOptionTypeV2 = {
 
 export interface MultiSelectV2Props {
   className?: string
-  selectedItems: MultiSelectOptionTypeV2[]
+  value?: MultiSelectOptionTypeV2[]
   t: TFunction
   placeholder: string
   handleChange: (data: MultiSelectOptionTypeV2) => void
@@ -23,11 +23,12 @@ export interface MultiSelectV2Props {
   customOptionElem?: (data: MultiSelectOptionTypeV2) => ReactNode
   error?: string
   label?: string
+  disallowCreations?: boolean
 }
 
 export const MultiSelectV2 = ({
   className,
-  selectedItems,
+  value = [],
   t,
   placeholder,
   handleChange,
@@ -36,7 +37,8 @@ export const MultiSelectV2 = ({
   handleChangeSearchValue,
   customOptionElem,
   error,
-  label
+  label,
+  disallowCreations = false
 }: MultiSelectV2Props) => {
   // We don't need to use the search functionality anymore
 
@@ -64,7 +66,7 @@ export const MultiSelectV2 = ({
   const renderSelectedItemsInInput = () => {
     return (
       <div className="flex flex-wrap items-center gap-1 p-1">
-        {selectedItems.map(it => (
+        {value?.map(it => (
           <Button
             key={it.key}
             size="sm"
@@ -80,14 +82,16 @@ export const MultiSelectV2 = ({
             <Icon name="close" size={10} className="ml-1" />
           </Button>
         ))}
+
         <input
           ref={inputRef}
           className="min-w-[80px] flex-1 border-none outline-none p-1 bg-transparent"
-          placeholder={selectedItems.length ? '' : placeholder}
+          placeholder={value?.length ? '' : placeholder}
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleInputKeyDown}
           onClick={() => setIsDropdownOpen(true)}
+          readOnly={disallowCreations}
           autoFocus
         />
       </div>
@@ -122,8 +126,7 @@ export const MultiSelectV2 = ({
               {options.length ? (
                 <ScrollArea className="max-h-[300px]">
                   {options.map(option => {
-                    console.log('option', option)
-                    const isSelected = selectedItems.findIndex(it => it.key === option.key) > -1
+                    const isSelected = value?.findIndex(it => it.key === option.key) > -1
 
                     return (
                       <DropdownMenu.Item

@@ -1,4 +1,4 @@
-import { Skeleton, Tag } from '@/components'
+import { Skeleton, StatusBadge, Text } from '@/components'
 import { cn } from '@/utils'
 import { TranslationStore } from '@/views'
 
@@ -17,20 +17,19 @@ export const RepoHeader = ({ name, isPublic, isLoading, className, useTranslatio
     <div className={cn('flex items-center gap-2 px-6 pb-2 pt-8', className)}>
       {isLoading && (
         <>
-          <Skeleton className="h-8 w-28" />
+          <Skeleton className="h-[var(--cn-line-height-7-tight)] w-28" />
           <Skeleton className="h-6 w-14" />
         </>
       )}
 
       {!isLoading && (
         <>
-          <h2 className="font-heading-section text-cn-foreground-1">{name}</h2>
-          <Tag
-            variant="outline"
-            theme="green"
-            value={!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
-            rounded
-          />
+          <Text className="font-heading-hero" as="h2" color="primary">
+            {name}
+          </Text>
+          <StatusBadge variant="outline" theme="success" className="rounded-full">
+            {!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
+          </StatusBadge>
         </>
       )}
     </div>

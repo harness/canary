@@ -2829,37 +2829,31 @@
     "dialog": {
       "backdrop": {
         "$extensions": {
-          "studio": {
-            "tokens": {
-              "modify": {
-                "type": {
-                  "$type": "other",
-                  "$value": "alpha"
-                },
-                "value": {
-                  "$type": "other",
-                  "$value": "0.4"
-                },
-                "space": {
-                  "$type": "other",
-                  "$value": "lch"
-                }
-              }
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.55",
+              "space": "lch"
             }
           }
         },
-        "value": {
-          "$type": "other",
-          "$value": "{chrome.300}"
+        "$type": "color",
+        "$value": "{chrome.900}",
+        "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
+      },
+      "backdrop-nested": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.15",
+              "space": "lch"
+            }
+          }
         },
-        "description": {
-          "$type": "other",
-          "$value": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
-        },
-        "type": {
-          "$type": "other",
-          "$value": "color"
-        }
+        "$type": "color",
+        "$value": "{chrome.900}",
+        "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       }
     },
     "diff": {

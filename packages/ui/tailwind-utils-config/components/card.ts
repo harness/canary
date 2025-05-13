@@ -6,7 +6,7 @@ export default {
       '&:where(.cn-card-content-sm)': {
         '@apply p-4': ''
       },
-      '&:where(.cn-card-content-md)': {
+      '&:where(.cn-card-content-default)': {
         '@apply p-6': ''
       },
       '&:where(.cn-card-content-lg)': {

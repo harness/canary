@@ -1453,18 +1453,19 @@
           "$type": "color",
           "$value": "{set.brand.solid.bg}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
-        }
-      },
-      "track-segments": {
-        "base": {
-          "$type": "color",
-          "$value": "{chrome.600}",
-          "$description": "Color for segment markers on the unfilled track portion. Creates visual indicators for specific values or intervals."
         },
-        "progress": {
+        "progress-stripes": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.3",
+                "space": "lch"
+              }
+            }
+          },
           "$type": "color",
-          "$value": "{set.brand.surface.bg}",
-          "$description": "Color for segment markers on the filled track portion. Maintains visibility of markers within the selected range."
+          "$value": "{pure.black}"
         }
       },
       "handle": {

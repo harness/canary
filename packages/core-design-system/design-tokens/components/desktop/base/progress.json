@@ -1,0 +1,22 @@
+{
+  "progress": {
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.2-half}"
+    },
+    "size": {
+      "sm": {
+        "$type": "sizing",
+        "$value": "{size.1}"
+      },
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.2}"
+      },
+      "md": {
+        "$type": "sizing",
+        "$value": "{size.5}"
+      }
+    }
+  }
+}

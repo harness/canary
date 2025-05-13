@@ -3,21 +3,13 @@ import { Children, forwardRef, HTMLAttributes, ImgHTMLAttributes, isValidElement
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const cardContentVariants = cva('cn-card-content', {
-  variants: {
-    size: {
-      sm: 'cn-card-content-sm',
-      default: 'cn-card-content-default',
-      lg: 'cn-card-content-lg'
-    }
-  },
-  defaultVariants: {
-    size: 'default'
-  }
-})
-
 const cardVariants = cva('cn-card', {
   variants: {
+    size: {
+      sm: 'cn-card-sm',
+      default: 'cn-card-default',
+      lg: 'cn-card-lg'
+    },
     orientation: {
       vertical: 'cn-card-vertical',
       horizontal: 'cn-card-horizontal'
@@ -36,6 +28,7 @@ const cardVariants = cva('cn-card', {
     }
   },
   defaultVariants: {
+    size: 'default',
     orientation: 'vertical',
     position: 'start',
     selected: false,
@@ -82,6 +75,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
         ref={ref}
         className={cn(
           cardVariants({
+            size,
             orientation,
             position,
             selected,
@@ -92,7 +86,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
         {...props}
       >
         {imageContent}
-        <div className={cardContentVariants({ size })}>{otherContent}</div>
+        <div className="cn-card-content-wrapper">{otherContent}</div>
       </div>
     )
   }
@@ -112,7 +106,7 @@ const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
 CardTitle.displayName = 'CardTitle'
 
 const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('mt-2 text-sm text-gray-700', className)} {...props} />
+  <div ref={ref} className={cn('cn-card-content', className)} {...props} />
 ))
 CardContent.displayName = 'CardContent'
 

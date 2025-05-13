@@ -2,16 +2,17 @@ export default {
   '.cn-card': {
     '@apply flex rounded-lg bg-white text-gray-900 border border-gray-200 overflow-hidden': '',
 
-    '.cn-card-content': {
-      '&:where(.cn-card-content-sm)': {
-        '@apply p-4': ''
-      },
-      '&:where(.cn-card-content-default)': {
-        '@apply p-6': ''
-      },
-      '&:where(.cn-card-content-lg)': {
-        '@apply p-8': ''
-      }
+    '&:where(.cn-card-sm)': {
+      '@apply rounded-md': '',
+      '.cn-card-content-wrapper': { '@apply p-4': '' }
+    },
+    '&:where(.cn-card-default)': {
+      '@apply rounded-lg': '',
+      '.cn-card-content-wrapper': { '@apply p-6': '' }
+    },
+    '&:where(.cn-card-lg)': {
+      '@apply rounded-xl': '',
+      '.cn-card-content-wrapper': { '@apply p-8': '' }
     },
 
     '.cn-card-title': {

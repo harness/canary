@@ -1,269 +1,153 @@
 ---
 title: Card
-description: Card component documentation
+description: Card component
 beta: true
 ---
 
-The `Card` component provides a flexible UI element for displaying content within a card layout. It is composed of several subcomponents such as Card.Header, Card.Footer, Card.Title, Card.Description, and Card.Content to offer a structured and customizable interface.
+The `Card` component provides a flexible UI element for displaying content within a card layout. It supports various configurations such as sizes, orientations, and states.
 
-import { DocsPage } from "@/components/docs-page";
+import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`
-  <div className="flex flex-col space-y-8">
-    <Card.Root variant="default" width="md">
-      <Card.Header>
-        <Card.Title as="h4">Card Title H4</Card.Title>
-        <Card.Description>This is the card description.</Card.Description>
-      </Card.Header>
-      <Card.Content>
-        Card content goes here.
-      </Card.Content>
-      <Card.Footer>
-        Footer text goes here.
-      </Card.Footer>
-    </Card.Root>
-
-    <Card.Root variant="plain" width="lg">
-      <Card.Header>
-        <Card.Title as="h5">Card Title H5</Card.Title>
-        <Card.Description>This is the card description.</Card.Description>
-      </Card.Header>
-      <Card.Content>
-        Card content goes here.
-      </Card.Content>
-      <Card.Footer>
-        Footer text goes here.
-      </Card.Footer>
-    </Card.Root>
-
-    <Card.Root variant="default" width="full">
-      <Card.Header>
-        <Card.Title as="h6">Card Title H6</Card.Title>
-        <Card.Description>This is the card description.</Card.Description>
-      </Card.Header>
-      <Card.Content>
-        Card content goes here.
-      </Card.Content>
-      <Card.Footer>
-        Footer text goes here.
-      </Card.Footer>
-    </Card.Root>
-
-  </div>`}
+  code={`<div className="flex flex-col gap-10">
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Basic Card</h6>
+      <Card.Root>
+        <Card.Image src="/card-image.png" width="100%" height="150px" />
+        <Card.Title>Card Title</Card.Title>
+        <Card.Content>
+          This is the card content. You can customize it as needed.
+        </Card.Content>
+      </Card.Root>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Horizontal Card</h6>
+      <Card.Root orientation="horizontal">
+        <Card.Image src="/card-image.png" width="250px" height="100%" />
+        <div>
+          <Card.Title>Horizontal Card</Card.Title>
+          <Card.Content>
+            This card uses horizontal orientation.
+          </Card.Content>
+        </div>
+      </Card.Root>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-2 text-center">Disabled Card</h6>
+      <Card.Root disabled>
+        <Card.Title>Disabled Card</Card.Title>
+        <Card.Content>
+          This card is disabled and cannot be interacted with.
+        </Card.Content>
+      </Card.Root>
+    </div>
+</div>`}
 />
 
 ## Usage
 
 ```typescript jsx
-import { Card } from '@harnessio/ui/components'
+import { Card } from '@harnessio/ui'
+
+// ...
 
 return (
-    <Card.Root variant="default" width="md">
-      <Card.Header>
-        <Card.Title as="h1">Card Title H1</Card.Title>
-        <Card.Description>This is the card description.</Card.Description>
-      </Card.Header>
-      <Card.Content>
-        Card content goes here.
-      </Card.Content>
-      <Card.Footer>
-        Footer text goes here.
-      </Card.Footer>
-    </Card.Root>
+  <Card.Root size="md">
+    <Card.Image src="/card-image.png" width="100%" height="150px" />
+    <Card.Title>Card Title</Card.Title>
+    <Card.Content>
+      This is the card content. You can customize it as needed.
+    </Card.Content>
+  </Card.Root>
 )
 ```
 
-## Anatomy
+## Sizes
 
-All parts of the `Card` component can be imported and composed as required.
+The `Card` component supports three sizes: `sm`, `md`, and `lg`.
 
-```typescript jsx
-<Card.Root>
-  <Card.Header>
-    <Card.Title />
-    <Card.Description />
-  </Card.Header>
-  <Card.Content />
-  <Card.Footer />
-</Card.Root>
-```
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-6">
+    <Card.Root size="sm">
+      <Card.Title>Small Card</Card.Title>
+    </Card.Root>
+    <Card.Root size="md">
+      <Card.Title>Medium Card</Card.Title>
+    </Card.Root>
+    <Card.Root size="lg">
+      <Card.Title>Large Card</Card.Title>
+    </Card.Root>
+</div>`}
+/>
+
+## Orientation
+
+The `Card` component supports two orientations: `vertical` and `horizontal`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-6">
+    <Card.Root orientation="vertical">
+      <Card.Title>Vertical Card</Card.Title>
+      <Card.Content>
+        This card uses vertical orientation.
+      </Card.Content>
+    </Card.Root>
+    <Card.Root orientation="horizontal">
+      <Card.Image src="/card-image.png" width="250px" height="100%" />
+      <div>
+        <Card.Title>Horizontal Card</Card.Title>
+        <Card.Content>
+          This card uses horizontal orientation.
+        </Card.Content>
+      </div>
+    </Card.Root>
+</div>`}
+/>
 
 ## API Reference
 
-### Root
-
-The `Root` component serves as the main container for all card elements.
+The `Card` component has several props to control its appearance:
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "children",
-      description:
-        "You can pass in your `Card.Header`, `Card.Content`, and `Card.Footer` as children",
-      required: true,
-      value: "ReactNode",
+      name: "size",
+      description: "The size of the card.",
+      required: false,
+      value: "'sm' | 'md' | 'lg'",
+      defaultValue: "'md'",
     },
     {
-      name: "className",
-      description: "Additional class names to apply to the root element",
+      name: "orientation",
+      description: "The orientation of the card.",
       required: false,
-      value: "string",
+      value: "'vertical' | 'horizontal'",
+      defaultValue: "'vertical'",
     },
     {
-      name: "variant",
-      description: "Variant of the card",
+      name: "selected",
+      description: "Whether the card is selected.",
       required: false,
-      value: "'default' | 'plain'",
-      defaultValue: "default",
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disabled",
+      description: "Whether the card is disabled.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
     {
       name: "width",
-      description: "Width of the card",
+      description: "The width of the card.",
       required: false,
       value:
         "'auto' | 'full' | 'screen' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | string",
-      defaultValue: "auto",
-    },
-  ]}
-/>
-
-### Header
-
-The `Header` component is used to define the header section of the card.
-
-```typescript jsx
-<Card.Header>
-  <Card.Title>Card Title</Card.Title>
-  <Card.Description>This is the card description.</Card.Description>
-</Card.Header>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "children",
-      description: "Content to display",
-      required: true,
-      value: "ReactNode",
-    },
-    {
-      name: "className",
-      description: "Additional class names to apply to the header",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### Title
-
-The `Title` component displays the title of the card.
-
-```typescript jsx
-<Card.Title>Card Title</Card.Title>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "children",
-      description: "Title content",
-      required: true,
-      value: "ReactNode",
-    },
-    {
-      name: "className",
-      description: "Additional class names to apply to the title",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "as",
-      description: "HTML tag to use for the title",
-      required: false,
-      value: "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'",
-      defaultValue: "h3",
-    },
-  ]}
-/>
-
-### Description
-
-The `Description` component displays the description of the card.
-
-```typescript jsx
-<Card.Description>This is the card description.</Card.Description>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "children",
-      description: "Description content",
-      required: true,
-      value: "ReactNode",
-    },
-    {
-      name: "className",
-      description: "Additional class names to apply to the description",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### Content
-
-The `Content` component defines the main content area of the card.
-
-```typescript jsx
-<Card.Content>
-  Card content goes here.
-</Card.Content>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "children",
-      description: "Content to display",
-      required: true,
-      value: "ReactNode",
-    },
-    {
-      name: "className",
-      description: "Additional class names to apply to the content",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### Footer
-
-The `Footer` component is used to define the footer section of the card.
-
-```typescript jsx
-<Card.Footer>
-  Footer text goes here.
-</Card.Footer>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "children",
-      description: "Footer content",
-      required: true,
-      value: "ReactNode",
-    },
-    {
-      name: "className",
-      description: "Additional class names to apply to the footer",
-      required: false,
-      value: "string",
+      defaultValue: "'auto'",
     },
   ]}
 />

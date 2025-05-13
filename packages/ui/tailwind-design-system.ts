@@ -8,6 +8,7 @@ import {
   avatarStyles,
   badgeStyles,
   buttonStyles,
+  cardStyles,
   checkboxStyles,
   dialogStyles,
   labelStyles,
@@ -438,6 +439,7 @@ export default {
       addComponents(checkboxStyles)
       addComponents(radioStyles)
       addComponents(avatarStyles)
+      addComponents(cardStyles)
     }),
     tailwindcssAnimate,
     typography,

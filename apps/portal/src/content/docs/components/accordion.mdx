@@ -34,7 +34,7 @@ import { DocsPage } from "@/components/docs-page";
 
     <div>
         <h5>Single collapsible w/left indicator</h5>
-        <Accordion.Root type="single" collapsible withLeftIndicator>
+        <Accordion.Root type="single" collapsible indicatorPosition="left">
             <Accordion.Item value="item1">
                 <Accordion.Trigger suffix="3 items">
                   <Accordion.TriggerIcon name="info-circle" />
@@ -150,6 +150,7 @@ All parts of the `Accordion` component can be imported and composed as required.
 <Accordion.Root>
   <Accordion.Item>
     <Accordion.Trigger>
+      <Accordion.TriggerIcon />
       <Accordion.TriggerLogo />
     </Accordion.Trigger>
     <Accordion.Content />
@@ -166,74 +167,174 @@ allows the display of `multiple` items or a `single` item. The accordion can be 
 By default, the accordion is **uncontrolled** and will manage its own internal state. When the `value` and `onValueChange`
 props are supplied, the accordion becomes **controlled** and state is handled externally.
 
-```typescript jsx
-<Accordion.Root
-  type="single"                // single|multiple
-  collapsible                  // [OPTIONAL] allow all panels to be collapsed when type is "single"
-  defaultValue="ItemValue"     // [OPTIONAL] value of item to expand initially
-  disabled                     // [OPTIONAL] disable the accordion expanded when type is "single"
-  onValueChange={handleChange} // [OPTIONAL] handler triggered when value changes when externally controlled
-  value={currentValue}         // [OPTIONAL] value of item currently selected when externally controlled
-  size="md"                    // [OPTIONAL] size of the accordion (default|md)
-  withLeftIndicator            // [OPTIONAL] show left indicator
->
-  {/* <Accordion.Item>'s as children */}
-</Accordion.Root>
-```
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "type",
+      description:
+        "Controls whether accordion allows display of multiple items or a single item",
+      defaultValue: "single",
+      required: true,
+      value: "'single' | 'multiple'",
+    },
+    {
+      name: "collapsible",
+      description: "Allow all panels to be collapsed when type is 'single'",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "defaultValue",
+      description: "Value of item(s) to expand initially in uncontrolled mode",
+      required: false,
+      value: "string | string[]",
+    },
+    {
+      name: "disabled",
+      description: "Disable the accordion",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onValueChange",
+      description: "Handler triggered when value changes in controlled mode",
+      required: false,
+      value: "function",
+    },
+    {
+      name: "value",
+      description: "Value of item(s) currently selected in controlled mode",
+      required: false,
+      value: "string | string[]",
+    },
+    {
+      name: "size",
+      description: "Size of the accordion",
+      defaultValue: "default",
+      required: false,
+      value: "'default' | 'md'",
+    },
+    {
+      name: "indicatorPosition",
+      description: "Position of the expand/collapse indicator",
+      defaultValue: "right",
+      required: false,
+      value: "'left' | 'right'",
+    },
+  ]}
+/>
 
 ### `Item`
 
 The `Accordion.Item` component represents an individual collapsible panel consisting of a trigger and content to display.
-The `value` prop is required and can be thought of as the identifier of the individual `Accordion.Item`. When multiple
-`Accordion.Item`s are wrapped in an `Accordion.Root`.
+The `value` prop is required and can be thought of as the identifier of the individual `Accordion.Item`.
 
-```typescript jsx
-<Accordion.Item
-  value="ItemValue" // item value
-  disabled          // [OPTIONAL] disable item
->
-  {/* <Accordion.Trigger> and <Accordion.Content> as children */}
-</Accordion.Item>
-```
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Unique identifier for the accordion item",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description: "Disable this specific accordion item",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
 
 ### `Trigger`
 
 The `Accordion.Trigger` component displays the item with a chevron disclosure icon.
 
-```typescript jsx
-<Accordion.Trigger
-  suffix="3 items"  // [OPTIONAL] suffix text
->
-  Item name
-</Accordion.Trigger>
-```
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content of the trigger",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "suffix",
+      description: "Optional text to display on the right side of the trigger",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
 
 ### `TriggerIcon`
 
-The `Accordion.TriggerIcon` component displays the trigger icon.
+The `Accordion.TriggerIcon` component displays an icon within the trigger
 
-```typescript jsx
-<Accordion.TriggerIcon
-  name="info-circle" // icon name
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the icon to display",
+      required: true,
+      value: "string",
+    },
+  ]}
 />
-```
 
 ### `TriggerLogo`
 
-The `Accordion.TriggerLogo` component displays the trigger icon.
+The `Accordion.TriggerLogo` component displays a logo within the trigger
 
-```typescript jsx
-<Accordion.TriggerLogo
-  name="docker" // logo name
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the logo to display",
+      required: true,
+      value: "string",
+    },
+  ]}
 />
-```
 
 ### `Content`
 
 The `Accordion.Content` component displays the item contents when triggered using the `Accordion.Trigger`.
 
-```typescript jsx
-<Accordion.Content>
-  <p>This is the item content</p>
-</Accordion.Content>
-```
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display when the accordion item is expanded",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>

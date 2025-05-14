@@ -19,22 +19,22 @@ const accordionVariants = cva('cn-accordion', {
   }
 })
 
-const AccordionContext = createContext<{ withLeftIndicator?: boolean }>({ withLeftIndicator: false })
+const AccordionContext = createContext<{ indicatorPosition?: 'right' | 'left' }>({ indicatorPosition: 'right' })
 
 type AccordionRootProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Root> &
   VariantProps<typeof accordionVariants> & {
     onValueChange?: (value: string | string[]) => void
-    withLeftIndicator?: boolean
+    indicatorPosition?: 'right' | 'left'
   }
 const AccordionRoot = forwardRef<ElementRef<typeof AccordionPrimitive.Root>, AccordionRootProps>(
-  ({ onValueChange, className, size, children, withLeftIndicator, ...props }, ref) => (
+  ({ onValueChange, className, size, children, indicatorPosition, ...props }, ref) => (
     <AccordionPrimitive.Root
       ref={ref}
       {...props}
       className={cn(accordionVariants({ size }), className)}
       onValueChange={onValueChange}
     >
-      <AccordionContext.Provider value={{ withLeftIndicator }}>{children}</AccordionContext.Provider>
+      <AccordionContext.Provider value={{ indicatorPosition }}>{children}</AccordionContext.Provider>
     </AccordionPrimitive.Root>
   )
 )
@@ -56,7 +56,7 @@ type AccordionTriggerProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.
 
 const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
   ({ className, children, suffix, indicatorProps, ...props }, ref) => {
-    const { withLeftIndicator } = useContext(AccordionContext)
+    const { indicatorPosition } = useContext(AccordionContext)
     const withSuffix = !!suffix
 
     const Indicator = () => (
@@ -69,14 +69,14 @@ const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger
     )
 
     return (
-      <AccordionPrimitive.Header className="flex">
+      <AccordionPrimitive.Header>
         <AccordionPrimitive.Trigger ref={ref} className={cn('cn-accordion-trigger', className)} {...props}>
-          {withLeftIndicator && <Indicator />}
+          {indicatorPosition === 'left' && <Indicator />}
 
           <span className="cn-accordion-trigger-text">{children}</span>
           {withSuffix && <span className="cn-accordion-trigger-suffix">{suffix}</span>}
 
-          {!withLeftIndicator && <Indicator />}
+          {indicatorPosition === 'right' && <Indicator />}
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Header>
     )

@@ -18,7 +18,7 @@ const StepInfo: FC<StepInfoProps> = item => {
   return (
     <li>
       <Layout.Horizontal className="gap-x-1">
-        <h3 className="text-2 text-cn-foreground-1 flex-none font-medium">{item.step}</h3>
+        <h3 className="flex-none text-2 font-medium text-cn-foreground-1">{item.step}</h3>
         <Layout.Vertical className="w-[90%] max-w-full">
           <p className="text-2 text-cn-foreground-2">{item.description}</p>
           <div
@@ -99,7 +99,7 @@ const PullRequestMergeSection = ({
   return (
     <Accordion.Item value={ACCORDION_VALUE}>
       <Accordion.Trigger
-        className={cn('py-3 text-left', { '[&>.cn-accordion-trigger-indicator]:hidden': mergeable || unchecked })}
+        className={cn('py-3', { '[&>.cn-accordion-trigger-indicator]:hidden': mergeable || unchecked })}
       >
         <StackedList.Field
           className="flex gap-y-1"

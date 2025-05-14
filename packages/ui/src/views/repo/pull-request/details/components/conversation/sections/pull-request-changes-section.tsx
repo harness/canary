@@ -219,7 +219,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   return (
     <Accordion.Item value={ACCORDION_VALUE}>
       <Accordion.Trigger
-        className={cn('py-3 text-left', { '[&>.cn-accordion-trigger-indicator]:hidden': !viewBtn })}
+        className={cn('py-3', { '[&>.cn-accordion-trigger-indicator]:hidden': !viewBtn })}
         onClick={e => {
           if (!viewBtn) e.preventDefault()
         }}

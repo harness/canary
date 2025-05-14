@@ -11,7 +11,7 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
 
   return (
     <Accordion.Item value="item-2">
-      <Accordion.Trigger className="py-3 text-left [&>.cn-accordion-trigger-indicator]:hidden">
+      <Accordion.Trigger className="py-3 [&>.cn-accordion-trigger-indicator]:hidden">
         <StackedList.Field
           className="flex gap-y-1"
           title={

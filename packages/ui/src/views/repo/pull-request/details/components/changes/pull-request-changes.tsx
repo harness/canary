@@ -309,9 +309,15 @@ const PullRequestAccordion: React.FC<{
   return (
     <StackedList.Root>
       <StackedList.Item className="overflow-hidden p-0" disableHover>
-        <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle} withLeftIndicator>
+        <Accordion.Root
+          type="multiple"
+          className="w-full"
+          value={openItems}
+          onValueChange={onToggle}
+          indicatorPosition="left"
+        >
           <Accordion.Item value={header?.text ?? ''} className="border-none">
-            <Accordion.Trigger className="bg-cn-background-2 px-4 py-3.5 text-left">
+            <Accordion.Trigger className="bg-cn-background-2 px-4 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center">
               <StackedList.Field
                 title={
                   <LineTitle

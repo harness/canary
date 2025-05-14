@@ -102,7 +102,7 @@ function Root({ children, onValueChange, value }: RootProps) {
       className="w-full min-w-0"
       onValueChange={onValueChange}
       value={value}
-      withLeftIndicator
+      indicatorPosition="left"
     >
       {children}
     </Accordion.Root>

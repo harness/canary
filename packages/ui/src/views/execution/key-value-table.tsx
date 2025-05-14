@@ -37,11 +37,11 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
             className="border-0"
             defaultValue={item.name}
             collapsible
-            withLeftIndicator
+            indicatorPosition="left"
           >
             <Accordion.Item value={item.name} className="border-0">
               <Accordion.Trigger
-                className="flex w-full gap-1 py-2.5 pr-4"
+                className="pr-4"
                 style={{
                   paddingLeft: `${level + 1}rem`
                 }}
@@ -82,9 +82,9 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
         return (
           <Table.Row key={index} className="border-0">
             <Table.Cell colSpan={2} className="border-0 p-0">
-              <Accordion.Root type="single" collapsible defaultValue={item.name} withLeftIndicator>
+              <Accordion.Root type="single" collapsible defaultValue={item.name} indicatorPosition="left">
                 <Accordion.Item value={item.name} className="border-0">
-                  <Accordion.Trigger className="flex w-full gap-1 px-4 py-2.5 data-[state=closed]:border-b data-[state=open]:border-b-0">
+                  <Accordion.Trigger className="px-4">
                     <Text size={2} weight="normal" className={specTitleStyle}>
                       {item.name}
                     </Text>

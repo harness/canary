@@ -6,15 +6,15 @@ main {
   @apply px-0 py-10 w-full !important;
 }
 
-.sl-container h1[id] {
+.sl-container h1 {
   @apply text-4xl font-normal text-cn-foreground;
 }
 
-.sl-container h2[id] {
+.sl-container h2 {
   @apply text-3xl font-normal text-cn-foreground;
 }
 
-.sl-container h3[id] {
+.sl-container h3 {
   @apply text-2xl font-normal text-cn-foreground;
 }
 

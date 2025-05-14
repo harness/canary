@@ -47,7 +47,7 @@ const PullRequestCheckSection = ({
 
   return !isEmpty(checkData) ? (
     <Accordion.Item value={ACCORDION_VALUE}>
-      <Accordion.Trigger className="py-3 text-left">
+      <Accordion.Trigger className="py-3">
         <StackedList.Field
           className="flex gap-y-1"
           title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}

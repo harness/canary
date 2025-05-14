@@ -3,9 +3,9 @@
     "id": "89bf9a3ab61c40d6291a24c452efc1591c4d41c0",
     "name": "source",
     "selectedTokenSets": {
-      "core/typography": "source",
-      "core/dimensions": "source",
-      "core/colors_lch": "source"
+      "core/typography": "enabled",
+      "core/dimensions": "enabled",
+      "core/colors_hex": "enabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -487,6 +487,7 @@
       "fontSize.11": "fb4b962d1764eda4a99d913c195974713cb6d0e6",
       "fontSize.12": "2030b054d89c81e3056a21bb2e43ed1d39b882fb",
       "fontSize.13": "1dbd6d33549b194b081294584ae84de7d8eca82b",
+      "fontSize.min": "82f0a69fbacceb3e2a8a185a09b5e24176918fe6",
       "lineHeight.0.none": "877fc4070c18dcfe17aa98e6b6c29e8e09dcb4ba",
       "lineHeight.0.tight": "5cdb69f84f45fbe99cdc723d58e7508dc6ca139a",
       "lineHeight.0.snug": "a91aa14e73b80f05e756b8cfcff118ea26002fdd",
@@ -678,8 +679,7 @@
       "opacity.60": "24a25f920c1de8559e48a5828b4c982bcccf75c0",
       "opacity.70": "24e70506912d5e69d78083757e230896de95107a",
       "opacity.80": "33302799180ddad5fc64a467c05b838de900cbe4",
-      "opacity.90": "2e5e5354d12c683fe7425b9893eee79eaa1f8f42",
-      "fontSize.min": "82f0a69fbacceb3e2a8a185a09b5e24176918fe6"
+      "opacity.90": "2e5e5354d12c683fe7425b9893eee79eaa1f8f42"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491161",
     "$figmaModeId": "426:0",

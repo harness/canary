@@ -1,0 +1,62 @@
+export default {
+  '.cn-card-select-root': {
+    '@apply grid gap-4': ''
+  },
+
+  '.cn-card-select-item': {
+    '@apply relative cursor-pointer transition-all': '',
+    borderWidth: 'var(--cn-card-border)',
+    borderStyle: 'solid',
+    borderColor: 'var(--cn-border-2)',
+    borderRadius: 'var(--cn-card-default-radius)',
+    backgroundColor: 'var(--cn-bg-2)',
+    paddingTop: 'var(--cn-card-check-default-py)',
+    paddingBottom: 'var(--cn-card-check-default-py)',
+    paddingLeft: 'var(--cn-card-check-default-pl)',
+    paddingRight: 'var(--cn-card-check-default-pr)',
+    gap: 'var(--cn-card-check-default-gap)',
+
+    '&:hover': {
+      borderColor: 'var(--cn-border-1)'
+    },
+
+    '&[data-disabled]': {
+      opacity: 'var(--cn-disabled-opacity)',
+      pointerEvents: 'none'
+    },
+
+    '&[data-state="checked"]': {
+      borderColor: 'var(--cn-border-accent)',
+      backgroundColor: 'var(--cn-comp-card-gradient)'
+    },
+
+    '.cn-card-select-title': {
+      color: 'var(--cn-text-1)',
+      '@apply font-body-strong mb-1': ''
+    },
+
+    '.cn-card-select-description': {
+      color: 'var(--cn-text-2)',
+      '@apply font-body-normal': ''
+    },
+
+    '.cn-card-select-icon, .cn-card-select-logo': {
+      '@apply mr-3 shrink-0': '',
+      width: '1.5rem',
+      height: '1.5rem'
+    },
+
+    '.cn-card-select-check': {
+      position: 'absolute',
+      right: 'var(--cn-spacing-4)',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      width: '1rem',
+      height: '1rem'
+    }
+  },
+
+  '.cn-card-select-hidden-input': {
+    '@apply sr-only': ''
+  }
+}

@@ -82,6 +82,7 @@ export * from './tag'
 export * from './sorts'
 export * from './entity-form-layout'
 export * as MultiSelectV2 from './multi-select-v2'
+export * from './card-select'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

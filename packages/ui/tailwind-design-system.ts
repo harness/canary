@@ -9,6 +9,7 @@ import {
   badgeStyles,
   buttonStyles,
   captionStyles,
+  cardSelectStyles,
   cardStyles,
   checkboxStyles,
   dialogStyles,
@@ -443,6 +444,7 @@ export default {
         linkStyles,
         avatarStyles,
         cardStyles,
+        cardSelectStyles,
 
         // Form styles
         formSharedStyles,

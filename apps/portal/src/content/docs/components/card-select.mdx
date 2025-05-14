@@ -1,0 +1,185 @@
+---
+title: CardSelect
+description: CardSelect component documentation
+beta: true
+---
+
+The `CardSelect` component provides an accessible and customizable card-based selection interface. It supports both single and multiple selection modes, making it suitable for forms, settings, and decision workflows.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<CardSelect.Root type="single" value={"option-1"} onValueChange={(val) => console.log(val)}>
+  <CardSelect.Item value="option-1" icon="check">
+    <CardSelect.Title>Option 1</CardSelect.Title>
+    <CardSelect.Description>This is the first option</CardSelect.Description>
+  </CardSelect.Item>
+
+  <CardSelect.Item value="option-2" logo="logo-harness">
+    <CardSelect.Title>Option 2</CardSelect.Title>
+    <CardSelect.Description>This is the second option</CardSelect.Description>
+  </CardSelect.Item>
+</CardSelect.Root>`}
+/>
+
+## Usage
+
+```tsx
+import { CardSelect } from "@harnessio/ui";
+
+<CardSelect.Root type="multiple" value={["one"]} onValueChange={setValues}>
+  <CardSelect.Item value="one" icon="plus">
+    <CardSelect.Title>Choice A</CardSelect.Title>
+    <CardSelect.Description>Option with an icon</CardSelect.Description>
+  </CardSelect.Item>
+
+  <CardSelect.Item value="two" logo="logo-somebrand">
+    <CardSelect.Title>Choice B</CardSelect.Title>
+    <CardSelect.Description>Option with a logo</CardSelect.Description>
+  </CardSelect.Item>
+</CardSelect.Root>;
+```
+
+## Modes
+
+The `CardSelect` supports two selection types:
+
+- `single`: behaves like a radio group.
+- `multiple`: behaves like a checkbox group.
+
+## API Reference
+
+### Root
+
+The `CardSelect.Root` is the top-level wrapper that controls selection state.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "type",
+      description: "Defines whether the selection is single or multiple.",
+      required: true,
+      value: "'single' | 'multiple'",
+    },
+    {
+      name: "value",
+      description: "Controlled selected value(s).",
+      required: false,
+      value: "unknown | unknown[]",
+      defaultValue: "undefined | []",
+    },
+    {
+      name: "defaultValue",
+      description: "Uncontrolled default selected value(s).",
+      required: false,
+      value: "unknown",
+      defaultValue: "undefined",
+    },
+    {
+      name: "onValueChange",
+      description: "Callback invoked on selection change.",
+      required: false,
+      value: "(val: unknown) => void | (val: unknown[]) => void",
+      defaultValue: "undefined",
+    },
+    {
+      name: "disabled",
+      description: "Whether all items are disabled.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### Item
+
+Represents an individual card that can be selected.
+
+```tsx
+<CardSelect.Item value="abc" icon="check">
+  <CardSelect.Title>Label</CardSelect.Title>
+  <CardSelect.Description>Detail text</CardSelect.Description>
+</CardSelect.Item>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Value associated with the item.",
+      required: true,
+      value: "unknown",
+    },
+    {
+      name: "icon",
+      description: "Icon name (left of title). Cannot be used with logo.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "logo",
+      description: "Logo name (left of title). Cannot be used with icon.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Disables selection of this item.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### Title
+
+Defines the title text for an item.
+
+```tsx
+<CardSelect.Title>Primary Label</CardSelect.Title>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Main title text.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Optional styling classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Description
+
+Provides supporting details or context.
+
+```tsx
+<CardSelect.Description>Supporting description</CardSelect.Description>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Supporting description text.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Optional styling classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

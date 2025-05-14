@@ -67,7 +67,7 @@
   "input-text-area": {
     "min-height": {
       "$type": "sizing",
-      "$value": "{size.32}"
+      "$value": "{size.25}"
     }
   }
 }

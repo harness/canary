@@ -1,8 +1,10 @@
 {
   "progress": {
-    "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.2-half}"
+    "container": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      }
     },
     "size": {
       "sm": {

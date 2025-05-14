@@ -33,12 +33,16 @@ export default {
 
     '.cn-card-title': {
       color: 'var(--cn-text-1)',
-      '@apply font-heading-base mb-2': ''
+      '@apply font-heading-base': ''
     },
 
     '.cn-card-content': {
       color: 'var(--cn-text-2)',
       '@apply font-body-normal': ''
+    },
+
+    '.cn-card-title + .cn-card-content': {
+      '@apply mt-2': ''
     },
 
     '&:where(.cn-card-vertical)': {

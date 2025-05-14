@@ -192,7 +192,7 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
               }
               setInputValue('')
               setSearchQuery?.('')
-              e.preventDefault() // Prevent default Enter behavior
+              e.preventDefault()
             }
           }
           if (e.key === 'Escape') {

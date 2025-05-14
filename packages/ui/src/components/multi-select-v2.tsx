@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
-import { Button, Caption, Command, Icon, Label, SkeletonList, Tag } from '@/components'
+import { Caption, Command, Label, SkeletonList, Tag } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { CommandList, Command as CommandPrimitive, useCommandState } from 'cmdk'
@@ -12,7 +12,7 @@ export interface MultiSelectOption {
   onReset?: () => void
 }
 
-interface MultipleSelectorProps {
+interface MultiSelectProps {
   label?: string
   caption?: string
   value?: MultiSelectOption[]
@@ -22,13 +22,8 @@ interface MultipleSelectorProps {
   searchQuery?: string | null
   setSearchQuery?: (query: string | null) => void
   onChange?: (options: MultiSelectOption[]) => void
-  /** Limit the maximum number of selected options. */
-  maxSelected?: number
-  /** When the number of selected options exceeds the limit, the onMaxSelected will be called. */
-  onMaxSelected?: (maxLimit: number) => void
   disabled?: boolean
   className?: string
-
   disallowCreation?: boolean
   /** Props of `Command` */
   commandProps?: React.ComponentPropsWithoutRef<typeof Command.Root>
@@ -37,7 +32,7 @@ interface MultipleSelectorProps {
   isLoading?: boolean
 }
 
-export interface MultipleSelectorRef {
+export interface MultiSelectRef {
   selectedValue: MultiSelectOption[]
   input: HTMLInputElement
   focus: () => void
@@ -74,7 +69,7 @@ const CommandEmpty = forwardRef<HTMLDivElement, React.ComponentProps<typeof Comm
 
 CommandEmpty.displayName = 'CommandEmpty'
 
-export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
+export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
   (
     {
       label,
@@ -86,16 +81,14 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
       options: arrayOptions,
       searchQuery,
       setSearchQuery,
-      maxSelected = Number.MAX_SAFE_INTEGER,
-      onMaxSelected,
       disabled,
       className,
       disallowCreation = false,
       commandProps,
       inputProps,
       isLoading = false
-    }: MultipleSelectorProps,
-    ref: React.Ref<MultipleSelectorRef>
+    }: MultiSelectProps,
+    ref: React.Ref<MultiSelectRef>
   ) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const [open, setOpen] = useState(false)
@@ -244,7 +237,7 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
     }, [disallowCreation, setSearchQuery, options.length])
 
     return (
-      <div className="flex flex-col gap-2 max-w-md">
+      <div className="flex flex-col gap-2 max-w-md ">
         <Label>{label}</Label>
         <Command.Root
           ref={dropdownRef}
@@ -257,7 +250,7 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
         >
           <div
             className={cn(
-              'min-h-10 rounded-md border border-input text-base ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 md:text-sm',
+              'min-h-10 rounded-md border border-cn-borders-2 focus-within:shadow-ring-selected focus-within:border-cn-borders-1',
               {
                 'px-3 py-2': (isControlled ? value : selected).length !== 0,
                 'cursor-text': !disabled && (isControlled ? value : selected).length !== 0
@@ -268,59 +261,23 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
               if (disabled) return
               inputRef?.current?.focus()
             }}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault()
-                if (disabled) return
-                inputRef?.current?.focus()
-              }
-            }}
             role="textbox"
             tabIndex={disabled ? -1 : 0}
             aria-label={placeholder}
           >
             <div className="relative flex flex-wrap gap-1">
               {(isControlled ? value : selected).map(option => {
-                if (option.value) {
-                  const tagTheme = 'purple'
-
-                  return (
-                    <Tag
-                      key={option.key}
-                      variant="secondary"
-                      size="sm"
-                      theme={tagTheme}
-                      label={option.key}
-                      value={option.value || ''}
-                      showReset={!disabled}
-                      onReset={() => handleUnselect(option)}
-                    />
-                  )
-                }
                 return (
-                  <Button
+                  <Tag
                     key={option.key}
+                    variant="secondary"
                     size="sm"
-                    type="button"
-                    variant="outline"
-                    className="h-6 py-0 px-2"
-                    onClick={e => {
-                      e.stopPropagation()
-                      handleUnselect(option)
-                    }}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter') {
-                        handleUnselect(option)
-                      }
-                    }}
-                    onMouseDown={e => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                    }}
-                  >
-                    {option.key}
-                    <Icon name="close" size={10} className="ml-1" />
-                  </Button>
+                    theme={option?.value ? 'purple' : undefined}
+                    label={option.key}
+                    value={option?.value || ''}
+                    showReset={!disabled}
+                    onReset={() => handleUnselect(option)}
+                  />
                 )
               })}
               <CommandPrimitive.Input
@@ -345,7 +302,7 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
                 }}
                 placeholder={placeholder}
                 className={cn(
-                  'flex-1 bg-transparent outline-none placeholder:text-muted-foreground',
+                  'flex-1 bg-transparent outline-none placeholder:text-cn-muted-foreground',
                   {
                     'px-3 py-2': (isControlled ? value : selected).length === 0,
                     'ml-1': (isControlled ? value : selected).length !== 0
@@ -353,29 +310,12 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
                   inputProps?.className
                 )}
               />
-              <Button
-                onClick={() => {
-                  if (isControlled) {
-                    onChange?.([])
-                  } else {
-                    setSelected([])
-                  }
-                }}
-                className={cn(
-                  'absolute right-0',
-                  (disabled || (isControlled ? value : selected).length < 1) && 'hidden'
-                )}
-                variant="ghost"
-                iconOnly
-              >
-                <Icon name="close" size={10} />
-              </Button>
             </div>
           </div>
           <div className="relative">
             {open && options?.length > 0 && (
               <CommandList
-                className="bg-popover bg-cn-background-1 text-popover-foreground animate-in absolute top-1 z-10 w-full rounded-md border shadow-md outline-none"
+                className="bg-cn-background-1 text-cn-foreground animate-in absolute top-1 z-10 w-full rounded-md border shadow-md outline-none"
                 onMouseLeave={() => {
                   setOnScrollbar(false)
                 }}
@@ -395,18 +335,11 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
                       {getAvailableOptions(options, isControlled ? value : selected).map(option => {
                         return (
                           <Command.Item
-                            key={option.value}
-                            value={option.value}
+                            key={option.key}
+                            value={option.value || option.key}
                             disabled={option.disable}
-                            onMouseDown={e => {
-                              e.preventDefault()
-                              e.stopPropagation()
-                            }}
                             onSelect={() => {
-                              if ((isControlled ? value : selected).length >= maxSelected) {
-                                onMaxSelected?.((isControlled ? value : selected).length)
-                                return
-                              }
+                              // This handler works for both mouse clicks and keyboard Enter presses
                               setInputValue('')
                               const newOptions = [...(isControlled ? value : selected), option]
                               if (isControlled) {
@@ -415,7 +348,10 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
                                 setSelected(newOptions)
                               }
                             }}
-                            className={cn('cursor-pointer', option.disable && 'cursor-default text-muted-foreground')}
+                            className={cn(
+                              'cursor-pointer',
+                              option.disable && 'cursor-default text-cn-muted-foreground'
+                            )}
                           >
                             {option.key}
                           </Command.Item>
@@ -434,4 +370,4 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
   }
 )
 
-MultipleSelector.displayName = 'MultipleSelector'
+MultiSelect.displayName = 'MultiSelect'

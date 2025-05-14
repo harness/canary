@@ -81,7 +81,7 @@ export * from './informer'
 export * from './tag'
 export * from './sorts'
 export * from './entity-form-layout'
-export * from './multi-select-v2'
+export * as MultiSelectV2 from './multi-select-v2'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

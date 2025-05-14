@@ -6,15 +6,15 @@ main {
   @apply px-0 py-10 w-full !important;
 }
 
-.sl-container h1 {
+.sl-container :is(h1):not(:where(.not-content *)) {
   @apply text-4xl font-normal text-cn-foreground;
 }
 
-.sl-container h2 {
+.sl-container :is(h2):not(:where(.not-content *)) {
   @apply text-3xl font-normal text-cn-foreground;
 }
 
-.sl-container h3 {
+.sl-container :is(h3):not(:where(.not-content *)) {
   @apply text-2xl font-normal text-cn-foreground;
 }
 

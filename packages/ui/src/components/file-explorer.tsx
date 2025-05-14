@@ -18,7 +18,7 @@ function FolderItem({ children, value = '', isActive, content, link }: FolderIte
     <Accordion.Item value={value} className="border-none">
       <Accordion.Trigger
         className="relative w-full p-0 pr-1.5 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
-        indicatorProps={{ size: 10 }}
+        indicatorProps={{ size: 12 }}
       >
         <div
           className={cn(

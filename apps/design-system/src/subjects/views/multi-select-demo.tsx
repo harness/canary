@@ -18,6 +18,7 @@ const OPTIONS: MultiSelectOption[] = [
 
 export const MultipleSelectorWithDisabledOption = () => {
   const [value, setValue] = useState<MultiSelectOption[]>([])
+  const [searchQuery, setSearchQuery] = useState<string | null>(null)
   return (
     <MultipleSelector
       onChange={options => setValue(options)}
@@ -27,6 +28,8 @@ export const MultipleSelectorWithDisabledOption = () => {
       //   disallowCreation
       label="Frameworks"
       caption="Separate tags with commas or press Enter. Use the format key:value for object entries."
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
     />
   )
 }

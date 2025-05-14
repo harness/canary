@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { forwardRef, useEffect } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
 import { Button, Caption, Command, Icon, Label, SkeletonList, Tag } from '@/components'
+import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { CommandList, Command as CommandPrimitive, useCommandState } from 'cmdk'
 
@@ -18,8 +18,8 @@ interface MultipleSelectorProps {
   defaultValue?: MultiSelectOption[]
   options?: MultiSelectOption[]
   placeholder?: string
-  /** async search */
-  onSearch?: (value: string) => Promise<MultiSelectOption[]>
+  searchQuery?: string | null
+  setSearchQuery?: (query: string | null) => void
   onChange?: (options: MultiSelectOption[]) => void
   /** Limit the maximum number of selected options. */
   maxSelected?: number
@@ -33,6 +33,7 @@ interface MultipleSelectorProps {
   commandProps?: React.ComponentPropsWithoutRef<typeof Command.Root>
   /** Props of `CommandInput` */
   inputProps?: Omit<React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>, 'value' | 'placeholder' | 'disabled'>
+  isLoading?: boolean
 }
 
 export interface MultipleSelectorRef {
@@ -40,20 +41,6 @@ export interface MultipleSelectorRef {
   input: HTMLInputElement
   focus: () => void
   reset: () => void
-}
-
-export function useDebounce<T>(value: T, delay?: number): T {
-  const [debouncedValue, setDebouncedValue] = React.useState<T>(value)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedValue(value), delay || 500)
-
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [value, delay])
-
-  return debouncedValue
 }
 
 // Simple function to get available options (removing already selected ones)
@@ -86,7 +73,7 @@ const CommandEmpty = forwardRef<HTMLDivElement, React.ComponentProps<typeof Comm
 
 CommandEmpty.displayName = 'CommandEmpty'
 
-export const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
+export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
   (
     {
       label,
@@ -96,32 +83,35 @@ export const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSe
       placeholder,
       defaultValue = [],
       options: arrayOptions,
-      onSearch,
+      searchQuery,
+      setSearchQuery,
       maxSelected = Number.MAX_SAFE_INTEGER,
       onMaxSelected,
       disabled,
       className,
       disallowCreation = false,
       commandProps,
-      inputProps
+      inputProps,
+      isLoading = false
     }: MultipleSelectorProps,
     ref: React.Ref<MultipleSelectorRef>
   ) => {
-    const inputRef = React.useRef<HTMLInputElement>(null)
-    const [open, setOpen] = React.useState(false)
-    const [onScrollbar, setOnScrollbar] = React.useState(false)
-    const [isLoading, setIsLoading] = React.useState(false)
-    const dropdownRef = React.useRef<HTMLDivElement>(null) // Added this
+    const inputRef = useRef<HTMLInputElement>(null)
+    const [open, setOpen] = useState(false)
+    const [onScrollbar, setOnScrollbar] = useState(false)
+    const dropdownRef = useRef<HTMLDivElement>(null) // Added this
 
-    // Use value for controlled mode, or defaultValue for initial uncontrolled state
-    const [selected, setSelected] = React.useState<MultiSelectOption[]>(value || defaultValue || [])
-    // Options are the available items to select from
-    const [options, setOptions] = React.useState<MultiSelectOption[]>(arrayOptions || [])
-    const [inputValue, setInputValue] = React.useState('')
-    const debouncedSearchTerm = useDebounce(inputValue, 500)
+    const [selected, setSelected] = useState<MultiSelectOption[]>(value || defaultValue || [])
+    const [options, setOptions] = useState<MultiSelectOption[]>(arrayOptions || [])
+    const [inputValue, setInputValue] = useState('')
+    const { search } = useDebounceSearch({
+      handleChangeSearchValue: setSearchQuery,
+      searchValue: searchQuery || ''
+    })
+
     const isControlled = !!value
 
-    React.useImperativeHandle(
+    useImperativeHandle(
       ref,
       () => ({
         selectedValue: [...selected],
@@ -144,7 +134,7 @@ export const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSe
       }
     }
 
-    const handleUnselect = React.useCallback(
+    const handleUnselect = useCallback(
       (option: MultiSelectOption) => {
         if (isControlled) {
           const newOptions = value?.filter(s => s.key !== option.key) || []
@@ -157,7 +147,7 @@ export const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSe
       [onChange, selected, isControlled, value]
     )
 
-    const handleKeyDown = React.useCallback(
+    const handleKeyDown = useCallback(
       (e: React.KeyboardEvent<HTMLDivElement>) => {
         const input = inputRef.current
         if (input) {
@@ -198,6 +188,7 @@ export const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSe
                 setSelected(newOptions)
               }
               setInputValue('')
+              setSearchQuery?.('')
               e.preventDefault() // Prevent default Enter behavior
             }
           }
@@ -231,38 +222,14 @@ export const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSe
     }, [value])
 
     useEffect(() => {
-      /** If `onSearch` is provided, do not trigger options updated. */
-      if (!arrayOptions || onSearch) {
+      if (!arrayOptions || setSearchQuery) {
         return
       }
       setOptions(arrayOptions || [])
-    }, [arrayOptions, onSearch])
+    }, [arrayOptions, setSearchQuery])
 
-    useEffect(() => {
-      /** async search */
-
-      const doSearch = async () => {
-        setIsLoading(true)
-        const res = await onSearch?.(debouncedSearchTerm)
-        setOptions(res || [])
-        setIsLoading(false)
-      }
-
-      const exec = async () => {
-        if (!onSearch || !open) return
-
-        if (debouncedSearchTerm) {
-          await doSearch()
-        }
-      }
-
-      void exec()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debouncedSearchTerm, open])
-
-    const EmptyItem = React.useCallback(() => {
-      // For async search that showing emptyIndicator
-      if (onSearch && disallowCreation && options.length === 0) {
+    const EmptyItem = useCallback(() => {
+      if (setSearchQuery && disallowCreation && options.length === 0) {
         return (
           <Command.Item value="-" disabled>
             No results found
@@ -271,22 +238,7 @@ export const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSe
       }
 
       return options.length === 0 ? <CommandEmpty>No results found</CommandEmpty> : undefined
-    }, [disallowCreation, onSearch, options.length])
-
-    /** Avoid Creatable Selector freezing or lagging when paste a long string. */
-    const commandFilter = React.useCallback(() => {
-      if (commandProps?.filter) {
-        return commandProps.filter
-      }
-
-      if (!disallowCreation) {
-        return (value: string, search: string) => {
-          return value.toLowerCase().includes(search.toLowerCase()) ? 1 : -1
-        }
-      }
-      // Using default filter in `cmdk`. We don't have to provide it.
-      return undefined
-    }, [disallowCreation, commandProps?.filter])
+    }, [disallowCreation, setSearchQuery, options.length])
 
     return (
       <div className="flex flex-col gap-2 max-w-md">
@@ -299,8 +251,6 @@ export const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSe
             commandProps?.onKeyDown?.(e)
           }}
           className={cn('h-auto overflow-visible bg-transparent max-w-md', commandProps?.className)}
-          shouldFilter={commandProps?.shouldFilter !== undefined ? commandProps.shouldFilter : !onSearch} // When onSearch is provided, we don't want to filter the options. You can still override it.
-          filter={commandFilter()}
         >
           <div
             className={cn(
@@ -378,11 +328,12 @@ export const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSe
               <CommandPrimitive.Input
                 {...inputProps}
                 ref={inputRef}
-                value={inputValue}
+                value={setSearchQuery ? search : inputValue}
                 disabled={disabled}
                 onValueChange={value => {
                   setInputValue(value)
                   inputProps?.onValueChange?.(value)
+                  setSearchQuery?.(value)
                 }}
                 onBlur={event => {
                   if (!onScrollbar) {

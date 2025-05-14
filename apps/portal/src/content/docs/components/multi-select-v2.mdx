@@ -1,0 +1,141 @@
+---
+title: MultiSelect V2
+description: MultiSelect component
+beta: true
+---
+
+The `MultiSelect` component allows users to select multiple options from a dropdown list. It is useful for scenarios where multiple selections are needed.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex w-full flex-col flex-wrap gap-4 items-baseline">
+    <div>MultipleSelector with key-value support</div>
+    <div className="relative w-full">
+      <MultipleSelector
+        label="Frameworks"
+        defaultValue={[{ key: 'React' }, { key: 'category', value: 'frontend' }]}
+        options={[
+          { key: 'nextjs' },
+          { key: 'Vite' },
+          { key: 'Nuxt' },
+          { key: 'Vue' },
+          { key: 'Remix' },
+          { key: 'Svelte' },
+          { key: 'Angular' },
+          { key: 'React' },
+          { key: 'Gatsby' }
+        ]}
+        onChange={(selected) => console.log(selected)}
+        placeholder="Select frameworks you like..."
+        caption="Separate tags with commas or press Enter. Use the format key:value for object entries."
+      />
+    </div>
+</div>`}
+/>
+
+## Usage
+
+```tsx
+import { MultipleSelector, MultiSelectOption } from "@harnessio/ui/components";
+import { useState } from "react";
+
+// Basic usage with controlled component
+const MyComponent = () => {
+  const [selected, setSelected] = useState<MultiSelectOption[]>([]);
+
+  return (
+    <MultipleSelector
+      label="Select frameworks"
+      placeholder="Select options..."
+      options={[{ key: "react" }, { key: "vue" }, { key: "angular" }]}
+      value={selected}
+      onChange={setSelected}
+    />
+  );
+};
+
+// With key-value support
+const TagsComponent = () => {
+  const [tags, setTags] = useState<MultiSelectOption[]>([]);
+
+  return (
+    <MultipleSelector
+      label="Tags"
+      caption="Use format key:value to create structured tags"
+      placeholder="Add tags..."
+      value={tags}
+      onChange={setTags}
+    />
+  );
+};
+```
+
+## MultiSelectOption Type
+
+```typescript
+interface MultiSelectOption {
+  key: string; // Required - the main identifier for the option
+  value?: string; // Optional - used for key-value pairs
+  disable?: boolean; // Optional - disables the option in the dropdown
+}
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "selectedItems",
+      description: "Array of selected items.",
+      required: true,
+    },
+    {
+      name: "t",
+      description: "Translation function.",
+      required: true,
+    },
+    {
+      name: "placeholder",
+      description: "Placeholder text for the input field.",
+      required: true,
+    },
+    {
+      name: "handleChange",
+      description: "Callback function called when selection changes.",
+      required: true,
+    },
+    {
+      name: "options",
+      description: "Array of options to display in the dropdown.",
+      required: true,
+    },
+    {
+      name: "searchValue",
+      description: "Current search value.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "handleChangeSearchValue",
+      description: "Callback function called when the search value changes.",
+      required: false,
+    },
+    {
+      name: "customOptionElem",
+      description: "Custom render function for options.",
+      required: false,
+    },
+    {
+      name: "error",
+      description: "Error message to display.",
+      required: false,
+    },
+    {
+      name: "label",
+      description: "Label for the input field.",
+      required: false,
+    },
+  ]}
+/>

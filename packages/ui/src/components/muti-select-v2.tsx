@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { forwardRef, useEffect } from 'react'
 
-import { Button, Command, Icon, SkeletonList, Tag } from '@/components'
+import { Button, Caption, Command, Icon, Label, SkeletonList, Tag } from '@/components'
 import { cn } from '@utils/cn'
 import { CommandList, Command as CommandPrimitive, useCommandState } from 'cmdk'
 
@@ -12,6 +12,8 @@ export interface MultiSelectOption {
 }
 
 interface MultipleSelectorProps {
+  label?: string
+  caption?: string
   value?: MultiSelectOption[]
   defaultValue?: MultiSelectOption[]
   options?: MultiSelectOption[]
@@ -87,6 +89,8 @@ CommandEmpty.displayName = 'CommandEmpty'
 export const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
   (
     {
+      label,
+      caption,
       value,
       onChange,
       placeholder,
@@ -285,194 +289,200 @@ export const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSe
     }, [disallowCreation, commandProps?.filter])
 
     return (
-      <Command.Root
-        ref={dropdownRef}
-        {...commandProps}
-        onKeyDown={e => {
-          handleKeyDown(e)
-          commandProps?.onKeyDown?.(e)
-        }}
-        className={cn('h-auto overflow-visible bg-transparent', commandProps?.className)}
-        shouldFilter={commandProps?.shouldFilter !== undefined ? commandProps.shouldFilter : !onSearch} // When onSearch is provided, we don't want to filter the options. You can still override it.
-        filter={commandFilter()}
-      >
-        <div
-          className={cn(
-            'min-h-10 rounded-md border border-input text-base ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 md:text-sm',
-            {
-              'px-3 py-2': (isControlled ? value : selected).length !== 0,
-              'cursor-text': !disabled && (isControlled ? value : selected).length !== 0
-            },
-            className
-          )}
-          onClick={() => {
-            if (disabled) return
-            inputRef?.current?.focus()
-          }}
+      <div className="flex flex-col gap-2 max-w-md">
+        <Label>{label}</Label>
+        <Command.Root
+          ref={dropdownRef}
+          {...commandProps}
           onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault()
+            handleKeyDown(e)
+            commandProps?.onKeyDown?.(e)
+          }}
+          className={cn('h-auto overflow-visible bg-transparent max-w-md', commandProps?.className)}
+          shouldFilter={commandProps?.shouldFilter !== undefined ? commandProps.shouldFilter : !onSearch} // When onSearch is provided, we don't want to filter the options. You can still override it.
+          filter={commandFilter()}
+        >
+          <div
+            className={cn(
+              'min-h-10 rounded-md border border-input text-base ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 md:text-sm',
+              {
+                'px-3 py-2': (isControlled ? value : selected).length !== 0,
+                'cursor-text': !disabled && (isControlled ? value : selected).length !== 0
+              },
+              className
+            )}
+            onClick={() => {
               if (disabled) return
               inputRef?.current?.focus()
-            }
-          }}
-          role="textbox"
-          tabIndex={disabled ? -1 : 0}
-          aria-label={placeholder}
-        >
-          <div className="relative flex flex-wrap gap-1">
-            {(isControlled ? value : selected).map(option => {
-              // If option has key and value, display as Tag with key-value format
-              if (option.value) {
-                // Use the option's theme or default to blue
-                const tagTheme = 'blue'
-
-                return (
-                  <Tag
-                    key={option.key}
-                    variant="secondary"
-                    size="sm"
-                    theme={tagTheme}
-                    label={option.key}
-                    value={option.value || ''}
-                    showReset={!disabled}
-                    onReset={() => handleUnselect(option)}
-                  />
-                )
-              }
-
-              // Otherwise display as regular button
-              return (
-                <Button
-                  key={option.key}
-                  size="sm"
-                  type="button"
-                  variant="outline"
-                  className="h-6 py-0 px-2"
-                  onClick={e => {
-                    e.stopPropagation()
-                    handleUnselect(option)
-                  }}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter') {
-                      handleUnselect(option)
-                    }
-                  }}
-                  onMouseDown={e => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                  }}
-                >
-                  {option.key}
-                  <Icon name="close" size={10} className="ml-1" />
-                </Button>
-              )
-            })}
-            {/* Avoid having the "Search" Icon */}
-            <CommandPrimitive.Input
-              {...inputProps}
-              ref={inputRef}
-              value={inputValue}
-              disabled={disabled}
-              onValueChange={value => {
-                setInputValue(value)
-                inputProps?.onValueChange?.(value)
-              }}
-              onBlur={event => {
-                if (!onScrollbar) {
-                  setOpen(false)
-                }
-                inputProps?.onBlur?.(event)
-              }}
-              onFocus={event => {
-                setOpen(true)
-                inputProps?.onFocus?.(event)
-              }}
-              placeholder={placeholder}
-              className={cn(
-                'flex-1 bg-transparent outline-none placeholder:text-muted-foreground',
-                {
-                  'px-3 py-2': (isControlled ? value : selected).length === 0,
-                  'ml-1': (isControlled ? value : selected).length !== 0
-                },
-                inputProps?.className
-              )}
-            />
-            <Button
-              onClick={() => {
-                if (isControlled) {
-                  onChange?.([])
-                } else {
-                  setSelected([])
-                }
-              }}
-              className={cn('absolute right-0', (disabled || (isControlled ? value : selected).length < 1) && 'hidden')}
-              variant="ghost"
-              iconOnly
-            >
-              <Icon name="close" size={10} />
-            </Button>
-          </div>
-        </div>
-        <div className="relative">
-          {open && (
-            <CommandList
-              className="bg-popover text-popover-foreground animate-in absolute top-1 z-10 w-full rounded-md border shadow-md outline-none"
-              onMouseLeave={() => {
-                setOnScrollbar(false)
-              }}
-              onMouseEnter={() => {
-                setOnScrollbar(true)
-              }}
-              onMouseUp={() => {
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                if (disabled) return
                 inputRef?.current?.focus()
-              }}
-            >
-              {isLoading ? (
-                <SkeletonList />
-              ) : (
-                <>
-                  {EmptyItem()}
-                  <Command.Group className="h-full overflow-auto">
-                    {getAvailableOptions(options, isControlled ? value : selected).map(option => {
-                      return (
-                        <Command.Item
-                          key={option.value}
-                          value={option.value}
-                          disabled={option.disable}
-                          onMouseDown={e => {
-                            e.preventDefault()
-                            e.stopPropagation()
-                          }}
-                          onSelect={() => {
-                            if ((isControlled ? value : selected).length >= maxSelected) {
-                              onMaxSelected?.((isControlled ? value : selected).length)
-                              return
-                            }
-                            setInputValue('')
-                            const newOptions = [...(isControlled ? value : selected), option]
-                            if (isControlled) {
-                              onChange?.(newOptions)
-                            } else {
-                              setSelected(newOptions)
-                            }
-                          }}
-                          className={cn('cursor-pointer', option.disable && 'cursor-default text-muted-foreground')}
-                        >
-                          {option.key}
-                        </Command.Item>
-                      )
-                    })}
-                  </Command.Group>
-                </>
-              )}
-            </CommandList>
-          )}
-        </div>
-      </Command.Root>
+              }
+            }}
+            role="textbox"
+            tabIndex={disabled ? -1 : 0}
+            aria-label={placeholder}
+          >
+            <div className="relative flex flex-wrap gap-1">
+              {(isControlled ? value : selected).map(option => {
+                // If option has key and value, display as Tag with key-value format
+                if (option.value) {
+                  // Use the option's theme or default to blue
+                  const tagTheme = 'blue'
+
+                  return (
+                    <Tag
+                      key={option.key}
+                      variant="secondary"
+                      size="sm"
+                      theme={tagTheme}
+                      label={option.key}
+                      value={option.value || ''}
+                      showReset={!disabled}
+                      onReset={() => handleUnselect(option)}
+                    />
+                  )
+                }
+
+                // Otherwise display as regular button
+                return (
+                  <Button
+                    key={option.key}
+                    size="sm"
+                    type="button"
+                    variant="outline"
+                    className="h-6 py-0 px-2"
+                    onClick={e => {
+                      e.stopPropagation()
+                      handleUnselect(option)
+                    }}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        handleUnselect(option)
+                      }
+                    }}
+                    onMouseDown={e => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                    }}
+                  >
+                    {option.key}
+                    <Icon name="close" size={10} className="ml-1" />
+                  </Button>
+                )
+              })}
+              {/* Avoid having the "Search" Icon */}
+              <CommandPrimitive.Input
+                {...inputProps}
+                ref={inputRef}
+                value={inputValue}
+                disabled={disabled}
+                onValueChange={value => {
+                  setInputValue(value)
+                  inputProps?.onValueChange?.(value)
+                }}
+                onBlur={event => {
+                  if (!onScrollbar) {
+                    setOpen(false)
+                  }
+                  inputProps?.onBlur?.(event)
+                }}
+                onFocus={event => {
+                  setOpen(true)
+                  inputProps?.onFocus?.(event)
+                }}
+                placeholder={placeholder}
+                className={cn(
+                  'flex-1 bg-transparent outline-none placeholder:text-muted-foreground',
+                  {
+                    'px-3 py-2': (isControlled ? value : selected).length === 0,
+                    'ml-1': (isControlled ? value : selected).length !== 0
+                  },
+                  inputProps?.className
+                )}
+              />
+              <Button
+                onClick={() => {
+                  if (isControlled) {
+                    onChange?.([])
+                  } else {
+                    setSelected([])
+                  }
+                }}
+                className={cn(
+                  'absolute right-0',
+                  (disabled || (isControlled ? value : selected).length < 1) && 'hidden'
+                )}
+                variant="ghost"
+                iconOnly
+              >
+                <Icon name="close" size={10} />
+              </Button>
+            </div>
+          </div>
+          <div className="relative">
+            {open && options?.length > 0 && (
+              <CommandList
+                className="bg-popover bg-cn-background-1 text-popover-foreground animate-in absolute top-1 z-10 w-full rounded-md border shadow-md outline-none"
+                onMouseLeave={() => {
+                  setOnScrollbar(false)
+                }}
+                onMouseEnter={() => {
+                  setOnScrollbar(true)
+                }}
+                onMouseUp={() => {
+                  inputRef?.current?.focus()
+                }}
+              >
+                {isLoading ? (
+                  <SkeletonList />
+                ) : (
+                  <>
+                    {EmptyItem()}
+                    <Command.Group className="h-full overflow-auto">
+                      {getAvailableOptions(options, isControlled ? value : selected).map(option => {
+                        return (
+                          <Command.Item
+                            key={option.value}
+                            value={option.value}
+                            disabled={option.disable}
+                            onMouseDown={e => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                            }}
+                            onSelect={() => {
+                              if ((isControlled ? value : selected).length >= maxSelected) {
+                                onMaxSelected?.((isControlled ? value : selected).length)
+                                return
+                              }
+                              setInputValue('')
+                              const newOptions = [...(isControlled ? value : selected), option]
+                              if (isControlled) {
+                                onChange?.(newOptions)
+                              } else {
+                                setSelected(newOptions)
+                              }
+                            }}
+                            className={cn('cursor-pointer', option.disable && 'cursor-default text-muted-foreground')}
+                          >
+                            {option.key}
+                          </Command.Item>
+                        )
+                      })}
+                    </Command.Group>
+                  </>
+                )}
+              </CommandList>
+            )}
+          </div>
+        </Command.Root>
+        <Caption>{caption}</Caption>
+      </div>
     )
   }
 )
 
 MultipleSelector.displayName = 'MultipleSelector'
-// export default MultipleSelector

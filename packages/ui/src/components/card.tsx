@@ -115,7 +115,7 @@ interface CardImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   height?: number | string
 }
 const CardImage = forwardRef<HTMLImageElement, CardImageProps>(({ className, width, height, ...props }, ref) => (
-  <img ref={ref} className={cn('cn-card-image', className)} style={{ width, height }} {...props} />
+  <img ref={ref} alt={props.alt} className={cn('cn-card-image', className)} style={{ width, height }} {...props} />
 ))
 CardImage.displayName = 'CardImage'
 

@@ -1470,6 +1470,18 @@
           },
           "$type": "color",
           "$value": "{pure.black}"
+        },
+        "warning": {
+          "$type": "color",
+          "$value": "{set.yellow.solid.bg}"
+        },
+        "success": {
+          "$type": "color",
+          "$value": "{set.green.solid.bg}"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "{set.red.solid.bg}"
         }
       },
       "handle": {

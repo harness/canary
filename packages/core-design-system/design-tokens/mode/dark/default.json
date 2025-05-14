@@ -1462,7 +1462,7 @@
           "$type": "color",
           "$value": "{set.yellow.solid.bg}"
         },
-        "completed": {
+        "success": {
           "$type": "color",
           "$value": "{set.green.solid.bg}"
         },

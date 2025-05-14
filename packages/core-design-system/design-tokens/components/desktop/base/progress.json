@@ -17,8 +17,12 @@
       },
       "md": {
         "$type": "sizing",
-        "$value": "{size.5}"
+        "$value": "{size.3}"
       }
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.full}"
     }
   }
 }

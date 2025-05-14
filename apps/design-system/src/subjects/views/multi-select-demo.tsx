@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { MultipleSelector, MultiSelectOption } from '@harnessio/ui/components'
 
 const OPTIONS: MultiSelectOption[] = [
-  { key: 'nextjs', onReset: () => console.log('reset') },
+  { key: 'nextjs' },
   { key: 'Vite' },
   { key: 'Nuxt' },
   { key: 'Vue' },

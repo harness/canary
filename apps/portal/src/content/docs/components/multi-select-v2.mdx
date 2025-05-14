@@ -51,21 +51,6 @@ const MyComponent = () => {
     />
   );
 };
-
-// With key-value support
-const TagsComponent = () => {
-  const [tags, setTags] = useState<MultiSelectOption[]>([]);
-
-  return (
-    <MultipleSelector
-      label="Tags"
-      caption="Use format key:value to create structured tags"
-      placeholder="Add tags..."
-      value={tags}
-      onChange={setTags}
-    />
-  );
-};
 ```
 
 ## MultiSelectOption Type
@@ -75,6 +60,7 @@ interface MultiSelectOption {
   key: string; // Required - the main identifier for the option
   value?: string; // Optional - used for key-value pairs
   disable?: boolean; // Optional - disables the option in the dropdown
+  onReset?: () => void; // Optional - custom reset handler for the option
 }
 ```
 
@@ -83,55 +69,99 @@ interface MultiSelectOption {
 <DocsPage.PropsTable
   props={[
     {
-      name: "selectedItems",
-      description: "Array of selected items.",
-      required: true,
+      name: "label",
+      description: "Label displayed above the component",
+      type: "string",
+      required: false,
     },
     {
-      name: "t",
-      description: "Translation function.",
-      required: true,
+      name: "caption",
+      description: "Helper text displayed below the component",
+      type: "string",
+      required: false,
     },
     {
-      name: "placeholder",
-      description: "Placeholder text for the input field.",
-      required: true,
+      name: "value",
+      description: "Selected options (controlled mode)",
+      type: "MultiSelectOption[]",
+      required: false,
     },
     {
-      name: "handleChange",
-      description: "Callback function called when selection changes.",
-      required: true,
+      name: "defaultValue",
+      description: "Initial selected options (uncontrolled mode)",
+      type: "MultiSelectOption[]",
+      required: false,
+      default: "[]",
     },
     {
       name: "options",
-      description: "Array of options to display in the dropdown.",
-      required: true,
-    },
-    {
-      name: "searchValue",
-      description: "Current search value.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "handleChangeSearchValue",
-      description: "Callback function called when the search value changes.",
+      description: "Available options to select from",
+      type: "MultiSelectOption[]",
       required: false,
     },
     {
-      name: "customOptionElem",
-      description: "Custom render function for options.",
+      name: "placeholder",
+      description: "Placeholder text when no options are selected",
+      type: "string",
       required: false,
     },
     {
-      name: "error",
-      description: "Error message to display.",
+      name: "searchQuery",
+      description: "Current search query string (controlled search)",
+      type: "string | null",
       required: false,
     },
     {
-      name: "label",
-      description: "Label for the input field.",
+      name: "setSearchQuery",
+      description: "Callback to update search query",
+      type: "(query: string | null) => void",
       required: false,
+    },
+    {
+      name: "onChange",
+      description: "Callback when selected options change",
+      type: "(options: MultiSelectOption[]) => void",
+      required: false,
+    },
+    {
+      name: "maxSelected",
+      description: "Maximum number of items that can be selected",
+      type: "number",
+      required: false,
+      default: "Number.MAX_SAFE_INTEGER",
+    },
+    {
+      name: "onMaxSelected",
+      description: "Callback when max selection limit is reached",
+      type: "(maxLimit: number) => void",
+      required: false,
+    },
+    {
+      name: "disabled",
+      description: "Disables the component",
+      type: "boolean",
+      required: false,
+      default: "false",
+    },
+    {
+      name: "className",
+      description: "Additional CSS class names",
+      type: "string",
+      required: false,
+    },
+    {
+      name: "disallowCreation",
+      description: "Prevents creating new options",
+      type: "boolean",
+      required: false,
+      default: "false",
+    },
+    {
+      name: "isLoading",
+      description: "Shows loading state in the dropdown",
+      type: "boolean",
+      required: false,
+      default: "false",
     },
   ]}
 />

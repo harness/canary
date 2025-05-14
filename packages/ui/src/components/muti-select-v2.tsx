@@ -9,6 +9,7 @@ export interface MultiSelectOption {
   key: string
   value?: string
   disable?: boolean
+  onReset?: () => void
 }
 
 interface MultipleSelectorProps {
@@ -139,9 +140,11 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
         if (isControlled) {
           const newOptions = value?.filter(s => s.key !== option.key) || []
           onChange?.(newOptions)
+          option.onReset?.()
         } else {
           const newOptions = selected.filter(s => s.key !== option.key)
           setSelected(newOptions)
+          option.onReset?.()
         }
       },
       [onChange, selected, isControlled, value]
@@ -278,10 +281,8 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
           >
             <div className="relative flex flex-wrap gap-1">
               {(isControlled ? value : selected).map(option => {
-                // If option has key and value, display as Tag with key-value format
                 if (option.value) {
-                  // Use the option's theme or default to blue
-                  const tagTheme = 'blue'
+                  const tagTheme = 'purple'
 
                   return (
                     <Tag
@@ -296,8 +297,6 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
                     />
                   )
                 }
-
-                // Otherwise display as regular button
                 return (
                   <Button
                     key={option.key}
@@ -324,7 +323,6 @@ export const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelector
                   </Button>
                 )
               })}
-              {/* Avoid having the "Search" Icon */}
               <CommandPrimitive.Input
                 {...inputProps}
                 ref={inputRef}

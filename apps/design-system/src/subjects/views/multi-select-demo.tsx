@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { MultipleSelector, MultiSelectOption } from '@harnessio/ui/components'
+import { MultiSelectV2 } from '@harnessio/ui/components'
 
-const OPTIONS: MultiSelectOption[] = [
+const OPTIONS: MultiSelectV2.MultiSelectOption[] = [
   { key: 'nextjs' },
   { key: 'Vite' },
   { key: 'Nuxt' },
@@ -17,10 +17,10 @@ const OPTIONS: MultiSelectOption[] = [
 ]
 
 export const MultipleSelectorWithDisabledOption = () => {
-  const [value, setValue] = useState<MultiSelectOption[]>([])
+  const [value, setValue] = useState<MultiSelectV2.MultiSelectOption[]>([OPTIONS[0]])
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
   return (
-    <MultipleSelector
+    <MultiSelectV2.MultiSelect
       onChange={options => setValue(options)}
       value={value}
       options={OPTIONS}
@@ -30,6 +30,7 @@ export const MultipleSelectorWithDisabledOption = () => {
       caption="Separate tags with commas or press Enter. Use the format key:value for object entries."
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
+      disabled
     />
   )
 }

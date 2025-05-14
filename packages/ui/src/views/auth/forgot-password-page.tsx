@@ -72,22 +72,22 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <Card.Header className="items-center">
+      <div className="relative z-10 mb-8 max-w-full text-cn-foreground-1 w-80">
+        <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <Card.Title className="mt-3 text-center" as="h1">
+          <Text className="mt-3 leading-snug" weight="medium" size={5} align="center" as="h1">
             Forgot password?
-          </Card.Title>
+          </Text>
           <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
             Enter your email to receive the verification code.
           </Text>
-        </Card.Header>
+        </div>
         {serverError && (
           <Alert.Container variant="destructive">
             <Alert.Title>{serverError}</Alert.Title>
           </Alert.Container>
         )}
-        <Card.Content className="mt-10">
+        <div className="mt-10 pt-0">
           <form onSubmit={handleSubmit(handleOnSubmit)}>
             <Input
               id="email"
@@ -107,8 +107,8 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
           <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
             Don’t have an account? <Link to="/signup">Sign up</Link>
           </Text>
-        </Card.Content>
-      </Card.Root>
+        </div>
+      </div>
       <Agreements />
     </Floating1ColumnLayout>
   )

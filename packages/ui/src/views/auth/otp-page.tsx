@@ -87,23 +87,23 @@ export function OTPPage({
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <Card.Header className="items-center">
+      <div className="relative z-10 mb-8 max-w-full text-cn-foreground-1 w-80">
+        <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <Card.Title className="mt-3 text-center" as="h1">
+          <Text className="mt-3 leading-snug" weight="medium" size={5} align="center" as="h1">
             Verify your email
-          </Card.Title>
+          </Text>
           <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
             Please enter the verification code we’ve sent to your email{' '}
             <span className="text-cn-foreground-1">{email}</span>
           </Text>
-        </Card.Header>
+        </div>
         {serverError && (
           <Alert.Container variant="destructive">
             <Alert.Title>{serverError}</Alert.Title>
           </Alert.Container>
         )}
-        <Card.Content className="mt-10">
+        <div className="mt-10 pt-0">
           <form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
             <div className="relative">
               <Controller
@@ -143,8 +143,8 @@ export function OTPPage({
               Resend
             </Button>
           </Text>
-        </Card.Content>
-      </Card.Root>
+        </div>
+      </div>
       <Agreements />
     </Floating1ColumnLayout>
   )

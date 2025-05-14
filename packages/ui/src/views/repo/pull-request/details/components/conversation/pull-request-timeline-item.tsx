@@ -236,7 +236,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
         </NodeGroup.Title>
         {!!content && (
           <NodeGroup.Content className={contentWrapperClassName}>
-            <Card.Root className={cn('rounded-md bg-transparent overflow-hidden shadow-none', contentClassName)}>
+            <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
               {!!contentHeader && (
                 <div
                   className={cn('flex w-full items-center justify-between p-4 py-3.5 bg-cn-background-2', {
@@ -324,7 +324,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   </div>
                 </>
               )}
-            </Card.Root>
+            </div>
           </NodeGroup.Content>
         )}
         {!isLast && <NodeGroup.Connector />}

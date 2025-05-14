@@ -4,14 +4,14 @@ import type { LinkProps } from 'react-router-dom'
 
 import {
   Button,
-  Card,
   ControlGroup,
   Fieldset,
   FormWrapper,
   Icon,
   Input,
   Link as StyledLink,
-  LinkProps as StyledLinkProps
+  LinkProps as StyledLinkProps,
+  Text
 } from '@/components'
 import { useRouterContext, useTheme } from '@/context'
 import { Floating1ColumnLayout, TranslationStore } from '@/views'
@@ -140,9 +140,9 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}
 
-          <Card.Title className="mt-3 text-center text-cn-foreground-1" as="h1">
+          <Text className="mt-3 text-center text-cn-foreground-1" weight="medium" size={5} align="center" as="h1">
             {t('views:createProject.title', 'Create your new project')}
-          </Card.Title>
+          </Text>
 
           <p className="mt-0.5 text-center text-sm leading-snug text-cn-foreground-2">
             {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}

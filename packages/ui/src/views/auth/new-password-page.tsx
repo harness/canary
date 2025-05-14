@@ -80,22 +80,22 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <Card.Header className="items-center">
+      <div className="relative z-10 mb-8 max-w-full text-cn-foreground-1 w-80">
+        <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <Card.Title className="mt-3 text-center" as="h1">
+          <Text className="mt-3 leading-snug" weight="medium" size={5} align="center" as="h1">
             Create new password
-          </Card.Title>
+          </Text>
           <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
             Your new password must be different from your previously used password.
           </Text>
-        </Card.Header>
+        </div>
         {serverError && (
           <Alert.Container variant="destructive">
             <Alert.Title>{serverError}</Alert.Title>
           </Alert.Container>
         )}
-        <Card.Content className="mt-10">
+        <div className="mt-10 pt-0">
           <form onSubmit={handleSubmit(onFormSubmit)}>
             <Input
               id="password"
@@ -120,8 +120,8 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
               {isLoading ? 'Saving...' : 'Save'}
             </Button>
           </form>
-        </Card.Content>
-      </Card.Root>
+        </div>
+      </div>
       <Agreements />
     </Floating1ColumnLayout>
   )

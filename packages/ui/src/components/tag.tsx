@@ -50,6 +50,7 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   onReset?: () => void
   label?: string
   value: string
+  disabled?: boolean
 }
 
 function Tag({
@@ -64,19 +65,38 @@ function Tag({
   className,
   showReset = false,
   showIcon = false,
+  disabled = false,
   ...props
 }: TagProps) {
   if (label && value) {
-    return <TagSplit {...{ variant, size, theme, rounded, icon, showIcon, showReset, onReset, label: label, value }} />
+    return (
+      <TagSplit
+        {...{ variant, size, theme, rounded, icon, showIcon, showReset, onReset, label: label, value, disabled }}
+      />
+    )
   }
 
   return (
-    <div tabIndex={-1} className={cn(tagVariants({ variant, size, theme, rounded }), className)} {...props}>
-      {showIcon && <Icon skipSize name={icon || 'tag-2'} className="cn-tag-icon" />}
-      <span className="cn-tag-text" title={value || label}>
+    <div
+      tabIndex={-1}
+      className={cn(
+        tagVariants({ variant, size, theme, rounded }),
+        { 'text-cn-foreground-disabled cursor-not-allowed': disabled },
+        className
+      )}
+      {...props}
+    >
+      {showIcon && (
+        <Icon
+          skipSize
+          name={icon || 'tag-2'}
+          className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}
+        />
+      )}
+      <span className={cn('cn-tag-text', { 'text-cn-foreground-disabled': disabled })} title={value || label}>
         {value || label}
       </span>
-      {showReset && (
+      {showReset && !disabled && (
         <button onClick={onReset}>
           <Icon skipSize name="close-2" className="cn-tag-reset-icon" />
         </button>
@@ -85,11 +105,23 @@ function Tag({
   )
 }
 
-function TagSplit({ variant, size, theme, rounded, icon, showIcon, showReset, value, label = '', onReset }: TagProps) {
-  const sharedProps = { variant, size, theme, rounded, icon }
+function TagSplit({
+  variant,
+  size,
+  theme,
+  rounded,
+  icon,
+  showIcon,
+  showReset,
+  value,
+  label = '',
+  onReset,
+  disabled = false
+}: TagProps) {
+  const sharedProps = { variant, size, theme, rounded, icon, disabled }
 
   return (
-    <div className="cn-tag-split flex w-fit items-center justify-center">
+    <div className={cn('cn-tag-split flex w-fit items-center justify-center', { 'cursor-not-allowed': disabled })}>
       {/* LEFT TAG - should never have a Reset Icon */}
       <Tag {...sharedProps} showIcon={showIcon} value={label} className="cn-tag-split-left" />
 

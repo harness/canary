@@ -238,7 +238,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
 
     return (
       <div className="flex flex-col gap-2 max-w-md ">
-        <Label>{label}</Label>
+        <Label className={disabled ? 'text-cn-foreground-disabled' : ''}>{label}</Label>
         <Command.Root
           ref={dropdownRef}
           {...commandProps}
@@ -277,6 +277,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                     value={option?.value || ''}
                     showReset={!disabled}
                     onReset={() => handleUnselect(option)}
+                    className="cn-background-softgray"
+                    disabled={disabled}
                   />
                 )
               })}
@@ -300,7 +302,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                   setOpen(true)
                   inputProps?.onFocus?.(event)
                 }}
-                placeholder={placeholder}
+                placeholder={disabled ? '' : placeholder}
                 className={cn(
                   'flex-1 bg-transparent outline-none placeholder:text-cn-muted-foreground',
                   {
@@ -364,7 +366,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             )}
           </div>
         </Command.Root>
-        <Caption>{caption}</Caption>
+        <Caption className={disabled ? 'text-cn-foreground-disabled' : ''}>{caption}</Caption>
       </div>
     )
   }

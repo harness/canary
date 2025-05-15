@@ -1,6 +1,6 @@
 export default {
   '.cn-card-select-root': {
-    '@apply grid': '',
+    display: 'grid',
 
     '&.cn-card-select-gap-sm': {
       gap: 'var(--cn-layout-sm)'
@@ -44,6 +44,24 @@ export default {
       backgroundColor: 'var(--cn-comp-card-gradient)'
     },
 
+    '.cn-card-select-content': {
+      '@apply flex items-center justify-between flex-1 min-w-0': ''
+    },
+
+    '.cn-card-select-content-left': {
+      '@apply flex items-center flex-1 min-w-0': ''
+    },
+
+    '.cn-card-select-check': {
+      position: 'absolute',
+      right: 'var(--cn-spacing-4)',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      width: '1rem',
+      height: '1rem',
+      color: 'var(--cn-text-1)'
+    },
+
     '.cn-card-select-title': {
       color: 'var(--cn-text-1)',
       '@apply font-body-strong mb-1': ''
@@ -60,13 +78,8 @@ export default {
       height: '1.5rem'
     },
 
-    '.cn-card-select-check': {
-      position: 'absolute',
-      right: 'var(--cn-spacing-4)',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      width: '1rem',
-      height: '1rem'
+    '.cn-card-select-content-container': {
+      '@apply flex-1 min-w-0': ''
     }
   },
 

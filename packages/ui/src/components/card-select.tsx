@@ -139,11 +139,11 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
         data-state={checked ? 'checked' : undefined}
         data-disabled={isDisabled ? '' : undefined}
       >
-        <div className="flex items-center justify-between flex-1 min-w-0">
-          <div className="flex items-center flex-1 min-w-0">
+        <div className="cn-card-select-content">
+          <div className="cn-card-select-content-left">
             {icon && <Icon name={icon} className="cn-card-select-icon" />}
             {logo && !icon && <Logo name={logo} className="cn-card-select-logo" />}
-            <div className="flex-1 min-w-0">{children}</div>
+            <div className="cn-card-select-content-container">{children}</div>
           </div>
           {checked && <Icon name="check" className="cn-card-select-check" />}
         </div>

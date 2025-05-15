@@ -14,6 +14,7 @@ import {
   MessageTheme,
   MultiSelect,
   MultiSelectOptionType,
+  MultiSelectV2,
   SplitButton,
   StackedList,
   Switch,
@@ -184,42 +185,34 @@ const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<Princi
 export const BranchSettingsRuleBypassListField: FC<
   FieldProps & {
     bypassOptions: PrincipalType[] | null
-    setPrincipalsSearchQuery: (val: string) => void
+    setPrincipalsSearchQuery: (val: string | null) => void
     principalsSearchQuery: string
   }
 > = ({ watch, setValue, bypassOptions, t, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
   const selectedBypassUsers = watch!('bypass').map(user => ({
-    ...user,
-    label: user.display_name
+    id: user.id,
+    key: user.display_name
   }))
 
   const handleCheckboxChange = useCallback(
-    (option: MultiSelectOptionType<Partial<PrincipalType>>) => {
-      const selectedIds = selectedBypassUsers.map(it => it.id)
+    (options: MultiSelectV2.MultiSelectOption[]) => {
+      // Transform MultiSelectV2 options to the format expected by the form
+      const transformedOptions = options.map(option => ({
+        id: Number(option.id), // Ensure id is a number
+        display_name: option.key
+      }))
 
-      setValue!(
-        'bypass',
-        selectedIds.includes(Number(option.id))
-          ? selectedBypassUsers.filter(item => item.id !== option.id)
-          : [
-              ...selectedBypassUsers,
-              {
-                id: option.id,
-                display_name: option.label
-              }
-            ],
-        { shouldValidate: true }
-      )
+      setValue!('bypass', transformedOptions, { shouldValidate: true })
     },
-    [selectedBypassUsers, setValue]
+    [setValue]
   )
 
-  const multiSelectOptions: MultiSelectOptionType<PrincipalType>[] = useMemo(() => {
+  const multiSelectOptions: MultiSelectV2.MultiSelectOption[] = useMemo(() => {
     return (
       bypassOptions?.map(option => ({
-        ...option,
         id: option.id!,
-        label: option.display_name
+        key: option.display_name
+        // value: option.display_name // Adding value for consistency with MultiSelectV2 format
       })) || []
     )
   }, [bypassOptions])
@@ -231,7 +224,7 @@ export const BranchSettingsRuleBypassListField: FC<
           {t('views:repos.bypassList', 'Bypass list')}
         </Label>
 
-        <MultiSelect<PrincipalType>
+        {/* <MultiSelect<PrincipalType>
           selectedItems={selectedBypassUsers}
           t={t}
           placeholder={t('views:repos.selectUsers', 'Select users')}
@@ -240,6 +233,16 @@ export const BranchSettingsRuleBypassListField: FC<
           searchValue={principalsSearchQuery}
           handleChangeSearchValue={setPrincipalsSearchQuery}
           customOptionElem={BranchSettingsRuleBypassListOption}
+        /> */}
+        <MultiSelectV2.MultiSelect
+          value={selectedBypassUsers}
+          onChange={handleCheckboxChange}
+          options={multiSelectOptions}
+          placeholder={t('views:repos.selectUsers', 'Select users')}
+          searchQuery={principalsSearchQuery}
+          setSearchQuery={setPrincipalsSearchQuery}
+          disallowCreation
+          // customOptionElem={BranchSettingsRuleBypassListOption}
         />
       </ControlGroup>
 

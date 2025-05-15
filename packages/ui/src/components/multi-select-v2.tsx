@@ -3,10 +3,11 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRe
 import { Caption, Command, Label, SkeletonList, Tag } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
-import { CommandList, Command as CommandPrimitive, useCommandState } from 'cmdk'
+import { Command as CommandPrimitive, useCommandState } from 'cmdk'
 import { noop } from 'lodash-es'
 
 export interface MultiSelectOption {
+  id: string | number
   key: string
   value?: string
   disable?: boolean
@@ -122,11 +123,11 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
     const handleUnselect = useCallback(
       (option: MultiSelectOption) => {
         if (isControlled) {
-          const newOptions = value?.filter(s => s.key !== option.key) || []
+          const newOptions = value?.filter(s => s.id !== option.id) || []
           onChange?.(newOptions)
           option.onReset?.()
         } else {
-          const newOptions = selected.filter(s => s.key !== option.key)
+          const newOptions = selected.filter(s => s.id !== option.id)
           setSelected(newOptions)
           option.onReset?.()
         }
@@ -145,8 +146,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
           }
           if (e.key === 'Enter' && input.value && !disallowCreation) {
             if (
-              !options.some(option => option.value === input.value) &&
-              !(isControlled ? value : selected).some(s => s.value === input.value)
+              !options.some(option => option.key.toLowerCase() === input.value.toLowerCase()) &&
+              !(isControlled ? value : selected).some(s => s.key.toLowerCase() === input.value.toLowerCase())
             ) {
               let newOption: MultiSelectOption
 
@@ -156,16 +157,19 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                 if (key && key.trim()) {
                   newOption = {
                     key: key.trim(),
-                    value: value ? value.trim() : ''
+                    value: value ? value.trim() : '',
+                    id: input.value
                   }
                 } else {
                   newOption = {
-                    key: input.value
+                    key: input.value,
+                    id: input.value
                   }
                 }
               } else {
                 newOption = {
-                  key: input.value
+                  key: input.value,
+                  id: input.value
                 }
               }
               const newOptions = [...(isControlled ? value : selected), newOption]
@@ -202,37 +206,35 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       }
     }, [open])
 
-    useEffect(() => {
-      if (value) {
-        setSelected(value)
-      }
-    }, [value])
+    // useEffect(() => {
+    //   if (value) {
+    //     setSelected(value)
+    //   }
+    // }, [value])
 
     useEffect(() => {
-      if (!arrayOptions || setSearchQuery) {
+      setOptions(arrayOptions ?? [])
+    }, [arrayOptions])
+
+    // State to hold available options
+    const [availableOptions, setAvailableOptions] = useState<MultiSelectOption[]>([])
+
+    // Effect to recalculate available options when dependencies change
+    useEffect(() => {
+      if (!options || options.length === 0) {
+        setAvailableOptions([])
         return
       }
-      setOptions(arrayOptions || [])
-    }, [arrayOptions, setSearchQuery])
 
-    const EmptyItem = useCallback(() => {
-      if (setSearchQuery && disallowCreation && options.length === 0) {
-        return (
-          <Command.Item value="-" disabled>
-            No results found
-          </Command.Item>
-        )
-      }
+      const filteredOptions = options.filter(option =>
+        isControlled
+          ? !value?.some(selectedOption => selectedOption.id === option.id)
+          : !selected?.some(selectedOption => selectedOption.id === option.id)
+      )
 
-      return <CommandEmpty>No results found</CommandEmpty>
-    }, [disallowCreation, setSearchQuery, options.length])
-
-    const availableOptions = useMemo(() => {
-      if (!options || options.length === 0) return []
-
-      return options.filter(option => !selected.some(selectedOption => selectedOption.key === option.key))
-    }, [options, selected])
-
+      setAvailableOptions(filteredOptions)
+    }, [options, selected, isControlled, value, inputValue, searchQuery, open])
+    console.log('availableOptions', availableOptions)
     return (
       <div className="flex flex-col gap-2 max-w-md">
         <Label disabled={disabled}>{label}</Label>
@@ -243,6 +245,11 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             handleKeyDown(e)
             commandProps?.onKeyDown?.(e)
           }}
+          filter={(_value, _search) => {
+            // Disable built-in filtering since we're handling it ourselves
+            return 1
+          }}
+          shouldFilter={false}
           className={cn('h-auto overflow-visible bg-transparent max-w-md', commandProps?.className)}
         >
           <div
@@ -267,7 +274,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
               {(isControlled ? value : selected).map(option => {
                 return (
                   <Tag
-                    key={option.key}
+                    id={String(option.id)}
+                    key={option.id}
                     variant="secondary"
                     size="sm"
                     theme={option?.value ? 'purple' : undefined}
@@ -313,8 +321,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             </div>
           </div>
           <div className="relative">
-            {open && options?.length > 0 && (
-              <CommandList
+            {open && (
+              <Command.List
                 className="bg-cn-background-1 text-cn-foreground animate-in absolute top-1 z-10 w-full rounded-md border shadow-md outline-none"
                 onMouseLeave={() => {
                   setOnScrollbar(false)
@@ -326,40 +334,37 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                   inputRef?.current?.focus()
                 }}
               >
-                {isLoading ? (
-                  <SkeletonList />
+                {availableOptions.length === 0 ? (
+                  <Command.Item value="-" disabled>
+                    No results found
+                  </Command.Item>
                 ) : (
-                  <>
-                    {EmptyItem()}
-                    <Command.Group className="h-full overflow-auto">
-                      {availableOptions.map(option => {
-                        return (
-                          <Command.Item
-                            key={option.key}
-                            value={option.value || option.key}
-                            disabled={option.disable}
-                            onSelect={() => {
-                              setInputValue('')
-                              const newOptions = [...(isControlled ? value : selected), option]
-                              if (isControlled) {
-                                onChange?.(newOptions)
-                              } else {
-                                setSelected(newOptions)
-                              }
-                            }}
-                            className={cn(
-                              'cursor-pointer',
-                              option.disable && 'cursor-default text-cn-muted-foreground'
-                            )}
-                          >
-                            {option.key}
-                          </Command.Item>
-                        )
-                      })}
-                    </Command.Group>
-                  </>
+                  <Command.Group>
+                    {availableOptions.map(option => {
+                      return (
+                        <Command.Item
+                          key={option.id}
+                          value={String(option.id)}
+                          disabled={option.disable}
+                          onSelect={() => {
+                            setInputValue('')
+                            setSearchQuery?.('')
+                            const newOptions = [...(isControlled ? value : selected), option]
+                            if (isControlled) {
+                              onChange?.(newOptions)
+                            } else {
+                              setSelected(newOptions)
+                            }
+                          }}
+                          className={cn('cursor-pointer', option.disable && 'cursor-default text-cn-muted-foreground')}
+                        >
+                          {option.key}
+                        </Command.Item>
+                      )
+                    })}
+                  </Command.Group>
                 )}
-              </CommandList>
+              </Command.List>
             )}
           </div>
         </Command.Root>

@@ -28,9 +28,9 @@
       "$type": "borderRadius",
       "$value": "{rounded.4}"
     },
-    "fade": {
+    "fade-height": {
       "$type": "sizing",
-      "$value": "{size.16}"
+      "$value": "{drawer.container}"
     }
   }
 }

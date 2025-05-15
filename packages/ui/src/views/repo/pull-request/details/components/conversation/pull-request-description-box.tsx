@@ -2,7 +2,6 @@ import { FC, useState } from 'react'
 
 import { Avatar, Button, DropdownMenu, Icon, MarkdownViewer, Text } from '@/components'
 import { HandleUploadType } from '@/views'
-import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'

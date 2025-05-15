@@ -29,11 +29,7 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
     defaultValues: { uid: '', email: '', display_name: '' }
   })
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = formMethods
+  const { register, handleSubmit } = formMethods
 
   const onSubmit: SubmitHandler<NewUserFields> = data => {
     handleCreateUser(data)

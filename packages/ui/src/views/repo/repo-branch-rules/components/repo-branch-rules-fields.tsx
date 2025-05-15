@@ -22,7 +22,6 @@ import {
 import { PrincipalType } from '@/types'
 import { FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
 import { cn } from '@utils/cn'
-import { getInitials } from '@utils/stringUtils'
 import { TFunction } from 'i18next'
 
 export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue, t }) => (

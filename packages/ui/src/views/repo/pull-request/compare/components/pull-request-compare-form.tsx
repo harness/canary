@@ -1,7 +1,7 @@
 import { forwardRef, MouseEvent, useRef, useState } from 'react'
-import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister, UseFormReturn } from 'react-hook-form'
+import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Button, Fieldset, FormInput, FormWrapper, Icon, Input, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { Button, Fieldset, FormInput, FormWrapper, Icon, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { handleFileDrop, handlePaste, HandleUploadType, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { z } from 'zod'

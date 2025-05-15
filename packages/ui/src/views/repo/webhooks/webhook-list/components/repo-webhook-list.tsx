@@ -1,14 +1,4 @@
-import {
-  MoreActionsTooltip,
-  NoData,
-  Pagination,
-  Spacer,
-  StackedList,
-  StatusBadge,
-  Switch,
-  Table,
-  Text
-} from '@/components'
+import { MoreActionsTooltip, NoData, Pagination, Spacer, StatusBadge, Switch, Table, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { TranslationStore, WebhookType } from '@/views'
 

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, Icon, Separator } from '@/components'
+import { Button, Icon } from '@/components'
 import FilterSelect, { FilterSelectAddIconLabel } from '@components/filters/filter-select'
 import FiltersField, { FiltersFieldProps } from '@components/filters/filters-field'
 import { FilterOptionConfig } from '@components/filters/types'

@@ -3,7 +3,6 @@ import { FC } from 'react'
 import { Avatar, Button, CommitCopyActions, StatusBadge, Tag } from '@/components'
 import { useRouterContext } from '@/context'
 import { ICommitDetailsStore, SandboxLayout, TranslationStore } from '@/views'
-import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
 
 interface RoutingProps {

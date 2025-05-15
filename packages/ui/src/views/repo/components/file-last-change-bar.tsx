@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import { Avatar, CommitCopyActions, Icon, StackedList, Text } from '@/components'
 import { LatestFileTypes, TranslationStore } from '@/views'
-import { getInitials } from '@utils/stringUtils'
 
 const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   return (

@@ -12,7 +12,6 @@ import {
   ReviewerAddActivity,
   TypesPullReqActivity
 } from '@/views'
-import { getInitials } from '@utils/stringUtils'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
 import PullRequestBranchBadge from './pull-request-branch-badge'

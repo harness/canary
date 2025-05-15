@@ -15,7 +15,6 @@ import {
 } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
-import { getInitials } from '@utils/stringUtils'
 import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
 
 import { BranchListPageProps } from '../types'

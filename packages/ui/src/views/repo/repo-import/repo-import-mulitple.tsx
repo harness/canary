@@ -123,14 +123,7 @@ export function RepoImportMultiplePage({
     }
   })
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-    reset
-  } = formMethods
+  const { register, handleSubmit, setValue, watch, reset } = formMethods
 
   const providerValue = watch('provider')
 

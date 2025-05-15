@@ -1,7 +1,7 @@
 import { Children, ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, isValidElement } from 'react'
 
 import { Button, Icon } from '@/components'
-import { usePortal, useTheme } from '@/context'
+import { usePortal } from '@/context'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, CopyButton, Dialog, Input, TextInput } from '@/components'
+import { Button, ButtonGroup, CopyButton, Dialog, TextInput } from '@/components'
 import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'

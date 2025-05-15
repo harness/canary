@@ -12,13 +12,11 @@ import {
   FormSeparator,
   FormWrapper,
   Icon,
-  Input,
   Legend
 } from '@/components'
 import { SkeletonForm } from '@/components/skeletons'
 import { IProfileSettingsStore, ProfileSettingsErrorType, SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { getInitials } from '@utils/stringUtils'
 import { z } from 'zod'
 
 const makeProfileSchema = (t: TranslationStore['t']) =>
@@ -134,8 +132,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
   const {
     register: registerPassword,
     reset: resetPasswordForm,
-    handleSubmit: handlePasswordSubmit,
-    formState: { errors: passwordErrors }
+    handleSubmit: handlePasswordSubmit
   } = passwordFormMethods
 
   useEffect(() => {

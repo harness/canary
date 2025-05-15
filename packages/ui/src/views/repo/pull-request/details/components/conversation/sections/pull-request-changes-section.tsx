@@ -10,7 +10,6 @@ import {
   TypesUserGroupOwnerEvaluation
 } from '@/views'
 import { cn } from '@utils/cn'
-import { getInitials } from '@utils/stringUtils'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
 

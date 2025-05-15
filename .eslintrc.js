@@ -65,7 +65,7 @@ module.exports = {
     ],
 
     '@typescript-eslint/no-unused-vars': [
-      'warn',
+      'error',
       {
         argsIgnorePattern: '^_',
         varsIgnorePattern: '^_',
@@ -90,13 +90,18 @@ module.exports = {
       ],
       rules: {
         'no-restricted-imports': 'off',
-        '@typescript-eslint/no-restricted-imports': ['error', {
-          paths: [{
-            name: 'react-router-dom',
-            message: 'Please use only type imports from react-router-dom.',
-            allowTypeImports: true
-          }]
-        }]
+        '@typescript-eslint/no-restricted-imports': [
+          'error',
+          {
+            paths: [
+              {
+                name: 'react-router-dom',
+                message: 'Please use only type imports from react-router-dom.',
+                allowTypeImports: true
+              }
+            ]
+          }
+        ]
       }
     }
   ]

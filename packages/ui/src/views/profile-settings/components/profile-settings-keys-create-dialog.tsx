@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, Dialog, Fieldset, FormInput, FormWrapper, Input, Textarea } from '@/components'
+import { Alert, Button, Dialog, Fieldset, FormInput, FormWrapper, Textarea } from '@/components'
 import { ApiErrorType } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo'

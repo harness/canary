@@ -9,10 +9,8 @@ import {
   Message,
   MessageTheme,
   ScrollArea,
-  SearchBox,
   SearchInput
 } from '@/components'
-import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 

@@ -1,5 +1,3 @@
-import { ReactNode } from 'react'
-
 import { Button } from '@components/button'
 import { Checkbox } from '@components/checkbox'
 import { Label } from '@components/form-primitives'

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Accordion, Icon, Tag } from '@/components'
+import { Accordion, Tag } from '@/components'
 import { ILabelType, LabelValueType } from '@/views'
 import { cn } from '@utils/cn'
 

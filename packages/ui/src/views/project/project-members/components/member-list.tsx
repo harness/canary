@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 
 import { Avatar, DropdownMenu, Icon, MoreActionsTooltip, Table } from '@/components'
 import { MembersProps, TranslationStore } from '@/views'
-import { getInitials } from '@utils/stringUtils'
 import { getRolesData } from '@views/project/project-members/constants'
 
 interface MembersListProps {

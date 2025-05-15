@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { Avatar, CommitCopyActions, MoreActionsTooltip, NoData, SkeletonTable, Table, Text } from '@/components'
-import { getInitials, timeAgo } from '@/utils'
+import { timeAgo } from '@/utils'
 import { BranchSelectorListItem, CommitTagType, RepoTagsStore, TranslationStore } from '@/views'
 
 interface RepoTagsListProps {

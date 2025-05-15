@@ -9,7 +9,6 @@ import {
   FormInput,
   FormWrapper,
   Icon,
-  Input,
   Label,
   Message,
   MessageTheme,

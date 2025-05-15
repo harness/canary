@@ -83,7 +83,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     [pullRequestMetadata?.state]
   )
   const [commitSha, setCommitSha] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [_loading, setLoading] = useState(true)
 
   const overallState = useMemo(() => determineOverallDecision(reviewers, currentUser), [reviewers, currentUser])
   const [approveState, setApproveState] = useState(overallState)

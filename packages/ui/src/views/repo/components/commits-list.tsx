@@ -4,7 +4,6 @@ import { Avatar, Button, CommitCopyActions, Icon, NodeGroup, StackedList } from 
 import { useRouterContext } from '@/context'
 import { formatDate } from '@/utils/utils'
 import { TypesCommit } from '@/views'
-import { getInitials } from '@utils/stringUtils'
 
 type CommitsGroupedByDate = Record<string, TypesCommit[]>
 

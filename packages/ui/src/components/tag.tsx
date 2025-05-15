@@ -1,5 +1,3 @@
-import { ReactElement } from 'react'
-
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'

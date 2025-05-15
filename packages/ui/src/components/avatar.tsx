@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode } from 'react'
+import { ComponentPropsWithoutRef, forwardRef } from 'react'
 
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import { cn } from '@utils/cn'

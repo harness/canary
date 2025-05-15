@@ -3,7 +3,6 @@ import { ChangeEvent, ClipboardEvent, DragEvent, Fragment, useMemo, useRef, useS
 import { Avatar, Button, Icon, IconProps, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
-import { getInitials } from '@utils/stringUtils'
 
 interface ToolbarItem {
   icon: IconProps['name']

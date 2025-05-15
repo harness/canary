@@ -4,7 +4,6 @@ import { Avatar } from '@components/avatar'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { Sidebar } from '@components/sidebar/sidebar'
-import { getInitials } from '@utils/stringUtils'
 import { TFunction } from 'i18next'
 
 const UserAvatar = ({ user }: Pick<UserProps, 'user'>) => {

@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { Alert, Button, ControlGroup, Dialog, Fieldset, FormInput, FormWrapper, Label, Textarea } from '@/components'
 import { BranchSelectorListItem, TranslationStore } from '@/views/repo'

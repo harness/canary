@@ -4,7 +4,6 @@ import { Avatar, Button, DropdownMenu, Icon, ScrollArea, SearchInput } from '@/c
 import { PrincipalType } from '@/types'
 import { PRReviewer, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
-import { getInitials } from '@utils/stringUtils'
 import { debounce } from 'lodash-es'
 
 interface ReviewersHeaderProps {

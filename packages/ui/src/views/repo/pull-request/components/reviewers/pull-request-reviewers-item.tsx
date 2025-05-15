@@ -1,6 +1,5 @@
 import { Avatar, Icon } from '@/components'
 import { PullReqReviewDecision, ReviewerItemProps } from '@/views'
-import { getInitials } from '@utils/stringUtils'
 
 const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewDecision }: ReviewerItemProps) => {
   const updatedReviewDecision = reviewDecision && processReviewDecision(reviewDecision, sha, sourceSHA)

@@ -16,7 +16,6 @@ import {
   TypesCommit
 } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { getInitials } from '@utils/stringUtils'
 import { Layout } from '@views/layouts/layout'
 import { ICommitSelectorStore } from '@views/repo/components/commit-selector/types'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'

@@ -3,7 +3,6 @@ import { FC, ReactNode, useMemo } from 'react'
 import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
 import {
   BranchInfoBar,
-  BranchSelectorTab,
   CodeModes,
   CommitDivergenceType,
   FileLastChangeBar,

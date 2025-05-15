@@ -5,7 +5,6 @@ import { Alert, Avatar, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Sel
 import { PrincipalType } from '@/types'
 import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { getInitials } from '@utils/stringUtils'
 import { getRolesData } from '@views/project/project-members/constants'
 import { z } from 'zod'
 

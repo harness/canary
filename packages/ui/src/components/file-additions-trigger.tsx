@@ -1,7 +1,6 @@
 import { FC, useRef } from 'react'
 
 import { Button, DropdownMenu, Icon, Link } from '@/components'
-import { useRouterContext } from '@/context'
 import { TranslationStore } from '@/views'
 
 export interface FileAdditionsTriggerProps {

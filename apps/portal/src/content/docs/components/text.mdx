@@ -1,0 +1,224 @@
+---
+title: Text
+description: Text component
+beta: true
+---
+
+The `Text` component is a versatile typographic component that supports various styling options through variants, colors, and text alignment. It automatically maps semantic HTML elements based on the selected variant.
+
+import { DocsPage } from "../../../components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid gap-4">
+    <Text variant="heading-section" color="foreground-1">Heading variants</Text>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-hero:</Text>
+        <Text variant="heading-hero" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-section:</Text>
+        <Text variant="heading-section" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-subsection:</Text>
+        <Text variant="heading-subsection" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-base:</Text>
+        <Text variant="heading-base" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-small:</Text>
+        <Text variant="heading-small" className="line-clamp-3">dummyText</Text>
+    </div>
+
+    <hr />
+
+    <Text variant="heading-section" color="foreground-1">Body variants</Text>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-normal:</Text>
+        <Text variant="body-normal" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-single-line-normal:</Text>
+        <Text variant="body-single-line-normal" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-strong:</Text>
+        <Text variant="body-strong" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-single-line-strong:</Text>
+        <Text variant="body-single-line-strong" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-code:</Text>
+        <Text variant="body-code" className="line-clamp-3">dummyText</Text>
+    </div>
+
+    <hr />
+
+    <Text variant="heading-section" color="foreground-1">Caption variants</Text>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-normal:</Text>
+        <Text variant="caption-normal" className="line-clamp-3">dummyText</Text>
+
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-soft:</Text>
+        <Text variant="caption-soft" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-single-line-normal:</Text>
+        <Text variant="caption-single-line-normal" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-single-line-soft:</Text>
+        <Text variant="caption-single-line-soft" className="line-clamp-3">dummyText</Text>
+    </div>
+
+    <hr />
+
+    <Text variant="heading-section" color="foreground-1">Colors</Text>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">inherit:</Text>
+        <Text color="inherit" className="line-clamp-3">dummyText</Text>
+
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-1:</Text>
+        <Text color="foreground-1" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-2:</Text>
+        <Text color="foreground-2" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-3:</Text>
+        <Text color="foreground-3" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">state-disabled:</Text>
+        <Text color="state-disabled" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">success:</Text>
+        <Text color="success" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">warning:</Text>
+        <Text color="warning" className="line-clamp-3">dummyText</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">danger:</Text>
+        <Text color="danger" className="line-clamp-3">dummyText</Text>
+    </div>
+
+</div>`.replaceAll('dummyText', `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, nulla iure? Repellendus laboriosam animi praesentium sed laudantium non necessitatibus, ducimus eius corporis vel ex libero exercitationem, nulla maxime voluptatem nisi!`)}
+/>
+
+## Usage
+
+```typescript jsx
+import { Text } from '@harnessio/ui/components'
+
+// ...
+
+return (
+  <>
+    {/* Basic usage */}
+    <Text>Default text with body-normal variant</Text>
+
+    {/* With variants */}
+    <Text variant="heading-section">Section Heading</Text> // Maps to <h2>
+    <Text variant="body-strong">Important text with stronger emphasis</Text>
+
+    {/* With colors */}
+    <Text color="foreground-1">High-contrast text</Text>
+    <Text color="success">Success message</Text>
+
+    {/* With custom element */}
+    <Text variant="heading-hero" as="h2">Hero heading as H2</Text> //  <h1> => <h2>
+    <Text<'time'> as="time" dateTime="2025-07-07">July 7</Text>
+
+    {/* With truncation */}
+    <Text truncate>This text will be truncated with an ellipsis if it overflows</Text>
+
+    {/* With text wrapping options */}
+    <Text wrap="balance">This text will be balanced for better readability</Text>
+  </>
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "The typographic style variant of the text",
+      defaultValue: "body-normal",
+      required: true,
+      value:
+        "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-single-line-normal' | 'body-strong' | 'body-single-line-strong' | 'body-code' | 'caption-normal' | 'caption-soft' | 'caption-single-line-normal' | 'caption-single-line-soft'",
+    },
+    {
+      name: "color",
+      description: "The color of the text",
+      defaultValue: "foreground-2",
+      required: false,
+      value:
+        "'inherit' | 'foreground-1' | 'foreground-2' | 'foreground-3' | 'state-disabled' | 'success' | 'warning' | 'danger'",
+    },
+    {
+      name: "align",
+      description: "The text alignment",
+      defaultValue: "left",
+      required: false,
+      value: "'left' | 'center' | 'right'",
+    },
+    {
+      name: "as",
+      description: "Override the element type that will be rendered",
+      defaultValue: "Based on variant or 'span'",
+      required: false,
+      value:
+        "'span' | 'div' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'label' | 'legend' | 'caption' | 'figcaption' | 'blockquote' | 'pre' | 'kbd' | 'var' | 'code' | 'samp' | 'cite' | 'time' | 'address' | 'strong' | 'abbr' | 'em'",
+    },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "truncate",
+      description: "Truncates text with an ellipsis",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "wrap",
+      description: "Controls how text wraps",
+      defaultValue: "wrap",
+      required: false,
+      value: "'wrap' | 'nowrap' | 'pretty' | 'balance'",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "The content of the text",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

@@ -132,7 +132,22 @@ The `Card` component supports `selected` and `disabled` states:
 
 ## API Reference
 
-The `Card` component has several props to control its appearance:
+### `Root`
+
+The root component for the card.
+
+```typescript jsx
+<Card.Root
+  orientation="vertical"              // [OPTIONAL] Orientation of the card
+  position="start"                    // [OPTIONAL] Position of the image
+  size="default"                      // [OPTIONAL] Size of the card
+  selected={false}                    // [OPTIONAL] Whether the card is selected
+  disabled={false}                    // [OPTIONAL] Whether the card is disabled
+  className="custom-class"            // [OPTIONAL] Custom class name
+>
+  {/* Card content */}
+</Card.Root>
+```
 
 <DocsPage.PropsTable
   props={[
@@ -171,6 +186,103 @@ The `Card` component has several props to control its appearance:
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Image`
+
+The image component for the card.
+
+```typescript jsx
+<Card.Image
+  src="/path/to/image.jpg"
+  alt="Image description"
+  width={300}              // [OPTIONAL] Image width
+  height={200}             // [OPTIONAL] Image height
+  className="custom-class" // [OPTIONAL] Custom class name
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "width",
+      description: "Width of the image",
+      required: false,
+      value: "number | string",
+    },
+    {
+      name: "height",
+      description: "Height of the image",
+      required: false,
+      value: "number | string",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Title`
+
+The title component for the card.
+
+```typescript jsx
+<Card.Title
+  as="h3"                  // [OPTIONAL] Heading level (h1-h6)
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  Card Title
+</Card.Title>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "as",
+      description: "HTML heading element to render as",
+      required: false,
+      value: "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'",
+      defaultValue: "'h3'",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Content`
+
+The content component for the card.
+
+```typescript jsx
+<Card.Content
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Card content */}
+</Card.Content>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
     },
   ]}
 />

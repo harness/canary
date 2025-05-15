@@ -56,18 +56,18 @@ const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
     ref
   ) => {
     const { imageContent, otherContent } = Children.toArray(children).reduce<{
-      imageContent: ReactNode[]
+      imageContent: ReactNode | null
       otherContent: ReactNode[]
     }>(
       (acc, child) => {
-        if (isValidElement(child) && child.type === CardImage) {
-          acc.imageContent.push(child)
+        if (acc.imageContent === null && isValidElement(child) && child.type === CardImage) {
+          acc.imageContent = child
         } else {
           acc.otherContent.push(child)
         }
         return acc
       },
-      { imageContent: [], otherContent: [] }
+      { imageContent: null, otherContent: [] }
     )
 
     return (

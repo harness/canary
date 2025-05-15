@@ -1,9 +1,10 @@
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 
 import { Caption, Command, Label, SkeletonList, Tag } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { CommandList, Command as CommandPrimitive, useCommandState } from 'cmdk'
+import { noop } from 'lodash-es'
 
 export interface MultiSelectOption {
   key: string
@@ -37,16 +38,6 @@ export interface MultiSelectRef {
   input: HTMLInputElement
   focus: () => void
   reset: () => void
-}
-
-// Simple function to get available options (removing already selected ones)
-function getAvailableOptions(
-  allOptions: MultiSelectOption[],
-  selectedOptions: MultiSelectOption[]
-): MultiSelectOption[] {
-  if (!allOptions || allOptions.length === 0) return []
-
-  return allOptions.filter(option => !selectedOptions.some(selected => selected.key === option.key))
 }
 
 const CommandEmpty = forwardRef<HTMLDivElement, React.ComponentProps<typeof CommandPrimitive.Empty>>(
@@ -233,12 +224,18 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
         )
       }
 
-      return options.length === 0 ? <CommandEmpty>No results found</CommandEmpty> : undefined
+      return <CommandEmpty>No results found</CommandEmpty>
     }, [disallowCreation, setSearchQuery, options.length])
 
+    const availableOptions = useMemo(() => {
+      if (!options || options.length === 0) return []
+
+      return options.filter(option => !selected.some(selectedOption => selectedOption.key === option.key))
+    }, [options, selected])
+
     return (
-      <div className="flex flex-col gap-2 max-w-md ">
-        <Label className={disabled ? 'text-cn-foreground-disabled' : ''}>{label}</Label>
+      <div className="flex flex-col gap-2 max-w-md">
+        <Label disabled={disabled}>{label}</Label>
         <Command.Root
           ref={dropdownRef}
           {...commandProps}
@@ -261,11 +258,12 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
               if (disabled) return
               inputRef?.current?.focus()
             }}
+            onKeyDown={noop}
             role="textbox"
             tabIndex={disabled ? -1 : 0}
             aria-label={placeholder}
           >
-            <div className="relative flex flex-wrap gap-1">
+            <div className="relative flex flex-wrap gap-2 items-center">
               {(isControlled ? value : selected).map(option => {
                 return (
                   <Tag
@@ -334,14 +332,13 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                   <>
                     {EmptyItem()}
                     <Command.Group className="h-full overflow-auto">
-                      {getAvailableOptions(options, isControlled ? value : selected).map(option => {
+                      {availableOptions.map(option => {
                         return (
                           <Command.Item
                             key={option.key}
                             value={option.value || option.key}
                             disabled={option.disable}
                             onSelect={() => {
-                              // This handler works for both mouse clicks and keyboard Enter presses
                               setInputValue('')
                               const newOptions = [...(isControlled ? value : selected), option]
                               if (isControlled) {

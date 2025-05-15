@@ -60,8 +60,8 @@ const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
       otherContent: ReactNode[]
     }>(
       (acc, child) => {
-        if (acc.imageContent === null && isValidElement(child) && child.type === CardImage) {
-          acc.imageContent = child
+        if (isValidElement(child) && child.type === CardImage) {
+          if (!acc.imageContent) acc.imageContent = child
         } else {
           acc.otherContent.push(child)
         }

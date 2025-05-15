@@ -189,30 +189,11 @@ export const BranchSettingsRuleBypassListField: FC<
     principalsSearchQuery: string
   }
 > = ({ watch, setValue, bypassOptions, t, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
-  const selectedBypassUsers = watch!('bypass').map(user => ({
-    id: user.id,
-    key: user.display_name
-  }))
-
-  const handleCheckboxChange = useCallback(
-    (options: MultiSelectV2.MultiSelectOption[]) => {
-      // Transform MultiSelectV2 options to the format expected by the form
-      const transformedOptions = options.map(option => ({
-        id: Number(option.id), // Ensure id is a number
-        display_name: option.key
-      }))
-
-      setValue!('bypass', transformedOptions, { shouldValidate: true })
-    },
-    [setValue]
-  )
-
   const multiSelectOptions: MultiSelectV2.MultiSelectOption[] = useMemo(() => {
     return (
       bypassOptions?.map(option => ({
         id: option.id!,
         key: option.display_name
-        // value: option.display_name // Adding value for consistency with MultiSelectV2 format
       })) || []
     )
   }, [bypassOptions])
@@ -223,26 +204,13 @@ export const BranchSettingsRuleBypassListField: FC<
         <Label className="mb-2" htmlFor="bypassValue">
           {t('views:repos.bypassList', 'Bypass list')}
         </Label>
-
-        {/* <MultiSelect<PrincipalType>
-          selectedItems={selectedBypassUsers}
-          t={t}
-          placeholder={t('views:repos.selectUsers', 'Select users')}
-          handleChange={handleCheckboxChange}
-          options={multiSelectOptions}
-          searchValue={principalsSearchQuery}
-          handleChangeSearchValue={setPrincipalsSearchQuery}
-          customOptionElem={BranchSettingsRuleBypassListOption}
-        /> */}
-        <MultiSelectV2.MultiSelect
-          value={selectedBypassUsers}
-          onChange={handleCheckboxChange}
+        <FormInput.MultiSelectV2
+          name="bypass"
           options={multiSelectOptions}
           placeholder={t('views:repos.selectUsers', 'Select users')}
           searchQuery={principalsSearchQuery}
           setSearchQuery={setPrincipalsSearchQuery}
           disallowCreation
-          // customOptionElem={BranchSettingsRuleBypassListOption}
         />
       </ControlGroup>
 

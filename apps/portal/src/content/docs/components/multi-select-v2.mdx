@@ -15,12 +15,12 @@ import { DocsPage } from "@/components/docs-page";
     <div className="relative w-full">
       <MultiSelectV2.MultiSelect
         label="Frameworks"
-        defaultValue={[{ key: 'React' }, { key: 'category', value: 'frontend' }]}
+        defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
         options={[
-          { key: 'nextjs' },
-          { key: 'Vite' },
-          { key: 'Nuxt' },
-          { key: 'Vue' },
+          { key: 'nextjs', id: 'nextjs' },
+          { key: 'Vite', id: 'vite' },
+          { key: 'Nuxt', id: 'nuxt' },
+          { key: 'Vue', id: 'vue' },
         ]}
         onChange={(selected) => console.log(selected)}
         placeholder="Select frameworks you like..."

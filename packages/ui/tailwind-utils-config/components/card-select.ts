@@ -1,6 +1,20 @@
 export default {
   '.cn-card-select-root': {
-    '@apply grid gap-4': ''
+    '@apply grid': '',
+
+    '&.cn-card-select-gap-sm': {
+      gap: 'var(--cn-layout-sm)'
+    },
+    '&.cn-card-select-gap-md': {
+      gap: 'var(--cn-layout-md)'
+    },
+    '&.cn-card-select-gap-lg': {
+      gap: 'var(--cn-layout-lg)'
+    },
+
+    '&.cn-card-select-horizontal': {
+      '@apply auto-cols-max grid-flow-col': ''
+    }
   },
 
   '.cn-card-select-item': {

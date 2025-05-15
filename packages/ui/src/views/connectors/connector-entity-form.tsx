@@ -157,9 +157,9 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
             <EntityFormLayout.Form>
               <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={formDefinition} />
               {apiError && (
-                <Alert.Container variant="destructive">
+                <Alert.Root theme="danger">
                   <Alert.Description>{apiError.toString()}</Alert.Description>
-                </Alert.Container>
+                </Alert.Root>
               )}
             </EntityFormLayout.Form>
           </Inner>

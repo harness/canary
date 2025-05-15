@@ -239,9 +239,9 @@ export function RepoCreatePage({
           </Fieldset>
 
           {apiError && (
-            <Alert.Container variant="destructive">
+            <Alert.Root theme="danger">
               <Alert.Description>{apiError}</Alert.Description>
-            </Alert.Container>
+            </Alert.Root>
           )}
 
           {/* SUBMIT BUTTONS */}

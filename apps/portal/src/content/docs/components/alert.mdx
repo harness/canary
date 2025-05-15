@@ -4,21 +4,56 @@ description: Alert component
 beta: true
 ---
 
-The `Alert` component provides a flexible UI element for displaying alert messages. It is composed of several subcomponents such as `AlertContainer`, `AlertTitle`, and `AlertDescription` to offer a structured and customizable interface.
+The `Alert` component provides a flexible UI element for displaying alert messages. It is composed of several subcomponents such as `AlertRoot`, `AlertTitle`, `AlertDescription`, and `AlertLink` to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="space-y-4">
-  <Alert.Container className="bg-red-100 border-red-400 text-red-700 px-4 py-3">
-    <Alert.Title className="font-bold">Error Alert</Alert.Title>
-    <Alert.Description className="text-red-800">This is an error alert description.</Alert.Description>
-  </Alert.Container>
-  <Alert.Container className="bg-yellow-100 border-yellow-400 text-yellow-700 px-4 py-3">
-    <Alert.Title className="font-bold">Warning Alert</Alert.Title>
-    <Alert.Description className="text-yellow-800">This is a warning alert description.</Alert.Description>
-  </Alert.Container>
+  <Alert.Root theme="info">
+    <Alert.Title>Alert Title</Alert.Title>
+    <Alert.Description>This is an alert description.</Alert.Description>
+  </Alert.Root>
+  <Alert.Root theme="danger" dismissible>
+    <Alert.Description >We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies or contact your administrator for clarification, then try creating the feature flag again.</Alert.Description>
+  </Alert.Root>
+  <Alert.Root theme="warning" dismissible>
+    <Alert.Title>Warning Alert</Alert.Title>
+    <Alert.Description>This is a warning alert description.</Alert.Description>
+  </Alert.Root>
+  <Alert.Root dismissible>
+    <Alert.Title>Dismissible Alert</Alert.Title>
+  </Alert.Root>
+  <Alert.Root >
+    <Alert.Title>Link Alert</Alert.Title>
+    <Alert.Link to="/abc">Learn more</Alert.Link>
+  </Alert.Root>
+  <Alert.Root >
+    <Alert.Title theme="warning">Link Alert as child</Alert.Title>
+    <Alert.Link to="/abc" asChild><Button>Learn more</Button></Alert.Link>
+  </Alert.Root>
+  <Alert.Root theme="danger">
+    <Alert.Title>Crowded Alert not expandable</Alert.Title>
+    <Alert.Description >LoremLorem ipsum dolor sit amet consectetur adipisicing elit. Unde molestiae hic, iste nostrum, quia eaque amet autem optio rem earum nihil rerum illo! Possimus</Alert.Description>
+  </Alert.Root>
+  <Alert.Root expandable>
+    <Alert.Title>Crowded Alert</Alert.Title>
+    <Alert.Description >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
+    <Alert.Link to="/abc">Learn more</Alert.Link>
+  </Alert.Root>
+  <Alert.Root theme="danger" expandable>
+    <Alert.Title>Crowded Alert</Alert.Title>
+    <Alert.Description >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
+  </Alert.Root>
+  <Alert.Root theme="warning" expandable>
+    <Alert.Title>Crowded Alert</Alert.Title>
+    <Alert.Description>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
+  </Alert.Root>
+  <Alert.Root expandable>
+    <Alert.Title>Expandable but not crowded</Alert.Title>
+    <Alert.Description >LoremLorem ipsum dolor sit amet consectetur adipisicing elit. Unde molestiae hic</Alert.Description>
+  </Alert.Root>
 </div>`}
 />
 
@@ -28,10 +63,24 @@ import { DocsPage } from "@/components/docs-page";
 import { Alert } from '@harnessio/ui/components'
 
 return (
-  <Alert.Container>
-    <Alert.Title>Alert Title</Alert.Title>
-    <Alert.Description>This is the alert description.</Alert.Description>
-  </Alert.Container>
+  <Alert.Root
+    theme="info"
+    expandable
+    dismissible
+    onDismiss={handleDismiss}
+  >
+    <Alert.Title>My Alert</Alert.Title>
+
+    <Alert.Description>This is the description of the alert</Alert.Description>
+
+    <Alert.Link
+      to="someplace"
+      external
+      asChild
+    >
+      Learn more
+    </Alert.Link>
+  </Alert.Root>
 )
 ```
 
@@ -40,17 +89,17 @@ return (
 All parts of the `Alert` component can be imported and composed as required.
 
 ```typescript jsx
-<Alert.Container>
+<Alert.Root>
   <Alert.Title />
   <Alert.Description />
-</Alert.Container>
+</Alert.Root>
 ```
 
 ## API Reference
 
-### Container
+### Root
 
-The `Container` component serves as the main container for all alert elements.
+The `Root` component serves as the main container for all alert elements.
 
 <DocsPage.PropsTable
   props={[
@@ -60,12 +109,46 @@ The `Container` component serves as the main container for all alert elements.
         "You can pass in your `Alert.Title` and `Alert.Description` as children",
       required: true,
       value: "ReactNode",
+      defaultValue: "",
     },
     {
       name: "className",
       description: "Additional class names to apply to the alert container",
       required: false,
       value: "string",
+      defaultValue: "",
+    },
+    {
+      name: "theme",
+      description:
+        "Theme of the alert. Can be one of 'info', 'warning', or 'danger'.",
+      required: false,
+      value: "'info' | 'warning' | 'danger'",
+      defaultValue: "'info'",
+    },
+    {
+      name: "dismissible",
+      description:
+        "If true, the alert can be dismissed by the user. Default is false.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "expandable",
+      description:
+        "If true, the alert can be expanded to show more content. Default is false.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onDismiss",
+      description:
+        "Callback function that is called when the alert is dismissed.",
+      required: false,
+      value: "() => void",
+      defaultValue: "",
     },
   ]}
 />
@@ -116,6 +199,53 @@ The `Description` component displays the description of the alert.
       description: "Additional class names to apply to the alert description",
       required: false,
       value: "string",
+    },
+  ]}
+/>
+
+### Link
+
+The `Link` component is used to create a link within the alert.
+
+```typescript jsx
+<Alert.Link to="/path">Learn more</Alert.Link>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "to",
+      description: "The URL to link to.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Link content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the alert link",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "external",
+      description:
+        "If true, the link will open in a new tab. Default is false.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "asChild",
+      description:
+        "If true, the link will be rendered as a child of the alert. Default is false.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
   ]}
 />

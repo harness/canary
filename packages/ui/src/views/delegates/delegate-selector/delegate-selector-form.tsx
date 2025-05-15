@@ -193,9 +193,9 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
           </Fieldset>
 
           {apiError && (
-            <Alert.Container variant="destructive" className="mb-8">
+            <Alert.Root theme="danger" className="mb-8">
               <Alert.Description>{apiError?.toString()}</Alert.Description>
-            </Alert.Container>
+            </Alert.Root>
           )}
           <FormSeparator />
 

@@ -99,9 +99,9 @@ export function OTPPage({
           </Text>
         </div>
         {serverError && (
-          <Alert.Container variant="destructive">
+          <Alert.Root theme="danger">
             <Alert.Title>{serverError}</Alert.Title>
-          </Alert.Container>
+          </Alert.Root>
         )}
         <div className="mt-10 pt-0">
           {/* TODO: Design system: Replace with FormWrapper once OTP component is ready*/}

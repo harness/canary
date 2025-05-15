@@ -127,9 +127,9 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
           </Fieldset>
 
           {errorMessage && (
-            <Alert.Container variant="destructive">
+            <Alert.Root theme="danger">
               <Alert.Title>{errorMessage}</Alert.Title>
-            </Alert.Container>
+            </Alert.Root>
           )}
 
           <Dialog.Footer className="-mx-5 -mb-5">

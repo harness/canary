@@ -99,9 +99,9 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 </Button>
               </div>
               {tokenGenerationError && (
-                <Alert.Container variant="destructive" className="mt-2">
+                <Alert.Root theme="danger" className="mt-2">
                   <Alert.Description>{tokenGenerationError}</Alert.Description>
-                </Alert.Container>
+                </Alert.Root>
               )}
             </>
           ) : (

@@ -101,9 +101,9 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
         handleChangeSearchValue={handleChangeSearchValue}
       />
       {!!apiError && (
-        <Alert.Container variant="destructive" className="mt-4">
+        <Alert.Root theme="danger" className="mt-4">
           <Alert.Description>{apiError}</Alert.Description>
-        </Alert.Container>
+        </Alert.Root>
       )}
       {!isDrawer && (
         <ButtonGroup>

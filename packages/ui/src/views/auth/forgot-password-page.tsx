@@ -85,9 +85,9 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
           </Text>
         </div>
         {serverError && (
-          <Alert.Container variant="destructive">
+          <Alert.Root theme="danger">
             <Alert.Title>{serverError}</Alert.Title>
-          </Alert.Container>
+          </Alert.Root>
         )}
         <div className="mt-10 pt-0">
           <FormWrapper {...formMethods} onSubmit={handleSubmit(handleOnSubmit)}>

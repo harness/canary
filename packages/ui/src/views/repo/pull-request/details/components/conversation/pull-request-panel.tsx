@@ -469,9 +469,9 @@ const PullRequestPanel = ({
         </StackedList.Item>
       </StackedList.Root>
       {!!error && (
-        <Alert.Container variant="destructive" className="mt-2">
+        <Alert.Root theme="danger" className="mt-2">
           <Alert.Title>{error}</Alert.Title>
-        </Alert.Container>
+        </Alert.Root>
       )}
     </>
   )

@@ -116,6 +116,11 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
         data-state={checked ? 'checked' : undefined}
         data-disabled={isDisabled ? '' : undefined}
       >
+        <div className="flex items-center flex-1 min-w-0">
+          {icon && <Icon name={icon} className="cn-card-select-icon" />}
+          {logo && !icon && <Logo name={logo} className="cn-card-select-logo" />}
+          <div className="flex-1 min-w-0">{children}</div>
+        </div>
         <input
           type={type === 'multiple' ? 'checkbox' : 'radio'}
           name={name}
@@ -126,9 +131,6 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
           onChange={() => onValueChange(value)}
           {...props}
         />
-        {icon && <Icon name={icon} className="cn-card-select-icon" />}
-        {logo && !icon && <Logo name={logo} className="cn-card-select-logo" />}
-        <div>{children}</div>
       </label>
     )
   }

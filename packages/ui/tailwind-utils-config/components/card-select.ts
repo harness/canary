@@ -4,7 +4,7 @@ export default {
   },
 
   '.cn-card-select-item': {
-    '@apply relative cursor-pointer transition-all': '',
+    '@apply relative cursor-pointer transition-all flex items-center': '',
     borderWidth: 'var(--cn-card-border)',
     borderStyle: 'solid',
     borderColor: 'var(--cn-border-2)',

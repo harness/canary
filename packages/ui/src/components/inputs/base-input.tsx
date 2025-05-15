@@ -1,9 +1,17 @@
-import { cloneElement, forwardRef, InputHTMLAttributes, isValidElement, ReactElement, ReactNode } from 'react'
+import {
+  cloneElement,
+  forwardRef,
+  InputHTMLAttributes,
+  isValidElement,
+  PropsWithChildren,
+  ReactElement,
+  ReactNode
+} from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-function InputAffix({ children, isPrefix = false }: { children: ReactNode; isPrefix?: boolean }) {
+function InputAffix({ children, isPrefix = false }: PropsWithChildren<{ isPrefix?: boolean }>) {
   if (!children) return null
   return <span className={cn('cn-input-affix', isPrefix ? 'cn-input-prefix' : 'cn-input-suffix')}>{children}</span>
 }

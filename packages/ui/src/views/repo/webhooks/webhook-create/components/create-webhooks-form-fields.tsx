@@ -25,7 +25,7 @@ export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch,
   </StackedList.Root>
 )
 
-export const WebhookNameField: FC<WebhookFormFieldProps & { disabled: boolean }> = ({ register, disabled, t }) => (
+export const WebhookNameField: FC<WebhookFormFieldProps & { disabled?: boolean }> = ({ register, disabled, t }) => (
   <ControlGroup>
     <FormInput.Text
       id="name"

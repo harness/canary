@@ -1,7 +1,6 @@
-import { forwardRef, KeyboardEvent, useCallback, useRef } from 'react'
+import { forwardRef, KeyboardEvent, useMemo, useRef } from 'react'
 
-import { Button, ControlGroup, FormCaption, Label } from '@/components'
-import { Icon } from '@components/icon'
+import { Button, ControlGroup, FormCaption, Icon, Label } from '@/components'
 
 import { BaseInput, InputProps } from './base-input'
 
@@ -40,6 +39,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       caption,
       error,
       warning,
+      theme,
       hideStepper = false,
       integerOnly = false,
       ...props
@@ -49,9 +49,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     // Create a ref for internal focus management
     const inputRef = useRef<HTMLInputElement | null>(null)
 
+    // override theme based on error and warning
+    const effectiveTheme = error ? 'danger' : warning ? 'warning' : theme
+
     // Generate a unique ID if one isn't provided
-    const generateUniqueId = useCallback(() => `text-input-${Math.random().toString(36).substring(2, 9)}`, [])
-    const inputId = id || generateUniqueId()
+    const inputId = useMemo(() => id || `input-${Math.random().toString(36).substring(2, 9)}`, [id])
 
     // Combine refs to handle both forward ref and internal ref
     const setRefs = (element: HTMLInputElement | null) => {
@@ -90,6 +92,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           id={inputId}
           disabled={disabled}
           inputMode={integerOnly ? 'numeric' : 'decimal'}
+          theme={effectiveTheme}
           onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
             // Prevent decimal point input when integerOnly is true
             if (integerOnly && e.key === '.') {

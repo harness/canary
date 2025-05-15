@@ -37,7 +37,7 @@ export const FormCaption = ({ theme = 'default', className, children }: PropsWit
   const effectiveIconName = theme === 'danger' ? 'cross-circle' : 'warning-triangle-outline'
 
   return (
-    <p role="region" aria-live="polite" className={cn(formCaptionVariants({ theme }), className)}>
+    <p className={cn(formCaptionVariants({ theme }), className)}>
       {canShowIcon && <Icon name={effectiveIconName} size={14} />}
       <span>{children}</span>
     </p>

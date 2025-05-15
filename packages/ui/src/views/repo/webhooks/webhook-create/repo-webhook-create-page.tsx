@@ -104,7 +104,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
           <WebhookToggleField register={register} setValue={setValue} watch={watch} t={t} />
         </Fieldset>
         <Fieldset>
-          <WebhookNameField register={register} disabled={false} t={t} />
+          <WebhookNameField register={register} t={t} />
         </Fieldset>
         <Fieldset>
           <WebhookDescriptionField register={register} t={t} />

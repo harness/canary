@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, FormInput, Icon, Select, SelectRootProps, type TextInputProps } from '@/components'
+import { Button, FormInput, Icon, Select, SelectRootProps, type FormTextInputPropsType } from '@/components'
 import { cn } from '@/utils'
 import { ColorsEnum, TranslationStore } from '@/views'
 
@@ -10,7 +10,7 @@ interface LabelFormColorAndNameGroupProps {
   useTranslationStore: () => TranslationStore
   handleDeleteValue?: () => void
   selectProps?: SelectRootProps
-  inputProps?: TextInputProps
+  inputProps: FormTextInputPropsType
 }
 
 export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = ({

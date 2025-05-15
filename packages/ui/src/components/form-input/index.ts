@@ -1,7 +1,7 @@
-import { FormTextInput } from './components/form-text-input'
+import { FormTextInput, type FormTextInputPropsType } from './components/form-text-input'
 
 const FormInput = {
   Text: FormTextInput
 }
 
-export { FormInput }
+export { FormInput, type FormTextInputPropsType }

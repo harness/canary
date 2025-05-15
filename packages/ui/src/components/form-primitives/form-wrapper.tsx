@@ -5,7 +5,7 @@ import { cn } from '@utils/cn'
 
 interface FormWrapperProps<T extends FieldValues> extends FormHTMLAttributes<HTMLFormElement>, UseFormReturn<T> {
   className?: string
-  formRef?: React.Ref<HTMLFormElement> | null
+  formRef?: React.Ref<HTMLFormElement>
   children?: ReactNode
 }
 

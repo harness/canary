@@ -1,23 +1,34 @@
-import { ChangeEvent, forwardRef, useCallback, useEffect, useRef } from 'react'
+import { ChangeEvent, forwardRef, useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
-import { debounce } from 'lodash-es'
+import { debounce as debounceFn } from 'lodash-es'
 
 import { BaseInput, InputProps } from './base-input'
 
 // Custom onChange handler for search that works with strings instead of events
-export interface SearchInputProps extends Omit<InputProps, 'type' | 'onChange' | 'label'> {
+export interface SearchInputProps extends Omit<InputProps, 'type' | 'onChange' | 'label' | 'prefix'> {
   onChange?: (value: string) => void
-  disableDebounce?: boolean
+  debounce?: number | boolean
 }
 
 const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
-  ({ placeholder = 'Search', disableDebounce = false, className, onChange, ...props }, ref) => {
+  ({ placeholder = 'Search', className, debounce = true, onChange, ...props }, ref) => {
+    const effectiveDebounce = useMemo(() => {
+      if (debounce === true) {
+        return 300
+      }
+      return debounce ?? 300
+    }, [debounce])
+
+    const effectiveDebounceDuration = useMemo(() => {
+      return typeof effectiveDebounce === 'number' ? effectiveDebounce : 300
+    }, [effectiveDebounce])
+
     const debouncedOnChangeRef = useRef(
-      debounce((value: string) => {
+      debounceFn((value: string) => {
         onChange?.(value)
-      }, 300)
+      }, effectiveDebounceDuration)
     )
 
     // Clean up debounced function on unmount
@@ -32,13 +43,13 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     const handleInputChange = useCallback(
       (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
-        if (disableDebounce) {
-          onChange?.(value)
-        } else {
+        if (effectiveDebounce) {
           debouncedOnChangeRef.current(value)
+        } else {
+          onChange?.(value)
         }
       },
-      [disableDebounce, onChange]
+      [effectiveDebounce, onChange]
     )
 
     return (

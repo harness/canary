@@ -94,8 +94,6 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
               onFocus={event => event.target.select()}
               autoFocus
             />
-
-            {error && <p className="text-cn-foreground-danger">{error}</p>}
           </Fieldset>
           <Fieldset>
             <Textarea
@@ -106,6 +104,8 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
               error={errors[FIELD_DESCRIPTION]?.message}
             />
           </Fieldset>
+
+          {error && <p className="text-cn-foreground-danger">{error}</p>}
 
           <Dialog.Footer>
             <Button type="button" variant="outline" onClick={handleDialogClose}>

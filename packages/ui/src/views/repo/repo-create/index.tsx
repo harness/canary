@@ -103,18 +103,6 @@ export function RepoCreatePage({
     }
   }, [isSuccess, reset])
 
-  const onSubmit: SubmitHandler<FormFields> = data => {
-    console.log('data', data)
-
-    onFormSubmit(data)
-  }
-
-  const handleCancel = () => {
-    onFormCancel()
-  }
-
-  console.log('errors', errors)
-
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
@@ -133,7 +121,7 @@ export function RepoCreatePage({
           </Link>
         </Text>
         <Spacer size={10} />
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onFormSubmit)}>
           {/* NAME */}
           <Fieldset>
             <FormInput.Text
@@ -264,7 +252,7 @@ export function RepoCreatePage({
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Create repository' : 'Creating repository...'}
                 </Button>
-                <Button type="button" variant="outline" onClick={handleCancel}>
+                <Button type="button" variant="outline" onClick={onFormCancel}>
                   Cancel
                 </Button>
               </ButtonGroup>

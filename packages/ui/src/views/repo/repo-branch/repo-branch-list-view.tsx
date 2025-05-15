@@ -25,13 +25,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
     setSearchQuery(null)
   }
 
-  const handleSearchChange = useCallback(
-    (query: string) => {
-      setSearchQuery(query)
-    },
-    [setSearchQuery]
-  )
-
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
@@ -51,7 +44,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                   defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}
                   inputContainerClassName="max-w-96"
-                  onChange={handleSearchChange}
+                  onChange={setSearchQuery}
                 />
               </ListActions.Left>
               <ListActions.Right>

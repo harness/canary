@@ -127,7 +127,8 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
               <Fieldset>
                 <FormInput.Text
                   id="lifetime"
-                  value={createdTokenData?.lifetime}
+                  {...register('lifetime')}
+                  defaultValue={createdTokenData?.lifetime}
                   label={t('views:profileSettings.expiration', 'Expiration')}
                   readOnly
                 />
@@ -136,7 +137,8 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                 <FormInput.Text
                   className="truncate"
                   id="token"
-                  value={createdTokenData?.token}
+                  {...register('token')}
+                  defaultValue={createdTokenData?.token}
                   readOnly
                   label={t('views:profileSettings.token', 'Token')}
                   suffix={<CopyButton iconSize={14} name={createdTokenData?.token || ''} />}

@@ -1,10 +1,13 @@
-import { forwardRef, useCallback, useRef } from 'react'
+import { forwardRef, useRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { TextInput, type TextInputProps } from '@components/inputs'
 
-const FormTextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
-  // Only access hook if it's available in the component tree
+interface FormTextInputPropsType extends TextInputProps {
+  name: string
+}
+
+const FormTextInput = forwardRef<HTMLInputElement, FormTextInputPropsType>((props, ref) => {
   const formContext = useFormContext()
 
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -21,13 +24,14 @@ const FormTextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) 
     }
   }
 
+  // Only access the component if it is inside FormProvider component tree
   if (!formContext) {
     throw new Error(
       'FormTextInput must be used within a FormProvider context through FormWrapper. Use the standalone TextInput component if form integration is not required.'
     )
   }
 
-  return props.name ? (
+  return (
     <Controller
       name={props.name}
       control={formContext.control}
@@ -35,17 +39,15 @@ const FormTextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) 
         // Use proper React Hook Form reference handling
         field.ref = setRefs
 
-        // Determine if there's an error from the form state
+        // form error takes precedence over props.error
         const errorMessage = fieldState.error?.message || props.error
 
         return <TextInput {...props} {...field} error={errorMessage} />
       }}
     />
-  ) : (
-    <TextInput {...props} ref={ref} />
   )
 })
 
-FormTextInput.displayName = 'TextInput - Form'
+FormTextInput.displayName = 'FormInput.Text'
 
-export { FormTextInput }
+export { FormTextInput, type FormTextInputPropsType }

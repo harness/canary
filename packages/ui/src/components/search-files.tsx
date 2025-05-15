@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useMemo, useState } from 'react'
+import { ReactNode, useCallback, useState } from 'react'
 
 import { Command, Popover, SearchInput, Text } from '@/components'
 import { TranslationStore } from '@/views'
@@ -45,8 +45,8 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
   const [filteredFiles, setFilteredFiles] = useState<FilteredFile[]>([])
   const { t } = useTranslationStore()
 
-  const filterQuery = useMemo(
-    () => (query: string) => {
+  const filterQuery = useCallback(
+    (query: string) => {
       if (!filesList) {
         setFilteredFiles([])
         return

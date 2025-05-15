@@ -143,8 +143,6 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               label="File Name"
               {...register('fileName')}
               placeholder="Add a file name"
-              theme={errors.fileName?.message ? 'danger' : 'default'}
-              error={errors.fileName?.message}
               autoFocus
             />
           )}
@@ -154,8 +152,6 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
             label="Commit Message"
             {...register('message')}
             placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
-            theme={errors.message?.message ? 'danger' : 'default'}
-            error={errors.message?.message}
           />
           <Textarea
             id="description"
@@ -237,8 +233,6 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     onChange: handleNewBranchNameChange
                   })}
                   placeholder="New Branch Name"
-                  error={errors.newBranchName?.message}
-                  theme={errors.newBranchName?.message ? 'danger' : 'default'}
                 />
               </div>
             )}

@@ -1,100 +1,44 @@
 ---
-title: TextInput
-description: TextInput component
+title: SearchInput
+description: SearchInput component
 ---
-
-The `TextInput` component is used to handle user input, providing options for styling via themes and sizes.
-Also offers options for adding icons, captions, custom content, and error text for the field.
 
 import { DocsPage } from "@/components/docs-page";
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <div className="flex flex-col gap-12 min-w-[400px]">
-  {/* Input Examples */}
-  <div className="font-bold w-full mb-2">Input Examples:</div>
-  <TextInput placeholder="Enter the value" />
-  <TextInput disabled placeholder="Username" label="Disabled Input" />
-  <TextInput 
-    label="Success Input" 
-    id="someinput" 
-    value="input with value" 
-    placeholder="Enter the value" 
-    theme="success" 
+Below is an example of how to implement a search input that displays the current search value using React state. The SearchInput component includes a built-in 300ms debounce to prevent excessive callbacks when typing:
+
+<DocsPage.ComponentExample client:only code={`() => {
+  // Using useState hook to track search value
+  const [searchValue, setSearchValue] = React.useState("");
+
+return (
+
+<div className="flex flex-col gap-6 min-w-[400px]">
+  <div className="mb-2 w-full font-bold mt-6">Search with State:</div>
+  <SearchInput
+    placeholder="Type to search..."
+    onChange={(value) => setSearchValue(value)}
   />
-  <TextInput 
-    theme="danger" 
-    label="Input with Error" 
-    error="This field is required" 
-  />
-  <TextInput 
-    theme="warning" 
-    label="Input with Warning" 
-    warning="Please double-check this field" 
-  />
-  <TextInput 
-    size="sm" 
-    label="Small Input" 
-    placeholder="Enter the small value" 
-  />
-  
-  <hr />
-
-{/* Search Input Examples */}
-
-<div className="font-bold w-full mb-2">Search Input Examples:</div>
-<SearchInput />
-<SearchInput disabled />
-
-<hr />
-
-{/* Suffix and Prefix Examples */}
-
-<div className="font-bold w-full mb-2">Suffix and Prefix Examples:</div>
-
-<TextInput prefix="https://" suffix=".com" />
-<TextInput size="sm" prefix="https://" suffix=".com" />
-<TextInput disabled size="sm" prefix="https://" suffix=".com" />
-<TextInput prefix="PAT:" value="ghp_1234567890abcdef" readOnly />
-
-<TextInput
-  suffix={
-    <Button variant="outline" iconOnly>
-      <Icon name="chevron-right" size={14} />
-    </Button>
-  }
-/>
-<TextInput
-  prefix={
-    <Button variant="outline" iconOnly>
-      <Icon name="minus" size={14} />
-    </Button>
-  }
-  suffix={
-    <Button variant="outline" iconOnly>
-      <Icon name="plus" size={14} />
-    </Button>
-  }
-/>
-
-</div>`}
-/>
+  <div className="rounded-md border p-3">
+    <div className="text-sm font-medium underline underline-offset-2">
+      Current Search Value:
+    </div>
+    <p className="mt-1 font-mono text-sm">{searchValue || "(empty)"}</p>
+  </div>
+</div>
+) }`} />
 
 ## Usage
 
 ```typescript jsx
-import { TextInput } from '@harnessio/ui/components'
+import { SearchInput } from '@harnessio/ui/components'
 
 //...
 
 return (
-    <TextInput
-    label="Success Input"
-    id="someinput"
-    value="input with value"
-    placeholder="Enter the value"
-    theme="success"
+    <SearchInput
+        placeholder="Type to search..."
+        onChange={(value) => setSearchValue(value)}
   />
 )
 ```
@@ -104,11 +48,11 @@ return (
 <DocsPage.PropsTable
   props={[
     {
-      name: "type",
-      description: "HTML input type, excludes 'number' and 'search'",
+      name: "debounce",
+      description: "Debounce duration in milliseconds",
       required: false,
-      defaultValue: "text",
-      value: "string",
+      defaultValue: 300,
+      value: "number | boolean",
     },
     {
       name: "wrapperClassName",
@@ -197,13 +141,6 @@ return (
       value: "'default' | 'sm'",
     },
     {
-      name: "prefix",
-      description: "Content to display before the input field",
-      required: false,
-      defaultValue: "",
-      value: "ReactNode",
-    },
-    {
       name: "suffix",
       description: "Content to display after the input field",
       required: false,
@@ -229,13 +166,13 @@ return (
       description: "Callback when value changes",
       required: false,
       defaultValue: "",
-      value: "React.ChangeEventHandler<HTMLInputElement>",
+      value: " (value: string) => void",
     },
     {
       name: "placeholder",
       description: "Placeholder text for the input field",
       required: false,
-      defaultValue: "",
+      defaultValue: "Search",
       value: "string",
     },
     {

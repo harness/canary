@@ -1,6 +1,7 @@
 import { createContext, forwardRef, HTMLAttributes, ReactNode, useContext, useState } from 'react'
 
 import { cn } from '@utils/cn'
+import { cva } from 'class-variance-authority'
 
 import { Icon } from './icon'
 import { Logo } from './logo'
@@ -14,6 +15,8 @@ interface CardSelectRootProps<T> {
   defaultValue?: T extends 'single' ? unknown : unknown[]
   onValueChange?: T extends 'single' ? (val: unknown) => void : (val: unknown[]) => void
   disabled?: boolean
+  orientation?: 'horizontal' | 'vertical'
+  gap?: 'sm' | 'md' | 'lg'
   children: ReactNode
 }
 
@@ -47,8 +50,28 @@ function isChecked(value: unknown, current: unknown | unknown[]) {
   return Array.isArray(current) ? current.includes(value) : current === value
 }
 
+const cardSelectVariants = cva('cn-card-select-root', {
+  variants: {
+    orientation: {
+      vertical: '',
+      horizontal: 'cn-card-select-horizontal'
+    },
+    gap: {
+      sm: 'cn-card-select-gap-sm',
+      md: 'cn-card-select-gap-md',
+      lg: 'cn-card-select-gap-lg'
+    }
+  },
+  defaultVariants: {
+    orientation: 'vertical',
+    gap: 'md'
+  }
+})
+
 function CardSelectRoot<T extends CardSelectType>({
   type,
+  orientation = 'vertical',
+  gap = 'md',
   name = `card-select-${Math.random().toString(36).slice(2)}`,
   value,
   defaultValue,
@@ -91,7 +114,7 @@ function CardSelectRoot<T extends CardSelectType>({
         onValueChange: handleValueChange
       }}
     >
-      <div className="cn-card-select-root" role={type === 'single' ? 'radiogroup' : 'group'}>
+      <div className={cardSelectVariants({ orientation, gap })} role={type === 'single' ? 'radiogroup' : 'group'}>
         {children}
       </div>
     </CardSelectContext.Provider>
@@ -116,10 +139,13 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
         data-state={checked ? 'checked' : undefined}
         data-disabled={isDisabled ? '' : undefined}
       >
-        <div className="flex items-center flex-1 min-w-0">
-          {icon && <Icon name={icon} className="cn-card-select-icon" />}
-          {logo && !icon && <Logo name={logo} className="cn-card-select-logo" />}
-          <div className="flex-1 min-w-0">{children}</div>
+        <div className="flex items-center justify-between flex-1 min-w-0">
+          <div className="flex items-center flex-1 min-w-0">
+            {icon && <Icon name={icon} className="cn-card-select-icon" />}
+            {logo && !icon && <Logo name={logo} className="cn-card-select-logo" />}
+            <div className="flex-1 min-w-0">{children}</div>
+          </div>
+          {checked && <Icon name="check" className="cn-card-select-check" />}
         </div>
         <input
           type={type === 'multiple' ? 'checkbox' : 'radio'}

@@ -10,43 +10,90 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<CardSelect.Root type="single" value={"option-1"} onValueChange={(val) => console.log(val)}>
-  <CardSelect.Item value="option-1" icon="check">
-    <CardSelect.Title>Option 1</CardSelect.Title>
-    <CardSelect.Description>This is the first option</CardSelect.Description>
-  </CardSelect.Item>
+  code={`
+  <div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Single Selection Card</h1>
+      <CardSelect.Root type="single" onValueChange={(val) => console.log(val)}>
+        <CardSelect.Item value="option-1" icon="branch">
+          <CardSelect.Title>Option 1</CardSelect.Title>
+          <CardSelect.Description>With an icon</CardSelect.Description>
+        </CardSelect.Item>
+        <CardSelect.Item value="option-2" logo="jira">
+          <CardSelect.Title>Option 2</CardSelect.Title>
+          <CardSelect.Description>With a logo instead of an icon</CardSelect.Description>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
 
-  <CardSelect.Item value="option-2" logo="logo-harness">
-    <CardSelect.Title>Option 2</CardSelect.Title>
-    <CardSelect.Description>This is the second option</CardSelect.Description>
-  </CardSelect.Item>
-</CardSelect.Root>`}
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Multiple Selection Card</h1>
+      <CardSelect.Root type="multiple" defaultValue={["one"]} onValueChange={(vals) => console.log(vals)}>
+        <CardSelect.Item value="one" icon="branch">
+          <CardSelect.Title>Option A</CardSelect.Title>
+          <CardSelect.Description>With an icon</CardSelect.Description>
+        </CardSelect.Item>
+        <CardSelect.Item value="two" logo="kubernetes">
+          <CardSelect.Title>Option B</CardSelect.Title>
+          <CardSelect.Description>With a logo instead of an icon</CardSelect.Description>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+  </div>`}
 />
 
 ## Usage
 
-```tsx
-import { CardSelect } from "@harnessio/ui";
+```typescript jsx
+import { CardSelect } from '@harnessio/ui/components'
 
-<CardSelect.Root type="multiple" value={["one"]} onValueChange={setValues}>
-  <CardSelect.Item value="one" icon="plus">
-    <CardSelect.Title>Choice A</CardSelect.Title>
-    <CardSelect.Description>Option with an icon</CardSelect.Description>
-  </CardSelect.Item>
+// Controlled Single Selection
+const [selected, setSelected] = useState('option-1')
 
-  <CardSelect.Item value="two" logo="logo-somebrand">
-    <CardSelect.Title>Choice B</CardSelect.Title>
-    <CardSelect.Description>Option with a logo</CardSelect.Description>
-  </CardSelect.Item>
-</CardSelect.Root>;
+return (
+  <CardSelect.Root type="single" value={selected} onValueChange={setSelected}>
+    <CardSelect.Item value="option-1" icon="branch">
+      <CardSelect.Title>Controlled Option</CardSelect.Title>
+      <CardSelect.Description>External state management</CardSelect.Description>
+    </CardSelect.Item>
+  </CardSelect.Root>
+)
+
+// Uncontrolled Multiple Selection
+return (
+  <CardSelect.Root
+    type="multiple"
+    defaultValue={['one']}
+    onValueChange={(vals) => console.log('Selected:', vals)}
+  >
+    <CardSelect.Item value="one" icon="branch">
+      <CardSelect.Title>Uncontrolled Option</CardSelect.Title>
+      <CardSelect.Description>Internal state management</CardSelect.Description>
+    </CardSelect.Item>
+  </CardSelect.Root>
+)
 ```
 
-## Modes
+## Anatomy
+
+The `CardSelect` component is composed of the following parts:
+
+```typescript jsx
+<CardSelect.Root>
+  <CardSelect.Item>
+    <CardSelect.Title />
+    <CardSelect.Description />
+  </CardSelect.Item>
+</CardSelect.Root>
+```
+
+## Selection Modes
 
 The `CardSelect` supports two selection types:
 
-- `single`: behaves like a radio group.
-- `multiple`: behaves like a checkbox group.
+- `single`: Behaves like a radio group, allowing only one selection at a time
+- `multiple`: Behaves like a checkbox group, allowing multiple selections
 
 ## API Reference
 
@@ -58,34 +105,34 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
   props={[
     {
       name: "type",
-      description: "Defines whether the selection is single or multiple.",
+      description: "Selection mode of the component.",
       required: true,
       value: "'single' | 'multiple'",
     },
     {
       name: "value",
-      description: "Controlled selected value(s).",
+      description: "Current selected value(s) for controlled usage.",
       required: false,
       value: "unknown | unknown[]",
       defaultValue: "undefined | []",
     },
     {
       name: "defaultValue",
-      description: "Uncontrolled default selected value(s).",
+      description: "Initial value(s) for uncontrolled usage.",
       required: false,
-      value: "unknown",
+      value: "unknown | unknown[]",
       defaultValue: "undefined",
     },
     {
       name: "onValueChange",
-      description: "Callback invoked on selection change.",
+      description: "Callback fired when selection changes.",
       required: false,
       value: "(val: unknown) => void | (val: unknown[]) => void",
       defaultValue: "undefined",
     },
     {
       name: "disabled",
-      description: "Whether all items are disabled.",
+      description: "When true, disables all selections.",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -95,41 +142,64 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
 
 ### Item
 
-Represents an individual card that can be selected.
-
-```tsx
-<CardSelect.Item value="abc" icon="check">
-  <CardSelect.Title>Label</CardSelect.Title>
-  <CardSelect.Description>Detail text</CardSelect.Description>
-</CardSelect.Item>
-```
+Represents an individual selectable card option.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "value",
-      description: "Value associated with the item.",
+      description: "Unique identifier for the item.",
       required: true,
-      value: "unknown",
+      value: "string",
     },
     {
       name: "icon",
-      description: "Icon name (left of title). Cannot be used with logo.",
+      description: "Icon to display in the card.",
       required: false,
       value: "string",
     },
     {
       name: "logo",
-      description: "Logo name (left of title). Cannot be used with icon.",
+      description: "Logo to display instead of an icon.",
       required: false,
       value: "string",
     },
     {
       name: "disabled",
-      description: "Disables selection of this item.",
+      description: "When true, prevents this item from being selected.",
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+  ]}
+/>
+
+### Title
+
+Displays the main heading for a card item.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Text content of the title.",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### Description
+
+Provides additional details for a card item.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Text content of the description.",
+      required: true,
+      value: "ReactNode",
     },
   ]}
 />

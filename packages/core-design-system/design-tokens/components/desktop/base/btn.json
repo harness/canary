@@ -71,6 +71,12 @@
         "$type": "spacing",
         "$value": "{spacing.2}"
       }
+    },
+    "wrapper": {
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.3-half}"
+      }
     }
   },
   "link": {

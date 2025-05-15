@@ -91,7 +91,6 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
     const formData = { ...data, rules }
-    console.log('formData', formData)
     handleRuleUpdate(formData)
   }
 

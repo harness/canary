@@ -79,7 +79,7 @@ export const repoBranchSettingsFormSchema = z.object({
   bypass: z.array(
     z.object({
       id: z.number(),
-      display_name: z.string()
+      key: z.string()
     })
   ),
   default: z.boolean().optional(),

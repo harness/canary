@@ -185,7 +185,7 @@ const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<Princi
 export const BranchSettingsRuleBypassListField: FC<
   FieldProps & {
     bypassOptions: PrincipalType[] | null
-    setPrincipalsSearchQuery: (val: string | null) => void
+    setPrincipalsSearchQuery: (val: string) => void
     principalsSearchQuery: string
   }
 > = ({ watch, setValue, bypassOptions, t, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {

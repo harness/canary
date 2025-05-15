@@ -22,7 +22,7 @@ interface MultiSelectProps {
   options?: MultiSelectOption[]
   placeholder?: string
   searchQuery?: string | null
-  setSearchQuery?: (query: string | null) => void
+  setSearchQuery?: (query: string) => void
   onChange?: (options: MultiSelectOption[]) => void
   disabled?: boolean
   className?: string
@@ -234,7 +234,6 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
 
       setAvailableOptions(filteredOptions)
     }, [options, selected, isControlled, value, inputValue, searchQuery, open])
-    console.log('availableOptions', availableOptions)
     return (
       <div className="flex flex-col gap-2 max-w-md">
         <Label disabled={disabled}>{label}</Label>

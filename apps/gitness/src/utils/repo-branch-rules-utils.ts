@@ -109,7 +109,7 @@ export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSet
         if (user) {
           acc.push({
             id: userId,
-            display_name: user?.display_name || ''
+            key: user?.display_name || ''
           })
         }
 

@@ -2,6 +2,7 @@ import { forwardRef, useRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { MultiSelect, type MultiSelectOption, type MultiSelectRef } from '@/components/multi-select-v2'
+import { Field } from '@components/stacked-list'
 
 interface FormMultiSelectV2PropsType
   extends Omit<React.ComponentPropsWithoutRef<typeof MultiSelect>, 'value' | 'onChange'> {
@@ -31,7 +32,6 @@ const FormMultiSelectV2 = forwardRef<MultiSelectRef, FormMultiSelectV2PropsType>
       'FormMultiSelectV2 must be used within a FormProvider context through FormWrapper. Use the standalone MultiSelectV2 component if form integration is not required.'
     )
   }
-
   return (
     <Controller
       name={props.name}
@@ -41,6 +41,7 @@ const FormMultiSelectV2 = forwardRef<MultiSelectRef, FormMultiSelectV2PropsType>
           setRefs(element)
           field.ref(element?.input || null)
         }
+        console.log('field.value', field.value)
 
         return (
           <MultiSelect
@@ -48,6 +49,7 @@ const FormMultiSelectV2 = forwardRef<MultiSelectRef, FormMultiSelectV2PropsType>
             ref={setFieldRef}
             value={field.value}
             onChange={(options: MultiSelectOption[]) => {
+              console.log('options', options)
               field.onChange(options)
             }}
           />

@@ -173,8 +173,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     [branchRules, dispatch]
   )
 
-  console.log('from container query:', principalsSearchQuery)
-
   useEffect(() => {
     if (rulesData) {
       setPresetRuleData(rulesData)

@@ -16,6 +16,7 @@ import {
   inputStyles,
   labelStyles,
   linkStyles,
+  multiSelectV2Styles,
   radioStyles,
   switchStyles,
   tagStyles
@@ -448,7 +449,8 @@ export default {
         checkboxStyles,
         radioStyles,
         inputStyles,
-        captionStyles
+        captionStyles,
+        multiSelectV2Styles
       ])
     }),
     tailwindcssAnimate,

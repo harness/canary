@@ -1,9 +1,9 @@
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
-import { Caption, Command, Label, SkeletonList, Tag } from '@/components'
+import { Caption, Command, Label, Tag } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
-import { Command as CommandPrimitive, useCommandState } from 'cmdk'
+import { Command as CommandPrimitive } from 'cmdk'
 import { noop } from 'lodash-es'
 
 export interface MultiSelectOption {
@@ -31,7 +31,6 @@ interface MultiSelectProps {
   commandProps?: React.ComponentPropsWithoutRef<typeof Command.Root>
   /** Props of `CommandInput` */
   inputProps?: Omit<React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>, 'value' | 'placeholder' | 'disabled'>
-  isLoading?: boolean
 }
 
 export interface MultiSelectRef {
@@ -40,26 +39,6 @@ export interface MultiSelectRef {
   focus: () => void
   reset: () => void
 }
-
-const CommandEmpty = forwardRef<HTMLDivElement, React.ComponentProps<typeof CommandPrimitive.Empty>>(
-  ({ className, ...props }, forwardedRef) => {
-    const render = useCommandState(state => state.filtered.count === 0)
-
-    if (!render) return null
-
-    return (
-      <div
-        ref={forwardedRef}
-        className={cn('py-6 text-center text-sm', className)}
-        data-cmdk-empty=""
-        role="presentation"
-        {...props}
-      />
-    )
-  }
-)
-
-CommandEmpty.displayName = 'CommandEmpty'
 
 export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
   (
@@ -77,8 +56,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       className,
       disallowCreation = false,
       commandProps,
-      inputProps,
-      isLoading = false
+      inputProps
     }: MultiSelectProps,
     ref: React.Ref<MultiSelectRef>
   ) => {
@@ -206,20 +184,12 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       }
     }, [open])
 
-    // useEffect(() => {
-    //   if (value) {
-    //     setSelected(value)
-    //   }
-    // }, [value])
-
     useEffect(() => {
       setOptions(arrayOptions ?? [])
     }, [arrayOptions])
 
-    // State to hold available options
     const [availableOptions, setAvailableOptions] = useState<MultiSelectOption[]>([])
 
-    // Effect to recalculate available options when dependencies change
     useEffect(() => {
       if (!options || options.length === 0) {
         setAvailableOptions([])
@@ -235,7 +205,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       setAvailableOptions(filteredOptions)
     }, [options, selected, isControlled, value, inputValue, searchQuery, open])
     return (
-      <div className="flex flex-col gap-2 max-w-md">
+      <div className="cn-multi-select-outer-container">
         <Label disabled={disabled}>{label}</Label>
         <Command.Root
           ref={dropdownRef}
@@ -244,22 +214,14 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             handleKeyDown(e)
             commandProps?.onKeyDown?.(e)
           }}
-          filter={(_value, _search) => {
-            // Disable built-in filtering since we're handling it ourselves
-            return 1
-          }}
+          // filter={(_value, _search) => {
+          //   return 1
+          // }}
           shouldFilter={false}
-          className={cn('h-auto overflow-visible bg-transparent max-w-md', commandProps?.className)}
+          className={cn('h-auto overflow-visible bg-transparent', commandProps?.className)}
         >
           <div
-            className={cn(
-              'min-h-10 rounded-md border border-cn-borders-2 focus-within:shadow-ring-selected focus-within:border-cn-borders-1',
-              {
-                'px-3 py-2': (isControlled ? value : selected).length !== 0,
-                'cursor-text': !disabled && (isControlled ? value : selected).length !== 0
-              },
-              className
-            )}
+            className={cn('cn-multi-select-container', className)}
             onClick={() => {
               if (disabled) return
               inputRef?.current?.focus()
@@ -269,7 +231,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             tabIndex={disabled ? -1 : 0}
             aria-label={placeholder}
           >
-            <div className="relative flex flex-wrap gap-2 items-center">
+            <div className="cn-multi-select-tag-wrapper">
               {(isControlled ? value : selected).map(option => {
                 return (
                   <Tag
@@ -282,7 +244,6 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                     value={option?.value || ''}
                     showReset={!disabled}
                     onReset={() => handleUnselect(option)}
-                    className="cn-background-softgray"
                     disabled={disabled}
                   />
                 )
@@ -308,21 +269,14 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                   inputProps?.onFocus?.(event)
                 }}
                 placeholder={disabled ? '' : placeholder}
-                className={cn(
-                  'flex-1 bg-transparent outline-none placeholder:text-cn-muted-foreground',
-                  {
-                    'px-3 py-2': (isControlled ? value : selected).length === 0,
-                    'ml-1': (isControlled ? value : selected).length !== 0
-                  },
-                  inputProps?.className
-                )}
+                className={cn('cn-multi-select-input', inputProps?.className)}
               />
             </div>
           </div>
           <div className="relative">
             {open && (
               <Command.List
-                className="bg-cn-background-1 text-cn-foreground animate-in absolute top-1 z-10 w-full rounded-md border shadow-md outline-none"
+                className="cn-multi-select-dropdown"
                 onMouseLeave={() => {
                   setOnScrollbar(false)
                 }}
@@ -355,7 +309,6 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                               setSelected(newOptions)
                             }
                           }}
-                          className={cn('cursor-pointer', option.disable && 'cursor-default text-cn-muted-foreground')}
                         >
                           {option.key}
                         </Command.Item>

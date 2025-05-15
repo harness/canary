@@ -41,7 +41,6 @@ const FormMultiSelectV2 = forwardRef<MultiSelectRef, FormMultiSelectV2PropsType>
           setRefs(element)
           field.ref(element?.input || null)
         }
-        console.log('field.value', field.value)
 
         return (
           <MultiSelect
@@ -49,7 +48,6 @@ const FormMultiSelectV2 = forwardRef<MultiSelectRef, FormMultiSelectV2PropsType>
             ref={setFieldRef}
             value={field.value}
             onChange={(options: MultiSelectOption[]) => {
-              console.log('options', options)
               field.onChange(options)
             }}
           />

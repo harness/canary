@@ -1,4 +1,4 @@
-import { get, isArray, isEmpty, isObject, isString, isUndefined, omitBy } from 'lodash-es'
+import { get, isArray, isEmpty, isNil, isNull, isObject, isString, isUndefined, omitBy } from 'lodash-es'
 
 import { IInputTransformerFunc, IOutputTransformerFunc } from '../../types'
 
@@ -59,8 +59,10 @@ export function unsetEmptyObjectOutputTransformer(path?: string): IOutputTransfo
 
     if (typeof value === 'undefined') return undefined
 
+    if (isNull(value)) return { value: undefined, path }
+
     if (isObject(value)) {
-      const cleanObj = omitBy(value, isUndefined)
+      const cleanObj = omitBy(value, isNil)
       if (isEmpty(cleanObj)) {
         return { value: undefined, path }
       }

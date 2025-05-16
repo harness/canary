@@ -1,6 +1,6 @@
 import { Icon, NoData, SkeletonList, StackedList } from '@/components'
+import { timeAgo, timeDistance } from '@/utils'
 import { PipelineExecutionStatus } from '@/views'
-import { timeAgo, timeDistance } from '@utils/utils'
 
 import { ExecutionStatusIcon } from '../components/execution-status-icon'
 import { IExecutionListProps, IExecutionType } from './types'

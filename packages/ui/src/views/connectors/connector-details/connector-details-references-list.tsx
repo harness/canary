@@ -1,5 +1,5 @@
 import { NoData, SkeletonList, SkeletonTable, Table } from '@/components'
-import { timeAgo } from '@utils/utils'
+import { timeAgo } from '@/utils'
 
 import { ConnectorReferenceItem, ConnectorReferenceListProps } from './types'
 

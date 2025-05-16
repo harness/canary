@@ -2,9 +2,9 @@ import { useCallback, useState } from 'react'
 
 import { Button, Icon, Separator, StatusBadge, Tag } from '@/components'
 import { useRouterContext } from '@/context'
+import { timeAgo } from '@/utils'
 import { TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
-import { timeAgo } from '@utils/utils'
 
 import { IconType } from '../pull-request.types'
 import { getPrState } from '../utils'

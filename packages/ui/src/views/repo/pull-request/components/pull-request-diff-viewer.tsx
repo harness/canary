@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { Avatar, Layout } from '@/components'
+import { timeAgo } from '@/utils'
 import {
   activitiesToDiffCommentItems,
   CommentItem,
@@ -15,7 +16,6 @@ import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git
 import { useCustomEventListener } from '@hooks/use-event-listener'
 import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
 import { getInitials } from '@utils/stringUtils'
-import { timeAgo } from '@utils/utils'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'

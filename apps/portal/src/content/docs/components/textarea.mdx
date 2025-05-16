@@ -6,17 +6,55 @@ beta: true
 
 The `Textarea` component is used to create a multi-line text input field.
 
-import { DocsPage } from "../../../components/docs-page";
+import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Textarea
-    name="about-you"
-    label="About you"
-    placeholder="Tell me about yourself..."
-    caption="What do you like to do in your free time?"
-    optional
-/>`}
+  code={`<div className="grid gap-4 max-w-96 w-full">
+    <Textarea
+      id="1"
+      name="default"
+      label="Default"
+      placeholder="Placeholder"
+      caption="Caption text"
+      rows={4}
+    />
+    <Textarea
+      id="2"
+      name="resizable"
+      label="Resizable"
+      placeholder="Placeholder"
+      caption="Caption text"
+      defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      optional
+      resizable
+      rows={4}
+    />
+    <Textarea
+      id="3"
+      name="error"
+      label="This component in error state and it has a very long text"
+      placeholder="Placeholder"
+      maxCharacters={100}
+      theme="danger"
+      defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      error="Error message"
+      optional
+      rows={4}
+    />
+    <Textarea
+      id="4"
+      name="disabled"
+      label="Disabled"
+      placeholder="Placeholder"
+      maxCharacters={100}
+      defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      caption="Caption text"
+      optional
+      rows={4}
+      disabled
+    />
+  </div>`}
 />
 
 ## Usage
@@ -43,21 +81,6 @@ The `Textarea` can be used either controlled or uncontrolled. When controlled, t
 the value changes. When uncontrolled, the `Textarea` will use the `defaultValue` prop as
 its initial value and will call `onChange` when its value changes. The `Textarea` also supports
 all attributes of the `textarea` HTML element.
-
-```typescript jsx
-<Textarea
-  name="textarea-name"       // [OPTIONAL] name of the textarea
-  id="textarea-id"           // [OPTIONAL] id of the textarea
-  value="Textarea value"     // [OPTIONAL] value of the textarea
-  onChange={handleChange}    // [OPTIONAL] callback to call when the value changes
-  label="Textarea label"     // [OPTIONAL] label for the textarea
-  caption="Textarea caption" // [OPTIONAL] caption to describe the textarea
-  error="Error message"      // [OPTIONAL] error message to display below
-  optional                   // [OPTIONAL] indicate if the textarea is optional
-  resizable                  // [OPTIONAL] indicate if the textarea should be resizable
-  disabled                   // [OPTIONAL] indicate if the textarea is disabled
-/>
-```
 
 <DocsPage.PropsTable
   props={[

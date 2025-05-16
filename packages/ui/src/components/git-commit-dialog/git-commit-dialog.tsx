@@ -14,8 +14,7 @@ import {
   Link,
   Message,
   MessageTheme,
-  Radio,
-  Textarea
+  Radio
 } from '@/components'
 import { UsererrorError, ViolationState } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -153,12 +152,11 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
             {...register('message')}
             placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
           />
-          <Textarea
+          <FormInput.Textarea
             id="description"
             {...register('description')}
             placeholder="Add an optional extended description"
             label="Extended description"
-            error={errors.description?.message?.toString()}
           />
           <ControlGroup>
             <Radio.Root
@@ -176,11 +174,11 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     Commit directly to the
                     <span
                       className="
-                        relative mx-1.5 inline-flex gap-1 px-2.5 text-cn-foreground-1
-                        before:absolute before:-top-1 before:left-0 before:z-[-1] before:h-6 before:w-full before:rounded before:bg-cn-background-8
+                        text-cn-foreground-1 before:bg-cn-background-8 relative mx-1.5 inline-flex gap-1
+                        px-2.5 before:absolute before:-top-1 before:left-0 before:z-[-1] before:h-6 before:w-full before:rounded
                       "
                     >
-                      <Icon className="translate-y-0.5 text-icons-9" name="branch" size={14} />
+                      <Icon className="text-icons-9 translate-y-0.5" name="branch" size={14} />
                       {currentBranch}
                     </span>
                     branch

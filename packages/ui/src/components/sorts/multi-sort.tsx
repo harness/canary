@@ -109,7 +109,7 @@ const SortableItem = ({
         </DropdownMenu.Content>
       </DropdownMenu.Root>
 
-      <Button variant="ghost" size="sm" iconOnly className="ml-auto" onClick={() => onRemoveSort(index)}>
+      <Button variant="transparent" size="sm" iconOnly className="ml-auto" onClick={() => onRemoveSort(index)}>
         <Icon className="rotate-45" name="plus" size={12} />
       </Button>
     </div>
@@ -204,14 +204,19 @@ export default function MultiSort() {
                 handleSortChange({ type: sortValue.value, direction: Direction.ASC })
               }
               displayLabel={
-                <Button size="sm" variant="ghost" className="gap-x-1.5">
+                <Button size="sm" variant="transparent" className="gap-x-1.5">
                   <Icon name="plus" size={12} />
                   Add sort
                 </Button>
               }
             />
           )}
-          <Button size="sm" variant="ghost" className="hover:text-cn-foreground-danger" onClick={handleResetSorts}>
+          <Button
+            size="sm"
+            variant="transparent"
+            className="hover:text-cn-foreground-danger"
+            onClick={handleResetSorts}
+          >
             <Icon name="trash" size={12} />
             Delete sort
           </Button>

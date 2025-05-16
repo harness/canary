@@ -34,11 +34,3 @@ export type InputConfigType =
   | SelectInputConfig
   | RadialInputConfig
   | CalendarInputConfig
-
-export interface RadioOption {
-  label: string
-  description: string
-  value: string
-  id: string
-  title: string
-}

@@ -66,7 +66,13 @@ export function CreateBranchDialog({
       name: prefilledName || '',
       target: selectedBranchOrTag?.name
     })
-  }, [selectedBranchOrTag, setValue, open, resetForm, prefilledName])
+  }, [open, prefilledName, reset])
+
+  useEffect(() => {
+    if (selectedBranchOrTag?.name) {
+      setValue('target', selectedBranchOrTag.name)
+    }
+  }, [selectedBranchOrTag, setValue])
 
   const handleClose = () => {
     resetForm()

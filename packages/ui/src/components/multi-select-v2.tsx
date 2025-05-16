@@ -115,6 +115,11 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
 
     const isControlled = !!value
 
+    // Helper function to get the current selected options based on controlled/uncontrolled state
+    const getSelectedOptions = useCallback(() => {
+      return isControlled ? value : selected
+    }, [isControlled, value, selected])
+
     useImperativeHandle(
       ref,
       () => ({
@@ -143,12 +148,12 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
 
     const handleUnselect = useCallback(
       (option: MultiSelectOption) => {
-        const newSelectedValues = (isControlled ? value : selected).filter(s => s.id !== option.id)
+        const newSelectedValues = getSelectedOptions().filter(s => s.id !== option.id)
         onChange?.(newSelectedValues)
         option.onReset?.()
         !isControlled && setSelected(newSelectedValues)
       },
-      [onChange, selected, isControlled, value]
+      [onChange, getSelectedOptions, isControlled]
     )
 
     const handleKeyDown = useCallback(
@@ -156,8 +161,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
         const input = inputRef.current
         if (input) {
           if (e.key === 'Delete' || e.key === 'Backspace') {
-            if (input.value === '' && (isControlled ? value?.length : selected.length) > 0) {
-              handleUnselect((isControlled ? value : selected).at(-1)!)
+            if (input.value === '' && getSelectedOptions()?.length > 0) {
+              handleUnselect(getSelectedOptions().at(-1)!)
             }
           }
           if (e.key === 'Enter' && input.value && !disallowCreation) {
@@ -165,10 +170,10 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             // This ensures that 'React' and 'react' would be considered the same option
             if (
               !options?.some(option => option.key.toLowerCase() === input.value.toLowerCase()) &&
-              !(isControlled ? value : selected).some(s => s.key.toLowerCase() === input.value.toLowerCase())
+              !getSelectedOptions().some(s => s.key.toLowerCase() === input.value.toLowerCase())
             ) {
               const newOption = createOptionFromInput(input.value)
-              const newOptions = [...(isControlled ? value : selected), newOption]
+              const newOptions = [...getSelectedOptions(), newOption]
               if (isControlled) {
                 onChange?.(newOptions)
               } else {
@@ -184,7 +189,16 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
           }
         }
       },
-      [handleUnselect, selected, disallowCreation, onChange, options, setInputValue, isControlled, value]
+      [
+        handleUnselect,
+        disallowCreation,
+        onChange,
+        options,
+        setInputValue,
+        isControlled,
+        getSelectedOptions,
+        setSearchQuery
+      ]
     )
 
     useEffect(() => {
@@ -209,11 +223,11 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       }
 
       const filteredOptions = options.filter(
-        option => !(isControlled ? value : selected)?.some(selectedOption => selectedOption.id === option.id)
+        option => !getSelectedOptions()?.some(selectedOption => selectedOption.id === option.id)
       )
 
       setAvailableOptions(filteredOptions)
-    }, [options, selected, isControlled, value, inputValue, searchQuery, open])
+    }, [options, getSelectedOptions, inputValue, searchQuery, open])
     return (
       <div className="cn-multi-select-outer-container">
         <Command.Root
@@ -238,7 +252,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             aria-label={placeholder}
           >
             <div className="cn-multi-select-tag-wrapper">
-              {(isControlled ? value : selected).map(option => {
+              {getSelectedOptions().map(option => {
                 return (
                   <Tag
                     id={String(option.id)}
@@ -310,7 +324,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                           onSelect={() => {
                             setInputValue('')
                             setSearchQuery?.('')
-                            const newSelectedValues = [...(isControlled ? value : selected), option]
+                            const newSelectedValues = [...getSelectedOptions(), option]
                             if (isControlled) {
                               onChange?.(newSelectedValues)
                             } else {

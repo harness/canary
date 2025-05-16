@@ -68,7 +68,6 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
             autoFocus
           />
           <FormInput.Textarea
-            className="text-cn-foreground-1"
             id="content"
             value={content}
             {...register('content')}

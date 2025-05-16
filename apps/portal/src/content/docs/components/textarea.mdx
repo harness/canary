@@ -82,21 +82,6 @@ the value changes. When uncontrolled, the `Textarea` will use the `defaultValue`
 its initial value and will call `onChange` when its value changes. The `Textarea` also supports
 all attributes of the `textarea` HTML element.
 
-```typescript jsx
-<Textarea
-  name="textarea-name"       // [OPTIONAL] name of the textarea
-  id="textarea-id"           // [OPTIONAL] id of the textarea
-  value="Textarea value"     // [OPTIONAL] value of the textarea
-  onChange={handleChange}    // [OPTIONAL] callback to call when the value changes
-  label="Textarea label"     // [OPTIONAL] label for the textarea
-  caption="Textarea caption" // [OPTIONAL] caption to describe the textarea
-  error="Error message"      // [OPTIONAL] error message to display below
-  optional                   // [OPTIONAL] indicate if the textarea is optional
-  resizable                  // [OPTIONAL] indicate if the textarea should be resizable
-  disabled                   // [OPTIONAL] indicate if the textarea is disabled
-/>
-```
-
 <DocsPage.PropsTable
   props={[
     {

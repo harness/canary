@@ -1,18 +1,14 @@
-import { forwardRef, useRef } from 'react'
+import { forwardRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { TextInput, type TextInputProps } from '@components/inputs'
-import { useMergeRefs } from '@utils/mergeUtils'
 
 interface FormTextInputPropsType extends TextInputProps {
   name: string
 }
 
 const FormTextInput = forwardRef<HTMLInputElement, FormTextInputPropsType>((props, ref) => {
-  const inputRef = useRef<HTMLInputElement | null>(null)
-
   const formContext = useFormContext()
-  const mergedRef = useMergeRefs<HTMLInputElement>([inputRef, ref])
 
   // Only access the component if it is inside FormProvider component tree
   if (!formContext) {
@@ -29,7 +25,7 @@ const FormTextInput = forwardRef<HTMLInputElement, FormTextInputPropsType>((prop
         // form error takes precedence over props.error
         const error = fieldState.error?.message ?? props.error
 
-        return <TextInput {...{ ...props, ...field, error }} ref={mergedRef} theme={error ? 'danger' : 'default'} />
+        return <TextInput {...{ ...props, ...field, error }} ref={ref} theme={error ? 'danger' : 'default'} />
       }}
     />
   )

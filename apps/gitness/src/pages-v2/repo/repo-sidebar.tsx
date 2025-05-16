@@ -45,9 +45,6 @@ export const RepoSidebar = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  console.log('fullGitRef', fullGitRef)
-  console.log('gitRefName', gitRefName)
-  console.log('fullResourcePath', fullResourcePath)
   const navigate = useNavigate()
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
@@ -207,8 +204,6 @@ export const RepoSidebar = () => {
     },
     [fullGitRef, selectedBranchTag?.name, navigate, repoId]
   )
-
-  console.log('selectBranchOrTag', selectedBranchTag)
 
   // TODO: repoId and spaceId must be defined
   if (!repoId) return <></>

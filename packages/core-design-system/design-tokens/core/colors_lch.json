@@ -19,7 +19,7 @@
         }
       },
       "$type": "color",
-      "$value": "lch(4.36% 1.08 285.25)"
+      "$value": "{pure.black}"
     }
   },
   "chrome": {

@@ -11,6 +11,7 @@ export type PathParams = {
   webhookId?: string
   labelId?: string
   branchId?: string
+  tagId?: string
 }
 
 export const PathProps = {
@@ -23,7 +24,8 @@ export const PathProps = {
   resourcePath: ':resourcePath*',
   diffRefs: ':diffRefs*',
   webhookId: ':webhookId*',
-  branchId: ':branchId'
+  branchId: ':branchId',
+  tagId: ':tagId'
 }
 
 export type PullRequestRoutePathParams = Omit<PathParams, 'pipelineId' | 'executionId' | 'gitRef'>

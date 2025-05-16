@@ -16,15 +16,18 @@ import { normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 export default function RepoCommitsPage() {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId, branchId } = useParams<PathParams>()
+  const { spaceId, repoId, branchId, tagId } = useParams<PathParams>()
   const { navigate } = useRouterContext()
 
   const decodedBranchId = branchId ? decodeURIComponent(branchId) : undefined
+  const decodedTagId = tagId ? decodeURIComponent(tagId) : undefined
 
   const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(
-    decodedBranchId ? { name: decodedBranchId, sha: '' } : null
+    decodedBranchId ? { name: decodedBranchId, sha: '' } : decodedTagId ? { name: decodedTagId, sha: '' } : null
   )
-  const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
+  const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(
+    decodedBranchId ? BranchSelectorTab.BRANCHES : decodedTagId ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
+  )
   const [searchParams, setSearchParams] = useSearchParams()
 
   const queryPage = parseInt(searchParams.get('page') || '1', 10)
@@ -67,15 +70,17 @@ export default function RepoCommitsPage() {
         setSelectedRefType(type)
       }
     },
-    [repoId, spaceId]
+    [spaceId]
   )
 
   useEffect(() => {
     if (selectedBranchOrTag?.name) {
       const encodedBranchOrTagId = encodeURIComponent(selectedBranchOrTag.name)
-      navigate(routes.toRepoCommits({ spaceId, repoId, branchId: encodedBranchOrTagId }))
+      selectedRefType === BranchSelectorTab.TAGS
+        ? navigate(routes.toRepoCommitsTags({ spaceId, repoId, tagId: encodedBranchOrTagId }))
+        : navigate(routes.toRepoCommitsBranches({ spaceId, repoId, branchId: encodedBranchOrTagId }))
     }
-  }, [selectedBranchOrTag, navigate, routes, spaceId, repoId])
+  }, [selectedBranchOrTag, navigate, routes, spaceId, repoId, selectedRefType])
 
   return (
     <RepoCommitsView

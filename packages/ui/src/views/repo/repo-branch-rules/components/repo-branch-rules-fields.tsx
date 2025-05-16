@@ -15,8 +15,7 @@ import {
   MultiSelectV2,
   SplitButton,
   StackedList,
-  Switch,
-  Textarea
+  Switch
 } from '@/components'
 import { PrincipalType } from '@/types'
 import { FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
@@ -50,28 +49,23 @@ export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch,
 )
 
 export const BranchSettingsRuleNameField: FC<FieldProps & { disabled: boolean }> = ({ register, disabled, t }) => (
-  <ControlGroup>
-    <FormInput.Text
-      id="name"
-      label={t('views:repos.name', 'Name')}
-      {...register!('identifier')}
-      placeholder={t('views:repos.enterRuleName', 'Enter the rule name here')}
-      autoFocus
-      disabled={disabled}
-    />
-  </ControlGroup>
+  <FormInput.Text
+    id="name"
+    label={t('views:repos.name', 'Name')}
+    {...register!('identifier')}
+    placeholder={t('views:repos.enterRuleName', 'Enter the rule name here')}
+    autoFocus
+    disabled={disabled}
+  />
 )
 
-export const BranchSettingsRuleDescriptionField: FC<FieldProps> = ({ register, errors, t }) => (
-  <ControlGroup>
-    <Textarea
-      label={t('views:repos.description', 'Description')}
-      id="description"
-      {...register!('description')}
-      placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter the description here')}
-      error={errors?.description?.message?.toString()}
-    />
-  </ControlGroup>
+export const BranchSettingsRuleDescriptionField: FC<FieldProps> = ({ register, t }) => (
+  <FormInput.Textarea
+    label={t('views:repos.description', 'Description')}
+    id="description"
+    {...register!('description')}
+    placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter the description here')}
+  />
 )
 
 export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue, watch, register, errors, t }) => {

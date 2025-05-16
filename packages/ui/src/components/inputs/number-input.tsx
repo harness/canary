@@ -132,11 +132,15 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         />
 
         {error ? (
-          <FormCaption theme="danger">{error}</FormCaption>
+          <FormCaption disabled={disabled} theme="danger">
+            {error}
+          </FormCaption>
         ) : warning ? (
-          <FormCaption theme="warning">{warning}</FormCaption>
+          <FormCaption disabled={disabled} theme="warning">
+            {warning}
+          </FormCaption>
         ) : caption ? (
-          <FormCaption>{caption}</FormCaption>
+          <FormCaption disabled={disabled}>{caption}</FormCaption>
         ) : null}
       </ControlGroup>
     )

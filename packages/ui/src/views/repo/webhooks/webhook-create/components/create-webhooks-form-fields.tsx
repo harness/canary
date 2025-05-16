@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Checkbox, ControlGroup, FormInput, Label, Radio, StackedList, Switch, Textarea } from '@/components'
+import { Checkbox, ControlGroup, FormInput, Label, Radio, StackedList, Switch } from '@/components'
 import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
 
 export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (
@@ -26,54 +26,45 @@ export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch,
 )
 
 export const WebhookNameField: FC<WebhookFormFieldProps & { disabled?: boolean }> = ({ register, disabled, t }) => (
-  <ControlGroup>
-    <FormInput.Text
-      id="name"
-      {...register!('identifier')}
-      placeholder="Name your webhook"
-      autoFocus
-      disabled={disabled}
-      label={t('views:repos.name', 'Name')}
-    />
-  </ControlGroup>
+  <FormInput.Text
+    id="name"
+    {...register!('identifier')}
+    placeholder="Name your webhook"
+    autoFocus
+    disabled={disabled}
+    label={t('views:repos.name', 'Name')}
+  />
 )
 
-export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
-  <ControlGroup>
-    <Textarea
-      id="description"
-      {...register!('description')}
-      placeholder={t('views:repos.descriptionPlaceholder', 'Enter a description')}
-      label={t('views:repos.description', 'Description')}
-      error={errors?.description?.message?.toString()}
-    />
-  </ControlGroup>
+export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register, t }) => (
+  <FormInput.Textarea
+    id="description"
+    {...register!('description')}
+    placeholder={t('views:repos.descriptionPlaceholder', 'Enter a description')}
+    label={t('views:repos.description', 'Description')}
+  />
 )
 
 export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, t }) => (
-  <ControlGroup>
-    <FormInput.Text
-      autoComplete="new-password"
-      data-form-type="other"
-      id="payloadUrl"
-      {...register!('url')}
-      placeholder={t('views:repos.urlPlaceholder', 'https://example.com/harness')}
-      label={t('views:repos.urlLabel', 'Payload URL')}
-    />
-  </ControlGroup>
+  <FormInput.Text
+    autoComplete="new-password"
+    data-form-type="other"
+    id="payloadUrl"
+    {...register!('url')}
+    placeholder={t('views:repos.urlPlaceholder', 'https://example.com/harness')}
+    label={t('views:repos.urlLabel', 'Payload URL')}
+  />
 )
 
 export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register, t }) => (
-  <ControlGroup>
-    <FormInput.Text
-      autoComplete="new-password"
-      data-form-type="other"
-      id="secret"
-      {...register!('secret')}
-      type="password"
-      label={t('views:repos.secret', 'Secret')}
-    />
-  </ControlGroup>
+  <FormInput.Text
+    autoComplete="new-password"
+    data-form-type="other"
+    id="secret"
+    {...register!('secret')}
+    type="password"
+    label={t('views:repos.secret', 'Secret')}
+  />
 )
 
 export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ watch, setValue, t }) => {

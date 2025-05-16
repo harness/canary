@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, ControlGroup, Dialog, FormInput, FormWrapper, Textarea } from '@/components'
+import { Button, ButtonGroup, ControlGroup, Dialog, FormInput, FormWrapper } from '@/components'
 import { UsererrorError } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -44,11 +44,7 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
     }
   })
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = formMethods
+  const { register, handleSubmit } = formMethods
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
@@ -65,12 +61,11 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
               {...register('title')}
               placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
             />
-            <Textarea
+            <FormInput.Textarea
               id="message"
               {...register('message')}
               placeholder="Add an optional extended description"
               label="Extended description"
-              error={errors.message?.message?.toString()}
             />
           </ControlGroup>
 

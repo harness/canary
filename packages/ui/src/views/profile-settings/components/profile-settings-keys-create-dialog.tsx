@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, Dialog, Fieldset, FormInput, FormWrapper, Textarea } from '@/components'
+import { Alert, Button, Dialog, FormInput, FormWrapper } from '@/components'
 import { ApiErrorType } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo'
@@ -39,13 +39,7 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
     }
   })
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors }
-  } = formMethods
+  const { register, handleSubmit, watch, reset } = formMethods
 
   const content = watch('content')
   const identifier = watch('identifier')
@@ -65,26 +59,21 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
           <Dialog.Title>{t('views:profileSettings.newSshKey', 'New SSH key')}</Dialog.Title>
         </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
-          <Fieldset>
-            <FormInput.Text
-              id="identifier"
-              value={identifier}
-              {...register('identifier')}
-              placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter the name')}
-              label={t('views:profileSettings.newSshKey', 'New SSH key')}
-              autoFocus
-            />
-          </Fieldset>
-          <Fieldset className="gap-y-0">
-            <Textarea
-              className="text-cn-foreground-1"
-              id="content"
-              value={content}
-              {...register('content')}
-              label={t('views:profileSettings.publicKey', 'Public key')}
-              error={errors.content?.message?.toString()}
-            />
-          </Fieldset>
+          <FormInput.Text
+            id="identifier"
+            value={identifier}
+            {...register('identifier')}
+            placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter the name')}
+            label={t('views:profileSettings.newSshKey', 'New SSH key')}
+            autoFocus
+          />
+          <FormInput.Textarea
+            className="text-cn-foreground-1"
+            id="content"
+            value={content}
+            {...register('content')}
+            label={t('views:profileSettings.publicKey', 'Public key')}
+          />
           {error?.type === ApiErrorType.KeyCreate && (
             <Alert.Container variant="destructive">
               <Alert.Title>{error.message}</Alert.Title>

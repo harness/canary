@@ -11,8 +11,7 @@ import {
   FormInput,
   FormWrapper,
   Input,
-  Spacer,
-  Textarea
+  Spacer
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -225,12 +224,11 @@ export function CreateSecretPage({
               <Accordion.Content>
                 <Fieldset className="rounded-md border p-4">
                   {/* DESCRIPTION */}
-                  <Textarea
+                  <FormInput.Textarea
                     id="description"
                     {...register('description')}
                     placeholder="Enter a description of this secret"
                     label="Description"
-                    error={errors.description?.message?.toString()}
                     optional
                   />
                   {/* TAGS */}

@@ -25,7 +25,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   return (
     <ControlGroup className={wrapperClassName}>
       {!!label && (
-        <Label disabled={props.disabled} optional={optional} htmlFor={inputId}>
+        <Label disabled={restProps.disabled} optional={optional} htmlFor={inputId}>
           {label}
         </Label>
       )}
@@ -33,11 +33,15 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
       <BaseInput {...restProps} ref={ref} theme={theme} id={inputId} />
 
       {error ? (
-        <FormCaption theme="danger">{error}</FormCaption>
+        <FormCaption disabled={restProps.disabled} theme="danger">
+          {error}
+        </FormCaption>
       ) : warning ? (
-        <FormCaption theme="warning">{warning}</FormCaption>
+        <FormCaption disabled={restProps.disabled} theme="warning">
+          {warning}
+        </FormCaption>
       ) : caption ? (
-        <FormCaption>{caption}</FormCaption>
+        <FormCaption disabled={restProps.disabled}>{caption}</FormCaption>
       ) : null}
     </ControlGroup>
   )

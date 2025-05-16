@@ -14,8 +14,7 @@ import {
   MessageTheme,
   Radio,
   SkeletonForm,
-  Text,
-  Textarea
+  Text
 } from '@/components'
 import {
   AccessLevel,
@@ -120,26 +119,22 @@ export const RepoSettingsGeneralForm: FC<{
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* NAME */}
           <Fieldset>
-            <ControlGroup>
-              <FormInput.Text
-                id="name"
-                {...register('name')}
-                placeholder={t('views:repos.repoNamePlaceholder', 'Enter repository name')}
-                disabled
-                label={t('views:repos.name', 'Name')}
-              />
-            </ControlGroup>
+            <FormInput.Text
+              id="name"
+              {...register('name')}
+              placeholder={t('views:repos.repoNamePlaceholder', 'Enter repository name')}
+              disabled
+              label={t('views:repos.name', 'Name')}
+            />
+
             {/* DESCRIPTION */}
-            <ControlGroup>
-              <Textarea
-                id="description"
-                {...register('description')}
-                placeholder={t('views:repos.repoDescriptionPlaceholder', 'Enter a description of this repository...')}
-                label={t('views:repos.description', 'Description')}
-                error={errors.description?.message?.toString()}
-                optional
-              />
-            </ControlGroup>
+            <FormInput.Textarea
+              id="description"
+              {...register('description')}
+              placeholder={t('views:repos.repoDescriptionPlaceholder', 'Enter a description of this repository...')}
+              label={t('views:repos.description', 'Description')}
+              optional
+            />
           </Fieldset>
 
           {/* BRANCH */}

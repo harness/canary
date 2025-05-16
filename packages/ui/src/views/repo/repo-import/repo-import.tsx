@@ -12,8 +12,7 @@ import {
   FormWrapper,
   Select,
   Spacer,
-  Text,
-  Textarea
+  Text
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -124,13 +123,7 @@ export function RepoImportPage({
     }
   })
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors }
-  } = formMethods
+  const { register, handleSubmit, setValue, watch } = formMethods
 
   const providerValue = watch('provider')
   const repositoryValue = watch('repository')
@@ -270,46 +263,33 @@ export function RepoImportPage({
 
           {/* token */}
           {watch('authorization') && (
-            <Fieldset>
-              <ControlGroup>
-                <FormInput.Text
-                  type="password"
-                  id="password"
-                  label="Token"
-                  {...register('password')}
-                  placeholder="Enter your access token"
-                />
-              </ControlGroup>
-            </Fieldset>
+            <FormInput.Text
+              type="password"
+              id="password"
+              label="Token"
+              {...register('password')}
+              placeholder="Enter your access token"
+            />
           )}
 
           <FormSeparator />
 
           {/* repo identifier */}
-          <Fieldset>
-            <ControlGroup>
-              <FormInput.Text
-                id="identifier"
-                label="Name"
-                {...register('identifier')}
-                placeholder="Enter repository name"
-              />
-            </ControlGroup>
-          </Fieldset>
+          <FormInput.Text
+            id="identifier"
+            label="Name"
+            {...register('identifier')}
+            placeholder="Enter repository name"
+          />
 
           {/* description */}
-          <Fieldset>
-            <ControlGroup>
-              <Textarea
-                id="description"
-                label="Description"
-                {...register('description')}
-                placeholder="Enter a description"
-                error={errors.description?.message?.toString()}
-                optional
-              />
-            </ControlGroup>
-          </Fieldset>
+          <FormInput.Textarea
+            id="description"
+            label="Description"
+            {...register('description')}
+            placeholder="Enter a description"
+            optional
+          />
 
           {!!apiErrorsValue && <span className="text-2 text-cn-foreground-danger">{apiErrorsValue}</span>}
 

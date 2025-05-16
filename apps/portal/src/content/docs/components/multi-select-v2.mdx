@@ -10,9 +10,8 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex w-full flex-col flex-wrap gap-4 items-baseline">
-    <div>MultipleSelector with key-value support</div>
-    <div className="relative w-full">
+  code={`
+  <div className="max-w-md">
       <MultiSelectV2.MultiSelect
         label="Frameworks"
         defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
@@ -24,16 +23,14 @@ import { DocsPage } from "@/components/docs-page";
         ]}
         placeholder="Select frameworks you like..."
         caption="Separate tags with commas or press Enter. Use the format key:value for object entries."
-        disallowCreation
       />
-    </div>
-</div>`}
+    </div>`}
 />
 
 ## Usage
 
 ```tsx
-import { MultipleSelector, MultiSelectOption } from "@harnessio/ui/components";
+import { MultiSelectV2 } from "@harnessio/ui/components";
 import { useState } from "react";
 
 // Basic usage with controlled component
@@ -41,7 +38,7 @@ const MyComponent = () => {
   const [selected, setSelected] = useState<MultiSelectOption[]>([]);
 
   return (
-    <MultipleSelector
+    <MultiSelectV2.MultiSelect
       label="Select frameworks"
       placeholder="Select options..."
       options={[{ key: "react" }, { key: "vue" }, { key: "angular" }]}
@@ -56,6 +53,7 @@ const MyComponent = () => {
 
 ```typescript
 interface MultiSelectOption {
+  id: string | number; // Required - the unique identifier for the option
   key: string; // Required - the main identifier for the option
   value?: string; // Optional - used for key-value pairs
   disable?: boolean; // Optional - disables the option in the dropdown

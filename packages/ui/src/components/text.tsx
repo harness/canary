@@ -2,11 +2,10 @@ import { ComponentProps, ElementType } from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
+import { wrapConditionalObjectElement } from '@utils/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 
 type TextElement =
-  | 'span'
-  | 'div'
   | 'p'
   | 'h1'
   | 'h2'
@@ -14,6 +13,7 @@ type TextElement =
   | 'h4'
   | 'h5'
   | 'h6'
+  | 'span'
   | 'label'
   | 'legend'
   | 'caption'
@@ -83,30 +83,40 @@ const textVariants = cva('', {
   }
 })
 
-const textVariantToElement: Record<string, TextElement> = {
-  'heading-hero': 'h1',
-  'heading-section': 'h2',
-  'heading-subsection': 'h3',
-  'heading-base': 'h4',
-  'heading-small': 'h5',
-  'body-code': 'pre'
+type TextVariant = Exclude<VariantProps<typeof textVariants>['variant'], undefined | null>
+
+const textVariantToElement: Record<TextVariant, TextElement> = {
+  'heading-hero': 'p',
+  'heading-section': 'p',
+  'heading-subsection': 'p',
+  'heading-base': 'p',
+  'heading-small': 'p',
+  'body-normal': 'p',
+  'body-single-line-normal': 'p',
+  'body-strong': 'p',
+  'body-single-line-strong': 'p',
+  'body-code': 'pre',
+  'caption-normal': 'span',
+  'caption-soft': 'span',
+  'caption-single-line-normal': 'span',
+  'caption-single-line-soft': 'span'
 }
 
 const getTextNode = ({ as, variant, asChild }: Pick<TextProps, 'as' | 'asChild' | 'variant'>) => {
-  if (asChild) {
-    return Slot
-  }
+  if (asChild) return Slot
+
+  if (as) return as
 
   if (textVariantToElement[variant]) {
     return textVariantToElement[variant]
   }
 
-  return (as ?? 'span') as ElementType
+  return 'span' as ElementType
 }
 
 type TextProps<E extends TextElement = 'span'> = Omit<ComponentProps<E>, 'color'> &
   Omit<VariantProps<typeof textVariants>, 'variant'> & {
-    variant: Exclude<VariantProps<typeof textVariants>['variant'], undefined | null>
+    variant: TextVariant
     /**
      * Shorthand for changing the default rendered element
      * into a semantically appropriate alternative.
@@ -122,19 +132,23 @@ type TextProps<E extends TextElement = 'span'> = Omit<ComponentProps<E>, 'color'
 const Text = <E extends TextElement = 'span'>({
   className,
   children,
+  truncate,
   variant,
-  as,
   asChild,
   align,
   color,
-  truncate,
   wrap,
+  as,
   ...props
 }: TextProps<E>) => {
   const Comp = getTextNode({ as, variant, asChild })
+  const isHeading = !as && !!variant?.startsWith('heading')
 
   return (
-    <Comp className={cn(textVariants({ variant, align, color, truncate, wrap }), className)} {...props}>
+    <Comp
+      className={cn(textVariants({ variant, align, color, truncate, wrap }), className)}
+      {...{ ...wrapConditionalObjectElement({ role: 'heading' }, isHeading), ...props }}
+    >
       {children}
     </Comp>
   )

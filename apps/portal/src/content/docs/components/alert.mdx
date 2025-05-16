@@ -4,7 +4,7 @@ description: Alert component
 beta: true
 ---
 
-The `Alert` component provides a flexible UI element for displaying alert messages. It is composed of several subcomponents such as `AlertRoot`, `AlertTitle`, `AlertDescription`, and `AlertLink` to offer a structured and customizable interface.
+The `Alert` component provides a flexible UI element for displaying alert messages. It is composed of several subcomponents such as `Alert.Root`, `Alert.Title`, `Alert.Description`, and `Alert.Link` to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -16,7 +16,7 @@ import { DocsPage } from "@/components/docs-page";
     <Alert.Description>This is an alert description.</Alert.Description>
   </Alert.Root>
   <Alert.Root theme="danger" dismissible>
-    <Alert.Description >We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies or contact your administrator for clarification, then try creating the feature flag again.</Alert.Description>
+    <Alert.Description>We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies or contact your administrator for clarification, then try creating the feature flag again.</Alert.Description>
   </Alert.Root>
   <Alert.Root theme="warning" dismissible>
     <Alert.Title>Warning Alert</Alert.Title>
@@ -25,26 +25,26 @@ import { DocsPage } from "@/components/docs-page";
   <Alert.Root dismissible>
     <Alert.Title>Dismissible Alert</Alert.Title>
   </Alert.Root>
-  <Alert.Root >
+  <Alert.Root>
     <Alert.Title>Link Alert</Alert.Title>
     <Alert.Link to="/abc">Learn more</Alert.Link>
   </Alert.Root>
-  <Alert.Root >
+  <Alert.Root>
     <Alert.Title theme="warning">Link Alert as child</Alert.Title>
     <Alert.Link to="/abc" asChild><Button>Learn more</Button></Alert.Link>
   </Alert.Root>
   <Alert.Root theme="danger">
     <Alert.Title>Crowded Alert not expandable</Alert.Title>
-    <Alert.Description >LoremLorem ipsum dolor sit amet consectetur adipisicing elit. Unde molestiae hic, iste nostrum, quia eaque amet autem optio rem earum nihil rerum illo! Possimus</Alert.Description>
+    <Alert.Description>LoremLorem ipsum dolor sit amet consectetur adipisicing elit. Unde molestiae hic, iste nostrum, quia eaque amet autem optio rem earum nihil rerum illo! Possimus</Alert.Description>
   </Alert.Root>
   <Alert.Root expandable>
     <Alert.Title>Crowded Alert</Alert.Title>
-    <Alert.Description >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
+    <Alert.Description>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
     <Alert.Link to="/abc">Learn more</Alert.Link>
   </Alert.Root>
   <Alert.Root theme="danger" expandable>
     <Alert.Title>Crowded Alert</Alert.Title>
-    <Alert.Description >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
+    <Alert.Description>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
   </Alert.Root>
   <Alert.Root theme="warning" expandable>
     <Alert.Title>Crowded Alert</Alert.Title>
@@ -52,7 +52,14 @@ import { DocsPage } from "@/components/docs-page";
   </Alert.Root>
   <Alert.Root expandable>
     <Alert.Title>Expandable but not crowded</Alert.Title>
-    <Alert.Description >LoremLorem ipsum dolor sit amet consectetur adipisicing elit. Unde molestiae hic</Alert.Description>
+    <Alert.Description>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</Alert.Description>
+  </Alert.Root>
+  <Alert.Root theme="danger" expandable>
+    <Alert.Title>Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title</Alert.Title>
+    <Alert.Description>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
+  </Alert.Root>
+  <Alert.Root theme="warning" expandable>
+    <Alert.Description>Without Title Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
   </Alert.Root>
 </div>`}
 />
@@ -62,22 +69,19 @@ import { DocsPage } from "@/components/docs-page";
 ```typescript jsx
 import { Alert } from '@harnessio/ui/components'
 
+//...
+
 return (
   <Alert.Root
     theme="info"
     expandable
     dismissible
-    onDismiss={handleDismiss}
   >
     <Alert.Title>My Alert</Alert.Title>
 
     <Alert.Description>This is the description of the alert</Alert.Description>
 
-    <Alert.Link
-      to="someplace"
-      external
-      asChild
-    >
+    <Alert.Link to="/someplace">
       Learn more
     </Alert.Link>
   </Alert.Root>
@@ -92,12 +96,13 @@ All parts of the `Alert` component can be imported and composed as required.
 <Alert.Root>
   <Alert.Title />
   <Alert.Description />
+  <Alert.Link />
 </Alert.Root>
 ```
 
 ## API Reference
 
-### Root
+### `Root`
 
 The `Root` component serves as the main container for all alert elements.
 
@@ -106,17 +111,15 @@ The `Root` component serves as the main container for all alert elements.
     {
       name: "children",
       description:
-        "You can pass in your `Alert.Title` and `Alert.Description` as children",
+        "You can pass in your `Alert.Title`, `Alert.Description` and `Alert.Link` as children",
       required: true,
       value: "ReactNode",
-      defaultValue: "",
     },
     {
       name: "className",
       description: "Additional class names to apply to the alert container",
       required: false,
       value: "string",
-      defaultValue: "",
     },
     {
       name: "theme",
@@ -124,7 +127,6 @@ The `Root` component serves as the main container for all alert elements.
         "Theme of the alert. Can be one of 'info', 'warning', or 'danger'.",
       required: false,
       value: "'info' | 'warning' | 'danger'",
-      defaultValue: "'info'",
     },
     {
       name: "dismissible",
@@ -132,7 +134,6 @@ The `Root` component serves as the main container for all alert elements.
         "If true, the alert can be dismissed by the user. Default is false.",
       required: false,
       value: "boolean",
-      defaultValue: "false",
     },
     {
       name: "expandable",
@@ -140,7 +141,6 @@ The `Root` component serves as the main container for all alert elements.
         "If true, the alert can be expanded to show more content. Default is false.",
       required: false,
       value: "boolean",
-      defaultValue: "false",
     },
     {
       name: "onDismiss",
@@ -148,12 +148,11 @@ The `Root` component serves as the main container for all alert elements.
         "Callback function that is called when the alert is dismissed.",
       required: false,
       value: "() => void",
-      defaultValue: "",
     },
   ]}
 />
 
-### Title
+### `Title`
 
 The `Title` component displays the title of the alert.
 
@@ -178,7 +177,7 @@ The `Title` component displays the title of the alert.
   ]}
 />
 
-### Description
+### `Description`
 
 The `Description` component displays the description of the alert.
 
@@ -203,7 +202,7 @@ The `Description` component displays the description of the alert.
   ]}
 />
 
-### Link
+### `Link`
 
 The `Link` component is used to create a link within the alert.
 

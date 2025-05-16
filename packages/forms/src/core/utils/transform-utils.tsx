@@ -20,8 +20,8 @@ export function inputTransformValues(values: Record<string, any>, transformerIte
         ? transformItem.inputTransform
         : [transformItem.inputTransform]
 
-      const rawValue = get(retValues, transformItem.path)
       inputTransform.forEach(inTransform => {
+        const rawValue = get(retValues, transformItem.path)
         const transformedObj = inTransform(rawValue, retValues)
         if (transformedObj) {
           set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
@@ -41,8 +41,8 @@ export function outputTransformValues(values: Record<string, any>, transformerIt
         ? transformItem.outputTransform
         : [transformItem.outputTransform]
 
-      const rawValue = get(retValues, transformItem.path)
       outputTransform.forEach(outTransform => {
+        const rawValue = get(retValues, transformItem.path)
         const transformedObj = outTransform(rawValue, retValues)
         if (transformedObj) {
           set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)

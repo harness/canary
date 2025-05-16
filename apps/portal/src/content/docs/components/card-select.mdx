@@ -193,11 +193,59 @@ Cards can display either an icon or a logo:
   </div>`}
 />
 
+### Disabled
+
+Cards can be disabled either individually or as a group:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Individual Cards Disabled</h1>
+      <CardSelect.Root type="single">
+        <CardSelect.Item value="enabled" icon="branch">
+          <CardSelect.Title>Enabled Card</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="disabled" icon="branch" disabled>
+          <CardSelect.Title>Disabled Card</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Entire Group Disabled</h1>
+      <CardSelect.Root type="single" disabled>
+        <CardSelect.Item value="one" icon="branch">
+          <CardSelect.Title>First Option</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="two" icon="branch">
+          <CardSelect.Title>Second Option</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+  </div>`}
+/>
+
 ## API Reference
 
 ### Root
 
 The `CardSelect.Root` is the top-level wrapper that controls selection state.
+
+```typescript jsx
+<CardSelect.Root
+  type="single"                     // Required: 'single' or 'multiple'
+  value={selectedValue}             // [OPTIONAL] For controlled usage
+  defaultValue={defaultValue}       // [OPTIONAL] For selecting item initially
+  onValueChange={handleChange}      // [OPTIONAL] Selection change handler
+  orientation="horizontal"           // [OPTIONAL] Card layout direction
+  gap="md"                          // [OPTIONAL] Space between cards
+  disabled={false}                  // [OPTIONAL] Disable all selections
+>
+  {/* CardSelect.Item components */}
+</CardSelect.Root>
+```
 
 <DocsPage.PropsTable
   props={[
@@ -256,6 +304,17 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
 
 Represents an individual selectable card option.
 
+```typescript jsx
+<CardSelect.Item
+  value="unique-id"               // Required: Unique identifier
+  icon="branch"                  // [OPTIONAL] Icon to display
+  logo="gitlab"                  // [OPTIONAL] Logo instead of icon
+  disabled={false}               // [OPTIONAL] Disable this item
+>
+  {/* CardSelect.Title and CardSelect.Description */}
+</CardSelect.Item>
+```
+
 <DocsPage.PropsTable
   props={[
     {
@@ -289,6 +348,12 @@ Represents an individual selectable card option.
 ### Title
 
 Displays the main heading for a card item.
+
+```typescript jsx
+<CardSelect.Title>
+  Option Title
+</CardSelect.Title>
+```
 
 <DocsPage.PropsTable
   props={[

@@ -12,7 +12,7 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`
   <div className="flex flex-col space-y-8">
-    <CardSelect.Root type="single" orientation="horizontal">
+    <CardSelect.Root type="single" orientation="horizontal" onValueChange={console.log}>
       <CardSelect.Item value="option-1">
         <CardSelect.Title>Option 1</CardSelect.Title>
       </CardSelect.Item>
@@ -21,7 +21,7 @@ import { DocsPage } from "@/components/docs-page";
       </CardSelect.Item>
     </CardSelect.Root>
   
-    <CardSelect.Root type="multiple" defaultValue={["one"]}>
+    <CardSelect.Root type="multiple" defaultValue={["one"]} onValueChange={console.log}>
       <CardSelect.Item value="one">
         <CardSelect.Title>Option A</CardSelect.Title>
       </CardSelect.Item>

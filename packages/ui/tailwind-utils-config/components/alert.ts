@@ -57,7 +57,11 @@ export default {
     '&-content': {
       background: 'inherit',
       gap: 'var(--cn-spacing-1)',
-      '@apply grid relative': ''
+      '@apply grid relative': '',
+
+      '&-overflow': {
+        overflow: 'hidden'
+      }
     },
 
     '&-content-expanded': {
@@ -65,6 +69,10 @@ export default {
     },
 
     '&-min-h-content': {
+      '@apply min-h-[70px]': ''
+    },
+
+    '&-min-h-content-no-title': {
       '@apply min-h-[60px]': ''
     },
 
@@ -87,15 +95,6 @@ export default {
         opacity: '0',
         transition: 'visibility 0s 2s, opacity 0.2s linear'
       }
-    },
-
-    '&-rotate-180': {
-      transform: 'rotate(180deg)',
-      transition: 'transform 0.2s ease-out'
-    },
-
-    '&-overflow': {
-      overflow: 'hidden'
     },
 
     '&-title': {
@@ -123,7 +122,12 @@ export default {
     '&-expand-button': {
       '&-icon': {
         width: 'var(--cn-icon-size-default)',
-        height: 'var(--cn-icon-size-default)'
+        height: 'var(--cn-icon-size-default)',
+
+        '&-rotate-180': {
+          transform: 'rotate(180deg)',
+          transition: 'transform 0.2s ease-out'
+        }
       }
     },
 

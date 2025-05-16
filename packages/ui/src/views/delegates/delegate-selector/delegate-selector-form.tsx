@@ -104,7 +104,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
     mode: 'onChange',
     defaultValues: {
       type: preSelectedTags?.length || disableAnyDelegate ? DelegateSelectionTypes.TAGS : DelegateSelectionTypes.ANY,
-      tags: preSelectedTags?.length ? preSelectedTags.map(tag => ({ id: tag, label: tag })) : []
+      tags: preSelectedTags?.length ? preSelectedTags?.map(tag => ({ id: tag, label: tag })) : []
     }
   })
 

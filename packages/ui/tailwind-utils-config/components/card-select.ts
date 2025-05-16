@@ -64,12 +64,16 @@ export default {
 
     '.cn-card-select-title': {
       color: 'var(--cn-text-1)',
-      '@apply font-body-strong mb-1': ''
+      '@apply font-body-strong': ''
     },
 
     '.cn-card-select-description': {
       color: 'var(--cn-text-2)',
       '@apply font-body-normal': ''
+    },
+
+    '.cn-card-select-title + .cn-card-select-description': {
+      '@apply mt-1': ''
     },
 
     '.cn-card-select-icon, .cn-card-select-logo': {

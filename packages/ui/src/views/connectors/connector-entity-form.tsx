@@ -9,6 +9,7 @@ import {
   getTransformers,
   InputFactory,
   inputTransformValues,
+  outputTransformValues,
   RenderForm,
   RootForm,
   useZodValidationResolver
@@ -138,7 +139,10 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
       resolver={resolver}
       mode="onSubmit"
       onSubmit={values => {
-        onSubmit({ values, connector, intent })
+        const definition = getConnectorDefinition(connector.type)
+        const transformers = definition ? getTransformers(definition?.formDefinition) : undefined
+        const transformedValues = transformers?.length ? outputTransformValues(values, transformers) : values
+        onSubmit({ values: transformedValues, connector, intent })
       }}
       validateAfterFirstSubmit={true}
     >

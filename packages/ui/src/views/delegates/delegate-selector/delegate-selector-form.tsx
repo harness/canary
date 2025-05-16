@@ -118,7 +118,6 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   } = formMethods
 
   const onSubmit: SubmitHandler<DelegateSelectorFormFields> = data => {
-    console.log('onSubmit')
     onFormSubmit(data)
     reset()
   }
@@ -236,9 +235,12 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
         <Button variant="outline" onClick={onBack}>
           Back
         </Button>
-        <Button onClick={handleSubmit(onSubmit)}>
+        <Button
+          onClick={handleSubmit(onSubmit)}
+          disabled={delegateType === DelegateSelectionTypes.TAGS && selectedTags.length === 0}
+        >
           Connect&nbsp;
-          {delegateType === DelegateSelectionTypes.TAGS ? matchedDelegates : 'any'}&nbsp;
+          {delegateType === DelegateSelectionTypes.TAGS ? (matchedDelegates > 0 ? matchedDelegates : '') : 'any'}&nbsp;
           {delegateType === DelegateSelectionTypes.TAGS && matchedDelegates > 1 ? 'delegates' : 'delegate'}
         </Button>
       </Footer>

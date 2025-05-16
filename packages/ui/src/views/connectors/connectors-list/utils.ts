@@ -13,7 +13,9 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, LogoName> = ne
   ['AwsSecretManager', 'awsSecretsManager'],
   ['Gcp', 'gcp'],
   ['GcpSecretManager', 'gcpSecretManager'],
+  ['GcpKms', 'gcpSecretManager'],
   ['AwsKms', 'awskms'],
   ['TerraformCloud', 'terraform'],
-  ['Vault', 'hashiCorpVault']
+  ['Vault', 'hashiCorpVault'],
+  ['HttpHelmRepo', 'helm']
 ])

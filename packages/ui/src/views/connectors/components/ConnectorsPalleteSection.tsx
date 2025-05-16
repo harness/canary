@@ -9,10 +9,11 @@ export interface ConnectorsPaletteSectionProps {
   connectors: AnyConnectorDefinition[]
   onSelect: (step: AnyConnectorDefinition) => void
   useTranslationStore: () => TranslationStore
+  showCategory?: boolean
 }
 
 export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
-  const { connectors, onSelect, useTranslationStore } = props
+  const { connectors, onSelect, useTranslationStore, showCategory } = props
   const { t: _t } = useTranslationStore()
 
   return (
@@ -34,9 +35,11 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                     {connector.name}
                   </StepsPaletteItemLayout.Title>
                 </StepsPaletteItemLayout.Header>
-                <StepsPaletteItemLayout.Description className="text-cn-foreground-4">
-                  {connector.category}
-                </StepsPaletteItemLayout.Description>
+                {showCategory && (
+                  <StepsPaletteItemLayout.Description className="text-cn-foreground-4">
+                    {connector.category}
+                  </StepsPaletteItemLayout.Description>
+                )}
               </StepsPaletteItemLayout.Right>
               <StepsPaletteItemLayout.RightItem>
                 <Icon name="chevron-right" size={12} />

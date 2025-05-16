@@ -28,16 +28,16 @@ export const SecretsHeader = ({
 
   const options: Array<RadioSelectOption<SecretType>> = [
     {
-      id: 'new-secret',
-      title: 'New Secret',
-      description: 'Create a new secret.',
-      value: SecretType.NEW
-    },
-    {
       id: 'existing-secret',
-      title: 'Existing Secret',
+      title: 'Existing',
       description: 'Use an existing secret.',
       value: SecretType.EXISTING
+    },
+    {
+      id: 'new-secret',
+      title: 'New',
+      description: 'Create a new secret.',
+      value: SecretType.NEW
     }
   ]
 

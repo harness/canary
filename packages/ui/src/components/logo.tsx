@@ -8,6 +8,7 @@ import {
   siGithub,
   siGitlab,
   siGooglecloud,
+  siHelm,
   siJira,
   siKubernetes,
   siTerraform,
@@ -29,6 +30,7 @@ export type LogoName =
   | 'hashiCorpVault'
   | 'awsSecretsManager'
   | 'gcpSecretManager'
+  | 'helm'
 
 const LogoNameMap: Record<LogoName, SimpleIcon> = {
   github: siGithub,
@@ -43,7 +45,8 @@ const LogoNameMap: Record<LogoName, SimpleIcon> = {
   docker: siDocker,
   hashiCorpVault: siVault,
   gcp: siGooglecloud,
-  gcpSecretManager: siGooglecloud
+  gcpSecretManager: siGooglecloud,
+  helm: siHelm
 }
 
 export interface LogoProps extends SVGProps<SVGSVGElement> {

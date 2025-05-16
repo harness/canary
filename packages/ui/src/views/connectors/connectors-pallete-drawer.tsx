@@ -11,7 +11,6 @@ const componentsMap: Record<
   {
     Header: ElementType
     Title: ElementType
-    Description: ElementType
     Content: ElementType
     Inner: ElementType
   }
@@ -19,14 +18,12 @@ const componentsMap: Record<
   true: {
     Header: Drawer.Header,
     Title: Drawer.Title,
-    Description: Drawer.Description,
     Content: Drawer.Content,
     Inner: Drawer.Inner
   },
   false: {
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
-    Description: EntityFormLayout.Description,
     Content: 'div',
     Inner: 'div'
   }
@@ -39,8 +36,8 @@ interface ConnectorsPaletteProps {
   onSelectConnector: () => void
   useTranslationStore: () => TranslationStore
   title?: string
-  subtitle?: string
   isDrawer?: boolean
+  showCategory?: boolean
 }
 
 export const ConnectorsPalette = ({
@@ -50,11 +47,11 @@ export const ConnectorsPalette = ({
   onSelectConnector,
   useTranslationStore,
   title = 'Connector Setup',
-  subtitle = 'Select a Connector',
-  isDrawer = false
+  isDrawer = false,
+  showCategory
 }: ConnectorsPaletteProps): JSX.Element => {
   const { t: _t } = useTranslationStore()
-  const { Header, Title, Description, Content, Inner } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Header, Title, Content, Inner } = componentsMap[isDrawer ? 'true' : 'false']
 
   const [query, setQuery] = useState('')
 
@@ -68,7 +65,6 @@ export const ConnectorsPalette = ({
     <Content>
       <Header>
         <Title>{title}</Title>
-        <Description>{subtitle}</Description>
         <Input
           placeholder={'Search'}
           onChange={value => {
@@ -88,6 +84,7 @@ export const ConnectorsPalette = ({
             onSelectConnector()
           }}
           useTranslationStore={useTranslationStore}
+          showCategory={showCategory}
         />
       </Inner>
       {isDrawer && (

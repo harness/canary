@@ -1,18 +1,14 @@
-import { forwardRef, useRef } from 'react'
+import { forwardRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Textarea, TextareaProps } from '@components/form-primitives'
-import { useMergeRefs } from '@utils/mergeUtils'
 
 interface FormTextareaPropsType extends TextareaProps {
   name: string
 }
 
 const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaPropsType>((props, ref) => {
-  const inputRef = useRef<HTMLTextAreaElement | null>(null)
-
   const formContext = useFormContext()
-  const mergedRef = useMergeRefs<HTMLTextAreaElement>([inputRef, ref])
 
   if (!formContext) {
     throw new Error(
@@ -26,12 +22,12 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaPropsType>((pro
       control={formContext.control}
       render={({ field, fieldState }) => {
         const error = fieldState.error?.message ?? props.error
-        return <Textarea {...{ ...props, ...field, error }} ref={mergedRef} theme={error ? 'danger' : 'default'} />
+        return <Textarea {...{ ...props, ...field, error }} ref={ref} theme={error ? 'danger' : 'default'} />
       }}
     />
   )
 })
 
-FormTextarea.displayName = 'FormInput.Text'
+FormTextarea.displayName = 'FormInput.Textarea'
 
 export { FormTextarea, type FormTextareaPropsType }

@@ -31,7 +31,7 @@ interface ProjectSettingsGeneralPageProps {
 
 const projectSettingsSchema = z.object({
   identifier: z.string().min(1, { message: 'Please provide a project name' }),
-  description: z.string().max(1024, { message: 'Description is too long' }).optional()
+  description: z.string()
 })
 
 export type ProjectSettingsGeneralFields = z.infer<typeof projectSettingsSchema>

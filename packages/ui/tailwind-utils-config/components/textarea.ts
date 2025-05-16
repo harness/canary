@@ -7,7 +7,7 @@ function createInputThemeStyles() {
   const styles: CSSRuleObject = {}
 
   themes.forEach(theme => {
-    styles[`&:where(.cn-textarea-${theme}):not(textarea[disabled])`] = {
+    styles[`&:where(.cn-textarea-${theme}):not(:disabled)`] = {
       borderColor: `var(--cn-border-${theme})`,
       boxShadow: `var(--cn-ring-${theme})`,
 
@@ -32,9 +32,7 @@ export default {
     padding:
       'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)',
     minHeight: 'var(--cn-input-text-area-min-height)',
-    borderWidth: 'var(--cn-input-border)',
-    borderStyle: 'solid',
-    borderColor: 'var(--cn-border-2)',
+    border: 'var(--cn-input-border) solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-2)',
     '@apply font-body-normal': '',
     color: 'var(--cn-text-1)',
@@ -56,7 +54,7 @@ export default {
       outline: 'none'
     },
 
-    '&:where(textarea[disabled])': {
+    '&:where(:disabled)': {
       backgroundColor: 'var(--cn-state-disabled-bg)',
       borderColor: 'var(--cn-state-disabled-border)',
       color: 'var(--cn-state-disabled-text)',
@@ -67,12 +65,12 @@ export default {
       }
     },
 
-    '&:where(textarea[readonly])': {
+    '&:where(:readonly)': {
       backgroundColor: 'var(--cn-state-disabled-bg)',
       borderColor: 'var(--cn-state-disabled-border)'
     },
 
-    '&:where(:hover):not(textarea[disabled]):not(.cn-textarea-danger)': {
+    '&:where(:hover):not(:disabled):not(.cn-textarea-danger)': {
       borderColor: 'var(--cn-border-1)'
     },
 

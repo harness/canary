@@ -3,7 +3,7 @@ export default {
     border: 'var(--cn-card-border) solid var(--cn-border-2)',
     borderRadius: 'var(--cn-card-default-radius)',
     backgroundColor: 'var(--cn-bg-2)',
-    '&:hover': {
+    '&:hover:not(.cn-card-disabled)': {
       borderColor: 'var(--cn-border-1)'
     },
     '@apply flex overflow-hidden': '',
@@ -80,7 +80,8 @@ export default {
       borderColor: 'var(--cn-border-accent)'
     },
     '&:where(.cn-card-disabled)': {
-      opacity: `var(--cn-disabled-opacity)`
+      opacity: `var(--cn-disabled-opacity)`,
+      '@apply cursor-not-allowed': ''
     }
   }
 }

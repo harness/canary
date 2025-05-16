@@ -1,0 +1,391 @@
+---
+title: CardSelect
+description: A card-based selection interface for single and multiple selections
+beta: true
+---
+
+The `CardSelect` component provides an accessible and customizable card-based selection interface. It supports both single and multiple selection modes, making it suitable for forms, settings, and decision workflows.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <div className="flex flex-col space-y-8">
+    <CardSelect.Root type="single" orientation="horizontal" onValueChange={console.log}>
+      <CardSelect.Item value="option-1">
+        <CardSelect.Title>Option 1</CardSelect.Title>
+      </CardSelect.Item>
+      <CardSelect.Item value="option-2">
+        <CardSelect.Title>Option 2</CardSelect.Title>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  
+    <CardSelect.Root type="multiple" defaultValue={["one"]} onValueChange={console.log}>
+      <CardSelect.Item value="one">
+        <CardSelect.Title>Option A</CardSelect.Title>
+      </CardSelect.Item>
+      <CardSelect.Item value="two">
+        <CardSelect.Title>Option B</CardSelect.Title>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { CardSelect } from "@harnessio/ui/components";
+
+// ...
+
+return (
+  <CardSelect.Root type="single">
+    <CardSelect.Item value="option-1" icon="branch">
+      <CardSelect.Title>Option 1</CardSelect.Title>
+      <CardSelect.Description>With an icon</CardSelect.Description>
+    </CardSelect.Item>
+
+    <CardSelect.Item value="option-2" logo="jira">
+      <CardSelect.Title>Option 2</CardSelect.Title>
+      <CardSelect.Description>With a logo</CardSelect.Description>
+    </CardSelect.Item>
+  </CardSelect.Root>
+)
+```
+
+### Selection Modes
+
+The `CardSelect` supports two selection types:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-8">
+  <div className="flex flex-col space-y-2">
+    <h1 className="text-lg font-semibold">Single Selection</h1>
+    <CardSelect.Root type="single" defaultValue="single-1">
+      <CardSelect.Item value="single-1" logo="gitlab">
+        <CardSelect.Title>Option 1</CardSelect.Title>
+        <CardSelect.Description>Behaves like a radio group</CardSelect.Description>
+      </CardSelect.Item>
+      <CardSelect.Item value="single-2" logo="bitbucket">
+        <CardSelect.Title>Option 2</CardSelect.Title>
+        <CardSelect.Description>Behaves like a radio group</CardSelect.Description>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  </div>
+
+  <div className="flex flex-col space-y-2">
+    <h1 className="text-lg font-semibold">Multiple Selection</h1>
+    <CardSelect.Root type="multiple" defaultValue={["multi-1", "multi-2"]}>
+      <CardSelect.Item value="multi-1" icon="pr-draft">
+        <CardSelect.Title>Option A</CardSelect.Title>
+        <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
+      </CardSelect.Item>
+      <CardSelect.Item value="multi-2" icon="merged">
+        <CardSelect.Title>Option B</CardSelect.Title>
+        <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  </div>
+</div>`}
+/>
+
+### Orientation
+
+Cards can be arranged horizontally or vertically:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Vertical Layout (Default)</h1>
+      <CardSelect.Root type="single" orientation="vertical">
+        <CardSelect.Item value="v1">
+          <CardSelect.Title>First Card</CardSelect.Title>
+          <CardSelect.Description>Cards stacked vertically</CardSelect.Description>
+        </CardSelect.Item>
+        <CardSelect.Item value="v2">
+          <CardSelect.Title>Second Card</CardSelect.Title>
+          <CardSelect.Description>Below the first card</CardSelect.Description>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Horizontal Layout</h1>
+      <CardSelect.Root type="single" orientation="horizontal">
+        <CardSelect.Item value="h1">
+          <CardSelect.Title>First Card</CardSelect.Title>
+          <CardSelect.Description>Cards arranged side by side</CardSelect.Description>
+        </CardSelect.Item>
+        <CardSelect.Item value="h2">
+          <CardSelect.Title>Second Card</CardSelect.Title>
+          <CardSelect.Description>In the same row</CardSelect.Description>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+  </div>`}
+/>
+
+### Gap
+
+Control the gap between cards using the `gap` prop:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Small Gap</h1>
+      <CardSelect.Root type="single" gap="sm" orientation="horizontal">
+        <CardSelect.Item value="small-1">
+          <CardSelect.Title>Small 1</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="small-2">
+          <CardSelect.Title>Small 2</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="small-3">
+          <CardSelect.Title>Small 3</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Medium Gap (Default)</h1>
+      <CardSelect.Root type="single" gap="md" orientation="horizontal">
+        <CardSelect.Item value="medium-1">
+          <CardSelect.Title>Medium 1</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="medium-2">
+          <CardSelect.Title>Medium 2</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="medium-3">
+          <CardSelect.Title>Medium 3</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Large Gap</h1>
+      <CardSelect.Root type="single" gap="lg" orientation="horizontal">
+        <CardSelect.Item value="large-1">
+          <CardSelect.Title>Large 1</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="large-2">
+          <CardSelect.Title>Large 2</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="large-3">
+          <CardSelect.Title>Large 3</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+  </div>`}
+/>
+
+### Icons and Logos
+
+Cards can display either an icon or a logo:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-4">
+    <CardSelect.Root type="single">
+      <CardSelect.Item value="icon" icon="branch">
+        <CardSelect.Title>With Icon</CardSelect.Title>
+      </CardSelect.Item>
+      <CardSelect.Item value="logo" logo="kubernetes">
+        <CardSelect.Title>With Logo</CardSelect.Title>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  </div>`}
+/>
+
+### Disabled
+
+Cards can be disabled either individually or as a group:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Individual Cards Disabled</h1>
+      <CardSelect.Root type="single">
+        <CardSelect.Item value="enabled" icon="branch">
+          <CardSelect.Title>Enabled Card</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="disabled" icon="branch" disabled>
+          <CardSelect.Title>Disabled Card</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Entire Group Disabled</h1>
+      <CardSelect.Root type="single" disabled>
+        <CardSelect.Item value="one" icon="branch">
+          <CardSelect.Title>First Option</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="two" icon="branch">
+          <CardSelect.Title>Second Option</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+  </div>`}
+/>
+
+## API Reference
+
+### Root
+
+The `CardSelect.Root` is the top-level wrapper that controls selection state.
+
+```typescript jsx
+<CardSelect.Root
+  type="single"                     // Required: 'single' or 'multiple'
+  value={selectedValue}             // [OPTIONAL] For controlled usage
+  defaultValue={defaultValue}       // [OPTIONAL] For selecting item initially
+  onValueChange={handleChange}      // [OPTIONAL] Selection change handler
+  orientation="horizontal"           // [OPTIONAL] Card layout direction
+  gap="md"                          // [OPTIONAL] Space between cards
+  disabled={false}                  // [OPTIONAL] Disable all selections
+>
+  {/* CardSelect.Item components */}
+</CardSelect.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "type",
+      description: "Selection mode of the component.",
+      required: true,
+      value: "'single' | 'multiple'",
+    },
+    {
+      name: "value",
+      description: "Current selected value(s) for controlled usage.",
+      required: false,
+      value: "unknown | unknown[]",
+      defaultValue: "undefined | []",
+    },
+    {
+      name: "defaultValue",
+      description: "Initial value(s) for uncontrolled usage.",
+      required: false,
+      value: "unknown | unknown[]",
+      defaultValue: "undefined",
+    },
+    {
+      name: "onValueChange",
+      description: "Callback fired when selection changes.",
+      required: false,
+      value: "(val: unknown) => void | (val: unknown[]) => void",
+      defaultValue: "undefined",
+    },
+    {
+      name: "orientation",
+      description: "Layout direction of the cards.",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      defaultValue: "'vertical'",
+    },
+    {
+      name: "gap",
+      description: "Space between cards.",
+      required: false,
+      value: "'sm' | 'md' | 'lg'",
+      defaultValue: "'md'",
+    },
+    {
+      name: "disabled",
+      description: "When true, disables all selections.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### Item
+
+Represents an individual selectable card option.
+
+```typescript jsx
+<CardSelect.Item
+  value="unique-id"               // Required: Unique identifier
+  icon="branch"                  // [OPTIONAL] Icon to display
+  logo="gitlab"                  // [OPTIONAL] Logo instead of icon
+  disabled={false}               // [OPTIONAL] Disable this item
+>
+  {/* CardSelect.Title and CardSelect.Description */}
+</CardSelect.Item>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Unique identifier for the item.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "icon",
+      description: "Icon to display in the card.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "logo",
+      description: "Logo to display instead of an icon.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "When true, prevents this item from being selected.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### Title
+
+Displays the main heading for a card item.
+
+```typescript jsx
+<CardSelect.Title>
+  Option Title
+</CardSelect.Title>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Text content of the title.",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### Description
+
+Provides additional details for a card item.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Text content of the description.",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

@@ -1,6 +1,6 @@
 ---
 title: CardSelect
-description: CardSelect component documentation
+description: A card-based selection interface for single and multiple selections
 beta: true
 ---
 
@@ -12,30 +12,116 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`
   <div className="flex flex-col space-y-8">
+    <CardSelect.Root type="single" orientation="horizontal">
+      <CardSelect.Item value="option-1">
+        <CardSelect.Title>Option 1</CardSelect.Title>
+      </CardSelect.Item>
+      <CardSelect.Item value="option-2">
+        <CardSelect.Title>Option 2</CardSelect.Title>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  
+    <CardSelect.Root type="multiple" defaultValue={["one"]}>
+      <CardSelect.Item value="one">
+        <CardSelect.Title>Option A</CardSelect.Title>
+      </CardSelect.Item>
+      <CardSelect.Item value="two">
+        <CardSelect.Title>Option B</CardSelect.Title>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { CardSelect } from "@harnessio/ui/components";
+
+// ...
+
+return (
+  <CardSelect.Root type="single">
+    <CardSelect.Item value="option-1" icon="branch">
+      <CardSelect.Title>Option 1</CardSelect.Title>
+      <CardSelect.Description>With an icon</CardSelect.Description>
+    </CardSelect.Item>
+
+    <CardSelect.Item value="option-2" logo="jira">
+      <CardSelect.Title>Option 2</CardSelect.Title>
+      <CardSelect.Description>With a logo</CardSelect.Description>
+    </CardSelect.Item>
+  </CardSelect.Root>
+)
+```
+
+### Selection Modes
+
+The `CardSelect` supports two selection types:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-8">
+  <div className="flex flex-col space-y-2">
+    <h1 className="text-lg font-semibold">Single Selection</h1>
+    <CardSelect.Root type="single" defaultValue="single-1">
+      <CardSelect.Item value="single-1" logo="gitlab">
+        <CardSelect.Title>Option 1</CardSelect.Title>
+        <CardSelect.Description>Behaves like a radio group</CardSelect.Description>
+      </CardSelect.Item>
+      <CardSelect.Item value="single-2" logo="bitbucket">
+        <CardSelect.Title>Option 2</CardSelect.Title>
+        <CardSelect.Description>Behaves like a radio group</CardSelect.Description>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  </div>
+
+  <div className="flex flex-col space-y-2">
+    <h1 className="text-lg font-semibold">Multiple Selection</h1>
+    <CardSelect.Root type="multiple" defaultValue={["multi-1", "multi-2"]}>
+      <CardSelect.Item value="multi-1" icon="pr-draft">
+        <CardSelect.Title>Option A</CardSelect.Title>
+        <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
+      </CardSelect.Item>
+      <CardSelect.Item value="multi-2" icon="merged">
+        <CardSelect.Title>Option B</CardSelect.Title>
+        <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  </div>
+</div>`}
+/>
+
+### Orientation
+
+Cards can be arranged horizontally or vertically:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-8">
     <div className="flex flex-col space-y-2">
-      <h1 className="text-lg font-semibold">Single Selection Card</h1>
-      <CardSelect.Root type="single" onValueChange={(val) => console.log(val)}>
-        <CardSelect.Item value="option-1" icon="branch">
-          <CardSelect.Title>Option 1</CardSelect.Title>
-          <CardSelect.Description>With an icon</CardSelect.Description>
+      <h1 className="text-lg font-semibold">Vertical Layout (Default)</h1>
+      <CardSelect.Root type="single" orientation="vertical">
+        <CardSelect.Item value="v1">
+          <CardSelect.Title>First Card</CardSelect.Title>
+          <CardSelect.Description>Cards stacked vertically</CardSelect.Description>
         </CardSelect.Item>
-        <CardSelect.Item value="option-2" logo="jira">
-          <CardSelect.Title>Option 2</CardSelect.Title>
-          <CardSelect.Description>With a logo instead of an icon</CardSelect.Description>
+        <CardSelect.Item value="v2">
+          <CardSelect.Title>Second Card</CardSelect.Title>
+          <CardSelect.Description>Below the first card</CardSelect.Description>
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
 
     <div className="flex flex-col space-y-2">
-      <h1 className="text-lg font-semibold">Multiple Selection Card</h1>
-      <CardSelect.Root type="multiple" defaultValue={["one"]} onValueChange={(vals) => console.log(vals)}>
-        <CardSelect.Item value="one" icon="branch">
-          <CardSelect.Title>Option A</CardSelect.Title>
-          <CardSelect.Description>With an icon</CardSelect.Description>
+      <h1 className="text-lg font-semibold">Horizontal Layout</h1>
+      <CardSelect.Root type="single" orientation="horizontal">
+        <CardSelect.Item value="h1">
+          <CardSelect.Title>First Card</CardSelect.Title>
+          <CardSelect.Description>Cards arranged side by side</CardSelect.Description>
         </CardSelect.Item>
-        <CardSelect.Item value="two" logo="kubernetes">
-          <CardSelect.Title>Option B</CardSelect.Title>
-          <CardSelect.Description>With a logo instead of an icon</CardSelect.Description>
+        <CardSelect.Item value="h2">
+          <CardSelect.Title>Second Card</CardSelect.Title>
+          <CardSelect.Description>In the same row</CardSelect.Description>
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
@@ -43,56 +129,69 @@ import { DocsPage } from "@/components/docs-page";
   </div>`}
 />
 
-## Usage
+### Gap
 
-```typescript jsx
-import { CardSelect } from '@harnessio/ui/components'
+Control the gap between cards using the `gap` prop:
 
-// Controlled Single Selection
-const [selected, setSelected] = useState('option-1')
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Small Gap</h1>
+      <CardSelect.Root type="single" gap="sm" orientation="horizontal">
+        <CardSelect.Item value="gap1">
+          <CardSelect.Title>Small 1</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="gap2">
+          <CardSelect.Title>Small 2</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
 
-return (
-  <CardSelect.Root type="single" value={selected} onValueChange={setSelected}>
-    <CardSelect.Item value="option-1" icon="branch">
-      <CardSelect.Title>Controlled Option</CardSelect.Title>
-      <CardSelect.Description>External state management</CardSelect.Description>
-    </CardSelect.Item>
-  </CardSelect.Root>
-)
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Medium Gap (Default)</h1>
+      <CardSelect.Root type="single" gap="md" orientation="horizontal">
+        <CardSelect.Item value="gap3">
+          <CardSelect.Title>Medium 1</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="gap4">
+          <CardSelect.Title>Medium 2</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
 
-// Uncontrolled Multiple Selection
-return (
-  <CardSelect.Root
-    type="multiple"
-    defaultValue={['one']}
-  >
-    <CardSelect.Item value="one" icon="branch">
-      <CardSelect.Title>Uncontrolled Option</CardSelect.Title>
-      <CardSelect.Description>Internal state management</CardSelect.Description>
-    </CardSelect.Item>
-  </CardSelect.Root>
-)
-```
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Large Gap</h1>
+      <CardSelect.Root type="single" gap="lg" orientation="horizontal">
+        <CardSelect.Item value="gap5">
+          <CardSelect.Title>Large 1</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="gap6">
+          <CardSelect.Title>Large 2</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
 
-## Anatomy
+  </div>`}
+/>
 
-The `CardSelect` component is composed of the following parts:
+### Icons and Logos
 
-```typescript jsx
-<CardSelect.Root>
-  <CardSelect.Item>
-    <CardSelect.Title />
-    <CardSelect.Description />
-  </CardSelect.Item>
-</CardSelect.Root>
-```
+Cards can display either an icon or a logo:
 
-## Selection Modes
-
-The `CardSelect` supports two selection types:
-
-- `single`: Behaves like a radio group, allowing only one selection at a time
-- `multiple`: Behaves like a checkbox group, allowing multiple selections
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-4">
+    <CardSelect.Root type="single">
+      <CardSelect.Item value="icon" icon="branch">
+        <CardSelect.Title>With Icon</CardSelect.Title>
+      </CardSelect.Item>
+      <CardSelect.Item value="logo" logo="kubernetes">
+        <CardSelect.Title>With Logo</CardSelect.Title>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  </div>`}
+/>
 
 ## API Reference
 
@@ -128,6 +227,20 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
       required: false,
       value: "(val: unknown) => void | (val: unknown[]) => void",
       defaultValue: "undefined",
+    },
+    {
+      name: "orientation",
+      description: "Layout direction of the cards.",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      defaultValue: "'vertical'",
+    },
+    {
+      name: "gap",
+      description: "Space between cards.",
+      required: false,
+      value: "'sm' | 'md' | 'lg'",
+      defaultValue: "'md'",
     },
     {
       name: "disabled",
@@ -199,56 +312,6 @@ Provides additional details for a card item.
       description: "Text content of the description.",
       required: true,
       value: "ReactNode",
-    },
-  ]}
-/>
-
-### Title
-
-Defines the title text for an item.
-
-```tsx
-<CardSelect.Title>Primary Label</CardSelect.Title>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "children",
-      description: "Main title text.",
-      required: true,
-      value: "ReactNode",
-    },
-    {
-      name: "className",
-      description: "Optional styling classes.",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### Description
-
-Provides supporting details or context.
-
-```tsx
-<CardSelect.Description>Supporting description</CardSelect.Description>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "children",
-      description: "Supporting description text.",
-      required: true,
-      value: "ReactNode",
-    },
-    {
-      name: "className",
-      description: "Optional styling classes.",
-      required: false,
-      value: "string",
     },
   ]}
 />

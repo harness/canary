@@ -16,8 +16,7 @@ import {
   Radio,
   Select,
   Spacer,
-  Text,
-  Textarea
+  Text
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -132,12 +131,11 @@ export function RepoCreatePage({
               autoFocus
             />
             {/* DESCRIPTION */}
-            <Textarea
+            <FormInput.Textarea
               id="description"
               {...register('description')}
               placeholder="Enter a description of this repository"
               label="Description"
-              error={errors.description?.message?.toString()}
               optional
             />
           </Fieldset>

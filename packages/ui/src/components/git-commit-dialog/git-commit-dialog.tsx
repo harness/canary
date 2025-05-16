@@ -14,8 +14,7 @@ import {
   Link,
   Message,
   MessageTheme,
-  Radio,
-  Textarea
+  Radio
 } from '@/components'
 import { UsererrorError, ViolationState } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -153,7 +152,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
             {...register('message')}
             placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
           />
-          <Textarea
+          <FormInput.Textarea
             id="description"
             {...register('description')}
             placeholder="Add an optional extended description"

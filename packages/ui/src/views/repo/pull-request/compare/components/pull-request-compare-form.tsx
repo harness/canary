@@ -1,7 +1,7 @@
 import { forwardRef, MouseEvent, useRef, useState } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Button, Fieldset, FormInput, FormWrapper, Icon, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { Button, Fieldset, FormInput, FormWrapper, Icon, MarkdownViewer, Tabs } from '@/components'
 import { handleFileDrop, handlePaste, HandleUploadType, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { z } from 'zod'
@@ -38,11 +38,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
     }
     const [__file, setFile] = useState<File>()
 
-    const {
-      register,
-      handleSubmit,
-      formState: { errors }
-    } = formMethods
+    const { register, handleSubmit } = formMethods
 
     const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
     const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -135,7 +131,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                   onDragLeave={handleDragLeave}
                   ref={dropZoneRef}
                 >
-                  <Textarea
+                  <FormInput.Textarea
                     id="description"
                     {...register('description')}
                     value={desc}
@@ -152,7 +148,6 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                       }
                     }}
                     label={t('views:pullRequests.compareChangesFormDescriptionLabel', 'Description')}
-                    error={errors.description?.message?.toString()}
                   />
                   {isDragging && (
                     <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-cn-borders-2" />

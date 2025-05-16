@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Dialog, Fieldset, FormInput, FormWrapper, Textarea } from '@/components'
+import { Button, Dialog, FormInput, FormWrapper } from '@/components'
 import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -45,7 +45,7 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     reset
   } = formMethods
 
@@ -85,25 +85,22 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
           <Dialog.Header>
             <Dialog.Title>Edit PR title</Dialog.Title>
           </Dialog.Header>
-          <Fieldset>
-            <FormInput.Text
-              id="title"
-              {...register('title')}
-              placeholder="Enter pull request title"
-              label="Title"
-              onFocus={event => event.target.select()}
-              autoFocus
-            />
-          </Fieldset>
-          <Fieldset>
-            <Textarea
-              {...register(FIELD_DESCRIPTION)}
-              placeholder="Enter pull request description"
-              label="Description"
-              rows={5}
-              error={errors[FIELD_DESCRIPTION]?.message}
-            />
-          </Fieldset>
+
+          <FormInput.Text
+            id="title"
+            {...register('title')}
+            placeholder="Enter pull request title"
+            label="Title"
+            onFocus={event => event.target.select()}
+            autoFocus
+          />
+
+          <FormInput.Textarea
+            {...register(FIELD_DESCRIPTION)}
+            placeholder="Enter pull request description"
+            label="Description"
+            rows={5}
+          />
 
           {error && <p className="text-cn-foreground-danger">{error}</p>}
 

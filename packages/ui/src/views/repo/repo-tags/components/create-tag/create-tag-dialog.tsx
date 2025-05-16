@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, Fieldset, FormInput, FormWrapper, Label, Textarea } from '@/components'
+import { Alert, Button, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
 import { BranchSelectorListItem, TranslationStore } from '@/views/repo'
 import { CreateTagFormFields, makeCreateTagFormSchema } from '@/views/repo/repo-tags/components/create-tag/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -41,14 +41,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
     defaultValues: INITIAL_FORM_VALUES
   })
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    clearErrors,
-    formState: { errors }
-  } = formMethods
+  const { register, handleSubmit, setValue, reset, clearErrors } = formMethods
 
   const resetForm = useCallback(() => {
     clearErrors()
@@ -78,36 +71,29 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
         </Dialog.Header>
 
         <FormWrapper<CreateTagFormFields> {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-          <Fieldset>
-            <FormInput.Text
-              id="name"
-              label={t('views:forms.tagName', 'Name')}
-              name="name"
-              maxLength={250}
-              placeholder={t('views:forms.enterTagName', 'Enter a tag name here')}
-              disabled={isLoading}
-            />
-          </Fieldset>
+          <FormInput.Text
+            id="name"
+            label={t('views:forms.tagName', 'Name')}
+            name="name"
+            maxLength={250}
+            placeholder={t('views:forms.enterTagName', 'Enter a tag name here')}
+            disabled={isLoading}
+          />
 
-          <Fieldset>
-            <ControlGroup>
-              <Label htmlFor="target" className="mb-2">
-                {t('views:forms.basedOn', 'Based on')}
-              </Label>
-              <BranchSelectorContainer />
-            </ControlGroup>
-          </Fieldset>
+          <ControlGroup>
+            <Label htmlFor="target" className="mb-2">
+              {t('views:forms.basedOn', 'Based on')}
+            </Label>
+            <BranchSelectorContainer />
+          </ControlGroup>
 
-          <Fieldset>
-            <Textarea
-              id="description"
-              {...register('message')}
-              placeholder={t('views:repos.repoTagDescriptionPlaceholder', 'Enter tag description here')}
-              label={t('views:repos.description', 'Description')}
-              error={errors.message?.message}
-              disabled={isLoading}
-            />
-          </Fieldset>
+          <FormInput.Textarea
+            id="description"
+            {...register('message')}
+            placeholder={t('views:repos.repoTagDescriptionPlaceholder', 'Enter tag description here')}
+            label={t('views:repos.description', 'Description')}
+            disabled={isLoading}
+          />
 
           {error && (
             <Alert.Container variant="destructive">

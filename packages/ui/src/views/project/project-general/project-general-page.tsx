@@ -12,8 +12,7 @@ import {
   FormWrapper,
   Icon,
   Legend,
-  SkeletonForm,
-  Textarea
+  SkeletonForm
 } from '@/components'
 import { SandboxLayout, TranslationStore, TypesSpace } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -32,7 +31,7 @@ interface ProjectSettingsGeneralPageProps {
 
 const projectSettingsSchema = z.object({
   identifier: z.string().min(1, { message: 'Please provide a project name' }),
-  description: z.string()
+  description: z.string().max(1024, { message: 'Description is too long' }).optional()
 })
 
 export type ProjectSettingsGeneralFields = z.infer<typeof projectSettingsSchema>
@@ -57,13 +56,7 @@ export const ProjectSettingsGeneralPage = ({
     }
   })
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    formState: { errors }
-  } = formMethods
+  const { register, handleSubmit, reset, setValue } = formMethods
 
   const [submitted, setSubmitted] = useState(false)
 
@@ -120,28 +113,23 @@ export const ProjectSettingsGeneralPage = ({
             <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
               <Fieldset>
                 {/* PROJECT NAME */}
-                <ControlGroup>
-                  <FormInput.Text
-                    id="identifier"
-                    {...register('identifier')}
-                    placeholder={t('views:projectSettings.general.projectNamePlaceholder', 'Enter project name')}
-                    label={t('views:projectSettings.general.projectNameLabel', 'Project name')}
-                    // TODO: backend is not ready to update project name
-                    disabled
-                  />
-                </ControlGroup>
+                <FormInput.Text
+                  id="identifier"
+                  {...register('identifier')}
+                  placeholder={t('views:projectSettings.general.projectNamePlaceholder', 'Enter project name')}
+                  label={t('views:projectSettings.general.projectNameLabel', 'Project name')}
+                  // TODO: backend is not ready to update project name
+                  disabled
+                />
 
                 {/* IDENTIFIER/DESCRIPTION */}
-                <ControlGroup>
-                  <Textarea
-                    id="description"
-                    {...register('description')}
-                    placeholder={t('views:projectSettings.general.projectDescriptionPlaceholder', 'Enter description')}
-                    optional
-                    label={t('views:projectSettings.general.projectDescriptionLabel', 'Description')}
-                    error={errors?.description?.message?.toString()}
-                  />
-                </ControlGroup>
+                <FormInput.Textarea
+                  id="description"
+                  {...register('description')}
+                  placeholder={t('views:projectSettings.general.projectDescriptionPlaceholder', 'Enter description')}
+                  optional
+                  label={t('views:projectSettings.general.projectDescriptionLabel', 'Description')}
+                />
 
                 {updateError && (
                   <Alert.Container variant="destructive">

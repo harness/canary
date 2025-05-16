@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
-import { Caption, Command, Label, Tag } from '@/components'
+import { Command, SkeletonList, Tag } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { Command as CommandPrimitive } from 'cmdk'
@@ -11,12 +11,52 @@ export interface MultiSelectOption {
   key: string
   value?: string
   disable?: boolean
+  theme?:
+    | 'gray'
+    | 'blue'
+    | 'brown'
+    | 'cyan'
+    | 'green'
+    | 'indigo'
+    | 'lime'
+    | 'mint'
+    | 'orange'
+    | 'pink'
+    | 'purple'
+    | 'red'
+    | 'violet'
+    | 'yellow'
   onReset?: () => void
 }
 
+/**
+ * Creates a new MultiSelectOption from an input string
+ * Handles both simple values and key:value format
+ * @param inputValue The string value entered by the user
+ * @returns A properly formatted MultiSelectOption
+ */
+const createOptionFromInput = (inputValue: string): MultiSelectOption => {
+  // Handle key:value format (e.g. "category:frontend")
+  if (inputValue.includes(':')) {
+    const [key, value] = inputValue.split(':', 2)
+
+    if (key && key.trim()) {
+      return {
+        key: key.trim(),
+        value: value ? value.trim() : '',
+        id: inputValue
+      }
+    }
+  }
+
+  // Default case: use input as the key
+  return {
+    key: inputValue,
+    id: inputValue
+  }
+}
+
 interface MultiSelectProps {
-  label?: string
-  caption?: string
   value?: MultiSelectOption[]
   defaultValue?: MultiSelectOption[]
   options?: MultiSelectOption[]
@@ -27,6 +67,7 @@ interface MultiSelectProps {
   disabled?: boolean
   className?: string
   disallowCreation?: boolean
+  isLoading?: boolean
   /** Props of `Command` */
   commandProps?: React.ComponentPropsWithoutRef<typeof Command.Root>
   /** Props of `CommandInput` */
@@ -43,18 +84,17 @@ export interface MultiSelectRef {
 export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
   (
     {
-      label,
-      caption,
       value,
       onChange,
       placeholder,
       defaultValue = [],
-      options: arrayOptions,
+      options,
       searchQuery,
       setSearchQuery,
       disabled,
       className,
       disallowCreation = false,
+      isLoading = false,
       commandProps,
       inputProps
     }: MultiSelectProps,
@@ -63,10 +103,10 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
     const inputRef = useRef<HTMLInputElement>(null)
     const [open, setOpen] = useState(false)
     const [onScrollbar, setOnScrollbar] = useState(false)
-    const dropdownRef = useRef<HTMLDivElement>(null) // Added this
+    const dropdownRef = useRef<HTMLDivElement>(null)
 
     const [selected, setSelected] = useState<MultiSelectOption[]>(value || defaultValue || [])
-    const [options, setOptions] = useState<MultiSelectOption[]>(arrayOptions || [])
+    const [availableOptions, setAvailableOptions] = useState<MultiSelectOption[]>([])
     const [inputValue, setInputValue] = useState('')
     const { search } = useDebounceSearch({
       handleChangeSearchValue: setSearchQuery,
@@ -86,29 +126,27 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       [selected]
     )
 
-    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
-        inputRef.current &&
-        !inputRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false)
-        inputRef.current.blur()
-      }
-    }
+    const handleClickOutside = useCallback(
+      (event: MouseEvent | TouchEvent) => {
+        if (
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target as Node) &&
+          inputRef.current &&
+          !inputRef.current.contains(event.target as Node)
+        ) {
+          setOpen(false)
+          inputRef.current.blur()
+        }
+      },
+      [dropdownRef, inputRef]
+    )
 
     const handleUnselect = useCallback(
       (option: MultiSelectOption) => {
-        if (isControlled) {
-          const newOptions = value?.filter(s => s.id !== option.id) || []
-          onChange?.(newOptions)
-          option.onReset?.()
-        } else {
-          const newOptions = selected.filter(s => s.id !== option.id)
-          setSelected(newOptions)
-          option.onReset?.()
-        }
+        const newSelectedValues = (isControlled ? value : selected).filter(s => s.id !== option.id)
+        onChange?.(newSelectedValues)
+        option.onReset?.()
+        !isControlled && setSelected(newSelectedValues)
       },
       [onChange, selected, isControlled, value]
     )
@@ -119,37 +157,17 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
         if (input) {
           if (e.key === 'Delete' || e.key === 'Backspace') {
             if (input.value === '' && (isControlled ? value?.length : selected.length) > 0) {
-              handleUnselect((isControlled ? value : selected)[(isControlled ? value : selected).length - 1])
+              handleUnselect((isControlled ? value : selected).at(-1)!)
             }
           }
           if (e.key === 'Enter' && input.value && !disallowCreation) {
+            // Perform case-insensitive comparison to prevent duplicate options with different casing
+            // This ensures that 'React' and 'react' would be considered the same option
             if (
-              !options.some(option => option.key.toLowerCase() === input.value.toLowerCase()) &&
+              !options?.some(option => option.key.toLowerCase() === input.value.toLowerCase()) &&
               !(isControlled ? value : selected).some(s => s.key.toLowerCase() === input.value.toLowerCase())
             ) {
-              let newOption: MultiSelectOption
-
-              if (input.value.includes(':')) {
-                const [key, value] = input.value.split(':', 2)
-
-                if (key && key.trim()) {
-                  newOption = {
-                    key: key.trim(),
-                    value: value ? value.trim() : '',
-                    id: input.value
-                  }
-                } else {
-                  newOption = {
-                    key: input.value,
-                    id: input.value
-                  }
-                }
-              } else {
-                newOption = {
-                  key: input.value,
-                  id: input.value
-                }
-              }
+              const newOption = createOptionFromInput(input.value)
               const newOptions = [...(isControlled ? value : selected), newOption]
               if (isControlled) {
                 onChange?.(newOptions)
@@ -182,13 +200,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
         document.removeEventListener('mousedown', handleClickOutside)
         document.removeEventListener('touchend', handleClickOutside)
       }
-    }, [open])
-
-    useEffect(() => {
-      setOptions(arrayOptions ?? [])
-    }, [arrayOptions])
-
-    const [availableOptions, setAvailableOptions] = useState<MultiSelectOption[]>([])
+    }, [open, handleClickOutside])
 
     useEffect(() => {
       if (!options || options.length === 0) {
@@ -196,17 +208,14 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
         return
       }
 
-      const filteredOptions = options.filter(option =>
-        isControlled
-          ? !value?.some(selectedOption => selectedOption.id === option.id)
-          : !selected?.some(selectedOption => selectedOption.id === option.id)
+      const filteredOptions = options.filter(
+        option => !(isControlled ? value : selected)?.some(selectedOption => selectedOption.id === option.id)
       )
 
       setAvailableOptions(filteredOptions)
     }, [options, selected, isControlled, value, inputValue, searchQuery, open])
     return (
       <div className="cn-multi-select-outer-container">
-        <Label disabled={disabled}>{label}</Label>
         <Command.Root
           ref={dropdownRef}
           {...commandProps}
@@ -214,9 +223,6 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             handleKeyDown(e)
             commandProps?.onKeyDown?.(e)
           }}
-          // filter={(_value, _search) => {
-          //   return 1
-          // }}
           shouldFilter={false}
           className={cn('h-auto overflow-visible bg-transparent', commandProps?.className)}
         >
@@ -239,7 +245,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                     key={option.id}
                     variant="secondary"
                     size="sm"
-                    theme={option?.value ? 'purple' : undefined}
+                    theme={option?.theme}
                     label={option.key}
                     value={option?.value || ''}
                     showReset={!disabled}
@@ -287,7 +293,9 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                   inputRef?.current?.focus()
                 }}
               >
-                {availableOptions.length === 0 ? (
+                {isLoading ? (
+                  <SkeletonList />
+                ) : availableOptions.length === 0 ? (
                   <Command.Item value="-" disabled>
                     No results found
                   </Command.Item>
@@ -302,11 +310,12 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                           onSelect={() => {
                             setInputValue('')
                             setSearchQuery?.('')
-                            const newOptions = [...(isControlled ? value : selected), option]
+                            const newSelectedValues = [...(isControlled ? value : selected), option]
                             if (isControlled) {
-                              onChange?.(newOptions)
+                              onChange?.(newSelectedValues)
                             } else {
-                              setSelected(newOptions)
+                              onChange?.(newSelectedValues)
+                              setSelected(newSelectedValues)
                             }
                           }}
                         >
@@ -320,7 +329,6 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             )}
           </div>
         </Command.Root>
-        <Caption className={disabled ? 'text-cn-foreground-disabled' : ''}>{caption}</Caption>
       </div>
     )
   }

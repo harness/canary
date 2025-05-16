@@ -1,7 +1,6 @@
-import { FC, useCallback, useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 
 import {
-  Avatar,
   Button,
   Checkbox,
   ControlGroup,
@@ -13,7 +12,6 @@ import {
   Message,
   MessageTheme,
   MultiSelect,
-  MultiSelectOptionType,
   MultiSelectV2,
   SplitButton,
   StackedList,
@@ -173,14 +171,14 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
   )
 }
 
-const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<PrincipalType>) => {
-  return (
-    <>
-      <Avatar name={option.display_name} src={option.avatar_url} rounded />
-      <span className="font-medium">{option.display_name}</span>
-    </>
-  )
-}
+// const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<PrincipalType>) => {
+//   return (
+//     <>
+//       <Avatar name={option.display_name} src={option.avatar_url} rounded />
+//       <span className="font-medium">{option.display_name}</span>
+//     </>
+//   )
+// }
 
 export const BranchSettingsRuleBypassListField: FC<
   FieldProps & {
@@ -201,10 +199,8 @@ export const BranchSettingsRuleBypassListField: FC<
   return (
     <Fieldset className="gap-y-4">
       <ControlGroup>
-        <Label className="mb-2" htmlFor="bypassValue">
-          {t('views:repos.bypassList', 'Bypass list')}
-        </Label>
-        <FormInput.MultiSelectV2
+        <FormInput.MultiSelect
+          label={t('views:repos.bypassList', 'Bypass list')}
           name="bypass"
           options={multiSelectOptions}
           placeholder={t('views:repos.selectUsers', 'Select users')}

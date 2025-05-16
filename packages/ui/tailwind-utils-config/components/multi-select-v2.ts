@@ -43,7 +43,8 @@ export default {
     '&-dropdown': {
       backgroundColor: 'var(--cn-bg-2)',
       borderColor: 'var(--cn-border-2)',
-      '@apply border rounded-md shadow-md mt-1 overflow-hidden animate-in absolute top-1 z-10 w-full outline-none': '',
+      '@apply border rounded-md shadow-md mt-1 overflow-hidden animate-in absolute top-1 z-[55] w-full outline-none':
+        '',
       maxHeight: '15rem'
     }
   }

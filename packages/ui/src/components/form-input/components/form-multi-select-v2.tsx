@@ -12,13 +12,7 @@ interface FormMultiSelectV2PropsType
 const FormMultiSelectV2 = forwardRef<MultiSelectRef, FormMultiSelectV2PropsType>((props, ref) => {
   const formContext = useFormContext()
 
-  const selectRef = useRef<MultiSelectRef | null>(null)
-
   const setRefs = (element: MultiSelectRef | null) => {
-    // Save to local ref
-    selectRef.current = element
-
-    // Forward to external ref
     if (typeof ref === 'function') {
       ref(element)
     } else if (ref) {
@@ -26,7 +20,6 @@ const FormMultiSelectV2 = forwardRef<MultiSelectRef, FormMultiSelectV2PropsType>
     }
   }
 
-  // Only access the component if it is inside FormProvider component tree
   if (!formContext) {
     throw new Error(
       'FormMultiSelectV2 must be used within a FormProvider context through FormWrapper. Use the standalone MultiSelectV2 component if form integration is not required.'
@@ -39,7 +32,7 @@ const FormMultiSelectV2 = forwardRef<MultiSelectRef, FormMultiSelectV2PropsType>
       render={({ field }) => {
         const setFieldRef = (element: MultiSelectRef | null) => {
           setRefs(element)
-          field.ref(element?.input || null)
+          field.ref = setRefs
         }
 
         return (

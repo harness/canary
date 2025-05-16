@@ -31,7 +31,7 @@ export const MultipleSelectorWithDisabledOption = () => {
         caption="Separate tags with commas or press Enter. Use the format key:value for object entries."
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        //   disabled
+        // disabled
       />
     </>
   )

@@ -2,17 +2,17 @@ export default {
   '.cn-card-select-root': {
     display: 'grid',
 
-    '&.cn-card-select-gap-sm': {
+    '&:where(.cn-card-select-gap-sm)': {
       gap: 'var(--cn-layout-sm)'
     },
-    '&.cn-card-select-gap-md': {
+    '&:where(.cn-card-select-gap-md)': {
       gap: 'var(--cn-layout-md)'
     },
-    '&.cn-card-select-gap-lg': {
+    '&:where(.cn-card-select-gap-lg)': {
       gap: 'var(--cn-layout-lg)'
     },
 
-    '&.cn-card-select-horizontal': {
+    '&:where(.cn-card-select-horizontal)': {
       '@apply auto-cols-max grid-flow-col': ''
     }
   },
@@ -30,16 +30,16 @@ export default {
     paddingRight: 'var(--cn-card-check-default-pr)',
     gap: 'var(--cn-card-check-default-gap)',
 
-    '&:hover': {
+    '&:hover:not([data-disabled])': {
       borderColor: 'var(--cn-border-1)'
     },
 
-    '&[data-disabled]': {
+    '&:where([data-disabled])': {
       opacity: 'var(--cn-disabled-opacity)',
-      pointerEvents: 'none'
+      '@apply cursor-not-allowed': ''
     },
 
-    '&[data-state="checked"]': {
+    '&:where([data-state="checked"])': {
       borderColor: 'var(--cn-border-accent)',
       backgroundColor: 'var(--cn-comp-card-gradient)'
     },

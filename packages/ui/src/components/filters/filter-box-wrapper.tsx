@@ -72,7 +72,7 @@ const FilterBoxWrapper = ({
             </DropdownMenu.Trigger>
             <DropdownMenu.Content align="start">
               <DropdownMenu.Item onSelect={() => handleRemoveFilter()} asChild>
-                <Button size="sm" variant="ghost" className="data-[highlighted]:text-cn-foreground-danger">
+                <Button size="sm" variant="transparent" className="data-[highlighted]:text-cn-foreground-danger">
                   <Icon name="trash" size={12} />
                   {t('component:filter.delete', 'Delete filter')}
                 </Button>

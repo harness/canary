@@ -1,4 +1,4 @@
-import { ComponentProps, ElementType } from 'react'
+import { ComponentProps, ElementType, forwardRef } from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
@@ -129,29 +129,28 @@ type TextProps<E extends TextElement = 'span'> = Omit<ComponentProps<E>, 'color'
     asChild?: boolean
   }
 
-const Text = <E extends TextElement = 'span'>({
-  className,
-  children,
-  truncate,
-  variant,
-  asChild,
-  align,
-  color,
-  wrap,
-  as,
-  ...props
-}: TextProps<E>) => {
-  const Comp = getTextNode({ as, variant, asChild })
-  const isHeading = !as && !!variant?.startsWith('heading')
+type TextComponent = <E extends TextElement = 'span'>(
+  props: TextProps<E> & { ref?: React.Ref<HTMLElement> }
+) => React.ReactElement | null
 
-  return (
-    <Comp
-      className={cn(textVariants({ variant, align, color, truncate, wrap }), className)}
-      {...{ ...wrapConditionalObjectElement({ role: 'heading' }, isHeading), ...props }}
-    >
-      {children}
-    </Comp>
-  )
-}
+const TextWithRef = forwardRef<HTMLElement, TextProps>(
+  ({ className, children, truncate, variant, asChild, align, color, wrap, as, ...props }, forwardedRef) => {
+    const Comp = getTextNode({ as, variant, asChild })
+    const isHeading = !as && !!variant?.startsWith('heading')
+
+    return (
+      <Comp
+        ref={forwardedRef}
+        className={cn(textVariants({ variant, align, color, truncate, wrap }), className)}
+        {...{ ...wrapConditionalObjectElement({ role: 'heading' }, isHeading), ...props }}
+      >
+        {children}
+      </Comp>
+    )
+  }
+)
+
+TextWithRef.displayName = 'Text'
+const Text = TextWithRef as unknown as TextComponent
 
 export { Text }

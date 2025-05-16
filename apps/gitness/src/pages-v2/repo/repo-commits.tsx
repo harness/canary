@@ -77,8 +77,8 @@ export default function RepoCommitsPage() {
     if (selectedBranchOrTag?.name) {
       const encodedBranchOrTagId = encodeURIComponent(selectedBranchOrTag.name)
       selectedRefType === BranchSelectorTab.TAGS
-        ? navigate(routes.toRepoCommitsTags({ spaceId, repoId, tagId: encodedBranchOrTagId }))
-        : navigate(routes.toRepoCommitsBranches({ spaceId, repoId, branchId: encodedBranchOrTagId }))
+        ? navigate(routes.toRepoTagCommits({ spaceId, repoId, tagId: encodedBranchOrTagId }))
+        : navigate(routes.toRepoBranchCommits({ spaceId, repoId, branchId: encodedBranchOrTagId }))
     }
   }, [selectedBranchOrTag, navigate, routes, spaceId, repoId, selectedRefType])
 

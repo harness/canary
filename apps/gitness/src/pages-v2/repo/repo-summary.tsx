@@ -337,7 +337,7 @@ export default function RepoSummaryPage() {
         }
         toRepoFileDetails={({ path }: { path: string }) => path}
         tokenGenerationError={tokenGenerationError}
-        toRepoCommits={() => routes.toRepoCommitsBranches({ spaceId, repoId, branchId: selectedBranchOrTag?.name })}
+        toRepoCommits={() => routes.toRepoBranchCommits({ spaceId, repoId, branchId: selectedBranchOrTag?.name })}
         toRepoBranches={() => routes.toRepoBranches({ spaceId, repoId })}
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
         toRepoPullRequests={() => routes.toPullRequests({ spaceId, repoId })}

@@ -116,7 +116,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
           isDrawer
         />
         <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} nested>
-          <Drawer.Content nested>
+          <Drawer.Content>
             {!!connectorEntity && (
               <ConnectorEntityForm
                 useTranslationStore={useTranslationStore}

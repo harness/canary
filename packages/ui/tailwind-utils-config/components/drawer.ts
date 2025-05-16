@@ -94,7 +94,18 @@ export default {
         },
 
         '&-body': {
-            padding: 'var(--cn-drawer-container)'
+            padding: 'var(--cn-drawer-container)',
+            '@apply before:absolute before:inset-x-0 before:top-0 before:z-10 after:z-10 after:absolute after:inset-x-0 after:bottom-0': '',
+
+            '&:before': {
+                height: 'var(--cn-drawer-fade-height)',
+                background: 'var(--cn-comp-dialog-fade-start)',
+            },
+
+            '&:after': {
+                height: 'var(--cn-drawer-fade-height)',
+                background: 'var(--cn-comp-dialog-fade-end)',
+            }
         },
 
         '&-footer': {
@@ -103,7 +114,7 @@ export default {
             gapY: 'var(--cn-drawer-gap)',
             gapX: 'var(--cn-spacing-3)',
             padding: 'var(--cn-drawer-container)',
-            '@apply flex border-t justify-end': ''
+            '@apply flex border-t': ''
         }
     }
 }

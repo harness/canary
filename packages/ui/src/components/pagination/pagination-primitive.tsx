@@ -1,9 +1,10 @@
 import * as React from 'react'
 
+import { Link } from '@components/link'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
-import { ButtonProps, ButtonThemes, buttonVariants, type ButtonVariants } from '../button'
+import { Button } from '../button'
 import { Icon } from '../icon'
 
 const PaginationPrimitiveRoot = ({ className, ...props }: React.ComponentProps<'nav'>) => (
@@ -17,9 +18,7 @@ const PaginationPrimitiveRoot = ({ className, ...props }: React.ComponentProps<'
 PaginationPrimitiveRoot.displayName = 'PaginationPrimitiveRoot'
 
 const PaginationPrimitiveContent = React.forwardRef<HTMLUListElement, React.ComponentProps<'ul'>>(
-  ({ className, ...props }, ref) => (
-    <ul ref={ref} className={cn('flex flex-grow items-center justify-center gap-3', className)} {...props} />
-  )
+  ({ className, ...props }, ref) => <ul ref={ref} className={cn('cn-pagination-content', className)} {...props} />
 )
 PaginationPrimitiveContent.displayName = 'PaginationPrimitiveContent'
 
@@ -32,47 +31,75 @@ type PaginationPrimitiveLinkGeneralProps = {
   isActive?: boolean
   disabled?: boolean
   t: TFunction
-} & Pick<ButtonProps, 'size'> &
-  React.ComponentProps<'a'>
+  onClick?: (e: React.MouseEvent) => void
+} & React.ComponentProps<'a'> &
+  React.ComponentProps<'button'>
 
 interface PaginationPrimitiveLinkProps extends Omit<PaginationPrimitiveLinkGeneralProps, 't'> {
-  isFullRounded?: boolean
   disabled?: boolean
-  variant?: ButtonVariants
-  theme?: ButtonThemes
 }
 
 const PaginationPrimitiveLink = ({
   className,
   isActive,
-  size = 'sm',
-  isFullRounded: rounded,
   children,
+  href,
+  ref,
   disabled = false,
-  variant = 'secondary',
-  theme = 'default',
+  onClick,
   ...props
-}: PaginationPrimitiveLinkProps) => (
-  <a
-    aria-current={isActive ? 'page' : undefined}
-    className={cn(
-      buttonVariants({
-        variant,
-        size,
-        rounded,
-        theme
-      }),
-      {
-        'cn-button-active': isActive,
-        'cn-button-disabled': disabled
-      },
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </a>
-)
+}: PaginationPrimitiveLinkProps) => {
+  if (!onClick && !href) {
+    throw new Error('PaginationPrimitiveLink must have either onClick or href')
+  }
+
+  if (onClick) {
+    return (
+      <Button
+        rounded
+        ref={ref as React.Ref<HTMLButtonElement>}
+        variant="ghost"
+        disabled={disabled}
+        onClick={onClick}
+        className={cn(
+          'cn-pagination-button',
+          {
+            'cn-button-active': isActive,
+            'cn-button-disabled': disabled
+          },
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </Button>
+    )
+  }
+
+  return (
+    <Button
+      rounded
+      variant="ghost"
+      disabled={disabled}
+      className={cn(
+        'cn-pagination-button',
+        {
+          'cn-button-active': isActive,
+          'cn-button-disabled': disabled
+        },
+        className
+      )}
+      asChild
+    >
+      {/* <a href={href} ref={ref} aria-current={isActive ? 'page' : undefined} {...props}>
+        {children}
+      </a> */}
+      <Link to={href as string} aria-current={isActive ? 'page' : undefined} {...props}>
+        {children}
+      </Link>
+    </Button>
+  )
+}
 PaginationPrimitiveLink.displayName = 'PaginationPrimitiveLink'
 
 const PaginationPrimitivePrevious = ({
@@ -84,14 +111,12 @@ const PaginationPrimitivePrevious = ({
 }: PaginationPrimitiveLinkGeneralProps) => (
   <PaginationPrimitiveLink
     aria-label="Go to previous page"
-    isFullRounded={false}
     disabled={disabled}
-    variant="ghost"
     className={className}
     href={href}
     {...props}
   >
-    <Icon name="arrow-long" size={12} className="rotate-180" />
+    <Icon name="chevron-left" size={16} />
     <span>{t('component:pagination.previous', 'Previous')}</span>
   </PaginationPrimitiveLink>
 )
@@ -106,28 +131,19 @@ const PaginationPrimitiveNext = ({
 }: PaginationPrimitiveLinkGeneralProps) => (
   <PaginationPrimitiveLink
     aria-label="Go to next page"
-    isFullRounded={false}
     disabled={disabled}
-    variant="ghost"
     className={className}
     href={href}
     {...props}
   >
     <span>{t('component:pagination.next', 'Next')}</span>
-    <Icon name="arrow-long" size={12} />
+    <Icon name="chevron-right" size={16} />
   </PaginationPrimitiveLink>
 )
 PaginationPrimitiveNext.displayName = 'PaginationPrimitiveNext'
 
 const PaginationPrimitiveEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (
-  <span
-    aria-hidden
-    className={cn(
-      'text-1 bg-cn-background-2 flex h-7 w-7 items-center justify-center rounded-full font-normal',
-      className
-    )}
-    {...props}
-  >
+  <span aria-hidden className={cn('cn-pagination-ellipsis', className)} {...props}>
     ...
     <span className="sr-only">More pages</span>
   </span>

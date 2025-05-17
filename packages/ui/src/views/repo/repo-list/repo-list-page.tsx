@@ -32,7 +32,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
 
   // State for storing saved filters and sorts
   // null means no saved state exists
-  const { repositories, totalPages, page, setPage } = useRepoStore()
+  const { repositories, totalItems, page, setPage, pageSize } = useRepoStore()
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
@@ -133,7 +133,9 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           toImportRepo={toImportRepo}
           {...routingProps}
         />
-        {!!repositories?.length && <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />}
+        {!!repositories?.length && (
+          <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
+        )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

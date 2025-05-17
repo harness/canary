@@ -82,9 +82,9 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
                 inputs={secretsFormDefinition ?? { inputs: [] }}
               />
               {apiError && (
-                <Alert.Container variant="destructive" className="my-8">
+                <Alert.Root theme="danger" className="my-8">
                   <Alert.Description>{apiError.toString()}</Alert.Description>
-                </Alert.Container>
+                </Alert.Root>
               )}
               {!isDrawer && (
                 <ButtonGroup>

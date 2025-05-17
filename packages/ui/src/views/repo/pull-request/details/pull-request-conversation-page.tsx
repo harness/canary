@@ -41,12 +41,12 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
         <SandboxLayout.Content className="pl-0 pr-8 pt-0">
           {/*TODO: update with design  */}
           {!!rebaseErrorMessage && (
-            <Alert.Container closable variant="destructive" className="mb-5">
+            <Alert.Root theme="danger" className="mb-5" dismissible>
               <Alert.Title>Cannot rebase branch</Alert.Title>
               <Alert.Description>
                 <p>{rebaseErrorMessage}</p>
               </Alert.Description>
-            </Alert.Container>
+            </Alert.Root>
           )}
 
           <PullRequestPanel {...panelProps} />

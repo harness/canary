@@ -1,11 +1,13 @@
-import { AlertContainer, type AlertContainerProps } from './AlertContainer'
 import { AlertDescription, type AlertDescriptionProps } from './AlertDescription'
+import { AlertLink, type AlertLinkProps } from './AlertLink'
+import { AlertRoot, type AlertRootProps } from './AlertRoot'
 import { AlertTitle, type AlertTitleProps } from './AlertTitle'
 
-export { AlertContainerProps, AlertDescriptionProps, AlertTitleProps }
+export { AlertRootProps, AlertDescriptionProps, AlertTitleProps, AlertLinkProps }
 
 export const Alert = {
-  Container: AlertContainer,
+  Root: AlertRoot,
   Title: AlertTitle,
-  Description: AlertDescription
+  Description: AlertDescription,
+  Link: AlertLink
 }

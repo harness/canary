@@ -110,11 +110,11 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
           </Fieldset>
 
           {error && (
-            <Alert.Container variant="destructive">
+            <Alert.Root theme="danger">
               <Alert.Title>
                 {t('views:repos.error', 'Error:')} {error}
               </Alert.Title>
-            </Alert.Container>
+            </Alert.Root>
           )}
 
           <Dialog.Footer className="-mx-5 -mb-5">

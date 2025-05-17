@@ -187,9 +187,9 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
             </>
           )}
           {error?.type === ApiErrorType.TokenCreate && (
-            <Alert.Container variant="destructive">
+            <Alert.Root theme="danger">
               <Alert.Title>{error.message}</Alert.Title>
-            </Alert.Container>
+            </Alert.Root>
           )}
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button type="button" variant="outline" onClick={onClose}>

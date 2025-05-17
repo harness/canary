@@ -144,9 +144,9 @@ export const ProjectSettingsGeneralPage = ({
                 </ControlGroup>
 
                 {updateError && (
-                  <Alert.Container variant="destructive">
+                  <Alert.Root theme="danger">
                     <Alert.Title>{updateError}</Alert.Title>
-                  </Alert.Container>
+                  </Alert.Root>
                 )}
 
                 {/*BUTTON CONTROL: SAVE & CANCEL*/}

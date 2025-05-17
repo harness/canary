@@ -174,9 +174,9 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
 
   const renderErrorMessage = (type: ProfileSettingsErrorType, message: string) =>
     error?.type === type && (
-      <Alert.Container variant="destructive">
+      <Alert.Root theme="danger">
         <Alert.Title>{message}</Alert.Title>
-      </Alert.Container>
+      </Alert.Root>
     )
 
   return (

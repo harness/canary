@@ -7,7 +7,7 @@ export interface AlertTitleProps extends PropsWithChildren<React.HTMLAttributes<
 }
 
 export const AlertTitle = forwardRef<HTMLHeadingElement, AlertTitleProps>(({ className, children }, ref) => (
-  <h5 ref={ref} className={cn('mb-1 font-medium leading-none tracking-tight', className)}>
+  <h5 ref={ref} className={cn('cn-alert-title', className)}>
     {children}
   </h5>
 ))

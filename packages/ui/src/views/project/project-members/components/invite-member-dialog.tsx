@@ -163,11 +163,11 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
           </Fieldset>
 
           {!!error && (
-            <Alert.Container className="!mt-0" variant="destructive">
+            <Alert.Root theme="danger" className="!mt-0">
               <Alert.Title>
                 {t('views:repos.error', 'Error:')} {error}
               </Alert.Title>
-            </Alert.Container>
+            </Alert.Root>
           )}
         </FormWrapper>
 

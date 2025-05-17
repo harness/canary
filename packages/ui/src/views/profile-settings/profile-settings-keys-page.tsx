@@ -20,9 +20,9 @@ interface SettingsAccountKeysPageProps {
 }
 
 const ErrorMessage: FC<{ message: string }> = ({ message }) => (
-  <Alert.Container variant="destructive">
+  <Alert.Root theme="danger">
     <Alert.Title>{message}</Alert.Title>
-  </Alert.Container>
+  </Alert.Root>
 )
 
 const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({

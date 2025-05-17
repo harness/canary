@@ -257,11 +257,11 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
           </section>
 
           {!!error?.length && (
-            <Alert.Container variant="destructive">
+            <Alert.Root theme="danger">
               <Alert.Title>
                 {t('views:repos.error', 'Error:')} {error}
               </Alert.Title>
-            </Alert.Container>
+            </Alert.Root>
           )}
 
           <Fieldset>

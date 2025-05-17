@@ -3,14 +3,15 @@ import { i18n, TFunction } from 'i18next'
 
 export interface RepoStore {
   repositories: RepositoryType[] | null
-  totalPages: number
+  totalItems: number
+  pageSize: number
   page: number
   importRepoIdentifier: string | null
   importToastId: string | null
 
   setImportToastId: (id: string | null) => void
   setPage: (page: number) => void
-  setRepositories: (data: RepositoryType[], totalPages: number) => void
+  setRepositories: (data: RepositoryType[], totalItems: number, pageSize: number) => void
   updateRepository: (repo: RepositoryType) => void
   setImportRepoIdentifier: (identifier: string | null) => void
   addRepository: (repo: RepositoryType) => void

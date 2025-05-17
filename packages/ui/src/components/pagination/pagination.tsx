@@ -8,17 +8,18 @@ import { PaginationPrimitive } from './pagination-primitive'
 interface PaginationItemsProps {
   totalPages: number
   currentPage: number
-  goToPage: (pageNum: number) => (e: MouseEvent<HTMLAnchorElement>) => void
+  goToPage?: (pageNum: number) => (e: React.MouseEvent) => void
+  getPageLink?: (pageNum: number) => string
 }
 
-const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, goToPage }) => {
+const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, goToPage, getPageLink }) => {
   const siblings = 2
   const items: ReactElement[] = []
 
   // Always show the first page
   items.push(
     <PaginationPrimitive.Item key={1}>
-      <PaginationPrimitive.Link isFullRounded size="sm" href="#" onClick={goToPage(1)} isActive={currentPage === 1}>
+      <PaginationPrimitive.Link href={getPageLink?.(1)} onClick={goToPage?.(1)} isActive={currentPage === 1}>
         1
       </PaginationPrimitive.Link>
     </PaginationPrimitive.Item>
@@ -35,9 +36,11 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
 
   // Pages around the current page
   for (let i = Math.max(2, currentPage - siblings); i <= Math.min(totalPages - 1, currentPage + siblings); i++) {
+    console.log('getPageLink?.(i)', getPageLink?.(i))
+
     items.push(
       <PaginationPrimitive.Item key={i}>
-        <PaginationPrimitive.Link isFullRounded isActive={currentPage === i} size="sm" href="#" onClick={goToPage(i)}>
+        <PaginationPrimitive.Link isActive={currentPage === i} href={getPageLink?.(i)} onClick={goToPage?.(i)}>
           {i}
         </PaginationPrimitive.Link>
       </PaginationPrimitive.Item>
@@ -56,7 +59,11 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
   // Always show the last page
   items.push(
     <PaginationPrimitive.Item key={totalPages}>
-      <PaginationPrimitive.Link isFullRounded onClick={goToPage(totalPages)} isActive={currentPage === totalPages}>
+      <PaginationPrimitive.Link
+        href={getPageLink?.(totalPages)}
+        onClick={goToPage?.(totalPages)}
+        isActive={currentPage === totalPages}
+      >
         {totalPages}
       </PaginationPrimitive.Link>
     </PaginationPrimitive.Item>
@@ -65,34 +72,90 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
   return <>{items}</>
 }
 
-export interface PaginationProps {
-  currentPage: number
-  goToPage: (pageNum: number) => void
-  totalPages?: number
-  nextPage?: number
-  previousPage?: number
+// export interface PaginationProps {
+//   currentPage: number
+//   goToPage: (pageNum: number) => void
+//   totalPages?: number
+//   nextPage?: number
+//   previousPage?: number
+//   className?: string
+//   t: TFunction
+//   hidePageNumbers?: boolean
+// }
+
+interface PaginationBaseProps {
   className?: string
   t: TFunction
 }
 
-export const Pagination: FC<PaginationProps> = ({
-  totalPages,
-  nextPage,
-  previousPage,
-  currentPage,
-  goToPage,
-  className,
-  t
-}) => {
-  const handleGoToPage = (val?: number) => (e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    if (!val) return
+type DeterminatePaginationNavProps =
+  | { goToPage: (page: number) => void; getPageLink?: never }
+  | { goToPage?: never; getPageLink: (page: number) => string }
 
-    goToPage(val)
+type IndeterminatePaginationNavProps =
+  | { onPrevious: () => void; onNext: () => void; getPrevPageLink?: never; getNextPageLink?: never }
+  | { onPrevious?: never; onNext?: never; getPrevPageLink: () => string; getNextPageLink: () => string }
+
+type DeterminatePaginationProps = PaginationBaseProps &
+  DeterminatePaginationNavProps & {
+    totalItems: number
+    pageSize: number
+    currentPage: number
+    hidePageNumbers?: boolean
+    indeterminate?: false
+
+    hasPrevious?: never
+    hasNext?: never
+    getPrevPageLink?: never
+    getNextPageLink?: never
+    onPrevious?: never
+    onNext?: never
   }
 
+type IndeterminatePaginationProps = PaginationBaseProps &
+  IndeterminatePaginationNavProps & {
+    hasPrevious?: boolean
+    hasNext?: boolean
+    indeterminate: true
+
+    goToPage?: never
+    getPageLink?: never
+    totalItems?: never
+    pageSize?: never
+    currentPage?: never
+    hidePageNumbers?: never
+  }
+
+export type PaginationProps = DeterminatePaginationProps | IndeterminatePaginationProps
+
+export const Pagination: FC<PaginationProps> = ({
+  totalItems,
+  pageSize,
+  currentPage,
+  goToPage,
+  getPageLink,
+  hasNext,
+  hasPrevious,
+  className,
+  t,
+  getPrevPageLink,
+  getNextPageLink,
+  onPrevious,
+  onNext,
+  hidePageNumbers = false,
+  indeterminate = false
+}) => {
+  const handleGoToPage = (selectedPage?: number) => (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (!selectedPage) return
+
+    goToPage?.(selectedPage)
+  }
+
+  const totalPages = indeterminate || !totalItems || !pageSize ? undefined : Math.ceil(totalItems / pageSize)
+
   // Render nothing if `totalPages` is absent or <= 1, and both `nextPage` and `previousPage` are absent
-  if ((!totalPages || totalPages <= 1) && !nextPage && !previousPage) {
+  if ((!totalPages || totalPages <= 1) && !hasNext && !hasPrevious) {
     return null
   }
 
@@ -100,28 +163,33 @@ export const Pagination: FC<PaginationProps> = ({
     <>
       <Spacer size={6} />
       <PaginationPrimitive.Root className={className}>
-        {totalPages ? (
+        {!indeterminate && totalPages && currentPage ? (
           <PaginationPrimitive.Content>
             {/* Previous Button */}
             <PaginationPrimitive.Item>
               <PaginationPrimitive.Previous
-                size="sm"
-                onClick={handleGoToPage(currentPage > 1 ? currentPage - 1 : undefined)}
+                onClick={goToPage ? handleGoToPage(currentPage > 1 ? currentPage - 1 : undefined) : undefined}
+                href={getPageLink?.(currentPage > 1 ? currentPage - 1 : currentPage)}
                 disabled={currentPage === 1}
                 t={t}
               />
             </PaginationPrimitive.Item>
 
             {/* Pagination Items */}
-            {totalPages && (
-              <PaginationItems totalPages={totalPages} currentPage={currentPage} goToPage={handleGoToPage} />
+            {!hidePageNumbers && totalPages && (
+              <PaginationItems
+                totalPages={totalPages}
+                currentPage={currentPage}
+                getPageLink={getPageLink}
+                goToPage={goToPage ? handleGoToPage : undefined}
+              />
             )}
 
             {/* Next Button */}
             <PaginationPrimitive.Item>
               <PaginationPrimitive.Next
-                size="sm"
-                onClick={handleGoToPage(currentPage < totalPages ? currentPage + 1 : undefined)}
+                onClick={goToPage ? handleGoToPage(currentPage < totalPages ? currentPage + 1 : undefined) : undefined}
+                href={getPageLink?.(currentPage < totalPages ? currentPage + 1 : currentPage)}
                 disabled={currentPage === totalPages}
                 t={t}
               />
@@ -132,20 +200,15 @@ export const Pagination: FC<PaginationProps> = ({
             {/* Previous Button */}
             <PaginationPrimitive.Item>
               <PaginationPrimitive.Previous
-                size="sm"
-                onClick={handleGoToPage(previousPage ?? undefined)}
-                disabled={!previousPage}
+                href={getPrevPageLink?.()}
+                onClick={onPrevious}
+                disabled={!hasPrevious}
                 t={t}
               />
             </PaginationPrimitive.Item>
             {/* Next Button */}
             <PaginationPrimitive.Item>
-              <PaginationPrimitive.Next
-                size="sm"
-                onClick={handleGoToPage(nextPage ?? undefined)}
-                disabled={!nextPage}
-                t={t}
-              />
+              <PaginationPrimitive.Next href={getNextPageLink?.()} onClick={onNext} disabled={!hasNext} t={t} />
             </PaginationPrimitive.Item>
           </PaginationPrimitive.Content>
         )}

@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
-import { Toast, useToast } from '@harnessio/ui/components'
+import { Pagination, Toast, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -26,12 +26,16 @@ export default function ReposListPage() {
     importRepoIdentifier,
     setImportRepoIdentifier,
     importToastId,
-    setImportToastId
+    setImportToastId,
+    totalItems,
+    pageSize
   } = useRepoStore()
   const { toast, dismiss } = useToast()
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+
+  const { t } = useTranslationStore()
 
   const {
     data: { body: repoData, headers } = {},
@@ -65,18 +69,21 @@ export default function ReposListPage() {
   )
 
   useEffect(() => {
-    const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
+    const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
+    const perPage = parseInt(headers?.get(PageResponseHeader.xPerPage) || '0')
     if (repoData) {
       const transformedRepos = transformRepoList(repoData)
-      setRepositories(transformedRepos, totalPages)
+      setRepositories(transformedRepos, totalItems, perPage)
     } else {
-      setRepositories([], totalPages)
+      setRepositories([], totalItems, perPage)
     }
   }, [repoData, headers, setRepositories])
 
   // const isRepoImporting: boolean = useMemo(() => {
   //   return repoData?.some(repository => repository.importing) ?? false
   // }, [repoData])
+
+  const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
 
   useEffect(() => {
     if (importRepoIdentifier && !importToastId) {
@@ -103,20 +110,53 @@ export default function ReposListPage() {
     }
   }, [importRepoIdentifier, setImportRepoIdentifier])
 
+  const getPrevPageLink = () => {
+    return `?page=${page - 1}`
+  }
+
+  const getNextPageLink = () => {
+    return `?page=${page + 1}`
+  }
+
+  const getPageLink = (page: number) => {
+    return `?page=${page}`
+  }
+
+  console.log('spaceURL', spaceURL)
+
   return (
-    <SandboxRepoListPage
-      useRepoStore={useRepoStore}
-      useTranslationStore={useTranslationStore}
-      isLoading={isFetching}
-      isError={isError}
-      errorMessage={error?.message}
-      searchQuery={query}
-      setSearchQuery={setQuery}
-      toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
-      toCreateRepo={() => routes.toCreateRepo({ spaceId })}
-      toImportRepo={() => routes.toImportRepo({ spaceId })}
-      toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
-    />
+    <>
+      <h1 style={{ marginTop: '10rem', textAlign: 'center' }}>Determinate Pagination</h1>
+
+      <Pagination currentPage={page} goToPage={setPage} t={t} totalItems={totalItems} pageSize={pageSize} />
+
+      <h1 style={{ marginTop: '10rem', textAlign: 'center' }}>Determinate Pagination with link</h1>
+
+      <Pagination currentPage={page} getPageLink={getPageLink} t={t} totalItems={totalItems} pageSize={pageSize} />
+
+      <h1 style={{ marginTop: '10rem', textAlign: 'center' }}>Indeterminate Pagination</h1>
+      <Pagination
+        indeterminate
+        hasNext={page < totalPages}
+        hasPrevious={page > 1}
+        getPrevPageLink={getPrevPageLink}
+        getNextPageLink={getNextPageLink}
+        t={t}
+      />
+      <SandboxRepoListPage
+        useRepoStore={useRepoStore}
+        useTranslationStore={useTranslationStore}
+        isLoading={isFetching}
+        isError={isError}
+        errorMessage={error?.message}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+        toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
+        toCreateRepo={() => routes.toCreateRepo({ spaceId })}
+        toImportRepo={() => routes.toImportRepo({ spaceId })}
+        toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
+      />
+    </>
   )
 }
 

@@ -16,6 +16,7 @@ import {
   inputStyles,
   labelStyles,
   linkStyles,
+  paginationStyles,
   radioStyles,
   switchStyles,
   tagStyles
@@ -442,6 +443,7 @@ export default {
         linkStyles,
         avatarStyles,
         cardStyles,
+        paginationStyles,
 
         // Form styles
         formSharedStyles,

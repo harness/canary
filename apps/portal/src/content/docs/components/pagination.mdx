@@ -127,7 +127,7 @@ import { DocsPage } from "@/components/docs-page";
 
 ## Usage
 
-### With Known Total Pages
+### Determinate Pagination
 
 ```typescript jsx
 import { Pagination } from '@harnessio/ui/components'
@@ -139,7 +139,8 @@ const { t } = useTranslationStore()
 
 return (
   <Pagination
-    totalPages={10}
+    totalItems={100}
+    pageSize={10}
     currentPage={currentPage}
     goToPage={setCurrentPage}
     t={t}
@@ -147,7 +148,7 @@ return (
 )
 ```
 
-### Without Known Total Pages
+### Indeterminate Pagination
 
 ```typescript jsx
 import { Pagination } from '@harnessio/ui/components'
@@ -159,31 +160,20 @@ const { t } = useTranslationStore()
 
 return (
   <Pagination
-    currentPage={currentPage}
-    nextPage={currentPage + 1}
-    previousPage={currentPage - 1}
-    goToPage={setCurrentPage}
+    indeterminate
+    hasPrevious={currentPage > 1}
+    hasNext={currentPage < 100}
+
+    // if need to use links
+    getPrevPageLink={() => currentPage - 1}
+    getNextPageLink={() => currentPage + 1}
+
+    // if need to use buttons
+    onPrevious={() => setCurrentPage(currentPage - 1)}
+    onNext={() => setCurrentPage(currentPage + 1)}
     t={t}
   />
 )
-```
-
-## API Reference
-
-The `Pagination` component controls the navigation through pages. It displays page numbers, and "Previous" and "Next" buttons.
-
-The component can be used either with a known total number of pages or with just the "Next" and "Previous" buttons. If `totalPages` is provided, it will display the page numbers along with the navigation buttons. If `totalPages` is not provided, it will only display the "Next" and "Previous" buttons based on the `nextPage` and `previousPage` props.
-
-```typescript jsx
-<Pagination
-  currentPage={1}              // current page number
-  goToPage={(pageNum) => {}}   // function to handle page change
-  t={t}                        // translation function
-  totalPages={10}              // [OPTIONAL] total number of pages
-  nextPage={2}                 // [OPTIONAL] next page number
-  previousPage={0}             // [OPTIONAL] previous page number
-  className="custom-class"     // [OPTIONAL] custom class name
-/>
 ```
 
 <DocsPage.PropsTable

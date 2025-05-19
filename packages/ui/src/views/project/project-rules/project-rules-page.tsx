@@ -29,7 +29,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   handleRuleClick
 }) => {
   const { t } = useTranslationStore()
-  const { rules: rulesData } = useProjectRulesStore()
+  const { rules: rulesData, pageSize, totalItems } = useProjectRulesStore()
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
@@ -70,8 +70,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
           />
         )}
 
-        {/* TODO: Design system: Fix pagination */}
-        <Pagination totalItems={0} pageSize={10} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

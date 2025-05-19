@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import { useListCommitsQuery } from '@harnessio/code-service-client'
@@ -32,21 +32,6 @@ export default function RepoCommitsPage() {
 
   const queryPage = parseInt(searchParams.get('page') || '1', 10)
 
-  // const [_page, _setPage] = useState(queryPage)
-
-  console.log('queryPage', queryPage)
-
-  // useEffect(() => {
-  //   console.log('page', page)
-  //   console.log('searchParams', searchParams)
-
-  //   // setSearchParams({ page: String(page) })
-  // }, [page, setSearchParams])
-
-  // useEffect(() => {
-  //   setPage(queryPage)
-  // }, [queryPage])
-
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
     queryParams: {
@@ -60,8 +45,8 @@ export default function RepoCommitsPage() {
     }
   })
 
-  const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
-  const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+  const xNextPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xNextPage) || '1'), [headers])
+  const xPrevPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xPrevPage) || '1'), [headers])
 
   const setPage = useCallback(
     (selectedPage: number) => setSearchParams({ page: String(selectedPage) }),

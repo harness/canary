@@ -60,8 +60,10 @@ export interface IProjectRulesStore {
   presetRuleData: RepoBranchSettingsFormFields | null
   principals: PrincipalType[] | null
   recentStatusChecks: string[] | null
+  totalItems: number
+  pageSize: number
 
-  setRules: (data: RuleDataType[]) => void
+  setRules: (data: RuleDataType[], headers?: Headers) => void
   setPresetRuleData: (data: RepoBranchSettingsFormFields | null) => void
   setPrincipals: (data: PrincipalType[] | null) => void
   setRecentStatusChecks: (data: string[] | null) => void

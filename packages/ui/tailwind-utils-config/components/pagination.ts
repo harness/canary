@@ -27,7 +27,6 @@ export default {
       }
     },
 
-    // body-single-line-strong
     '&-previous': {
       paddingInline: 'var(--cn-pagination-btn-px)'
     },

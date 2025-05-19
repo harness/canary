@@ -66,7 +66,7 @@ export default function ReposListPage() {
 
   useEffect(() => {
     const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
-    const perPage = parseInt(headers?.get(PageResponseHeader.xPerPage) || '0')
+    const perPage = parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
     if (repoData) {
       const transformedRepos = transformRepoList(repoData)
       setRepositories(transformedRepos, totalItems, perPage)

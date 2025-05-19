@@ -37,7 +37,7 @@ export const ProjectRulesListContainer = () => {
   }
 
   const {
-    data: { body: rulesData } = {},
+    data: { body: rulesData, headers } = {},
     isLoading,
     refetch: refetchRulesList
   } = useSpaceRuleListQuery({
@@ -74,10 +74,10 @@ export const ProjectRulesListContainer = () => {
         identifier: rule.identifier,
         state: rule.state ? String(rule.state) : undefined
       }))
-      setRules(formattedRules)
+      setRules(formattedRules, headers)
       setApiError(null)
     }
-  }, [rulesData, setRules])
+  }, [rulesData, setRules, headers])
 
   const handleDeleteRule = (identifier: string) => {
     deleteRule({ rule_identifier: identifier })

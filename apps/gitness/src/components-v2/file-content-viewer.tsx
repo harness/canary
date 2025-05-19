@@ -115,18 +115,16 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       gitRef: fullGitRef || ''
     })
   }
-
-  console.log('headers', headers)
+  const xPrevPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xPrevPage) || '1'), [headers])
+  const xNextPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xNextPage) || '1'), [headers])
 
   const getPrevPageLink = useCallback(() => {
-    const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '') || 1
     return `?page=${xPrevPage}`
-  }, [headers])
+  }, [xPrevPage])
 
   const getNextPageLink = useCallback(() => {
-    const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '') || 1
     return `?page=${xNextPage}`
-  }, [headers])
+  }, [xNextPage])
 
   /**
    * Navigate to Edit file route
@@ -202,8 +200,8 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
             />
             <Pagination
               indeterminate
-              hasNext={page < 10}
-              hasPrevious={page > 1}
+              hasNext={xNextPage > 0}
+              hasPrevious={xPrevPage > 0}
               getPrevPageLink={getPrevPageLink}
               getNextPageLink={getNextPageLink}
               t={t}

@@ -43,7 +43,7 @@ export default function RepoExecutionListPage() {
     if (executionsBody) {
       const executions = apiExecutions2Executions(executionsBody)
       const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
-      const pageSize = parseInt(headers?.get(PageResponseHeader.xPerPage) || '0')
+      const pageSize = parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
       setExecutionsData(executions, { totalItems, pageSize })
     } else {
       setExecutionsData(null, { totalItems: 0, pageSize: 0 })

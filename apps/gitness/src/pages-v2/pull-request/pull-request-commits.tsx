@@ -44,15 +44,6 @@ export function PullRequestCommitPage() {
     setPaginationFromHeaders(headers)
   }, [headers, setPaginationFromHeaders])
 
-  // TODO: Design system: Can it be removed
-  // useEffect(() => {
-  //   console.log('page', page)
-  //   console.log('queryPage', queryPage)
-
-  //   setQueryPage(page)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [page, queryPage])
-
   return (
     <PullRequestCommitsView
       toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}

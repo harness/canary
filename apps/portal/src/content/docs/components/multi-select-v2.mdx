@@ -11,7 +11,7 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`
-  <div className="w-96">
+  <div className="w-96 flex flex-col gap-y-4">
       <MultiSelectV2.MultiSelect
         label="Frameworks"
         defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
@@ -22,7 +22,11 @@ import { DocsPage } from "@/components/docs-page";
           { key: 'Vue', id: 'vue' },
         ]}
         placeholder="Select frameworks you like..."
-        caption="Separate tags with commas or press Enter. Use the format key:value for object entries."
+      />
+      <MultiSelectV2.MultiSelect
+        label="Frameworks"
+        defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
+        error="This is an error state"
       />
     </div>`}
 />

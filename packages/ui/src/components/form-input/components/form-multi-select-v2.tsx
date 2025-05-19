@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Caption, Label } from '@/components'
+import { Caption, FormCaption, Label } from '@/components'
 import { MultiSelect, type MultiSelectOption, type MultiSelectRef } from '@/components/multi-select-v2'
 
 interface FormMultiSelectPropsType
@@ -9,6 +9,7 @@ interface FormMultiSelectPropsType
   name: string
   label?: string
   caption?: string
+  error?: string
 }
 
 const FormMultiSelect = forwardRef<MultiSelectRef, FormMultiSelectPropsType>((props, ref) => {
@@ -33,21 +34,26 @@ const FormMultiSelect = forwardRef<MultiSelectRef, FormMultiSelectPropsType>((pr
       <Controller
         name={props.name}
         control={formContext.control}
-        render={({ field }) => {
+        render={({ field, fieldState }) => {
           const setFieldRef = (element: MultiSelectRef | null) => {
             setRefs(element)
             field.ref = setRefs
           }
 
           return (
-            <MultiSelect
-              {...props}
-              ref={setFieldRef}
-              value={field.value}
-              onChange={(options: MultiSelectOption[]) => {
-                field.onChange(options)
-              }}
-            />
+            <>
+              <MultiSelect
+                {...props}
+                ref={setFieldRef}
+                value={field.value}
+                onChange={(options: MultiSelectOption[]) => {
+                  field.onChange(options)
+                }}
+              />
+              {fieldState.error || props.error ? (
+                <FormCaption theme="danger">{fieldState.error?.message || props.error}</FormCaption>
+              ) : null}
+            </>
           )
         }}
       />

@@ -207,6 +207,7 @@ export const BranchSettingsRuleBypassListField: FC<
           searchQuery={principalsSearchQuery}
           setSearchQuery={setPrincipalsSearchQuery}
           disallowCreation
+          error={errors?.bypass?.message?.toString()}
         />
       </ControlGroup>
 

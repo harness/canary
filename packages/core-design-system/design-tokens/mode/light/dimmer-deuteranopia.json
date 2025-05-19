@@ -1312,11 +1312,6 @@
         "$type": "color",
         "$value": "{blue.800}",
         "$description": "Hover color for text links."
-      },
-      "text-visited": {
-        "$type": "color",
-        "$value": "{blue.500}",
-        "$description": "Visited state color for text links, replaced with blue for deuteranopia visibility."
       }
     },
     "pipeline": {

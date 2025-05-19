@@ -1303,11 +1303,6 @@
         "$type": "color",
         "$value": "{blue.200}",
         "$description": "Hover color for text links."
-      },
-      "text-visited": {
-        "$type": "color",
-        "$value": "{cyan.300}",
-        "$description": "Visited state color for text links. Differentiates links the user has already activated."
       }
     },
     "pipeline": {

@@ -104,7 +104,6 @@ export interface ILabelsStore {
 
   setIsLoading: (isLoading: boolean) => void
   setLabels: (labels: ILabelType[], paginationData: { totalItems: number; pageSize: number }) => void
-  setPaginationFromHeaders: (headers: Headers | undefined) => void
   addLabel: (label: ILabelType) => void
   deleteLabel: (key: string) => void
   setPage: (page: number) => void

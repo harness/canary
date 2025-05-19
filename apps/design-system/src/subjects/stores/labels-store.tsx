@@ -90,7 +90,6 @@ export const LabelsListStore: RepoLabelsListStore = {
     setRepoSpaceRef: (_: SetRepoSpaceRefProps) => {},
     setGetParentScopeLabels: (_: boolean) => {},
     setPage: (_: number) => {},
-    resetLabelsAndValues: () => {},
-    setPaginationFromHeaders: (_?: Headers) => {}
+    resetLabelsAndValues: () => {}
   })
 }

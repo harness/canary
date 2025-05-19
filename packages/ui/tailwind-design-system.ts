@@ -18,6 +18,7 @@ import {
   inputStyles,
   labelStyles,
   linkStyles,
+  modalDialogStyles,
   multiSelectV2Styles,
   paginationStyles,
   radioStyles,
@@ -450,6 +451,7 @@ export default {
         cardStyles,
         cardSelectStyles,
         paginationStyles,
+        modalDialogStyles,
 
         // Form styles
         formSharedStyles,

@@ -83,6 +83,7 @@ export * from './entity-form-layout'
 export * as MultiSelectV2 from './multi-select-v2'
 export * from './card-select'
 export * from './layout-v2'
+export * from './modal-dialog'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

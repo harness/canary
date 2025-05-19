@@ -6,7 +6,8 @@ export type ProjectMembersListProps = Pick<
 > & {
   memberList: MembersProps[]
   handleResetFiltersQueryAndPages: () => void
-  totalPages: number
+  totalItems: number
+  pageSize: number
   page: number
   setPage: (val: number) => void
 }

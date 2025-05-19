@@ -37,7 +37,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   setSearchQuery
 }) => {
   const { Link, useSearchParams } = useRouterContext()
-  const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
+  const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
     usePullRequestListStore()
 
   const { t } = useTranslationStore()
@@ -300,7 +300,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           </PRListFilterHandler>
         )}
         {renderListContent()}
-        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

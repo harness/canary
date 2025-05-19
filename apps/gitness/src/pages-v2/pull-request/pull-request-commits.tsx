@@ -18,10 +18,10 @@ export function PullRequestCommitPage() {
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [queryPage, _setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { pathname } = useLocation()
 
-  const { page, setPage, setCommitList, setIsFetchingCommits, setPaginationFromHeaders } = usePullRequestCommitsStore()
+  const { setCommitList, setIsFetchingCommits, setPaginationFromHeaders } = usePullRequestCommitsStore()
 
   const { isFetching, data: { body: commits, headers } = {} } = useListPullReqCommitsQuery({
     queryParams: { page: queryPage },
@@ -44,10 +44,14 @@ export function PullRequestCommitPage() {
     setPaginationFromHeaders(headers)
   }, [headers, setPaginationFromHeaders])
 
-  useEffect(() => {
-    setQueryPage(page)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, queryPage, setPage])
+  // TODO: Design system: Can it be removed
+  // useEffect(() => {
+  //   console.log('page', page)
+  //   console.log('queryPage', queryPage)
+
+  //   setQueryPage(page)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [page, queryPage])
 
   return (
     <PullRequestCommitsView
@@ -58,3 +62,5 @@ export function PullRequestCommitPage() {
     />
   )
 }
+
+PullRequestCommitPage.displayName = 'PullRequestCommitPage'

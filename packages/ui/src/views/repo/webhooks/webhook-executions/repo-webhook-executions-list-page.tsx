@@ -25,7 +25,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   toRepoWebhookExecutionDetails
 }) => {
   const { t } = useTranslationStore()
-  const { executions, webhookExecutionPage, setWebhookExecutionPage, totalWebhookExecutionPages } = useWebhookStore()
+  const { executions, webhookExecutionPage, setWebhookExecutionPage, totalItems, pageSize } = useWebhookStore()
   const { navigate } = useRouterContext()
   const events = useMemo(() => {
     return [...getBranchEvents(t), ...getTagEvents(t), ...getPrEvents(t)]
@@ -91,7 +91,8 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
               </Table.Body>
             </Table.Root>
             <Pagination
-              totalPages={totalWebhookExecutionPages}
+              totalItems={totalItems}
+              pageSize={pageSize}
               currentPage={webhookExecutionPage}
               goToPage={setWebhookExecutionPage}
               t={t}

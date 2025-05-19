@@ -31,7 +31,8 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   const { t } = useTranslationStore()
   const {
     labels: spaceLabels,
-    totalPages,
+    totalItems,
+    pageSize,
     page,
     setPage,
     isLoading,
@@ -103,7 +104,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
           </div>
         )}
 
-        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

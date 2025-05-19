@@ -20,7 +20,8 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   errorMessage,
   useTranslationStore,
   currentPage,
-  totalPages,
+  totalItems,
+  pageSize,
   goToPage,
   isLoading,
   connectors,
@@ -103,7 +104,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
           isLoading={isLoading}
           {...props}
         />
-        <Pagination totalPages={totalPages} currentPage={currentPage} goToPage={goToPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

@@ -15,6 +15,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   errorMessage,
   searchQuery,
   setSearchQuery,
+  setQueryPage,
   toCreateRepo,
   toImportRepo,
   toImportMultipleRepos,
@@ -26,8 +27,9 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const handleSearch = useCallback(
     (query: string) => {
       setSearchQuery(query.length ? query : null)
+      setQueryPage(1)
     },
-    [setSearchQuery]
+    [setSearchQuery, setQueryPage]
   )
 
   // State for storing saved filters and sorts

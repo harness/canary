@@ -8,7 +8,8 @@ export interface RepoWebhookListProps {
   useTranslationStore: () => TranslationStore
   isDirtyList: boolean
   handleReset: () => void
-  totalPages: number
+  totalItems: number
+  pageSize: number
   page: number
   setPage: (val: number) => void
   openDeleteWebhookDialog: (id: number) => void
@@ -23,7 +24,8 @@ export function RepoWebhookList({
   useTranslationStore,
   isDirtyList,
   handleReset,
-  totalPages,
+  totalItems,
+  pageSize,
   page,
   setPage,
   openDeleteWebhookDialog,
@@ -167,7 +169,7 @@ export function RepoWebhookList({
           ))}
         </Table.Body>
       </Table.Root>
-      <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
     </>
   )
 }

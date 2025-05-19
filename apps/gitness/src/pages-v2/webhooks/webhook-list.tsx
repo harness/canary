@@ -25,7 +25,7 @@ import { useWebhookStore } from './stores/webhook-store'
 export default function WebhookListPage() {
   const repoRef = useGetRepoRef() ?? ''
   const { spaceId, repoId } = useParams<PathParams>()
-  const { webhooks, setWebhooks, page, setPage, setError, setTotalPages } = useWebhookStore()
+  const { webhooks, setWebhooks, page, setPage, setError, setPaginationFromHeaders } = useWebhookStore()
   const [query, setQuery] = useQueryState('query')
 
   const queryClient = useQueryClient()
@@ -95,7 +95,7 @@ export default function WebhookListPage() {
   useEffect(() => {
     if (webhookData) {
       setWebhooks(webhookData)
-      setTotalPages(headers)
+      setPaginationFromHeaders(headers)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

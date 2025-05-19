@@ -90,8 +90,10 @@ export interface SetRepoSpaceRefProps {
 
 export interface ILabelsStore {
   labels: ILabelType[]
+
   page: number
-  totalPages: number
+  totalItems: number
+  pageSize: number
 
   values: LabelValuesType
   isLoading: boolean
@@ -101,7 +103,8 @@ export interface ILabelsStore {
   getParentScopeLabels: boolean
 
   setIsLoading: (isLoading: boolean) => void
-  setLabels: (labels: ILabelType[]) => void
+  setLabels: (labels: ILabelType[], paginationData: { totalItems: number; pageSize: number }) => void
+  setPaginationFromHeaders: (headers: Headers | undefined) => void
   addLabel: (label: ILabelType) => void
   deleteLabel: (key: string) => void
   setPage: (page: number) => void

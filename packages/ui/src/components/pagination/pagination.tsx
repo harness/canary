@@ -10,11 +10,31 @@ interface PaginationItemsProps {
   currentPage: number
   goToPage?: (pageNum: number) => (e: React.MouseEvent) => void
   getPageLink?: (pageNum: number) => string
+  truncateLimit: number
 }
 
-const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, goToPage, getPageLink }) => {
-  const siblings = 2
+const PaginationItems: FC<PaginationItemsProps> = ({
+  totalPages,
+  currentPage,
+  goToPage,
+  getPageLink,
+  truncateLimit
+}) => {
+  // Calculate how many siblings to show around the current page
+  // The total visible pages would be: first + last + current + (siblings * 2) + 2 ellipses (at most)
+  // So we derive siblings from truncateLimit to ensure we don't exceed the limit
+  const siblings = Math.max(1, Math.floor((truncateLimit - 3) / 2))
+  const leftBound = Math.max(2, currentPage - siblings)
+  const rightBound = Math.min(totalPages - 1, currentPage + siblings)
   const items: ReactElement[] = []
+
+  console.log('--------------')
+  console.log('totalPages', totalPages)
+  console.log('currentPage', currentPage)
+  console.log('truncateLimit', truncateLimit)
+  console.log('siblings', siblings)
+  console.log('leftBound', leftBound)
+  console.log('rightBound', rightBound)
 
   // Always show the first page
   items.push(
@@ -26,7 +46,7 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
   )
 
   // Add ellipsis if needed
-  if (currentPage > 2 + siblings) {
+  if (leftBound > 2) {
     items.push(
       <PaginationPrimitive.Item key="start-ellipsis">
         <PaginationPrimitive.Ellipsis />
@@ -35,9 +55,7 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
   }
 
   // Pages around the current page
-  for (let i = Math.max(2, currentPage - siblings); i <= Math.min(totalPages - 1, currentPage + siblings); i++) {
-    console.log('getPageLink?.(i)', getPageLink?.(i))
-
+  for (let i = leftBound; i <= rightBound; i++) {
     items.push(
       <PaginationPrimitive.Item key={i}>
         <PaginationPrimitive.Link isActive={currentPage === i} href={getPageLink?.(i)} onClick={goToPage?.(i)}>
@@ -48,7 +66,7 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
   }
 
   // Add ellipsis if needed
-  if (currentPage < totalPages - siblings - 1) {
+  if (rightBound < totalPages - 1) {
     items.push(
       <PaginationPrimitive.Item key="end-ellipsis">
         <PaginationPrimitive.Ellipsis />
@@ -56,18 +74,20 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
     )
   }
 
-  // Always show the last page
-  items.push(
-    <PaginationPrimitive.Item key={totalPages}>
-      <PaginationPrimitive.Link
-        href={getPageLink?.(totalPages)}
-        onClick={goToPage?.(totalPages)}
-        isActive={currentPage === totalPages}
-      >
-        {totalPages}
-      </PaginationPrimitive.Link>
-    </PaginationPrimitive.Item>
-  )
+  // Always show the last page if it's different from the first page
+  if (totalPages > 1) {
+    items.push(
+      <PaginationPrimitive.Item key={totalPages}>
+        <PaginationPrimitive.Link
+          href={getPageLink?.(totalPages)}
+          onClick={goToPage?.(totalPages)}
+          isActive={currentPage === totalPages}
+        >
+          {totalPages}
+        </PaginationPrimitive.Link>
+      </PaginationPrimitive.Item>
+    )
+  }
 
   return <>{items}</>
 }
@@ -86,6 +106,7 @@ const PaginationItems: FC<PaginationItemsProps> = ({ totalPages, currentPage, go
 interface PaginationBaseProps {
   className?: string
   t: TFunction
+  truncateLimit?: number
 }
 
 type DeterminatePaginationNavProps =
@@ -138,6 +159,7 @@ export const Pagination: FC<PaginationProps> = ({
   hasPrevious,
   className,
   t,
+  truncateLimit = 4,
   getPrevPageLink,
   getNextPageLink,
   onPrevious,
@@ -182,6 +204,7 @@ export const Pagination: FC<PaginationProps> = ({
                 currentPage={currentPage}
                 getPageLink={getPageLink}
                 goToPage={goToPage ? handleGoToPage : undefined}
+                truncateLimit={truncateLimit}
               />
             )}
 

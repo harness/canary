@@ -106,7 +106,8 @@ export interface ConnectorDetailsReferenceProps {
   apiConnectorRefError?: string
   useTranslationStore: () => TranslationStore
   currentPage: number
-  totalPages: number
+  totalItems: number
+  pageSize: number
   goToPage: (page: number) => void
   isLoading: boolean
   entities: ConnectorReferenceList
@@ -148,7 +149,8 @@ export interface ConnectorDetailsActivityProps {
   apiConnectorActivityError?: string
   useTranslationStore: () => TranslationStore
   currentPage: number
-  totalPages: number
+  totalItems: number
+  pageSize: number
   goToPage: (page: number) => void
   isLoading: boolean
   activities: ConnectorActivityList

@@ -41,4 +41,5 @@ export interface RepoListProps extends Partial<RoutingProps> {
   errorMessage?: string
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
+  setQueryPage: (page: number) => void
 }

@@ -26,7 +26,7 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
   onDeleteHandler
 }) => {
   const { t } = useTranslationStore()
-  const { memberList, totalPages, page, setPage } = useMemberListStore()
+  const { memberList, totalItems, pageSize, page, setPage } = useMemberListStore()
   const { principalList } = usePrincipalListStore()
 
   const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
@@ -104,7 +104,8 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
               onDeleteHandler={onDeleteHandler}
               useTranslationStore={useTranslationStore}
               onEditMember={onEditMember}
-              totalPages={totalPages}
+              totalItems={totalItems}
+              pageSize={pageSize}
               page={page}
               setPage={setPage}
             />

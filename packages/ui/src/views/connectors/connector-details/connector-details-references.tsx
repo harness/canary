@@ -14,7 +14,8 @@ const ConnectorDetailsReference: FC<ConnectorDetailsReferenceProps> = ({
   apiConnectorRefError,
   useTranslationStore,
   currentPage,
-  totalPages,
+  totalItems,
+  pageSize,
   goToPage,
   isLoading,
   entities,
@@ -79,7 +80,7 @@ const ConnectorDetailsReference: FC<ConnectorDetailsReferenceProps> = ({
         {...props}
       />
       <Spacer size={8} />
-      <Pagination totalPages={totalPages} currentPage={currentPage} goToPage={goToPage} t={t} />
+      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} t={t} />
     </div>
   )
 }

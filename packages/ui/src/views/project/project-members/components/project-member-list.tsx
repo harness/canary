@@ -11,7 +11,8 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
   useTranslationStore,
   handleResetFiltersQueryAndPages,
   onEditMember,
-  totalPages,
+  totalItems,
+  pageSize,
   page,
   setPage,
   onDeleteHandler
@@ -54,7 +55,7 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
         onDelete={onDeleteHandler}
         useTranslationStore={useTranslationStore}
       />
-      <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
     </>
   )
 }

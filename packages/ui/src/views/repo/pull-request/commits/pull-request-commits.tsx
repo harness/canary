@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 
 import { NoData, Pagination, SkeletonList } from '@/components'
 import { CommitsList, IPullRequestCommitsStore, SandboxLayout, TranslationStore, TypesCommit } from '@/views'
@@ -18,8 +18,16 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   toCommitDetails,
   toCode
 }) => {
-  const { commitsList, xNextPage, xPrevPage, page, setPage, isFetchingCommits } = usePullRequestCommitsStore()
+  const { commitsList, xNextPage, xPrevPage, isFetchingCommits } = usePullRequestCommitsStore()
   const { t } = useTranslationStore()
+
+  const getPrevPageLink = useCallback(() => {
+    return `?page=${xPrevPage}`
+  }, [xPrevPage])
+
+  const getNextPageLink = useCallback(() => {
+    return `?page=${xNextPage}`
+  }, [xNextPage])
 
   if (isFetchingCommits) {
     return <SkeletonList />
@@ -50,9 +58,18 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
         />
       )}
 
-      <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
+      <Pagination
+        indeterminate
+        hasNext={xNextPage > 0}
+        hasPrevious={xPrevPage > 0}
+        getPrevPageLink={getPrevPageLink}
+        getNextPageLink={getNextPageLink}
+        t={t}
+      />
     </SandboxLayout.Content>
   )
 }
+
+PullRequestCommitsView.displayName = 'PullRequestCommitsView'
 
 export { PullRequestCommitsView }

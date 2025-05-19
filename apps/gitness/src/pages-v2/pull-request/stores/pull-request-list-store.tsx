@@ -9,7 +9,8 @@ import { PageResponseHeader } from '../../../types'
 interface PullRequestListStore {
   pullRequests: PullRequestType[] | null
   labelsQuery: string
-  totalPages: number
+  totalItems: number
+  pageSize: number
   openPullReqs: number
   closedPullReqs: number
   page: number
@@ -21,7 +22,8 @@ interface PullRequestListStore {
 
 export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   pullRequests: null,
-  totalPages: 0,
+  totalItems: 0,
+  pageSize: 10,
   page: 1,
   openPullReqs: 0,
   closedPullReqs: 0,
@@ -56,7 +58,8 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
 
     set({
       pullRequests: transformedPullRequests,
-      totalPages: parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
+      totalItems: parseInt(headers?.get(PageResponseHeader.xTotal) || '0'),
+      pageSize: parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
     })
   },
   setOpenClosePullRequests: data => {

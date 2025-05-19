@@ -15,8 +15,7 @@ export const WebhookExecutionsContainer = () => {
   const repo_ref = useGetRepoRef()
   const routes = useRoutes()
   const { spaceId, repoId, webhookId } = useParams<PathParams>()
-  const { webhookExecutionPage, setWebhookExecutionPage, setExecutions, setTotalWebhookExecutionPages } =
-    useWebhookStore()
+  const { webhookExecutionPage, setWebhookExecutionPage, setExecutions, setPaginationFromHeaders } = useWebhookStore()
 
   const { queryPage } = usePaginationQueryStateWithStore({
     page: webhookExecutionPage,
@@ -37,7 +36,7 @@ export const WebhookExecutionsContainer = () => {
   useEffect(() => {
     if (executions && headers) {
       setExecutions(executions as WebhookExecutionType[])
-      setTotalWebhookExecutionPages(headers)
+      setPaginationFromHeaders(headers)
     }
   }, [executions, setExecutions])
 

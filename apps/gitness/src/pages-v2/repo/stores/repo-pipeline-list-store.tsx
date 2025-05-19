@@ -4,13 +4,15 @@ import { IPipelineListStore } from '@harnessio/ui/views'
 
 export const usePipelineListStore = create<IPipelineListStore>(set => ({
   pipelines: null,
-  totalPages: 0,
+  totalItems: 0,
+  pageSize: 0,
   page: 1,
   setPage: page => set({ page }),
-  setPipelinesData: (pipelines, totalPages) => {
+  setPipelinesData: (pipelines, { totalItems, pageSize }) => {
     set({
       pipelines,
-      totalPages
+      totalItems,
+      pageSize
     })
   }
 }))

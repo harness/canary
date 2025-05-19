@@ -4,7 +4,8 @@ import { ILabelsStore, ILabelType, LabelValuesType, SetRepoSpaceRefProps } from 
 
 export const useLabelsStore = create<ILabelsStore>(set => ({
   labels: [],
-  totalPages: 1,
+  totalItems: 0,
+  pageSize: 10,
   page: 1,
   isLoading: true,
   values: {},
@@ -12,7 +13,9 @@ export const useLabelsStore = create<ILabelsStore>(set => ({
   repo_ref: null,
   getParentScopeLabels: false,
 
-  setLabels: labels => set({ labels }),
+  setLabels: (labels: ILabelType[], paginationData: { totalItems: number; pageSize: number }) =>
+    set({ labels, ...paginationData }),
+
   addLabel: (label: ILabelType) => set(state => ({ labels: [...state.labels, label] })),
 
   deleteLabel: (key: string) => set(state => ({ labels: state.labels.filter(label => label.key !== key) })),

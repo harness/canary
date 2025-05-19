@@ -22,7 +22,8 @@ export interface TypesSpace {
 export interface IMemberListStore {
   memberList: MemberData[]
   spaceId: string
-  totalPages: number
+  totalItems: number
+  pageSize: number
   page: number
   setPage: (page: number) => void
 }

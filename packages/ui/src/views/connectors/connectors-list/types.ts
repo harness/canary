@@ -1,5 +1,4 @@
 import { CheckboxOptions } from '@components/filters/types'
-import { PaginationProps } from '@components/index'
 import { SortValue } from '@components/sorts'
 import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
@@ -53,13 +52,15 @@ export type ConnectorListFilters = {
   favorite?: boolean
 }
 
-export interface ConnectorListPageProps
-  extends ConnectorListProps,
-    Pick<PaginationProps, 'totalPages' | 'currentPage' | 'goToPage'> {
+export interface ConnectorListPageProps extends ConnectorListProps {
   searchQuery?: string
   setSearchQuery: (query?: string) => void
   isError?: boolean
   errorMessage?: string
+  currentPage: number
+  totalItems: number
+  pageSize: number
+  goToPage: (page: number) => void
   onFilterChange?: (filterValues: ConnectorListFilters) => void
   onSortChange?: (sort: SortValue[]) => void
   onCreate: () => void

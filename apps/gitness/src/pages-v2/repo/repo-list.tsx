@@ -33,7 +33,7 @@ export default function ReposListPage() {
   const { toast, dismiss } = useToast()
 
   const [query, setQuery] = useQueryState('query')
-  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+  const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const { t } = useTranslationStore()
 
@@ -128,7 +128,14 @@ export default function ReposListPage() {
     <>
       <h1 style={{ marginTop: '10rem', textAlign: 'center' }}>Determinate Pagination</h1>
 
-      <Pagination currentPage={page} goToPage={setPage} t={t} totalItems={totalItems} pageSize={pageSize} />
+      <Pagination
+        currentPage={page}
+        truncateLimit={3}
+        goToPage={setPage}
+        t={t}
+        totalItems={totalItems}
+        pageSize={pageSize}
+      />
 
       <h1 style={{ marginTop: '10rem', textAlign: 'center' }}>Determinate Pagination with link</h1>
 
@@ -151,6 +158,7 @@ export default function ReposListPage() {
         errorMessage={error?.message}
         searchQuery={query}
         setSearchQuery={setQuery}
+        setQueryPage={setQueryPage}
         toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
         toCreateRepo={() => routes.toCreateRepo({ spaceId })}
         toImportRepo={() => routes.toImportRepo({ spaceId })}

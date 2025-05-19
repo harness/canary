@@ -32,20 +32,25 @@ export default function RepoCommitsPage() {
 
   const queryPage = parseInt(searchParams.get('page') || '1', 10)
 
-  const [page, setPage] = useState(queryPage)
+  // const [_page, _setPage] = useState(queryPage)
 
-  useEffect(() => {
-    setSearchParams({ page: String(page) })
-  }, [page, setSearchParams])
+  console.log('queryPage', queryPage)
 
-  useEffect(() => {
-    setPage(queryPage)
-  }, [queryPage])
+  // useEffect(() => {
+  //   console.log('page', page)
+  //   console.log('searchParams', searchParams)
+
+  //   // setSearchParams({ page: String(page) })
+  // }, [page, setSearchParams])
+
+  // useEffect(() => {
+  //   setPage(queryPage)
+  // }, [queryPage])
 
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
     queryParams: {
-      page: page,
+      page: queryPage,
       git_ref: normalizeGitRef(
         selectedRefType === BranchSelectorTab.TAGS
           ? REFS_TAGS_PREFIX + selectedBranchOrTag?.name
@@ -57,6 +62,11 @@ export default function RepoCommitsPage() {
 
   const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
   const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+
+  const setPage = useCallback(
+    (selectedPage: number) => setSearchParams({ page: String(selectedPage) }),
+    [setSearchParams]
+  )
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
@@ -90,7 +100,7 @@ export default function RepoCommitsPage() {
       toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
       commitsList={commitData?.commits}
       isFetchingCommits={isFetchingCommits}
-      page={page}
+      page={queryPage}
       setPage={setPage}
       xNextPage={xNextPage}
       xPrevPage={xPrevPage}

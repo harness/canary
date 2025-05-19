@@ -9,11 +9,15 @@ export interface IMemberListStore {
   // state
   memberList: MemberData[]
   spaceId: string
-  totalPages: number
+  totalItems: number
+  pageSize: number
   page: number
 
   // actions
-  setMemberList: (members: TypesMembershipUser[]) => void
+  setMemberList: (
+    members: TypesMembershipUser[],
+    { totalItems, pageSize }: { totalItems: number; pageSize: number }
+  ) => void
   setPage: (page: number) => void
 }
 
@@ -22,10 +26,11 @@ export const useMemberListStore = create<IMemberListStore>(set => ({
   memberList: [],
   page: 1,
   spaceId: '',
-  totalPages: 1,
+  totalItems: 0,
+  pageSize: 10,
 
   // Actions
-  setMemberList: members =>
+  setMemberList: (members, { totalItems, pageSize }) =>
     set({
       memberList: members.map((member: TypesMembershipUser) => ({
         display_name: member.principal?.display_name ?? '',
@@ -34,7 +39,9 @@ export const useMemberListStore = create<IMemberListStore>(set => ({
         avatarUrl: '',
         timestamp: member.created ? timeAgoFromEpochTime(member.created) : 'No time available',
         uid: member.principal?.uid ?? ''
-      }))
+      })),
+      totalItems,
+      pageSize
     }),
   setPage: page => set({ page })
 }))

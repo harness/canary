@@ -1,4 +1,3 @@
-import { PaginationProps } from '@components/index'
 import { TranslationStore } from '@views/repo'
 
 interface RoutingProps {
@@ -23,12 +22,14 @@ export interface SecretListProps extends Partial<RoutingProps> {
   onDeleteSecret: (secretId: string) => void
 }
 
-export interface SecretListPageProps
-  extends SecretListProps,
-    Pick<PaginationProps, 'totalPages' | 'currentPage' | 'goToPage'> {
+export interface SecretListPageProps extends SecretListProps {
   searchQuery?: string
   setSearchQuery: (query?: string) => void
   isError?: boolean
   errorMessage?: string
   onCreate: () => void
+  currentPage: number
+  totalItems: number
+  pageSize: number
+  goToPage: (page: number) => void
 }

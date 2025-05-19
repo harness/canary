@@ -6,7 +6,8 @@ import { PageResponseHeader } from '../../../types'
 
 export const useAdminListUsersStore = create<IAdminListUsersStore>(set => ({
   users: [],
-  totalPages: 1,
+  totalItems: 0,
+  pageSize: 10,
   page: 1,
   password: null,
   user: null,
@@ -20,11 +21,13 @@ export const useAdminListUsersStore = create<IAdminListUsersStore>(set => ({
       users: data
     })
   },
-  setTotalPages: (headers: Headers) => {
-    const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
+  setPaginationFromHeaders: (headers: Headers) => {
+    const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
+    const pageSize = parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
 
     set({
-      totalPages
+      totalItems,
+      pageSize
     })
   },
   setPassword: (password: string) => {

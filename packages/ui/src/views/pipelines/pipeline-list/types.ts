@@ -17,8 +17,12 @@ export interface IPipeline {
 
 export interface IPipelineListStore {
   pipelines: IPipeline[] | null
-  setPipelinesData: (data: IPipeline[] | null, totalPages: number) => void
-  totalPages: number
+  setPipelinesData: (
+    data: IPipeline[] | null,
+    { totalItems, pageSize }: { totalItems: number; pageSize: number }
+  ) => void
+  totalItems: number
+  pageSize: number
   page: number
   setPage: (page: number) => void
 }

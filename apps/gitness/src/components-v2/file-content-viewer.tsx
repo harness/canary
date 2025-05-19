@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harnessio/code-service-client'
@@ -58,7 +58,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [page, _setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { theme } = useThemeStore()
   const { t } = useTranslationStore()
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
@@ -73,9 +73,6 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       path: fullResourcePath
     }
   })
-
-  const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
-  const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
 
   // TODO: temporary solution for matching themes
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
@@ -118,6 +115,18 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       gitRef: fullGitRef || ''
     })
   }
+
+  console.log('headers', headers)
+
+  const getPrevPageLink = useCallback(() => {
+    const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '') || 1
+    return `?page=${xPrevPage}`
+  }, [headers])
+
+  const getNextPageLink = useCallback(() => {
+    const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '') || 1
+    return `?page=${xNextPage}`
+  }, [headers])
 
   /**
    * Navigate to Edit file route
@@ -191,7 +200,14 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
                 committer: item.committer
               }))}
             />
-            <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
+            <Pagination
+              indeterminate
+              hasNext={page < 10}
+              hasPrevious={page > 1}
+              getPrevPageLink={getPrevPageLink}
+              getNextPageLink={getNextPageLink}
+              t={t}
+            />
           </div>
         )
       default:

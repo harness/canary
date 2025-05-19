@@ -48,7 +48,8 @@ export type IconType = 'pr-open' | 'pr-closed' | 'pr-draft' | 'pr-merge'
 
 export interface PullRequestListStore {
   pullRequests: PullRequestType[] | null
-  totalPages: number
+  totalItems: number
+  pageSize: number
   page: number
   setPage: (page: number) => void
   setLabelsQuery: (query: string) => void

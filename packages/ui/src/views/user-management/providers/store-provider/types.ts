@@ -4,7 +4,8 @@ import { TranslationStore, UsersProps } from '@/views'
 
 export interface IAdminListUsersStore {
   users: UsersProps[]
-  totalPages: number
+  totalItems: number
+  pageSize: number
   page: number
   password: string | null
   user: UsersProps | null
@@ -13,7 +14,7 @@ export interface IAdminListUsersStore {
   setUser: (user: UsersProps) => void
   setPage: (data: number) => void
   setUsers: (data: UsersProps[]) => void
-  setTotalPages: (data: Headers) => void
+  setPaginationFromHeaders: (data: Headers) => void
   setGeneratePassword: (data: boolean) => void
 }
 

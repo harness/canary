@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
 import { useGetRepoId } from '../../../../framework/hooks/useGetRepoId'
+import { PageResponseHeader } from '../../../../types'
 import { useLabelsStore } from '../../../project/stores/labels-store'
 import { useGetRepoLabelAndValuesData } from './use-get-repo-label-and-values-data'
 
@@ -22,7 +23,8 @@ export const usePopulateLabelStore = ({ queryPage, query, enabled = true, inheri
     space_ref,
     repo_ref,
     labels,
-    values
+    values,
+    headers
   } = useGetRepoLabelAndValuesData({ queryPage, query, enabled, inherited: inherited || getParentScopeLabels })
 
   /**
@@ -50,8 +52,11 @@ export const usePopulateLabelStore = ({ queryPage, query, enabled = true, inheri
    * Set labels data from API to store
    */
   useEffect(() => {
-    setLabels(labels)
-  }, [labels, setLabels])
+    setLabels(labels, {
+      totalItems: parseInt(headers?.get(PageResponseHeader.xTotal) ?? '0'),
+      pageSize: parseInt(headers?.get(PageResponseHeader.xPerPage) ?? '10')
+    })
+  }, [labels, setLabels, headers])
 
   /**
    * Set values data from API to store

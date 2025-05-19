@@ -11,6 +11,7 @@ interface PullRequestCommitsStore {
   isFetchingCommits: boolean
   xNextPage: number
   xPrevPage: number
+  // pageSize: number
   page: number
 
   // actions
@@ -25,6 +26,7 @@ export const usePullRequestCommitsStore = create<PullRequestCommitsStore>(set =>
   isFetchingCommits: false,
   xNextPage: 0,
   xPrevPage: 0,
+  // pageSize: 10,
   page: 1,
   setCommitList: data => {
     set({ commitsList: data })
@@ -34,6 +36,8 @@ export const usePullRequestCommitsStore = create<PullRequestCommitsStore>(set =>
   setPaginationFromHeaders: (headers?: Headers) => {
     const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
     const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+    // const pageSize = parseInt(headers?.get(PageResponseHeader.xPerPage) || '')
+
     set({ xNextPage, xPrevPage })
   }
 }))

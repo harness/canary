@@ -21,7 +21,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslationStore()
-  const { executions, totalPages, page, setPage } = useExecutionListStore()
+  const { executions, pageSize, totalItems, page, setPage } = useExecutionListStore()
 
   const {
     search: searchInput,
@@ -85,7 +85,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
           handleExecutePipeline={handleExecutePipeline}
         />
         <Spacer size={8} />
-        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

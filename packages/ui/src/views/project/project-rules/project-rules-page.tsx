@@ -70,8 +70,10 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
           />
         )}
 
-        <Pagination currentPage={page} goToPage={setPage} t={t} />
+        {/* TODO: Design system: Fix pagination */}
+        <Pagination totalItems={0} pageSize={10} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )
 }
+ProjectRulesPage.displayName = 'ProjectRulesPage'

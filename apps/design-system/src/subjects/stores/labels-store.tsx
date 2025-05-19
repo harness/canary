@@ -46,7 +46,8 @@ export const LabelsListStore: RepoLabelsListStore = {
       }
     ],
 
-    totalPages: 1,
+    totalItems: 1,
+    pageSize: 10,
     page: 1,
     repo_ref: 'canary',
     space_ref: 'P1org',

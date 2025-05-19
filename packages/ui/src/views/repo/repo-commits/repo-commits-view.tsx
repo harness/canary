@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 
 import { NoData, Pagination, SkeletonList, Spacer, Text } from '@/components'
 import { CommitsList, SandboxLayout, TranslationStore, TypesCommit } from '@/views'
@@ -35,6 +35,14 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   const handleResetFiltersAndPages = () => {
     setPage(1)
   }
+
+  const getPrevPageLink = useCallback(() => {
+    return `?page=${xPrevPage}`
+  }, [xPrevPage])
+
+  const getNextPageLink = useCallback(() => {
+    return `?page=${xNextPage}`
+  }, [xNextPage])
 
   return (
     <SandboxLayout.Main fullWidth>
@@ -91,10 +99,11 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                 <CommitsList data={commitsList} toCode={toCode} toCommitDetails={toCommitDetails} />
                 <Pagination
                   className="pl-[26px]"
-                  nextPage={xNextPage}
-                  previousPage={xPrevPage}
-                  currentPage={page}
-                  goToPage={setPage}
+                  indeterminate
+                  hasNext={xNextPage > 0}
+                  hasPrevious={xPrevPage > 0}
+                  getPrevPageLink={getPrevPageLink}
+                  getNextPageLink={getNextPageLink}
                   t={t}
                 />
               </>

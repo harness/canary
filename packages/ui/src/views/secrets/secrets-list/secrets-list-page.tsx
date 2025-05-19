@@ -16,7 +16,8 @@ const SecretListPage: FC<SecretListPageProps> = ({
   errorMessage,
   useTranslationStore,
   currentPage,
-  totalPages,
+  totalItems,
+  pageSize,
   goToPage,
   isLoading,
   secrets,
@@ -85,7 +86,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
           {...props}
         />
         <Spacer size={8} />
-        <Pagination totalPages={totalPages} currentPage={currentPage} goToPage={goToPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

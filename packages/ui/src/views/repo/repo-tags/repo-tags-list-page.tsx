@@ -35,6 +35,14 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
 
+  const getPrevPageLink = useCallback(() => {
+    return `?page=${xPrevPage}`
+  }, [xPrevPage])
+
+  const getNextPageLink = useCallback(() => {
+    return `?page=${xNextPage}`
+  }, [xNextPage])
+
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content
@@ -83,7 +91,14 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
         <Spacer size={5} />
 
         {!isLoading && (
-          <Pagination currentPage={page} nextPage={xNextPage} previousPage={xPrevPage} goToPage={setPage} t={t} />
+          <Pagination
+            indeterminate
+            hasNext={xNextPage > 0}
+            hasPrevious={xPrevPage > 0}
+            getNextPageLink={getNextPageLink}
+            getPrevPageLink={getPrevPageLink}
+            t={t}
+          />
         )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

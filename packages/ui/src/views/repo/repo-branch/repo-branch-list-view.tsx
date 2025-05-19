@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
 import { Button, ListActions, Pagination, SearchInput, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
@@ -28,6 +28,14 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
+
+  const getPrevPageLink = useCallback(() => {
+    return `?page=${xPrevPage}`
+  }, [xPrevPage])
+
+  const getNextPageLink = useCallback(() => {
+    return `?page=${xNextPage}`
+  }, [xNextPage])
 
   return (
     <SandboxLayout.Main>
@@ -73,7 +81,14 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
           {...routingProps}
         />
         {!isLoading && (
-          <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
+          <Pagination
+            indeterminate
+            hasNext={xNextPage > 0}
+            hasPrevious={xPrevPage > 0}
+            getPrevPageLink={getPrevPageLink}
+            getNextPageLink={getNextPageLink}
+            t={t}
+          />
         )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

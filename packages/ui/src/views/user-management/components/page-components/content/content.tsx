@@ -7,7 +7,7 @@ import { ContentProps } from '@/views/user-management/components/page-components
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
-export const Content = ({ totalPages, currentPage, setPage }: ContentProps) => {
+export const Content = ({ totalItems, pageSize, currentPage, setPage }: ContentProps) => {
   const { useTranslationStore, useAdminListUsersStore } = useUserManagementStore()
 
   const { users } = useAdminListUsersStore()
@@ -33,7 +33,8 @@ export const Content = ({ totalPages, currentPage, setPage }: ContentProps) => {
       <Spacer size={4.5} />
       <UsersList />
       <Pagination
-        totalPages={totalPages}
+        totalItems={totalItems}
+        pageSize={pageSize}
         currentPage={currentPage}
         goToPage={(pageNum: number) => setPage(pageNum)}
         t={t}

@@ -6,11 +6,11 @@ import { useUserManagementStore } from '@/views/user-management/providers/store-
 export const UserManagementPageContent = ({ handlers }: Pick<IUserManagementPageProps, 'handlers'>) => {
   const { useAdminListUsersStore } = useUserManagementStore()
 
-  const { totalPages, page: currentPage, setPage } = useAdminListUsersStore()
+  const { totalItems, pageSize, page: currentPage, setPage } = useAdminListUsersStore()
 
   return (
     <SandboxLayout.Main>
-      <Content totalPages={totalPages} currentPage={currentPage} setPage={setPage} />
+      <Content totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} setPage={setPage} />
       <Dialogs handlers={handlers} />
     </SandboxLayout.Main>
   )

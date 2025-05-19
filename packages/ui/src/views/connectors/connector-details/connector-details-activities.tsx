@@ -11,7 +11,8 @@ const ConnectorDetailsActivities: FC<ConnectorDetailsActivityProps> = ({
   apiConnectorActivityError,
   useTranslationStore,
   currentPage,
-  totalPages,
+  totalItems,
+  pageSize,
   goToPage,
   isLoading,
   activities,
@@ -55,7 +56,7 @@ const ConnectorDetailsActivities: FC<ConnectorDetailsActivityProps> = ({
         {...props}
       />
       <Spacer size={8} />
-      <Pagination totalPages={totalPages} currentPage={currentPage} goToPage={goToPage} t={t} />
+      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} t={t} />
     </div>
   )
 }

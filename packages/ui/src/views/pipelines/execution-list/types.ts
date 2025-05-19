@@ -20,8 +20,9 @@ export interface IExecution {
 
 export interface IExecutionListStore {
   executions: IExecution[] | null
-  setExecutionsData: (data: IExecution[] | null, totalPages: number) => void
-  totalPages: number
+  setExecutionsData: (data: IExecution[] | null, paginationData: { totalItems: number; pageSize: number }) => void
+  totalItems: number
+  pageSize: number
   page: number
   setPage: (page: number) => void
 }

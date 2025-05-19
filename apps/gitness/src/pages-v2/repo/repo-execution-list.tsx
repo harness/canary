@@ -42,10 +42,11 @@ export default function RepoExecutionListPage() {
   useEffect(() => {
     if (executionsBody) {
       const executions = apiExecutions2Executions(executionsBody)
-      const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '')
-      setExecutionsData(executions, totalPages)
+      const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
+      const pageSize = parseInt(headers?.get(PageResponseHeader.xPerPage) || '0')
+      setExecutionsData(executions, { totalItems, pageSize })
     } else {
-      setExecutionsData(null, 0)
+      setExecutionsData(null, { totalItems: 0, pageSize: 0 })
     }
   }, [executionsBody, headers])
 

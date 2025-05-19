@@ -49,6 +49,7 @@ const FormMultiSelect = forwardRef<MultiSelectRef, FormMultiSelectPropsType>((pr
                 onChange={(options: MultiSelectOption[]) => {
                   field.onChange(options)
                 }}
+                theme={fieldState.error || props.error ? 'danger' : undefined}
               />
               {fieldState.error || props.error ? (
                 <FormCaption theme="danger">{fieldState.error?.message || props.error}</FormCaption>

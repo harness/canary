@@ -76,14 +76,12 @@ export const repoBranchSettingsFormSchema = z.object({
     })
   ),
   state: z.boolean(),
-  bypass: z
-    .array(
-      z.object({
-        id: z.number(),
-        key: z.string()
-      })
-    )
-    .min(1, 'Bypass list is required'),
+  bypass: z.array(
+    z.object({
+      id: z.number(),
+      key: z.string()
+    })
+  ),
   default: z.boolean().optional(),
   repo_owners: z.boolean().optional(),
   rules: z.array(

@@ -12,8 +12,8 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`
   <div className="w-96 flex flex-col gap-y-4">
+      <Label>MultiSelect with options</Label>
       <MultiSelectV2.MultiSelect
-        label="Frameworks"
         defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
         options={[
           { key: 'nextjs', id: 'nextjs' },
@@ -23,10 +23,20 @@ import { DocsPage } from "@/components/docs-page";
         ]}
         placeholder="Select frameworks you like..."
       />
+      <Label>MultiSelect without options</Label>
       <MultiSelectV2.MultiSelect
-        label="Frameworks"
         defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
-        error="This is an error state"
+      />
+      <Label>MultiSelect with creation disabled</Label>
+      <MultiSelectV2.MultiSelect
+        defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
+        options={[
+          { key: 'nextjs', id: 'nextjs' },
+          { key: 'Vite', id: 'vite' },
+          { key: 'Nuxt', id: 'nuxt' },
+          { key: 'Vue', id: 'vue' },
+        ]}
+        disallowCreation
       />
     </div>`}
 />

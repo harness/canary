@@ -314,9 +314,15 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                 {isLoading ? (
                   <SkeletonList />
                 ) : availableOptions?.length === 0 ? (
-                  <Command.Item value="-" disabled>
-                    No results found
-                  </Command.Item>
+                  disallowCreation ? (
+                    <Command.Item value="-" disabled>
+                      No results found
+                    </Command.Item>
+                  ) : (
+                    <Command.Item value="-" disabled>
+                      Press enter to create value
+                    </Command.Item>
+                  )
                 ) : (
                   <Command.Group>
                     {availableOptions?.map(option => {

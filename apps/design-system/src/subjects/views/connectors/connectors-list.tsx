@@ -57,7 +57,8 @@ const ConnectorsListPageWrapper = (): JSX.Element => {
         onTestConnection={noop}
         onToggleFavoriteConnector={noop}
         currentPage={1}
-        totalPages={5}
+        totalItems={filteredMockConnectorsList.length}
+        pageSize={10}
         goToPage={noop}
         onCreate={noop}
       />

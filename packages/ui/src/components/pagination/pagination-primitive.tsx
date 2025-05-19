@@ -86,7 +86,7 @@ const PaginationPrimitiveLink = ({
       )}
       asChild
     >
-      <Link to={href as string} aria-current={isActive ? 'page' : undefined} {...props}>
+      <Link variant="secondary" to={href as string} aria-current={isActive ? 'page' : undefined} {...props}>
         {children}
       </Link>
     </Button>

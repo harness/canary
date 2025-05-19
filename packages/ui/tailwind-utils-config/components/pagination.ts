@@ -1,8 +1,16 @@
 export default {
   '.cn-pagination': {
     '&-root': {
+      containerType: 'inline-size',
       // TODO: Design system: How to handle magic numbers?
-      '@apply mx-auto w-full max-w-[700px]': ''
+      '@apply mx-auto w-full max-w-[700px]': '',
+
+      // Container query to hide pagination pages on smaller spaces
+      '@container (max-width: 400px)': {
+        '.cn-pagination-pages': {
+          '@apply hidden': ''
+        }
+      }
     },
 
     '&-button': {
@@ -14,7 +22,7 @@ export default {
       gap: 'var(--cn-spacing-half)',
 
       '&:where(.cn-pagination-hide-pages)': {
-        '@apply justify-end': ''
+        '@apply justify-center': ''
       },
 
       '&:where(:not(.cn-pagination-hide-pages))': {

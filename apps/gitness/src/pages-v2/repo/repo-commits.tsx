@@ -45,8 +45,8 @@ export default function RepoCommitsPage() {
     }
   })
 
-  const xNextPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xNextPage) || '1'), [headers])
-  const xPrevPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xPrevPage) || '1'), [headers])
+  const xNextPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xNextPage) || ''), [headers])
+  const xPrevPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xPrevPage) || ''), [headers])
 
   const setPage = useCallback(
     (selectedPage: number) => setSearchParams({ page: String(selectedPage) }),

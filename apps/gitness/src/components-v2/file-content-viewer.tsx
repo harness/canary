@@ -115,8 +115,8 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       gitRef: fullGitRef || ''
     })
   }
-  const xPrevPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xPrevPage) || '1'), [headers])
-  const xNextPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xNextPage) || '1'), [headers])
+  const xPrevPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xPrevPage) || ''), [headers])
+  const xNextPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xNextPage) || ''), [headers])
 
   const getPrevPageLink = useCallback(() => {
     return `?page=${xPrevPage}`

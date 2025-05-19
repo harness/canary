@@ -15,16 +15,108 @@ The `totalItems` and `pageSize` props are used to determine the total number of 
 
 import { DocsPage } from "@/components/docs-page";
 
+### Determinate Pagination (Button)
+
 <DocsPage.ComponentExample
   client:only
   code={`() => {
     const t = (key, fallback) => fallback || key
     const [currentPage, setCurrentPage] = React.useState(1)
 
-      const getPageLink = (page: number) => {
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                totalItems={100}
+                pageSize={10}
+                currentPage={currentPage}
+                goToPage={setCurrentPage}
+                t={t}
+            />
+        </div>
+    )
+
+}`} />
+
+### Determinate Pagination with Truncation
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const t = (key, fallback) => fallback || key
+    const [currentPage, setCurrentPage] = React.useState(1)
+
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                totalItems={100}
+                pageSize={10}
+                truncateLimit={5}
+                currentPage={currentPage}
+                goToPage={setCurrentPage}
+                t={t}
+            />
+        </div>
+    )
+
+}`} />
+
+### Determinate Pagination with Hidden Page Numbers
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const t = (key, fallback) => fallback || key
+    const [currentPage, setCurrentPage] = React.useState(1)
+
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                totalItems={100}
+                pageSize={10}
+                currentPage={currentPage}
+                goToPage={setCurrentPage}
+                hidePageNumbers
+                t={t}
+            />
+        </div>
+    )
+
+}`} />
+
+### Determinate Pagination with Links
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const t = (key, fallback) => fallback || key
+    const [currentPage, setCurrentPage] = React.useState(1)
+    
+    const getPageLink = (page) => {
         return '?page=' + page
     }
 
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                totalItems={100}
+                pageSize={10}
+                currentPage={currentPage}
+                getPageLink={getPageLink}
+                t={t}
+            />
+        </div>
+    )
+
+}`} />
+
+### Indeterminate Pagination with Links
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const t = (key, fallback) => fallback || key
+    const [currentPage, setCurrentPage] = React.useState(1)
+    
     const getPrevPageLink = () => {
         return '?page=' + (currentPage - 1)
     }
@@ -33,6 +125,29 @@ import { DocsPage } from "@/components/docs-page";
         return '?page=' + (currentPage + 1)
     }
 
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                indeterminate
+                hasNext={currentPage < 100}
+                hasPrevious={currentPage > 1}
+                getPrevPageLink={getPrevPageLink}
+                getNextPageLink={getNextPageLink}
+                t={t}
+            />
+        </div>
+    )
+
+}`} />
+
+### Indeterminate Pagination with Callbacks
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const t = (key, fallback) => fallback || key
+    const [currentPage, setCurrentPage] = React.useState(1)
+    
     const onPrevious = () => {
         alert("Triggered onPrevious callback")
     }
@@ -42,88 +157,19 @@ import { DocsPage } from "@/components/docs-page";
     }
 
     return (
-        <div className="flex flex-col w-[600px] gap-40">
-            <div>
-                <h5>Determinate Pagination (renders Button)</h5>
-                <Pagination
-                    totalItems={100}
-                    pageSize={10}
-                    currentPage={currentPage}
-                    goToPage={setCurrentPage}
-                    t={t}
-                />
-            </div>
-            <hr />
-            <div>
-                <h5>Determinate Pagination with truncateLimit (renders Button) </h5>
-                <Pagination
-                    totalItems={100}
-                    pageSize={10}
-                    truncateLimit={7}
-                    currentPage={currentPage}
-                    goToPage={setCurrentPage}
-                    t={t}
-                />
-            </div>
-            <hr />
-            <div>
-                <h5>Determinate Pagination with page numbers hidden (renders Button)</h5>
-                <Pagination
-                    totalItems={100}
-                    pageSize={10}
-                    currentPage={currentPage}
-                    goToPage={setCurrentPage}
-                    hidePageNumbers
-                    t={t}
-                />
-            </div>
-            <hr />
-
-            <div>
-                <h5>Determinate Pagination with getPageLink (renders Link)</h5>
-                <Pagination
-                    totalItems={100}
-                    pageSize={10}
-                    currentPage={currentPage}
-                    getPageLink={getPageLink}
-                    t={t}
-                />
-            </div>
-            <hr />
-
-            <div>
-                <h5>Indeterminate Pagination with getPrevPageLink and getNextPageLink</h5>
-                <h5>(renders Link)</h5>
-                <Pagination
-                    indeterminate
-                    hasNext={currentPage < 100}
-                    hasPrevious={currentPage > 1}
-                    getPrevPageLink={getPrevPageLink}
-                    getNextPageLink={getNextPageLink}
-                    t={t}
-                />
-            </div>
-            <hr />
-
-            <div>
-                <h5>Indeterminate Pagination with onNext and onPrevious (renders Button)</h5>
-                <Pagination
-                    indeterminate
-                    hasNext={currentPage < 100}
-                    hasPrevious={currentPage > 1}
-                    onPrevious={onPrevious}
-                    onNext={onNext}
-                    t={t}
-                />
-            </div>
-            <hr />
-
-
+        <div className="w-[550px]">
+            <Pagination
+                indeterminate
+                hasNext={currentPage < 100}
+                hasPrevious={currentPage > 1}
+                onPrevious={onPrevious}
+                onNext={onNext}
+                t={t}
+            />
         </div>
     )
 
-}
-`} />
+}`} />
 
 ## Usage
 

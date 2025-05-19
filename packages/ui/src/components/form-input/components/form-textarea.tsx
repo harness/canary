@@ -20,10 +20,9 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaPropsType>((pro
     <Controller
       name={props.name}
       control={formContext.control}
-      render={({ field, fieldState }) => {
-        const error = fieldState.error?.message ?? props.error
-        return <Textarea {...{ ...props, ...field, error }} ref={ref} theme={error ? 'danger' : 'default'} />
-      }}
+      render={({ field, fieldState }) => (
+        <Textarea {...props} {...field} error={fieldState.error?.message || props.error} ref={ref} />
+      )}
     />
   )
 })

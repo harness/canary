@@ -72,7 +72,7 @@ const Example: FC<ExampleProps> = ({ code, scope }) => {
   return (
     <div className="bg-cn-background-1 not-content my-12 overflow-hidden rounded-md border">
       <LiveProvider code={code} scope={scopeWithLayout} enableTypeScript>
-        <div className="w-full p-12 [&>div]:grid [&>div]:place-items-center">
+        <div className="grid place-items-center p-12">
           <RouterProvider router={router} />
         </div>
         <details className="example-expand bg-cn-background-2 border-t p-3">

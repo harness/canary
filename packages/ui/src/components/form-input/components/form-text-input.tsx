@@ -21,12 +21,9 @@ const FormTextInput = forwardRef<HTMLInputElement, FormTextInputPropsType>((prop
     <Controller
       name={props.name}
       control={formContext.control}
-      render={({ field, fieldState }) => {
-        // form error takes precedence over props.error
-        const error = fieldState.error?.message ?? props.error
-
-        return <TextInput {...{ ...props, ...field, error }} ref={ref} theme={error ? 'danger' : 'default'} />
-      }}
+      render={({ field, fieldState }) => (
+        <TextInput {...props} {...field} error={fieldState.error?.message || props.error} ref={ref} />
+      )}
     />
   )
 })

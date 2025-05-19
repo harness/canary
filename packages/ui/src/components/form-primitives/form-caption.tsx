@@ -46,10 +46,7 @@ export const FormCaption = ({
   const effectiveIconName = theme === 'danger' ? 'cross-circle' : 'warning-triangle-outline'
 
   return (
-    <p
-      className={cn(formCaptionVariants({ theme }), { 'cn-caption-disabled': disabled }, className)}
-      aria-disabled={disabled}
-    >
+    <p className={cn(formCaptionVariants({ theme }), { 'cn-caption-disabled': disabled }, className)}>
       {canShowIcon && <Icon name={effectiveIconName} size={14} />}
       <span>{children}</span>
     </p>

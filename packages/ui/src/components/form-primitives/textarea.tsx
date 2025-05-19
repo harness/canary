@@ -1,7 +1,7 @@
-import { forwardRef, TextareaHTMLAttributes, useCallback, useState } from 'react'
+import { forwardRef, TextareaHTMLAttributes, useCallback, useMemo, useState } from 'react'
 
 import { ControlGroup, FormCaption, Label } from '@/components'
-import { anyTypeOf, useMergeRefs } from '@/utils'
+import { generateAlphaNumericHash, isAnyTypeOf, useMergeRefs } from '@/utils'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
@@ -9,7 +9,8 @@ const textareaVariants = cva('cn-textarea', {
   variants: {
     theme: {
       default: '',
-      danger: 'cn-textarea-danger'
+      danger: 'cn-textarea-danger',
+      warning: 'cn-textarea-warning'
     }
   },
   defaultVariants: {
@@ -22,6 +23,7 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   theme?: VariantProps<typeof textareaVariants>['theme']
   caption?: string
   error?: string
+  warning?: string
   optional?: boolean
   resizable?: boolean
   maxCharacters?: number
@@ -35,10 +37,10 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
     {
-      id,
+      id: defaultId,
       label,
-      theme,
       error,
+      warning,
       caption,
       optional,
       disabled,
@@ -51,6 +53,10 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     ref
   ) => {
     const [counter, setCounter] = useState(0)
+
+    const theme = error ? 'danger' : warning ? 'warning' : props.theme
+
+    const id = useMemo(() => defaultId || `textarea-${generateAlphaNumericHash(10)}`, [defaultId])
 
     const setCharactersCount = useCallback(
       (value: string) => {
@@ -70,7 +76,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       node => {
         if (!node) return
 
-        if (anyTypeOf(node.value, ['number', 'string'])) {
+        if (isAnyTypeOf(node.value, ['number', 'string'])) {
           setCharactersCount(String(node.value))
         }
       },
@@ -109,8 +115,12 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         />
 
         {error ? (
-          <FormCaption theme="danger" disabled={disabled}>
+          <FormCaption disabled={disabled} theme="danger">
             {error}
+          </FormCaption>
+        ) : warning ? (
+          <FormCaption disabled={disabled} theme="warning">
+            {warning}
           </FormCaption>
         ) : caption ? (
           <FormCaption disabled={disabled}>{caption}</FormCaption>

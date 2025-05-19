@@ -1,7 +1,6 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-// themes can be extended in the future
-const themes = ['danger'] as const
+const themes = ['danger', 'warning'] as const
 
 function createInputThemeStyles() {
   const styles: CSSRuleObject = {}

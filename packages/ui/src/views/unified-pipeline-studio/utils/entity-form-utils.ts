@@ -5,7 +5,6 @@ export function addNameInput(inputs: IInputDefinition[], path: string): IInputDe
     {
       path,
       label: 'Name',
-      description: 'Name of the step',
       inputType: 'text',
       outputTransform: unsetEmptyStringOutputTransformer()
     },

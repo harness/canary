@@ -4,9 +4,6 @@ import { Select } from '@components/select'
 
 import { InputComponent, InputProps, useController, useFormContext, type AnyFormikValue } from '@harnessio/forms'
 
-import { InputError } from './common/InputError'
-import { InputLabel } from './common/InputLabel'
-import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
@@ -29,7 +26,7 @@ type SelectInputProps = InputProps<AnyFormikValue, SelectInputConfig>
 
 function SelectInputInternal(props: SelectInputProps): JSX.Element {
   const { path, input } = props
-  const { label = '', required, description, inputConfig, readonly, placeholder } = input
+  const { label, required, description, inputConfig, readonly, placeholder } = input
 
   const methods = useFormContext()
   const values = methods.watch()
@@ -38,7 +35,7 @@ function SelectInputInternal(props: SelectInputProps): JSX.Element {
     return readonly || !!inputConfig?.isDisabled?.(values)
   }, [readonly, inputConfig?.isDisabled, values])
 
-  const { field } = useController({
+  const { field, fieldState } = useController({
     name: path
   })
 
@@ -50,29 +47,28 @@ function SelectInputInternal(props: SelectInputProps): JSX.Element {
 
   return (
     <InputWrapper {...props}>
-      <>
-        <InputLabel label={label} description={description} required={required} />
-        <Select.Root
-          disabled={disabled}
-          value={field.value}
-          placeholder={placeholder}
-          onValueChange={value => {
-            field.onChange(value)
-          }}
-        >
-          <Select.Content>
-            {inputConfig?.options.map(item => {
-              return (
-                <Select.Item key={item.value} value={item.value}>
-                  {item.label}
-                </Select.Item>
-              )
-            })}
-          </Select.Content>
-        </Select.Root>
-        <InputError path={path} />
-        {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
-      </>
+      <Select.Root
+        label={label}
+        caption={description}
+        required={required}
+        disabled={disabled}
+        value={field.value}
+        placeholder={placeholder}
+        error={fieldState?.error?.message}
+        onValueChange={value => {
+          field.onChange(value)
+        }}
+      >
+        <Select.Content>
+          {inputConfig?.options.map(item => {
+            return (
+              <Select.Item key={item.value} value={item.value}>
+                {item.label}
+              </Select.Item>
+            )
+          })}
+        </Select.Content>
+      </Select.Root>
     </InputWrapper>
   )
 }

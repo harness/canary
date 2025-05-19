@@ -10,12 +10,12 @@ import {
   InputComponent,
   InputProps,
   RenderInputs,
-  useFieldArray
+  useFieldArray,
+  useFormContext
 } from '@harnessio/forms'
 
-import { InputError } from './common/InputError'
+import { InputCaption } from './common/InputCaption'
 import { InputLabel } from './common/InputLabel'
-import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
@@ -39,6 +39,10 @@ function ArrayInputInternal(props: ArrayInputInternalProps): JSX.Element {
     name: path
   })
 
+  const { getFieldState, formState } = useFormContext()
+  const fieldState = getFieldState(path, formState)
+  const { error } = fieldState
+
   const getChildInputs = useCallback(
     (rowInput: UIInputWithConfigsForArray, parentPath: string, idx: number): IInputDefinition[] => {
       const retInput = {
@@ -54,45 +58,42 @@ function ArrayInputInternal(props: ArrayInputInternalProps): JSX.Element {
 
   return (
     <InputWrapper {...props}>
-      <>
-        <InputLabel label={label} required={required} description={description} />
-        {/* TODO: do we need Controller ? */}
-        <Controller
-          name={path}
-          render={() => (
-            <div className="flex flex-col">
-              <div>
-                {fields.map((item, idx) => (
-                  <div key={item.id} className="flex items-end space-x-2">
-                    {inputConfig?.input && (
-                      <RenderInputs items={getChildInputs(inputConfig?.input, path, idx)} factory={factory} />
-                    )}
-                    <div>
-                      {/* TODO: Design system: Find alternate */}
-                      <button
-                        className="mt-2"
-                        onClick={() => {
-                          remove(idx)
-                        }}
-                        disabled={readonly}
-                      >
-                        <Icon name="trash" />
-                      </button>
-                    </div>
+      <InputLabel label={label} required={required} />
+      {/* TODO: do we need Controller ? */}
+      <Controller
+        name={path}
+        render={() => (
+          <div className="flex flex-col">
+            <div>
+              {fields.map((item, idx) => (
+                <div key={item.id} className="flex items-end space-x-2">
+                  {inputConfig?.input && (
+                    <RenderInputs items={getChildInputs(inputConfig?.input, path, idx)} factory={factory} />
+                  )}
+                  <div>
+                    <Button
+                      iconOnly
+                      className="mt-2"
+                      onClick={() => {
+                        remove(idx)
+                      }}
+                      disabled={readonly}
+                    >
+                      <Icon name="trash" />
+                    </Button>
                   </div>
-                ))}
-              </div>
-              <div>
-                <Button size="sm" onClick={() => append(input.default ?? undefined)} className="mt-2">
-                  Add
-                </Button>
-              </div>
+                </div>
+              ))}
             </div>
-          )}
-        />
-        <InputError path={path} />
-        {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
-      </>
+            <div>
+              <Button size="sm" onClick={() => append(input.default ?? undefined)} className="mt-2">
+                Add
+              </Button>
+            </div>
+          </div>
+        )}
+      />
+      <InputCaption error={error?.message} caption={description} />
     </InputWrapper>
   )
 }

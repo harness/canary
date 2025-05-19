@@ -2,9 +2,6 @@ import { Textarea } from '@components/index'
 
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
-import { InputError } from './common/InputError'
-import { InputLabel } from './common/InputLabel'
-import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
@@ -19,20 +16,23 @@ type TextAreaInputProps = InputProps<AnyFormikValue, TextAreaInputConfig>
 
 function TextAreaInputInternal(props: TextAreaInputProps): JSX.Element {
   const { readonly, path, input } = props
-  const { label = '', required, placeholder, description, inputConfig } = input
+  const { label, required, placeholder, description } = input
 
-  const { field } = useController({
-    name: path
+  const { field, fieldState } = useController({
+    name: path,
+    disabled: readonly
   })
 
   return (
     <InputWrapper {...props}>
-      <>
-        <InputLabel label={label} description={description} required={required} />
-        <Textarea placeholder={placeholder} {...field} disabled={readonly} />
-        <InputError path={path} />
-        {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
-      </>
+      <Textarea
+        label={label}
+        optional={!required}
+        placeholder={placeholder}
+        caption={description}
+        error={fieldState?.error?.message}
+        {...field}
+      />
     </InputWrapper>
   )
 }

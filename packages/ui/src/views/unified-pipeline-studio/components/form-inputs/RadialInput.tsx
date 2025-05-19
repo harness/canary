@@ -1,11 +1,10 @@
-import { FormControl, FormField, FormItem } from '@components/form'
+import { FormControl } from '@components/form'
 import { RadioSelect } from '@views/components/RadioSelect'
 
-import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/forms'
+import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
 import { InputLabel, InputWrapper } from './common'
-import { InputError } from './common/InputError'
-import { InputTooltip } from './common/InputTooltip'
+import { InputCaption } from './common/InputCaption'
 import { RuntimeInputConfig } from './types/types'
 
 export interface RadioOption {
@@ -28,25 +27,21 @@ type RadialInputProps = InputProps<AnyFormikValue, RadialInputConfig>
 
 function RadialInputInternal(props: RadialInputProps): JSX.Element {
   const { path, input } = props
-  const { label = '', required, description, inputConfig } = input
+  const { label, required, description, inputConfig, readonly } = input
   const options = inputConfig?.options ?? []
+
+  const { field, fieldState } = useController({
+    name: path,
+    disabled: readonly
+  })
 
   return (
     <InputWrapper {...props}>
-      <FormField
-        name={path}
-        render={({ field }) => (
-          <FormItem>
-            <InputLabel label={label} description={description} required={required} />
-            <FormControl>
-              <RadioSelect options={options} value={field.value} onValueChange={field.onChange} id={field.value} />
-            </FormControl>
-            <InputError path={path} />
-
-            {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
-          </FormItem>
-        )}
-      />
+      <InputLabel label={label} required={required} />
+      <FormControl>
+        <RadioSelect options={options} value={field.value} onValueChange={field.onChange} id={field.value} />
+      </FormControl>
+      <InputCaption error={fieldState?.error?.message} caption={description} />
     </InputWrapper>
   )
 }

@@ -1,10 +1,8 @@
-import { Input } from '@components/input'
+import { NumberInput as NumberInputUI } from '@components/index'
 
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
-import { InputError } from './common/InputError'
-import { InputLabel } from './common/InputLabel'
-import { InputTooltip } from './common/InputTooltip'
+import { InputCaption } from './common/InputCaption'
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
@@ -17,31 +15,26 @@ export interface NumberInputConfig {
 
 type NumberInputProps = InputProps<AnyFormikValue, NumberInputConfig>
 
-// TODO: Design system: Replace it with new NumberInput component. Check with Srdjan.
 function NumberInputInternal(props: NumberInputProps): JSX.Element {
   const { readonly, path, input } = props
-  const { label = '', required, placeholder, description, inputConfig } = input
+  const { label, required, placeholder, description } = input
 
-  const { field } = useController({
-    name: path
+  const { field, fieldState } = useController({
+    name: path,
+    disabled: readonly
   })
 
   return (
     <InputWrapper {...props}>
-      <>
-        <InputLabel label={label} description={description} required={required} />
-        <Input
-          placeholder={placeholder}
-          {...field}
-          disabled={readonly}
-          type="number"
-          onChange={evt => {
-            field.onChange(parseFloat(evt.currentTarget.value))
-          }}
-        />
-        <InputError path={path} />
-        {inputConfig?.tooltip && <InputTooltip tooltip={inputConfig.tooltip} />}
-      </>
+      <NumberInputUI
+        label={label}
+        required={required}
+        caption={description}
+        error={fieldState?.error?.message}
+        placeholder={placeholder}
+        {...field}
+      />
+      <InputCaption error={fieldState?.error?.message} />
     </InputWrapper>
   )
 }

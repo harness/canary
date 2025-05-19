@@ -20,6 +20,7 @@ const inputs: IInputConfigWithConfig[] = [
     inputType: 'select',
     path: `${RUN_STEP_IDENTIFIER}.shell`,
     label: 'Shell',
+    required: true,
     inputConfig: {
       options: [
         { label: 'Sh', value: 'sh' },
@@ -47,6 +48,7 @@ const inputs: IInputConfigWithConfig[] = [
     inputType: 'list',
     path: `${RUN_STEP_IDENTIFIER}.env`,
     label: 'Environment',
+    required: true,
     inputConfig: {
       layout: 'grid',
       inputs: [
@@ -72,6 +74,7 @@ const inputs: IInputConfigWithConfig[] = [
     path: `${RUN_STEP_IDENTIFIER}.report`,
     label: 'Report',
     description: 'Report uploads reports at the provided paths',
+    required: true,
     inputConfig: {
       layout: 'grid',
       inputs: [

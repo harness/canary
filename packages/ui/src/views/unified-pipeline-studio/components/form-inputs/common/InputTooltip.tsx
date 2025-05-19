@@ -4,6 +4,7 @@ interface InputTooltipProps {
   tooltip: string
 }
 
+// TODO: not in use, delete after tooltip implementation is done
 function InputTooltip(props: InputTooltipProps): JSX.Element | null {
   const { tooltip } = props
   return (

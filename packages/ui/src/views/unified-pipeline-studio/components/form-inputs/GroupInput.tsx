@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Icon } from '@components/icon'
-import { Accordion } from '@components/index'
+import { Accordion, FormCaption } from '@components/index'
 import { get } from 'lodash-es'
 
 import { InputComponent, InputProps, RenderInputs, useFormContext, type AnyFormikValue } from '@harnessio/forms'
@@ -67,7 +67,8 @@ function GroupInputInternal(props: InputProps<AnyFormikValue, GroupInputConfig>)
       <Accordion.Item value={'group'} className="border-b-0">
         <Accordion.Trigger>
           <Layout.Horizontal className="items-center">
-            <InputLabel label={label} required={required} description={description} className="mb-0" />
+            <InputLabel label={label} required={required} className="mb-0" />
+            <FormCaption>{description}</FormCaption>
             {allowShowWarning && groupError ? (
               <Icon name="triangle-warning" className="text-cn-foreground-danger" />
             ) : null}

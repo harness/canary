@@ -14,7 +14,6 @@ import { DocsPage } from "../../../components/docs-page";
         <h5 className="mb-1">Default</h5>
         <Link to="#1">Link</Link>
         <Link to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link to="#3" data-visited="true">Link (visited)</Link>
         <Link to="#4" disabled>Link (disabled)</Link>
     </div>
     
@@ -22,7 +21,6 @@ import { DocsPage } from "../../../components/docs-page";
         <h5 className="mb-1">Default sm</h5>
         <Link size="sm" to="#1">Link</Link>
         <Link size="sm" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link size="sm" to="#3" data-visited="true">Link (visited)</Link>
         <Link size="sm" to="#4" disabled>Link (disabled)</Link>
     </div>
 
@@ -30,7 +28,6 @@ import { DocsPage } from "../../../components/docs-page";
         <h5 className="mb-1">Secondary</h5>
         <Link variant="secondary" to="#1">Link</Link>
         <Link variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link variant="secondary" to="#3" data-visited="true">Link (visited)</Link>
         <Link variant="secondary" to="#4" disabled>Link (disabled)</Link>
     </div>
 
@@ -38,72 +35,35 @@ import { DocsPage } from "../../../components/docs-page";
         <h5 className="mb-1">Secondary sm</h5>
         <Link size="sm" variant="secondary" to="#1">Link</Link>
         <Link size="sm" variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link size="sm" variant="secondary" to="#3" data-visited="true">Link (visited)</Link>
         <Link size="sm" variant="secondary" to="#4" disabled>Link (disabled)</Link>
     </div>
 
     <div className="flex flex-col gap-2">
-        <h5 className="mb-1">Default w/prefix icon</h5>
-        <Link prefixIcon to="#1">Link</Link>
-        <Link prefixIcon to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link prefixIcon to="#3" data-visited="true">Link (visited)</Link>
-        <Link prefixIcon to="#4" disabled>Link (disabled)</Link>
+        <h5 className="mb-1">Default with icons</h5>
+        <Link prefixIcon suffixIcon to="#1">Link</Link>
+        <Link prefixIcon suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
+        <Link prefixIcon suffixIcon to="#4" disabled>Link (disabled)</Link>
     </div>
 
     <div className="flex flex-col gap-2">
-        <h5 className="mb-1">Default sm w/prefix icon</h5>
-        <Link size="sm" prefixIcon to="#1">Link</Link>
-        <Link size="sm" prefixIcon to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link size="sm" prefixIcon to="#3" data-visited="true">Link (visited)</Link>
-        <Link size="sm" prefixIcon to="#4" disabled>Link (disabled)</Link>
+        <h5 className="mb-1">Default sm with icons</h5>
+        <Link size="sm" prefixIcon suffixIcon to="#1">Link</Link>
+        <Link size="sm" prefixIcon suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" prefixIcon suffixIcon to="#4" disabled>Link (disabled)</Link>
     </div>
 
     <div className="flex flex-col gap-2">
-        <h5 className="mb-1">Secondary w/prefix icon</h5>
-        <Link prefixIcon variant="secondary" to="#1">Link</Link>
-        <Link prefixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link prefixIcon variant="secondary" to="#3" data-visited="true">Link (visited)</Link>
-        <Link prefixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
+        <h5 className="mb-1">Secondary with icons</h5>
+        <Link prefixIcon suffixIcon variant="secondary" to="#1">Link</Link>
+        <Link prefixIcon suffixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
+        <Link prefixIcon suffixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
     </div>
 
     <div className="flex flex-col gap-2">
-        <h5 className="mb-1">Secondary sm w/prefix icon</h5>
-        <Link size="sm" prefixIcon variant="secondary" to="#1">Link</Link>
-        <Link size="sm" prefixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link size="sm" prefixIcon variant="secondary" to="#3" data-visited="true">Link (visited)</Link>
-        <Link size="sm" prefixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
-    </div>
-
-    <div className="flex flex-col gap-2">
-        <h5 className="mb-1">Default w/suffix icon</h5>
-        <Link suffixIcon to="#1">Link</Link>
-        <Link suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link suffixIcon to="#3" data-visited="true">Link (visited)</Link>
-        <Link suffixIcon to="#4" disabled>Link (disabled)</Link>
-    </div>
-
-    <div className="flex flex-col gap-2">
-        <h5 className="mb-1">Default sm w/suffix icon</h5>
-        <Link size="sm" suffixIcon to="#1">Link</Link>
-        <Link size="sm" suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link size="sm" suffixIcon to="#3" data-visited="true">Link (visited)</Link>
-        <Link size="sm" suffixIcon to="#4" disabled>Link (disabled)</Link>
-    </div>
-
-    <div className="flex flex-col gap-2">
-        <h5 className="mb-1">Secondary w/suffix icon</h5>
-        <Link suffixIcon variant="secondary" to="#1">Link</Link>
-        <Link suffixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link suffixIcon variant="secondary" to="#3" data-visited="true">Link (visited)</Link>
-        <Link suffixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
-    </div>
-
-    <div className="flex flex-col gap-2">
-        <h5 className="mb-1">Secondary sm w/suffix icon</h5>
-        <Link size="sm" suffixIcon variant="secondary" to="#1">Link</Link>
-        <Link size="sm" suffixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link size="sm" suffixIcon variant="secondary" to="#3" data-visited="true">Link (visited)</Link>
-        <Link size="sm" suffixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
+        <h5 className="mb-1">Secondary sm with icons</h5>
+        <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#1">Link</Link>
+        <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
     </div>
 
 </div>`}

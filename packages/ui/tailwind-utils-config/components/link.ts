@@ -29,7 +29,7 @@ export default {
     },
 
     '&:where([data-disabled="false"])': {
-      '&:where(.cn-link-default):not(:visited):not([data-visited="true"])': {
+      '&:where(.cn-link-default)': {
         '&:hover, &:focus, &:where([data-hovered="true"])': {
           color: 'var(--cn-comp-link-text-hover)'
         }
@@ -37,10 +37,6 @@ export default {
 
       '&:hover, &:focus, &:where([data-hovered="true"])': {
         textDecorationColor: 'inherit'
-      },
-
-      '&:visited, &:where([data-visited="true"])': {
-        color: 'var(--cn-comp-link-text-visited)'
       }
     },
 

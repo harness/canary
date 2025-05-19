@@ -81,9 +81,9 @@ const Flex = ({
         align && alignClasses[align],
         justify && justifyClasses[justify],
         wrap && wrapClasses[wrap],
-        gap && `gap-[${gap}]`,
-        gapX && `gap-x-[${gapX}]`,
-        gapY && `gap-y-[${gapY}]`,
+        gap && `gap-${gap}`,
+        gapX && `gap-x-${gapX}`,
+        gapY && `gap-y-${gapY}`,
         className
       )}
       {...props}
@@ -131,9 +131,9 @@ const Grid = ({
         'grid',
         align && alignClasses[align],
         justify && justifyClasses[justify],
-        gap && `gap-[${gap}]`,
-        gapX && `gap-x-[${gapX}]`,
-        gapY && `gap-y-[${gapY}]`,
+        gap && `gap-${gap}`,
+        gapX && `gap-x-${gapX}`,
+        gapY && `gap-y-${gapY}`,
         className
       )}
       style={{

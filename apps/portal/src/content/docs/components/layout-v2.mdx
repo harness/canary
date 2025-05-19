@@ -1,36 +1,308 @@
 ---
-title: Layout
-description: Layout component
+title: Layout V2
+description: Flexible layout components using Tailwind CSS
 beta: true
 ---
 
 import { DocsPage } from "../../../components/docs-page";
 
+## Overview
+
+The LayoutV2 component provides a set of flexible layout primitives for building consistent UI layouts. It includes Grid, Flex, Horizontal, and Vertical components with a clean, type-safe API.
+
+## Flex Component
+
+The Flex component is a versatile layout container that allows you to arrange items in a row or column with various alignment and spacing options.
+
+### Basic Flex (Row Direction)
+
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Grid columns="1fr 1fr" gap="var(--cn-spacing-4)">
-  <div>Item 1</div>
-  <div>Item 2</div>
-</LayoutV2.Grid>
+  code={`<LayoutV2.Flex className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4">Item 1</div>
+  <div className="bg-cn-background-2 p-4">Item 2</div>
+  <div className="bg-cn-background-2 p-4">Item 3</div>
+</LayoutV2.Flex>`} />
 
-// Basic Flex
+### Flex with Column Direction
 
-<LayoutV2.Flex direction="row" align="center" justify="between">
-  <div>Item 1</div>
-  <div>Item 2</div>
-</LayoutV2.Flex>
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Flex direction="column" className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4">Item 1</div>
+  <div className="bg-cn-background-2 p-4">Item 2</div>
+  <div className="bg-cn-background-2 p-4">Item 3</div>
+</LayoutV2.Flex>`} />
 
-// Horizontal with spacing
+### Flex with Alignment and Justification
 
-<LayoutV2.Horizontal spacing="large">
-  <div>Item 1</div>
-  <div>Item 2</div>
-</LayoutV2.Horizontal>
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Flex 
+  direction="row" 
+  align="center" 
+  justify="between" 
+  className="border border-cn-borders-1 p-4 h-32"
+>
+  <div className="bg-cn-background-2 p-4">Start</div>
+  <div className="bg-cn-background-2 p-4">Center</div>
+  <div className="bg-cn-background-2 p-4">End</div>
+</LayoutV2.Flex>`} />
 
-// Vertical with spacing
+### Flex with Gap
 
-<LayoutV2.Vertical spacing="small">
-  <div>Item 1</div>
-  <div>Item 2</div>
-</LayoutV2.Vertical>
-`} />
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Flex gap="4" className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4">Item 1</div>
+  <div className="bg-cn-background-2 p-4">Item 2</div>
+  <div className="bg-cn-background-2 p-4">Item 3</div>
+</LayoutV2.Flex>`} />
+
+### Flex with Wrap
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Flex wrap="wrap" gap="4" className="border border-cn-borders-1 p-4 w-64">
+  <div className="bg-cn-background-2 p-4">Item 1</div>
+  <div className="bg-cn-background-2 p-4">Item 2</div>
+  <div className="bg-cn-background-2 p-4">Item 3</div>
+  <div className="bg-cn-background-2 p-4">Item 4</div>
+  <div className="bg-cn-background-2 p-4">Item 5</div>
+</LayoutV2.Flex>`} />
+
+### Flex with Custom Element
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Flex as="span" className="border border-cn-borders-1 p-4 inline-flex">
+  <div className="bg-cn-background-2 p-4">I'm in a span!</div>
+</LayoutV2.Flex>`} />
+
+## Grid Component
+
+The Grid component provides a powerful way to create grid layouts with precise control over columns, rows, and spacing.
+
+### Basic Grid with Equal Columns
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Grid columns="1fr 1fr" gap="4" className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4">Column 1</div>
+  <div className="bg-cn-background-2 p-4">Column 2</div>
+  <div className="bg-cn-background-2 p-4">Column 3</div>
+  <div className="bg-cn-background-2 p-4">Column 4</div>
+</LayoutV2.Grid>`} />
+
+### Grid with Different Column Sizes
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Grid columns="2fr 1fr 1fr" gap="4" className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4">2fr</div>
+  <div className="bg-cn-background-2 p-4">1fr</div>
+  <div className="bg-cn-background-2 p-4">1fr</div>
+</LayoutV2.Grid>`} />
+
+### Grid with Defined Rows
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Grid 
+  columns="1fr 1fr" 
+  rows="auto auto" 
+  gap="4" 
+  className="border border-cn-borders-1 p-4"
+>
+  <div className="bg-cn-background-2 p-4">Row 1, Col 1</div>
+  <div className="bg-cn-background-2 p-4">Row 1, Col 2</div>
+  <div className="bg-cn-background-2 p-4">Row 2, Col 1</div>
+  <div className="bg-cn-background-2 p-4">Row 2, Col 2</div>
+</LayoutV2.Grid>`} />
+
+### Grid with Alignment and Justification
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Grid 
+  columns="1fr 1fr" 
+  gap="4" 
+  align="center" 
+  justify="between" 
+  className="border border-cn-borders-1 p-4 h-40"
+>
+  <div className="bg-cn-background-2 p-4 h-16">Item 1</div>
+  <div className="bg-cn-background-2 p-4 h-16">Item 2</div>
+  <div className="bg-cn-background-2 p-4 h-16">Item 3</div>
+  <div className="bg-cn-background-2 p-4 h-16">Item 4</div>
+</LayoutV2.Grid>`} />
+
+## Horizontal Component
+
+The Horizontal component is a convenient wrapper around Flex that's pre-configured for row layouts with consistent spacing options.
+
+### Horizontal with Default Spacing
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Horizontal className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4">Item 1</div>
+  <div className="bg-cn-background-2 p-4">Item 2</div>
+  <div className="bg-cn-background-2 p-4">Item 3</div>
+</LayoutV2.Horizontal>`} />
+
+### Horizontal with Small Spacing
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Horizontal spacing="small" className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4">Small</div>
+  <div className="bg-cn-background-2 p-4">Gap</div>
+  <div className="bg-cn-background-2 p-4">Spacing</div>
+</LayoutV2.Horizontal>`} />
+
+### Horizontal with Large Spacing
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Horizontal spacing="large" className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4">Large</div>
+  <div className="bg-cn-background-2 p-4">Gap</div>
+  <div className="bg-cn-background-2 p-4">Spacing</div>
+</LayoutV2.Horizontal>`} />
+
+### Horizontal with Alignment
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Horizontal align="center" className="border border-cn-borders-1 p-4 h-32">
+  <div className="bg-cn-background-2 p-4 h-16">Taller</div>
+  <div className="bg-cn-background-2 p-4">Normal</div>
+  <div className="bg-cn-background-2 p-4 h-24">Tallest</div>
+</LayoutV2.Horizontal>`} />
+
+## Vertical Component
+
+The Vertical component is a convenient wrapper around Flex that's pre-configured for column layouts with consistent spacing options.
+
+### Vertical with Default Spacing
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Vertical className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4">Item 1</div>
+  <div className="bg-cn-background-2 p-4">Item 2</div>
+  <div className="bg-cn-background-2 p-4">Item 3</div>
+</LayoutV2.Vertical>`} />
+
+### Vertical with Small Spacing
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Vertical spacing="small" className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4">Small</div>
+  <div className="bg-cn-background-2 p-4">Gap</div>
+  <div className="bg-cn-background-2 p-4">Spacing</div>
+</LayoutV2.Vertical>`} />
+
+### Vertical with Large Spacing
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Vertical spacing="large" className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4">Large</div>
+  <div className="bg-cn-background-2 p-4">Gap</div>
+  <div className="bg-cn-background-2 p-4">Spacing</div>
+</LayoutV2.Vertical>`} />
+
+### Vertical with Alignment
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Vertical align="center" className="border border-cn-borders-1 p-4 w-64">
+  <div className="bg-cn-background-2 p-4 w-32">Narrower</div>
+  <div className="bg-cn-background-2 p-4 w-48">Wider</div>
+  <div className="bg-cn-background-2 p-4 w-16">Narrowest</div>
+</LayoutV2.Vertical>`} />
+
+## Combining Components
+
+You can nest layout components to create complex layouts.
+
+## Combining Components
+
+You can nest layout components to create complex layouts.
+
+### Dashboard Example
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Vertical spacing="large" className="border border-cn-borders-1 p-4">
+  <LayoutV2.Horizontal justify="between" align="center">
+    <h3 className="text-lg font-medium">Dashboard</h3>
+    <LayoutV2.Horizontal spacing="small">
+      <div className="bg-cn-background-2 p-2 rounded">Action 1</div>
+      <div className="bg-cn-background-2 p-2 rounded">Action 2</div>
+    </LayoutV2.Horizontal>
+  </LayoutV2.Horizontal>
+</LayoutV2.Vertical>`} />
+
+### Two-Column Layout
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Grid columns="2fr 1fr" gap="4" className="border border-cn-borders-1 p-4">
+  <div className="bg-cn-background-2 p-4 rounded">Main Content Area</div>
+  <div className="bg-cn-background-2 p-4 rounded">Sidebar Area</div>
+</LayoutV2.Grid>`} />
+
+## API Reference
+
+### Flex Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `direction` | `'row' \| 'column' \| 'row-reverse' \| 'column-reverse'` | `'row'` | Direction of the flex container |
+| `align` | `'start' \| 'center' \| 'end' \| 'baseline' \| 'stretch'` | - | Alignment of items on the cross axis |
+| `justify` | `'start' \| 'center' \| 'end' \| 'between'` | - | Alignment of items on the main axis |
+| `wrap` | `'nowrap' \| 'wrap' \| 'wrap-reverse'` | - | Whether items should wrap to the next line |
+| `gap` | `string` | - | Space between items (using Tailwind spacing) |
+| `gapX` | `string` | - | Horizontal space between items |
+| `gapY` | `string` | - | Vertical space between items |
+| `as` | `'div' \| 'span'` | `'div'` | HTML element to render |
+| `className` | `string` | - | Additional CSS classes |
+
+### Grid Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `columns` | `string` | - | Grid template columns |
+| `rows` | `string` | - | Grid template rows |
+| `flow` | `'row' \| 'column' \| 'dense' \| 'row-dense' \| 'column-dense'` | - | Grid auto flow |
+| `align` | `'start' \| 'center' \| 'end' \| 'baseline' \| 'stretch'` | - | Alignment of items on the vertical axis |
+| `justify` | `'start' \| 'center' \| 'end' \| 'between'` | - | Alignment of items on the horizontal axis |
+| `gap` | `string` | - | Space between items (using Tailwind spacing) |
+| `gapX` | `string` | - | Horizontal space between items |
+| `gapY` | `string` | - | Vertical space between items |
+| `as` | `'div' \| 'span'` | `'div'` | HTML element to render |
+| `className` | `string` | - | Additional CSS classes |
+
+### Horizontal Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `spacing` | `'small' \| 'medium' \| 'large'` | `'medium'` | Predefined spacing between items |
+| `align` | `'start' \| 'center' \| 'end' \| 'baseline' \| 'stretch'` | - | Alignment of items on the cross axis |
+| `justify` | `'start' \| 'center' \| 'end' \| 'between'` | - | Alignment of items on the main axis |
+| `as` | `'div' \| 'span'` | `'div'` | HTML element to render |
+| `className` | `string` | - | Additional CSS classes |
+
+### Vertical Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `spacing` | `'small' \| 'medium' \| 'large'` | `'medium'` | Predefined spacing between items |
+| `align` | `'start' \| 'center' \| 'end' \| 'baseline' \| 'stretch'` | - | Alignment of items on the cross axis |
+| `justify` | `'start' \| 'center' \| 'end' \| 'between'` | - | Alignment of items on the main axis |
+| `as` | `'div' \| 'span'` | `'div'` | HTML element to render |
+| `className` | `string` | - | Additional CSS classes |

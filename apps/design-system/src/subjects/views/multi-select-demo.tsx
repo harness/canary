@@ -28,7 +28,7 @@ export const MultipleSelectorWithDisabledOption = () => {
         // isLoading
         // disabled
       />
-      <>Helloooo</>
+      <div>Helloooo</div>
     </LayoutV2.Flex>
   )
 }

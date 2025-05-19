@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
-import { Pagination, Toast, useToast } from '@harnessio/ui/components'
+import { Toast, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -26,16 +26,12 @@ export default function ReposListPage() {
     importRepoIdentifier,
     setImportRepoIdentifier,
     importToastId,
-    setImportToastId,
-    totalItems,
-    pageSize
+    setImportToastId
   } = useRepoStore()
   const { toast, dismiss } = useToast()
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
-
-  const { t } = useTranslationStore()
 
   const {
     data: { body: repoData, headers } = {},
@@ -79,12 +75,6 @@ export default function ReposListPage() {
     }
   }, [repoData, headers, setRepositories])
 
-  // const isRepoImporting: boolean = useMemo(() => {
-  //   return repoData?.some(repository => repository.importing) ?? false
-  // }, [repoData])
-
-  const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
-
   useEffect(() => {
     if (importRepoIdentifier && !importToastId) {
       const { id } = toast({
@@ -110,61 +100,21 @@ export default function ReposListPage() {
     }
   }, [importRepoIdentifier, setImportRepoIdentifier])
 
-  const getPrevPageLink = () => {
-    return `?page=${page - 1}`
-  }
-
-  const getNextPageLink = () => {
-    return `?page=${page + 1}`
-  }
-
-  const getPageLink = (page: number) => {
-    return `?page=${page}`
-  }
-
-  console.log('spaceURL', spaceURL)
-
   return (
-    <>
-      <h1 style={{ marginTop: '10rem', textAlign: 'center' }}>Determinate Pagination</h1>
-
-      <Pagination
-        currentPage={page}
-        truncateLimit={3}
-        goToPage={setPage}
-        t={t}
-        totalItems={totalItems}
-        pageSize={pageSize}
-      />
-
-      <h1 style={{ marginTop: '10rem', textAlign: 'center' }}>Determinate Pagination with link</h1>
-
-      <Pagination currentPage={page} getPageLink={getPageLink} t={t} totalItems={totalItems} pageSize={pageSize} />
-
-      <h1 style={{ marginTop: '10rem', textAlign: 'center' }}>Indeterminate Pagination</h1>
-      <Pagination
-        indeterminate
-        hasNext={page < totalPages}
-        hasPrevious={page > 1}
-        getPrevPageLink={getPrevPageLink}
-        getNextPageLink={getNextPageLink}
-        t={t}
-      />
-      <SandboxRepoListPage
-        useRepoStore={useRepoStore}
-        useTranslationStore={useTranslationStore}
-        isLoading={isFetching}
-        isError={isError}
-        errorMessage={error?.message}
-        searchQuery={query}
-        setSearchQuery={setQuery}
-        setQueryPage={setQueryPage}
-        toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
-        toCreateRepo={() => routes.toCreateRepo({ spaceId })}
-        toImportRepo={() => routes.toImportRepo({ spaceId })}
-        toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
-      />
-    </>
+    <SandboxRepoListPage
+      useRepoStore={useRepoStore}
+      useTranslationStore={useTranslationStore}
+      isLoading={isFetching}
+      isError={isError}
+      errorMessage={error?.message}
+      searchQuery={query}
+      setSearchQuery={setQuery}
+      setQueryPage={setQueryPage}
+      toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
+      toCreateRepo={() => routes.toCreateRepo({ spaceId })}
+      toImportRepo={() => routes.toImportRepo({ spaceId })}
+      toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
+    />
   )
 }
 

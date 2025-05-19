@@ -1,6 +1,7 @@
 import { FC, MouseEvent, ReactElement } from 'react'
 
 import { Spacer } from '@/components'
+import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
 import { PaginationPrimitive } from './pagination-primitive'
@@ -27,14 +28,6 @@ const PaginationItems: FC<PaginationItemsProps> = ({
   const leftBound = Math.max(2, currentPage - siblings)
   const rightBound = Math.min(totalPages - 1, currentPage + siblings)
   const items: ReactElement[] = []
-
-  console.log('--------------')
-  console.log('totalPages', totalPages)
-  console.log('currentPage', currentPage)
-  console.log('truncateLimit', truncateLimit)
-  console.log('siblings', siblings)
-  console.log('leftBound', leftBound)
-  console.log('rightBound', rightBound)
 
   // Always show the first page
   items.push(
@@ -91,17 +84,6 @@ const PaginationItems: FC<PaginationItemsProps> = ({
 
   return <>{items}</>
 }
-
-// export interface PaginationProps {
-//   currentPage: number
-//   goToPage: (pageNum: number) => void
-//   totalPages?: number
-//   nextPage?: number
-//   previousPage?: number
-//   className?: string
-//   t: TFunction
-//   hidePageNumbers?: boolean
-// }
 
 interface PaginationBaseProps {
   className?: string
@@ -186,9 +168,13 @@ export const Pagination: FC<PaginationProps> = ({
       <Spacer size={6} />
       <PaginationPrimitive.Root className={className}>
         {!indeterminate && totalPages && currentPage ? (
-          <PaginationPrimitive.Content>
+          <PaginationPrimitive.Content
+            className={cn({
+              'cn-pagination-hide-pages': hidePageNumbers
+            })}
+          >
             {/* Previous Button */}
-            <PaginationPrimitive.Item>
+            <PaginationPrimitive.Item className="cn-pagination-item-previous">
               <PaginationPrimitive.Previous
                 onClick={goToPage ? handleGoToPage(currentPage > 1 ? currentPage - 1 : undefined) : undefined}
                 href={getPageLink?.(currentPage > 1 ? currentPage - 1 : currentPage)}
@@ -209,7 +195,7 @@ export const Pagination: FC<PaginationProps> = ({
             )}
 
             {/* Next Button */}
-            <PaginationPrimitive.Item>
+            <PaginationPrimitive.Item className="cn-pagination-item-next">
               <PaginationPrimitive.Next
                 onClick={goToPage ? handleGoToPage(currentPage < totalPages ? currentPage + 1 : undefined) : undefined}
                 href={getPageLink?.(currentPage < totalPages ? currentPage + 1 : currentPage)}
@@ -219,9 +205,9 @@ export const Pagination: FC<PaginationProps> = ({
             </PaginationPrimitive.Item>
           </PaginationPrimitive.Content>
         ) : (
-          <PaginationPrimitive.Content>
+          <PaginationPrimitive.Content className="cn-pagination-hide-pages">
             {/* Previous Button */}
-            <PaginationPrimitive.Item>
+            <PaginationPrimitive.Item className="cn-pagination-item-previous">
               <PaginationPrimitive.Previous
                 href={getPrevPageLink?.()}
                 onClick={onPrevious}
@@ -230,7 +216,7 @@ export const Pagination: FC<PaginationProps> = ({
               />
             </PaginationPrimitive.Item>
             {/* Next Button */}
-            <PaginationPrimitive.Item>
+            <PaginationPrimitive.Item className="cn-pagination-item-next">
               <PaginationPrimitive.Next href={getNextPageLink?.()} onClick={onNext} disabled={!hasNext} t={t} />
             </PaginationPrimitive.Item>
           </PaginationPrimitive.Content>

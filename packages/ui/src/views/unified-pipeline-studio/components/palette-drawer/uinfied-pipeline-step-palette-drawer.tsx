@@ -1,4 +1,4 @@
-import { ElementType, useMemo, useRef, useState } from 'react'
+import { ElementType, useCallback, useMemo, useRef, useState } from 'react'
 
 import { Button, Drawer, EntityFormLayout, Input, Pagination, Spacer } from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
@@ -39,7 +39,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
   const { requestClose, isDrawer = false } = props
   const { Header, Title, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const { setFormEntity, setRightDrawer, useTemplateListStore, useTranslationStore } = useUnifiedPipelineStudioContext()
-  const { page, xNextPage, xPrevPage, setPage, templates, templatesError } = useTemplateListStore()
+  const { xNextPage, xPrevPage, setPage, templates, templatesError } = useTemplateListStore()
 
   const [query, setQuery] = useState('')
 
@@ -56,6 +56,16 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
     () => harnessSteps.filter(harnessStep => harnessStep.identifier.includes(query)),
     [query, harnessSteps]
   )
+
+  const onPreviousPage = useCallback(() => {
+    templatesSectionRef.current?.scrollIntoView()
+    setPage(xPrevPage, query)
+  }, [xPrevPage, query, setPage])
+
+  const onNextPage = useCallback(() => {
+    templatesSectionRef.current?.scrollIntoView()
+    setPage(xNextPage, query)
+  }, [xNextPage, query, setPage])
 
   return (
     <>
@@ -121,13 +131,11 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
               }}
             />
             <Pagination
-              nextPage={xNextPage}
-              previousPage={xPrevPage}
-              currentPage={page}
-              goToPage={(pageNum: number) => {
-                templatesSectionRef.current?.scrollIntoView()
-                setPage(pageNum, query)
-              }}
+              indeterminate
+              hasNext={xNextPage > 0}
+              hasPrevious={xPrevPage > 0}
+              onPrevious={onPreviousPage}
+              onNext={onNextPage}
               t={t}
             />
           </>

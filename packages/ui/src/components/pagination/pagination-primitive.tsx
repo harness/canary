@@ -8,12 +8,7 @@ import { Button } from '../button'
 import { Icon } from '../icon'
 
 const PaginationPrimitiveRoot = ({ className, ...props }: React.ComponentProps<'nav'>) => (
-  <nav
-    role="navigation"
-    aria-label="pagination"
-    className={cn('mx-auto flex w-full max-w-[700px] items-center justify-between', className)}
-    {...props}
-  />
+  <nav role="navigation" aria-label="pagination" className={cn('cn-pagination-root', className)} {...props} />
 )
 PaginationPrimitiveRoot.displayName = 'PaginationPrimitiveRoot'
 
@@ -23,7 +18,7 @@ const PaginationPrimitiveContent = React.forwardRef<HTMLUListElement, React.Comp
 PaginationPrimitiveContent.displayName = 'PaginationPrimitiveContent'
 
 const PaginationPrimitiveItem = React.forwardRef<HTMLLIElement, React.ComponentProps<'li'>>(
-  ({ className, ...props }, ref) => <li ref={ref} className={cn('first:mr-auto last:ml-auto', className)} {...props} />
+  ({ className, ...props }, ref) => <li ref={ref} className={cn(className)} {...props} />
 )
 PaginationPrimitiveItem.displayName = 'PaginationPrimitiveItem'
 
@@ -91,9 +86,6 @@ const PaginationPrimitiveLink = ({
       )}
       asChild
     >
-      {/* <a href={href} ref={ref} aria-current={isActive ? 'page' : undefined} {...props}>
-        {children}
-      </a> */}
       <Link to={href as string} aria-current={isActive ? 'page' : undefined} {...props}>
         {children}
       </Link>

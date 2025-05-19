@@ -1,67 +1,191 @@
-import { FC, ReactNode } from 'react'
+import { FC, HTMLAttributes, ReactNode } from 'react'
 
-import { Flex as FlexPrimitive, Grid as GridPrimitive } from '@radix-ui/themes'
 import { cn } from '@utils/cn'
 
-// Define the allowed props for Flex component based on Radix UI Themes
-type ResponsiveValue<T> = T | { xs?: T; sm?: T; md?: T; lg?: T; xl?: T }
-
+// Simple base props shared by all layout components
 interface LayoutProps {
-  as?: 'div' | 'span'
-  asChild?: boolean
-  justify?: ResponsiveValue<'start' | 'center' | 'end' | 'between'>
-  gap?: ResponsiveValue<string>
-  gapX?: ResponsiveValue<string>
-  gapY?: ResponsiveValue<string>
   children?: ReactNode
   className?: string
+  gap?: string
+  gapX?: string
+  gapY?: string
+  align?: 'start' | 'center' | 'end' | 'baseline' | 'stretch'
+  justify?: 'start' | 'center' | 'end' | 'between'
+  as?: 'div' | 'span'
 }
 
+// Simplified Flex props
 interface FlexProps extends LayoutProps {
-  display?: ResponsiveValue<'none' | 'inline-flex' | 'flex'>
-  direction?: ResponsiveValue<'row' | 'column' | 'row-reverse' | 'column-reverse'>
-  align?: ResponsiveValue<'start' | 'center' | 'end' | 'baseline' | 'stretch'>
-  wrap?: ResponsiveValue<'nowrap' | 'wrap' | 'wrap-reverse'>
+  direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse'
+  wrap?: 'nowrap' | 'wrap' | 'wrap-reverse'
 }
 
+// Simplified Grid props
 interface GridProps extends LayoutProps {
-  display?: ResponsiveValue<'none' | 'inline-grid' | 'grid'>
-  areas?: ResponsiveValue<string>
-  columns?: ResponsiveValue<string>
-  rows?: ResponsiveValue<string>
-  flow?: ResponsiveValue<'row' | 'column'>
-  align?: ResponsiveValue<'start' | 'center' | 'end' | 'baseline' | 'stretch'>
+  columns?: string
+  rows?: string
+  flow?: 'row' | 'column' | 'dense' | 'row-dense' | 'column-dense'
 }
 
-const Flex = ({ children, className, ...props }: FlexProps) => {
+// Custom Flex component using Tailwind classes
+const Flex = ({
+  children,
+  className,
+  direction = 'row',
+  align,
+  justify,
+  gap,
+  gapX,
+  gapY,
+  wrap,
+  as: Comp = 'div',
+  ...props
+}: FlexProps & HTMLAttributes<HTMLDivElement>) => {
+  // Map direction to Tailwind classes
+  const directionClasses = {
+    row: 'flex-row',
+    column: 'flex-col',
+    'row-reverse': 'flex-row-reverse',
+    'column-reverse': 'flex-col-reverse'
+  }
+
+  // Map align to Tailwind classes
+  const alignClasses = {
+    start: 'items-start',
+    center: 'items-center',
+    end: 'items-end',
+    baseline: 'items-baseline',
+    stretch: 'items-stretch'
+  }
+
+  // Map justify to Tailwind classes
+  const justifyClasses = {
+    start: 'justify-start',
+    center: 'justify-center',
+    end: 'justify-end',
+    between: 'justify-between'
+  }
+
+  // Map wrap to Tailwind classes
+  const wrapClasses = {
+    nowrap: 'flex-nowrap',
+    wrap: 'flex-wrap',
+    'wrap-reverse': 'flex-wrap-reverse'
+  }
+
   return (
-    <FlexPrimitive {...props} className={cn('flex', className)}>
+    <Comp
+      className={cn(
+        'flex',
+        direction && directionClasses[direction],
+        align && alignClasses[align],
+        justify && justifyClasses[justify],
+        wrap && wrapClasses[wrap],
+        gap && `gap-[${gap}]`,
+        gapX && `gap-x-[${gapX}]`,
+        gapY && `gap-y-[${gapY}]`,
+        className
+      )}
+      {...props}
+    >
       {children}
-    </FlexPrimitive>
+    </Comp>
   )
 }
 
-const Grid = ({ children, className, ...props }: GridProps) => {
+// Custom Grid component using Tailwind classes
+const Grid = ({
+  children,
+  className,
+  columns,
+  rows,
+  flow,
+  align,
+  justify,
+  gap,
+  gapX,
+  gapY,
+  as: Comp = 'div',
+  ...props
+}: GridProps & HTMLAttributes<HTMLDivElement>) => {
+  // Map align to Tailwind classes
+  const alignClasses = {
+    start: 'items-start',
+    center: 'items-center',
+    end: 'items-end',
+    baseline: 'items-baseline',
+    stretch: 'items-stretch'
+  }
+
+  // Map justify to Tailwind classes
+  const justifyClasses = {
+    start: 'justify-start',
+    center: 'justify-center',
+    end: 'justify-end',
+    between: 'justify-between'
+  }
+
   return (
-    <GridPrimitive {...props} className={cn('grid', className)}>
+    <Comp
+      className={cn(
+        'grid',
+        align && alignClasses[align],
+        justify && justifyClasses[justify],
+        gap && `gap-[${gap}]`,
+        gapX && `gap-x-[${gapX}]`,
+        gapY && `gap-y-[${gapY}]`,
+        className
+      )}
+      style={{
+        gridTemplateColumns: columns,
+        gridTemplateRows: rows,
+        gridAutoFlow: flow?.replace('-', ' ')
+      }}
+      {...props}
+    >
       {children}
-    </GridPrimitive>
+    </Comp>
   )
 }
 
-// Horizontal component that uses Flex internally
-const Horizontal: FC<FlexProps> = ({ children, className, ...props }) => {
+// Map spacing values to Tailwind CSS variables
+const spacingMap = {
+  small: 'var(--cn-spacing-2)',
+  medium: 'var(--cn-spacing-4)',
+  large: 'var(--cn-spacing-6)'
+}
+
+// Simple Horizontal component (row-oriented Flex with spacing options)
+interface HorizontalProps extends Omit<FlexProps, 'direction'> {
+  spacing?: 'small' | 'medium' | 'large'
+}
+
+const Horizontal: FC<HorizontalProps & HTMLAttributes<HTMLDivElement>> = ({
+  children,
+  className,
+  spacing = 'medium',
+  ...props
+}) => {
   return (
-    <Flex direction="row" className={className} {...props}>
+    <Flex direction="row" className={className} gap={spacing ? spacingMap[spacing] : undefined} {...props}>
       {children}
     </Flex>
   )
 }
 
-// Vertical component that uses Flex internally
-const Vertical: FC<FlexProps> = ({ children, className, ...props }) => {
+// Simple Vertical component (column-oriented Flex with spacing options)
+interface VerticalProps extends Omit<FlexProps, 'direction'> {
+  spacing?: 'small' | 'medium' | 'large'
+}
+
+const Vertical: FC<VerticalProps & HTMLAttributes<HTMLDivElement>> = ({
+  children,
+  className,
+  spacing = 'medium',
+  ...props
+}) => {
   return (
-    <Flex direction="column" className={className} {...props}>
+    <Flex direction="column" className={className} gap={spacing ? spacingMap[spacing] : undefined} {...props}>
       {children}
     </Flex>
   )

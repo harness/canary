@@ -1,0 +1,36 @@
+---
+title: Layout
+description: Layout component
+beta: true
+---
+
+import { DocsPage } from "../../../components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Grid columns="1fr 1fr" gap="var(--cn-spacing-4)">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</LayoutV2.Grid>
+
+// Basic Flex
+
+<LayoutV2.Flex direction="row" align="center" justify="between">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</LayoutV2.Flex>
+
+// Horizontal with spacing
+
+<LayoutV2.Horizontal spacing="large">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</LayoutV2.Horizontal>
+
+// Vertical with spacing
+
+<LayoutV2.Vertical spacing="small">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</LayoutV2.Vertical>
+`} />

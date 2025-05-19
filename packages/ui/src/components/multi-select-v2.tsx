@@ -171,7 +171,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             // Perform case-insensitive comparison to prevent duplicate options with different casing
             // This ensures that 'React' and 'react' would be considered the same option
             if (
-              !options?.some(option => option.key.toLowerCase() === input.value.toLowerCase()) &&
+              // !options?.some(option => option.key.toLowerCase() === input.value.toLowerCase())
+              (!availableOptions || availableOptions.length === 0) &&
               !getSelectedOptions().some(s => s.key.toLowerCase() === input.value.toLowerCase())
             ) {
               const newOption = createOptionFromInput(input.value)
@@ -191,16 +192,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
           }
         }
       },
-      [
-        handleUnselect,
-        disallowCreation,
-        onChange,
-        options,
-        setInputValue,
-        isControlled,
-        getSelectedOptions,
-        setSearchQuery
-      ]
+      [disallowCreation, getSelectedOptions, handleUnselect, availableOptions, isControlled, setSearchQuery, onChange]
     )
 
     useEffect(() => {
@@ -226,12 +218,20 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
         return
       }
 
-      const filteredOptions = options?.filter(
+      let filteredOptions = options?.filter(
         option => !getSelectedOptions()?.some(selectedOption => selectedOption.id === option.id)
       )
 
+      if (!setSearchQuery && inputValue) {
+        const lowerCaseInput = inputValue.toLowerCase()
+        filteredOptions = filteredOptions?.filter(option => {
+          const keyMatch = option.key.toLowerCase().includes(lowerCaseInput)
+          return keyMatch
+        })
+      }
+
       setAvailableOptions(filteredOptions || null)
-    }, [options, getSelectedOptions, inputValue, searchQuery, open])
+    }, [options, getSelectedOptions, inputValue, searchQuery, open, setSearchQuery])
     return (
       <div className="cn-multi-select-outer-container">
         <Command.Root

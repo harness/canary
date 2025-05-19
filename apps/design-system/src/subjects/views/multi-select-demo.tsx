@@ -18,7 +18,6 @@ const OPTIONS: MultiSelectV2.MultiSelectOption[] = [
 
 export const MultipleSelectorWithDisabledOption = () => {
   const [value, setValue] = useState<MultiSelectV2.MultiSelectOption[]>([OPTIONS[0]])
-  const [searchQuery, setSearchQuery] = useState<string | null>(null)
   return (
     <>
       <MultiSelectV2.MultiSelect
@@ -26,8 +25,6 @@ export const MultipleSelectorWithDisabledOption = () => {
         value={value}
         options={OPTIONS}
         placeholder="Select frameworks you like..."
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
         // isLoading
         // disabled
       />

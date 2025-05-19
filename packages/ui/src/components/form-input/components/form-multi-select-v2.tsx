@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Caption, FormCaption, Label } from '@/components'
+import { FormCaption, Label } from '@/components'
 import { MultiSelect, type MultiSelectOption, type MultiSelectRef } from '@/components/multi-select-v2'
 
 interface FormMultiSelectPropsType
@@ -51,16 +51,15 @@ const FormMultiSelect = forwardRef<MultiSelectRef, FormMultiSelectPropsType>((pr
                 }}
                 theme={fieldState.error || props.error ? 'danger' : undefined}
               />
-              {fieldState.error || props.error ? (
-                <FormCaption theme="danger">{fieldState.error?.message || props.error}</FormCaption>
+              {props.caption || fieldState.error || props.error ? (
+                <FormCaption theme={fieldState.error || props.error ? 'danger' : undefined}>
+                  {fieldState.error?.message || props.error || props.caption}
+                </FormCaption>
               ) : null}
             </>
           )
         }}
       />
-      {props.caption ? (
-        <Caption className={props.caption ? 'text-cn-foreground-disabled' : ''}>{props.caption}</Caption>
-      ) : null}
     </>
   )
 })

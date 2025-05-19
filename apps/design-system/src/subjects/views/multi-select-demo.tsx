@@ -30,6 +30,7 @@ export const MultipleSelectorWithDisabledOption = () => {
         setSearchQuery={setSearchQuery}
         // isLoading
         // disabled
+        theme="danger"
       />
     </>
   )

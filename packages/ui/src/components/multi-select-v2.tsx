@@ -68,6 +68,8 @@ interface MultiSelectProps {
   className?: string
   disallowCreation?: boolean
   isLoading?: boolean
+  /** Theme for the MultiSelect component */
+  theme?: 'danger'
   /** Props of `Command` */
   commandProps?: React.ComponentPropsWithoutRef<typeof Command.Root>
   /** Props of `CommandInput` */
@@ -95,6 +97,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       className,
       disallowCreation = false,
       isLoading = false,
+      theme,
       commandProps,
       inputProps
     }: MultiSelectProps,
@@ -241,7 +244,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
           className={cn('h-auto overflow-visible bg-transparent', commandProps?.className)}
         >
           <div
-            className={cn('cn-multi-select-container', className)}
+            className={cn('cn-multi-select-container', theme && `cn-multi-select-${theme}`, className)}
             onClick={() => {
               if (disabled) return
               inputRef?.current?.focus()

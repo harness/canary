@@ -93,6 +93,7 @@
     "@radix-ui/react-toggle": "^1.1.1",
     "@radix-ui/react-toggle-group": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.6",
+    "@radix-ui/themes": "^3.2.1",
     "@tailwindcss/typography": "^0.5.15",
     "@uiw/react-markdown-preview": "^5.1.1",
     "add": "^2.0.6",

@@ -90,7 +90,8 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
           isLoading={false}
           setSearchQuery={noop}
           currentPage={1}
-          totalPages={1}
+          totalItems={100}
+          pageSize={10}
           goToPage={noop}
         />
       </Tabs.Content>
@@ -100,7 +101,8 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
           isLoading={false}
           activities={mockConnectorActivityList}
           currentPage={1}
-          totalPages={1}
+          totalItems={100}
+          pageSize={10}
           goToPage={noop}
         />
       </Tabs.Content>

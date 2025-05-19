@@ -10,7 +10,10 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
   const useRepoListStore = useCallback(
     () => ({
       ...repoListStore,
-      importToastId: null,
+      totalItems: 100,
+      pageSize: 10,
+      setPaginationFromHeaders: (_?: Headers) => {},
+      importToastId: '',
       setImportToastId: noop,
       updateRepository: noop,
       setPage: noop,
@@ -31,6 +34,7 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
         isError={false}
         searchQuery=""
         setSearchQuery={noop}
+        setQueryPage={noop}
         {...props}
       />
     </>

@@ -22,7 +22,8 @@ const SecretsListPage = (): JSX.Element => (
     onEditSecret={noop}
     onDeleteSecret={noop}
     currentPage={1}
-    totalPages={5}
+    totalItems={10}
+    pageSize={10}
     goToPage={noop}
     onCreate={noop}
   />

@@ -49,7 +49,8 @@ const useMemberListStore = () => {
     spaceId: '',
     page: 1,
     setPage: noop,
-    totalPages: 10
+    totalItems: 10,
+    pageSize: 10
   }
 }
 

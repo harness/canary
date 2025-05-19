@@ -171,7 +171,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             // Perform case-insensitive comparison to prevent duplicate options with different casing
             // This ensures that 'React' and 'react' would be considered the same option
             if (
-              // !options?.some(option => option.key.toLowerCase() === input.value.toLowerCase())
+              !options?.some(option => option.key.toLowerCase() === input.value.toLowerCase()) &&
               (!availableOptions || availableOptions.length === 0) &&
               !getSelectedOptions().some(s => s.key.toLowerCase() === input.value.toLowerCase())
             ) {

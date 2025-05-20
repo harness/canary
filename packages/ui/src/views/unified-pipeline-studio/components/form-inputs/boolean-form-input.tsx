@@ -6,17 +6,16 @@ import { InputCaption } from './common/InputCaption'
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
-export interface BooleanInputConfig {
+export interface BooleanFormInputConfig {
   inputType: 'boolean'
   inputConfig?: {
-    onChange: (value: AnyFormikValue, formik: UseFormReturn) => void
     tooltip?: string
   } & RuntimeInputConfig
 }
 
-type BooleanInputInternalProps = InputProps<AnyFormikValue, BooleanInputConfig>
+type BooleanFormInputProps = InputProps<AnyFormikValue, BooleanFormInputConfig>
 
-function BooleanInputInternal(props: BooleanInputInternalProps): JSX.Element {
+function BooleanFormInputInternal(props: BooleanFormInputProps): JSX.Element {
   const { readonly, path, input } = props
   const { label = '', required, description } = input
 
@@ -36,15 +35,15 @@ function BooleanInputInternal(props: BooleanInputInternalProps): JSX.Element {
         caption={description}
         showOptionalLabel={!required}
       />
-      <InputCaption error={fieldState?.error?.message} caption={description} />
+      <InputCaption error={fieldState?.error?.message} />
     </InputWrapper>
   )
 }
 
-export class BooleanInput extends InputComponent<AnyFormikValue> {
+export class BooleanFormInput extends InputComponent<AnyFormikValue> {
   public internalType = 'boolean'
 
-  renderComponent(props: BooleanInputInternalProps): JSX.Element {
-    return <BooleanInputInternal {...props} />
+  renderComponent(props: BooleanFormInputProps): JSX.Element {
+    return <BooleanFormInputInternal {...props} />
   }
 }

@@ -43,6 +43,13 @@ const inputs: IInputConfigWithConfig[] = [
       allowedValueTypes: ['fixed', 'runtime', 'expression']
     }
   },
+  {
+    inputType: 'number',
+    path: `${RUN_STEP_IDENTIFIER}.nn`,
+    label: 'Number test',
+    required: true,
+    description: 'qwewqe qwewqewqe  qweqwewqe  qweqweqwe  wqewqewq'
+  },
   getContainerPartial(RUN_STEP_IDENTIFIER),
   {
     inputType: 'list',

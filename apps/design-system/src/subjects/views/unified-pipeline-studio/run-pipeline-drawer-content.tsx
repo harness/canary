@@ -2,18 +2,18 @@ import { useState } from 'react'
 
 import { InputFactory } from '@harnessio/forms'
 import {
-  BooleanInput,
-  NumberInput,
+  BooleanFormInput,
+  NumberFormInput,
   RunPipelineDrawerContent as RunPipelineDrawerContentView,
-  TextInput,
+  TextFormInput,
   VisualYamlValue
 } from '@harnessio/ui/views'
 import { YamlRevision } from '@harnessio/yaml-editor'
 
 const inputComponentFactory = new InputFactory()
-inputComponentFactory.registerComponent(new TextInput())
-inputComponentFactory.registerComponent(new BooleanInput())
-inputComponentFactory.registerComponent(new NumberInput())
+inputComponentFactory.registerComponent(new TextFormInput())
+inputComponentFactory.registerComponent(new BooleanFormInput())
+inputComponentFactory.registerComponent(new NumberFormInput())
 
 const pipelineInputs = {
   stringRequired: { type: 'string', required: true },

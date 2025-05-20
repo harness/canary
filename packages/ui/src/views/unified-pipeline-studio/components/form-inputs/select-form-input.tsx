@@ -12,7 +12,7 @@ export interface SelectOption {
   value: string
 }
 
-export interface SelectInputConfig {
+export interface SelectFormInputConfig {
   inputType: 'select'
   inputConfig: {
     options: SelectOption[]
@@ -22,9 +22,9 @@ export interface SelectInputConfig {
   } & RuntimeInputConfig
 }
 
-type SelectInputProps = InputProps<AnyFormikValue, SelectInputConfig>
+type SelectFormInputProps = InputProps<AnyFormikValue, SelectFormInputConfig>
 
-function SelectInputInternal(props: SelectInputProps): JSX.Element {
+function SelectFormInputInternal(props: SelectFormInputProps): JSX.Element {
   const { path, input } = props
   const { label, required, description, inputConfig, readonly, placeholder } = input
 
@@ -73,10 +73,10 @@ function SelectInputInternal(props: SelectInputProps): JSX.Element {
   )
 }
 
-export class SelectInput extends InputComponent<AnyFormikValue> {
+export class SelectFormInput extends InputComponent<AnyFormikValue> {
   public internalType = 'select'
 
-  renderComponent(props: SelectInputProps): JSX.Element {
-    return <SelectInputInternal {...props} />
+  renderComponent(props: SelectFormInputProps): JSX.Element {
+    return <SelectFormInputInternal {...props} />
   }
 }

@@ -21,7 +21,7 @@ import { RuntimeInputConfig } from './types/types'
 
 export type UIInputWithConfigsForArray = Omit<IInputDefinition, 'path'>
 
-export interface ArrayInputConfig {
+export interface ArrayFormInputConfig {
   inputType: 'array'
   inputConfig: {
     input: IInputDefinition
@@ -29,9 +29,9 @@ export interface ArrayInputConfig {
   } & RuntimeInputConfig
 }
 
-type ArrayInputInternalProps = InputProps<AnyFormikValue, ArrayInputConfig>
+type ArrayFormInputProps = InputProps<AnyFormikValue, ArrayFormInputConfig>
 
-function ArrayInputInternal(props: ArrayInputInternalProps): JSX.Element {
+function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
   const { readonly, path, input, factory } = props
   const { label, required, inputConfig, description } = input
 
@@ -98,10 +98,10 @@ function ArrayInputInternal(props: ArrayInputInternalProps): JSX.Element {
   )
 }
 
-export class ArrayInput extends InputComponent<AnyFormikValue> {
+export class ArrayFormInput extends InputComponent<AnyFormikValue> {
   public internalType = 'array'
 
-  renderComponent(props: ArrayInputInternalProps): JSX.Element {
-    return <ArrayInputInternal {...props} />
+  renderComponent(props: ArrayFormInputProps): JSX.Element {
+    return <ArrayFormInputInternal {...props} />
   }
 }

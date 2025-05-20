@@ -5,22 +5,22 @@ import { noop } from 'lodash-es'
 import { InputFactory } from '@harnessio/forms'
 import { Tabs } from '@harnessio/ui/components'
 import {
-  ArrayInput,
-  BooleanInput,
+  ArrayFormInput,
+  BooleanFormInput,
+  CardsFormInput,
   ConnectorDetailsActivities,
   ConnectorDetailsConfiguration,
   ConnectorDetailsItem,
   ConnectorDetailsLayout,
   ConnectorDetailsReference,
   ConnectorDetailsTabsKeys,
-  GroupInput,
+  GroupFormInput,
   ListInput,
-  NumberInput,
-  RadialInput,
-  SelectInput,
-  SeparatorInput,
-  TextAreaInput,
-  TextInput
+  NumberFormInput,
+  SelectFormInput,
+  SeparatorFormInput,
+  TextareaFormInput,
+  TextFormInput
 } from '@harnessio/ui/views'
 
 import { mockConnectorActivityList } from './mock-connector-activity-list'
@@ -28,16 +28,16 @@ import mockConnectorDetails from './mock-connector-details.json'
 import { mockConnectorRefList } from './mock-connector-ref-list'
 
 const inputComponentFactory = new InputFactory()
-inputComponentFactory.registerComponent(new TextInput())
-inputComponentFactory.registerComponent(new BooleanInput())
-inputComponentFactory.registerComponent(new NumberInput())
-inputComponentFactory.registerComponent(new ArrayInput())
+inputComponentFactory.registerComponent(new TextFormInput())
+inputComponentFactory.registerComponent(new BooleanFormInput())
+inputComponentFactory.registerComponent(new NumberFormInput())
+inputComponentFactory.registerComponent(new ArrayFormInput())
 inputComponentFactory.registerComponent(new ListInput())
-inputComponentFactory.registerComponent(new TextAreaInput())
-inputComponentFactory.registerComponent(new GroupInput())
-inputComponentFactory.registerComponent(new SelectInput())
-inputComponentFactory.registerComponent(new SeparatorInput())
-inputComponentFactory.registerComponent(new RadialInput())
+inputComponentFactory.registerComponent(new TextareaFormInput())
+inputComponentFactory.registerComponent(new GroupFormInput())
+inputComponentFactory.registerComponent(new SelectFormInput())
+inputComponentFactory.registerComponent(new SeparatorFormInput())
+inputComponentFactory.registerComponent(new CardsFormInput())
 
 const ConnectorsDetailsPageWrapper = (): JSX.Element => {
   const connectorDetails = {

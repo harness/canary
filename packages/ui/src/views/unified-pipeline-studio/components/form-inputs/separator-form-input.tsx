@@ -1,16 +1,16 @@
-import { FormSeparator } from '@components/form-primitives'
+import { Separator } from '@components/separator'
 
 import { InputComponent, type AnyFormikValue } from '@harnessio/forms'
 
-export interface SeparatorInputConfig {
+export interface SeparatorFormInputConfig {
   inputType: 'separator'
 }
 
 function SeparatorInputInternal(): JSX.Element {
-  return <FormSeparator className="my-4" />
+  return <Separator />
 }
 
-export class SeparatorInput extends InputComponent<AnyFormikValue> {
+export class SeparatorFormInput extends InputComponent<AnyFormikValue> {
   public internalType = 'separator'
 
   renderComponent(): JSX.Element {

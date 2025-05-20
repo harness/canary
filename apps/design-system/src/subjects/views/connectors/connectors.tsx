@@ -6,35 +6,35 @@ import { useTranslationStore } from '@utils/viewUtils'
 import { InputFactory } from '@harnessio/forms'
 import { Button, Drawer, ListActions, Spacer } from '@harnessio/ui/components'
 import {
-  ArrayInput,
-  BooleanInput,
+  ArrayFormInput,
+  BooleanFormInput,
+  CardsFormInput,
   ConnectorEntity,
   ConnectorEntityForm,
   ConnectorsPalette,
   ConnectorTestConnectionDialog,
   EntityIntent,
-  GroupInput,
+  GroupFormInput,
   ListInput,
-  NumberInput,
-  RadialInput,
+  NumberFormInput,
   SandboxLayout,
-  SelectInput,
-  SeparatorInput,
-  TextAreaInput,
-  TextInput
+  SelectFormInput,
+  SeparatorFormInput,
+  TextareaFormInput,
+  TextFormInput
 } from '@harnessio/ui/views'
 
 const inputComponentFactory = new InputFactory()
-inputComponentFactory.registerComponent(new TextInput())
-inputComponentFactory.registerComponent(new BooleanInput())
-inputComponentFactory.registerComponent(new NumberInput())
-inputComponentFactory.registerComponent(new ArrayInput())
+inputComponentFactory.registerComponent(new TextFormInput())
+inputComponentFactory.registerComponent(new BooleanFormInput())
+inputComponentFactory.registerComponent(new NumberFormInput())
+inputComponentFactory.registerComponent(new ArrayFormInput())
 inputComponentFactory.registerComponent(new ListInput())
-inputComponentFactory.registerComponent(new TextAreaInput())
-inputComponentFactory.registerComponent(new GroupInput())
-inputComponentFactory.registerComponent(new SelectInput())
-inputComponentFactory.registerComponent(new SeparatorInput())
-inputComponentFactory.registerComponent(new RadialInput())
+inputComponentFactory.registerComponent(new TextareaFormInput())
+inputComponentFactory.registerComponent(new GroupFormInput())
+inputComponentFactory.registerComponent(new SelectFormInput())
+inputComponentFactory.registerComponent(new SeparatorFormInput())
+inputComponentFactory.registerComponent(new CardsFormInput())
 
 const ConnectorsListPageContent = (): JSX.Element => {
   const [connectorEntity, setConnectorEntity] = useState<ConnectorEntity | null>(null)

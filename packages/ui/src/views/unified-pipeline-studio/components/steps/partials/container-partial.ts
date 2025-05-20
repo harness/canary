@@ -173,9 +173,9 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
     {
       inputType: 'boolean',
       required: true,
-
       path: `${stepIdentifier}.container.privileged`,
-      label: 'Privileged'
+      label: 'Privileged',
+      description: 'Description shod be caption'
     },
     {
       inputType: 'text',

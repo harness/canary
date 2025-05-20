@@ -5,16 +5,16 @@ import { InputComponent, InputProps, useController, type AnyFormikValue } from '
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
-export interface TextAreaInputConfig {
+export interface TextareaFormInputConfig {
   inputType: 'textarea'
   inputConfig?: {
     tooltip?: string
   } & RuntimeInputConfig
 }
 
-type TextAreaInputProps = InputProps<AnyFormikValue, TextAreaInputConfig>
+type TextareaFormInputProps = InputProps<AnyFormikValue, TextareaFormInputConfig>
 
-function TextAreaInputInternal(props: TextAreaInputProps): JSX.Element {
+function TextareaFormInputInternal(props: TextareaFormInputProps): JSX.Element {
   const { readonly, path, input } = props
   const { label, required, placeholder, description } = input
 
@@ -37,10 +37,10 @@ function TextAreaInputInternal(props: TextAreaInputProps): JSX.Element {
   )
 }
 
-export class TextAreaInput extends InputComponent<AnyFormikValue> {
+export class TextareaFormInput extends InputComponent<AnyFormikValue> {
   public internalType = 'textarea'
 
-  renderComponent(props: TextAreaInputProps): JSX.Element {
-    return <TextAreaInputInternal {...props} />
+  renderComponent(props: TextareaFormInputProps): JSX.Element {
+    return <TextareaFormInputInternal {...props} />
   }
 }

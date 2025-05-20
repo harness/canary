@@ -1,21 +1,20 @@
-import { NumberInput as NumberInputUI } from '@components/index'
+import { NumberInput } from '@components/index'
 
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
-import { InputCaption } from './common/InputCaption'
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
-export interface NumberInputConfig {
+export interface NumberFormInputConfig {
   inputType: 'number'
   inputConfig?: {
     tooltip?: string
   } & RuntimeInputConfig
 }
 
-type NumberInputProps = InputProps<AnyFormikValue, NumberInputConfig>
+type NumberFormInputProps = InputProps<AnyFormikValue, NumberFormInputConfig>
 
-function NumberInputInternal(props: NumberInputProps): JSX.Element {
+function NumberFormInputInternal(props: NumberFormInputProps): JSX.Element {
   const { readonly, path, input } = props
   const { label, required, placeholder, description } = input
 
@@ -26,7 +25,7 @@ function NumberInputInternal(props: NumberInputProps): JSX.Element {
 
   return (
     <InputWrapper {...props}>
-      <NumberInputUI
+      <NumberInput
         label={label}
         required={required}
         caption={description}
@@ -34,15 +33,14 @@ function NumberInputInternal(props: NumberInputProps): JSX.Element {
         placeholder={placeholder}
         {...field}
       />
-      <InputCaption error={fieldState?.error?.message} />
     </InputWrapper>
   )
 }
 
-export class NumberInput extends InputComponent<AnyFormikValue> {
+export class NumberFormInput extends InputComponent<AnyFormikValue> {
   public internalType = 'number'
 
-  renderComponent(props: NumberInputProps): JSX.Element {
-    return <NumberInputInternal {...props} />
+  renderComponent(props: NumberFormInputProps): JSX.Element {
+    return <NumberFormInputInternal {...props} />
   }
 }

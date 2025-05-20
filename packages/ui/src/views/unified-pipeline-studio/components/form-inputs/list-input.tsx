@@ -16,7 +16,6 @@ import {
 
 import { InputCaption } from './common/InputCaption'
 import { InputLabel } from './common/InputLabel'
-import { InputTooltip } from './common/InputTooltip'
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
@@ -24,7 +23,7 @@ export type UIInputWithConfigsForList<T = unknown> = Omit<IInputDefinition<T>, '
   relativePath: string
 }
 
-export interface ListInputConfig {
+export interface ListFormInputConfig {
   inputType: 'list'
   inputConfig: {
     inputs: UIInputWithConfigsForList[]
@@ -33,9 +32,9 @@ export interface ListInputConfig {
   } & RuntimeInputConfig
 }
 
-type ListInputProps = InputProps<AnyFormikValue, ListInputConfig>
+type ListFormInputProps = InputProps<AnyFormikValue, ListFormInputConfig>
 
-function ListInputInternal(props: ListInputProps): JSX.Element {
+function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
   const { readonly, path, input, factory } = props
   const { label, required, inputConfig, description } = input
 
@@ -129,7 +128,7 @@ function ListInputInternal(props: ListInputProps): JSX.Element {
 export class ListInput extends InputComponent<AnyFormikValue> {
   public internalType = 'list'
 
-  renderComponent(props: ListInputProps): JSX.Element {
-    return <ListInputInternal {...props} />
+  renderComponent(props: ListFormInputProps): JSX.Element {
+    return <ListFormInputInternal {...props} />
   }
 }

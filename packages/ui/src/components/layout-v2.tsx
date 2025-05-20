@@ -1,6 +1,7 @@
 import { FC, HTMLAttributes, ReactNode } from 'react'
 
 import { cn } from '@utils/cn'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 interface LayoutProps {
   children?: ReactNode
@@ -8,54 +9,71 @@ interface LayoutProps {
   gap?: string
   gapX?: string
   gapY?: string
-  align?: 'start' | 'center' | 'end' | 'baseline' | 'stretch'
-  justify?: 'start' | 'center' | 'end' | 'between'
   as?: 'div' | 'span'
 }
 
-interface FlexProps extends LayoutProps {
-  direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse'
-  wrap?: 'nowrap' | 'wrap' | 'wrap-reverse'
-}
+interface FlexProps extends LayoutProps, VariantProps<typeof flexVariants> {}
 
-interface GridProps extends LayoutProps {
+const gridVariants = cva('grid', {
+  variants: {
+    align: {
+      start: 'items-start',
+      center: 'items-center',
+      end: 'items-end',
+      baseline: 'items-baseline',
+      stretch: 'items-stretch'
+    },
+    justify: {
+      start: 'justify-start',
+      center: 'justify-center',
+      end: 'justify-end',
+      between: 'justify-between'
+    }
+  }
+})
+
+interface GridProps extends LayoutProps, VariantProps<typeof gridVariants> {
   columns?: string
   rows?: string
   flow?: 'row' | 'column' | 'dense' | 'row-dense' | 'column-dense'
 }
 
-const directionClasses = {
-  row: 'flex-row',
-  column: 'flex-col',
-  'row-reverse': 'flex-row-reverse',
-  'column-reverse': 'flex-col-reverse'
-}
-
-const alignClasses = {
-  start: 'items-start',
-  center: 'items-center',
-  end: 'items-end',
-  baseline: 'items-baseline',
-  stretch: 'items-stretch'
-}
-
-const justifyClasses = {
-  start: 'justify-start',
-  center: 'justify-center',
-  end: 'justify-end',
-  between: 'justify-between'
-}
-
-const wrapClasses = {
-  nowrap: 'flex-nowrap',
-  wrap: 'flex-wrap',
-  'wrap-reverse': 'flex-wrap-reverse'
-}
+const flexVariants = cva('flex', {
+  variants: {
+    direction: {
+      row: 'flex-row',
+      column: 'flex-col',
+      'row-reverse': 'flex-row-reverse',
+      'column-reverse': 'flex-col-reverse'
+    },
+    align: {
+      start: 'items-start',
+      center: 'items-center',
+      end: 'items-end',
+      baseline: 'items-baseline',
+      stretch: 'items-stretch'
+    },
+    justify: {
+      start: 'justify-start',
+      center: 'justify-center',
+      end: 'justify-end',
+      between: 'justify-between'
+    },
+    wrap: {
+      nowrap: 'flex-nowrap',
+      wrap: 'flex-wrap',
+      'wrap-reverse': 'flex-wrap-reverse'
+    }
+  },
+  defaultVariants: {
+    direction: 'row'
+  }
+})
 
 const Flex = ({
   children,
   className,
-  direction = 'row',
+  direction,
   align,
   justify,
   gap,
@@ -68,11 +86,7 @@ const Flex = ({
   return (
     <Comp
       className={cn(
-        'flex',
-        direction && directionClasses[direction],
-        align && alignClasses[align],
-        justify && justifyClasses[justify],
-        wrap && wrapClasses[wrap],
+        flexVariants({ direction, align, justify, wrap }),
         gap && `gap-${gap}`,
         gapX && `gap-x-${gapX}`,
         gapY && `gap-y-${gapY}`,
@@ -86,6 +100,7 @@ const Flex = ({
 }
 
 // Custom Grid component using Tailwind classes
+
 const Grid = ({
   children,
   className,
@@ -103,9 +118,7 @@ const Grid = ({
   return (
     <Comp
       className={cn(
-        'grid',
-        align && alignClasses[align],
-        justify && justifyClasses[justify],
+        gridVariants({ align, justify }),
         gap && `gap-${gap}`,
         gapX && `gap-x-${gapX}`,
         gapY && `gap-y-${gapY}`,
@@ -123,41 +136,39 @@ const Grid = ({
   )
 }
 
-const spacingMap = {
-  small: 'var(--cn-spacing-4)',
-  medium: 'var(--cn-spacing-8)',
-  large: 'var(--cn-spacing-12)'
-}
+const spacingVariants = cva('', {
+  variants: {
+    spacing: {
+      small: 'var(--cn-spacing-4)',
+      medium: 'var(--cn-spacing-8)',
+      large: 'var(--cn-spacing-12)'
+    }
+  },
+  defaultVariants: {
+    spacing: 'medium'
+  }
+})
 
-interface HorizontalProps extends Omit<FlexProps, 'direction'> {
-  spacing?: 'small' | 'medium' | 'large'
-}
+interface HorizontalProps extends Omit<FlexProps, 'direction'>, VariantProps<typeof spacingVariants> {}
 
 const Horizontal: FC<HorizontalProps & HTMLAttributes<HTMLDivElement>> = ({
   children,
   className,
-  spacing = 'medium',
+  spacing,
   ...props
 }) => {
   return (
-    <Flex direction="row" className={cn(spacing && spacingMap[spacing], className)} {...props}>
+    <Flex direction="row" className={cn(spacingVariants({ spacing }), className)} {...props}>
       {children}
     </Flex>
   )
 }
 
-interface VerticalProps extends Omit<FlexProps, 'direction'> {
-  spacing?: 'small' | 'medium' | 'large'
-}
+interface VerticalProps extends Omit<FlexProps, 'direction'>, VariantProps<typeof spacingVariants> {}
 
-const Vertical: FC<VerticalProps & HTMLAttributes<HTMLDivElement>> = ({
-  children,
-  className,
-  spacing = 'medium',
-  ...props
-}) => {
+const Vertical: FC<VerticalProps & HTMLAttributes<HTMLDivElement>> = ({ children, className, spacing, ...props }) => {
   return (
-    <Flex direction="column" className={cn(spacing && spacingMap[spacing], className)} {...props}>
+    <Flex direction="column" className={cn(spacingVariants({ spacing }), className)} {...props}>
       {children}
     </Flex>
   )

@@ -8,7 +8,15 @@ import { DocsPage } from "../../../components/docs-page";
 
 ## Overview
 
-The LayoutV2 component provides a set of flexible layout primitives for building consistent UI layouts. It includes Grid, Flex, Horizontal, and Vertical components with a clean, type-safe API.
+The LayoutV2 component provides a set of flexible layout primitives for building consistent UI layouts. It includes Grid, Flex, Horizontal, and Vertical components with a clean, type-safe API powered by Class Variance Authority (CVA).
+
+## Implementation
+
+Layout V2 uses Class Variance Authority (CVA) for managing component variants, providing a type-safe way to define and use styling variants. The implementation includes:
+
+- `flexVariants`: Controls direction, alignment, justification, and wrapping for Flex components
+- `gridVariants`: Controls alignment and justification for Grid components
+- `spacingVariants`: Controls spacing options for Horizontal and Vertical components
 
 ## Flex Component
 

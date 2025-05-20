@@ -338,7 +338,7 @@
     "installDelegate": "Install delegate",
     "enterTags": "Enter tags",
     "testDelegate": "Test Delegate connectivity",
-    "delegateMatches": "Matches:",
+    "delegateMatches": "Matches: ",
     "connectDelegates": "Connect "
   },
   "createProject": {

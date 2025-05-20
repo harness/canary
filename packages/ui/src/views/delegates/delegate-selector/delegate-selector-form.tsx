@@ -200,7 +200,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
               </Fieldset>
               <Text size={4}>{t('views:delegates.testDelegate', 'Test Delegate connectivity')}</Text>
               <p>
-                {t('views:delegates.delegateMatches', 'Matches:')}
+                {t('views:delegates.delegateMatches', 'Matches: ')}
                 {matchedDelegates}
               </p>
               <DelegateConnectivityList

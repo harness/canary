@@ -355,49 +355,20 @@ The Vertical component is a convenient wrapper around Flex that's pre-configured
 </LayoutV2.Vertical>`}
 />
 
-## Combining Components
-
-You can nest layout components to create complex layouts.
-
-## Combining Components
-
-You can nest layout components to create complex layouts.
-
-### Dashboard Example
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<Card.Root>
-  <Card.Header>
-    <LayoutV2.Horizontal justify="between" align="center">
-      <Card.Title>Dashboard</Card.Title>
-      <LayoutV2.Horizontal spacing="small">
-        <button className="btn btn-sm">Action 1</button>
-        <button className="btn btn-sm">Action 2</button>
-      </LayoutV2.Horizontal>
-    </LayoutV2.Horizontal>
-  </Card.Header>
-</Card.Root>`}
-/>
-
-### Two-Column Layout
+## Two-Column Layout
 
 <DocsPage.ComponentExample
   client:only
   code={`<LayoutV2.Grid columns="2fr 1fr" gap="4" className="p-4">
   <Card.Root>
-    <Card.Header>
-      <Card.Title>Main Content</Card.Title>
-    </Card.Header>
     <Card.Content>
+      <Card.Title>Main Content</Card.Title>
       <p>This is the main content area of the dashboard.</p>
     </Card.Content>
   </Card.Root>
   <Card.Root>
-    <Card.Header>
-      <Card.Title>Sidebar</Card.Title>
-    </Card.Header>
     <Card.Content>
+      <Card.Title>Sidebar</Card.Title>
       <p>This is the sidebar with additional information.</p>
     </Card.Content>
   </Card.Root>

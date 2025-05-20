@@ -2,7 +2,6 @@ import { FC, HTMLAttributes, ReactNode } from 'react'
 
 import { cn } from '@utils/cn'
 
-// Simple base props shared by all layout components
 interface LayoutProps {
   children?: ReactNode
   className?: string
@@ -14,20 +13,45 @@ interface LayoutProps {
   as?: 'div' | 'span'
 }
 
-// Simplified Flex props
 interface FlexProps extends LayoutProps {
   direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse'
   wrap?: 'nowrap' | 'wrap' | 'wrap-reverse'
 }
 
-// Simplified Grid props
 interface GridProps extends LayoutProps {
   columns?: string
   rows?: string
   flow?: 'row' | 'column' | 'dense' | 'row-dense' | 'column-dense'
 }
 
-// Custom Flex component using Tailwind classes
+const directionClasses = {
+  row: 'flex-row',
+  column: 'flex-col',
+  'row-reverse': 'flex-row-reverse',
+  'column-reverse': 'flex-col-reverse'
+}
+
+const alignClasses = {
+  start: 'items-start',
+  center: 'items-center',
+  end: 'items-end',
+  baseline: 'items-baseline',
+  stretch: 'items-stretch'
+}
+
+const justifyClasses = {
+  start: 'justify-start',
+  center: 'justify-center',
+  end: 'justify-end',
+  between: 'justify-between'
+}
+
+const wrapClasses = {
+  nowrap: 'flex-nowrap',
+  wrap: 'flex-wrap',
+  'wrap-reverse': 'flex-wrap-reverse'
+}
+
 const Flex = ({
   children,
   className,
@@ -41,38 +65,6 @@ const Flex = ({
   as: Comp = 'div',
   ...props
 }: FlexProps & HTMLAttributes<HTMLDivElement>) => {
-  // Map direction to Tailwind classes
-  const directionClasses = {
-    row: 'flex-row',
-    column: 'flex-col',
-    'row-reverse': 'flex-row-reverse',
-    'column-reverse': 'flex-col-reverse'
-  }
-
-  // Map align to Tailwind classes
-  const alignClasses = {
-    start: 'items-start',
-    center: 'items-center',
-    end: 'items-end',
-    baseline: 'items-baseline',
-    stretch: 'items-stretch'
-  }
-
-  // Map justify to Tailwind classes
-  const justifyClasses = {
-    start: 'justify-start',
-    center: 'justify-center',
-    end: 'justify-end',
-    between: 'justify-between'
-  }
-
-  // Map wrap to Tailwind classes
-  const wrapClasses = {
-    nowrap: 'flex-nowrap',
-    wrap: 'flex-wrap',
-    'wrap-reverse': 'flex-wrap-reverse'
-  }
-
   return (
     <Comp
       className={cn(
@@ -108,23 +100,6 @@ const Grid = ({
   as: Comp = 'div',
   ...props
 }: GridProps & HTMLAttributes<HTMLDivElement>) => {
-  // Map align to Tailwind classes
-  const alignClasses = {
-    start: 'items-start',
-    center: 'items-center',
-    end: 'items-end',
-    baseline: 'items-baseline',
-    stretch: 'items-stretch'
-  }
-
-  // Map justify to Tailwind classes
-  const justifyClasses = {
-    start: 'justify-start',
-    center: 'justify-center',
-    end: 'justify-end',
-    between: 'justify-between'
-  }
-
   return (
     <Comp
       className={cn(
@@ -148,14 +123,12 @@ const Grid = ({
   )
 }
 
-// Map spacing values to Tailwind CSS variables
 const spacingMap = {
-  small: 'var(--cn-spacing-2)',
-  medium: 'var(--cn-spacing-4)',
-  large: 'var(--cn-spacing-6)'
+  small: 'var(--cn-spacing-4)',
+  medium: 'var(--cn-spacing-8)',
+  large: 'var(--cn-spacing-12)'
 }
 
-// Simple Horizontal component (row-oriented Flex with spacing options)
 interface HorizontalProps extends Omit<FlexProps, 'direction'> {
   spacing?: 'small' | 'medium' | 'large'
 }
@@ -167,13 +140,12 @@ const Horizontal: FC<HorizontalProps & HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => {
   return (
-    <Flex direction="row" className={className} gap={spacing ? spacingMap[spacing] : undefined} {...props}>
+    <Flex direction="row" className={cn(spacing && spacingMap[spacing], className)} {...props}>
       {children}
     </Flex>
   )
 }
 
-// Simple Vertical component (column-oriented Flex with spacing options)
 interface VerticalProps extends Omit<FlexProps, 'direction'> {
   spacing?: 'small' | 'medium' | 'large'
 }
@@ -185,18 +157,15 @@ const Vertical: FC<VerticalProps & HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => {
   return (
-    <Flex direction="column" className={className} gap={spacing ? spacingMap[spacing] : undefined} {...props}>
+    <Flex direction="column" className={cn(spacing && spacingMap[spacing], className)} {...props}>
       {children}
     </Flex>
   )
 }
 
-// Export the LayoutV2 component with all subcomponents
 export const LayoutV2 = {
-  // Re-export Radix UI components with their full API
   Grid,
   Flex,
-  // Custom components
   Horizontal,
   Vertical
 }

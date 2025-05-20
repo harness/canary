@@ -320,7 +320,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                     </Command.Item>
                   ) : (
                     <Command.Item value="-" disabled>
-                      Press enter to create value
+                      Press Enter to create
                     </Command.Item>
                   )
                 ) : (

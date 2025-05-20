@@ -1,6 +1,6 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-const themes = ['danger'] as const
+const themes = ['danger', 'warning'] as const
 
 function createMultiSelectThemeStyles() {
   const styles: CSSRuleObject = {}

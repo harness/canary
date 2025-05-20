@@ -10,6 +10,7 @@ interface FormMultiSelectPropsType
   label?: string
   caption?: string
   error?: string
+  warning?: string
 }
 
 const FormMultiSelect = forwardRef<MultiSelectRef, FormMultiSelectPropsType>((props, ref) => {
@@ -49,12 +50,14 @@ const FormMultiSelect = forwardRef<MultiSelectRef, FormMultiSelectPropsType>((pr
                 onChange={(options: MultiSelectOption[]) => {
                   field.onChange(options)
                 }}
-                theme={fieldState.error || props.error ? 'danger' : undefined}
+                theme={fieldState.error || props.error ? 'danger' : props.warning ? 'warning' : undefined}
               />
-              {props.caption || fieldState.error || props.error ? (
-                <FormCaption theme={fieldState.error || props.error ? 'danger' : undefined}>
-                  {fieldState.error?.message || props.error || props.caption}
-                </FormCaption>
+              {fieldState.error || props.error ? (
+                <FormCaption theme="danger">{props.error}</FormCaption>
+              ) : props.warning ? (
+                <FormCaption theme="warning">{props.warning}</FormCaption>
+              ) : props.caption ? (
+                <FormCaption>{props.caption}</FormCaption>
               ) : null}
             </>
           )

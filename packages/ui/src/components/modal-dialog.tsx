@@ -1,9 +1,10 @@
-import { forwardRef, HTMLAttributes, ReactNode, useState } from 'react'
+import { Children, forwardRef, HTMLAttributes, isValidElement, ReactNode, useState } from 'react'
 
 import * as Dialog from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
+import { Button } from './button'
 import { Icon } from './icon'
 import { Logo } from './logo'
 import { ScrollArea } from './scroll-area'
@@ -11,13 +12,26 @@ import { ScrollArea } from './scroll-area'
 const contentVariants = cva('cn-modal-dialog-content', {
   variants: {
     size: {
-      sm: '',
-      md: 'cn-modal-size-md',
-      lg: 'cn-modal-size-lg'
+      sm: 'cn-modal-dialog-sm',
+      md: 'cn-modal-dialog-md',
+      lg: 'cn-modal-dialog-lg'
     }
   },
   defaultVariants: {
     size: 'sm'
+  }
+})
+
+const headerVariants = cva('cn-modal-dialog-header', {
+  variants: {
+    theme: {
+      default: 'cn-modal-dialog-theme-default',
+      warning: 'cn-modal-dialog-theme-warning',
+      danger: 'cn-modal-dialog-theme-danger'
+    }
+  },
+  defaultVariants: {
+    theme: 'default'
   }
 })
 
@@ -48,7 +62,6 @@ const Root = ({ open, defaultOpen, onOpenChange, children }: ModalDialogRootProp
 }
 
 const Trigger = Dialog.Trigger
-const Close = Dialog.Close
 
 interface ContentProps extends Dialog.DialogContentProps, VariantProps<typeof contentVariants> {
   size?: 'sm' | 'md' | 'lg'
@@ -61,9 +74,9 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
       <Dialog.Overlay className="cn-modal-dialog-overlay" />
       <Dialog.Content ref={ref} className={cn(contentVariants({ size }), className)} {...props}>
         {!hideClose && (
-          <Close className="cn-modal-dialog-close">
-            <Icon name="close-2" size={16} />
-          </Close>
+          <Dialog.Close className="cn-modal-dialog-close">
+            <Icon name="close-2" className="cn-modal-dialog-close-icon" skipSize />
+          </Dialog.Close>
         )}
         {children}
       </Dialog.Content>
@@ -84,19 +97,36 @@ const Header = ({ className, icon, logo, theme = 'default', children, ...props }
     return null
   }
 
+  // Find the title and description from children
+  let title: React.ReactNode = null
+  let description: React.ReactNode = null
+
+  Children.forEach(children, child => {
+    if (isValidElement(child)) {
+      if (child.type === Title) {
+        title = child
+      } else if (child.type === Description) {
+        description = child
+      }
+    }
+  })
+
   return (
-    <div className={cn('cn-modal-dialog-header', `cn-theme-${theme}`, className)} {...props}>
-      {icon && (
-        <div className="cn-modal-dialog-header-icon">
-          <Icon name={icon as any} size={24} />
-        </div>
-      )}
-      {logo && (
-        <div className="cn-modal-dialog-header-logo">
-          <Logo name={logo as any} />
-        </div>
-      )}
-      {children}
+    <div className={cn(headerVariants({ theme }), className)} {...props}>
+      <div className="cn-modal-dialog-header-title-row">
+        {icon && (
+          <div className="cn-modal-dialog-header-icon">
+            <Icon name={icon as any} size={24} />
+          </div>
+        )}
+        {logo && (
+          <div className="cn-modal-dialog-header-logo">
+            <Logo name={logo as any} />
+          </div>
+        )}
+        {title}
+      </div>
+      {description}
     </div>
   )
 }
@@ -122,6 +152,12 @@ const Body = ({ className, children, ...props }: BodyProps) => (
 
 const Footer = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div className={cn('cn-modal-dialog-footer', className)} {...props} />
+)
+
+const Close = ({ children, className, ...props }: HTMLAttributes<HTMLButtonElement>) => (
+  <Dialog.Close asChild className={className} {...props}>
+    <Button variant="secondary">{children}</Button>
+  </Dialog.Close>
 )
 
 const ModalDialog = {

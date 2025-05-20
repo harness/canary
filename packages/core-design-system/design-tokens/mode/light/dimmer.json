@@ -1123,6 +1123,14 @@
         "$type": "color",
         "$value": "{chrome.900}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
+      },
+      "fade-start": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {gradient.dialog.fade} 0%, {bg.2} 100%)"
+      },
+      "fade-end": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {bg.2} 0%, {gradient.dialog.fade} 100%)"
       }
     },
     "diff": {
@@ -2019,6 +2027,21 @@
       "to": {
         "$type": "color",
         "$value": "{chrome.25}"
+      }
+    },
+    "dialog": {
+      "fade": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{bg.2}"
       }
     }
   },

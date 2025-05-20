@@ -6,18 +6,6 @@
     },
     "black": {
       "$value": "#0f0f11"
-    },
-    "transparent": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0",
-            "space": "lch"
-          }
-        }
-      },
-      "$value": "{pure.black}"
     }
   },
   "chrome": {

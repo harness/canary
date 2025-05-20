@@ -1,6 +1,7 @@
 import { FC, useMemo, useState } from 'react'
 
 import { DropdownMenu, Icon, SearchBox } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { CommitSelectorListItem } from '@views/repo/pull-request'
 
@@ -14,12 +15,11 @@ const filterItems = (items: CommitSelectorListItem[], query: string) => {
 export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
   selectedCommit,
   onSelectCommit,
-  commitList,
-  useTranslationStore
+  commitList
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
 
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   // TODO: Leave until be filtering can be done
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {

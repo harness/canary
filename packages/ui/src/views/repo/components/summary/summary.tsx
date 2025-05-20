@@ -1,6 +1,6 @@
 import { Icon, Spacer, Table, Text } from '@/components'
-import { useRouterContext } from '@/context'
-import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
+import { useRouterContext, useTranslation } from '@/context'
+import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
 
 interface RoutingProps {
@@ -9,7 +9,6 @@ interface RoutingProps {
 interface SummaryProps extends RoutingProps {
   latestFile: LatestFileTypes
   files: RepoFile[]
-  useTranslationStore: () => TranslationStore
   hideHeader?: boolean
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toRepoFileDetails?: ({ path }: { path: string }) => string
@@ -18,23 +17,18 @@ interface SummaryProps extends RoutingProps {
 export const Summary = ({
   latestFile,
   files,
-  useTranslationStore,
   hideHeader = false,
   toCommitDetails,
   toRepoFileDetails
 }: SummaryProps) => {
   const { navigate } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   return (
     <>
       {!hideHeader && (
         <>
-          <FileLastChangeBar
-            toCommitDetails={toCommitDetails}
-            useTranslationStore={useTranslationStore}
-            {...latestFile}
-          />
+          <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />
           <Spacer size={4} />
         </>
       )}
@@ -53,13 +47,7 @@ export const Summary = ({
           {hideHeader && (
             <Table.Row>
               <Table.Cell className="!p-0" colSpan={3}>
-                <FileLastChangeBar
-                  onlyTopRounded
-                  withoutBorder
-                  toCommitDetails={toCommitDetails}
-                  useTranslationStore={useTranslationStore}
-                  {...latestFile}
-                />
+                <FileLastChangeBar onlyTopRounded withoutBorder toCommitDetails={toCommitDetails} {...latestFile} />
               </Table.Cell>
             </Table.Row>
           )}

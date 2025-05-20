@@ -1,6 +1,7 @@
 import { memo, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Accordion, Button, Checkbox, CopyButton, CounterBadge, Icon, Layout, StackedList } from '@/components'
+import { useTranslation } from '@/context'
 import {
   CommentItem,
   CommitFilterItemProps,
@@ -12,7 +13,6 @@ import {
   HandleUploadType,
   InViewDiffRenderer,
   jumpToFile,
-  TranslationStore,
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
@@ -47,7 +47,6 @@ interface HeaderProps {
 }
 
 interface LineTitleProps {
-  useTranslationStore: () => TranslationStore
   header: HeaderProps
   viewed: boolean
   setViewed: (val: boolean) => void
@@ -62,7 +61,6 @@ interface LineTitleProps {
 interface DataProps {
   data: HeaderProps[]
   diffMode: DiffModeEnum
-  useTranslationStore: () => TranslationStore
   currentUser?: string
   comments: CommentItem<TypesPullReqActivity>[][]
   handleSaveComment: (comment: string, parentId?: number) => void
@@ -91,7 +89,6 @@ interface DataProps {
 
 const LineTitle: React.FC<LineTitleProps> = ({
   header,
-  useTranslationStore,
   viewed,
   setViewed,
   showViewed,
@@ -101,7 +98,7 @@ const LineTitle: React.FC<LineTitleProps> = ({
   toggleFullDiff,
   useFullDiff
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { text, addedLines, deletedLines, filePath, checksumAfter } = header
   return (
     <div className="flex items-center justify-between gap-x-3">
@@ -160,7 +157,6 @@ const PullRequestAccordion: React.FC<{
   header: HeaderProps
   data?: string
   diffMode: DiffModeEnum
-  useTranslationStore: () => TranslationStore
   currentUser?: string
   comments: CommentItem<TypesPullReqActivity>[][]
   handleSaveComment: (comment: string, parentId?: number) => void
@@ -190,7 +186,6 @@ const PullRequestAccordion: React.FC<{
 }> = ({
   header,
   diffMode,
-  useTranslationStore,
   currentUser,
   comments,
   handleSaveComment,
@@ -217,7 +212,7 @@ const PullRequestAccordion: React.FC<{
   onToggle,
   setCollapsed
 }) => {
-  const { t: _ts } = useTranslationStore()
+  const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
   const [useFullDiff, setUseFullDiff] = useState(false)
   const diffViewerState = useMemo(() => new Map<string, DiffViewerState>(), [])
@@ -321,7 +316,6 @@ const PullRequestAccordion: React.FC<{
               <StackedList.Field
                 title={
                   <LineTitle
-                    useTranslationStore={useTranslationStore}
                     header={header}
                     viewed={viewed}
                     setViewed={setViewed}
@@ -380,7 +374,6 @@ const PullRequestAccordion: React.FC<{
                       handleSaveComment={handleSaveComment}
                       deleteComment={deleteComment}
                       updateComment={updateComment}
-                      useTranslationStore={useTranslationStore}
                       onCopyClick={onCopyClick}
                       onCommitSuggestion={onCommitSuggestion}
                       addSuggestionToBatch={addSuggestionToBatch}
@@ -406,7 +399,6 @@ const PullRequestAccordion: React.FC<{
 function PullRequestChangesInternal({
   data,
   diffMode,
-  useTranslationStore,
   currentUser,
   comments,
   handleSaveComment,
@@ -543,7 +535,6 @@ function PullRequestChangesInternal({
                       key={`${item.title}-${index}`}
                       header={item}
                       diffMode={diffMode}
-                      useTranslationStore={useTranslationStore}
                       currentUser={currentUser}
                       comments={fileComments}
                       handleSaveComment={handleSaveComment}

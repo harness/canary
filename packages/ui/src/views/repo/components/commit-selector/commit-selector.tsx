@@ -1,13 +1,13 @@
 import { FC, useMemo } from 'react'
 
 import { Button, ButtonSizes, DropdownMenu, Icon, Text } from '@/components'
-import { CommitSelectorListItem, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { CommitSelectorListItem } from '@/views'
 
 import { CommitSelectorDropdown } from './commit-selector-dropdown'
 import { ICommitSelectorStore } from './types'
 
 interface CommitSelectorProps {
-  useTranslationStore: () => TranslationStore
   buttonSize?: ButtonSizes
   onSelectCommit?: (commit: CommitSelectorListItem) => void
   repoId?: string
@@ -17,7 +17,6 @@ interface CommitSelectorProps {
   setSearchQuery: (query: string | null) => void
 }
 export const CommitSelector: FC<CommitSelectorProps> = ({
-  useTranslationStore,
   useRepoCommitStore,
   buttonSize,
   onSelectCommit,
@@ -27,7 +26,7 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
   setSearchQuery
 }) => {
   const { commits: commitList, selectedCommit } = useRepoCommitStore()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const finalList = useMemo(
     () => [
@@ -64,7 +63,6 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
         selectedCommit={selectedCommit}
         repoId={repoId}
         spaceId={spaceId}
-        useTranslationStore={useTranslationStore}
         setSearchQuery={setSearchQuery}
         searchQuery={searchQuery}
       />

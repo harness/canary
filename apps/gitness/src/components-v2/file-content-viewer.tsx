@@ -15,7 +15,6 @@ import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 import { useAPIPath } from '../hooks/useAPIPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
-import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { PageResponseHeader } from '../types'
@@ -60,7 +59,6 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
   const [page, _setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { theme } = useThemeStore()
-  const { t } = useTranslationStore()
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
     queryParams: {
@@ -204,7 +202,6 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
               hasPrevious={xPrevPage > 0}
               getPrevPageLink={getPrevPageLink}
               getNextPageLink={getNextPageLink}
-              t={t}
             />
           </div>
         )

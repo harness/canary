@@ -18,7 +18,6 @@ import {
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'
 
@@ -132,8 +131,7 @@ export const CreateWebhookContainer = () => {
     return <SkeletonForm className="mt-7" />
   }
 
-  if (!!webhookId && !webhookData)
-    return <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="webhooks" />
+  if (!!webhookId && !webhookData) return <NotFoundPage pageTypeText="webhooks" />
 
   return (
     <>
@@ -143,7 +141,6 @@ export const CreateWebhookContainer = () => {
         apiError={apiError}
         isLoading={creatingWebHook || updatingWebHook}
         useWebhookStore={useWebhookStore}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

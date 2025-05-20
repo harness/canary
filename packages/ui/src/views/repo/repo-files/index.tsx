@@ -1,6 +1,7 @@
 import { FC, ReactNode, useMemo } from 'react'
 
 import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
+import { useTranslation } from '@/context'
 import {
   BranchInfoBar,
   CodeModes,
@@ -11,8 +12,7 @@ import {
   PathActionBar,
   RepoFile,
   SandboxLayout,
-  Summary,
-  TranslationStore
+  Summary
 } from '@/views'
 
 interface RepoFilesProps {
@@ -24,7 +24,6 @@ interface RepoFilesProps {
   isShowSummary: boolean
   latestFile: LatestFileTypes
   children: ReactNode
-  useTranslationStore: () => TranslationStore
   pathNewFile: string
   pathUploadFiles: string
   codeMode: CodeModes
@@ -44,7 +43,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   isShowSummary,
   latestFile,
   children,
-  useTranslationStore,
   pathNewFile,
   pathUploadFiles,
   codeMode,
@@ -57,7 +55,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   toRepoFileDetails
 }) => {
   const { selectedBranchTag, repoId, spaceId, selectedRefType } = useRepoBranchesStore()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
 
@@ -75,11 +73,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
         <>
           {!isLoadingRepoDetails && (
             <>
-              <FileLastChangeBar
-                toCommitDetails={toCommitDetails}
-                useTranslationStore={useTranslationStore}
-                {...latestFile}
-              />
+              <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />
               <Spacer size={4} />
             </>
           )}
@@ -112,7 +106,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             toCommitDetails={toCommitDetails}
             latestFile={latestFile}
             files={files}
-            useTranslationStore={useTranslationStore}
             toRepoFileDetails={toRepoFileDetails}
           />
         </>
@@ -132,7 +125,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     isView,
     children,
     isDir,
-    useTranslationStore,
     latestFile,
     loading,
     isShowSummary,
@@ -155,7 +147,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
           <PathActionBar
             codeMode={codeMode}
             pathParts={pathParts}
-            useTranslationStore={useTranslationStore}
             pathNewFile={pathNewFile}
             pathUploadFiles={pathUploadFiles}
             selectedRefType={selectedRefType}

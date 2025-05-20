@@ -1,7 +1,8 @@
 import { FC } from 'react'
 
 import { Avatar, CommitCopyActions, Icon, StackedList, Text } from '@/components'
-import { LatestFileTypes, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { LatestFileTypes } from '@/views'
 
 const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   return (
@@ -29,20 +30,18 @@ const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, toCommitDetails }) =>
 }
 
 export interface FileLastChangeBarProps extends LatestFileTypes {
-  useTranslationStore: () => TranslationStore
   onlyTopRounded?: boolean
   withoutBorder?: boolean
   toCommitDetails?: ({ sha }: { sha: string }) => string
 }
 
 export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
-  useTranslationStore,
   onlyTopRounded = false,
   withoutBorder = false,
   toCommitDetails,
   ...props
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   return (
     <StackedList.Root withoutBorder={withoutBorder} onlyTopRounded={onlyTopRounded}>

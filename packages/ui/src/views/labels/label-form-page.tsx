@@ -14,6 +14,7 @@ import {
   SkeletonForm,
   Tag
 } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import {
   ColorsEnum,
@@ -22,8 +23,7 @@ import {
   ILabelsStore,
   LabelType,
   NotFoundPage,
-  SandboxLayout,
-  TranslationStore
+  SandboxLayout
 } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -31,7 +31,6 @@ import { LabelFormColorAndNameGroup } from './components/label-form-color-and-na
 
 export interface LabelFormPageProps {
   useLabelsStore: () => ILabelsStore
-  useTranslationStore: () => TranslationStore
   onSubmit: (data: CreateLabelFormFields) => void
   isSaving: boolean
   onFormCancel: () => void
@@ -42,7 +41,6 @@ export interface LabelFormPageProps {
 
 export const LabelFormPage: FC<LabelFormPageProps> = ({
   useLabelsStore,
-  useTranslationStore,
   onSubmit,
   isSaving,
   onFormCancel,
@@ -50,7 +48,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
   labelId,
   className
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { values: storeValues, labels: storeLabels, isLoading } = useLabelsStore()
 
   /**
@@ -147,7 +145,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
   }
 
   if (!fullLabelData && !!labelId && !isLoading) {
-    return <NotFoundPage useTranslationStore={useTranslationStore} />
+    return <NotFoundPage />
   }
 
   return (
@@ -169,7 +167,6 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               </Label>
 
               <LabelFormColorAndNameGroup
-                useTranslationStore={useTranslationStore}
                 selectProps={{
                   name: 'color-label',
                   onValueChange: handleLabelColorChange,
@@ -202,7 +199,6 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
                   isValue
                   key={idx}
                   className="mt-5 first-of-type:mt-0"
-                  useTranslationStore={useTranslationStore}
                   handleDeleteValue={() => handleDeleteValue(idx)}
                   selectProps={{
                     name: `value-${idx}`,

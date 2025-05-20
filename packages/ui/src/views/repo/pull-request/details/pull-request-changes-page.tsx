@@ -4,7 +4,6 @@ import { SkeletonList, Spacer } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { activityToCommentItem, HandleUploadType, TypesCommit } from '@views/index'
-import { TranslationStore } from '@views/repo/repo-list/types'
 import { orderBy } from 'lodash-es'
 
 import { CommitSuggestion, PullReqReviewDecision, TypesPullReq } from '../pull-request.types'
@@ -18,7 +17,6 @@ import {
 } from './pull-request-details-types'
 
 interface RepoPullRequestChangesPageProps {
-  useTranslationStore: () => TranslationStore
   usePullRequestProviderStore: () => PullRequestDataState
   currentUser?: TypesUser
   pullReqMetadata?: TypesPullReq
@@ -59,7 +57,6 @@ interface RepoPullRequestChangesPageProps {
   setJumpToDiff: (fileName: string) => void
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
-  useTranslationStore,
   loadingReviewers,
   usePullRequestProviderStore,
   diffMode,
@@ -142,7 +139,6 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
             isBinary: item.isBinary
           })) || []
         }
-        useTranslationStore={useTranslationStore}
         diffMode={diffMode}
         currentUser={currentUser?.display_name}
         comments={activityBlocks}
@@ -175,7 +171,6 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
     <>
       <PullRequestChangesFilter
         active={''}
-        useTranslationStore={useTranslationStore}
         loading={loadingReviewers}
         currentUser={currentUser ?? {}}
         pullRequestMetadata={pullReqMetadata ? pullReqMetadata : undefined}

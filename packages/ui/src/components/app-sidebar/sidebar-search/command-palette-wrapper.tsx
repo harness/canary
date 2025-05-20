@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Icon } from '@/components'
-import { TFunction } from 'i18next'
+import { useTranslation } from '@/context'
 
 import { CommandPalette } from './command-palette'
 import { useSearch } from './search-context'
@@ -21,11 +21,9 @@ interface CommandOption {
   icon?: () => JSX.Element
 }
 
-interface CommandPaletteProps {
-  t: TFunction
-}
+export function CommandPaletteWrapper() {
+  const { t } = useTranslation()
 
-export function CommandPaletteWrapper({ t }: CommandPaletteProps) {
   const { isOpen, setIsOpen } = useSearch()
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<PageKey[]>([])

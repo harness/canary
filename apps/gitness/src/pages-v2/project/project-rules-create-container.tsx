@@ -8,6 +8,7 @@ import {
   useSpaceRuleGetQuery,
   useSpaceRuleUpdateMutation
 } from '@harnessio/code-service-client'
+import { useTranslation } from '@harnessio/ui/context'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchRulesActionType,
@@ -19,13 +20,12 @@ import {
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { transformDataFromApi, transformFormOutput } from '../../utils/repo-branch-rules-utils'
 import { useBranchRulesStore } from '../repo/stores/repo-branch-rules-store'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
 export const ProjectRulesCreateOrUpdateContainer = () => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const spaceURL = useGetSpaceURLParam()
@@ -199,7 +199,6 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
       handleSelectChangeForRule={handleSelectChangeForRule}
       handleInputChange={handleInputChange}
       handleInitialRules={handleInitialRules}
-      useTranslationStore={useTranslationStore}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}
       isSubmitSuccess={isSubmitSuccess}

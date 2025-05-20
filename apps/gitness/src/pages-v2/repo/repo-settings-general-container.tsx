@@ -31,7 +31,6 @@ import { BranchSelectorContainer } from '../../components-v2/branch-selector-con
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
@@ -264,7 +263,6 @@ export const RepoSettingsGeneralPageContainer = () => {
         loadingStates={loadingStates}
         isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}
         useRepoRulesStore={useRepoRulesStore}
-        useTranslationStore={useTranslationStore}
         handleRuleClick={handleRuleClick}
         openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
@@ -276,7 +274,6 @@ export const RepoSettingsGeneralPageContainer = () => {
       <DeleteAlertDialog
         open={isRuleAlertDeleteDialogOpen || isRepoAlertDeleteDialogOpen}
         onClose={closeAlertDeleteDialog}
-        useTranslationStore={useTranslationStore}
         {...wrapConditionalObjectElement(
           {
             identifier: alertDeleteParams,

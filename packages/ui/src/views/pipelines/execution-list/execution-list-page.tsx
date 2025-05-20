@@ -10,7 +10,6 @@ import { IExecutionListPageProps } from './types'
 
 const ExecutionListPage: FC<IExecutionListPageProps> = ({
   useExecutionListStore,
-  useTranslationStore,
   isLoading,
   isError,
   errorMessage,
@@ -20,7 +19,6 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
   LinkComponent
 }) => {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
   const { executions, pageSize, totalItems, page, setPage } = useExecutionListStore()
 
   const {
@@ -80,12 +78,11 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
           LinkComponent={LinkComponent}
           query={searchQuery ?? ''}
           handleResetQuery={handleResetSearch}
-          useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           handleExecutePipeline={handleExecutePipeline}
         />
         <Spacer size={8} />
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

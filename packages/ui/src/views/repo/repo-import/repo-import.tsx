@@ -13,7 +13,8 @@ import {
   Spacer,
   Text
 } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -100,17 +101,10 @@ interface RepoImportPageProps {
   onFormCancel: () => void
   isLoading: boolean
   apiErrorsValue?: string
-  useTranslationStore: () => TranslationStore
 }
 
-export function RepoImportPage({
-  onFormSubmit,
-  onFormCancel,
-  isLoading,
-  apiErrorsValue,
-  useTranslationStore
-}: RepoImportPageProps) {
-  const { t } = useTranslationStore()
+export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiErrorsValue }: RepoImportPageProps) {
+  const { t } = useTranslation()
 
   const formMethods = useForm<ImportRepoFormFields>({
     resolver: zodResolver(formSchema),

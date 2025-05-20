@@ -12,18 +12,16 @@ import {
   PullRequestPanelProps,
   PullRequestSideBar,
   PullRequestSideBarProps,
-  SandboxLayout,
-  TranslationStore
+  SandboxLayout
 } from '@/views'
 
 export interface PullRequestConversationPageProps {
   rebaseErrorMessage: string | null
   panelProps: PullRequestPanelProps
   filtersProps: PullRequestFilterProps<{ label: string; value: string }>
-  overviewProps: Omit<PullRequestOverviewProps, 'useTranslationStore'>
+  overviewProps: PullRequestOverviewProps
   commentBoxProps: PullRequestCommentBoxProps
-  sideBarProps: Omit<PullRequestSideBarProps, 'useTranslationStore'>
-  useTranslationStore: () => TranslationStore
+  sideBarProps: PullRequestSideBarProps
 }
 
 export const PullRequestConversationPage: FC<PullRequestConversationPageProps> = ({
@@ -32,8 +30,7 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
   filtersProps,
   overviewProps,
   commentBoxProps,
-  sideBarProps,
-  useTranslationStore
+  sideBarProps
 }) => {
   return (
     <SandboxLayout.Columns columnWidths="minmax(calc(100% - 288px), 1fr) 288px">
@@ -55,7 +52,7 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
           <PullRequestFilters {...filtersProps} />
           <Spacer size={6} />
 
-          <PullRequestOverview useTranslationStore={useTranslationStore} {...overviewProps} />
+          <PullRequestOverview {...overviewProps} />
           <Spacer size={9} />
 
           <PullRequestCommentBox {...commentBoxProps} />
@@ -64,7 +61,7 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
 
       <SandboxLayout.Column>
         <SandboxLayout.Content className="px-0 pt-0">
-          <PullRequestSideBar useTranslationStore={useTranslationStore} {...sideBarProps} />
+          <PullRequestSideBar {...sideBarProps} />
         </SandboxLayout.Content>
       </SandboxLayout.Column>
     </SandboxLayout.Columns>

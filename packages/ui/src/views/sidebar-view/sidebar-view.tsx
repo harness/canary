@@ -17,9 +17,8 @@ import {
   User,
   useSidebar
 } from '@/components'
-import { useRouterContext, useTheme } from '@/context'
+import { useRouterContext, useTheme, useTranslation } from '@/context'
 import { TypesUser } from '@/types'
-import { TranslationStore } from '@/views'
 
 interface SidebarProps {
   recentMenuItems: NavbarItemType[]
@@ -33,13 +32,11 @@ interface SidebarProps {
   handleLogOut: () => void
   handleChangePinnedMenuItem: (item: NavbarItemType, pin: boolean) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
-  useTranslationStore: () => TranslationStore
   showNewSearch?: boolean
   hasToggle?: boolean
 }
 
 export const SidebarView = ({
-  useTranslationStore,
   handleChangePinnedMenuItem,
   handleRemoveRecentMenuItem,
   pinnedMenuItems,
@@ -52,7 +49,7 @@ export const SidebarView = ({
   hasToggle = true,
   showNewSearch
 }: SidebarProps) => {
-  const { t, i18n, changeLanguage } = useTranslationStore()
+  const { t, i18n, changeLanguage } = useTranslation()
   const { theme, setTheme } = useTheme()
   const { navigate } = useRouterContext()
   const { collapsed, toggleSidebar } = useSidebar()
@@ -84,10 +81,9 @@ export const SidebarView = ({
       <Sidebar.Root className="h-svh">
         <Sidebar.Header className="pb-3">
           {showNewSearch ? (
-            <SearchProvider t={t}>
+            <SearchProvider>
               <SidebarSearch
                 className="pb-3 pt-1.5"
-                t={t}
                 logo={
                   <div className="my-5 flex items-center pl-2">
                     <HarnessLogo />
@@ -96,7 +92,7 @@ export const SidebarView = ({
               />
             </SearchProvider>
           ) : (
-            <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
+            <SidebarSearchLegacy logo={<HarnessLogo />} />
           )}
         </Sidebar.Header>
         <Sidebar.Content>
@@ -110,7 +106,6 @@ export const SidebarView = ({
                     handleChangePinnedMenuItem={handleChangePinnedMenuItem}
                     handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
                     handleCustomNav={handleCustomNav}
-                    t={t}
                   />
                 ))}
 
@@ -140,7 +135,6 @@ export const SidebarView = ({
                       handleChangePinnedMenuItem={handleChangePinnedMenuItem}
                       handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
                       handleCustomNav={handleCustomNav}
-                      t={t}
                     />
                   ))}
                 </Sidebar.Menu>
@@ -203,7 +197,6 @@ export const SidebarView = ({
             openThemeDialog={() => setOpenThemeDialog(true)}
             openLanguageDialog={() => setOpenLanguageDialog(true)}
             handleLogOut={handleLogOut}
-            t={t}
           />
         </Sidebar.Footer>
         <Sidebar.Rail />

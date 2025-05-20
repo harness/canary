@@ -1,4 +1,3 @@
-import { useTranslationStore } from '@utils/viewUtils'
 import { noop } from 'lodash-es'
 
 import { SecretListPage } from '@harnessio/ui/views'
@@ -16,7 +15,6 @@ const SecretsListPage = (): JSX.Element => (
       updatedAt: secret.updatedAt,
       createdAt: secret.createdAt
     }))}
-    useTranslationStore={useTranslationStore}
     isLoading={false}
     setSearchQuery={noop}
     onEditSecret={noop}

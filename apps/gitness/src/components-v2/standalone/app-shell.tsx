@@ -2,6 +2,7 @@ import { FC, useEffect, useMemo } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
 import { NavbarItemType, Toaster, useSidebar } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useNav } from '../../components/stores/recent-pinned-nav-links.store'
@@ -11,7 +12,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useLocationChange } from '../../framework/hooks/useLocationChange'
 import { useRepoImportEvents } from '../../framework/hooks/useRepoImportEvent'
 import { useSelectedSpaceId } from '../../framework/hooks/useSelectedSpaceId'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { Breadcrumbs } from '../breadcrumbs/breadcrumbs'
 import { useGetBreadcrumbs } from '../breadcrumbs/useGetBreadcrumbs'
@@ -29,7 +29,7 @@ export const AppShell: FC = () => {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const { pinnedMenu, setRecent, setNavLinks } = useNav()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const selectedSpaceId = useSelectedSpaceId(spaceId)
   const spaceIdPathParam = spaceId ?? selectedSpaceId ?? ''
 

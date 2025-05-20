@@ -1,8 +1,7 @@
 import { FC } from 'react'
 
 import { Button, CounterBadge, DropdownMenu, Icon, IconProps, Spacer, Tag, Text } from '@/components'
-import { useRouterContext } from '@/context'
-import { TranslationStore } from '@views/repo/repo-list/types'
+import { useRouterContext, useTranslation } from '@/context'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
 
@@ -24,7 +23,6 @@ interface SummaryPanelProps {
   updateRepoError?: string
   isEditDialogOpen: boolean
   setEditDialogOpen: (value: boolean) => void
-  useTranslationStore: () => TranslationStore
 }
 
 const SummaryPanel: FC<SummaryPanelProps> = ({
@@ -36,10 +34,9 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   saveDescription,
   updateRepoError,
   isEditDialogOpen,
-  setEditDialogOpen,
-  useTranslationStore
+  setEditDialogOpen
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const onClose = () => {
     setEditDialogOpen(false)
   }

@@ -1,7 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
 import { Button, ListActions, SearchInput, SkeletonList, Spacer } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
 import { RepoWebhookList } from './components/repo-webhook-list'
@@ -9,7 +9,6 @@ import { RepoWebhookListPageProps } from './types'
 
 const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   useWebhookStore,
-  useTranslationStore,
   openDeleteWebhookDialog,
   searchQuery,
   setSearchQuery,
@@ -19,7 +18,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   toRepoWebhookCreate
 }) => {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { webhooks, totalItems, pageSize, page, setPage, error } = useWebhookStore()
 
   const handleSearchChange = useCallback(
@@ -81,7 +80,6 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
               error={error}
               isDirtyList={isDirtyList}
               webhooks={webhooks || []}
-              useTranslationStore={useTranslationStore}
               handleReset={handleResetFiltersQueryAndPages}
               totalItems={totalItems}
               pageSize={pageSize}

@@ -13,8 +13,8 @@ import {
   LinkProps as StyledLinkProps,
   Text
 } from '@/components'
-import { useRouterContext, useTheme } from '@/context'
-import { Floating1ColumnLayout, TranslationStore } from '@/views'
+import { TranslationStore, useRouterContext, useTheme, useTranslation } from '@/context'
+import { Floating1ColumnLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
 import { z } from 'zod'
@@ -25,7 +25,6 @@ export interface CreateProjectPageCommonProps {
   error?: string
   isLoading?: boolean
   onFormSubmit: (data: CreateProjectFields) => void
-  useTranslationStore: () => TranslationStore
   importProjectLinkProps: LinkProps
 }
 
@@ -71,7 +70,7 @@ const createProjectSchema = (t: TranslationStore['t']) =>
 export type CreateProjectFields = z.infer<ReturnType<typeof createProjectSchema>>
 
 export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
-  const { error, isLoading, backLinkProps, importProjectLinkProps, onFormSubmit, useTranslationStore } = props
+  const { error, isLoading, backLinkProps, importProjectLinkProps, onFormSubmit } = props
   const { isLightTheme } = useTheme()
   const { Link } = useRouterContext()
 
@@ -79,7 +78,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
   const isFirst = getIsFirstProjectPage(props)
   const isWithBackButton = !!backLinkProps?.to && isAdditional
 
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const [serverError, setServerError] = useState<string | null>(null)
   const formWrapper = useForm<CreateProjectFields>({

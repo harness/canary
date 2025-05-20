@@ -2,8 +2,8 @@ import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Alert, Button, ControlGroup, Dialog, Fieldset, FormInput, FormWrapper, Label } from '@/components'
+import { TranslationStore, useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
 import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'
@@ -33,12 +33,11 @@ export function CreateBranchDialog({
   onSubmit,
   isCreatingBranch,
   error,
-  useTranslationStore,
   selectedBranchOrTag,
   renderProp: branchSelectorContainer,
   prefilledName
 }: CreateBranchDialogProps) {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const formMethods = useForm<CreateBranchFormFields>({
     resolver: zodResolver(createBranchFormSchema(t)),

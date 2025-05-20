@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { TranslationStore } from '@harnessio/ui/views'
+import { TranslationStore } from '@harnessio/ui/context'
 
 import i18n from '../i18n'
 

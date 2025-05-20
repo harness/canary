@@ -6,7 +6,6 @@ import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 const RepoLayout = () => {
   const isMFE = useIsMFE()
@@ -16,14 +15,9 @@ const RepoLayout = () => {
 
   return (
     <>
-      <RepoHeader
-        name={repoData?.identifier ?? ''}
-        isPublic={!!repoData?.is_public}
-        isLoading={isLoadingRepoData}
-        useTranslationStore={useTranslationStore}
-      />
+      <RepoHeader name={repoData?.identifier ?? ''} isPublic={!!repoData?.is_public} isLoading={isLoadingRepoData} />
       <SubHeaderWrapper>
-        <RepoSubheader showPipelinesTab={!isMFE} useTranslationStore={useTranslationStore} />
+        <RepoSubheader showPipelinesTab={!isMFE} />
       </SubHeaderWrapper>
       <Outlet />
     </>

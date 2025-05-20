@@ -1,26 +1,21 @@
 import { FC, useMemo, useState } from 'react'
 
 import { Button, DropdownMenu, Icon, ScrollArea, SearchBox, Tag } from '@/components'
+import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { wrapConditionalObjectElement } from '@/utils'
-import { HandleAddLabelType, LabelValueType, TranslationStore } from '@/views'
+import { HandleAddLabelType, LabelValueType } from '@/views'
 
 import { LabelsWithValueType } from './pull-request-labels-header'
 
 export interface LabelValueSelectorProps {
-  useTranslationStore: () => TranslationStore
   label: LabelsWithValueType
   handleAddOrRemoveLabel: (data: HandleAddLabelType, isSelected: boolean) => void
   onSearchClean: () => void
 }
 
-export const LabelValueSelector: FC<LabelValueSelectorProps> = ({
-  useTranslationStore,
-  label,
-  handleAddOrRemoveLabel,
-  onSearchClean
-}) => {
-  const { t } = useTranslationStore()
+export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleAddOrRemoveLabel, onSearchClean }) => {
+  const { t } = useTranslation()
   const [searchState, setSearchState] = useState('')
 
   const { search, handleSearchChange } = useDebounceSearch({

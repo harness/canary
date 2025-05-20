@@ -1,15 +1,15 @@
+import { useTranslation } from '@/context'
 import { formatNumber } from '@/utils'
-import { ICommitDetailsStore, TranslationStore } from '@/views'
+import { ICommitDetailsStore } from '@/views'
 
 import { CommitChanges } from './commit-changes'
 
 export interface CommitDiffsViewProps {
   useCommitDetailsStore: () => ICommitDetailsStore
-  useTranslationStore: () => TranslationStore
 }
 
-export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsStore, useTranslationStore }) => {
-  const { t } = useTranslationStore()
+export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsStore }) => {
+  const { t } = useTranslation()
   const { diffs, diffStats } = useCommitDetailsStore()
 
   return (
@@ -39,7 +39,6 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
           unchangedPercentage: item.unchangedPercentage,
           isBinary: item.isBinary
         }))}
-        useTranslationStore={useTranslationStore}
         diffMode={2}
       />
     </div>

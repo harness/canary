@@ -2,7 +2,7 @@ import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Avatar, Button, Icon, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
   CommitSelectorListItem,
@@ -12,7 +12,6 @@ import {
   LabelValuesType,
   PullRequestSideBar,
   SandboxLayout,
-  TranslationStore,
   TypesCommit
 } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -63,7 +62,6 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   isBranchSelected: boolean
   setIsBranchSelected: (val: boolean) => void
   prBranchCombinationExists: { number: number; title: string; description: string } | null
-  useTranslationStore: () => TranslationStore
   repoId?: string
   spaceId?: string
   useRepoCommitsStore: () => ICommitSelectorStore
@@ -106,7 +104,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   diffStats,
   isBranchSelected,
   prBranchCombinationExists,
-  useTranslationStore,
   useRepoCommitsStore,
   currentUser,
 
@@ -139,7 +136,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const { navigate } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const formMethods = useForm<CompareFormFields>({
     resolver: zodResolver(pullRequestFormSchema),
@@ -284,7 +281,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               getFormValues={getValues}
               onFormDraftSubmit={onFormDraftSubmit}
               onFormSubmit={onFormSubmit}
-              useTranslationStore={useTranslationStore}
             />
           </Layout.Horizontal>
         )}
@@ -353,7 +349,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                           isLoading={isLoading}
                           onFormDraftSubmit={onFormDraftSubmit}
                           onFormSubmit={onFormSubmit}
-                          useTranslationStore={useTranslationStore}
                           formMethods={formMethods}
                         />
                       </div>
@@ -369,7 +364,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       reviewers={reviewers ?? []}
                       searchQuery={searchReviewersQuery}
                       setSearchQuery={setSearchReviewersQuery}
-                      useTranslationStore={useTranslationStore}
                       labelsList={labelsList}
                       labelsValues={labelsValues}
                       PRLabels={PRLabels}
@@ -420,7 +414,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     diffData={diffData}
                     currentUser={currentUser}
                     diffStats={diffStats}
-                    useTranslationStore={useTranslationStore}
                     jumpToDiff={jumpToDiff}
                     setJumpToDiff={setJumpToDiff}
                   />

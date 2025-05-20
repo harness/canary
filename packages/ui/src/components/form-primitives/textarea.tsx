@@ -93,13 +93,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           )}
 
           {maxCharacters && (
-            <span
-              className={cn('cn-textarea-counter', {
-                'cn-textarea-counter-danger': theme === 'danger',
-                'cn-textarea-counter-disabled': disabled
-              })}
-              role="status"
-            >
+            <span className={cn('cn-textarea-counter', { 'cn-textarea-counter-disabled': disabled })} role="status">
               {counter} / {maxCharacters}
             </span>
           )}

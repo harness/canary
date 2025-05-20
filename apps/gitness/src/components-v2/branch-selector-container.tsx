@@ -5,7 +5,6 @@ import { useFindRepositoryQuery, useListBranchesQuery, useListTagsQuery } from '
 import { BranchData, BranchSelectorListItem, BranchSelectorTab, BranchSelectorV2 } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { transformBranchList } from '../pages-v2/repo/transform-utils/branch-transform'
 import { PathParams } from '../RouteDefinitions'
 import { orderSortDate } from '../types'
@@ -100,7 +99,6 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
 
   return (
     <BranchSelectorV2
-      useTranslationStore={useTranslationStore}
       branchList={branchList}
       tagList={tagList}
       selectedBranchorTag={selectedBranch ?? { name: '', sha: '', default: false }}

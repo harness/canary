@@ -1,5 +1,5 @@
-import { useRouterContext } from '@/context'
-import { ContentLayoutWithSidebar, TranslationStore } from '@/views'
+import { useRouterContext, useTranslation } from '@/context'
+import { ContentLayoutWithSidebar } from '@/views'
 import { TFunction } from 'i18next'
 
 const getNavItems = (t: TFunction) => [
@@ -47,9 +47,9 @@ const getNavItems = (t: TFunction) => [
   // }
 ]
 
-export function RepoSettingsLayout({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) {
+export function RepoSettingsLayout() {
   const { Outlet } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   return (
     <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={100} sidebarViewportClassName="pt-7">

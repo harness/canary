@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 
 import repoSummaryProps from '@subjects/views/repo-summary/repo-summary-props.json'
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { BranchSelectorV2, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/ui/views'
 
@@ -18,7 +18,6 @@ export const RepoEmpty: FC<Partial<RepoSummaryViewProps>> = props => {
       saveDescription={noop}
       handleCreateToken={noop}
       navigateToFile={noop}
-      useTranslationStore={useTranslationStore}
       gitRef=""
       updateRepoError=""
       isEditDialogOpen={false}
@@ -36,7 +35,6 @@ export const RepoEmpty: FC<Partial<RepoSummaryViewProps>> = props => {
           onSelectBranch={noop}
           isBranchOnly={false}
           dynamicWidth={false}
-          useTranslationStore={useTranslationStore}
           setSearchQuery={noop}
         />
       }

@@ -38,12 +38,10 @@ interface PipelineStudioStepFormProps {
 export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Element => {
   const { requestClose, isDrawer = false } = props
   const { Header, Title, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
-  const { setFormEntity, setRightDrawer, useTemplateListStore, useTranslationStore } = useUnifiedPipelineStudioContext()
+  const { setFormEntity, setRightDrawer, useTemplateListStore } = useUnifiedPipelineStudioContext()
   const { xNextPage, xPrevPage, setPage, templates, templatesError } = useTemplateListStore()
 
   const [query, setQuery] = useState('')
-
-  const { t } = useTranslationStore()
 
   const templatesSectionRef = useRef<HTMLDivElement | null>(null)
 
@@ -136,7 +134,6 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
               hasPrevious={xPrevPage > 0}
               onPrevious={onPreviousPage}
               onNext={onNextPage}
-              t={t}
             />
           </>
         )}

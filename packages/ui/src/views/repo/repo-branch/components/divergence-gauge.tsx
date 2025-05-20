@@ -1,6 +1,6 @@
 import { Progress } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@/utils/cn'
-import { TranslationStore } from '@/views'
 
 interface GaugeProps {
   behindAhead: {
@@ -8,11 +8,10 @@ interface GaugeProps {
     ahead?: number
   }
   className?: string
-  useTranslationStore: () => TranslationStore
 }
 
-export const DivergenceGauge = ({ behindAhead, className, useTranslationStore }: GaugeProps) => {
-  const { t } = useTranslationStore()
+export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
+  const { t } = useTranslation()
   const total = (behindAhead.behind ?? 0) + (behindAhead.ahead ?? 0)
   const getPercentage = (value: number) => (total > 0 ? (value / total) * 100 : 0)
   const behindPercentage = getPercentage(behindAhead.behind ?? 0)

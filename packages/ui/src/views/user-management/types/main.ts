@@ -1,4 +1,4 @@
-import { IDataHandlers, TranslationStore } from '@/views'
+import { IDataHandlers } from '@/views'
 import { IErrorStates, ILoadingStates } from '@/views/user-management/providers/state-provider/types'
 import { IAdminListUsersStore } from '@/views/user-management/providers/store-provider'
 
@@ -15,7 +15,6 @@ export interface UsersProps {
 
 export interface IUserManagementPageProps {
   useAdminListUsersStore: () => IAdminListUsersStore
-  useTranslationStore: () => TranslationStore
   handlers: IDataHandlers
   loadingStates: ILoadingStates
   errorStates: IErrorStates

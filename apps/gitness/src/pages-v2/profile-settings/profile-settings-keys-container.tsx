@@ -28,7 +28,6 @@ import {
   TokensList
 } from '@harnessio/ui/views'
 
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useProfileSettingsStore } from './stores/profile-settings-store'
 
 const CONVERT_DAYS_TO_NANO_SECONDS = 24 * 60 * 60 * 1000 * 1000000
@@ -214,7 +213,6 @@ export const SettingsProfileKeysPage = () => {
         openAlertDeleteDialog={openAlertDeleteDialog}
         error={apiError}
         headers={headers}
-        useTranslationStore={useTranslationStore}
         isLoadingTokenList={isLoadingTokenList}
         isLoadingKeysList={isLoadingPublicKeys}
       />
@@ -225,14 +223,12 @@ export const SettingsProfileKeysPage = () => {
         error={apiError}
         isLoading={createTokenMutation.isLoading}
         useProfileSettingsStore={useProfileSettingsStore}
-        useTranslationStore={useTranslationStore}
       />
       <ProfileSettingsKeysCreateDialog
         open={saveSshKeyDialog}
         onClose={closeSshKeyDialog}
         handleCreateSshKey={handleCreateSshKey}
         error={apiError}
-        useTranslationStore={useTranslationStore}
       />
       <DeleteAlertDialog
         open={isAlertDeleteDialogOpen}
@@ -240,7 +236,6 @@ export const SettingsProfileKeysPage = () => {
         deleteFn={alertParams?.type === 'key' ? handleDeletePublicKey : handleDeleteToken}
         error={apiError}
         isLoading={alertParams?.type === 'key' ? deletePublicKeyMutation.isLoading : deleteTokenMutation.isLoading}
-        useTranslationStore={useTranslationStore}
         {...alertParams}
       />
     </>

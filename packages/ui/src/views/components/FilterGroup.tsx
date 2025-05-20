@@ -1,11 +1,11 @@
 import { ComponentProps, ReactNode, useMemo, useRef, useState } from 'react'
 
 import { ListActions, SearchBox } from '@/components'
+import { useTranslation } from '@/context'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
 import { FilterOptionConfig } from '@components/filters/types'
 import { Sort, SortValue } from '@components/sorts'
 import ListControlBar from '@views/repo/components/list-control-bar'
-import { TFunction } from 'i18next'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
 
@@ -20,7 +20,6 @@ interface FilterGroupProps<
   searchInput: string
   sortConfig: Omit<ComponentProps<typeof Sort.Root>, 'children'>
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  t: TFunction
   filterOptions: FilterOptionConfig<V, CustomValue>[]
   headerAction?: ReactNode
 }
@@ -37,11 +36,12 @@ const FilterGroup = <
     onFilterValueChange,
     searchInput,
     handleInputChange,
-    t,
     filterOptions,
     sortConfig,
     handleFilterOpen
   } = props
+
+  const { t } = useTranslation()
 
   const FilterHandler = useMemo(() => createFilters<T>(), [])
   const filtersRef = useRef<FilterRefType<T> | null>(null)
@@ -153,7 +153,6 @@ const FilterGroup = <
             setOpenedFilter={handleSetOpenedFilter}
             filterOptions={filterOptions}
             selectedFiltersCnt={selectedFiltersCnt}
-            t={t}
           />
         </>
       </Sort.Root>

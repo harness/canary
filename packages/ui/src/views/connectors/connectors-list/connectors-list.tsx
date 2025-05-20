@@ -12,8 +12,8 @@ import {
   Text,
   Tooltip
 } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
-import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorTestConnectionDialog } from '../components/connector-test-connection-dialog'
@@ -26,15 +26,8 @@ const Title = ({ title }: { title: string }): JSX.Element => (
   </span>
 )
 
-const ConnectivityStatus = ({
-  item,
-  useTranslationStore
-}: {
-  item: ConnectorListItem
-  connectorDetailUrl: string
-  useTranslationStore: () => TranslationStore
-}): JSX.Element => {
-  const { t } = useTranslationStore()
+const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetailUrl: string }): JSX.Element => {
+  const { t } = useTranslation()
   const isSuccess = item?.status?.status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
   const [errorConnectionOpen, setErrorConnectionOpen] = useState(false)
 
@@ -74,7 +67,6 @@ const ConnectivityStatus = ({
         errorMessage={item?.status?.errorSummary}
         isOpen={errorConnectionOpen}
         onClose={() => setErrorConnectionOpen(false)}
-        useTranslationStore={useTranslationStore}
         errorData={item.status?.errors ? { errors: item.status?.errors } : undefined}
       />
     </>
@@ -83,13 +75,12 @@ const ConnectivityStatus = ({
 
 export function ConnectorsList({
   connectors,
-  useTranslationStore,
   isLoading,
   toConnectorDetails,
   onDeleteConnector,
   onToggleFavoriteConnector
 }: ConnectorListProps): JSX.Element {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />
@@ -153,7 +144,6 @@ export function ConnectorsList({
                     <ConnectivityStatus
                       item={{ name, identifier, type, spec, status, lastModifiedAt }}
                       connectorDetailUrl={connectorDetailUrl}
-                      useTranslationStore={useTranslationStore}
                     />
                   ) : null}
                 </Table.Cell>

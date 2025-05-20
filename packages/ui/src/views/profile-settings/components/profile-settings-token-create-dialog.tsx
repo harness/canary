@@ -2,8 +2,8 @@ import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Alert, Button, CopyButton, Dialog, Fieldset, FormInput, FormWrapper, Select } from '@/components'
+import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
 import { ApiErrorType, IProfileSettingsStore, TokenFormType } from '../types'
@@ -14,7 +14,6 @@ interface ProfileSettingsTokenCreateDialogProps {
   handleCreateToken: (data: TokenFormType) => void
   error: { type: string; message: string } | null
   isLoading: boolean
-  useTranslationStore: () => TranslationStore
   useProfileSettingsStore: () => IProfileSettingsStore
 }
 
@@ -38,11 +37,10 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
   handleCreateToken,
   error,
   isLoading,
-  useTranslationStore,
   useProfileSettingsStore
 }) => {
   const { createdTokenData } = useProfileSettingsStore()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const formMethods = useForm<TokenFormType>({
     resolver: zodResolver(tokenCreateFormSchema),
     mode: 'onChange',

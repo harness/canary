@@ -52,7 +52,6 @@ import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
 import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studio/unified-pipeline-studio'
-import { useTranslationStore } from '@utils/viewUtils'
 
 import { ChatEmptyPreviewWrapper, ChatPreviewWrapper, Tooltip } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
@@ -270,7 +269,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         element: (
           <RepoViewWrapper>
             <RepoSettingsViewWrapper>
-              <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="rules" />
+              <NotFoundPage pageTypeText="rules" />
             </RepoSettingsViewWrapper>
           </RepoViewWrapper>
         )

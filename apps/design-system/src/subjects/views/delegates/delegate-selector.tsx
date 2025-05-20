@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { useTranslationStore } from '@utils/viewUtils'
 import { defaultTo } from 'lodash-es'
 
 import { Drawer, Link } from '@harnessio/ui/components'
@@ -62,7 +61,6 @@ const DelegateSelectorDrawer = ({ open, setOpen, preSelectedTags, onSubmit, disa
       <DelegateSelectorForm
         delegates={delegatesData}
         tagsList={mockTagsList}
-        useTranslationStore={useTranslationStore}
         isLoading={false}
         onFormSubmit={onSubmit}
         onBack={() => setOpen(false)}

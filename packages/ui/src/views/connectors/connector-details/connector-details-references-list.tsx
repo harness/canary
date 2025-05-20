@@ -1,4 +1,5 @@
 import { NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 
 import { ConnectorReferenceItem, ConnectorReferenceListProps } from './types'
@@ -16,12 +17,11 @@ const Description = ({ description }: { description: string }): JSX.Element => (
 
 const ConnectorDetailsReferenceList = ({
   entities,
-  useTranslationStore,
   isLoading,
   toEntity,
   toScope
 }: ConnectorReferenceListProps): JSX.Element => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const content = entities?.content
   if (isLoading) {
     return <SkeletonList />

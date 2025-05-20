@@ -9,7 +9,6 @@ import {
 } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { BranchSelectorContainer } from './branch-selector-container'
 
 interface CreateBranchDialogProps {
@@ -78,7 +77,6 @@ export const CreateBranchDialog = ({
 
   return (
     <CreateBranchDialogComp
-      useTranslationStore={useTranslationStore}
       open={open}
       onClose={onClose}
       selectedBranchOrTag={selectedBranchOrTag}

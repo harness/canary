@@ -2,8 +2,8 @@ import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper } from '@/components'
-import { useRouterContext } from '@/context'
-import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLayout, TranslationStore } from '@/views'
+import { useRouterContext, useTranslation } from '@/context'
+import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -29,7 +29,6 @@ interface RepoBranchSettingsRulesPageProps {
   apiErrors?: BranchSettingsErrors
   useRepoRulesStore: () => IRepoStore | IProjectRulesStore
   useBranchRulesStore: () => IBranchRulesStore
-  useTranslationStore: () => TranslationStore
   handleCheckboxChange: (id: string, checked: boolean) => void
   handleSubmenuChange: (id: string, subOptionId: string, checked: boolean) => void
   handleSelectChangeForRule: (id: string, selectedOption: string) => void
@@ -45,7 +44,6 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   isLoading,
   handleRuleUpdate,
   useRepoRulesStore,
-  useTranslationStore,
   apiErrors,
   useBranchRulesStore,
   handleCheckboxChange,
@@ -59,7 +57,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   projectScope = false
 }) => {
   const { NavLink } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { presetRuleData, principals, recentStatusChecks } = useRepoRulesStore()
   const formMethods = useForm<RepoBranchSettingsFormFields>({
     resolver: zodResolver(repoBranchSettingsFormSchema),
@@ -126,16 +124,16 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
   return (
     <SandboxLayout.Content className={`max-w-[570px] px-0 ${projectScope ? 'mx-auto' : ''}`}>
-      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">
+      <h1 className="text-cn-foreground-1 mb-10 text-2xl font-medium">
         {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
       </h1>
 
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-        <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} t={t} />
+        <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />
 
-        <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} t={t} />
+        <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} />
 
-        <BranchSettingsRuleDescriptionField register={register} errors={errors} t={t} />
+        <BranchSettingsRuleDescriptionField register={register} errors={errors} />
 
         <div className="flex flex-col gap-y-11">
           <BranchSettingsRuleTargetPatternsField
@@ -143,7 +141,6 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             setValue={setValue}
             register={register}
             errors={errors}
-            t={t}
           />
 
           <BranchSettingsRuleBypassListField
@@ -152,7 +149,6 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             setValue={setValue}
             watch={watch}
             bypassOptions={principals}
-            t={t}
             setPrincipalsSearchQuery={setPrincipalsSearchQuery}
             principalsSearchQuery={principalsSearchQuery}
           />
@@ -164,7 +160,6 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             handleSubmenuChange={handleSubmenuChange}
             handleSelectChangeForRule={handleSelectChangeForRule}
             handleInputChange={handleInputChange}
-            t={t}
           />
         </div>
         <Fieldset className="mt-5">

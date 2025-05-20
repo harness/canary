@@ -9,7 +9,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { useRepoStore } from './stores/repo-list-store'
@@ -103,7 +102,6 @@ export default function ReposListPage() {
   return (
     <SandboxRepoListPage
       useRepoStore={useRepoStore}
-      useTranslationStore={useTranslationStore}
       isLoading={isFetching}
       isError={isError}
       errorMessage={error?.message}

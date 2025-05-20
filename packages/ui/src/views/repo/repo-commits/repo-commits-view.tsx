@@ -1,7 +1,8 @@
 import { FC, useCallback } from 'react'
 
 import { NoData, Pagination, SkeletonList, Spacer, Text } from '@/components'
-import { CommitsList, SandboxLayout, TranslationStore, TypesCommit } from '@/views'
+import { useTranslation } from '@/context'
+import { CommitsList, SandboxLayout, TypesCommit } from '@/views'
 
 export interface RepoCommitsViewProps {
   isFetchingCommits: boolean
@@ -10,7 +11,6 @@ export interface RepoCommitsViewProps {
   xPrevPage: number
   page: number
   setPage: (page: number) => void
-  useTranslationStore: () => TranslationStore
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
   renderProp: () => JSX.Element | null
@@ -23,12 +23,11 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   xPrevPage,
   page,
   setPage,
-  useTranslationStore,
   toCommitDetails,
   toCode,
   renderProp: BranchSelectorContainer
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const isDirtyList = page !== 1
 
@@ -104,7 +103,6 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                   hasPrevious={xPrevPage > 0}
                   getPrevPageLink={getPrevPageLink}
                   getNextPageLink={getNextPageLink}
-                  t={t}
                 />
               </>
             )}

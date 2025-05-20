@@ -5,7 +5,6 @@ import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@har
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { getRepoProviderConfig, PROVIDER_TYPE_MAP } from './constants/import-providers-map'
 import { useRepoStore } from './stores/repo-list-store'
 
@@ -58,7 +57,6 @@ export const ImportRepo = () => {
         onFormCancel={onCancel}
         isLoading={isLoading}
         apiErrorsValue={error?.message?.toString()}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

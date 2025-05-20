@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
 
-import { TranslationStore } from '@/views'
 import { z } from 'zod'
 
 import { PullRequestType } from '../pull-request/pull-request.types'
@@ -47,7 +46,6 @@ export interface BranchListPageProps extends Partial<RoutingProps> {
   isLoading: boolean
   branches: BranchProps[]
   defaultBranch?: string
-  useTranslationStore: () => TranslationStore
   setCreateBranchDialogOpen: (isOpen: boolean) => void
   handleResetFiltersAndPages: () => void
   onDeleteBranch: (branchName: string) => void
@@ -57,7 +55,6 @@ export interface BranchListPageProps extends Partial<RoutingProps> {
 export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   isLoading: boolean
   useRepoBranchesStore: () => IBranchSelectorStore
-  useTranslationStore: () => TranslationStore
   isCreateBranchDialogOpen: boolean
   setCreateBranchDialogOpen: (isOpen: boolean) => void
   onSubmit: (formValues: CreateBranchFormFields) => Promise<void>
@@ -80,7 +77,6 @@ export interface CreateBranchDialogProps {
   onSubmit: (formValues: CreateBranchFormFields) => Promise<void>
   error?: string
   isCreatingBranch?: boolean
-  useTranslationStore: () => TranslationStore
   selectedBranchOrTag: BranchSelectorListItem | null
   renderProp: React.ReactNode
   prefilledName?: string

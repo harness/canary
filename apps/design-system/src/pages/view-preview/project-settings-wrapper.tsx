@@ -1,8 +1,6 @@
 import { FC, HTMLAttributes, PropsWithChildren } from 'react'
 import { Route } from 'react-router-dom'
 
-import { useTranslationStore } from '@utils/viewUtils'
-
 import { ProjectSettingsTabNav, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import RootViewWrapper from './root-view-wrapper'
@@ -10,7 +8,7 @@ import RootViewWrapper from './root-view-wrapper'
 const Layout = () => {
   return (
     <SubHeaderWrapper>
-      <ProjectSettingsTabNav useTranslationStore={useTranslationStore} />
+      <ProjectSettingsTabNav />
     </SubHeaderWrapper>
   )
 }

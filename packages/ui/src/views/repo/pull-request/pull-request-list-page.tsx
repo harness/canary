@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Button, ListActions, NoData, Pagination, SearchInput, SkeletonList, Spacer, StackedList } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
 import { CustomFilterOptionConfig, FilterFieldTypes } from '@components/filters/types'
@@ -28,7 +28,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   defaultSelectedAuthorError,
   setPrincipalsSearchQuery,
   principalsSearchQuery,
-  useTranslationStore,
   principalData,
   defaultSelectedAuthor,
   isPrincipalsLoading,
@@ -40,7 +39,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
     usePullRequestListStore()
 
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const { labels, values: labelValueOptions, isLoading: isLabelsLoading } = useLabelsStore()
 
@@ -169,7 +168,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
     return (
       <PullRequestListContent
-        useTranslationStore={useTranslationStore}
         repoId={repoId}
         spaceId={spaceId}
         pullRequests={pullRequests}
@@ -294,13 +292,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               setOpenedFilter={setOpenedFilter}
               selectedFiltersCnt={selectedFiltersCnt}
               filterOptions={PR_FILTER_OPTIONS}
-              t={t}
             />
             <Spacer size={5} />
           </PRListFilterHandler>
         )}
         {renderListContent()}
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

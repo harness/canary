@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { useRepoRulesStore } from '@subjects/views/repo-general-settings/use-repo-rules-store'
-import { useTranslationStore } from '@utils/viewUtils'
 
 import { SkeletonForm } from '@harnessio/ui/components'
 import { RepoBranchSettingsRulesPage } from '@harnessio/ui/views'
@@ -52,7 +51,6 @@ export const RepoCreateRule = () => {
       handleSelectChangeForRule={() => {}}
       handleInputChange={() => {}}
       handleInitialRules={() => {}}
-      useTranslationStore={useTranslationStore}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}
     />

@@ -12,8 +12,9 @@ import {
   StatusBadge,
   Text
 } from '@/components'
+import { useTranslation } from '@/context'
 import { formatNumber } from '@/utils'
-import { DiffModeOptions, InViewDiffRenderer, jumpToFile, TranslationStore, TypesDiffStats } from '@/views'
+import { DiffModeOptions, InViewDiffRenderer, jumpToFile, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { chunk } from 'lodash-es'
 
@@ -54,7 +55,6 @@ interface PullRequestAccordionProps {
   data?: string
   diffMode: DiffModeEnum
   currentUser?: string
-  useTranslationStore: () => TranslationStore
   openItems: string[]
   onToggle: () => void
   setCollapsed: (val: boolean) => void
@@ -64,12 +64,11 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
   header,
   diffMode,
   currentUser,
-  useTranslationStore,
   openItems,
   onToggle,
   setCollapsed
 }) => {
-  const { t: _ts } = useTranslationStore()
+  const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
   const [showHiddenDiff, setShowHiddenDiff] = useState(false)
   const startingLine = useMemo(
@@ -142,7 +141,6 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
                       removedLines={header?.removedLines}
                       deleted={header?.isDeleted}
                       unchangedPercentage={header?.unchangedPercentage}
-                      useTranslationStore={useTranslationStore}
                       collapseDiff={() => setCollapsed(true)}
                     />
                   </>
@@ -160,7 +158,6 @@ interface PullRequestCompareDiffListProps {
   diffStats: TypesDiffStats
   diffData: HeaderProps[]
   currentUser?: string
-  useTranslationStore: () => TranslationStore
   jumpToDiff?: string
   setJumpToDiff: (fileName: string) => void
 }
@@ -169,11 +166,10 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   diffStats,
   diffData,
   currentUser,
-  useTranslationStore,
   jumpToDiff,
   setJumpToDiff
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
@@ -302,7 +298,6 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                       currentUser={currentUser}
                       data={item?.data}
                       diffMode={diffMode}
-                      useTranslationStore={useTranslationStore}
                       openItems={openItems}
                       onToggle={() => toggleOpen(item.text)}
                       setCollapsed={val => setCollapsed(item.text, val)}

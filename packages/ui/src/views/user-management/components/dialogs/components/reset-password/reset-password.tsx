@@ -1,4 +1,5 @@
 import { Button, ButtonGroup, CopyButton, Dialog, Input } from '@/components'
+import { useTranslation } from '@/context'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { useStates } from '@views/user-management/providers/state-provider'
 
@@ -9,8 +10,8 @@ interface ResetPasswordDialogProps {
 }
 
 export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: ResetPasswordDialogProps) {
-  const { useTranslationStore, useAdminListUsersStore } = useUserManagementStore()
-  const { t } = useTranslationStore()
+  const { useAdminListUsersStore } = useUserManagementStore()
+  const { t } = useTranslation()
   const { user, generatePassword, setGeneratePassword, password } = useAdminListUsersStore()
 
   const { loadingStates, errorStates } = useStates()

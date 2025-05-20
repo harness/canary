@@ -1,18 +1,18 @@
 import { useMemo } from 'react'
 
 import { Avatar, DropdownMenu, Icon, MoreActionsTooltip, Table } from '@/components'
-import { MembersProps, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { MembersProps } from '@/views'
 import { getRolesData } from '@views/project/project-members/constants'
 
 interface MembersListProps {
   members: MembersProps[]
   onDelete: (member: string) => void
   onEdit: (member: MembersProps) => void
-  useTranslationStore: () => TranslationStore
 }
 
-export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: MembersListProps) => {
-  const { t } = useTranslationStore()
+export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => {
+  const { t } = useTranslation()
 
   const roleOptions = useMemo(() => getRolesData(t), [t])
 

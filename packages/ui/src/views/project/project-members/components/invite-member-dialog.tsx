@@ -2,6 +2,7 @@ import { FC, forwardRef, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Alert, Avatar, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Select } from '@/components'
+import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -38,14 +39,13 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
   open,
   onClose,
   onSubmit,
-  useTranslationStore,
   isInvitingMember,
   principals,
   error,
   setPrincipalsSearchQuery,
   principalsSearchQuery
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   /**
    * Since the select component works only with strings,
    * we need to construct the full data model based on the selected item.

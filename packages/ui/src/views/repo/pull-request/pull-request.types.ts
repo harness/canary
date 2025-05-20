@@ -2,7 +2,6 @@ import { PrincipalType, UsererrorError } from '@/types'
 import { ColorsEnum, ILabelsStore, LabelType } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
-import { TranslationStore } from '../repo-list/types'
 import { LabelsValue } from './components/labels'
 
 export interface CommitSelectorListItem {
@@ -16,7 +15,6 @@ export interface CommitSelectorDropdownProps {
   onSelectCommit?: (branchTag: CommitSelectorListItem) => void
   repoId?: string
   spaceId?: string
-  useTranslationStore: () => TranslationStore
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
 }
@@ -240,7 +238,6 @@ export interface PullRequestPageProps {
   principalData?: Partial<PrincipalType>[]
   setPrincipalsSearchQuery?: (query: string) => void
   onFilterChange?: (filterValues: PRListFilters) => void
-  useTranslationStore: () => TranslationStore
   isLoading?: boolean
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void

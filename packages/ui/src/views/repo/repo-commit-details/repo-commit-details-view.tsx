@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
 import { Avatar, Button, CommitCopyActions, StatusBadge, Tag } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
-import { ICommitDetailsStore, SandboxLayout, TranslationStore } from '@/views'
+import { ICommitDetailsStore, SandboxLayout } from '@/views'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -11,19 +11,17 @@ interface RoutingProps {
 }
 export interface RepoCommitDetailsViewProps extends RoutingProps {
   useCommitDetailsStore: () => ICommitDetailsStore
-  useTranslationStore: () => TranslationStore
   showSidebar?: boolean
 }
 
 export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   useCommitDetailsStore,
-  useTranslationStore,
   showSidebar = true,
   toCommitDetails,
   toCode
 }) => {
   const { Outlet, Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { commitData, isVerified } = useCommitDetailsStore()
 
   return (

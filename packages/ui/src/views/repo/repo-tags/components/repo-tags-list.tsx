@@ -1,11 +1,11 @@
 import { FC } from 'react'
 
 import { Avatar, CommitCopyActions, MoreActionsTooltip, NoData, SkeletonTable, Table, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
-import { BranchSelectorListItem, CommitTagType, RepoTagsStore, TranslationStore } from '@/views'
+import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'
 
 interface RepoTagsListProps {
-  useTranslationStore: () => TranslationStore
   onDeleteTag: (tagName: string) => void
   useRepoTagsStore: () => RepoTagsStore
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -17,7 +17,6 @@ interface RepoTagsListProps {
 }
 
 export const RepoTagsList: FC<RepoTagsListProps> = ({
-  useTranslationStore,
   useRepoTagsStore,
   toCommitDetails,
   isLoading,
@@ -27,7 +26,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   onDeleteTag,
   onOpenCreateBranchDialog
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { tags: tagsList } = useRepoTagsStore()
 
   const getTableActions = (tag: CommitTagType) => [

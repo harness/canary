@@ -14,7 +14,8 @@ import {
   Spacer,
   Text
 } from '@/components'
-import { DelegateConnectivityList, DelegateItem, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { DelegateConnectivityList, DelegateItem } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RadioSelect, RadioSelectOption } from '@views/components/RadioSelect'
 import { z } from 'zod'
@@ -66,7 +67,6 @@ export type DelegateSelectorFormFields = z.infer<typeof delegateSelectorFormSche
 export interface DelegateSelectorFormProps {
   delegates: DelegateItem[]
   tagsList: string[]
-  useTranslationStore: () => TranslationStore
   onFormSubmit: (data: DelegateSelectorFormFields) => void
   onBack: () => void
   apiError?: string
@@ -81,7 +81,6 @@ export interface DelegateSelectorFormProps {
 export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   delegates,
   tagsList,
-  useTranslationStore,
   onFormSubmit,
   onBack,
   apiError = null,
@@ -92,7 +91,8 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   disableAnyDelegate,
   isDrawer = false
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
+
   const [searchTag, setSearchTag] = useState('')
   const [matchedDelegates, setMatchedDelegates] = useState(0)
 
@@ -205,7 +205,6 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
               </p>
               <DelegateConnectivityList
                 delegates={delegates}
-                useTranslationStore={useTranslationStore}
                 isLoading={isLoading}
                 selectedTags={selectedTags?.map(tag => tag.id)}
                 isDelegateSelected={isDelegateSelected}

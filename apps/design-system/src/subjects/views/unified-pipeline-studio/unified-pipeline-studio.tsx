@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { Drawer } from '@harnessio/ui/components'
 import { UnifiedPipelineStudio, UnifiedPipelineStudioProps } from '@harnessio/ui/views'
@@ -28,7 +28,6 @@ const PipelineStudioViewWrapper = () => {
   return (
     <>
       <UnifiedPipelineStudio
-        useTranslationStore={useTranslationStore}
         useTemplateListStore={useTemplateListStore}
         yamlRevision={yamlRevision}
         onYamlRevisionChange={onYamlRevisionChange}

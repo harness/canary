@@ -1,11 +1,9 @@
 import { NoData } from '@/components'
+import { useTranslation } from '@/context'
 import { useSearch } from '@/views/user-management/providers/search-provider'
-import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
 export const NoSearchResults = () => {
-  const { useTranslationStore } = useUserManagementStore()
-
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const { handleResetSearch } = useSearch()
 

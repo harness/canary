@@ -1,14 +1,14 @@
 import { useMemo, useRef, useState } from 'react'
 
 import { Button, DropdownMenu, Icon, Link, LinkProps, ScrollArea, SearchInput, Tag } from '@/components'
+import { useTranslation } from '@/context'
 import {
   HandleAddLabelType,
   ILabelType,
   LabelAssignmentType,
   LabelType,
   LabelValuesType,
-  LabelValueType,
-  TranslationStore
+  LabelValueType
 } from '@/views'
 import { debounce } from 'lodash-es'
 
@@ -36,7 +36,6 @@ interface LabelsHeaderProps {
   removeLabel?: (id: number) => void
   searchQuery?: string
   setSearchQuery?: (query: string) => void
-  useTranslationStore: () => TranslationStore
 }
 
 export const LabelsHeader = ({
@@ -47,10 +46,9 @@ export const LabelsHeader = ({
   editLabelsProps,
   removeLabel,
   searchQuery,
-  setSearchQuery,
-  useTranslationStore
+  setSearchQuery
 }: LabelsHeaderProps) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [labelWithValuesToShow, setLabelWithValuesToShow] = useState<LabelsWithValueType | null>(null)
 
   const handleSearchQuery = (query: string) => {
@@ -123,7 +121,6 @@ export const LabelsHeader = ({
         <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
           {labelWithValuesToShow && (
             <LabelValueSelector
-              useTranslationStore={useTranslationStore}
               label={labelWithValuesToShow}
               handleAddOrRemoveLabel={handleAddOrRemoveLabel}
               onSearchClean={handleCloseValuesView}

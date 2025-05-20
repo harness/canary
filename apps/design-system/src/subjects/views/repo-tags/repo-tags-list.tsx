@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { asyncNoop, noop, useTranslationStore } from '@utils/viewUtils.ts'
+import { asyncNoop, noop } from '@utils/viewUtils.ts'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import {
@@ -42,7 +42,6 @@ export const RepoTagsList = () => {
     <>
       <RepoTagsListView
         isLoading={false}
-        useTranslationStore={useTranslationStore}
         openCreateBranchDialog={(selectedTagInList: BranchSelectorListItem) => {
           setOpenCreateBranchDialog(true)
           setSelectedTagInList(selectedTagInList)
@@ -56,7 +55,6 @@ export const RepoTagsList = () => {
         openCreateTagDialog={() => setOpenCreateTagDialog(true)}
       />
       <CreateTagDialog
-        useTranslationStore={useTranslationStore}
         open={openCreateTagDialog}
         onClose={() => setOpenCreateTagDialog(false)}
         onSubmit={noop}
@@ -65,7 +63,6 @@ export const RepoTagsList = () => {
         selectedBranchOrTag={null}
         branchSelectorRenderer={() => (
           <BranchSelectorV2
-            useTranslationStore={useTranslationStore}
             branchList={branches}
             tagList={tags}
             selectedBranchorTag={branches[0]}
@@ -80,7 +77,6 @@ export const RepoTagsList = () => {
         )}
       />
       <CreateBranchDialog
-        useTranslationStore={useTranslationStore}
         open={openCreateBranchDialog}
         onClose={() => setOpenCreateBranchDialog(false)}
         selectedBranchOrTag={selectedTagInList}
@@ -89,7 +85,6 @@ export const RepoTagsList = () => {
         error=""
         renderProp={() => (
           <BranchSelectorV2
-            useTranslationStore={useTranslationStore}
             branchList={branches}
             tagList={tags}
             selectedBranchorTag={selectedTagInList ?? { name: '', sha: '', default: false }}
@@ -110,7 +105,6 @@ export const RepoTagsList = () => {
         deleteFn={noop}
         type="tag"
         isLoading={false}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

@@ -6,7 +6,6 @@ import { RepoCommitDetailsView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useCommitDetailsStore } from './stores/commit-details-store'
 
@@ -32,7 +31,6 @@ export default function RepoCommitDetailsPage({ showSidebar = true }: { showSide
       toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
       toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
       useCommitDetailsStore={useCommitDetailsStore}
-      useTranslationStore={useTranslationStore}
       showSidebar={showSidebar}
     />
   )

@@ -1,6 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
 import { Button, ListActions, Pagination, SearchBox, Spacer } from '@/components'
+import { useTranslation } from '@/context'
 import { RepoTagsListViewProps, SandboxLayout } from '@/views'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
@@ -8,7 +9,6 @@ import { cn } from '@utils/cn'
 import { RepoTagsList } from './components/repo-tags-list'
 
 export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
-  useTranslationStore,
   isLoading,
   openCreateBranchDialog,
   openCreateTagDialog,
@@ -18,7 +18,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   useRepoTagsStore,
   toCommitDetails
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { tags: tagsList, page, xNextPage, xPrevPage, setPage } = useRepoTagsStore()
 
   const { search, handleSearchChange } = useDebounceSearch({
@@ -78,7 +78,6 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
 
         <RepoTagsList
           onDeleteTag={onDeleteTag}
-          useTranslationStore={useTranslationStore}
           useRepoTagsStore={useRepoTagsStore}
           toCommitDetails={toCommitDetails}
           onOpenCreateBranchDialog={openCreateBranchDialog}
@@ -97,7 +96,6 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
             hasPrevious={xPrevPage > 0}
             getNextPageLink={getNextPageLink}
             getPrevPageLink={getPrevPageLink}
-            t={t}
           />
         )}
       </SandboxLayout.Content>

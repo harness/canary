@@ -10,7 +10,6 @@ import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 
 export const CreateRepo = () => {
@@ -64,7 +63,6 @@ export const CreateRepo = () => {
         isSuccess={isSuccess}
         gitIgnoreOptions={gitIgnoreOptions}
         licenseOptions={licenseOptions}
-        useTranslationStore={useTranslationStore}
         apiError={error?.message?.toString()}
       />
     </>

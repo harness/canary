@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
 import { useMatches } from 'react-router-dom'
 
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { useTranslation } from '@harnessio/ui/context'
+
 import { CustomHandle } from '../routing/types'
 
 const usePageTitle = () => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const matches = useMatches()
 
   useEffect(() => {

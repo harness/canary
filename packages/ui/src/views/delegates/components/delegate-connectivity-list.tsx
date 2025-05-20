@@ -1,4 +1,5 @@
 import { Icon, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
 import { defaultTo } from 'lodash-es'
@@ -11,12 +12,11 @@ const Title = ({ title }: { title: string }): JSX.Element => (
 
 export function DelegateConnectivityList({
   delegates,
-  useTranslationStore,
   isLoading,
   selectedTags,
   isDelegateSelected
 }: DelegateConnectivityListProps): JSX.Element {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />

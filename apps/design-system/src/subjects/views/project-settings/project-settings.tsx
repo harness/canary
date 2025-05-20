@@ -1,5 +1,3 @@
-import { useTranslationStore } from '@utils/viewUtils'
-
 import { ProjectSettingsGeneralPage } from '@harnessio/ui/views'
 
 export const ProjectSettingsView = () => {
@@ -10,7 +8,6 @@ export const ProjectSettingsView = () => {
       isUpdateSuccess={false}
       updateError={null}
       setOpenDeleteDialog={() => {}}
-      useTranslationStore={useTranslationStore}
     />
   )
 }

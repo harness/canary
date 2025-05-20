@@ -3,7 +3,6 @@ import { useCallback, useState } from 'react'
 import { Button, Icon, Separator, StatusBadge, Tag } from '@/components'
 import { useRouterContext } from '@/context'
 import { timeAgo } from '@/utils'
-import { TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 
 import { IconType } from '../pull-request.types'
@@ -28,7 +27,6 @@ interface PullRequestTitleProps {
     description?: string
   }
   updateTitle: (title: string, description: string) => void
-  useTranslationStore: () => TranslationStore
 }
 
 export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
@@ -48,8 +46,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
     repoId,
     description
   },
-  updateTitle,
-  useTranslationStore
+  updateTitle
 }) => {
   const { Link } = useRouterContext()
   const [isEditing, setIsEditing] = useState(false)
@@ -124,7 +121,6 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         onSubmit={handleSubmit}
         initialTitle={title || ''}
         initialDescription={description || ''}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

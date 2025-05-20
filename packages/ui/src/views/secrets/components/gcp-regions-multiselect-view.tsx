@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 import { Alert, MultiSelect, SkeletonList } from '@/components'
-import { TranslationStore } from '@views/repo'
 
 export interface GcpRegionsMultiSelectProps {
   value?: string | string[]
@@ -10,21 +9,11 @@ export interface GcpRegionsMultiSelectProps {
   regionsOptions: Array<{ id: string; label: string }>
   isLoading?: boolean
   error?: string
-  useTranslationStore: () => TranslationStore
 }
 
 export function GcpRegionsMultiSelect(props: GcpRegionsMultiSelectProps): React.ReactElement {
-  const {
-    value,
-    onChange,
-    placeholder = 'Select regions',
-    regionsOptions,
-    isLoading,
-    error,
-    useTranslationStore
-  } = props
+  const { value, onChange, placeholder = 'Select regions', regionsOptions, isLoading, error } = props
   const [selectedItems, setSelectedItems] = useState<Array<{ id: string; label: string }>>([])
-  const { t } = useTranslationStore()
 
   useEffect(() => {
     if (value) {
@@ -68,7 +57,6 @@ export function GcpRegionsMultiSelect(props: GcpRegionsMultiSelectProps): React.
           options={regionsOptions}
           handleChange={handleChange}
           placeholder={placeholder}
-          t={t}
         />
       )}
     </>

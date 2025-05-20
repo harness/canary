@@ -2,7 +2,7 @@ import { FC, HTMLAttributes, PropsWithChildren } from 'react'
 
 import { repoFilesStore } from '@subjects/views/repo-files/components/repo-files-store'
 import { renderEntries } from '@utils/fileViewUtils'
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { FileExplorer } from '@harnessio/ui/components'
 import { BranchSelectorV2, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
@@ -11,7 +11,6 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLEleme
   return (
     <div className="grid" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
       <RepoSidebarView
-        useTranslationStore={useTranslationStore}
         navigateToNewFile={noop}
         navigateToFile={noop}
         filesList={repoFilesStore.filesList}
@@ -26,7 +25,6 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLEleme
             onSelectBranch={noop}
             isBranchOnly={false}
             dynamicWidth={false}
-            useTranslationStore={useTranslationStore}
             setSearchQuery={noop}
           />
         )}

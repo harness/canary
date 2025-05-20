@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+import { useTranslation } from '@/context'
 import { Button } from '@components/button'
 import { Dialog } from '@components/dialog'
 import { Icon } from '@components/icon'
@@ -7,7 +8,6 @@ import { Layout } from '@components/layout'
 import { MarkdownViewer } from '@components/markdown-viewer'
 import { Progress } from '@components/progress'
 import { cn } from '@utils/cn'
-import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorEntity } from '../types'
@@ -32,7 +32,6 @@ interface ConnectorTestConnectionDialogProps {
   percentageFilled?: number
   errorData?: { errors?: ErrorDetail[] }
   viewDocClick?: () => void
-  useTranslationStore: () => TranslationStore
 }
 
 export const ConnectorTestConnectionDialog = ({
@@ -46,10 +45,9 @@ export const ConnectorTestConnectionDialog = ({
   percentageFilled = 50,
   errorMessage,
   errorData,
-  viewDocClick,
-  useTranslationStore
+  viewDocClick
 }: ConnectorTestConnectionDialogProps): JSX.Element => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const ConnectivityStatus = ({ status }: { status: string }): JSX.Element => {
     const getStatus = (): { status: string; color: string } | undefined => {

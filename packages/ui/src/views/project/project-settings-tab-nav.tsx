@@ -1,15 +1,15 @@
 import { FC } from 'react'
 
 import { TabNav } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { SandboxLayout } from '@/views'
 
 export interface ProjectSettingsTabNavProps {
-  useTranslationStore: () => TranslationStore
   isMFE?: boolean
 }
 
-export const ProjectSettingsTabNav: FC<ProjectSettingsTabNavProps> = ({ useTranslationStore, isMFE }) => {
-  const { t } = useTranslationStore()
+export const ProjectSettingsTabNav: FC<ProjectSettingsTabNavProps> = ({ isMFE }) => {
+  const { t } = useTranslation()
 
   return (
     <SandboxLayout.SubHeader>

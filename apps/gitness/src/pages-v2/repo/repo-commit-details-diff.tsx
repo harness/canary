@@ -15,7 +15,6 @@ import { CommitDiff, CommitSidebar } from '@harnessio/ui/views'
 import Explorer from '../../components/FileExplorer'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
@@ -100,12 +99,12 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
   return (
     <>
       {showSidebar && (
-        <CommitSidebar useTranslationStore={useTranslationStore} navigateToFile={() => {}} filesList={filesList}>
+        <CommitSidebar navigateToFile={() => {}} filesList={filesList}>
           {!!repoDetails?.body?.content?.entries?.length && <Explorer repoDetails={repoDetails?.body} />}
         </CommitSidebar>
       )}
 
-      <CommitDiff useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationStore} />
+      <CommitDiff useCommitDetailsStore={useCommitDetailsStore} />
     </>
   )
 }

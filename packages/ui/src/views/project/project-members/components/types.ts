@@ -2,7 +2,7 @@ import { MembersProps, ProjectMemberListViewProps } from '@/views'
 
 export type ProjectMembersListProps = Pick<
   ProjectMemberListViewProps,
-  'isLoading' | 'onEditMember' | 'useTranslationStore' | 'onDeleteHandler'
+  'isLoading' | 'onEditMember' | 'onDeleteHandler'
 > & {
   memberList: MembersProps[]
   handleResetFiltersQueryAndPages: () => void

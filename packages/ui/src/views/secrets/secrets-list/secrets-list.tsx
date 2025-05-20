@@ -1,5 +1,5 @@
 import { Icon, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 
 import { SecretListProps } from './types'
@@ -8,15 +8,9 @@ const Title = ({ title }: { title: string }): JSX.Element => (
   <span className="max-w-full truncate font-medium text-cn-foreground-1">{title}</span>
 )
 
-export function SecretList({
-  secrets,
-  useTranslationStore,
-  isLoading,
-  toSecretDetails,
-  onDeleteSecret
-}: SecretListProps): JSX.Element {
+export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret }: SecretListProps): JSX.Element {
   const { navigate } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />

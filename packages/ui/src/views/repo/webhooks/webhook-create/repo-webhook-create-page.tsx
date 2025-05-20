@@ -2,7 +2,8 @@ import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonGroup, Fieldset, FormWrapper } from '@/components'
-import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
+import { useTranslation } from '@/context'
+import { SandboxLayout, WebhookStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createWebhookFormSchema } from '@views/repo/webhooks/webhook-create/components/create-webhooks-form-schema'
 
@@ -26,7 +27,6 @@ interface RepoWebhooksCreatePageProps {
   isLoading: boolean
   // preSetWebHookData: CreateWebhookFormFields | null
   useWebhookStore: () => WebhookStore
-  useTranslationStore: () => TranslationStore
 }
 
 export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
@@ -34,9 +34,10 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
   apiError,
   isLoading,
   onFormCancel,
-  useTranslationStore,
   useWebhookStore
 }) => {
+  const { t } = useTranslation()
+
   const formMethods = useForm<CreateWebhookFormFields>({
     resolver: zodResolver(createWebhookFormSchema),
     mode: 'onChange',
@@ -60,8 +61,6 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
     reset,
     formState: { errors }
   } = formMethods
-
-  const { t } = useTranslationStore()
 
   const { preSetWebhookData } = useWebhookStore()
 
@@ -101,30 +100,30 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
       </h1>
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
         <Fieldset>
-          <WebhookToggleField register={register} setValue={setValue} watch={watch} t={t} />
+          <WebhookToggleField register={register} setValue={setValue} watch={watch} />
         </Fieldset>
         <Fieldset>
-          <WebhookNameField register={register} t={t} />
+          <WebhookNameField register={register} />
         </Fieldset>
         <Fieldset>
-          <WebhookDescriptionField register={register} t={t} />
+          <WebhookDescriptionField register={register} />
         </Fieldset>
         <Fieldset>
-          <WebhookPayloadUrlField register={register} errors={errors} t={t} />
+          <WebhookPayloadUrlField register={register} errors={errors} />
         </Fieldset>
         <Fieldset>
-          <WebhookSecretField register={register} errors={errors} t={t} />
+          <WebhookSecretField register={register} errors={errors} />
         </Fieldset>
         <Fieldset>
-          <WebhookSSLVerificationField setValue={setValue} watch={watch} t={t} />
+          <WebhookSSLVerificationField setValue={setValue} watch={watch} />
         </Fieldset>
         <Fieldset>
-          <WebhookTriggerField setValue={setValue} watch={watch} t={t} />
+          <WebhookTriggerField setValue={setValue} watch={watch} />
           {triggerValue === TriggerEventsEnum.SELECTED_EVENTS && (
             <div className="flex justify-between">
               {eventSettingsComponents.map(component => (
                 <div key={component.fieldName} className="flex flex-col">
-                  <WebhookEventSettingsFieldset setValue={setValue} watch={watch} eventList={component.events} t={t} />
+                  <WebhookEventSettingsFieldset setValue={setValue} watch={watch} eventList={component.events} />
                 </div>
               ))}
             </div>

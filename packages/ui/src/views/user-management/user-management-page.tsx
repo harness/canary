@@ -10,7 +10,6 @@ import { UserManagementPageContent } from './components'
 
 export const UserManagementPage: FC<IUserManagementPageProps> = ({
   useAdminListUsersStore,
-  useTranslationStore,
   handlers,
   loadingStates,
   errorStates,
@@ -18,10 +17,7 @@ export const UserManagementPage: FC<IUserManagementPageProps> = ({
   setSearchQuery
 }) => {
   return (
-    <UserManagementStoreProvider
-      useAdminListUsersStore={useAdminListUsersStore}
-      useTranslationStore={useTranslationStore}
-    >
+    <UserManagementStoreProvider useAdminListUsersStore={useAdminListUsersStore}>
       <StateProvider loadingStates={loadingStates} errorStates={errorStates}>
         <SearchProvider searchQuery={searchQuery} setSearchQuery={setSearchQuery}>
           <DialogsProvider>

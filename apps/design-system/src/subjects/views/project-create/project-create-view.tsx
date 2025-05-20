@@ -1,4 +1,4 @@
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { CreateProjectPage } from '@harnessio/ui/views'
 
@@ -6,8 +6,7 @@ export const CreateProjectView = ({ isAdditional = false }: { isAdditional?: boo
   const commonProps = {
     isLoading: false,
     error: '',
-    onFormSubmit: noop,
-    useTranslationStore: useTranslationStore
+    onFormSubmit: noop
   }
 
   if (isAdditional) {

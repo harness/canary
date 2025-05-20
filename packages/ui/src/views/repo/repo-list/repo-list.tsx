@@ -1,16 +1,14 @@
 import { Icon, NoData, SkeletonList, StackedList, StatusBadge } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
-import { TFunction } from 'i18next'
 
 import { RepositoryType } from '../repo.types'
-import { RoutingProps, TranslationStore } from './types'
+import { RoutingProps } from './types'
 
 export interface PageProps extends Partial<RoutingProps> {
   repos: RepositoryType[]
   handleResetFiltersQueryAndPages: () => void
   isDirtyList: boolean
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
 }
 
@@ -23,27 +21,29 @@ const Stats = ({ pulls }: { pulls: number }) => (
   </div>
 )
 
-const Title = ({ title, isPrivate, t }: { title: string; isPrivate: boolean; t: TFunction }) => (
-  <div className="inline-flex items-center gap-2.5">
-    <span className="max-w-full truncate font-medium">{title}</span>
-    <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
-      {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
-    </StatusBadge>
-  </div>
-)
+const Title = ({ title, isPrivate }: { title: string; isPrivate: boolean }) => {
+  const { t } = useTranslation()
+  return (
+    <div className="inline-flex items-center gap-2.5">
+      <span className="max-w-full truncate font-medium">{title}</span>
+      <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
+        {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
+      </StatusBadge>
+    </div>
+  )
+}
 
 export function RepoList({
   repos,
   handleResetFiltersQueryAndPages,
   isDirtyList,
-  useTranslationStore,
   isLoading,
   toRepository,
   toCreateRepo,
   toImportRepo
 }: PageProps) {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />
@@ -102,7 +102,7 @@ export function RepoList({
                   <span className="max-w-full truncate">{repo.description}</span>
                 )
               }
-              title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
+              title={<Title title={repo.name} isPrivate={repo.private} />}
               className="flex max-w-[80%] gap-1.5 text-wrap"
             />
             {!repo.importing && (

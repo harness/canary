@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 
 import { Button, Checkbox, CounterBadge, DropdownMenu, Icon, SplitButton } from '@/components'
+import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import { formatNumber } from '@/utils'
-import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
+import { DiffModeOptions, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { cn } from '@utils/cn'
 
@@ -39,7 +40,6 @@ export interface PullRequestChangesFilterProps {
   loading?: boolean
   diffMode: DiffModeEnum
   setDiffMode: (value: DiffModeEnum) => void
-  useTranslationStore: () => TranslationStore
   pullReqCommits?: TypesCommit[]
   defaultCommitFilter: CommitFilterItemProps
   selectedCommits: CommitFilterItemProps[]
@@ -64,7 +64,6 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   refetchReviewers,
   diffMode,
   setDiffMode,
-  useTranslationStore,
   pullReqCommits,
   defaultCommitFilter,
   selectedCommits,
@@ -76,7 +75,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   pullReqStats,
   setJumpToDiff
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [commitFilterOptions, setCommitFilterOptions] = useState([defaultCommitFilter])
   const shouldHideReviewButton = useMemo(
     () => pullRequestMetadata?.state === 'merged' || pullRequestMetadata?.state === 'closed',

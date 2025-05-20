@@ -23,7 +23,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { useRepoTagsStore } from './stores/repo-tags-store'
@@ -133,7 +132,6 @@ export const RepoTagsListContainer = () => {
   return (
     <>
       <RepoTagsListView
-        useTranslationStore={useTranslationStore}
         isLoading={isLoadingTags}
         openCreateBranchDialog={(selectedTagInList: BranchSelectorListItem) => {
           setOpenCreateBranchDialog(true)
@@ -151,7 +149,6 @@ export const RepoTagsListContainer = () => {
         toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
       />
       <CreateTagDialog
-        useTranslationStore={useTranslationStore}
         open={openCreateTagDialog}
         onClose={() => setOpenCreateTagDialog(false)}
         onSubmit={onSubmit}
@@ -180,7 +177,6 @@ export const RepoTagsListContainer = () => {
         type="tag"
         identifier={deleteTagName ?? undefined}
         isLoading={isDeletingTag}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

@@ -1,14 +1,13 @@
 import { ReactNode } from 'react'
 
 import { Button, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { SandboxLayout } from '@/views'
 
 interface RepoSidebarProps {
   navigateToNewFile: () => void
   navigateToFile: (file: string) => void
   filesList?: string[]
   children: ReactNode
-  useTranslationStore: () => TranslationStore
   branchSelectorRenderer: ReactNode
 }
 
@@ -17,8 +16,7 @@ export const RepoSidebar = ({
   branchSelectorRenderer,
   navigateToFile,
   filesList,
-  children,
-  useTranslationStore
+  children
 }: RepoSidebarProps) => {
   return (
     <>
@@ -33,11 +31,7 @@ export const RepoSidebar = ({
                 </Button>
               </div>
               <div className="px-5">
-                <SearchFiles
-                  navigateToFile={navigateToFile}
-                  filesList={filesList}
-                  useTranslationStore={useTranslationStore}
-                />
+                <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
               </div>
               <ScrollArea viewportClassName="px-5 pr-3.5">
                 {children}

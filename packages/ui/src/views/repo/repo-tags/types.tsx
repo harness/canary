@@ -1,5 +1,3 @@
-import { TranslationStore } from '@views/index'
-
 import { BranchSelectorListItem, TypesCommit } from '../repo.types'
 
 export interface TypeTagger {
@@ -30,7 +28,6 @@ export interface RepoTagsStore {
 }
 
 export interface RepoTagsListViewProps {
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   openCreateBranchDialog: (selectedTagInList: BranchSelectorListItem) => void
   openCreateTagDialog: () => void

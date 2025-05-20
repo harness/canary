@@ -17,58 +17,69 @@ import {
   StackedList,
   Switch
 } from '@/components'
+import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
 import { cn } from '@utils/cn'
-import { TFunction } from 'i18next'
 
-export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue, t }) => (
-  <StackedList.Root className="overflow-hidden" borderBackground>
-    <StackedList.Item
-      className="!rounded px-5 py-3"
-      disableHover
-      isHeader
-      isLast
-      actions={
-        <Switch
-          {...register!('state')}
-          checked={watch!('state')}
-          onCheckedChange={() => setValue!('state', !watch!('state'))}
+export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue }) => {
+  const { t } = useTranslation()
+  return (
+    <StackedList.Root className="overflow-hidden" borderBackground>
+      <StackedList.Item
+        className="!rounded px-5 py-3"
+        disableHover
+        isHeader
+        isLast
+        actions={
+          <Switch
+            {...register!('state')}
+            checked={watch!('state')}
+            onCheckedChange={() => setValue!('state', !watch!('state'))}
+          />
+        }
+      >
+        <StackedList.Field
+          title={t('views:repos.enableRule', 'Enable the rule')}
+          description={t(
+            'views:repos.enableRuleDescription',
+            'By enabling the toggle, the branch rule will be enforced.'
+          )}
         />
-      }
-    >
-      <StackedList.Field
-        title={t('views:repos.enableRule', 'Enable the rule')}
-        description={t(
-          'views:repos.enableRuleDescription',
-          'By enabling the toggle, the branch rule will be enforced.'
-        )}
-      />
-    </StackedList.Item>
-  </StackedList.Root>
-)
+      </StackedList.Item>
+    </StackedList.Root>
+  )
+}
 
-export const BranchSettingsRuleNameField: FC<FieldProps & { disabled: boolean }> = ({ register, disabled, t }) => (
-  <FormInput.Text
-    id="name"
-    label={t('views:repos.name', 'Name')}
-    {...register!('identifier')}
-    placeholder={t('views:repos.enterRuleName', 'Enter the rule name here')}
-    autoFocus
-    disabled={disabled}
-  />
-)
+export const BranchSettingsRuleNameField: FC<FieldProps & { disabled: boolean }> = ({ register, disabled }) => {
+  const { t } = useTranslation()
+  return (
+    <FormInput.Text
+      id="name"
+      label={t('views:repos.name', 'Name')}
+      {...register!('identifier')}
+      placeholder={t('views:repos.enterRuleName', 'Enter the rule name here')}
+      autoFocus
+      disabled={disabled}
+    />
+  )
+}
 
-export const BranchSettingsRuleDescriptionField: FC<FieldProps> = ({ register, t }) => (
-  <FormInput.Textarea
-    label={t('views:repos.description', 'Description')}
-    id="description"
-    {...register!('description')}
-    placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter the description here')}
-  />
-)
+export const BranchSettingsRuleDescriptionField: FC<FieldProps> = ({ register }) => {
+  const { t } = useTranslation()
+  return (
+    <FormInput.Textarea
+      label={t('views:repos.description', 'Description')}
+      id="description"
+      {...register!('description')}
+      placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter the description here')}
+    />
+  )
+}
 
-export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue, watch, register, errors, t }) => {
+export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue, watch, register, errors }) => {
+  const { t } = useTranslation()
+
   const [selectedOption, setSelectedOption] = useState<PatternsButtonType>(PatternsButtonType.INCLUDE)
 
   const patterns = watch!('patterns') || []
@@ -180,7 +191,9 @@ export const BranchSettingsRuleBypassListField: FC<
     setPrincipalsSearchQuery: (val: string) => void
     principalsSearchQuery: string
   }
-> = ({ watch, setValue, bypassOptions, t, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
+> = ({ watch, setValue, bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
+  const { t } = useTranslation()
+
   const multiSelectOptions: MultiSelectV2.MultiSelectOption[] = useMemo(() => {
     return (
       bypassOptions?.map(option => ({
@@ -230,16 +243,15 @@ export const BranchSettingsRuleListField: FC<{
   handleSubmenuChange: (ruleId: string, subOptionId: string, checked: boolean) => void
   handleSelectChangeForRule: (ruleId: string, check: string) => void
   handleInputChange: (ruleId: string, value: string) => void
-  t: TFunction
 }> = ({
   rules,
   recentStatusChecks,
   handleCheckboxChange,
   handleSubmenuChange,
   handleSelectChangeForRule,
-  handleInputChange,
-  t
+  handleInputChange
 }) => {
+  const { t } = useTranslation()
   const branchRules = getBranchRules(t)
 
   return (
@@ -278,7 +290,6 @@ export const BranchSettingsRuleListField: FC<{
                 <MultiSelect
                   className="pl-[26px]"
                   selectedItems={rules[index].selectOptions.map(option => ({ id: option, label: option }))}
-                  t={t}
                   placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
                   handleChange={val => handleSelectChangeForRule(rule.id, val.label)}
                   options={recentStatusChecks?.map(check => ({ id: check, label: check })) ?? []}

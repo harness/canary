@@ -18,7 +18,6 @@ import Explorer from '../../components/FileExplorer'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
@@ -213,7 +212,6 @@ export const RepoSidebar = () => {
       <div className="grid" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
         {!repository?.is_empty && (
           <RepoSidebarView
-            useTranslationStore={useTranslationStore}
             navigateToNewFile={navigateToNewFile}
             navigateToFile={navigateToFile}
             filesList={filesList}

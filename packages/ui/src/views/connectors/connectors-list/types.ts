@@ -1,6 +1,5 @@
 import { CheckboxOptions } from '@components/filters/types'
 import { SortValue } from '@components/sorts'
-import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorConfigType } from '../types'
@@ -38,7 +37,6 @@ export interface ConnectorListItem {
 
 export interface ConnectorListProps extends Partial<RoutingProps> {
   connectors: ConnectorListItem[]
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   onEditConnector: (connector: ConnectorListItem) => void
   onTestConnection: (connector: ConnectorListItem) => void

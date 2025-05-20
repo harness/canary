@@ -1,4 +1,4 @@
-import { TranslationStore } from '@views/repo'
+import { TranslationStore } from '@/context'
 import { z } from 'zod'
 
 export const makeCreateTagFormSchema = (t: TranslationStore['t']) =>

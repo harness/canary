@@ -317,6 +317,46 @@
     "lastActivity": "Last Activity",
     "created": "Created"
   },
+  "delegates": {
+    "delegate": "Delegate",
+    "heartbeat": "Heartbeat",
+    "selected": "Selected",
+    "anyDelegate": "Any delegate",
+    "useAnyDelegate": "Use any available delegate",
+    "delegateTags": "Delegate with tags",
+    "useDelegateTags": "Use delegate with following tags",
+    "noDelegatesInstalled": "Haven't installed a delegate yet?",
+    "installDelegate": "Install Delegate",
+    "enterTags": "Enter tags",
+    "testDelegate": "Test Delegate connectivity",
+    "delegateMatches": "Matches:",
+    "connectDelegates": "Connect "
+  },
+  "createProject": {
+    "backButton": "Retour",
+    "validation": {
+      "nameNoEmpty": "Le champ ne peut pas être vide",
+      "nameMinLength": "Le nom du projet doit contenir au moins 4 caractères"
+    },
+    "title": "Créez votre nouveau projet",
+    "description": "Organisez vos dépôts, pipelines et plus encore.",
+    "form": {
+      "name": "Nom du projet",
+      "namePlaceholder": "Entrez le nom de votre projet",
+      "description": "Description",
+      "descriptionPlaceholder": "Entrez une description (facultatif)"
+    },
+    "create": {
+      "projectCreation": "Création du projet...",
+      "createProject": "Créer le projet"
+    },
+    "or": "ou",
+    "importProject": "Importer un projet",
+    "logout": {
+      "question": "Voulez-vous utiliser un autre compte ?",
+      "link": "Se déconnecter"
+    }
+  },
   "execution": {
     "summary": "Résumé",
     "logs": "Journaux",
@@ -530,31 +570,6 @@
     "generalTab": "Général",
     "keysTab": "Clés et Jetons",
     "saving": "Enregistrement..."
-  },
-  "createProject": {
-    "validation": {
-      "nameNoEmpty": "Le champ ne peut pas être vide",
-      "nameMinLength": "Le nom du projet doit contenir au moins 4 caractères"
-    },
-    "backButton": "Retour",
-    "title": "Créez votre nouveau projet",
-    "description": "Organisez vos dépôts, pipelines et plus encore.",
-    "form": {
-      "name": "Nom du projet",
-      "namePlaceholder": "Entrez le nom de votre projet",
-      "description": "Description",
-      "descriptionPlaceholder": "Entrez une description (facultatif)"
-    },
-    "create": {
-      "projectCreation": "Création du projet...",
-      "createProject": "Créer le projet"
-    },
-    "or": "ou",
-    "importProject": "Importer un projet",
-    "logout": {
-      "question": "Voulez-vous utiliser un autre compte ?",
-      "link": "Se déconnecter"
-    }
   },
   "forms": {
     "selectMember": "",

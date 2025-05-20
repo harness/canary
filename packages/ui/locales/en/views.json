@@ -326,6 +326,46 @@
     "lastActivity": "Last Activity",
     "created": "Created"
   },
+  "delegates": {
+    "delegate": "Delegate",
+    "heartbeat": "Heartbeat",
+    "selected": "Selected",
+    "anyDelegate": "Any Delegate",
+    "useAnyDelegate": "Use any available delegate",
+    "delegateTags": "Delegate with tags",
+    "useDelegateTags": "Use delegate with following tags",
+    "noDelegatesInstalled": "Haven't installed a delegate yet?",
+    "installDelegate": "Install delegate",
+    "enterTags": "Enter tags",
+    "testDelegate": "Test Delegate connectivity",
+    "delegateMatches": "Matches:",
+    "connectDelegates": "Connect "
+  },
+  "createProject": {
+    "backButton": "Back",
+    "validation": {
+      "nameNoEmpty": "The field can’t be blank",
+      "nameMinLength": "The project name should be at least 4 characters"
+    },
+    "title": "Create your new project",
+    "description": "Organize your repositories, pipelines and more.",
+    "form": {
+      "name": "Project name",
+      "namePlaceholder": "Enter your project name",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter a description (optional)"
+    },
+    "create": {
+      "projectCreation": "Creating project...",
+      "createProject": "Create project"
+    },
+    "or": "or",
+    "importProject": "Import project",
+    "logout": {
+      "question": "Want to use a different account?",
+      "link": "Log out"
+    }
+  },
   "execution": {
     "summary": "Summary",
     "logs": "Logs",
@@ -543,31 +583,6 @@
     "saving": "Saving...",
     "generalTab": "General",
     "keysTab": "Keys and Tokens"
-  },
-  "createProject": {
-    "validation": {
-      "nameNoEmpty": "The field can’t be blank",
-      "nameMinLength": "The project name should be at least 4 characters"
-    },
-    "backButton": "Back",
-    "title": "Create your new project",
-    "description": "Organize your repositories, pipelines and more.",
-    "form": {
-      "name": "Project name",
-      "namePlaceholder": "Enter your project name",
-      "description": "Description",
-      "descriptionPlaceholder": "Enter a description (optional)"
-    },
-    "create": {
-      "projectCreation": "Creating project...",
-      "createProject": "Create project"
-    },
-    "or": "or",
-    "importProject": "Import project",
-    "logout": {
-      "question": "Want to use a different account?",
-      "link": "Log out"
-    }
   },
   "forms": {
     "selectMember": "Select member",

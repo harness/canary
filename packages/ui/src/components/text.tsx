@@ -1,9 +1,11 @@
-import { ComponentProps, ElementType, forwardRef } from 'react'
+import { ComponentProps, ElementType, forwardRef, ReactElement, Ref, useLayoutEffect, useRef, useState } from 'react'
 
+import { useMergeRefs, wrapConditionalObjectElement } from '@/utils'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
-import { wrapConditionalObjectElement } from '@utils/utils'
 import { cva, VariantProps } from 'class-variance-authority'
+
+import { Tooltip } from './tooltip'
 
 type TextElement =
   | 'p'
@@ -78,8 +80,7 @@ const textVariants = cva('', {
     variant: 'body-normal',
     align: 'left',
     color: 'foreground-2',
-    truncate: false,
-    wrap: 'wrap'
+    truncate: false
   }
 })
 
@@ -130,22 +131,43 @@ type TextProps<E extends TextElement = 'span'> = Omit<ComponentProps<E>, 'color'
   }
 
 type TextComponent = <E extends TextElement = 'span'>(
-  props: TextProps<E> & { ref?: React.Ref<HTMLElement> }
-) => React.ReactElement | null
+  props: TextProps<E> & { ref?: Ref<HTMLElement> }
+) => ReactElement | null
 
 const TextWithRef = forwardRef<HTMLElement, TextProps>(
-  ({ className, children, truncate, variant, asChild, align, color, wrap, as, ...props }, forwardedRef) => {
+  ({ className, children, truncate, variant, asChild, align, color, wrap, as, ...props }, ref) => {
+    const [withTooltip, setWithTooltip] = useState(false)
+    const localRef = useRef<HTMLElement>(null)
+
     const Comp = getTextNode({ as, variant, asChild })
+
     const isHeading = !as && !!variant?.startsWith('heading')
+    const isTruncated = truncate === true
+
+    const compRef = useMergeRefs<HTMLElement>([localRef, ref])
+
+    useLayoutEffect(() => {
+      if (!isTruncated) return
+      if (!localRef.current) return
+
+      const { scrollWidth, clientWidth } = localRef.current
+      setWithTooltip(scrollWidth > clientWidth)
+    }, [isTruncated])
 
     return (
-      <Comp
-        ref={forwardedRef}
-        className={cn(textVariants({ variant, align, color, truncate, wrap }), className)}
-        {...{ ...wrapConditionalObjectElement({ role: 'heading' }, isHeading), ...props }}
-      >
-        {children}
-      </Comp>
+      <Tooltip.Root>
+        <Tooltip.Trigger asChild>
+          <Comp
+            ref={compRef}
+            className={cn(textVariants({ variant, align, color, truncate, wrap }), className)}
+            {...props}
+            {...wrapConditionalObjectElement({ role: 'heading' }, isHeading)}
+          >
+            {children}
+          </Comp>
+        </Tooltip.Trigger>
+        {withTooltip && <Tooltip.Content side="top">{children}</Tooltip.Content>}
+      </Tooltip.Root>
     )
   }
 )

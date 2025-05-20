@@ -139,9 +139,9 @@ const Grid = ({
 const spacingVariants = cva('', {
   variants: {
     spacing: {
-      small: 'var(--cn-spacing-4)',
-      medium: 'var(--cn-spacing-8)',
-      large: 'var(--cn-spacing-12)'
+      small: 'var(--cn-spacing-2)',
+      medium: 'var(--cn-spacing-4)',
+      large: 'var(--cn-spacing-6)'
     }
   },
   defaultVariants: {

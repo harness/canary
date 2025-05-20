@@ -19,6 +19,10 @@
     "min": {
       "$type": "sizing",
       "$value": "{size.12}"
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     }
   }
 }

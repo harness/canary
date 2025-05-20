@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { LayoutV2, MultiSelectV2 } from '@harnessio/ui/components'
+import { MultiSelectV2 } from '@harnessio/ui/components'
 
 const OPTIONS: MultiSelectV2.MultiSelectOption[] = [
   { key: 'nextjs', id: 'nextjs' },
@@ -19,7 +19,7 @@ const OPTIONS: MultiSelectV2.MultiSelectOption[] = [
 export const MultipleSelectorWithDisabledOption = () => {
   const [value, setValue] = useState<MultiSelectV2.MultiSelectOption[]>([OPTIONS[0]])
   return (
-    <LayoutV2.Flex direction="row" gap="2">
+    <>
       <MultiSelectV2.MultiSelect
         onChange={options => setValue(options)}
         value={value}
@@ -28,7 +28,6 @@ export const MultipleSelectorWithDisabledOption = () => {
         // isLoading
         // disabled
       />
-      <div>Helloooo</div>
-    </LayoutV2.Flex>
+    </>
   )
 }

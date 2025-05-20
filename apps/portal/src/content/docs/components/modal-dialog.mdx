@@ -4,260 +4,349 @@ description: A dialog overlay that appears above the page content
 beta: true
 ---
 
-The `ModalDialog` component provides a modal dialog overlay for displaying important content or requesting user input. It includes features like different sizes, themes, icons/logos, and scrollable content areas.
+The `ModalDialog` component provides an accessible and customizable dialog overlay for displaying important content or requesting user input. It supports different sizes, themes, and can include icons or logos in the header.
 
 import { DocsPage } from "@/components/docs-page";
-
-## Usage
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<ModalDialog.Root>
-  <ModalDialog.Trigger asChild>
-    <Button>Open Modal</Button>
-  </ModalDialog.Trigger>
-
-  <ModalDialog.Content size="sm">
-    <ModalDialog.Header icon="branch" theme="warning">
-      <ModalDialog.Title>Confirm Action</ModalDialog.Title>
-      <ModalDialog.Description>Are you sure you want to proceed with this action?</ModalDialog.Description>
-    </ModalDialog.Header>
-
-    <ModalDialog.Body>
-      This action cannot be undone. Please make sure you want to proceed.
-    </ModalDialog.Body>
-
-    <ModalDialog.Footer>
-      <ModalDialog.Close asChild>
-        <Button variant="secondary">Cancel</Button>
-      </ModalDialog.Close>
-      <Button variant="primary">Confirm</Button>
-    </ModalDialog.Footer>
-
-  </ModalDialog.Content>
-</ModalDialog.Root>`}
-/>
-
-## Components
-
-### ModalDialog.Root
-
-The root component that manages the modal's open state.
-
-| Prop           | Type                      | Default     | Description                                          |
-| -------------- | ------------------------- | ----------- | ---------------------------------------------------- |
-| `open`         | `boolean`                 | `undefined` | Controls the open state when used in controlled mode |
-| `onOpenChange` | `(open: boolean) => void` | `undefined` | Callback when open state changes                     |
-| `children`     | `ReactNode`               | Required    | Trigger and Content components                       |
-
-### ModalDialog.Content
-
-The main content container of the modal.
-
-| Prop        | Type                   | Default  | Description                      |
-| ----------- | ---------------------- | -------- | -------------------------------- |
-| `size`      | `"sm" \| "md" \| "lg"` | `"sm"`   | Controls the width of the modal  |
-| `hideClose` | `boolean`              | `false`  | Hides the close button when true |
-| `children`  | `ReactNode`            | Required | Modal content components         |
-
-### ModalDialog.Header
-
-The header section of the modal.
-
-| Prop       | Type                                 | Default     | Description                      |
-| ---------- | ------------------------------------ | ----------- | -------------------------------- |
-| `icon`     | `string`                             | `undefined` | Name of icon to display          |
-| `logo`     | `string`                             | `undefined` | Name of logo to display          |
-| `theme`    | `"default" \| "warning" \| "danger"` | `"default"` | Theme for icon/logo color        |
-| `children` | `ReactNode`                          | Required    | Title and Description components |
-
-Note: `icon` and `logo` props cannot be used together.
-
-### ModalDialog.Body
-
-The main content area of the modal. Content is automatically scrollable.
-
-| Prop        | Type        | Default  | Description                       |
-| ----------- | ----------- | -------- | --------------------------------- |
-| `className` | `string`    | `""`     | Class for the scrollable viewport |
-| `children`  | `ReactNode` | Required | Modal content                     |
-
-### ModalDialog.Footer
-
-Container for modal actions, typically buttons.
-
-| Prop        | Type        | Default  | Description        |
-| ----------- | ----------- | -------- | ------------------ |
-| `className` | `string`    | `""`     | Additional classes |
-| `children`  | `ReactNode` | Required | Footer content     |
-
-## Examples
-
-### With Warning Theme
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<ModalDialog.Root>
-  <ModalDialog.Trigger asChild>
-    <Button>Show Warning</Button>
-  </ModalDialog.Trigger>
-
-  <ModalDialog.Content size="sm">
-    <ModalDialog.Header icon="branch" theme="warning">
-      <ModalDialog.Title>Warning</ModalDialog.Title>
-      <ModalDialog.Description>This action might have consequences.</ModalDialog.Description>
-    </ModalDialog.Header>
-    <ModalDialog.Body>
-      Content here
-    </ModalDialog.Body>
-    <ModalDialog.Footer>
-      <ModalDialog.Close asChild>
-        <Button variant="secondary">Cancel</Button>
-      </ModalDialog.Close>
-      <Button variant="primary">Continue</Button>
-    </ModalDialog.Footer>
-  </ModalDialog.Content>
-</ModalDialog.Root>`}
-/>
-
-### With Logo
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<ModalDialog.Root>
-  <ModalDialog.Trigger asChild>
-    <Button>Welcome Guide</Button>
-  </ModalDialog.Trigger>
-
-  <ModalDialog.Content size="md">
-    <ModalDialog.Header logo="harness">
-      <ModalDialog.Title>Welcome</ModalDialog.Title>
-      <ModalDialog.Description>Getting started with Harness</ModalDialog.Description>
-    </ModalDialog.Header>
-    <ModalDialog.Body>
-      Welcome content and guide steps here...
-    </ModalDialog.Body>
-    <ModalDialog.Footer>
-      <Button variant="primary">Get Started</Button>
-    </ModalDialog.Footer>
-  </ModalDialog.Content>
-</ModalDialog.Root>`}
-/>
-
-### Large Size with Scrollable Content
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<ModalDialog.Root>
-  <ModalDialog.Trigger asChild>
-    <Button>View Details</Button>
-  </ModalDialog.Trigger>
-
-  <ModalDialog.Content size="lg">
-    <ModalDialog.Header icon="branch">
-      <ModalDialog.Title>Detailed Information</ModalDialog.Title>
-      <ModalDialog.Description>Comprehensive details about the system</ModalDialog.Description>
-    </ModalDialog.Header>
-    <ModalDialog.Body>
-      {/* Content will scroll if it exceeds the viewport */}
-      <div className="space-y-4">
-        <h3>Section 1</h3>
-        <p>Detailed content here...</p>
-        <h3>Section 2</h3>
-        <p>More content here...</p>
-        {/* Add more sections as needed */}
-      </div>
-    </ModalDialog.Body>
-    <ModalDialog.Footer>
-      <ModalDialog.Close asChild>
-        <Button variant="secondary">Close</Button>
-      </ModalDialog.Close>
-    </ModalDialog.Footer>
-  </ModalDialog.Content>
-</ModalDialog.Root>`}
-/>
-
-## Usage
-
-```tsx
-import { ModalDialog } from "@harnessio/ui";
-
-<ModalDialog.Root open={isOpen} onOpenChange={setIsOpen}>
-  <ModalDialog.Trigger asChild>
-    <button>Open</button>
-  </ModalDialog.Trigger>
-
-  <ModalDialog.Content size="md" hideClose={false}>
-    <ModalDialog.Header>
-      <ModalDialog.Title>Heading</ModalDialog.Title>
-      <ModalDialog.Description>Description text</ModalDialog.Description>
-    </ModalDialog.Header>
-    <ModalDialog.Body>Dialog content here.</ModalDialog.Body>
-    <ModalDialog.Footer>
-      <ModalDialog.Close>Cancel</ModalDialog.Close>
-      <button className="btn btn-primary">Submit</button>
-    </ModalDialog.Footer>
-  </ModalDialog.Content>
-</ModalDialog.Root>;
-```
-
-## Sizes
-
-The `size` prop controls the width of the dialog. Options include `sm`, `md`, and `lg`.
 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col gap-4">
   <ModalDialog.Root>
     <ModalDialog.Trigger asChild>
-      <button>Small</button>
+      <Button>Basic Modal</Button>
     </ModalDialog.Trigger>
-    <ModalDialog.Content size="sm">
-      <ModalDialog.Header>
-        <ModalDialog.Title>Small Dialog</ModalDialog.Title>
+    <ModalDialog.Content>
+      <ModalDialog.Header logo="gitlab">
+        <ModalDialog.Title>Basic Dialog</ModalDialog.Title>
+        <ModalDialog.Description>A simple dialog with logo</ModalDialog.Description>
       </ModalDialog.Header>
-      <ModalDialog.Body>Compact modal dialog</ModalDialog.Body>
+      <ModalDialog.Body>
+        Content goes here
+      </ModalDialog.Body>
+      <ModalDialog.Footer>
+        <ModalDialog.Close>Close</ModalDialog.Close>
+        <Button variant="primary">Confirm</Button>
+      </ModalDialog.Footer>
     </ModalDialog.Content>
   </ModalDialog.Root>
 
-<ModalDialog.Root>
-  <ModalDialog.Trigger asChild>
-    <button>Medium</button>
-  </ModalDialog.Trigger>
-  <ModalDialog.Content size="md">
-    <ModalDialog.Header>
-      <ModalDialog.Title>Medium Dialog</ModalDialog.Title>
-    </ModalDialog.Header>
-    <ModalDialog.Body>Standard modal dialog</ModalDialog.Body>
-  </ModalDialog.Content>
-</ModalDialog.Root>
-
   <ModalDialog.Root>
     <ModalDialog.Trigger asChild>
-      <button>Large</button>
+      <Button>Danger Modal</Button>
     </ModalDialog.Trigger>
-    <ModalDialog.Content size="lg">
-      <ModalDialog.Header>
-        <ModalDialog.Title>Large Dialog</ModalDialog.Title>
+    <ModalDialog.Content>
+      <ModalDialog.Header icon="incidents" theme="danger">
+        <ModalDialog.Title>Danger</ModalDialog.Title>
+        <ModalDialog.Description>A danger dialog with icon</ModalDialog.Description>
       </ModalDialog.Header>
-      <ModalDialog.Body>Wide modal dialog</ModalDialog.Body>
+      <ModalDialog.Body>
+        Danger content here
+      </ModalDialog.Body>
+      <ModalDialog.Footer>
+        <ModalDialog.Close>Cancel</ModalDialog.Close>
+        <Button variant="primary" theme="danger">Confirm</Button>
+      </ModalDialog.Footer>
     </ModalDialog.Content>
   </ModalDialog.Root>
 </div>`}
 />
 
+## Usage
+
+```typescript jsx
+import { ModalDialog } from "@harnessio/ui/components";
+
+// ...
+
+return (
+  <ModalDialog.Root>
+    <ModalDialog.Trigger asChild>
+      <Button>Open Dialog</Button>
+    </ModalDialog.Trigger>
+
+    <ModalDialog.Content size="md">
+      <ModalDialog.Header icon="circle-plus">
+        <ModalDialog.Title>Dialog Title</ModalDialog.Title>
+        <ModalDialog.Description>Optional description text</ModalDialog.Description>
+      </ModalDialog.Header>
+
+      <ModalDialog.Body>
+        Dialog content goes here
+      </ModalDialog.Body>
+
+      <ModalDialog.Footer>
+        <ModalDialog.Close>Cancel</ModalDialog.Close>
+        <Button variant="primary">Confirm</Button>
+      </ModalDialog.Footer>
+    </ModalDialog.Content>
+  </ModalDialog.Root>
+)
+```
+
+### Sizes
+
+The dialog supports three sizes: small, medium, and large:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-4">
+  <div className="space-y-2">
+    <h3 className="text-lg font-semibold">Small (Default)</h3>
+    <ModalDialog.Root>
+      <ModalDialog.Trigger asChild>
+        <Button>Small Dialog</Button>
+      </ModalDialog.Trigger>
+      <ModalDialog.Content size="sm">
+        <ModalDialog.Header>
+          <ModalDialog.Title>Small Dialog</ModalDialog.Title>
+        </ModalDialog.Header>
+        <ModalDialog.Body>Compact size for simple dialogs</ModalDialog.Body>
+        <ModalDialog.Footer>
+          <ModalDialog.Close>Close</ModalDialog.Close>
+        </ModalDialog.Footer>
+      </ModalDialog.Content>
+    </ModalDialog.Root>
+  </div>
+
+<div className="space-y-2">
+  <h3 className="text-lg font-semibold">Medium</h3>
+  <ModalDialog.Root>
+    <ModalDialog.Trigger asChild>
+      <Button>Medium Dialog</Button>
+    </ModalDialog.Trigger>
+    <ModalDialog.Content size="md">
+      <ModalDialog.Header>
+        <ModalDialog.Title>Medium Dialog</ModalDialog.Title>
+      </ModalDialog.Header>
+      <ModalDialog.Body>Standard size for most use cases</ModalDialog.Body>
+      <ModalDialog.Footer>
+        <ModalDialog.Close>Close</ModalDialog.Close>
+      </ModalDialog.Footer>
+    </ModalDialog.Content>
+  </ModalDialog.Root>
+</div>
+
+  <div className="space-y-2">
+    <h3 className="text-lg font-semibold">Large</h3>
+    <ModalDialog.Root>
+      <ModalDialog.Trigger asChild>
+        <Button>Large Dialog</Button>
+      </ModalDialog.Trigger>
+      <ModalDialog.Content size="lg">
+        <ModalDialog.Header>
+          <ModalDialog.Title>Large Dialog</ModalDialog.Title>
+        </ModalDialog.Header>
+        <ModalDialog.Body>Maximum width for complex content</ModalDialog.Body>
+        <ModalDialog.Footer>
+          <ModalDialog.Close>Close</ModalDialog.Close>
+        </ModalDialog.Footer>
+      </ModalDialog.Content>
+    </ModalDialog.Root>
+  </div>
+</div>`}
+/>
+
+### Themes
+
+Headers can have different themes with matching icons:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-4">
+  <div className="space-y-2">
+    <h3 className="text-lg font-semibold">Default Theme</h3>
+    <ModalDialog.Root>
+      <ModalDialog.Trigger asChild>
+        <Button>Default</Button>
+      </ModalDialog.Trigger>
+      <ModalDialog.Content>
+        <ModalDialog.Header icon="circle-plus">
+          <ModalDialog.Title>Information</ModalDialog.Title>
+          <ModalDialog.Description>Default theme with info icon</ModalDialog.Description>
+        </ModalDialog.Header>
+        <ModalDialog.Body>Content here</ModalDialog.Body>
+        <ModalDialog.Footer>
+          <ModalDialog.Close>Close</ModalDialog.Close>
+        </ModalDialog.Footer>
+      </ModalDialog.Content>
+    </ModalDialog.Root>
+  </div>
+
+<div className="space-y-2">
+  <h3 className="text-lg font-semibold">Warning Theme</h3>
+  <ModalDialog.Root>
+    <ModalDialog.Trigger asChild>
+      <Button>Warning</Button>
+    </ModalDialog.Trigger>
+    <ModalDialog.Content>
+      <ModalDialog.Header icon="circle-plus" theme="warning">
+        <ModalDialog.Title>Warning</ModalDialog.Title>
+        <ModalDialog.Description>
+          Warning theme with caution icon
+        </ModalDialog.Description>
+      </ModalDialog.Header>
+      <ModalDialog.Body>Content here</ModalDialog.Body>
+      <ModalDialog.Footer>
+        <ModalDialog.Close>Cancel</ModalDialog.Close>
+        <Button variant="primary">Continue</Button>
+      </ModalDialog.Footer>
+    </ModalDialog.Content>
+  </ModalDialog.Root>
+</div>
+
+  <div className="space-y-2">
+    <h3 className="text-lg font-semibold">Danger Theme</h3>
+    <ModalDialog.Root>
+      <ModalDialog.Trigger asChild>
+        <Button>Danger</Button>
+      </ModalDialog.Trigger>
+      <ModalDialog.Content>
+        <ModalDialog.Header icon="circle-plus" theme="danger">
+          <ModalDialog.Title>Delete Item</ModalDialog.Title>
+          <ModalDialog.Description>Danger theme for destructive actions</ModalDialog.Description>
+        </ModalDialog.Header>
+        <ModalDialog.Body>This action cannot be undone</ModalDialog.Body>
+        <ModalDialog.Footer>
+          <ModalDialog.Close>Cancel</ModalDialog.Close>
+          <Button variant="danger">Delete</Button>
+        </ModalDialog.Footer>
+      </ModalDialog.Content>
+    </ModalDialog.Root>
+  </div>
+</div>`}
+/>
+
+### With Logo/Icon
+
+Headers can display a logo or an icon:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-4">
+    <ModalDialog.Root>
+    <ModalDialog.Trigger asChild>
+      <Button>With Logo</Button>
+    </ModalDialog.Trigger>
+    <ModalDialog.Content>
+      <ModalDialog.Header logo="jira">
+        <ModalDialog.Title>Connect to Jira</ModalDialog.Title>
+        <ModalDialog.Description>Set up your Jira integration</ModalDialog.Description>
+      </ModalDialog.Header>
+      <ModalDialog.Body>
+        Integration setup form would go here
+      </ModalDialog.Body>
+      <ModalDialog.Footer>
+        <ModalDialog.Close>Cancel</ModalDialog.Close>
+        <Button variant="primary">Connect</Button>
+      </ModalDialog.Footer>
+    </ModalDialog.Content>
+  </ModalDialog.Root>
+
+  <ModalDialog.Root>
+    <ModalDialog.Trigger asChild>
+      <Button>With Icon</Button>
+    </ModalDialog.Trigger>
+    <ModalDialog.Content>
+      <ModalDialog.Header icon="branch-2">
+        <ModalDialog.Title>Create Branch</ModalDialog.Title>
+        <ModalDialog.Description>Create a new Git branch from main</ModalDialog.Description>
+      </ModalDialog.Header>
+      <ModalDialog.Body>
+        Branch creation form would go here
+      </ModalDialog.Body>
+      <ModalDialog.Footer>
+        <ModalDialog.Close>Cancel</ModalDialog.Close>
+        <Button variant="primary">Create Branch</Button>
+      </ModalDialog.Footer>
+    </ModalDialog.Content>
+  </ModalDialog.Root>
+</div>`}
+/>
+
+### Scrollable Content
+
+The Body component automatically handles scrolling for long content:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<ModalDialog.Root>
+  <ModalDialog.Trigger asChild>
+    <Button>Scrollable</Button>
+  </ModalDialog.Trigger>
+  <ModalDialog.Content>
+    <ModalDialog.Header icon="circle-plus">
+      <ModalDialog.Title>Long Content</ModalDialog.Title>
+      <ModalDialog.Description>Dialog with scrollable content</ModalDialog.Description>
+    </ModalDialog.Header>
+    <ModalDialog.Body>
+      <div className="space-y-4">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div key={i}>
+            <h3 className="font-semibold">Section {i + 1}</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+          </div>
+        ))}
+      </div>
+    </ModalDialog.Body>
+    <ModalDialog.Footer>
+      <ModalDialog.Close>Close</ModalDialog.Close>
+    </ModalDialog.Footer>
+  </ModalDialog.Content>
+</ModalDialog.Root>`}
+/>
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "size",
+      type: "'sm' | 'md' | 'lg'",
+      default: "'sm'",
+      description: "Controls the width of the dialog",
+    },
+    {
+      name: "hideClose",
+      type: "boolean",
+      default: "false",
+      description: "Hides the close button in the top-right corner",
+    },
+    {
+      name: "theme",
+      type: "'default' | 'warning' | 'danger'",
+      default: "'default'",
+      description: "Theme for the header section",
+    },
+    {
+      name: "icon",
+      type: "string",
+      description: "Icon to display in the header (cannot be used with logo)",
+    },
+    {
+      name: "logo",
+      type: "string",
+      description: "Logo to display in the header (cannot be used with icon)",
+    },
+    {
+      name: "open",
+      type: "boolean",
+      description: "Controls the open state in controlled mode",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description: "Callback when open state changes",
+    },
+  ]}
+/>
+
 ## API Reference
 
-### `Root`
+### Root
 
 Controls the open/close behavior of the modal.
 
 ```tsx
-<ModalDialog.Root
-  open={isOpen} // [OPTIONAL] Controlled open state
-  onOpenChange={setIsOpen} // [OPTIONAL] Open state change handler
->
-  {/* Children */}
+<ModalDialog.Root open={isOpen} onOpenChange={setIsOpen}>
+  {/* Modal content */}
 </ModalDialog.Root>
 ```
 
@@ -265,51 +354,39 @@ Controls the open/close behavior of the modal.
   props={[
     {
       name: "open",
-      description: "Controls the open state (controlled mode)",
+      description: "Controls the open state of the dialog",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "defaultOpen",
+      description: "Initial open state for uncontrolled mode",
       required: false,
       value: "boolean",
     },
     {
       name: "onOpenChange",
+      name: "onOpenChange",
       description: "Callback when open state changes",
       required: false,
       value: "(open: boolean) => void",
     },
-  ]}
-/>
-
-### `Trigger`
-
-Used to open the modal.
-
-```tsx
-<ModalDialog.Trigger asChild>
-  <button>Open Dialog</button>
-</ModalDialog.Trigger>
-```
-
-<DocsPage.PropsTable
-  props={[
     {
-      name: "asChild",
-      description: "Render a child element as the trigger",
-      required: false,
-      value: "boolean",
+      name: "children",
+      description: "Modal content",
+      required: true,
+      value: "ReactNode",
     },
   ]}
 />
 
-### `Content`
+### Content
 
-Main container for modal content.
+The main content container of the dialog.
 
 ```tsx
-<ModalDialog.Content
-  size="md" // [OPTIONAL] Dialog size
-  hideClose={false} // [OPTIONAL] Hide the close icon
-  className="custom-class" // [OPTIONAL] Custom class name
->
-  {/* Dialog content */}
+<ModalDialog.Content size="md" hideClose={false}>
+  {/* Dialog sections */}
 </ModalDialog.Content>
 ```
 
@@ -317,17 +394,17 @@ Main container for modal content.
   props={[
     {
       name: "size",
-      description: "Size of the dialog",
+      description: "Controls the width of the dialog",
       required: false,
       value: "'sm' | 'md' | 'lg'",
-      defaultValue: "'sm'",
+      default: "'sm'",
     },
     {
       name: "hideClose",
-      description: "Whether to hide the close icon",
+      description: "Hides the close button in the top-right corner",
       required: false,
       value: "boolean",
-      defaultValue: "false",
+      default: "false",
     },
     {
       name: "className",
@@ -335,34 +412,71 @@ Main container for modal content.
       required: false,
       value: "string",
     },
+    {
+      name: "children",
+      description: "Dialog sections",
+      required: true,
+      value: "ReactNode",
+    },
   ]}
 />
 
-### `Header`, `Title`, and `Description`
+### Header
 
-Displays the dialog heading content.
+The header section of the dialog, containing the title and optional description.
 
 ```tsx
-<ModalDialog.Header>
-  <ModalDialog.Title>Title</ModalDialog.Title>
-  <ModalDialog.Description>Description text</ModalDialog.Description>
+<ModalDialog.Header icon="circle-plus" theme="warning">
+  <ModalDialog.Title>Dialog Title</ModalDialog.Title>
+  <ModalDialog.Description>Optional description</ModalDialog.Description>
 </ModalDialog.Header>
 ```
 
 <DocsPage.PropsTable
-  title="Title"
   props={[
+    {
+      name: "icon",
+      description: "Icon to display in the header (cannot be used with logo)",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "logo",
+      description: "Logo to display in the header (cannot be used with icon)",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "theme",
+      description: "Theme for the header section",
+      required: false,
+      value: "'default' | 'warning' | 'danger'",
+      default: "'default'",
+    },
     {
       name: "className",
       description: "Custom class name",
       required: false,
       value: "string",
     },
+    {
+      name: "children",
+      description: "Header sections",
+      required: true,
+      value: "ReactNode",
+    },
   ]}
 />
+
+### Title
+
+The title text component for the dialog header.
+
+```tsx
+<ModalDialog.Title className="custom-class">Dialog Title</ModalDialog.Title>
+```
 
 <DocsPage.PropsTable
-  title="Description"
   props={[
     {
       name: "className",
@@ -370,10 +484,43 @@ Displays the dialog heading content.
       required: false,
       value: "string",
     },
+    {
+      name: "children",
+      description: "Title content",
+      required: true,
+      value: "ReactNode",
+    },
   ]}
 />
 
-### `Body`
+### Description
+
+Optional description text below the title.
+
+```tsx
+<ModalDialog.Description className="custom-class">
+  Additional context or instructions
+</ModalDialog.Description>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Description content",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### Body
 
 Main scrollable content area of the dialog.
 
@@ -391,17 +538,23 @@ Main scrollable content area of the dialog.
       required: false,
       value: "string",
     },
+    {
+      name: "children",
+      description: "Body content",
+      required: true,
+      value: "ReactNode",
+    },
   ]}
 />
 
-### `Footer`
+### Footer
 
 Footer section for actions (e.g., buttons).
 
 ```tsx
 <ModalDialog.Footer className="custom-class">
   <ModalDialog.Close>Cancel</ModalDialog.Close>
-  <button className="btn btn-primary">Confirm</button>
+  <Button variant="primary">Confirm</Button>
 </ModalDialog.Footer>
 ```
 
@@ -413,10 +566,16 @@ Footer section for actions (e.g., buttons).
       required: false,
       value: "string",
     },
+    {
+      name: "children",
+      description: "Footer content",
+      required: true,
+      value: "ReactNode",
+    },
   ]}
 />
 
-### `Close`
+### Close
 
 Can be used inside `Footer` or as a standalone button to close the modal.
 
@@ -424,4 +583,19 @@ Can be used inside `Footer` or as a standalone button to close the modal.
 <ModalDialog.Close>Cancel</ModalDialog.Close>
 ```
 
-<DocsPage.PropsTable props={[]} />
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Button label",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

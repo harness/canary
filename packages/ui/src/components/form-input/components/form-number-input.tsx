@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from 'react'
+import { forwardRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { NumberInput, type NumberInputProps } from '@components/inputs'

@@ -185,13 +185,68 @@ The Grid component provides a powerful way to create grid layouts with precise c
 </LayoutV2.Grid>`}
 />
 
+### Grid with Numeric Columns
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Grid 
+  columns={6} 
+  gap="md" 
+  className="p-4"
+>
+  <Card.Root>
+    <Card.Content>Column 1</Card.Content>
+  </Card.Root>
+  <Card.Root>
+    <Card.Content>Column 2</Card.Content>
+  </Card.Root>
+  <Card.Root>
+    <Card.Content>Column 3</Card.Content>
+  </Card.Root>
+  <Card.Root>
+    <Card.Content>Column 4</Card.Content>
+  </Card.Root>
+  <Card.Root>
+    <Card.Content>Column 5</Card.Content>
+  </Card.Root>
+  <Card.Root>
+    <Card.Content>Column 6</Card.Content>
+  </Card.Root>
+</LayoutV2.Grid>`}
+/>
+
+### Grid with Numeric Rows and Columns
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LayoutV2.Grid 
+  columns={2} 
+  rows={2}
+  gap="md" 
+  className="p-4"
+>
+  <Card.Root>
+    <Card.Content>Row 1, Col 1</Card.Content>
+  </Card.Root>
+  <Card.Root>
+    <Card.Content>Row 1, Col 2</Card.Content>
+  </Card.Root>
+  <Card.Root>
+    <Card.Content>Row 2, Col 1</Card.Content>
+  </Card.Root>
+  <Card.Root>
+    <Card.Content>Row 2, Col 2</Card.Content>
+  </Card.Root>
+</LayoutV2.Grid>`}
+/>
+
 ### Grid with Alignment and Justification
 
 <DocsPage.ComponentExample
   client:only
   code={`<LayoutV2.Grid 
   columns="1fr 1fr" 
-  gap="4" 
+  gap="md" 
   align="center" 
   justify="between" 
   className="p-4 h-40"
@@ -215,57 +270,6 @@ The Grid component provides a powerful way to create grid layouts with precise c
 
 The Horizontal component is a convenient wrapper around Flex that's pre-configured for row layouts with consistent spacing options.
 
-### Horizontal with Default Spacing
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<LayoutV2.Horizontal className="p-4">
-  <Card.Root>
-    <Card.Content>Item 1</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Item 2</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Item 3</Card.Content>
-  </Card.Root>
-</LayoutV2.Horizontal>`}
-/>
-
-### Horizontal with Small Spacing
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<LayoutV2.Horizontal spacing="small" className="p-4">
-  <Card.Root>
-    <Card.Content>Small</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Gap</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Spacing</Card.Content>
-  </Card.Root>
-</LayoutV2.Horizontal>`}
-/>
-
-### Horizontal with Large Spacing
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<LayoutV2.Horizontal spacing="large" className="p-4">
-  <Card.Root>
-    <Card.Content>Large</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Gap</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Spacing</Card.Content>
-  </Card.Root>
-</LayoutV2.Horizontal>`}
-/>
-
 ### Horizontal with Alignment
 
 <DocsPage.ComponentExample
@@ -286,57 +290,6 @@ The Horizontal component is a convenient wrapper around Flex that's pre-configur
 ## Vertical Component
 
 The Vertical component is a convenient wrapper around Flex that's pre-configured for column layouts with consistent spacing options.
-
-### Vertical with Default Spacing
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<LayoutV2.Vertical className="p-4">
-  <Card.Root>
-    <Card.Content>Item 1</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Item 2</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Item 3</Card.Content>
-  </Card.Root>
-</LayoutV2.Vertical>`}
-/>
-
-### Vertical with Small Spacing
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<LayoutV2.Vertical spacing="small" className="p-4">
-  <Card.Root>
-    <Card.Content>Small</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Gap</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Spacing</Card.Content>
-  </Card.Root>
-</LayoutV2.Vertical>`}
-/>
-
-### Vertical with Large Spacing
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<LayoutV2.Vertical spacing="large" className="p-4">
-  <Card.Root>
-    <Card.Content>Large</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Gap</Card.Content>
-  </Card.Root>
-  <Card.Root>
-    <Card.Content>Spacing</Card.Content>
-  </Card.Root>
-</LayoutV2.Vertical>`}
-/>
 
 ### Vertical with Alignment
 
@@ -359,7 +312,7 @@ The Vertical component is a convenient wrapper around Flex that's pre-configured
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Grid columns="2fr 1fr" gap="4" className="p-4">
+  code={`<LayoutV2.Grid columns="2fr 1fr" gap="md" className="p-4">
   <Card.Root>
     <Card.Content>
       <Card.Title>Main Content</Card.Title>

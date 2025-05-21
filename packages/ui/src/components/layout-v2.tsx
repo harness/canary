@@ -109,9 +109,9 @@ interface LayoutProps {
 interface FlexProps extends LayoutProps, VariantProps<typeof flexVariants> {}
 
 interface GridProps extends LayoutProps, VariantProps<typeof gridVariants> {
-  columns?: string
-  rows?: string
-  flow?: 'row' | 'column' | 'dense' | 'row-dense' | 'column-dense'
+  columns?: string | number
+  rows?: string | number
+  flow?: 'row' | 'column' | 'dense' | 'row dense' | 'column dense'
 }
 
 const Flex = ({
@@ -129,11 +129,7 @@ const Flex = ({
 }: FlexProps & HTMLAttributes<HTMLDivElement>) => {
   return (
     <Comp
-      className={cn(
-        flexVariants({ direction, align, justify, wrap }),
-        gapVariants({ gap, gapX, gapY }),
-        className
-      )}
+      className={cn(flexVariants({ direction, align, justify, wrap }), gapVariants({ gap, gapX, gapY }), className)}
       {...props}
     >
       {children}
@@ -159,15 +155,11 @@ const Grid = ({
 }: GridProps & HTMLAttributes<HTMLDivElement>) => {
   return (
     <Comp
-      className={cn(
-        gridVariants({ align, justify }),
-        gapVariants({ gap, gapX, gapY }),
-        className
-      )}
+      className={cn(gridVariants({ align, justify }), gapVariants({ gap, gapX, gapY }), className)}
       style={{
-        gridTemplateColumns: columns,
-        gridTemplateRows: rows,
-        gridAutoFlow: flow?.replace('-', ' ')
+        gridTemplateColumns: typeof columns === 'number' ? `repeat(${columns}, minmax(0, 1fr))` : columns,
+        gridTemplateRows: typeof rows === 'number' ? `repeat(${rows}, minmax(0, auto))` : rows,
+        gridAutoFlow: flow
       }}
       {...props}
     >

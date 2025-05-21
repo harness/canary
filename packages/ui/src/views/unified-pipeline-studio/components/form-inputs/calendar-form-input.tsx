@@ -6,10 +6,10 @@ import { InputComponent, InputProps, useController, type AnyFormikValue } from '
 
 import { RuntimeInputConfig } from './types/types'
 
-export type CalendarInputType = 'calendar'
+export type CalendarFormInputType = 'calendar'
 
 export interface CalendarInputConfig {
-  inputType: CalendarInputType
+  inputType: 'calendar'
   tooltip?: string
   inputConfig?: {
     /* placeholder for more config */
@@ -48,7 +48,7 @@ function CalendarFormInputInternal(props: CalendarFormInputProps): JSX.Element {
 }
 
 export class CalendarInput extends InputComponent<AnyFormikValue> {
-  public internalType: CalendarInputType = 'calendar'
+  public internalType: CalendarFormInputType = 'calendar'
 
   renderComponent(props: CalendarFormInputProps): JSX.Element {
     return <CalendarFormInputInternal {...props} />

@@ -1,6 +1,6 @@
 import { Switch } from '@components/switch'
 
-import { InputComponent, InputProps, useController, type AnyFormikValue, type UseFormReturn } from '@harnessio/forms'
+import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
 import { InputCaption } from './common/InputCaption'
 import { InputWrapper } from './common/InputWrapper'

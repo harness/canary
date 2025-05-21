@@ -39,7 +39,7 @@ function CardsFormInputInternal(props: CardsFormInputProps): JSX.Element {
       <InputLabel label={label} required={required} />
       <CardSelect.Root type="single" value={field.value} onValueChange={field.onChange} disabled={readonly}>
         {options.map(option => (
-          <CardSelect.Item value={option.value}>
+          <CardSelect.Item value={option.value} key={option.value?.toString()}>
             <CardSelect.Title>{option.label}</CardSelect.Title>
             <CardSelect.Description>{option.description}</CardSelect.Description>
           </CardSelect.Item>

@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Dialog } from '@/components'
+import { Button, ButtonLayout, Dialog } from '@/components'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
@@ -48,7 +48,7 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
         {deleteUserError && <span className="text-2 text-cn-foreground-danger">{deleteUserError}</span>}
 
         <Dialog.Footer>
-          <ButtonGroup className="justify-end">
+          <ButtonLayout>
             {!isDeletingUser && (
               <Button type="button" variant="outline" onClick={onClose}>
                 {t('views:userManagement.cancel', 'Cancel')}
@@ -60,7 +60,7 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
                 ? t('views:userManagement.deleteUser.pending', 'Deleting user...')
                 : t('views:userManagement.deleteUser.confirm', 'Yes, delete user')}
             </Button>
-          </ButtonGroup>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

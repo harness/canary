@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import {
   Alert,
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -139,7 +139,7 @@ export const ProjectSettingsGeneralPage = ({
 
                 {/*BUTTON CONTROL: SAVE & CANCEL*/}
                 <ControlGroup type="button">
-                  <ButtonGroup spacing="3">
+                  <ButtonLayout horizontalAlign="start">
                     {!submitted ? (
                       <>
                         <Button type="submit">
@@ -157,7 +157,7 @@ export const ProjectSettingsGeneralPage = ({
                         <Icon name="tick" size={14} />
                       </Button>
                     )}
-                  </ButtonGroup>
+                  </ButtonLayout>
                 </ControlGroup>
               </Fieldset>
             </FormWrapper>

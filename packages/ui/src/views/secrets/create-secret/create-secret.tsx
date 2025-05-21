@@ -5,7 +5,7 @@ import {
   Accordion,
   Alert,
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -254,14 +254,18 @@ export function CreateSecretPage({
 
         <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
           <ControlGroup>
-            <ButtonGroup className="flex flex-row justify-between">
-              <Button type="button" variant="secondary" onClick={handleCancel}>
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isLoading}>
-                {!isLoading ? 'Save' : 'Saving...'}
-              </Button>
-            </ButtonGroup>
+            <ButtonLayout.Root>
+              <ButtonLayout.Primary>
+                <Button type="submit" disabled={isLoading}>
+                  {!isLoading ? 'Save' : 'Saving...'}
+                </Button>
+              </ButtonLayout.Primary>
+              <ButtonLayout.Secondary>
+                <Button type="button" variant="secondary" onClick={handleCancel}>
+                  Cancel
+                </Button>
+              </ButtonLayout.Secondary>
+            </ButtonLayout.Root>
           </ControlGroup>
         </div>
 

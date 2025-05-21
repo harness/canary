@@ -5,7 +5,7 @@ import {
   Alert,
   Avatar,
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -228,7 +228,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
             {renderErrorMessage(ProfileSettingsErrorType.PROFILE, error?.message || '')}
 
             <ControlGroup type="button">
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 {!profileSubmitted ? (
                   <Button
                     type="submit"
@@ -244,7 +244,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                     <Icon name="tick" size={14} />
                   </Button>
                 )}
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </FormWrapper>
 
@@ -282,7 +282,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
             {renderErrorMessage(ProfileSettingsErrorType.PASSWORD, error?.message || '')}
 
             <ControlGroup type="button">
-              <ButtonGroup>
+              <ButtonLayout>
                 {!passwordSubmitted ? (
                   <Button type="submit" disabled={isUpdatingPassword}>
                     {isUpdatingPassword
@@ -295,7 +295,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                     <Icon name="tick" size={14} />
                   </Button>
                 )}
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </FormWrapper>
         </>

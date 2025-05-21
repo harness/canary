@@ -23,7 +23,8 @@ import {
   radioStyles,
   switchStyles,
   tagStyles,
-  textareaStyles
+  textareaStyles,
+  buttonLayoutStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -450,6 +451,7 @@ export default {
         cardStyles,
         cardSelectStyles,
         paginationStyles,
+        buttonLayoutStyles,
 
         // Form styles
         formSharedStyles,

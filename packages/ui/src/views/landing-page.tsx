@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ButtonGroup, DropdownMenu, Icon } from '@/components'
+import { Button, ButtonLayout, DropdownMenu, Icon } from '@/components'
 import { useRouterContext } from '@/context'
 import { SandboxLayout, TranslationStore } from '@/views'
 
@@ -49,7 +49,7 @@ export const LandingPageView: FC<LandingPageProps> = ({
           )}
         </p>
 
-        <ButtonGroup>
+        <ButtonLayout>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button>
@@ -77,7 +77,7 @@ export const LandingPageView: FC<LandingPageProps> = ({
           <Button variant="outline" asChild>
             <Link to={toCreateProject?.() || ''}>{t('views:landingPage.createProject', 'Create Project')}</Link>
           </Button>
-        </ButtonGroup>
+        </ButtonLayout>
       </section>
     </SandboxLayout.Main>
   )

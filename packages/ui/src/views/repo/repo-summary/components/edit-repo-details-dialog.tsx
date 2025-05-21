@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { AlertDialog, Button, ButtonGroup, Textarea } from '@/components'
+import { AlertDialog, Button, ButtonLayout, Textarea } from '@/components'
 
 interface EditRepoDetailsDialog {
   showEditRepoDetails: boolean
@@ -47,14 +47,14 @@ export const EditRepoDetails = ({
           error={updateRepoError?.length ? updateRepoError : undefined}
         />
         <AlertDialog.Footer>
-          <ButtonGroup>
+          <ButtonLayout>
             <Button variant="outline" onClick={handleClose}>
               Cancel
             </Button>
             <Button type="button" onClick={() => onSave(newDesc)}>
               Save
             </Button>
-          </ButtonGroup>
+          </ButtonLayout>
         </AlertDialog.Footer>
       </AlertDialog.Content>
     </AlertDialog.Root>

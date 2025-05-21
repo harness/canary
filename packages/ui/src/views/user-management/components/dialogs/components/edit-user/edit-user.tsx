@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
 import {
   createEditUserSchema,
   type EditUserFields
@@ -93,7 +93,7 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
           {updateUserError && <span className="text-2 text-cn-foreground-danger">{updateUserError}</span>}
         </FormWrapper>
         <Dialog.Footer>
-          <ButtonGroup className="justify-end">
+          <ButtonLayout>
             <Button type="button" variant="outline" onClick={onClose} disabled={isUpdatingUser}>
               {t('views:userManagement.cancel', 'Cancel')}
             </Button>
@@ -102,7 +102,7 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
                 ? t('views:userManagement.editUser.pending', 'Saving...')
                 : t('views:userManagement.editUser.save', 'Save')}
             </Button>
-          </ButtonGroup>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

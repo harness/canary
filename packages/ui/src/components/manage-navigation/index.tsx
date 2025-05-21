@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { AlertDialog, Button, ButtonGroup, Icon, ScrollArea, Text } from '@/components'
+import { AlertDialog, Button, ButtonLayout, Icon, ScrollArea, Text } from '@/components'
 import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import { MenuGroupType, NavbarItemType } from '@components/app-sidebar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
@@ -215,7 +215,7 @@ export const ManageNavigation = ({
           </div>
         </ScrollArea>
         <AlertDialog.Footer>
-          <ButtonGroup>
+          <ButtonLayout>
             {!submitted ? (
               <>
                 <Button variant="outline" onClick={handleCancel} disabled={isSubmitting}>
@@ -238,7 +238,7 @@ export const ManageNavigation = ({
                 <Icon name="tick" size={14} />
               </Button>
             )}
-          </ButtonGroup>
+          </ButtonLayout>
         </AlertDialog.Footer>
       </AlertDialog.Content>
     </AlertDialog.Root>

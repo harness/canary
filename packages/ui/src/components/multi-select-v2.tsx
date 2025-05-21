@@ -170,18 +170,49 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
           if (e.key === 'Enter' && input.value && !disallowCreation) {
             // Perform case-insensitive comparison to prevent duplicate options with different casing
             // This ensures that 'React' and 'react' would be considered the same option
-            if (
+            // Check if input is valid for adding
+            const isInputValid = 
               !options?.some(option => option.key.toLowerCase() === input.value.toLowerCase()) &&
               (!availableOptions || availableOptions.length === 0) &&
               !getSelectedOptions().some(s => s.key.toLowerCase() === input.value.toLowerCase())
-            ) {
-              const newOption = createOptionFromInput(input.value)
-              const newOptions = [...getSelectedOptions(), newOption]
+              
+            if (isInputValid) {
+              // Initialize new options array
+              const newOptions = [...getSelectedOptions()]
+              
+              // Process input - handle comma-separated values
+              if (input.value.includes(',')) {
+                const tagValues = input.value
+                  .split(',')
+                  .map(tag => tag.trim())
+                  .filter(Boolean)
+
+                // Process each tag
+                tagValues.forEach(tagValue => {
+                  // Check if this specific tag is valid to add
+                  const tagLower = tagValue.toLowerCase()
+                  const isTagValid = 
+                    !options?.some(option => option.key.toLowerCase() === tagLower) &&
+                    (!availableOptions || availableOptions.length === 0) &&
+                    !newOptions.some(s => s.key.toLowerCase() === tagLower)
+                    
+                  if (isTagValid) {
+                    newOptions.push(createOptionFromInput(tagValue))
+                  }
+                })
+              } else {
+                // Single tag case
+                newOptions.push(createOptionFromInput(input.value))
+              }
+              
+              // Update state with new options
               if (isControlled) {
                 onChange?.(newOptions)
               } else {
                 setSelected(newOptions)
               }
+              
+              // Reset input state
               setInputValue('')
               setSearchQuery?.('')
               e.preventDefault()

@@ -3,17 +3,6 @@ import { FC, HTMLAttributes, ReactNode } from 'react'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-interface LayoutProps {
-  children?: ReactNode
-  className?: string
-  gap?: string
-  gapX?: string
-  gapY?: string
-  as?: 'div' | 'span'
-}
-
-interface FlexProps extends LayoutProps, VariantProps<typeof flexVariants> {}
-
 const gridVariants = cva('grid', {
   variants: {
     align: {
@@ -31,12 +20,6 @@ const gridVariants = cva('grid', {
     }
   }
 })
-
-interface GridProps extends LayoutProps, VariantProps<typeof gridVariants> {
-  columns?: string
-  rows?: string
-  flow?: 'row' | 'column' | 'dense' | 'row-dense' | 'column-dense'
-}
 
 const flexVariants = cva('flex', {
   variants: {
@@ -69,6 +52,36 @@ const flexVariants = cva('flex', {
     direction: 'row'
   }
 })
+
+const spacingVariants = cva('', {
+  variants: {
+    spacing: {
+      small: 'var(--cn-spacing-2)',
+      medium: 'var(--cn-spacing-4)',
+      large: 'var(--cn-spacing-6)'
+    }
+  },
+  defaultVariants: {
+    spacing: 'medium'
+  }
+})
+
+interface LayoutProps {
+  children?: ReactNode
+  className?: string
+  gap?: string
+  gapX?: string
+  gapY?: string
+  as?: 'div' | 'span'
+}
+
+interface FlexProps extends LayoutProps, VariantProps<typeof flexVariants> {}
+
+interface GridProps extends LayoutProps, VariantProps<typeof gridVariants> {
+  columns?: string
+  rows?: string
+  flow?: 'row' | 'column' | 'dense' | 'row-dense' | 'column-dense'
+}
 
 const Flex = ({
   children,
@@ -135,19 +148,6 @@ const Grid = ({
     </Comp>
   )
 }
-
-const spacingVariants = cva('', {
-  variants: {
-    spacing: {
-      small: 'var(--cn-spacing-2)',
-      medium: 'var(--cn-spacing-4)',
-      large: 'var(--cn-spacing-6)'
-    }
-  },
-  defaultVariants: {
-    spacing: 'medium'
-  }
-})
 
 interface HorizontalProps extends Omit<FlexProps, 'direction'>, VariantProps<typeof spacingVariants> {}
 

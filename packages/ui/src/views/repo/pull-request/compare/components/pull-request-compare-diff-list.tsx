@@ -241,23 +241,26 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                       }
                     }}
                     className="flex w-80 cursor-pointer items-center justify-between px-3 py-2"
-                  >
-                    <Text color="foreground-1" className="flex-1 overflow-hidden" truncate>
-                      {diff.filePath}
-                    </Text>
-                    <div className="ml-4 flex items-center space-x-2">
-                      {diff.addedLines != null && diff.addedLines > 0 && (
-                        <StatusBadge variant="outline" size="sm" theme="success">
-                          +{diff.addedLines}
-                        </StatusBadge>
-                      )}
-                      {diff.removedLines != null && diff.removedLines > 0 && (
-                        <StatusBadge variant="outline" size="sm" theme="danger">
-                          -{diff.removedLines}
-                        </StatusBadge>
-                      )}
-                    </div>
-                  </DropdownMenu.Item>
+                    title={
+                      <>
+                        <Text color="foreground-1" className="flex-1 overflow-hidden" truncate>
+                          {diff.filePath}
+                        </Text>
+                        <div className="ml-4 flex items-center space-x-2">
+                          {diff.addedLines != null && diff.addedLines > 0 && (
+                            <StatusBadge variant="outline" size="sm" theme="success">
+                              +{diff.addedLines}
+                            </StatusBadge>
+                          )}
+                          {diff.removedLines != null && diff.removedLines > 0 && (
+                            <StatusBadge variant="outline" size="sm" theme="danger">
+                              -{diff.removedLines}
+                            </StatusBadge>
+                          )}
+                        </div>
+                      </>
+                    }
+                  />
                 ))}
               </div>
             </DropdownMenu.Content>

@@ -54,13 +54,12 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
                 <DropdownMenu.Content align="start" className="w-[300px]">
                   {roleOptions.map(role => (
                     <DropdownMenu.Item
+                      title={role.label}
+                      description={role.description}
                       key={role.uid}
                       className="flex-col items-start gap-y-1.5 px-3 py-2"
                       onClick={() => onEdit({ ...member, role: role.uid })}
-                    >
-                      <span className="leading-none">{role.label}</span>
-                      <span className="leading-tight text-cn-foreground-2">{role.description}</span>
-                    </DropdownMenu.Item>
+                    />
                   ))}
                 </DropdownMenu.Content>
               </DropdownMenu.Root>

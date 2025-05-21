@@ -58,9 +58,10 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
               </Button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content align="end">
-              <DropdownMenu.Item className="flex items-center gap-1.5" onClick={() => setEditDialogOpen(true)}>
-                <span>{description?.length ? 'Edit Description' : 'Add description'}</span>
-              </DropdownMenu.Item>
+              <DropdownMenu.Item
+                onClick={() => setEditDialogOpen(true)}
+                title={<span>{description?.length ? 'Edit Description' : 'Add description'}</span>}
+              />
             </DropdownMenu.Content>
           </DropdownMenu.Root>
         </div>
@@ -91,7 +92,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             details.map(item => (
               <Link key={item.id} to={item.to}>
                 <div className="flex cursor-pointer items-center gap-1.5">
-                  <Icon name={item.iconName} size={14} className="text-cn-foreground-3 fill-none" />
+                  <Icon name={item.iconName} size={14} className="fill-none text-cn-foreground-3" />
                   <Text>{item.name}</Text>
                   <CounterBadge>{item.count}</CounterBadge>
                 </div>

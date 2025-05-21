@@ -1,11 +1,9 @@
 import { ComponentProps, ElementType, forwardRef, ReactElement, Ref, useLayoutEffect, useRef, useState } from 'react'
 
-import { useMergeRefs, wrapConditionalObjectElement } from '@/utils'
+import { extractTextFromReactNode, useMergeRefs, wrapConditionalObjectElement } from '@/utils'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
-
-import { Tooltip } from './tooltip'
 
 type TextElement =
   | 'p'
@@ -150,24 +148,20 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
       if (!isTruncated) return
       if (!localRef.current) return
 
-      const { scrollWidth, clientWidth } = localRef.current
-      setWithTooltip(scrollWidth > clientWidth)
+      const { scrollWidth, scrollHeight, clientWidth, clientHeight } = localRef.current
+      setWithTooltip(scrollWidth > clientWidth || scrollHeight > clientHeight)
     }, [isTruncated])
 
     return (
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild>
-          <Comp
-            ref={compRef}
-            className={cn(textVariants({ variant, align, color, truncate, wrap }), className)}
-            {...props}
-            {...wrapConditionalObjectElement({ role: 'heading' }, isHeading)}
-          >
-            {children}
-          </Comp>
-        </Tooltip.Trigger>
-        {withTooltip && <Tooltip.Content side="top">{children}</Tooltip.Content>}
-      </Tooltip.Root>
+      <Comp
+        ref={compRef}
+        className={cn(textVariants({ variant, align, color, truncate, wrap }), className)}
+        {...props}
+        {...wrapConditionalObjectElement({ role: 'heading' }, isHeading)}
+        {...wrapConditionalObjectElement({ title: extractTextFromReactNode(children) }, withTooltip)}
+      >
+        {children}
+      </Comp>
     )
   }
 )

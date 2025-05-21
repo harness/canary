@@ -125,7 +125,7 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
   )
 }
 
-export class ListInput extends InputComponent<AnyFormikValue> {
+export class ListFormInput extends InputComponent<AnyFormikValue> {
   public internalType = 'list'
 
   renderComponent(props: ListFormInputProps): JSX.Element {

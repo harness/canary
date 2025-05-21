@@ -5,7 +5,7 @@ import { BooleanFormInput } from '../boolean-form-input'
 import { CalendarInput } from '../calendar-form-input'
 import { CardsFormInput } from '../cards-form-input'
 import { GroupFormInput } from '../group-form-input'
-import { ListInput } from '../list-input'
+import { ListFormInput } from '../list-form-input'
 import { NumberFormInput } from '../number-form-input'
 import { SelectFormInput } from '../select-form-input'
 import { SeparatorFormInput } from '../separator-form-input'
@@ -18,7 +18,7 @@ inputComponentFactory.registerComponent(new TextareaFormInput())
 inputComponentFactory.registerComponent(new NumberFormInput())
 inputComponentFactory.registerComponent(new BooleanFormInput())
 inputComponentFactory.registerComponent(new ArrayFormInput())
-inputComponentFactory.registerComponent(new ListInput())
+inputComponentFactory.registerComponent(new ListFormInput())
 inputComponentFactory.registerComponent(new GroupFormInput())
 inputComponentFactory.registerComponent(new SelectFormInput())
 inputComponentFactory.registerComponent(new SeparatorFormInput())

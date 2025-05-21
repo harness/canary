@@ -4,7 +4,7 @@
     "name": "source",
     "selectedTokenSets": {
       "core/typography": "source",
-      "core/dimensions": "enabled",
+      "core/dimensions": "source",
       "core/colors_lch": "source"
     },
     "$figmaStyleReferences": {
@@ -20342,9 +20342,9 @@
       "dialog.sm": "082c9cfe30978be58aecc61a4c59db1cbf362530",
       "dialog.md": "fd556149b7dc7759a4431c6da13b0e62eb80a953",
       "dialog.lg": "075e67733b3996b17508c54b79de865e30e7586d",
-      "dialog.container": "f87f7abacaf4c2e5c16a341d2dedf6db52820cc7",
+      "dialog.px": "f87f7abacaf4c2e5c16a341d2dedf6db52820cc7",
       "dialog.gap": "f0ab2ac440fe269ae2cd1b36d05ba7e96e7e7621",
-      "dialog.footer.py": "62fc038a885b1f41712b80f0e2de8a5f11474a0d",
+      "dialog.py": "62fc038a885b1f41712b80f0e2de8a5f11474a0d",
       "dialog.border": "68a6274075e891631508c1eddc559d5624f4bcf5",
       "dialog.radius": "d62efd03278832e19e21fd585fdaa1a349e49cda",
       "dialog.safezone": "88965332f607393eff7da57a6373c4d4d356e90c",
@@ -20383,7 +20383,7 @@
       "header.px": "dec2c833147369f134a52eeee9ba3bd272170237",
       "header.py": "c4b7144512b0e1466a2ade37ebe082cdb145ba9a",
       "header.gap": "006be37eafa04521f584b42c7a545bd669c6d8b3",
-      "header.min-height": "5a6db18d4964e0f7cd1f2440390db04b10ea7e72",
+      "header.min": "5a6db18d4964e0f7cd1f2440390db04b10ea7e72",
       "navtab.gap": "e866fb2328863e2f4de085cfc1013f7fa7f9ebb6",
       "navtab.px": "f6bb7c4ff139a4da5175af8e56b5d57e0eff7ccd",
       "navtab.height": "a4cab85a457781e7234a117a2b0369e485859e32",

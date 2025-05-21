@@ -15,8 +15,8 @@ export interface CardOption {
 }
 
 export interface CardsFormInputConfig {
+  inputType: 'cards'
   inputConfig: {
-    inputType: 'cards'
     options: CardOption[]
     tooltip?: string
   } & RuntimeInputConfig

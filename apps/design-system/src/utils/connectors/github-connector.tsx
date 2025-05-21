@@ -16,7 +16,6 @@ const inputs: IInputConfigWithConfigInterface[] = [
     path: 'githubType',
     label: 'GitHub Type',
     inputConfig: {
-      inputType: 'radio',
       options: [
         { label: 'Cloud', value: 'Cloud', description: 'Connect to Github Cloud', id: 'cloud', title: 'Cloud' },
         {

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Alert, Button, ButtonGroup, Icon, Logo, StackedList } from '@/components'
+import { Alert, Button, ButtonLayout, Icon, Logo, StackedList } from '@/components'
 import { ConnectorItem, connectorRefFilters, DirectionEnum, EntityReference, EntityRendererProps } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -106,12 +106,16 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
         </Alert.Root>
       )}
       {!isDrawer && (
-        <ButtonGroup>
-          <Button type="button" variant="outline" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button type="submit">Save</Button>
-        </ButtonGroup>
+        <ButtonLayout.Root>
+          <ButtonLayout.Primary>
+            <Button type="submit">Save</Button>
+          </ButtonLayout.Primary>
+          <ButtonLayout.Secondary>
+            <Button type="button" variant="outline" onClick={onCancel}>
+              Cancel
+            </Button>
+          </ButtonLayout.Secondary>
+        </ButtonLayout.Root>
       )}
     </div>
   )

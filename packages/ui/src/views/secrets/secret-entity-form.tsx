@@ -1,6 +1,6 @@
 import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react'
 
-import { Alert, Button, ButtonGroup } from '@/components'
+import { Alert, Button, ButtonLayout } from '@/components'
 import { EntityIntent, InputConfigType, TranslationStore } from '@/views'
 
 import {
@@ -87,12 +87,12 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
                 </Alert.Root>
               )}
               {!isDrawer && (
-                <ButtonGroup>
+                <ButtonLayout horizontalAlign="start">
                   <Button variant="outline" onClick={() => onBack?.()}>
                     Back
                   </Button>
                   <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-                </ButtonGroup>
+                </ButtonLayout>
               )}
             </>
           )

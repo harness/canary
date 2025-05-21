@@ -3,7 +3,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
   Button,
-  ButtonGroup,
+    ButtonLayout,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -283,7 +283,7 @@ export function RepoImportPage({
           {/* SUBMIT BUTTONS */}
           <Fieldset className="mt-6">
             <ControlGroup>
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Import repository' : 'Importing repository...'}
@@ -291,7 +291,7 @@ export function RepoImportPage({
                 <Button type="button" variant="outline" onClick={handleCancel}>
                   Cancel
                 </Button>
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </Fieldset>
         </FormWrapper>

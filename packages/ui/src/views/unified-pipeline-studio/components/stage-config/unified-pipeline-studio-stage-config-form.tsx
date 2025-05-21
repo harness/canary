@@ -1,6 +1,6 @@
 import { ElementType, Fragment, useEffect, useState } from 'react'
 
-import { Button, ButtonGroup, Drawer, EntityFormLayout, Icon } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, Icon } from '@/components'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
@@ -114,10 +114,10 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
             <Description>
               Configure a stage for your pipeline. Stages are logical groupings of steps that execute together.
             </Description>
-            <ButtonGroup>
+            <ButtonLayout horizontalAlign="start">
               <Button variant={'ai'}> AI Autofill</Button>
               <Button variant={'outline'}> Use Template</Button>
-            </ButtonGroup>
+            </ButtonLayout>
           </Header>
           <Body>
             <EntityFormLayout.Form>
@@ -125,27 +125,29 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
             </EntityFormLayout.Form>
           </Body>
           <Footer>
-            <ButtonGroup className="justify-between">
-              <ButtonGroup>
-                <Button onClick={() => rootForm.submitForm()}>Submit</Button>
+            <ButtonLayout.Root>
+              <ButtonLayout.Primary>
                 <Button variant="secondary" onClick={requestClose}>
                   Cancel
                 </Button>
-              </ButtonGroup>
+                <Button onClick={() => rootForm.submitForm()}>Submit</Button>
+              </ButtonLayout.Primary>
               {!!editStageIntention && (
-                <Button
-                  variant="secondary"
-                  iconOnly
-                  onClick={() => {
-                    requestYamlModifications.deleteInArray({ path: editStageIntention.path })
-                    requestClose()
-                  }}
-                  aria-label="Remove Stage"
-                >
-                  <Icon name="trash" />
-                </Button>
+                <ButtonLayout.Secondary>
+                  <Button
+                    variant="secondary"
+                    iconOnly
+                    onClick={() => {
+                      requestYamlModifications.deleteInArray({ path: editStageIntention.path })
+                      requestClose()
+                    }}
+                    aria-label="Remove Stage"
+                  >
+                    <Icon name="trash" />
+                  </Button>
+                </ButtonLayout.Secondary>
               )}
-            </ButtonGroup>
+            </ButtonLayout.Root>
           </Footer>
         </Content>
       )}

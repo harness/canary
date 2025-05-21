@@ -29,26 +29,23 @@ function InputValueTypeSelection(props: InputLabelProps): JSX.Element {
 
       <DropdownMenu.Content>
         <DropdownMenu.Item
+          title="Fixed"
           onSelect={() => {
             setInputValueType('fixed')
           }}
-        >
-          Fixed
-        </DropdownMenu.Item>
+        />
         <DropdownMenu.Item
+          title="Runtime"
           onSelect={() => {
             setInputValueType('runtime')
           }}
-        >
-          Runtime
-        </DropdownMenu.Item>
+        />
         <DropdownMenu.Item
+          title="Expression"
           onSelect={() => {
             setInputValueType('expression')
           }}
-        >
-          Expression
-        </DropdownMenu.Item>
+        />
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

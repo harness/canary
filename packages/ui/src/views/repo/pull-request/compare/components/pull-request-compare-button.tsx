@@ -56,7 +56,6 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
     <>
       {!isSubmitted ? (
         <SplitButton<PR_TYPE>
-          id="pr-type"
           handleButtonClick={handleButtonClick}
           loading={isLoading}
           selectedValue={prType}

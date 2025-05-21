@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, Checkbox, CounterBadge, DropdownMenu, Icon, SplitButton } from '@/components'
+import { Button, CounterBadge, DropdownMenu, Icon, SplitButton } from '@/components'
 import { TypesUser } from '@/types'
 import { formatNumber } from '@/utils'
 import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
@@ -181,13 +181,13 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
 
       // TODO: we have to give the possibility to choose several values
       return (
-        <DropdownMenu.Item
+        <DropdownMenu.CheckboxItem
+          title={item.name}
+          checked={isSelected}
           key={idx}
           onClick={(e: React.MouseEvent<HTMLDivElement>) => handleCommitCheck(e, item)}
           className="flex cursor-pointer items-center"
-        >
-          <Checkbox checked={isSelected} label={item.name} />
-        </DropdownMenu.Item>
+        />
       )
     })
   }
@@ -231,20 +231,17 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             <Icon name="chevron-fill-down" size={6} className="chevron-down text-icons-7" />
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="start">
-            <DropdownMenu.Group>
-              {DiffModeOptions.map(item => (
-                <DropdownMenu.Item
-                  className={cn({
-                    'bg-cn-background-hover':
-                      diffMode === (item.value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
-                  })}
-                  key={item.value}
-                  onClick={() => handleDiffModeChange(item.value)}
-                >
-                  {item.name}
-                </DropdownMenu.Item>
-              ))}
-            </DropdownMenu.Group>
+            {DiffModeOptions.map(item => (
+              <DropdownMenu.Item
+                title={item.name}
+                className={cn({
+                  'bg-cn-background-hover':
+                    diffMode === (item.value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
+                })}
+                key={item.value}
+                onClick={() => handleDiffModeChange(item.value)}
+              />
+            ))}
           </DropdownMenu.Content>
         </DropdownMenu.Root>
 
@@ -269,26 +266,29 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   setJumpToDiff(diff.filePath)
                 }}
                 className="flex w-full items-center justify-between gap-x-5 py-1.5"
-              >
-                <div className="flex min-w-0 flex-1 items-center justify-start gap-x-1.5">
-                  <Icon name="file" size={16} className="shrink-0 text-icons-1" />
-                  <span className="overflow-hidden truncate text-2 text-cn-foreground-1 [direction:rtl]">
-                    {diff.filePath}
-                  </span>
-                </div>
-                <div className="flex shrink-0 items-center text-2">
-                  {diff.addedLines != null && diff.addedLines > 0 && (
-                    <span className="text-cn-foreground-success">+{diff.addedLines}</span>
-                  )}
-                  {diff.addedLines != null &&
-                    diff.addedLines > 0 &&
-                    diff.deletedLines != null &&
-                    diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
-                  {diff.deletedLines != null && diff.deletedLines > 0 && (
-                    <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
-                  )}
-                </div>
-              </DropdownMenu.Item>
+                title={
+                  <>
+                    <div className="flex min-w-0 flex-1 items-center justify-start gap-x-1.5">
+                      <Icon name="file" size={16} className="shrink-0 text-icons-1" />
+                      <span className="overflow-hidden truncate text-2 text-cn-foreground-1 [direction:rtl]">
+                        {diff.filePath}
+                      </span>
+                    </div>
+                    <div className="flex shrink-0 items-center text-2">
+                      {diff.addedLines != null && diff.addedLines > 0 && (
+                        <span className="text-cn-foreground-success">+{diff.addedLines}</span>
+                      )}
+                      {diff.addedLines != null &&
+                        diff.addedLines > 0 &&
+                        diff.deletedLines != null &&
+                        diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
+                      {diff.deletedLines != null && diff.deletedLines > 0 && (
+                        <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
+                      )}
+                    </div>
+                  </>
+                }
+              />
             ))}
           </DropdownMenu.Content>
         </DropdownMenu.Root>
@@ -315,7 +315,6 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           )}
           {!shouldHideReviewButton && currentUser && (
             <SplitButton
-              id="pr-status"
               theme={getApprovalStateTheme(approveState)}
               disabled={isActiveUserPROwner}
               variant="outline"

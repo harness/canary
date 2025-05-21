@@ -60,9 +60,7 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
 
         <div className="p-1">
           {filteredBySearchOptions.map(option => (
-            <DropdownMenu.Item key={option.value as string} onSelect={() => onChange(option)}>
-              {option.label}
-            </DropdownMenu.Item>
+            <DropdownMenu.Item key={option.value as string} onSelect={() => onChange(option)} title={option.label} />
           ))}
 
           {filteredBySearchOptions.length === 0 && (
@@ -74,7 +72,7 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
 
         {customFooter && (
           <div className="border-cn-borders-4 border-t p-1">
-            <DropdownMenu.Item asChild>{customFooter}</DropdownMenu.Item>
+            <DropdownMenu.Item asChild title={customFooter} />
           </div>
         )}
       </DropdownMenu.Content>

@@ -3,9 +3,9 @@ import { MouseEvent, ReactNode } from 'react'
 import { Button, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
-import { Option } from '@components/option'
-import { Radio } from '@components/radio'
 import { cn } from '@utils/cn'
+
+import { ScrollArea } from './scroll-area'
 
 export interface SplitButtonOptionType<T extends string> {
   value: T
@@ -16,7 +16,6 @@ export interface SplitButtonOptionType<T extends string> {
 
 // Base props shared by all variants
 interface SplitButtonBaseProps<T extends string> {
-  id: string
   handleButtonClick: (e: MouseEvent) => void
   loading?: boolean
   selectedValue?: T
@@ -54,7 +53,6 @@ export type SplitButtonProps<T extends string> = SplitButtonSolidProps<T> | Spli
  * - variant=surface with theme=success|danger|muted
  */
 export const SplitButton = <T extends string>({
-  id,
   handleButtonClick,
   loading = false,
   selectedValue,
@@ -88,51 +86,36 @@ export const SplitButton = <T extends string>({
         >
           <Icon name="chevron-down" size={12} className="chevron-down" />
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content className={cn('mt-1 max-w-80', dropdownContentClassName)} align="end">
-          {selectedValue ? (
-            <Radio.Root value={String(selectedValue)} id={id}>
-              <DropdownMenu.Group>
+        <DropdownMenu.Content className={cn('mt-1 max-w-80 flex', dropdownContentClassName)} align="end">
+          <ScrollArea>
+            {selectedValue ? (
+              <DropdownMenu.RadioGroup value={String(selectedValue)}>
                 {options.map(option => (
-                  <DropdownMenu.Item
+                  <DropdownMenu.RadioItem
+                    title={option.label}
+                    description={option?.description}
+                    value={String(option.value)}
                     key={String(option.value)}
                     onClick={() => handleOptionChange(option.value)}
                     disabled={loading || option.disabled}
-                  >
-                    <Option
-                      control={
-                        <Radio.Item
-                          className="mt-px"
-                          value={String(option.value)}
-                          id={String(option.value)}
-                          showOptionalLabel
-                        />
-                      }
-                      id={String(option.value)}
-                      label={option.label}
-                      ariaSelected={selectedValue === option.value}
-                      description={option?.description}
-                    />
-                  </DropdownMenu.Item>
+                  />
+                ))}
+              </DropdownMenu.RadioGroup>
+            ) : (
+              <DropdownMenu.Group>
+                {options.map(option => (
+                  <DropdownMenu.Item
+                    title={option.label}
+                    description={option.description}
+                    key={String(option.value)}
+                    className="px-3 py-2.5"
+                    onClick={() => handleOptionChange(option.value)}
+                    disabled={loading || option.disabled}
+                  />
                 ))}
               </DropdownMenu.Group>
-            </Radio.Root>
-          ) : (
-            <DropdownMenu.Group>
-              {options.map(option => (
-                <DropdownMenu.Item
-                  key={String(option.value)}
-                  className="px-3 py-2.5"
-                  onClick={() => handleOptionChange(option.value)}
-                  disabled={loading || option.disabled}
-                >
-                  <span className="flex flex-col gap-y-1.5">
-                    <span className="leading-none text-cn-foreground-1">{option.label}</span>
-                    {option?.description && <span className="text-cn-foreground-2">{option.description}</span>}
-                  </span>
-                </DropdownMenu.Item>
-              ))}
-            </DropdownMenu.Group>
-          )}
+            )}
+          </ScrollArea>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </div>

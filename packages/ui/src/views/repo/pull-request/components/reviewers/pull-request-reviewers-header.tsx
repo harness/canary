@@ -3,7 +3,6 @@ import { useRef } from 'react'
 import { Avatar, Button, DropdownMenu, Icon, ScrollArea, SearchInput } from '@/components'
 import { PrincipalType } from '@/types'
 import { PRReviewer, TranslationStore } from '@/views'
-import { cn } from '@utils/cn'
 import { debounce } from 'lodash-es'
 
 interface ReviewersHeaderProps {
@@ -75,19 +74,13 @@ const ReviewersHeader = ({
                 const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
 
                 return (
-                  <DropdownMenu.Item
-                    className={cn('py-2', {
-                      'pl-7': !isSelected
-                    })}
+                  <DropdownMenu.AvatarItem
+                    title={<Avatar name={display_name} rounded />}
+                    description={display_name}
+                    checkmark={!!isSelected}
                     key={uid}
                     onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}
-                  >
-                    <div className="flex w-full min-w-0 items-center gap-x-2 pl-1">
-                      {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
-                      <Avatar name={display_name} rounded />
-                      <span className="truncate text-2 font-medium text-cn-foreground-1">{display_name}</span>
-                    </div>
-                  </DropdownMenu.Item>
+                  />
                 )
               })}
             </ScrollArea>

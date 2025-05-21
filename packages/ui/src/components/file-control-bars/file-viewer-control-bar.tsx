@@ -60,12 +60,11 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
             </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="end">
-            <DropdownMenu.Item onSelect={handleViewRaw}>
-              <span className="truncate text-sm">View Raw</span>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item onSelect={handleOpenDeleteDialog}>
-              <span className="truncate text-sm text-cn-foreground-danger">Delete</span>
-            </DropdownMenu.Item>
+            <DropdownMenu.Item onSelect={handleViewRaw} title={<span className="truncate text-sm">View Raw</span>} />
+            <DropdownMenu.Item
+              onSelect={handleOpenDeleteDialog}
+              title={<span className="truncate text-sm text-cn-foreground-danger">Delete</span>}
+            />
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </Layout.Horizontal>

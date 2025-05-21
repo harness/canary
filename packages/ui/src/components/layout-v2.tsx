@@ -66,12 +66,43 @@ const spacingVariants = cva('', {
   }
 })
 
+const gapVariants = cva('', {
+  variants: {
+    gap: {
+      none: 'gap-0',
+      xs: 'gap-1',
+      sm: 'gap-2',
+      md: 'gap-4',
+      lg: 'gap-6',
+      xl: 'gap-8'
+    },
+    gapX: {
+      none: 'gap-x-0',
+      xs: 'gap-x-1',
+      sm: 'gap-x-2',
+      md: 'gap-x-4',
+      lg: 'gap-x-6',
+      xl: 'gap-x-8'
+    },
+    gapY: {
+      none: 'gap-y-0',
+      xs: 'gap-y-1',
+      sm: 'gap-y-2',
+      md: 'gap-y-4',
+      lg: 'gap-y-6',
+      xl: 'gap-y-8'
+    }
+  }
+})
+
+type GapSize = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+
 interface LayoutProps {
   children?: ReactNode
   className?: string
-  gap?: string
-  gapX?: string
-  gapY?: string
+  gap?: GapSize
+  gapX?: GapSize
+  gapY?: GapSize
   as?: 'div' | 'span'
 }
 
@@ -100,9 +131,7 @@ const Flex = ({
     <Comp
       className={cn(
         flexVariants({ direction, align, justify, wrap }),
-        gap && `gap-${gap}`,
-        gapX && `gap-x-${gapX}`,
-        gapY && `gap-y-${gapY}`,
+        gapVariants({ gap, gapX, gapY }),
         className
       )}
       {...props}
@@ -132,9 +161,7 @@ const Grid = ({
     <Comp
       className={cn(
         gridVariants({ align, justify }),
-        gap && `gap-${gap}`,
-        gapX && `gap-x-${gapX}`,
-        gapY && `gap-y-${gapY}`,
+        gapVariants({ gap, gapX, gapY }),
         className
       )}
       style={{

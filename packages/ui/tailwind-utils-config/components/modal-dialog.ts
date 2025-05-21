@@ -12,7 +12,8 @@ export default {
     borderWidth: 'var(--cn-dialog-border)',
     boxShadow: 'var(--cn-shadow-5)',
     width: 'var(--cn-modal-width-sm)',
-    maxWidth: '100%',
+    maxWidth: 'calc(100vw - (var(--cn-dialog-safezone) * 2))',
+    maxHeight: 'calc(100vh - (var(--cn-dialog-safezone) * 2))',
     padding: 'var(--cn-dialog-container)',
     gap: 'var(--cn-dialog-gap)',
     '@apply fixed left-1/2 top-1/2 z-50 flex flex-col translate-x-[-50%] translate-y-[-50%]': '',
@@ -54,6 +55,7 @@ export default {
   // Header Icon/Logo and Title
   '.cn-modal-dialog-header-title-row': {
     gap: 'var(--cn-spacing-2-half)',
+    paddingRight: 'var(--cn-spacing-6)',
     '@apply flex items-center': ''
   },
   '.cn-modal-dialog-header-icon': {
@@ -80,37 +82,27 @@ export default {
 
   // Body Component
   '.cn-modal-dialog-body': {
-    '@apply flex-grow': ''
+    '@apply flex-grow h-full overflow-auto': ''
   },
 
   // Footer Component
   '.cn-modal-dialog-footer': {
     borderTop: '1px solid var(--cn-border-3)',
     borderTopWidth: 'var(--cn-dialog-border)',
-    paddingTop: 'var(--cn-dialog-footer-py)',
+    paddingTop: 'var(--cn-dialog-container)',
     paddingLeft: 'var(--cn-dialog-container)',
     paddingRight: 'var(--cn-dialog-container)',
     marginLeft: 'calc(-1 * var(--cn-dialog-container))',
     marginRight: 'calc(-1 * var(--cn-dialog-container))',
-    '@apply flex justify-end gap-3': '',
-    '@apply mt-auto': ''
+    '@apply flex justify-end gap-3': ''
   },
 
   // Close (X) Button
   '.cn-modal-dialog-close': {
-    '@apply cursor-pointer flex items-center justify-center absolute': '',
-    color: 'var(--cn-text-2)',
-    width: `var(--cn-icon-size-default)`,
-    height: `var(--cn-icon-size-default)`,
+    position: 'absolute',
     top: 'var(--cn-dialog-container)',
     right: 'var(--cn-dialog-container)',
-    '&:hover': {
-      color: 'var(--cn-text-1)'
-    },
-
-    '&.cn-modal-dialog-close-icon': {
-      width: `var(--cn-icon-size-default)`,
-      height: `var(--cn-icon-size-default)`
-    }
+    width: `var(--cn-icon-size-default)`,
+    height: `var(--cn-icon-size-default)`
   }
 }

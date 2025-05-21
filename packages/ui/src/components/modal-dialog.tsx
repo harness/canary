@@ -37,13 +37,12 @@ const headerVariants = cva('cn-modal-dialog-header', {
 
 export interface ModalDialogRootProps {
   open?: boolean
-  defaultOpen?: boolean
   onOpenChange?: (open: boolean) => void
   children: ReactNode
 }
 
-const Root = ({ open, defaultOpen, onOpenChange, children }: ModalDialogRootProps) => {
-  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen ?? false)
+const Root = ({ open, onOpenChange, children }: ModalDialogRootProps) => {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(open ?? false)
   const isControlled = open !== undefined
   const isOpen = isControlled ? open : uncontrolledOpen
 
@@ -74,8 +73,10 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
       <Dialog.Overlay className="cn-modal-dialog-overlay" />
       <Dialog.Content ref={ref} className={cn(contentVariants({ size }), className)} {...props}>
         {!hideClose && (
-          <Dialog.Close className="cn-modal-dialog-close">
-            <Icon name="close-2" className="cn-modal-dialog-close-icon" skipSize />
+          <Dialog.Close asChild>
+            <Button variant="transparent" className="cn-modal-dialog-close">
+              <Icon name="close-2" skipSize />
+            </Button>
           </Dialog.Close>
         )}
         {children}
@@ -145,7 +146,7 @@ interface BodyProps {
 }
 
 const Body = ({ className, children, ...props }: BodyProps) => (
-  <ScrollArea className={cn('cn-modal-dialog-body', className)} {...props}>
+  <ScrollArea className="flex flex-col" viewportClassName={cn('cn-modal-dialog-body', className)} {...props}>
     {children}
   </ScrollArea>
 )
@@ -155,8 +156,10 @@ const Footer = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
 )
 
 const Close = ({ children, className, ...props }: HTMLAttributes<HTMLButtonElement>) => (
-  <Dialog.Close asChild className={className} {...props}>
-    <Button variant="secondary">{children}</Button>
+  <Dialog.Close asChild>
+    <Button variant="secondary" className={className} {...props}>
+      {children}
+    </Button>
   </Dialog.Close>
 )
 

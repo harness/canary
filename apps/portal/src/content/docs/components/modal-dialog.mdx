@@ -10,41 +10,28 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-4">
+  code={`<div className="flex flex-col space-y-4">
   <ModalDialog.Root>
     <ModalDialog.Trigger asChild>
-      <Button>Basic Modal</Button>
+      <Button>Open Dialog</Button>
     </ModalDialog.Trigger>
     <ModalDialog.Content>
-      <ModalDialog.Header logo="gitlab">
+      <ModalDialog.Header>
         <ModalDialog.Title>Basic Dialog</ModalDialog.Title>
-        <ModalDialog.Description>A simple dialog with logo</ModalDialog.Description>
+        <ModalDialog.Description>A simple dialog with title, description and body</ModalDialog.Description>
       </ModalDialog.Header>
       <ModalDialog.Body>
-        Content goes here
+        <p className="font-body-normal bg-pink-100/80 p-4 rounded-lg text-black">
+          This is the body of the dialog. You can include any content here such as text, forms, or images and style it however you like, as this example does with a pink background.
+          <br /><br />
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          <br /><br />
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
       </ModalDialog.Body>
       <ModalDialog.Footer>
         <ModalDialog.Close>Close</ModalDialog.Close>
         <Button variant="primary">Confirm</Button>
-      </ModalDialog.Footer>
-    </ModalDialog.Content>
-  </ModalDialog.Root>
-
-  <ModalDialog.Root>
-    <ModalDialog.Trigger asChild>
-      <Button>Danger Modal</Button>
-    </ModalDialog.Trigger>
-    <ModalDialog.Content>
-      <ModalDialog.Header icon="incidents" theme="danger">
-        <ModalDialog.Title>Danger</ModalDialog.Title>
-        <ModalDialog.Description>A danger dialog with icon</ModalDialog.Description>
-      </ModalDialog.Header>
-      <ModalDialog.Body>
-        Danger content here
-      </ModalDialog.Body>
-      <ModalDialog.Footer>
-        <ModalDialog.Close>Cancel</ModalDialog.Close>
-        <Button variant="primary" theme="danger">Confirm</Button>
       </ModalDialog.Footer>
     </ModalDialog.Content>
   </ModalDialog.Root>
@@ -100,7 +87,7 @@ The dialog supports three sizes: small, medium, and large:
         <ModalDialog.Header>
           <ModalDialog.Title>Small Dialog</ModalDialog.Title>
         </ModalDialog.Header>
-        <ModalDialog.Body>Compact size for simple dialogs</ModalDialog.Body>
+        <ModalDialog.Description>Compact size for simple dialogs</ModalDialog.Description>
         <ModalDialog.Footer>
           <ModalDialog.Close>Close</ModalDialog.Close>
         </ModalDialog.Footer>
@@ -118,7 +105,9 @@ The dialog supports three sizes: small, medium, and large:
       <ModalDialog.Header>
         <ModalDialog.Title>Medium Dialog</ModalDialog.Title>
       </ModalDialog.Header>
-      <ModalDialog.Body>Standard size for most use cases</ModalDialog.Body>
+      <ModalDialog.Description>
+        Standard size for most use cases
+      </ModalDialog.Description>
       <ModalDialog.Footer>
         <ModalDialog.Close>Close</ModalDialog.Close>
       </ModalDialog.Footer>
@@ -136,7 +125,7 @@ The dialog supports three sizes: small, medium, and large:
         <ModalDialog.Header>
           <ModalDialog.Title>Large Dialog</ModalDialog.Title>
         </ModalDialog.Header>
-        <ModalDialog.Body>Maximum width for complex content</ModalDialog.Body>
+        <ModalDialog.Description>Maximum width for complex content</ModalDialog.Description>
         <ModalDialog.Footer>
           <ModalDialog.Close>Close</ModalDialog.Close>
         </ModalDialog.Footer>
@@ -160,11 +149,10 @@ Headers can have different themes with matching icons:
         <Button>Default</Button>
       </ModalDialog.Trigger>
       <ModalDialog.Content>
-        <ModalDialog.Header icon="circle-plus">
+        <ModalDialog.Header icon="info-circle">
           <ModalDialog.Title>Information</ModalDialog.Title>
           <ModalDialog.Description>Default theme with info icon</ModalDialog.Description>
         </ModalDialog.Header>
-        <ModalDialog.Body>Content here</ModalDialog.Body>
         <ModalDialog.Footer>
           <ModalDialog.Close>Close</ModalDialog.Close>
         </ModalDialog.Footer>
@@ -179,16 +167,14 @@ Headers can have different themes with matching icons:
       <Button>Warning</Button>
     </ModalDialog.Trigger>
     <ModalDialog.Content>
-      <ModalDialog.Header icon="circle-plus" theme="warning">
+      <ModalDialog.Header icon="triangle-warning" theme="warning">
         <ModalDialog.Title>Warning</ModalDialog.Title>
         <ModalDialog.Description>
           Warning theme with caution icon
         </ModalDialog.Description>
       </ModalDialog.Header>
-      <ModalDialog.Body>Content here</ModalDialog.Body>
       <ModalDialog.Footer>
         <ModalDialog.Close>Cancel</ModalDialog.Close>
-        <Button variant="primary">Continue</Button>
       </ModalDialog.Footer>
     </ModalDialog.Content>
   </ModalDialog.Root>
@@ -201,11 +187,10 @@ Headers can have different themes with matching icons:
         <Button>Danger</Button>
       </ModalDialog.Trigger>
       <ModalDialog.Content>
-        <ModalDialog.Header icon="circle-plus" theme="danger">
+        <ModalDialog.Header icon="trash" theme="danger">
           <ModalDialog.Title>Delete Item</ModalDialog.Title>
           <ModalDialog.Description>Danger theme for destructive actions</ModalDialog.Description>
         </ModalDialog.Header>
-        <ModalDialog.Body>This action cannot be undone</ModalDialog.Body>
         <ModalDialog.Footer>
           <ModalDialog.Close>Cancel</ModalDialog.Close>
           <Button variant="primary" theme="danger">Delete</Button>
@@ -232,9 +217,6 @@ Headers can display a logo or an icon:
         <ModalDialog.Title>Connect to Jira</ModalDialog.Title>
         <ModalDialog.Description>Set up your Jira integration</ModalDialog.Description>
       </ModalDialog.Header>
-      <ModalDialog.Body>
-        Integration setup form would go here
-      </ModalDialog.Body>
       <ModalDialog.Footer>
         <ModalDialog.Close>Cancel</ModalDialog.Close>
         <Button variant="primary">Connect</Button>
@@ -251,12 +233,33 @@ Headers can display a logo or an icon:
         <ModalDialog.Title>Create Branch</ModalDialog.Title>
         <ModalDialog.Description>Create a new Git branch from main</ModalDialog.Description>
       </ModalDialog.Header>
-      <ModalDialog.Body>
-        Branch creation form would go here
-      </ModalDialog.Body>
       <ModalDialog.Footer>
         <ModalDialog.Close>Cancel</ModalDialog.Close>
         <Button variant="primary">Create Branch</Button>
+      </ModalDialog.Footer>
+    </ModalDialog.Content>
+  </ModalDialog.Root>
+</div>`}
+/>
+
+### Hidden Close Button
+
+You can hide the close button in the top-right corner using the `hideClose` prop:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-4">
+  <ModalDialog.Root>
+    <ModalDialog.Trigger asChild>
+      <Button>Open Dialog</Button>
+    </ModalDialog.Trigger>
+    <ModalDialog.Content hideClose>
+      <ModalDialog.Header>
+        <ModalDialog.Title>Hidden Close Button</ModalDialog.Title>
+        <ModalDialog.Description>This dialog has no close button in the top-right corner</ModalDialog.Description>
+      </ModalDialog.Header>
+      <ModalDialog.Footer>
+        <ModalDialog.Close>Close</ModalDialog.Close>
       </ModalDialog.Footer>
     </ModalDialog.Content>
   </ModalDialog.Root>
@@ -269,73 +272,57 @@ The Body component automatically handles scrolling for long content:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<ModalDialog.Root>
-  <ModalDialog.Trigger asChild>
-    <Button>Scrollable</Button>
-  </ModalDialog.Trigger>
-  <ModalDialog.Content>
-    <ModalDialog.Header icon="circle-plus">
-      <ModalDialog.Title>Long Content</ModalDialog.Title>
-      <ModalDialog.Description>Dialog with scrollable content</ModalDialog.Description>
-    </ModalDialog.Header>
-    <ModalDialog.Body>
-      <div className="space-y-4">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div key={i}>
-            <h3 className="font-semibold">Section {i + 1}</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-          </div>
-        ))}
-      </div>
-    </ModalDialog.Body>
-    <ModalDialog.Footer>
-      <ModalDialog.Close>Close</ModalDialog.Close>
-    </ModalDialog.Footer>
-  </ModalDialog.Content>
-</ModalDialog.Root>`}
-/>
+  code={`<div className="flex flex-col space-y-4">
+  <ModalDialog.Root>
+    <ModalDialog.Trigger asChild>
+      <Button>Default</Button>
+    </ModalDialog.Trigger>
+    <ModalDialog.Content>
+      <ModalDialog.Header icon="circle-plus">
+        <ModalDialog.Title>Long Content</ModalDialog.Title>
+        <ModalDialog.Description>Dialog with scrollable content</ModalDialog.Description>
+      </ModalDialog.Header>
+      <ModalDialog.Body>
+        <div className="space-y-4">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <div key={i}>
+              <h3 className="font-body-strong">Section {i + 1}</h3>
+              <p className="font-body-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+            </div>
+          ))}
+        </div>
+      </ModalDialog.Body>
+      <ModalDialog.Footer>
+        <ModalDialog.Close>Close</ModalDialog.Close>
+      </ModalDialog.Footer>
+    </ModalDialog.Content>
+  </ModalDialog.Root>
 
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "size",
-      type: "'sm' | 'md' | 'lg'",
-      default: "'sm'",
-      description: "Controls the width of the dialog",
-    },
-    {
-      name: "hideClose",
-      type: "boolean",
-      default: "false",
-      description: "Hides the close button in the top-right corner",
-    },
-    {
-      name: "theme",
-      type: "'default' | 'warning' | 'danger'",
-      default: "'default'",
-      description: "Theme for the header section",
-    },
-    {
-      name: "icon",
-      type: "string",
-      description: "Icon to display in the header (cannot be used with logo)",
-    },
-    {
-      name: "logo",
-      type: "string",
-      description: "Logo to display in the header (cannot be used with icon)",
-    },
-    {
-      name: "open",
-      type: "boolean",
-      description: "Controls the open state in controlled mode",
-    },
-    {
-      name: "onOpenChange",
-      type: "(open: boolean) => void",
-      description: "Callback when open state changes",
-    },
-  ]}
+  <ModalDialog.Root>
+    <ModalDialog.Trigger asChild>
+      <Button>Fixed Height</Button>
+    </ModalDialog.Trigger>
+    <ModalDialog.Content className="h-1/2">
+      <ModalDialog.Header icon="circle-plus">
+        <ModalDialog.Title>Long Content</ModalDialog.Title>
+        <ModalDialog.Description>Dialog with scrollable content</ModalDialog.Description>
+      </ModalDialog.Header>
+      <ModalDialog.Body>
+        <div className="space-y-4">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <div key={i}>
+              <h3 className="font-body-strong">Section {i + 1}</h3>
+              <p className="font-body-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+            </div>
+          ))}
+        </div>
+      </ModalDialog.Body>
+      <ModalDialog.Footer>
+        <ModalDialog.Close>Close</ModalDialog.Close>
+      </ModalDialog.Footer>
+    </ModalDialog.Content>
+  </ModalDialog.Root>
+</div>`}
 />
 
 ## API Reference
@@ -355,12 +342,6 @@ Controls the open/close behavior of the modal.
     {
       name: "open",
       description: "Controls the open state of the dialog",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "defaultOpen",
-      description: "Initial open state for uncontrolled mode",
       required: false,
       value: "boolean",
     },
@@ -397,14 +378,14 @@ The main content container of the dialog.
       description: "Controls the width of the dialog",
       required: false,
       value: "'sm' | 'md' | 'lg'",
-      default: "'sm'",
+      defaultValue: "'sm'",
     },
     {
       name: "hideClose",
       description: "Hides the close button in the top-right corner",
       required: false,
       value: "boolean",
-      default: "false",
+      defaultValue: "false",
     },
     {
       name: "className",
@@ -451,7 +432,7 @@ The header section of the dialog, containing the title and optional description.
       description: "Theme for the header section",
       required: false,
       value: "'default' | 'warning' | 'danger'",
-      default: "'default'",
+      defaultValue: "'default'",
     },
     {
       name: "className",

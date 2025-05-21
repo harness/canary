@@ -22,6 +22,7 @@ import {
   multiSelectV2Styles,
   paginationStyles,
   radioStyles,
+  scrollAreaStyles,
   switchStyles,
   tagStyles,
   textareaStyles
@@ -452,6 +453,7 @@ export default {
         cardSelectStyles,
         paginationStyles,
         modalDialogStyles,
+        scrollAreaStyles,
 
         // Form styles
         formSharedStyles,

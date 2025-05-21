@@ -70,27 +70,27 @@ const gapVariants = cva('', {
   variants: {
     gap: {
       none: 'gap-0',
-      xs: 'gap-1',
-      sm: 'gap-2',
-      md: 'gap-4',
-      lg: 'gap-6',
-      xl: 'gap-8'
+      xs: 'gap-[var(--cn-layout-xs,var(--cn-spacing-2))]',
+      sm: 'gap-[var(--cn-layout-sm,var(--cn-spacing-3))]',
+      md: 'gap-[var(--cn-layout-md,var(--cn-spacing-4))]',
+      lg: 'gap-[var(--cn-layout-lg,var(--cn-spacing-6))]',
+      xl: 'gap-[var(--cn-layout-xl,var(--cn-spacing-8))]'
     },
     gapX: {
       none: 'gap-x-0',
-      xs: 'gap-x-1',
-      sm: 'gap-x-2',
-      md: 'gap-x-4',
-      lg: 'gap-x-6',
-      xl: 'gap-x-8'
+      xs: 'gap-x-[var(--cn-layout-xs,var(--cn-spacing-2))]',
+      sm: 'gap-x-[var(--cn-layout-sm,var(--cn-spacing-3))]',
+      md: 'gap-x-[var(--cn-layout-md,var(--cn-spacing-4))]',
+      lg: 'gap-x-[var(--cn-layout-lg,var(--cn-spacing-6))]',
+      xl: 'gap-x-[var(--cn-layout-xl,var(--cn-spacing-8))]'
     },
     gapY: {
       none: 'gap-y-0',
-      xs: 'gap-y-1',
-      sm: 'gap-y-2',
-      md: 'gap-y-4',
-      lg: 'gap-y-6',
-      xl: 'gap-y-8'
+      xs: 'gap-y-[var(--cn-layout-xs,var(--cn-spacing-2))]',
+      sm: 'gap-y-[var(--cn-layout-sm,var(--cn-spacing-3))]',
+      md: 'gap-y-[var(--cn-layout-md,var(--cn-spacing-4))]',
+      lg: 'gap-y-[var(--cn-layout-lg,var(--cn-spacing-6))]',
+      xl: 'gap-y-[var(--cn-layout-xl,var(--cn-spacing-8))]'
     }
   }
 })
@@ -103,7 +103,7 @@ interface LayoutProps {
   gap?: GapSize
   gapX?: GapSize
   gapY?: GapSize
-  as?: 'div' | 'span'
+  as?: React.ElementType
 }
 
 interface FlexProps extends LayoutProps, VariantProps<typeof flexVariants> {}

@@ -56,37 +56,38 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
         sideOffset={sideOffset}
         alignOffset={alignOffset}
       >
-        <DropdownMenu.Group>
-          {actions.map((action, idx) =>
-            action.to ? (
-              <Link
-                key={`${action.title}-${idx}`}
-                to={action.to}
-                onClick={e => {
-                  e.stopPropagation()
-                }}
-              >
-                <DropdownMenu.Item>
+        {actions.map((action, idx) =>
+          action.to ? (
+            <Link
+              key={`${action.title}-${idx}`}
+              to={action.to}
+              onClick={e => {
+                e.stopPropagation()
+              }}
+            >
+              <DropdownMenu.Item
+                title={
                   <span className={cn('truncate text-sm', { 'text-cn-foreground-danger': action.isDanger })}>
                     {action.title}
                   </span>
-                </DropdownMenu.Item>
-              </Link>
-            ) : (
-              <DropdownMenu.Item
-                key={`${action.title}-${idx}`}
-                onClick={e => {
-                  e.stopPropagation()
-                  action?.onClick?.()
-                }}
-              >
+                }
+              />
+            </Link>
+          ) : (
+            <DropdownMenu.Item
+              title={
                 <span className={cn('truncate text-sm', { 'text-cn-foreground-danger': action.isDanger })}>
                   {action.title}
                 </span>
-              </DropdownMenu.Item>
-            )
-          )}
-        </DropdownMenu.Group>
+              }
+              key={`${action.title}-${idx}`}
+              onClick={e => {
+                e.stopPropagation()
+                action?.onClick?.()
+              }}
+            />
+          )
+        )}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

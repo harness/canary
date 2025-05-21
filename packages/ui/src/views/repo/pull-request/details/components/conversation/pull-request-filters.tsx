@@ -22,9 +22,7 @@ const DropdownMenuComponent = <T extends { label: string; value: string }>({
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-56" align="end">
         {items.map(item => (
-          <DropdownMenu.Item className="py-2.5" key={item.value} onClick={() => onItemSelect(item)}>
-            {item.label}
-          </DropdownMenu.Item>
+          <DropdownMenu.Item key={item.value} onClick={() => onItemSelect(item)} title={item.label} />
         ))}
       </DropdownMenu.Content>
     </DropdownMenu.Root>

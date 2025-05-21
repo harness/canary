@@ -58,9 +58,10 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
               </Button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content align="end">
-              <DropdownMenu.Item className="flex items-center gap-1.5" onClick={() => setEditDialogOpen(true)}>
-                <span>{description?.length ? 'Edit Description' : 'Add description'}</span>
-              </DropdownMenu.Item>
+              <DropdownMenu.Item
+                onClick={() => setEditDialogOpen(true)}
+                title={<span>{description?.length ? 'Edit Description' : 'Add description'}</span>}
+              />
             </DropdownMenu.Content>
           </DropdownMenu.Root>
         </div>

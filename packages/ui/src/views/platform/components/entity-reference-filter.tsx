@@ -31,9 +31,7 @@ export const EntityReferenceFilter: React.FC<EntityReferenceFilterProps> = ({
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" className="w-50 max-h-80 overflow-y-auto">
         {Object.entries(filterTypes).map(([type, label]) => (
-          <DropdownMenu.Item key={type} onClick={() => handleValueChange(type)}>
-            {label}
-          </DropdownMenu.Item>
+          <DropdownMenu.Item key={type} onClick={() => handleValueChange(type)} title={label} />
         ))}
       </DropdownMenu.Content>
     </DropdownMenu.Root>

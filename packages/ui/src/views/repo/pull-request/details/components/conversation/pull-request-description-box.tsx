@@ -41,16 +41,13 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-[200px]" align="end">
-          <DropdownMenu.Group>
-            <DropdownMenu.Item
-              onClick={e => {
-                setEdit(true)
-                e.stopPropagation()
-              }}
-            >
-              Edit
-            </DropdownMenu.Item>
-          </DropdownMenu.Group>
+          <DropdownMenu.Item
+            title="Edit"
+            onClick={e => {
+              setEdit(true)
+              e.stopPropagation()
+            }}
+          />
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     )

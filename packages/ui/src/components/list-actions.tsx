@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 
-import { CheckIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
 
 import { DropdownMenu } from './dropdown-menu'
@@ -49,10 +48,12 @@ function Dropdown({ title, items, onChange, selectedValue }: DropdownProps) {
         <DropdownMenu.Content align="end">
           {items.map((i, i_idx) => {
             return (
-              <DropdownMenu.Item className="cursor-pointer" onClick={() => onChange?.(i.value ?? i.name)} key={i_idx}>
-                <div className="mr-1 w-4">{Boolean(i.value) && selectedValue === i.value ? <CheckIcon /> : null}</div>
-                {i.name}
-              </DropdownMenu.Item>
+              <DropdownMenu.Item
+                onClick={() => onChange?.(i.value ?? i.name)}
+                key={i_idx}
+                title={i.name}
+                checkmark={Boolean(i.value) && selectedValue === i.value}
+              />
             )
           })}
         </DropdownMenu.Content>

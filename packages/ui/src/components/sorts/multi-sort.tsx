@@ -81,11 +81,10 @@ const SortableItem = ({
         <DropdownMenu.Content align="start">
           {sortOptions.map(option => (
             <DropdownMenu.Item
+              title={option.label}
               onSelect={() => onUpdateSort?.(index, { ...sort, type: option.value })}
               key={option.value}
-            >
-              {option.label}
-            </DropdownMenu.Item>
+            />
           ))}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
@@ -100,11 +99,10 @@ const SortableItem = ({
         <DropdownMenu.Content align="start">
           {sortDirections.map(direction => (
             <DropdownMenu.Item
+              title={direction.label}
               onSelect={() => onUpdateSort?.(index, { ...sort, direction: direction.value })}
               key={direction.value}
-            >
-              {direction.label}
-            </DropdownMenu.Item>
+            />
           ))}
         </DropdownMenu.Content>
       </DropdownMenu.Root>

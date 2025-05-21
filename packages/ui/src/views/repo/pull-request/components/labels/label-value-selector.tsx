@@ -113,15 +113,12 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
 
       <ScrollArea viewportClassName="max-h-[224px]">
         {values.map(value => (
-          <DropdownMenu.Item key={value.id} onSelect={handleOnSelect(value)}>
-            <div className="relative w-full pr-7">
-              <Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={value.value} />
-
-              {label.selectedValueId === value.id && (
-                <IconV2 className="absolute right-0 top-1 text-icons-2" name="check" size={12} />
-              )}
-            </div>
-          </DropdownMenu.Item>
+          <DropdownMenu.Item
+            key={value.id}
+            onSelect={handleOnSelect(value)}
+            title={<Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={value.value} />}
+            checkmark={label.selectedValueId === value.id}
+          />
         ))}
 
         {isAllowAddNewValue && !!label?.isCustom && !!values.length && <DropdownMenu.Separator />}
@@ -132,9 +129,10 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
               {t('views:pullRequests.addValue', 'Add new value')}
             </span>
 
-            <DropdownMenu.Item onSelect={handleAddNewValue}>
-              <Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={searchState} />
-            </DropdownMenu.Item>
+            <DropdownMenu.Item
+              onSelect={handleAddNewValue}
+              title={<Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={searchState} />}
+            />
           </>
         )}
 

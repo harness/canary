@@ -148,8 +148,10 @@ export const LabelsHeader = ({
               {!!labelsListWithValues.length && (
                 <ScrollArea viewportClassName="max-h-[224px]">
                   {labelsListWithValues?.map((label, idx) => (
-                    <DropdownMenu.Item key={`${label.id}-${idx}`} onSelect={handleOnSelect(label)}>
-                      <div className="relative grid w-full gap-y-1.5 pr-7">
+                    <DropdownMenu.Item
+                      key={`${label.id}-${idx}`}
+                      onSelect={handleOnSelect(label)}
+                      title={
                         <Tag
                           variant="secondary"
                           size="sm"
@@ -157,16 +159,10 @@ export const LabelsHeader = ({
                           label={label.key}
                           value={(label.values?.length || '').toString()}
                         />
-
-                        {!!label?.description && (
-                          <span className="w-full truncate text-cn-foreground-2">{label.description}</span>
-                        )}
-
-                        {label.isSelected && (
-                          <IconV2 className="absolute right-0 top-1 text-icons-2" name="check" size={12} />
-                        )}
-                      </div>
-                    </DropdownMenu.Item>
+                      }
+                      description={label.description}
+                      checkmark={label.isSelected}
+                    />
                   ))}
                 </ScrollArea>
               )}

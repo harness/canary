@@ -1,4 +1,4 @@
-import { createElement, ReactNode } from 'react'
+import { Children, createElement, isValidElement, ReactElement, ReactNode } from 'react'
 
 import { TimeAgoHoverCard } from '@/components'
 import { formatDistanceToNow } from 'date-fns'
@@ -81,4 +81,15 @@ export const timeAgo = (
     console.error(`Failed to format time ago: ${error}`)
     return 'Unknown time'
   }
+}
+
+export const filterChildrenByDisplayNames = (children: ReactNode, displayNames: string[]): ReactElement[] => {
+  return Children.toArray(children).filter((child): child is ReactElement => {
+    if (!isValidElement(child) || !child.type || typeof child.type === 'string') {
+      return false
+    }
+
+    const childDisplayName = (child.type as any).displayName
+    return displayNames.includes(childDisplayName)
+  })
 }

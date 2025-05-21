@@ -25,7 +25,7 @@ const avatarVariants = cva('cn-avatar', {
   }
 })
 
-interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
+export interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
   name?: string
   src?: string
   size?: VariantProps<typeof avatarVariants>['size']

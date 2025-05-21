@@ -45,31 +45,48 @@ export const SidebarItem = ({
 
   const dropdownItems = isRecent ? (
     <>
-      <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handlePin}>
-        <Text truncate color="inherit">
-          {t('component:navbar.pin', 'Pin')}
-        </Text>
-      </DropdownMenu.Item>
-      <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handleRemoveRecent}>
-        <Text truncate color="inherit">
-          {t('component:navbar.remove', 'Remove')}
-        </Text>
-      </DropdownMenu.Item>
+      <DropdownMenu.Item
+        className={dropdownItemClassNames}
+        onSelect={handlePin}
+        title={
+          <Text truncate color="inherit">
+            {t('component:navbar.pin', 'Pin')}
+          </Text>
+        }
+      />
+
+      <DropdownMenu.Item
+        className={dropdownItemClassNames}
+        onSelect={handleRemoveRecent}
+        title={
+          <Text truncate color="inherit">
+            {t('component:navbar.remove', 'Remove')}
+          </Text>
+        }
+      />
     </>
   ) : (
     <>
-      <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handleCustomNav}>
-        <Text truncate color="inherit">
-          {t('component:navbar.reorder', 'Reorder')}
-        </Text>
-      </DropdownMenu.Item>
+      <DropdownMenu.Item
+        className={dropdownItemClassNames}
+        onSelect={handleCustomNav}
+        title={
+          <Text truncate color="inherit">
+            {t('component:navbar.reorder', 'Reorder')}
+          </Text>
+        }
+      />
 
       {!item.permanentlyPinned && (
-        <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handlePin}>
-          <Text truncate color="inherit">
-            {t('component:navbar.unpin', 'Unpin')}
-          </Text>
-        </DropdownMenu.Item>
+        <DropdownMenu.Item
+          className={dropdownItemClassNames}
+          onSelect={handlePin}
+          title={
+            <Text truncate color="inherit">
+              {t('component:navbar.unpin', 'Unpin')}
+            </Text>
+          }
+        />
       )}
     </>
   )

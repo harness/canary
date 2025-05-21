@@ -23,16 +23,20 @@ export const FileAdditionsTrigger: FC<FileAdditionsTriggerProps> = ({ pathNewFil
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="min-w-[157px]" align="end">
-        <DropdownMenu.Item>
-          <Link variant="secondary" to={pathNewFile} prefixIcon="plus">
-            <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create File')}</span>
-          </Link>
-        </DropdownMenu.Item>
-        <DropdownMenu.Item>
-          <Link variant="secondary" to={pathUploadFiles} prefixIcon="upload">
-            <span className="truncate">{t('views:repos.upload-files', 'Upload files')}</span>
-          </Link>
-        </DropdownMenu.Item>
+        <DropdownMenu.Item
+          title={
+            <Link variant="secondary" to={pathNewFile} prefixIcon="plus">
+              <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create file')}</span>
+            </Link>
+          }
+        />
+        <DropdownMenu.Item
+          title={
+            <Link variant="secondary" to={pathUploadFiles} prefixIcon="upload">
+              <span className="truncate">{t('views:repos.upload-files', 'Upload files')}</span>
+            </Link>
+          }
+        />
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

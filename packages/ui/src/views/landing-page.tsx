@@ -56,14 +56,12 @@ export const LandingPageView: FC<LandingPageProps> = ({ spaces, getProjectPath, 
               {!!spaces?.length &&
                 spaces.map(space => (
                   <Link key={space.id} to={getProjectPath(space?.path)}>
-                    <DropdownMenu.Item>{space.identifier}</DropdownMenu.Item>
+                    <DropdownMenu.Item title={space.identifier} />
                   </Link>
                 ))}
 
               {!spaces?.length && (
-                <DropdownMenu.Item disabled>
-                  {t('views:landingPage.noProjects', 'No projects available')}
-                </DropdownMenu.Item>
+                <DropdownMenu.Item disabled title={t('views:landingPage.noProjects', 'No projects available')} />
               )}
             </DropdownMenu.Content>
           </DropdownMenu.Root>

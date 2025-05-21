@@ -1,11 +1,13 @@
 import { FormMultiSelect, type FormMultiSelectPropsType } from './components/form-multi-select-v2'
+import { FormNumberInput, type FormNumberInputPropsType } from './components/form-number-input'
 import { FormTextInput, type FormTextInputPropsType } from './components/form-text-input'
 import { FormTextarea } from './components/form-textarea'
 
 const FormInput = {
   Text: FormTextInput,
   MultiSelect: FormMultiSelect,
-  Textarea: FormTextarea
+  Textarea: FormTextarea,
+  Number: FormNumberInput
 }
 
-export { FormInput, type FormTextInputPropsType, type FormMultiSelectPropsType }
+export { FormInput, type FormTextInputPropsType, type FormMultiSelectPropsType, type FormNumberInputPropsType }

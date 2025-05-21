@@ -10,7 +10,7 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
       <Text size={2} weight="normal" color="tertiaryBackground" wrap="nowrap">
         {user?.name || ''}
       </Text>
-      <Text size={2} weight="normal" color="primary" className="line-clamp-1 truncate text-wrap">
+      <Text size={2} weight="normal" color="primary" className="line-clamp-1 text-wrap" truncate>
         {lastCommitMessage}
       </Text>
       <Icon className="shrink-0 text-icons-success" name="tick" size={12} />

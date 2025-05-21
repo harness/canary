@@ -12,6 +12,6 @@ const InputCaption = ({ error, caption }: InputCaptionProps) => {
 
   return caption ? <FormCaption>{caption}</FormCaption> : null
 }
-InputCaption.displayName = 'InputError'
+InputCaption.displayName = 'InputCaption'
 
 export { InputCaption }

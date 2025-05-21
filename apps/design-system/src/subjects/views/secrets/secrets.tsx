@@ -6,24 +6,24 @@ import { noop, useTranslationStore } from '@utils/viewUtils'
 import { InputFactory } from '@harnessio/forms'
 import { Button, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
-  ArrayInput,
+  ArrayFormInput,
   BooleanFormInput,
   CalendarInput,
+  CardsFormInput,
   DirectionEnum,
   EntityIntent,
-  GroupInput,
-  ListInput,
+  GroupFormInput,
+  ListFormInput,
   NumberFormInput,
   onSubmitSecretProps,
-  RadialInput,
   SecretEntityForm,
   SecretEntityFormHandle,
   SecretItem,
   SecretReference,
   SecretsHeader,
   SecretType,
-  SelectInput,
-  SeparatorInput,
+  SelectFormInput,
+  SeparatorFormInput,
   TextareaFormInput,
   TextFormInput
 } from '@harnessio/ui/views'
@@ -38,13 +38,13 @@ const inputComponentFactory = new InputFactory()
 inputComponentFactory.registerComponent(new TextFormInput())
 inputComponentFactory.registerComponent(new BooleanFormInput())
 inputComponentFactory.registerComponent(new NumberFormInput())
-inputComponentFactory.registerComponent(new ArrayInput())
-inputComponentFactory.registerComponent(new ListInput())
+inputComponentFactory.registerComponent(new ArrayFormInput())
+inputComponentFactory.registerComponent(new ListFormInput())
 inputComponentFactory.registerComponent(new TextareaFormInput())
-inputComponentFactory.registerComponent(new GroupInput())
-inputComponentFactory.registerComponent(new SelectInput())
-inputComponentFactory.registerComponent(new SeparatorInput())
-inputComponentFactory.registerComponent(new RadialInput())
+inputComponentFactory.registerComponent(new GroupFormInput())
+inputComponentFactory.registerComponent(new SelectFormInput())
+inputComponentFactory.registerComponent(new SeparatorFormInput())
+inputComponentFactory.registerComponent(new CardsFormInput())
 inputComponentFactory.registerComponent(new CalendarInput())
 
 export const SecretsPage = ({

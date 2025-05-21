@@ -15,7 +15,7 @@ import {
   ConnectorDetailsReference,
   ConnectorDetailsTabsKeys,
   GroupFormInput,
-  ListInput,
+  ListFormInput,
   NumberFormInput,
   SelectFormInput,
   SeparatorFormInput,
@@ -32,7 +32,7 @@ inputComponentFactory.registerComponent(new TextFormInput())
 inputComponentFactory.registerComponent(new BooleanFormInput())
 inputComponentFactory.registerComponent(new NumberFormInput())
 inputComponentFactory.registerComponent(new ArrayFormInput())
-inputComponentFactory.registerComponent(new ListInput())
+inputComponentFactory.registerComponent(new ListFormInput())
 inputComponentFactory.registerComponent(new TextareaFormInput())
 inputComponentFactory.registerComponent(new GroupFormInput())
 inputComponentFactory.registerComponent(new SelectFormInput())

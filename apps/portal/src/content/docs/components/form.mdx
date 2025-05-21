@@ -7,63 +7,85 @@ The `Form` component is a container for form elements, providing a structured la
 
 import { DocsPage } from "@/components/docs-page";
 
-```tsx
-import { useForm } from "react-hook-form";
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [submittedValue, setSubmittedValue] = React.useState<FormValues | null>(null);
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+const inputRef = React.useRef<HTMLInputElement | null>(null);
 
-//...
-
-// Define the validation schema with zod
 const formSchema = z.object({
-  inputField: z.string().min(3, "Input must be at least 3 characters"),
+name: z.string().trim().min(3, "Input must be at least 3 characters"),
+
+    // 🚨 z.coerce.number() - It is mandatory for number fields
+    // https://github.com/shadcn-ui/ui/issues/421#issuecomment-1561080201
+    age: z.coerce.number().min(1, "Number must be at least 1"),
+
+    comment: z.string().trim().min(10, "Comment must be at least 10 characters"),
+
 });
 
 // Infer the type from the schema
-type FormValues = z.infer<typeof formSchema>;
+const FormValues = z.infer<typeof formSchema>;
 
-export const ExampleFormComponent = () => {
-  const [submittedValue, setSubmittedValue] = useState<string | null>(null);
-  const inputRef = useRef<HTMLInputElement | null>(null);
+// Initialize react-hook-form with zod resolver
+const formMethods = useForm<FormValues>({
+resolver: zodResolver(formSchema),
+defaultValues: {
+name: "John doe",
+age: 1,
+comment: "Lorem ipsum",
+},
+});
 
-  // Initialize react-hook-form with zod resolver
-  const formMethods = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      inputField: "some text",
-    },
-  });
+const { register, handleSubmit } = formMethods;
 
-  const { register, handleSubmit } = formMethods;
+// Handle form submission
+const onSubmit = (data: FormValues) => {
+setSubmittedValue(data);
+};
 
-  // Handle form submission
-  const onSubmit = (data: FormValues) => {
-    setSubmittedValue(data.inputField);
-  };
+React.useEffect(() => {
+if(!formMethods.formState.isValid){
+setSubmittedValue(null);
+}
+},[formMethods.formState.isValid]);
 
-  return (
-    <div className="w-full max-w-md">
-      {/* ‼️ It is mandatory to pass all return values from useForm to FormWrapper  */}
-      <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-        <FormInput.Text
-          ref={inputRef}
-          label="Input Field"
-          placeholder="Enter at least 3 characters"
-          {...register("inputField")}
+return (
+<div className="w-[500px]">
+{/* ‼️ It is mandatory to pass all return values from useForm to FormWrapper */}
+<FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+<FormInput.Text
+label="Input Field"
+placeholder="Enter at least 3 characters"
+{...register("name")}
+/>
+
+        <FormInput.Number
+          label="Number Field"
+          placeholder="Enter a number"
+          {...register("age")}
         />
 
-        <Button type="submit" disabled={methods.formState.isSubmitting}>
+        <FormInput.Textarea
+          label="Textarea Field"
+          placeholder="Enter a textarea"
+          {...register("comment")}
+        />
+
+        <Button type="submit" disabled={formMethods.formState.isSubmitting}>
           {formMethods.formState.isSubmitting ? "Submitting..." : "Submit"}
         </Button>
 
-        {submittedValue && (
-          <div className="mt-4 p-3 bg-green-50 text-green-800 rounded">
-            Submitted value: {submittedValue}
-          </div>
+        <h4>Submitted Values</h4>
+        {formMethods.formState.isValid && submittedValue && (
+          <pre className="mt-4 p-3 bg-cn-background-3 text-cn-foreground-1 rounded whitespace-break-spaces text-sm">
+            {JSON.stringify(submittedValue, null, 2)}
+          </pre>
         )}
       </FormWrapper>
     </div>
-  );
-};
-```
+
+);
+}`}
+/>

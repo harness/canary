@@ -137,8 +137,6 @@ const Flex = ({
   )
 }
 
-// Custom Grid component using Tailwind classes
-
 const Grid = ({
   children,
   className,

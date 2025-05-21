@@ -36,8 +36,7 @@ import { DocsPage } from "@/components/docs-page";
         <h5>Single collapsible w/left indicator</h5>
         <Accordion.Root type="single" collapsible indicatorPosition="left">
             <Accordion.Item value="item1">
-                <Accordion.Trigger suffix="3 items">
-                  <Accordion.TriggerIcon name="info-circle" />
+                <Accordion.Trigger suffix="3 items" prefix={<Icon name="info-circle" size={18} />}>
                   Item 1
                 </Accordion.Trigger>
                 <Accordion.Content>
@@ -48,8 +47,7 @@ import { DocsPage } from "@/components/docs-page";
             </Accordion.Item>
 
             <Accordion.Item value="item2">
-                <Accordion.Trigger suffix="5 items">
-                  <Accordion.TriggerIcon name="info-circle" />
+                <Accordion.Trigger suffix="5 items" prefix={<Icon name="info-circle" size={18} />}>
                   Item 2
                 </Accordion.Trigger>
                 <Accordion.Content>
@@ -69,8 +67,7 @@ import { DocsPage } from "@/components/docs-page";
         <h5>Multiple (size md)</h5>
         <Accordion.Root type="multiple" defaultValue={["item1", "item3"]} size="md">
             <Accordion.Item value="item1">
-                <Accordion.Trigger suffix="Suffix text">
-                  <Accordion.TriggerLogo name="docker" />
+                <Accordion.Trigger suffix="Suffix text" prefix={<Logo name="docker" size={18} />}>
                   Item 1
                 </Accordion.Trigger>
                 <Accordion.Content>
@@ -79,8 +76,7 @@ import { DocsPage } from "@/components/docs-page";
             </Accordion.Item>
 
             <Accordion.Item value="item2" disabled>
-                <Accordion.Trigger suffix="Suffix text">
-                  <Accordion.TriggerLogo name="docker" />
+                <Accordion.Trigger suffix="Suffix text" prefix={<Logo name="docker" size={18} />}>
                   Item 3 (disabled/closed)
                 </Accordion.Trigger>
                 <Accordion.Content>
@@ -89,8 +85,7 @@ import { DocsPage } from "@/components/docs-page";
             </Accordion.Item>
 
             <Accordion.Item value="item3" disabled>
-                <Accordion.Trigger suffix="Suffix text">
-                  <Accordion.TriggerLogo name="docker" />
+                <Accordion.Trigger suffix="Suffix text" prefix={<Logo name="docker" size={18} />}>
                   Item 3 (disabled/expanded)
                 </Accordion.Trigger>
                 <Accordion.Content>
@@ -113,29 +108,9 @@ import { Accordion } from '@harnessio/ui/components'
 return (
   <Accordion.Root type="multiple" defaultValue={["item1"]} size="md">
     <Accordion.Item value="item1">
-      <Accordion.Trigger>Item 1</Accordion.Trigger>
+      <Accordion.Trigger>Trigger text</Accordion.Trigger>
       <Accordion.Content>
-        <p>This is the content of item 1</p>
-      </Accordion.Content>
-    </Accordion.Item>
-
-    <Accordion.Item value="item2">
-      <Accordion.Trigger>
-        <Accordion.TriggerLogo name="docker" />
-        Item 2
-      </Accordion.Trigger>
-      <Accordion.Content>
-        <p>This is the content of item 2</p>
-      </Accordion.Content>
-    </Accordion.Item>
-
-    <Accordion.Item value="item3">
-      <Accordion.Trigger>
-        <Accordion.TriggerIcon name="info-circle" />
-        Item 3
-      </Accordion.Trigger>
-      <Accordion.Content>
-        <p>This is the content of item 3</p>
+        <p>This is the content</p>
       </Accordion.Content>
     </Accordion.Item>
   </Accordion.Root>
@@ -149,10 +124,7 @@ All parts of the `Accordion` component can be imported and composed as required.
 ```typescript jsx
 <Accordion.Root>
   <Accordion.Item>
-    <Accordion.Trigger>
-      <Accordion.TriggerIcon />
-      <Accordion.TriggerLogo />
-    </Accordion.Trigger>
+    <Accordion.Trigger />
     <Accordion.Content />
   </Accordion.Item>
 </Accordion.Root>
@@ -278,39 +250,16 @@ The `Accordion.Trigger` component displays the item with a chevron disclosure ic
       value: "boolean",
     },
     {
-      name: "suffix",
-      description: "Optional text to display on the right side of the trigger",
+      name: "prefix",
+      description:
+        "Optional element to display on the left side of the trigger. Use for icons and logos",
       required: false,
       value: "string",
     },
-  ]}
-/>
-
-### `TriggerIcon`
-
-The `Accordion.TriggerIcon` component displays an icon within the trigger
-
-<DocsPage.PropsTable
-  props={[
     {
-      name: "name",
-      description: "Name of the icon to display",
-      required: true,
-      value: "string",
-    },
-  ]}
-/>
-
-### `TriggerLogo`
-
-The `Accordion.TriggerLogo` component displays a logo within the trigger
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "name",
-      description: "Name of the logo to display",
-      required: true,
+      name: "suffix",
+      description: "Optional text to display on the right side of the trigger",
+      required: false,
       value: "string",
     },
   ]}

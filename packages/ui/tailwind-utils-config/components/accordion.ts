@@ -43,10 +43,8 @@ export default {
       },
 
       '&-text': {
-        display: 'flex',
-        alignItems: 'center',
         width: '100%',
-        gap: 'var(--cn-accordion-default-gap)',
+        textAlign: 'start',
         color: 'var(--cn-text-1)',
         '@apply font-body-strong': ''
       },

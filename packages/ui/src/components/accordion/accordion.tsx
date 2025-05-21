@@ -1,6 +1,5 @@
 import { ComponentPropsWithoutRef, createContext, ElementRef, forwardRef, ReactNode, useContext } from 'react'
 
-import { Logo, LogoProps } from '@components/logo'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -34,7 +33,9 @@ const AccordionRoot = forwardRef<ElementRef<typeof AccordionPrimitive.Root>, Acc
       className={cn(accordionVariants({ size }), className)}
       onValueChange={onValueChange}
     >
-      <AccordionContext.Provider value={{ indicatorPosition }}>{children}</AccordionContext.Provider>
+      <AccordionContext.Provider value={{ indicatorPosition: indicatorPosition ?? 'right' }}>
+        {children}
+      </AccordionContext.Provider>
     </AccordionPrimitive.Root>
   )
 )
@@ -50,14 +51,14 @@ const AccordionItem = forwardRef<ElementRef<typeof AccordionPrimitive.Item>, Acc
 AccordionItem.displayName = 'AccordionItem'
 
 type AccordionTriggerProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
+  prefix?: ReactNode
   suffix?: ReactNode
   indicatorProps?: Omit<IconProps, 'name'>
 }
 
 const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
-  ({ className, children, suffix, indicatorProps, ...props }, ref) => {
+  ({ className, children, suffix, prefix, indicatorProps, ...props }, ref) => {
     const { indicatorPosition } = useContext(AccordionContext)
-    const withSuffix = !!suffix
 
     const Indicator = () => (
       <Icon
@@ -73,8 +74,9 @@ const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger
         <AccordionPrimitive.Trigger ref={ref} className={cn('cn-accordion-trigger', className)} {...props}>
           {indicatorPosition === 'left' && <Indicator />}
 
+          {!!prefix && <span className="cn-accordion-trigger-prefix">{prefix}</span>}
           <span className="cn-accordion-trigger-text">{children}</span>
-          {withSuffix && <span className="cn-accordion-trigger-suffix">{suffix}</span>}
+          {!!suffix && <span className="cn-accordion-trigger-suffix">{suffix}</span>}
 
           {indicatorPosition === 'right' && <Indicator />}
         </AccordionPrimitive.Trigger>
@@ -83,9 +85,6 @@ const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger
   }
 )
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
-
-const AccordionTriggerIcon = (props: Omit<IconProps, 'size'>) => <Icon size={18} {...props} role="presentation" />
-const AccordionTriggerLogo = (props: Omit<LogoProps, 'size'>) => <Logo size={18} {...props} role="presentation" />
 
 type AccordionContentProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
 
@@ -102,8 +101,6 @@ const Accordion = {
   Root: AccordionRoot,
   Item: AccordionItem,
   Trigger: AccordionTrigger,
-  TriggerIcon: AccordionTriggerIcon,
-  TriggerLogo: AccordionTriggerLogo,
   Content: AccordionContent
 }
 

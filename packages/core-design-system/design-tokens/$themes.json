@@ -20376,7 +20376,6 @@
       "diff.expanded": "20192e8de770362da3a06711a845a9dfc7c93ae6",
       "diff.single": "3e6856cd6091214fbbbb7180c6fa94cc519b5b6a",
       "diff.code.px": "9d0049607d30a54ab46f099dbb16a38885be576b",
-      "cell.min-height": "5a493b1f82f0b24dc68d3070885c2732b60deb21",
       "cell.px": "99f7fba690cdb3718e7ff835711090eb8726bfa1",
       "cell.py": "474df7d1c5f000b95c3cb454a6655bb4df94be30",
       "cell.gap": "056e9b6dfe6ca80520f800bfb778ff0752e3ad30",
@@ -20437,7 +20436,8 @@
       "sidebar.footer.gap": "7acf5d0f13fc56c0a822358c0bca99e0f3e12bb3",
       "sidebar.user-item.px": "f38377cdc697e2c19c1703ef4e664d61865eb932",
       "sidebar.user-item.gap": "07e466f93355f125bbe792696cc27af9271037a7",
-      "sidebar.user-item.size": "61625bce7d9b9fd4ece03cf3b67fc3e7c0a6695a"
+      "sidebar.user-item.size": "61625bce7d9b9fd4ece03cf3b67fc3e7c0a6695a",
+      "cell.min": "5a493b1f82f0b24dc68d3070885c2732b60deb21"
     },
     "group": "breakpoint"
   }

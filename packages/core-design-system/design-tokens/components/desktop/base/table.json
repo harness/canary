@@ -1,6 +1,6 @@
 {
   "cell": {
-    "min-height": {
+    "min": {
       "$type": "sizing",
       "$value": "{size.11-half}"
     },

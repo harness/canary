@@ -42,7 +42,7 @@ const inputs: IInputConfigWithConfigInterface[] = [
     label: 'Enter the Secret Text'
   },
   {
-    inputType: 'radio',
+    inputType: 'cards',
     path: `secret.spec.valueType`,
     inputConfig: {
       inputType: 'radio',

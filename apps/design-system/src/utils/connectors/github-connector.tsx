@@ -12,7 +12,7 @@ export const GITHUB_CONNECTOR_CATEOGRY = 'Code Repository'
 
 const inputs: IInputConfigWithConfigInterface[] = [
   {
-    inputType: 'radio',
+    inputType: 'cards',
     path: 'githubType',
     label: 'GitHub Type',
     inputConfig: {

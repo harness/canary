@@ -1669,6 +1669,21 @@
         "$type": "color",
         "$value": "{chrome.25}"
       }
+    },
+    "dialog": {
+      "fade": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{bg.2}"
+      }
     }
   },
   "shadow": {
@@ -2036,21 +2051,6 @@
         "spread": "4",
         "color": "{set.yellow.soft.bg-hover}",
         "type": "dropShadow"
-      }
-    },
-    "dialog": {
-      "fade": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{bg.2}"
       }
     }
   },

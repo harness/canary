@@ -154,6 +154,10 @@ const Grid = ({
   return (
     <Comp
       className={cn(gridVariants({ align, justify }), gapVariants({ gap, gapX, gapY }), className)}
+      // We need to use inline styles here instead of Tailwind classes because:
+      // 1. Tailwind's compiler processes classes at build time and drops runtime references
+      // 2. Dynamic values (like user-provided columns/rows) can't be properly handled by Tailwind
+      // 3. This approach ensures consistent rendering regardless of what values are passed at runtime
       style={{
         gridTemplateColumns: typeof columns === 'number' ? `repeat(${columns}, minmax(0, 1fr))` : columns,
         gridTemplateRows: typeof rows === 'number' ? `repeat(${rows}, minmax(0, auto))` : rows,

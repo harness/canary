@@ -323,6 +323,10 @@
       "$type": "sizing",
       "$value": "384px"
     },
+    "11-half": {
+      "$type": "sizing",
+      "$value": "46px"
+    },
     "px": {
       "$type": "sizing",
       "$value": "1px"

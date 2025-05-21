@@ -1,10 +1,9 @@
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import { Avatar } from '@components/avatar'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { Sidebar } from '@components/sidebar/sidebar'
-import { TFunction } from 'i18next'
 
 const UserAvatar = ({ user }: Pick<UserProps, 'user'>) => {
   const userName = user?.display_name || user?.uid || ''
@@ -25,11 +24,11 @@ interface UserProps {
   openThemeDialog: () => void
   openLanguageDialog: () => void
   handleLogOut: () => void
-  t: TFunction
 }
 
-export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut, t }: UserProps) {
+export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut }: UserProps) {
   const { Link } = useRouterContext()
+  const { t } = useTranslation()
 
   return (
     <Sidebar.Menu>

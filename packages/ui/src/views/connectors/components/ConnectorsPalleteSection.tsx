@@ -1,5 +1,5 @@
 import { Icon, Logo } from '@/components'
-import { TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
 import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-content-layout'
 import { StepsPaletteItemLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-item-layout'
 
@@ -8,13 +8,12 @@ import { AnyConnectorDefinition } from '../types'
 export interface ConnectorsPaletteSectionProps {
   connectors: AnyConnectorDefinition[]
   onSelect: (step: AnyConnectorDefinition) => void
-  useTranslationStore: () => TranslationStore
   showCategory?: boolean
 }
 
 export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
-  const { connectors, onSelect, useTranslationStore, showCategory } = props
-  const { t: _t } = useTranslationStore()
+  const { connectors, onSelect, showCategory } = props
+  const { t: _t } = useTranslation()
 
   return (
     <StepsPaletteContentLayout.Section>

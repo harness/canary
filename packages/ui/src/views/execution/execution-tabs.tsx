@@ -1,14 +1,9 @@
 import { TabNav } from '@/components'
-import { SandboxLayout, SubHeaderWrapper, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { SandboxLayout, SubHeaderWrapper } from '@/views'
 
-export const ExecutionTabs = ({
-  useTranslationStore,
-  className
-}: {
-  useTranslationStore: () => TranslationStore
-  className?: string
-}) => {
-  const { t } = useTranslationStore()
+export const ExecutionTabs = ({ className }: { className?: string }) => {
+  const { t } = useTranslation()
 
   return (
     <SubHeaderWrapper className={className}>

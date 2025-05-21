@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
-import { useTranslationStore } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
 import { Button, Drawer, ListActions, Spacer } from '@harnessio/ui/components'
@@ -102,13 +101,11 @@ const ConnectorsListPageContent = (): JSX.Element => {
         viewDocClick={() => {
           console.log('')
         }}
-        useTranslationStore={useTranslationStore}
         errorData={{ errors: [{ reason: 'Unexpected Error', message: 'Bad credentials' }] }}
       />
 
       <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
         <ConnectorsPalette
-          useTranslationStore={useTranslationStore}
           connectors={harnessConnectors}
           onSelectConnector={() => setIsConnectorSelected(true)}
           setConnectorEntity={setConnectorEntity}
@@ -119,7 +116,6 @@ const ConnectorsListPageContent = (): JSX.Element => {
           <Drawer.Content nested>
             {!!connectorEntity && (
               <ConnectorEntityForm
-                useTranslationStore={useTranslationStore}
                 connector={connectorEntity}
                 onBack={() => setIsConnectorSelected(false)}
                 // onFormSubmit={handleFormSubmit}
@@ -136,7 +132,6 @@ const ConnectorsListPageContent = (): JSX.Element => {
         <Drawer.Content>
           {!!connectorEntity && (
             <ConnectorEntityForm
-              useTranslationStore={useTranslationStore}
               connector={connectorEntity}
               onBack={() => setIsEditConnectorDrawerOpen(false)}
               getConnectorDefinition={getHarnessConnectorDefinition}

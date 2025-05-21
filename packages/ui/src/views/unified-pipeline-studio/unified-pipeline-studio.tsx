@@ -1,6 +1,5 @@
 import { IFormDefinition, InputFactory } from '@harnessio/forms'
 
-import { TranslationStore } from '..'
 import { UnifiedPipelineStudioNodeContextProvider } from './components/graph-implementation/context/UnifiedPipelineStudioNodeContext'
 import { Yaml2PipelineGraphOptions } from './components/graph-implementation/utils/yaml-to-pipeline-graph'
 import { AnyStepDefinition } from './components/steps/types'
@@ -31,7 +30,6 @@ export interface ITemplateListStore {
 
 export interface UnifiedPipelineStudioProps {
   useTemplateListStore: () => ITemplateListStore
-  useTranslationStore: () => TranslationStore
   view: VisualYamlValue
   setView: (view: VisualYamlValue) => void
   yamlRevision: YamlRevision
@@ -63,7 +61,6 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
   const {
     view,
     setView,
-    useTranslationStore,
     useTemplateListStore,
     yamlRevision,
     onYamlRevisionChange,
@@ -106,7 +103,6 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       onErrorsChange={onErrorsChange}
       panelOpen={panelOpen}
       onPanelOpenChange={onPanelOpenChange}
-      useTranslationStore={useTranslationStore}
       useTemplateListStore={useTemplateListStore}
       view={view}
       setView={setView}

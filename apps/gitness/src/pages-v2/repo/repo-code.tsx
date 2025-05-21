@@ -16,7 +16,6 @@ import { FileEditor } from '../../components-v2/file-editor'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { sortFilesByType } from '../../utils/common-utils'
 import { FILE_SEPERATOR, getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
@@ -198,7 +197,6 @@ export const RepoCode = () => {
       isDir={repoDetails?.type === 'dir'}
       isShowSummary={!!repoEntryPathToFileTypeMap.size}
       latestFile={latestFiles}
-      useTranslationStore={useTranslationStore}
       pathNewFile={pathToNewFile}
       // TODO: add correct path to Upload files page
       pathUploadFiles="/upload-file"

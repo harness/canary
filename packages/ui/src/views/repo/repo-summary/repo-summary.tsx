@@ -10,9 +10,9 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { formatDate } from '@/utils'
-import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout, TranslationStore } from '@/views'
+import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout } from '@/views'
 import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
 
 import { CloneRepoDialog } from './components/clone-repo-dialog'
@@ -68,7 +68,6 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   }
   saveDescription: (description: string) => void
   updateRepoError?: string
-  useTranslationStore: () => TranslationStore
   isEditDialogOpen: boolean
   setEditDialogOpen: (value: boolean) => void
   currentBranchDivergence: CommitDivergenceType
@@ -99,7 +98,6 @@ export function RepoSummaryView({
   updateRepoError,
   isEditDialogOpen,
   setEditDialogOpen,
-  useTranslationStore,
   currentBranchDivergence,
   handleCreateToken,
   toRepoFiles,
@@ -114,7 +112,7 @@ export function RepoSummaryView({
   ...props
 }: RepoSummaryViewProps) {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (loading) {
     return (
@@ -183,11 +181,7 @@ export function RepoSummaryView({
               <ListActions.Left>
                 <ButtonGroup className="gap-2.5">
                   {branchSelectorRenderer}
-                  <SearchFiles
-                    navigateToFile={navigateToFile}
-                    filesList={filesList}
-                    useTranslationStore={useTranslationStore}
-                  />
+                  <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
                 </ButtonGroup>
               </ListActions.Left>
               <ListActions.Right>
@@ -207,7 +201,6 @@ export function RepoSummaryView({
                     sshUrl={repository?.git_ssh_url}
                     httpsUrl={repository?.git_url ?? 'could not fetch url'}
                     handleCreateToken={handleCreateToken}
-                    useTranslationStore={useTranslationStore}
                     tokenGenerationError={tokenGenerationError}
                   />
                 </ButtonGroup>
@@ -240,7 +233,6 @@ export function RepoSummaryView({
                 sha: latestCommitInfo?.sha || ''
               }}
               files={files}
-              useTranslationStore={useTranslationStore}
               toRepoFileDetails={toRepoFileDetails}
               hideHeader
             />
@@ -307,7 +299,6 @@ export function RepoSummaryView({
               isEditDialogOpen={isEditDialogOpen}
               setEditDialogOpen={setEditDialogOpen}
               is_public={repository?.is_public}
-              useTranslationStore={useTranslationStore}
             />
             {renderSidebarComponent}
           </SandboxLayout.Content>

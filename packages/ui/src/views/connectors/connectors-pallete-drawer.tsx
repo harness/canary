@@ -1,7 +1,7 @@
 import { ElementType, useMemo, useState } from 'react'
 
 import { Button, Drawer, EntityFormLayout, Input } from '@/components'
-import { TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
 
 import { ConnectorsPaletteSection } from './components/ConnectorsPalleteSection'
 import { AnyConnectorDefinition, ConnectorEntity } from './types'
@@ -34,7 +34,6 @@ interface ConnectorsPaletteProps {
   requestClose?: () => void
   setConnectorEntity: (value: ConnectorEntity | null) => void
   onSelectConnector: () => void
-  useTranslationStore: () => TranslationStore
   title?: string
   isDrawer?: boolean
   showCategory?: boolean
@@ -45,12 +44,11 @@ export const ConnectorsPalette = ({
   requestClose,
   setConnectorEntity,
   onSelectConnector,
-  useTranslationStore,
   title = 'Connector Setup',
   isDrawer = false,
   showCategory
 }: ConnectorsPaletteProps): JSX.Element => {
-  const { t: _t } = useTranslationStore()
+  const { t: _t } = useTranslation()
   const { Header, Title, Content, Inner } = componentsMap[isDrawer ? 'true' : 'false']
 
   const [query, setQuery] = useState('')
@@ -83,7 +81,6 @@ export const ConnectorsPalette = ({
             })
             onSelectConnector()
           }}
-          useTranslationStore={useTranslationStore}
           showCategory={showCategory}
         />
       </Inner>

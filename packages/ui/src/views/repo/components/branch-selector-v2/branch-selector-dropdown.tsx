@@ -1,7 +1,7 @@
 import { FC, useMemo, useState } from 'react'
 
 import { Button, DropdownMenu, Icon, SearchInput, StatusBadge, Tabs } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -14,7 +14,6 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   onSelectBranch,
   repoId,
   spaceId,
-  useTranslationStore,
   isBranchOnly = false,
   searchQuery,
   setSearchQuery,
@@ -25,7 +24,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 }) => {
   const { Link } = useRouterContext()
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(preSelectedTab)
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const BRANCH_SELECTOR_LABELS = getBranchSelectorLabels(t)
 
   const filteredItems = useMemo(() => {

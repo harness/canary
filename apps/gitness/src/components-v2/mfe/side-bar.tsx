@@ -3,14 +3,13 @@ import { FC } from 'react'
 import { noop } from 'lodash-es'
 
 import { HarnessLogo, Icon, IconProps, Sidebar, SidebarSearchLegacy, User, useSidebar } from '@harnessio/ui/components'
-import { useRouterContext } from '@harnessio/ui/context'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 const SideBarToggleMenuItem: FC = () => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { collapsed, toggleSidebar } = useSidebar()
   return (
     <Sidebar.MenuItem className="flex justify-center">
@@ -32,7 +31,7 @@ const SideBarToggleMenuItem: FC = () => {
 
 const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currentUser } = useAppContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { NavLink } = useRouterContext()
   const { routes, hooks } = useMFEContext()
   const { forceLogout } = hooks?.useLogout?.() || {}
@@ -53,7 +52,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
     <Sidebar.Provider className="min-h-svh">
       <Sidebar.Root className="h-svh">
         <Sidebar.Header className="pb-3">
-          <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
+          <SidebarSearchLegacy logo={<HarnessLogo />} />
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group>
@@ -118,7 +117,6 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
             openThemeDialog={noop}
             openLanguageDialog={noop}
             handleLogOut={forceLogout || noop}
-            t={t}
           />
         </Sidebar.Footer>
         <Sidebar.Rail />

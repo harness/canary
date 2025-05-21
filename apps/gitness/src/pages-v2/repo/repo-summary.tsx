@@ -34,7 +34,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { sortFilesByType } from '../../utils/common-utils'
@@ -320,7 +319,6 @@ export default function RepoSummaryPage() {
         updateRepoError={updateError}
         isEditDialogOpen={isEditDialogOpen}
         setEditDialogOpen={setEditDialogOpen}
-        useTranslationStore={useTranslationStore}
         currentBranchDivergence={currBranchDivergence}
         searchQuery={branchTagQuery}
         setSearchQuery={setBranchTagQuery}
@@ -348,7 +346,6 @@ export default function RepoSummaryPage() {
           onClose={() => setSuccessTokenDialog(false)}
           navigateToManageToken={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
           tokenData={createdTokenData}
-          useTranslationStore={useTranslationStore}
         />
       )}
     </>

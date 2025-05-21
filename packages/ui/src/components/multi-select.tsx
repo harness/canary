@@ -11,8 +11,8 @@ import {
   ScrollArea,
   SearchInput
 } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
-import { TFunction } from 'i18next'
 
 export type MultiSelectOptionType<T = unknown> = T & {
   id: string | number
@@ -22,7 +22,6 @@ export type MultiSelectOptionType<T = unknown> = T & {
 export interface MultiSelectProps<T = unknown> {
   className?: string
   selectedItems: MultiSelectOptionType<Partial<T>>[]
-  t: TFunction
   placeholder: string
   handleChange: (data: MultiSelectOptionType<Partial<T>>) => void
   options: MultiSelectOptionType<T>[]
@@ -36,7 +35,6 @@ export interface MultiSelectProps<T = unknown> {
 export const MultiSelect = <T = unknown,>({
   className,
   selectedItems,
-  t,
   placeholder,
   handleChange,
   options,
@@ -46,6 +44,8 @@ export const MultiSelect = <T = unknown,>({
   error,
   label
 }: MultiSelectProps<T>) => {
+  const { t } = useTranslation()
+
   const handleSearchChange = useCallback(
     (query: string) => {
       handleChangeSearchValue?.(query)

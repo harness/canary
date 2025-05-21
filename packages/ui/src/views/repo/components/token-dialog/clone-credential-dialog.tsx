@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button, ButtonGroup, CopyButton, Dialog, TextInput } from '@/components'
-import { TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -12,7 +12,6 @@ interface RoutingProps {
 interface CloneCredentialDialogProps extends Partial<RoutingProps> {
   open: boolean
   onClose: () => void
-  useTranslationStore: () => TranslationStore
   tokenData: {
     identifier: string
     lifetime: string
@@ -31,10 +30,9 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
   open,
   onClose,
   navigateToManageToken,
-  tokenData,
-  useTranslationStore
+  tokenData
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   useForm<TCloneCredentialsDialog>({
     resolver: zodResolver(formSchema),
     defaultValues: tokenData

@@ -5,7 +5,6 @@ import { CreateProjectFields, CreateProjectPage } from '@harnessio/ui/views'
 
 import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
-import { useTranslationStore } from '../i18n/stores/i18n-store'
 
 export const CreateProject = () => {
   const routes = useRoutes()
@@ -33,7 +32,7 @@ export const CreateProject = () => {
     createSpace({ body: { identifier: formData.name, description: formData.description } })
   }
 
-  const commonProps = { isLoading, error: error?.message, onFormSubmit: handleFormSubmit, useTranslationStore }
+  const commonProps = { isLoading, error: error?.message, onFormSubmit: handleFormSubmit }
 
   if (isAdditional) {
     return (

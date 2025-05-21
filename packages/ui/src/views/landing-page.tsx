@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
 import { Button, ButtonGroup, DropdownMenu, Icon } from '@/components'
-import { useRouterContext } from '@/context'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { useRouterContext, useTranslation } from '@/context'
+import { SandboxLayout } from '@/views'
 
 interface TypesSpace {
   created?: number
@@ -22,18 +22,12 @@ interface RoutingProps {
 
 export interface LandingPageProps extends Partial<RoutingProps> {
   spaces: TypesSpace[]
-  useTranslationStore: () => TranslationStore
   getProjectPath: (spaceId?: string) => string
 }
 
-export const LandingPageView: FC<LandingPageProps> = ({
-  spaces,
-  useTranslationStore,
-  getProjectPath,
-  toCreateProject
-}) => {
+export const LandingPageView: FC<LandingPageProps> = ({ spaces, getProjectPath, toCreateProject }) => {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   return (
     <SandboxLayout.Main className="min-h-[inherit]">

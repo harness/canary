@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 
 import { Button, NoData, Pagination, Spacer } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -18,7 +18,6 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   setSearchQuery,
   isError,
   errorMessage,
-  useTranslationStore,
   currentPage,
   totalItems,
   pageSize,
@@ -30,7 +29,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   onCreate,
   ...props
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { navigate } = useRouterContext()
   const [_selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
@@ -94,17 +93,11 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
           searchInput={searchInput}
           handleInputChange={handleInputChange}
           headerAction={<Button onClick={onCreate}>{t('views:connectors.createNew', 'New connector')}</Button>}
-          t={t}
           filterOptions={CONNECTOR_FILTER_OPTIONS}
         />
         <Spacer size={4.5} />
-        <ConnectorsList
-          connectors={connectors}
-          useTranslationStore={useTranslationStore}
-          isLoading={isLoading}
-          {...props}
-        />
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} t={t} />
+        <ConnectorsList connectors={connectors} isLoading={isLoading} {...props} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

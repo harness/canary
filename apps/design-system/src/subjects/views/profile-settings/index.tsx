@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { SettingsAccountGeneralPage } from '@harnessio/ui/views'
 
@@ -16,7 +16,6 @@ export const ProfileSettingsView = () => {
   return (
     <SettingsAccountGeneralPage
       useProfileSettingsStore={mockProfileSettingsStore}
-      useTranslationStore={useTranslationStore}
       isLoadingUser={isLoadingUser}
       isUpdatingUser={false}
       isUpdatingPassword={false}

@@ -1,15 +1,15 @@
 import { FC } from 'react'
 
 import { Button, ButtonGroup, Spacer, Text } from '@/components'
-import { ErrorTypes, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { ErrorTypes } from '@/views'
 
 export const RepoSettingsGeneralDelete: FC<{
   isLoading?: boolean
   apiError: { type: ErrorTypes; message: string } | null
   openRepoAlertDeleteDialog: () => void
-  useTranslationStore: () => TranslationStore
-}> = ({ openRepoAlertDeleteDialog, apiError, useTranslationStore }) => {
-  const { t } = useTranslationStore()
+}> = ({ openRepoAlertDeleteDialog, apiError }) => {
+  const { t } = useTranslation()
   return (
     <div>
       <Text size={13} weight="medium" className="mb-2.5" as="div">

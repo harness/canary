@@ -1,4 +1,4 @@
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { BranchSelectorV2, RepoCommitsView as RepoCommitsUiView } from '@harnessio/ui/views'
 
@@ -13,7 +13,6 @@ export const RepoCommitsView = () => {
       setPage={noop}
       xNextPage={2}
       xPrevPage={NaN}
-      useTranslationStore={useTranslationStore}
       renderProp={() => (
         <BranchSelectorV2
           repoId="canary"
@@ -25,7 +24,6 @@ export const RepoCommitsView = () => {
           onSelectBranch={noop}
           isBranchOnly={false}
           dynamicWidth={false}
-          useTranslationStore={useTranslationStore}
           setSearchQuery={noop}
         />
       )}

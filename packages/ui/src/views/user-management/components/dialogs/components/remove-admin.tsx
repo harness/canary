@@ -1,4 +1,5 @@
 import { Button, ButtonGroup, ControlGroup, Dialog, Fieldset } from '@/components'
+import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
@@ -9,8 +10,8 @@ interface RemoveAdminDialogProps {
 }
 
 export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: RemoveAdminDialogProps) {
-  const { useTranslationStore, useAdminListUsersStore } = useUserManagementStore()
-  const { t } = useTranslationStore()
+  const { useAdminListUsersStore } = useUserManagementStore()
+  const { t } = useTranslation()
   const { user } = useAdminListUsersStore()
 
   const { loadingStates, errorStates } = useStates()

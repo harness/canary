@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { Button, DropdownMenu, Icon, type ButtonSizes } from '@/components'
-import { BranchData, BranchSelectorListItem, BranchSelectorTab, TranslationStore } from '@/views'
+import { BranchData, BranchSelectorListItem, BranchSelectorTab } from '@/views'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
 
@@ -11,7 +11,6 @@ interface BranchSelectorProps {
   selectedBranchorTag: BranchSelectorListItem
   repoId: string
   spaceId: string
-  useTranslationStore: () => TranslationStore
   branchPrefix?: string
   buttonSize?: ButtonSizes
   selectedBranch?: BranchSelectorListItem
@@ -30,7 +29,6 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   branchList,
   tagList,
   selectedBranchorTag,
-  useTranslationStore,
   branchPrefix,
   buttonSize,
   selectedBranch,
@@ -69,7 +67,6 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
         selectedBranch={selectedBranch || selectedBranchorTag}
         repoId={repoId}
         spaceId={spaceId}
-        useTranslationStore={useTranslationStore}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         dynamicWidth={dynamicWidth}

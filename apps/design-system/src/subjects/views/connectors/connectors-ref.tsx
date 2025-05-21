@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
 import { Button, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
@@ -113,7 +113,6 @@ export const ConnectorsRefPage = ({
           <div>
             {/* Render create connector flow from here */}
             <ConnectorsPalette
-              useTranslationStore={useTranslationStore}
               connectors={harnessConnectors}
               onSelectConnector={() => setIsConnectorSelected(true)}
               setConnectorEntity={setConnectorEntity}
@@ -123,7 +122,6 @@ export const ConnectorsRefPage = ({
                 {!!connectorEntity && (
                   <ConnectorEntityForm
                     intent={EntityIntent.CREATE}
-                    useTranslationStore={useTranslationStore}
                     connector={connectorEntity}
                     onBack={() => setIsConnectorSelected(false)}
                     // onFormSubmit={handleFormSubmit}

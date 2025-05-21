@@ -1,5 +1,4 @@
 import { getHarnessConnectorDefinition } from '@utils/connectors/utils'
-import { useTranslationStore } from '@utils/viewUtils'
 import { noop } from 'lodash-es'
 
 import { InputFactory } from '@harnessio/forms'
@@ -66,7 +65,6 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
       connectorDetails={connectorDetails}
       onTest={noop}
       onDelete={noop}
-      useTranslationStore={useTranslationStore}
       toConnectorsList={() => '/connectors'}
     >
       <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.CONFIGURATION}>
@@ -75,7 +73,6 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
           onSave={noop}
           inputComponentFactory={inputComponentFactory}
           getConnectorDefinition={type => getHarnessConnectorDefinition(type, { autoExpandGroups: true })}
-          useTranslationStore={useTranslationStore}
           apiError={''}
         />
       </Tabs.Content>
@@ -86,7 +83,6 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
           entities={mockConnectorRefList}
           searchQuery={''}
           apiConnectorRefError={undefined}
-          useTranslationStore={useTranslationStore}
           isLoading={false}
           setSearchQuery={noop}
           currentPage={1}
@@ -97,7 +93,6 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
       </Tabs.Content>
       <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.ACTIVITY}>
         <ConnectorDetailsActivities
-          useTranslationStore={useTranslationStore}
           isLoading={false}
           activities={mockConnectorActivityList}
           currentPage={1}

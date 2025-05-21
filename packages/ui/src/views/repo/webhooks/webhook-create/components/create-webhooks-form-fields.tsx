@@ -1,73 +1,90 @@
 import { FC } from 'react'
 
 import { Checkbox, ControlGroup, FormInput, Label, Radio, StackedList, Switch } from '@/components'
+import { useTranslation } from '@/context'
 import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
 
-export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (
-  <StackedList.Root>
-    <StackedList.Item
-      className="!rounded px-5 py-3"
-      disableHover
-      isHeader
-      actions={
-        <Switch
-          {...register!('enabled')}
-          checked={watch!('enabled')}
-          onCheckedChange={() => setValue!('enabled', !watch!('enabled'))}
+export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue }) => {
+  const { t } = useTranslation()
+  return (
+    <StackedList.Root>
+      <StackedList.Item
+        className="!rounded px-5 py-3"
+        disableHover
+        isHeader
+        actions={
+          <Switch
+            {...register!('enabled')}
+            checked={watch!('enabled')}
+            onCheckedChange={() => setValue!('enabled', !watch!('enabled'))}
+          />
+        }
+      >
+        <StackedList.Field
+          title={t('views:repos.enableWebhookToggle', 'Enable the webhook')}
+          description={t('views:repos.toggleDescription', 'We will deliver event details when this hook is triggered')}
         />
-      }
-    >
-      <StackedList.Field
-        title={t('views:repos.enableWebhookToggle', 'Enable the webhook')}
-        description={t('views:repos.toggleDescription', 'We will deliver event details when this hook is triggered')}
-      />
-    </StackedList.Item>
-  </StackedList.Root>
-)
+      </StackedList.Item>
+    </StackedList.Root>
+  )
+}
 
-export const WebhookNameField: FC<WebhookFormFieldProps & { disabled?: boolean }> = ({ register, disabled, t }) => (
-  <FormInput.Text
-    id="name"
-    {...register!('identifier')}
-    placeholder="Name your webhook"
-    autoFocus
-    disabled={disabled}
-    label={t('views:repos.name', 'Name')}
-  />
-)
+export const WebhookNameField: FC<WebhookFormFieldProps & { disabled?: boolean }> = ({ register, disabled }) => {
+  const { t } = useTranslation()
+  return (
+    <FormInput.Text
+      id="name"
+      {...register!('identifier')}
+      placeholder="Name your webhook"
+      autoFocus
+      disabled={disabled}
+      label={t('views:repos.name', 'Name')}
+    />
+  )
+}
 
-export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register, t }) => (
-  <FormInput.Textarea
-    id="description"
-    {...register!('description')}
-    placeholder={t('views:repos.descriptionPlaceholder', 'Enter a description')}
-    label={t('views:repos.description', 'Description')}
-  />
-)
+export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register }) => {
+  const { t } = useTranslation()
+  return (
+    <FormInput.Textarea
+      id="description"
+      {...register!('description')}
+      placeholder={t('views:repos.descriptionPlaceholder', 'Enter a description')}
+      label={t('views:repos.description', 'Description')}
+    />
+  )
+}
 
-export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, t }) => (
-  <FormInput.Text
-    autoComplete="new-password"
-    data-form-type="other"
-    id="payloadUrl"
-    {...register!('url')}
-    placeholder={t('views:repos.urlPlaceholder', 'https://example.com/harness')}
-    label={t('views:repos.urlLabel', 'Payload URL')}
-  />
-)
+export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register }) => {
+  const { t } = useTranslation()
+  return (
+    <FormInput.Text
+      autoComplete="new-password"
+      data-form-type="other"
+      id="payloadUrl"
+      {...register!('url')}
+      placeholder={t('views:repos.urlPlaceholder', 'https://example.com/harness')}
+      label={t('views:repos.urlLabel', 'Payload URL')}
+    />
+  )
+}
 
-export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register, t }) => (
-  <FormInput.Text
-    autoComplete="new-password"
-    data-form-type="other"
-    id="secret"
-    {...register!('secret')}
-    type="password"
-    label={t('views:repos.secret', 'Secret')}
-  />
-)
+export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register }) => {
+  const { t } = useTranslation()
+  return (
+    <FormInput.Text
+      autoComplete="new-password"
+      data-form-type="other"
+      id="secret"
+      {...register!('secret')}
+      type="password"
+      label={t('views:repos.secret', 'Secret')}
+    />
+  )
+}
 
-export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ watch, setValue, t }) => {
+export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ watch, setValue }) => {
+  const { t } = useTranslation()
   const sslVerificationValue = watch!('insecure')
   const handleAccessChange = (value: string) => {
     setValue!('insecure', value)
@@ -95,7 +112,8 @@ export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ watch, 
   )
 }
 
-export const WebhookTriggerField: FC<WebhookFormFieldProps> = ({ watch, setValue, t }) => {
+export const WebhookTriggerField: FC<WebhookFormFieldProps> = ({ watch, setValue }) => {
+  const { t } = useTranslation()
   const sslVerificationValue = watch!('trigger')
   const handleTriggerChange = (value: string) => {
     setValue!('trigger', value)

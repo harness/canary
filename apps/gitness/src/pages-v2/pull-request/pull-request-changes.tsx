@@ -32,7 +32,6 @@ import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dial
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { PullReqReviewDecision } from '../../pages/pull-request/types/types'
 import { changedFileId, DIFF2HTML_CONFIG } from '../../pages/pull-request/utils'
@@ -428,7 +427,6 @@ export default function PullRequestChanges() {
       <PullRequestChangesPage
         handleUpload={handleUpload}
         usePullRequestProviderStore={usePullRequestProviderStore}
-        useTranslationStore={useTranslationStore}
         setDiffMode={setDiffMode}
         loadingReviewers={loadingReviewers}
         diffMode={diffMode}

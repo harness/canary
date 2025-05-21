@@ -1,7 +1,6 @@
 import { ComponentType, JSXElementConstructor, ReactElement, ReactNode } from 'react'
 
 import { CiStatus, PipelineExecutionStatus } from '@/views'
-import { TranslationStore } from '@views/repo'
 import { TLinkComponent } from '@views/types/link-types'
 
 export type IExecutionType = string | ReactElement<unknown, string | JSXElementConstructor<unknown>>
@@ -29,7 +28,6 @@ export interface IExecutionListStore {
 
 export interface IExecutionListPageProps {
   useExecutionListStore: () => IExecutionListStore
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   isError: boolean
   errorMessage?: string
@@ -44,7 +42,6 @@ export interface IExecutionListProps {
   LinkComponent: ComponentType<{ to: string; children: ReactNode }>
   query?: string
   handleResetQuery: () => void
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   handleExecutePipeline: () => void
 }

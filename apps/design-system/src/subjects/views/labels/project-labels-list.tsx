@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { LabelsListStore } from '@subjects/stores/labels-store'
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { LabelsListPage } from '@harnessio/ui/views'
@@ -13,7 +13,6 @@ export const ProjectLabelsList = () => {
     <>
       <LabelsListPage
         className="mx-auto max-w-[1040px]"
-        useTranslationStore={useTranslationStore}
         useLabelsStore={LabelsListStore.useLabelsStore}
         createdIn={''}
         searchQuery={''}
@@ -27,7 +26,6 @@ export const ProjectLabelsList = () => {
         type="label"
         deleteFn={noop}
         isLoading={false}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

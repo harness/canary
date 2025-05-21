@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button, ButtonGroup, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { useTranslation } from '@/context'
 import {
   createEditUserSchema,
   type EditUserFields
@@ -17,8 +18,8 @@ interface EditUserDialogProps {
 }
 
 export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDialogProps) {
-  const { useTranslationStore, useAdminListUsersStore } = useUserManagementStore()
-  const { t } = useTranslationStore()
+  const { useAdminListUsersStore } = useUserManagementStore()
+  const { t } = useTranslation()
   const { user } = useAdminListUsersStore()
 
   const { loadingStates, errorStates } = useStates()

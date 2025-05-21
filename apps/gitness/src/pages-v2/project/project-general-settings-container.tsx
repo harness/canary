@@ -14,7 +14,6 @@ import { ProjectSettingsGeneralFields, ProjectSettingsGeneralPage } from '@harne
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext.tsx'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 
 export const ProjectGeneralSettingsPageContainer = () => {
   const routes = useRoutes()
@@ -77,7 +76,6 @@ export const ProjectGeneralSettingsPageContainer = () => {
         isUpdateSuccess={updateDescription.isSuccess}
         updateError={updateError}
         setOpenDeleteDialog={() => setOpenDeleteDialog(true)}
-        useTranslationStore={useTranslationStore}
       />
       <DeleteAlertDialog
         open={openDeleteDialog}
@@ -87,7 +85,6 @@ export const ProjectGeneralSettingsPageContainer = () => {
         error={deleteError}
         isLoading={isLoading}
         withForm
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

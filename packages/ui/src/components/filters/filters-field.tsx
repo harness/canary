@@ -1,7 +1,6 @@
 import { Button } from '@components/button'
 import { Checkbox } from '@components/checkbox'
 import { Label } from '@components/form-primitives'
-import { TFunction } from 'i18next'
 
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
@@ -24,7 +23,6 @@ export interface FiltersFieldProps<
 > {
   filterOption: FilterOptionConfig<T, CustomValue>
   removeFilter: () => void
-  t: TFunction
   valueLabel?: string
   shouldOpenFilter: boolean
   onOpenChange?: (open: boolean) => void
@@ -100,7 +98,6 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
   removeFilter,
   shouldOpenFilter,
   onOpenChange,
-  t,
   onChange,
   value
 }: FiltersFieldProps<T, V, CustomValue>) => {
@@ -121,7 +118,6 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
     <FilterBoxWrapper
       contentClassName={filterOption.type === FilterFieldTypes.Calendar ? 'w-[250px]' : ''}
       handleRemoveFilter={() => removeFilter()}
-      t={t}
       onOpenChange={onOpenChange}
       defaultOpen={shouldOpenFilter}
       filterLabel={filterOption.label}

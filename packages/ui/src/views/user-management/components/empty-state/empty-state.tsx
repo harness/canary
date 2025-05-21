@@ -1,12 +1,10 @@
 import { NoData } from '@/components'
+import { useTranslation } from '@/context'
 import { DialogLabels } from '@/views/user-management'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
-import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
 export const EmptyState = () => {
-  const { useTranslationStore } = useUserManagementStore()
-
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const { handleDialogOpen } = useDialogData()
 

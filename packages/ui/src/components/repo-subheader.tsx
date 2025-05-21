@@ -1,5 +1,6 @@
 import { TabNav } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { SandboxLayout } from '@/views'
 
 export enum RepoTabsKeys {
   SUMMARY = 'summary',
@@ -16,11 +17,10 @@ export const repoTabsKeysArr = Object.values(RepoTabsKeys)
 interface RepoSubheaderProps {
   className?: string
   showPipelinesTab?: boolean
-  useTranslationStore: () => TranslationStore
 }
 
-export const RepoSubheader = ({ useTranslationStore, showPipelinesTab = true, className }: RepoSubheaderProps) => {
-  const { t } = useTranslationStore()
+export const RepoSubheader = ({ showPipelinesTab = true, className }: RepoSubheaderProps) => {
+  const { t } = useTranslation()
 
   return (
     <SandboxLayout.SubHeader className={className}>

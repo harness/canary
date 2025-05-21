@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { BranchSelectorV2, PullRequestComparePage, PullRequestComparePageProps } from '@harnessio/ui/views'
 
@@ -49,7 +49,6 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       useRepoCommitsStore={useRepoCommitsListStore}
       searchCommitQuery={null}
       setSearchCommitQuery={noop}
-      useTranslationStore={useTranslationStore}
       isLoading={false}
       searchReviewersQuery=""
       setSearchReviewersQuery={noop}
@@ -67,7 +66,6 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
           onSelectBranch={noop}
           isBranchOnly={false}
           dynamicWidth={false}
-          useTranslationStore={useTranslationStore}
           setSearchQuery={noop}
         />
       }

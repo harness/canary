@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonGroup, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
-import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   createNewUserSchema,
@@ -16,8 +16,7 @@ interface CreateUserDialogProps {
 }
 
 export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUserDialogProps) {
-  const { useTranslationStore } = useUserManagementStore()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const { loadingStates, errorStates } = useStates()
   const { isCreatingUser } = loadingStates

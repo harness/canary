@@ -1,6 +1,5 @@
 import { PrincipalType } from '@/types'
 import { IPrincipalListStore } from '@views/account'
-import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
 import { IMemberListStore } from '../project.types'
@@ -22,7 +21,6 @@ export interface ProjectMemberListViewProps {
   isInvitingMember: boolean
   useMemberListStore: () => IMemberListStore
   usePrincipalListStore: () => IPrincipalListStore
-  useTranslationStore: () => TranslationStore
   isInviteMemberDialogOpen: boolean
   setIsInviteMemberDialogOpen: (isOpen: boolean) => void
   searchQuery: string | null
@@ -39,7 +37,6 @@ export interface InviteMemberDialogProps {
   open: boolean
   onClose: () => void
   onSubmit: (formValues: InviteMemberFormFields) => void
-  useTranslationStore: () => TranslationStore
   isInvitingMember: boolean
   principals: PrincipalType[]
   error?: string

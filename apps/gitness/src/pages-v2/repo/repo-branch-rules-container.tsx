@@ -9,6 +9,7 @@ import {
   useRepoRuleUpdateMutation
 } from '@harnessio/code-service-client'
 import { SkeletonForm } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchRulesActionType,
@@ -23,14 +24,13 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { transformFormOutput } from '../../utils/repo-branch-rules-utils'
 import { useBranchRulesStore } from './stores/repo-branch-rules-store'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const routes = useRoutes()
   const navigate = useNavigate()
   const repoRef = useGetRepoRef()
@@ -203,7 +203,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   }
 
   if (!!identifier && !!fetchRuleError) {
-    return <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="rules" />
+    return <NotFoundPage pageTypeText="rules" />
   }
 
   return (
@@ -218,7 +218,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       handleSelectChangeForRule={handleSelectChangeForRule}
       handleInputChange={handleInputChange}
       handleInitialRules={handleInitialRules}
-      useTranslationStore={useTranslationStore}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}
       isSubmitSuccess={isSubmitSuccess}

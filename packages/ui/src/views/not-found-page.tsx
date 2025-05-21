@@ -1,16 +1,15 @@
 import { FC } from 'react'
 
 import { Button } from '@/components'
+import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
-import { TranslationStore } from '@views/repo'
 
 export interface NotFoundPageProps {
-  useTranslationStore: () => TranslationStore
   pageTypeText?: string
 }
 
-export const NotFoundPage: FC<NotFoundPageProps> = ({ useTranslationStore, pageTypeText }) => {
-  const { t } = useTranslationStore()
+export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText }) => {
+  const { t } = useTranslation()
 
   const handleReload = () => {
     window.location.reload()

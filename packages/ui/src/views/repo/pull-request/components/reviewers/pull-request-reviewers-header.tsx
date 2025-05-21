@@ -1,8 +1,9 @@
 import { useRef } from 'react'
 
 import { Avatar, Button, DropdownMenu, Icon, ScrollArea, SearchInput } from '@/components'
+import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
-import { PRReviewer, TranslationStore } from '@/views'
+import { PRReviewer } from '@/views'
 import { cn } from '@utils/cn'
 import { debounce } from 'lodash-es'
 
@@ -14,7 +15,6 @@ interface ReviewersHeaderProps {
   currentUserId?: string
   searchQuery: string
   setSearchQuery: (query: string) => void
-  useTranslationStore: () => TranslationStore
 }
 
 const ReviewersHeader = ({
@@ -24,10 +24,9 @@ const ReviewersHeader = ({
   handleDelete,
   currentUserId,
   searchQuery,
-  setSearchQuery,
-  useTranslationStore
+  setSearchQuery
 }: ReviewersHeaderProps) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const handleSearchQuery = (query: string) => {
     setSearchQuery(query)

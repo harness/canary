@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
 import { Icon, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
-import { TranslationStore } from '@views/repo'
 
 import { KeysList } from '../types'
 
@@ -10,16 +10,10 @@ interface ProfileKeysListProps {
   publicKeys: KeysList[]
   isLoading?: boolean
   openAlertDeleteDialog: (params: { identifier: string; type: string }) => void
-  useTranslationStore: () => TranslationStore
 }
 
-export const ProfileKeysList: FC<ProfileKeysListProps> = ({
-  publicKeys,
-  isLoading,
-  openAlertDeleteDialog,
-  useTranslationStore
-}) => {
-  const { t } = useTranslationStore()
+export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoading, openAlertDeleteDialog }) => {
+  const { t } = useTranslation()
 
   return (
     <Table.Root

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { useTranslationStore } from '@utils/viewUtils'
 import { noop } from 'lodash-es'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
@@ -48,7 +47,6 @@ const ConnectorsListPageWrapper = (): JSX.Element => {
             isFavorite: connector.isFavorite
           })) as ConnectorListItem[]
         }
-        useTranslationStore={useTranslationStore}
         isLoading={false}
         onFilterChange={handleFilterChange}
         setSearchQuery={noop}
@@ -70,7 +68,6 @@ const ConnectorsListPageWrapper = (): JSX.Element => {
         error={null}
         type="connector"
         identifier={alertDeleteParams}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

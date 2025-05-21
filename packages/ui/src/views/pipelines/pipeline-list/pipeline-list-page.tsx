@@ -9,7 +9,6 @@ import { IPipelineListPageProps } from './types'
 
 const PipelineListPage: FC<IPipelineListPageProps> = ({
   usePipelineListStore,
-  useTranslationStore,
   isLoading,
   isError,
   errorMessage,
@@ -19,7 +18,6 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
   LinkComponent,
   toPipelineDetails
 }) => {
-  const { t } = useTranslationStore()
   const { pipelines, totalItems, pageSize, page, setPage } = usePipelineListStore()
 
   const {
@@ -75,13 +73,12 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
           LinkComponent={LinkComponent}
           query={searchQuery ?? ''}
           handleResetQuery={handleResetSearch}
-          useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           handleCreatePipeline={handleCreatePipeline}
           toPipelineDetails={toPipelineDetails}
         />
         <Spacer size={8} />
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

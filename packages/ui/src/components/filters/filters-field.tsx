@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { Button } from '@components/button'
 import { Checkbox } from '@components/checkbox'
 import { Label } from '@components/form-primitives'
@@ -32,11 +34,19 @@ export interface FiltersFieldProps<
   value?: V
 }
 
-const renderFilterValues = <T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>>(
-  filter: FilterField<V>,
-  filterOption: FilterOptionConfig<T, CustomValue>,
+interface FilterFieldProps<T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>> {
+  filter: FilterField<V>
+  filterOption: FilterOptionConfig<T, CustomValue>
   onUpdateFilter: (selectedValues: V) => void
-): JSX.Element | null => {
+}
+
+const FilterFieldInternal = <T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>>({
+  filter,
+  filterOption,
+  onUpdateFilter
+}: FilterFieldProps<T, V, CustomValue>): JSX.Element | null => {
+  const uniqId = useMemo(() => `filter-${Math.random().toString(36).slice(2, 11)}`, [])
+
   if (!onUpdateFilter) return null
 
   switch (filterOption.type) {
@@ -77,15 +87,16 @@ const renderFilterValues = <T extends string, V extends FilterValueTypes, Custom
     }
     case FilterFieldTypes.Checkbox: {
       const checkboxFilter = filter as FilterField<boolean>
+      const checkboxId = `checkbox-${uniqId}`
       return (
         // TODO Need to remove button once we get the designs for checkbox filter
         <Button variant="secondary" theme="default" className="gap-x-2.5">
           <Checkbox
-            id="filter-checkbox"
+            id={checkboxId}
             checked={checkboxFilter.value}
             onCheckedChange={value => onUpdateFilter(value as V)}
           />
-          <Label className="grid-cols-none" htmlFor="filter-checkbox">
+          <Label className="grid-cols-none" htmlFor={checkboxId}>
             <span>{filterOption.filterFieldConfig?.label}</span>
           </Label>
         </Button>
@@ -115,7 +126,13 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
   }
 
   if (filterOption.type === FilterFieldTypes.Checkbox) {
-    return renderFilterValues<T, V, CustomValue>(activeFilterOption, filterOption, onFilterValueChange) ?? null
+    return (
+      <FilterFieldInternal<T, V, CustomValue>
+        filter={activeFilterOption}
+        filterOption={filterOption}
+        onUpdateFilter={onFilterValueChange}
+      />
+    )
   }
 
   return (
@@ -128,7 +145,11 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
       filterLabel={filterOption.label}
       valueLabel={getFilterLabelValue(filterOption, activeFilterOption)}
     >
-      {renderFilterValues<T, V, CustomValue>(activeFilterOption, filterOption, onFilterValueChange) ?? null}
+      <FilterFieldInternal<T, V, CustomValue>
+        filter={activeFilterOption}
+        filterOption={filterOption}
+        onUpdateFilter={onFilterValueChange}
+      />
     </FilterBoxWrapper>
   )
 }

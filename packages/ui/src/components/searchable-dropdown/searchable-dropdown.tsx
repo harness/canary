@@ -27,7 +27,7 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="flex items-center gap-x-1.5">{displayLabel}</DropdownMenu.Trigger>
+      <DropdownMenu.Trigger asChild>{displayLabel}</DropdownMenu.Trigger>
       <DropdownMenu.Content
         className="min-w-[224px] p-0"
         align={dropdownAlign}

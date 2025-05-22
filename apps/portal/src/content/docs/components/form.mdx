@@ -25,53 +25,55 @@ import { DocsPage } from "@/components/docs-page";
   () => {
   const [submittedValue, setSubmittedValue] = React.useState<FormValues | null>(null);
 
-  const inputRef = React.useRef<HTMLInputElement | null>(null);
+const inputRef = React.useRef<HTMLInputElement | null>(null);
 
-  const formSchema = z.object({
-    name: z.string().trim().min(3, "Input must be at least 3 characters"),
+const formSchema = z.object({
+name: z.string().trim().min(3, "Input must be at least 3 characters"),
 
     // 🚨 z.coerce.number() - Must be used for number fields
     // https://github.com/shadcn-ui/ui/issues/421#issuecomment-1561080201
     age: z.coerce.number().min(1, "Number must be at least 1"),
 
     comment: z.string().trim().min(10, "Comment must be at least 10 characters"),
-  });
 
-  // Infer the type from the schema
-  const FormValues = z.infer<typeof formSchema>;
+});
 
-  // Initialize react-hook-form with zod resolver
-  const formMethods = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "John doe",
-      age: 1,
-      comment: "Lorem ipsum",
-    },
-  });
+// Infer the type from the schema
+const FormValues = z.infer<typeof formSchema>;
 
-  const { register, handleSubmit } = formMethods;
+// Initialize react-hook-form with zod resolver
+const formMethods = useForm<FormValues>({
+resolver: zodResolver(formSchema),
+defaultValues: {
+name: "John doe",
+age: 1,
+comment: "Lorem ipsum",
+},
+});
 
-  // Handle form submission
-  const onSubmit = (data: FormValues) => {
-    setSubmittedValue(data);
-  };
+const { register, handleSubmit } = formMethods;
 
-  React.useEffect(() => {
-    if(!formMethods.formState.isValid){
-      setSubmittedValue(null);
-    }
-  },[formMethods.formState.isValid]);
+// Handle form submission
+const onSubmit = (data: FormValues) => {
+setSubmittedValue(data);
+};
 
-  return (
-    <div className="w-[500px]">
-      {/* ‼️ It is mandatory to pass all return values from useForm to FormWrapper */}
-      <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-        <FormInput.Text
-          label="Input Field"
-          placeholder="Enter at least 3 characters"
-          {...register("name")}
-        />
+React.useEffect(() => {
+if(!formMethods.formState.isValid){
+setSubmittedValue(null);
+}
+},[formMethods.formState.isValid]);
+
+return (
+
+<div className="w-[500px]">
+{/* ‼️ It is mandatory to pass all return values from useForm to FormWrapper */}
+<FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+<FormInput.Text
+label="Input Field"
+placeholder="Enter at least 3 characters"
+{...register("name")}
+/>
 
         <FormInput.Number
           label="Number Field"
@@ -97,7 +99,8 @@ import { DocsPage } from "@/components/docs-page";
         )}
       </FormWrapper>
     </div>
-  );
+
+);
 }
 `}
 />

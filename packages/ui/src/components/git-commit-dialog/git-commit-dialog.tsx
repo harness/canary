@@ -3,10 +3,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   Button,
-  ButtonLayout,
   CommitToGitRefOption,
   ControlGroup,
-  Dialog,
   FormInput,
   FormWrapper,
   GitCommitFormType,
@@ -14,6 +12,7 @@ import {
   Link,
   Message,
   MessageTheme,
+  ModalDialog,
   Radio,
   Tag
 } from '@/components'
@@ -123,114 +122,114 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   }
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={handleDialogClose}>
-      <Dialog.Content className="max-w-[576px]">
-        <Dialog.Header>
-          <Dialog.Title>Commit Changes</Dialog.Title>
-        </Dialog.Header>
+    <ModalDialog.Root open={isOpen} onOpenChange={handleDialogClose}>
+      <ModalDialog.Content className="max-w-[576px]">
+        <ModalDialog.Header>
+          <ModalDialog.Title>Commit Changes</ModalDialog.Title>
+        </ModalDialog.Header>
 
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-          {isFileNameRequired && (
+        <ModalDialog.Body>
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+            {isFileNameRequired && (
+              <FormInput.Text
+                id="fileName"
+                label="File Name"
+                {...register('fileName')}
+                placeholder="Add a file name"
+                autoFocus
+              />
+            )}
             <FormInput.Text
-              id="fileName"
-              label="File Name"
-              {...register('fileName')}
-              placeholder="Add a file name"
-              autoFocus
+              autoFocus={!isFileNameRequired}
+              id="message"
+              label="Commit Message"
+              {...register('message')}
+              placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
             />
-          )}
-          <FormInput.Text
-            autoFocus={!isFileNameRequired}
-            id="message"
-            label="Commit Message"
-            {...register('message')}
-            placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
-          />
-          <FormInput.Textarea
-            id="description"
-            {...register('description')}
-            placeholder="Add an optional extended description"
-            label="Extended description"
-          />
-          <ControlGroup>
-            <FormInput.Radio className="gap-6" id="commitToGitRef" {...register('commitToGitRef')}>
-              <Radio.Item
-                id={CommitToGitRefOption.DIRECTLY}
-                className="mt-px"
-                value={CommitToGitRefOption.DIRECTLY}
-                label={
-                  <span className="flex items-center gap-2">
-                    Commit directly to the
-                    <Tag size="sm" value={currentBranch} icon="branch-2" showIcon />
-                    branch
-                  </span>
-                }
-              />
-              <Radio.Item
-                id={CommitToGitRefOption.NEW_BRANCH}
-                className="mt-px"
-                value={CommitToGitRefOption.NEW_BRANCH}
-                label="Create a new branch for this commit and start a pull request"
-                caption={
-                  // TODO: Add correct path
-                  <Link to="/">Learn more about pull requests</Link>
-                }
-              />
-            </FormInput.Radio>
-            {violation && (
-              <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
-                {bypassable
-                  ? commitToGitRefValue === CommitToGitRefOption.DIRECTLY
-                    ? 'Some rules will be bypassed to commit directly'
-                    : 'Some rules will be bypassed to commit by creating branch'
-                  : commitToGitRefValue === CommitToGitRefOption.DIRECTLY
-                    ? "Some rules don't allow you to commit directly"
-                    : "Some rules don't allow you to create new branch for commit"}
-              </Message>
-            )}
-            {error && error?.message && (
-              <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
-                {error.message}
-              </Message>
-            )}
-
-            {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH && (!violation || (violation && bypassable)) && (
-              <div className="ml-8 mt-3">
-                <FormInput.Text
-                  autoFocus
-                  prefix={
-                    <div className="grid place-items-center px-2">
-                      <Icon name="branch" size={14} />
-                    </div>
+            <FormInput.Textarea
+              id="description"
+              {...register('description')}
+              placeholder="Add an optional extended description"
+              label="Extended description"
+            />
+            <ControlGroup>
+              <FormInput.Radio className="gap-6" id="commitToGitRef" {...register('commitToGitRef')}>
+                <Radio.Item
+                  id={CommitToGitRefOption.DIRECTLY}
+                  className="mt-px"
+                  value={CommitToGitRefOption.DIRECTLY}
+                  label={
+                    <span className="flex items-center gap-2">
+                      Commit directly to the
+                      <Tag size="sm" value={currentBranch} icon="branch-2" showIcon />
+                      branch
+                    </span>
                   }
-                  id="newBranchName"
-                  {...register('newBranchName')}
-                  placeholder="New Branch Name"
                 />
-              </div>
-            )}
-          </ControlGroup>
-        </FormWrapper>
+                <Radio.Item
+                  id={CommitToGitRefOption.NEW_BRANCH}
+                  className="mt-px"
+                  value={CommitToGitRefOption.NEW_BRANCH}
+                  label="Create a new branch for this commit and start a pull request"
+                  caption={
+                    // TODO: Add correct path
+                    <Link to="/">Learn more about pull requests</Link>
+                  }
+                />
+              </FormInput.Radio>
+              {violation && (
+                <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
+                  {bypassable
+                    ? commitToGitRefValue === CommitToGitRefOption.DIRECTLY
+                      ? 'Some rules will be bypassed to commit directly'
+                      : 'Some rules will be bypassed to commit by creating branch'
+                    : commitToGitRefValue === CommitToGitRefOption.DIRECTLY
+                      ? "Some rules don't allow you to commit directly"
+                      : "Some rules don't allow you to create new branch for commit"}
+                </Message>
+              )}
+              {error && error?.message && (
+                <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
+                  {error.message}
+                </Message>
+              )}
 
-        <Dialog.Footer>
-          <ButtonLayout>
-            <Button variant="outline" onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
-              Cancel
+              {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH && (!violation || (violation && bypassable)) && (
+                <div className="ml-8 mt-3">
+                  <FormInput.Text
+                    autoFocus
+                    prefix={
+                      <div className="grid place-items-center px-2">
+                        <Icon name="branch" size={14} />
+                      </div>
+                    }
+                    id="newBranchName"
+                    {...register('newBranchName')}
+                    placeholder="New Branch Name"
+                  />
+                </div>
+              )}
+            </ControlGroup>
+          </FormWrapper>
+        </ModalDialog.Body>
+
+        <ModalDialog.Footer>
+          <ModalDialog.Close onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
+            Cancel
+          </ModalDialog.Close>
+          {!bypassable ? (
+            <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
+              {isSubmitting ? 'Committing...' : 'Commit changes'}
             </Button>
-            {!bypassable ? (
-              <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
-                {isSubmitting ? 'Committing...' : 'Commit changes'}
-              </Button>
-            ) : (
-              <Button onClick={handleSubmit(onSubmit)} variant="outline" theme="danger" type="submit">
-                {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH
-                  ? 'Bypass rules and commit via new branch'
-                  : 'Bypass rules and commit directly'}
-              </Button>
-            )}
-          </ButtonLayout>
-        </Dialog.Footer>
-      </Dialog.Content>
-    </Dialog.Root>
+          ) : (
+            <Button onClick={handleSubmit(onSubmit)} variant="outline" theme="danger" type="submit">
+              {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH
+                ? 'Bypass rules and commit via new branch'
+                : 'Bypass rules and commit directly'}
+            </Button>
+          )}
+        </ModalDialog.Footer>
+      </ModalDialog.Content>
+    </ModalDialog.Root>
   )
 }

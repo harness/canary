@@ -1,6 +1,6 @@
 import { FormEvent, MouseEvent, ReactNode, useState } from 'react'
 
-import { Button, Dialog, Icon, SearchBox, Spacer, useSidebar } from '@/components'
+import { Button, Icon, ModalDialog, SearchBox, Spacer, useSidebar } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 
@@ -57,17 +57,17 @@ function SidebarSearchLegacy({ logo }: ProjectProps) {
           tabIndex={collapsed ? -1 : 0}
         />
       </div>
-      <Dialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
-        <Dialog.Content className="h-[600px] max-w-[800px]">
-          <Dialog.Header>
-            <Dialog.Title>{t('component:navbar.search', 'Search')}</Dialog.Title>
-            <Dialog.Description>
+      <ModalDialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
+        <ModalDialog.Content size="lg" className="h-[600px] max-w-[800px]">
+          <ModalDialog.Header>
+            <ModalDialog.Title>{t('component:navbar.search', 'Search')}</ModalDialog.Title>
+            <ModalDialog.Description>
               <Spacer size={6} />
-              <SearchBox.Root width="full" placeholder={`${t('component:navbar.search', 'Search')}...`} />
-            </Dialog.Description>
-          </Dialog.Header>
-        </Dialog.Content>
-      </Dialog.Root>
+              <SearchBox.Root autoFocus width="full" placeholder={`${t('component:navbar.search', 'Search')}...`} />
+            </ModalDialog.Description>
+          </ModalDialog.Header>
+        </ModalDialog.Content>
+      </ModalDialog.Root>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { Button } from './button'
+import { Button, ButtonProps } from './button'
 import { Icon } from './icon'
 import { Logo } from './logo'
 import { ScrollArea } from './scroll-area'
@@ -155,13 +155,14 @@ const Footer = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div className={cn('cn-modal-dialog-footer', className)} {...props} />
 )
 
-const Close = ({ children, className, ...props }: HTMLAttributes<HTMLButtonElement>) => (
+const Close = forwardRef<HTMLButtonElement, ButtonProps>(({ children, className, ...props }, ref) => (
   <Dialog.Close asChild>
-    <Button variant="secondary" className={className} {...props}>
+    <Button variant="secondary" className={className} {...props} ref={ref}>
       {children}
     </Button>
   </Dialog.Close>
-)
+))
+Close.displayName = 'ModalDialog.Close'
 
 const ModalDialog = {
   Root,

@@ -1,3 +1,4 @@
+import type { AccordionFormInputConfig } from './accordion-form-input'
 import type { ArrayFormInputConfig } from './array-input'
 import type { BooleanFormInputConfig } from './boolean-form-input'
 import type { CalendarInputConfig } from './calendar-form-input'
@@ -21,7 +22,7 @@ export type InputType =
   | 'separator'
   | 'cards'
   | 'calendar'
-  | 'secretSelect'
+  | 'accordion'
 
 export type InputConfigType =
   | TextFormInputConfig
@@ -34,3 +35,4 @@ export type InputConfigType =
   | SelectFormInputConfig
   | CardsFormInputConfig
   | CalendarInputConfig
+  | AccordionFormInputConfig

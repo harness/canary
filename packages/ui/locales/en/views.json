@@ -193,7 +193,7 @@
     "commit": "Commit",
     "tagger": "Tagger",
     "creationDate": "Creation date",
-    "newTag": "New tag",
+    "newTag": "New Tag",
     "enableWebhookToggle": "Enable the webhook",
     "toggleDescription": "We will deliver event details when this hook is triggered",
     "urlPlaceholder": "https://example.com/harness",

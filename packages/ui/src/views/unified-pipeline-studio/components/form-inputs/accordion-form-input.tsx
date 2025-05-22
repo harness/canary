@@ -17,7 +17,7 @@ import { InputLabel } from './common/InputLabel'
 import { Layout } from './common/Layout'
 
 function getAccordionId(input: IInputDefinition) {
-  return input.path + '_' + input.label
+  return `${input.path}_${input.label}`
 }
 
 export interface AccordionFormInputConfig {
@@ -61,17 +61,19 @@ function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element 
     setForceMount(undefined)
   }, [])
 
-  // NOTE: open/close accordion
   const [accordionValue, setAccordionValue] = useState<string[]>(
     autoExpandGroups ? inputs.map(input => getAccordionId(input)) : []
   )
 
-  const onValueChange = (value: string | string[]) => {
-    setAccordionValue(typeof value === 'string' ? [value] : value)
-  }
-
   return (
-    <Accordion.Root type="multiple" onValueChange={onValueChange} value={accordionValue} indicatorPosition="right">
+    <Accordion.Root
+      type="multiple"
+      onValueChange={(value: string | string[]) => {
+        setAccordionValue(typeof value === 'string' ? [value] : value)
+      }}
+      value={accordionValue}
+      indicatorPosition="right"
+    >
       {inputs.map((childInput, idx) => {
         const accId = getAccordionId(childInput)
 

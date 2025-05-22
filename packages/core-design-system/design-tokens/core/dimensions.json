@@ -56,6 +56,10 @@
       "$type": "spacing",
       "$value": "56px"
     },
+    "15": {
+      "$type": "spacing",
+      "$value": "60px"
+    },
     "16": {
       "$type": "spacing",
       "$value": "64px"
@@ -250,6 +254,10 @@
     "14": {
       "$type": "sizing",
       "$value": "56px"
+    },
+    "15": {
+      "$type": "sizing",
+      "$value": "60px"
     },
     "16": {
       "$type": "sizing",

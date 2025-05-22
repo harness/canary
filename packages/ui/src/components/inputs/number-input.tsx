@@ -14,12 +14,6 @@ export interface NumberInputProps extends Omit<InputProps, 'type' | 'suffix'> {
   integerOnly?: boolean
 }
 
-function focusAtEnd(element: HTMLInputElement | null): void {
-  if (element) {
-    element.setSelectionRange(element.value.length, element.value.length)
-  }
-}
-
 /**
  * TODO: Design system: Add support for integer only
  *
@@ -69,13 +63,31 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     }
 
     const handleIncrement = () => {
-      inputRef.current?.stepUp()
-      focusAtEnd(inputRef.current)
+      const input = inputRef.current
+      if (input) {
+        input.stepUp()
+        input.focus()
+        /**
+         * input.stepUp() will change the value of the input field, but it does not automatically trigger the onchange event callback.
+         * React Hook Form wasn't detecting these changes because no onChange event was being triggered
+         */
+        const event = new Event('input', { bubbles: true })
+        input.dispatchEvent(event)
+      }
     }
 
     const handleDecrement = () => {
-      inputRef.current?.stepDown()
-      focusAtEnd(inputRef.current)
+      const input = inputRef.current
+      if (input) {
+        input.stepDown()
+        input.focus()
+        /**
+         * input.stepDown() will change the value of the input field, but it does not automatically trigger the onchange event callback.
+         * React Hook Form wasn't detecting these changes because no onChange event was being triggered
+         */
+        const event = new Event('input', { bubbles: true })
+        input.dispatchEvent(event)
+      }
     }
 
     return (

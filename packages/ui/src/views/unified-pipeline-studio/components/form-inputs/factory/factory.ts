@@ -1,5 +1,6 @@
 import { InputFactory } from '@harnessio/forms'
 
+import { AccordionFormInput } from '../accordion-form-input'
 import { ArrayFormInput } from '../array-input'
 import { BooleanFormInput } from '../boolean-form-input'
 import { CalendarInput } from '../calendar-form-input'
@@ -24,5 +25,6 @@ inputComponentFactory.registerComponent(new SelectFormInput())
 inputComponentFactory.registerComponent(new SeparatorFormInput())
 inputComponentFactory.registerComponent(new CardsFormInput())
 inputComponentFactory.registerComponent(new CalendarInput())
+inputComponentFactory.registerComponent(new AccordionFormInput())
 
 export { inputComponentFactory }

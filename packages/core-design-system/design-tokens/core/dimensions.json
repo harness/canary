@@ -179,6 +179,10 @@
       "$type": "borderRadius",
       "$value": "24px"
     },
+    "px": {
+      "$type": "borderRadius",
+      "$value": "1px"
+    },
     "none": {
       "$type": "borderRadius",
       "$value": "0px",

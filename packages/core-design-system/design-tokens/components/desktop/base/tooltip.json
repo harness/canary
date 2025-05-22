@@ -4,13 +4,25 @@
       "$type": "borderRadius",
       "$value": "{rounded.2}"
     },
-    "padding": {
+    "py": {
       "$type": "spacing",
-      "$value": "{spacing.3}"
+      "$value": "{spacing.1}"
     },
-    "gap": {
+    "px": {
       "$type": "spacing",
-      "$value": "{spacing.1-half}"
+      "$value": "{spacing.2-half}"
+    },
+    "max": {
+      "$type": "sizing",
+      "$value": "{size.90}"
+    },
+    "min": {
+      "$type": "sizing",
+      "$value": "{size.12}"
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     }
   }
 }

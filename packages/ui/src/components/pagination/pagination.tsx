@@ -103,7 +103,6 @@ const PaginationItems: FC<PaginationItemsProps> = ({
 interface PaginationBaseProps {
   className?: string
   t: TFunction
-  truncateLimit?: number
 }
 
 type DeterminatePaginationNavProps =
@@ -156,7 +155,6 @@ export const Pagination: FC<PaginationProps> = ({
   hasPrevious,
   className,
   t,
-  truncateLimit = 4,
   getPrevPageLink,
   getNextPageLink,
   onPrevious,
@@ -205,7 +203,7 @@ export const Pagination: FC<PaginationProps> = ({
                 currentPage={currentPage}
                 getPageLink={getPageLink}
                 goToPage={goToPage ? handleGoToPage : undefined}
-                truncateLimit={truncateLimit}
+                truncateLimit={5}
               />
             )}
 

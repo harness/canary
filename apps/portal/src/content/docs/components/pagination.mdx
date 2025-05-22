@@ -37,29 +37,6 @@ import { DocsPage } from "@/components/docs-page";
 
 }`} />
 
-### Determinate Pagination with Truncation
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const t = (key, fallback) => fallback || key
-    const [currentPage, setCurrentPage] = React.useState(1)
-
-    return (
-        <div className="w-[550px]">
-            <Pagination
-                totalItems={100}
-                pageSize={10}
-                truncateLimit={5}
-                currentPage={currentPage}
-                goToPage={setCurrentPage}
-                t={t}
-            />
-        </div>
-    )
-
-}`} />
-
 ### Determinate Pagination with Hidden Page Numbers
 
 <DocsPage.ComponentExample
@@ -236,14 +213,6 @@ return (
       description: "Custom class name",
       required: false,
       value: "string",
-    },
-    {
-      name: "truncateLimit",
-      description:
-        "Maximum number of page links to show before truncating with ellipses",
-      required: false,
-      value: "number",
-      defaultValue: "4",
     },
     // Determinate pagination mode props
     {

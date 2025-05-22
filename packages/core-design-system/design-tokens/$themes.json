@@ -434,151 +434,6 @@
       "pink.1000": "S:1c3d86595382b4c66d7fc80a9ee2f2f84f907954,"
     },
     "$figmaVariableReferences": {
-      "tracking.tighter": "a612b42a1649449f70026a485256dbbf92da6d92",
-      "tracking.tight": "7a7825cb0165113837002059584dbce83e75a03f",
-      "tracking.normal": "167b6fa66855f1546669aff796686de35514edd0",
-      "tracking.wide": "34601988c203609e80fad6e8391458c47385e386",
-      "tracking.wider": "14e61a1989be947ad3fe6136353654d98871dc90",
-      "tracking.widest": "0b2e216ff832f9bf7b96e8f222ea8f38b04a6a27",
-      "fontWeight.default.normal.100": "5b09487638f3ccf3a4a7712ca2283b4818a41f28",
-      "fontWeight.default.normal.200": "fc6532ae463eb44ec62b89697d1770070585dcb2",
-      "fontWeight.default.normal.300": "2a00b61d9e090f7d69fff8c59d50f1f2f31e9c6f",
-      "fontWeight.default.normal.400": "a9fb4a40a31f7264e888c758f0c41e821ca64ed5",
-      "fontWeight.default.normal.500": "f1c8211b31501f08aebfa03feb5cb23e64d84383",
-      "fontWeight.default.normal.600": "9f72ba08a4eef21b705744ff948adb815552f31c",
-      "fontWeight.default.normal.700": "65f437db2221dd868421efc11be47197919f4d7d",
-      "fontWeight.default.normal.800": "4cd4610b5bc9c9399265e2052ea540b0a611f893",
-      "fontWeight.default.normal.900": "61db8dba465a957b970ce724962ed5d7ba53dbe4",
-      "fontWeight.default.italic.100": "49b3a69eb9896949fb6949a77227395c89db4993",
-      "fontWeight.default.italic.200": "808f6f0d72e6bfcb83b90a8cb3863b1a46d311ce",
-      "fontWeight.default.italic.300": "9cfefc39c3766d91382ca3fa060312da79adce54",
-      "fontWeight.default.italic.400": "c61147ebfaa86b2db0689e4fb43e8dc3f64b6111",
-      "fontWeight.default.italic.500": "9f47c20a77a2dbf36bcd4a3a1a7dd482c421fd20",
-      "fontWeight.default.italic.600": "41778d3acc38b2010cce4a0aadb90b714d91d533",
-      "fontWeight.default.italic.700": "43351d6b32a5db2bf412a96b802d552427beaa1f",
-      "fontWeight.default.italic.800": "eda335db87b371f9915196f9446948a792541dbd",
-      "fontWeight.default.italic.900": "ba03f1879f7c8fd9b9ff8bf07868b20a0d898245",
-      "fontWeight.mono.normal.100": "08b6a758e55b545792206fb57555c8d4b487f8f7",
-      "fontWeight.mono.normal.200": "96e84293221cdf7f88111b1cd55331de92078b22",
-      "fontWeight.mono.normal.300": "603909a040a23ba2e5ba9c706fa810420de0994c",
-      "fontWeight.mono.normal.400": "36794dc06d68b3dad63d9498d9e293d412bf8ca2",
-      "fontWeight.mono.normal.500": "641ef4178f648003d0b5c9c0469baa1dce6bcff5",
-      "fontWeight.mono.normal.700": "4cf0b1b2ea34b1df18999bade9c2af3a0ef6b0d2",
-      "fontWeight.mono.normal.800": "dc12775dcfa08d98fbb5296e62b582108707ef32",
-      "fontWeight.mono.italic.100": "63c01eccb265182f72e2a3142c59a6b696809700",
-      "fontWeight.mono.italic.200": "90ea2bf0e5904f16625f98a8ea62f78a8974380d",
-      "fontWeight.mono.italic.300": "33dbd3e167f4bd43a1d4adb5ad310d609d31a10d",
-      "fontWeight.mono.italic.400": "ecc3db60b0207b50c7fcce4e292625738d8d6537",
-      "fontWeight.mono.italic.500": "521eb13936369a6dc2340374df7abb5e657fefde",
-      "fontWeight.mono.italic.700": "f57d23d3402767dd602e9363428d91bc7cd42423",
-      "fontWeight.mono.italic.800": "f4a0edc9d3e9422dc5f7b8a16c7e0612ae476088",
-      "fontFamily.default": "1e95627ed050d7022c04d9c054649d2660d7a1b3",
-      "fontFamily.mono": "6e2cde7653fb49cb103b1bece4149cf46bb60c98",
-      "fontSize.0": "2fdbc7bd30ffd310af3294f2e1c9278f7bbd9708",
-      "fontSize.1": "9b079ccd31a0d3ba8e47e486c3e91684be715cf3",
-      "fontSize.2": "c60eea6bcf5ccdc456aacedbed9caeb54234e882",
-      "fontSize.3": "8f1921cef9703056dbb0471b0584137d0335fab1",
-      "fontSize.4": "f363564938b5d462f674be889215b65c77331eaa",
-      "fontSize.5": "9d58f7c69b9640d0e2ab69d9e52a1357ef7684cc",
-      "fontSize.6": "0c46eab47356e0e65364de4c8fd8836596afa876",
-      "fontSize.7": "cd5b388000487b8c6a4f6b8f77b029ea802c6293",
-      "fontSize.8": "f87dc7b91d96c1c84fcd3264928c351414812c93",
-      "fontSize.9": "3c92f584d882a663201c735135e788f105248fd1",
-      "fontSize.10": "22991cf214dd11386ae4c8825dfc006462b041e5",
-      "fontSize.11": "fb4b962d1764eda4a99d913c195974713cb6d0e6",
-      "fontSize.12": "2030b054d89c81e3056a21bb2e43ed1d39b882fb",
-      "fontSize.13": "1dbd6d33549b194b081294584ae84de7d8eca82b",
-      "fontSize.min": "82f0a69fbacceb3e2a8a185a09b5e24176918fe6",
-      "lineHeight.0.none": "877fc4070c18dcfe17aa98e6b6c29e8e09dcb4ba",
-      "lineHeight.0.tight": "5cdb69f84f45fbe99cdc723d58e7508dc6ca139a",
-      "lineHeight.0.snug": "a91aa14e73b80f05e756b8cfcff118ea26002fdd",
-      "lineHeight.0.normal": "92bb170bafdbb832e022db932285af4ae8c61a3a",
-      "lineHeight.0.relaxed": "8c52d96f9b6f745afd6d10ac5e5c637186646f5f",
-      "lineHeight.0.loose": "e0bf48c75b13a19878762704143c2c9ecbb5d844",
-      "lineHeight.1.none": "6414568fb42e657038f15f51cdf8063de2df16a1",
-      "lineHeight.1.tight": "988dae48ee4c4d7cc357d6d2d0cf3aff692fb8de",
-      "lineHeight.1.snug": "3f2b1de4fb3922051d115752e413be9ffc1c5a94",
-      "lineHeight.1.normal": "5f246172042814af4dd0bceda7b6be257b559fd1",
-      "lineHeight.1.relaxed": "04b628bf5e2a99ce4f000231d61f90df2261bc16",
-      "lineHeight.1.loose": "6f0ad4cd88300f93e83340b382cd60afcd9e64bb",
-      "lineHeight.2.none": "a3ec2ee9d928aad207f2591ee2aafa11eb0c5994",
-      "lineHeight.2.tight": "dcfe57d2487f85facbe2c571e1d808611f275963",
-      "lineHeight.2.snug": "35c9d6712ee81113e0afd41ffd50315a2609296f",
-      "lineHeight.2.normal": "166137f14f3e9ef65385e5c1c34650d2a3dcc0be",
-      "lineHeight.2.relaxed": "b60d550d3359dfa124049a602d1e991637a0a63b",
-      "lineHeight.2.loose": "25f359bcc36db1ab385781708bf3e29bf19c0fb6",
-      "lineHeight.3.none": "587310dd45a3d1ca5ab1b282d0bab5f851f22b21",
-      "lineHeight.3.tight": "44d7e107df1f1cb6c513c6068a07479e120642e4",
-      "lineHeight.3.snug": "b472e8557cc6d47ab5bc58e313ae21996167d3e7",
-      "lineHeight.3.normal": "995546a4d31a494e604b32e3d9e24232b08c8804",
-      "lineHeight.3.relaxed": "98269aed2541813458513b357083ce5bce728496",
-      "lineHeight.3.loose": "6b5137db8104038dfaad63b8d4b257baf6a6e9fe",
-      "lineHeight.4.none": "a6d9cab5e41bceba1d3e5275fcf2f62393a2415e",
-      "lineHeight.4.tight": "6f564fb09f0033bf9bc893ce560cf357acbc3f0d",
-      "lineHeight.4.snug": "c4b0fe3ba0f86a29e3d6b2dd283c00c46eda79ce",
-      "lineHeight.4.normal": "6f299744c220a06e3115ce0353528773e54b1407",
-      "lineHeight.4.relaxed": "ca2eba573e333ba3df195ba689c990a0dbf5596e",
-      "lineHeight.4.loose": "501f4310e23276e43a2981d52de016d4f53b8c63",
-      "lineHeight.5.none": "2a7d7b4e1e0c43c332c208e2c33735c6e91ffb56",
-      "lineHeight.5.tight": "8d8f16a259d7cfc76d607d5e375234f2915b8a5e",
-      "lineHeight.5.snug": "20c52c19148a32d34efe8e2cf3d7ef2f1dafd9b2",
-      "lineHeight.5.normal": "4e648d71e48f9d7444cda778095e5c8a7d6e061b",
-      "lineHeight.5.relaxed": "628e83c3a41d1d4acf1435ca9575b550056a8ed9",
-      "lineHeight.5.loose": "b2649f5330f86315c9bfb83fac8dbf17bb91fa85",
-      "lineHeight.6.none": "01d06e566a3ca852f26a98f6df52da90c2e6e641",
-      "lineHeight.6.tight": "f32433bfb3a15fdb025363c9a6bdf744eaa7b115",
-      "lineHeight.6.snug": "71cfaa2c78d2f6735beb0bf274fe9dc62a66062d",
-      "lineHeight.6.normal": "40bca5a3e15543370314a60e7170908d2988f187",
-      "lineHeight.6.relaxed": "e2d6a413a84a733c9647fa781eb9b7eb2ef3aa7f",
-      "lineHeight.6.loose": "e7e4d18d20da50de7f92d5c8221d646532aa2060",
-      "lineHeight.7.none": "a32ea6211b23820c38e7e629345d5608891eceb5",
-      "lineHeight.7.tight": "f4fefcbf2ba7cd0207c599d7b7c000adc1a92a7f",
-      "lineHeight.7.snug": "ae73c019bc812faa883d535d4a30842aa5e4da36",
-      "lineHeight.7.normal": "90a9897ffbb74673fb53d8cc5a5c371dff7df08b",
-      "lineHeight.7.relaxed": "a9d910df0b0c78a3e4fd622e7a2aab8cb3bbc036",
-      "lineHeight.7.loose": "82bb8178f63c008539f22fdcd7b0e622969e88ef",
-      "lineHeight.8.none": "04c9028f02b4db68c0f1cc6a88f30fbb29181ef9",
-      "lineHeight.8.tight": "d82aa02d6c4db4bcc63a15e6f071651ea0bcce22",
-      "lineHeight.8.snug": "afc436c2200c95b2a620357e14376c396fd6749c",
-      "lineHeight.8.normal": "ff8eec480bc16528ad45fc17db32a334548ad0f5",
-      "lineHeight.8.relaxed": "20aabd47b292d4ac1ac410a7f54992a59ed1a297",
-      "lineHeight.8.loose": "f33bf2baf3e63465ffd87f71686722fd1ecdb69f",
-      "lineHeight.9.none": "da112a1fcfe778d73dcbf6790e24d7798ddfbfc8",
-      "lineHeight.9.tight": "e0a551b01a6736cc486aa50471ddedbcfdeac6e8",
-      "lineHeight.9.snug": "98d3579f0f364c8d9d1e54680f6ece2d6b2fb6cf",
-      "lineHeight.9.normal": "0de682e28c1c273aa1a920f488e9829a42e1af30",
-      "lineHeight.9.relaxed": "5a4a152c67e986cf36a375b0773be53f1bdddebe",
-      "lineHeight.9.loose": "60739756fe96a66b9b89df7dbb7b1a2727dc33d3",
-      "lineHeight.10.none": "39134d4750f773c93c2f17ab13d3c6ea732b98ca",
-      "lineHeight.10.tight": "5cc1e763b7be596634431016be4bad6989cc0a1c",
-      "lineHeight.10.snug": "e01d61d5dd2107b25605158be08d7aab7bf830f2",
-      "lineHeight.10.normal": "160ccec6bae6d39c82ad96ea5f251d37c41461da",
-      "lineHeight.10.relaxed": "93e29ade757a5ef4559eda714a01c667c91d5178",
-      "lineHeight.10.loose": "370360bce917ac1ea44f065a08ca06b56291d3e7",
-      "lineHeight.11.none": "e8faabca308a9bdf5cd2194030cc51e13f5a52f6",
-      "lineHeight.11.tight": "9c30ceaecda4e8242908d6ec43df509ef244003f",
-      "lineHeight.11.snug": "dfac4a541cd2c106c8de6673311d6ea6e1d8b7ae",
-      "lineHeight.11.normal": "53e51be897628e97fdc0e7f9df9d512570847715",
-      "lineHeight.11.relaxed": "89a5b58e82313aee11a7a8c56c9eaf13c0e30ca5",
-      "lineHeight.11.loose": "c972ba8ad0b0e3bea4ea796b85c595279c1728ad",
-      "lineHeight.12.none": "df4f88384b0f31c013fe4e2ffd17607c2e8bf024",
-      "lineHeight.12.tight": "267d48f79fd5b911dca607e1be7ccf1c0029e7b5",
-      "lineHeight.12.snug": "f209c3e17281140371f009dca2dff211bc9e37e5",
-      "lineHeight.12.normal": "10dc54b1b9d358c5a1f6eb8510f623115e58be8f",
-      "lineHeight.12.relaxed": "e36f615728b90cd0318cbf95571a00d8e8647a76",
-      "lineHeight.12.loose": "a11f86668a72dbc7aaabe51b4d76b16be3617e80",
-      "lineHeight.13.none": "86d65fb2aef376a9f6379a6314fd563b1e99137a",
-      "lineHeight.13.tight": "e719baee3434e656bd96212767dd243a71617e30",
-      "lineHeight.13.snug": "288b6182f0ca41a1898106ef9dcd54e43934f0d7",
-      "lineHeight.13.normal": "2c0ae8e7400d306e56af834389b9b470be7c2ec4",
-      "lineHeight.13.relaxed": "666e03fd7199e5b1dcd36ead138dcb3943aebf2e",
-      "lineHeight.13.loose": "47e9c7ab7a2009b2c12fece096dcad4243000959",
-      "lineHeight.none": "0ada589083afc93d3045c5acb0b7711adbbb7e9d",
-      "lineHeight.tight": "a6fd74fa33d363aab652597f9d966744160b54c3",
-      "lineHeight.snug": "f43210c68fc55e2601319d370150caae96d48f1d",
-      "lineHeight.normal": "77d777b37c60240820d4b6a575ec11e9bab93f8f",
-      "lineHeight.relaxed": "543311ba04e458a942bb0d50826eb0334b932877",
-      "lineHeight.loose": "02429cf3d31691740527d1faea026f4cd4572166",
       "spacing.0": "475f43f27d46745efb1151d34181ca93e485c323",
       "spacing.1": "a88d7f7fa50cfde706a203262c7981abf2275b7d",
       "spacing.2": "15d295c3581f15a4b4cc29bc3b2c9c4f02e88009",
@@ -616,6 +471,7 @@
       "spacing.3-half": "4e6064233484460281223f420b5015d31aeb5efc",
       "spacing.4-half": "aca636954fe21b24a18ac1e2641cab71b2fce9a8",
       "rounded.1": "4c8e9b29af661054f065ecfb517ffbf725d128ae",
+      "rounded.px": "3c023b948516d2071836e07348eb83cbba78a0e9",
       "rounded.2": "5c9a222659e74e39ecb528719f03049f267ba7b6",
       "rounded.3": "546448f107049e61fca518fd32468633bba50a51",
       "rounded.4": "8355a7d82d6f8643701db782be4fb5cc61e0fe2a",
@@ -1726,7 +1582,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -1791,6 +1646,7 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
@@ -2531,7 +2387,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -2601,7 +2456,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -3335,7 +3191,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -3405,7 +3260,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -4136,7 +3992,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -4206,7 +4061,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -4939,7 +4795,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -5009,7 +4864,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -5742,7 +5598,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -5812,7 +5667,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -6545,7 +6401,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -6615,7 +6470,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -7348,7 +7204,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -7418,7 +7273,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -8151,7 +8007,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -8221,7 +8076,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -8954,7 +8810,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -9024,7 +8879,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -9757,7 +9613,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -9827,7 +9682,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -10560,7 +10416,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -10630,7 +10485,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -11363,7 +11219,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -11433,7 +11288,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -12165,7 +12021,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -12235,7 +12090,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -12967,7 +12823,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -13037,7 +12892,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -13769,7 +13625,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -13839,7 +13694,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -14571,7 +14427,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -14641,7 +14496,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -15373,7 +15229,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -15443,7 +15298,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -16175,7 +16031,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -16245,7 +16100,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -17001,7 +16857,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -17071,7 +16926,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -17803,7 +17659,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -17873,7 +17728,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -18605,7 +18461,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -18675,7 +18530,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "4b4382c8f983d170a16b127fb4627e0d25c445eb"
     },
     "group": "mode"
   },
@@ -19407,7 +19263,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -19477,7 +19332,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -20209,7 +20065,6 @@
       "comp.diff.expand-content": "1f0c136f21d9abc2ce4a585f7750043932bfc30f",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.link.text-visited": "39b6b12d8317b7e916bcba67f322018c02b42d82",
       "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card.bg": "921d9347b50b804d478f66576a20e22184ac05b5",
       "comp.pipeline.card.border": "bc1f47b752dfe47adee51573d9faa8d4738f0079",
@@ -20279,7 +20134,8 @@
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
     },
     "group": "mode"
   },
@@ -20439,9 +20295,9 @@
       "btn.py.sm": "0016f78f877b26a9f8843fa820d41a7ec6fb1a13",
       "btn.py.default": "a8bac530920096f2a857ec837cef9d6960808670",
       "btn.py.lg": "dbadfa238e54880a13fdd4fc66f14dc44afab1b3",
+      "btn.wrapper.gap": "22305e7fc989a9eadb2a07762c4f46f7af49f86e",
       "link.gap.sm": "e63b120b0015804d7581ad9bdcde168886bf350c",
       "link.gap.default": "dd3aa27e1885fd22d4ab02fd4055d911d46d075c",
-      "btn.wrapper.gap": "22305e7fc989a9eadb2a07762c4f46f7af49f86e",
       "badge.size.sm": "2aaf247c1dcb25b9744e4a10e2c0315c096468fe",
       "badge.size.default": "2b7170084780c9924660ee2aa997511f778b83ee",
       "badge.default.gap": "0c5418b2e9318e1ce2963748e72056c7c6736142",
@@ -20556,8 +20412,11 @@
       "tag.border": "f675fc12a9f950c500255b0c4cca35fa4b94539f",
       "tag.max-width": "59874db9c8d0fa937c05d35cfac76341a9460072",
       "tooltip.radius": "f75277905b2f6c6bbee278e7d79cea149254d620",
-      "tooltip.padding": "1a270d3047ced1ec7041b25fbd3ebb5fb7b54f7c",
-      "tooltip.gap": "7af1a53746e1e88e3a64a82afc0bc640b1cfdea6",
+      "tooltip.py": "1a270d3047ced1ec7041b25fbd3ebb5fb7b54f7c",
+      "tooltip.px": "6712b557e6d5c49d0607d1cfb8dc678503e5742f",
+      "tooltip.max": "1dc20a0bb7e52d9d8a7759c7d0a7af4de8b36550",
+      "tooltip.min": "d8c576be7d47f4f14425d45d69a48f43f0d51248",
+      "tooltip.border": "73e89b88147070fbc47fd80b40e86b58d6d600fb",
       "sidebar.item.px": "9f976af443d268a5d47ca9ad6652cfab0dc865b3",
       "sidebar.item.size": "19f85b1a35176c6d96a77912c46f7c0e3f50fe00",
       "sidebar.item.gap": "bdf10a3534802adcdc42d6c87f51862de6a1fb6a",

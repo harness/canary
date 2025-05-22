@@ -1127,6 +1127,14 @@
         "$type": "color",
         "$value": "{pure.black}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
+      },
+      "fade-start": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {gradient.dialog.fade} 0%, {bg.2} 100%)"
+      },
+      "fade-end": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {bg.2} 0%, {gradient.dialog.fade} 100%)"
       }
     },
     "diff": {
@@ -1298,11 +1306,6 @@
         "$type": "color",
         "$value": "{blue.200}",
         "$description": "Hover color for text links."
-      },
-      "text-visited": {
-        "$type": "color",
-        "$value": "{purple.300}",
-        "$description": "Visited state color for text links. Differentiates links the user has already activated."
       }
     },
     "pipeline": {
@@ -2028,6 +2031,21 @@
       "to": {
         "$type": "color",
         "$value": "{chrome.950}"
+      }
+    },
+    "dialog": {
+      "fade": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{bg.2}"
       }
     }
   },

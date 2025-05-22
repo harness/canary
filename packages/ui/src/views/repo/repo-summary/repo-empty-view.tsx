@@ -77,7 +77,7 @@ git push -u origin main
 
         <Fieldset>
           <Text size={4} weight="medium">
-            Please Generate Git Cradentials if it’s your first time cloning the repository
+            Please Generate Git Credentials if it’s your first time cloning the repository
           </Text>
           <Text size={3}>Git clone URL</Text>
           <Input label="HTTP" value={httpUrl} readOnly rightElement={<CopyButton name={httpUrl} />} />

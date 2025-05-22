@@ -187,7 +187,7 @@
     "commit": "Commit",
     "tagger": "Tagger",
     "creationDate": "Creation date",
-    "newTag": "New tag",
+    "newTag": "New Tag",
     "enableWebhookToggle": "Activer le webhook",
     "toggleDescription": "Nous enverrons les détails lorsque ce webhook sera déclenché",
     "urlPlaceholder": "https://example.com/harness",

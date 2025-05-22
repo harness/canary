@@ -1,10 +1,10 @@
 import * as React from 'react'
 
-import { Link } from '@components/link'
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
-import { Button } from '../button'
+import { Button, buttonVariants } from '../button'
 import { Icon } from '../icon'
 
 const PaginationPrimitiveRoot = ({ className, ...props }: React.ComponentProps<'nav'>) => (
@@ -44,6 +44,7 @@ const PaginationPrimitiveLink = ({
   onClick,
   ...props
 }: PaginationPrimitiveLinkProps) => {
+  const { Link: LinkBase } = useRouterContext()
   if (!onClick && !href) {
     throw new Error('PaginationPrimitiveLink must have either onClick or href')
   }
@@ -72,11 +73,10 @@ const PaginationPrimitiveLink = ({
   }
 
   return (
-    <Button
-      rounded
-      variant="ghost"
-      disabled={disabled}
+    <LinkBase
+      to={href as string}
       className={cn(
+        buttonVariants({ variant: 'ghost', rounded: true }),
         'cn-pagination-button',
         {
           'cn-button-active': isActive,
@@ -84,12 +84,13 @@ const PaginationPrimitiveLink = ({
         },
         className
       )}
-      asChild
+      data-disabled={disabled}
+      aria-disabled={disabled}
+      aria-current={isActive ? 'page' : undefined}
+      {...props}
     >
-      <Link variant="secondary" to={href as string} aria-current={isActive ? 'page' : undefined} {...props}>
-        {children}
-      </Link>
-    </Button>
+      {children}
+    </LinkBase>
   )
 }
 PaginationPrimitiveLink.displayName = 'PaginationPrimitiveLink'

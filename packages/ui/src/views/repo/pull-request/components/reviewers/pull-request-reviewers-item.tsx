@@ -19,9 +19,9 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
   }
   return (
     <div key={reviewer?.id} className="flex items-center justify-between space-x-2">
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 overflow-hidden">
         <Avatar name={reviewer?.display_name} rounded />
-        <div className="truncate text-2 font-medium text-cn-foreground-1">{reviewer?.display_name}</div>
+        <div className="text-2 text-cn-foreground-1 truncate font-medium">{reviewer?.display_name}</div>
       </div>
       <div className="px-1.5">
         {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}

@@ -1,8 +1,7 @@
-import { useRouterContext, useTranslation } from '@/context'
+import { TFunctionWithFallback, useRouterContext, useTranslation } from '@/context'
 import { ContentLayoutWithSidebar } from '@/views'
-import { TFunction } from 'i18next'
 
-const getNavItems = (t: TFunction) => [
+const getNavItems = (t: TFunctionWithFallback) => [
   {
     groupId: 0,
     title: t('views:profileSettings.accountSettings', 'Account settings'),

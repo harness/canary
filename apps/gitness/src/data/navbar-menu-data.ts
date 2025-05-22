@@ -1,11 +1,10 @@
-import { TFunction } from 'i18next'
-
 import { MenuGroupType, MenuGroupTypes } from '@harnessio/ui/components'
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 import { RouteFunctionMap } from '../framework/routing/types'
 
 export type GetNavbarMenuDataParams = {
-  t: TFunction
+  t: TFunctionWithFallback
   routes: RouteFunctionMap
   spaceId?: string
   repoId?: string

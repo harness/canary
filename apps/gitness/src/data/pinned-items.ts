@@ -1,6 +1,5 @@
-import { TFunction } from 'i18next'
-
 import { NavbarItemType } from '@harnessio/ui/components'
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 import { RouteFunctionMap } from '../framework/routing/types'
 
@@ -9,7 +8,7 @@ export const getPinnedMenuItemsData = ({
   spaceId,
   routes
 }: {
-  t: TFunction
+  t: TFunctionWithFallback
   routes: RouteFunctionMap
   spaceId?: string
 }): NavbarItemType[] => [

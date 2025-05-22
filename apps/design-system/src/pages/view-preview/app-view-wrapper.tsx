@@ -102,6 +102,8 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
               pinnedMenuItems={pinnedMenu}
               handleChangePinnedMenuItem={setPinned}
               handleRemoveRecentMenuItem={noop}
+              changeLanguage={noop}
+              lang="en"
             />
             <Sidebar.Inset>
               {breadcrumbs}

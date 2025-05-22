@@ -1,7 +1,7 @@
-import { TranslationStore } from '@/context'
+import { TFunctionWithFallback } from '@/context'
 import { z } from 'zod'
 
-export const makeCreateTagFormSchema = (t: TranslationStore['t']) =>
+export const makeCreateTagFormSchema = (t: TFunctionWithFallback) =>
   z.object({
     name: z
       .string()

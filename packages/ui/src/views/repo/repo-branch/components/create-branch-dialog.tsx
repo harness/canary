@@ -2,13 +2,13 @@ import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Alert, Button, ControlGroup, Dialog, Fieldset, FormInput, FormWrapper, Label } from '@/components'
-import { TranslationStore, useTranslation } from '@/context'
+import { TFunctionWithFallback, useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'
 
-export const createBranchFormSchema = (t: TranslationStore['t']) =>
+export const createBranchFormSchema = (t: TFunctionWithFallback) =>
   z.object({
     name: z
       .string()

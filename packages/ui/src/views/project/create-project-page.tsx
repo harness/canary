@@ -13,7 +13,7 @@ import {
   LinkProps as StyledLinkProps,
   Text
 } from '@/components'
-import { TranslationStore, useRouterContext, useTheme, useTranslation } from '@/context'
+import { TFunctionWithFallback, useRouterContext, useTheme, useTranslation } from '@/context'
 import { Floating1ColumnLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
@@ -56,7 +56,7 @@ const getIsFirstProjectPage = (props: CreateProjectPageProps): props is CreateFi
   return 'logoutLinkProps' in props
 }
 
-const createProjectSchema = (t: TranslationStore['t']) =>
+const createProjectSchema = (t: TFunctionWithFallback) =>
   z.object({
     name: z
       .string()

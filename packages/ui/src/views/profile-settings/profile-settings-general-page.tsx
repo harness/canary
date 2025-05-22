@@ -15,12 +15,12 @@ import {
   Legend
 } from '@/components'
 import { SkeletonForm } from '@/components/skeletons'
-import { TranslationStore, useTranslation } from '@/context'
+import { TFunctionWithFallback, useTranslation } from '@/context'
 import { IProfileSettingsStore, ProfileSettingsErrorType, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-const makeProfileSchema = (t: TranslationStore['t']) =>
+const makeProfileSchema = (t: TFunctionWithFallback) =>
   z.object({
     name: z
       .string()
@@ -46,7 +46,7 @@ const makeProfileSchema = (t: TranslationStore['t']) =>
       })
   })
 
-const makePasswordSchema = (t: TranslationStore['t']) =>
+const makePasswordSchema = (t: TFunctionWithFallback) =>
   z
     .object({
       newPassword: z

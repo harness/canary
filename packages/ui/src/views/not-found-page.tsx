@@ -24,10 +24,11 @@ export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText }) => {
         </span>
         <span className="mb-7 text-sm text-cn-foreground-3">
           {pageTypeText
-            ? t('views:notFound.descriptionWithType', {
-                defaultValue: `The requested page is not found. You can go back to view all ${pageTypeText} and manage your settings.`,
-                type: pageTypeText
-              })
+            ? t(
+                'views:notFound.descriptionWithType',
+                `The requested page is not found. You can go back to view all ${pageTypeText} and manage your settings.`,
+                { type: pageTypeText }
+              )
             : t('views:notFound.description', 'The requested page is not found.')}
         </span>
         <Button variant="outline" type="button" onClick={handleReload}>

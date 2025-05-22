@@ -21,7 +21,6 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router-dom";
-import { useTranslationStore } from "@/lib/viewUtils";
 
 type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 
@@ -68,7 +67,7 @@ const Example: FC<ExampleProps> = ({ code, scope, contentClassName }) => {
       path: "*",
       element: (
         <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet}>
-          <TranslationProvider useTranslationStore={useTranslationStore}>
+          <TranslationProvider>
             <Tooltip.Provider>
               <LivePreview />
             </Tooltip.Provider>

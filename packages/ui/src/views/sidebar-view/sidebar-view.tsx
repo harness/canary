@@ -34,6 +34,8 @@ interface SidebarProps {
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
   showNewSearch?: boolean
   hasToggle?: boolean
+  changeLanguage: (language: string) => void
+  lang: string
 }
 
 export const SidebarView = ({
@@ -47,9 +49,11 @@ export const SidebarView = ({
   handleCustomNav,
   handleLogOut,
   hasToggle = true,
-  showNewSearch
+  showNewSearch,
+  changeLanguage,
+  lang
 }: SidebarProps) => {
-  const { t, i18n, changeLanguage } = useTranslation()
+  const { t } = useTranslation()
   const { theme, setTheme } = useTheme()
   const { navigate } = useRouterContext()
   const { collapsed, toggleSidebar } = useSidebar()
@@ -209,7 +213,7 @@ export const SidebarView = ({
       />
       <LanguageDialog
         supportedLanguages={languages}
-        defaultLanguage={i18n.language as LanguageCode}
+        defaultLanguage={lang as LanguageCode}
         open={openLanguageDialog}
         onOpenChange={() => setOpenLanguageDialog(false)}
         onChange={handleLanguageChange}

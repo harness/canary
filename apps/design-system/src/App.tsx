@@ -3,7 +3,6 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import ViewPreview from '@/pages/view-preview/view-preview'
 import { useThemeStore } from '@utils/theme-utils'
-import { useTranslationStore } from '@utils/viewUtils'
 
 import { ThemeProvider, TranslationProvider } from '@harnessio/ui/context'
 
@@ -24,7 +23,7 @@ const App: FC = () => {
 
   return (
     <ThemeProvider {...themeStore}>
-      <TranslationProvider useTranslationStore={useTranslationStore}>
+      <TranslationProvider>
         <RouterProvider router={router} />
       </TranslationProvider>
     </ThemeProvider>

@@ -48,10 +48,11 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
           <AlertDialog.Title>{t('component:deleteDialog.title', 'Are you sure?')}</AlertDialog.Title>
           <AlertDialog.Description>
             {type
-              ? t('component:deleteDialog.descriptionWithType', {
-                  defaultValue: `This will permanently delete your ${type} and remove all data. This action cannot be undone.`,
-                  type: type
-                })
+              ? t(
+                  'component:deleteDialog.descriptionWithType',
+                  `This will permanently delete your ${type} and remove all data. This action cannot be undone.`,
+                  { type: type }
+                )
               : t(
                   'component:deleteDialog.description',
                   `This will permanently remove all data. This action cannot be undone.`

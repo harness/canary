@@ -1,12 +1,12 @@
+import { TFunctionWithFallback } from '@/context'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
-import { TFunction } from 'i18next'
 
 export enum BranchSelectorTab {
   BRANCHES = 'branches',
   TAGS = 'tags'
 }
 
-export const getBranchSelectorLabels = (t: TFunction) => ({
+export const getBranchSelectorLabels = (t: TFunctionWithFallback) => ({
   [BranchSelectorTab.BRANCHES]: {
     label: t('views:repos.branches', 'Branches'),
     searchPlaceholder: t('views:repos.findBranch', 'Find a branch')

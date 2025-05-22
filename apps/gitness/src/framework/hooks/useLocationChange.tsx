@@ -1,9 +1,8 @@
 import { useEffect, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { TFunction } from 'i18next'
-
 import { MenuGroupType, NavbarItemType } from '@harnessio/ui/components'
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 import { GetNavbarMenuData } from '../../data/navbar-menu-data'
 import { useRoutes } from '../context/NavigationContext'
@@ -13,7 +12,7 @@ const useLocationChange = ({
   onRouteChange,
   getNavbarMenuData
 }: {
-  t: TFunction
+  t: TFunctionWithFallback
   onRouteChange: (item: NavbarItemType) => void
   getNavbarMenuData: GetNavbarMenuData
 }) => {

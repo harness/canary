@@ -1,32 +1,51 @@
-import { createContext, useContext } from 'react'
+import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
 
-import { i18n, TFunction } from 'i18next'
+type Substitutions = Record<string, string | undefined>
 
-export interface TranslationStore {
-  t: TFunction
-  i18n: i18n
-  changeLanguage: (lng: string) => void
+export type TFunctionWithFallback = (key: string, fallback?: string, substitutions?: Substitutions) => string
+
+interface TranslationPayload {
+  t: TFunctionWithFallback
 }
 
-export const TranslationContext = createContext<TranslationStore | null>(null)
+type TranslationProviderProps = PropsWithChildren<{
+  t?: TFunctionWithFallback
+}>
 
-export const TranslationProvider = ({
-  children,
-  useTranslationStore
-}: {
-  children: React.ReactNode
-  useTranslationStore: () => TranslationStore
-}) => {
-  const store = useTranslationStore()
-  return <TranslationContext.Provider value={store}>{children}</TranslationContext.Provider>
+const defaultTranslator: TFunctionWithFallback = (_key, fallback = '') => fallback
+
+const TranslationContext = createContext<TranslationPayload>({
+  t: defaultTranslator
+})
+
+const escapeHtml = (unsafe: string): string =>
+  unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+
+const applySubstitutions = (template: string, substitutions?: Substitutions): string => {
+  if (!substitutions) return template
+
+  return template.replace(/{{(.*?)}}/g, (_, key: string) => escapeHtml(substitutions[key.trim()] ?? ''))
 }
 
-export const useTranslation = () => {
-  const context = useContext(TranslationContext)
+export function TranslationProvider({ t: rawTranslator = defaultTranslator, children }: TranslationProviderProps) {
+  const payload = useMemo<TranslationPayload>(
+    () => ({
+      t: (key, fallback = '', substitutions) => {
+        const translation = rawTranslator(key, fallback)
+        return applySubstitutions(translation, substitutions)
+      }
+    }),
+    [rawTranslator]
+  )
 
-  if (!context) {
-    throw new Error('useTranslation must be used within TranslationProvider')
-  }
+  return <TranslationContext.Provider value={payload}>{children}</TranslationContext.Provider>
+}
 
-  return context
+export function useTranslation(): TranslationPayload {
+  return useContext(TranslationContext)
 }

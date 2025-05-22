@@ -18,10 +18,12 @@ import { getNavbarMenuData } from '../../data/navbar-menu-data'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useSelectedSpaceId } from '../../framework/hooks/useSelectedSpaceId'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 
 const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { t } = useTranslation()
+  const { changeLanguage, i18n } = useTranslationStore()
   const { currentUser } = useAppContext()
   const { spaceId, repoId } = useParams<PathParams>()
   const selectedSpaceId = useSelectedSpaceId(spaceId)
@@ -145,6 +147,8 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
         pinnedMenuItems={pinnedMenu}
         handleChangePinnedMenuItem={handleChangePinnedMenuItem}
         handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
+        changeLanguage={changeLanguage}
+        lang={i18n.language}
       />
 
       <Sidebar.Inset>

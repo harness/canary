@@ -3,9 +3,12 @@ import { create } from 'zustand'
 import { BranchRulesAction, getBranchRules, IBranchRulesStore, Rule } from '@harnessio/ui/views'
 
 import i18n from '../../../i18n/i18n'
+import { createI18NextAdapter } from '../../../i18n/i18nAdapter'
 import { branchSettingsReducer } from '../reducers/repo-branch-rules-reducer'
 
-const branchRules = getBranchRules(i18n.t)
+const tFunc = createI18NextAdapter(i18n.t)
+
+const branchRules = getBranchRules(tFunc)
 
 const initialState: Rule[] = branchRules.map(rule => ({
   id: rule.id,

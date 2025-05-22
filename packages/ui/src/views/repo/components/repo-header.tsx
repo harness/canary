@@ -17,8 +17,8 @@ export const RepoHeader = ({ name, isPublic, isLoading, className, useTranslatio
     <div className={cn('grid grid-cols-[auto,1fr] items-center gap-2 px-6 pb-2 pt-7', className)}>
       {isLoading && (
         <>
-          <Skeleton className="h-[var(--cn-line-height-7-tight)] w-28" />
-          <Skeleton className="h-6 w-14" />
+          <Skeleton className="bg-cn-background-0 h-[var(--cn-line-height-7-tight)] w-28" />
+          <Skeleton className="bg-cn-background-0 h-6 w-14" />
         </>
       )}
 

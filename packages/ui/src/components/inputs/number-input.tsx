@@ -115,7 +115,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             hideStepper ? null : (
               <div className="flex flex-col">
                 <Button
-                  type="button"
                   tabIndex={-1}
                   aria-label="Increment value"
                   variant="ghost"
@@ -128,7 +127,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                 </Button>
                 <hr />
                 <Button
-                  type="button"
                   tabIndex={-1}
                   aria-label="Decrement value"
                   variant="ghost"

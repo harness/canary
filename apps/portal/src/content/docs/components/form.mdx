@@ -3,64 +3,75 @@ title: Form
 description: Form component
 ---
 
-The `Form` component is a container for form elements, providing a structured layout and validation capabilities.
+The form system consists of two main components:
+
+- **FormWrapper** - A container component that wraps form inputs and handles form submission
+- **FormInput** - A set of input components for different data types
+
+### Usage
+
+The `FormInput` components generate fields with the correct:
+
+- Labels
+- Input types
+- Validation feedback
+- Accessibility attributes
 
 import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExampleWithZodAndForm
   client:only
-  code={`() => {
+  code={`
+  () => {
   const [submittedValue, setSubmittedValue] = React.useState<FormValues | null>(null);
 
-const inputRef = React.useRef<HTMLInputElement | null>(null);
+  const inputRef = React.useRef<HTMLInputElement | null>(null);
 
-const formSchema = z.object({
-name: z.string().trim().min(3, "Input must be at least 3 characters"),
+  const formSchema = z.object({
+    name: z.string().trim().min(3, "Input must be at least 3 characters"),
 
     // 🚨 z.coerce.number() - Must be used for number fields
     // https://github.com/shadcn-ui/ui/issues/421#issuecomment-1561080201
     age: z.coerce.number().min(1, "Number must be at least 1"),
 
     comment: z.string().trim().min(10, "Comment must be at least 10 characters"),
+  });
 
-});
+  // Infer the type from the schema
+  const FormValues = z.infer<typeof formSchema>;
 
-// Infer the type from the schema
-const FormValues = z.infer<typeof formSchema>;
+  // Initialize react-hook-form with zod resolver
+  const formMethods = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "John doe",
+      age: 1,
+      comment: "Lorem ipsum",
+    },
+  });
 
-// Initialize react-hook-form with zod resolver
-const formMethods = useForm<FormValues>({
-resolver: zodResolver(formSchema),
-defaultValues: {
-name: "John doe",
-age: 1,
-comment: "Lorem ipsum",
-},
-});
+  const { register, handleSubmit } = formMethods;
 
-const { register, handleSubmit } = formMethods;
+  // Handle form submission
+  const onSubmit = (data: FormValues) => {
+    setSubmittedValue(data);
+  };
 
-// Handle form submission
-const onSubmit = (data: FormValues) => {
-setSubmittedValue(data);
-};
+  React.useEffect(() => {
+    if(!formMethods.formState.isValid){
+      setSubmittedValue(null);
+    }
+  },[formMethods.formState.isValid]);
 
-React.useEffect(() => {
-if(!formMethods.formState.isValid){
-setSubmittedValue(null);
-}
-},[formMethods.formState.isValid]);
-
-return (
-
-<div className="w-[500px]">
-{/* ‼️ It is mandatory to pass all return values from useForm to FormWrapper */}
-<FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-<FormInput.Text
-label="Input Field"
-placeholder="Enter at least 3 characters"
-{...register("name")}
-/>
+  return (
+    <div className="w-[500px]">
+      {/* ‼️ It is mandatory to pass all return values from useForm to FormWrapper */}
+      <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+        <FormInput.Text
+          label="Input Field"
+          placeholder="Enter at least 3 characters"
+          {...register("name")}
+        />
 
         <FormInput.Number
           label="Number Field"
@@ -86,17 +97,18 @@ placeholder="Enter at least 3 characters"
         )}
       </FormWrapper>
     </div>
-
-);
-}`}
+  );
+}
+`}
 />
 
 ### Form with Zod and React Hook Form
 
-```tsx
+```typescript jsx
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Button, FormInput, FormWrapper } from "@harnessio/ui/components";
 
 // ...
 

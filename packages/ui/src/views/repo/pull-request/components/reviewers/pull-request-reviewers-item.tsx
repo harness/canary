@@ -1,4 +1,4 @@
-import { Avatar, Icon } from '@/components'
+import { Avatar, Icon, Tooltip } from '@/components'
 import { PullReqReviewDecision, ReviewerItemProps } from '@/views'
 
 const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewDecision }: ReviewerItemProps) => {
@@ -21,7 +21,12 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
     <div key={reviewer?.id} className="flex items-center justify-between space-x-2">
       <div className="flex items-center space-x-2 overflow-hidden">
         <Avatar name={reviewer?.display_name} rounded />
-        <div className="text-2 text-cn-foreground-1 truncate font-medium">{reviewer?.display_name}</div>
+        <Tooltip.Root delayDuration={600}>
+          <Tooltip.Trigger asChild>
+            <div className="text-2 text-cn-foreground-1 truncate font-medium">{reviewer?.display_name}</div>
+          </Tooltip.Trigger>
+          <Tooltip.Content>{reviewer?.display_name}</Tooltip.Content>
+        </Tooltip.Root>
       </div>
       <div className="px-1.5">
         {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}

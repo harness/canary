@@ -45,7 +45,8 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
             onChange={e => setSearchQuery(e.target.value)}
             rightElement={
               <Button
-                variant="ghost"
+                variant="transparent"
+                size="sm"
                 iconOnly
                 onClick={() => {
                   setSearchQuery('')

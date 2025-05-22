@@ -102,23 +102,22 @@ const FilterSelectLabel = ({
 }) => {
   return (
     <>
-      {/* TODO: Design system: Update with proper button */}
-      <span className="text-14 flex items-center gap-x-1 text-cn-foreground-2 hover:text-cn-foreground-1">
+      <Button size="sm" variant="transparent">
         {displayLabel}
         {selectedFilters > 0 && (
           <StatusBadge variant="outline" size="sm">
             {selectedFilters}
           </StatusBadge>
         )}
-      </span>
-      <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
+        <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
+      </Button>
     </>
   )
 }
 
 const FilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactNode }) => {
   return (
-    <Button size="sm" variant="ghost" className="gap-x-1.5">
+    <Button size="sm" variant="transparent" className="gap-x-1.5">
       <Icon name="plus" size={10} />
       <span>{displayLabel}</span>
     </Button>

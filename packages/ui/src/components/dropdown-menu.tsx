@@ -134,7 +134,8 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     asChild
   >
     <div className="flex items-center gap-x-2.5">
-      <Checkbox checked={checked} label={children} />
+      <Checkbox checked={checked} />
+      <span className="text-2 text-cn-foreground-1">{children}</span>
     </div>
   </DropdownMenuPrimitive.CheckboxItem>
 ))

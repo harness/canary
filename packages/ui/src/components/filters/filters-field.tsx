@@ -78,13 +78,14 @@ const renderFilterValues = <T extends string, V extends FilterValueTypes, Custom
     case FilterFieldTypes.Checkbox: {
       const checkboxFilter = filter as FilterField<boolean>
       return (
-        <Button variant="secondary" theme="default" className="cursor-pointer" asChild>
-          <Label className="gap-x-3">
-            <Checkbox
-              className="pb-1"
-              checked={checkboxFilter.value}
-              onCheckedChange={value => onUpdateFilter(value as V)}
-            />
+        // TODO Need to remove button once we get the designs for checkbox filter
+        <Button variant="secondary" theme="default" className="gap-x-2.5">
+          <Checkbox
+            id="filter-checkbox"
+            checked={checkboxFilter.value}
+            onCheckedChange={value => onUpdateFilter(value as V)}
+          />
+          <Label className="grid-cols-none" htmlFor="filter-checkbox">
             <span>{filterOption.filterFieldConfig?.label}</span>
           </Label>
         </Button>

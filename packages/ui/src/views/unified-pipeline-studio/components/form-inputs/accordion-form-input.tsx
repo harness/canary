@@ -32,7 +32,7 @@ export interface AccordionFormInputConfig {
 type AccordionFormInputProp = InputProps<AnyFormikValue, AccordionFormInputConfig>
 
 function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element {
-  const { input, factory, path } = props
+  const { input, factory } = props
   const { inputs = [], inputConfig = {} } = input
   const { showWarning = 'closed', autoExpandGroups } = inputConfig
 
@@ -73,23 +73,17 @@ function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element 
   return (
     <Accordion.Root type="multiple" onValueChange={onValueChange} value={accordionValue} indicatorPosition="right">
       {inputs.map((childInput, idx) => {
-        const allowShowWarning =
-          showWarning === 'always' || (showWarning === 'closed' && !accordionValue.includes(getAccordionId(childInput)))
+        const accId = getAccordionId(childInput)
 
-        console.log(errorPerGroup)
-        console.log(allowShowWarning)
+        const allowShowWarning =
+          showWarning === 'always' || (showWarning === 'closed' && !accordionValue.includes(accId))
 
         return (
-          <Accordion.Item value={getAccordionId(childInput)}>
+          <Accordion.Item value={accId} key={getAccordionId(childInput)}>
             {childInput.label && (
               <Accordion.Trigger>
                 <Layout.Horizontal className="items-center">
-                  <InputLabel
-                    label={childInput.label}
-                    required={childInput.required}
-                    description={childInput.description}
-                    className="mb-0"
-                  />
+                  <InputLabel label={childInput.label} required={childInput.required} className="mb-0" />
                   {allowShowWarning && errorPerGroup[idx] ? (
                     <Icon name="triangle-warning" className="text-cn-foreground-danger" />
                   ) : null}
@@ -108,10 +102,6 @@ function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element 
 
 export class AccordionFormInput extends InputComponent<AnyFormikValue> {
   public internalType = 'accordion'
-
-  constructor() {
-    super()
-  }
 
   renderComponent(props: AccordionFormInputProp): JSX.Element {
     return <AccordionFormInputInternal {...props} />

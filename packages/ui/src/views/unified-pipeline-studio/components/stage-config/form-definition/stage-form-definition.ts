@@ -17,9 +17,6 @@ const inputs: IInputConfigWithConfig[] = [
       {
         inputType: 'group',
         path: '',
-        label: 'General',
-        // TODO: description is not implemented - mock required.
-        description: 'Configure the basic settings for your stage. Read documentation to learn more.',
         inputConfig: { autoExpandGroups: true },
         inputs: [
           {

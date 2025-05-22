@@ -4,10 +4,21 @@ import { Icon } from '@components/icon'
 import { Accordion } from '@components/index'
 import { get } from 'lodash-es'
 
-import { InputComponent, InputProps, RenderInputs, useFormContext, type AnyFormikValue } from '@harnessio/forms'
+import {
+  IInputDefinition,
+  InputComponent,
+  InputProps,
+  RenderInputs,
+  useFormContext,
+  type AnyFormikValue
+} from '@harnessio/forms'
 
 import { InputLabel } from './common/InputLabel'
 import { Layout } from './common/Layout'
+
+function getAccordionId(input: IInputDefinition) {
+  return input.path + '_' + input.label
+}
 
 export interface AccordionFormInputConfig {
   inputType: 'accordion'
@@ -19,26 +30,30 @@ export interface AccordionFormInputConfig {
 }
 
 type AccordionFormInputProp = InputProps<AnyFormikValue, AccordionFormInputConfig>
+
 function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element {
   const { input, factory, path } = props
   const { inputs = [], inputConfig = {} } = input
   const { showWarning = 'closed', autoExpandGroups } = inputConfig
 
   const { formState } = useFormContext()
-  const [groupError, setGroupError] = useState<boolean>(false)
+  const [errorPerGroup, setErrorPerGroup] = useState<boolean[]>([])
 
   useEffect(() => {
-    const error = get(formState.errors, path)
-    if (error) {
-      setGroupError(true)
-    }
-    inputs.forEach(input => {
-      const errorAtInput = get(formState.errors, input.path)
-      if (errorAtInput) {
-        setGroupError(true)
-      }
+    // TODO: for nested group/list/array errors are not collected
+    const errors: boolean[] = []
+
+    inputs.forEach((groupInput, idx) => {
+      groupInput.inputs?.forEach(chidInput => {
+        if (errors[idx]) return
+
+        const childError = get(formState.errors, chidInput.path)
+        errors[idx] = !!childError
+      })
     })
-  }, [formState?.errors])
+
+    setErrorPerGroup(errors)
+  }, [formState?.errors, inputs])
 
   // TODO: WORKAROUND/POC
   const [forceMount, setForceMount] = useState<true | undefined>(true)
@@ -48,7 +63,7 @@ function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element 
 
   // NOTE: open/close accordion
   const [accordionValue, setAccordionValue] = useState<string[]>(
-    autoExpandGroups ? inputs.map(input => input.path + '_' + input.label) : []
+    autoExpandGroups ? inputs.map(input => getAccordionId(input)) : []
   )
 
   const onValueChange = (value: string | string[]) => {
@@ -56,27 +71,31 @@ function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element 
   }
 
   return (
-    <Accordion.Root type="multiple" onValueChange={onValueChange} value={accordionValue}>
-      {inputs.map(childInput => {
+    <Accordion.Root type="multiple" onValueChange={onValueChange} value={accordionValue} indicatorPosition="right">
+      {inputs.map((childInput, idx) => {
         const allowShowWarning =
-          showWarning === 'always' ||
-          (showWarning === 'closed' && accordionValue.includes(childInput.path + '_' + childInput.label))
+          showWarning === 'always' || (showWarning === 'closed' && !accordionValue.includes(getAccordionId(childInput)))
+
+        console.log(errorPerGroup)
+        console.log(allowShowWarning)
 
         return (
-          <Accordion.Item value={childInput.path + '_' + childInput.label}>
-            <Accordion.Trigger>
-              <Layout.Horizontal className="items-center">
-                <InputLabel
-                  label={childInput.label}
-                  required={childInput.required}
-                  description={childInput.description}
-                  className="mb-0"
-                />
-                {allowShowWarning && groupError ? (
-                  <Icon name="triangle-warning" className="text-cn-foreground-danger" />
-                ) : null}
-              </Layout.Horizontal>
-            </Accordion.Trigger>
+          <Accordion.Item value={getAccordionId(childInput)}>
+            {childInput.label && (
+              <Accordion.Trigger>
+                <Layout.Horizontal className="items-center">
+                  <InputLabel
+                    label={childInput.label}
+                    required={childInput.required}
+                    description={childInput.description}
+                    className="mb-0"
+                  />
+                  {allowShowWarning && errorPerGroup[idx] ? (
+                    <Icon name="triangle-warning" className="text-cn-foreground-danger" />
+                  ) : null}
+                </Layout.Horizontal>
+              </Accordion.Trigger>
+            )}
             <Accordion.Content className="space-y-4" forceMount={forceMount}>
               <RenderInputs items={childInput.inputs ?? []} factory={factory} />
             </Accordion.Content>

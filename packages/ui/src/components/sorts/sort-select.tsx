@@ -1,4 +1,4 @@
-import { Icon } from '@/components'
+import { Button, Icon } from '@/components'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 
 import { useSort } from './sort-context'
@@ -21,12 +21,10 @@ const SortSelect = ({ displayLabel, buttonLabel }: SortTriggerProps) => {
   return (
     <SearchableDropdown<SortOption>
       displayLabel={
-        <>
-          <span className="flex items-center gap-x-1 text-cn-foreground-2 hover:text-cn-foreground-1">
-            {displayLabel}
-          </span>
+        <Button size="sm" variant="transparent">
+          {displayLabel}
           <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
-        </>
+        </Button>
       }
       inputPlaceholder="Select..."
       options={filteredSortOptions}

@@ -2,7 +2,9 @@ export default {
   '.cn-checkbox-wrapper': {
     display: 'flex',
     gap: 'var(--cn-spacing-2-half)',
-    width: '100%'
+    '&:has(.cn-checkbox-label-wrapper)': {
+      width: '100%'
+    }
   },
 
   '.cn-checkbox-label-wrapper': {
@@ -16,12 +18,15 @@ export default {
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    top: 'var(--cn-spacing-half)',
     width: 'var(--cn-size-4)',
     height: 'var(--cn-size-4)',
     border: 'var(--cn-border-width-1) solid var(--cn-comp-selection-unselected-border)',
     borderRadius: 'var(--cn-rounded-1)',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
+
+    '&:has(+ .cn-checkbox-label-wrapper)': {
+      top: 'var(--cn-spacing-half)'
+    },
 
     '&:where([disabled])': {
       backgroundColor: 'var(--cn-state-disabled-bg)',

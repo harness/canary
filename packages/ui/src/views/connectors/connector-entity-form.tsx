@@ -12,6 +12,7 @@ import {
   outputTransformValues,
   RenderForm,
   RootForm,
+  unsetHiddenInputsValues,
   useZodValidationResolver
 } from '@harnessio/forms'
 
@@ -142,7 +143,10 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
         const definition = getConnectorDefinition(connector.type)
         const transformers = definition ? getTransformers(definition?.formDefinition) : undefined
         const transformedValues = transformers?.length ? outputTransformValues(values, transformers) : values
-        onSubmit({ values: transformedValues, connector, intent })
+        const formattedValues = definition
+          ? unsetHiddenInputsValues(definition.formDefinition, transformedValues)
+          : transformedValues
+        onSubmit({ values: formattedValues, connector, intent })
       }}
       validateAfterFirstSubmit={true}
     >

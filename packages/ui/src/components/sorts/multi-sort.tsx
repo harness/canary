@@ -204,7 +204,7 @@ export default function MultiSort() {
                 handleSortChange({ type: sortValue.value, direction: Direction.ASC })
               }
               displayLabel={
-                <Button size="sm" variant="transparent" className="gap-x-1.5">
+                <Button size="sm" variant="transparent" className="justify-start">
                   <Icon name="plus" size={12} />
                   Add sort
                 </Button>

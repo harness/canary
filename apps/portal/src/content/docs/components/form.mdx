@@ -17,7 +17,7 @@ const inputRef = React.useRef<HTMLInputElement | null>(null);
 const formSchema = z.object({
 name: z.string().trim().min(3, "Input must be at least 3 characters"),
 
-    // 🚨 z.coerce.number() - It is mandatory for number fields
+    // 🚨 z.coerce.number() - Must be used for number fields
     // https://github.com/shadcn-ui/ui/issues/421#issuecomment-1561080201
     age: z.coerce.number().min(1, "Number must be at least 1"),
 
@@ -90,3 +90,61 @@ placeholder="Enter at least 3 characters"
 );
 }`}
 />
+
+### Form with Zod and React Hook Form
+
+```tsx
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+// ...
+
+/**
+ * 1️⃣ Define the validation schema with zod
+ */
+const formSchema = z.object({
+  /** 💡 As a best practice, use trim() to remove whitespace from the input */
+  name: z.string().trim().min(3, "Input must be at least 3 characters"),
+
+  // 🚨 z.coerce.number() - Must be used for number fields
+  // https://github.com/shadcn-ui/ui/issues/421#issuecomment-1561080201
+  age: z.coerce.number().min(1, "Number must be at least 1"),
+  comment: z.string().trim().min(10, "Comment must be at least 10 characters"),
+});
+
+// ...
+
+/** 2️⃣ Infer the type from the schema */
+const FormValuesType = z.infer<typeof formSchema>;
+
+function FormWithZodAndReactHookForm() {
+  /** 3️⃣ Initialize react-hook-form with zod resolver */
+  const formMethods = useForm<FormValuesType>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "John doe",
+      age: 1,
+      comment: "Lorem ipsum",
+    },
+  });
+
+  /** 4️⃣ Extract register and handleSubmit from formMethods */
+  const { register, handleSubmit } = formMethods;
+
+  /** 6️⃣ Handle form submission */
+  const onSubmit = (data: FormValuesType) => {
+    // ...
+  };
+
+  /** 5️⃣ Use FormWrapper with formMethods and onSubmit */
+  return (
+    <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+      <FormInput.Text {...register("name")} label="Name" />
+      <FormInput.Number {...register("age")} label="Age" />
+      <FormInput.Textarea {...register("comment")} label="Comment" />
+      <Button type="submit">Submit</Button>
+    </FormWrapper>
+  );
+}
+```

@@ -1,6 +1,5 @@
-import { ComponentProps, HTMLAttributes, ReactNode } from 'react'
+import { HTMLAttributes, ReactNode } from 'react'
 
-import { ButtonGroup } from '@/components'
 import { cn } from '@utils/cn'
 
 const EntityFormLayout = {
@@ -20,8 +19,8 @@ const EntityFormLayout = {
     return <div className={cn('flex flex-col max-w-xl space-y-7', className)} {...props} />
   },
 
-  Footer: function Footer({ className, ...props }: ComponentProps<typeof ButtonGroup>) {
-    return <ButtonGroup className={cn('pt-10', className)} {...props} />
+  Footer: function Footer({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+    return <div className={cn('flex flex-col gap-3 pt-10', className)} {...props} />
   }
 }
 

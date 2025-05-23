@@ -45,18 +45,16 @@ const PipelineStudioViewWrapper = () => {
         view={view}
         onRun={() => setRunPipelineOpen(true)}
       />
-      <Drawer.Lazy
-        unmountOnClose={true}
+      <Drawer.Root
         open={runPipelineOpen}
         onOpenChange={isOpen => {
           if (!isOpen) {
             setRunPipelineOpen(false)
           }
         }}
-        direction="right"
       >
         <RunPipelineDrawerContent onClose={() => setRunPipelineOpen(false)} />
-      </Drawer.Lazy>
+      </Drawer.Root>
     </>
   )
 }

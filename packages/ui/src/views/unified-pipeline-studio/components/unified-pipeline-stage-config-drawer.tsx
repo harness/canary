@@ -9,7 +9,6 @@ export const UnifiedPipelineStageConfigDrawer = () => {
 
   return (
     <Drawer.Root
-      direction="right"
       open={rightDrawer === RightDrawer.StageConfig}
       onOpenChange={open => {
         if (!open) {
@@ -18,7 +17,7 @@ export const UnifiedPipelineStageConfigDrawer = () => {
         }
       }}
     >
-      <Drawer.Content className="w-lg" style={{ minWidth: '500px' }}>
+      <Drawer.Content>
         <UnifiedPipelineStudioStageConfigForm
           requestClose={() => {
             setRightDrawer(RightDrawer.None)

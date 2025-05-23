@@ -170,7 +170,7 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
           <Footer>
             <ButtonGroup>
               {isCreate && !!onBack && (
-                <Button variant="outline" onClick={() => onBack?.()}>
+                <Button variant="outline" onClick={onBack}>
                   Back
                 </Button>
               )}

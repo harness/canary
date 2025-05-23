@@ -283,6 +283,29 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
 <DocsPage.ComponentExample
   client:only
   code={`
+  <ButtonGroup direction="vertical">
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer with 'sm' size</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonGroup>
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          </ButtonGroup>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
     <Drawer.Root>
       <Drawer.Trigger asChild>
         <Button>Open Drawer with 'md' size</Button>
@@ -305,12 +328,6 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
       </Drawer.Content>
     </Drawer.Root>
 
-`}
-/>
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
     <Drawer.Root>
       <Drawer.Trigger asChild>
         <Button>Open Drawer with 'lg' size</Button>
@@ -333,6 +350,7 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
       </Drawer.Content>
     </Drawer.Root>
 
+  </ButtonGroup>
 `}
 />
 
@@ -343,6 +361,29 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
 <DocsPage.ComponentExample
   client:only
   code={`
+  <ButtonGroup direction="vertical">
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer with 'right' direction</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonGroup>
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          </ButtonGroup>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
     <Drawer.Root direction="left">
       <Drawer.Trigger asChild>
         <Button>Open Drawer with 'left' direction</Button>
@@ -365,12 +406,6 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
       </Drawer.Content>
     </Drawer.Root>
 
-`}
-/>
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
     <Drawer.Root direction="top">
       <Drawer.Trigger asChild>
         <Button>Open Drawer with 'top' direction</Button>
@@ -393,12 +428,6 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
       </Drawer.Content>
     </Drawer.Root>
 
-`}
-/>
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
     <Drawer.Root direction="bottom">
       <Drawer.Trigger asChild>
         <Button>Open Drawer with 'bottom' direction</Button>
@@ -421,6 +450,7 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
       </Drawer.Content>
     </Drawer.Root>
 
+  </ButtonGroup>
 `}
 />
 
@@ -443,14 +473,14 @@ Contains [`Drawer.Trigger`](#trigger) and [`Drawer.Content`](#content) component
     {
       name: "open",
       description:
-        "When set, operate in controlled mode in combination with onOpenChange",
+        "When set, operate in controlled mode in combination with onOpenChange.",
       required: false,
       value: "boolean",
       defaultValue: "undefined",
     },
     {
       name: "onOpenChange",
-      description: "Callback notified when open state changes",
+      description: "Callback notified when open state changes.",
       required: false,
       value: "(open: boolean) => void",
       defaultValue: "undefined",
@@ -472,7 +502,7 @@ Contains [`Drawer.Trigger`](#trigger) and [`Drawer.Content`](#content) component
     },
     {
       name: "direction",
-      description: "Direction the drawer will originate from",
+      description: "Direction the drawer will originate from.",
       required: false,
       value: "'right' | 'left' | 'top' | 'bottom'",
       defaultValue: "right",
@@ -502,7 +532,7 @@ Contains [`Drawer.Trigger`](#trigger) and [`Drawer.Content`](#content) component
     },
     {
       name: "nested",
-      description: "Whether the drawer is nested in another drawer",
+      description: "Whether the drawer is nested in another drawer.",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -517,7 +547,7 @@ Contains [`Drawer.Trigger`](#trigger) and [`Drawer.Content`](#content) component
     },
     {
       name: "children",
-      description: "Drawer.Trigger and Drawer.Content components",
+      description: "Drawer.Trigger and Drawer.Content components.",
       required: true,
       value: "ReactNode",
     },
@@ -566,21 +596,21 @@ Contains [`Drawer.Header`](#header), [`Drawer.Body`](#body) and [`Drawer.Footer`
   props={[
     {
       name: "size",
-      description: "Width | height of the drawer",
+      description: "Width | height of the drawer.",
       required: false,
       value: "'sm' | 'md' | 'lg'",
       defaultValue: "sm",
     },
     {
       name: "hideClose",
-      description: "When set, do not display the close 'x' button",
+      description: "When set, do not display the close 'x' button.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "children",
-      description: "Drawer.Header, Drawer.Body and Drawer.Footer components",
+      description: "Drawer.Header, Drawer.Body and Drawer.Footer components.",
       required: true,
       value: "ReactNode",
     },
@@ -595,14 +625,14 @@ An optional container for the [`Drawer.Tagline`](#tagline), [`Drawer.Title`](#ti
   props={[
     {
       name: "icon",
-      description: "Name of an icon to display (cannot be combined with logo)",
+      description: "Name of an icon to display (cannot be combined with logo).",
       required: false,
       value: "string",
       defaultValue: "undefined",
     },
     {
       name: "logo",
-      description: "Name of a logo to display (cannot be combined with icon)",
+      description: "Name of a logo to display (cannot be combined with icon).",
       required: false,
       value: "string",
       defaultValue: "undefined",
@@ -610,7 +640,7 @@ An optional container for the [`Drawer.Tagline`](#tagline), [`Drawer.Title`](#ti
     {
       name: "children",
       description:
-        "Drawer.Tagline, Drawer.Title and Drawer.Description components",
+        "Drawer.Tagline, Drawer.Title and Drawer.Description components.",
       required: true,
       value: "ReactNode",
     },
@@ -625,7 +655,7 @@ An optional tagline above the title.
   props={[
     {
       name: "children",
-      description: "Content to display",
+      description: "Content to display.",
       required: true,
       value: "ReactNode",
     },
@@ -674,14 +704,14 @@ A scrollable wrapper for all content that doesn’t belong to the [`Drawer.Heade
   props={[
     {
       name: "className",
-      description: "Class to apply to the viewport of the scrollable area",
+      description: "Class to apply to the viewport of the scrollable area.",
       required: false,
       value: "string",
       defaultValue: "undefined",
     },
     {
       name: "children",
-      description: "Content to display, rendered as a ScrollArea",
+      description: "Content to display, rendered as a ScrollArea.",
       required: true,
       value: "ReactNode",
     },

@@ -23,22 +23,18 @@ const FormRadio = forwardRef<ElementRef<typeof Radio.Root>, FormRadioPropsType>(
       name={props.name}
       control={formContext.control}
       render={({ field, fieldState }) => (
-        <>
-          <Radio.Root
-            {...props}
-            {...field}
-            ref={ref}
-            value={field.value}
-            onValueChange={field.onChange}
-            error={fieldState.error?.message || props.error}
-            disabled={field.disabled || props.disabled}
-            className={props.className}
-          >
-            {children}
-          </Radio.Root>
-          {/* TODO: remove this */}
-          {fieldState.error?.message}
-        </>
+        <Radio.Root
+          {...props}
+          {...field}
+          ref={ref}
+          value={field.value}
+          onValueChange={field.onChange}
+          error={fieldState.error?.message || props.error}
+          disabled={field.disabled || props.disabled}
+          className={props.className}
+        >
+          {children}
+        </Radio.Root>
       )}
     />
   )

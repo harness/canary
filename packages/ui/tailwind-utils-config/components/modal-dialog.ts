@@ -14,7 +14,10 @@ export default {
     width: 'var(--cn-modal-width-sm)',
     maxWidth: 'calc(100vw - (var(--cn-dialog-safezone) * 2))',
     maxHeight: 'calc(100vh - (var(--cn-dialog-safezone) * 2))',
-    padding: 'var(--cn-dialog-container)',
+    paddingTop: 'var(--cn-dialog-py)',
+    paddingBottom: 'var(--cn-dialog-py)',
+    paddingLeft: 'var(--cn-dialog-px)',
+    paddingRight: 'var(--cn-dialog-px)',
     gap: 'var(--cn-dialog-gap)',
     '@apply fixed left-1/2 top-1/2 z-50 flex flex-col translate-x-[-50%] translate-y-[-50%]': '',
     '@apply min-h-0': '',
@@ -89,19 +92,19 @@ export default {
   '.cn-modal-dialog-footer': {
     borderTop: '1px solid var(--cn-border-3)',
     borderTopWidth: 'var(--cn-dialog-border)',
-    paddingTop: 'var(--cn-dialog-container)',
-    paddingLeft: 'var(--cn-dialog-container)',
-    paddingRight: 'var(--cn-dialog-container)',
-    marginLeft: 'calc(-1 * var(--cn-dialog-container))',
-    marginRight: 'calc(-1 * var(--cn-dialog-container))',
+    paddingTop: 'var(--cn-dialog-py)',
+    paddingLeft: 'var(--cn-dialog-px)',
+    paddingRight: 'var(--cn-dialog-px)',
+    marginLeft: 'calc(-1 * var(--cn-dialog-px))',
+    marginRight: 'calc(-1 * var(--cn-dialog-px))',
     '@apply flex justify-end gap-3': ''
   },
 
   // Close (X) Button
   '.cn-modal-dialog-close': {
     position: 'absolute',
-    top: 'var(--cn-dialog-container)',
-    right: 'var(--cn-dialog-container)',
+    top: 'var(--cn-dialog-py)',
+    right: 'var(--cn-dialog-px)',
     width: `var(--cn-icon-size-default)`,
     height: `var(--cn-icon-size-default)`
   }

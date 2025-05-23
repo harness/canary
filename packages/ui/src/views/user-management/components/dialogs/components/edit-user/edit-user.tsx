@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, Fieldset, FormInput, FormWrapper, ModalDialog } from '@/components'
+import { Button, Fieldset, FormInput, FormWrapper, ModalDialog } from '@/components'
 import {
   createEditUserSchema,
   type EditUserFields

@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo } from 'react'
 
 import { CollapseButtonProps } from '../components/components/collapse'
+import { LayoutConfig } from '../pipeline-graph-internal'
 import { ParallelContainerConfigType, SerialContainerConfigType } from '../types/container-node'
 
 export const defaultSerialContainerConfig = {
@@ -22,20 +23,33 @@ export const defaultParallelContainerConfig = {
 interface ContainerNodeContextProps {
   serialContainerConfig: SerialContainerConfigType
   parallelContainerConfig: ParallelContainerConfigType
-  portComponent?: (props: { side: 'left' | 'right'; id?: string; adjustment?: number }) => JSX.Element
+  portComponent?: (props: {
+    side: 'left' | 'right'
+    id?: string
+    adjustment?: number
+    layout?: LayoutConfig
+  }) => JSX.Element
   collapseButtonComponent?: (props: CollapseButtonProps) => JSX.Element
+  layout: LayoutConfig
 }
 
 const ContainerNodeContext = createContext<ContainerNodeContextProps>({
   serialContainerConfig: defaultSerialContainerConfig,
-  parallelContainerConfig: defaultParallelContainerConfig
+  parallelContainerConfig: defaultParallelContainerConfig,
+  layout: { type: 'center', portPosition: 'center' }
 })
 
 export interface ContainerNodeProviderProps {
   serialContainerConfig?: Partial<SerialContainerConfigType>
   parallelContainerConfig?: Partial<ParallelContainerConfigType>
-  portComponent?: (props: { side: 'left' | 'right'; id?: string; adjustment?: number }) => JSX.Element
+  portComponent?: (props: {
+    side: 'left' | 'right'
+    id?: string
+    adjustment?: number
+    layout?: LayoutConfig
+  }) => JSX.Element
   collapseButtonComponent?: (props: CollapseButtonProps) => JSX.Element
+  layout?: LayoutConfig
 }
 
 const ContainerNodeProvider = ({
@@ -43,6 +57,7 @@ const ContainerNodeProvider = ({
   parallelContainerConfig,
   portComponent,
   collapseButtonComponent,
+  layout = { type: 'center', portPosition: 'center' },
   children
 }: React.PropsWithChildren<ContainerNodeProviderProps>) => {
   const serialConfig: SerialContainerConfigType = useMemo(() => {
@@ -63,7 +78,8 @@ const ContainerNodeProvider = ({
         serialContainerConfig: serialConfig,
         parallelContainerConfig: parallelConfig,
         portComponent,
-        collapseButtonComponent
+        collapseButtonComponent,
+        layout
       }}
     >
       {children}

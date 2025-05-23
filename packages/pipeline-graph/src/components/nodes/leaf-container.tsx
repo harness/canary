@@ -6,7 +6,7 @@ import Port from './port'
 
 export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInternalType>) {
   const { node, isFirst, isLast, parentNodeType, mode } = props
-  const { portComponent } = useContainerNodeContext()
+  const { portComponent, layout } = useContainerNodeContext()
 
   const h = node.config?.height ? node.config?.height + 'px' : 'auto'
   const w = node.config?.width ? node.config?.width + 'px' : 'auto'
@@ -32,16 +32,16 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
     >
       {!node.config?.hideLeftPort &&
         (portComponent ? (
-          portComponent({ side: 'left', id: `left-port-${node.path}` })
+          portComponent({ side: 'left', id: `left-port-${node.path}`, layout })
         ) : (
-          <Port side="left" id={`left-port-${node.path}`} />
+          <Port side="left" id={`left-port-${node.path}`} layout={layout} />
         ))}
 
       {!node.config?.hideRightPort &&
         (portComponent ? (
-          portComponent({ side: 'right', id: `right-port-${node.path}` })
+          portComponent({ side: 'right', id: `right-port-${node.path}`, layout })
         ) : (
-          <Port side="right" id={`right-port-${node.path}`} />
+          <Port side="right" id={`right-port-${node.path}`} layout={layout} />
         ))}
 
       <RenderNodeContent node={node} isFirst={isFirst} isLast={isLast} parentNodeType={parentNodeType} mode={mode} />

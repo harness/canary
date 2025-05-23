@@ -1,5 +1,15 @@
+import { LayoutConfig } from '../pipeline-graph-internal'
 import { ContainerNode } from '../types/nodes'
 import { AnyNodeInternal, ParallelNodeInternalType, SerialNodeInternalType } from '../types/nodes-internal'
+
+export function getFlexAlign(layoutType: LayoutConfig['type'] = 'center') {
+  switch (layoutType) {
+    case 'center':
+      return 'center'
+    case 'top':
+      return 'start'
+  }
+}
 
 export function getTreeDepth(node: AnyNodeInternal): number {
   if (node.containerType === ContainerNode.leaf) {

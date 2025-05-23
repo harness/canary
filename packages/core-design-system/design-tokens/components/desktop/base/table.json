@@ -1,15 +1,43 @@
 {
-  "cellHeight": {
-    "single": {
-      "$type": "sizing",
-      "$value": "{size.12}"
+  "cell": {
+    "min": {
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.11-half}"
+      },
+      "compact": {
+        "$type": "sizing",
+        "$value": "{size.9}"
+      },
+      "wide": {
+        "$type": "sizing",
+        "$value": "{size.15}"
+      }
     },
-    "double": {
-      "$type": "sizing",
-      "$value": "{size.16}"
+    "py": {
+      "default": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "compact": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
+      "wide": {
+        "$type": "spacing",
+        "$value": "{spacing.5}"
+      }
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.4}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
     }
   },
-  "cell": {
+  "header": {
     "px": {
       "$type": "spacing",
       "$value": "{spacing.4}"
@@ -21,6 +49,20 @@
     "gap": {
       "$type": "spacing",
       "$value": "{spacing.2}"
+    },
+    "min": {
+      "$type": "sizing",
+      "$value": "{size.11-half}"
+    }
+  },
+  "table": {
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.3}"
     }
   }
 }

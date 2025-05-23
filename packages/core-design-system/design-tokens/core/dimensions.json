@@ -56,6 +56,10 @@
       "$type": "spacing",
       "$value": "56px"
     },
+    "15": {
+      "$type": "spacing",
+      "$value": "60px"
+    },
     "16": {
       "$type": "spacing",
       "$value": "64px"
@@ -251,6 +255,10 @@
       "$type": "sizing",
       "$value": "56px"
     },
+    "15": {
+      "$type": "sizing",
+      "$value": "60px"
+    },
     "16": {
       "$type": "sizing",
       "$value": "64px"
@@ -322,6 +330,10 @@
     "96": {
       "$type": "sizing",
       "$value": "384px"
+    },
+    "11-half": {
+      "$type": "sizing",
+      "$value": "46px"
     },
     "px": {
       "$type": "sizing",

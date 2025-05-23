@@ -3,18 +3,15 @@
     "item": {
       "gap": {
         "$type": "spacing",
-        "$value": "{spacing.2-half}",
-        "$description": "8px"
+        "$value": "{spacing.2-half}"
       },
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.2}",
-        "$description": "8px"
+        "$value": "{spacing.2}"
       },
       "px": {
         "$type": "spacing",
-        "$value": "{spacing.2}",
-        "$description": "8px"
+        "$value": "{spacing.2}"
       },
       "radius": {
         "$type": "borderRadius",
@@ -24,12 +21,11 @@
     "container": {
       "$type": "spacing",
       "$value": "{spacing.1}",
-      "$description": "4px\n"
+      "$description": "\n"
     },
     "radius": {
       "$type": "borderRadius",
-      "$value": "{rounded.2}",
-      "$description": "6px"
+      "$value": "{rounded.2}"
     },
     "min-width": {
       "$type": "sizing",

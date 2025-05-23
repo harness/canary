@@ -448,6 +448,7 @@
       "spacing.11": "efe2a2a5b2a60d05c078a1c7a7950588a3a030c6",
       "spacing.12": "ef37fcfa576beb8e91c51010ec3329ddbe985742",
       "spacing.14": "1ae0ed4cd0c32b858ff791415edad283ef1c2af5",
+      "spacing.15": "7d0c7fdfa257a4833bb391e8197069da34dfc08b",
       "spacing.16": "0d515ad8f73ae192356bd3fce04347ff8914bfa5",
       "spacing.20": "8b4d19c935a89483725be041ce3e19182d81638b",
       "spacing.24": "7b33d80680ee7f444bc05e404bf74b2fa7caac3b",
@@ -471,13 +472,13 @@
       "spacing.3-half": "4e6064233484460281223f420b5015d31aeb5efc",
       "spacing.4-half": "aca636954fe21b24a18ac1e2641cab71b2fce9a8",
       "rounded.1": "4c8e9b29af661054f065ecfb517ffbf725d128ae",
-      "rounded.px": "3c023b948516d2071836e07348eb83cbba78a0e9",
       "rounded.2": "5c9a222659e74e39ecb528719f03049f267ba7b6",
       "rounded.3": "546448f107049e61fca518fd32468633bba50a51",
       "rounded.4": "8355a7d82d6f8643701db782be4fb5cc61e0fe2a",
       "rounded.5": "babea9851a66e652c1b014b1b4e5ae3703efb06a",
       "rounded.6": "00e5a4d652385f2496ba39014f6c1daca0e26736",
       "rounded.7": "f36f7c646daf87ab3f745e9f73c885a957b414e8",
+      "rounded.px": "3c023b948516d2071836e07348eb83cbba78a0e9",
       "rounded.none": "dee9b0b76ac1ec8e902c7f542c80e776ce9fee0f",
       "rounded.full": "4691cfbd097fadbf1bcc96d2f48a40f9852cc7bf",
       "size.0": "995df3a4b1b9b4f63001434f1d6725f9b299eac0",
@@ -494,6 +495,7 @@
       "size.11": "a09585144f13eeed9212adba9567769b0f50fe0f",
       "size.12": "e6dd420d85cc30a8bac1788e21d7b6572f069cde",
       "size.14": "827d8aab20a4c2491204ab2667997e5290363d01",
+      "size.15": "62e1e9eb74ab5b4f461acfe135981095568e6e63",
       "size.16": "5b7b04b1ade9b423f1d5b9720898fd4776956a36",
       "size.20": "51754ed1d031bdf73b871a0194e054b6bcdb99d2",
       "size.24": "c9ff66a843bc50465f8632bd973a3805f551c773",
@@ -512,6 +514,7 @@
       "size.80": "f0e6046ee68bb26d971366e664771f36ffd3964f",
       "size.90": "71e16ac59f8643ff6056f04a8628df44751a621b",
       "size.96": "481530a9303c4b3abe4882fc4b13c01e82d6d32f",
+      "size.11-half": "9a980f6bceb28276332e8cfc9e9f979914fd5419",
       "size.px": "facc62d09b9290c8ae5a39e684e076f0078cce60",
       "size.half": "a18c6726902f0dd03d09fda796c7793f1e5a3be9",
       "size.1-half": "84a71e411cbd12832d0ab8d7d4581fcf24fa8f45",
@@ -2451,13 +2454,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -3255,13 +3258,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -4056,13 +4059,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -4859,13 +4862,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -5662,13 +5665,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -6465,13 +6468,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -7268,13 +7271,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -8071,13 +8074,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -8874,13 +8877,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -9677,13 +9680,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -10480,13 +10483,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -11283,13 +11286,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -12085,13 +12088,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -12887,13 +12890,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -13689,13 +13692,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -14491,13 +14494,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -15293,13 +15296,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -16095,13 +16098,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -16921,13 +16924,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -17723,13 +17726,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -18525,13 +18528,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "4b4382c8f983d170a16b127fb4627e0d25c445eb"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -19327,13 +19330,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -20129,13 +20132,13 @@
       "gradient.pipeline.widget.blob.small.gradient-to": "198813cf6242881ce0e0d030ca22ef31f9190d13",
       "gradient.card.from": "2f24ba885603450f5a73384a8f397aafd47b79a7",
       "gradient.card.to": "ff3e5b03e3dc2b46bf9162c390c9a2416111c3ee",
+      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4",
       "iconStrokeWidth.xs": "77ca59c88a0b47972554b1db3f6469a230a6ad8c",
       "iconStrokeWidth.sm": "e445b22e1f18af07002a1dc76f900dada5477383",
       "iconStrokeWidth.default": "4377ec04d21e3851d7f71914a0051ed09daad5fb",
       "iconStrokeWidth.md": "580043ec5bcae9c2097bff41e3e24e49883451c9",
       "iconStrokeWidth.lg": "e72029e275f9e020f7d772662521389ea67a279a",
-      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97",
-      "gradient.dialog.fade": "c0c24543390c3a754f5303715e3ec0937e9644c4"
+      "disabled.opacity": "790719fe50381c5e10c7eef72d9eabab3540ee97"
     },
     "group": "mode"
   },
@@ -20341,9 +20344,9 @@
       "dialog.sm": "082c9cfe30978be58aecc61a4c59db1cbf362530",
       "dialog.md": "fd556149b7dc7759a4431c6da13b0e62eb80a953",
       "dialog.lg": "075e67733b3996b17508c54b79de865e30e7586d",
-      "dialog.container": "f87f7abacaf4c2e5c16a341d2dedf6db52820cc7",
+      "dialog.px": "f87f7abacaf4c2e5c16a341d2dedf6db52820cc7",
       "dialog.gap": "f0ab2ac440fe269ae2cd1b36d05ba7e96e7e7621",
-      "dialog.footer.py": "62fc038a885b1f41712b80f0e2de8a5f11474a0d",
+      "dialog.py": "62fc038a885b1f41712b80f0e2de8a5f11474a0d",
       "dialog.border": "68a6274075e891631508c1eddc559d5624f4bcf5",
       "dialog.radius": "d62efd03278832e19e21fd585fdaa1a349e49cda",
       "dialog.safezone": "88965332f607393eff7da57a6373c4d4d356e90c",
@@ -20375,11 +20378,20 @@
       "diff.expanded": "20192e8de770362da3a06711a845a9dfc7c93ae6",
       "diff.single": "3e6856cd6091214fbbbb7180c6fa94cc519b5b6a",
       "diff.code.px": "9d0049607d30a54ab46f099dbb16a38885be576b",
-      "cellHeight.single": "5a493b1f82f0b24dc68d3070885c2732b60deb21",
-      "cellHeight.double": "b7952862f72c5fb8ae93e21cf915a68dfaf14d1c",
+      "cell.min.default": "5a493b1f82f0b24dc68d3070885c2732b60deb21",
+      "cell.min.compact": "e723eae710c72ddd2b10f378b60bc35b2ca64144",
+      "cell.min.wide": "897f4ca3ce5e989d0939be80273a3c01306bf3a3",
+      "cell.py.default": "474df7d1c5f000b95c3cb454a6655bb4df94be30",
+      "cell.py.compact": "ff2712cf05fa95cac1afa4337107a9024c569959",
+      "cell.py.wide": "77a5b96009e76bfe4b28ea57850ecfa3df483639",
       "cell.px": "99f7fba690cdb3718e7ff835711090eb8726bfa1",
-      "cell.py": "474df7d1c5f000b95c3cb454a6655bb4df94be30",
       "cell.gap": "056e9b6dfe6ca80520f800bfb778ff0752e3ad30",
+      "header.px": "dec2c833147369f134a52eeee9ba3bd272170237",
+      "header.py": "c4b7144512b0e1466a2ade37ebe082cdb145ba9a",
+      "header.gap": "006be37eafa04521f584b42c7a545bd669c6d8b3",
+      "header.min": "5a6db18d4964e0f7cd1f2440390db04b10ea7e72",
+      "table.border": "2f5833e99cdce9d01ba740a4ec64486b5bddccd8",
+      "table.radius": "27510bb325df936273368d01dc770c75c5888f26",
       "navtab.gap": "e866fb2328863e2f4de085cfc1013f7fa7f9ebb6",
       "navtab.px": "f6bb7c4ff139a4da5175af8e56b5d57e0eff7ccd",
       "navtab.height": "a4cab85a457781e7234a117a2b0369e485859e32",

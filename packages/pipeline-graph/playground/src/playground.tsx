@@ -8,6 +8,8 @@ import Demo5Size from './demo5-size'
 
 import './playground.css'
 
+import Demo6TopAlign from './demo6-top-align'
+
 type ExperimentalType = 'sharpLine' | 'sharpBorder' | 'skeleton'
 
 const demoArr = [
@@ -30,6 +32,10 @@ const demoArr = [
   {
     name: 'Size',
     component: Demo5Size
+  },
+  {
+    name: 'Top align layout',
+    component: Demo6TopAlign
   }
 ]
 

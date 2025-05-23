@@ -119,7 +119,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
           <WebhookSSLVerificationField register={register} t={t} />
         </Fieldset>
         <Fieldset>
-          <WebhookTriggerField register={register} setValue={setValue} watch={watch} t={t} />
+          <WebhookTriggerField register={register} t={t} />
           {triggerValue === TriggerEventsEnum.SELECTED_EVENTS && (
             <div className="flex justify-between">
               {eventSettingsComponents.map(component => (

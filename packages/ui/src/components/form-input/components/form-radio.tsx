@@ -22,14 +22,15 @@ const FormRadio = forwardRef<ElementRef<typeof Radio.Root>, FormRadioPropsType>(
     <Controller
       name={props.name}
       control={formContext.control}
-      render={({ field, fieldState }) => (
+      render={({ field }) => (
         <Radio.Root
           {...props}
           {...field}
           ref={ref}
           value={field.value}
           onValueChange={field.onChange}
-          error={fieldState.error?.message || props.error}
+          // Add it once error support is added
+          // error={fieldState.error?.message || props.error}
           disabled={field.disabled || props.disabled}
           className={props.className}
         >

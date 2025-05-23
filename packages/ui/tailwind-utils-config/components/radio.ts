@@ -67,14 +67,5 @@ export default {
       color: 'var(--cn-state-disabled-text) !important'
     },
     '@apply truncate': ''
-  },
-
-  '.cn-radio-item-caption': {
-    font: 'var(--cn-body-normal)',
-    color: 'var(--cn-text-2)',
-    '&:where(.disabled)': {
-      color: 'var(--cn-state-disabled-text)'
-    },
-    '@apply truncate': ''
   }
 }

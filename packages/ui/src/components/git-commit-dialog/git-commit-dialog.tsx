@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react'
+import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
@@ -90,14 +90,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
     }
   })
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors }
-  } = formMethods
+  const { register, handleSubmit, setValue, watch, reset } = formMethods
 
   const isDisabledSubmission = disableCTA || isSubmitting
   const onSubmit: SubmitHandler<GitCommitSchemaType> = data => {
@@ -108,19 +101,19 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
 
   const commitToGitRefValue = watch('commitToGitRef')
   const fileNameValue = watch('fileName')
+  const newBranchNameValue = watch('newBranchName')
 
-  const handleCommitToGitRefChange = (value: CommitToGitRefOption) => {
-    dryRun(value, fileNameValue)
-    setValue('commitToGitRef', value, { shouldValidate: true })
-
-    if (CommitToGitRefOption.DIRECTLY) {
+  useEffect(() => {
+    dryRun(commitToGitRefValue, fileNameValue)
+    if (commitToGitRefValue === CommitToGitRefOption.DIRECTLY) {
       setValue('newBranchName', '')
     }
-  }
+  }, [commitToGitRefValue])
 
-  const handleNewBranchNameChange = (_e: ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
     setAllStates({ violation: false, bypassable: false, bypassed: false })
-  }
+  }, [newBranchNameValue])
+
   const handleDialogClose = (open: boolean) => {
     if (!open) {
       reset()
@@ -159,12 +152,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
             label="Extended description"
           />
           <ControlGroup>
-            <Radio.Root
-              className="gap-6"
-              id="commitToGitRef"
-              value={commitToGitRefValue}
-              onValueChange={handleCommitToGitRefChange}
-            >
+            <FormInput.Radio className="gap-6" id="commitToGitRef" {...register('commitToGitRef')}>
               <Radio.Item
                 id={CommitToGitRefOption.DIRECTLY}
                 className="mt-px"
@@ -172,6 +160,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                 label={
                   <span>
                     Commit directly to the
+                    {/* TODO: Design system: Add correct component for branch here */}
                     <span
                       className="
                         text-cn-foreground-1 before:bg-cn-background-8 relative mx-1.5 inline-flex gap-1
@@ -195,7 +184,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                   <Link to="/">Learn more about pull requests</Link>
                 }
               />
-            </Radio.Root>
+            </FormInput.Radio>
             {violation && (
               <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
                 {bypassable
@@ -212,11 +201,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                 {error.message}
               </Message>
             )}
-            {errors.commitToGitRef && (
-              <Message className="ml-8 mt-0.5" theme={MessageTheme.ERROR}>
-                {errors.commitToGitRef?.message?.toString()}
-              </Message>
-            )}
+
             {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH && (!violation || (violation && bypassable)) && (
               <div className="ml-8 mt-3">
                 <FormInput.Text
@@ -227,9 +212,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     </div>
                   }
                   id="newBranchName"
-                  {...register('newBranchName', {
-                    onChange: handleNewBranchNameChange
-                  })}
+                  {...register('newBranchName')}
                   placeholder="New Branch Name"
                 />
               </div>

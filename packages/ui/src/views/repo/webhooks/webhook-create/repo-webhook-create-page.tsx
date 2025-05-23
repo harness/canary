@@ -52,18 +52,19 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
     }
   })
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors }
-  } = formMethods
+  const { register, handleSubmit, setValue, watch, reset } = formMethods
 
   const { t } = useTranslationStore()
 
   const { preSetWebhookData } = useWebhookStore()
+
+  const triggerValue = watch('trigger')
+
+  useEffect(() => {
+    if (triggerValue === TriggerEventsEnum.ALL_EVENTS) {
+      setValue('triggers', [])
+    }
+  }, [triggerValue])
 
   useEffect(() => {
     if (preSetWebhookData) {
@@ -86,7 +87,6 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
     { fieldName: 'tagEvents', events: getTagEvents(t) },
     { fieldName: 'prEvents', events: getPrEvents(t) }
   ]
-  const triggerValue = watch('trigger')
 
   const onSubmit: SubmitHandler<CreateWebhookFormFields> = data => {
     onFormSubmit(data)
@@ -110,21 +110,27 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
           <WebhookDescriptionField register={register} t={t} />
         </Fieldset>
         <Fieldset>
-          <WebhookPayloadUrlField register={register} errors={errors} t={t} />
+          <WebhookPayloadUrlField register={register} t={t} />
         </Fieldset>
         <Fieldset>
-          <WebhookSecretField register={register} errors={errors} t={t} />
+          <WebhookSecretField register={register} t={t} />
         </Fieldset>
         <Fieldset>
-          <WebhookSSLVerificationField setValue={setValue} watch={watch} t={t} />
+          <WebhookSSLVerificationField register={register} t={t} />
         </Fieldset>
         <Fieldset>
-          <WebhookTriggerField setValue={setValue} watch={watch} t={t} />
+          <WebhookTriggerField register={register} setValue={setValue} watch={watch} t={t} />
           {triggerValue === TriggerEventsEnum.SELECTED_EVENTS && (
             <div className="flex justify-between">
               {eventSettingsComponents.map(component => (
                 <div key={component.fieldName} className="flex flex-col">
-                  <WebhookEventSettingsFieldset setValue={setValue} watch={watch} eventList={component.events} t={t} />
+                  <WebhookEventSettingsFieldset
+                    register={register}
+                    setValue={setValue}
+                    watch={watch}
+                    eventList={component.events}
+                    t={t}
+                  />
                 </div>
               ))}
             </div>

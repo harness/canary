@@ -1,17 +1,22 @@
 export default {
-  '.cn-radio-wrapper': {
+  ':where(.cn-radio-root, .cn-radio-control)': {
+    '@apply grid': '',
+    gap: 'var(--cn-layout-sm)'
+  },
+
+  '.cn-radio-item-wrapper': {
     display: 'flex',
     gap: 'var(--cn-spacing-2-half)',
     width: '100%'
   },
 
-  '.cn-radio-label-wrapper': {
+  '.cn-radio-item-label-wrapper': {
     display: 'flex',
     flexDirection: 'column',
     gap: 'var(--cn-spacing-1)'
   },
 
-  '.cn-radio-root': {
+  '.cn-radio-item': {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -40,7 +45,7 @@ export default {
     }
   },
 
-  '.cn-radio-indicator': {
+  '.cn-radio-item-indicator': {
     width: 'var(--cn-size-2)',
     height: 'var(--cn-size-2)',
     borderRadius: '50%',
@@ -55,7 +60,7 @@ export default {
     }
   },
 
-  '.cn-radio-label': {
+  '.cn-radio-item-label': {
     font: 'var(--cn-body-strong) !important',
     color: 'var(--cn-text-1) !important',
     '&:where(.disabled)': {
@@ -64,7 +69,7 @@ export default {
     '@apply truncate': ''
   },
 
-  '.cn-radio-caption': {
+  '.cn-radio-item-caption': {
     font: 'var(--cn-body-normal)',
     color: 'var(--cn-text-2)',
     '&:where(.disabled)': {

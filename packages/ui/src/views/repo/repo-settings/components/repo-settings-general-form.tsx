@@ -10,8 +10,6 @@ import {
   FormWrapper,
   Icon,
   Label,
-  Message,
-  MessageTheme,
   Radio,
   SkeletonForm,
   Text
@@ -62,14 +60,7 @@ export const RepoSettingsGeneralForm: FC<{
     }
   })
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors }
-  } = formMethods
+  const { register, handleSubmit, setValue, watch, reset } = formMethods
 
   useEffect(() => {
     reset({
@@ -80,7 +71,6 @@ export const RepoSettingsGeneralForm: FC<{
     })
   }, [repoData, isLoadingRepoData, reset])
 
-  const accessValue = watch('access')
   const branchValue = watch('branch')
 
   useEffect(() => {
@@ -97,10 +87,6 @@ export const RepoSettingsGeneralForm: FC<{
 
   const handleSelectChange = (fieldName: keyof RepoUpdateData, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
-  }
-
-  const handleAccessChange = (value: AccessLevel) => {
-    setValue('access', value, { shouldValidate: true })
   }
 
   const onSubmit: SubmitHandler<RepoUpdateData> = data => {
@@ -153,30 +139,26 @@ export const RepoSettingsGeneralForm: FC<{
           </Fieldset>
 
           <Fieldset className="mt-4">
-            <ControlGroup>
-              <Label className="mb-6">{t('views:repos.visibility', 'Visibility')}</Label>
-              <Radio.Root value={accessValue} onValueChange={handleAccessChange} id="visibility">
-                <Radio.Item
-                  id="access-public"
-                  value="1"
-                  label={t('views:repos.public', 'Public')}
-                  caption={t(
-                    'views:repos.publicDescription',
-                    'Anyone with access to the gitness environment can clone this repo.'
-                  )}
-                />
-                <Radio.Item
-                  id="access-private"
-                  value="2"
-                  label={t('views:repos.private', 'Private')}
-                  caption={t(
-                    'views:repos.privateDescription',
-                    'You can choose who can see and commit to this repository.'
-                  )}
-                />
-              </Radio.Root>
-              {errors.access && <Message theme={MessageTheme.ERROR}>{errors.access.message?.toString()}</Message>}
-            </ControlGroup>
+            <FormInput.Radio label={t('views:repos.visibility', 'Visibility')} id="visibility" {...register('access')}>
+              <Radio.Item
+                id="access-public"
+                value="1"
+                label={t('views:repos.public', 'Public')}
+                caption={t(
+                  'views:repos.publicDescription',
+                  'Anyone with access to the gitness environment can clone this repo.'
+                )}
+              />
+              <Radio.Item
+                id="access-private"
+                value="2"
+                label={t('views:repos.private', 'Private')}
+                caption={t(
+                  'views:repos.privateDescription',
+                  'You can choose who can see and commit to this repository.'
+                )}
+              />
+            </FormInput.Radio>
           </Fieldset>
 
           {/* SUBMIT BUTTONS */}

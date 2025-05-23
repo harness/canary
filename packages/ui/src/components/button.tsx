@@ -77,7 +77,8 @@ const buttonVariants = cva('cn-button', {
   ],
   defaultVariants: {
     variant: 'primary',
-    size: 'default'
+    size: 'default',
+    theme: 'default'
   }
 })
 

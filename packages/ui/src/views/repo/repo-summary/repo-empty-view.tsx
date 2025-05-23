@@ -1,6 +1,6 @@
 import {
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   CopyButton,
   Fieldset,
@@ -83,9 +83,9 @@ git push -u origin main
           <Input label="HTTP" value={httpUrl} readOnly rightElement={<CopyButton name={httpUrl} />} />
           <Input label="SSH" value={sshUrl} readOnly rightElement={<CopyButton name={sshUrl} />} />
           <ControlGroup>
-            <ButtonGroup>
+            <ButtonLayout horizontalAlign="start">
               <Button onClick={handleCreateToken}>Generate Clone Credentials</Button>
-            </ButtonGroup>
+            </ButtonLayout>
             <p className="mt-2">
               You can also manage your git credential{' '}
               <span

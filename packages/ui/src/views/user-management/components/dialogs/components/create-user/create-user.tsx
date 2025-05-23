@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -74,7 +74,7 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
         </FormWrapper>
 
         <Dialog.Footer>
-          <ButtonGroup className="justify-end">
+          <ButtonLayout>
             <Button variant="outline" onClick={onClose} disabled={isCreatingUser}>
               {t('views:userManagement.cancel', 'Cancel')}
             </Button>
@@ -83,7 +83,7 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
                 ? t('views:userManagement.createUser.inviting', 'Inviting...')
                 : t('views:userManagement.createUser.inviteNewUser', 'Invite new user')}
             </Button>
-          </ButtonGroup>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

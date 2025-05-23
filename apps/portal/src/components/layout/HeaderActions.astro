@@ -1,9 +1,9 @@
 ---
-import { Button, ButtonGroup, Icon } from "@harnessio/ui/components";
+import { Button, ButtonLayout, Icon } from "@harnessio/ui/components";
 import ThemeSelect from "./ThemeSelect.astro";
 ---
 
-<ButtonGroup spacing="8">
+<ButtonLayout>
   <ThemeSelect />
   <Button
     variant="ghost"
@@ -14,4 +14,4 @@ import ThemeSelect from "./ThemeSelect.astro";
   <Button variant="ghost" iconOnly>
     <Icon name="environment" size={16} />
   </Button>
-</ButtonGroup>
+</ButtonLayout>

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import {
   Alert,
   Button,
-  ButtonGroup,
+  ButtonLayout,
   Checkbox,
   ControlGroup,
   Fieldset,
@@ -228,7 +228,7 @@ export function RepoCreatePage({
           {/* SUBMIT BUTTONS */}
           <Fieldset>
             <ControlGroup>
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Create repository' : 'Creating repository...'}
@@ -236,7 +236,7 @@ export function RepoCreatePage({
                 <Button type="button" variant="outline" onClick={onFormCancel}>
                   Cancel
                 </Button>
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </Fieldset>
         </FormWrapper>

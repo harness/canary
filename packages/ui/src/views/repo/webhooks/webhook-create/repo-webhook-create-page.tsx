@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, Fieldset, FormWrapper } from '@/components'
+import { Button, ButtonLayout, Fieldset, FormWrapper } from '@/components'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createWebhookFormSchema } from '@views/repo/webhooks/webhook-create/components/create-webhooks-form-schema'
@@ -138,7 +138,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
         </Fieldset>
 
         <Fieldset className="mt-7">
-          <ButtonGroup>
+          <ButtonLayout horizontalAlign="start">
             <Button type="submit" disabled={isLoading}>
               {isLoading
                 ? preSetWebhookData
@@ -151,7 +151,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
             <Button type="button" variant="outline" onClick={onFormCancel}>
               {t('views:repos.cancel', 'Cancel')}
             </Button>
-          </ButtonGroup>
+          </ButtonLayout>
         </Fieldset>
 
         {!!apiError && <span className="text-2 text-cn-foreground-danger">{apiError?.toString()}</span>}

@@ -6,13 +6,23 @@ export type ComponentExampleProps = Omit<ExampleProps, "scope"> & {
   scope?: ExampleProps["scope"];
 };
 
-const ComponentExample: FC<ComponentExampleProps> = ({ code, scope }) => {
+const ComponentExample: FC<ComponentExampleProps> = ({
+  code,
+  scope,
+  contentClassName,
+}) => {
   const combinedScope = useMemo<ExampleProps["scope"]>(
     () => ({ ...components, ...scope }),
     [scope],
   );
 
-  return <Example code={code} scope={combinedScope} />;
+  return (
+    <Example
+      contentClassName={contentClassName}
+      code={code}
+      scope={combinedScope}
+    />
+  );
 };
 
 export default ComponentExample;

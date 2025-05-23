@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, CopyButton, Dialog, TextInput } from '@/components'
+import { Button, ButtonLayout, CopyButton, Dialog, TextInput } from '@/components'
 import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -79,16 +79,14 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
           <span>{t('views:repos.cloneCredGenerated')}</span>
         </div>
         <Dialog.Footer>
-          <ButtonGroup>
-            <>
-              <Button variant="outline" onClick={onClose}>
-                Close
-              </Button>
-              <Button type="button" onClick={() => navigateToManageToken?.()}>
-                {t('views:repos.manageAPIToken')}
-              </Button>
-            </>
-          </ButtonGroup>
+          <ButtonLayout>
+            <Button variant="outline" onClick={onClose}>
+              Close
+            </Button>
+            <Button type="button" onClick={() => navigateToManageToken?.()}>
+              {t('views:repos.manageAPIToken')}
+            </Button>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

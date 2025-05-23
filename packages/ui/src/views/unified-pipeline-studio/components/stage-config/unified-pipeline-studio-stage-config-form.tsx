@@ -1,6 +1,6 @@
 import { ElementType, Fragment, useEffect, useState } from 'react'
 
-import { Button, ButtonGroup, Drawer, EntityFormLayout, Icon } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, Icon } from '@/components'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
@@ -114,10 +114,10 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
             <Description>
               Configure a stage for your pipeline. Stages are logical groupings of steps that execute together.
             </Description>
-            <ButtonGroup>
+            <ButtonLayout horizontalAlign="start">
               <Button variant={'ai'}> AI Autofill</Button>
               <Button variant={'outline'}> Use Template</Button>
-            </ButtonGroup>
+            </ButtonLayout>
           </Header>
           <Inner>
             <EntityFormLayout.Form>
@@ -125,24 +125,28 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
             </EntityFormLayout.Form>
           </Inner>
           <Footer>
-            <ButtonGroup>
-              <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-              <Button variant="secondary" onClick={requestClose}>
-                Cancel
-              </Button>
-            </ButtonGroup>
-            {editStageIntention && (
-              <Button
-                variant="secondary"
-                iconOnly
-                onClick={() => {
-                  requestYamlModifications.deleteInArray({ path: editStageIntention.path })
-                  requestClose()
-                }}
-              >
-                <Icon name="trash" />
-              </Button>
-            )}
+            <ButtonLayout.Root>
+              <ButtonLayout.Primary>
+                <Button variant="secondary" onClick={requestClose}>
+                  Cancel
+                </Button>
+                <Button onClick={() => rootForm.submitForm()}>Submit</Button>
+              </ButtonLayout.Primary>
+              {!!editStageIntention && (
+                <ButtonLayout.Secondary>
+                  <Button
+                    variant="secondary"
+                    iconOnly
+                    onClick={() => {
+                      requestYamlModifications.deleteInArray({ path: editStageIntention.path })
+                      requestClose()
+                    }}
+                  >
+                    <Icon name="trash" />
+                  </Button>
+                </ButtonLayout.Secondary>
+              )}
+            </ButtonLayout.Root>
           </Footer>
         </Content>
       )}

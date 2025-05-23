@@ -7,6 +7,7 @@ import {
 } from "react";
 import { LiveEditor, LivePreview, LiveProvider } from "react-live";
 import { Icon, Tooltip } from "@harnessio/ui/components";
+import { cn } from "@harnessio/ui/utils";
 import { RouterContextProvider } from "@harnessio/ui/context";
 import ExampleLayout from "./example-layout";
 import { themes } from "prism-react-renderer";
@@ -20,9 +21,11 @@ import {
 
 type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 
-export type ExampleProps = Pick<LiveProviderProps, "code" | "scope">;
+export type ExampleProps = Pick<LiveProviderProps, "code" | "scope"> & {
+  contentClassName?: string;
+};
 
-const Example: FC<ExampleProps> = ({ code, scope }) => {
+const Example: FC<ExampleProps> = ({ code, scope, contentClassName }) => {
   const [isLightTheme, setIsLightTheme] = useState(
     () => document.querySelector("html")?.dataset.theme === "light",
   );
@@ -72,7 +75,7 @@ const Example: FC<ExampleProps> = ({ code, scope }) => {
   return (
     <div className="bg-cn-background-1 not-content my-12 overflow-hidden rounded-md border">
       <LiveProvider code={code} scope={scopeWithLayout} enableTypeScript>
-        <div className="grid place-items-center p-12">
+        <div className={cn("grid place-items-center p-12", contentClassName)}>
           <RouterProvider router={router} />
         </div>
         <details className="example-expand bg-cn-background-2 border-t p-3">

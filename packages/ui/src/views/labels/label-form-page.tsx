@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import {
   Alert,
   Button,
-  ButtonGroup,
+  ButtonLayout,
   Checkbox,
   ControlGroup,
   Fieldset,
@@ -265,14 +265,14 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
           )}
 
           <Fieldset>
-            <ButtonGroup spacing="3">
+            <ButtonLayout horizontalAlign="start">
               <Button type="submit" disabled={isSaving}>
                 {isSaving ? t('views:repos.saving', 'Saving…') : t('views:repos.save', 'Save')}
               </Button>
               <Button type="reset" variant="outline" onClick={onFormCancel}>
                 {t('views:repos.cancel', 'Cancel')}
               </Button>
-            </ButtonGroup>
+            </ButtonLayout>
           </Fieldset>
         </FormWrapper>
       )}

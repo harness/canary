@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, CopyButton, Dialog, Input } from '@/components'
+import { Button, ButtonLayout, CopyButton, Dialog, Input } from '@/components'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { useStates } from '@views/user-management/providers/state-provider'
 
@@ -67,7 +67,7 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
         </div>
 
         <Dialog.Footer>
-          <ButtonGroup className="justify-end">
+          <ButtonLayout>
             <Button type="button" variant="outline" onClick={onClose} disabled={isUpdatingUser}>
               {generatePassword ? t('views:userManagement.close', 'Close') : t('views:userManagement.cancel', 'Cancel')}
             </Button>
@@ -78,7 +78,7 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
                   : t('views:userManagement.resetPassword.confirm', 'Confirm')}
               </Button>
             )}
-          </ButtonGroup>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

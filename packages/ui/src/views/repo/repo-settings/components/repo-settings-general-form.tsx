@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -164,7 +164,7 @@ export const RepoSettingsGeneralForm: FC<{
           {/* SUBMIT BUTTONS */}
           <Fieldset>
             <ControlGroup>
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 {!isSubmitted || !isRepoUpdateSuccess ? (
                   <Button type="submit" disabled={isUpdatingRepoData}>
                     {!isUpdatingRepoData ? t('views:repos.save', 'Save') : t('views:repos.saving', 'Saving...')}
@@ -175,7 +175,7 @@ export const RepoSettingsGeneralForm: FC<{
                     <Icon name="tick" size={14} />
                   </Button>
                 )}
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </Fieldset>
 

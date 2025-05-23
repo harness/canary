@@ -20,10 +20,11 @@ import { DocsPage } from "@/components/docs-page";
       <div className="flex flex-col space-y-8">
         {/* Standard usage */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Standard usage</h4>
+
           <Radio.Root
             value={group1Value}
             onValueChange={setGroup1Value}
+            label="Standard usage"
           >
             <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
             <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
@@ -33,10 +34,11 @@ import { DocsPage } from "@/components/docs-page";
 
         {/* Optional */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Optional</h4>
+
           <Radio.Root
             value={group2Value}
             onValueChange={setGroup2Value}
+            label="Optional usage"
           >
             <Radio.Item value="option1" label="Option 1" caption="This field is optional" optional />
           </Radio.Root>
@@ -44,10 +46,10 @@ import { DocsPage } from "@/components/docs-page";
 
         {/* Disabled */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Disabled</h4>
           <Radio.Root
             value={group3Value}
             onValueChange={setGroup3Value}
+            label="Disabled radio"
           >
             <Radio.Item value="option1" label="Option 1" caption="This option is disabled" disabled />
             <Radio.Item value="option2" label="Option 2" />

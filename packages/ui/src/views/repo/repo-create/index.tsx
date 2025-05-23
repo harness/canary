@@ -79,17 +79,12 @@ export function RepoCreatePage({
     formState: { errors }
   } = formMethods
 
-  const accessValue = watch('access')
   const gitignoreValue = watch('gitignore')
   const licenseValue = watch('license')
   const readmeValue = watch('readme')
 
   const handleSelectChange = (fieldName: keyof FormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
-  }
-
-  const handleAccessChange = (value: '1' | '2') => {
-    setValue('access', value, { shouldValidate: true })
   }
 
   const handleReadmeChange = (value: boolean) => {
@@ -188,32 +183,20 @@ export function RepoCreatePage({
 
           {/* ACCESS */}
           <Fieldset className="mt-4">
-            <ControlGroup>
-              <Text className="leading-none text-cn-foreground-2" size={2}>
-                Who has access
-              </Text>
-              <Radio.Root className="mt-6" value={accessValue} onValueChange={handleAccessChange} id="access">
-                <Radio.Item
-                  id="access-public"
-                  className="mt-px"
-                  value="1"
-                  label="Public"
-                  caption="Anyone with access to the Gitness environment can clone this repo."
-                />
-                <Radio.Item
-                  id="access-private"
-                  className="mt-px"
-                  value="2"
-                  label="Private"
-                  caption="You choose who can see and commit to this repository."
-                />
-              </Radio.Root>
-              {errors.access && (
-                <Message className="mt-0.5" theme={MessageTheme.ERROR}>
-                  {errors.access.message?.toString()}
-                </Message>
-              )}
-            </ControlGroup>
+            <FormInput.Radio label="Who has access" id="access" {...register('access')}>
+              <Radio.Item
+                id="access-public"
+                value="1"
+                label="Public"
+                caption="Anyone with access to the Gitness environment can clone this repo."
+              />
+              <Radio.Item
+                id="access-private"
+                value="2"
+                label="Private"
+                caption="You choose who can see and commit to this repository."
+              />
+            </FormInput.Radio>
           </Fieldset>
 
           {/* README */}

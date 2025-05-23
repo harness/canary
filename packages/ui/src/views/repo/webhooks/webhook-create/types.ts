@@ -24,7 +24,7 @@ export enum WebhookTriggerEnum {
 export type CreateWebhookFormFields = z.infer<typeof createWebhookFormSchema>
 
 export interface WebhookFormFieldProps {
-  register?: UseFormRegister<CreateWebhookFormFields>
+  register: UseFormRegister<CreateWebhookFormFields>
   errors?: FieldErrors<CreateWebhookFormFields>
   watch?: UseFormWatch<CreateWebhookFormFields>
   setValue?: UseFormSetValue<CreateWebhookFormFields>

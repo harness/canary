@@ -35,6 +35,9 @@ name: z.string().trim().min(3, "Input must be at least 3 characters"),
     age: z.coerce.number().min(1, "Number must be at least 1"),
 
     comment: z.string().trim().min(10, "Comment must be at least 10 characters"),
+    permission: z.enum(['public', 'private'], {
+      required_error: 'Please select an option.'
+    }).optional()
 
 });
 
@@ -48,6 +51,7 @@ defaultValues: {
 name: "John doe",
 age: 1,
 comment: "Lorem ipsum",
+permission: "public"
 },
 });
 
@@ -86,6 +90,11 @@ placeholder="Enter at least 3 characters"
           placeholder="Enter a textarea"
           {...register("comment")}
         />
+
+        <FormInput.Radio {...register('permission')} label="Permission">
+          <Radio.Item value="public" label="Public" caption="Anyone with the link can access" />
+          <Radio.Item value="private" label="Private" caption="Only you and your team members can access" />
+        </FormInput.Radio>
 
         <Button type="submit" disabled={formMethods.formState.isSubmitting}>
           {formMethods.formState.isSubmitting ? "Submitting..." : "Submit"}

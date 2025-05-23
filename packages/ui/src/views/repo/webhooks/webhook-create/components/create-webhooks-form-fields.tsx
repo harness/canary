@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { Checkbox, ControlGroup, FormInput, Label, Radio, StackedList, Switch } from '@/components'
-import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
+import { Checkbox, ControlGroup, FormInput, Radio, StackedList, Switch } from '@/components'
+import { WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
 
 export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (
   <StackedList.Root>
@@ -11,7 +11,7 @@ export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch,
       isHeader
       actions={
         <Switch
-          {...register!('enabled')}
+          {...register('enabled')}
           checked={watch!('enabled')}
           onCheckedChange={() => setValue!('enabled', !watch!('enabled'))}
         />
@@ -28,7 +28,7 @@ export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch,
 export const WebhookNameField: FC<WebhookFormFieldProps & { disabled?: boolean }> = ({ register, disabled, t }) => (
   <FormInput.Text
     id="name"
-    {...register!('identifier')}
+    {...register('identifier')}
     placeholder="Name your webhook"
     autoFocus
     disabled={disabled}
@@ -39,7 +39,7 @@ export const WebhookNameField: FC<WebhookFormFieldProps & { disabled?: boolean }
 export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register, t }) => (
   <FormInput.Textarea
     id="description"
-    {...register!('description')}
+    {...register('description')}
     placeholder={t('views:repos.descriptionPlaceholder', 'Enter a description')}
     label={t('views:repos.description', 'Description')}
   />
@@ -50,7 +50,7 @@ export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, t 
     autoComplete="new-password"
     data-form-type="other"
     id="payloadUrl"
-    {...register!('url')}
+    {...register('url')}
     placeholder={t('views:repos.urlPlaceholder', 'https://example.com/harness')}
     label={t('views:repos.urlLabel', 'Payload URL')}
   />
@@ -61,65 +61,38 @@ export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register, t }) =
     autoComplete="new-password"
     data-form-type="other"
     id="secret"
-    {...register!('secret')}
+    {...register('secret')}
     type="password"
     label={t('views:repos.secret', 'Secret')}
   />
 )
 
-export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ watch, setValue, t }) => {
-  const sslVerificationValue = watch!('insecure')
-  const handleAccessChange = (value: string) => {
-    setValue!('insecure', value)
-  }
+export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ register, t }) => (
+  <FormInput.Radio label={t('views:repos.sslVerification', 'SSL Verification')} id="insecure" {...register('insecure')}>
+    <Radio.Item id="enable-ssl" value="1" label={t('views:repos.sslVerificationLabel', 'Enable SSL Verification')} />
+    <Radio.Item
+      id="disable-ssl"
+      value="2"
+      label={t('views:repos.disableSslLabel', 'Disable SSL verification')}
+      caption={t('views:repos.disableSslDescription', 'Not recommended for production use')}
+    />
+  </FormInput.Radio>
+)
 
-  return (
-    <ControlGroup className="mt-4">
-      <Label htmlFor="insecure" className="mb-6">
-        {t('views:repos.sslVerification', 'SSL Verification')}
-      </Label>
-      <Radio.Root value={sslVerificationValue} onValueChange={handleAccessChange} id="insecure">
-        <Radio.Item
-          id="enable-ssl"
-          value="1"
-          label={t('views:repos.sslVerificationLabel', 'Enable SSL Verification')}
-        />
-        <Radio.Item
-          id="disable-ssl"
-          value="2"
-          label={t('views:repos.disableSslLabel', 'Disable SSL verification')}
-          caption={t('views:repos.disableSslDescription', 'Not recommended for production use')}
-        />
-      </Radio.Root>
-    </ControlGroup>
-  )
-}
-
-export const WebhookTriggerField: FC<WebhookFormFieldProps> = ({ watch, setValue, t }) => {
-  const sslVerificationValue = watch!('trigger')
-  const handleTriggerChange = (value: string) => {
-    setValue!('trigger', value)
-    if (value === TriggerEventsEnum.ALL_EVENTS) {
-      setValue!('triggers', [])
-    }
-  }
-
-  return (
-    <ControlGroup className="mt-4">
-      <Label htmlFor="trigger" className="mb-6">
-        {t('views:repos.evenTriggerLabel', 'Which events would you like to use to trigger this webhook?')}
-      </Label>
-      <Radio.Root value={sslVerificationValue} onValueChange={handleTriggerChange} id="trigger">
-        <Radio.Item id="all-events" value="1" label={t('views:repos.evenTriggerAllLabel', 'Send me everything')} />
-        <Radio.Item
-          id="select-events"
-          value="2"
-          label={t('views:repos.eventTriggerIndividualLabel', 'Let me select individual events')}
-        />
-      </Radio.Root>
-    </ControlGroup>
-  )
-}
+export const WebhookTriggerField: FC<WebhookFormFieldProps> = ({ t, register }) => (
+  <FormInput.Radio
+    label={t('views:repos.evenTriggerLabel', 'Which events would you like to use to trigger this webhook?')}
+    id="trigger"
+    {...register('trigger')}
+  >
+    <Radio.Item id="all-events" value="1" label={t('views:repos.evenTriggerAllLabel', 'Send me everything')} />
+    <Radio.Item
+      id="select-events"
+      value="2"
+      label={t('views:repos.eventTriggerIndividualLabel', 'Let me select individual events')}
+    />
+  </FormInput.Radio>
+)
 
 export const WebhookEventSettingsFieldset: FC<WebhookFormFieldProps & { eventList: WebhookEvent[] }> = ({
   watch,

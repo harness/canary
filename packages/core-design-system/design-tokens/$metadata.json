@@ -50,6 +50,7 @@
     "components/desktop/base/tooltip",
     "components/desktop/base/toast",
     "components/desktop/base/sidebar",
-    "components/desktop/base/toggle"
+    "components/desktop/base/toggle",
+    "components/desktop/base/calendar"
   ]
 }

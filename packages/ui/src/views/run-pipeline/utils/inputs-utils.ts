@@ -37,7 +37,15 @@ export function pipelineInput2FormInput(
       allowedValueTypes: ['fixed', 'runtime', 'expression'],
       ...(inputProps.description ? { tooltip: inputProps.description as string } : {})
     },
-    outputTransform: inputType === 'text' ? unsetEmptyStringOutputTransformer() : undefined,
+    outputTransform:
+      inputType === 'text'
+        ? unsetEmptyStringOutputTransformer()
+        : // @TODO: this is a temporary solution - need to handle for all scenarios
+          inputType === 'connector'
+          ? value => ({
+              value: value?.connectorIdWithScope
+            })
+          : undefined,
     ...(typeof inputProps.pattern === 'string'
       ? {
           validation: {

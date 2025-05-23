@@ -1,6 +1,6 @@
 import { FormEvent, ReactNode, useState } from 'react'
 
-import { Dialog } from './dialog'
+import { ModalDialog } from './modal-dialog'
 import { Root as SearchBox } from './search-box'
 import { Spacer } from './spacer'
 
@@ -35,17 +35,17 @@ function Root({ logo }: ProjectProps) {
         onSearch={openSearchDialog}
         handleChange={openSearchDialog}
       />
-      <Dialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
-        <Dialog.Content className="h-[600px] max-w-[800px]">
-          <Dialog.Header>
-            <Dialog.Title>Search</Dialog.Title>
-            <Dialog.Description>
+      <ModalDialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
+        <ModalDialog.Content className="h-[600px] max-w-[800px]">
+          <ModalDialog.Header>
+            <ModalDialog.Title>Search</ModalDialog.Title>
+            <ModalDialog.Description>
               <Spacer size={6} />
               <SearchBox width="full" placeholder="Search..." />
-            </Dialog.Description>
-          </Dialog.Header>
-        </Dialog.Content>
-      </Dialog.Root>
+            </ModalDialog.Description>
+          </ModalDialog.Header>
+        </ModalDialog.Content>
+      </ModalDialog.Root>
     </div>
   )
 }

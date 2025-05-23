@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Select } from '@/components'
+import { Alert, Button, ControlGroup, Fieldset, FormWrapper, Input, ModalDialog, Select } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -73,82 +73,84 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
   }
 
   return (
-    <Dialog.Root
+    <ModalDialog.Root
       open={isOpen}
       onOpenChange={() => {
         onClose()
         reset()
       }}
     >
-      <Dialog.Content className="max-w-xl" aria-describedby={undefined}>
-        <Dialog.Header>
-          <Dialog.Title>Create Pipeline</Dialog.Title>
-        </Dialog.Header>
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-          <Fieldset>
-            <Input
-              id="name"
-              label="Pipeline name"
-              {...register('name')}
-              size="md"
-              error={errors.name?.message?.toString()}
-            />
-          </Fieldset>
+      <ModalDialog.Content className="max-w-xl" aria-describedby={undefined}>
+        <ModalDialog.Header>
+          <ModalDialog.Title>Create Pipeline</ModalDialog.Title>
+        </ModalDialog.Header>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
+          <ModalDialog.Body>
+            <div className="space-y-7 mb-7">
+              <Fieldset>
+                <Input
+                  id="name"
+                  label="Pipeline name"
+                  {...register('name')}
+                  size="md"
+                  error={errors.name?.message?.toString()}
+                />
+              </Fieldset>
 
-          <Fieldset>
-            <Input
-              id="yamlPath"
-              label="Yaml path"
-              {...register('yamlPath')}
-              size="md"
-              error={errors.yamlPath?.message?.toString()}
-            />
-          </Fieldset>
+              <Fieldset>
+                <Input
+                  id="yamlPath"
+                  label="Yaml path"
+                  {...register('yamlPath')}
+                  size="md"
+                  error={errors.yamlPath?.message?.toString()}
+                />
+              </Fieldset>
 
-          <Fieldset>
-            <ControlGroup>
-              <Select.Root
-                disabled={isLoadingBranchNames}
-                name="branch"
-                value={branch}
-                onValueChange={value => handleSelectChange('branch', value)}
-                placeholder="Select"
-                label="Branch"
-              >
-                <Select.Content>
-                  {branchNames?.map(branchName => (
-                    <Select.Item key={branchName} value={branchName}>
-                      {branchName}
-                    </Select.Item>
-                  ))}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
-          </Fieldset>
+              <Fieldset>
+                <ControlGroup>
+                  <Select.Root
+                    disabled={isLoadingBranchNames}
+                    name="branch"
+                    value={branch}
+                    onValueChange={value => handleSelectChange('branch', value)}
+                    placeholder="Select"
+                    label="Branch"
+                  >
+                    <Select.Content>
+                      {branchNames?.map(branchName => (
+                        <Select.Item key={branchName} value={branchName}>
+                          {branchName}
+                        </Select.Item>
+                      ))}
+                    </Select.Content>
+                  </Select.Root>
+                </ControlGroup>
+              </Fieldset>
 
-          {errorMessage && (
-            <Alert.Root theme="danger">
-              <Alert.Title>{errorMessage}</Alert.Title>
-            </Alert.Root>
-          )}
+              {errorMessage && (
+                <Alert.Root theme="danger">
+                  <Alert.Title>{errorMessage}</Alert.Title>
+                </Alert.Root>
+              )}
+            </div>
+          </ModalDialog.Body>
 
-          <Dialog.Footer className="-mx-5 -mb-5">
-            <Button
-              type="button"
+          <ModalDialog.Footer>
+            <ModalDialog.Close
               onClick={() => {
                 onCancel()
                 reset()
               }}
-              variant="outline"
             >
               Cancel
-            </Button>
+            </ModalDialog.Close>
             <Button type="submit" disabled={isLoadingBranchNames}>
               Create Pipeline
             </Button>
-          </Dialog.Footer>
+          </ModalDialog.Footer>
         </FormWrapper>
-      </Dialog.Content>
-    </Dialog.Root>
+      </ModalDialog.Content>
+    </ModalDialog.Root>
   )
 }

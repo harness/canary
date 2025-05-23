@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { AlertDialog, Button, ButtonLayout, Textarea } from '@/components'
+import { Button, ModalDialog, Textarea } from '@/components'
 
 interface EditRepoDetailsDialog {
   showEditRepoDetails: boolean
@@ -26,37 +26,31 @@ export const EditRepoDetails = ({
     setNewDesc(description)
   }, [description])
   return (
-    <AlertDialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
-      <AlertDialog.Content
-        className="h-80 max-h-[70vh] w-[460px] !rounded"
-        onClose={handleClose}
-        onOverlayClick={handleClose}
-      >
-        <AlertDialog.Header>
-          <AlertDialog.Title className="mb-4">Repository Description</AlertDialog.Title>
-        </AlertDialog.Header>
-        <Textarea
-          label="Description"
-          className="h-24 text-cn-foreground-1"
-          value={newDesc}
-          defaultValue={description}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-            setNewDesc(e?.target?.value)
-          }}
-          placeholder="Enter repository description here"
-          error={updateRepoError?.length ? updateRepoError : undefined}
-        />
-        <AlertDialog.Footer>
-          <ButtonLayout>
-            <Button variant="outline" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button type="button" onClick={() => onSave(newDesc)}>
-              Save
-            </Button>
-          </ButtonLayout>
-        </AlertDialog.Footer>
-      </AlertDialog.Content>
-    </AlertDialog.Root>
+    <ModalDialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
+      <ModalDialog.Content className="h-80 max-h-[70vh] w-[460px] !rounded">
+        <ModalDialog.Header>
+          <ModalDialog.Title className="mb-4">Repository Description</ModalDialog.Title>
+        </ModalDialog.Header>
+        <ModalDialog.Body>
+          <Textarea
+            label="Description"
+            className="h-24 text-cn-foreground-1"
+            value={newDesc}
+            defaultValue={description}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+              setNewDesc(e?.target?.value)
+            }}
+            placeholder="Enter repository description here"
+            error={updateRepoError?.length ? updateRepoError : undefined}
+          />
+        </ModalDialog.Body>
+        <ModalDialog.Footer>
+          <ModalDialog.Close onClick={handleClose}>Cancel</ModalDialog.Close>
+          <Button type="button" onClick={() => onSave(newDesc)}>
+            Save
+          </Button>
+        </ModalDialog.Footer>
+      </ModalDialog.Content>
+    </ModalDialog.Root>
   )
 }

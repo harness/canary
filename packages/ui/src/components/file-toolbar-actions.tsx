@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ButtonLayout, CopyButton, Icon } from '@/components'
+import { Button, CopyButton, Icon, Layout } from '@/components'
 import { cn } from '@utils/cn'
 
 export interface FileToolbarActionsProps {
@@ -17,7 +17,7 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
   showEdit = false
 }) => {
   return (
-    <ButtonLayout className="gap-0">
+    <Layout.Horizontal gap="gap-0">
       <CopyButton className="rounded-r-none" name={copyContent} />
       {showEdit && (
         <Button
@@ -41,6 +41,6 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
       >
         <Icon name="download" size={16} className="text-icons-3" />
       </Button>
-    </ButtonLayout>
+    </Layout.Horizontal>
   )
 }

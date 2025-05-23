@@ -2,10 +2,10 @@ import { FC } from 'react'
 
 import {
   Button,
-  ButtonLayout,
   DropdownMenu,
   FileToolbarActions,
   Icon,
+  Layout,
   StackedList,
   ToggleGroup,
   ViewTypeValue
@@ -43,7 +43,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
 
   const RightDetails = () => {
     return (
-      <ButtonLayout className="items-center gap-2">
+      <Layout.Horizontal gap="gap-2" className="items-center">
         <span className="text-sm text-cn-foreground-2">{`${fileContent?.split('\n').length || 0} lines`}</span>
         <span className="h-3 border-l border-cn-borders-2" />
         <span className="mr-5 text-sm text-cn-foreground-2">{fileBytesSize}</span>
@@ -68,7 +68,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
-      </ButtonLayout>
+      </Layout.Horizontal>
     )
   }
 

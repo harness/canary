@@ -8,88 +8,22 @@ The `ButtonLayout` component allows you to group multiple buttons together, eith
 
 import { DocsPage } from "../../../components/docs-page";
 
-## Default `ButtonLayout` with `horizontal` orientation and `end` align
-
 <DocsPage.ComponentExample
   client:only
-  className={"!block ![place-items:normal]"}
+  contentClassName={"!block ![place-items:normal]"}
   code={`
     <ButtonLayout>
-        <Button variant="outline">Button outline</Button>
-        <Button variant="secondary">Button secondary</Button>
-        <Button>Button primary</Button>
-      </ButtonLayout>
-    `}
-/>
-
-## `horizontal` orientation and `start` align
-
-<DocsPage.ComponentExample
-  client:only
-  className={"!block ![place-items:normal]"}
-  code={`
-    <ButtonLayout horizontalAlign="start">
-        <Button>Button primary</Button>
-        <Button variant="secondary">Button secondary</Button>
-        <Button variant="outline">Button outline</Button>
+      <Button variant="outline">Button outline</Button>
+      <Button variant="secondary">Button secondary</Button>
+      <Button>Button primary</Button>
     </ButtonLayout>
-    `}
-/>
-
-## `vertical` orientation
-
-<DocsPage.ComponentExample
-  client:only
-  className={"!block ![place-items:normal]"}
-  code={`
-      <ButtonLayout orientation="vertical">
-        <Button>Button primary</Button>
-        <Button variant="secondary">Button secondary</Button>
-        <Button variant="outline">Button outline</Button>
-      </ButtonLayout>
- `}
-/>
-
-## `horizontal` orientation and with button grouping using `ButtonLayout.Primary` and `ButtonLayout.Secondary`
-
-<DocsPage.ComponentExample
-  client:only
-  className={"!block ![place-items:normal]"}
-  code={`
-      <ButtonLayout.Root>
-        <ButtonLayout.Primary>
-            <Button>Button primary</Button>
-        </ButtonLayout.Primary>
-        <ButtonLayout.Secondary>
-            <Button variant="secondary">Button secondary</Button>
-        </ButtonLayout.Secondary>
-      </ButtonLayout.Root>
- `}
-/>
-
-## `vertical` orientation and with button grouping using `ButtonLayout.Primary` and `ButtonLayout.Secondary`
-
-<DocsPage.ComponentExample
-  client:only
-  className={"!block ![place-items:normal]"}
-  code={`
-      <ButtonLayout.Root orientation="vertical">
-        <ButtonLayout.Primary>
-              <Button>Button primary</Button>
-          </ButtonLayout.Primary>
-        <ButtonLayout.Secondary>
-            <Button variant="secondary">Button secondary</Button>
-        </ButtonLayout.Secondary>
-      </ButtonLayout.Root>
- `}
+  `}
 />
 
 ## Usage
 
 ```typescript jsx
 import { Button, ButtonLayout } from '@harnessio/ui/components'
-
-//...
 
 return (
   <ButtonLayout horizontalAlign="start">
@@ -120,17 +54,109 @@ return (
 All parts of the `ButtonLayout` component can be imported and composed as required.
 
 ```typescript jsx
-<ButtonLayout.Root orientation="horizontal" horizontalAlign="start">
+import { ButtonLayout } from '@harnessio/ui/components'
+
+<ButtonLayout.Root>
   <ButtonLayout.Primary />
   <ButtonLayout.Secondary />
 </ButtonLayout.Root>
 ```
 
-or simply use it without composition
+## Layout Orientation
 
-```typescript jsx
-<ButtonLayout />
-```
+The `ButtonLayout` component accepts an `orientation` prop, which defines the layout direction: either `horizontal` or `vertical`.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <div className="flex flex-col gap-10">
+      <ButtonLayout>
+        <Button variant="outline">Button outline</Button>
+        <Button variant="secondary">Button secondary</Button>
+        <Button>Button primary</Button>
+      </ButtonLayout>
+
+      <ButtonLayout orientation="vertical">
+        <Button>Button primary</Button>
+        <Button variant="secondary">Button secondary</Button>
+        <Button variant="outline">Button outline</Button>
+      </ButtonLayout>
+    </div>
+
+`}
+/>
+
+## Horizontal Alignment
+
+When `orientation` is `horizontal`, the `horizontalAlign` prop controls alignment. Use `start` to align buttons to the left, or `end` to align them to the right.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <div className="flex flex-col gap-10">
+      <ButtonLayout>
+        <Button variant="outline">Button outline</Button>
+        <Button variant="secondary">Button secondary</Button>
+        <Button>Button primary</Button>
+      </ButtonLayout>
+
+      <ButtonLayout horizontalAlign="start">
+        <Button>Button primary</Button>
+        <Button variant="secondary">Button secondary</Button>
+        <Button variant="outline">Button outline</Button>
+      </ButtonLayout>
+    </div>
+
+`}
+/>
+
+## Compositions: `ButtonLayout.Primary` and `ButtonLayout.Secondary`
+
+The component provides `ButtonLayout.Primary` and `ButtonLayout.Secondary` compositions for grouping buttons.
+
+When `orientation` is set to `horizontal`:
+
+- `Primary` aligns buttons to the **right**
+- `Secondary` aligns buttons to the **left**
+
+When `orientation` is set to `horizontal` and `horizontalAlign` is set to `start`:
+
+- `Primary` aligns buttons to the **left**
+- `Secondary` aligns buttons to the **right**
+
+When `orientation` is set to `vertical`:
+
+- `Primary` places buttons at the **top**
+- `Secondary` places buttons at the **bottom**
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <div className="flex flex-col gap-10">
+      <ButtonLayout.Root>
+        <ButtonLayout.Primary>
+          <Button>Button primary</Button>
+        </ButtonLayout.Primary>
+        <ButtonLayout.Secondary>
+          <Button variant="secondary">Button secondary</Button>
+        </ButtonLayout.Secondary>
+      </ButtonLayout.Root>
+
+      <ButtonLayout.Root orientation="vertical">
+        <ButtonLayout.Primary>
+          <Button>Button primary</Button>
+        </ButtonLayout.Primary>
+        <ButtonLayout.Secondary>
+          <Button variant="secondary">Button secondary</Button>
+        </ButtonLayout.Secondary>
+      </ButtonLayout.Root>
+    </div>
+
+`}
+/>
 
 ## API Reference
 
@@ -143,14 +169,14 @@ The `Root` component serves as the main container for `Button`, `ButtonLayout.Pr
     {
       name: "children",
       description:
-        "Button, ButtonLayout.Primary and ButtonLayout.Secondary components",
+        "Button, ButtonLayout.Primary and ButtonLayout.Secondary components.",
       required: true,
       defaultValue: "",
       value: "ReactNode",
     },
     {
       name: "orientation",
-      description: "Whether to display stacked",
+      description: "Whether to display stacked.",
       required: false,
       value: "'horizontal' | 'vertical'",
       defaultValue: "horizontal",
@@ -158,14 +184,14 @@ The `Root` component serves as the main container for `Button`, `ButtonLayout.Pr
     {
       name: "horizontalAlign",
       description:
-        "When orientation is 'horizontal', align to the left when 'start' and right when 'end'",
+        "When orientation is 'horizontal', align to the left when 'start' and right when 'end'.",
       required: false,
       value: "'start' | 'end'",
       defaultValue: "end",
     },
     {
       name: "className",
-      description: "Additional class names",
+      description: "Additional class names.",
       required: false,
       value: "string",
     },
@@ -182,14 +208,14 @@ The `Root` component serves as the main container for `Button`, `ButtonLayout.Pr
   props={[
     {
       name: "children",
-      description: "Button components",
+      description: "Button components.",
       required: true,
       defaultValue: "",
       value: "ReactNode",
     },
     {
       name: "className",
-      description: "Additional class names",
+      description: "Additional class names.",
       required: false,
       value: "string",
     },
@@ -206,14 +232,14 @@ The `Root` component serves as the main container for `Button`, `ButtonLayout.Pr
   props={[
     {
       name: "children",
-      description: "Button components",
+      description: "Button components.",
       required: true,
       defaultValue: "",
       value: "ReactNode",
     },
     {
       name: "className",
-      description: "Additional class names",
+      description: "Additional class names.",
       required: false,
       value: "string",
     },

@@ -181,7 +181,7 @@ export function RepoSummaryView({
             */}
             <ListActions.Root>
               <ListActions.Left>
-                <ButtonLayout className="gap-2.5">
+                <ButtonLayout>
                   {branchSelectorRenderer}
                   <SearchFiles
                     navigateToFile={navigateToFile}

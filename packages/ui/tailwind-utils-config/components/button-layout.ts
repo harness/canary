@@ -21,15 +21,25 @@ export default {
 
         '&-horizontal': {
             '&:where(.cn-button-layout-horizontal-end)': {
-                '@apply justify-end': ''
+                '@apply justify-end': '',
+
+                '.cn-button-layout-primary': {
+                    '@apply order-2 ml-auto': ''
+                },
+
+                '.cn-button-layout-secondary': {
+                    '@apply order-first mr-auto': ''
+                }
             },
 
-            '.cn-button-layout-primary': {
-                '@apply order-2 ml-auto': ''
-            },
+            '&:where(.cn-button-layout-horizontal-start)': {
+                '.cn-button-layout-primary': {
+                    '@apply order-first mr-auto': ''
+                },
 
-            '.cn-button-layout-secondary': {
-                '@apply order-1': ''
+                '.cn-button-layout-secondary': {
+                    '@apply order-2 ml-auto': ''
+                }
             }
         },
 

@@ -22,10 +22,10 @@ import {
 type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 
 export type ExampleProps = Pick<LiveProviderProps, "code" | "scope"> & {
-  className?: string;
+  contentClassName?: string;
 };
 
-const Example: FC<ExampleProps> = ({ code, scope, className }) => {
+const Example: FC<ExampleProps> = ({ code, scope, contentClassName }) => {
   const [isLightTheme, setIsLightTheme] = useState(
     () => document.querySelector("html")?.dataset.theme === "light",
   );
@@ -72,12 +72,10 @@ const Example: FC<ExampleProps> = ({ code, scope, className }) => {
     },
   ]);
 
-  console.log(className);
-
   return (
     <div className="bg-cn-background-1 not-content my-12 overflow-hidden rounded-md border">
       <LiveProvider code={code} scope={scopeWithLayout} enableTypeScript>
-        <div className={cn("grid place-items-center p-12", className)}>
+        <div className={cn("grid place-items-center p-12", contentClassName)}>
           <RouterProvider router={router} />
         </div>
         <details className="example-expand bg-cn-background-2 border-t p-3">

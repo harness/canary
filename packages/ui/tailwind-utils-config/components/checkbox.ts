@@ -4,6 +4,13 @@ export default {
     gap: 'var(--cn-spacing-2-half)',
     '&:has(.cn-checkbox-label-wrapper)': {
       width: '100%'
+    },
+
+    /**
+     * Align the checkbox indicator with the label
+     */
+    '&:where(:has(.cn-checkbox-label-wrapper)) .cn-checkbox-root': {
+      top: 'var(--cn-spacing-half)'
     }
   },
 
@@ -23,10 +30,6 @@ export default {
     border: 'var(--cn-border-width-1) solid var(--cn-comp-selection-unselected-border)',
     borderRadius: 'var(--cn-rounded-1)',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
-
-    '&:has(+ .cn-checkbox-label-wrapper)': {
-      top: 'var(--cn-spacing-half)'
-    },
 
     '&:where([disabled])': {
       backgroundColor: 'var(--cn-state-disabled-bg)',

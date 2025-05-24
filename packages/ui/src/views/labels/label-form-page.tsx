@@ -5,7 +5,6 @@ import {
   Alert,
   Button,
   ButtonGroup,
-  Checkbox,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -73,6 +72,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
       description: currentLabel.description ?? '',
       color: currentLabel.color,
       type: currentLabel.type,
+      isDynamic: currentLabel.type === LabelType.DYNAMIC,
       values: currentValues
     }
   }, [storeLabels, storeValues, labelId])
@@ -85,6 +85,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
       description: '',
       color: ColorsEnum.BLUE,
       type: LabelType.STATIC,
+      isDynamic: false,
       values: []
     }
   })
@@ -108,11 +109,11 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
   const values = watch('values')
   const key = watch('key')
   const color = watch('color')
-  const isDynamicValue = watch('type') === LabelType.DYNAMIC
+  const isDynamic = watch('isDynamic')
 
-  const handleDynamicChange = (val: boolean) => {
-    setValue('type', val ? LabelType.DYNAMIC : LabelType.STATIC)
-  }
+  useEffect(() => {
+    setValue('type', isDynamic ? LabelType.DYNAMIC : LabelType.STATIC)
+  }, [isDynamic, setValue])
 
   const handleLabelColorChange = (val: ColorsEnum) => {
     setValue('color', val)
@@ -222,11 +223,10 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
             </ControlGroup>
 
             <div className="mt-5">
-              <Checkbox
-                id="type"
-                checked={isDynamicValue}
-                onCheckedChange={handleDynamicChange}
+              <FormInput.Checkbox
+                id="isDynamic"
                 label={t('views:labelData.form.allowUsersCheckboxLabel', 'Allow users to add values')}
+                {...register('isDynamic')}
               />
             </div>
           </Fieldset>

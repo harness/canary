@@ -4,7 +4,6 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 import {
   Button,
   ButtonGroup,
-  Checkbox,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -157,12 +156,17 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           {/* authorization - pipelines */}
           <Fieldset>
             <ControlGroup className="flex flex-row gap-5">
-              <Checkbox {...register('repositories')} id="authorization" checked={true} disabled label="Repositories" />
-              <Checkbox
+              <FormInput.Checkbox
+                {...register('repositories')}
+                id="authorization"
+                checked={true}
+                disabled
+                label="Repositories"
+              />
+              <FormInput.Checkbox
                 {...register('pipelines')}
                 id="pipelines"
-                checked={watch('pipelines')}
-                onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
+                // onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
                 label="Import Pipelines"
               />
             </ControlGroup>

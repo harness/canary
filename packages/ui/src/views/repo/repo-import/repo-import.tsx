@@ -4,7 +4,6 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 import {
   Button,
   ButtonGroup,
-  Checkbox,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -244,20 +243,8 @@ export function RepoImportPage({
           {/* authorization - pipelines */}
           <Fieldset>
             <ControlGroup className="flex flex-row gap-5">
-              <Checkbox
-                {...register('authorization')}
-                id="authorization"
-                checked={watch('authorization')}
-                onCheckedChange={(checked: boolean) => setValue('authorization', checked)}
-                label="Requires Authorization"
-              />
-              <Checkbox
-                {...register('pipelines')}
-                id="pipelines"
-                checked={watch('pipelines')}
-                onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
-                label="Import Pipelines"
-              />
+              <FormInput.Checkbox {...register('authorization')} id="authorization" label="Requires Authorization" />
+              <FormInput.Checkbox {...register('pipelines')} id="pipelines" label="Import Pipelines" />
             </ControlGroup>
           </Fieldset>
 

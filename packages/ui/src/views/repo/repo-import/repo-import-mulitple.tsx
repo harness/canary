@@ -3,7 +3,6 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 import {
   Button,
   ButtonGroup,
-  Checkbox,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -274,14 +273,8 @@ export function RepoImportMultiplePage({
           {/* authorization - pipelines */}
           <Fieldset>
             <ControlGroup className="flex flex-row gap-5">
-              <Checkbox {...register('repositories')} id="authorization" checked={true} disabled label="Repositories" />
-              <Checkbox
-                {...register('pipelines')}
-                id="pipelines"
-                checked={watch('pipelines')}
-                onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
-                label="Pipelines"
-              />
+              <FormInput.Checkbox {...register('repositories')} id="authorization" disabled label="Repositories" />
+              <FormInput.Checkbox {...register('pipelines')} id="pipelines" label="Pipelines" />
             </ControlGroup>
           </Fieldset>
 

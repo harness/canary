@@ -1,10 +1,10 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { Icon, Label } from '@/components'
+import { FormCaption, Icon, Label } from '@/components'
 import { cn } from '@/utils/cn'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 
-interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
+export interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
   label?: string
   caption?: string
   showOptionalLabel?: boolean
@@ -39,7 +39,7 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
             >
               {label}
             </Label>
-            <p className={`cn-checkbox-caption ${props.disabled ? 'disabled' : ''}`}>{caption || ''}</p>
+            <FormCaption disabled={props.disabled}>{caption}</FormCaption>
           </div>
         )}
       </div>

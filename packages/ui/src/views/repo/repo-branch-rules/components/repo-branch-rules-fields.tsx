@@ -151,11 +151,9 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
       </ControlGroup>
 
       <ControlGroup>
-        <Checkbox
+        <FormInput.Checkbox
           id="default-branch"
           {...register!('default')}
-          checked={watch!('default')}
-          onCheckedChange={() => setValue!('default', !watch!('default'))}
           label={t('views:repos.applyRuleDefaultBranch', 'Apply this rule to the default branch')}
         />
 
@@ -180,7 +178,7 @@ export const BranchSettingsRuleBypassListField: FC<
     setPrincipalsSearchQuery: (val: string) => void
     principalsSearchQuery: string
   }
-> = ({ watch, setValue, bypassOptions, t, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
+> = ({ bypassOptions, t, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
   const multiSelectOptions: MultiSelectV2.MultiSelectOption[] = useMemo(() => {
     return (
       bypassOptions?.map(option => ({
@@ -206,10 +204,8 @@ export const BranchSettingsRuleBypassListField: FC<
       </ControlGroup>
 
       <ControlGroup>
-        <Checkbox
+        <FormInput.Checkbox
           {...register!('repo_owners')}
-          checked={watch!('repo_owners')}
-          onCheckedChange={() => setValue!('repo_owners', !watch!('repo_owners'))}
           id="edit-permissons"
           label={t(
             'views:repos.editPermissionsCheckboxDescription',

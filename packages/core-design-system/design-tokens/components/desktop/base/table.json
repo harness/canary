@@ -1,61 +1,61 @@
 {
-  "cell": {
-    "min": {
-      "default": {
-        "$type": "sizing",
-        "$value": "{size.11-half}"
+  "table": {
+    "cell": {
+      "min": {
+        "default": {
+          "$type": "sizing",
+          "$value": "{size.11-half}"
+        },
+        "compact": {
+          "$type": "sizing",
+          "$value": "{size.9}"
+        },
+        "wide": {
+          "$type": "sizing",
+          "$value": "{size.15}"
+        }
       },
-      "compact": {
-        "$type": "sizing",
-        "$value": "{size.9}"
+      "py": {
+        "default": {
+          "$type": "spacing",
+          "$value": "{spacing.3}"
+        },
+        "compact": {
+          "$type": "spacing",
+          "$value": "{spacing.2}"
+        },
+        "wide": {
+          "$type": "spacing",
+          "$value": "{spacing.5}"
+        }
       },
-      "wide": {
-        "$type": "sizing",
-        "$value": "{size.15}"
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       }
     },
-    "py": {
-      "default": {
+    "header": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "py": {
         "$type": "spacing",
         "$value": "{spacing.3}"
       },
-      "compact": {
+      "gap": {
         "$type": "spacing",
         "$value": "{spacing.2}"
       },
-      "wide": {
-        "$type": "spacing",
-        "$value": "{spacing.5}"
+      "min": {
+        "$type": "sizing",
+        "$value": "{size.11-half}"
       }
     },
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.4}"
-    },
-    "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.2}"
-    }
-  },
-  "header": {
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.4}"
-    },
-    "py": {
-      "$type": "spacing",
-      "$value": "{spacing.3}"
-    },
-    "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.2}"
-    },
-    "min": {
-      "$type": "sizing",
-      "$value": "{size.11-half}"
-    }
-  },
-  "table": {
     "border": {
       "$type": "borderWidth",
       "$value": "{borderWidth.1}"

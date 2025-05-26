@@ -1091,6 +1091,22 @@
     }
   },
   "comp": {
+    "alert": {
+      "fade": {
+        "default": {
+          "$type": "color",
+          "$value": "linear-gradient(0deg, {set.gray.soft.bg} 40%, {gradient.alert.fade-default} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "linear-gradient(0deg, {set.red.soft.bg} 40%, {gradient.alert.fade-danger} 100%)"
+        },
+        "warning": {
+          "$type": "color",
+          "$value": "linear-gradient(0deg, {set.yellow.soft.bg} 40%, {gradient.alert.fade-warning} 100%)"
+        }
+      }
+    },
     "avatar": {
       "border": {
         "$extensions": {
@@ -1926,6 +1942,47 @@
       "gradient-stop-4": {
         "$type": "color",
         "$value": "{cyan.300}"
+      }
+    },
+    "alert": {
+      "fade-default": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{set.gray.soft.bg}"
+      },
+      "fade-danger": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{set.red.soft.bg}"
+      },
+      "fade-warning": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{set.yellow.soft.bg}"
       }
     },
     "skeleton": {

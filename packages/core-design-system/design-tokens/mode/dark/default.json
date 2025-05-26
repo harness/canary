@@ -2030,7 +2030,7 @@
   "iconStrokeWidth": {
     "xs": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.2"
     },
     "sm": {
       "$type": "borderWidth",

@@ -4,7 +4,7 @@ import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connect
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
-import { Button, ButtonGroup, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
+import { Button, ButtonLayout, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
   ArrayFormInput,
   BooleanFormInput,
@@ -187,12 +187,16 @@ export const ConnectorsRefPage = ({
           {renderConnectorContent()}
         </Drawer.Body>
         <Drawer.Footer>
-          <ButtonGroup>
-            <Button type="button" variant="outline" onClick={handleCancel}>
-              Cancel
-            </Button>
-            <Button>Save</Button>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Primary>
+              <Button>Save</Button>
+            </ButtonLayout.Primary>
+            <ButtonLayout.Secondary>
+              <Button type="button" variant="outline" onClick={handleCancel}>
+                Cancel
+              </Button>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>

@@ -191,7 +191,7 @@ export function RepoSummaryView({
                 </ButtonLayout>
               </ListActions.Left>
               <ListActions.Right>
-                <ButtonLayout className="gap-2.5">
+                <ButtonLayout>
                   {refType === BranchSelectorTab.BRANCHES ? (
                     <Button variant="outline" asChild>
                       <Link

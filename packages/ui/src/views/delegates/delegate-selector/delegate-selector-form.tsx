@@ -4,6 +4,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 import {
   Alert,
   Button,
+  ButtonLayout,
   Drawer,
   EntityFormLayout,
   Fieldset,
@@ -215,17 +216,24 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
         </FormWrapper>
       </Body>
       <Footer>
-        <Button variant="outline" onClick={onBack}>
-          {t('views:createProject.backButton', 'Back')}
-        </Button>
-        <Button
-          onClick={handleSubmit(onSubmit)}
-          disabled={delegateType === DelegateSelectionTypes.TAGS && selectedTags.length === 0}
-        >
-          {t('views:delegates.connectDelegates', 'Connect ')}
-          {delegateType === DelegateSelectionTypes.TAGS ? (matchedDelegates > 0 ? matchedDelegates : '') : 'any'}&nbsp;
-          {delegateType === DelegateSelectionTypes.TAGS && matchedDelegates > 1 ? 'delegates' : 'delegate'}
-        </Button>
+        <ButtonLayout.Root>
+          <ButtonLayout.Primary>
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              disabled={delegateType === DelegateSelectionTypes.TAGS && selectedTags.length === 0}
+            >
+              {t('views:delegates.connectDelegates', 'Connect ')}
+              {delegateType === DelegateSelectionTypes.TAGS ? (matchedDelegates > 0 ? matchedDelegates : '') : 'any'}
+              &nbsp;
+              {delegateType === DelegateSelectionTypes.TAGS && matchedDelegates > 1 ? 'delegates' : 'delegate'}
+            </Button>
+          </ButtonLayout.Primary>
+          <ButtonLayout.Secondary>
+            <Button variant="outline" onClick={onBack}>
+              {t('views:createProject.backButton', 'Back')}
+            </Button>
+          </ButtonLayout.Secondary>
+        </ButtonLayout.Root>
       </Footer>
     </>
   )

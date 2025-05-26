@@ -13,6 +13,7 @@ export const DrawerRoot = ({
   ...props
 }: ComponentProps<typeof DrawerPrimitive.Root>) => {
   const triggerRef = useRef<HTMLButtonElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     if (!nested) return
@@ -21,15 +22,20 @@ export const DrawerRoot = ({
       triggerRef.current.click()
     }
 
-    if (!open && !!onOpenChange) {
-      onOpenChange(false)
+    if (!open && closeRef.current) {
+      closeRef.current.click()
     }
-  }, [nested, open, onOpenChange])
+  }, [nested, open])
 
-  const FakeTrigger = (
-    <DrawerPrimitive.Trigger asChild>
-      <button className="sr-only" ref={triggerRef} aria-hidden="true" tabIndex={-1} />
-    </DrawerPrimitive.Trigger>
+  const FakeTriggers = (
+    <>
+      <DrawerPrimitive.Trigger asChild>
+        <button className="sr-only" ref={triggerRef} aria-hidden="true" tabIndex={-1} />
+      </DrawerPrimitive.Trigger>
+      <DrawerPrimitive.Close asChild>
+        <button className="sr-only" ref={closeRef} aria-hidden="true" tabIndex={-1} />
+      </DrawerPrimitive.Close>
+    </>
   )
 
   const RootComponent = nested ? DrawerPrimitive.NestedRoot : DrawerPrimitive.Root
@@ -44,7 +50,7 @@ export const DrawerRoot = ({
   return (
     <DrawerContext.Provider value={{ direction, nested }}>
       <RootComponent {...rootProps}>
-        {nested && FakeTrigger}
+        {nested && FakeTriggers}
         {children}
       </RootComponent>
     </DrawerContext.Provider>

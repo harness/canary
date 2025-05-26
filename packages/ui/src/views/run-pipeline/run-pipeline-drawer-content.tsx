@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 
-import { Button, ButtonGroup, Drawer, SkeletonList } from '@/components'
+import { Button, ButtonLayout, Drawer, SkeletonList } from '@/components'
 import { cn } from '@/utils'
 
 import { InputFactory } from '@harnessio/forms'
@@ -100,25 +100,29 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
       </Drawer.Body>
 
       <Drawer.Footer>
-        <ButtonGroup>
-          <Button
-            disabled={(allowDisableRun && !isValid) || !isYamlSyntaxValid}
-            loading={isExecutingPipeline}
-            onClick={() => {
-              if (view === 'visual') {
-                setAllowDisableRun(true)
-                rootFormRef.current?.submitForm()
-              } else {
-                onRun()
-              }
-            }}
-          >
-            Run pipeline
-          </Button>
-          <Button onClick={onCancel} variant="secondary" disabled={isExecutingPipeline}>
-            Cancel
-          </Button>
-        </ButtonGroup>
+        <ButtonLayout.Root>
+          <ButtonLayout.Primary>
+            <Button
+              disabled={(allowDisableRun && !isValid) || !isYamlSyntaxValid}
+              loading={isExecutingPipeline}
+              onClick={() => {
+                if (view === 'visual') {
+                  setAllowDisableRun(true)
+                  rootFormRef.current?.submitForm()
+                } else {
+                  onRun()
+                }
+              }}
+            >
+              Run pipeline
+            </Button>
+          </ButtonLayout.Primary>
+          <ButtonLayout.Secondary>
+            <Button onClick={onCancel} variant="secondary" disabled={isExecutingPipeline}>
+              Cancel
+            </Button>
+          </ButtonLayout.Secondary>
+        </ButtonLayout.Root>
       </Drawer.Footer>
     </Drawer.Content>
   )

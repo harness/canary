@@ -25,7 +25,7 @@ import {
   tagStyles,
   textareaStyles,
   drawerStyles,
-    buttonLayoutStyles
+  buttonLayoutStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 

@@ -1,6 +1,6 @@
 import { ElementType, useEffect, useState } from 'react'
 
-import { Button, ButtonGroup, Drawer, EntityFormLayout, Icon, SkeletonList } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, Icon, SkeletonList } from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 import { get, isEmpty, isUndefined, omit, omitBy } from 'lodash-es'
@@ -246,29 +246,31 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
             </EntityFormLayout.Form>
           </Body>
           <Footer>
-            <ButtonGroup className="justify-between">
-              <div className="flex gap-x-3">
+            <ButtonLayout.Root>
+              <ButtonLayout.Primary className="flex gap-x-3">
                 <Button disabled={loading || !!error?.message} onClick={() => rootForm.submitForm()}>
                   Submit
                 </Button>
                 <Button variant="secondary" onClick={requestClose}>
                   Cancel
                 </Button>
-              </div>
+              </ButtonLayout.Primary>
               {!!editStepIntention && (
-                <Button
-                  variant="secondary"
-                  iconOnly
-                  onClick={() => {
-                    requestYamlModifications.deleteInArray({ path: editStepIntention.path })
-                    requestClose()
-                  }}
-                  aria-label="Remove Step"
-                >
-                  <Icon name="trash" />
-                </Button>
+                <ButtonLayout.Secondary>
+                  <Button
+                    variant="secondary"
+                    iconOnly
+                    onClick={() => {
+                      requestYamlModifications.deleteInArray({ path: editStepIntention.path })
+                      requestClose()
+                    }}
+                    aria-label="Remove Step"
+                  >
+                    <Icon name="trash" />
+                  </Button>
+                </ButtonLayout.Secondary>
               )}
-            </ButtonGroup>
+            </ButtonLayout.Root>
           </Footer>
         </>
       )}
